@@ -1,0 +1,359 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.mastercard.pts.integrated</groupId>
+	<artifactId>mi-iss-automation-epam</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>MI Issuing Smoke Tests</name>
+
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		
+		<mtaf-ui-tools.version>1.5.0</mtaf-ui-tools.version>
+		<mtaf-provider-factory.version>2.3.0-20170411.160657-4</mtaf-provider-factory.version>
+		<mtaf-automation-utils.version>1.4.0</mtaf-automation-utils.version>
+		
+		<aspectj.version>1.8.9</aspectj.version>
+		<junit.version>4.12</junit.version>
+		<java-hamcrest.version>2.0.0.0</java-hamcrest.version>
+		<ant.version>1.7.0</ant.version>
+		<ant-launcher.version>1.10.1</ant-launcher.version>
+		<ant-jsch.version>1.10.1</ant-jsch.version>
+		<jsch.version>0.1.54</jsch.version>
+		<sikulixapi.version>1.1.0</sikulixapi.version>
+		<winium-webdriver.version>0.1.0-1</winium-webdriver.version>
+		<winium-elements-desktop.version>0.2.0-1</winium-elements-desktop.version>
+		<oracle-ojdbc.version>11.2.0</oracle-ojdbc.version>
+		<jackson-databind.version>2.8.9</jackson-databind.version>
+		<json-patch.version>1.9</json-patch.version>
+		
+		<embeddables>**/TestStories.java</embeddables>
+		<ignore.failure.in.stories>true</ignore.failure.in.stories>
+		<ignore.failure.in.view>true</ignore.failure.in.view>
+		<generate.view.after.story>true</generate.view.after.story>
+		<story.timout.secs>7200</story.timout.secs>
+		
+		<jbehave-maven-plugin.version>4.1</jbehave-maven-plugin.version>
+		<properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
+		<aspectj-maven-plugin.version>1.10</aspectj-maven-plugin.version>
+		<serenity-maven-plugin.version>1.1.36</serenity-maven-plugin.version>
+		<lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
+	</properties>
+
+	
+	<repositories>
+		<repository>
+			<!-- com.sikulix.sikulixapi: jxgrabkey -->
+			<id>labs.consol.de</id>
+			<name>labs.consol.de</name>
+			<url>http://labs.consol.de/maven/repository/</url>
+			<layout>default</layout>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+				<updatePolicy>never</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.mastercard.testing</groupId>
+			<artifactId>mtaf-ui-tools</artifactId>
+			<version>${mtaf-ui-tools.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.mastercard.testing</groupId>
+					<artifactId>mtaf-provider-factory</artifactId>
+				</exclusion>
+				<exclusion>
+					<artifactId>hamcrest-core</artifactId>
+					<groupId>org.hamcrest</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>hamcrest-library</artifactId>
+					<groupId>org.hamcrest</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>hamcrest-integration</artifactId>
+					<groupId>org.hamcrest</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>junit</artifactId>
+					<groupId>junit</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>com.mastercard.testing</groupId>
+			<artifactId>mtaf-provider-factory</artifactId>
+			<version>${mtaf-provider-factory.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>hamcrest-core</artifactId>
+					<groupId>org.hamcrest</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>hamcrest-library</artifactId>
+					<groupId>org.hamcrest</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>junit</artifactId>
+					<groupId>junit</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>com.mastercard.testing</groupId>
+			<artifactId>mtaf-automation-utils</artifactId>
+			<version>${mtaf-automation-utils.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>junit</artifactId>
+					<groupId>junit</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<artifactId>junit</artifactId>
+			<groupId>junit</groupId>
+			<version>${junit.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>hamcrest-core</artifactId>
+					<groupId>org.hamcrest</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant-launcher</artifactId>
+			<version>${ant-launcher.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant-jsch</artifactId>
+			<version>${ant-jsch.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+			<version>${ant.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>java-hamcrest</artifactId>
+			<version>${java-hamcrest.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jcraft</groupId>
+			<artifactId>jsch</artifactId>
+			<version>${jsch.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.2gis.winium</groupId>
+			<artifactId>winium-webdriver</artifactId>
+			<version>${winium-webdriver.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sikulix</groupId>
+			<artifactId>sikulixapi</artifactId>
+			<version>${sikulixapi.version}</version>
+		</dependency>			
+        
+		<dependency>
+			<groupId>com.github.2gis.winium</groupId>
+			<artifactId>winium-elements-desktop</artifactId>
+			<version>${winium-elements-desktop.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.oracle</groupId>
+		    <artifactId>ojdbc6</artifactId>
+		    <version>${oracle-ojdbc.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson-databind.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jdk8</artifactId>
+			<version>${jackson-databind.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>${jackson-databind.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.fge</groupId>
+			<artifactId>json-patch</artifactId>
+			<version>${json-patch.version}</version>
+		</dependency>
+			<dependency>
+			    <groupId>org.springframework</groupId>
+			    <artifactId>spring-jdbc</artifactId>
+			    <version>4.2.5.RELEASE</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>${properties-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>set-system-properties</goal>
+						</goals>
+						<configuration>
+							<properties>
+								<serenityReport>true</serenityReport>
+							</properties>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<version>${aspectj-maven-plugin.version}</version>
+				<configuration>
+					<complianceLevel>${maven.compiler.target}</complianceLevel>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>test-compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.jbehave</groupId>
+				<artifactId>jbehave-maven-plugin</artifactId>
+				<version>${jbehave-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>run-stories-as-embeddables</id>
+						<phase>integration-test</phase>
+						<configuration>
+							<threads>${jbehave.execution.threads}</threads>
+							<includes>
+								<include>${embeddables}</include>
+							</includes>
+							<metaFilters>
+								<metaFilter>${meta.filter}</metaFilter>
+							</metaFilters>
+							<systemProperties>
+								<property>
+									<name>java.awt.headless</name>
+									<value>true</value>
+								</property>
+							</systemProperties>
+							<storyTimeoutInSecs>${story.timout.secs}</storyTimeoutInSecs>
+							<ignoreFailureInStories>${ignore.failure.in.stories}</ignoreFailureInStories>
+							<ignoreFailureInView>${ignore.failure.in.view}</ignoreFailureInView>
+							<generateViewAfterStories>${generate.view.after.story}</generateViewAfterStories>
+						</configuration>
+						<goals>
+							<goal>unpack-view-resources</goal>
+							<goal>run-stories-as-embeddables</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>net.serenity-bdd.maven.plugins</groupId>
+				<artifactId>serenity-maven-plugin</artifactId>
+				<version>${serenity-maven-plugin.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-simple</artifactId>
+						<version>1.7.25</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<id>serenity-reports</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>aggregate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>${lifecycle-mapping.version}</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.codehaus.mojo</groupId>
+										<artifactId>properties-maven-plugin</artifactId>
+										<versionRange>[1.0.0,)</versionRange>
+										<goals>
+											<goal>set-system-properties</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

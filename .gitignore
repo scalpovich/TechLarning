@@ -1,0 +1,14 @@
+target/
+.settings/
+.classpath
+.project
+*.xls*.tmp
+/src/main/resources/PINData.txt
+/src/main/resources/*.ath
+/src/main/resources/LatestAuthFileDetails.txt
+/src/main/resources/*.tmp
+/src/main/resources/*.Err
+/src/main/resources/*.IPM
+/src/main/resources/AuthFileName.txt
+/src/main/resources/CEEData.txt
+/src/main/resources/MessageReversalIndicator.txt
