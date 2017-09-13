@@ -43,6 +43,6 @@ public class UploadFile extends SimulatorUtilities{
 	
 	public void uploadIpmFile(File fileName){
 		String remoteDir = ConstantData.IPM_UPLOAD_FILE_PATH;
-		linuxBox.upload(getResourceFolderPath() + "//" + fileName, remoteDir);		
+		linuxBox.upload(getTempDirectoryLocationForSimulatorResults() + "\\" + fileName, remoteDir);		
 	}
 }

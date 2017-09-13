@@ -85,6 +85,7 @@ public class BatchFileValidator {
 		try {
 			rawlines = Files.readLines(batch, Charsets.UTF_8);
 		} catch (IOException e) {
+			//NO SONAR. We are propagating exception to another class where it is thrown
 			throw MiscUtils.propagate(e);
 		}
 		

@@ -70,7 +70,8 @@ public class FileCreation {
 		try {
 		    content = IOUtils.toString(inputStream);
 		} catch (IOException e) {
-			logger.debug(ConstantData.EXCEPTION, e);
+			logger.error(ConstantData.EXCEPTION, e);
+			//NO SONAR. We are propagating exception to another class where it is thrown
 			MiscUtils.propagate(e);
 		} finally {
 		    inputStream.close();

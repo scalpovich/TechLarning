@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,24 +62,25 @@ public class MiscUtils {
 	{
 		try {
 			String temptaskName = null;
-			if(taskName.toUpperCase().equalsIgnoreCase("FINSIM"))
+			String command = null;
+			if("FINSIM".equalsIgnoreCase(taskName))
 			{
 				temptaskName = "ATClient";
 			}
-			else if(taskName.toUpperCase().equalsIgnoreCase("MCPS"))
+			else if("MCPS".equalsIgnoreCase(taskName))
 			{
 				temptaskName = "MCPS";
 			}
-			else if(taskName.toUpperCase().equalsIgnoreCase("MAS"))
+			else if("MAS".equalsIgnoreCase(taskName))
 			{
 				temptaskName = "MSPMCW";
 			}
-			else if(taskName.toUpperCase().equalsIgnoreCase("WINIUM"))
+			else if("WINIUM".equalsIgnoreCase(taskName))
 			{
 				temptaskName = "Winium.Desktop.Driver";
 			}
-			String command = "taskkill /F /IM " + temptaskName +  ".exe";
-			Runtime.getRuntime().exec(command);
+			command = "taskkill /F /IM " + temptaskName +  ".exe";
+			Runtime.getRuntime().exec(command).waitFor(10, TimeUnit.SECONDS);
 		} catch (Exception e) {
 			throw MiscUtils.propagate(e);
 		}
@@ -118,7 +120,7 @@ public class MiscUtils {
 
 	public static String generate6CharAlphaNumeric()
 	{
-		return ("AUT" + MiscUtils.generateRandomNumberBetween2Number(1, 9) + MiscUtils.randomAlphabet(2)).toUpperCase(); 		
+		return ("AU" + MiscUtils.generateRandomNumberBetween2Number(100, 999) + MiscUtils.randomAlphabet(1)).toUpperCase();
 	}
 	
 	public static String convertToYYMM(String data) {

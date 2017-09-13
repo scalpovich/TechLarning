@@ -35,6 +35,8 @@ public class ConstantData {
 	public static final String PROCESSING_INSTITUTION="BNK [000000]";
 	
 	public static final String EXCEPTION = "Exception occurred";
-	
+	public static final String SIKUKI_EXCEPTION = "Image could not be clicked";
+	public static final String MESSAGE_CONSTANT = "Simulator path being set :  ";
+
 	private ConstantData() {}
 }

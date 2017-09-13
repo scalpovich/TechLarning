@@ -14,8 +14,6 @@ public class DateUtils {
 	
 	private static final int DEFAULT_KEY_LENGTH = 10;
 	
-	public DateUtils() {}
-	
     public static String currentDateddMMyyyy(){
     	Date date = new Date();
         String format = "dd/MM/yyyy";

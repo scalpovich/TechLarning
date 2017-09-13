@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils;
 import org.sikuli.script.FindFailed;
@@ -17,8 +18,10 @@ import org.slf4j.LoggerFactory;
 public class SimulatorUtilities{
 	private static final Logger logger = LoggerFactory.getLogger(SimulatorUtilities.class);
 	private static Screen screen = new Screen();
-
 	private static int numberOfTabs = 1;
+	private static final String  SELECTED_IMAGE = "_Selected";
+	private static final String SIKULI_MESSAGE = "***** Sikuli click operation is performed on : ";
+	private static final String SIKULI_DOUBLECLICK_MESSAGE = "***** Sikuli double click operation is performed on : ";
 
 	public  void pressTab()
 	{
@@ -44,8 +47,33 @@ public class SimulatorUtilities{
 	{
 		robotOperation("downArrow", numberOfTabs);
 	}
-
+	
+	public void pressUpArrow(int numberOfTabs)
+	{
+		robotOperation("upArrow", numberOfTabs);
+	}
+	
+	public void pressDelete(int numberOfTabs)
+	{
+		robotOperation("pressDelete", numberOfTabs);
+	}
+	
+	public void pressDelete()
+	{
+		pressDelete(numberOfTabs);
+	}
+	
+	public void pressUpArrow()
+	{
+		pressUpArrow(numberOfTabs);
+	}
+	
 	public void pressLeftArrow()
+	{
+		pressLeftArrow(numberOfTabs);
+	}
+	
+	public void pressLeftArrow(int numberOfTabs )
 	{
 		robotOperation("tabLeft", numberOfTabs);
 	}
@@ -62,6 +90,11 @@ public class SimulatorUtilities{
 	}
 
 	public void pressRightArrow()
+	{
+		pressRightArrow(numberOfTabs);
+	}
+	
+	public void pressRightArrow(int numberOfTabs)
 	{
 		robotOperation("tabRight", numberOfTabs);
 	}
@@ -87,7 +120,16 @@ public class SimulatorUtilities{
 			Robot robot = new Robot();
 			for(int i = 0; i < numberOfTabs; i++)
 			{
-				getOperation(operationType, robot);
+				if(operationType.toUpperCase().contains("TAB"))
+				{
+					getTabOperation(operationType, robot);
+				}
+				else
+				{
+					getOtherOperation(operationType, robot);
+				}
+				wait(1000);
+				logger.info("**** Robot/Keyboard Operation performed :  " + operationType);
 			}
 			wait(2000);
 		}
@@ -98,17 +140,8 @@ public class SimulatorUtilities{
 		}
 	}
 
-	private void getOperation(String operationType, Robot robot) {
+	private void getOtherOperation(String operationType, Robot robot) {
 		switch (operationType) {
-		case "tab":
-			robot.keyPress(KeyEvent.VK_TAB);
-			break;
-		case "tabLeft":
-			robot.keyPress(KeyEvent.VK_LEFT);
-			break;
-		case "tabRight":
-			robot.keyPress(KeyEvent.VK_RIGHT);
-			break;
 		case "pressEnter":
 			robot.keyPress(KeyEvent.VK_ENTER);
 			break;					
@@ -123,10 +156,32 @@ public class SimulatorUtilities{
 			break;		
 		case "downArrow":
 			robot.keyPress(KeyEvent.VK_DOWN);
-			break;				
+			break;		
+		case "upArrow":
+			robot.keyPress(KeyEvent.VK_UP);
+			break;		
 		case "escape":
 			robot.keyPress(KeyEvent.VK_ESCAPE);
 			break;	
+		case "pressDelete":
+			robot.keyPress(KeyEvent.VK_DELETE);
+			break;	
+		default:
+			break;
+		}
+	}
+
+	private void getTabOperation(String operationType, Robot robot) {
+		switch (operationType) {
+		case "tab":
+			robot.keyPress(KeyEvent.VK_TAB);
+			break;
+		case "tabLeft":
+			robot.keyPress(KeyEvent.VK_LEFT);
+			break;
+		case "tabRight":
+			robot.keyPress(KeyEvent.VK_RIGHT);
+			break;
 		default:
 			break;
 		}
@@ -154,11 +209,16 @@ public class SimulatorUtilities{
 		try
 		{
 			String path = getResourceFolderPath() + SimulatorConstantsData.AUTOIT_EXE_PATH.replace("\\", "\\\\");
-			MiscUtils.reportToConsole( "********** " + fileName + " ********** AutoIt Exe being executed.");
-			wait(1000);
+			logger.info("********* AutoIt Exe being executed : " + fileName);
 			String commandToExecute = " cmd /c " + path + fileName;
-			Runtime.getRuntime().exec(commandToExecute);
-			wait(3000);
+			if(fileName.contains("SelectIPSHost")) {
+				Runtime.getRuntime().exec(commandToExecute).waitFor(25, TimeUnit.SECONDS);
+				wait(15000);
+			}
+			else {
+				Runtime.getRuntime().exec(commandToExecute).waitFor(15, TimeUnit.SECONDS);
+			}
+			wait(2000);
 		}
 		catch(Exception e)
 		{
@@ -185,18 +245,7 @@ public class SimulatorUtilities{
 			robot.keyRelease(KeyEvent.VK_V);
 			robot.keyRelease(KeyEvent.VK_CONTROL);
 			wait(1000);
-		}
-	}
-
-	public void setValueInCombo(String characters) throws AWTException {
-		if(isNotNullAndEmpty(characters))
-		{
-			Robot robot = new Robot();
-			robot.keyPress(KeyEvent.VK_F4);
-			wait(2000);
-			pressRobotKey(characters, robot);
-			wait(2000);
-			robot.keyPress(KeyEvent.VK_ENTER);
+			logger.info("***** SetText operation is performed. Text set to : " + characters);
 		}
 	}
 
@@ -207,19 +256,32 @@ public class SimulatorUtilities{
 
 	public void performClickOperation(String nameOfSnapshot)
 	{	
-		performActionClick(getImageOfItem(nameOfSnapshot), getImageForSelectedItem(nameOfSnapshot) );
+		logger.info(SIKULI_MESSAGE +  nameOfSnapshot);
+		performActionClick(getImageOfItem(nameOfSnapshot));
 		wait(1000);
 	}
 
 	public void performDoubleClickOperation(String nameOfSnapshot)
 	{	
-		performActionDoubleClick(getImageOfItem(nameOfSnapshot), getImageForSelectedItem(nameOfSnapshot) );
+		logger.info(SIKULI_DOUBLECLICK_MESSAGE +  nameOfSnapshot);
+		performActionDoubleClick(getImageOfItem(nameOfSnapshot) );
 		wait(1000);
 	}
-
-	public void  clickDataElements(String dataElement)
-	{
-		searchForImageAndPerformDoubleClick(dataElement);	
+	
+	public void performClickOperationOnImages(String nameOfSnapshot)
+	{	
+		String imagesName = nameOfSnapshot + SELECTED_IMAGE;
+		logger.info(SIKULI_MESSAGE +  nameOfSnapshot);
+		performActionClickOnImages(getImageOfItem(nameOfSnapshot), getImageOfItem(imagesName) );
+		wait(1000);
+	}
+	
+	public void performDoubleClickOperationOnImages(String nameOfSnapshot)
+	{	
+		String imagesNameTemp = nameOfSnapshot + SELECTED_IMAGE;
+		logger.info(SIKULI_DOUBLECLICK_MESSAGE +  nameOfSnapshot);
+		performActionDoubleClickOnImages(getImageOfItem(nameOfSnapshot), getImageOfItem(imagesNameTemp) );
+		wait(1000);
 	}
 
 	private void performRightClick(Pattern nameOfSnapshot) 
@@ -228,49 +290,61 @@ public class SimulatorUtilities{
 			screen.rightClick(nameOfSnapshot);
 		}
 		catch(Exception e)	{
-			logger.debug(ConstantData.EXCEPTION, e);
+			logger.debug(ConstantData.SIKUKI_EXCEPTION, nameOfSnapshot);
 			MiscUtils.propagate(e);
 		}
 	}
 
-	private void performActionClick(Pattern selectParent, Pattern selectParentIfSelected) {
+	private void performActionClick(Pattern selectParent) {
 		try {
-			if(screen.exists(selectParent) != null) 
-			{
+				screen.click(selectParent);
+		}
+		catch(Exception e)
+		{
+			logger.debug(ConstantData.SIKUKI_EXCEPTION, e);
+			MiscUtils.propagate(e);
+		}
+	}
+	
+	private void performActionDoubleClick(Pattern selectParent) {
+		try {
+				screen.doubleClick(selectParent);
+		}
+		catch(Exception e)
+		{
+			logger.debug(ConstantData.SIKUKI_EXCEPTION, e);
+			MiscUtils.propagate(e);
+		}
+	}
+
+	private void performActionClickOnImages(Pattern selectParent,  Pattern selectParent1) {
+		try {
+			if(screen.exists(selectParent) != null) {
 				screen.click(selectParent);
 			}
-			else
-			{
-				if(selectParentIfSelected!=null)
-				{
-					screen.click(selectParentIfSelected);
-				}
+			else {
+				screen.click(selectParent1);
 			}
 		}
 		catch(Exception e)
 		{
-			logger.debug(ConstantData.EXCEPTION, e);
+			logger.debug(ConstantData.SIKUKI_EXCEPTION, e);
 			MiscUtils.propagate(e);
 		}
 	}
-
-	private void performActionDoubleClick(Pattern selectParent, Pattern selectParentIfSelected) {
+	
+	private void performActionDoubleClickOnImages(Pattern selectParent,  Pattern selectParent1) {
 		try {
-			if(screen.exists(selectParent) != null) 
-			{
+			if(screen.exists(selectParent) != null) {
 				screen.doubleClick(selectParent);
 			}
-			else
-			{
-				if(selectParentIfSelected!=null)
-				{
-					screen.doubleClick(selectParentIfSelected);
-				}
+			else {
+				screen.doubleClick(selectParent1);
 			}
 		}
 		catch(Exception e)
 		{
-			logger.debug(ConstantData.EXCEPTION, e);
+			logger.debug(ConstantData.SIKUKI_EXCEPTION, e);
 			MiscUtils.propagate(e);
 		}
 	}
@@ -298,9 +372,26 @@ public class SimulatorUtilities{
 		}
 		catch(Exception e)
 		{
-			logger.debug(ConstantData.EXCEPTION, e);
+			logger.debug(ConstantData.SIKUKI_EXCEPTION, screenName);
 			return false;
 		}
+	}
+	
+	public Boolean areImagesPresent(String screenName)
+	{
+		try
+		{
+			if (screen.exists(getImageOfItem(screenName))!=null)
+			return true;
+			else if (screen.exists(getImageOfItem(screenName + SELECTED_IMAGE))!=null)
+			return true;
+		}
+		catch(Exception e)
+		{
+			logger.debug(ConstantData.SIKUKI_EXCEPTION, screenName);
+			return false;
+		}
+		return false;
 	}
 
 	public String getResourceFolderPath()
@@ -314,24 +405,23 @@ public class SimulatorUtilities{
 		String tempFolder = new DateUtils().getDateyyyyMMdd() + "_IssuingTests_Simulator";
 		//Folder is located in Temp Directory .. Ex: C:\Users\e071200\AppData\Local\Temp\20170718_IssuingTests_Simulator
 		File resourcesDirectory = new File(System.getProperty("java.io.tmpdir") + tempFolder); 
-		return resourcesDirectory.getAbsolutePath().replace("\\", "\\\\");
+		return resourcesDirectory.getAbsolutePath();
 	}
 
 	private Pattern getImageOfItem(String nameOfSnapshot) {
 
 		String objectName = getResourceFolderPath() + SimulatorConstantsData.SIKULI_IMAGE_PATH  + nameOfSnapshot +".PNG";
-		MiscUtils.reportToConsole("Performing operation with Sikuli on image :", nameOfSnapshot);
 		if(!fileExists(objectName))
 		{
 			return null;
 		}
 
 		try {
-			return new Pattern(objectName).similar(0.9F);
+			return new Pattern(objectName).similar(0.75F);
 		}
 		catch(Exception e)
 		{
-			logger.debug(ConstantData.EXCEPTION, e);
+			logger.debug(ConstantData.SIKUKI_EXCEPTION, nameOfSnapshot);
 			return null;
 		}
 	}
@@ -351,31 +441,10 @@ public class SimulatorUtilities{
 		performClickOperation(nameOfSnapshot);
 	}
 
-	public void searchForImageAndPerformDoubleClickforDataElements(String nameOfSnapshot)
-	{
-		if(nameOfSnapshot.contains("61_13"))
-		{
-			performOperationOnDataElementDe6113();
-		}
-		else
-		{
-			searchAndScrollDownForImage(nameOfSnapshot, 10);
-			performDoubleClickOperation(nameOfSnapshot);
-		}
-	}
-
 	public void searchForImageAndPerformDoubleClick(String nameOfSnapshot)
 	{
 		searchAndScrollDownForImage(nameOfSnapshot, 10);
 		performDoubleClickOperation(nameOfSnapshot);
-	}
-
-	private void performOperationOnDataElementDe6113() {
-		searchAndScrollDownForImage("DE61_DataElement", 10);
-		performClickOperation("DE61_DataElement");
-		pressRightArrow();
-		searchAndScrollDownForImage("DE61_13_DataElement", 2);
-		performDoubleClickOperation("DE61_13_DataElement");
 	}
 
 	private void searchAndScrollDownForImage(String nameOfSnapshot,  int loopThrough) {
@@ -408,7 +477,8 @@ public class SimulatorUtilities{
 
 	public String getPinText() {
 		executeAutoITExe("GetPINData");
-		String filePath = getResourceFolderPath() + "\\PINDATA.txt";
+
+		String filePath = getTempDirectoryLocationForSimulatorResults() + "\\PINDATA.txt";
 		String content;
 		try {
 			content = FileCreation.getFileContents(filePath);
@@ -419,86 +489,6 @@ public class SimulatorUtilities{
 			logger.debug(ConstantData.EXCEPTION, e);
 			MiscUtils.propagate(e);
 			return null;
-		}
-	}
-
-	public void pressRobotKey(String valueToSelect, Robot a) {
-
-		Boolean isDigit = valueToSelect.matches("\\d{1}");
-		if(isDigit)
-		{
-			int digit = Integer.parseInt(valueToSelect);
-			performNumberKeyPress(digit, a);
-		}
-		else
-		{
-			performAlphabetKeyPress(valueToSelect, a);
-		}
-	}
-
-	private void performAlphabetKeyPress(String valueToSelect, Robot a) {
-		switch (valueToSelect.toUpperCase()) {
-		case "A" :  a.keyPress(KeyEvent.VK_A); 
-		break;		
-		case "B" :  a.keyPress(KeyEvent.VK_B);
-		break;
-		case "C" :  a.keyPress(KeyEvent.VK_C);
-		break;
-		case "D" :  a.keyPress(KeyEvent.VK_D);
-		break;
-		case "E" :  a.keyPress(KeyEvent.VK_E);
-		break;
-		case "F" :  a.keyPress(KeyEvent.VK_F);
-		break;
-		}
-	}
-
-	private void performNumberKeyPress(int valueToSelect, Robot a) {
-		switch (valueToSelect) {
-		case 0 :  a.keyPress(KeyEvent.VK_0);
-		break;
-		case 1 : a.keyPress(KeyEvent.VK_1); 
-		break;
-		case 2 : a.keyPress(KeyEvent.VK_2);
-		break;
-		case 3 : a.keyPress(KeyEvent.VK_3);
-		break;
-		case 4 : a.keyPress(KeyEvent.VK_4);
-		break;
-		case 5 : a.keyPress(KeyEvent.VK_5);
-		break;
-		case 6 : a.keyPress(KeyEvent.VK_6);
-		break;
-		case 7 : a.keyPress(KeyEvent.VK_7);
-		break;
-		case 8 : a.keyPress(KeyEvent.VK_8);
-		break;
-		case 9 : a.keyPress(KeyEvent.VK_9);
-		break;
-		case 10 : a.keyPress(KeyEvent.VK_9);
-		a.keyPress(KeyEvent.VK_F4);
-		a.keyPress(KeyEvent.VK_DOWN);
-		a.keyPress(KeyEvent.VK_ENTER);
-		/*pressDownArrow();
-		pressEnter();*/
-		break;
-		case 11 : a.keyPress(KeyEvent.VK_9);
-		a.keyPress(KeyEvent.VK_F4);
-		a.keyPress(KeyEvent.VK_DOWN);
-		a.keyPress(KeyEvent.VK_DOWN);
-		a.keyPress(KeyEvent.VK_ENTER);
-		/*		pressDownArrow(2);
-		pressEnter();*/
-		break;
-		case 12 : a.keyPress(KeyEvent.VK_9);
-		a.keyPress(KeyEvent.VK_F4);
-		a.keyPress(KeyEvent.VK_DOWN);
-		a.keyPress(KeyEvent.VK_DOWN);
-		a.keyPress(KeyEvent.VK_DOWN);
-		a.keyPress(KeyEvent.VK_ENTER);
-		/*pressDownArrow(3);
-		pressEnter();*/
-		break;
 		}
 	}
 }
