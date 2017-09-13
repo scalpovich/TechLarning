@@ -53,16 +53,6 @@ public class FinSimSimulator {
 		return ipAddress;
 	}
 
-//	@Value("${simulator.finsim.pinkey}")
-//	public void setPinKey(String pinKey) {
-//		this.pinKey = pinKey;
-//	}
-//
-//	@Value("${simulator.finsim.decimalization.value}")
-//	public void setDecimalizationValue(String decimalizationValue) {
-//		this.decimalizationValue = decimalizationValue;
-//	}
-
 	public String getPinKey() {
 		return pinKey;
 	}
