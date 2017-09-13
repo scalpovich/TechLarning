@@ -26,7 +26,7 @@ public class BulkDeviceRequest {
 		BulkDeviceRequest request = new BulkDeviceRequest();
 		request.setBranch(provider.getString(BRANCH_KEY));
 		request.setCorporateClientCode(provider.getString(CORPORATE_CLIENT_CODE));
-		request.setQuantityRequested(String.valueOf(RandomUtils.nextInt(2,10)));
+		request.setQuantityRequested(String.valueOf(RandomUtils.nextInt(2,5)));
 		return request;
 	}
 	public String getProductType() {

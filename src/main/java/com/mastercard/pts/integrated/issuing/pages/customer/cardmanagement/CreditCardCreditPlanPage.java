@@ -85,41 +85,25 @@ public class CreditCardCreditPlanPage extends AbstractModelPage {
 		// if records are found then we just have to change the Billing Plan
 		// Code to make it work hence setting
 		if (!isNoRecordsFoundInTable()) {
-			creditCardCreditPlan.setCreditPlanCode(MiscUtils
-					.generateRandomNumberBetween2Number(100, 999));
+			creditCardCreditPlan.setCreditPlanCode(MiscUtils.generateRandomNumberBetween2Number(100, 999));
 		}
 
 		clickAddNewButton();
 		// Add Document Checklist section
 		runWithinPopup("Add Credit Plan", () -> {
-			WebElementUtils.enterText(creditPlanCodeTxt,
-					creditCardCreditPlan.getCreditPlanCode());
-			WebElementUtils.enterText(descriptionTxt,
-					creditCardCreditPlan.getDescription());
-			WebElementUtils.enterText(abbreviationTxt,
-					creditCardCreditPlan.getAbbreviation());
-			WebElementUtils.selectDropDownByVisibleText(paymentDateDDwn,
-					creditCardCreditPlan.getPaymentDate());
-			WebElementUtils.enterTextIfControlIsEnabled(paymentDueDateDaysTxt,
-					creditCardCreditPlan.getPaymentDueDateDays());
-			WebElementUtils.selectDropDownByVisibleText(unpaidDateDDwn,
-					creditCardCreditPlan.getUnpaidDate());
-			WebElementUtils.enterTextIfControlIsEnabled(unpaidDateDaysTxt,
-					creditCardCreditPlan.getUnpaidDateDays());
-			WebElementUtils.selectDropDownByVisibleText(
-					transactionRuleDateDDwn,
-					creditCardCreditPlan.getTransactionRulePlan());
-			WebElementUtils.selectDropDownByVisibleText(currenyDDwn,
-					creditCardCreditPlan.getCurreny());
-			WebElementUtils.enterText(minimumDueTxt,
-					creditCardCreditPlan.getMinimumDue());
-			WebElementUtils.enterText(totalDueTxt,
-					creditCardCreditPlan.getTotalDue());
-			WebElementUtils.selectDropDownByVisibleText(
-					paymentPriorityPlanDDwn,
-					creditCardCreditPlan.getPaymentPriorityPlan());
-			WebElementUtils.enterText(allowedPercentageTxt,
-					creditCardCreditPlan.getAllowedPercentage());
+			WebElementUtils.enterText(creditPlanCodeTxt, creditCardCreditPlan.getCreditPlanCode());
+			WebElementUtils.enterText(descriptionTxt, creditCardCreditPlan.getDescription());
+			WebElementUtils.enterText(abbreviationTxt, creditCardCreditPlan.getAbbreviation());
+			WebElementUtils.selectDropDownByVisibleText(paymentDateDDwn, creditCardCreditPlan.getPaymentDate());
+			WebElementUtils.enterTextIfControlIsEnabled(paymentDueDateDaysTxt, creditCardCreditPlan.getPaymentDueDateDays());
+			WebElementUtils.selectDropDownByVisibleText(unpaidDateDDwn, creditCardCreditPlan.getUnpaidDate());
+			WebElementUtils.enterTextIfControlIsEnabled(unpaidDateDaysTxt, creditCardCreditPlan.getUnpaidDateDays());
+			WebElementUtils.selectDropDownByVisibleText(transactionRuleDateDDwn, creditCardCreditPlan.getTransactionRulePlan());
+			WebElementUtils.selectDropDownByVisibleText(currenyDDwn, creditCardCreditPlan.getCurreny());
+			WebElementUtils.enterText(minimumDueTxt, creditCardCreditPlan.getMinimumDue());
+			WebElementUtils.enterText(totalDueTxt, creditCardCreditPlan.getTotalDue());
+			WebElementUtils.selectDropDownByVisibleText(paymentPriorityPlanDDwn, creditCardCreditPlan.getPaymentPriorityPlan());
+			WebElementUtils.enterText(allowedPercentageTxt, creditCardCreditPlan.getAllowedPercentage());
 			clickSaveButton();
 		});
 		verifyOperationStatus();
@@ -127,8 +111,7 @@ public class CreditCardCreditPlanPage extends AbstractModelPage {
 
 	private void performSearchOperationOnMainScreen(
 			CreditCardCreditPlan creditCardCreditPlan) {
-		WebElementUtils.enterText(creditPlanCodeTxt,
-				creditCardCreditPlan.getCreditPlanCode());
+		WebElementUtils.enterText(creditPlanCodeTxt, creditCardCreditPlan.getCreditPlanCode());
 		clickSearchButton();
 	}
 

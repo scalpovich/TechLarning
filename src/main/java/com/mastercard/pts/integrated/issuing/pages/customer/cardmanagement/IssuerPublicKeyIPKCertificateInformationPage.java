@@ -74,15 +74,20 @@ public class IssuerPublicKeyIPKCertificateInformationPage extends AbstractModelP
 	{
 		ipkList.forEach(ipk->{
 		logger.info("create IPK : {}",ipk.toString());
-		clickAddNewButton();
-		runWithinPopup(
-				"Add Ipk Certificate Information",
-				() -> {
-						addCertificate(ipk);
-						verifyNoErrors();
-				});
-
-		verifyOperationStatus();       
+		performSearchOperationOnMainScreen(ipk);
+		if(isNoRecordsFoundInTable())
+		{
+			clickAddNewButton();
+			runWithinPopup(
+					"Add Ipk Certificate Information",
+					() -> {
+							addCertificate(ipk);
+							verifyNoErrors();
+					});
+	
+			verifyOperationStatus();  
+		}
+		
 		});
 	}
 	
@@ -98,6 +103,11 @@ public class IssuerPublicKeyIPKCertificateInformationPage extends AbstractModelP
 			clickSaveButton();
 	}
 	
+	private void performSearchOperationOnMainScreen(IssuerPublicKey ipk)
+	{
+		WebElementUtils.enterText(ipkId, ipk.getIpkId());
+		clickSearchButton();
+	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

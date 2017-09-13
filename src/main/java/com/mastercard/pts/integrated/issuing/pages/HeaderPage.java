@@ -22,6 +22,12 @@ public class HeaderPage extends AbstractPage{
     @PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[contains(.,'Signout')]")
     private MCWebElement signOutAgentLnk;
 
+    @PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[@title='Sign Out']")
+    private MCWebElement signOutCollectLnk;
+    
+    @PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[contains(.,'Signout')]")
+    private MCWebElement signOutCardholderLnk;
+    
 	@Override
 	protected List<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
@@ -30,6 +36,14 @@ public class HeaderPage extends AbstractPage{
 
     public void signOutCustomer(){
     	signOutCustomerLnk.click();
+    }
+    
+    public void signOutCollect(){
+    	signOutCollectLnk.click();
+    }
+    
+    public void signOutCardholder(){
+    	signOutCardholderLnk.click();
     }
     
     public void signOutAgent(){

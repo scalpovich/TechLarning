@@ -19,7 +19,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle = HelpdeskNav.TAB_HELPDESK, treeMenuItems = {
 		HelpdeskNav.L1_ACTIVITY,
-		HelpdeskNav.L2_SCR_PROCESS,
+		HelpdeskNav.L2_SEARCH,
 		HelpdeskNav.L3_SERVICE_REQUEST
 		})
 public class ServiceRequestPage extends AbstractModelPage{

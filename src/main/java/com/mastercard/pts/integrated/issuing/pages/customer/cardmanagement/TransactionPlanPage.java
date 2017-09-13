@@ -61,20 +61,14 @@ public class TransactionPlanPage extends AbstractModelPage {
 		runWithinPopup(
 				"Add Transaction Plan",
 				() -> {
-					WebElementUtils.enterText(planCodeTxt,
-							plan.getTransactionPlanCode());
-					WebElementUtils.enterText(transactionSetDescTxt,
-							plan.getDescription());
-					WebElementUtils.selectDropDownByVisibleText(
-							productTypeDDwn, plan.getProductType());
+					WebElementUtils.enterText(planCodeTxt, plan.getTransactionPlanCode());
+					WebElementUtils.enterText(transactionSetDescTxt, plan.getDescription());
+					WebElementUtils.selectDropDownByVisibleText( productTypeDDwn, plan.getProductType());
 
 					if (plan.isAllTransactionsAssigned()) {
-						WebElementUtils
-								.selectAllOptionsInListBox(availableTransactionsLstBx);
+						WebElementUtils .selectAllOptionsInListBox(availableTransactionsLstBx);
 					} else {
-						WebElementUtils.selectListBoxByVisibleText(
-								availableTransactionsLstBx,
-								plan.getAssignedTransactions());
+						WebElementUtils.selectListBoxByVisibleText( availableTransactionsLstBx, plan.getAssignedTransactions());
 					}
 
 					addTransactionsBtn.click();

@@ -35,7 +35,7 @@ public class ExcelDataLoader implements DataLoader {
 		} catch (Exception e) {
 			logger.error("Fail to load data from excel", e);
 			MiscUtils.propagate(e);
-			return null;
+			return Optional.empty();
 		}
 	}
 	

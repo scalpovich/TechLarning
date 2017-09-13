@@ -91,6 +91,10 @@ public class ProgramPage extends AbstractModelPage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:addOnLimitCycleIndicatior:input:dropdowncomponent")
 	private MCWebElement addOnLimitResetDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:refundInCurrency:input:dropdowncomponent")
+	private MCWebElement refundInCurrencyDDwn;
+	
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#dedupePlanCode select")
 	private MCWebElement dedupePlanCodeDDwn;
@@ -149,6 +153,11 @@ public class ProgramPage extends AbstractModelPage {
 	public void selectWalletPlanPlan1(String walletPlanPlan1) {
 		WebElementUtils.selectDropDownByVisibleText(walletPlanPlan1DDwn, walletPlanPlan1);
 	}
+	
+	public void selectRefundInCurrency(String refundInCurrency) {
+		if(refundInCurrencyDDwn.isEnabled())
+		WebElementUtils.selectDropDownByVisibleText(refundInCurrencyDDwn, refundInCurrency);
+	}
 
 	public void selectDevicePlanPlan1DDwn(String devicePlanPlan1) {
 		WebElementUtils.selectDropDownByVisibleText(devicePlanPlan1DDwn, devicePlanPlan1);
@@ -190,7 +199,9 @@ public class ProgramPage extends AbstractModelPage {
 		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
 			addMaximumBalanceWithoutKyc(program.getMaximumBalanceWithoutKyc());
 			addnumberOfLoadsAllowedWithoutKyc(program.getNumberOfLoadsAllowedWithoutKyc());
+			selectRefundInCurrency(program.getRefundInCurrency());
 		}
+		
 		clickNextButton();
 		selectWalletPlanPlan1(program.getWalletPlanPlan1());
 		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());

@@ -136,10 +136,6 @@ public class AcceptancePage extends AbstractModelPage {
 		selectBranchId(details.getBranchId());
 		selectOrderNumber(details.getOrderNumber());
 		clickSearchButton();
-		if (errorElementCount() > 0) {
-			selectOrderNumber(details.getOrderNumber());
-			clickSearchButton();
-		}
 		WebElementUtils.retryUntil(tableFirstRecord::click,
 				() -> WebElementUtils.hasClass(getFinder().findOne(FindBy.X_PATH, "//*[@class='dataview']/tbody/tr[1]"), "select"));
 		clickModifyButton();

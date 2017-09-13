@@ -18,7 +18,6 @@ public class AdministrationResetPasswordPage extends AbstractModelPage {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationResetPasswordPage.class);
 
-
 	public void verifyUiOperationStatus() {
 		logger.info("Group Creation");
 	}

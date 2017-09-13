@@ -15,13 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.configuration.FinSimSimulator;
-import com.mastercard.pts.integrated.issuing.configuration.MasSimulator;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.transaction.AuthorizationTransactionFactory;
+import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ClearingTestCase;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.Transaction;
-import com.mastercard.pts.integrated.issuing.domain.customer.transaction.TransactionTestDataForMAS;
+import com.mastercard.pts.integrated.issuing.domain.provider.ClearingTestCaseProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.domain.provider.TransactionProvider;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
 
@@ -33,9 +35,6 @@ public class TransactionSteps {
 	private TestContext context;
 
 	@Autowired
-	private MasSimulator simulator;
-
-	@Autowired
 	private FinSimSimulator finSimConfig;
 
 	@Autowired
@@ -44,11 +43,20 @@ public class TransactionSteps {
 	@Autowired
 	private KeyValueProvider provider;
 
-	private String athFileName;
+	@Autowired
+	private AuthorizationTransactionFactory transactionFactory;
+
+	@Autowired
+	private TransactionProvider transactionProvider;
+
+	@Autowired
+	private ClearingTestCaseProvider clearingTestCaseProvider;
+
+	private String authFilePath;
 
 	private String arnNumber;
 
-	private String transactionAmount;
+	private String transactionAmount = "20.00";
 
 	public String getTransactionAmount() {
 		return transactionAmount;
@@ -62,95 +70,76 @@ public class TransactionSteps {
 	@Alias("a sample simulator \"$transaction\" is executed")
 	@Given("perform an $transaction MAS transaction")
 	public void givenTransactionIsExecuted(String transaction){
+		givenOptimizedTransactionIsExecuted(transaction);
+	}
+
+	@Then("last entry is deleted")
+	@When("last entry is deleted")
+	public void deleteLastTransactionEntry()
+	{
+		transactionWorkflow.removeLastEntry();
+	}
+
+	@When("user performs an optimized $transaction MAS transaction")
+	@Given("user performs an optimized $transaction MAS transaction")
+	public void givenOptimizedTransactionIsExecuted(String transaction)
+	{
 		Device device = context.get(ContextConstants.DEVICE);
-		Transaction transactionData = Transaction.createWithProviderAndGenerateTestData(device, provider);
-		String[] deElements = testDataForAuthorizationTransactionOnMas(transactionData);
-		Transaction transactionDataForTransaction = setDataForTransaction(transaction, transactionData, deElements);
-		transactionWorkflow.performMASTransaction(transactionDataForTransaction);
+
+		Transaction transactionData = transactionProvider.loadTransaction(transaction);
+		transactionData.setTestCase(transactionFactory.createCsvTesCase(transactionData));
+		transactionData.setCardProfile(transactionFactory.createCsvCardProfile(transactionData));
+
+		//when data is dynammically passed when scripts run from end-2-end
+		// else block for when scripts are running from excel
+		if(device != null)
+		{
+			//  This is a Single Wallet, Single Currency INDIA card
+			transactionData.setIssuerCountryCode(transactionWorkflow.getCurrencyToBeUsed(transactionData.getCurrency())); //"356"; // transactionData.getCurrency(); //356
+			transactionData.setIssuerCurrencyCode(transactionWorkflow.getCurrencyToBeUsed(transactionData.getCurrency()));
+			transactionData.setCardHolderBillingCurrency(transactionWorkflow.getCurrencyToBeUsed(transactionData.getCurrency()));  //value from DE Element 61_13
+		}
+		else
+		{
+			transactionData.setIssuerCountryCode(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair().get("049"))); //"356"; // transactionData.getCurrency(); //356
+			transactionData.setIssuerCurrencyCode(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair().get("049")));  //value from DE Element 49
+			transactionData.setCardHolderBillingCurrency(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair().get("061.13")));  //value from DE Element 61_13
+		}
+		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData);
 	}
 
-	@When("perform an $transaction MAS transaction sample")
-	@Alias("a sample simulator \"$transaction\" is executed sample")
-	@Given("perform an $transaction MAS transaction sample")
-	public void givenASampleSimulatorIsExecutedSample(String transaction){
-
-		Transaction transactionData = Transaction.createWithProviderAndGenerateTestData();
-		String[] deElements = testDataForAuthorizationTransactionOnMas(transactionData);
-		Transaction transactionDataForTransaction = setDataForTransaction(transaction, transactionData, deElements);
-		transactionWorkflow.performMASTransaction(transactionDataForTransaction);
-	}
-
-	@When("perform an $transaction MAS transaction on the same card")
-	@Alias("a sample simulator \"$transaction\" is executed on the same card")
-	@Given("perform an $transaction MAS transaction on the same card")
-	public void givenTrasactionIsExecutedOnSameCard(String transaction){
-		Device device = context.get(ContextConstants.DEVICE);
-		Transaction transactionData = Transaction.createWithProviderAndGenerateTestData(device, provider);
-		String[] deElements = testDataForAuthorizationTransactionOnMas(transactionData);
-		Transaction transactionDataForTransaction = setDataForTransaction(transaction, transactionData, deElements);
-		transactionWorkflow.performTransaction(transactionDataForTransaction);
-	}
-
-	@When("perform a sample $transaction MAS transaction on the same card")
-	@Alias("a sample simulator \"$transaction\" is executed sample on the same card")
-	@Given("perform a sample $transaction MAS transaction on the same card")
-	public void givenSampleTrasactionIsExecutedOnSameCard(String transaction){
-
-		Transaction transactionData = Transaction.createWithProviderAndGenerateTestData();
-		String[] deElements = testDataForAuthorizationTransactionOnMas(transactionData);
-		Transaction transactionDataForTransaction = setDataForTransaction(transaction, transactionData, deElements);
-		transactionWorkflow.performTransaction(transactionDataForTransaction);
-	}
-
-
-	private Transaction setDataForTransaction(String transaction,	Transaction transactionData, String[] deElements) {
-		String [] getTransactionTestData = TransactionTestDataForMAS.getTestCase(transaction).split("\\|");
-		transactionData.setTestCaseToSelect(getTransactionTestData[0]);
-		transactionData.setCardForTransaction(getTransactionTestData[1]);
-		transactionData.setDeKeyValuePair(transactionData.setDataElementValues(deElements));
-		return transactionData;
-	}
-
-	private String[] testDataForAuthorizationTransactionOnMas(Transaction transactionData) {
-
-		if(transactionData.getPinForTransaction().length() == 0)
-			transactionData.setPinForTransaction("BLANK");
-
-		String [] deElements = new String[5];
-		deElements[0] = "DE4=" + transactionData.getTransactionAmount();  //TRANSACTION_AMOUNT
-		deElements[1] = "DE37=generateRandomNumber";
-		deElements[2] = "DE49=" + transactionData.getCurrency(); //country code  // CURRENCY	INR [356] in DATA TABLE
-		deElements[3] = "DE52=" + transactionData.getPinForTransaction(); // Pin Number
-		deElements[4] = "DE61_13=" + transactionData.getCurrency(); //country code
-
-		return deElements;
+	@Given("Auth file is provided for $iteration")
+	public void givenAuthFileIsProvided(String iteration) {
+		ClearingTestCase testCase = clearingTestCaseProvider.loadTestCase(iteration);
+		authFilePath = testCase.getAuthFilePath();
+		transactionAmount = testCase.getTransactionFeeAmount();
 	}
 
 	@When("Auth file is generated from MAS")
 	@Given("Auth file is generated")
 	public void givenAthFileIsGenerated() throws IOException{
-		transactionWorkflow.authFileGeneration();
-		String fileName =  "AuthFileName.txt";
-		athFileName = transactionWorkflow.getFileData(fileName);	
-		assertNotNull("Auth fileName is not null", athFileName);
+		String fileName = "AuthFileName.txt";
+		String authFileName = transactionWorkflow.getFileData(fileName);	
+		assertNotNull("Auth fileName is not null", authFileName);
+		authFilePath = transactionWorkflow.getTempDirectoryLocationForSimulatorResults() + "\\"
+				+ authFileName;
 	}
 
 	@When("Auth file is loaded into MCPS and processed")
 	public void loadAuthFileToMCPS(){
-		arnNumber = transactionWorkflow.loadAuthFileToMCPS(athFileName);
+		arnNumber = transactionWorkflow.loadAuthFileToMCPS(authFilePath);
 		logger.info("ARD number is ", arnNumber);
 	}
 
 	@Alias("test results are reported")
+	@When("MAS test results are verified")
 	@Then("MAS test results are verified")
 	public void thenTestResultsAreReported(){
 		Boolean testResults = transactionWorkflow.verifyTestResults();
-		if(testResults)
-		{
+		if(testResults)	{
 			logger.info("Transaction is succcessful!");
 		}
-		else
-		{
+		else	{
 			logger.error("Transaction failed!");
 		}
 	}
@@ -158,32 +147,15 @@ public class TransactionSteps {
 	@When("connection to $simulator is established")
 	@Then("connection to $simulator is established")
 	@Given("connection to $simulator is established")
-	public void launchWiniumAndSimulator(String simulator){
-		
-		MiscUtils.killProcessFromTaskManager("WINIUM");		
-		MiscUtils.killProcessFromTaskManager(simulator);
-		
-		transactionWorkflow.startWiniumDriverWithSimulator(simulator);
-
-		if(simulator.toUpperCase().contains("FINSIM"))
-		{
-			transactionWorkflow.launchAndConnectToFinSim();
-		}
-		else if(simulator.toUpperCase().contains("MAS")) 
-		{
-			transactionWorkflow.selectMASLicenseAndConfigure("Credit - Professional");
-		}
-		else if(simulator.toUpperCase().contains("MCPS")) 
-		{
-			transactionWorkflow.launchAndConnectToMCPS();
-		}
+	public void launchWiniumAndSimulator(String simulator) {
+		transactionWorkflow.launchWiniumAndSimulator(simulator);
 	}
 
 	@When("PIN is retrieved successfully with data from Pin Offset File")
 	@Then("PIN is retrieved successfully with data from Pin Offset File")
 	public void thenPINIsRetrievedSuccessfully(){
 		Device device = context.get(ContextConstants.DEVICE);
-		Transaction transactionData = Transaction.generateFinSimPinTestData(device, finSimConfig);
+		Transaction transactionData = Transaction.generateFinSimPinTestData(device, finSimConfig, provider);
 
 		String pinNumber = transactionWorkflow.getPinNumber(transactionData);
 		MiscUtils.reportToConsole("FINSim PIN Number generated : " + pinNumber );
@@ -214,6 +186,6 @@ public class TransactionSteps {
 
 	@Then("transaction fee is correctly posted")
 	public void thenTransactionFeeIsCorrecltyPosted(){
-		assertEquals("20.00", transactionWorkflow.getFeePostingStatus(arnNumber));
+		assertEquals(transactionAmount, transactionWorkflow.getFeePostingStatus(arnNumber));
 	}
 }

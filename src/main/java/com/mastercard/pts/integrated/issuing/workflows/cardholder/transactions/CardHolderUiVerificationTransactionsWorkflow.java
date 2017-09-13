@@ -6,6 +6,7 @@ import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.transactions.CancelRemittanceBookingPage;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.transactions.CashRemittanceBookingPage;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.transactions.FundTransferPage;
+import com.mastercard.pts.integrated.issuing.pages.cardholder.transactions.TransactionsHomePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
 @Workflow
@@ -25,6 +26,11 @@ public class CardHolderUiVerificationTransactionsWorkflow {
 
 	public void verifyFundTransferPage() {
 		FundTransferPage page = navigator.navigateToPage(FundTransferPage.class);
+		page.verifyUiOperationStatus();
+	}
+
+	public void verifyHomePage() {
+		TransactionsHomePage page = navigator.navigateToPage(TransactionsHomePage.class);
 		page.verifyUiOperationStatus();
 	}
 

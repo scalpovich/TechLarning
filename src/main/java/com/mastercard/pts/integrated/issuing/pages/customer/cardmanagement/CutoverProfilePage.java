@@ -46,16 +46,19 @@ public class CutoverProfilePage extends AbstractModelPage {
 	public void addCutoverProfile(CutoverProfile cp) {
 		logger.info("create CutoverProfile on date : {}",
 				cp.getBusinessDate());
-		clickAddNewButton();
-
-		runWithinPopup(
-				"Add Cutover Profile",
-				() -> {
-					addCutoverProfileRecord(cp);
-						verifyNoErrors();
-				});
-
-		verifyOperationStatus();                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+		if(isNoRecordsFoundInTable())
+		{
+			clickAddNewButton();
+	
+			runWithinPopup(
+					"Add Cutover Profile",
+					() -> {
+						addCutoverProfileRecord(cp);
+							verifyNoErrors();
+					});
+	
+			verifyOperationStatus();  
+		}
 	}
 
 	private void addCutoverProfileRecord(CutoverProfile cp) {

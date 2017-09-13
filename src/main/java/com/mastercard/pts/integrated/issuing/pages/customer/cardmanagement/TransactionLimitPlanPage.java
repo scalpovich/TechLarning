@@ -211,27 +211,18 @@ public class TransactionLimitPlanPage extends AbstractModelPage {
 			String productType) {
 		clickAddNewButton();
 
-		runWithinPopup(
-				"Add Transaction Limit Plan Detail",
-				() -> {
-					selectIframeTransactionType(details
-							.getIframeTransactionType());
-					selectIframeTransactionSource(details
-							.getIframeTransactionSource());
-					selectIframeTransactionChannel(details
-							.getIframeTransactionChannel());
-					selectIframeTransactionOrigin(details
-							.getIframeTransactionOrigin());
+		runWithinPopup("Add Transaction Limit Plan Detail",() -> {
+					selectIframeTransactionType(details.getIframeTransactionType());
+					selectIframeTransactionSource(details.getIframeTransactionSource());
+					selectIframeTransactionChannel(details.getIframeTransactionChannel());
+					selectIframeTransactionOrigin(details.getIframeTransactionOrigin());
 					enterIframeFloorAmount(details.getIframeFloorAmount());
 					selectIframeFloorResponse(details.getIframeFloorResponse());
 					enterIframeCeilingAmount(details.getIframeCeilingAmount());
-					selectIframeCeilingResponse(details
-							.getIframeCeilingResponse());
+					selectIframeCeilingResponse(details.getIframeCeilingResponse());
 					if (productType.equalsIgnoreCase(ProductType.DEBIT)) {
-						enterIframeStandInAmount(details
-								.getIframeCeilingAmount());
-						selectIframeStandInResponse(details
-								.getIframeCeilingResponse());
+						enterIframeStandInAmount(details.getIframeCeilingAmount());
+						selectIframeStandInResponse(details.getIframeCeilingResponse());
 					}
 					enterIframeDailyAmount(details.getIframeDailyAmount());
 					selectIframeDailyResponse(details.getIframeDailyResponse());

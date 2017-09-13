@@ -47,7 +47,6 @@ public class ApplicationCorrectionPage extends AbstractModelPage {
 				WebElementUtils.visibilityOf(cardPackIDTxt));
 	}
 
-	// methods
 	public String getMasterDetailContentTitleText() {
 		logger.info("Activate Deactivate Sub Account Master Detail Tilte Text: {}");
 		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle)).getText();

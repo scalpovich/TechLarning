@@ -19,7 +19,7 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = ProfileNav.TAB_PROFILE, treeMenuItems = { ProfileNav.L1_CHANGE_PASSWORD })
+@Navigation(tabTitle = ProfileNav.TAB_PROFILE, treeMenuItems = { ProfileNav.L1_CHANGE_PASSWRD })
 public class ChangePasswordPage extends AbstractModelPage {
 	private static final Logger logger = LoggerFactory.getLogger(ChangePasswordPage.class);
 

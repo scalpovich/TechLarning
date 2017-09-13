@@ -5,8 +5,6 @@ import java.util.Collection;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
@@ -22,8 +20,6 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L2_PROCESSING_BATCHES,
 		CardManagementNav.L3_COLLECTION_BATCH_PROCESS })
 public class CollectionBatchProcessPage extends AbstractModelPage {
-
-//	private static final Logger logger = LoggerFactory.getLogger(CollectionBatchProcessPage.class);
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "batchType:input:dropdowncomponent")
 	private MCWebElement batchTypeDDwn;

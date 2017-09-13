@@ -27,7 +27,6 @@ public class BranchEntityActivateSuspendBranchPage extends AbstractModelPage {
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
-	// main screen locators
 	@PageElement(findBy = FindBy.CSS, valueToFind = "div .Title")
 	private MCWebElement masterDetailContentTitle;
 
@@ -44,7 +43,6 @@ public class BranchEntityActivateSuspendBranchPage extends AbstractModelPage {
 		return Arrays.asList(WebElementUtils.visibilityOf(masterDetailContentTitle), WebElementUtils.visibilityOf(branchIdTxt));
 	}
 
-	// methods
 	public String getMasterDetailContentTitleText() {
 		logger.info("Branch Entity Activate Suspend Branch Master Detail Tilte Text: {}");
 		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle)).getText();

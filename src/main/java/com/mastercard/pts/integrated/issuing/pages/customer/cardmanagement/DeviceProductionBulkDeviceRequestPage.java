@@ -69,8 +69,8 @@ public class DeviceProductionBulkDeviceRequestPage extends AbstractModelPage {
 					request.getBranch());
 			WebElementUtils.selectDropDownByVisibleText(programDDwn,
 					request.getProgram());
-			WebElementUtils.selectDropDownByVisibleText(
-					corporateClientCodeDDwn, request.getCorporateClientCode());
+			if (corporateClientCodeDDwn.isEnabled())
+				WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, request.getCorporateClientCode());
 			WebElementUtils.selectDropDownByVisibleText(devicePlanDDwn,
 					request.getDevicePlan());
 			WebElementUtils.enterText(quantityRequestedTxt,

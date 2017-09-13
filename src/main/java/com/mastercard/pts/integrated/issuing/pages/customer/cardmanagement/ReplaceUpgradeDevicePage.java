@@ -5,8 +5,6 @@ import java.util.Collection;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
@@ -21,8 +19,6 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L1_ACTIVITY, CardManagementNav.L2_DEVICE,
 		CardManagementNav.L3_REPLACE_UPGRADE_DEVICE })
 public class ReplaceUpgradeDevicePage extends AbstractModelPage {
-
-//	private static final Logger logger = LoggerFactory.getLogger(DeviceProductionCancellationPage.class);
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:cardBatch.displayStatusFlag:input:dropdowncomponent")
 	private MCWebElement createOpenBatch;

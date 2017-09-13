@@ -23,6 +23,10 @@ public class Device {
 	
 	private static final String TRANSACTION_AMOUNT = "TRANSACTION_AMOUNT";
 	
+	private static final String CORPORATE_CLIENT_CODE = "CORPORATE_CLIENT_CODE";
+
+	private String corporateClientCode;
+	
 	private String appliedForProduct;
 	
 	private String applicationType;
@@ -86,6 +90,7 @@ public class Device {
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
 		device.setApplicationType(provider.getString(APPLICATION_TYPE));
+		device.setCorporateClientCode(provider.getString(CORPORATE_CLIENT_CODE));
 		device.setSubApplicationType(provider.getString(SUB_APPLICATION_TYPE));
 		device.setCreateOpenBatch(provider.getString(CREATE_OPEN_BATCH));
 		device.setCustomerType(provider.getString(DEVICE_CUSTOMER_TYPE));
@@ -349,4 +354,13 @@ public class Device {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
+	public String getCorporateClientCode() {
+		return corporateClientCode;
+	}
+
+
+	public void setCorporateClientCode(String corporateClientCode) {
+		this.corporateClientCode = corporateClientCode;
+	}
+
 }

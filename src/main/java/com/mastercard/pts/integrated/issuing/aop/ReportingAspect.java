@@ -15,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+
 @Aspect
 @Component
 public class ReportingAspect {
@@ -22,7 +24,22 @@ public class ReportingAspect {
 	private static final Logger logger = LoggerFactory.getLogger(ReportingAspect.class);
 
 	@Around("execution(public * *(..)) && @within(com.mastercard.pts.integrated.issuing.annotation.Workflow)")
-	public Object reportStep(ProceedingJoinPoint pjp) throws Throwable {
+	public Object proceedStep(ProceedingJoinPoint pjp) {
+		try {
+			if (isScenarioRunning()) {
+				return proceedAndReportStep(pjp);
+			}
+			return pjp.proceed();
+		} catch (Throwable e) {
+			throw MiscUtils.propagate(e);
+		}
+	}
+
+	private boolean isScenarioRunning() {
+		return StepEventBus.getEventBus().resultSoFar().isPresent();
+	}
+
+	private Object proceedAndReportStep(ProceedingJoinPoint pjp) {
 		Object output = null;
 		ExecutedStepDescription description = null;
 		try {
@@ -31,9 +48,8 @@ public class ReportingAspect {
 			notifyStepPassed();
 		} catch (Throwable e) {
 			notifyStepFailed(description, e);
-			throw e;
-		}
-
+			throw MiscUtils.propagate(e);
+		} 
 		return output;
 	}
 
@@ -45,7 +61,7 @@ public class ReportingAspect {
 		if (!StepEventBus.getEventBus().aStepInTheCurrentTestHasFailed()) {
 			logger.error("Step failed", cause);
 		}
-		
+
 		StepFailure failure = new StepFailure(description, cause);
 		StepEventBus.getEventBus().stepFailed(failure);
 	}
@@ -56,16 +72,16 @@ public class ReportingAspect {
 		StepEventBus.getEventBus().stepStarted(description);
 		return description;
 	}
-	
+
 	private String getTestNameFrom(ProceedingJoinPoint pjp) {
 		String methodName = pjp.getSignature().getName();
 		Object[] args = pjp.getArgs();
-        if ((args == null) || (args.length == 0)) {
-            return methodName;
-        }
-        
-        String argsDescription = Arrays.stream(args).map(StepArgumentWriter::readableFormOf)
-        		.collect(Collectors.joining(", "));
-        return String.format("%s: %s", methodName, argsDescription);
-    }
+		if ((args == null) || (args.length == 0)) {
+			return methodName;
+		}
+
+		String argsDescription = Arrays.stream(args).map(StepArgumentWriter::readableFormOf)
+				.collect(Collectors.joining(", "));
+		return String.format("%s: %s", methodName, argsDescription);
+	}
 }

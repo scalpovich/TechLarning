@@ -4,7 +4,9 @@ import org.jbehave.core.annotations.Then;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.cardholder.enquiry.CardHolderUiVerificationEnquiryWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.cardholder.home.CardHolderUiVerificationHomeWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.cardholder.services.CardHolderUiVerificationServicesWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.cardholder.transactions.CardHolderUiVerificationTransactionsWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.cardholder.virtualcard.CardHolderUiVerificationVirtualCardWorkflow;
@@ -20,9 +22,20 @@ public class CardHolderUiVerificationSteps {
 
 	@Autowired
 	private CardHolderUiVerificationServicesWorkflow cardHolderUiVerificationServicesWorkflow;
-	
+
 	@Autowired
 	private CardHolderUiVerificationVirtualCardWorkflow cardHolderUiVerificationVirtualCardWorkflow;
+
+	@Autowired
+	CardHolderUiVerificationHomeWorkflow cardHolderUiVerificationHomeWorkflow;
+
+	@Autowired
+	private LoginWorkflow loginWorkflow;
+
+	@Then("Home page of enquiry tab is rendered correctly")
+	public void thenHomePageOfEnquiryTabIsRenderedCorrectly() {
+		cardHolderUiVerificationEnquiryWorkflow.verifyHomePage();
+	}
 
 	@Then("Transactions page of enquiry tab is rendered correctly")
 	public void thenTransactionsPageOfEnquiryTabIsRenderedCorrectly() {
@@ -37,6 +50,11 @@ public class CardHolderUiVerificationSteps {
 	@Then("ViewCharges page of enquiry tab is rendered correctly")
 	public void thenViewChargesPageOfEnquiryTabIsRenderedCorrectly() {
 		cardHolderUiVerificationEnquiryWorkflow.verifyViewChargesPage();
+	}
+
+	@Then("Home page of transactions tab is rendered correctly")
+	public void thenHomePageOfTransactionsTabIsRenderedCorrectly() {
+		cardHolderUiVerificationTransactionsWorkflow.verifyHomePage();
 	}
 
 	@Then("CancelRemittanceBooking page of transactions tab is rendered correctly")
@@ -89,6 +107,11 @@ public class CardHolderUiVerificationSteps {
 		cardHolderUiVerificationServicesWorkflow.verifyUnblockDevicePage();
 	}
 
+	@Then("Home page of virtualcard tab is rendered correctly")
+	public void thenHomePageOfVirtualCardTabIsRenderedCorrectly() {
+		cardHolderUiVerificationVirtualCardWorkflow.verifyHomePage();
+	}
+	
 	@Then("RequestForLimitedValidityVirtualCard page of virtualcard tab is rendered correctly")
 	public void thenRequestForLimitedValidityVirtualCardPageOfVirtualCardTabIsRenderedCorrectly() {
 		cardHolderUiVerificationVirtualCardWorkflow.verifyRequestForLimitedValidityVirtualCardPage();
@@ -109,4 +132,13 @@ public class CardHolderUiVerificationSteps {
 		cardHolderUiVerificationVirtualCardWorkflow.verifyVirtualPrepaidCardRequestPage();
 	}
 
+	@Then("Card Holder Home page is rendered correctly")
+	public void thenCardHolderHomePageIsRenderedCorrectly() {
+		cardHolderUiVerificationHomeWorkflow.verifyHomePage();
+	}
+
+	@Then("user signs out from cardholder portal")
+	public void signOutFromPortal() {
+		loginWorkflow.signOutCardholder();
+	}
 }

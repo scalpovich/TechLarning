@@ -39,14 +39,13 @@ public class AgencyEntityActivateSuspendAgencyPage extends AbstractModelPage {
 		verifyButton("Search");
 	}
 
-	@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.visibilityOf(masterDetailContentTitle), WebElementUtils.visibilityOf(agencyIdTxt));
-	}
-
-	// methods
 	public String getMasterDetailContentTitleText() {
 		logger.info("Agency Entity Activate Suspend Agency Master Detail Tilte Text: {}");
 		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle)).getText();
+	}
+	
+	@Override
+	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
+		return Arrays.asList(WebElementUtils.visibilityOf(masterDetailContentTitle), WebElementUtils.visibilityOf(agencyIdTxt));
 	}
 }

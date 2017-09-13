@@ -5,15 +5,13 @@ import java.util.Collection;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.dispute.ChargeBackReversal;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
-import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
@@ -23,26 +21,13 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 public class ChargeBackReversalPage extends AbstractDisputePage {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(ChargeBackReversalPage.class);
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchContainer:networkCode:input:dropdowncomponent")
-	private MCWebElement interchangeDDwn;
-
-	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=microfilmRefNumber]")
-	private MCWebElement microfilmRefNumber;
-
-	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=cardNumber]")
-	private MCWebElement cardNumber;
-
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='reverseFee']/span/input")
 	private MCWebElement reverFeeCbx;
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='messageText']/span/textarea")
 	private MCWebElement textTxtArea;
 
 	public void verifyUiOperationStatus() {
-		logger.info("Chargeback Reversal");
-		verifySearchButton("Search");
+		verifyOperationStatus("Chargeback Reversal");
 	}
 
 	public void triggerChargeBackReversal(ChargeBackReversal cb)
@@ -60,7 +45,7 @@ public class ChargeBackReversalPage extends AbstractDisputePage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(interchangeDDwn),
+				WebElementUtils.elementToBeClickable(interDDwn),
 				WebElementUtils.elementToBeClickable(transactionDateDpkr),
 				WebElementUtils.elementToBeClickable(microfilmRefNumber),
 				WebElementUtils.elementToBeClickable(cardNumber));

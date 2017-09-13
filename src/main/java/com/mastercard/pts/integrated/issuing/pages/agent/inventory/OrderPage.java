@@ -8,11 +8,9 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.agent.inventory.Order;
-import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -21,24 +19,8 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = InventoryNav.TAB_INVENTORY, treeMenuItems = { InventoryNav.L1_ORDER, InventoryNav.L2_ORDER })
-public class OrderPage extends AbstractModelPage {
+public class OrderPage extends InventoryAbstractPage {
 	private static final Logger logger = LoggerFactory.getLogger(OrderPage.class);
-
-	@Value("${default.wait.timeout_in_sec}")
-	private long timeoutInSec;
-
-	// main screen locators
-	@PageElement(findBy = FindBy.CSS, valueToFind = "div .Title")
-	private MCWebElement masterDetailContentTitle;
-
-	@PageElement(findBy = FindBy.ID, valueToFind = "brancId")
-	private MCWebElement branchIdDdwn;
-
-	@PageElement(findBy = FindBy.ID, valueToFind = "programCode")
-	private MCWebElement programDdwn;
-
-	@PageElement(findBy = FindBy.ID, valueToFind = "deviceType")
-	private MCWebElement deviceTypeDdwn;
 
 	@PageElement(findBy = FindBy.ID, valueToFind = "qtyOrdered")
 	private MCWebElement quantityOrderedTxt;
@@ -55,6 +37,7 @@ public class OrderPage extends AbstractModelPage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".SuccessMessageTxt")
 	private MCWebElement successMessage;
 
+	@Override
 	public void verifyUiOperationStatus() {
 		logger.info("Order");
 		verifyButton("Submit");
@@ -63,26 +46,20 @@ public class OrderPage extends AbstractModelPage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.visibilityOf(branchIdDdwn), WebElementUtils.visibilityOf(programDdwn),
-				WebElementUtils.visibilityOf(deviceTypeDdwn), WebElementUtils.visibilityOf(quantityOrderedTxt), WebElementUtils.visibilityOf(memoTxt));
-	}
-
-	// methods
-	public String getMasterDetailContentTitleText() {
-		logger.info("Corporate User View Edit Master Detail Tilte Text: {}");
-		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle)).getText();
+		return Arrays.asList(WebElementUtils.visibilityOf(brancIdDDwn), WebElementUtils.visibilityOf(programCodeDDwn),
+				WebElementUtils.visibilityOf(deviceTypeDDwn), WebElementUtils.visibilityOf(quantityOrderedTxt), WebElementUtils.visibilityOf(memoTxt));
 	}
 
 	public void selectBranchId(String branchId) {
-		WebElementUtils.selectDropDownByVisibleText(branchIdDdwn, branchId);
+		WebElementUtils.selectDropDownByVisibleText(brancIdDDwn, branchId);
 	}
 
 	public void selectProgramCode(String programCode) {
-		WebElementUtils.selectDropDownByVisibleText(programDdwn, programCode);
+		WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, programCode);
 	}
 
 	public void selectDeviceType(String deviceType) {
-		WebElementUtils.selectDropDownByVisibleText(deviceTypeDdwn, deviceType);
+		WebElementUtils.selectDropDownByVisibleText(deviceTypeDDwn, deviceType);
 	}
 
 	public void enterQuantityOrdered(String quantityOrdered) {
@@ -95,10 +72,6 @@ public class OrderPage extends AbstractModelPage {
 
 	public void clickSubmitButton() {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(submitBtn)).click();
-	}
-
-	public void clickOKButton() {
-		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(okBtn)).click();
 	}
 
 	public String getOrderNumber() {

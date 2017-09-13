@@ -7,15 +7,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.winium.DesktopOptions;
 import org.openqa.selenium.winium.WiniumDriver;
+import org.sikuli.script.FindFailed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +31,16 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.SimulatorConstantsData;
 import com.mastercard.pts.integrated.issuing.utils.SimulatorUtilities;
-
 @Workflow
 public class TransactionWorkflow extends SimulatorUtilities {
 	private static final Logger logger = LoggerFactory.getLogger(TransactionWorkflow.class);
+	private static final String EDIT_DE_VALUE = "Edit DE Value";
+	private static final String SET_VALUE = "Set Value";
+	private static final String CLOSE = "Close";
+	private static final String MESSAGE_TYPE_INDICATOR = "Message Type Indicator";
+	private static final String MIDDLE_PRESENTMENT = "Middle Presentment";
+	private static final String PATH_BUILDER =  "\" \"";
+	private static final String ISSUER_TEST = 	"IssuerTest";
 
 	@Autowired
 	private MasSimulator simulator;
@@ -46,15 +52,31 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private Navigator navigator;
 
 	private WiniumDriver winiumDriver;
-	
+
 	@Autowired
 	private TestContext context;
 
-	public void performMASTransaction(Transaction transaction)
+	public void performOptimizedMasTransaction(String transaction, Transaction transactionData)
 	{
-		
-		selectIPSHostTestModeAndConfigureBinAndHost(transaction);
-		performTransaction(transaction);
+		handleDialogs();
+
+		addBinRangeAndCurrencyDetailsBasedOnCardNumber(transactionData);
+
+		importAndLoadCardProfile(transactionData.getCardProfile());
+		importAndLoadTestCase(transactionData.getTestCase(), transaction);
+
+		performExecution(transaction);
+	}
+
+	public String getCurrencyToBeUsed(String currency)
+	{
+		List<String> theList = Arrays.asList(currency.split(""));
+		String currencyTemp = "356";
+		if(!theList.isEmpty())
+		{
+			currencyTemp = currency;
+		}
+		return currencyTemp;
 	}
 
 	public void launchAndConnectToFinSim()
@@ -75,15 +97,46 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		return verifyResults();
 	}
 
+	public void launchWiniumAndSimulator(String simulator) {
+		MiscUtils.killProcessFromTaskManager("WINIUM");		
+		MiscUtils.killProcessFromTaskManager(simulator);
+
+		try {
+			startWiniumDriverWithSimulator(simulator);
+		} catch (Exception e) {
+			throw MiscUtils.propagate(e);
+		}
+
+		if(simulator.toUpperCase().contains("FINSIM")) {
+			launchAndConnectToFinSim();
+
+		} else if(simulator.toUpperCase().contains("MAS")) {
+			selectMASLicenseAndConfigure("Credit - Professional");
+			connect2IPSHostModeAndConfigureIP(); 	
+
+			//clicking click Test Preparation
+			clickTestPreparations();
+			performClickTestCases();
+
+			//clicking click Test Monitor
+			clickTestMonitor();
+			performClickTestCases();
+
+		} else if(simulator.toUpperCase().contains("MCPS")) {
+			launchAndConnectToMCPS();
+		}
+	}
+
 	public void startWiniumDriverWithSimulator(String serviceName) {
 		try
 		{
-			wait(3000);
 			DesktopOptions options = launchSimulator(serviceName);
 			String path = getResourceFolderPath() + SimulatorConstantsData.WINIUM_DRIVER_EXE_PATH.replace("\\", "\\\\");
 			Runtime.getRuntime().exec(path, null, new File( path.replace("Winium.Desktop.Driver.exe", ""))) ;
-			//			handleDriverCloseProgramWindow();
+			wait(3000);
 			winiumDriver = new WiniumDriver(new URL("http://localhost:9999"), options);
+			wait(3000);
+			MiscUtils.reportToConsole("************" + serviceName + " started******************");
 			wait(5000);
 		}
 		catch(Exception e)
@@ -91,6 +144,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			logger.debug("Exception occurred while starting Winium", e);
 			MiscUtils.propagate(e);
 		}
+
 	}
 
 	private DesktopOptions launchSimulator(String serviceName) {
@@ -116,289 +170,223 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private DesktopOptions launchMAS() {
 		DesktopOptions options = new DesktopOptions();
-		MiscUtils.reportToConsole("Simulator path being set :  " + SimulatorConstantsData.MAS_EXE_PATH);
+		MiscUtils.reportToConsole(ConstantData.MESSAGE_CONSTANT   + SimulatorConstantsData.MAS_EXE_PATH);
 		options.setApplicationPath(SimulatorConstantsData.MAS_EXE_PATH);
 		return options;
 	}
 
 	private DesktopOptions launchFinSim() {
 		DesktopOptions options = new DesktopOptions();
-		MiscUtils.reportToConsole("Simulator path being set :  " + SimulatorConstantsData.FINSIM_EXE_PATH);
-		options.setApplicationPath(SimulatorConstantsData.FINSIM_EXE_PATH);
+		String path = getResourceFolderPath() + SimulatorConstantsData.FINSIM_EXE_PATH.replace("\\", "\\\\");
+		MiscUtils.reportToConsole(ConstantData.MESSAGE_CONSTANT  + path);
+		options.setApplicationPath(path);
+		wait(3000);
 		return options;
 	}
 
 	private DesktopOptions launchMCPS() {
 		DesktopOptions options = new DesktopOptions();
-		MiscUtils.reportToConsole("Simulator path being set :  " + SimulatorConstantsData.MCPS_EXE_PATH);
+		MiscUtils.reportToConsole(ConstantData.MESSAGE_CONSTANT  + SimulatorConstantsData.MCPS_EXE_PATH);
 		options.setApplicationPath(SimulatorConstantsData.MCPS_EXE_PATH);
 		return options;
 	}
 
 	private DesktopOptions launchExpressMap() {
 		DesktopOptions options = new DesktopOptions();
-		MiscUtils.reportToConsole("Simulator path being set :  " + SimulatorConstantsData.EXPRESSMAP_EXE_PATH);
+		MiscUtils.reportToConsole(ConstantData.MESSAGE_CONSTANT  + SimulatorConstantsData.EXPRESSMAP_EXE_PATH);
 		options.setApplicationPath(SimulatorConstantsData.EXPRESSMAP_EXE_PATH);
 		return options;
 	}
 
-	public void performTransaction(Transaction transaction)
+	public void importAndLoadTestCase(String filePath, String transaction)
 	{
-		try
-		{
-			selectTestCaseAndCardType(transaction.getTestCaseToSelect());
-			selectCardProfile(transaction.getCardForTransaction());
-			editCardProfileDetails(transaction);
-			attachCardToTestCase(transaction.getCardForTransaction()); 
-			addDataElementsFromDataElementsSubSection(transaction);
-
-			executeAutoITExe("ActivateMASandScrollUpOnCardSection.exe");
-
-			for (Map.Entry<String, String> entry : transaction.getDeKeyValuePair().entrySet()) {
-				wait(1000);
-				MiscUtils.reportToConsole("DE Element Values : " , entry.getKey() + " ::: " +  entry.getValue());
-				//PIN value when BLANK, we do not want to go ahead and make a entry in Data Elements
-				if(entry.getValue().toUpperCase() != "BLANK")
-				{
-					changeDataElement(entry.getKey(), entry.getValue());
-					pressPageUp(5);
-				}
-			}
-
-			String[] caseToSelect = transaction.getTestCaseToSelect().split(">>");
-			runTransaction(caseToSelect[caseToSelect.length-1]);
-		}
-		catch(Exception e)
-		{
-			logger.debug(ConstantData.EXCEPTION, e);
-			MiscUtils.propagate(e);
-		}
-	}
-	
-	public void importCsvFiles(String fileName)
-	{
-		performClickOperation("importFile");
-		wait(2000);
-		executeAutoITExe("ImportTestSuite.exe "+ fileName );
-	}
-
-	private void addDataElementsFromDataElementsSubSection(Transaction transaction)
-	{
-		performClickOperation("Data Elements");
-		pressTab();
-		wait(2000);
-		pressPageUp(10);
-		performClickOperation("Fields");
-		pressRightArrow();	
-		for (Map.Entry<String, String> entry : transaction.getDeKeyValuePair().entrySet()) {
-			wait(1000);
-			MiscUtils.reportToConsole("DE Element being added from Data Elements section : " , entry.getKey());
-			String val = entry.getKey()+"_DataElement";
-			findDataElementToAdd(val);
-		}
-		performClickOperation("Card Profiles");
-	}
-
-	private void navigateToTestCases(String treePath)
-	{
-		String[] path = treePath.split(">>");
-		for(int i = 0; i< path.length - 1; i++)
-		{
-			path[i] = path[i].trim().replace(">", "");
-			performClickOperation(path[i]);
-			pressRightArrow();
-		}
-		//014
-		int finalVal = Integer.parseInt(path[path.length-1]);
-		//clicking on 009 so that there is no issue clickin on 014 .. as there is an issue with 004 and 014
-		if(finalVal > 10)
-		{
-			searchForImageAndPerformClick("009");
-			pressDownArrow(5);
-		}
-		//clicking on 009 so that there is no issue clickin on 014 .. as there is an issue with 004 and 014
-		if(finalVal > 15)
-		{
-			pressDownArrow(5);
-		}
-		searchForImageAndPerformClick(path[path.length-1]);
-		wait(2000);
-		performClickOperation(path[path.length-1]);
-	}
-
-	public void selectTestCaseAndCardType(String treePath)
-	{
+		MiscUtils.reportToConsole("******************** importAndLoadTestCase Started ******************");
 		//navigating to "Test Preparation" section
-		executeAutoITExe("ClickTestPreparation.exe");
-		winiumDriver.findElementByName("Allows preparing the test cases").click();
-		wait(5000);
+		clickTestPreparations();
+		importTestCaseFile(filePath);
+		handleDialogs();
+		
+		selectTestCaseFromImportedCases(transaction);
+	}
 
-		performClickOperation("Test Cases (Issuer Testing)");
-		//scrolling page up
-		executeAutoITExe("ActivateMASandScrollUpOnTestCases.exe");
-		performClickOperation("MAS_16.Q4");
-		pressRightArrow();
-		performClickOperation("Test Cases");
-		pressRightArrow();
-		performClickOperation("IssuerTest");
-		pressRightArrow();
-		navigateToTestCases(treePath);
-		wait(7000);
-	}
-	
-	public void importAndLoadTest(String fileName)
+	private void importTestCaseFile(String fileName)
 	{
-		importCsvFiles(fileName);
-		selectTestCaseFromImportedCases(fileName);
+		activateMas();
+		if(isImagePresent("importFile")) {
+		}
+		else {
+			clickTestPreparations();
+			activateMas();
+			performClickTestCases();
+			performClickCardProfiles();
+		}
+		activateMas();
+		performClickOperation("importFile");
+		wait(4000);
+		executeAutoITExe("ImportTestCase.exe "+ fileName );
 	}
-	
+
+	public void importAndLoadCardProfile(String filePath)
+	{				
+		MiscUtils.reportToConsole("******************** importAndLoadCardProfile Started ******************");
+		clickTestPreparations();
+		importCardProfileFile(filePath);
+		handleDialogs();
+	}
+
+	private void importCardProfileFile(String filePath)
+	{
+		activateMas();
+		performClickCardProfiles();
+		performClickOperation("ImportCardProfile");
+		wait(4000);
+		executeAutoITExe("ImportCardProfile.exe "+ filePath );
+	}
+
+	public void removeLastEntry()
+	{
+		clickTestPreparations();
+		activateMas();
+		performClickOperation("Imported");
+		pressPageDown();
+		pressDelete();
+		wait(5000);
+	}
+
 	private void selectTestCaseFromImportedCases(String testcaseName)
 	{
-		//navigating to "Test Preparation" section
-		executeAutoITExe("ClickTestPreparation.exe");
-		winiumDriver.findElementByName("Allows preparing the test cases").click();
-		wait(5000);
+		MiscUtils.reportToConsole("******************** selectTestCaseFromImportedCases Started ******************");
+		MiscUtils.reportToConsole("******************** TRANSACTION to SELECT : " + testcaseName + " ******************");
 
-		performClickOperation("Test Cases (Issuer Testing)");
-		//scrolling page up
-		executeAutoITExe("ActivateMASandScrollUpOnTestCases.exe");
-		performClickOperation("MAS_16.Q4");
-		pressRightArrow();
-		performClickOperation("Test Cases");
-		pressRightArrow();
+		scrollUpToSelectTest();
+		activateMas();
+		performClickOperationOnImages(ISSUER_TEST);
+		pressLeftArrow();
 		performClickOperation("Imported");
-		pressRightArrow();
-		performClickOperation("MyGroup");
-		pressRightArrow();
-		performClickOperation(testcaseName);
+		pressRightArrow(4);
+		pressPageDown();
 	}
 
 
-	private void selectCard(String testCase) 
-	{
-		searchForImageAndPerformClick(testCase);
-	}
-
-	private void findDataElementToAdd(String testCase) 
-	{
-		searchForImageAndPerformDoubleClickforDataElements(testCase);
-		executeAutoITExe("ClickYesOnAddSubfields.exe");
-		pressPageUp(20);
-	}
-
-	private void attachCardToTestCase(String testCase)
-	{
-		searchForImageAndPerformDoubleClick(testCase);
-		pressPageUp(5);
-	}
-
-	private void runTransaction(String testCase)
-	{
-		executeAutoITExe("ActivateMAS.exe");
-		performDoubleClickOperation(testCase);
+	private void performExecution(String transaction) {
+		MiscUtils.reportToConsole("******************** performExecution Started ******************");
+		//clicking click Test Monitor
+		clickTestMonitor();
+		wait(3000);
+		selectTestCaseFromImportedCases(transaction);
+		activateMas();
 		performDoubleClickOperation("ClearResults");
+		wait(3000);
 		executeAutoITExe("HandleClearTestResultsWindow.exe");
 		pressEnter();
+		activateMas();
 		performDoubleClickOperation("RunTest");
 		wait(5000);
 		executeAutoITExe("ActivateStartTestDialogAndClose.exe");
 	}
 
-	private Boolean verifyResults()
+	private void activateMas()
 	{
 		executeAutoITExe("ActivateMAS.exe");
-		wait(5000);
-		winiumDriver.findElementByName("Allows analysing the results").click();
+		wait(1000);
+	}
+
+	private void activateMcps()
+	{
+		executeAutoITExe("ActivateMCPS");
+	}
+
+	private void clickTDG()
+	{
+		executeAutoITExe("ClickTDG");
+	}
+
+	private Boolean verifyResults()
+	{
+		MiscUtils.reportToConsole("******************** verifyResults Started ******************");
+		clickTestResults();
+		wait(8000);
+
 		winiumDriver.findElementByName("Sequential View").click();
-		if(isImagePresent("0110_NTW to APS Rcvd"))
+		
+		if(areImagesPresent("0110_NTW to APS Rcvd"))
 		{
-			performDoubleClickOperation("0110_NTW to APS Rcvd");
-			if(isImagePresent("0110_Response_Approved"))
+			performDoubleClickOperationOnImages("0110_NTW to APS Rcvd");
+			wait(2000);
+			if(areImagesPresent("0110_Response_Approved"))
 			{
-				performClickOperation("0110_Response_Approved");
+				performClickOperationOnImages("0110_Response_Approved");
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public String loadAuthFileToMCPS(String fileName)
-	{
-		loadAuthFileIntoMCPS(fileName);
+	public String loadAuthFileToMCPS(String fullFileNameAndPath) {
+		loadAuthFileIntoMCPS(fullFileNameAndPath);
 		return editFieldsAndProcess();
+	}
+
+	public void loadFile(String fileName) {
+		wait(5000);
+		try {
+			setText(fileName);
+			performClickOperation("Open");
+			wait(3000);
+			performClickOperation("OK");
+			wait(2000);
+		} catch (Exception e) {
+			logger.debug("Exception occurred while loading file in MCPS", e);
+			MiscUtils.propagate(e);
+		}
 	}
 
 	public void loadIPMFileIntoMCPS(String fileName)
 	{
-
-		executeAutoITExe("ActivateMCPS");
-		winiumDriver.findElementByName("TDG").click();
+		clickTDG();
 		performClickOperation("folder");
 		executeAutoITExe("ActivateOpenExistingFileScreen");
-		wait(5000);
-		try {
-			setText(fileName);
-			performClickOperation("Open");
-			wait(3000);
-			performClickOperation("OK");
-			wait(2000);
-		} catch (Exception e) {
-			logger.debug("Exception occurred while loading file in MCPS", e);
-			MiscUtils.propagate(e);
-		}
+		loadFile(fileName);
 	}
-	
-	
+
 	private void loadAuthFileIntoMCPS(String fileName)
 	{
-
-		executeAutoITExe("ActivateMCPS");
-		winiumDriver.findElementByName("TDG").click();
+		clickTDG();
 		performClickOperation("Down Arrow");
 		performClickOperation("Import Auth file");
-		executeAutoITExe("ActivateImportAuthFileScreen");
-		wait(5000);
-		try {
-			setText(fileName);
-			performClickOperation("Open");
-			wait(3000);
-			performClickOperation("OK");
-			wait(2000);
-		} catch (Exception e) {
-			logger.debug("Exception occurred while loading file in MCPS", e);
-			MiscUtils.propagate(e);
-		}
+		executeAutoITExe("LoadAuthFile.exe " + fileName );
+		loadFile(fileName);
 	}
 
 	private String editFieldsAndProcess(){
 		String aRN = "";
 		try{
 			wait(2000);
-			executeAutoITExe("ActivateMCPS");
-			performClickOperation("Middle Presentment");
-			performClickOperation("Message Type Indicator"); // selecting the table
+			activateMcps();
+			performClickOperation(MIDDLE_PRESENTMENT);
+			performClickOperation(MESSAGE_TYPE_INDICATOR); // selecting the table
 			searchForImageAndPerformDoubleClick("Retrieval Reference Number");
 			wait(2000);
-			executeAutoITExe("ActivateEditFieldValueScreen");
-			String rRN = winiumDriver.findElementByName("Edit DE Value").getText();
+			activateEditField();
+			String rRN = winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
 			String trimmedRrn = rRN.substring(1, rRN.length());
-			winiumDriver.findElementByName("Close").click();
+			winiumDriver.findElementByName(CLOSE).click();
 
 			aRN = addAcquirerReferenceData(trimmedRrn);
 
-			performClickOperation("Message Type Indicator"); // selecting the table
+			performClickOperation(MESSAGE_TYPE_INDICATOR); // selecting the table
 			pressPageUp();
-			performClickOperation("Middle Presentment");
-			performClickOperation("Message Type Indicator"); // selecting the table
+			performClickOperation(MIDDLE_PRESENTMENT);
+			performClickOperation(MESSAGE_TYPE_INDICATOR); // selecting the table
 			searchForImageAndPerformDoubleClick("Forwarding Institution Identification Code");
-			executeAutoITExe("ActivateEditFieldValueScreen");
-			winiumDriver.findElementByName("Edit DE Value").getText();
+			activateEditField();
+			winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
 			setText("");
 			setText("999684");
 			wait(2000);
-			performClickOperation("Set Value");
+			performClickOperation(SET_VALUE);
 			wait(2000);
-			winiumDriver.findElementByName("Close").click();
+			winiumDriver.findElementByName(CLOSE).click();
 			addField();
 			loadIpmFile(getIpmFileName());
 			assignUniqueFileId();
@@ -406,14 +394,18 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			logger.debug("Exception occurred while editing fields", e);
 			MiscUtils.propagate(e);
 		}
-
 		return aRN;
 	}
 
+	private void activateEditField()
+	{
+		executeAutoITExe("ActivateEditFieldValueScreen");
+	}
+
 	private String addAcquirerReferenceData(String rRN) throws AWTException {
-		performClickOperation("Message Type Indicator"); // selecting the table
+		performClickOperation(MESSAGE_TYPE_INDICATOR); // selecting the table
 		pressPageUp();
-		performClickOperation("Middle Presentment");
+		performClickOperation(MIDDLE_PRESENTMENT);
 		searchForImageAndPerformDoubleClick("Acquirer Reference Data");
 		executeAutoITExe("ActivateEditSubfieldValueScreen");
 		performClickOperation("Acquirer Sequence Number");
@@ -423,10 +415,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setText(rRN);
 		winiumDriver.findElementByName("OK").click();
 		wait(2000);
-		performClickOperation("Set Value");
-		String aRN = winiumDriver.findElementByName("Edit DE Value").getText();
+		performClickOperation(SET_VALUE);
+		String aRN = winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
 		wait(2000);
-		winiumDriver.findElementByName("Close").click();
+		winiumDriver.findElementByName(CLOSE).click();
 		return aRN;
 	}
 
@@ -434,19 +426,19 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumDriver.findElementByName("Add a field to the current message").click();
 		wait(3000);
 		searchForImageAndPerformDoubleClick("Transaction Originator Institution ID Code");
-		executeAutoITExe("ActivateEditFieldValueScreen");
+		activateEditField();
 		performClickOperation("AddRemove");
 		wait(2000);
 		performClickOperation("Bit Map Secondary");
 		wait(2000);
 		searchForImageAndPerformDoubleClick("093 Transaction Destination");
-		winiumDriver.findElementByName("Edit DE Value").getText();
+		winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
 		setText("");
 		setText("999684");
 		wait(2000);
-		performClickOperation("Set Value");
+		performClickOperation(SET_VALUE);
 		wait(2000);
-		winiumDriver.findElementByName("Close").click();
+		winiumDriver.findElementByName(CLOSE).click();
 		performClickOperation("Save");
 		performClickOperation("OK");
 		wait(2000);
@@ -462,22 +454,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		return splitString[5];	
 	}
 
-	private void loadIpmFile(String fileName) throws IOException{
-		executeAutoITExe("ActivateMCPS");
-		winiumDriver.findElementByName("TDG").click();
+	private void loadIpmFile(String fileName) {
+		clickTDG();
 		performClickOperation("folder"); //open ipm file
 		executeAutoITExe("ActivateOpenIPMFileScreen");
-		wait(5000);
-		try {
-			setText(fileName);
-			performClickOperation("Open");
-			wait(3000);
-			performClickOperation("OK");
-			wait(2000);
-		} catch (Exception e) {
-			logger.debug("Exception occurred while loading file in MCPS", e);
-			MiscUtils.propagate(e);
-		}				
+		loadFile(fileName);		
 	}
 
 	private void assignUniqueFileId() throws AWTException{
@@ -500,9 +481,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setText(value);
 		winiumDriver.findElementByName("OK").click();
 		wait(2000);
-		performClickOperation("Set Value");		
+		performClickOperation(SET_VALUE);		
 		wait(2000);
-		winiumDriver.findElementByName("Close").click();
+		winiumDriver.findElementByName(CLOSE).click();
 	}
 
 	public void authFileGeneration()
@@ -516,18 +497,18 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public String getFileData(String filePath) throws IOException{
-		FileInputStream fis = new FileInputStream(getTempDirectoryLocationForSimulatorResults() + "//" + filePath);
-		BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-		String fileName = br.readLine();
-		fis.close();
-		return fileName;
+		try (FileInputStream fis = new FileInputStream(getTempDirectoryLocationForSimulatorResults() + "//" + filePath);) {
+			BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+			String fileName = br.readLine();
+			fis.close();
+			return fileName;
+		}
 	}
 
 	private void generateAuthFileFromMas() throws AWTException
 	{
 		wait(5000);
-		executeAutoITExe("ClickTestResults.exe");
-		winiumDriver.findElementByName("Allows analysing the results").click();
+		clickTestResults();
 		winiumDriver.findElementByName("Sequential View").click();
 
 		performClickOperation("Generate Auth File");
@@ -538,77 +519,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		pressTab(2);
 		pressEnter();
 		wait(3000);
-	}
-
-	public void selectCardProfile(String cardProfileName)
-	{
-		executeAutoITExe("ActivateMAS");
-		performClickOperation("Card Profiles");
-		performClickOperation("CardProfiles_Reference");
-		pressLeftArrow();
-		performClickOperation("CardProfiles_User");
-		pressRightArrow();
-		selectCard(cardProfileName); 
-		wait(3000);
-	}
-
-	private void editCardProfileDetails(Transaction transaction)
-	{
-		try
-		{
-			executeAutoITExe("ActivateMAS.exe");
-			performClickOperation(transaction.getCardForTransaction());
-			//clicking the edit icon ("pen sysmbol")
-			performRightClickOperation(transaction.getCardForTransaction());
-			wait(1000);
-			performClickOperation("Edit Node");
-			wait(10000);
-			winiumDriver.findElementByName("Typical Data").click();
-			wait(2000);
-			pressTab();
-			setText(transaction.getCardNumber());
-			pressTab();
-			setText(StringUtils.leftPad(transaction.getTransactionAmount(), 12, "0"));
-			pressTab();
-			setText(MiscUtils.convertToYYMM(transaction.getExpirationYear()));
-			pressTab();
-			setText(transaction.getCardSequenceNumber());
-			pressTab();
-			if(isNotNullAndEmpty(transaction.getPinForTransaction()))
-			{
-				setText(transaction.getPinForTransaction());
-			}
-			if(	isNotNullAndEmpty(transaction.getCvvData()))
-			{
-				winiumDriver.findElementByName("Track Data").click();
-				pressTab(6);
-				setText("000"+transaction.getCvvData());
-				wait(1000);
-			}
-			winiumDriver.findElementByName("OK").click();
-			wait(1000);
-		}
-		catch(Exception e)
-		{
-			logger.debug(ConstantData.EXCEPTION, e);
-			MiscUtils.propagate(e);
-		}
-	}
-
-	private void changeDataElement(String dataElement, String value){
-		try
-		{
-			clickDataElements(dataElement);
-			executeAutoITExe("ClickEnterValueInDataElementScreen.exe");
-			pressTab();
-			setText(value);
-			executeAutoITExe("ClickOkOnDataElementScreen.exe");
-		}
-		catch(Exception e)
-		{
-			logger.debug(ConstantData.EXCEPTION, e);
-			MiscUtils.propagate(e);
-		}
 	}
 
 	private void selectMCPSLicense(){
@@ -628,14 +538,16 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			}
 
 			executeAutoITExe("ActivateLicenseProfiles.exe");
-			performDoubleClickOperation(licenseTypeToSelect);
+			performDoubleClickOperationOnImages(licenseTypeToSelect);
 			wait(15000);
 
 			if(getLoadServicesScreen() > 0)	{
 				executeAutoITExe("ActivateSelectServices");
-				performClickOperation("MAS 16.4");
+				wait(2000);
+//				performClickOperation("MAS 16.4");
+				winiumClickOperation("MAS 16.4");
 				pressSpaceBar();
-				winiumDriver.findElementByName("Load the services").click();
+				winiumClickOperation("Load the services");
 			}
 
 			wait(5000);
@@ -650,60 +562,112 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		}
 	}
 
-	public void selectIPSHostTestModeAndConfigureBinAndHost(Transaction transaction) 
+	public void connect2IPSHostModeAndConfigureIP()
 	{
-		try
-		{
-			wait(5000);
-			executeAutoITExe("ActivateMAS.exe");
-			winiumDriver.findElementByName("Allows setting the test mode").click();
-			executeAutoITExe("SelectIPSHostTestMode.exe");
-			wait(15000);
-			waitForImageToAppear("CONNECTED");
-
-			configureBinRange(transaction);
-
+		try {
+			connect2IpsHostTestMode();
 			//change ip and reselefct IPS Host Test Mode
-			configureTestOptionsHostAndIP(winiumDriver);
-			winiumDriver.findElementByName("Allows setting the test mode").click();
-			executeAutoITExe("ReSelectIPSHostTestMode.exe");
-			wait(10000);
-			winiumDriver.findElementByName("Allows preparing the test cases").click();
-
-			while(getWindowButtonCount() > 0) {
-				winiumDriver.findElementByName("OK").click();
-				executeAutoITExe("SelectIPSHostTestMode.exe");
-				wait(5000);
-			}
-		}
-		catch(Exception e)
-		{
-			logger.debug(ConstantData.EXCEPTION, e);
-			MiscUtils.propagate(e);
+			configureTestOptionsHostAndIP();
+			reconnect2IpsHostTestMode();
+		} catch (FindFailed e) {
+			throw MiscUtils.propagate(e);
 		}
 	}
 
-	private void configureBinRange(Transaction transaction)
+	private void selectIpsModeWithWinium() {
+		winiumDriver.findElementByName("Select Test Mode").findElement(By.xpath(("//*[contains(@AutomationId,'comboBox1')]"))).click();
+		winiumDriver.findElementByName("Select Test Mode").findElement(By.name("IPS Host Testing")).click();
+		wait(20000);
+	}
+	
+	private void reSelectIpsModeWithWinium() {
+		winiumDriver.findElementByName("Select Test Mode").findElement(By.xpath(("//*[contains(@AutomationId,'comboBox1')]"))).click();
+		winiumDriver.findElementByName("Select Test Mode").findElement(By.name("Select Test Mode")).click();
+		wait(5000);
+		winiumDriver.findElementByName("Select Test Mode").findElement(By.name("IPS Host Testing")).click();
+		wait(20000);
+	}
+	
+	private void reconnect2IpsHostTestMode() {
+		clickTestMode();		
+		reSelectLicense();
+		wait(10000);
+
+		while(getWindowButtonCount() > 0) {
+			winiumDriver.findElementByName("OK").click();
+			selectLicense();
+			wait(5000);
+		}
+	}
+
+	private void connect2IpsHostTestMode() throws FindFailed {
+		wait(5000);
+		executeAutoITExe("ClickTestMode.exe");
+		selectLicense();
+		wait(15000);
+		waitForImageToAppear("CONNECTED");
+		wait(15000);
+	}
+
+	public void clickTestOptions()
 	{
-		String bin = transaction.getCardNumber();
-		String currency = transaction.getCurrency();
+		executeAutoITExe("ClickTestOptions.exe");
+	}
+
+	public void clickTestMonitor()
+	{
+		executeAutoITExe("ClickTestMonitor.exe");
+	}
+
+	public void clickTestMode()
+	{
+		executeAutoITExe("ClickTestMode.exe");
+	}
+
+	public void clickTestPreparations()
+	{
+		executeAutoITExe("ClickTestPreparation.exe");
+		wait(5000);
+	}
+
+	public void clickTestResults()
+	{
+		executeAutoITExe("ClickTestResults.exe");
+	}
+
+	public void addBinRangeAndCurrencyDetailsBasedOnCardNumber(Transaction transactionData)
+	{
+		configureBinRange(transactionData);
+	}
+
+	private void configureBinRange(Transaction transactionData)
+	{
+		String bin = transactionData.getCardNumber();
+		String issuerCountryCode = transactionData.getIssuerCountryCode() ; //"356"; // transactionData.getCurrency(); //356
+		String issuerCurrencyCode =  transactionData.getIssuerCurrencyCode();  //value from DE Element 49
+		String cardHolderBillingCurrency = transactionData.getCardHolderBillingCurrency(); //value from DE Element 61_13
+
+		String binBinMinRange = bin.substring(0, 9) + "00";
+		String binMaxBinRange = bin.substring(0, 9) + "99";
+
 		try
 		{
-			if(!isImagePresent("BIN Table"))
-			{
-				winiumDriver.findElementByName("Allows configuring the options").click();
-				wait(2000);
-			}
-			String binBinMinRange = bin.substring(0, 9) + "00";
-			String binMaxBinRange = bin.substring(0, 9) + "99";
-			performClickOperation("BIN Table");
-			performClickOperation("BIN Table User");
-			pressTab(3);
+			clickTestOptions();
+
+			activateMas();	
+			winiumClickOperation("BIN Table");
 			performClickOperation("Add New");
 			wait(10000);
+			if(isImagePresent("Add BIN Range")) {
+			}
+			else {
+				performClickOperationOnImages("BIN Table");
+				performClickOperation("Add New");
+				wait(10000);
+			}
 			waitForImageToAppear("Add BIN Range");
-			winiumDriver.findElementByName("General").click();
-			//			executeAutoITExe("ActivateAddBINrange.exe");
+			winiumClickOperation("General");
+			executeAutoITExe("ActivateAddBINrange.exe");
 			pressTab();
 			setText(binBinMinRange);
 			pressTab();
@@ -715,13 +679,18 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(1000);
 			pressTab();
 			wait(1000);
-			setText(currency);
+			setText(issuerCountryCode);
 			pressTab();
-			setText(currency);
+			setText(issuerCurrencyCode);
 			pressTab();
-			setText(currency);
-			winiumDriver.findElementByName("OK").click();
+			setText(cardHolderBillingCurrency);
+			winiumClickOperation("OK");
 			wait(2000);
+			if(isImagePresent("OK"))
+			{
+				performClickOperation("OK");
+				wait(2000);
+			}
 		}
 		catch(Exception e)
 		{
@@ -732,37 +701,23 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void closeSimulator(String name) 
 	{
-		if(name.toUpperCase().contains("MAS"))
-		{
-			executeAutoITExe("CloseMAS.exe");
-		}
-		else if(name.toUpperCase().contains("FINSIM"))
-		{
-			for(int i = 0; i<2; i++)
-			{
-				performClickOperation("CLOSE");
-			}
-		}
 		winiumDriver = null;
 		MiscUtils.killProcessFromTaskManager(name);
 	}
 
-	private void configureTestOptionsHostAndIP(WiniumDriver driver)
+	private void configureTestOptionsHostAndIP()
 	{
 		try
 		{
+			clickTestOptions();
+
 			String tempVariable;
 			String ipAdd = simulator.getIpAddress();
 			String[] ip = ipAdd.split("\\.");
 
-			if(!isImagePresent("TCP_IP"))
-			{
-				driver.findElementByName("Allows configuring the options").click();
-				wait(2000);
-			}
-			performClickOperation("TCP_IP");
-			driver.findElementByName("Client").click();
-			driver.findElementByName("Port :").sendKeys(simulator.getPort());
+			winiumClickOperation("TCP/IP");
+			winiumClickOperation("Client");
+			winiumSetTextOperation("Port :", simulator.getPort());
 			pressTab();
 			for (int i = 0; i<  ip.length; i++)
 			{
@@ -771,7 +726,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 				wait(1000);
 			}
 			pressTab();
-			driver.findElementByName("Apply").click();
+			winiumClickOperation("Apply");
+			wait(2000);
 		}
 		catch(Exception e)
 		{
@@ -828,8 +784,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			pressEnter();
 			wait(5000);
 			executeAutoITExe("ActivateFINSimPasswordScreen.exe");
-			//			setText(finSimSimulator.getPassword());
-			setText("master@987");
+			setText(finSimSimulator.getPassword());
 			wait(5000);
 		}
 		catch(Exception e)
@@ -842,24 +797,12 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	public String getPinNumber(Transaction transactionData) {
 		try
 		{
-			launchPinCalculator();
-			executeAutoITExe("ActivatePinOffsetScreen.exe");
-			setText(String.valueOf(transactionData.getCardNumber()));
-			pressTab();
-			setText(String.valueOf(transactionData.getPinKey()));
-			pressTab();
-			setText(String.valueOf(transactionData.getDecimalisationTable()));
-			pressTab();
-			setValueInCombo(String.valueOf(transactionData.getValidationDataStart()));
-			pressTab();
-			setValueInCombo(String.valueOf(transactionData.getCardLength()));
-			pressTab();
-			setValueInCombo(String.valueOf(transactionData.getPad()));
-			pressTab();
-			setText(String.valueOf(transactionData.getOffSetForCard()));
-			pressTab(2);
-			setValueInCombo(String.valueOf(transactionData.getPinLength()));
-			pressTab();
+			//			Ex: SelectValuesFromPinOffsetCalculator.exe "5877650150876119" "EE9A8BACEE127B4B2DC900D8EEA9221D" "1234567890123456" "4" "12" "F" "7782" "4"
+			//NO SONAR... 
+			String parameters =   "\"" + transactionData.getCardNumber() + PATH_BUILDER +  transactionData.getPinKey() + PATH_BUILDER  + transactionData.getDecimalisationTable() +  PATH_BUILDER + transactionData.getValidationDataStart()
+					+  PATH_BUILDER + transactionData.getCardLength() + PATH_BUILDER + transactionData.getPad() +  PATH_BUILDER + transactionData.getOffSetForCard() +  PATH_BUILDER + transactionData.getPinLength() + "\"";
+			MiscUtils.reportToConsole(" ******* Parameter for SelectValuesFromPinOffsetCalculator : ******"  + parameters );
+			executeAutoITExe("SelectValuesFromPinOffsetCalculator.exe " + parameters );
 
 			return getPinText();
 		}
@@ -869,10 +812,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			MiscUtils.propagate(e);
 			return null;
 		}
-	}
-
-	private void launchPinCalculator() {
-		executeAutoITExe("LaunchPinCalculatorScreen");
 	}
 
 	private Boolean performWiniumOperationIsObjectDisplayed(String clickOn)
@@ -895,24 +834,56 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	{
 		return text.toUpperCase().replace("A","0").replace("B", "1").replace("C","2").replace("D","3").replace("E", "4").replace("F", "5").replace("G","6").replace("H", "7").replace("I","8").replace("J","9");
 	}
-	
+
 	public void verifychargeBackOutgoingMsg() {
 		performClickOperation("firstChargeBack");
 		performDoubleClickOperation("cardIssuerReferenceData");
 		wait(10000);
-		String text=winiumDriver.findElementByName("Edit DE Value").getText();
-		context.put("IssuerCardReference",
-				text);
-		
-		winiumDriver.findElementByName("Close").click();
+		String text=winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
+		context.put("IssuerCardReference", text);
 
+		winiumClickOperation(CLOSE);
 		performDoubleClickOperation("messageReversalIndicator");
-
 		executeAutoITExe("GetVauleFromMessageReversalIndicator.exe"); 
-			
-        winiumDriver.findElementByName("OK").click();
-        wait(1000);
-        winiumDriver.findElementByName("Close").click();
+		winiumClickOperation("OK");
+		wait(1000);
+		winiumClickOperation(CLOSE);
+	}
 
+	private void winiumClickOperation(String locator) {
+		logger.info(" *****  winiumClick Operation is being performed :  "+ locator);
+		activateMas();
+		winiumDriver.findElementByName(locator).click();
+	}
+
+	private void winiumSetTextOperation(String locator, String text) {
+		logger.info("***** winiumSetText Operation performed : locator/text : " + locator + " / " + text);
+		activateMas();
+		winiumDriver.findElementByName(locator).sendKeys(text);
+	}
+
+	private void performClickTestCases() {
+		activateMas();
+		performClickOperationOnImages("Test Cases (Issuer Testing)");
+	} 
+
+	private void performClickCardProfiles() {
+		performClickOperationOnImages("Card Profiles");
+	} 
+
+	private void selectLicense() {
+		executeAutoITExe("SelectIPSHostTestMode.exe");
+	}
+
+	private void reSelectLicense() {
+		executeAutoITExe("ReSelectIPSHostTestMode.exe");
+	}
+
+	private void scrollUpToSelectTest() {
+		executeAutoITExe("ActivateMASandScrollUpOnTestCases.exe");
+	}
+	
+	private void handleDialogs() { 
+		executeAutoITExe("HandleUnhandlesDialogs.exe");
 	}
 }

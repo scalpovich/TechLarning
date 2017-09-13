@@ -96,7 +96,7 @@ public class InstitutionCreationWorkflow {
 		EmbossingPINAndPriorityPassFileNameParameterPage page = navigator.navigateToPage(EmbossingPINAndPriorityPassFileNameParameterPage.class);
 		for(EmbossingPinAndPriorityPassFileNameParameter emb :data )
 		{
-		page. EmbossingPINAndPriorityPassFileNameParameter(emb);
+		page. embossingPINAndPriorityPassFileNameParameter(emb);
 		}
 	}
 	

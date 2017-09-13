@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.agent.services;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -124,9 +125,21 @@ public class DeviceSalePage extends AbstractModelPage {
     @PageElement(findBy = FindBy.CSS, valueToFind = "#currentCountryCode")
     private MCWebElement countryDdwn;
     
+    @PageElement(findBy = FindBy.CSS, valueToFind = "#currentZipCode")
+    private MCWebElement postalCodeTxt;
+    
+    @PageElement(findBy = FindBy.CSS, valueToFind = "#applicantProf")
+    private MCWebElement applicantProfessionDdwn;
+        
+    @PageElement(findBy = FindBy.CSS, valueToFind = "#kycStatus")
+    private MCWebElement kycStatusChkBx;    
+    
     @PageElement(findBy = FindBy.CSS, valueToFind = "#kycRemarks")
     private MCWebElement kycRemarksTxt;
     
+    @PageElement(findBy = FindBy.CSS, valueToFind = "#legalId1Type")
+    private MCWebElement document1TypeDdwn;
+
     @PageElement(findBy = FindBy.CSS, valueToFind = "#legalId1")
     private MCWebElement legalId1Txt;
     
@@ -279,8 +292,24 @@ public class DeviceSalePage extends AbstractModelPage {
     	WebElementUtils.selectDropDownByVisibleText(countryDdwn, country);
     }
     
+    public void enterPostalCode(String postalCode){
+    	WebElementUtils.enterText(postalCodeTxt, postalCode);
+    }
+    
+    public void selectApplicantProfession(String applicantProfession){
+    	WebElementUtils.selectDropDownByVisibleText(applicantProfessionDdwn, applicantProfession);
+    }
+        
+    public void clickKYCStatusCheckBox(){
+    	kycStatusChkBx.click();
+    }
+        
     public void enterKycRemarks(String kycRemarks){
     	WebElementUtils.enterText(kycRemarksTxt, kycRemarks);
+    }
+    
+    public void selectDocument1Type(String passportType){
+    	WebElementUtils.selectDropDownByVisibleText(document1TypeDdwn, passportType);
     }
 
     public void enterLegalId1(String legalId1){
@@ -339,12 +368,15 @@ public class DeviceSalePage extends AbstractModelPage {
         selectPreferredMailingAddress(details.getPreferredMailingAddress());
         enterCurrentAddressLine1(details.getCurrentAddressLine1());
         selectCountry(details.getCountry());
+        enterPostalCode(details.getPostalCode());
+        WebElementUtils.asWebElement(postalCodeTxt).sendKeys(Keys.TAB);
         pageScrollDown();
         clickNextButton();
+        selectApplicantProfession(details.getApplicantProfession());
     }
     
     public void fillApplicationDetails2AndSubmit(){
-        pageScrollDown();
+    	pageScrollDown();
         clickNextButton();
         clickSubmitButton();
     }
@@ -354,6 +386,7 @@ public class DeviceSalePage extends AbstractModelPage {
     	
     	processApplication(details);    	
     	fillApplicationDetails1(details);
+    	selectDocument1Type(details.getDocument1Type());
         enterLegalId1(details.getLegalId());
     	fillApplicationDetails2AndSubmit();
      }

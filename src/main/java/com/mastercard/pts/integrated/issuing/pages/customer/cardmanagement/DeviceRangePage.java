@@ -102,29 +102,16 @@ public class DeviceRangePage extends AbstractModelPage {
 		runWithinPopup(
 				"Add Device Range",
 				() -> {
-					selectProductType(deviceRange.getProductType());
-					selectProgram(deviceRange.getProgram());
-					selectDevicePlanCode(deviceRange.getDevicePlanCode());
-					selectIssuerBin(deviceRange.getIssuerBin());
-					selectBranch(deviceRange.getBranch());
-					addBtn.click();
-					waitForWicket();
+					fillAddDevicePage(deviceRange);
 
 					addFromDeviceNumber(deviceRange.getFromDeviceNumber());
+					log.info("From addFromDeviceNumber = " + deviceRange.getFromDeviceNumber());
 					addToDeviceNumber(deviceRange.getToDeviceNumber());
+					log.info("To addFromDeviceNumber = " + deviceRange.getToDeviceNumber());
 
-					if (ProductType.DEBIT.equalsIgnoreCase(deviceRange
-							.getProductType())) {
-						WebElementUtils.selectDropDownByVisibleText(
-								endPointModeDDwn, deviceRange.getEndPointMode());
-						WebElementUtils.selectDropDownByVisibleText(
-								routingTypeDDwn, deviceRange.getRoutingType());
-						WebElementUtils.selectDropDownByVisibleText(
-								interfaceNameDDwn, deviceRange.getInterfaceName());
-					}
+					forDebitCard(deviceRange);
 
-					WebElementUtils.selectDropDownByVisibleText(statusDDwn,
-							deviceRange.getStatus());
+					WebElementUtils.selectDropDownByVisibleText(statusDDwn, deviceRange.getStatus());
 
 					pageScrollDown();
 					clickSaveButton();
@@ -133,6 +120,24 @@ public class DeviceRangePage extends AbstractModelPage {
 				});
 
 		verifyOperationStatus();
+	}
+
+	private void fillAddDevicePage(DeviceRange deviceRange) {
+		selectProductType(deviceRange.getProductType());
+		selectProgram(deviceRange.getProgram());
+		selectDevicePlanCode(deviceRange.getDevicePlanCode());
+		selectIssuerBin(deviceRange.getIssuerBin());
+		selectBranch(deviceRange.getBranch());
+		addBtn.click();
+		waitForWicket();
+	}
+
+	private void forDebitCard(DeviceRange deviceRange) {
+		if (ProductType.DEBIT.equalsIgnoreCase(deviceRange.getProductType())) {
+			WebElementUtils.selectDropDownByVisibleText(endPointModeDDwn, deviceRange.getEndPointMode());
+			WebElementUtils.selectDropDownByVisibleText(routingTypeDDwn, deviceRange.getRoutingType());
+			WebElementUtils.selectDropDownByVisibleText(interfaceNameDDwn, deviceRange.getInterfaceName());
+		}
 	}
 
 	public void verifyUiOperationStatus() {

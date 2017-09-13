@@ -94,25 +94,24 @@ public class EmbossingPINAndPriorityPassFileTemplatePage extends
 			EmbossingPinPriorityPassFileTemplate page) {
 		logger.info("Embossing,PIN and Priority Pass File Template");
 
+		performSearchOperationOnMainScreen(page);
+		if(isNoRecordsFoundInTable())
+		{
 		clickAddNewButton();
 
 		runWithinPopup("Add Embossing, PIN and Priority Pass File Template",
 				() -> {
 					WebElementUtils.visibilityOf(templateId);
-					WebElementUtils.enterText(templateId,
-							page.getTemplateCode());
-					WebElementUtils.enterText(templateDesc,
-							page.getDescription());
-					WebElementUtils.selectDropDownByVisibleText(
-							fileTypeAddEmbossingPinPassTemplatePopup,
-							page.getFileType());
+					WebElementUtils.enterText(templateId, page.getTemplateCode());
+					WebElementUtils.enterText(templateDesc, page.getDescription());
+					WebElementUtils.selectDropDownByVisibleText(fileTypeAddEmbossingPinPassTemplatePopup, page.getFileType());
 					enableHeaderTrailerChecksum(page);
 					clickAddDetailsButton();
 					addRecordFieldFormats(page.getRecordField());
 					addOrderByFormats(page.getOrderByFormat());
 					clickSaveButton();
 				});
-
+		}
 	}
 
 	public void addRecordFieldFormats(List<RecordFieldFormat> data) {
@@ -164,6 +163,11 @@ public class EmbossingPINAndPriorityPassFileTemplatePage extends
 		WebElementUtils.visibilityOf(orderByFormatTable);
 		WebElementUtils.waitForWicket(driver());
 
+	}
+	private void performSearchOperationOnMainScreen(EmbossingPinPriorityPassFileTemplate page)
+	{
+		WebElementUtils.enterText(templateId, page.getTemplateCode());
+		clickSearchButton();
 	}
 
 	public void enableHeaderTrailerChecksum(

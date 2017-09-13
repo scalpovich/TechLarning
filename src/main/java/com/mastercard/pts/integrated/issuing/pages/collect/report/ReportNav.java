@@ -8,4 +8,8 @@ public class ReportNav {
 
 	public static final String L1_REPORTS = "VIE001";
 	
+	private ReportNav(){
+		
+	}
+	
 }

@@ -1,7 +1,6 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
@@ -33,10 +32,9 @@ public class DeviceRange {
 	private String status;
 	
 	public static String[] generateDeviceRange(int length) {
-		String rangeSpan = String.valueOf(length - 1);
-		String randomSpan = RandomStringUtils.randomNumeric(9 - rangeSpan.length());
-		String from = randomSpan + StringUtils.repeat('0', rangeSpan.length()) + "0";
-		String to = randomSpan + rangeSpan + "9";
+		String randomSpan = RandomStringUtils.randomNumeric(length - 2);
+		String from = randomSpan + "00";
+		String to = randomSpan + "99";
 		return new String[] { from, to };
 	}
 	

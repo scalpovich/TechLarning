@@ -3,19 +3,23 @@ package com.mastercard.pts.integrated.issuing.domain.customer.transaction;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.StringUtils;
-
 import com.mastercard.pts.integrated.issuing.configuration.FinSimSimulator;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
-import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 public class Transaction {
 
 	private static final String TRANSACTION_AMOUNT = "TRANSACTION_AMOUNT";
 
 	private static final String CURRENCY_USED = "CURRENCY";
+	
+	private static final String FINSIM_VALIDATION_DATA_START = "FINSIM_VALIDATION_DATA_START";
+	
+	private static final String FINSIM_CARD_LENGTH = "FINSIM_CARD_LENGTH";
+	
+	private static final String FINSIM_PAD = "FINSIM_PAD";
+	
+	private static final String FINSIM_PIN_LENGHT = "FINSIM_PIN_LENGHT";
 
 	private Map<String, String> deKeyValuePair = new LinkedHashMap<>();
 	
@@ -60,6 +64,32 @@ public class Transaction {
 	private String merchantProfile;
 	
 	private String transactionProfile;
+	
+	private String testCase;
+	
+	private String cardProfile;
+	
+	private String issuerCountryCode;
+
+	private String issuerCurrencyCode;
+	
+	private String cardHolderBillingCurrency;
+	
+	public String getIssuerCurrencyCode() {
+		return issuerCurrencyCode;
+	}
+
+	public void setIssuerCurrencyCode(String issuerCurrencyCode) {
+		this.issuerCurrencyCode = issuerCurrencyCode;
+	}
+
+	public String getCardHolderBillingCurrency() {
+		return cardHolderBillingCurrency;
+	}
+
+	public void setCardHolderBillingCurrency(String cardHolderBillingCurrency) {
+		this.cardHolderBillingCurrency = cardHolderBillingCurrency;
+	}
 
 	public String getOffSetForCard() {
 		return offSetForCard;
@@ -85,23 +115,22 @@ public class Transaction {
 		return transactionData;
 	}
 
-	public static Transaction generateFinSimPinTestData(Device device, FinSimSimulator finSimConfig) {
+	public static Transaction generateFinSimPinTestData(Device device, FinSimSimulator finSimConfig, KeyValueProvider provider) {
 		Transaction transactionData  = new Transaction();
-		//data come from PIN Offset file generated
 		transactionData.setCardNumber(device.getDeviceNumber());
 		transactionData.setPinKey(finSimConfig.getPinKey());
 		transactionData.setDecimalisationTable(finSimConfig.getDecimalizationValue());
-		transactionData.setValidationDataStart("4");
-		transactionData.setCardLength("12");
-		transactionData.setPad("F");
-		transactionData.setOffSetForCard(MiscUtils.convertToYYMM(device.getPinOffset().substring(1, 4)));
-		transactionData.setPinLength("4");
+		transactionData.setValidationDataStart(provider.getString(FINSIM_VALIDATION_DATA_START));
+		transactionData.setCardLength(provider.getString(FINSIM_CARD_LENGTH));
+		transactionData.setPad(provider.getString(FINSIM_PAD));
+		transactionData.setOffSetForCard((device.getPinOffset().substring(1, 5)));
+		transactionData.setPinLength(provider.getString(FINSIM_PIN_LENGHT));
+		
 		return transactionData;
 	}
 
 	public static Transaction fetchDataForFinSim(FinSimSimulator finSimConfig) {
 		Transaction transactionData  = new Transaction();
-		//data come from PIN Offset file generated
 		transactionData.setCardNumber("5877657327160814");
 		transactionData.setPinKey(finSimConfig.getPinKey());
 		transactionData.setDecimalisationTable(finSimConfig.getDecimalizationValue());
@@ -176,52 +205,6 @@ public class Transaction {
 		this.pinLength = pinLength;
 	}
 
-	public Map<String, String> setDataElementValues(String [] deElements) {
-		LinkedHashMap<String, String> dataElementData = new LinkedHashMap<>();
-
-		for(int i = 0; i < deElements.length; i++)
-		{
-			String [] temp = null;
-			try
-			{
-				 temp = deElements[i].split("=");
-			}
-			catch(NullPointerException e)
-			{
-				temp[1] = "BLANK";
-			}
-			
-			dataElementData.put(temp[0], getValues(temp[0], temp[1]));
-		}
-		return dataElementData;
-	}
-
-	private String getValues(String temp0, String temp1) {
-		String output = null;
-		switch (temp0) {
-		case "DE4":
-			output= StringUtils.leftPad(temp1, 12, "0"); 
-			break;
-		case "DE37":
-			output = getDataElement37Value(temp1);
-			break;
-		default:
-			output = temp1;
-			break;
-		}
-		return output;
-	}
-
-	private String  getDataElement37Value(String temp) {
-		if( temp.contains("generateRandomNumber"))
-		{
-			return RandomStringUtils.randomNumeric(12);
-		}
-		else
-		{
-			return StringUtils.leftPad(temp, 12, "0"); 
-		}
-	}
 
 	public String getCardNumber() {
 		return cardNumber;
@@ -317,6 +300,30 @@ public class Transaction {
 
 	public void setTransactionProfile(String transactionProfile) {
 		this.transactionProfile = transactionProfile;
+	}
+
+	public String getTestCase() {
+		return testCase;
+	}
+
+	public void setTestCase(String testCase) {
+		this.testCase = testCase;
+	}
+
+	public String getCardProfile() {
+		return cardProfile;
+	}
+
+	public void setCardProfile(String cardProfile) {
+		this.cardProfile = cardProfile;
+	}
+
+	public String getIssuerCountryCode() {
+		return issuerCountryCode;
+	}
+
+	public void setIssuerCountryCode(String issuerCountryCode) {
+		this.issuerCountryCode = issuerCountryCode;
 	}
 
 }

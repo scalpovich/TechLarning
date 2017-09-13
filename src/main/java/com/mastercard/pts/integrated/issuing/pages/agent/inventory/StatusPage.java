@@ -8,11 +8,9 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.agent.inventory.Status;
-import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -21,18 +19,8 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = InventoryNav.TAB_INVENTORY, treeMenuItems = { InventoryNav.L1_ORDER, InventoryNav.L2_STATUS })
-public class StatusPage extends AbstractModelPage {
+public class StatusPage extends InventoryAbstractPage {
 	private static final Logger logger = LoggerFactory.getLogger(OrderPage.class);
-
-	@Value("${default.wait.timeout_in_sec}")
-	private long timeoutInSec;
-
-	// main screen locators
-	@PageElement(findBy = FindBy.CSS, valueToFind = "div .Title")
-	private MCWebElement masterDetailContentTitle;
-
-	@PageElement(findBy = FindBy.CSS, valueToFind = "#brancId")
-	private MCWebElement branchIdDdwn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#orderNo")
 	private MCWebElement orderNumberTxt;
@@ -52,6 +40,7 @@ public class StatusPage extends AbstractModelPage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody//tr/td[5]")
 	private MCWebElement statusMessage;
 
+	@Override
 	public void verifyUiOperationStatus() {
 		logger.info("Status");
 		verifyButton("Search");
@@ -59,18 +48,12 @@ public class StatusPage extends AbstractModelPage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.visibilityOf(branchIdDdwn), WebElementUtils.visibilityOf(orderNumberTxt),
+		return Arrays.asList(WebElementUtils.visibilityOf(brancIdDDwn), WebElementUtils.visibilityOf(orderNumberTxt),
 				WebElementUtils.visibilityOf(statusDDwn), WebElementUtils.visibilityOf(orderFromDateDPkr), WebElementUtils.visibilityOf(orderToDateDPkr));
 	}
 
-	// methods
-	public String getMasterDetailContentTitleText() {
-		logger.info("Corporate User View Edit Master Detail Tilte Text: {}");
-		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle)).getText();
-	}
-
 	public void selectBranchId(String branchId) {
-		WebElementUtils.selectDropDownByVisibleText(branchIdDdwn, branchId);
+		WebElementUtils.selectDropDownByVisibleText(brancIdDDwn, branchId);
 	}
 
 	public void enterOrderNumber(String orderNumber) {

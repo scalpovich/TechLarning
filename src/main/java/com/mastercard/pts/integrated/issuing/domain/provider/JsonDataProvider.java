@@ -106,7 +106,7 @@ public class JsonDataProvider implements DataProvider {
 	}
 
 	private JsonNode buildJsonNode(JsonNode target, String path)
-			throws IOException, JsonProcessingException, JsonPatchException {
+			throws IOException, JsonPatchException {
 		InputStream inputStream = getResource(path);
 		if (inputStream == null) {
 			return target;
@@ -124,6 +124,7 @@ public class JsonDataProvider implements DataProvider {
 			logger.info("Patch data from {}", path);
 			return patch.apply(target);
 		} catch (IOException e) {
+			//NO SONAR. It is based on the exception, we are performing other operations so cannot throw this as an error hence Info message
 			JsonMergePatch merge = JsonMergePatch.fromJson(node);
 			logger.info("Merge data from {}", path);
 			return merge.apply(target);

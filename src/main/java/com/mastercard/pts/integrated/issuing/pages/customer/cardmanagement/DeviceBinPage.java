@@ -62,14 +62,17 @@ public class DeviceBinPage extends AbstractModelPage {
 
 	public void addDeviceBin(List<DeviceBin> dbList) {
 		dbList.forEach(db -> {
-			logger.info("create Devcie bin : {}", db.toString());
-			clickAddNewButton();
-			runWithinPopup("Add Device BIN", () -> {
-				addBin(db);
-				verifyNoErrors();
-			});
-
-			verifyOperationStatus();
+			performSearchOperationOnMainScreen(db);
+			if(isNoRecordsFoundInTable())
+			{
+				logger.info("create Devcie bin : {}", db.toString());
+				clickAddNewButton();
+				runWithinPopup("Add Device BIN", () -> {
+					addBin(db);
+					verifyNoErrors();
+				});
+				verifyOperationStatus();
+			}
 		});
 	}
 
@@ -83,6 +86,12 @@ public class DeviceBinPage extends AbstractModelPage {
 		WebElementUtils.enterText(issuerIcaTxt, db.getIssuerBin());
 		WebElementUtils.enterText(proxyIcaTxt, db.getIssuerBin());
 		clickSaveButton();
+	}
+
+	private void performSearchOperationOnMainScreen(DeviceBin db)
+	{
+		WebElementUtils.enterText(issuerBin, db.getIssuerBin());
+		clickSearchButton();
 	}
 
 	@Override

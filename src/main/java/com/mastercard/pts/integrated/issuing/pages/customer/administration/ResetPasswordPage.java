@@ -19,7 +19,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle = AdministrationNav.TAB_ADMINISTRATION, treeMenuItems = {
 		AdministrationNav.L1_SETUP,
-		AdministrationNav.L2_RESET_PASSWORD
+		AdministrationNav.L2_RESET_PASSWRD
 		})
 public class ResetPasswordPage extends AbstractModelPage{
 

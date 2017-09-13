@@ -31,7 +31,7 @@ public class CutoverProfile {
 	public static CutoverProfile createWithProvider(DataProvider provider)
 	{
 		CutoverProfile cp=provider.getDataBySimpleClassName(CutoverProfile.class);
-		cp.setBusinessDate(LocalDate.now());
+		cp.setBusinessDate(LocalDate.now().plusDays(1));
 		return cp;
 	}
 	

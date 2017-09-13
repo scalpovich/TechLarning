@@ -67,26 +67,35 @@ public class EmbossingPINAndPriorityPassFileNameParameterPage extends AbstractMo
 				);
 	}
 	
-	public void  EmbossingPINAndPriorityPassFileNameParameter(EmbossingPinAndPriorityPassFileNameParameter data)
+	public void  embossingPINAndPriorityPassFileNameParameter(EmbossingPinAndPriorityPassFileNameParameter data)
 	{
 		logger.info("Embossing,PIN and Priority Pass File Name Parameter ");
-		clickAddNewButton();
-		
-		runWithinPopup("Add Embossing ,PIN & Priority Pass File Name Parameter", () -> {
+		performSearchOperationOnMainScreen(data);
+		if(isNoRecordsFoundInTable())
+		{
+			clickAddNewButton();
 			
-			WebElementUtils.enterText(planDesc, data.getDescription());
-			WebElementUtils.selectDropDownByVisibleText(fileTypeDrpDwnPopUp, data.getFileType());
+			runWithinPopup("Add Embossing ,PIN & Priority Pass File Name Parameter", () -> {
+				
+				WebElementUtils.enterText(planDesc, data.getDescription());
+				WebElementUtils.selectDropDownByVisibleText(fileTypeDrpDwnPopUp, data.getFileType());
+				
+				WebElementUtils.selectDropDownByVisibleText(productTypeDrpDwnPopUp, data.getProductType());
+				WebElementUtils.enterText(priorityTxtBxPopUp, data.getPriority());
+				WebElementUtils.enterText(fileNameExpTxtBxPopUp,data.getFileNameExpression());
+				
+				clickSaveButton();
+				
+			});
 			
-			WebElementUtils.selectDropDownByVisibleText(productTypeDrpDwnPopUp, data.getProductType());
-			WebElementUtils.enterText(priorityTxtBxPopUp, data.getPriority());
-			WebElementUtils.enterText(fileNameExpTxtBxPopUp,data.getFileNameExpression());
-			
-			clickSaveButton();
-			
-		});
-		
-		verifyOperationStatus();
-		
-		
+			verifyOperationStatus();		
+		}
 	}
+	
+	private void performSearchOperationOnMainScreen(EmbossingPinAndPriorityPassFileNameParameter data)
+	{
+		WebElementUtils.enterText(planDesc, data.getDescription());
+		clickSearchButton();
+	}
+
 }

@@ -28,7 +28,6 @@ public class AssignProgramsAgencyPage extends AbstractModelPage {
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
-	// main screen locators
 	@PageElement(findBy = FindBy.CSS, valueToFind = "div .Title")
 	private MCWebElement masterDetailContentTitle;
 
@@ -57,7 +56,6 @@ public class AssignProgramsAgencyPage extends AbstractModelPage {
 		return Arrays.asList(WebElementUtils.visibilityOf(agencyIdDdwn));
 	}
 
-	// methods
 	public String getMasterDetailContentTitleText() {
 		logger.info("Corporate User View Edit Master Detail Tilte Text: {}");
 		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle)).getText();

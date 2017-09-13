@@ -38,6 +38,9 @@ public class LoginWorkflow {
 	
 	public void confirmInstitutionSelection(String institutionSelector) {
 		InstitutionSelectionPage page = pageFactory.getPage(InstitutionSelectionPage.class);
+		String institution = System.getProperty("institution");
+		if (institution != null && !institution.trim().isEmpty())
+			institutionSelector=institution;
 		page.selectInstitution(institutionSelector);
 		page.clickConfirm();
 	}
@@ -57,6 +60,16 @@ public class LoginWorkflow {
 	public void signOutCustomer(){
 		HeaderPage page = pageFactory.getPage(HeaderPage.class);
 		page.signOutCustomer();
+	}
+	
+	public void signOutCollect(){
+		HeaderPage page = pageFactory.getPage(HeaderPage.class);
+		page.signOutCollect();
+	}
+	
+	public void signOutCardholder(){
+		HeaderPage page = pageFactory.getPage(HeaderPage.class);
+		page.signOutCardholder();
 	}
 	
 	public void signOutAgent(){

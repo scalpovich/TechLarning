@@ -129,6 +129,7 @@ public class ProcessBatchesPage extends AbstractModelPage {
 		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
 		Date todayDate;
 		Date dateFromUI;
+		batchStatus=null;
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
 		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "SYSTEM INTERNAL PROCESSING [B]");
 		selectInternalBatchType(batch.getBatchName());

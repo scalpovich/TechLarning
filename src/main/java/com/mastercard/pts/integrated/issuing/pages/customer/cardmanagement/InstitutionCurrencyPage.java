@@ -50,16 +50,21 @@ public class InstitutionCurrencyPage extends AbstractModelPage {
 	{
 		logger.info("create currency : {}",
 				currency.getCurrency());
-		clickAddNewButton();
 
-		runWithinPopup(
-				"Add Institution Currency",
-				() -> {
-						addInstituteCurrency(currency);
-						verifyNoErrors();
-				});
-
-		verifyOperationStatus();
+		performSearchOperationOnMainScreen();
+		if(isNoRecordsFoundInTable())
+		{
+			clickAddNewButton();
+	
+			runWithinPopup(
+					"Add Institution Currency",
+					() -> {
+							addInstituteCurrency(currency);
+							verifyNoErrors();
+					});
+	
+			verifyOperationStatus();
+		}
 	}
 	
 	private void addInstituteCurrency(InstitutionCurrency currency) {
@@ -68,6 +73,11 @@ public class InstitutionCurrencyPage extends AbstractModelPage {
 		clickSaveButton();
 	}	
 	
+	private void performSearchOperationOnMainScreen()
+	{
+		WebElementUtils.enterText(currencyCodeAlpha, "INR");
+		clickSearchButton();
+	}
 	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

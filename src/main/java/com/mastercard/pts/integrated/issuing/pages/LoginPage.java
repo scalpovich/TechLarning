@@ -21,6 +21,9 @@ public class LoginPage extends AbstractPage implements Validatable {
 	public static final String AUTHENTIFICATION_FAILED = "Authentication failed. "
 			+ "You have used an invalid user name, password or client certificate."; 
 	
+	public static final String AUTHENTIFICATION_FAILED_AGENT = "Authentication failed. "
+			+ "Please enter valid User ID or Password";
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[type='text']")
 	private MCWebElement userIdInput;
 	

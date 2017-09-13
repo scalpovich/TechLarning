@@ -5,8 +5,6 @@ import java.util.Collection;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
@@ -24,9 +22,6 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L4_CREDIT_BUREAU_VERIFICATION })
 public class CreditBureauVerificationPage extends AbstractModelPage {
 
-//	private static final Logger logger = LoggerFactory.getLogger(CloseBatchPage.class);
-
-//	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Batch No')]")
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview")
 	private MCWebElement batchNoColumn;
 

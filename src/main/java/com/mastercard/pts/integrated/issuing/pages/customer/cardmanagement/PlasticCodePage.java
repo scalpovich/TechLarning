@@ -47,17 +47,21 @@ public class PlasticCodePage extends AbstractModelPage {
 	
 	public void addPictureCode(PlasticCode pc)
 	{
-		logger.info("create new plastic code : {}",pc.getPlasticCodeNumber());
-		clickAddNewButton();
-
-		runWithinPopup(
-				"Add Plastic Code",
-				() -> {
-						addCode(pc);
-						verifyNoErrors();
-				});
-
-		verifyOperationStatus();
+		performSearchOperationOnMainScreen(pc);
+		if(isNoRecordsFoundInTable())
+		{
+			logger.info("create new plastic code : {}",pc.getPlasticCodeNumber());
+			clickAddNewButton();
+	
+			runWithinPopup(
+					"Add Plastic Code",
+					() -> {
+							addCode(pc);
+							verifyNoErrors();
+					});
+	
+			verifyOperationStatus();
+		}
 	}
 	
 	private void addCode(PlasticCode pc) {
@@ -65,7 +69,13 @@ public class PlasticCodePage extends AbstractModelPage {
 		WebElementUtils.enterText(descriptionPopupTxt, pc.getDescription());
 		clickSaveButton();
 	}	
-	
+
+	private void performSearchOperationOnMainScreen(PlasticCode pc)
+	{
+		WebElementUtils.enterText(plasticId, pc.getPlasticCodeNumber());
+		clickSearchButton();
+	}
+
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(

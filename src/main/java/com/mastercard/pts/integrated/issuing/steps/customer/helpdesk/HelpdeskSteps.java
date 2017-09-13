@@ -90,6 +90,7 @@ public class HelpdeskSteps {
 		assertEquals(currentBalanceAmount, currentBalanceAmountBET);
 	}
 
+	@When("after transaction wallet balance amount for $type device is updated correctly")
 	@Then("after transaction wallet balance amount for $type device is updated correctly")
 	public void thenCheckCurrentWalletBalanceAmount(String type) {
 		Device device = context.get(ContextConstants.DEVICE);

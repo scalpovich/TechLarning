@@ -17,6 +17,8 @@ public class HelpdeskNav {
 	public static final String L2_GENERAL = "HEA002";
 
 	public static final String L2_SCR_PROCESS = "HEAS00";
+	
+	public static final String L2_SEARCH = "HSE000";
 
 	public static final String L3_FORWARDED = "HEAS01";
 

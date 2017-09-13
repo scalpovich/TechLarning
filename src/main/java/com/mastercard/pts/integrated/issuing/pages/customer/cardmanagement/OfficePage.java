@@ -74,16 +74,20 @@ public class OfficePage extends AbstractModelPage {
 	public void addOffice(List<Office> officeList)
 	{
 		officeList.forEach(ofc->{
-		logger.info("create office : {}",ofc.toString());
-		clickAddNewButton();
-		runWithinPopup(
-				"Add Office",
-				() -> {
-						addOffice(ofc);
-						verifyNoErrors();
-				});
-
-		verifyOperationStatus();       
+			performSearchOperationOnMainScreen(ofc);
+			if(isNoRecordsFoundInTable())
+			{
+				logger.info("create office : {}",ofc.toString());
+				clickAddNewButton();
+				runWithinPopup(
+						"Add Office",
+						() -> {
+								addOffice(ofc);
+								verifyNoErrors();
+						});
+		
+				verifyOperationStatus(); 
+			}      
 		});
 	}
 	
@@ -104,6 +108,12 @@ public class OfficePage extends AbstractModelPage {
 			WebElementUtils.enterText(address3PopupTxt, ofc.getAddressLine2());
 			SimulatorUtilities.wait(5000);
 			clickSaveButton();
+	}
+
+	private void performSearchOperationOnMainScreen(Office ofc)
+	{
+		WebElementUtils.enterText(branchName, ofc.getOfficeName());
+		clickSearchButton();
 	}
 
 	@Override

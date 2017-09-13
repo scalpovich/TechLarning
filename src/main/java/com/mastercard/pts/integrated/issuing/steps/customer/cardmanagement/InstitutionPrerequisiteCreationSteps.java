@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class InstitutionPrerequisiteCreationSteps{
 	@Given("check for new Institution status")
 	@When("check for new Institution status")
 	public void givenCheckforNewInstitutionStatus(){
-		assertTrue("Institution already exist, so no need of pre requisite data creation",context.get("NEW_INSTITUION_CREATED").equals(true));
+		assertThat("Institution already exist, so no need of pre requisite data creation", context.get("NEW_INSTITUION_CREATED"), equalTo(true));
 	}
 	
 	@Given("user creates new holiday configuration")

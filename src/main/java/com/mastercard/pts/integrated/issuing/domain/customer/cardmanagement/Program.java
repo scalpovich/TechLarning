@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
 
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
@@ -15,6 +16,10 @@ public class Program implements HasCodeAndDescription {
 	private static final String CASH_LIMIT_TYPE = "CASH_LIMIT_TYPE";
 
 	private static final String PROGRAM_TYPE = "PROGRAM_TYPE";
+	
+	private static final String REFUND_IN_CURRENCY = "REFUND_IN_CURRENCY";
+	
+	private String refundInCurrency;
 
 	private String description;
 
@@ -72,7 +77,7 @@ public class Program implements HasCodeAndDescription {
 		programObject.setDescription(ConstantData.GENERIC_DESCRIPTION);
 		programObject.setProgramType(provider.getString(PROGRAM_TYPE));
 		programObject.setMaximumBalanceWithoutKyc(RandomStringUtils.randomNumeric(4));
-		programObject.setNumberOfLoadsAllowedWithoutKyc(RandomStringUtils.randomNumeric(2));
+		programObject.setNumberOfLoadsAllowedWithoutKyc(String.valueOf(RandomUtils.nextInt(1,99)));
 		programObject.setCreditLimit(RandomStringUtils.randomNumeric(5));
 		programObject.setMaximumCreditLimit(RandomStringUtils.randomNumeric(6));
 		programObject.setCashLimitAmount(RandomStringUtils.randomNumeric(5));
@@ -80,12 +85,21 @@ public class Program implements HasCodeAndDescription {
 		programObject.setCashLimitType(provider.getString(CASH_LIMIT_TYPE));
 		programObject.setCashLimitReset(provider.getString(CASH_LIMIT_RESET));
 		programObject.setAddOnLimitReset(provider.getString(CASH_LIMIT_RESET));
+		programObject.setRefundInCurrency(provider.getString(REFUND_IN_CURRENCY));
 		return programObject;
 	}
 	
 	@Override
 	public String getDescription() {
 		return description;
+	}
+
+	public String getRefundInCurrency() {
+		return refundInCurrency;
+	}
+
+	public void setRefundInCurrency(String refundInCurrency) {
+		this.refundInCurrency = refundInCurrency;
 	}
 
 	public void setDescription(String description) {

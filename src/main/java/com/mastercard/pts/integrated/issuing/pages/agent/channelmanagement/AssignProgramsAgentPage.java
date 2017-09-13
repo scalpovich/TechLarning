@@ -28,7 +28,6 @@ public class AssignProgramsAgentPage extends AbstractModelPage {
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
-	// main screen locators
 	@PageElement(findBy = FindBy.CSS, valueToFind = "div .Title")
 	private MCWebElement masterDetailContentTitle;
 
@@ -58,7 +57,6 @@ public class AssignProgramsAgentPage extends AbstractModelPage {
 		verifyButton("Search");
 	}
 
-	// methods
 	public String getMasterDetailContentTitleText() {
 		logger.info("Corporate User View Edit Master Detail Tilte Text: {}");
 		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle)).getText();
@@ -99,6 +97,10 @@ public class AssignProgramsAgentPage extends AbstractModelPage {
 		selectBranchId(details.getBranchId());
 		selectAgentId(details.getAgentId());
 		clickSearchButton();
+		//work around for the defect assigning program - repeating as AgentId dropDown value is not retained after search
+		selectAgentId(details.getAgentId());
+		clickSearchButton();
+		
 		selectProgramCode(details.getProgramCode());
 		selectDeviceType(details.getDeviceType());
 		clickAddButton();

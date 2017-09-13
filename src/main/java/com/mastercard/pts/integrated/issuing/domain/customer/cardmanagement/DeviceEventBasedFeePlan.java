@@ -45,14 +45,6 @@ public class DeviceEventBasedFeePlan implements HasCodeAndDescription {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	public String getCurrency() {
-		return currency;
-	}
-	
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
 
 	public String getProductType() {
 		return productType;
@@ -60,6 +52,14 @@ public class DeviceEventBasedFeePlan implements HasCodeAndDescription {
 	
 	public void setProductType(String productType) {
 		this.productType = productType;
+	}
+	
+	public String getCurrency() {
+		return currency;
+	}
+	
+	public void setCurrency(String currency) {
+		this.currency = currency;
 	}
 	
 	public List<DeviceEventBasedFeePlanDetails> getDeviceEventBasedFeePlanDetails() {

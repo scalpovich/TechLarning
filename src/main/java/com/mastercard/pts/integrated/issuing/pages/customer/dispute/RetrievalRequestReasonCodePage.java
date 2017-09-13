@@ -5,35 +5,20 @@ import java.util.Collection;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
-import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
-import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
-import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = DisputeNav.TAB_DISPUTE, treeMenuItems = {
 		DisputeNav.L1_SETUP, DisputeNav.L2_DISPUTE_REASON_CODE,
-		DisputeNav.L3_RE_PRESENTMENT_REASON_CODE}
+		DisputeNav.L3_RETRIEVAL_REQUEST_REASON_CODE}
 )
-public class RetrievalRequestReasonCodePage extends AbstractModelPage {
-	
-	private static final Logger logger = LoggerFactory.getLogger(RetrievalRequestReasonCodePage.class);
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
-	protected MCWebElement interchangeDDwn;
-
-	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn='reasonCode']")
-	protected MCWebElement reasonCodeTxt;
+public class RetrievalRequestReasonCodePage extends AbstractDisputePage {
 
 	public void verifyUiOperationStatus() {
-		logger.info("Retrieval Request Reason Code");
-		verifySearchButton("Search");
+		verifyOperationStatus("Retrieval Request Reason Code");
 	}
 
 	@Override

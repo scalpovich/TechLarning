@@ -7,14 +7,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
-import com.mastercard.testing.mtaf.bindings.page.AbstractPage;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-public class CollectHomePage extends AbstractPage {
+@Navigation(tabTitle = CollectHomeNav.TAB_HOME)
+public class CollectHomePage extends AbstractCollectPage {
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "a[title=Home]")
 	private MCWebElement homeTab;
@@ -30,6 +31,11 @@ public class CollectHomePage extends AbstractPage {
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "a[title=Report]")
 	private MCWebElement reportTab;
+	
+	@Override
+	public void verifyUiOperationStatus() {
+		verifyUiOperationStatus("Home");
+	}
 
 	@Override
 	protected List<ExpectedCondition<WebElement>> isLoadedConditions() {

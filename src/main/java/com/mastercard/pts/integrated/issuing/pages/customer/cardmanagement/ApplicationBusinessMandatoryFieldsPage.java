@@ -77,7 +77,7 @@ public class ApplicationBusinessMandatoryFieldsPage extends AbstractModelPage {
 		//When record already exists
 		if(!isNoRecordsFoundInTable())
 		{
-			editAndAddBusinessMandatoryFields(applicationBusinessMandatoryFields);
+			editAndAddBusinessMandatoryFields();
 		}		
 		else
 		{
@@ -91,7 +91,7 @@ public class ApplicationBusinessMandatoryFieldsPage extends AbstractModelPage {
 					applicationBusinessMandatoryFields.setProgramCode("All [~]");
 				}
 				WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, applicationBusinessMandatoryFields.getProgramCode());
-				clickWhenClickable(searchBtn);
+				clickOnElementWhenClickable(searchBtn);
 				
 				WebElementUtils.checkCheckbox(checkBoxOneChk, true);
 				clickSaveButton();
@@ -114,7 +114,7 @@ public class ApplicationBusinessMandatoryFieldsPage extends AbstractModelPage {
 				.map(WebElement::getText).findFirst();
 	}
 
-	private void editAndAddBusinessMandatoryFields(ApplicationBusinessMandatoryFields applicationBusinessMandatoryFields) {
+	private void editAndAddBusinessMandatoryFields() {
 		
 		editFirstRecord();		
 		
@@ -127,7 +127,7 @@ public class ApplicationBusinessMandatoryFieldsPage extends AbstractModelPage {
 		});
 	}
 	
-	private void clickWhenClickable(MCWebElement element) {
+	private void clickOnElementWhenClickable(MCWebElement element) {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
 		waitForWicket();
 	}

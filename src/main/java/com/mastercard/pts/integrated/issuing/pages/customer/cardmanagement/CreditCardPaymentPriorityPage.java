@@ -97,28 +97,18 @@ public class CreditCardPaymentPriorityPage extends AbstractModelPage {
 		// Add Document Checklist section
 		AtomicBoolean canceled = new AtomicBoolean(false);
 		runWithinPopup("Add Payment Priority", () -> {
-			WebElementUtils.enterText(paymentPriorityPlanCodeTxt,
-					creditCardPaymentPriority.getPaymentPriorityPlanCode());
-			WebElementUtils.enterText(descriptionTxt,
-					creditCardPaymentPriority.getDescription());
-			WebElementUtils.enterText(cashTxt,
-					creditCardPaymentPriority.getCash());
-			WebElementUtils.enterText(purchaseTxt,
-					creditCardPaymentPriority.getPurchase());
-			WebElementUtils.enterText(uniqueTxt,
-					creditCardPaymentPriority.getUnique());
-			WebElementUtils.enterText(tEeTxt,
-					creditCardPaymentPriority.gettAndE());
-			WebElementUtils.enterText(feeTxt,
-					creditCardPaymentPriority.getFee());
-			WebElementUtils.enterText(transferTxt,
-					creditCardPaymentPriority.getTransfer());
-			WebElementUtils.enterText(installementTxt,
-					creditCardPaymentPriority.getInstallement());
-			WebElementUtils.enterText(interestTxt,
-					creditCardPaymentPriority.getInterest());
+			WebElementUtils.enterText(paymentPriorityPlanCodeTxt, creditCardPaymentPriority.getPaymentPriorityPlanCode());
+			WebElementUtils.enterText(descriptionTxt, creditCardPaymentPriority.getDescription());
+			WebElementUtils.enterText(cashTxt, creditCardPaymentPriority.getCash());
+			WebElementUtils.enterText(purchaseTxt, creditCardPaymentPriority.getPurchase());
+			WebElementUtils.enterText(uniqueTxt, creditCardPaymentPriority.getUnique());
+			WebElementUtils.enterText(tEeTxt, creditCardPaymentPriority.gettAndE());
+			WebElementUtils.enterText(feeTxt, creditCardPaymentPriority.getFee());
+			WebElementUtils.enterText(transferTxt, creditCardPaymentPriority.getTransfer());
+			WebElementUtils.enterText(installementTxt, creditCardPaymentPriority.getInstallement());
+			WebElementUtils.enterText(interestTxt, creditCardPaymentPriority.getInterest());
+		
 			clickSaveButton();
-
 			canceled.set(verifyAlreadyExistsAndClickCancel());
 		});
 		if (!canceled.get()) {

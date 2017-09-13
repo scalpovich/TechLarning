@@ -27,7 +27,6 @@ public class AssignPrivilegesPage extends AbstractModelPage {
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
-	// main screen locators
 	@PageElement(findBy = FindBy.CSS, valueToFind = "div .Title")
 	private MCWebElement masterDetailContentTitle;
 
@@ -48,7 +47,6 @@ public class AssignPrivilegesPage extends AbstractModelPage {
 				WebElementUtils.visibilityOf(usrTypeDDwn));
 	}
 
-	// methods
 	public String getMasterDetailContentTitleText() {
 		logger.info("Role Information Tilte Text: {}");
 		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle)).getText();

@@ -30,8 +30,7 @@ public class HolidayConfiguration {
 	}
 	
 	public static HolidayConfiguration createWithProvider(DataProvider provider) {
-		HolidayConfiguration hc=new HolidayConfiguration();
-		hc=provider.getDataBySimpleClassName(HolidayConfiguration.class);
+		HolidayConfiguration hc = provider.getDataBySimpleClassName(HolidayConfiguration.class);
 		hc.setCalendarDate(LocalDate.now().plusDays(1));
 		return hc;
 	}

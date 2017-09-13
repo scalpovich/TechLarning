@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
-import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
@@ -21,8 +21,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 public class DisputesManagementReportPage extends AbstractDisputePage {
 	
-	private static final Logger logger = LoggerFactory
-			.getLogger(DisputesManagementReportPage.class);
+	private static final Logger logger = LoggerFactory.getLogger(DisputesManagementReportPage.class);
 
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "componentPanel")

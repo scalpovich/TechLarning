@@ -25,7 +25,7 @@ public class BatchTraceHistoryPage extends AbstractModelPage {
 	private static final Logger logger = LoggerFactory
 			.getLogger(BatchTraceHistoryPage.class);
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:3:componentList:0:componentPanel:input:inputTextField")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:1:componentPanel:input:inputTextField")
 	private MCWebElement searchJobIdTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='fromDttm']/..")
@@ -35,6 +35,8 @@ public class BatchTraceHistoryPage extends AbstractModelPage {
 	private MCWebElement endDateTxt;
 
 	public boolean searchJob(String jobId) {
+		boolean found = false;
+		int i;
 		logger.info("Searching for jobId: {}", jobId);
 		WebElementUtils.enterText(searchJobIdTxt, jobId);
 		clickSearchButton();
@@ -46,8 +48,13 @@ public class BatchTraceHistoryPage extends AbstractModelPage {
 			}
 		}
 
-		return getFirstRecordCellTextByColumnName("Message Label").contains(
-				"Batch completed successfully");
+		for(i=1;i<4;i++){
+			if(getCellTextByColumnName(i, "Message Label").contains("Batch executed sucessfully")){
+				found = true;
+				break;
+			}
+		}
+		return found;
 	}
 
 	public boolean searchJob() {

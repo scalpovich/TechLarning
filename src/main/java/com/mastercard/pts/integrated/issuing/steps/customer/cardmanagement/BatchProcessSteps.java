@@ -149,11 +149,17 @@ public class BatchProcessSteps {
 		assertEquals("SUCCESS [2]", batchProcessWorkflow.processSystemInternalProcessingBatch(batch));			
 
 	}
+	
+	@Then("file is successfully downloaded is executed for prepaid")
+	public void thenFileIsSuccessfullyDownloadedForPrepaid(){
+		thenFileIsSuccessfullyDownloaded();
+	}
 
 	@Then("file is successfully downloaded")
 	public void thenFileIsSuccessfullyDownloaded(){
 		String partialFileName = "STMT" + provider.getString(INSTITUTION_CODE) + DateUtils.getDate(); 
-		File batchFile = linuxBox.downloadByLookUpForPartialFileName(partialFileName, tempDirectory.toString(), "Statement_Generation");
+		String fileName = "STMT";
+		File batchFile = linuxBox.downloadByLookUpForPartialFileName(fileName, tempDirectory.toString(), "STATEMENT_DOWNLOAD");
 		assertNotNull(partialFileName + " : Batch file is successfully donwloaded",batchFile);
 	}
 

@@ -4,6 +4,7 @@ import org.jbehave.core.annotations.Then;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.administration.UiVerificationAdministrationWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.UiVerificationCardManagementWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.dispute.UiVerifcationDisputeWorkflow;
@@ -31,6 +32,9 @@ public class CustomerUiVerificationSteps {
 
 	@Autowired
 	private UiVerifcationDisputeWorkflow uiVerificationDisputeWorkflow;
+
+	@Autowired
+	private LoginWorkflow loginWorkflow;
 
 	@Then("all pages of helpdesk tab are rendered correctly")
 	public void thenAllPagesOfHelpdeskTabAreRenderedCorrectly() {
@@ -1383,4 +1387,9 @@ public class CustomerUiVerificationSteps {
 		uiVerificationCardManagementWorkflow.verifyDeviceStatusPage();
 	}
 
+	@Then("user signs out from customer portal")
+	public void signOutFromPortal() {
+		loginWorkflow.signOutCustomer();
+	}	
+	
 }

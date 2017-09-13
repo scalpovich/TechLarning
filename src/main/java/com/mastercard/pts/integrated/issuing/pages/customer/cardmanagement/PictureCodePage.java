@@ -46,17 +46,21 @@ public class PictureCodePage extends AbstractModelPage {
 	
 	public void addPictureCode(PictureCode pc)
 	{
-		logger.info("create new picture code : {}",pc.getPictureCodeNumber());
-		clickAddNewButton();
-
-		runWithinPopup(
-				"Add Picture Code",
-				() -> {
-						addCode(pc);
-						verifyNoErrors();
-				});
-
-		verifyOperationStatus();
+		performSearchOperationOnMainScreen(pc);
+		if(isNoRecordsFoundInTable())
+		{
+			logger.info("create new picture code : {}",pc.getPictureCodeNumber());
+			clickAddNewButton();
+	
+			runWithinPopup(
+					"Add Picture Code",
+					() -> {
+							addCode(pc);
+							verifyNoErrors();
+					});
+	
+			verifyOperationStatus();
+		}
 	}
 	
 	private void addCode(PictureCode pc) {
@@ -65,6 +69,12 @@ public class PictureCodePage extends AbstractModelPage {
 		clickSaveButton();
 	}	
 
+	private void performSearchOperationOnMainScreen(PictureCode pc)
+	{
+		WebElementUtils.enterText(pictureCode, pc.getPictureCodeNumber());
+		clickSearchButton();
+	}
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(

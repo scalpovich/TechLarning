@@ -65,9 +65,12 @@ public class DeviceCreateDevicePage extends AbstractModelPage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePhotoIndicator1:input:dropdowncomponent")
 	private MCWebElement photoIndicatorDDwn;
 
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#corporateClientCode select")
+	private MCWebElement corporateClientCodeDDwn;
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#branchCode select")
 	private MCWebElement branchCodeDDwn;
-
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#title select")
 	private MCWebElement titleDDwn;
 
@@ -124,33 +127,23 @@ public class DeviceCreateDevicePage extends AbstractModelPage {
 	public void verifyProgramAndDevicePlan(Device device) {
 		clickAddNewButton();
 
-		runWithinPopup(
-				"Add Device",
-				() -> {
+		runWithinPopup("Add Device", () -> {
 					fillDeviceInformation(device);
 					fillBatchDetails(device);
 
 					clickNextButton();
-					WebElementUtils.selectDropDownByVisibleText(
-							customerTypeDDwn, device.getCustomerType());
+					WebElementUtils.selectDropDownByVisibleText(customerTypeDDwn, device.getCustomerType());
 
-					List<String> programs = WebElementUtils
-							.getOptionsTextFromSelect(programCodeDDwn);
-					Assert.assertThat("Program is not available", programs,
-							Matchers.hasItem(device.getProgramCode()));
+					List<String> programs = WebElementUtils.getOptionsTextFromSelect(programCodeDDwn);
+					Assert.assertThat("Program is not available", programs, Matchers.hasItem(device.getProgramCode()));
 
-					WebElementUtils.selectDropDownByVisibleText(
-							programCodeDDwn, device.getProgramCode());
+					WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, device.getProgramCode());
 
 					clickNextButton();
-					WebElementUtils.selectDropDownByVisibleText(
-							deviceType1DDwn, device.getDeviceType1());
+					WebElementUtils.selectDropDownByVisibleText(deviceType1DDwn, device.getDeviceType1());
 
-					List<String> devicePlans = WebElementUtils
-							.getOptionsTextFromSelect(devicePlan1DDwn);
-					Assert.assertThat("Device plan is not available",
-							devicePlans,
-							Matchers.hasItem(device.getDevicePlan1()));
+					List<String> devicePlans = WebElementUtils.getOptionsTextFromSelect(devicePlan1DDwn);
+					Assert.assertThat("Device plan is not available", devicePlans, Matchers.hasItem(device.getDevicePlan1()));
 				});
 	}
 
@@ -179,10 +172,10 @@ public class DeviceCreateDevicePage extends AbstractModelPage {
 			fillProfileAndAddressDetailsAndClickNext(device);
 
 			// skip wallet extra fields
-				clickFinishButton();
+			clickFinishButton();
 
-				verifyNoErrors();
-			});
+			verifyNoErrors();
+		});
 
 		verifyOperationStatus();
 
@@ -212,18 +205,13 @@ public class DeviceCreateDevicePage extends AbstractModelPage {
 	}
 
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
-		WebElementUtils.selectDropDownByVisibleText(customerTypeDDwn,
-				device.getCustomerType());
-		WebElementUtils.selectDropDownByVisibleText(programCodeDDwn,
-				device.getProgramCode());
+		WebElementUtils.selectDropDownByVisibleText(customerTypeDDwn, device.getCustomerType());
+		WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, device.getProgramCode());
 		clickNextButton();
 
-		WebElementUtils.selectDropDownByVisibleText(deviceType1DDwn,
-				device.getDeviceType1());
-		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn,
-				device.getDevicePlan1());
-		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn,
-				device.getPhotoIndicator());
+		WebElementUtils.selectDropDownByVisibleText(deviceType1DDwn, device.getDeviceType1());
+		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
+		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
 	}
 
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
@@ -255,6 +243,9 @@ public class DeviceCreateDevicePage extends AbstractModelPage {
 	}
 
 	private void fillProfile(Device device) {
+		if(corporateClientCodeDDwn.isEnabled())
+			WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
+
 		WebElementUtils.selectDropDownByVisibleText(branchCodeDDwn,
 				device.getBranchCode());
 		ClientDetails client = device.getClientDetails();

@@ -53,18 +53,21 @@ public class NetworkMembershipPage extends AbstractModelPage {
 	
 	public void addNewNetworkMembership(List<NetworkMembership> networkMemeberList)
 	{
-		networkMemeberList.forEach(networkMember->{
-		logger.info("create network member of interchange : {}",networkMember.getInterchange());
-		clickAddNewButton();
-		runWithinPopup(
-				"Add Network Membership",
-				() -> {
-					addNetworkMember(networkMember);
-						verifyNoErrors();
-				});
-
-		verifyOperationStatus();       
-		});
+		if(isNoRecordsFoundInTable())
+			{
+			networkMemeberList.forEach(networkMember->{
+			logger.info("create network member of interchange : {}",networkMember.getInterchange());
+			clickAddNewButton();
+			runWithinPopup(
+					"Add Network Membership",
+					() -> {
+						addNetworkMember(networkMember);
+							verifyNoErrors();
+					});
+	
+			verifyOperationStatus();       
+			});
+		}
 	}
 	
 	private void addNetworkMember(NetworkMembership nm)

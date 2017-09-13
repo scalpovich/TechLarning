@@ -24,16 +24,20 @@ public class InstitutionSteps {
 	@Autowired
 	private TestContext context;
 	
+	private static final String NEW_INSTITUION_CREATED = "NEW_INSTITUION_CREATED";
+	
 	@When("create new institution")
 	public void newInstitutionCreation(){
-		context.put("NEW_INSTITUION_CREATED", false);
+		context.put(NEW_INSTITUION_CREATED, false);
 		Institution inst=Institution.createWithProvider(provider);
 		if(institutionCreationWorkflow.isInstituteNotPresent(inst)){
 			institutionCreationWorkflow.createNewInstitute(inst);
-			context.put("NEW_INSTITUION_CREATED", true);
+			context.put(NEW_INSTITUION_CREATED, true);
 		}
-		else
-			logger.error("institution is already available in system");
+		else {
+			logger.info("institution is already available in system");
+			context.put(NEW_INSTITUION_CREATED, true);
+		}
 	}
 	
 }

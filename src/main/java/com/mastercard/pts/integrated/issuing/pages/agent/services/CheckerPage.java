@@ -40,12 +40,6 @@ public class CheckerPage extends AbstractModelPage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#applicationType")
 	private MCWebElement applicationTypeDdwn;
 
-	@PageElement(findBy = FindBy.CSS, valueToFind = "#programCode")
-	private MCWebElement programCodeDdwn;
-
-	@PageElement(findBy = FindBy.CSS, valueToFind = "#cardPackID")
-	private MCWebElement cardPackIdTxt;
-
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#regesteredMobileNumber")
 	private MCWebElement mobileNumberTxt;
 
@@ -55,20 +49,26 @@ public class CheckerPage extends AbstractModelPage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[@class='dataview']//td[2]")
 	private MCWebElement tableFirstRecord;
 
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#programCode")
+	private MCWebElement programCodeDdwn;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#cardPackID")
+	private MCWebElement cardPackIdTxt;
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Modify']")
 	private MCWebElement modifyBtn;
-
-	@PageElement(findBy = FindBy.CSS, valueToFind = "#memo")
-	private MCWebElement commentTxt;
-
-	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Approve']")
-	private MCWebElement approveBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='OK']")
 	private MCWebElement okBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".SuccessMessageTxt")
 	private MCWebElement approvalMessage;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#memo")
+	private MCWebElement commentTxt;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Approve']")
+	private MCWebElement approveBtn;
 
 	public void verifyUiOperationStatus() {
 		logger.info("Checker");

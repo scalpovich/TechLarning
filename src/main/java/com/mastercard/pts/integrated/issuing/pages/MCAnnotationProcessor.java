@@ -14,6 +14,8 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 public class MCAnnotationProcessor {
 	
+	private MCAnnotationProcessor() {}
+	
 	public static void initializeSuper(Object instance, ElementFinderProvider finderProvider) {
 		Class<?> clazz = instance.getClass().getSuperclass();
 		while (!clazz.equals(Object.class)) {

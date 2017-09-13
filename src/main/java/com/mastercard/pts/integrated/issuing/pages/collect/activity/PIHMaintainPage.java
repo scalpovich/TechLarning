@@ -31,14 +31,14 @@ public class PIHMaintainPage extends AbstractModelPage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=accountNo]")
 	private MCWebElement accountNoTxt;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:1:componentPanel:input:dropdowncomponent")
-	private MCWebElement paymentModeDDwn;
-
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=chequeNo]")
 	private MCWebElement chequeNoTxt;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=recieptNbr]")
 	private MCWebElement recieptNbrTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:1:componentPanel:input:dropdowncomponent")
+	private MCWebElement paymentModeDDwn;
 
 	public void verifyUiOperationStatus() {
 		logger.info("PIH Maintain");

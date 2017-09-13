@@ -43,6 +43,10 @@ public abstract class AbstractModelPage extends AbstractPage {
 
 	public static final String RESPONSE_MESSAGE = "Response message: {}";
 
+	public static final String CONTACT_INFORMATION_EXPECTED = "Contact Information";
+
+	public static final String ACTUAL_RESULT_LABEL = " | Actual Result : ";
+
 	private static final Logger logger = LoggerFactory.getLogger(AbstractModelPage.class);
 
 	@Value("${default.wait.timeout_in_sec}")
@@ -128,7 +132,7 @@ public abstract class AbstractModelPage extends AbstractPage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value=Continue]")
 	private MCWebElement continueButton;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[type='reset']")
 	private MCWebElement okButton;
 
@@ -143,7 +147,7 @@ public abstract class AbstractModelPage extends AbstractPage {
 	protected void clickOkButton() {
 		clickWhenClickable(okButton);
 	}
-	
+
 	protected void clickFinishButton() {
 		clickWhenClickable(finishBtn);
 	}
@@ -210,6 +214,7 @@ public abstract class AbstractModelPage extends AbstractPage {
 	protected void clicksearchButtonElement() {
 		clickWhenClickable(searchButtonElement);
 	}
+
 	protected Boolean isNoRecordsFoundInTable() {
 		try {
 			return driver().findElement(By.cssSelector(".norecords")).isDisplayed();
@@ -320,7 +325,7 @@ public abstract class AbstractModelPage extends AbstractPage {
 	protected boolean waitForRow() {
 		try {
 			waitForWicket();
-			Thread.sleep(10000); // Pre-production batch and device production
+			Thread.sleep(20000); // Pre-production batch and device production
 									// batch takes little longer hence the wait
 			return driver().findElement(By.cssSelector(FIRST_ROW_SELECT)).isDisplayed();
 		} catch (NoSuchElementException | InterruptedException e) {
@@ -487,7 +492,7 @@ public abstract class AbstractModelPage extends AbstractPage {
 		try {
 			WebElementUtils.waitForWicket(driver());
 			for (int l = 0; l < 21; l++) {
-				while (batchStatus.getText().equalsIgnoreCase("PENDING [0]"))
+				while ("PENDING [0]".equalsIgnoreCase(batchStatus.getText()) || "IN PROCESS [1]".equalsIgnoreCase(batchStatus.getText()))
 					Thread.sleep(10000); // waiting for page auto refresh
 			}
 		} catch (NoSuchElementException | InterruptedException e) {
@@ -497,13 +502,15 @@ public abstract class AbstractModelPage extends AbstractPage {
 
 	protected void verifySearchButton(String buttonLabel) {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(searchButtonElement));
-		Assert.assertTrue(buttonLabel.contains(searchButtonElement.getText()));
+		Assert.assertTrue("Error Message -  Button Label - Expected Result : " + buttonLabel + ACTUAL_RESULT_LABEL + searchButtonElement.getText(),
+				buttonLabel.contains(searchButtonElement.getText()));
 		logger.info(RESPONSE_MESSAGE, searchButtonElement.getText());
 	}
 
 	protected void verifyPopup(String popupName) {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(popupNameElement));
-		Assert.assertTrue(popupName.contains(popupNameElement.getText()));
+		Assert.assertTrue("Error Message - Popup Name - Expecting Result : " + popupName + ACTUAL_RESULT_LABEL + popupNameElement.getText(),
+				popupName.contains(popupNameElement.getText()));
 		logger.info(RESPONSE_MESSAGE, popupNameElement.getText());
 	}
 
@@ -513,7 +520,8 @@ public abstract class AbstractModelPage extends AbstractPage {
 		boolean isAlertPresent = alert != null;
 		if (isAlertPresent) {
 			actualAlertText = alert.getText();
-			Assert.assertTrue(actualAlertText.contains(expectedAlertText));
+			Assert.assertTrue("Error Message - Delete Alert - Expected Result : " + expectedAlertText + ACTUAL_RESULT_LABEL + actualAlertText,
+					actualAlertText.contains(expectedAlertText));
 			alert.dismiss();
 		}
 		if (!isAlertPresent) {
@@ -531,11 +539,11 @@ public abstract class AbstractModelPage extends AbstractPage {
 		}
 		if (!isNoRecordsFoundInTable()) {
 			viewFirstRecord();
-			verifyPopup(name.replaceAll("Add", "View"));
+			verifyPopup(name.replaceFirst("Add", "View"));
 			clickX2Close();
 			if (isEditColumnPresent()) {
 				editFirstRecord();
-				verifyPopup(name.replaceAll("Add", "Edit"));
+				verifyPopup(name.replaceFirst("Add", "Edit"));
 				clickX2Close();
 			}
 			if (isDeleteColumnPresent()) {
@@ -546,18 +554,26 @@ public abstract class AbstractModelPage extends AbstractPage {
 	}
 
 	protected void verifyHomePageCollectPortal(String text) {
-		Assert.assertTrue(paragraph.getText().contains("Welcome to " + text));
-		Assert.assertTrue(heading.getText().contains(text));
+
+		if ("home".equalsIgnoreCase(text))
+			Assert.assertTrue("Error Message - Expected Result : " + text + ACTUAL_RESULT_LABEL + heading.getText(), heading.getText().contains(text));
+		else {
+			Assert.assertTrue("Error Message - Expected Result : Welcome to " + text + ACTUAL_RESULT_LABEL + paragraph.getText(),
+					paragraph.getText().contains("Welcome to " + text));
+			Assert.assertTrue("Error Message - Expected Result : " + text + ACTUAL_RESULT_LABEL + heading.getText(), heading.getText().contains(text));
+		}
 	}
 
 	protected void verifyDeviceDetails() {
 		boolean deviceNumberLength = deviceNumber.getText().trim().length() > 0;
-		Assert.assertTrue(deviceNumberLength);
+		Assert.assertTrue("Error Message - Device Number Length - Expected Result : Length Greater Than Zero | Actual Result : "
+				+ deviceNumber.getText().trim().length(), deviceNumberLength);
 	}
 
 	protected void verifyWalletDetails() {
 		boolean walletNumberLength = walletNumber.getText().trim().length() > 0;
-		Assert.assertTrue(walletNumberLength);
+		Assert.assertTrue("Error Message - Wallet Number Length - Expected Result : Length Greater Than Zero | Actual Result : "
+				+ walletNumber.getText().trim().length(), walletNumberLength);
 	}
 
 	public String getMasterDetailContentTitle() {
@@ -565,21 +581,23 @@ public abstract class AbstractModelPage extends AbstractPage {
 	}
 
 	protected void verifyTitleCardHolderPortal(String text) {
-		Assert.assertTrue(getMasterDetailContentTitle().trim().contains(text));
+		Assert.assertTrue(
+				"Error Message - Title of Cradholder Portal - Expected Result : " + text + ACTUAL_RESULT_LABEL + getMasterDetailContentTitle().trim(),
+				getMasterDetailContentTitle().trim().contains(text));
 	}
 
 	protected void verifyButton(String text) {
-		if (text.equalsIgnoreCase("submit"))
-			Assert.assertTrue(submitButton.isVisible());
-		if (text.equalsIgnoreCase("cancel"))
-			Assert.assertTrue(cancelButton.isVisible());
-		if (text.equalsIgnoreCase("continue"))
-			Assert.assertTrue(continueButton.isVisible());
-
+		if ("submit".equalsIgnoreCase(text))
+			Assert.assertTrue("Error Message - Submit Button is Not Visible", submitButton.isVisible());
+		if ("cancel".equalsIgnoreCase(text))
+			Assert.assertTrue("Error Message - Cancel Button is Not Visible", cancelButton.isVisible());
+		if ("continue".equalsIgnoreCase(text))
+			Assert.assertTrue("Error Message - Continue Button is Not Visible", continueButton.isVisible());
 	}
 
 	protected void verifyContactInformation() {
-		Assert.assertTrue(contactInformation.getText().equals("Contact Information"));
-
+		Assert.assertTrue(
+				"Error Message - Contanct Information Not Present - Expected Result : Contact Information | Actual Result : " + contactInformation.getText(),
+				CONTACT_INFORMATION_EXPECTED.equals(contactInformation.getText()));
 	}
 }

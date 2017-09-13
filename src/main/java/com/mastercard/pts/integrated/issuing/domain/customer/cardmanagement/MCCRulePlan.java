@@ -1,7 +1,6 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
-import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
@@ -13,9 +12,8 @@ public class MCCRulePlan implements HasCodeAndDescription {
 	
 	private String productType;
 	
-	// TODO: Add list of MCC
-	
-	public static MCCRulePlan createWithProvider(KeyValueProvider provider) {
+	// TODO: Add list of MCC	
+	public static MCCRulePlan createGenericTestData() {
 		MCCRulePlan plan = new MCCRulePlan();
 		plan.setMccRulePlanCode(MiscUtils.generate8CharAlphaNumeric() + MiscUtils.generateRandomNumberAsString(1));
 		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);

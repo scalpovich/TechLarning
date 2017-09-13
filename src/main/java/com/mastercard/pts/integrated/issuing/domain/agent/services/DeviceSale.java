@@ -15,7 +15,13 @@ public class DeviceSale {
 	private static final String CURRENT_ADDRESS_LINE_1 = "CURRENT_ADDRESS_LINE_1";
 	private static final String COUNTRY_XL = "COUNTRY";
 	private static final String LEGAL_ID = "LEGAL_ID";
+	private static final String POSTAL_CODE = "POSTAL_CODE";
+	private static final String DOCUMENT_1_TYPE = "DOCUMENT_1_TYPE";
+	private static final String APPLICANT_PROFESSION = "APPLICANT_PROFESSION";
 	
+	private String applicantProfession;
+	private String postalCode;
+	private String document1Type;
 	private String program;
 	private String deviceType;
 	private String cardPackId;
@@ -51,9 +57,36 @@ public class DeviceSale {
 		plan.setCountry(provider.getString(COUNTRY_XL));
 		plan.setKycremarks(ConstantData.GENERIC_DESCRIPTION);
 		plan.setLegalId(provider.getString(LEGAL_ID));
+		plan.setPostalCode(provider.getString(POSTAL_CODE));
+		plan.setDocument1Type(provider.getString(DOCUMENT_1_TYPE));
+		plan.setApplicantProfession(provider.getString(APPLICANT_PROFESSION));
 		return plan;
 	}
 	
+	public String getApplicantProfession() {
+		return applicantProfession;
+	}
+
+	public void setApplicantProfession(String applicantProfession) {
+		this.applicantProfession = applicantProfession;
+	}
+
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public String getDocument1Type() {
+		return document1Type;
+	}
+
+	public void setDocument1Type(String document1Type) {
+		this.document1Type = document1Type;
+	}
+
 	public String getPrimaryDeviceNumber() {
 		return primaryDeviceNumber;
 	}

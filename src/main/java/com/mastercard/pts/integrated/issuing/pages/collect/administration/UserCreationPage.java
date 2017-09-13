@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -18,9 +17,9 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = AdministrationNav.TAB_ADMINISTARTION, treeMenuItems = { AdministrationNav.L1_USER_CREATION })
-public class UserCreationPage extends AbstractModelPage {
+public class UserCreationPage extends AdministrationAbstractPage {
 
-	private static final Logger logger = LoggerFactory.getLogger(UserCreationPage.class);
+	private static final Logger loggerTemp = LoggerFactory.getLogger(UserCreationPage.class);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=usrId]")
 	private MCWebElement usrIdTxt;
@@ -34,8 +33,9 @@ public class UserCreationPage extends AbstractModelPage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:1:componentPanel:input:dropdowncomponent")
 	private MCWebElement userStatusDDwn;
 
+	@Override
 	public void verifyUiOperationStatus() {
-		logger.info("User Creation");
+		loggerTemp.info("User Creation");
 		verifySearchButton("Search");
 		verifyUiOperation("Add User");
 	}

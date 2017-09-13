@@ -5,48 +5,22 @@ import java.util.Collection;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
-import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
-import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
-import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_DE_DUPE_SDN_VERIFICATION })
-public class DeDupeSDNVerificationPage extends AbstractModelPage {
-
-	private static final Logger logger = LoggerFactory
-			.getLogger(DeDupeSDNVerificationPage.class);
-
-	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=applicationNumber]")
-	private MCWebElement applicationNumberTxt;
-
-	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=formNumber]")
-	private MCWebElement formNumberTxt;
-
-	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=fromDate]")
-	private MCWebElement fromDateDPkr;
-
-	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=toDate]")
-	private MCWebElement toDateDPkr;
-
-	public void verifyUiOperationStatus() {
-		logger.info("De-Dupe/SDN Verification ");
-		verifySearchButton("Search");
-	}
+public class DeDupeSDNVerificationPage extends AbstractCardManagementPage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(applicationNumberTxt),
-				WebElementUtils.elementToBeClickable(formNumberTxt),
-				WebElementUtils.elementToBeClickable(fromDateDPkr),
-				WebElementUtils.elementToBeClickable(toDateDPkr)
+				WebElementUtils.elementToBeClickable(applicationNumber),
+				WebElementUtils.elementToBeClickable(formNumber),
+				WebElementUtils.elementToBeClickable(fromDate),
+				WebElementUtils.elementToBeClickable(toDate)
 				);
 	}
 }

@@ -5,11 +5,8 @@ import java.util.Collection;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -18,24 +15,15 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = ServicesNav.TAB_SERVICES, treeMenuItems = { ServicesNav.L1_ACTIVATE_PAIRED_CARD })
-public class ActivatePairedDevicePage extends AbstractModelPage {
-	private static final Logger logger = LoggerFactory.getLogger(ActivatePairedDevicePage.class);
-
-	@PageElement(findBy = FindBy.CSS, valueToFind = "div .Title")
-	private MCWebElement masterDetailContentTitle;
+public class ActivatePairedDevicePage extends ServicesAbstractPage {
 
 	@PageElement(findBy = FindBy.ID, valueToFind = "reasonCode")
 	private MCWebElement replacementReasonDDwn;
 
 	public void verifyUiOperationStatus() {
-		logger.info("Activate Paired Device");
-		verifyTitleCardHolderPortal("Activate Paired Device");
-		verifyWalletDetails();
-		verifyDeviceDetails();
-		verifyButton("Submit");
-		verifyButton("Cancel");
+		verifyUiOperationStatusReusable("Activate Paired Device");
 	}
-
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(masterDetailContentTitle), WebElementUtils.visibilityOf(replacementReasonDDwn));

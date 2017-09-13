@@ -108,44 +108,41 @@ public class VendorsPage extends AbstractModelPage {
 
 	public void addVendorMaster(Vendor vendor)
 	{
-		logger.info("Vendor ");
-		clickAddNewButton();
-
-		runWithinPopup("Add Vendor", () -> {
-
-			WebElementUtils.enterText(vendorCode, vendor.getVendorCode());
-			WebElementUtils.enterText(vendorName, vendor.getVendorName());
-
-			WebElementUtils.selectDropDownByVisibleText(categoryDrpDwnPopup, vendor.getCategory());
-
-			WebElementUtils.selectDropDownByVisibleText(branchDrpDwnPopup, vendor.getBranch());
-
-			if(vendor.getCategory().contains("Personalization Bureau"))
-			{
-				WebElementUtils.checkCheckbox(deviceProductionChk, true);
-				WebElementUtils.selectDropDownByVisibleText(embossingFileTemplateDrpDwnPopup, vendor.getEmbosingFileTemplate());
+		performSearchOperationOnMainScreen(vendor);
+		if(isNoRecordsFoundInTable())
+			{		logger.info("Vendor ");
+			clickAddNewButton();
+	
+			runWithinPopup("Add Vendor", () -> {
+				WebElementUtils.enterText(vendorCode, vendor.getVendorCode());
+				WebElementUtils.enterText(vendorName, vendor.getVendorName());
+				WebElementUtils.selectDropDownByVisibleText(categoryDrpDwnPopup, vendor.getCategory());	
+				WebElementUtils.selectDropDownByVisibleText(branchDrpDwnPopup, vendor.getBranch());
+				if(vendor.getCategory().contains("Personalization Bureau")){
+					WebElementUtils.checkCheckbox(deviceProductionChk, true);
+					WebElementUtils.selectDropDownByVisibleText(embossingFileTemplateDrpDwnPopup, vendor.getEmbosingFileTemplate());
+					}
+				WebElementUtils.enterText(address1Popup, ConstantData.VENDOR_MASTER_ADDRESS);
+				WebElementUtils.enterText(address2Popup,ConstantData.VENDOR_MASTER_ADDRESS);
+				WebElementUtils.selectDropDownByVisibleText(countryDrpDwnPopup, ConstantData.VENDOR_MASTER_COUNTRY);
+				WebElementUtils.enterText(contactPersonPopup, ConstantData.VENDOR_MASTER_CONTACT_PERSON);
+				WebElementUtils.enterText(phoneNumberPopup,ConstantData.VENDOR_MASTER_PHONE_NO);
+				WebElementUtils.enterText(zipCodeTxtBx,ConstantData.POSTAL_CODE);	
+				WebElementUtils.selectDropDownByVisibleText(mobileNoDrpDwnPopup, ConstantData.VENDOR_MASTER_MOBILE_COUNTRY_CODE);
+				WebElementUtils.enterText(mobileNoTxtBxPopup, ConstantData.VENDOR_MASTER_MOBILE_NUMBER);
+				WebElementUtils.enterText(emailIdPopup,ConstantData.VENDOR_MASTER_EMAIL );
+	
+				clickSaveButton();
+			});
+	
+			verifyOperationStatus();
 			}
-
-			WebElementUtils.enterText(address1Popup, ConstantData.VENDOR_MASTER_ADDRESS);
-			WebElementUtils.enterText(address2Popup,ConstantData.VENDOR_MASTER_ADDRESS);
-
-			WebElementUtils.selectDropDownByVisibleText(countryDrpDwnPopup, ConstantData.VENDOR_MASTER_COUNTRY);
-
-			WebElementUtils.enterText(contactPersonPopup, ConstantData.VENDOR_MASTER_CONTACT_PERSON);
-			WebElementUtils.enterText(phoneNumberPopup,ConstantData.VENDOR_MASTER_PHONE_NO);
-
-			WebElementUtils.enterText(zipCodeTxtBx,ConstantData.POSTAL_CODE);
-
-			WebElementUtils.selectDropDownByVisibleText(mobileNoDrpDwnPopup, ConstantData.VENDOR_MASTER_MOBILE_COUNTRY_CODE);
-
-			WebElementUtils.enterText(mobileNoTxtBxPopup, ConstantData.VENDOR_MASTER_MOBILE_NUMBER);
-			WebElementUtils.enterText(emailIdPopup,ConstantData.VENDOR_MASTER_EMAIL );
-
-			clickSaveButton();
-
-		});
-
-		verifyOperationStatus();
-
 	}
+	
+	private void performSearchOperationOnMainScreen(Vendor vendor)
+	{
+		WebElementUtils.enterText(vendorCode, vendor.getVendorCode());
+		clickSearchButton();
+	}
+
 }

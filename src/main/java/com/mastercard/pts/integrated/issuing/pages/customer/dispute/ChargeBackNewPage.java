@@ -5,15 +5,13 @@ import java.util.Collection;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.dispute.ChargeBack;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
-import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
@@ -21,18 +19,6 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		DisputeNav.L1_DISPUTE_ACTIVITY, DisputeNav.L2_CHARGEBACK,
 		DisputeNav.L3_CHARGEBACK_NEW })
 public class ChargeBackNewPage extends AbstractDisputePage {
-
-	private static final Logger logger = LoggerFactory
-			.getLogger(ChargeBackNewPage.class);
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchContainer:networkCode:input:dropdowncomponent")
-	private MCWebElement interchangeDDwn;
-
-	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=microfilmRefNumber]")
-	private MCWebElement microfilmRefNumber;
-
-	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=cardNumber]")
-	private MCWebElement cardNumber;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='amount']/span/input")
 	private MCWebElement chargeBackAmountTxt;
@@ -82,14 +68,13 @@ public class ChargeBackNewPage extends AbstractDisputePage {
 	}
 
 	public void verifyUiOperationStatus() {
-		logger.info("Chargeback New");
-		verifySearchButton("Search");
+		verifyOperationStatus("Chargeback New");
 	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(interchangeDDwn),
+				WebElementUtils.elementToBeClickable(interDDwn),
 				WebElementUtils.elementToBeClickable(transactionDateDpkr),
 				WebElementUtils.elementToBeClickable(microfilmRefNumber),
 				WebElementUtils.elementToBeClickable(cardNumber));

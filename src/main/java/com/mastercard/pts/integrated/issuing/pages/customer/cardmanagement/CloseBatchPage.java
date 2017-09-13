@@ -5,8 +5,6 @@ import java.util.Collection;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
@@ -23,8 +21,6 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L3_OPERATION_APPLICATION_CREDIT,
 		CardManagementNav.L4_CLOSE_BATCH })
 public class CloseBatchPage extends AbstractModelPage {
-
-//	private static final Logger logger = LoggerFactory.getLogger(CloseBatchPage.class);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview-div")
 	private MCWebElement batchNoColumn;

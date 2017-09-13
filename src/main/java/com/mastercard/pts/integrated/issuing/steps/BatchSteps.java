@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.steps;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +50,7 @@ public class BatchSteps {
 	public void  embossingFileWasGeneratedSuccessfully() {
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE");
-		
+
 		List<Map<String, String>> batchData = BatchFileValidator.forBatch(batchFile)
 				.expectHeader(getHeaderPattern())
 				.expectLine(DEFAULT_EMBOSSING_LINE)
@@ -67,7 +68,7 @@ public class BatchSteps {
 		device.setIcvvData(deviceData.get("icv"));
 		device.setCvv2Data(deviceData.get("cvv2"));
 		device.setPvkiData(deviceData.get("pvki"));
-		
+
 		MiscUtils.reportToConsole("Device Details :  " + device );
 	}
 
@@ -75,28 +76,26 @@ public class BatchSteps {
 	@Then("Pin Offset file batch was generated successfully")
 	public void  getPinFileData()
 	{
-		try
-		{
-			String[] values = null;
-			DevicePlan tempdevice = context.get(ContextConstants.DEVICE_PLAN);
-			File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevice.getDevicePlanCode(), tempDirectory.toString(), "PIN");
-
-			Scanner scanner = new Scanner(batchFile);
+		String[] values = null;
+		DevicePlan tempdevice = context.get(ContextConstants.DEVICE_PLAN);
+		File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevice.getDevicePlanCode(), tempDirectory.toString(), "PIN");
+		Device device = context.get(ContextConstants.DEVICE);
+		try(Scanner scanner = new Scanner(batchFile)){
 			while(scanner.hasNext()){
 				values = scanner.nextLine().split(">");
 			}
 
-			Device device = context.get(ContextConstants.DEVICE);
-			if(values[0] == null && values[0].isEmpty())
-			{
-				values[0] = "pin not retrieved";
-			}
 			device.setPinOffset(values[0]);
 			MiscUtils.reportToConsole("Pin Offset :  " + values[0] );
 			scanner.close();
 		}
-		catch(Exception e)
+		catch(NullPointerException | FileNotFoundException e)
 		{
+			if(e.getLocalizedMessage().contains("NullPointerException"))
+			{
+				device.setPinOffset("pin not retrieved");
+				MiscUtils.reportToConsole("Pin Offset :  " + "pin not retrieved");
+			}
 			MiscUtils.propagate(e);
 		}
 	}

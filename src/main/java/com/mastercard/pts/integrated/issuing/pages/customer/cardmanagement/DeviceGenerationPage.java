@@ -5,8 +5,6 @@ import java.util.Collection;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
@@ -24,12 +22,8 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L4_DEVICE_GENERATION })
 public class DeviceGenerationPage extends AbstractModelPage {
 
-//	private static final Logger logger = LoggerFactory.getLogger(DeviceGenerationPage.class);
-
-//	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Batch No')]")
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview")
 	private MCWebElement batchNoColumn;
-
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

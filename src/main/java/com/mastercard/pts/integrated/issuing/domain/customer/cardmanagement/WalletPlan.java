@@ -44,17 +44,10 @@ public class WalletPlan implements HasCodeAndDescription {
 		return description;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
-	public String getCurrency() {
-		return currency;
-	}
-
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
+	
 	public String getProductType() {
 		return productType;
 	}
@@ -62,6 +55,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	public void setProductType(String productType) {
 		this.productType = productType;
 	}
+	
 	public String getProgramType() {
 		return programType;
 	}
@@ -76,6 +70,14 @@ public class WalletPlan implements HasCodeAndDescription {
 
 	public void setUsage(String usage) {
 		this.usage = usage;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public String getCurrency() {
+		return currency;
 	}
 	
 	@Override

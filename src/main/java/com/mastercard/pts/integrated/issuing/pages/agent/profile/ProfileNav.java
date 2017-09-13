@@ -6,7 +6,7 @@ public class ProfileNav {
 	
 	public static final String L1_VIEW_PROFILE = "userProfile";
 	public static final String L1_ENTITY_DETAILS = "entityProfile";
-	public static final String L1_CHANGE_PASSWORD = "ChangePwd";
+	public static final String L1_CHANGE_PASSWRD = "ChangePwd";
 	
 	private ProfileNav() {}
 }

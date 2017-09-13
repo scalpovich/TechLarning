@@ -4,9 +4,11 @@ import org.jbehave.core.annotations.Then;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.collect.activity.CollectUiVerificationActivityWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.collect.administration.CollectUiVerificationAdministrationWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.collect.businesssetup.CollectUiVerificationBussinessSetupWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.collect.home.CollectUiVerificationHomeWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.collect.report.CollectUiVerificationReportWorkflow;
 
 @Component
@@ -24,6 +26,12 @@ public class CollectUiVerificationSteps {
 	@Autowired
 	private CollectUiVerificationReportWorkflow collectUiVerificationReportWorkflow;
 
+	@Autowired
+	private LoginWorkflow loginWorkflow;
+
+	@Autowired
+	private CollectUiVerificationHomeWorkflow collectUiVerificationHomeWorkflow;
+	
 	@Then("Action page of business setup tab is rendered correctly")
 	public void thenActionPageOfBusinessSetupTabIsRenderedCorrectly() {
 		collectUiVerificationBussinessSetupWorkflow.verifyActionPage();
@@ -228,5 +236,20 @@ public class CollectUiVerificationSteps {
 	public void thenReportsPageOfReportTabIsRenderedCorrectly() {
 		collectUiVerificationReportWorkflow.verifyReportsPage();
 	}
-
+	
+	@Then("Home page of report tab is rendered correctly")
+	public void thenHomePageOfReportTabIsRenderedCorrectly() {
+		collectUiVerificationReportWorkflow.verifyReportsHomePage();
+	}
+	
+	@Then("Home page is rendered correctly")
+	public void thenHomePageIsRenderedCorrectly() {
+		collectUiVerificationHomeWorkflow.verifyHomePage();
+	}
+	
+	@Then("user signs out from collect portal")
+	public void signOutFromPortal() {
+		loginWorkflow.signOutCollect();
+	}	
+	
 }

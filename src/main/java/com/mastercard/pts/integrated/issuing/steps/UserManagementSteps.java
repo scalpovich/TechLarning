@@ -33,6 +33,12 @@ public class UserManagementSteps {
 	
 	private static final String CUSTOMER = "customer";
 	
+	@SuppressWarnings("unused")
+	private static final String COLLECT = "customer";
+	
+	@SuppressWarnings("unused")
+	private static final String CARDHOLDER = "cardholder";
+	
 	private static final String ADMIN = "admin";
 	
 	private static final String AGENCY = "agency";
@@ -60,6 +66,7 @@ public class UserManagementSteps {
 	
 	private String userDefaultInstitution;
 	
+	@When("user sign out from $type portal")
 	@Given("user sign out from $type portal")
 	public void givenUserSignOutFromPortal(String type){
 		if(CUSTOMER.equalsIgnoreCase(type))
@@ -98,14 +105,7 @@ public class UserManagementSteps {
 	public void givenUserIsLoggedInAgentPortal(String userType) {
 		Portal agentPortal = environment.getPortalByType(Portal.TYPE_AGENT);
 		loginWorkflow.openLoginPageForPortal(agentPortal);
-		if (ADMIN.equalsIgnoreCase(userType))
-			loginWorkflow.login(agentPortal.getAdminUserName(), agentPortal.getAdminPassword());
-		else if(AGENCY.equalsIgnoreCase(userType))
-			loginWorkflow.login(agentPortal.getAgencyUserName(), agentPortal.getPassword());
-		else if(BRANCH.equalsIgnoreCase(userType))
-			loginWorkflow.login(agentPortal.getBranchUserName(), agentPortal.getPassword());
-		else if(AGENT.equalsIgnoreCase(userType))
-			loginWorkflow.login(agentPortal.getAgentUserName(), agentPortal.getPassword());
+		roleBasedLogin(userType, agentPortal);
 		pageFactory.getPage(AgentHomePage.class)
 		.switchToWindow().waitUntilIsLoaded();
 	}
@@ -125,9 +125,43 @@ public class UserManagementSteps {
 		loginWorkflow.login(portal.getUserName(), portal.getPassword());
 	}
 	
+	@When("user logs in with valid credentials as $userType user")
+	public void whenUserLogsInWithValidCredentialsAsUsertTypeUser(String userType) {
+		Portal agentPortal = environment.getPortalByType(Portal.TYPE_AGENT);
+		loginWorkflow.openLoginPageForPortal(agentPortal);
+		roleBasedLogin(userType, agentPortal);
+	}
+
+	private void roleBasedLogin(String userType, Portal agentPortal) {
+		if (ADMIN.equalsIgnoreCase(userType))
+			loginWorkflow.login(agentPortal.getAdminUserName(), agentPortal.getAdminPassword());
+		else if(AGENCY.equalsIgnoreCase(userType))
+			loginWorkflow.login(agentPortal.getAgencyUserName(), agentPortal.getPassword());
+		else if(BRANCH.equalsIgnoreCase(userType))
+			loginWorkflow.login(agentPortal.getBranchUserName(), agentPortal.getPassword());
+		else if(AGENT.equalsIgnoreCase(userType))
+			loginWorkflow.login(agentPortal.getAgentUserName(), agentPortal.getPassword());
+	}
+	
 	@When("user logs in with incorrect password")
 	public void whenUserLogsInWithIncorrectPassword() {
 		loginWorkflow.login(portal.getUserName(), INCORRECT_PASSCODE);
+	}
+	
+	@When("user logs in with incorrect password as $userType user")
+	public void whenUserLogsInWithIncorrectPasswordAsUserTypeUser(String userType) {
+		Portal agentPortal = environment.getPortalByType(Portal.TYPE_AGENT);
+		loginWorkflow.openLoginPageForPortal(agentPortal);
+		if (ADMIN.equalsIgnoreCase(userType))
+			loginWorkflow.login(agentPortal.getAdminUserName(), INCORRECT_PASSCODE);
+		else if(AGENCY.equalsIgnoreCase(userType))
+			loginWorkflow.login(agentPortal.getAgencyUserName(), INCORRECT_PASSCODE);
+		else if(BRANCH.equalsIgnoreCase(userType))
+			loginWorkflow.login(agentPortal.getBranchUserName(), INCORRECT_PASSCODE);
+		else if(AGENT.equalsIgnoreCase(userType))
+			loginWorkflow.login(agentPortal.getAgentUserName(), INCORRECT_PASSCODE);
+		pageFactory.getPage(AgentHomePage.class)
+		.switchToWindow().waitUntilIsLoaded();
 	}
 	
 	@When("user confirms selection of institution")
@@ -159,6 +193,15 @@ public class UserManagementSteps {
 			.switchToWindow().waitUntilIsLoaded();
 	}
 	
+	@Then("user sees message that user name or password is incorrect on agent portal")
+	public void thenUserSeesMessageThatUserNameOrPasswordIsIncorrectOnAgentPortal() {
+		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
+		Optional<String> loginErrorMessage = loginPage.getErrorMessage();
+		Assert.assertTrue("Incorrect login error message or Login is Successful", loginErrorMessage.isPresent());
+		Assert.assertEquals("Incorrect login error message",LoginPage.AUTHENTIFICATION_FAILED_AGENT,
+				loginErrorMessage.get()); //NOSONAR: isPresent() is checked in assertTrue statement
+	}
+	
 	@When("user is logged into collect portal successfully")
 	@Then("user is logged into collect portal successfully")
 	public void thenUserIsLoggedIntoCollectPortalSuccessfully() {
@@ -169,7 +212,7 @@ public class UserManagementSteps {
 	public void thenUserSeesMessageThatUserNameOrPasswordIsIncorrect() {
 		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
 		Optional<String> loginErrorMessage = loginPage.getErrorMessage();
-		Assert.assertTrue("No error message", loginErrorMessage.isPresent());
+		Assert.assertTrue("Incorrect login error message or Login is Successful", loginErrorMessage.isPresent());
 		Assert.assertEquals("Incorrect login error message",LoginPage.AUTHENTIFICATION_FAILED,
 				loginErrorMessage.get()); //NOSONAR: isPresent() is checked in assertTrue statement
 	}
@@ -187,6 +230,7 @@ public class UserManagementSteps {
 	public void thenDefaultInstitutionIsSelected() {
 		InstitutionSelectionPage page = pageFactory.getPage(InstitutionSelectionPage.class);
 		String preselectedInstitution = page.getSelectedInstitution();
+		userDefaultInstitution = Institution.createWithProvider(provider).buildAbbreviationAndCode();
 		Assert.assertEquals("Default institution is not selected",
 				userDefaultInstitution, preselectedInstitution);
 	}
@@ -196,6 +240,7 @@ public class UserManagementSteps {
 		InstitutionHomePage page = pageFactory.getPage(InstitutionHomePage.class);
 		page.waitUntilIsLoaded();
 		String selectedInstitution = page.getSelectedInstitution();
+		userDefaultInstitution = Institution.createWithProvider(provider).buildAbbreviationAndCode();
 		String expectedInstitution = userDefaultInstitution.replace('[', '(').replace(']', ')');
 		Assert.assertEquals("Default institution is not selected",
 				expectedInstitution, selectedInstitution);

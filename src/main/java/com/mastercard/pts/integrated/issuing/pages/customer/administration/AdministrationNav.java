@@ -16,7 +16,7 @@ public class AdministrationNav {
 
 	public static final String L2_ENABLE_MAKER_CHECKER = "ADS011";
 
-	public static final String L2_RESET_PASSWORD = "ADS007";
+	public static final String L2_RESET_PASSWRD = "ADS007";
 	
 	public static final String L2_HELPDESK_PRIVILEGES = "SYS004";
 	

@@ -50,6 +50,7 @@ public class LoadFromFileUploadSteps {
 	public void whenUserProcessesBatchForPrepaid(String type){
 		//since data is constant for this transaction, we do not need this data to go into Excel
 		ProcessBatches batch =  ProcessBatches.getBatchData();
+		batch.setBatchName("Load IPM Incoming File [IPM_INCOMING]");
 		batch.setProductType(ProductType.fromShortName(type));
 		assertEquals("SUCCESS [2]",loadFromFileUploadWorkflow.processUploadBatch(batch));
 	}

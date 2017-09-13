@@ -39,6 +39,11 @@ public class DisputeWorkflow extends SimulatorUtilities{
 		return dbUtils.getSingleRecordColumnValueFromDB(query,"MICROFILM_REF_NUMBER");
 	}
 
+	public String getEventTriggerFromDb(String bankCode) {
+		String query=SQLQueriesConstants.FETCH_TRIGGER_QUERY.replaceFirst("BANKCODE", bankCode);
+		return dbUtils.getSingleRecordColumnValueFromDB(query,"EVT_JOB_ID");
+	}
+
 	public void createRetrievalRequest(RetrievalRequest rr) {
 		RetrivalRequestPage page = navigator.navigateToPage(RetrivalRequestPage.class);
 		page.searchByArn(rr.getArn());

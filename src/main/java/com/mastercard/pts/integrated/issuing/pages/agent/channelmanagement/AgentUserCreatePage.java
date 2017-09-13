@@ -6,10 +6,8 @@ import java.util.Collection;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.agent.channelmanagement.AgentUser;
@@ -23,74 +21,14 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle = ChannelManagementNav.TAB_CHANNEL_MANAGEMENT, treeMenuItems = { ChannelManagementNav.L1_AGENT, ChannelManagementNav.L2_AGENT_USER,
 		ChannelManagementNav.L3_AGENT_USER_CREATE })
-public class AgentUserCreatePage extends UserPage {
+public class AgentUserCreatePage extends AbstractChannelMamagementPage {
 	private static final Logger logger = LoggerFactory.getLogger(AgentUserCreatePage.class);
-
-	@Value("${default.wait.timeout_in_sec}")
-	private long timeoutInSec;
-
-	@PageElement(findBy = FindBy.CSS, valueToFind = "div .Title")
-	private MCWebElement masterDetailContentTitle;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "parentID")
-	private MCWebElement parentIdDDwn;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "roleID")
-	private MCWebElement roleIdDDwn;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "userID")
-	private MCWebElement userIDTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "txnPassword")
 	private MCWebElement txnPasswordTxt;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "userName")
-	private MCWebElement userNameTxt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "txnPassword")
 	private MCWebElement transactionPasswordTxt;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "address1")
-	private MCWebElement address1Txt;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "address2")
-	private MCWebElement address2Txt;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "address3")
-	private MCWebElement address3Txt;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "address4")
-	private MCWebElement address4Txt;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "pinCode")
-	private MCWebElement pinCodeTxt;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "city")
-	private MCWebElement cityTxt;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "state")
-	private MCWebElement stateTxt;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "country")
-	private MCWebElement countryTxt;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "emailId")
-	private MCWebElement emailIdTxt;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "preferredLanguage")
-	private MCWebElement preferredLanguageDDwn;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "isdCode")
-	private MCWebElement isdCodeDDwn;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "resPhNo")
-	private MCWebElement resPhNoTxt;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "mobileNo")
-	private MCWebElement mobileNoTxt;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "faxNo")
-	private MCWebElement faxNoTxt;
 
 	public void verifyUiOperationStatus() {
 		logger.info("Agency Information");
@@ -110,12 +48,12 @@ public class AgentUserCreatePage extends UserPage {
 	}
 
 	public void createAgenctUser(AgentUser au) {
-		WebElementUtils.selectDropDownByVisibleText(parentIdDwn, au.getParentId());
-		WebElementUtils.selectDropDownByVisibleText(roleIdDwn, au.getRoleId());
-		WebElementUtils.enterText(userIdTxt, au.getUserId());
+		WebElementUtils.selectDropDownByVisibleText(parentIdDDwn, au.getParentId());
+		WebElementUtils.selectDropDownByVisibleText(roleIdDDwn, au.getRoleId());
+		WebElementUtils.enterText(userIDTxt, au.getUserId());
 		WebElementUtils.enterText(userNameTxt, au.getUserName());
 		WebElementUtils.enterText(transactionPasswordTxt, au.getTransactionPassword());		
-		WebElementUtils.selectDropDownByValue(preferredLanguageDwn, au.getPreferenceLanguage());
+		WebElementUtils.selectDropDownByValue(preferredLanguageDDwn, au.getPreferenceLanguage());
 		WebElementUtils.enterText(address1Txt, au.getAddress1());
 		WebElementUtils.selectDropDownByVisibleText(countryDwn, au.getCountry());
 		postalCodeTxt.click();
@@ -123,16 +61,10 @@ public class AgentUserCreatePage extends UserPage {
 		WebElementUtils.enterText(postalCodeTxt, au.getPostalCode() + Keys.TAB);
 		WebElementUtils.enterText(address2Txt, au.getAddress1());
 		WebElementUtils.enterText(emailIdTxt, au.getEmail());
-		WebElementUtils.selectDropDownByVisibleText(isdCodeDwn, au.getIsdCode());
+		WebElementUtils.selectDropDownByVisibleText(isdCodeDDwn, au.getIsdCode());
 		WebElementUtils.enterText(mobileNoTxt, au.getPhone());
 
 		clickCreateButton();
 		clickOkButton();
-	}
-
-	// methods
-	public String getMasterDetailContentTitleText() {
-		logger.info("Agent User Create Master Detail Tilte Text: {}");
-		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle)).getText();
 	}
 }
