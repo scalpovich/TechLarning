@@ -3,10 +3,8 @@ package com.mastercard.pts.integrated.issuing.configuration;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.StoryFinder;
@@ -15,15 +13,13 @@ import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import com.mastercard.testing.mtaf.jbehave.MastercardJBehaveStories;
 import com.mastercard.pts.integrated.issuing.utils.CustomRallyReport;
-import com.mastercard.pts.integrated.issuing.utils.CustomUIStories;
-
 import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 
 @RunWith(JUnitReportingRunner.class)
-public class TestStories extends CustomUIStories {
-	protected final Logger log = Logger.getLogger(getClass());
-    @Override
+public class TestStories extends MastercardJBehaveStories {
+	@Override
 	public ApplicationContext getAnnotatedApplicationContext() {
         return new AnnotationConfigApplicationContext(TestConfiguration.class);
     }
