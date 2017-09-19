@@ -2,10 +2,37 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 
+
 public class Vendor {
+	public String AddressLine1;
+	public String AddressLine2;
+	public String Country;
+	public String PINFileTemplateName;
+	public String PostalCode;
+	public String VendorMobileNo;
+	public String Email;
+	public String VendorCategory;
+	private String vendorCode;
+	private String vendorName;
+	private String category;
+	private String branch;
+	private String embosingFileTemplate;
+
+
+	private String address1;
+	private String address2;
+	private String country;
+
+	private String contactPerson;
+	private String mobileNoType;
+
+	private String mobileNumber;
+	private String phoneNumber;
 
 	private String vendorCode;
 	private String vendorName;
@@ -28,6 +55,91 @@ public class Vendor {
 	
 	public String getBranch() {
 		return branch;
+	}
+	public String getAddressLine1() {
+		return AddressLine1;
+	}
+
+	public void setAddressLine1(String addressLine1) {
+		AddressLine1 = addressLine1;
+	}
+
+	public String getAddressLine2() {
+		return AddressLine2;
+	}
+
+	public void setAddressLine2(String addressLine2) {
+		AddressLine2 = addressLine2;
+	}
+
+	public String getCountry() {
+		return Country;
+	}
+
+	public void setCountry(String country) {
+		Country = country;
+	}
+
+	public String getPINFileTemplateName() {
+		return PINFileTemplateName;
+	}
+
+	public void setPINFileTemplateName(String pINFileTemplateName) {
+		PINFileTemplateName = pINFileTemplateName;
+	}
+
+	public String getPostalCode() {
+		return PostalCode;
+	}
+
+	public void setPostalCode(String postalCode) {
+		PostalCode = postalCode;
+	}
+
+	public String getVendorMobileNo() {
+		return VendorMobileNo;
+	}
+
+	public void setVendorMobileNo(String vendorMobileNo) {
+		VendorMobileNo = vendorMobileNo;
+	}
+
+	public String getEmail() {
+		return Email;
+	}
+
+	public void setEmail(String email) {
+		Email = email;
+	}
+
+	public String getVendorCategory() {
+		return VendorCategory;
+	}
+
+	public void setVendorCategory(String vendorCategory) {
+		VendorCategory = vendorCategory;
+	}
+
+	public String Vendor;
+
+	public String getVendor() {
+		return Vendor;
+	}
+
+	public void setVendor(String vendor) {
+		Vendor = vendor;
+	}
+
+	public Vendor vendorDataProvider() {
+		Vendor vendor = new Vendor();
+		vendor.setAddressLine1(MapUtils.fnGetInputDataFromMap("addressLine1"));
+		vendor.setAddressLine2(MapUtils.fnGetInputDataFromMap("addressLine2"));
+		vendor.setCountry(MapUtils.fnGetInputDataFromMap("country"));
+		vendor.setPINFileTemplateName(MapUtils.fnGetInputDataFromMap("PINFileTempName"));
+		vendor.setPostalCode(MapUtils.fnGetInputDataFromMap("postalCode"));
+		vendor.setVendorMobileNo(MapUtils.fnGetInputDataFromMap("vendorMobileNo1"));
+		vendor.setEmail(MapUtils.fnGetInputDataFromMap("email"));
+		return vendor;
 	}
 
 	public void setBranch(String branch) {
@@ -184,5 +296,4 @@ public class Vendor {
 	public void setEmbosingFileTemplate(String embosingFileTemplate) {
 		this.embosingFileTemplate = embosingFileTemplate;
 	}
-
 }

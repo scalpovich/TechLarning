@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -13,6 +14,9 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 public class PrepaidStatementPlan implements HasCodeAndDescription {
 
+//public class PrepaidStatementPlan extends AbstractBasePage {
+
+	public String PrepaidStatementPlan;
 	private static final String PSP_SUPPRESS_IF_NO_ACTIVITY = "PSP_SUPPRESS_IF_NO_ACTIVITY";
 
 	private static final String PSP_PERIOD = "PSP_PERIOD";
@@ -25,6 +29,15 @@ public class PrepaidStatementPlan implements HasCodeAndDescription {
 	
 	private boolean suppressIfNoActivity;
 	
+	private List<PrepaidStatementP
+
+	public String getPrepaidStatementPlan() {
+		return PrepaidStatementPlan;
+	}
+
+	public void setPrepaidStatementPlan(String prepaidStatementPlan) {
+		PrepaidStatementPlan = prepaidStatementPlan;
+	}
 	private List<PrepaidStatementPlanDetails> prepaidStatementPlanDetails = new ArrayList<>();
 	
 	public static PrepaidStatementPlan createWithProvider(KeyValueProvider provider) {
@@ -88,3 +101,4 @@ public class PrepaidStatementPlan implements HasCodeAndDescription {
 		return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
 	}
 }
+

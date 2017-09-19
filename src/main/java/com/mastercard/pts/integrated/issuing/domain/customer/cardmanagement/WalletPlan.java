@@ -1,6 +1,8 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
@@ -23,63 +25,49 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String programType;
 
 	private String usage;
-	
+
+	public String Currency;
+
+	public String WalletPlanUsage;
+
+	public String WalletType;
+
+	public String ProgramType;
 	private String dummyAccountNumber;
 	
 	private String billingCyleCode;
 	
 	private String creditPlan;
 
-	public static WalletPlan createWithProvider(DataProvider provider, KeyValueProvider keyValueProvider) {
-		WalletPlan plan = provider.getDataBySimpleClassName(WalletPlan.class);
-		plan.setWalletPlanCode(MiscUtils.generate10CharAlphaNumeric());
-		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);
-		plan.setProgramType(keyValueProvider.getString(PROGRAM_TYPE));
-		plan.setDummyAccountNumber(RandomStringUtils.randomNumeric(6));
-		return plan;
+	public String WalletPlan;
+
+	public String getWalletPlan() {
+		return WalletPlan;
 	}
 
-	@Override
-	public String getDescription() {
-		return description;
+	public void setWalletPlan(String walletPlan) {
+		WalletPlan = walletPlan;
 	}
 
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
-	
-	public String getProductType() {
-		return productType;
+	public String getWalletType() {
+		return WalletType;
 	}
 
-	public void setProductType(String productType) {
-		this.productType = productType;
+	public void setWalletType(String walletType) {
+		WalletType = walletType;
 	}
-	
+
 	public String getProgramType() {
-		return programType;
+		return ProgramType;
 	}
 
 	public void setProgramType(String programType) {
-		this.programType = programType;
-	}
-	
-	public String getUsage() {
-		return usage;
+		ProgramType = programType;
 	}
 
-	public void setUsage(String usage) {
-		this.usage = usage;
-	}
-	
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
 	public String getCurrency() {
 		return currency;
 	}
-	
 	@Override
 	public String getCode() {
 		return getWalletPlanCode();
@@ -87,6 +75,18 @@ public class WalletPlan implements HasCodeAndDescription {
 	
 	public String getWalletPlanCode() {
 		return walletPlanCode;
+	}
+
+	public void setCurrency(String currency) {
+		Currency = currency;
+	}
+
+	public String getWalletPlanUsage() {
+		return WalletPlanUsage;
+	}
+
+	public void setWalletPlanUsage(String walletPlanUsage) {
+		WalletPlanUsage = walletPlanUsage;
 	}
 
 	public void setWalletPlanCode(String walletPlanCode) {
@@ -105,6 +105,13 @@ public class WalletPlan implements HasCodeAndDescription {
 		return billingCyleCode;
 	}
 
+	public Walletplan walletplanDataprovider() {
+		Walletplan walletplan = new Walletplan();
+		walletplan.setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
+		walletplan.setWalletPlanUsage(MapUtils.fnGetInputDataFromMap("WalletplanUsage"));
+		return walletplan;
+	}
+
 	public void setBillingCyleCode(String billingCyleCode) {
 		this.billingCyleCode = billingCyleCode;
 	}
@@ -121,4 +128,12 @@ public class WalletPlan implements HasCodeAndDescription {
 	public String toString() {
 		return MiscUtils.toString(this);
 	}
+	public static WalletPlan createWithProvider(DataProvider provider, KeyValueProvider keyValueProvider) {
+		WalletPlan plan = provider.getDataBySimpleClassName(WalletPlan.class);
+		plan.setWalletPlanCode(MiscUtils.generate10CharAlphaNumeric());
+		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);
+		plan.setProgramType(keyValueProvider.getString(PROGRAM_TYPE));
+		plan.setDummyAccountNumber(RandomStringUtils.randomNumeric(6));
+		return plan;
+
 }

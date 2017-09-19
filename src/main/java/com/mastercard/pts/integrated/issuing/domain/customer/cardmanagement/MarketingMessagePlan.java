@@ -2,12 +2,14 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+public class MarketingMessagePlan extends AbstractBasePage {
 
-public class MarketingMessagePlan implements HasCodeAndDescription {
+	public String MarketingMessagePlan;
 
 	private String marketingMessagePlanCode;
 	
@@ -20,6 +22,8 @@ public class MarketingMessagePlan implements HasCodeAndDescription {
 	@Override
 	public String getCode() {
 		return getMarketingMessagePlanCode();
+	public String getMarketingMessagePlan() {
+		return MarketingMessagePlan;
 	}
 	
 	public String getMarketingMessagePlanCode() {

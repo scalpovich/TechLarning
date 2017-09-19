@@ -2,13 +2,61 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
-
 public class WalletFeePlan {
+	public String Currency;
+
+	public String FeeAmount;
+
+	public String WaiverPeriod;
+
+	public String getCurrency() {
+		return Currency;
+	}
+
+	public void setCurrency(String currency) {
+		Currency = currency;
+	}
+
+	public String getFeeAmount() {
+		return FeeAmount;
+	}
+
+	public void setFeeAmount(String feeAmount) {
+		FeeAmount = feeAmount;
+	}
+
+	public String getWaiverPeriod() {
+		return WaiverPeriod;
+	}
+
+	public void setWaiverPeriod(String waiverPeriod) {
+		WaiverPeriod = waiverPeriod;
+	}
+
+	public String WalletFeePlanType;
+
+	public String getWalletFeePlanType() {
+		return WalletFeePlanType;
+	}
+
+	public void setWalletFeePlanType(String walletFeePlanType) {
+		WalletFeePlanType = walletFeePlanType;
+	}
+
+	public WalletFeePlan walletfeeplanDataProvider() {
+		WalletFeePlan walletfeeplan = new WalletFeePlan();
+		walletfeeplan.setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
+		walletfeeplan.setFeeAmount(MapUtils.fnGetInputDataFromMap("Fee"));
+		walletfeeplan.setWaiverPeriod(MapUtils.fnGetInputDataFromMap("WaiveCycle"));
+		return walletfeeplan;
+	}
 
 	private static final String KEY_CURRENCY = "CURRENCY";
 	
@@ -69,5 +117,6 @@ public class WalletFeePlan {
 	public void setWalletFeePlanDetails(List<WalletFeePlanDetails> walletFeePlanDetails) {
 		this.walletFeePlanDetails = walletFeePlanDetails;
 	}
+
 
 }

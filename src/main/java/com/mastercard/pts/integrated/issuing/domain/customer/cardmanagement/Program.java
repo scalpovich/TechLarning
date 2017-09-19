@@ -2,6 +2,8 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
@@ -11,6 +13,9 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 public class Program implements HasCodeAndDescription {
 
+	public String Currency;
+
+	public String Program;
 	private static final String CASH_LIMIT_RESET = "CASH_LIMIT_RESET";
 
 	private static final String CASH_LIMIT_TYPE = "CASH_LIMIT_TYPE";
@@ -109,7 +114,6 @@ public class Program implements HasCodeAndDescription {
 	public String getInterchange() {
 		return interchange;
 	}
-
 	public void setInterchange(String interchange) {
 		this.interchange = interchange;
 	}
@@ -125,7 +129,6 @@ public class Program implements HasCodeAndDescription {
 	public String getProgramType() {
 		return programType;
 	}
-	
 	@Override
 	public String getCode() {
 		return getProgramCode();
@@ -168,6 +171,81 @@ public class Program implements HasCodeAndDescription {
 	
 	public String getWalletPlanPlan1() {
 		return walletPlanPlan1;
+	}
+
+	public String getProgram() {
+		return Program;
+	}
+
+	public void setProgram(String program) {
+		Program = program;
+	}
+
+	public String getCurrency() {
+		return Currency;
+	}
+
+	public void setCurrency(String currency) {
+		Currency = currency;
+	}
+
+	public String CurrencyConversionBy;
+
+	public void setCurrencyConversionBy(String currencyConversionBy) {
+		this.currencyConversionBy = currencyConversionBy;
+	}
+	
+	public String getWalletPlanPlan1() {
+		return walletPlanPlan1;
+	}
+
+	public String getCurrencyConversionBy() {
+		return CurrencyConversionBy;
+	}
+
+	public void setCurrencyConversionBy(String currencyConversionBy) {
+		CurrencyConversionBy = currencyConversionBy;
+	}
+
+	public String MaxBalanceWithoutKYC;
+
+	public String getMaxBalanceWithoutKYC() {
+		return MaxBalanceWithoutKYC;
+	}
+
+	public void setMaxBalanceWithoutKYC(String maxBalanceWithoutKYC) {
+		MaxBalanceWithoutKYC = maxBalanceWithoutKYC;
+	}
+
+	public String getLoadsWithoutKYC() {
+		return LoadsWithoutKYC;
+	}
+
+	public void setLoadsWithoutKYC(String loadsWithoutKYC) {
+		LoadsWithoutKYC = loadsWithoutKYC;
+	}
+
+	public String LoadsWithoutKYC;
+
+	public String ProgramType;
+
+	public String RefundInCurrency;
+
+	public String getRefundInCurrency() {
+		return RefundInCurrency;
+	}
+
+	public void setRefundInCurrency(String refundInCurrency) {
+		RefundInCurrency = refundInCurrency;
+	}
+
+	public String getProgramType() {
+		return ProgramType;
+	}
+
+	public void setProgramType(String programType) {
+		ProgramType = programType;
+
 	}
 
 	public void setWalletPlanPlan1(String walletPlanPlan1) {
@@ -303,6 +381,15 @@ public class Program implements HasCodeAndDescription {
 
 	public void setPrepaidStatementPlan(String prepaidStatementPlan) {
 		this.prepaidStatementPlan = prepaidStatementPlan;
+	}
+	public Program ProgramDataProvider() {
+		Program program = new Program();
+		program.setRefundInCurrency("Program");
+		program.setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
+		program.setCurrencyConversionBy(MapUtils.fnGetInputDataFromMap("CurrencyConversionBy"));
+		program.setMaxBalanceWithoutKYC(MapUtils.fnGetInputDataFromMap("MaximumBalancewithoutKYC"));
+		program.setLoadsWithoutKYC(MapUtils.fnGetInputDataFromMap("LoadsWithoutKYC"));
+		return program;
 	}
 
 	@Override

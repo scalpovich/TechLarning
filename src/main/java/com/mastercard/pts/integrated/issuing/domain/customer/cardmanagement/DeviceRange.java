@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
-import org.apache.commons.lang3.RandomStringUtils;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
@@ -101,11 +102,16 @@ public class DeviceRange {
 	public void setToDeviceNumber(String toDeviceNumber) {
 		this.toDeviceNumber = toDeviceNumber;
 	}
-	
-	public String getEndPointMode() {
+public String getEndPointMode() {
 		return endPointMode;
 	}
-	
+	public DeviceRange devicerangeDataProvider() {
+		DeviceRange devicerange = new DeviceRange();
+		devicerange.setFromDeviceNumber(MapUtils.fnGetInputDataFromMap("FromDeviceNo"));
+		devicerange.setToDeviceNumber(MapUtils.fnGetInputDataFromMap("ToDeviceNo"));
+		return devicerange;
+
+	}
 	public void setEndPointMode(String endPointMode) {
 		this.endPointMode = endPointMode;
 	}

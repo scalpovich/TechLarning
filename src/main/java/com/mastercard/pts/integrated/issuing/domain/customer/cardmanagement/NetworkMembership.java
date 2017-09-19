@@ -1,6 +1,8 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import java.util.List;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
@@ -12,9 +14,15 @@ public class NetworkMembership{
 	private String cutoverMins;
 	private String settlementCurrency;
 	private String presentmentTimeLimitDays;
+
+	public String SettlementCurrency;
 		
 	public String getInterchange() {
 		return interchange;
+	public String PresentmentTimeLimit;
+
+	public String getPresentmentTimeLimit() {
+		return PresentmentTimeLimit;
 	}
 	public void setInterchange(String interchange) {
 		this.interchange = interchange;
@@ -27,8 +35,23 @@ public class NetworkMembership{
 	}
 	public String getCutoverMins() {
 		return cutoverMins;
+
+
+	public void setPresentmentTimeLimit(String presentmentTimeLimit) {
+		PresentmentTimeLimit = presentmentTimeLimit;
 	}
-	public void setCutoverMins(String cutoverMins) {
+
+	public String getSettlementCurrency() {
+		return SettlementCurrency;
+	}
+
+	public void setSettlementCurrency(String settlementCurrency) {
+		SettlementCurrency = settlementCurrency;
+	}
+
+
+
+ 	public void setCutoverMins(String cutoverMins) {
 		this.cutoverMins = cutoverMins;
 	}
 	public String getsettlementCurrency() {
@@ -48,4 +71,11 @@ public class NetworkMembership{
 	{
 		return provider.getData(new TypeReference<List<NetworkMembership>>() {}, "NetworkMembership");
 	}
+	public NetworkMembership NetworkMembershipDataProvider() {
+		NetworkMembership networkmembership = new NetworkMembership();
+		networkmembership.setPresentmentTimeLimit(MapUtils.fnGetInputDataFromMap("PresentTimeLimit"));
+		networkmembership.setSettlementCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
+		return networkmembership;
+	}
+
 }

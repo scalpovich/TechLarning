@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
@@ -12,6 +13,17 @@ public class TransactionPlan implements HasCodeAndDescription {
 
 	private static final String ALL_TRANSACTIONS = "*";
 
+
+
+	public String TransactionType;
+
+	public String getTransactionType() {
+		return TransactionType;
+	}
+
+	public void setTransactionType(String transactionType) {
+		TransactionType = transactionType;
+	}
 	private String transactionPlanCode;
 	
 	private String description;

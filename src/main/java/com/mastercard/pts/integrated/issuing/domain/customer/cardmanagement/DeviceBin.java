@@ -1,16 +1,23 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import java.util.List;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 
+
 public class DeviceBin {
+	public String Remark;
 
 	private String interchange;
+
 	private String productType;
 	private String issuerBin;
 	private String binType;
+
+
 	private String remarks;
 	
 	public DeviceBin(String interchange, String productType, String issuerBin,
@@ -60,6 +67,35 @@ public class DeviceBin {
 	public static List<DeviceBin> createWithProvider(DataProvider provider)
 	{
 		return provider.getData(new TypeReference<List<DeviceBin>>() {}, "DeviceBin");
+
+	public String getIssuerBin() {
+		return IssuerBin;
 	}
-	
+
+	public void setIssuerBin(String issuerBin) {
+		IssuerBin = issuerBin;
+	}
+
+	public String getBinType() {
+		return BinType;
+	}
+
+	public void setBinType(String binType) {
+		BinType = binType;
+	}
+
+	public String getRemark() {
+		return Remark;
+	}
+
+	public void setRemark(String remark) {
+		Remark = remark;
+	}
+
+	public DeviceBIN devicebinDataProvider() {
+		DeviceBIN devicebin = new DeviceBIN();
+		devicebin.setRemark(MapUtils.fnGetInputDataFromMap("Remark"));
+		return devicebin;
+	}
+
 }

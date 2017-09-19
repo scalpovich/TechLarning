@@ -2,6 +2,8 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
@@ -9,7 +11,7 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 public class DeviceEventBasedFeePlan implements HasCodeAndDescription {
-	
+	public String Currency;
 	private String deviceCode;
 	private String productType;
 	private String currency;
@@ -68,10 +70,23 @@ public class DeviceEventBasedFeePlan implements HasCodeAndDescription {
 
 	public void setDeviceEventBasedFeePlanDetails(List<DeviceEventBasedFeePlanDetails> deviceEventBasedFeePlanDetails) {
 		this.deviceEventBasedFeePlanDetails = deviceEventBasedFeePlanDetails;
+
+
+	public String getCurrency() {
+		return Currency;
 	}
 
+	public void setCurrency(String currency) {
+		Currency = currency;
+	}
+
+	public DeviceEventBasedFeePlan deviceeventbasedfeeplanDataProvider() {
+		DeviceEventBasedFeePlan deviceeventbasedfeeplan = new DeviceEventBasedFeePlan();
+		deviceeventbasedfeeplan.setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
+		return deviceeventbasedfeeplan;
+	}
 	@Override
 	public String toString() {
 		return MiscUtils.toString(this);
-	}
+	}	
 }
