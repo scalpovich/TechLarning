@@ -32,6 +32,41 @@ public class SurchargePlanPage extends AbstractModelPage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=description]")
 	private MCWebElement 	description;
 
+	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
+	private MCWebElement addSurchargePlan;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:1:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	private MCWebElement SurchargePlanCode;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:2:cols:colspanMarkup:inputField:input:inputTextField")
+	private MCWebElement Description;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:3:cols:colspanMarkup:inputField:input:inputTextField")
+	private MCWebElement Currency;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
+	private MCWebElement save2;
+
+	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
+	private MCWebElement addSubDetails;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:1:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	private MCWebElement Interchange;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:2:cols:colspanMarkup:inputField:input:inputTextField")
+	private MCWebElement MCG;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:3:cols:colspanMarkup:inputField:input:inputTextField")
+	private MCWebElement EffectiveDate;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:3:cols:colspanMarkup:inputField:input:inputTextField")
+	private MCWebElement EndDate;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:3:cols:colspanMarkup:inputField:input:inputTextField")
+	private MCWebElement FeeTransactionDescription;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
+	private MCWebElement save;
 	public void verifyUiOperationStatus() {
 		logger.info("Surcharge Plan");
 		verifyUiOperation("Add Surcharge Plan");

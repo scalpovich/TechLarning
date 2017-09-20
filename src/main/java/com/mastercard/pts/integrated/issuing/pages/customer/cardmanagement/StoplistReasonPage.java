@@ -36,6 +36,17 @@ public class StoplistReasonPage extends AbstractModelPage {
 		verifyUiOperation("Add Stoplist Reason");
 	}
 
+	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
+	private MCWebElement addStoplistReason;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "reasonCode:input:dropdowncomponent")
+	private MCWebElement ReasonCode;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "description:input:inputTextField")
+	private MCWebElement Description;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
+	private MCWebElement save;
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(

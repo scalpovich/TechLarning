@@ -34,6 +34,23 @@ public class HolidayConfigurationPage extends AbstractModelPage {
 	@PageElement(findBy = FindBy.X_PATH,valueToFind  = "//span[@id='type']/select")
 	private MCWebElement typeDwn;
 	
+	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
+	private MCWebElement addHolidayConfiguration;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "/html/body/div[2]/div/div/form/table[1]/tbody/tr[1]/td[2]/span/span/span/img")
+	private MCWebElement CalendarDate;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "/html/body/div[2]/div/div/form/table[1]/tbody/tr[1]/td[2]/span/span/span/span/table/tbody/tr[1]/td[3]/a")
+	private MCWebElement selectDate;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:2:cols:colspanMarkup:inputField:input:inputTextField")
+	private MCWebElement Description;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:3:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	private MCWebElement Type;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
+	private MCWebElement save;
 	public void verifyUiOperationStatus() {
 		logger.info("Holiday Master");
 		verifyUiOperation("Add Holiday Master");

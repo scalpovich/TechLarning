@@ -13,6 +13,10 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Dedu
 import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
+import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -25,6 +29,16 @@ public class DedupePlanPage extends AbstractModelPage {
 	private static final Logger logger = LoggerFactory
 			.getLogger(DedupePlanPage.class);
 
+	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
+	private MCWebElement addDedupePlan;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:1:cols:colspanMarkup:inputField:input:inputTextField")
+	private MCWebElement DedupePlanCode;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:1:cols:nextCol:colspanMarkup:inputField:input:inputTextField")
+	private MCWebElement Description;
+
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=dedupePlanCode]")
 	private MCWebElement dedupePlanCodeSearchTxt;
 
@@ -34,6 +48,48 @@ public class DedupePlanPage extends AbstractModelPage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#description input")
 	private MCWebElement descriptionTxt;
 
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
+	private MCWebElement save;
+
+	public void clickaddDedupePlan() {
+		waitForElementVisible(addDedupePlan);
+		addDedupePlan.click();
+	}
+
+	public void switchToAddDedupePlanFrame() {
+		addWicketAjaxListeners(getFinder().getWebDriver());
+		switchToIframe(Constants.ADD_DEDUPE_PLAN_FRAME);
+	}
+
+	public String enterDedupeCode() {
+		addWicketAjaxListeners(getFinder().getWebDriver());
+		enterText(DedupePlanCode, CustomUtils.randomNumbers(5));
+		return DedupePlanCode.getAttribute("value");
+	}
+
+	public String enterDedupeDescription() {
+		addWicketAjaxListeners(getFinder().getWebDriver());
+		enterText(Description, "HDFC dedupe plan all customer");
+		return Description.getAttribute("value");
+	}
+
+	public void clickSaveButton() {
+		addWicketAjaxListeners(getFinder().getWebDriver());
+		ClickButton(save);
+		SwitchToDefaultFrame();
+	}
+
+	public void adddedupeplan() {
+		addDedupePlan.click();
+		addWicketAjaxListeners(getFinder().getWebDriver());
+		switchToIframe(Constants.ADD_DEDUPE_PLAN_FRAME);
+		enterText(DedupePlanCode, CustomUtils.randomNumbers(5));
+		enterText(Description, "HDFC dedupe plan all customer");
+		addWicketAjaxListeners(getFinder().getWebDriver());
+		ClickButton(save);
+		SwitchToDefaultFrame();
+	}
 	public void inputWalletPlanCode(String walletPlanCodeString) {
 		WebElementUtils.enterText(walletPlanCodeTxt, walletPlanCodeString);
 	}
@@ -64,7 +120,8 @@ public class DedupePlanPage extends AbstractModelPage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils
-				.elementToBeClickable(dedupePlanCodeSearchTxt));
+		// TODO Auto-generated method stub
+		return null;
 	}
+
 }

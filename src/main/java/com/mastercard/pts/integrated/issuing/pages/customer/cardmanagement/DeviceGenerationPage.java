@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -24,6 +25,19 @@ public class DeviceGenerationPage extends AbstractModelPage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview")
 	private MCWebElement batchNoColumn;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[2]/div[4]/div[2]/div[2]/form[1]/div[2]/div[4]/table/tbody/tr[1]/td[8]/span/input")
+	private MCWebElement DeviceGenerationRecord;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
+	private MCWebElement ProcessSelected;
+
+	public void devicegeneration() {
+		DeviceGenerationRecord.click();
+		CustomUtils.ThreadDotSleep(1000);
+		ProcessSelected.click();
+		CustomUtils.ThreadDotSleep(1000);
+	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

@@ -1,11 +1,9 @@
 package com.mastercard.pts.integrated.issuing.utils;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Properties;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.optional.ssh.Scp;
@@ -18,203 +16,176 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
-public class LinuxUtils  {
+public abstract class LinuxUtils {
+	final static Logger logger = LoggerFactory.getLogger(LinuxUtils.class);
 
-	private static final Logger logger = LoggerFactory.getLogger(LinuxUtils.class);
+	public interface RemoteConnectionDetails {
+		String getUserName();
 
-	public interface RemoteConnectionDetails{
-		String getUserName(); 
-		String getPassword(); 
-		String getHostName(); 
+		String getPassword();
+
+		String getHostName();
+
 		int getPort();
 	}
 
-	public static void download(RemoteConnectionDetails connectiondetails, String remoteSource,
-			String localDestination ) throws JSchException  {
-		logger.info("Conection Details: {}", connectiondetails);
+	// Copying Embossed file from linux server to windows machine through winscp
 
+	private static int checkAck(InputStream in) throws IOException {
+		int b = in.read();
+		if (b == 0)
+			return b;
+		if (b == -1)
+			return b;
+
+		if (b == 1 || b == 2) {
+			StringBuffer stringBuffer = new StringBuffer();
+			int c;
+			do {
+				c = in.read();
+				stringBuffer.append((char) c);
+			} while (c != '\n');
+		}
+		return b;
+	}
+
+	public static Session connectSession(String user, String host, String pwd,
+			int port) throws JSchException, IOException {
 		JSch jsch = new JSch();
-		Session session = jsch.getSession(connectiondetails.getUserName(),
-				connectiondetails.getHostName(), connectiondetails.getPort());
-		session.setPassword(connectiondetails.getPassword());
-		Properties config = new Properties();
-
-		config.put("StrictHostKeyChecking", "no");
-
-		session.setConfig(config);
-		session.connect();
-
-		//specify the location where the DAT file gets generated
-		if (!remoteSource.startsWith("/")) {
-			remoteSource = "/" + remoteSource;
-		}
-		String command = "scp -f " + remoteSource;
-
-		Channel channel = session.openChannel("exec");
-		((ChannelExec)channel).setCommand(command);
-
-		channel.connect();
-
-		try {
-			transferFile(remoteSource, localDestination, channel);
-		} catch (IOException e) {
-			MiscUtils.propagate(e);
-		}
-	}
-	
-	public static String getFileAbsolutePath(RemoteConnectionDetails connectiondetails, String lookUpFor) throws Exception
-	{
-		return getFileFromLinuxBox(connectiondetails, lookUpFor);
-	}
-
-	private static String getFileFromLinuxBox (RemoteConnectionDetails connectiondetails, String lookUpFor) throws Exception
-	{
-		String result = null;
-		Session session = new JSch().getSession(connectiondetails.getUserName(), connectiondetails.getHostName(), connectiondetails.getPort());        
-		session.setPassword(connectiondetails.getPassword());
-		java.util.Properties config = new java.util.Properties(); 
+		Session session = jsch.getSession(user, host, port);
+		session.setPassword(pwd);
+		java.util.Properties config = new java.util.Properties();
 		config.put("StrictHostKeyChecking", "no");
 		session.setConfig(config);
 		session.connect();
-		String cmd = "find `pwd` -name \"*" + lookUpFor + "*\"";
-
-		Channel channel=session.openChannel("exec");
-		((ChannelExec)channel).setCommand(cmd);
-		channel.setInputStream(null);
-		((ChannelExec)channel).setErrStream(System.err);
-		InputStream in=channel.getInputStream();
-		channel.connect();
-
-		byte[] tmp=new byte[1024];
-		while(true){
-			while(in.available()>0){
-				int i=in.read(tmp, 0, 1024);
-				if(i<0) { 
-					break; 
-				}
-				result = new String(tmp, 0, i).trim();
-				logger.info("Result of search for file with text : "+ lookUpFor + " : " + channel.getExitStatus());
-			}
-			if(channel.isClosed()){
-				if(in.available()>0) continue; 
-				logger.info("exit-status: "+channel.getExitStatus());
-				break;
-			}
-			try
-			{
-				Thread.sleep(1000);
-			}
-			catch(Exception e)
-			{
-				logger.debug(ConstantData.EXCEPTION, e);
-				MiscUtils.propagate(e);
-			}
-		}
-		channel.disconnect();
-		session.disconnect();
-		return result;
+		System.out.println("connected");
+		return session;
 	}
 
-	private static void transferFile(String remoteSource, String localDestination, Channel channel)
-			throws IOException {
-		// get I/O streams for remote scp
-		OutputStream out = channel.getOutputStream();
-		InputStream in = channel.getInputStream();
+	public static String listFilesInDirectory(Session session, String filepath,
+			String fileName) throws JSchException, IOException {
+		ChannelExec channelExec = (ChannelExec) session.openChannel("exec");
+		channelExec
+				.setCommand("ls -t" + " " + filepath + " > " + "" + fileName);
+		channelExec.getOutputStream();
+		channelExec.getInputStream();
+		channelExec.connect();
+		return fileName;
+	}
 
+	public static void movingToDir(Session session) throws JSchException,
+			IOException {
+		ChannelExec channelExec1 = (ChannelExec) session.openChannel("exec");
+		channelExec1.setCommand("pwd > 576456.txt");
+		// channelExec.setCommand("pwd > 11121.txt");
+		OutputStream out1 = channelExec1.getOutputStream();
+		InputStream in1 = channelExec1.getInputStream();
+		System.out.println("connecting");
+		channelExec1.connect();
+	}
+
+	public static void navigateAndGetGPGFile(Session session, String command,
+			String FileName) throws JSchException, IOException {
+		ChannelExec channelExec = (ChannelExec) session.openChannel("exec");
+		if (!channelExec.isClosed()) {
+			channelExec.setCommand(command + FileName);
+			channelExec.connect();
+			int exitStatus = channelExec.getExitStatus();
+			channelExec.disconnect();
+			if (exitStatus < 0) {
+				logger.warn("Done with no error status");
+			} else if (exitStatus > 0) {
+				logger.warn("Done with error");
+			} else {
+				logger.warn("Successfully done");
+			}
+			channelExec.disconnect();
+		}
+	}
+
+	public static void copyFilesfromServer(Session session, String command,
+			String fileName, String localDest) throws JSchException,
+			IOException {
+		FileOutputStream fileOutputStream = null;
+
+		String Copycommand = command + "/" + fileName;
+		Channel channel1 = session.openChannel("exec");
+		System.out.println(Copycommand);
+		((ChannelExec) channel1).setCommand(Copycommand);
+		OutputStream out = channel1.getOutputStream();
+		InputStream in = channel1.getInputStream();
+		System.out.println("connecting");
+		channel1.connect();
 		byte[] buf = new byte[1024];
 		buf[0] = 0;
 		out.write(buf, 0, 1);
 		out.flush();
-
-		checkAck(in);
-
+		if (checkAck(in) != 0) {
+			System.out.println("ok");
+		}
 		in.read(buf, 0, 5);
 		long fileSize = 0L;
 		while (true) {
 			if (in.read(buf, 0, 1) < 0 || buf[0] == ' ') {
 				break;
 			}
-			fileSize = fileSize * 10L + (long) (buf[0] - '0');
+			fileSize = fileSize * 10L + buf[0] - '0';
 		}
+		// for (int i = 0;; i++) {
+		// if(buf.length <i){
+		// System.out.println(i);
 		for (int i = 1; i < buf.length; i++) {
-			in.read(buf, i - 1, 1);
+			in.read(buf, i, 1);
 
-			if (buf[i-1] == (byte) 0x0a ) {
+			if (buf[i] == (byte) 0x0a) {
+				break;
+			}
+			// }
+		}
+		buf[0] = 0;
+		out.write(buf, 0, 1);
+		out.flush();
+		// String localDest = System.getProperty("user.dir") +
+		// "/src/main/resources/downloads";
+		fileOutputStream = new FileOutputStream(localDest);
+		int i;
+		while (true) {
+			i = buf.length < fileSize ? buf.length : (int) fileSize;
+			i = in.read(buf, 0, i);
+			if (i < 0) {
+				break;
+			}
+			fileOutputStream.write(buf, 0, i);
+			fileSize -= i;
+			if (fileSize == 0L) {
 				break;
 			}
 		}
 		buf[0] = 0;
 		out.write(buf, 0, 1);
 		out.flush();
-		String fileName = getFileName(remoteSource.replace("/", "\\"));
-		logger.info("File Name of the file being downloaded: {}", fileName);
-		createFolderIfNotAlreadyExists(localDestination);
+		fileOutputStream.close();
+		// channel1.close();
 
-		String finalDestination = localDestination + "\\" + fileName;
-		try (FileOutputStream fileOutputStream = new FileOutputStream(finalDestination)) {
-			logger.info("File downloaded to @: {}", finalDestination);
-
-			int i;
-			while (fileSize != 0L) {
-				i = buf.length < fileSize ? buf.length : (int) fileSize;
-				i = in.read(buf, 0, i);
-				if (i < 0) {
-					break;
-				}
-				fileOutputStream.write(buf, 0, i);
-				fileSize -= i;
-			}
-			buf[0] = 0;
-			out.write(buf, 0, 1);
-			out.flush();
-		}
 	}
 
-	private static String getFileName(String fullPath) {
-		File f = new File(fullPath);
-		return f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf('\\') + 1);
-	}
-
-	private static void createFolderIfNotAlreadyExists(String destDir) {
-		File file = new File(destDir);
-		if (!file.exists()) {
-			file.mkdir();
-			logger.info("Directory is created!");
-		}
-	}
-
-	private static int checkAck(InputStream in) throws IOException {
-		int b = in.read();
-		if (b < 0) 
-			return b;
-
-		if (b == 1 || b == 2) {
-			StringBuilder stringBuilder = new StringBuilder();
-			int c;
-			do {
-				c = in.read();
-				stringBuilder.append((char) c);
-			}
-			while (c != '\n');
-		}
-		return b;
-	}
-
-	public static void upload(RemoteConnectionDetails connectiondetails, String localsource,
-			String remoteDir) throws JSchException  {
+	public static void upload(RemoteConnectionDetails connectiondetails,
+			String localsource, String remoteDir) throws JSchException {
 
 		Scp scp = new Scp();
 		int portSSH = connectiondetails.getPort();
 		String serverSSH = connectiondetails.getHostName();
-		String userSSH = connectiondetails.getUserName(); 
+		String userSSH = connectiondetails.getUserName();
 		String pswdSSH = connectiondetails.getPassword();
 
-		scp.setPort( portSSH );
+		scp.setPort(portSSH);
 		scp.setLocalFile(localsource);
-		scp.setTodir( userSSH + ":" + pswdSSH + "@" + serverSSH + ":" + remoteDir );
-		scp.setProject( new Project() );
-		scp.setTrust( true );
+		scp.setTodir(userSSH + ":" + pswdSSH + "@" + serverSSH + ":"
+				+ remoteDir);
+		scp.setProject(new Project());
+		scp.setTrust(true);
 		scp.execute();
+
 	}
 
 }

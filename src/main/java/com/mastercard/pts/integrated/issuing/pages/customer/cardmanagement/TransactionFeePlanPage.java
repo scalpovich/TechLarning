@@ -25,6 +25,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		})
 
 public class TransactionFeePlanPage extends AbstractModelPage {
+	// Currency [ISSS05]
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(TransactionFeePlanPage.class);
@@ -64,6 +65,53 @@ public class TransactionFeePlanPage extends AbstractModelPage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "rate:input:inputAmountField")
 	private MCWebElement rateTxt;
+
+
+
+	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
+	private MCWebElement addTransactionFeePlan;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "txnFeePlanCode:input:inputTextField")
+	private MCWebElement TransactionFeePlanCode;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "description:input:inputTextField")
+	private MCWebElement Description;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
+	private MCWebElement save2;
+
+	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
+	private MCWebElement addSubDetails;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "transactionCode:input:dropdowncomponent")
+	private MCWebElement TransactionType;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "currencyCode:input:dropdowncomponent")
+	private MCWebElement WalletCurrency;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "networkCode:input:dropdowncomponent")
+	private MCWebElement TransactionSource;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "transactionOrigin:input:dropdowncomponent")
+	private MCWebElement TransactionOrigin;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "txnFeePlanStartDate:input:dateTextField")
+	private MCWebElement EffectiveDate;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "txnFeePlanEndDate:input:dateTextField")
+	private MCWebElement EndDate;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "fromTxnAmount:input:inputAmountField")
+	private MCWebElement FromAmount;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "toTxnAmount:input:inputAmountField")
+	private MCWebElement ToAmount;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "fixFee:input:inputAmountField")
+	private MCWebElement Fix;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
+	private MCWebElement save;
 
 	public void verifyUiOperationStatus() {
 		logger.info("Transaction Fee Plan Master");
@@ -107,4 +155,5 @@ public class TransactionFeePlanPage extends AbstractModelPage {
 				WebElementUtils.elementToBeClickable(descriptionTxt)
 				);
 	}
+
 }
