@@ -14,9 +14,7 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 public class PrepaidStatementPlan implements HasCodeAndDescription {
 
-//public class PrepaidStatementPlan extends AbstractBasePage {
-
-	public String PrepaidStatementPlan;
+	private String prepaidStatementPlan;
 	private static final String PSP_SUPPRESS_IF_NO_ACTIVITY = "PSP_SUPPRESS_IF_NO_ACTIVITY";
 
 	private static final String PSP_PERIOD = "PSP_PERIOD";
@@ -29,16 +27,15 @@ public class PrepaidStatementPlan implements HasCodeAndDescription {
 	
 	private boolean suppressIfNoActivity;
 	
-	private List<PrepaidStatementP
+	private List<PrepaidStatementPlanDetails> prepaidStatementPlanDetails = new ArrayList<>();
 
 	public String getPrepaidStatementPlan() {
-		return PrepaidStatementPlan;
+		return prepaidStatementPlan;
 	}
 
 	public void setPrepaidStatementPlan(String prepaidStatementPlan) {
-		PrepaidStatementPlan = prepaidStatementPlan;
+		this.prepaidStatementPlan = prepaidStatementPlan;
 	}
-	private List<PrepaidStatementPlanDetails> prepaidStatementPlanDetails = new ArrayList<>();
 	
 	public static PrepaidStatementPlan createWithProvider(KeyValueProvider provider) {
 		PrepaidStatementPlan plan = new PrepaidStatementPlan();

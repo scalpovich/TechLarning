@@ -68,10 +68,6 @@ public class WalletPlan implements HasCodeAndDescription {
 	public String getCurrency() {
 		return currency;
 	}
-	@Override
-	public String getCode() {
-		return getWalletPlanCode();
-	}
 	
 	public String getWalletPlanCode() {
 		return walletPlanCode;
@@ -105,8 +101,18 @@ public class WalletPlan implements HasCodeAndDescription {
 		return billingCyleCode;
 	}
 
-	public Walletplan walletplanDataprovider() {
-		Walletplan walletplan = new Walletplan();
+	@Override
+	public String getDescription() {
+		return description;
+	}
+	
+	@Override
+	public String getCode() {
+		return getWalletPlanCode();
+	}
+	
+	public WalletPlan walletplanDataprovider() {
+		WalletPlan walletplan = new WalletPlan();
 		walletplan.setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
 		walletplan.setWalletPlanUsage(MapUtils.fnGetInputDataFromMap("WalletplanUsage"));
 		return walletplan;
@@ -124,6 +130,10 @@ public class WalletPlan implements HasCodeAndDescription {
 		this.creditPlan = creditPlan;
 	}
 	
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 	@Override
 	public String toString() {
 		return MiscUtils.toString(this);
@@ -135,5 +145,6 @@ public class WalletPlan implements HasCodeAndDescription {
 		plan.setProgramType(keyValueProvider.getString(PROGRAM_TYPE));
 		plan.setDummyAccountNumber(RandomStringUtils.randomNumeric(6));
 		return plan;
+	}
 
 }

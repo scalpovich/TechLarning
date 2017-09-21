@@ -9,45 +9,22 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 
 
 public class Vendor {
-	public String AddressLine1;
-	public String AddressLine2;
-	public String Country;
-	public String PINFileTemplateName;
-	public String PostalCode;
-	public String VendorMobileNo;
-	public String Email;
-	public String VendorCategory;
+	private String AddressLine1;
+	private String AddressLine2;
+	private String PINFileTemplateName;
+	private String PostalCode;
+	private String VendorMobileNo;
+	private String VendorCategory;
 	private String vendorCode;
 	private String vendorName;
 	private String category;
 	private String branch;
 	private String embosingFileTemplate;
-
-
 	private String address1;
 	private String address2;
 	private String country;
-
 	private String contactPerson;
 	private String mobileNoType;
-
-	private String mobileNumber;
-	private String phoneNumber;
-
-	private String vendorCode;
-	private String vendorName;
-	private String category;
-	private String branch;
-	private String embosingFileTemplate;
-
-
-	private String address1;
-	private String address2;
-	private String country;
-
-	private String contactPerson;
-	private String mobileNoType;
-
 	private String mobileNumber;
 	private String phoneNumber;
 	private String email;
@@ -70,14 +47,6 @@ public class Vendor {
 
 	public void setAddressLine2(String addressLine2) {
 		AddressLine2 = addressLine2;
-	}
-
-	public String getCountry() {
-		return Country;
-	}
-
-	public void setCountry(String country) {
-		Country = country;
 	}
 
 	public String getPINFileTemplateName() {
@@ -104,13 +73,6 @@ public class Vendor {
 		VendorMobileNo = vendorMobileNo;
 	}
 
-	public String getEmail() {
-		return Email;
-	}
-
-	public void setEmail(String email) {
-		Email = email;
-	}
 
 	public String getVendorCategory() {
 		return VendorCategory;

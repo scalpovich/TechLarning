@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -20,7 +20,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1_OPERATION, CardManagementNav.L2_PROCESSING_BATCHES,
 		CardManagementNav.L3_RESEND_PIN_REQUEST })
-public class ResendPINRequestPage extends AbstractModelPage {
+public class ResendPINRequestPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(ResendPINRequestPage.class);

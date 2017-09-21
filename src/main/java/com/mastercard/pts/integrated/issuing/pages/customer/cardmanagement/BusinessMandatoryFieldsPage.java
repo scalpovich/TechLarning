@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BusinessMandatory;
-import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -31,7 +31,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_APPLICATION,
 		CardManagementNav.L3_BUSINESS_MANDATORY_FIELDS })
-public class BusinessMandatoryFieldsPage extends AbstractModelPage {
+public class BusinessMandatoryFieldsPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(BusinessMandatoryFieldsPage.class);

@@ -6,13 +6,13 @@ import java.util.Collection;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
-import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
-public class UserPage extends AbstractModelPage {
+public class UserPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "div .Title")
 	protected MCWebElement masterDetailContentTitle;

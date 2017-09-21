@@ -45,9 +45,7 @@ public class DeviceBin {
 	public void setProductType(String productType) {
 		this.productType = productType;
 	}
-	public String getIssuerBin() {
-		return issuerBin;
-	}
+	
 	public void setIssuerBin(String issuerBin) {
 		this.issuerBin = issuerBin;
 	}
@@ -67,22 +65,12 @@ public class DeviceBin {
 	public static List<DeviceBin> createWithProvider(DataProvider provider)
 	{
 		return provider.getData(new TypeReference<List<DeviceBin>>() {}, "DeviceBin");
-
+	}
+	
 	public String getIssuerBin() {
-		return IssuerBin;
+		return issuerBin;
 	}
 
-	public void setIssuerBin(String issuerBin) {
-		IssuerBin = issuerBin;
-	}
-
-	public String getBinType() {
-		return BinType;
-	}
-
-	public void setBinType(String binType) {
-		BinType = binType;
-	}
 
 	public String getRemark() {
 		return Remark;
@@ -92,8 +80,8 @@ public class DeviceBin {
 		Remark = remark;
 	}
 
-	public DeviceBIN devicebinDataProvider() {
-		DeviceBIN devicebin = new DeviceBIN();
+	public DeviceBin devicebinDataProvider() {
+		DeviceBin devicebin = new DeviceBin();
 		devicebin.setRemark(MapUtils.fnGetInputDataFromMap("Remark"));
 		return devicebin;
 	}

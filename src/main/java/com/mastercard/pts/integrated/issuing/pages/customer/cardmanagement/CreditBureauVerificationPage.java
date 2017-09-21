@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -20,7 +20,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L2_OPERATION_APPLICATION,
 		CardManagementNav.L3_OPERATION_APPLICATION_CREDIT,
 		CardManagementNav.L4_CREDIT_BUREAU_VERIFICATION })
-public class CreditBureauVerificationPage extends AbstractModelPage {
+public class CreditBureauVerificationPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview")
 	private MCWebElement batchNoColumn;

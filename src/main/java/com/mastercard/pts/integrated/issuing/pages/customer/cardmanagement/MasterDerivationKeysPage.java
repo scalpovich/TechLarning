@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MasterDerivationKeys;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -25,7 +25,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
 		CardManagementNav.L2_EMV,
 		CardManagementNav.L3_MASTER_DERIVATION_KEYS_MDK})
-public class MasterDerivationKeysPage extends AbstractModelPage {
+public class MasterDerivationKeysPage extends AbstractBasePage {
 	
 	private static final Logger logger = LoggerFactory
 			.getLogger(MasterDerivationKeysPage.class);

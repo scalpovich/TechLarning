@@ -24,22 +24,17 @@ public class Portal {
 	private String agentAdminPassword;
 	private String customerAdminPassword;
 	private String user;
-
 	private String url;
-
 	private String userName;
-
+	private String branchUserName;
 	private String adminUserName;
-
 	private String password;
+	private String adminPassword;
 
 	public static final String TYPE_CUSTOMER = "customer";
 	public static final String TYPE_AGENT = "agent";
 	public static final String TYPE_COLLECT = "collect";
 	public static final String TYPE_CARDHOLDER = "cardholder";
-
-	private String url;
-
 
 
 	@Autowired
@@ -87,21 +82,6 @@ public class Portal {
 		return getPortal(Portal.TYPE_CUSTOMER);
 	}
 
-private String url;
-
-	private String userName;
-
-	private String agencyUserName;
-
-	private String branchUserName;
-
-	private String agentUserName;
-
-	private String adminUserName;
-
-	private String password;
-
-	private String adminPassword;
 
 	public String getBranchUserName() {
 		return branchUserName;
@@ -118,6 +98,8 @@ private String url;
 	public String getAgencyUserName() {
 		return agencyUserName;
 	}
+	
+
 
 	public void setAgencyUserName(String agencyUserName) {
 		String agencyUsrName = System.getProperty("agencyUserName");
@@ -130,6 +112,8 @@ private String url;
 	public String getAdminUserName() {
 		return adminUserName;
 	}
+	
+
 
 	public void setAdminUserName(String adminUserName) {
 		String adminUsrName = System.getProperty("adminUserName");
@@ -170,9 +154,6 @@ private String url;
 		this.customerUserName = customerUserName;
 	}
 
-	public void setAgencyUserName(String agencyUserName) {
-		this.agencyUserName = agencyUserName;
-	}
 
 	public String getAgentUserName() {
 		return agentUserName;
@@ -250,17 +231,7 @@ private String url;
 		this.user = user;
 	}
 
-	public String getAgencyUserName() {
-		return agencyUserName;
-	}
 
-	public String getAdminUserName() {
-		return adminUserName;
-	}
-
-	public void setAdminUserName(String adminUserName) {
-		this.adminUserName = adminUserName;
-	}
 
 	public String getUserName() {
 		return userName;

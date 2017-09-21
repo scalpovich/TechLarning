@@ -19,17 +19,11 @@ public class PictureCode {
 		this.pictureCodeNumber = pictureCodeNumber;
 }
 
-	public String getPictureCode() {
-		return PictureCode;
-	}
 
 	public String getDescription() {
 		return description;
-
-
-	public void setPictureCode(String pictureCode) {
-		PictureCode = pictureCode;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}

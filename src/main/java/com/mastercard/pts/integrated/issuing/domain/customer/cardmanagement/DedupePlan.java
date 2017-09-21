@@ -6,7 +6,7 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
-public class DedupePlan extends AbstractBasePage {
+public class DedupePlan implements HasCodeAndDescription {
 //need to check why we need implements HasCodeAndDescription
 //public class DedupePlan implements HasCodeAndDescription {
 	public String DedupePlanCode;
@@ -29,6 +29,7 @@ public class DedupePlan extends AbstractBasePage {
 	@Override
 	public String getDescription() {
 		return description;
+	}
 
 	public void setDescription(String description) {
 		this.description = description;

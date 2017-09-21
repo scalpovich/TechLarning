@@ -14,13 +14,6 @@ public class PlasticCode {
 	public void setPlasticCodeNumber(String plasticCodeNumber) {
 		this.plasticCodeNumber = plasticCodeNumber;
 	}
-	public String getPlasticCode() {
-		return PlasticCode;
-	}
-
-	public void setPlasticCode(String plasticCode) {
-		PlasticCode = plasticCode;
-	}
 
 	public String getDescription() {
 		return description;

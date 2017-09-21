@@ -25,6 +25,7 @@ public class TransactionLimitPlan implements HasCodeAndDescription {
 		plan.setTransactionLimitPlanCode(MiscUtils.generate10CharAlphaNumeric());
 		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);
 		return plan;
+	}
 
 	public String StartMonthForYearlyLimits;
 

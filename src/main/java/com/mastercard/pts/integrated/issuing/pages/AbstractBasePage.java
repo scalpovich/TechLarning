@@ -50,7 +50,7 @@ import com.mastercard.testing.mtaf.bindings.page.AbstractPage;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 
-public abstract class AbstractModelPage extends AbstractPage {
+public abstract class AbstractBasePage extends AbstractPage {
 
 	private static final By INFO_MESSAGE_LOCATOR = By.cssSelector(":not([style]) > .feedbackPanel span.feedbackPanelINFO");
 
@@ -66,7 +66,7 @@ public abstract class AbstractModelPage extends AbstractPage {
 
 	public static final String ACTUAL_RESULT_LABEL = " | Actual Result : ";
 
-	private static final Logger logger = LoggerFactory.getLogger(AbstractModelPage.class);
+	private static final Logger logger = LoggerFactory.getLogger(AbstractBasePage.class);
 
 		final Logger logger = LoggerFactory.getLogger(AbstractBasePage.class);
 	final static int ELEMENT_WAIT_MAX = 600;

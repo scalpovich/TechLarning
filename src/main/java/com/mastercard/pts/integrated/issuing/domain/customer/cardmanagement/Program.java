@@ -75,6 +75,11 @@ public class Program implements HasCodeAndDescription {
 	private String mccRulePlan;
 	
 	private String prepaidStatementPlan;
+	
+	public String loadsWithoutKYC;
+
+	public String maxBalanceWithoutKYC;
+
 
 	public static Program createWithProvider(DataProvider dataProvider, KeyValueProvider provider){
 		Program programObject = dataProvider.getDataBySimpleClassName(Program.class);
@@ -165,9 +170,6 @@ public class Program implements HasCodeAndDescription {
 		return currencyConversionBy;
 	}
 
-	public void setCurrencyConversionBy(String currencyConversionBy) {
-		this.currencyConversionBy = currencyConversionBy;
-	}
 	
 	public String getWalletPlanPlan1() {
 		return walletPlanPlan1;
@@ -195,58 +197,23 @@ public class Program implements HasCodeAndDescription {
 		this.currencyConversionBy = currencyConversionBy;
 	}
 	
-	public String getWalletPlanPlan1() {
-		return walletPlanPlan1;
-	}
-
-	public String getCurrencyConversionBy() {
-		return CurrencyConversionBy;
-	}
-
-	public void setCurrencyConversionBy(String currencyConversionBy) {
-		CurrencyConversionBy = currencyConversionBy;
-	}
-
-	public String MaxBalanceWithoutKYC;
-
 	public String getMaxBalanceWithoutKYC() {
-		return MaxBalanceWithoutKYC;
+		return maxBalanceWithoutKYC;
 	}
 
 	public void setMaxBalanceWithoutKYC(String maxBalanceWithoutKYC) {
-		MaxBalanceWithoutKYC = maxBalanceWithoutKYC;
+		maxBalanceWithoutKYC = maxBalanceWithoutKYC;
 	}
 
 	public String getLoadsWithoutKYC() {
-		return LoadsWithoutKYC;
+		return loadsWithoutKYC;
 	}
 
 	public void setLoadsWithoutKYC(String loadsWithoutKYC) {
-		LoadsWithoutKYC = loadsWithoutKYC;
+		this.loadsWithoutKYC = loadsWithoutKYC;
 	}
 
-	public String LoadsWithoutKYC;
 
-	public String ProgramType;
-
-	public String RefundInCurrency;
-
-	public String getRefundInCurrency() {
-		return RefundInCurrency;
-	}
-
-	public void setRefundInCurrency(String refundInCurrency) {
-		RefundInCurrency = refundInCurrency;
-	}
-
-	public String getProgramType() {
-		return ProgramType;
-	}
-
-	public void setProgramType(String programType) {
-		ProgramType = programType;
-
-	}
 
 	public void setWalletPlanPlan1(String walletPlanPlan1) {
 		this.walletPlanPlan1 = walletPlanPlan1;

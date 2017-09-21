@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
-import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -37,7 +37,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L1_OPERATION,
 		CardManagementNav.L2_PROCESSING_BATCHES,
 		CardManagementNav.L3_PROCESS_BATCHES })
-public class ProcessBatchesPage extends AbstractModelPage {
+public class ProcessBatchesPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(ProcessBatchesPage.class);

@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils.RemoteConnectionDetails;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
@@ -16,19 +15,20 @@ import com.mastercard.testing.utils.encryption.EncryptUtils;
 
 @Component
 public class LinuxBox implements RemoteConnectionDetails {
+	
+	private static final Logger logger = LoggerFactory.getLogger(LinuxBox.class);
 
-
-	@Value("${devcloud.server.ip}")
+	@Value("${linux.host.name}")
 	private String hostName;
-
-	@Value("${devcloud.server.port}")
+	
+	@Value("${linux.port.number}")	
 	private int port;
-
-	@Value("${devcloud.server.username}")
+	
+	@Value("${linux.user.name}")
 	private String userName;
-
+	
 	private String password;
-
+	
 	public File download(String remoteSource, String localDestination) {
 		logger.info("Download {} -> {}", remoteSource, localDestination);
 		try {
@@ -68,12 +68,13 @@ public class LinuxBox implements RemoteConnectionDetails {
 			MiscUtils.propagate(e);
 		}
 	}
-	@Value("${devcloud.server.password}")
+	
+	@Value("${linux.user.password}")
 	public void decryptAndSetPassword(String password) {
 		try {
-			setPassword(password);
+			setPassword(EncryptUtils.decrypt(password));
 		} catch (Exception e) {
-			throw Throwables.propagate(e);
+			MiscUtils.propagate(e);
 		}
 	}
 	

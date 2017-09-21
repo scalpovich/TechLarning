@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DocumentChecklist;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -26,7 +26,7 @@ import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_APPLICATION,
 		CardManagementNav.L3_DOCUMENT_CHECKLIST })
-public class DocumentChecklistPage extends AbstractModelPage {
+public class DocumentChecklistPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(DocumentChecklistPage.class);

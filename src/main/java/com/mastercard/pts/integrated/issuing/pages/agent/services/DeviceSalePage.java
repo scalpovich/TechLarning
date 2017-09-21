@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.agent.services.DeviceSale;
-import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.DBUtility;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
@@ -26,7 +26,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle = ServicesNav.TAB_SERVICES,
 	treeMenuItems = { ServicesNav.L1_DEVICE_SALE_ISSUANCE, ServicesNav.L2_DEVICE_SALE})
-public class DeviceSalePage extends AbstractModelPage {
+public class DeviceSalePage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(DeviceSalePage.class);
 	private static final String QUERY_STRING_DEVICE_NUMBER_PREPAID_EMV = "SELECT * FROM Device d WHERE d.BANK_CODE  = '121212' AND d.PRODUCT_TYPE = 'D' AND d.STATUS_CODE  = '0' AND d.device_plan_code in (select dp.device_plan_code from device_plan dp where device_type = '2' and dp.bank_code = d.bank_code) order by d.ACTIVATION_DATE desc";
 	private static final String QUERY_STRING_DEVICE_NUMBER_PREPAID_MAGSTRIPE = "SELECT * FROM Device d WHERE d.BANK_CODE  = '121212' AND d.PRODUCT_TYPE = 'P' AND d.STATUS_CODE  = '0' AND d.device_plan_code in (select dp.device_plan_code from device_plan dp where device_type = '1' and dp.bank_code = d.bank_code) order by d.ACTIVATION_DATE desc";

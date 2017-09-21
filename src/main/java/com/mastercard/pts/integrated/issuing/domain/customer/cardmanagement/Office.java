@@ -88,9 +88,6 @@ public class Office {
 		ControlCode = controlCode;
 	}
 
-	public String getOfficeType() {
-		return OfficeType;
-	}
 	public String getControlOffice() {
 		return controlOffice;
 	}
@@ -98,10 +95,6 @@ public class Office {
 		this.controlOffice = controlOffice;
 	}
 
-	public void setOfficeType(String officeType) {
-		OfficeType = officeType;
-	}
-	
 	public static List<Office> createWithProvider(DataProvider provider)
 	{
 		return provider.getData(new TypeReference<List<Office>>() {}, "Office");

@@ -70,15 +70,9 @@ public class DeviceEventBasedFeePlan implements HasCodeAndDescription {
 
 	public void setDeviceEventBasedFeePlanDetails(List<DeviceEventBasedFeePlanDetails> deviceEventBasedFeePlanDetails) {
 		this.deviceEventBasedFeePlanDetails = deviceEventBasedFeePlanDetails;
-
-
-	public String getCurrency() {
-		return Currency;
 	}
 
-	public void setCurrency(String currency) {
-		Currency = currency;
-	}
+
 
 	public DeviceEventBasedFeePlan deviceeventbasedfeeplanDataProvider() {
 		DeviceEventBasedFeePlan deviceeventbasedfeeplan = new DeviceEventBasedFeePlan();

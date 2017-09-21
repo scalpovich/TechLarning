@@ -19,6 +19,7 @@ public class NetworkMembership{
 		
 	public String getInterchange() {
 		return interchange;
+	}
 	public String PresentmentTimeLimit;
 
 	public String getPresentmentTimeLimit() {
@@ -35,7 +36,7 @@ public class NetworkMembership{
 	}
 	public String getCutoverMins() {
 		return cutoverMins;
-
+	}
 
 	public void setPresentmentTimeLimit(String presentmentTimeLimit) {
 		PresentmentTimeLimit = presentmentTimeLimit;

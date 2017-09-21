@@ -7,7 +7,7 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
-public class MarketingMessagePlan extends AbstractBasePage {
+public class MarketingMessagePlan implements HasCodeAndDescription {
 
 	public String MarketingMessagePlan;
 
@@ -22,6 +22,7 @@ public class MarketingMessagePlan extends AbstractBasePage {
 	@Override
 	public String getCode() {
 		return getMarketingMessagePlanCode();
+	}
 	public String getMarketingMessagePlan() {
 		return MarketingMessagePlan;
 	}

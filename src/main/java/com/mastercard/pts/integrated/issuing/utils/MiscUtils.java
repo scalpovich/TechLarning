@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class MiscUtils {
 
@@ -167,5 +169,8 @@ public class MiscUtils {
 				.collect(
 						Collectors.toMap(Entry::getKey,
 								e -> matcher.group(e.getValue())));
+	}
+	public static String toString(Object object) {
+		return ReflectionToStringBuilder.toString(object, ToStringStyle.MULTI_LINE_STYLE);
 	}
 }

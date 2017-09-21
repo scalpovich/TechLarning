@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.EmbossingPinPriorityPassFileTemplate;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.EmbossingPinPriorityPassFileTemplate.OrderByFormat;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.EmbossingPinPriorityPassFileTemplate.RecordFieldFormat;
-import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -26,7 +26,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L2_EMBOSSING_PARAMETERS,
 		CardManagementNav.L3_EMBOSSING_PIN_AND_PRIORITY_PASS_FILE_TEMPLATE })
 public class EmbossingPINAndPriorityPassFileTemplatePage extends
-		AbstractModelPage {
+		AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(EmbossingPINAndPriorityPassFileTemplatePage.class);
