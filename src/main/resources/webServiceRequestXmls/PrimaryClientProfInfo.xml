@@ -1,0 +1,28 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:elt="http://eltws.map.ecs.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <elt:callExtApiPrimaryClientProfInfo>
+         <!--Optional:-->
+         <extApiPrimaryClientProfInfoRequest>
+            <!--Optional:-->
+            <userId>654321</userId>
+            <!--Optional:-->
+            <sessionKey>31RUGD7DVW3PKU6YHV0MYI9</sessionKey>
+            <!--Optional:-->
+            <channel>31</channel>
+            <!--Optional:-->
+            <transactionCounter>2</transactionCounter>
+            <!--Optional:-->
+            <passCodeFlag>N</passCodeFlag>
+            <!--Optional:-->
+            <passCode></passCode>
+            <!--Optional:-->
+            <transactionCode>318</transactionCode>
+            <!--Optional:-->
+            <formFactorType>CRD</formFactorType>
+            <!--Optional:-->
+            <formFactor>4799681120404003</formFactor>
+         </extApiPrimaryClientProfInfoRequest>
+      </elt:callExtApiPrimaryClientProfInfo>
+   </soapenv:Body>
+</soapenv:Envelope>

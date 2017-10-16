@@ -1,14 +1,63 @@
+# Mac Crap
+.DS_Store
+
+# Project Specific
+
+# General Logging
+*.log
+*.log.*
+
+# Maven
 target/
-.settings/
-.classpath
+
+# General Java Builds
+classes/
+build/
+
+# Eclipse
+*.pydevproject
 .project
-*.xls*.tmp
-/src/main/resources/PINData.txt
-/src/main/resources/*.ath
-/src/main/resources/LatestAuthFileDetails.txt
-/src/main/resources/*.tmp
-/src/main/resources/*.Err
-/src/main/resources/*.IPM
-/src/main/resources/AuthFileName.txt
-/src/main/resources/CEEData.txt
-/src/main/resources/MessageReversalIndicator.txt
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+
+# IntelliJ
+.idea
+*.iml
+
+# UltraEdit
+*.bak
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
+
+#############
+## Windows detritus
+#############
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
