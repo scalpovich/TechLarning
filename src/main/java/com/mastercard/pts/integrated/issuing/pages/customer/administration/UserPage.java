@@ -1,7 +1,11 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.administration;
 
 import junit.framework.Assert;
+import java.util.Arrays;
+import java.util.Collection;
 
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,21 +18,30 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
+import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
-import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = AdministrationNav.TAB_ADMINISTRATION, treeMenuItems = {
-		AdministrationNav.L1_SETUP, AdministrationNav.L2_USER })
-public class UserPage extends UserCreation {
-	final Logger logger = LoggerFactory.getLogger(UserPage.class);
+		AdministrationNav.L1_SETUP,
+		AdministrationNav.L2_USER
+		})
+public class UserPage extends UserCreation{
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(UserPage.class);
 
 	@Autowired
 	public DatePicker date;
 
-	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
+	private MCWebElement userIdTxt;
+@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addUser;
 
 	// Objects of Add User frame
@@ -259,4 +272,13 @@ public class UserPage extends UserCreation {
 		}
 	}
 	
+	public void verifyUiOperationStatus() {
+		logger.info("User");
+		verifyUiOperation("Add User");
+	}
+
+	@Override
+	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
+		return Arrays.asList(WebElementUtils.elementToBeClickable(userIdTxt));
+	}
 }

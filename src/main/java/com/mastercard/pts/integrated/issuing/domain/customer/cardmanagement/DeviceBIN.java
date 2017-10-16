@@ -1,57 +1,72 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.springframework.stereotype.Component;
+import java.util.List;
 
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 
 @Component
-public class DeviceBIN {
+public class DeviceBin {
 
-	public static DeviceBIN devicebin = new DeviceBIN();
-
-	public String Remark;
-
-	public String BinType;
-
-	public String IssuerBin;
-
-	public String Interchange;
-
+	private String interchange;
+	private String productType;
+	private String issuerBin;
+	private String binType;
+	private String remarks;
+	
+	public DeviceBin(String interchange, String productType, String issuerBin,
+			String binType, String remarks) {
+		super();
+		this.interchange = interchange;
+		this.productType = productType;
+		this.issuerBin = issuerBin;
+		this.binType = binType;
+		this.remarks = remarks;
+	}
+	public DeviceBin() {
+		super();
+	}
+	
 	public String getInterchange() {
-		return Interchange;
+		return interchange;
 	}
-
 	public void setInterchange(String interchange) {
-		Interchange = interchange;
+		this.interchange = interchange;
 	}
-
+	public String getProductType() {
+		return productType;
+	}
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
 	public String getIssuerBin() {
-		return IssuerBin;
+		return issuerBin;
 	}
-
 	public void setIssuerBin(String issuerBin) {
-		IssuerBin = issuerBin;
+		this.issuerBin = issuerBin;
 	}
-
 	public String getBinType() {
-		return BinType;
+		return binType;
 	}
-
 	public void setBinType(String binType) {
-		BinType = binType;
+		this.binType = binType;
 	}
-
-	public String getRemark() {
-		return Remark;
+	public String getRemarks() {
+		return remarks;
 	}
-
-	public void setRemark(String remark) {
-		Remark = remark;
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
-
 	public void devicebinDataProvider() {
 		setRemark(MapUtils.fnGetInputDataFromMap("Remark"));
 
 	}
 
+	public static List<DeviceBin> createWithProvider(DataProvider provider)
+	{
+		return provider.getData(new TypeReference<List<DeviceBin>>() {}, "DeviceBin");
+	}
+	
 }
