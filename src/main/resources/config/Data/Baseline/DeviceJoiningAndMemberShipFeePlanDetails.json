@@ -1,7 +1,0 @@
-{
-	"feeType": "Joining/Issuance Fee [I]",
-	"postIssuanceFeeOn": "Sale [S]",
-	"postIssuanceFeeOnForCreditCard": "Card Production [C]",
-	"effectiveDateEndDays": 5,
-	"effectiveDateStartDays": 1	
-}

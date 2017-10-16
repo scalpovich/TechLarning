@@ -1,1 +1,0 @@
-taskkill /im MSPMCW.exe* /f
