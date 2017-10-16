@@ -1,14 +1,21 @@
 package com.mastercard.pts.integrated.issuing.context;
 
 import java.util.HashMap;
+import java.util.Map;
 
+import org.openqa.selenium.WebDriver;
 import org.springframework.stereotype.Component;
 
-@Component
-public class CustomTestContext {
+@Component("storyContext")
+public class TestContext {
 
 	@Deprecated
 	private HashMap<String, String> currentStoryTestData;
+	private static final ThreadLocal<Map<String, Object>> context = new ThreadLocal<>();
+	
+	private static final String KEY_STORY_NAME = "storyName";
+	
+	public static final String KEY_STORY_DATA = "storyData";
 
 	/**
 	 * We will write whatever is there in loggers at the end of execution. use
@@ -17,8 +24,26 @@ public class CustomTestContext {
 	 */
 	public static StringBuilder loggers = new StringBuilder();
 
-	protected HashMap<String, HashMap<String, Object>> contextMap = new HashMap<String, HashMap<String, Object>>();;
+	protected HashMap<String, HashMap<String, Object>> contextMap = new HashMap<String, HashMap<String, Object>>();
+	
+	public void initStoryContext(String storyName) {
+		context.set(new HashMap<>());
+		put(KEY_STORY_NAME, storyName.toUpperCase());
+	}
+	
+	public String getStoryName() {
+		return get(KEY_STORY_NAME);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T> T get(String storyName, String key)
+			throws IllegalArgumentException {
 
+		HashMap<String, Object> eMap = contextMap.get(storyName);
+
+		return (T) eMap.get(key);
+
+	}
 	public void put(String storyName, String key, Object value)
 			throws IllegalArgumentException {
 		if (contextMap.get(storyName) == null) {
@@ -76,6 +101,19 @@ public class CustomTestContext {
 
 	public HashMap<String, HashMap<String, Object>> getContextMap() {
 		return contextMap;
+	}
+	public void dispose() {
+		context.set(null);
+	}
+	
+	/**
+	 * Does some thing in old style.
+	 *
+	 * @deprecated.  
+	 */
+	@Deprecated
+	public static WebDriver getDriver() {
+		return (WebDriver) context.get().get("DRIVER");
 	}
 
 	public void setContextMap(

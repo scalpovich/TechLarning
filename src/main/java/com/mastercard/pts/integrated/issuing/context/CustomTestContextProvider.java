@@ -18,17 +18,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomTestContextProvider {
 
-	private static final ThreadLocal<CustomTestContext> userThreadLocal = new TestContextLocal();
+	private static final ThreadLocal<TestContext> userThreadLocal = new TestContextLocal();
 
-	static final class TestContextLocal extends ThreadLocal<CustomTestContext> {
+	static final class TestContextLocal extends ThreadLocal<TestContext> {
 
 		@Override
-		protected CustomTestContext initialValue() {
-			return new CustomTestContext();
+		protected TestContext initialValue() {
+			return new TestContext();
 		}
 	}
 
-	public static CustomTestContext get() {
+	public static TestContext get() {
 		return userThreadLocal.get();
 	}
 
