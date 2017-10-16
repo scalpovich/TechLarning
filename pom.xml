@@ -4,15 +4,22 @@
 	<groupId>com.mastercard.MPTS.bdd</groupId>
 	<name>mi_issuing_insprint_automation</name>
 	<version>0.0.1-SNAPSHOT</version>
-
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<jbehave.core.version>4.0.5</jbehave.core.version>
-		<mtaf-ui-tools.version>1.9.0-SNAPSHOT</mtaf-ui-tools.version>
+		<!--  jbehave.core.version>4.0.5</jbehave.core.version-->
+		<jbehave-maven-plugin.version>4.1</jbehave-maven-plugin.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<mtaf-ui-tools.version>1.5.0</mtaf-ui-tools.version>
+		<mtaf-provider-factory.version>2.3.0-20170411.160657-4</mtaf-provider-factory.version>
+		<mtaf-automation-utils.version>1.5.0-SNAPSHOT</mtaf-automation-utils.version>
+		<aspectj.version>1.8.9</aspectj.version>
+		<junit.version>4.12</junit.version>
+		<java-hamcrest.version>2.0.0.0</java-hamcrest.version>
+		<ant.version>1.7.0</ant.version>
+		<ant-launcher.version>1.10.1</ant-launcher.version>
 		<ant-jsch.version>1.10.1</ant-jsch.version>
 		<issuing-soap-tools.version>1.0.0</issuing-soap-tools.version>
-		<mtaf-automation-utils.version>1.5.0-SNAPSHOT</mtaf-automation-utils.version>
 		<pdf.reader.version>5.0.6</pdf.reader.version>
 		<mtaf-jdbc-tools.version>1.2.0</mtaf-jdbc-tools.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
@@ -24,6 +31,23 @@
 		<maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
 		<maven-reports-plugin.version>2.8</maven-reports-plugin.version>
 		<dependency.locations.enabled>false</dependency.locations.enabled>
+		<sikulixapi.version>1.1.0</sikulixapi.version>
+		<winium-webdriver.version>0.1.0-1</winium-webdriver.version>
+		<winium-elements-desktop.version>0.2.0-1</winium-elements-desktop.version>
+		<oracle-ojdbc.version>11.2.0</oracle-ojdbc.version>
+		<jackson-databind.version>2.8.9</jackson-databind.version>
+		<json-patch.version>1.9</json-patch.version>
+		
+		<embeddables>**/TestJUnitStories.java</embeddables>
+		<ignore.failure.in.stories>true</ignore.failure.in.stories>
+		<ignore.failure.in.view>true</ignore.failure.in.view>
+		<generate.view.after.story>true</generate.view.after.story>
+		<story.timout.secs>7200</story.timout.secs>
+		
+		<properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
+		<aspectj-maven-plugin.version>1.10</aspectj-maven-plugin.version>
+		<serenity-maven-plugin.version>1.1.36</serenity-maven-plugin.version>
+		<lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
 	</properties>
 	<reporting>
 		<plugins>
@@ -39,11 +63,78 @@
 			</plugin>
 		</plugins>
 	</reporting>
+
+	
+	<repositories>
+		<repository>
+			<!-- com.sikulix.sikulixapi: jxgrabkey -->
+			<id>labs.consol.de</id>
+			<name>labs.consol.de</name>
+			<url>http://labs.consol.de/maven/repository/</url>
+			<layout>default</layout>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+				<updatePolicy>never</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.ant</groupId>
 			<artifactId>ant-jsch</artifactId>
 			<version>${ant-jsch.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.mastercard.testing</groupId>
+			<artifactId>mtaf-ui-tools</artifactId>
+			<version>${mtaf-ui-tools.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.mastercard.testing</groupId>
+					<artifactId>mtaf-provider-factory</artifactId>
+				</exclusion>
+				<exclusion>
+					<artifactId>hamcrest-core</artifactId>
+					<groupId>org.hamcrest</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>hamcrest-library</artifactId>
+					<groupId>org.hamcrest</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>hamcrest-integration</artifactId>
+					<groupId>org.hamcrest</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>junit</artifactId>
+					<groupId>junit</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>com.mastercard.testing</groupId>
+			<artifactId>mtaf-provider-factory</artifactId>
+			<version>${mtaf-provider-factory.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>hamcrest-core</artifactId>
+					<groupId>org.hamcrest</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>hamcrest-library</artifactId>
+					<groupId>org.hamcrest</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>junit</artifactId>
+					<groupId>junit</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.mastercard.testing</groupId>
@@ -65,6 +156,12 @@
 			<groupId>com.mastercard.testing</groupId>
 			<artifactId>mtaf-automation-utils</artifactId>
 			<version>${mtaf-automation-utils.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>junit</artifactId>
+					<groupId>junit</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf ,For PDF 
 			reader -->
@@ -84,11 +181,82 @@
 			<artifactId>commons-dbcp</artifactId>
 			<version>${commons-dbcp.version}</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.jcraft/jsch -->
+		<dependency>
+			<artifactId>junit</artifactId>
+			<groupId>junit</groupId>
+			<version>${junit.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>hamcrest-core</artifactId>
+					<groupId>org.hamcrest</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant-launcher</artifactId>
+			<version>${ant-launcher.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant-jsch</artifactId>
+			<version>${ant-jsch.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+			<version>${ant.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>java-hamcrest</artifactId>
+			<version>${java-hamcrest.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.jcraft</groupId>
 			<artifactId>jsch</artifactId>
 			<version>${jsch.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.2gis.winium</groupId>
+			<artifactId>winium-webdriver</artifactId>
+			<version>${winium-webdriver.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sikulix</groupId>
+			<artifactId>sikulixapi</artifactId>
+			<version>${sikulixapi.version}</version>
+		</dependency>			
+        
+		<dependency>
+			<groupId>com.github.2gis.winium</groupId>
+			<artifactId>winium-elements-desktop</artifactId>
+			<version>${winium-elements-desktop.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.oracle</groupId>
+		    <artifactId>ojdbc6</artifactId>
+		    <version>${oracle-ojdbc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.lingala.zip4j</groupId>
@@ -104,10 +272,37 @@
 			<groupId>com.jayway.restassured</groupId>
 			<artifactId>rest-assured</artifactId>
 			<version>2.9.0</version>
-			<!-- <scope>test</scope> -->
+		</dependency>		
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson-databind.version}</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jdk8</artifactId>
+			<version>${jackson-databind.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>${jackson-databind.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.fge</groupId>
+			<artifactId>json-patch</artifactId>
+			<version>${json-patch.version}</version>
+		</dependency>
+		<dependency>
+			    <groupId>org.springframework</groupId>
+			    <artifactId>spring-jdbc</artifactId>
+			    <version>4.2.5.RELEASE</version>
+		</dependency>
 	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -119,7 +314,38 @@
 					<source>${maven.compiler.source}</source>
 					<target>${maven.compiler.target}</target>
 				</configuration>
+
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack-resources-core</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<properties>
+								<serenityReport>true</serenityReport>
+							</properties>
+							<outputDirectory>${project.build.directory}/jbehave/view</outputDirectory>
+							<overWriteReleases>true</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
+							<excludes>**/*.class</excludes>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.jbehave</groupId>
+									<artifactId>jbehave-navigator</artifactId>
+									<version>${jbehave.core.version}</version>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
@@ -146,22 +372,21 @@
 					</execution>
 				</executions>
 			</plugin>
+			
 			<plugin>
 				<groupId>org.jbehave</groupId>
 				<artifactId>jbehave-maven-plugin</artifactId>
-				<version>${jbehave.core.version}</version>
+				<version>${jbehave-maven-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>run-stories-as-embeddables</id>
 						<phase>integration-test</phase>
 						<configuration>
-
 							<storyTimeoutInSecs>${storyTimeout}</storyTimeoutInSecs>
 							<threads>${jbehave.execution.threads}</threads>
 							<includes>
-								<include>**/TestJUnitStories.java</include>
+								<include>${embeddables}</include>
 							</includes>
-							<skip>${jbehave.skip.tests}</skip>
 							<metaFilters>
 								<metaFilter>${meta.filter}</metaFilter>
 							</metaFilters>
@@ -171,31 +396,43 @@
 									<value>true</value>
 								</property>
 							</systemProperties>
-							<ignoreFailureInStories>false</ignoreFailureInStories>
-							<ignoreFailureInView>true</ignoreFailureInView>
-							<generateViewAfterStories>true</generateViewAfterStories>
-							<storyTimeoutInSecs>${storyTimeout}</storyTimeoutInSecs>
+							<storyTimeoutInSecs>${story.timout.secs}</storyTimeoutInSecs>
+							<ignoreFailureInStories>${ignore.failure.in.stories}</ignoreFailureInStories>
+							<ignoreFailureInView>${ignore.failure.in.view}</ignoreFailureInView>
+							<generateViewAfterStories>${generate.view.after.story}</generateViewAfterStories>
 							<verboseFailures>true</verboseFailures>
 						</configuration>
 						<goals>
-							<goal>run-stories-as-embeddables</goal>
 							<goal>unpack-view-resources</goal>
+							<goal>run-stories-as-embeddables</goal>
 						</goals>
 					</execution>
 				</executions>
 				<dependencies>
-					<dependency>
+				     <dependency>
+				         <groupId>org.codehaus.groovy</groupId>
+				         <artifactId>groovy-all</artifactId>
+				         <version>1.8.4</version>
+				     </dependency>
+				<dependency>
 						<groupId>log4j</groupId>
 						<artifactId>log4j</artifactId>
 						<version>1.2.17</version>
 
 					</dependency>
-				</dependencies>
-			</plugin>
+				 </dependencies>
+			</plugin>			
 			<plugin>
 				<groupId>net.serenity-bdd.maven.plugins</groupId>
 				<artifactId>serenity-maven-plugin</artifactId>
-				<version>1.1.36</version>
+				<version>${serenity-maven-plugin.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-simple</artifactId>
+						<version>1.7.25</version>
+					</dependency>
+				</dependencies>
 				<executions>
 					<execution>
 						<id>serenity-reports</id>
@@ -206,16 +443,14 @@
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
+
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
+					<version>${lifecycle-mapping.version}</version>
 					<configuration>
 						<lifecycleMappingMetadata>
 							<pluginExecutions>
@@ -232,10 +467,11 @@
 										</versionRange>
 										<goals>
 											<goal>unpack</goal>
+											<goal>set-system-properties</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore></ignore>
+										<ignore />
 									</action>
 								</pluginExecution>
 							</pluginExecutions>
