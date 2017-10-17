@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -20,7 +20,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Navigation(tabTitle = DistributionNav.TAB_DISTRIBUTION, treeMenuItems = {
 		DistributionNav.L1_SETUP, DistributionNav.L2_INTEREST_MASTER})
 
-public class InterestMasterPage extends AbstractModelPage {
+public class InterestMasterPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory
 			.getLogger(InterestMasterPage.class);
 

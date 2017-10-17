@@ -10,9 +10,15 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
+import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 
 @Component
-public class VerifyPage extends AbstractBasePage {
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
+		CardManagementNav.L1_ACTIVITY,
+		CardManagementNav.L2_ACTIVITY_APPLICATION,
+		CardManagementNav.L3_ACTIVITY_APPLICATION_CREDIT,
+		CardManagementNav.L4_VERIFY })
+public class VerifyPage extends AbstractCardManagementPage {
 
 	// ------------- Card Management > Institution Parameter Setup > Institution
 	// Currency [ISSS05]
@@ -35,5 +41,6 @@ public class VerifyPage extends AbstractBasePage {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }

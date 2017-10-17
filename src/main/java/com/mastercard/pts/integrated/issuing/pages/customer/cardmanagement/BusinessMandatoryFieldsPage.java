@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -21,23 +22,30 @@ import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.ReadTestDataFromExcel;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP,
-		CardManagementNav.L2APPLICATION, CardManagementNav.L3BUSINESS_MANDATORY_FIELDS })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
+		CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_APPLICATION,
+		CardManagementNav.L3_BUSINESS_MANDATORY_FIELDS })
 public class BusinessMandatoryFieldsPage extends AbstractBasePage {
-	final Logger logger = LoggerFactory.getLogger(EmbossingPriorityPassPage.class);
 
+	private static final Logger logger = LoggerFactory
+			.getLogger(BusinessMandatoryFieldsPage.class);
 	@Autowired
 	private ReadTestDataFromExcel excelTestData;
 
-	// ------------- Card Management > Institution Parameter Setup > Institution
-	// Currency [ISSS05]
+	@Autowired
+	private ReadTestDataFromExcel excelTestData;
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
+	private MCWebElement productType;
 
-	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent")
+	private MCWebElement customerType;
+@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addBusinessMandatoryFieldsBtn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class = 'feedbackPanelERROR']")
@@ -169,10 +177,14 @@ public class BusinessMandatoryFieldsPage extends AbstractBasePage {
 		SelectDropDownByIndex(FieldNameDDwn, 1);
 		clickSaveButton();
 	}
+	public void verifyUiOperationStatus() {
+		logger.info("Business Mandatory Fields");
+		verifyUiOperation("Add Business Mandatory Fields");
+	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return null;
+		return Arrays.asList(WebElementUtils.elementToBeClickable(productType),
+				WebElementUtils.elementToBeClickable(customerType));
 	}
-
 }

@@ -4,11 +4,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 
 import net.serenitybdd.core.annotations.findby.By;
 
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +33,13 @@ import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1ACTIVITY,
-		CardManagementNav.L2ACTIVITY_APPLICATION, CardManagementNav.L3NEWDEVICE })
-public class NewApplicationPage extends NewApplication {
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
+		CardManagementNav.L1_ACTIVITY, CardManagementNav.L2_ACTIVITY_APPLICATION, 	CardManagementNav.L3_NEW_APPLCIATION
+		})
+public class NewApplicationPage extends AbstractCardManagementPage {
 
-	final Logger logger = LoggerFactory.getLogger(NewApplicationPage.class);
-
-	@Autowired
+	private static final Logger logger = LoggerFactory.getLogger(NewApplicationPage.class);
+@Autowired
 	Program program;
 
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
@@ -767,5 +770,21 @@ public class NewApplicationPage extends NewApplication {
 		String strOutputMessage = ApplicationSuccessTxt.getText().split("\\n")[0];
 		boolean strRequestNumber = strOutputMessage.contains("Application Processed Successfully.");
 		Assert.assertNotNull("VIP Status needs to be provided", strRequestNumber);
+	}
+	@Override
+	public void verifyUiOperationStatus() {
+		logger.info("Application");
+		verifyUiOperation("Add Application");
+	}
+
+	@Override
+	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
+		return Arrays.asList(
+				WebElementUtils.elementToBeClickable(applicationNumber),
+				WebElementUtils.elementToBeClickable(formNumber),
+				WebElementUtils.elementToBeClickable(firstName),
+				WebElementUtils.elementToBeClickable(lastName),
+				WebElementUtils.elementToBeClickable(fromDate),
+				WebElementUtils.elementToBeClickable(toDate));
 	}
 }

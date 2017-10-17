@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.openqa.selenium.By;
@@ -25,9 +26,29 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L2TRANSACTION_PLAN })
 public class TransactionPlanPage extends AbstractBasePage {
 	final Logger logger = LoggerFactory.getLogger(VendorPage.class);
-	// ------------- Card Management > Institution Parameter Setup > Institution
-	// Currency [ISSS05]
 
+	private static final Logger logger = LoggerFactory
+			.getLogger(TransactionPlanPage.class);
+	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
+	private MCWebElement addTransactionPlanBtn;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=transactionSetCode]")
+	private MCWebElement planCodeSearchTxt;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#transactionSetCode input")
+	private MCWebElement planCodeTxt;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#transactionSetDesc input")
+	private MCWebElement transactionSetDescTxt;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#productType select")
+	private MCWebElement productTypeDDwn;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "select[name^=planPalette]")
+	private MCWebElement availableTransactionsLstBx;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "button.add")
+	private MCWebElement addTransactionsBtn;
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addTransactionPlanBtn;
 
@@ -48,6 +69,11 @@ public class TransactionPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
 	private MCWebElement CancelBtn;
+
+	public void verifyUiOperationStatus() {
+		logger.info("Transaction Plan");
+		verifySearchButton("Search");
+	}
 
 	public void clickaddTransactionPlan() {
 		clickWhenClickable(addTransactionPlanBtn);
@@ -109,9 +135,31 @@ public class TransactionPlanPage extends AbstractBasePage {
 		}
 	}
 
-	@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return null;
+	public void createTransactionPlan(TransactionPlan plan) {
+		logger.info("Create Transaction Plan {}", plan.getTransactionPlanCode());
+		clickAddNewButton();
+
+		runWithinPopup(
+				"Add Transaction Plan",
+				() -> {
+					WebElementUtils.enterText(planCodeTxt, plan.getTransactionPlanCode());
+					WebElementUtils.enterText(transactionSetDescTxt, plan.getDescription());
+					WebElementUtils.selectDropDownByVisibleText( productTypeDDwn, plan.getProductType());
+
+					if (plan.isAllTransactionsAssigned()) {
+						WebElementUtils .selectAllOptionsInListBox(availableTransactionsLstBx);
+					} else {
+						WebElementUtils.selectListBoxByVisibleText( availableTransactionsLstBx, plan.getAssignedTransactions());
+					}
+
+					addTransactionsBtn.click();
+
+					clickSaveButton();
+
+					verifyNoErrors();
+				});
+
+		verifyOperationStatus();
 	}
 
 }

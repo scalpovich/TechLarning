@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,22 +17,65 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
+import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP,
-		CardManagementNav.L2DEVICE_RANGE })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
+		CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_DEVICE_RANGE })
 public class DeviceRangePage extends AbstractBasePage {
-	final Logger logger = LoggerFactory.getLogger(DeviceRangePage.class);
 
+	private static final Logger logger = LoggerFactory
+			.getLogger(DeviceRangePage.class);
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
+	private MCWebElement productTypeSearchDDwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "CardRangeContainer:productType:input:dropdowncomponent")
+	private MCWebElement productTypeDDwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "CardRangeContainer:productCode:input:dropdowncomponent")
+	private MCWebElement programDDwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "CardRangeContainer:devicePlanCode:input:dropdowncomponent")
+	private MCWebElement devicePlanCodeDDwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "CardRangeContainer:issuerBin:input:dropdowncomponent")
+	private MCWebElement issuerBinDDwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "CardRangeContainer:branchCode:input:dropdowncomponent")
+	private MCWebElement branchDDwn;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value=Add]")
+	private MCWebElement addBtn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "CardRangeDetailContainer:minCardRange:input:inputTextField")
+	private MCWebElement fromDeviceNumberTxt;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "CardRangeDetailContainer:maxCardRange:input:inputTextField")
+	private MCWebElement toDeviceNumberTxt;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#endPointMode select")
+	private MCWebElement endPointModeDDwn;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#componentName select")
+	private MCWebElement interfaceNameDDwn;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#routingType select")
+	private MCWebElement routingTypeDDwn;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#activeFlag select")
+	private MCWebElement statusDDwn;
 	@Autowired
 	Program program;
 
@@ -289,11 +333,90 @@ public class DeviceRangePage extends AbstractBasePage {
 		}
 
 	}
+	public void selectProductType(String productType) {
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn,
+				productType);
+	}
+
+	public void selectProgram(String program) {
+		WebElementUtils.selectDropDownByVisibleText(programDDwn, program);
+	}
+
+	public void selectDevicePlanCode(String devicePlanCode) {
+		WebElementUtils.selectDropDownByVisibleText(devicePlanCodeDDwn,
+				devicePlanCode);
+	}
+
+	public void selectIssuerBin(String issuerBin) {
+		WebElementUtils.selectDropDownByVisibleText(issuerBinDDwn, issuerBin);
+	}
+
+	public void selectBranch(String branch) {
+		WebElementUtils.selectDropDownByVisibleText(branchDDwn, branch);
+	}
+
+	public void addFromDeviceNumber(String fromDeviceNumber) {
+		WebElementUtils.enterText(fromDeviceNumberTxt, fromDeviceNumber);
+	}
+
+	public void addToDeviceNumber(String toDeviceNumber) {
+		WebElementUtils.enterText(toDeviceNumberTxt, toDeviceNumber);
+	}
+
+	// Method to fill data in Add Device Range
+	public void addDeviceRangeData(DeviceRange deviceRange) {
+		logger.info("Device Range: {}", deviceRange.getDevicePlanCode());
+		clickAddNewButton();
+		runWithinPopup(
+				"Add Device Range",
+				() -> {
+					fillAddDevicePage(deviceRange);
+
+					addFromDeviceNumber(deviceRange.getFromDeviceNumber());
+					log.info("From addFromDeviceNumber = " + deviceRange.getFromDeviceNumber());
+					addToDeviceNumber(deviceRange.getToDeviceNumber());
+					log.info("To addFromDeviceNumber = " + deviceRange.getToDeviceNumber());
+
+					forDebitCard(deviceRange);
+
+					WebElementUtils.selectDropDownByVisibleText(statusDDwn, deviceRange.getStatus());
+
+					pageScrollDown();
+					clickSaveButton();
+
+					verifyNoErrors();
+				});
+
+		verifyOperationStatus();
+	}
+
+	private void fillAddDevicePage(DeviceRange deviceRange) {
+		selectProductType(deviceRange.getProductType());
+		selectProgram(deviceRange.getProgram());
+		selectDevicePlanCode(deviceRange.getDevicePlanCode());
+		selectIssuerBin(deviceRange.getIssuerBin());
+		selectBranch(deviceRange.getBranch());
+		addBtn.click();
+		waitForWicket();
+	}
+
+	private void forDebitCard(DeviceRange deviceRange) {
+		if (ProductType.DEBIT.equalsIgnoreCase(deviceRange.getProductType())) {
+			WebElementUtils.selectDropDownByVisibleText(endPointModeDDwn, deviceRange.getEndPointMode());
+			WebElementUtils.selectDropDownByVisibleText(routingTypeDDwn, deviceRange.getRoutingType());
+			WebElementUtils.selectDropDownByVisibleText(interfaceNameDDwn, deviceRange.getInterfaceName());
+		}
+	}
+
+	public void verifyUiOperationStatus() {
+		logger.info("Device Range");
+		verifySearchButton("Search");
+	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		// TODO Auto-generated method stub
-		return null;
+		return Arrays.asList(WebElementUtils
+				.visibilityOf(productTypeSearchDDwn));
 	}
 
 }

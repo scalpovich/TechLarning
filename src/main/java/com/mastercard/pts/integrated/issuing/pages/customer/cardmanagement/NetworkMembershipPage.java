@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManag
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -25,13 +27,30 @@ import net.thucydides.core.annotations.findby.By;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1INSTITUTION_PARAMETER_SETUP, CardManagementNav.L2NETWORKMEMBERSHIP })
+		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
+		CardManagementNav.L2_NETWORK_MEMBERSHIP })
 public class NetworkMembershipPage extends AbstractBasePage {
-	final Logger logger = LoggerFactory.getLogger(NetworkMembershipPage.class);
+	
+	private static final Logger logger = LoggerFactory
+			.getLogger(NetworkMembershipPage.class);
 
-	// ------------- Card Management > Institution Parameter Setup > Network
-	// Membership [ISSS04]
-
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
+	private MCWebElement interchangeDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='networkCode']/select")
+	private MCWebElement interchangePopupDwn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='presentmentTimeLimit']")
+	private MCWebElement presentmentTimeLimitTxt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='cutoverHrs']/select")
+	private MCWebElement cutoverHoursDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='cutoverMi']/select")
+	private MCWebElement cutoverMinsDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='settlementCurrency']/select")
+	private MCWebElement settlementCurrencyDwn;
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addNetworkMembershipBtn;
 
@@ -205,12 +224,46 @@ public class NetworkMembershipPage extends AbstractBasePage {
 		return ConfirmationMsgTxt.getText().split("\\n")[0];
 
 	}
+	
+	public void verifyUiOperationStatus() {
+		logger.info("Network Membership");
+		verifyUiOperation("Add Network Membership");
+		verifySearchButton("Search");
+	}
+	
+	public void addNewNetworkMembership(List<NetworkMembership> networkMemeberList)
+	{
+		if(isNoRecordsFoundInTable())
+			{
+			networkMemeberList.forEach(networkMember->{
+			logger.info("create network member of interchange : {}",networkMember.getInterchange());
+			clickAddNewButton();
+			runWithinPopup(
+					"Add Network Membership",
+					() -> {
+						addNetworkMember(networkMember);
+							verifyNoErrors();
+					});
+	
+			verifyOperationStatus();       
+			});
+		}
+	}
+	
+	private void addNetworkMember(NetworkMembership nm)
+	{
+			WebElementUtils.selectDropDownByVisibleText(interchangePopupDwn, nm.getInterchange());
+			WebElementUtils.selectDropDownByVisibleText(cutoverHoursDwn, nm.getCutoverHours());
+			WebElementUtils.selectDropDownByVisibleText(cutoverMinsDwn, nm.getCutoverMins());
+			WebElementUtils.selectDropDownByVisibleText(settlementCurrencyDwn, nm.getsettlementCurrency());
+			WebElementUtils.enterText(presentmentTimeLimitTxt, nm.getPresentmentTimeLimitDays());
+			clickSaveButton();
+	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return null;
+		return Arrays.asList(WebElementUtils.elementToBeClickable(interchangeDwn));
 	}
-
 	public MCWebElement getAddNetworkMembership() {
 		return addNetworkMembershipBtn;
 	}
@@ -218,5 +271,4 @@ public class NetworkMembershipPage extends AbstractBasePage {
 	public void setAddNetworkMembership(MCWebElement addNetworkMembership) {
 		this.addNetworkMembershipBtn = addNetworkMembership;
 	}
-
 }

@@ -8,13 +8,13 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
-public class AdministrationAbstractPage extends AbstractModelPage {
+public class AdministrationAbstractPage extends AbstractBasePage {
 	protected static final Logger logger = LoggerFactory.getLogger(ReportPrivilegesPage.class);
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")

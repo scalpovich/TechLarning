@@ -7,12 +7,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.springframework.beans.factory.annotation.Value;
 
-import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
-public class ServicesAbstractPage extends AbstractModelPage {
+public class ServicesAbstractPage extends AbstractBasePage {
 
 	@Value("${default.wait.timeout_in_sec}")
 	protected long timeoutInSec;

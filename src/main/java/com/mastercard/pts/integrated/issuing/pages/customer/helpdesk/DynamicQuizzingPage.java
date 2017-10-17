@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.pages.AbstractModelPage;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -21,7 +21,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		HelpdeskNav.L1_SETUP,
 		HelpdeskNav.L2_DYNAMIC_QUIZZING
 		})
-public class DynamicQuizzingPage extends AbstractModelPage{
+public class DynamicQuizzingPage extends AbstractBasePage{
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(DynamicQuizzingPage.class);

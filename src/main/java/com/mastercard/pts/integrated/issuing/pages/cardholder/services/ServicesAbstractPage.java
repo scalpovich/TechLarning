@@ -2,10 +2,12 @@ package com.mastercard.pts.integrated.issuing.pages.cardholder.services;
 
 import java.util.Collection;
 import java.util.Collections;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -41,6 +43,28 @@ public class ServicesAbstractPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(text(), 'Wallet Status')]/following-sibling::td[1]")
 	protected MCWebElement walletStatusLbl;
 
+	private void verifyUiOperationStatus(String screenName, String screenName2)
+	{
+		logger.info(screenName);
+		verifyTitleCardHolderPortal(screenName);
+		verifyWalletDetails();
+		verifyDeviceDetails();
+		verifyButton(screenName2);
+		verifyButton("Cancel");
+	}
 
+	public void verifyUiOperationStatusReusable(String screenName)
+	{
+		verifyUiOperationStatus(screenName,"Submit" );
+	}
+	
+	public void verifyUiOperationStatusReusable(String screenName, String screenName2)
+	{
+		verifyUiOperationStatus(screenName, screenName2);
+	}
 
+	@Override
+	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
+		return Collections.emptyList();
+	}
 }

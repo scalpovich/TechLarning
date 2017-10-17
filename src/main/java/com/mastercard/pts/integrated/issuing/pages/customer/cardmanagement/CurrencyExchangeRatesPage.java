@@ -7,10 +7,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,21 +29,20 @@ import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.ReadTestDataFromExcel;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
-/**
- * @author e074127 Page Class for Currency Exchange Rates Screen
- */
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1INSTITUTION_PARAMETER_SETUP,
-		CardManagementNav.L2CURRENCY_EXCHANGE_RATES })
+		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
+		CardManagementNav.L2_CURRENCY_EXCHANGE_RATES
+		})
 public class CurrencyExchangeRatesPage extends AbstractBasePage {
 
-	/** The logger. */
-	final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory
+			.getLogger(CurrencyExchangeRatesPage.class);
 
 	@Autowired
 	DatePicker datePicker;
@@ -52,14 +54,13 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement sourceCurrencySearchDdwn;
-
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent")
 	private MCWebElement destinationCurrencySearchDdwn;
-
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement rateOriginSearchDdwn;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:1:componentPanel:input:dropdowncomponent")
+@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:1:componentPanel:input:dropdowncomponent")
 	private MCWebElement programSearchDdwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:searchButtonPanel:buttonCol:searchButton")
@@ -361,4 +362,17 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		fileCreation.createCERUploadFileBank(isInvalid);
 	}
 
+	public void verifyUiOperationStatus() {
+		logger.info("Currency Exchange Rate");
+		verifyUiOperationNoEdit("Add Currency Exchange Rate");
+	}
+
+	@Override
+	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
+		return Arrays.asList(
+				WebElementUtils.elementToBeClickable(sourceCurrency),
+				WebElementUtils.elementToBeClickable(destinationCurrency),
+				WebElementUtils.elementToBeClickable(rateOrigin)
+				);
+	}
 }

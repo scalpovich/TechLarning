@@ -1,6 +1,11 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.HashMap;
+import java.util.Arrays;
+import java.util.Collection;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,16 +16,20 @@ import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManag
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.ReadTestDataFromExcel;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1INSTITUTION_PARAMETER_SETUP,
-		CardManagementNav.L2EVENTS, CardManagementNav.L3EVENTS_AND_ALERTS })
-public class EventsAndAlertsPage extends AbstractBasePage {
+		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
+		CardManagementNav.L2_EVENTS,
+		CardManagementNav.L3_EVENTS_AND_ALERTS
+		})
 
+public class EventsAndAlertsPage extends AbstractBasePage {
+	
 	private static final Logger logger = LoggerFactory.getLogger(EventsAndAlertsPage.class);
 
 	@Autowired
@@ -31,10 +40,10 @@ public class EventsAndAlertsPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=eventCode]")
 	private MCWebElement eventCode;
-
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=eventDescription]")
 	private MCWebElement eventDescription;
-
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:1:componentPanel:input:dropdowncomponent")
 	private MCWebElement eventType;
 
@@ -69,6 +78,19 @@ public class EventsAndAlertsPage extends AbstractBasePage {
 			enterEventeventID(eventID);
 			clickSearchBtn();
 		}
+	}	
+	public void verifyUiOperationStatus() {
+		logger.info("Event");
+		verifyUiOperation("Add Event");
 	}
-
+	
+	@Override
+	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
+		return Arrays.asList(
+				WebElementUtils.elementToBeClickable(product),
+				WebElementUtils.elementToBeClickable(eventCode),
+				WebElementUtils.elementToBeClickable(eventDescription),
+				WebElementUtils.elementToBeClickable(eventType)
+				);
+	}
 }

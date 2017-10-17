@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.openqa.selenium.WebElement;
@@ -16,21 +17,29 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
+import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP,
-		CardManagementNav.L2APPLICATION, CardManagementNav.L3DOCUMENT_CHECKLIST })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
+		CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_APPLICATION,
+		CardManagementNav.L3_DOCUMENT_CHECKLIST })
 public class DocumentChecklistPage extends AbstractBasePage {
-	final Logger logger = LoggerFactory.getLogger(DocumentChecklistPage.class);
-	// ------------- Card Management > Institution Parameter Setup > Institution
-	// Currency [ISSS05]
 
-	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
-	private MCWebElement addDocumentChecklistBtn;
+	private static final Logger logger = LoggerFactory
+			.getLogger(DocumentChecklistPage.class);
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "productType:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=documentPlanCode]")
+	private MCWebElement documentPlanCode;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=description]")
+	private MCWebElement description;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:0:componentPanel:input:dropdowncomponent")
+	private MCWebElement productType;
+@PageElement(findBy = FindBy.NAME, valueToFind = "productType:input:dropdowncomponent")
 	private MCWebElement ProductTypeDDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "documentPlanCode:input:inputTextField")
@@ -135,9 +144,16 @@ public class DocumentChecklistPage extends AbstractBasePage {
 		SwitchToDefaultFrame();
 	}
 
-	@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return null;
+	public void verifyUiOperationStatus() {
+		logger.info("Document Checklist");
+		verifyUiOperation("Add Document Checklist");
 	}
 
+	@Override
+	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
+		return Arrays.asList(
+				WebElementUtils.elementToBeClickable(documentPlanCode),
+				WebElementUtils.elementToBeClickable(description),
+				WebElementUtils.elementToBeClickable(productType));
+	}
 }

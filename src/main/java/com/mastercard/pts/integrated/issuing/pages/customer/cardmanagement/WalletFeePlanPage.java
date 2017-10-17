@@ -1,10 +1,13 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
@@ -15,6 +18,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.DatePicker;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -24,9 +28,20 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L2WALLET_CONFIGURATION, CardManagementNav.L3WALLET_FEE_PLAN })
 public class WalletFeePlanPage extends AbstractBasePage {
 
-	// ------------- Card Management > Institution Parameter Setup > Institution
-	// Currency [ISSS05]
+	private static final Logger logger = LoggerFactory
+			.getLogger(WalletFeePlanPage.class);
 
+	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=walletFeePlanCode]")
+	private MCWebElement walletFeePlanCode;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=description]")
+	private MCWebElement description;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:0:componentPanel:input:dropdowncomponent")
+	private MCWebElement currency;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:1:componentPanel:input:dropdowncomponent")
+	private MCWebElement productType;
 	@Autowired
 	DatePicker date;
 
@@ -63,6 +78,10 @@ public class WalletFeePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "waiveNumOfCycle:input:inputTextField")
 	private MCWebElement waiveNoOfCycleTxt;
 
+	public void verifyUiOperationStatus() {
+		logger.info("Wallet Fee Plan");
+		verifyUiOperation("Add Wallet Fee Plan");
+	}
 	public String Calelement = "//span[@id = 'walletFeeEndDate']";
 
 	public void clickAddWalletFeePlan() {
@@ -161,4 +180,13 @@ public class WalletFeePlanPage extends AbstractBasePage {
 		return null;
 	}
 
+
+	@Override
+	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
+		return Arrays.asList(
+				WebElementUtils.elementToBeClickable(walletFeePlanCode),
+				WebElementUtils.elementToBeClickable(description),
+				WebElementUtils.elementToBeClickable(currency),
+				WebElementUtils.elementToBeClickable(productType));
+	}
 }

@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,23 +18,34 @@ import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManag
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
-/**
- * @author E070234
- *
- */
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1INSTITUTION_PARAMETER_SETUP, CardManagementNav.L2INSTITUTIONCURRENCY })
+		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
+		CardManagementNav.L2_INSTITUTION_CURRENCY })
 public class InstitutionCurrencyPage extends AbstractBasePage {
-	final Logger logger = LoggerFactory.getLogger(InstitutionCurrencyPage.class);
+	
+	private static final Logger logger = LoggerFactory
+			.getLogger(InstitutionCurrencyPage.class);
 
-	// ------------- Card Management > Institution Parameter Setup > Institution
-	// Currency [ISSS05]
-
+	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=currencyCodeAlpha]")
+	private MCWebElement currencyCodeAlpha;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=description]")
+	private MCWebElement description;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:0:componentPanel:input:dropdowncomponent")
+	private MCWebElement status;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='currencyCode']/span/select")
+	private MCWebElement currencyCodePopupDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind  = "//td[@id='status']/span/select")
+	private MCWebElement statusPopupDwn;
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addInstitutionCurrencyBtn;
 
@@ -222,5 +234,50 @@ public class InstitutionCurrencyPage extends AbstractBasePage {
 			logger.debug("Error pannel not present", e);
 		}
 	}
+	public void verifyUiOperationStatus() {
+		logger.info("Institution Currency");
+		verifyUiOperation("Add Institution Currency");
+	}
 
+	public void addInstitutionCurrency(InstitutionCurrency currency)
+	{
+		logger.info("create currency : {}",
+				currency.getCurrency());
+
+		performSearchOperationOnMainScreen();
+		if(isNoRecordsFoundInTable())
+		{
+			clickAddNewButton();
+	
+			runWithinPopup(
+					"Add Institution Currency",
+					() -> {
+							addInstituteCurrency(currency);
+							verifyNoErrors();
+					});
+	
+			verifyOperationStatus();
+		}
+	}
+	
+	private void addInstituteCurrency(InstitutionCurrency currency) {
+		WebElementUtils.selectDropDownByVisibleText(currencyCodePopupDwn,currency.getCurrency());
+		WebElementUtils.selectDropDownByVisibleText(statusPopupDwn,currency.getStatus());
+		clickSaveButton();
+	}	
+	
+	private void performSearchOperationOnMainScreen()
+	{
+		WebElementUtils.enterText(currencyCodeAlpha, "INR");
+		clickSearchButton();
+	}
+	
+	@Override
+	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
+		return Arrays.asList(
+				WebElementUtils.elementToBeClickable(currencyCodeAlpha),
+				WebElementUtils.elementToBeClickable(description),
+				WebElementUtils.elementToBeClickable(status)
+				);
+	}
 }

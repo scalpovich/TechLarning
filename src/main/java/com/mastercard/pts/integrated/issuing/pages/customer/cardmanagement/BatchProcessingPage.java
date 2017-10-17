@@ -1,9 +1,12 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,32 +17,31 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Proc
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CustomMCWebElementImpl;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.QMRPDFUtility;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
-/**
- * @author E070234 - Implement this class for the basic functionality of batch
- *         processing and QMR report downloading and validation.
- *
- */
-
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1OPERATION,
-		CardManagementNav.L2PROCESSING_BATCHES, CardManagementNav.L3PROCESS_BATCHES })
 @Component
-public class BatchProcessingPage extends ProcessBatches {
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
+		CardManagementNav.L1_REPORTS, CardManagementNav.L2_BATCH_PROCESSING})
 
+public class BatchProcessingPage extends AbstractBasePage {
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(BatchProcessingPage.class);
 	@Autowired
 	QMRPDFUtility pdfUtil;
 
-	final Logger logger1 = LoggerFactory.getLogger(BatchProcessingPage.class);
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "batchType:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "componentPanel")
+	private MCWebElement selectReportDDwn;
+@PageElement(findBy = FindBy.NAME, valueToFind = "batchType:input:dropdowncomponent")
 	public MCWebElement batchTypeDDwn;
 	// ProcessingBatches
 
@@ -361,6 +363,16 @@ public class BatchProcessingPage extends ProcessBatches {
 
 	public void getNewCards() {
 		// To be implemented
+	}	
+	public void verifyUiOperationStatus() {
+		logger.info("Batch Processing");
+		verifySearchButton("Go");
 	}
 
+	@Override
+	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
+		return Arrays.asList(
+				WebElementUtils.elementToBeClickable(selectReportDDwn)
+				);
+	}
 }
