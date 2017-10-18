@@ -274,29 +274,6 @@ public class DateUtils {
 		return f.format(calendar.getTime()) + "/" + f1.format(calendar.getTime()) + "/" + f2.format(calendar.getTime());
 	}
 
-	public static String getDateddMMyyyy() {
-		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
-		return sdf.format(cal.getTime());
-	}
-
-	public static String getTime() {
-		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("HHmmss");
-		return sdf.format(cal.getTime());
-	}
-
-	public static String getDate() {
-		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyy");
-		return sdf.format(cal.getTime());
-	}
-
-	public static String getDateTimeDDMMYYYYHHMMSS() {
-		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyyHHmmss");
-		return sdf.format(cal.getTime());
-	}
 
 	public static String getDateTimeDDMMYYHHMMSS() {
 		Calendar cal = Calendar.getInstance();

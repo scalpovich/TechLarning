@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.administration;
 
 import junit.framework.Assert;
+
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -23,6 +24,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
@@ -40,7 +42,7 @@ public class UserPage extends UserCreation{
 
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
-	private MCWebElement userIdTxt;
+	private MCWebElement srchUserIdTxt;
 @PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addUser;
 
@@ -279,6 +281,6 @@ public class UserPage extends UserCreation{
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.elementToBeClickable(userIdTxt));
+		return Arrays.asList(WebElementUtils.elementToBeClickable(srchUserIdTxt));
 	}
 }

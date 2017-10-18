@@ -199,39 +199,8 @@ public abstract class LinuxUtils {
 		}
 	}
 
-	private static int checkAck(InputStream in) throws IOException {
-		int b = in.read();
-		if (b < 0) 
-			return b;
 
-		if (b == 1 || b == 2) {
-			StringBuilder stringBuilder = new StringBuilder();
-			int c;
-			do {
-				c = in.read();
-				stringBuilder.append((char) c);
-			}
-			while (c != '\n');
-		}
-		return b;
-	}
 
-	public static void upload(RemoteConnectionDetails connectiondetails, String localsource,
-			String remoteDir) throws JSchException  {
-
-		Scp scp = new Scp();
-		int portSSH = connectiondetails.getPort();
-		String serverSSH = connectiondetails.getHostName();
-		String userSSH = connectiondetails.getUserName(); 
-		String pswdSSH = connectiondetails.getPassword();
-
-		scp.setPort( portSSH );
-		scp.setLocalFile(localsource);
-		scp.setTodir( userSSH + ":" + pswdSSH + "@" + serverSSH + ":" + remoteDir );
-		scp.setProject( new Project() );
-		scp.setTrust( true );
-		scp.execute();
-	}
 	public static Session connectSession(String user, String host, String pwd,
 			int port) throws JSchException, IOException {
 		JSch jsch = new JSch();
@@ -370,5 +339,6 @@ public abstract class LinuxUtils {
 		scp.execute();
 
 	}
+	
 
 }

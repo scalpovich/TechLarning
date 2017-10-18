@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.mastercard.pts.integrated.issuing.context.CustomTestContext;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 
 public class Utils {
 
@@ -66,7 +66,7 @@ public class Utils {
 		if (isNeedToWrite) {
 			StringBuilder s = new StringBuilder(
 					System.getProperty("line.separator") + log);
-			CustomTestContext.loggers.append(s);
+			TestContext.loggers.append(s);
 		}
 	}
 

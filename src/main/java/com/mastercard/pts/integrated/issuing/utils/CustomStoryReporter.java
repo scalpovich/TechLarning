@@ -40,6 +40,9 @@ public class CustomStoryReporter implements StoryReporter {
     		rallyALM = new CustomRallyReport();
     	}
     }
+    public CustomStoryReporter(StoryReporter delegate) {
+		this.delegate = delegate;
+	}
     
     protected boolean isRallyReportingEnabled() {
     	return System.getProperty("testsetid") != null;
@@ -274,35 +277,7 @@ public class CustomStoryReporter implements StoryReporter {
 		
 	}
 
-	@Override
-	public void successful(String step) {
-		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public void ignorable(String step) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void pending(String step) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void notPerformed(String step) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void failed(String step, Throwable cause) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void failedOutcomes(String step, OutcomesTable table) {
@@ -332,4 +307,4 @@ public class CustomStoryReporter implements StoryReporter {
 		// TODO Auto-generated method stub
 
 	}
-
+}

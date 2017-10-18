@@ -23,17 +23,26 @@ public class TestContext {
 	 * 
 	 */
 	public static StringBuilder loggers = new StringBuilder();
-
-	protected HashMap<String, HashMap<String, Object>> contextMap = new HashMap<String, HashMap<String, Object>>();
-	
-	/*public void initStoryContext(String storyName) {
+	public void initStoryContext(String storyName) {
 		context.set(new HashMap<>());
 		put(KEY_STORY_NAME, storyName.toUpperCase());
 	}
 	
 	public String getStoryName() {
 		return get(KEY_STORY_NAME);
-	}*/
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T> T get(String key) {
+		return (T) context.get().get(key);
+	}
+	
+	public void put(String key, Object value) {
+		context.get().put(key, value);
+	}
+	
+	protected HashMap<String, HashMap<String, Object>> contextMap = new HashMap<String, HashMap<String, Object>>();
+	
 	
 	@SuppressWarnings("unchecked")
 	public <T> T get(String storyName, String key)
@@ -44,14 +53,7 @@ public class TestContext {
 		return (T) eMap.get(key);
 
 	}
-	
 
-	public HashMap<String, Object> get(String storyName)
-			throws IllegalArgumentException {
-
-		return contextMap.get(storyName);
-
-	}
 	public void put(String storyName, String key, Object value)
 			throws IllegalArgumentException {
 		if (contextMap.get(storyName) == null) {
