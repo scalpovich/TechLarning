@@ -8,9 +8,7 @@ public class ProcessBatches {
 	
 	private String joBID;
 	private String batchType;
-	
 	private String batchName;
-	private String batchType;
 	private String fileType;
 	private String productType;
 	private String generatedFilename;
@@ -22,9 +20,6 @@ public class ProcessBatches {
 	
 	private static final String BATCH_NAME = "Transaction Upload [TRANSACTION_UPLOAD]";
 	
-	public String getBatchType() {
-		return batchType;
-	}
 
 	public static ProcessBatches createWithProvider(KeyValueProvider provider){
 		ProcessBatches batch = new ProcessBatches();
@@ -56,17 +51,6 @@ public class ProcessBatches {
 		this.extractType = extractType;
 	}
 
-	public void setBatchType(String batchType) {
-		this.batchType = batchType;
-	}
-
-	public String getBatchName() {
-		return batchName;
-	}
-
-	public void setBatchName(String batchName) {
-		this.batchName = batchName;
-	}
 
 	public String getProductType() {
 		return productType;

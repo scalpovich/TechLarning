@@ -39,9 +39,9 @@ public class CutOverProfile {
 		this.cutoverMins = cutoverMins;
 	}
 	
-	public static CutoverProfile createWithProvider(DataProvider provider)
+	public static CutOverProfile createWithProvider(DataProvider provider)
 	{
-		CutoverProfile cp=provider.getDataBySimpleClassName(CutoverProfile.class);
+		CutOverProfile cp=provider.getDataBySimpleClassName(CutOverProfile.class);
 		cp.setBusinessDate(LocalDate.now().plusDays(1));
 		return cp;
 	}

@@ -33,8 +33,10 @@ public class TransactionLimitPlan implements HasCodeAndDescription {
 	private String iframeproductType;
 	private String iframePlanType;
 	private String iframeStartMonthForYearlyLimits;
+	private String transactionType;
 	public String CeilingAmount;
 	public String FloorAmount;
+	
 	private String periodicity;
 	private String customerInitiatedDebitTransactionLimitsDailyVelocity;
 	private String customerInitiatedDebitTransactionLimitsPeriodicVelocity;
@@ -253,20 +255,20 @@ public class TransactionLimitPlan implements HasCodeAndDescription {
 	public String toString() {
 		return MiscUtils.toString(this);
 	}
-public String getStartMonthForYearlyLimits() {
-		return StartMonthForYearlyLimits;
+	public String getStartMonthForYearlyLimits() {
+		return iframeStartMonthForYearlyLimits;
 	}
 
 	public void setStartMonthForYearlyLimits(String startMonthForYearlyLimits) {
-		StartMonthForYearlyLimits = startMonthForYearlyLimits;
+		iframeStartMonthForYearlyLimits = startMonthForYearlyLimits;
 	}
 
 	public String getTransactionType() {
-		return TransactionType;
+		return transactionType;
 	}
 
 	public void setTransactionType(String transactionType) {
-		TransactionType = transactionType;
+		this.transactionType = transactionType;
 	}
 
 	public String getFloorAmount() {

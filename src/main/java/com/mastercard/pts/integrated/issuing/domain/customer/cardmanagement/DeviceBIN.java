@@ -60,7 +60,7 @@ public class DeviceBin {
 		this.remarks = remarks;
 	}
 	public void devicebinDataProvider() {
-		setRemark(MapUtils.fnGetInputDataFromMap("Remark"));
+		setRemarks(MapUtils.fnGetInputDataFromMap("Remark"));
 
 	}
 

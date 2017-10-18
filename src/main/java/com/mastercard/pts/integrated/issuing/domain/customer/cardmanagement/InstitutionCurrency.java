@@ -11,11 +11,11 @@ public class InstitutionCurrency {
 	private String status;
 	
 	public String getSettlementCurrency() {
-		return SettlementCurrency;
+		return settlementCurrency;
 	}
 
 	public void setSettlementCurrency(String settlementCurrency) {
-		SettlementCurrency = settlementCurrency;
+		this.settlementCurrency = settlementCurrency;
 	}
 	public String getStatus() {
 		return status;

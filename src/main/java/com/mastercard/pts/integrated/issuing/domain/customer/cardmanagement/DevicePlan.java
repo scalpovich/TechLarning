@@ -162,9 +162,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	private String pinDataTransmission;
 
 	private String pinGenerationOption;
-	private String devicePlanCode;
 	private String associationType;
-	private String productType;
 	private String deviceType;
 	private String serviceCode;
 	private String deliveryMode;
@@ -174,7 +172,6 @@ public class DevicePlan implements HasCodeAndDescription {
 	private String pictureCode;
 	private String cardProduction;
 	private String embossingVendor;
-	private String activationMode;
 	private String expiryFlag;
 	private String validityOnInitialMonths;
 	private String expiryDate;
@@ -595,13 +592,6 @@ public class DevicePlan implements HasCodeAndDescription {
 		this.validityOnInitialMonths = validityOnInitialMonths;
 	}
 
-	public String getCustomCode() {
-		return customCode;
-	}
-
-	public void setCustomCode(String customCode) {
-		this.customCode = customCode;
-	}
 
 	public String getDeviceNumberGenerationIssuePairedDevice() {
 		return deviceNumberGenerationIssuePairedDevice;
@@ -953,53 +943,6 @@ public class DevicePlan implements HasCodeAndDescription {
 		return getDevicePlanCode();
 	}
 
-	public String getDevicePlanCode() {
-		return devicePlanCode;
-	}
-
-	public void setDevicePlanCode(String devicePlanCode) {
-		this.devicePlanCode = devicePlanCode;
-	}
-
-	public String getAssociation() {
-		return associationType;
-	}
-
-	public void setAssociation(String association) {
-		this.associationType = association;
-	}
-
-	public String getProductType() {
-		return productType;
-	}
-
-	public void setProductType(String productType) {
-		this.productType = productType;
-	}
-
-	public String getDeviceType() {
-		return deviceType;
-	}
-
-	public void setDeviceType(String deviceType) {
-		this.deviceType = deviceType;
-	}
-
-	public String getServiceCode() {
-		return serviceCode;
-	}
-
-	public void setServiceCode(String serviceCode) {
-		this.serviceCode = serviceCode;
-	}
-
-	public String getDeliveryMode() {
-		return deliveryMode;
-	}
-
-	public void setDeliveryMode(String deliveryMode) {
-		this.deliveryMode = deliveryMode;
-	}
 
 	public String getDeviceIdGenerationTemplate() {
 		return deviceIdGenerationTemplate;
@@ -1049,21 +992,6 @@ public class DevicePlan implements HasCodeAndDescription {
 		this.embossingVendor = embossingVendor;
 	}
 
-	public String getActivationMode() {
-		return activationMode;
-	}
-
-	public void setActivationMode(String activationMode) {
-		this.activationMode = activationMode;
-	}
-
-	public String getExpiryFlag() {
-		return expiryFlag;
-	}
-
-	public void setExpiryFlag(String expiryFlag) {
-		this.expiryFlag = expiryFlag;
-	}
 
 	public String getValidityOnInitialMonths() {
 		return validityOnInitialMonths;
@@ -1071,14 +999,6 @@ public class DevicePlan implements HasCodeAndDescription {
 
 	public void setPersonalizationValidityOnInitialMonths(String validityOnInitialMonths) {
 		this.validityOnInitialMonths = validityOnInitialMonths;
-	}
-
-	public String getExpiryDate() {
-		return expiryDate;
-	}
-
-	public void setExpiryDate(String expiryDate) {
-		this.expiryDate = expiryDate;
 	}
 
 	public String getBaseDeviceEventBasedPlan() {

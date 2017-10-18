@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Walletplan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.WalletPlanFlows;
 
 @Component
@@ -15,7 +15,7 @@ public class WalletPlanSteps {
 	@Autowired
 	DeviceCreation deviceCreation;
 
-	public Walletplan walletplan;
+	public WalletPlan walletplan;
 
 	@Autowired
 	WalletPlanFlows walletplanflows;
@@ -24,7 +24,7 @@ public class WalletPlanSteps {
 	public void whenUserCreatesAWhiteListedMerchantWalletPlan(@Named("walletType") String walletType,
 			@Named("Programtype") String Programtype, @Named("product") String product) {
 		String WalletPlan = "";
-		walletplan = Walletplan.walletplanDataprovider();
+		walletplan = WalletPlan.walletplanDataprovider();
 		walletplan.setWalletType(walletType);
 		walletplan.setProgramType(Programtype);
 		deviceCreation.setProduct(product);

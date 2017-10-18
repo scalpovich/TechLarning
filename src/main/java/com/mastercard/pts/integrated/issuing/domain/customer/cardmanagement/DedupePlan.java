@@ -32,7 +32,7 @@ public class DedupePlan implements HasCodeAndDescription {
 
 
 	public String getDedupePlanCode() {
-		return DedupePlanCode;
+		return dedupePlanCode;
 	}
 	
 	public static DedupePlan createWithProvider(KeyValueProvider provider) {
@@ -64,7 +64,7 @@ public class DedupePlan implements HasCodeAndDescription {
 	}
 
 	public void setDedupePlanCode(String dedupePlanCode) {
-		DedupePlanCode = dedupePlanCode;
+		this.dedupePlanCode = dedupePlanCode;
 	}
 
 	public void setWalletPlanCode(String walletPlanCode) {

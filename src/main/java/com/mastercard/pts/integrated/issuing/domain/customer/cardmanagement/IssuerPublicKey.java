@@ -15,12 +15,13 @@ public class IssuerPublicKey {
 	private String ipkId;
 	private String interchange;
 	private String issuerBin;
-	private LocalDate issueDate;
-	private LocalDate ipkExpiryDate;
+	private String issuerDate;
+	private String ipkExpiryDate;
 	private String serialNumber;
 	private String status;
 	private String issueDataCurrentDatePlus;
 	public String DeviceBin;
+	public LocalDate expiryDate;
 	public String getIpkId() {
 		return ipkId;
 	}
@@ -39,12 +40,10 @@ public class IssuerPublicKey {
 	public void setIssuerBin(String issuerBin) {
 		this.issuerBin = issuerBin;
 	}
-	public LocalDate getIssueDate() {
-		return issueDate;
+	public String getIssuerDate() {
+		return issuerDate;
 	}
-	public void setIssueDate(LocalDate issueDate) {
-		this.issueDate = issueDate;
-	}
+
 	public LocalDate getExpiryDate() {
 		return expiryDate;
 	}
@@ -82,37 +81,20 @@ public class IssuerPublicKey {
 		DeviceBin = deviceBin;
 	}
 
-	public String getIssuerDate() {
-		return IssuerDate;
-	}
-
 	public void setIssuerDate(String issuerDate) {
-		IssuerDate = issuerDate;
+		issuerDate = issuerDate;
 	}
 
-	public String getStatus() {
-		return Status;
-	}
-
-	public void setStatus(String status) {
-		Status = status;
-	}
 
 	public String getIPKExpiryDate() {
-		return IPKExpiryDate;
+		return ipkExpiryDate;
 	}
 
 	public void setIPKExpiryDate(String iPKExpiryDate) {
-		IPKExpiryDate = iPKExpiryDate;
+		this.ipkExpiryDate = iPKExpiryDate;
 	}
 
-	public String getInterchange() {
-		return Interchange;
-	}
 
-	public void setInterchange(String interchange) {
-		Interchange = interchange;
-	}
 
 	public void ipkDatProvider() {
 		// IssuerPublicKey ipk = new IssuerPublicKey();

@@ -40,7 +40,7 @@ public class WalletFeePlan {
 	private String statementFeeEmailReGeneration;
 	private String statementFeeEmailReGenerationAbove6Months;
 	public String EffectiveDate;
-	public String EndDate
+	public String EndDate;
 	public String WaiverPeriod;
 	private List<WalletFeePlanDetails> walletFeePlanDetails = new ArrayList<>();
 

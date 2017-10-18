@@ -26,12 +26,11 @@ public class Portal {
 	private String user;
 
 	private String url;
-
 	private String userName;
-
 	private String adminUserName;
-
 	private String password;
+	private String branchUserName;
+	private String adminPassword;
 
 	public static final String TYPE_CUSTOMER = "customer";
 	public static final String TYPE_AGENT = "agent";
@@ -40,6 +39,31 @@ public class Portal {
 
 	@Autowired
 	private Environment env;
+	
+	@Bean
+	@Qualifier(Portal.TYPE_CUSTOMER)
+	public Portal customerPortal() {
+		return getPortal(Portal.TYPE_CUSTOMER);
+	}
+
+	@Bean
+	@Qualifier(Portal.TYPE_AGENT)
+	public Portal agentPortal() {
+		return getPortal(Portal.TYPE_AGENT);
+	}
+
+	@Bean
+	@Qualifier(Portal.TYPE_CARDHOLDER)
+	public Portal cardholderPortal() {
+		return getPortal(Portal.TYPE_CARDHOLDER);
+	}
+
+	@Bean
+	@Qualifier(Portal.TYPE_COLLECT)
+	public Portal collectionPortal() {
+		return getPortal(Portal.TYPE_COLLECT);
+	}
+
 	
 	@Value("${Customer.portal.url}")
 	private String customerPortalUrl;
@@ -79,21 +103,6 @@ public class Portal {
 
 	@Value("${Customer.portal.user.name2}")
 	private String customerPortalUser2;
-	private String url;
-
-	private String userName;
-
-	private String agencyUserName;
-
-	private String branchUserName;
-
-	private String agentUserName;
-
-	private String adminUserName;
-
-	private String password;
-
-	private String adminPassword;
 
 	public String getBranchUserName() {
 		return branchUserName;
@@ -107,66 +116,6 @@ public class Portal {
 			this.branchUserName = branchUserName;
 	}
 
-	public String getAgencyUserName() {
-		return agencyUserName;
-	}
-
-	public void setAgencyUserName(String agencyUserName) {
-		String agencyUsrName = System.getProperty("agencyUserName");
-		if (agencyUsrName != null && !agencyUsrName.trim().isEmpty())
-			this.agencyUserName = agencyUsrName;
-		else
-			this.agencyUserName = agencyUserName;
-	}
-
-	public String getAdminUserName() {
-		return adminUserName;
-	}
-
-	public void setAdminUserName(String adminUserName) {
-		String adminUsrName = System.getProperty("adminUserName");
-		if (adminUsrName != null && !adminUsrName.trim().isEmpty())
-			this.adminUserName = adminUsrName;
-		else
-			this.adminUserName = adminUserName;
-	}
-
-	public String getAgentUserName() {
-		return agentUserName;
-	}
-
-	public void setAgentUserName(String agentUserName) {
-		String agentUsrName = System.getProperty("agentUserName");
-		if (agentUsrName != null && !agentUsrName.trim().isEmpty())
-			this.agentUserName = agentUsrName;
-		else
-			this.agentUserName = agentUserName;
-	}
-
-	
-	@Bean
-	@Qualifier(Portal.TYPE_CUSTOMER)
-	public Portal customerPortal() {
-		return getPortal(Portal.TYPE_CUSTOMER);
-	}
-
-	@Bean
-	@Qualifier(Portal.TYPE_AGENT)
-	public Portal agentPortal() {
-		return getPortal(Portal.TYPE_AGENT);
-	}
-
-	@Bean
-	@Qualifier(Portal.TYPE_CARDHOLDER)
-	public Portal cardholderPortal() {
-		return getPortal(Portal.TYPE_CARDHOLDER);
-	}
-
-	@Bean
-	@Qualifier(Portal.TYPE_COLLECT)
-	public Portal collectionPortal() {
-		return getPortal(Portal.TYPE_COLLECT);
-	}
 
 	/*
 	 * public String getUrl() { return customerPortalUrl; }
@@ -350,9 +299,6 @@ public static String getTypeCustomer() {
 		return portal;
 	}
 
-	public static String getTypeCustomer() {
-		return TYPE_CUSTOMER;
-	}
 
 	public static String getTypeAgent() {
 		return TYPE_AGENT;

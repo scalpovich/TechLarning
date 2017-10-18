@@ -14,7 +14,7 @@ import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 
 @Component
 @Navigation(tabTitle = ServicesNav.TAB_SERVICES, treeMenuItems = { ServicesNav.L1_ACTIVATE_DEACTIVATE_WALLET})
-public class ActivateDeactivateWalletPage extends AbstractBasePage {
+public class ActivateDeactivateWalletPage extends ServicesAbstractPage {
 
 	public void verifyUiOperationStatus() {
 		verifyUiOperationStatusReusable("Activate/ Deactivate Wallet");

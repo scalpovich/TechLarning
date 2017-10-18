@@ -36,13 +36,14 @@ public class NetworkMembership {
 	}
 	public String getsettlementCurrency() {
 		return settlementCurrency;
+	}
 	public static NetworkMembership NetworkMembershipDataProvider() {
 		NetworkMembership networkmembership = new NetworkMembership();
-		networkmembership.setPresentmentTimeLimit(MapUtils.fnGetInputDataFromMap("PresentTimeLimit"));
+		networkmembership.setPresentmentTimeLimitDays(MapUtils.fnGetInputDataFromMap("PresentTimeLimit"));
 		networkmembership.setSettlementCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
 		return networkmembership;
 	}
-	public void setsettlementCurrency(String settlementCurrency) {
+	public void setSettlementCurrency(String settlementCurrency) {
 		this.settlementCurrency = settlementCurrency;
 	}
 	public String getPresentmentTimeLimitDays() {

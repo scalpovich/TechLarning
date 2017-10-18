@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Walletplan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -117,7 +117,7 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	}
 
-	public void selectCurrency(Walletplan walletplan) {
+	public void selectCurrency(WalletPlan walletplan) {
 		selectByVisibleText(CurrencyDDwn, walletplan.getCurrency());
 	}
 
@@ -125,11 +125,11 @@ public class WalletPlanPage extends AbstractBasePage {
 		selectByVisibleText(ProductTypeDDwn, deviceCreation.getProduct());
 	}
 
-	public void selectProgramType(Walletplan walletplan) {
+	public void selectProgramType(WalletPlan walletplan) {
 		selectByVisibleText(ProgrameTypeDDwn, walletplan.getProgramType());
 	}
 
-	public void selectWalletUsage(Walletplan walletplan) {
+	public void selectWalletUsage(WalletPlan walletplan) {
 		if (UsageDDwn.isEnabled()) {
 			selectByVisibleText(UsageDDwn, walletplan.getWalletPlanUsage());
 		}
@@ -183,7 +183,7 @@ public class WalletPlanPage extends AbstractBasePage {
 		}
 	}
 
-	public String addWalletPlanGeneral(DeviceCreation devicecreation, Walletplan walletplan) {
+	public String addWalletPlanGeneral(DeviceCreation devicecreation, WalletPlan walletplan) {
 		String walletPlancode;
 		String WalletPlanDesc;
 		walletPlancode = enterWalletPlanCode();

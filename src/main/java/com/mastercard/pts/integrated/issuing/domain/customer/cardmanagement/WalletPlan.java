@@ -11,7 +11,7 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 @Component
-public class Walletplan {
+public class WalletPlan implements HasCodeAndDescription {
 	private static final String PROGRAM_TYPE = "PROGRAM_TYPE";
 	private static final String WP_CURRENCY	 = 	"WP_CURRENCY";
 	private static final String WP_PROGRAM_TYPE	 = 	"WP_PROGRAM_TYPE";
@@ -275,8 +275,8 @@ public class Walletplan {
 		WalletPlanUsage = walletPlanUsage;
 	}
 
-	public static Walletplan walletplanDataprovider() {
-		Walletplan walletplan = new Walletplan();
+	public static WalletPlan walletplanDataprovider() {
+		WalletPlan walletplan = new WalletPlan();
 		walletplan.setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
 		walletplan.setWalletPlanUsage(MapUtils.fnGetInputDataFromMap("WalletplanUsage"));
 		return walletplan;

@@ -4,70 +4,70 @@ public class CardManagementNav {
 
 	public static final String TAB_CARD_MANAGEMENT = "Card Management";
 
-	public static final String L1INSTITUTION_PARAMETER_SETUP = "ISR000";
-	public static final String L1PROGRAM_SETUP = "ISS000";
-	public static final String L1ACTIVITY = "ISA000";
-	public static final String L1OPERATION = "ISO000";
-	public static final String L1SEARCH = "ISE000";
-	public static final String L1REPORTS = "ISRE00";
+	public static final String L1_INSTITUTION_PARAMETER_SETUP = "ISR000";
+	public static final String L1_PROGRAM_SETUP = "ISS000";
+	public static final String L1_ACTIVITY = "ISA000";
+	public static final String L1_OPERATION = "ISO000";
+	public static final String L1_SEARCH = "ISE000";
+	public static final String L1_REPORTS = "ISRE00";
 
-	public static final String L2STATEMENT_MESSAGE_PLAN = "STMSG001";
-	public static final String L2MARKETING_MESSAGE_PLAN = "MKMSG001";
-	public static final String L2ACCOUNT_TYPE = "ISSS12";
-	public static final String L2EMBOSSING_PARAMETERS = "ISSM00";
+	public static final String L2_STATEMENT_MESSAGE_PLAN = "STMSG001";
+	public static final String L2_MARKETING_MESSAGE_PLAN = "MKMSG001";
+	public static final String L2_ACCOUNT_TYPE = "ISSS12";
+	public static final String L2_EMBOSSING_PARAMETERS = "ISSM00";
 
-	public static final String L2PREPAID_STATEMENT_PLAN = "STPLN001";
-	public static final String L2TRANSACTION_PLAN = "TXP001";
-	public static final String L2TRANSACTION_LIMIT_PLAN = "TXLP001";
-	public static final String L2IPK_CERTIFICATE_INFORMATION = "ISSE02";
+	public static final String L2_PREPAID_STATEMENT_PLAN = "STPLN001";
+	public static final String L2_TRANSACTION_PLAN = "TXP001";
+	public static final String L2_TRANSACTION_LIMIT_PLAN = "TXLP001";
+	public static final String L2_IPK_CERTIFICATE_INFORMATION = "ISSE02";
 
-	public static final String L2DEDUPE_PLAN = "DDPLN001";
+	public static final String L2_DEDUPE_PLAN = "DDPLN001";
 
-	public static final String L2MCC_RULES = "ISSD03";
+	public static final String L2_MCC_RULES = "ISSD03";
 
-	public static final String L2WALLET_CONFIGURATION = "ISSW00";
-	public static final String L2PROGRAM = "PRMG001";
-	public static final String L2DEVICE_RANGE = "DVRNG001";
+	public static final String L2_WALLET_CONFIGURATION = "ISSW00";
+	public static final String L2_PROGRAM = "PRMG001";
+	public static final String L2_DEVICE_RANGE = "DVRNG001";
 
-	public static final String L2CUTOVERPROFILE = "ISSS03";
-	public static final String L2NETWORKMEMBERSHIP = "ISSS04";
-	public static final String L2TRANSACTIONREGISTRATION = "ISSS25";
-	public static final String L2INSTITUTIONCURRENCY = "ISSS05";
-	public static final String L2OFFICE = "ISSS06";
-	public static final String L2PLASTICCODE = "ISSS07";
-	public static final String L2PICTURECODE = "ISSS08";
-	public static final String L2DEVICEBIN = "ISSS09";
-	public static final String L2MCG = "ISS022";
-	public static final String L2VENDOR = "ISS023";
-	public static final String L2EVENTS = "ISSEA0";
+	public static final String L2_CUTOVERPROFILE = "ISSS03";
+	public static final String L2_NETWORKMEMBERSHIP = "ISSS04";
+	public static final String L2_TRANSACTIONREGISTRATION = "ISSS25";
+	public static final String L2_INSTITUTIONCURRENCY = "ISSS05";
+	public static final String L2_OFFICE = "ISSS06";
+	public static final String L2_PLASTICCODE = "ISSS07";
+	public static final String L2_PICTURECODE = "ISSS08";
+	public static final String L2_DEVICEBIN = "ISSS09";
+	public static final String L2_MCG = "ISS022";
+	public static final String L2_VENDOR = "ISS023";
+	public static final String L2_EVENTS = "ISSEA0";
 
-	public static final String L3WALLET_FEE_PLAN = "WLFEP001";
+	public static final String L3_WALLET_FEE_PLAN = "WLFEP001";
 
-	public static final String L3WALLET_PLAN = "WALLP001";
+	public static final String L3_WALLET_PLAN = "WALLP001";
 
-	public static final String L2APPLICATION = "ISSC00";
-	public static final String L3DOCUMENT_CHECKLIST = "ISSADC";
-	public static final String L3BUSINESS_MANDATORY_FIELDS = "ISSBMF";
+	public static final String L2_APPLICATION = "ISSC00";
+	public static final String L3_DOCUMENT_CHECKLIST = "ISSADC";
+	public static final String L3_BUSINESS_MANDATORY_FIELDS = "ISSBMF";
 
-	public static final String L2CREDIT_CARD = "ISSB00";
-	public static final String L3CREDIT_CARD_BILLING_CYCLE = "ISSBB0";
-	public static final String L3CREDIT_CARD_PAYMENT_PRIORITY = "ISSBPP";
-	public static final String L3CREDIT_CARD_PAYMENT_BOUNCE_REASON = "ISSBPB";
-	public static final String L3CREDIT_CARD_TRANSACTION_RULE_PLAN = "ISSBTR";
-	public static final String L3CREDIT_CARD_CREDIT_PLAN = "ISSBCP";
-	public static final String L3EVENTS_AND_ALERTS = "ISSEA1";
+	public static final String L2_CREDIT_CARD = "ISSB00";
+	public static final String L3_CREDIT_CARD_BILLING_CYCLE = "ISSBB0";
+	public static final String L3_CREDIT_CARD_PAYMENT_PRIORITY = "ISSBPP";
+	public static final String L3_CREDIT_CARD_PAYMENT_BOUNCE_REASON = "ISSBPB";
+	public static final String L3_CREDIT_CARD_TRANSACTION_RULE_PLAN = "ISSBTR";
+	public static final String L3_CREDIT_CARD_CREDIT_PLAN = "ISSBCP";
+	public static final String L3_EVENTS_AND_ALERTS = "ISSEA1";
 
 	// Device Configuration Tree Details
-	public static final String L2DEVICE_CONFIGURATION = "ISSD00";
-	public static final String L3DEVICE_JOINING_AND_MEMBERSHIP_FEE_PLAN = "ISW008";
-	public static final String L3DEVICE_EVENT_BASED_FEE_PLAN = "IS0005";
-	public static final String L3DEVICE_PRIORITYPASSID_CARDPACKID_TEMPLATE_PLAN = "ISS001";
-	public static final String L3DEVICE_PLAN = "ISW009";
-	public static final String L3EMBOSSING_TEMPLATE = "ISW013";
+	public static final String L2_DEVICE_CONFIGURATION = "ISSD00";
+	public static final String L3_DEVICE_JOINING_AND_MEMBERSHIP_FEE_PLAN = "ISW008";
+	public static final String L3_DEVICE_EVENT_BASED_FEE_PLAN = "IS0005";
+	public static final String L3_DEVICE_PRIORITYPASSID_CARDPACKID_TEMPLATE_PLAN = "ISS001";
+	public static final String L3_DEVICE_PLAN = "ISW009";
+	public static final String L3_EMBOSSING_TEMPLATE = "ISW013";
 	// end
 
 	// Activity --> Device
-	public static final String L2DEVICE = "ISAC00";
+	public static final String L2_DEVICE = "ISAC00";
 	public static final String L3NEW_DEVICE = "ISAD0N";
 	public static final String L3DEVICE_PRODUCTION_BULK_DEVICE_REQUEST = "BLKDRQ01";
 	public static final String L2AUTHORIZATION = "ISAA00";

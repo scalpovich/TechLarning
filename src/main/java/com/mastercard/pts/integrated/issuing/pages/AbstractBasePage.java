@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.pages;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -42,11 +43,11 @@ import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementFinderProvider;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.AbstractPage;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 public abstract class AbstractBasePage extends AbstractPage {
-	final Logger logger = LoggerFactory.getLogger(AbstractBasePage.class);
 	final static int ELEMENT_WAIT_MAX = 6000;
 
 	private static final long TIMEOUT = 100;
@@ -323,9 +324,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return getCellTextByColumnNameInEmbeddedTab(1, columnName);
 	}
 
-	protected WebDriver driver() {
-		return getFinder().getWebDriver();
-	}
 
 	protected Boolean verifyAddDetailsButtonIsVisible() {
 		// looks like method should be renamed
@@ -458,7 +456,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return generatedMessage;
 	}
 
-	private void clickWhenClickable(MCWebElement element) {
+	protected void clickWhenClickable(MCWebElement element) {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
 		waitForWicket();
 	}
@@ -1000,11 +998,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		new WebDriverWait(driver(), TIMEOUT).until(ExpectedConditions.elementToBeClickable(ele)).click();
 	}
 
-	protected void clickWhenClickable(MCWebElement element) {
-		waitForElementVisible(element);
-		new WebDriverWait(driver(), TIMEOUT).until(elementToBeClickable(element)).click();
-		// waitForWicket(driver());
-	}
+
 
 	protected void clickWhenClickable(WebElement element) {
 		waitForElementVisible(element);

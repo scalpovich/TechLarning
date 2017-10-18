@@ -11,7 +11,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Mark
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PrepaidStatementPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StatementMessagePlan;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Walletplan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramFlows;
 
 @Component
@@ -21,7 +21,7 @@ public class ProgramSteps {
 	DeviceCreation devicecreation;
 
 	@Autowired
-	Walletplan walletplan;
+	WalletPlan walletplan;
 
 	@Autowired
 	DevicePlan deviceplan;

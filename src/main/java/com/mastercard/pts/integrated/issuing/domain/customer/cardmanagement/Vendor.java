@@ -13,17 +13,18 @@ public class Vendor {
 	private String vendorCode;
 	private String vendorName;
 	private String category;
-	private String branch;
+	private String VendorCategory;
+	private String branchCode;
 	public String PINFileTemplateName;
 	private String embosingFileTemplate;
-	public String PostalCode;
+	public String postalCode;
 	public String VendorMobileNo;
 	public String newVendorDetails;
 	public String NewVendor;
 
 
-	private String address1;
-	private String address2;
+	private String addressLine1;
+	private String addressLine2;
 	private String country;
 
 	private String contactPerson;
@@ -34,15 +35,7 @@ public class Vendor {
 	private String email;
 
 	
-	public String getBranch() {
-		return branch;
-	}
 
-	public void setBranch(String branch) {
-		this.branch = branch;
-	}
-
-	
 	public String getVendorCode() {
 		return vendorCode;
 	}
@@ -67,30 +60,6 @@ public class Vendor {
 		this.category = category;
 	}
 	
-	public String getAddress2() {
-		return address2;
-	}
-
-	public void setAddress2(String address2) {
-		this.address2 = address2;
-	}
-
-	public String getAddress1() {
-		return address1;
-	}
-
-	public void setAddress1(String address1) {
-		this.address1 = address1;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
 	public String getContactPerson() {
 		return contactPerson;
 	}
@@ -123,13 +92,6 @@ public class Vendor {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
 	
 	public static List<Vendor>  createWithProvider(KeyValueProvider provider)
 	{
@@ -139,14 +101,14 @@ public class Vendor {
 		Vendor autoBranchCourier = new Vendor();
 		autoBranchCourier.setVendorName(provider.getString("AUTOMATION_ BRANCH_COURIER_VENDOR_NAME"));
 		autoBranchCourier.setCategory(provider.getString("AUTOMATION_BRANCH_COURIER_CATEGORY"));
-		autoBranchCourier.setBranch(provider.getString("AUTOMATION_BRANCH_COURIER_BRANCH"));
+		autoBranchCourier.setBranchCode(provider.getString("AUTOMATION_BRANCH_COURIER_BRANCH"));
 		autoBranchCourier.setVendorCode(provider.getString("AUTOMATION_BRANCH_COURIER_VENDOR_CODE"));
 		vendorMasterData.add(autoBranchCourier);
 		
 		Vendor autoRedAgent = new Vendor();
 		autoRedAgent.setVendorName(provider.getString("AUTOMATION_RED_AGENT_VENDOR_NAME"));
 		autoRedAgent.setCategory(provider.getString("AUTOMATION_RED_AGENT_CATEGORY"));
-		autoRedAgent.setBranch(provider.getString("AUTOMATION_RED_AGENT_BRANCH"));
+		autoRedAgent.setBranchCode(provider.getString("AUTOMATION_RED_AGENT_BRANCH"));
 		autoRedAgent.setVendorCode(provider.getString("AUTOMATION_RED_AGENT_VENDOR_CODE"));
 		vendorMasterData.add(autoRedAgent);
 		
@@ -154,14 +116,14 @@ public class Vendor {
 		Vendor autoPlasticManuf = new Vendor();
 		autoPlasticManuf.setVendorName(provider.getString("AUTOMATION_PLASTIC_MANUF_VENDOR_NAME"));
 		autoPlasticManuf.setCategory(provider.getString("AUTOMATION_PLASTIC_MANUF_CATEGORY"));
-		autoPlasticManuf.setBranch(provider.getString("AUTOMATION_PLASTIC_MANUF_BRANCH"));
+		autoPlasticManuf.setBranchCode(provider.getString("AUTOMATION_PLASTIC_MANUF_BRANCH"));
 		autoPlasticManuf.setVendorCode(provider.getString("AUTOMATION_PLASTIC_MANUF_VENDOR_CODE"));
 		vendorMasterData.add(autoPlasticManuf);
 		
 		Vendor autoPersBureau = new Vendor();
 		autoPersBureau.setVendorName(provider.getString("AUTOMATION_PERS_BUREAU_VENDOR_NAME"));
 		autoPersBureau.setCategory(provider.getString("AUTOMATION_PERS_BUREAU_CATEGORY"));
-		autoPersBureau.setBranch(provider.getString("AUTOMATION_PERS_BUREAU_BRANCH"));
+		autoPersBureau.setBranchCode(provider.getString("AUTOMATION_PERS_BUREAU_BRANCH"));
 		autoPersBureau.setVendorCode(provider.getString("AUTOMATION_PERS_BUREAU_VENDOR_CODE"));
 		autoPersBureau.setEmbosingFileTemplate(provider.getString("AUTOMATION_EMBOSING_FILE_TEMPLATE"));
 		vendorMasterData.add(autoPersBureau);
@@ -169,14 +131,14 @@ public class Vendor {
 		Vendor autoDirectSaleAgent = new Vendor();
 		autoDirectSaleAgent.setVendorName(provider.getString("AUTOMATION_DIRECT_SALE_AGENT_VENDOR_NAME"));
 		autoDirectSaleAgent.setCategory(provider.getString("AUTOMATION_DIRECT_SALE_AGENT_CATEGORY"));
-		autoDirectSaleAgent.setBranch(provider.getString("AUTOMATION_DIRECT_SALE_AGENT_BRANCH"));
+		autoDirectSaleAgent.setBranchCode(provider.getString("AUTOMATION_DIRECT_SALE_AGENT_BRANCH"));
 		autoDirectSaleAgent.setVendorCode(provider.getString("AUTOMATION_DIRECT_SALE_AGENT_VENDOR_CODE"));
 		vendorMasterData.add(autoDirectSaleAgent);
 		
 		Vendor autoZoneCourier = new Vendor();
 		autoZoneCourier.setVendorName(provider.getString("AUTOMATION_ZONE_COURIER_VENDOR_NAME"));
 		autoZoneCourier.setCategory(provider.getString("AUTOMATION_ZONE_COURIER_CATEGORY"));
-		autoZoneCourier.setBranch(provider.getString("AUTOMATION_ZONE_COURIER_BRANCH"));
+		autoZoneCourier.setBranchCode(provider.getString("AUTOMATION_ZONE_COURIER_BRANCH"));
 		autoZoneCourier.setVendorCode(provider.getString("AUTOMATION_ZONE_COURIER_VENDOR_CODE"));
 		vendorMasterData.add(autoZoneCourier);
 		
@@ -201,43 +163,43 @@ public class Vendor {
 	}
 
 	public String getEmbossingFileTemp() {
-		return embossingFileTemp;
+		return embosingFileTemplate;
 	}
 
 	public void setEmbossingFileTemp(String embossingFileTemp) {
-		this.embossingFileTemp = embossingFileTemp;
+		this.embosingFileTemplate = embossingFileTemp;
 	}
 
 	public String getBranchCode() {
-		return BranchCode;
+		return branchCode;
 	}
 
 	public void setBranchCode(String branchCode) {
-		BranchCode = branchCode;
+		this.branchCode = branchCode;
 	}
 
 	public String getAddressLine1() {
-		return AddressLine1;
+		return addressLine1;
 	}
 
 	public void setAddressLine1(String addressLine1) {
-		AddressLine1 = addressLine1;
+		this.addressLine1 = addressLine1;
 	}
 
 	public String getAddressLine2() {
-		return AddressLine2;
+		return addressLine2;
 	}
 
 	public void setAddressLine2(String addressLine2) {
-		AddressLine2 = addressLine2;
+		addressLine2 = addressLine2;
 	}
 
 	public String getCountry() {
-		return Country;
+		return country;
 	}
 
 	public void setCountry(String country) {
-		Country = country;
+		this.country = country;
 	}
 
 	public String getPINFileTemplateName() {
@@ -249,11 +211,11 @@ public class Vendor {
 	}
 
 	public String getPostalCode() {
-		return PostalCode;
+		return postalCode;
 	}
 
 	public void setPostalCode(String postalCode) {
-		PostalCode = postalCode;
+		this.postalCode = postalCode;
 	}
 
 	public String getVendorMobileNo() {
@@ -265,11 +227,11 @@ public class Vendor {
 	}
 
 	public String getEmail() {
-		return Email;
+		return email;
 	}
 
 	public void setEmail(String email) {
-		Email = email;
+		this.email = email;
 	}
 
 	public String getVendorCategory() {

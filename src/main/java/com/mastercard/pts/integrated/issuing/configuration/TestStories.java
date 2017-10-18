@@ -11,12 +11,9 @@ import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import com.mastercard.testing.mtaf.jbehave.MastercardJBehaveStories;
 import com.mastercard.pts.integrated.issuing.utils.CustomRallyReport;
 import com.mastercard.pts.integrated.issuing.utils.CustomUIStories;
 
@@ -66,10 +63,6 @@ public class TestStories extends CustomUIStories {
 		}	
 		return testList.substring(0, testList.lastIndexOf(","));
 	}
-	@Override
-	public ApplicationContext getAnnotatedApplicationContext() {
-		return new AnnotationConfigApplicationContext(
-				TestConfiguration.class);
-	}
+
 
 }

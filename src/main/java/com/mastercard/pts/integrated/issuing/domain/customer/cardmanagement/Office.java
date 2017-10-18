@@ -80,7 +80,7 @@ public class Office {
 		office.setAddressLine1(MapUtils.fnGetInputDataFromMap("addressLine1"));
 		office.setAddressLine2(MapUtils.fnGetInputDataFromMap("addressLine2"));
 		office.setCountry(MapUtils.fnGetInputDataFromMap("country"));
-		office.setPostalCode(MapUtils.fnGetInputDataFromMap("postalCode"));
+		office.setZip(MapUtils.fnGetInputDataFromMap("postalCode"));
 		return office;
 
 	}

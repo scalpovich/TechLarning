@@ -23,6 +23,11 @@ public class MarketingMessagePlan implements HasCodeAndDescription {
 
 	public String MarketingMsgEffectiveDate;
 	public String MarketingMsgEndDate;
+	
+
+	public String getMarketingMessagePlan() {
+		return marketingMessagePlanCode;
+	}
 
 	@Override
 	public String getCode() {
@@ -53,11 +58,7 @@ public class MarketingMessagePlan implements HasCodeAndDescription {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String MarketingMsgEndDate;
-
-	public String getMarketingMessagePlan() {
-		return MarketingMessagePlan;
-	}
+	
 
 	public String getMarketingMsgEffectiveDate() {
 		return MarketingMsgEffectiveDate;
@@ -94,7 +95,7 @@ public class MarketingMessagePlan implements HasCodeAndDescription {
 		return plan;
 	}
 	public void setMarketingMessagePlan(String marketingMessagePlan) {
-		MarketingMessagePlan = marketingMessagePlan;
+		this.marketingMessagePlanCode = marketingMessagePlan;
 	}
 
 	public static MarketingMessagePlan marketingmessageprovider() {
