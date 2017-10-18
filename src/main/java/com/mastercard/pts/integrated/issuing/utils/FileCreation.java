@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
 import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CurrencyExchangeRatesPage;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 
-@Component
 public class FileCreation {
 	private static final Logger logger = LoggerFactory
 			.getLogger(FileCreation.class);
@@ -102,40 +102,34 @@ public class FileCreation {
 	public void setTransactionLine(String transactionLine) {
 		this.transactionLine = transactionLine;
 	}
-
-	public static String createTransactionLine(String deviceNumber,
-			String walletNumber, KeyValueProvider provider) {
-		return deviceNumber + "|" + walletNumber + "|0|"
-				+ DateUtils.getDateddMMyyyy() + "|U1|"
-				+ provider.getString(TRANSACTION_AMOUNT) + "|"
-				+ provider.getString(TRANSACTION_CURRENCY) + "|"
-				+ provider.getString(BILLING_AMOUNT) + "|"
-				+ provider.getString(BILLING_CURRENCY) + "|"
-				+ Constants.GENERIC_DESCRIPTION + "|" + "00000000";
+	public static String createTransactionLine(String deviceNumber, String walletNumber, KeyValueProvider provider){
+		return deviceNumber + "|" + walletNumber + "|0|" + DateUtils.getDateddMMyyyy() + "|U1|" + provider.getString(TRANSACTION_AMOUNT) 
+				+ "|" + provider.getString(TRANSACTION_CURRENCY) + "||" + DateUtils.getDateddMMyyyy() + "|" + provider.getString(BILLING_AMOUNT) 
+				+ "|" + provider.getString(BILLING_CURRENCY) + "|" + ConstantData.GENERIC_DESCRIPTION + "|||" + "00000000";
 	}
 
-	public static String getFileContents(String file) throws IOException {
+	public static String getFileContents(String file) throws IOException
+	{
 		String content = null;
 		FileInputStream inputStream = new FileInputStream(file);
 		try {
-			content = IOUtils.toString(inputStream);
+		    content = IOUtils.toString(inputStream);
 		} catch (IOException e) {
-			logger.debug("Exception occurred", e);
-			throw new RuntimeException(e);
+			logger.error(ConstantData.EXCEPTION, e);
+			//NO SONAR. We are propagating exception to another class where it is thrown
+			MiscUtils.propagate(e);
 		} finally {
-			inputStream.close();
+		    inputStream.close();
 		}
 		return content;
 	}
 
-	public static FileCreation createFile(KeyValueProvider provider) {
+
+	public static FileCreation createFile(KeyValueProvider provider){
 		FileCreation file = new FileCreation();
-		file.setFilename("APP" + provider.getString(INSTITUTION_CODE)
-				+ DateUtils.getDate() + DateUtils.getTime() + ".DAT");
-		file.setHeader("HD" + provider.getString(INSTITUTION_CODE)
-				+ DateUtils.getDateTimeDDMMYYYYHHMMSS() + "2.0");
-		file.setTransactionLine("File");
-		file.setFooter("FT" + "000000001");
+		file.setFilename("TXU" + provider.getString(INSTITUTION_CODE) + DateUtils.getDate() + DateUtils.getTime() + ".DAT");
+		file.setHeader("HD" + provider.getString(INSTITUTION_CODE) + DateUtils.getDateTimeDDMMYYYYHHMMSS() + "2.0");
+		file.setFooter("FT" + "000000001");		
 		return file;
 	}
 

@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,6 +16,8 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class MiscUtils {
 
@@ -36,10 +39,8 @@ public class MiscUtils {
 	public static Boolean isProcessRuning(String taskName) {
 		try {
 			String line;
-			Process p = Runtime.getRuntime().exec(
-					System.getenv("windir") + "\\system32\\" + "tasklist.exe");
-			BufferedReader input = new BufferedReader(new InputStreamReader(
-					p.getInputStream()));
+			Process p = Runtime.getRuntime().exec(System.getenv("windir") + "\\system32\\" + "tasklist.exe");
+			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			while ((line = input.readLine()) != null) {
 				if (line.toUpperCase().contains(taskName.toUpperCase())) {
 					input.close();
@@ -47,6 +48,7 @@ public class MiscUtils {
 				}
 			}
 			input.close();
+			p.destroy();
 		} catch (Exception e) {
 			MiscUtils.propagate(e);
 			return false;
@@ -54,8 +56,27 @@ public class MiscUtils {
 		return false;
 	}
 
-	public static String generateRandomNumberBetween2Number(int startingNumber,
-			int endNumber) {
+	public static void killProcessFromTaskManager(String taskName) {
+		try {
+			String temptaskName = null;
+			String command = null;
+			if ("FINSIM".equalsIgnoreCase(taskName)) {
+				temptaskName = "ATClient";
+			} else if ("MCPS".equalsIgnoreCase(taskName)) {
+				temptaskName = "MCPS";
+			} else if ("MAS".equalsIgnoreCase(taskName)) {
+				temptaskName = "MSPMCW";
+			} else if ("WINIUM".equalsIgnoreCase(taskName)) {
+				temptaskName = "Winium.Desktop.Driver";
+			}
+			command = "taskkill /F /IM " + temptaskName + ".exe";
+			Runtime.getRuntime().exec(command).waitFor(10, TimeUnit.SECONDS);
+		} catch (Exception e) {
+			throw MiscUtils.propagate(e);
+		}
+	}
+
+	public static String generateRandomNumberBetween2Number(int startingNumber, int endNumber) {
 		Random r = new Random();
 		int low = startingNumber;
 		int high = endNumber;
@@ -67,26 +88,27 @@ public class MiscUtils {
 	}
 
 	public static void reportToConsole(String message) {
-		reportToConsole(message, message);
+		System.out.println(message);
 	}
 
 	public static void reportToConsole(String message1, String message) {
-		System.out.println(message1 + " : " + message);
+		reportToConsole(message1 + " : " + message);
 	}
 
 	public static String generate10CharAlphaNumeric() {
-		return ("AUTO" + MiscUtils.generateRandomNumberBetween2Number(10, 99) + MiscUtils
-				.randomAlphabet(4)).toUpperCase();
+		return ("AT" + MiscUtils.generateRandomNumberBetween2Number(1000, 9999) + MiscUtils.randomAlphabet(4)).toUpperCase();
 	}
 
 	public static String generate8CharAlphaNumeric() {
-		return ("AUTO" + MiscUtils.generateRandomNumberBetween2Number(10, 99) + MiscUtils
-				.randomAlphabet(2)).toUpperCase();
+		return ("AT" + MiscUtils.generateRandomNumberBetween2Number(1000, 9999) + MiscUtils.randomAlphabet(2)).toUpperCase();
 	}
 
 	public static String generate6CharAlphaNumeric() {
-		return ("AUT" + MiscUtils.generateRandomNumberBetween2Number(1, 9) + MiscUtils
-				.randomAlphabet(2)).toUpperCase();
+		return ("A" + MiscUtils.generateRandomNumberBetween2Number(1000, 9999) + MiscUtils.randomAlphabet(1)).toUpperCase();
+	}
+
+	public static String convertToYYMM(String data) {
+		return data.substring(2) + data.subSequence(0, 2);
 	}
 
 	/**
@@ -97,37 +119,10 @@ public class MiscUtils {
 	 * @param prefix
 	 * @return constant string value
 	 */
-	public static String getConstantStringFromClassByPefixMatch(Class<?> cls,
-			String prefix) {
-		Predicate<Integer> isConstant = modifiers -> Modifier
-				.isPublic(modifiers)
-				&& Modifier.isStatic(modifiers)
-				&& Modifier.isFinal(modifiers);
-		return Arrays
-				.stream(cls.getDeclaredFields())
-				.filter(f -> isConstant.test(f.getModifiers())
-						&& f.getType().equals(String.class))
-				.map(f -> propagate(() -> (String) f.get(null)))
-				.filter(s -> StringUtils.startsWithIgnoreCase(s, prefix))
-				.findFirst()
-				.orElseThrow(() -> new IllegalArgumentException(prefix));
-	}
-
-	// //tobedeleetd
-
-	public static String getConstantStringFromClassBySufixMatch(Class<?> cls,
-			String prefix) {
-		Predicate<Integer> isConstant = modifiers -> Modifier
-				.isPublic(modifiers)
-				&& Modifier.isStatic(modifiers)
-				&& Modifier.isFinal(modifiers);
-		return Arrays
-				.stream(cls.getDeclaredFields())
-				.filter(f -> isConstant.test(f.getModifiers())
-						&& f.getType().equals(String.class))
-				.map(f -> propagate(() -> (String) f.get(null)))
-				.filter(s -> StringUtils.startsWithIgnoreCase(s, prefix))
-				.findFirst()
+	public static String getConstantStringFromClassByPefixMatch(Class<?> cls, String prefix) {
+		Predicate<Integer> isConstant = modifiers -> Modifier.isPublic(modifiers) && Modifier.isStatic(modifiers) && Modifier.isFinal(modifiers);
+		return Arrays.stream(cls.getDeclaredFields()).filter(f -> isConstant.test(f.getModifiers()) && f.getType().equals(String.class))
+				.map(f -> propagate(() -> (String) f.get(null))).filter(s -> StringUtils.startsWithIgnoreCase(s, prefix)).findFirst()
 				.orElseThrow(() -> new IllegalArgumentException(prefix));
 	}
 
@@ -141,14 +136,11 @@ public class MiscUtils {
 
 	@FunctionalInterface
 	public interface ThrowingSupplier<T> {
-		T get() throws Exception; // NOSONAR: utility to handle generic
-									// exceptions
+		T get() throws Exception; // NOSONAR: utility to handle generic exceptions
 	}
 
 	public static RuntimeException propagate(Throwable throwable) {
-		// Throwables.throwIfUnchecked(throwable);
-		throw new RuntimeException(throwable); // NOSONAR: utility to handle
-												// generic exceptions
+		throw new RuntimeException(throwable); // NOSONAR: utility to handle generic exceptions
 	}
 
 	@SuppressWarnings("unchecked")
@@ -161,11 +153,10 @@ public class MiscUtils {
 		} catch (Exception e) {
 			throw propagate(e);
 		}
-		return indexes
-				.entrySet()
-				.stream()
-				.collect(
-						Collectors.toMap(Entry::getKey,
-								e -> matcher.group(e.getValue())));
+		return indexes.entrySet().stream().collect(Collectors.toMap(Entry::getKey, e -> matcher.group(e.getValue())));
+	}
+
+	public static String toString(Object object) {
+		return ReflectionToStringBuilder.toString(object, ToStringStyle.MULTI_LINE_STYLE);
 	}
 }

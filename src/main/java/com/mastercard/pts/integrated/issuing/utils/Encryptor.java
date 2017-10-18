@@ -23,7 +23,8 @@ public class Encryptor {
 			return EncryptUtils.encrypt(text);
 		} catch (Exception e) {
 			logger.error("Fail to encrypt: " + e);
-			throw Throwables.propagate(e);
+			MiscUtils.propagate(e);
+			return null;
 		}
 	}
 }
