@@ -28,7 +28,7 @@ import net.thucydides.core.annotations.findby.By;
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
-		CardManagementNav.L2_NETWORK_MEMBERSHIP })
+		CardManagementNav.L2_NETWORKMEMBERSHIP })
 public class NetworkMembershipPage extends AbstractBasePage {
 	
 	private static final Logger logger = LoggerFactory

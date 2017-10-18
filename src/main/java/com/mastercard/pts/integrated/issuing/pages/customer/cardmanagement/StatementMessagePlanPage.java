@@ -27,7 +27,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_PROGRAM_SETUP,
+		CardManagementNav.L1PROGRAM_SETUP,
 		CardManagementNav.L2_STATEMENT_MESSAGE_PLAN })
 public class StatementMessagePlanPage extends AbstractBasePage {
 
@@ -120,10 +120,6 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 		verifySearchButton("Search");
 	}
 
-	@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.visibilityOf(planCodeSearchTxt));
-	}
 
 	public void createStatementMessagePlan(StatementMessagePlan plan) {
 		logger.info("Create Statement Message Plan: {}",

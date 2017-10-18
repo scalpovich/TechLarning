@@ -24,7 +24,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle =  CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
-		CardManagementNav.L2_TRANSACTION_REGISTRATION})
+		CardManagementNav.L2_TRANSACTIONREGISTRATION})
 public class TransactionRegistrationPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind =  "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")

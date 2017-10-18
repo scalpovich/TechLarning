@@ -22,7 +22,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP,
-		CardManagementNav.L2WALLET_CONFIGURATION, CardManagementNav.L3WALLET_PLAN })
+		CardManagementNav.L2_WALLET_CONFIGURATION, CardManagementNav.L3_WALLET_PLAN })
 public class WalletPlanPage extends AbstractBasePage {
 	final Logger logger = LoggerFactory.getLogger(WalletPlanPage.class);
 

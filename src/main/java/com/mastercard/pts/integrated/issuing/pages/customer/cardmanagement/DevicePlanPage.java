@@ -30,7 +30,7 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_DEVICE_CONFIGURATION,
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP, CardManagementNav.L2_DEVICE_CONFIGURATION,
 		CardManagementNav.L3_DEVICE_PLAN })
 public class DevicePlanPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(DevicePlanPage.class);

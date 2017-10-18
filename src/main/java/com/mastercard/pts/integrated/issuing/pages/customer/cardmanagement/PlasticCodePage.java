@@ -23,7 +23,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
-		CardManagementNav.L2_PLASTIC_CODE })
+		CardManagementNav.L2_PLASTICCODE })
 public class PlasticCodePage extends AbstractBasePage {
 	
 	private static final Logger logger = LoggerFactory

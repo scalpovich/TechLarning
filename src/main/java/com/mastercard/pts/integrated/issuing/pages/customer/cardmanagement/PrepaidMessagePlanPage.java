@@ -20,7 +20,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP,
-		CardManagementNav.L2PREPAID_STATEMENT_PLAN })
+		CardManagementNav.L2_PREPAID_STATEMENT_PLAN })
 public class PrepaidMessagePlanPage extends AbstractBasePage {
 	final Logger logger = LoggerFactory.getLogger(EmbossingPriorityPassPage.class);
 

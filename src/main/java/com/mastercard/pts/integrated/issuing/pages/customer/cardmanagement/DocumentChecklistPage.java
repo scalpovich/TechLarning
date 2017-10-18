@@ -24,7 +24,7 @@ import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_APPLICATION,
+		CardManagementNav.L1PROGRAM_SETUP, CardManagementNav.L2_APPLICATION,
 		CardManagementNav.L3_DOCUMENT_CHECKLIST })
 public class DocumentChecklistPage extends AbstractBasePage {
 

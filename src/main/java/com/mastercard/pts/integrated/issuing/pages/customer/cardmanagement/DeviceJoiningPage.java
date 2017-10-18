@@ -23,7 +23,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP,
-		CardManagementNav.L2DEVICE_CONFIGURATION, CardManagementNav.L3DEVICE_JOINING_AND_MEMBERSHIP_FEE_PLAN })
+		CardManagementNav.L2_DEVICE_CONFIGURATION, CardManagementNav.L3_DEVICE_JOINING_AND_MEMBERSHIP_FEE_PLAN })
 public class DeviceJoiningPage extends AbstractBasePage {
 	final Logger logger = LoggerFactory.getLogger(DeviceJoiningPage.class);
 

@@ -22,7 +22,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_DEDUPE_PLAN })
+		CardManagementNav.L1PROGRAM_SETUP, CardManagementNav.L2_DEDUPE_PLAN })
 public class DedupePlanPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory

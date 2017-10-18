@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBIN;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -32,7 +32,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_DEVICE_RANGE })
+		CardManagementNav.L1PROGRAM_SETUP, CardManagementNav.L2_DEVICE_RANGE })
 public class DeviceRangePage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory
@@ -83,7 +83,7 @@ public class DeviceRangePage extends AbstractBasePage {
 	DevicePlan deviceplan;
 
 	@Autowired
-	DeviceBIN issuerbin;
+	DeviceBin issuerbin;
 	// ------------- Card Management > Institution Parameter Setup > Institution
 	// Currency [ISSS05]
 

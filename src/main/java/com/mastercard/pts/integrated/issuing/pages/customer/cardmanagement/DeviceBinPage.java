@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBIN;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -29,7 +29,7 @@ import net.serenitybdd.core.annotations.findby.By;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
-		CardManagementNav.L2_DEVICE_BIN })
+		CardManagementNav.L2_DEVICEBIN })
 public class DeviceBinPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(DeviceBinPage.class);
@@ -114,7 +114,7 @@ public class DeviceBinPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='issuerBin']/..//div[@class='ketchup-error-container-alt']//ol//li[contains(text(),'Must be numeric.')]")
 	private MCWebElement IssuerBINNumericError;
 
-	public void clickaddDeviceBIN() {
+	public void clickaddDeviceBin() {
 		clickWhenClickable(addDeviceBinBtn);
 		switchToAddDeviceBinFrame();
 	}
@@ -123,16 +123,16 @@ public class DeviceBinPage extends AbstractBasePage {
 		switchToIframe(Constants.ADD_DEVICE_BIN_FRAME);
 	}
 
-	public void selectNetwork(DeviceBIN deviceBIN) {
-		selectByVisibleText(InterchangeDDwn, deviceBIN.getInterchange());
+	public void selectNetwork(DeviceBin DeviceBin) {
+		selectByVisibleText(InterchangeDDwn, DeviceBin.getInterchange());
 	}
 
-	public String enterIssuerBIN(DeviceBIN deviceBIN) {
-		if (deviceBIN.getInterchange().contains("Mastercard")) {
+	public String enterIssuerBIN(DeviceBin DeviceBin) {
+		if (DeviceBin.getInterchange().contains("Mastercard")) {
 			enterValueinTextBox(IssuerBINTxt, "5" + CustomUtils.RandomNumbers(5));
-		} else if (deviceBIN.getInterchange().contains("Visa")) {
+		} else if (DeviceBin.getInterchange().contains("Visa")) {
 			enterValueinTextBox(IssuerBINTxt, "4" + CustomUtils.RandomNumbers(5));
-		} else if (deviceBIN.getInterchange().contains("Rupay")) {
+		} else if (DeviceBin.getInterchange().contains("Rupay")) {
 			enterValueinTextBox(IssuerBINTxt, "6" + CustomUtils.RandomNumbers(5));
 		} else {
 			enterValueinTextBox(IssuerBINTxt, "2" + CustomUtils.RandomNumbers(5));
@@ -144,8 +144,8 @@ public class DeviceBinPage extends AbstractBasePage {
 		selectByVisibleText(ProductTypeDDwn, devicecreation.getProduct());
 	}
 
-	public void selectBinType(DeviceBIN deviceBIN) {
-		selectByVisibleText(BinTypeDDwn, deviceBIN.getBinType());
+	public void selectBinType(DeviceBin DeviceBin) {
+		selectByVisibleText(BinTypeDDwn, DeviceBin.getBinType());
 	}
 
 	public void enterProcessingBIN() {
@@ -168,8 +168,8 @@ public class DeviceBinPage extends AbstractBasePage {
 			enterValueinTextBox(ProxyICATxt, CustomUtils.RandomNumbers(6));
 	}
 
-	public String enterRemarks(DeviceBIN devicebin) {
-		enterValueinTextBox(RemarkTxt, devicebin.getRemark());
+	public String enterRemarks(DeviceBin DeviceBin) {
+		enterValueinTextBox(RemarkTxt, DeviceBin.getRemarks());
 		return RemarkTxt.getAttribute("value");
 	}
 
@@ -177,12 +177,12 @@ public class DeviceBinPage extends AbstractBasePage {
 		clickWhenClickable(saveBtn);
 	}
 
-	public boolean verifyErrorsOnDeviceBINPage() {
+	public boolean verifyErrorsOnDeviceBinPage() {
 		return publishErrorOnPage();
 	}
 
-	public void verifyNewDeviceBINSuccess() {
-		if (!verifyErrorsOnDeviceBINPage()) {
+	public void verifyNewDeviceBinSuccess() {
+		if (!verifyErrorsOnDeviceBinPage()) {
 			logger.info("Device BIN Added Successfully");
 			SwitchToDefaultFrame();
 		} else {
@@ -192,24 +192,24 @@ public class DeviceBinPage extends AbstractBasePage {
 		}
 	}
 
-	public String addDeviceBINDetails(DeviceBIN devicebin, DeviceCreation devicecreation) {
+	public String addDeviceBinDetails(DeviceBin DeviceBin, DeviceCreation devicecreation) {
 		String BIN;
 		String Remarks;
-		selectNetwork(devicebin);
-		BIN = enterIssuerBIN(devicebin);
+		selectNetwork(DeviceBin);
+		BIN = enterIssuerBIN(DeviceBin);
 		selectproductType(devicecreation);
-		selectBinType(devicebin);
+		selectBinType(DeviceBin);
 		enterProcessingICA();
 		enterProcessingBIN();
 		enterIssuerICA();
 		enterProxyICA();
 		waitForPageToLoad(getFinder().getWebDriver());
-		Remarks = enterRemarks(devicebin);
+		Remarks = enterRemarks(DeviceBin);
 		clickSaveButton();
 		return BIN;
 	}
 
-	public void editdeviceBIN(String issuerBIN, String fieldUpdated, String updatedValue) {
+	public void editDeviceBin(String issuerBIN, String fieldUpdated, String updatedValue) {
 		waitForElementVisible(addDeviceBinBtn);
 		WebElement EditRupayNtkBtn = getFinder().getWebDriver().findElement(
 				By.xpath("//td[contains(.,'" + issuerBIN + "')]/following::td[2]/span/a/img[@alt='Edit Record']"));
@@ -227,7 +227,7 @@ public class DeviceBinPage extends AbstractBasePage {
 		SwitchToDefaultFrame();
 	}
 
-	public void deleteDeviceBIN() {
+	public void deleteDeviceBin() {
 		// System.out.println("//table[@class='dataview']/tbody/tr[" + i +
 		// "]/td[3]");
 
@@ -246,7 +246,7 @@ public class DeviceBinPage extends AbstractBasePage {
 		Assert.assertEquals(ErrorDevicedelete.getText(), Constants.Record_Cannot_Be_deleted);
 	}
 
-	public void deviceBINValidation(String interchangeType, String productType, String binType, String remark) {
+	public void deviceBinValidation(String interchangeType, String productType, String binType, String remark) {
 		ClickButton(addDeviceBinBtn);
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		switchToIframe(Constants.ADD_DEVICE_BIN_FRAME);

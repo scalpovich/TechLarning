@@ -34,7 +34,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_ACTIVITY, CardManagementNav.L2_ACTIVITY_APPLICATION, 	CardManagementNav.L3_NEW_APPLCIATION
+		CardManagementNav.L1_ACTIVITY, CardManagementNav.L2ACTIVITY_APPLICATION, 	CardManagementNav.L3_NEW_APPLCIATION
 		})
 public class NewApplicationPage extends AbstractCardManagementPage {
 

@@ -29,7 +29,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_PROGRAM })
+		CardManagementNav.L1PROGRAM_SETUP, CardManagementNav.L2_PROGRAM })
 public class ProgramPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory

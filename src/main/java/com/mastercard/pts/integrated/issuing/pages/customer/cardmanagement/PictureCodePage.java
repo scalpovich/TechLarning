@@ -24,7 +24,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
-		CardManagementNav.L2_PICTURE_CODE })
+		CardManagementNav.L2_PICTURECODE })
 public class PictureCodePage extends AbstractBasePage {
 	
 	private static final Logger logger = LoggerFactory
@@ -109,12 +109,7 @@ public class PictureCodePage extends AbstractBasePage {
 		return description + " " + "[" + picturecode + "]";
 	}
 
-	@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return null;
-	}
-	
-	
+
 	public void verifyUiOperationStatus() {
 		logger.info("Picture Code");
 		verifyUiOperation("Add Picture Code");

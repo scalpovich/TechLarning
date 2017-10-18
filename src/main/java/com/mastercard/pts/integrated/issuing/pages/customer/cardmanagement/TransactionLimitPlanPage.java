@@ -29,7 +29,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_PROGRAM_SETUP,
+		CardManagementNav.L1PROGRAM_SETUP,
 		CardManagementNav.L2_DEVICE_CONFIGURATION,
 		CardManagementNav.L2_TRANSACTION_LIMIT_PLAN })
 public class TransactionLimitPlanPage extends AbstractBasePage {

@@ -28,7 +28,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
  */
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1INSTITUTION_PARAMETER_SETUP,
+		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
 		CardManagementNav.L2HOST_ACCOUNTING, CardManagementNav.L3ACCOUNT_MASTER })
 public class AccountMasterPage extends AbstractBasePage {
 	// Card Management > Institution Parameter Setup > Host Accounting > Account

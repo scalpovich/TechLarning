@@ -25,7 +25,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP,
-		CardManagementNav.L2WALLET_CONFIGURATION, CardManagementNav.L3WALLET_FEE_PLAN })
+		CardManagementNav.L2_WALLET_CONFIGURATION, CardManagementNav.L3_WALLET_FEE_PLAN })
 public class WalletFeePlanPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory
@@ -175,10 +175,6 @@ public class WalletFeePlanPage extends AbstractBasePage {
 		clickSaveButton();
 	}
 
-	@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return null;
-	}
 
 
 	@Override

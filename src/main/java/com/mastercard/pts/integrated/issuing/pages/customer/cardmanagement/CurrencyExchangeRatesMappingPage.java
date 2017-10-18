@@ -25,7 +25,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
-		CardManagementNav.L2_CURRENCY_EXCHANGE_RATES_MAPPING
+		CardManagementNav.L2CURRENCY_EXCHANGE_RATES_MAPPING
 		})
 public class CurrencyExchangeRatesMappingPage extends AbstractBasePage {
 	

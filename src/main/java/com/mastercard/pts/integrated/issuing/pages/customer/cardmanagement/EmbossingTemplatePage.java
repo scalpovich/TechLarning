@@ -29,8 +29,8 @@ import net.thucydides.core.annotations.findby.By;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1INSTITUTION_PARAMETER_SETUP, CardManagementNav.L2EMBOSSING_PARAMETERS,
-		CardManagementNav.L3EMBOSSING_TEMPLATE })
+		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP, CardManagementNav.L2_EMBOSSING_PARAMETERS,
+		CardManagementNav.L3_EMBOSSING_TEMPLATE })
 public class EmbossingTemplatePage extends AbstractBasePage {
 	final Logger logger = LoggerFactory.getLogger(EmbossingTemplatePage.class);
 

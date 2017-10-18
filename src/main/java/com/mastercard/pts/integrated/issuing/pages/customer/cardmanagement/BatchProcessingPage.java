@@ -282,7 +282,7 @@ public class BatchProcessingPage extends AbstractBasePage {
 		ClickButton(statusLnk);
 		waitForElementVisible(batchScheduledID);
 
-		logger1.debug("Scheduled Batch Id :- " + batchScheduledID.getText());
+		logger.debug("Scheduled Batch Id :- " + batchScheduledID.getText());
 		switchToIframe(Constants.VIEW_BATCH_DETAILS_FRAME);
 		waitForSucces();
 
@@ -309,7 +309,7 @@ public class BatchProcessingPage extends AbstractBasePage {
 		} while (!(statuslabelTxt.trim().contains(statusString.trim())) && i++ < 20);
 
 		CustomUtils.ThreadDotSleep(2000);
-		logger1.info("Status  -", statuslabelTxt);
+		logger.info("Status  -", statuslabelTxt);
 		closeBtn.click();
 		SwitchToDefaultFrame();
 

@@ -16,7 +16,7 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1SEARCH, CardManagementNav.L2SEARCHAPPLICATION,
+		CardManagementNav.L1_SEARCH, CardManagementNav.L2SEARCHAPPLICATION,
 		CardManagementNav.L3APPLICATIONDETAILS })
 @Component
 public class SearchApplicationDetailsPage extends SearchApplicationDetails{

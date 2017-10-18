@@ -20,7 +20,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP,
-		CardManagementNav.L2DEVICE_CONFIGURATION, CardManagementNav.L3DEVICE_PRIORITYPASSID_CARDPACKID_TEMPLATE_PLAN })
+		CardManagementNav.L2_DEVICE_CONFIGURATION, CardManagementNav.L3_DEVICE_PRIORITYPASSID_CARDPACKID_TEMPLATE_PLAN })
 public class DeviceCardPackTemplatePage extends AbstractBasePage {
 	final Logger logger = LoggerFactory.getLogger(DeviceCardPackTemplatePage.class);
 	// ------------- Card Management > Institution Parameter Setup > Institution

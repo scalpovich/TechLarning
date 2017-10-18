@@ -16,7 +16,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1INSTITUTION_PARAMETER_SETUP, CardManagementNav.L2VENDOR })
+		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP, CardManagementNav.L2_VENDOR })
 public class VendorPage extends AbstractBasePage {
 	final Logger logger = LoggerFactory.getLogger(VendorPage.class);
 

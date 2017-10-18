@@ -23,9 +23,9 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP,
-		CardManagementNav.L2TRANSACTION_PLAN })
+		CardManagementNav.L2_TRANSACTION_PLAN })
 public class TransactionPlanPage extends AbstractBasePage {
-	final Logger logger = LoggerFactory.getLogger(VendorPage.class);
+
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(TransactionPlanPage.class);

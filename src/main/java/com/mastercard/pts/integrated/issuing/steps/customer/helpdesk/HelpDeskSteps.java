@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.helpdesk;
 import org.jbehave.core.annotations.Named;
+
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -33,16 +34,17 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.distribution.Dispatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpdeskWorkflow;
 
 @Component
-public class HelpdeskSteps {
+public class HelpDeskSteps {
 	private HelpdeskGeneral helpdeskGeneral;
 	private BigDecimal currentBalanceAmount;
 	private static final String STATUS_INCORRECT_INFO_MSG = "Device has incorrect status";
-
+	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
 	@Autowired
 	private TestContext context;
 

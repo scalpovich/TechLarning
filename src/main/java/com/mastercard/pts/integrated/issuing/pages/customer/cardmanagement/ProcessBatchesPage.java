@@ -29,11 +29,12 @@ import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_OPERATION, CardManagementNav.L2_PROCESSING_BATCHES,
-		CardManagementNav.L3_PROCESS_BATCHES })
+		CardManagementNav.L3PROCESS_BATCHES })
 public class ProcessBatchesPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
