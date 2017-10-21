@@ -1,0 +1,30 @@
+[
+	{
+      "interchange":"API Private Network1 [31]",
+      "presentmentTimeLimitDays":"5",
+      "cutoverHours":"23 [23]",
+      "cutoverMins":"00 [00]",
+      "settlementCurrency":"INR [356]"
+	},
+	{
+      "interchange":"ISO Private Network1 [21]",
+      "presentmentTimeLimitDays":"3",
+      "cutoverHours":"23 [23]",
+      "cutoverMins":"00 [00]",
+      "settlementCurrency":"INR [356]"
+	},
+	{
+      "interchange":"VISA [01]",
+      "presentmentTimeLimitDays":"1",
+      "cutoverHours":"23 [23]",
+      "cutoverMins":"00 [00]",
+      "settlementCurrency":"INR [356]"
+	},
+	{
+      "interchange":"MASTERCARD [02]",
+      "presentmentTimeLimitDays":"1",
+      "cutoverHours":"23 [23]",
+      "cutoverMins":"00 [00]",
+      "settlementCurrency":"INR [356]"
+	}
+]
