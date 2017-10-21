@@ -370,9 +370,9 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(sourceCurrency),
-				WebElementUtils.elementToBeClickable(destinationCurrency),
-				WebElementUtils.elementToBeClickable(rateOrigin)
+				WebElementUtils.elementToBeClickable(sourceCurrencySearchDdwn),
+				WebElementUtils.elementToBeClickable(destinationCurrencySearchDdwn),
+				WebElementUtils.elementToBeClickable(rateOriginSearchDdwn)
 				);
 	}
 }

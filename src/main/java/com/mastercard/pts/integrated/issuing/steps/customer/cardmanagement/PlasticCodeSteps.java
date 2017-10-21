@@ -20,7 +20,7 @@ public class PlasticCodeSteps {
 	public void whenUserCreatesAPlascticCode() {
 		plasticcode = PlasticCode.plasticcodeDataprovider();
 		String PlasticCode = plasticcodeflows.addPlasticCode(plasticcode);
-		plasticcode.setPlasticCode(PlasticCode);
+		plasticcode.setPlasticCodeNumber(PlasticCode);
 
 	}
 }

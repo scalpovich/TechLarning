@@ -37,13 +37,17 @@ import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1_ACTIVITY, CardManagementNav.L2_DEVICE, CardManagementNav.L3_NEW_DEVICE})
 public class NewDevicePage extends AbstractCardManagementPage {
-	private static final Logger loggerTemp = LoggerFactory.getLogger(NewDevicePage.class);
+	private static final Logger logger = LoggerFactory.getLogger(NewDevicePage.class);
 
 	@Autowired
 	MenuSubMenuPage menusubMenuPage;
 
 	@Autowired
 	Program program;
+	
+	@Autowired
+	NewDevice newDevice;
+	
 
 	@Autowired
 	DevicePlan deviceplan;
@@ -219,13 +223,13 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(AppliedTypeDDwn);
 		CustomUtils.ThreadDotSleep(1000);
-		selectByVisibleText(AppliedTypeDDwn, newdeviceDataProvider().getApplicationType());
+		selectByVisibleText(AppliedTypeDDwn, newDevice.newdeviceDataProvider().getApplicationType());
 	}
 
 	public void selectApplicationSubType() {
 		waitForElementVisible(ApplicationSubtypeDDwn);
 		CustomUtils.ThreadDotSleep(1000);
-		selectByVisibleText(ApplicationSubtypeDDwn, newdeviceDataProvider().getApplicationSubType());
+		selectByVisibleText(ApplicationSubtypeDDwn, newDevice.newdeviceDataProvider().getApplicationSubType());
 	}
 
 	public void clickNextButton() {
@@ -245,7 +249,7 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(CreateOpenBatchDDwn);
 		CustomUtils.ThreadDotSleep(1000);
-		selectByVisibleText(CreateOpenBatchDDwn, newdeviceDataProvider().getBatchType());
+		selectByVisibleText(CreateOpenBatchDDwn, newDevice.newdeviceDataProvider().getBatchType());
 	}
 
 	public void clickGenerateBatch() {
@@ -259,20 +263,20 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		CustomUtils.ThreadDotSleep(5000);
 		waitForElementVisible(CustomerTypeDDwn);
-		selectByVisibleText(CustomerTypeDDwn, getCustomerType());
+		selectByVisibleText(CustomerTypeDDwn, newDevice.getCustomerType());
 	}
 
 	public void selectProgramCode() {
 		waitForElementVisible(ProgramCodeDDwn);
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		CustomUtils.ThreadDotSleep(1000);
-		selectByVisibleText(ProgramCodeDDwn, program.getProgram());
+		selectByVisibleText(ProgramCodeDDwn, program.getProgramCode());
 		// selectByVisibleText(ProgramCodeDDwn, "program [856]");
 	}
 
 	public void selectDeviceType() {
 		waitForElementVisible(DeviceTypeDDwn);
-		selectByVisibleText(DeviceTypeDDwn, getDeviceType());
+		selectByVisibleText(DeviceTypeDDwn, newDevice.getDeviceType());
 	}
 
 	public void selectDevicePlan() {
@@ -308,40 +312,40 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		CustomUtils.ThreadDotSleep(1000);
 		waitForElementVisible(TitleDDwn);
-		selectByVisibleText(TitleDDwn, newdeviceDataProvider().getTitle());
+		selectByVisibleText(TitleDDwn, newDevice.newdeviceDataProvider().getTitle());
 	}
 
 	public void enterFirstName() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(FirstnameTxt, newdeviceDataProvider().getFirstName() + CustomUtils.randomNumbers(3));
+		enterText(FirstnameTxt, newDevice.newdeviceDataProvider().getFirstName() + CustomUtils.randomNumbers(3));
 	}
 
 	public void enterMiddleName1() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		if (newdeviceDataProvider().getFirstName() != null)
-			enterText(MiddleName1Txt, newdeviceDataProvider().getMiddleName1());
+		if (newDevice.newdeviceDataProvider().getFirstName() != null)
+			enterText(MiddleName1Txt, newDevice.newdeviceDataProvider().getMiddleName1());
 	}
 
 	public void enterMiddleName2() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		if (newdeviceDataProvider().getFirstName() != null)
-			enterText(MiddleName2Txt, newdeviceDataProvider().getMiddleName2() + CustomUtils.randomNumbers(3));
+		if (newDevice.newdeviceDataProvider().getFirstName() != null)
+			enterText(MiddleName2Txt, newDevice.newdeviceDataProvider().getMiddleName2() + CustomUtils.randomNumbers(3));
 	}
 
 	public void enterLastName() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(LastnameTxt, newdeviceDataProvider().getLastName() + CustomUtils.randomNumbers(3));
+		enterText(LastnameTxt, newDevice.newdeviceDataProvider().getLastName() + CustomUtils.randomNumbers(3));
 	}
 
 	public void selectGender() {
 		waitForElementVisible(GenderDDwn);
-		selectByVisibleText(GenderDDwn, newdeviceDataProvider().getGender());
+		selectByVisibleText(GenderDDwn, newDevice.newdeviceDataProvider().getGender());
 	}
 
 	public void selectNationality() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		CustomUtils.ThreadDotSleep(1000);
-		selectByVisibleText(NationalityDDwn, newdeviceDataProvider().getNationality());
+		selectByVisibleText(NationalityDDwn, newDevice.newdeviceDataProvider().getNationality());
 	}
 
 	public void selectBirthDate() {
@@ -363,7 +367,7 @@ public class NewDevicePage extends AbstractCardManagementPage {
 
 	public void selectMaritalStatus() {
 		CustomUtils.ThreadDotSleep(1000);
-		selectByVisibleText(MaritalStatusDDwn, newdeviceDataProvider().getMaritalStatus());
+		selectByVisibleText(MaritalStatusDDwn, newDevice.newdeviceDataProvider().getMaritalStatus());
 	}
 
 	public void enterAccountNumber() {
@@ -377,21 +381,21 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 
 		if (AccountTypeDDwn.isEnabled()) {
-			selectByVisibleText(AccountTypeDDwn, getAccountType());
+			selectByVisibleText(AccountTypeDDwn, newDevice.getAccountType());
 		}
 	}
 
 	public void selectPreferedLanguage() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		CustomUtils.ThreadDotSleep(1000);
-		selectByVisibleText(PreferredLangDDwn, newdeviceDataProvider().getPreferedLanguage());
+		selectByVisibleText(PreferredLangDDwn, newDevice.newdeviceDataProvider().getPreferedLanguage());
 	}
 
 	public void enterRegisteredEmail() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(RegisteredEmailIDDDwn);
 		CustomUtils.ThreadDotSleep(1000);
-		enterText(RegisteredEmailIDDDwn, newdeviceDataProvider().getEmail());
+		enterText(RegisteredEmailIDDDwn, newDevice.newdeviceDataProvider().getEmail());
 	}
 
 	public void enterRegisteredMobile() {
@@ -399,42 +403,42 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		if (RegisteredMobileDDDwn.isEnabled()) {
 			waitForElementVisible(RegisteredMobileDDDwn);
 			CustomUtils.ThreadDotSleep(1000);
-			selectByVisibleText(RegisteredMobileDDDwn, newdeviceDataProvider().getMobileNo());
+			selectByVisibleText(RegisteredMobileDDDwn, newDevice.newdeviceDataProvider().getMobileNo());
 			enterText(RegisteredMobileTxt, CustomUtils.randomNumbers(10));
 		}
 	}
 
 	public void enterAddressLine1() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(AddressLine1Txt, newdeviceDataProvider().getAddressLine1());
+		enterText(AddressLine1Txt, newDevice.newdeviceDataProvider().getAddressLine1());
 	}
 
 	public void enterAddressLine2() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(AddressLine2Txt, newdeviceDataProvider().getAddressLine2());
+		enterText(AddressLine2Txt, newDevice.newdeviceDataProvider().getAddressLine2());
 	}
 
 	public void enterAddressLine3() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(AddressLine3Txt, newdeviceDataProvider().getAddressLine3());
+		enterText(AddressLine3Txt, newDevice.newdeviceDataProvider().getAddressLine3());
 	}
 
 	public void enterAddressLine4() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(AddressLine4Txt, newdeviceDataProvider().getAddressLine4());
+		enterText(AddressLine4Txt, newDevice.newdeviceDataProvider().getAddressLine4());
 	}
 
 	public void selectCountry() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(CountryDDwn);
-		selectByVisibleText(CountryDDwn, newdeviceDataProvider().getCountry());
+		selectByVisibleText(CountryDDwn, newDevice.newdeviceDataProvider().getCountry());
 	}
 
 	public void enterPostalCode() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(PostalCodeTxt);
 		CustomUtils.ThreadDotSleep(1000);
-		enterText(PostalCodeTxt, newdeviceDataProvider().getPostalCode());
+		enterText(PostalCodeTxt, newDevice.newdeviceDataProvider().getPostalCode());
 	}
 
 	public void clickCopyAddress() {
@@ -492,7 +496,7 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		ClickButton(FinishBtn);
 		SwitchToDefaultFrame();
-		getDeviceNumber();
+		newDevice.getDeviceNumber();
 		return null;
 	}
 
@@ -617,7 +621,7 @@ public class NewDevicePage extends AbstractCardManagementPage {
 
 	@Override
 	public void verifyUiOperationStatus() {
-	loggerTemp.info("Device");
+	logger.info("Device");
 		verifyUiOperation("Add Device");
 	}
 

@@ -186,7 +186,7 @@ public class BatchProcessingPage extends AbstractBasePage {
 	public void processCustomerMasterDownload(String batchName, String productType, String extType) {
 		processDownloadBatch(batchName);
 		selectProductType(productType);
-		selectProgramName(getProgramDataValuefromExcel());
+		selectProgramName(ProcessBatches.getProgramDataValuefromExcel());
 		selectExtractType(extType);
 		clickSubmitBtn();
 	}

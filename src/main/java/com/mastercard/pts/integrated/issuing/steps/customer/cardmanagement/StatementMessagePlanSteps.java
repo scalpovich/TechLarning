@@ -25,6 +25,6 @@ public class StatementMessagePlanSteps {
 		devicecreation.setProduct(product);
 		statementmessageplan = StatementMessagePlan.StatementMessagePlanProvider();
 		String statementMessageePlan = stmntmsgflows.createStatementMessagePlan(statementmessageplan, devicecreation);
-		statementmessageplan.setStatementMessagePlan(statementMessageePlan);
+		statementmessageplan.setStatementMessagePlanCode(statementMessageePlan);
 	}
 }

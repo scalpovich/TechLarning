@@ -23,7 +23,7 @@ public class InstitutionCurrencySteps {
 
 	@When("user creates an Institution Currency with status as $status")
 	public void whenUserCreatesAnInstitutionCurrency(@Named("status") String status) {
-		institutioncurrency = InstitutionCurrency.InstitutionCurrencyDataProvider();
+		institutioncurrency = InstitutionCurrency.institutionCurrencyDataProvider();
 		institutioncurrency.setSettlementCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
 		institutioncurrency.setStatus(status);
 		institutioncurrencyflows.addInstitutionCurrency(institutioncurrency);

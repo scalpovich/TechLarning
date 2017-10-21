@@ -35,8 +35,6 @@ public class BusinessMandatoryFieldsPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(BusinessMandatoryFieldsPage.class);
-	@Autowired
-	private ReadTestDataFromExcel excelTestData;
 
 	@Autowired
 	private ReadTestDataFromExcel excelTestData;
@@ -110,7 +108,7 @@ public class BusinessMandatoryFieldsPage extends AbstractBasePage {
 		if (MapUtils.fnGetInputDataFromMap("Program") != null) {
 			selectByVisibleText(ProgramCodeDDwn, MapUtils.fnGetInputDataFromMap("Program"));
 		} else {
-			selectByVisibleText(ProgramCodeDDwn, program.getProgram());
+			selectByVisibleText(ProgramCodeDDwn, program.getProgramCode());
 		}
 		// selectByVisibleText(ProgramCodeDDwn, "program [405]");
 	}

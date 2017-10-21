@@ -5,7 +5,7 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBIN;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.IssuerPublicKey;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.IPKCertificationInfoFlows;
@@ -20,7 +20,7 @@ public class IPKCertificationInformationSteps {
 	IssuerPublicKey ipk;
 
 	@Autowired
-	DeviceBIN devicebin;
+	DeviceBin devicebin;
 
 	@Autowired
 	IPKCertificationInfoFlows ipkflows;

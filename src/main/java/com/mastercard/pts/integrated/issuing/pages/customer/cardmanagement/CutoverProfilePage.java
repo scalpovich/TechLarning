@@ -47,7 +47,7 @@ public class CutoverProfilePage extends AbstractBasePage {
 		verifyUiOperationNoEdit("Add Cutover Profile");
 	}
 
-	public void addCutoverProfile(CutoverProfile cp) {
+	public void addCutoverProfile(CutOverProfile cp) {
 		logger.info("create CutoverProfile on date : {}",
 				cp.getBusinessDate());
 		if(isNoRecordsFoundInTable())
@@ -136,7 +136,7 @@ public class CutoverProfilePage extends AbstractBasePage {
 
 		}
 	}
-	private void addCutoverProfileRecord(CutoverProfile cp) {
+	private void addCutoverProfileRecord(CutOverProfile cp) {
 		WebElementUtils.pickDate(businessDateDPkr, cp.getBusinessDate());
 		WebElementUtils.selectDropDownByVisibleText(cutoverHrsDwn, cp.getCutoverHours());
 		WebElementUtils.selectDropDownByVisibleText(cutoverMiDwn, cp.getCutoverMins());

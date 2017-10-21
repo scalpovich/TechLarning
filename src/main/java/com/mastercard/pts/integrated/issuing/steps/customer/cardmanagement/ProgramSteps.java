@@ -75,6 +75,6 @@ public class ProgramSteps {
 				|| programType.contains("Retail Travel card - Multi currency")) {
 			Program = programflows.createProgramPrepaidMultiCurrency(devicecreation, program);
 		}
-		program.setProgram(Program);
+		program.setProgramCode(Program);
 	}
 }

@@ -110,7 +110,7 @@ public class AccountHeadSteps extends AccountHeadFlows {
 	@Then("verify that an appropriate error message is seen on the screen")
 	public void verify_error_message_duplicate_account_head() {
 		logger.info("Verifying the error message for the duplicate entry of Account Head");
-		Assert.assertTrue(verifyErrorMessage());
+		Assert.assertTrue(verifyErrorMessage1());
 		sessionExpiryloginInAgain();
 	}
 

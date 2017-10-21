@@ -196,7 +196,7 @@ public class AccountHeadFlows extends MenuFlows {
 	 */
 	public boolean verifySuspenseAccountNotDeactivated() {
 		accountHeadPage.deactivateAccountHead(status);
-		return verifyErrorMessage();
+		return verifyErrorMessage1();
 	}
 
 	/**
@@ -204,7 +204,7 @@ public class AccountHeadFlows extends MenuFlows {
 	 *
 	 * @return true, if successful
 	 */
-	public boolean verifyErrorMessage() {
+	public boolean verifyErrorMessage1() {
 		return CustomUtils.checkErrorMessage(
 				MapUtils.fnGetInputDataFromMap("ErrorMessage"),
 				accountHeadPage.getErrorMessageText());

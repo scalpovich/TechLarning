@@ -45,9 +45,6 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "batchId:input:dropdowncomponent")
 	private MCWebElement batchNameDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "buttonPanel:submitButton")
-	private MCWebElement submitBtn;
-
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='productType']/select")
 	private MCWebElement productTypeDDwn;
 

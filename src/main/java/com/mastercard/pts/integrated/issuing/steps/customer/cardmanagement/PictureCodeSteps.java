@@ -18,6 +18,6 @@ public class PictureCodeSteps {
 	@When("user creates Picture Code")
 	public void whenUserCreatesPictureCode() {
 		String PictureCode = picturecodeflows.addPictureCode();
-		picturecode.setPictureCode(PictureCode);
+		picturecode.setPictureCodeNumber(PictureCode);
 	}
 }

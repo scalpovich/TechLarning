@@ -53,6 +53,9 @@ public class DocumentChecklistPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addSubDetailsBtn;
+	
+	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
+	private MCWebElement addDocumentChecklistBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "documentName:input:dropdowncomponent")
 	private MCWebElement DocumentNameTxtrbtn;

@@ -81,7 +81,7 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 	private MCWebElement Description;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "productType:input:dropdowncomponent")
-	private MCWebElement ProductType;
+	private MCWebElement productType;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement save2;
@@ -186,7 +186,7 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 	}
 
 	public void selectProductType(DeviceCreation deviceCreation) {
-		selectByVisibleText(ProductType, deviceCreation.getProduct());
+		selectByVisibleText(productType, deviceCreation.getProduct());
 	}
 
 	public String statementMessagePlanDetails(DeviceCreation deviceCreation) {

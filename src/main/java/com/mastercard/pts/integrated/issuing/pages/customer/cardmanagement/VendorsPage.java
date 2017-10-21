@@ -117,7 +117,7 @@ public class VendorsPage extends AbstractBasePage {
 				WebElementUtils.enterText(vendorCode, vendor.getVendorCode());
 				WebElementUtils.enterText(vendorName, vendor.getVendorName());
 				WebElementUtils.selectDropDownByVisibleText(categoryDrpDwnPopup, vendor.getCategory());	
-				WebElementUtils.selectDropDownByVisibleText(branchDrpDwnPopup, vendor.getBranch());
+				WebElementUtils.selectDropDownByVisibleText(branchDrpDwnPopup, vendor.getBranchCode());
 				if(vendor.getCategory().contains("Personalization Bureau")){
 					WebElementUtils.checkCheckbox(deviceProductionChk, true);
 					WebElementUtils.selectDropDownByVisibleText(embossingFileTemplateDrpDwnPopup, vendor.getEmbosingFileTemplate());

@@ -23,22 +23,22 @@ public class WalletPlanSteps {
 	@When("user creates a wallet plan of $walletType type for program $Programtype for $product")
 	public void whenUserCreatesAWhiteListedMerchantWalletPlan(@Named("walletType") String walletType,
 			@Named("Programtype") String Programtype, @Named("product") String product) {
-		String WalletPlan = "";
+		String walletPlan = "";
 		walletplan = WalletPlan.walletplanDataprovider();
 		walletplan.setWalletType(walletType);
 		walletplan.setProgramType(Programtype);
 		deviceCreation.setProduct(product);
 		if (walletType.contains("default")) {
-			WalletPlan = walletplanflows.createWalletPlan(deviceCreation, walletplan);
+			walletPlan = walletplanflows.createWalletPlan(deviceCreation, walletplan);
 		}
 		if (walletType.contains("White listed MCG")) {
-			WalletPlan = walletplanflows.createWhitelistedMCGWalletPlan(deviceCreation, walletplan);
+			walletPlan = walletplanflows.createWhitelistedMCGWalletPlan(deviceCreation, walletplan);
 		}
 		if (walletType.contains("White listed Merchant")) {
-			WalletPlan = walletplanflows.createWhitelistedMerchantWalletPlan(deviceCreation, walletplan);
+			walletPlan = walletplanflows.createWhitelistedMerchantWalletPlan(deviceCreation, walletplan);
 		}
 
-		walletplan.setWalletPlan(WalletPlan);
+		walletplan.setWalletPlan(walletPlan);
 
 	}
 

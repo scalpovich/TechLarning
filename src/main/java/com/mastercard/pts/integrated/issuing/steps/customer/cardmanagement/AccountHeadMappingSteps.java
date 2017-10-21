@@ -144,7 +144,7 @@ public class AccountHeadMappingSteps extends AccountHeadMappingFlows {
 	@Then("verify that a proper validation message is shown if the user tries to enter duplicate account head mapping")
 	public void verify_error_message() {
 		logger.info("Verify that a proper validation message is shown if the user tries to enter duplicate account head mapping");
-		Assert.assertTrue(verifyErrorMessage());
+		Assert.assertTrue(verifyErrorMessage1());
 		sessionExpiryloginInAgain();
 	}
 

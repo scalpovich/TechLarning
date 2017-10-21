@@ -200,7 +200,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickWhenClickable(createBtn);
 	}
 	
-	protected void clickSaveButton() {
+	public void clickSaveButton() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		clickWhenClickable(saveBtn);
 	}

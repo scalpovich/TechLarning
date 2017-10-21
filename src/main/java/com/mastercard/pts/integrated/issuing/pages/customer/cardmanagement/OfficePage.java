@@ -129,7 +129,7 @@ public class OfficePage extends AbstractBasePage {
 
 	public void selectControlOffice(Office office) {
 		if (ControlCodeDDwn.isEnabled()) {
-			selectByVisibleText(ControlCodeDDwn, office.getControlCode());
+			selectByVisibleText(ControlCodeDDwn, office.getOfficeCode());
 		}
 	}
 
@@ -157,7 +157,7 @@ public class OfficePage extends AbstractBasePage {
 	}
 
 	public void enterPostalCode(Office office) {
-		enterValueinTextBox(PostalCodeTxt, office.getPostalCode());
+		enterValueinTextBox(PostalCodeTxt, office.getZip());
 	}
 
 	public void clickSaveBtn() {

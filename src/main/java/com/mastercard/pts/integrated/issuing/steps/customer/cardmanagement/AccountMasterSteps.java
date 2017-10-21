@@ -134,7 +134,7 @@ public class AccountMasterSteps extends AbstractBaseFlows {
 	@Then("verify that the system throws an appropriate error message on adding a duplicate account master")
 	public void system_throws_an_appropriate_error_message_for_duplicate_account() {
 		logger.info("Verifying the error message is displayed.");
-		Assert.assertTrue(accountMasterFlows.verifyErrorMessage());
+		Assert.assertTrue(accountMasterFlows.verifyErrorMessage1());
 		sessionExpiryloginInAgain();
 	}
 

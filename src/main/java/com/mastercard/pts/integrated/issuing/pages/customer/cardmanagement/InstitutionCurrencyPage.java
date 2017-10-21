@@ -237,7 +237,7 @@ public class InstitutionCurrencyPage extends AbstractBasePage {
 	public void addInstitutionCurrency(InstitutionCurrency currency)
 	{
 		logger.info("create currency : {}",
-				currency.getCurrency());
+				currency.getSettlementCurrency());
 
 		performSearchOperationOnMainScreen();
 		if(isNoRecordsFoundInTable())
@@ -256,7 +256,7 @@ public class InstitutionCurrencyPage extends AbstractBasePage {
 	}
 	
 	private void addInstituteCurrency(InstitutionCurrency currency) {
-		WebElementUtils.selectDropDownByVisibleText(currencyCodePopupDwn,currency.getCurrency());
+		WebElementUtils.selectDropDownByVisibleText(currencyCodePopupDwn,currency.getSettlementCurrency());
 		WebElementUtils.selectDropDownByVisibleText(statusPopupDwn,currency.getStatus());
 		clickSaveButton();
 	}	

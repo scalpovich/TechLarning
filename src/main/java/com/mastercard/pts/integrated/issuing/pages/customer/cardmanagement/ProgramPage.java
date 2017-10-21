@@ -425,7 +425,7 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	public void selectBaseCurrency(Program program) {
-		selectByVisibleText(BaseCurrencyDDwn, program.getCurrency());
+		selectByVisibleText(BaseCurrencyDDwn, program.getBaseCurrency());
 	}
 
 	public void selectCurrencyConversionBy(Program program) {
@@ -448,7 +448,7 @@ public class ProgramPage extends AbstractBasePage {
 
 	public void selectReferenceCurrency(Program program) {
 		if (ReferenceCurrency.isEnabled()) {
-			selectByVisibleText(ReferenceCurrency, program.getCurrency());
+			selectByVisibleText(ReferenceCurrency, program.getBaseCurrency());
 		}
 	}
 
@@ -457,11 +457,11 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	public void enterMaximumBalanceWithoutKYC(Program program) {
-		enterValueinTextBox(MaxBalWithoutKYCTxt, program.getMaxBalanceWithoutKYC());
+		enterValueinTextBox(MaxBalWithoutKYCTxt, program.getMaximumBalanceWithoutKyc());
 	}
 
 	public void enterLoadsWithoutKYC(Program program) {
-		enterValueinTextBox(LoadsWithoutKYCTxt, program.getLoadsWithoutKYC());
+		enterValueinTextBox(LoadsWithoutKYCTxt, program.getLoadsWithoutKyc());
 	}
 
 	public void clickNextButton() {
@@ -499,7 +499,7 @@ public class ProgramPage extends AbstractBasePage {
 		if (MapUtils.fnGetInputDataFromMap("DevicePlanForProgram") != null) {
 			selectByVisibleText(DevicePlan1DDwn, MapUtils.fnGetInputDataFromMap("DevicePlanForProgram"));
 		} else {
-			selectByVisibleText(DevicePlan1DDwn, program.getDevicePlanProgram());
+			selectByVisibleText(DevicePlan1DDwn, program.getDevicePlanPlan1());
 		}
 	}
 

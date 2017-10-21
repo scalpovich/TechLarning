@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BusinessCalendar;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CutoverProfile;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CutOverProfile;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.EmbossingPinAndPriorityPassFileNameParameter;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.EmbossingPinPriorityPassFileTemplate;
@@ -71,7 +71,7 @@ public class InstitutionPrerequisiteCreationSteps{
 	@Given("user creates new cutover profile")
 	@When("user creates new cutover profile")
 	public void givenUserCreatesNewCutoverProfile(){
-		CutoverProfile cp=CutoverProfile.createWithProvider(dbProvider);
+		CutOverProfile cp=CutOverProfile.createWithProvider(dbProvider);
 		institutionCreationWorkflow.createCutOverProfile(cp);
 	}
 	

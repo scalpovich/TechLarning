@@ -17,6 +17,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManag
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -29,9 +30,6 @@ public class TransactionPlanPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(TransactionPlanPage.class);
-	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
-	private MCWebElement addTransactionPlanBtn;
-
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=transactionSetCode]")
 	private MCWebElement planCodeSearchTxt;
 

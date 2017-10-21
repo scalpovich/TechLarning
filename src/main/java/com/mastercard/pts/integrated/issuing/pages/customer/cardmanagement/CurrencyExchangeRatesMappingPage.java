@@ -156,8 +156,8 @@ public class CurrencyExchangeRatesMappingPage extends AbstractBasePage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(transactionSource),
-				WebElementUtils.elementToBeClickable(rateOrigin)
+				WebElementUtils.elementToBeClickable(transactionSourceDdwn),
+				WebElementUtils.elementToBeClickable(rateOriginDdwn)
 				);
 	}
 }

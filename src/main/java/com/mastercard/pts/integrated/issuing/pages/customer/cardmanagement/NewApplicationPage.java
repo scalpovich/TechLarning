@@ -24,6 +24,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.ReadTestDataFromExcel;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 //TODO: Auto-generated Javadoc
 /**
  * @author E070234 
@@ -39,8 +40,11 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class NewApplicationPage extends AbstractCardManagementPage {
 
 	private static final Logger logger = LoggerFactory.getLogger(NewApplicationPage.class);
-@Autowired
+	@Autowired
 	Program program;
+	
+	@Autowired
+	NewApplication newApp;
 
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement AddNewApplicactionbtn;
@@ -220,7 +224,7 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 	ReadTestDataFromExcel excelTestData;
 
 	public void setNewApplicationParametersValue() {
-		setNewApplicationParameter();
+		newApp.setNewApplicationParameter();
 	}
 
 	public void selectMandatoryFields(String excelFileName) {
@@ -278,13 +282,13 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 
 	public void selectProductType() {
 		waitForElementVisible(AppliedForProductDDwn);
-		selectByVisibleText(AppliedForProductDDwn, getProductType());
+		selectByVisibleText(AppliedForProductDDwn, newApp.getProductType());
 	}
 
 	public void selectApplicationType() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(AppliedTypeDDwn);
-		selectByVisibleText(AppliedTypeDDwn, getApplicationType());
+		selectByVisibleText(AppliedTypeDDwn, newApp.getApplicationType());
 	}
 
 	public void selectSubApplicationType() {
@@ -293,7 +297,7 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 		waitForElementVisible(ApplicationSubtypeDDwn);
 		waitForElementVisible(ApplicationSubtypeDDwn);
 
-		selectByVisibleText(ApplicationSubtypeDDwn, getSubApplicationType());
+		selectByVisibleText(ApplicationSubtypeDDwn, newApp.getSubApplicationType());
 	}
 
 	public void clickNextBtn() {
@@ -309,7 +313,7 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 	 */
 	public void selectCreateOpenBatch() {
 		waitForElementVisible(CreateOpenBatchDDwn);
-		selectByVisibleText(CreateOpenBatchDDwn, getCreateOpenBatch());
+		selectByVisibleText(CreateOpenBatchDDwn, newApp.getCreateOpenBatch());
 	}
 
 	public void clickGenerateBtn() {
@@ -330,15 +334,15 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 
 	public void selectCustomerType() {
 		waitForElementVisible(CustomerTypeDDwn);
-		selectByVisibleText(CustomerTypeDDwn, getCustomerType());
+		selectByVisibleText(CustomerTypeDDwn, newApp.getCustomerType());
 	}
 
 	public void selectProgramCode() {
 		CustomUtils.ThreadDotSleep(5000);
 		waitForElementVisible(ProgramCodeDDwn);
 		waitForElementVisible(ProgramCodeDDwn);
-		System.out.println(program.getProgram());
-		selectByVisibleText(ProgramCodeDDwn, program.getProgram());
+		System.out.println(program.getProgramCode());
+		selectByVisibleText(ProgramCodeDDwn, program.getProgramCode());
 	}
 
 	/**
@@ -372,40 +376,40 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 		CustomUtils.ThreadDotSleep(5000);
 		waitForElementVisible(BranchCodeDDwn);
 
-		selectByVisibleText(BranchCodeDDwn, getBranchcode());
+		selectByVisibleText(BranchCodeDDwn, newApp.getBranchcode());
 	}
 
 	public void selectCorporateClientCode() {
-		if (getCorporateClientCode() != null) {
+		if (newApp.getCorporateClientCode() != null) {
 			waitForElementVisible(CorporateClientCode);
 			CustomUtils.ThreadDotSleep(1000);
-			selectByVisibleText(CorporateClientCode, getCorporateClientCode());
+			selectByVisibleText(CorporateClientCode, newApp.getCorporateClientCode());
 		}
 	}
 
 	public void enterTitle() {
 		waitForElementVisible(TitleDDwn);
-		selectByVisibleText(TitleDDwn, getNameTitle());
+		selectByVisibleText(TitleDDwn, newApp.getNameTitle());
 	}
 
 	public void enterFirstName() {
 		waitForElementVisible(FirstnameTxt);
-		enterText(FirstnameTxt, getFirstName() + CustomUtils.RandomNumbers(3));
+		enterText(FirstnameTxt, newApp.getFirstName() + CustomUtils.RandomNumbers(3));
 	}
 
 	public void enterLastName() {
 		waitForElementVisible(LastnameTxt);
 
-		enterText(LastnameTxt, getLastName() + CustomUtils.RandomNumbers(2));
+		enterText(LastnameTxt, newApp.getLastName() + CustomUtils.RandomNumbers(2));
 	}
 
 	public void selelctVIPStatus() {
 
 		if (checkIfMandateFieldIsPresent("VIP_FLAG")) {
 			if (CheckMandateField(VIPDDwn)) {
-				if ((getVIPStatus() != null)) {
+				if ((newApp.getVIPStatus() != null)) {
 					waitForElementVisible(VIPDDwn);
-					enterText(VIPDDwn, getVIPStatus());
+					enterText(VIPDDwn, newApp.getVIPStatus());
 				} else
 					Assert.assertNotNull("VIP Status needs to be provided", false);
 			} else
@@ -413,17 +417,17 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 		}
 
 		waitForElementVisible(VIPDDwn);
-		selectByVisibleText(VIPDDwn, getVIPStatus());
+		selectByVisibleText(VIPDDwn, newApp.getVIPStatus());
 	}
 
 	public void enterGender() {
 		waitForElementVisible(GenderDDwn);
-		selectByVisibleText(GenderDDwn, getGender());
+		selectByVisibleText(GenderDDwn, newApp.getGender());
 	}
 
 	public void enterNationality() {
 		waitForElementVisible(NationalityDDwn);
-		selectByVisibleText(NationalityDDwn, getNationality());
+		selectByVisibleText(NationalityDDwn, newApp.getNationality());
 	}
 
 	public void enterDOB() {
@@ -435,7 +439,7 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 		}
 		waitForElementVisible(YearTxt);
 		YearTxt.clearField();
-		enterText(YearTxt, getYearBirth());
+		enterText(YearTxt, newApp.getYearBirth());
 		CustomUtils.ThreadDotSleep(1000);
 		waitForElementVisible(OkBtn);
 		ClickButton(OkBtn);
@@ -445,12 +449,12 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 
 	public void enterMaritialStatus() {
 		waitForElementVisible(MaritalStatusDDwn);
-		selectByVisibleText(MaritalStatusDDwn, getMaritalStatus());
+		selectByVisibleText(MaritalStatusDDwn, newApp.getMaritalStatus());
 	}
 
 	public void enetrPreferredLanguage() {
 		waitForElementVisible(PreferredLangDDwn);
-		selectByVisibleText(PreferredLangDDwn, getPreferredLanguage());
+		selectByVisibleText(PreferredLangDDwn, newApp.getPreferredLanguage());
 	}
 
 	/**
@@ -459,91 +463,91 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 	 */
 	public void enetrPreferredAddress() {
 		waitForElementVisible(PreferredAddressDDwn);
-		selectByVisibleText(PreferredAddressDDwn, getPreferredAddress());
+		selectByVisibleText(PreferredAddressDDwn, newApp.getPreferredAddress());
 	}
 
 	public void enterAddressLine1() {
 		waitForElementVisible(AddressLine1Txt);
-		enterText(AddressLine1Txt, getAddressLine1() + CustomUtils.RandomNumbers(2));
+		enterText(AddressLine1Txt, newApp.getAddressLine1() + CustomUtils.RandomNumbers(2));
 	}
 
 	public void selectCountry() {
 		waitForElementVisible(CountryDDwn);
-		selectByVisibleText(CountryDDwn, getCountry());
+		selectByVisibleText(CountryDDwn, newApp.getCountry());
 	}
 
 	public void enterZipCode() {
 		waitForElementVisible(PostalCodeTxt);
-		enterText(PostalCodeTxt, getPostalCode());
+		enterText(PostalCodeTxt, newApp.getPostalCode());
 		CustomUtils.ThreadDotSleep(3000);
 	}
 
 	public void enterMiddleName1() {
 		if (checkIfMandateFieldIsPresent("MIDDLE_NAME1")) {
 			if (CheckMandateField(MiddleName1Txt)) {
-				if ((getMiddleName1() != null)) {
+				if ((newApp.getMiddleName1() != null)) {
 					waitForElementVisible(MiddleName1Txt);
-					enterText(MiddleName1Txt, getMiddleName1() + CustomUtils.RandomNumbers(2));
+					enterText(MiddleName1Txt, newApp.getMiddleName1() + CustomUtils.RandomNumbers(2));
 				} else
 					Assert.assertNotNull("Middle name needs to be provided", false);
 			} else
 				Assert.assertNotNull("Middle name should be business Mandatory", false);
-		} else if ((getMiddleName1() != null)) {
+		} else if ((newApp.getMiddleName1() != null)) {
 			waitForElementVisible(MiddleName1Txt);
-			enterText(MiddleName1Txt, getMiddleName1() + CustomUtils.RandomNumbers(2));
+			enterText(MiddleName1Txt, newApp.getMiddleName1() + CustomUtils.RandomNumbers(2));
 		}
 	}
 
 	public void enterMiddleName2() {
 		if (checkIfMandateFieldIsPresent("MIDDLE_NAME2")) {
 			if (CheckMandateField(MiddleName2Txt)) {
-				if ((getMiddleName2() != null)) {
+				if ((newApp.getMiddleName2() != null)) {
 					waitForElementVisible(MiddleName2Txt);
-					enterText(MiddleName2Txt, getMiddleName2() + CustomUtils.RandomNumbers(2));
+					enterText(MiddleName2Txt, newApp.getMiddleName2() + CustomUtils.RandomNumbers(2));
 				} else
 					Assert.assertNotNull("Middle name2 needs to be provided", false);
 			} else
 				Assert.assertNotNull("Middle name2 should be business Mandatory", false);
 		}
 
-		if (getMiddleName2() != null) {
+		if (newApp.getMiddleName2() != null) {
 			waitForElementVisible(MiddleName2Txt);
-			enterText(MiddleName2Txt, getMiddleName2() + CustomUtils.RandomNumbers(2));
+			enterText(MiddleName2Txt, newApp.getMiddleName2() + CustomUtils.RandomNumbers(2));
 		}
 	}
 
 	public void enterMaidenName() {
 		if (checkIfMandateFieldIsPresent("MAIDEN_NAME")) {
 			if (CheckMandateField(MaidenNameTxt)) {
-				if ((getMaidenName() != null)) {
+				if ((newApp.getMaidenName() != null)) {
 					waitForElementVisible(MaidenNameTxt);
-					enterText(MaidenNameTxt, getMaidenName());
+					enterText(MaidenNameTxt, newApp.getMaidenName());
 				} else
 					Assert.assertNotNull("Middle name2 needs to be provided", false);
 			} else
 				Assert.assertNotNull("Middle name2 should be business Mandatory", false);
 		}
-		if ((getMaidenName() != null)) {
+		if ((newApp.getMaidenName() != null)) {
 			waitForElementVisible(MaidenNameTxt);
-			enterText(MaidenNameTxt, getMaidenName());
+			enterText(MaidenNameTxt, newApp.getMaidenName());
 		}
 	}
 
 	public void selectBirthcountry() {
 		if (checkIfMandateFieldIsPresent("BIRTH_COUNTRY")) {
 			if (CheckMandateField(BirthcountryDDwn)) {
-				if ((getBirthcountry() != null)) {
+				if ((newApp.getBirthcountry() != null)) {
 					waitForElementVisible(BirthcountryDDwn);
-					enterText(BirthcountryDDwn, getBirthcountry());
+					enterText(BirthcountryDDwn, newApp.getBirthcountry());
 				} else
 					Assert.assertNotNull("Birth Country needs to be provided", false);
 			} else
 				Assert.assertNotNull("Birth Country should be business Mandatory", false);
 		}
 
-		if ((getBirthcountry() != null)) {
+		if ((newApp.getBirthcountry() != null)) {
 			waitForElementVisible(BirthcountryDDwn);
-			selectByVisibleText(BirthcountryDDwn, getBirthcountry());
+			selectByVisibleText(BirthcountryDDwn, newApp.getBirthcountry());
 		}
 	}
 
@@ -551,18 +555,18 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 
 		if (checkIfMandateFieldIsPresent("BIRTH_CITY")) {
 			if (CheckMandateField(BirthCityDDwn)) {
-				if ((getBirthCity() != null)) {
+				if ((newApp.getBirthCity() != null)) {
 					waitForElementVisible(BirthCityDDwn);
-					enterText(BirthCityDDwn, getBirthCity());
+					enterText(BirthCityDDwn, newApp.getBirthCity());
 				} else
 					Assert.assertNotNull("Birth city needs to be provided", false);
 			} else
 				Assert.assertNotNull("Birth city should be business Mandatory", false);
 		}
 
-		if ((getBirthCity() != null)) {
+		if ((newApp.getBirthCity() != null)) {
 			waitForElementVisible(BirthCityDDwn);
-			selectByVisibleText(BirthCityDDwn, getBirthCity());
+			selectByVisibleText(BirthCityDDwn, newApp.getBirthCity());
 		}
 	}
 
@@ -574,97 +578,97 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 
 		if (checkIfMandateFieldIsPresent("EDUCATION")) {
 			if (CheckMandateField(EducationDDwn)) {
-				if ((getEducation() != null)) {
+				if ((newApp.getEducation() != null)) {
 					waitForElementVisible(EducationDDwn);
-					enterText(EducationDDwn, getEducation());
+					enterText(EducationDDwn, newApp.getEducation());
 				} else
 					Assert.assertNotNull("Education needs to be provided", false);
 			} else
 				Assert.assertNotNull("Education should be business Mandatory", false);
 		}
-		if ((getBirthCity() != null)) {
+		if ((newApp.getBirthCity() != null)) {
 			waitForElementVisible(EducationDDwn);
-			selectByVisibleText(EducationDDwn, getEducation());
+			selectByVisibleText(EducationDDwn, newApp.getEducation());
 		}
 	}
 
 	public void selectTravelType() {
-		if ((getTravelType() != null)) {
+		if ((newApp.getTravelType() != null)) {
 			waitForElementVisible(TravelTypeDDwn);
-			selectByVisibleText(TravelTypeDDwn, getTravelType());
+			selectByVisibleText(TravelTypeDDwn, newApp.getTravelType());
 		}
 	}
 
 	public void selectTravelPurpose() {
-		if ((getTravelPurpose() != null)) {
+		if ((newApp.getTravelPurpose() != null)) {
 			waitForElementVisible(TravelPurposechkbx);
-			selectByVisibleText(TravelPurposechkbx, getTravelPurpose());
+			selectByVisibleText(TravelPurposechkbx, newApp.getTravelPurpose());
 		}
 	}
 
 	public void selectTravelCountry() {
-		if ((getTravelCountry() != null)) {
+		if ((newApp.getTravelCountry() != null)) {
 			waitForElementVisible(TravelCountryDDwn);
-			selectByVisibleText(TravelCountryDDwn, getTravelCountry());
+			selectByVisibleText(TravelCountryDDwn, newApp.getTravelCountry());
 		}
 	}
 
 	public void selectStmtHardCopyReq() {
 		if (checkIfMandateFieldIsPresent("STATEMENT_PREFERENCE")) {
 			if (CheckMandateField(StmtHardCopyReqDDwn)) {
-				if ((getStmtHardCopyReq() != null)) {
+				if ((newApp.getStmtHardCopyReq() != null)) {
 					waitForElementVisible(StmtHardCopyReqDDwn);
-					enterText(StmtHardCopyReqDDwn, getStmtHardCopyReq());
+					enterText(StmtHardCopyReqDDwn, newApp.getStmtHardCopyReq());
 				} else
 					Assert.assertNotNull("Statement needs to be provided", false);
 			} else
 				Assert.assertNotNull("Statement should be business Mandatory", false);
 		}
 
-		if ((getStmtHardCopyReq() != null)) {
+		if ((newApp.getStmtHardCopyReq() != null)) {
 			waitForElementVisible(StmtHardCopyReqDDwn);
-			selectByVisibleText(StmtHardCopyReqDDwn, getStmtHardCopyReq());
+			selectByVisibleText(StmtHardCopyReqDDwn, newApp.getStmtHardCopyReq());
 		}
 	}
 
 	public void selectLanguagePref() {
-		if ((getLanguagePref() != null)) {
+		if ((newApp.getLanguagePref() != null)) {
 			waitForElementVisible(LanguagePrefDDwn);
-			selectByVisibleText(LanguagePrefDDwn, getLanguagePref());
+			selectByVisibleText(LanguagePrefDDwn, newApp.getLanguagePref());
 		}
 	}
 
 	public void selectDeliveryMode() {
-		if ((getDeliveryMode() != null)) {
+		if ((newApp.getDeliveryMode() != null)) {
 			waitForElementVisible(DeliveryModeDDwn);
-			selectByVisibleText(DeliveryModeDDwn, getDeliveryMode());
+			selectByVisibleText(DeliveryModeDDwn, newApp.getDeliveryMode());
 		}
 	}
 
 	public void selectRegisteredMobileISDDDwn() {
-		if ((getRegisteredMobileNo() != null)) {
+		if ((newApp.getRegisteredMobileNo() != null)) {
 			waitForElementVisible(registeredMobileISDDDwn);
 			selectByVisibleText(registeredMobileISDDDwn, "IND");
 		}
 	}
 
 	public void enterRegisteredMobileNo() {
-		if ((getRegisteredMobileNo() != null)) {
+		if ((newApp.getRegisteredMobileNo() != null)) {
 			waitForElementVisible(registeredMobileNoTxt);
-			enterText(registeredMobileNoTxt, getRegisteredMobileNo());
+			enterText(registeredMobileNoTxt, newApp.getRegisteredMobileNo());
 		}
 	}
 
 	public void enterRegisteredEmailID() {
-		if ((getRegisteredEmailID() != null)) {
+		if ((newApp.getRegisteredEmailID() != null)) {
 			waitForElementVisible(registeredEmailIDTxt);
-			enterText(registeredEmailIDTxt, getRegisteredEmailID());
+			enterText(registeredEmailIDTxt, newApp.getRegisteredEmailID());
 		}
 	}
 
 	public void CheckKycStatus() {
 
-		if ((getKycStatus() != null) && getKycStatus().equalsIgnoreCase("Y")) {
+		if ((newApp.getKycStatus() != null) && newApp.getKycStatus().equalsIgnoreCase("Y")) {
 			waitForElementVisible(KycStatuschkbx);
 
 			KycStatuschkbx.click();
@@ -673,7 +677,7 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 
 	public void ChecksmsAlert() {
 
-		if ((getSmsAlert() != null) && getSmsAlert().equalsIgnoreCase("Y")) {
+		if ((newApp.getSmsAlert() != null) && newApp.getSmsAlert().equalsIgnoreCase("Y")) {
 			waitForElementVisible(smsAlertchkbx);
 
 			smsAlertchkbx.click();
@@ -682,7 +686,7 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 
 	public void CheckEmailAlert() {
 
-		if ((getEmailAlert() != null) && getEmailAlert().equalsIgnoreCase("Y")) {
+		if ((newApp.getEmailAlert() != null) && newApp.getEmailAlert().equalsIgnoreCase("Y")) {
 			waitForElementVisible(EmailAlertchkbx);
 
 			EmailAlertchkbx.click();
@@ -691,7 +695,7 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 
 	public void CheckRegisterForDncr() {
 
-		if ((getRegisterForDncr() != null) && getRegisterForDncr().equalsIgnoreCase("Y")) {
+		if ((newApp.getRegisterForDncr() != null) && newApp.getRegisterForDncr().equalsIgnoreCase("Y")) {
 			RegisterForDncrchkbx.click();
 			waitForElementVisible(RegisterForDncrchkbx);
 
@@ -755,14 +759,14 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 
 		String Applicationnumber = CheckApplicationNumber();
 		System.out.println(Applicationnumber);
-		setApplicationNumber(Applicationnumber);
+		newApp.setApplicationNumber(Applicationnumber);
 
 	}
 
 	public void getCreatedDeviceNumber() {
 		String Devicennumber = CheckDeviceNumber();
 		System.out.println(Devicennumber);
-		setDeviceNumber(Devicennumber);
+		newApp.setDeviceNumber(Devicennumber);
 	}
 
 	public void checkSuccessMsg() {

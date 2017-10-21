@@ -146,7 +146,8 @@ public class AccountHeadMappingFlows extends MenuFlows {
 	 *
 	 * @return true, if successful
 	 */
-	public boolean verifyErrorMessage() {
+	
+	public boolean verifyErrorMessage1() {
 		return CustomUtils.checkErrorMessage(
 				MapUtils.fnGetInputDataFromMap("ErrorMessage"),
 				accountHeadMappingPage.getErrorMessageText());

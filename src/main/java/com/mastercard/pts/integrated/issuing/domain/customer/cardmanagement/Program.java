@@ -7,6 +7,7 @@ import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 public class Program implements HasCodeAndDescription {
@@ -108,6 +109,7 @@ public class Program implements HasCodeAndDescription {
 	private String resetLimitsCashLimitReset;
 	private String resetLimitsAddonLimitReset;
 	private String eventsSelectAll;
+	public String loadsWithoutKyc;
 	
 	public static Program createWithProvider(DataProvider dataProvider, KeyValueProvider provider){
 		Program programObject = dataProvider.getDataBySimpleClassName(Program.class);
@@ -167,6 +169,17 @@ public class Program implements HasCodeAndDescription {
 		programObject.setEventsSelectAll(provider.getString(PGM_EVENTS_SELECT_ALL));
 
 		return programObject;
+	}
+	
+
+	public void ProgramDataProvider() {
+		// Program program = new Program();
+		setRefundInCurrency("Program");
+		setBaseCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
+		setCurrencyConversionBy(MapUtils.fnGetInputDataFromMap("CurrencyConversionBy"));
+		setMaximumBalanceWithoutKyc(MapUtils.fnGetInputDataFromMap("MaximumBalancewithoutKYC"));
+		setLoadsWithoutKyc(MapUtils.fnGetInputDataFromMap("LoadsWithoutKYC"));
+
 	}
 
 	public String getCalenderStartMonth() {
@@ -361,6 +374,22 @@ public class Program implements HasCodeAndDescription {
 
 	public String getResetLimitsAddonLimitReset() {
 		return resetLimitsAddonLimitReset;
+	}
+	
+	public String getLoadsWithoutKyc() {
+		return loadsWithoutKyc;
+	}
+	public String DevicePlanProgram;
+
+	public String getDevicePlanProgram() {
+		return DevicePlanProgram;
+	}
+	public void setDevicePlanProgram(String devicePlanProgram) {
+		DevicePlanProgram = devicePlanProgram;
+	}
+	
+	public void setLoadsWithoutKyc(String loadsWithoutKyc) {
+		this.loadsWithoutKyc = loadsWithoutKyc;
 	}
 
 	public void setResetLimitsAddonLimitReset(String resetLimitsAddonLimitReset) {

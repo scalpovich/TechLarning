@@ -101,7 +101,7 @@ public class AccountMasterFlows extends MenuFlows {
 	 *
 	 * @return true, if successful
 	 */
-	public boolean verifyErrorMessage() {
+	public boolean verifyErrorMessage1() {
 		waitForElementVisible(accountMasterPage.getErrorMessageText());
 		return CustomUtils.checkErrorMessage(
 				MapUtils.fnGetInputDataFromMap("ErrorMessage"),

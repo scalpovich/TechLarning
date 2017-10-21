@@ -108,7 +108,7 @@ public class NetworkMembershipPage extends AbstractBasePage {
 	}
 
 	public void fillPresentTime(NetworkMembership ntk) {
-		enterValueinTextBox(PresentmentTimeLimitTxt, ntk.getPresentmentTimeLimit());
+		enterValueinTextBox(PresentmentTimeLimitTxt, ntk.getPresentmentTimeLimitDays());
 	}
 
 	public void selectCutoverHours() {
@@ -120,7 +120,7 @@ public class NetworkMembershipPage extends AbstractBasePage {
 	}
 
 	public void selectSettlementCurrency(NetworkMembership ntk) {
-		selectByVisibleText(SettlementCurrencyDDwn, ntk.getPresentmentTimeLimit());
+		selectByVisibleText(SettlementCurrencyDDwn, ntk.getPresentmentTimeLimitDays());
 	}
 
 	public void clickSaveBtn() {

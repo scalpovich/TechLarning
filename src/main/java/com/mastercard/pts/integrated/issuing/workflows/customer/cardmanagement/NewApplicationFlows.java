@@ -87,7 +87,7 @@ public class NewApplicationFlows {
 	public void getGeneratedCardDetails() {
 		newApplication.checkSuccessMsg();
 		newApplication.getApplicationnumber();
-		newApplication.getDeviceNumber();
+		newApplication.getCreatedDeviceNumber();
 	}
 
 }

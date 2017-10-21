@@ -22,6 +22,6 @@ public class OfficeSteps {
 		office = Office.OfficeDataProvider();
 		office.setOfficeType(type);
 		String controlCode = officeflows.addOffice(office, type);
-		office.setControlCode(controlCode);
+		office.setOfficeCode(controlCode);
 	}
 }

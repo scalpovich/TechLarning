@@ -99,7 +99,7 @@ public class ProcessBatches {
 		this.generatedFilename = generatedFilename;
 	}
 
-	public String getProgramDataValuefromExcel() {
+	public static String getProgramDataValuefromExcel() {
 		return MapUtils.fnGetInputDataFromMap("Program");
 	}
 

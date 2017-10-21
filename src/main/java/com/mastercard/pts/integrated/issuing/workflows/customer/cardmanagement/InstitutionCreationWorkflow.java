@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BusinessCalendar;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CutoverProfile;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CutOverProfile;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.EmbossingPinAndPriorityPassFileNameParameter;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.EmbossingPinPriorityPassFileTemplate;
@@ -57,7 +57,7 @@ public class InstitutionCreationWorkflow {
 		page.addHolidayConfiguration(hc);
 	}
 	
-	public void createCutOverProfile(CutoverProfile cp) {
+	public void createCutOverProfile(CutOverProfile cp) {
 		CutoverProfilePage page = navigator.navigateToPage(CutoverProfilePage.class);
 		page.addCutoverProfile(cp);
 	}
