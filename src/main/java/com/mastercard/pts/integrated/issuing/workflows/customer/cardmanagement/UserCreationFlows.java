@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.UserPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
 @Component
 public class UserCreationFlows {

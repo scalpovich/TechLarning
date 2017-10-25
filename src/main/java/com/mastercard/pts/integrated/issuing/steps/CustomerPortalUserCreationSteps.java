@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.CustomerPortalUserCreationPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.pts.integrated.issuing.workflows.CustomerPortalUserCreationFlows;
 

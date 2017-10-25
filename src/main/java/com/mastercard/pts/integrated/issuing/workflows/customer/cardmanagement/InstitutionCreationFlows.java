@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.InstitutionCreationPageNew;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.LoginPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 

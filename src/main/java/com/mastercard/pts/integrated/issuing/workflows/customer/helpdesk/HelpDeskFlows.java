@@ -12,7 +12,7 @@ import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.GeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.SearchPanelHelpdeskPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
 // TODO: Auto-generated Javadoc
 /**

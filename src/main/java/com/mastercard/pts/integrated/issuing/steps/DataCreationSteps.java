@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.pages.customer.navigation.Navigator;
-import com.mastercard.pts.integrated.issuing.pages.customer.navigation.PageObjectFactory;
+import com.mastercard.pts.integrated.issuing.pages.PageObjectFactory;
+import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.pts.integrated.issuing.workflows.DataCreationFlows;
 

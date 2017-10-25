@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.ApproveorRejectPage;
-import com.mastercard.pts.integrated.issuing.pages.BillingCyclePage;
-import com.mastercard.pts.integrated.issuing.pages.CloseBatchPage;
-import com.mastercard.pts.integrated.issuing.pages.InstitutionSelectionPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.BillingCyclePage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CloseBatchPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.InstitutionSelectionPage;
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
-import com.mastercard.pts.integrated.issuing.pages.PaymentBounceReasonPage;
-import com.mastercard.pts.integrated.issuing.pages.PaymentPriorityPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PaymentBounceReasonPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PaymentPriorityPage;
 import com.mastercard.pts.integrated.issuing.pages.agent.channelmanagement.AgentPortalAdminUserCreationPage;
 import com.mastercard.pts.integrated.issuing.pages.agent.channelmanagement.AgentPortalAgencyUserCreationPage;
 import com.mastercard.pts.integrated.issuing.pages.agent.channelmanagement.AgentPortalAgentUserCreationPage;

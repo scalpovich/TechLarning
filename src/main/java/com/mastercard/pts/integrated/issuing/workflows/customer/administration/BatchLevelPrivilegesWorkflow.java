@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.configuration.Portal;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.BatchLevelPreviledgePage;
-import com.mastercard.pts.integrated.issuing.pages.customer.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 
 @Component

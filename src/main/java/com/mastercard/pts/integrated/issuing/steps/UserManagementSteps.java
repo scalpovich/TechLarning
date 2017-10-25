@@ -15,7 +15,7 @@ import com.mastercard.pts.integrated.issuing.configuration.Portal;
 import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
-import com.mastercard.pts.integrated.issuing.pages.LoginPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.administration.LoginPage;
 import com.mastercard.pts.integrated.issuing.pages.PageObjectFactory;
 import com.mastercard.pts.integrated.issuing.pages.agent.AgentHomePage;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.CardholderHomePage;
@@ -195,9 +195,9 @@ public class UserManagementSteps {
 	@Then("user sees message that user name or password is incorrect on agent portal")
 	public void thenUserSeesMessageThatUserNameOrPasswordIsIncorrectOnAgentPortal() {
 		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
-		Optional<String> loginErrorMessage = loginPage.getErrorMessage();
-		Assert.assertTrue("Incorrect login error message or Login is Successful", loginErrorMessage.isPresent());
-		Assert.assertEquals("Incorrect login error message",LoginPage.AUTHENTIFICATION_FAILED, loginErrorMessage.get()); //NOSONAR: isPresent() is checked in assertTrue statement
+		String loginErrorMessage = loginPage.getErrorMessage();
+		Assert.assertTrue("Incorrect login error message or Login is Successful", loginErrorMessage.isEmpty());
+		Assert.assertEquals("Incorrect login error message",LoginPage.AUTHENTIFICATION_FAILED, loginErrorMessage); //NOSONAR: isPresent() is checked in assertTrue statement
 	}
 
 	@When("user is logged into collect portal successfully")
@@ -209,17 +209,17 @@ public class UserManagementSteps {
 	@Then("user sees message that user name or password is incorrect")
 	public void thenUserSeesMessageThatUserNameOrPasswordIsIncorrect() {
 		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
-		Optional<String> loginErrorMessage = loginPage.getErrorMessage();
-		Assert.assertTrue("Incorrect login error message or Login is Successful", loginErrorMessage.isPresent());
-		Assert.assertEquals("Incorrect login error message", LoginPage.AUTHENTIFICATION_FAILED, loginErrorMessage.get()); //NOSONAR: isPresent() is checked in assertTrue statement
+		String loginErrorMessage = loginPage.getErrorMessage();
+		Assert.assertTrue("Incorrect login error message or Login is Successful", loginErrorMessage.isEmpty());
+		Assert.assertEquals("Incorrect login error message", LoginPage.AUTHENTIFICATION_FAILED, loginErrorMessage); //NOSONAR: isPresent() is checked in assertTrue statement
 	}
 
 	@Then("user sees message that user name or password is incorrect for collect portal")
 	public void thenUserSeesMessageThatUserNameOrPasswordIsIncorrectForCollectPortal() {
 		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
-		Optional<String> loginErrorMessage = loginPage.getErrorMessage();
-		Assert.assertTrue("Incorrect login error message or Login is Successful", loginErrorMessage.isPresent());
-		Assert.assertEquals("Incorrect login error message", LoginPage.AUTHENTIFICATION_FAILED_COLLECT, loginErrorMessage.get()); //NOSONAR: isPresent() is checked in assertTrue statement 
+		String loginErrorMessage = loginPage.getErrorMessage();
+		Assert.assertTrue("Incorrect login error message or Login is Successful", loginErrorMessage.isEmpty());
+		Assert.assertEquals("Incorrect login error message", LoginPage.AUTHENTIFICATION_FAILED_COLLECT, loginErrorMessage); //NOSONAR: isPresent() is checked in assertTrue statement 
 	}
 
 	@Then("list of available institutions is displayed")

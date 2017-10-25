@@ -1,7 +1,9 @@
 package com.mastercard.pts.integrated.issuing.pages.navigation;
 
+import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Preconditions;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.PageObjectFactory;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -18,12 +21,15 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.AbstractPage;
 
 @Component
-public final class Navigator {
+public final class Navigator extends AbstractBasePage {
 	
 	private final Logger logger = LoggerFactory.getLogger(Navigator.class);
 	
 	@Autowired
 	private PageObjectFactory pageObjFactory;
+
+@Autowired
+	private WebDriverProvider driverProvider;
 
 	@Autowired
 	private ElementFinderProvider finderProvider;
@@ -44,18 +50,19 @@ public final class Navigator {
 	public <T extends AbstractPage> T navigateToPage(Class<T> pageObjectClass) {
 		
 		Navigation nav = pageObjectClass.getAnnotation(Navigation.class);
-		Preconditions.checkArgument(nav != null, "Please specify @Navigation for class: %s",
+		Preconditions.checkArgument(nav != null,
+				"Please specify @Navigation for class: %s",
 				pageObjectClass.getName());
-		
+
 		if (nav.treeMenuItems().length == 0) {
-			navigateToTab(nav.tabTitle());	
+			navigateToTab(nav.tabTitle());
 		} else {
-			navigateToPath(nav.tabTitle(), nav.treeMenuItems());	
+			navigateToPath(nav.tabTitle(), nav.treeMenuItems());
 		}
-		
+
 		T page = pageObjFactory.getPage(pageObjectClass);
 		page.waitUntilIsLoaded();
-		
+
 		return page;
 	}
 
@@ -131,7 +138,14 @@ public final class Navigator {
 	 */
 	public void navigateToTab(String tabTitle) {
 		logger.info("Navigate to {} tab", tabTitle);
-		clickElement(By.xpath(String.format("//a[contains(.,'%s')]", tabTitle)));
+		By tabLocator = By.xpath(String.format("//a[contains(.,'%s')]/..",
+				tabTitle));
+		WebElement tab = AbstractBasePage.fluentWait(() -> driverProvider.get()
+				.findElement(tabLocator));
+		if (!hasClass(tab, "active")) {
+			clickElement(By.xpath(String.format("//a[contains(.,'%s')]",
+					tabTitle)));
+		}
 	}
 
 	/**
@@ -164,6 +178,7 @@ public final class Navigator {
 
 	private void clickLeaf(String treeMenuItem) {
 		By locator = By.cssSelector(String.format("#%s a", treeMenuItem));
+		fluentWait(() -> driverProvider.get().findElement(locator));
 		clickElement(locator);
 	}
 

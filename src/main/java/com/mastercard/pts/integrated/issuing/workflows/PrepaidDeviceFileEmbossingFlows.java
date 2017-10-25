@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
-import com.mastercard.pts.integrated.issuing.pages.customer.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.FileUtils;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;

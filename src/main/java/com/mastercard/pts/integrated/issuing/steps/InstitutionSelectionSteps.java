@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
-import com.mastercard.pts.integrated.issuing.pages.InstitutionSelectionPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.InstitutionSelectionPage;
 
 @Component
 public class InstitutionSelectionSteps extends AbstractBasePage {

@@ -1,8 +1,10 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
+import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
-
+@Component
 public class NewDevice extends AbstractBasePage {
 
 	public String DeviceNumber;

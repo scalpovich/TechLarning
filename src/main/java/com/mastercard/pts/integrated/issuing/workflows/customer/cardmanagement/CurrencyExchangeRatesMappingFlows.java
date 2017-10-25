@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CurrencyExchangeRateMapping;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CurrencyExchangeRatesMappingPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
 @Component
 public class CurrencyExchangeRatesMappingFlows {

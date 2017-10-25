@@ -18,7 +18,7 @@ import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CurrencyExchangeRatesPage;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
-
+@Component
 public class FileCreation {
 	private static final Logger logger = LoggerFactory
 			.getLogger(FileCreation.class);

@@ -9,7 +9,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Busi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.BusinessMandatoryFieldsPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.workflows.MenuFlows;
 
 @Component

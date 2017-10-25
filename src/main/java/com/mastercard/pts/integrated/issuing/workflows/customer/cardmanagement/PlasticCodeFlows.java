@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PlasticCode;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PlasticCodePage;
-import com.mastercard.pts.integrated.issuing.pages.customer.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.workflows.MenuFlows;
 
 @Component

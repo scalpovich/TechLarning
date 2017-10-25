@@ -1,22 +1,53 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.administration;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.configuration.Portal;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.pages.Validatable;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
+import com.mastercard.testing.mtaf.bindings.page.AbstractPage;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-public class LoginPage extends AbstractBasePage {
-	final Logger logger = LoggerFactory.getLogger(LoginPage.class);
+public class LoginPage extends AbstractBasePage  {
+	final Logger llogger = LoggerFactory.getLogger(LoginPage.class);
+	public static final String AUTHENTIFICATION_FAILED_COLLECT = "Authentication failed. "
+			+ "You have used an invalid user name, password or client certificate."; 
+	
+	public static final String AUTHENTIFICATION_FAILED = "Authentication failed. "
+			+ "Please enter valid User ID or Password.";
+	
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[type='text']")
+	private MCWebElement userIdInput;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[type='password']")
+	private MCWebElement passwordInput;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[type='submit']")
+	private MCWebElement loginButton;
+	
+	private By messageBoxLocator = By.cssSelector(".feedbackPanelERROR");
+	
 	@PageElement(findBy = FindBy.ID, valueToFind = "userid")
 	private MCWebElement username;
 
@@ -34,6 +65,8 @@ public class LoginPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@type='submit']")
 	private MCWebElement signin;
+	@Value("${default.wait.timeout_in_sec}")
+	private long timeoutInSec;
 
 	public void loadPage() {
 		CustomUtils.ThreadDotSleep(4000);
@@ -146,7 +179,7 @@ public class LoginPage extends AbstractBasePage {
 				CutomerPortalUsername.sendKeys(uName);
 			}
 		} else {
-			logger.info("Logout Button not found  we are not setting userID");
+			llogger.info("Logout Button not found  we are not setting userID");
 		}
 		return this;
 	}
@@ -161,7 +194,7 @@ public class LoginPage extends AbstractBasePage {
 			}
 
 		} else {
-			logger.info("Logout Button not found  we are not loading page and miximizing it");
+			llogger.info("Logout Button not found  we are not loading page and miximizing it");
 		}
 	}
 
@@ -170,6 +203,41 @@ public class LoginPage extends AbstractBasePage {
 		for (String handle : handles) {
 			if (!handle.equals(getFinder().getWebDriver().getWindowHandle()))
 				getFinder().getWebDriver().switchTo().window(handle);
+		}
+	}
+
+
+	@Override
+	protected List<ExpectedCondition<WebElement>> isLoadedConditions() {
+		return Arrays.asList(
+				WebElementUtils.visibilityOf(userIdInput),
+				WebElementUtils.visibilityOf(passwordInput),
+				WebElementUtils.elementToBeClickable(loginButton));
+	}
+
+	public void inputUserName(String userName) {
+		WebElementUtils.enterText(userIdInput, userName);
+	}
+
+	public void inputPassword(String password) {
+		WebElementUtils.enterText(passwordInput, password);
+	}
+	
+	public void clickLoginButton() {
+		loginButton.click();
+	}
+	
+	
+	public String getErrorMessage() {
+		try {
+			WebElement errorMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By
+					.cssSelector("span.feedbackPanelERROR")));
+			llogger.info("Error message : {}", errorMessageLbl.getText());
+			return errorMessageLbl.toString();
+		} catch (TimeoutException e) {
+			llogger.info("Operation Status message {}: " + "No Status is updated");
+			llogger.debug("Error message {}: ", e);
+			return null;
 		}
 	}
 }

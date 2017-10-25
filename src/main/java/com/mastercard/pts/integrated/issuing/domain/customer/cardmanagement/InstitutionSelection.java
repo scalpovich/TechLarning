@@ -4,16 +4,16 @@ import org.springframework.beans.factory.annotation.Value;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 
 
-public class InstitutionSelection extends AbstractBasePage{
+public class InstitutionSelection {
 	
 	@Value("${Customer.portal.admin.institutionName}")	
-	private String customerAdminInstitution;
+	private static String customerAdminInstitution;
 	
 	@Value("${app.user.institutionselection}")
-	private String institutionName;
+	private static String institutionName;
 	
 	@Value("${app.user.Bankinstitutionselection}")
-	private String bankInstitutionName;
+	private static String bankInstitutionName;
 	
 	private String instiution;	
 	private String adminInstiutionName;
@@ -39,7 +39,7 @@ public class InstitutionSelection extends AbstractBasePage{
 		this.adminInstiutionName = adminInstiutionName;
 	}
 	
-	public InstitutionSelection IntitutionDataProvider(){
+	public static InstitutionSelection IntitutionDataProvider(){
 		InstitutionSelection institute = new InstitutionSelection();		
 		institute.setInstiution(institutionName);
 		institute.setAdminInstiutionName(customerAdminInstitution);

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.pages.AdminstrationPage;
-import com.mastercard.pts.integrated.issuing.pages.InstitutionSelectionPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.InstitutionSelectionPage;
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.LoginPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.RupaySettlementPage;

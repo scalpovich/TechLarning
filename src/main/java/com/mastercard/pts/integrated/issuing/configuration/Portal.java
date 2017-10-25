@@ -257,7 +257,7 @@ public class Portal {
 	public String getAdminPassword() {
 		return adminPassword;
 	}
-public static String getTypeCustomer() {
+	public static String getTypeCustomer() {
 		return TYPE_CUSTOMER;
 	}
 	public void setAdminPassword(String adminPassword) {

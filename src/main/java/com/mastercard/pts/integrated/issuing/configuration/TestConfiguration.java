@@ -24,10 +24,10 @@ import com.mastercard.testing.utils.encryption.EncryptUtils;
 @Configuration
 @ComponentScan(basePackages = { "com.mastercard.pts.integrated.issuing" })
 @PropertySources({
-		@PropertySource(value = "/config/${environment}/environment.properties", ignoreResourceNotFound = false),
-		@PropertySource(value = "/config/${environment}/user.properties", ignoreResourceNotFound = false),
-		@PropertySource(value = "/config/${environment}/test.properties", ignoreResourceNotFound = false),
-		@PropertySource(value = "/config/${environment}/apitest.properties", ignoreResourceNotFound = false),
+		@PropertySource(value = "/config/${env}/environment.properties", ignoreResourceNotFound = false),
+		@PropertySource(value = "/config/${env}/user.properties", ignoreResourceNotFound = false),
+		@PropertySource(value = "/config/${env}/test.properties", ignoreResourceNotFound = false),
+		@PropertySource(value = "/config/${env}/apitest.properties", ignoreResourceNotFound = false),
 		@PropertySource(value = "/log4j.properties", ignoreResourceNotFound = false) })
 @Import({MTAFWebToolsConfiguration.class,Portal.class})
 @EnableAspectJAutoProxy

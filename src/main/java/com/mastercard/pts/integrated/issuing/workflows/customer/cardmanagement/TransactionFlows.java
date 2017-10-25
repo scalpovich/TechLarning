@@ -10,9 +10,9 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Tran
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionPlanPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionRegistrationPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.pages.customer.processingcenter.ProcessingCenterPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.processingcenter.TransactionTypePage;
+import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 

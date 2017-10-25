@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MasterDerivationKeys;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.MasterDerivationKeysPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
 @Component
 public class EMVMDKKeyFlows extends MenuFlows {

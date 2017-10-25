@@ -39,7 +39,7 @@
 		<jackson-databind.version>2.8.9</jackson-databind.version>
 		<json-patch.version>1.9</json-patch.version>
 		
-		<embeddables>**/TestJUnitStories.java</embeddables>
+		<embeddables>**/TestStories.java</embeddables>
 		<ignore.failure.in.stories>true</ignore.failure.in.stories>
 		<ignore.failure.in.view>true</ignore.failure.in.view>
 		<generate.view.after.story>true</generate.view.after.story>
