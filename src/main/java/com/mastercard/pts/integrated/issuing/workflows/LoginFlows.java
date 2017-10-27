@@ -25,7 +25,7 @@ public class LoginFlows extends AbstractBaseFlows {
 
 	public void Login(Portal portal, String userType) {
 		getFinder().getWebDriver().get(portal.getUrl());
-		if (userType.equalsIgnoreCase("CustomerUser")) {
+/*		if (userType.equalsIgnoreCase("CustomerUser")) {
 			loginPage.login(Portal.getTypeCustomer(),
 					portal.getCustomerUserName(),
 					portal.getCustomerUserPassword());
@@ -46,13 +46,13 @@ public class LoginFlows extends AbstractBaseFlows {
 					portal.getAgencyUserPassword());
 		else if (userType.equalsIgnoreCase("AgentUser"))
 			loginPage.login(Portal.getTypeAgent(), portal.getAgentUserName(),
-					portal.getAgentUserPassword());
+					portal.getAgentUserPassword());*/
 	}
 	public void LoginWithNewUser(Portal portal){
 		getFinder().getWebDriver().navigate().to(portal.getUrl());				
-			loginPage.login(Portal.getTypeCustomer(),
+			/*loginPage.login(Portal.getTypeCustomer(),
 					portal.userDataProvider().getUser(),
-					portal.getCustomerUserPassword());
+					portal.getCustomerUserPassword());*/
 			institutionSelectionPage.selectInstitution();
 		
 	}

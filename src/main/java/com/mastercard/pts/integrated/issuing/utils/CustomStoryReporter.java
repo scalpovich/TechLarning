@@ -34,15 +34,12 @@ public class CustomStoryReporter implements StoryReporter {
     protected ThreadLocal<AlmReportScenario> almScenarioContext = new ThreadLocal<>();
     protected ThreadLocal<Scenario> jBehaveScenarioContext = new ThreadLocal<>();
 
-	private StoryReporter delegate;
-    public CustomStoryReporter() {
+	public CustomStoryReporter() {
     	if (isRallyReportingEnabled()) {
     		rallyALM = new CustomRallyReport();
     	}
     }
-    public CustomStoryReporter(StoryReporter delegate) {
-		this.delegate = delegate;
-	}
+ 
     
     protected boolean isRallyReportingEnabled() {
     	return System.getProperty("testsetid") != null;
@@ -77,10 +74,7 @@ public class CustomStoryReporter implements StoryReporter {
             reportBeforeStory(story);
         }
     }
-	public void beforeStory(Story story) {
-		System.out.println("In before story method");
-		System.out.println("Story name " + story.getName());
-	}
+
     protected void reportBeforeStory(Story story) {
         log.info("=====================================================");
         log.info("Begin Story: " + story.getName() + "============ ");

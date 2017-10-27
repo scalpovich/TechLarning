@@ -19,7 +19,7 @@ public class BatchLevelPrivilegesWorkflow extends AbstractBaseFlows {
 	public void selectEntityTypeAsUser(String userName) {
 		batch.selectEntityType();
 		batch.selectEntityID(userName);
-		portal.setUser(userName);
+		portal.setUserName(userName);
 		batch.clickSearchBtn();
 	}
 

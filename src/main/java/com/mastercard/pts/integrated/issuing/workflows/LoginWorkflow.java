@@ -3,6 +3,8 @@ package com.mastercard.pts.integrated.issuing.workflows;
 import net.thucydides.core.annotations.Step;
 
 import org.jbehave.web.selenium.WebDriverProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
@@ -14,6 +16,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.InstitutionSelection
 
 @Workflow
 public class LoginWorkflow {
+	final Logger logger = LoggerFactory.getLogger(LoginWorkflow.class);
 	
 	@Autowired
 	private PageObjectFactory pageFactory;

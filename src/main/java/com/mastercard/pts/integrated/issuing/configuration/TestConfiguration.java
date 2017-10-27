@@ -28,7 +28,7 @@ import com.mastercard.testing.utils.encryption.EncryptUtils;
 		@PropertySource(value = "/config/${env}/user.properties", ignoreResourceNotFound = false),
 		@PropertySource(value = "/config/${env}/test.properties", ignoreResourceNotFound = false),
 		@PropertySource(value = "/config/${env}/apitest.properties", ignoreResourceNotFound = false),
-		@PropertySource(value = "/log4j.properties", ignoreResourceNotFound = false) })
+})
 @Import({MTAFWebToolsConfiguration.class,Portal.class})
 @EnableAspectJAutoProxy
 public class TestConfiguration {
