@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProgramPage;
-import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.pages.customer.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.workflows.MenuFlows;
 
 @Component
@@ -18,6 +18,8 @@ public class ProgramFlows extends MenuFlows {
 
 	@Autowired
 	Navigator navigator;
+
+	ProgramPage programpage;
 
 	public void navigateProgramPage() {
 
@@ -37,13 +39,13 @@ public class ProgramFlows extends MenuFlows {
 
 	public String createprogramPrepaid(DeviceCreation deviceCreation, Program program) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
-		ProgramPage programpage = navigator.navigateToPage(ProgramPage.class);
+		programpage = navigator.navigateToPage(ProgramPage.class);
 		programpage.clickAddProgram();
 		String PROGRAM = programpage.addProgramGeneral(deviceCreation, program);
 		programpage.addKYCLimits(program);
 		programpage.selectLoadAndRefundParameters(program);
 		programpage.clickNextButton();
-		programpage.selectWalletPLan();
+		programpage.selectWalletPLan(program);
 		programpage.selectDevicePlan(program);
 		programpage.selectOtherPlans();
 		programpage.clickNextButton();
@@ -54,13 +56,13 @@ public class ProgramFlows extends MenuFlows {
 
 	public String createProgramPrepaidMultiCurrency(DeviceCreation deviceCreation, Program program) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
-		ProgramPage programpage = navigator.navigateToPage(ProgramPage.class);
+		programpage = navigator.navigateToPage(ProgramPage.class);
 		programpage.clickAddProgram();
 		String PROGRAM = programpage.addProgramGeneralMultiCurrency(deviceCreation, program);
 		programpage.addKYCLimits(program);
 		programpage.selectLoadAndRefundParameters(program);
 		programpage.clickNextButton();
-		programpage.selectWalletPLan();
+		programpage.selectWalletPLan(program);
 		programpage.selectDevicePlan(program);
 		programpage.selectOtherPlans();
 		programpage.clickNextButton();
@@ -71,17 +73,21 @@ public class ProgramFlows extends MenuFlows {
 
 	public String createProgramDebit(DeviceCreation deviceCreation, Program program) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
-		ProgramPage programpage = navigator.navigateToPage(ProgramPage.class);
+		programpage = navigator.navigateToPage(ProgramPage.class);
 		programpage.clickAddProgram();
 		String PROGRAM = programpage.addProgramGeneral(deviceCreation, program);
 		programpage.addKYCLimits(program);
 		programpage.selectLoadAndRefundParameters(program);
 		programpage.clickNextButton();
-		programpage.selectWalletPLan();
+		programpage.selectWalletPLan(program);
 		programpage.selectDevicePlan(program);
 		programpage.clickNextButton();
 		programpage.clickNextButton();
 		programpage.clickFinishButton();
 		return PROGRAM;
+	}
+
+	public void VerifyProgramSuccess() {
+		programpage.verifyNewProgramSuccess();
 	}
 }

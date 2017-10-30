@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Walletplan;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.WalletPlanPage;
-import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.pages.customer.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.workflows.MenuFlows;
 
 @Component
@@ -15,29 +15,43 @@ public class WalletPlanFlows extends MenuFlows {
 	@Autowired
 	Navigator navigator;
 
-	public String createWalletPlan(DeviceCreation deviceCreation, WalletPlan walletplan) {
+	public String createOpenWalletPlan(DeviceCreation deviceCreation, Walletplan walletplan) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
 		WalletPlanPage walletplanpage = navigator.navigateToPage(WalletPlanPage.class);
 		walletplanpage.clickaddWalletPLan();
 		String walletPlan = walletplanpage.addWalletPlanGeneral(deviceCreation, walletplan);
+		walletplanpage.selectOpenWalletUsage();
 		walletplanpage.clickNextButton();
 		walletplanpage.clickFinishButton();
 		return walletPlan;
 
 	}
 
-	public String createWhitelistedMCGWalletPlan(DeviceCreation deviceCreation, WalletPlan walletplan) {
+	public String createClosedWalletPlan(DeviceCreation deviceCreation, Walletplan walletplan) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
 		WalletPlanPage walletplanpage = navigator.navigateToPage(WalletPlanPage.class);
 		walletplanpage.clickaddWalletPLan();
 		String walletPlan = walletplanpage.addWalletPlanGeneral(deviceCreation, walletplan);
+		walletplanpage.selectClosedWalletUsage();
+		walletplanpage.clickNextButton();
+		walletplanpage.clickFinishButton();
+		return walletPlan;
+
+	}
+
+	public String createClosedWhitelistedMCGWalletPlan(DeviceCreation deviceCreation, Walletplan walletplan) {
+		waitForElementVisible(menuSubMenuPage.getCardManagement());
+		WalletPlanPage walletplanpage = navigator.navigateToPage(WalletPlanPage.class);
+		walletplanpage.clickaddWalletPLan();
+		String walletPlan = walletplanpage.addWalletPlanGeneral(deviceCreation, walletplan);
+		walletplanpage.selectClosedWalletUsage();
 		walletplanpage.selectWhiteListedMCGPlan();
 		walletplanpage.clickNextButton();
 		walletplanpage.clickFinishButton();
 		return walletPlan;
 	}
 
-	public String createWhitelistedMerchantWalletPlan(DeviceCreation deviceCreation, WalletPlan walletplan) {
+	public String createWhitelistedMerchantWalletPlan(DeviceCreation deviceCreation, Walletplan walletplan) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
 		WalletPlanPage walletplanpage = navigator.navigateToPage(WalletPlanPage.class);
 		walletplanpage.clickaddWalletPLan();
@@ -48,7 +62,7 @@ public class WalletPlanFlows extends MenuFlows {
 		return walletPlan;
 	}
 
-	public String createMutltiWalletPLan(DeviceCreation deviceCreation, WalletPlan walletplan) {
+	public String createMutltiWalletPLan(DeviceCreation deviceCreation, Walletplan walletplan) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
 		WalletPlanPage walletplanpage = navigator.navigateToPage(WalletPlanPage.class);
 		walletplanpage.clickaddWalletPLan();

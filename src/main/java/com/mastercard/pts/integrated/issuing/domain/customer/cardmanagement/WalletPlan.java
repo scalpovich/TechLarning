@@ -47,6 +47,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String walletInactvityRulesInactivityOperation;
 	private String walletInactvityRulesInactivityAfterDays;
 	private String walletInactvityRulesClosureWalletAfterDays;
+	public String Currency;
 
 	public String WalletPlanUsage;
 	public static WalletPlan createWithProvider(DataProvider provider, KeyValueProvider keyValueProvider) {
@@ -186,7 +187,6 @@ public class WalletPlan implements HasCodeAndDescription {
 	public String WalletType;
 
 	public String ProgramType;
-
 	public String WalletPlan;
 
 	public String getWalletPlan() {
@@ -201,6 +201,59 @@ public class WalletPlan implements HasCodeAndDescription {
 		return WalletType;
 	}
 
+	public String OpenloopWalletPlan;
+
+	public String ClosedloopWalletPlan;
+
+	public String getClosedloopWalletPlan() {
+		return ClosedloopWalletPlan;
+	}
+
+	public void setClosedloopWalletPlan(String closedloopWalletPlan) {
+		ClosedloopWalletPlan = closedloopWalletPlan;
+	}
+
+	public String getUsageType() {
+		return usageType;
+	}
+
+	public void setUsageType(String usageType) {
+		this.usageType = usageType;
+	}
+
+	public String usageType;
+
+	public String getOpenloopWalletPlan() {
+		return OpenloopWalletPlan;
+	}
+
+	public void setOpenloopWalletPlan(String openloopWalletPlan) {
+		OpenloopWalletPlan = openloopWalletPlan;
+	}
+
+	public String getWalletType() {
+		return WalletType;
+	}
+
+	public void setWalletType(String walletType) {
+		WalletType = walletType;
+	}
+
+	public String getProgramType() {
+		return ProgramType;
+	}
+
+	public void setProgramType(String programType) {
+		ProgramType = programType;
+	}
+
+	public String getCurrency() {
+		return Currency;
+	}
+
+	public void setCurrency(String currency) {
+		Currency = currency;
+	}
 	public void setWalletType(String walletType) {
 		WalletType = walletType;
 	}
@@ -267,6 +320,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	public void setCreditPlan(String creditPlan) {
 		this.creditPlan = creditPlan;
 	}
+
 	public String getWalletPlanUsage() {
 		return WalletPlanUsage;
 	}

@@ -5,13 +5,17 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 public class ProductType {
 
 	public static final String PREPAID = "Prepaid [P]";
+	public static final String Prepaid = "Prepaid";
 	public static final String CREDIT = "Credit [C]";
 	public static final String DEBIT = "Debit [D]";
-	
-	private ProductType() {}
-	
+	public static final String Debit = "Debit";
+
+	private ProductType() {
+	}
+
 	/**
-	 * @param name of product, e.g. "credit" or "Prepaid"
+	 * @param name
+	 *            of product, e.g. "credit" or "Prepaid"
 	 * @return product type in application format, e.g. "Prepaid [P]"
 	 */
 	public static String fromShortName(String name) {

@@ -171,18 +171,148 @@ public class Program implements HasCodeAndDescription {
 
 		return programObject;
 	}
-	
+
+
+	public String Currency;
+
+	public String Program;
+
+	public String Interchange;
+
+	public String DevicePlanProgram;
+
+	public String WalletType;
+
+	public String WalletPlan1;
+
+	public String WalletPlan2;
+
+	public String WalletPlan3;
+
+	public String getWalletPlan2() {
+		return WalletPlan2;
+	}
+
+	public void setWalletPlan2(String walletPlan2) {
+		WalletPlan2 = walletPlan2;
+	}
+
+	public String getWalletPlan3() {
+		return WalletPlan3;
+	}
+
+	public void setWalletPlan3(String walletPlan3) {
+		WalletPlan3 = walletPlan3;
+	}
+
+	public String getWalletPlan1() {
+		return WalletPlan1;
+	}
+
+	public void setWalletPlan1(String walletPlan) {
+		WalletPlan1 = walletPlan;
+	}
+
+	public String getWalletType() {
+		return WalletType;
+	}
+
+	public void setWalletType(String walletType) {
+		WalletType = walletType;
+	}
+
+	public String getDevicePlanProgram() {
+		return DevicePlanProgram;
+	}
+
+	public void setDevicePlanProgram(String devicePlanProgram) {
+		DevicePlanProgram = devicePlanProgram;
+	}
+
+	public String getInterchange() {
+		return Interchange;
+	}
+
+	public void setInterchange(String interchange) {
+		Interchange = interchange;
+	}
+
+	public String getProgram() {
+		return Program;
+	}
+
+	public void setProgram(String program) {
+		Program = program;
+	}
+
+	public String getCurrency() {
+		return Currency;
+	}
+
+	public void setCurrency(String currency) {
+		Currency = currency;
+	}
+
+	public String CurrencyConversionBy;
+
+	public String getCurrencyConversionBy() {
+		return CurrencyConversionBy;
+	}
+
+	public void setCurrencyConversionBy(String currencyConversionBy) {
+		CurrencyConversionBy = currencyConversionBy;
+	}
+
+	public String MaxBalanceWithoutKYC;
+
+	public String getMaxBalanceWithoutKYC() {
+		return MaxBalanceWithoutKYC;
+	}
+
+	public void setMaxBalanceWithoutKYC(String maxBalanceWithoutKYC) {
+		MaxBalanceWithoutKYC = maxBalanceWithoutKYC;
+	}
+
+	public String getLoadsWithoutKYC() {
+		return LoadsWithoutKYC;
+	}
+
+	public void setLoadsWithoutKYC(String loadsWithoutKYC) {
+		LoadsWithoutKYC = loadsWithoutKYC;
+	}
+
+	public String LoadsWithoutKYC;
+
+	public String ProgramType;
+
+	public String RefundInCurrency;
+
+	public String getRefundInCurrency() {
+		return RefundInCurrency;
+	}
+
+	public void setRefundInCurrency(String refundInCurrency) {
+		RefundInCurrency = refundInCurrency;
+	}
+
+	public String getProgramType() {
+		return ProgramType;
+	}
+
+	public void setProgramType(String programType) {
+		ProgramType = programType;
+
+	}
 
 	public void ProgramDataProvider() {
 		// Program program = new Program();
 		setRefundInCurrency("Program");
-		setBaseCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
+		setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
 		setCurrencyConversionBy(MapUtils.fnGetInputDataFromMap("CurrencyConversionBy"));
-		setMaximumBalanceWithoutKyc(MapUtils.fnGetInputDataFromMap("MaximumBalancewithoutKYC"));
-		setLoadsWithoutKyc(MapUtils.fnGetInputDataFromMap("LoadsWithoutKYC"));
+		setMaxBalanceWithoutKYC(MapUtils.fnGetInputDataFromMap("MaximumBalancewithoutKYC"));
+		setLoadsWithoutKYC(MapUtils.fnGetInputDataFromMap("LoadsWithoutKYC"));
 
 	}
-
 	public String getCalenderStartMonth() {
 		return calenderStartMonth;
 	}

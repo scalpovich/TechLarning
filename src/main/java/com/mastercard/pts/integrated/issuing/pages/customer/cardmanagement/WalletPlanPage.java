@@ -129,9 +129,19 @@ public class WalletPlanPage extends AbstractBasePage {
 		selectByVisibleText(ProgrameTypeDDwn, walletplan.getProgramType());
 	}
 
+	public void selectOpenWalletUsage() {
+		if (UsageDDwn.isEnabled()) {
+			selectByVisibleText(UsageDDwn, "Open Loop");
+		}
+	}
 	public void selectWalletUsage(WalletPlan walletplan) {
 		if (UsageDDwn.isEnabled()) {
 			selectByVisibleText(UsageDDwn, walletplan.getWalletPlanUsage());
+		}
+	}
+	public void selectClosedWalletUsage() {
+		if (UsageDDwn.isEnabled()) {
+			selectByVisibleText(UsageDDwn, "Closed Loop");
 		}
 	}
 
@@ -192,6 +202,7 @@ public class WalletPlanPage extends AbstractBasePage {
 		waitForPageToLoad(getFinder().getWebDriver());
 		selectProduct(devicecreation);
 		waitForPageToLoad(getFinder().getWebDriver());
+		waitForLoaderToDisappear();
 		selectProgramType(walletplan);
 		waitForPageToLoad(getFinder().getWebDriver());
 		selectWalletUsage(walletplan);
