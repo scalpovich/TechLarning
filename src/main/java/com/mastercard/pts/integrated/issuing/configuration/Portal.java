@@ -1,27 +1,174 @@
 package com.mastercard.pts.integrated.issuing.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+
 public class Portal {
 
 	public static final String TYPE_CUSTOMER = "customer";
 	public static final String TYPE_AGENT = "agent";
 	public static final String TYPE_COLLECT = "collect";
 	public static final String TYPE_CARDHOLDER = "cardholder";
+	
+
+	private String customerUserName;
+	private String agencyUserName;
+	private String agentUserName;
+	private String agentAdminUser;
+	private String customerAdminUser;
+	private String customerUserPassword;
+	private String agencyUserPassword;
+	private String agentUserPassword;
+	private String agentAdminPassword;
+	private String customerAdminPassword;
 
 	private String url;
 
 	private String userName;
 
-	private String agencyUserName;
-
 	private String branchUserName;
-
-	private String agentUserName;
 
 	private String adminUserName;
 
 	private String password;
 
 	private String adminPassword;
+	
+	@Autowired
+	private Environment env;
+	
+	@Value("${Customer.portal.url}")
+	private String customerPortalUrl;
+
+	@Value("${Agent.portal.url}")
+	private String agentPortalUrl;
+
+	@Value("${Customer.portal.user.admin.name}")
+	private String customerPortalAdmin;
+
+	@Value("${Customer.portal.user.admin.password}")
+	private String customerPortalAdminPass;
+
+	@Value("${Customer.portal.user.name}")
+	private String customerPortalUser;
+
+	@Value("${Customer.portal.user.password}")
+	private String customerUserPass;
+
+	@Value("${Agent.portal.user.admin.name}")
+	private String agentPortalAdminUser;
+
+	@Value("${Agent.portal.user.admin.password}")
+	private String agentPortalAdminPass;
+
+	@Value("${Customer.portal.user.name2}")
+	private String customerPortalUser2;
+
+	public String getCustomerUserName() {
+		return customerUserName;
+	}
+
+	public void setCustomerUserName(String customerUserName) {
+		this.customerUserName = customerUserName;
+	}
+
+/*	public void setAgencyUserName(String agencyUserName) {
+		this.agencyUserName = agencyUserName;
+	}*/
+
+
+
+/*	public void setAgentUserName(String agentUserName) {
+		this.agentUserName = agentUserName;
+	}*/
+
+	public String getAgentAdminUser() {
+		return agentAdminUser;
+	}
+
+	public void setAgentAdminUser(String agentAdminUser) {
+		this.agentAdminUser = agentAdminUser;
+	}
+
+	public String getCustomerAdminUser() {
+		return customerAdminUser;
+	}
+
+	public void setCustomerAdminUser(String customerAdminUser) {
+		this.customerAdminUser = customerAdminUser;
+	}
+
+	public String getCustomerUserPassword() {
+		return customerUserPassword;
+	}
+
+	public void setCustomerUserPassword(String customerUserPassword) {
+		this.customerUserPassword = customerUserPassword;
+	}
+
+	public String getAgencyUserPassword() {
+		return agencyUserPassword;
+	}
+
+	public void setAgencyUserPassword(String agencyUserPassword) {
+		this.agencyUserPassword = agencyUserPassword;
+	}
+
+	public String getAgentUserPassword() {
+		return agentUserPassword;
+	}
+
+	public void setAgentUserPassword(String agentUserPassword) {
+		this.agentUserPassword = agentUserPassword;
+	}
+
+	public String getAgentAdminPassword() {
+		return agentAdminPassword;
+	}
+
+	public void setAgentAdminPassword(String agentAdminPassword) {
+		this.agentAdminPassword = agentAdminPassword;
+	}
+
+	public String getCustomerAdminPassword() {
+		return customerAdminPassword;
+	}
+
+	public void setCustomerAdminPassword(String customerAdminPassword) {
+		this.customerAdminPassword = customerAdminPassword;
+	}
+
+
+
+
+
+
+
+
+/*	public void setAdminUserName(String adminUserName) {
+		this.adminUserName = adminUserName;
+	}*/
+
+	public String getUserName() {
+		return userName;
+	}
+
+/*	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+*/
+
+
+/*	public void setUrl(String url) {
+		this.url = url;
+	}*/
+
+
+
+/*	public void setPassword(String password) {
+		this.password = password;
+	}*/
 
 	public String getBranchUserName() {
 		return branchUserName;
@@ -71,9 +218,7 @@ public class Portal {
 			this.agentUserName = agentUserName;
 	}
 
-	public String getUserName() {
-		return userName;
-	}
+
 
 	public void setUserName(String userName) {
 		String usrName = System.getProperty("userName");
