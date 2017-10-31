@@ -16,8 +16,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import com.mastercard.pts.integrated.issuing.utils.CustomRallyReport;
 import com.mastercard.pts.integrated.issuing.utils.CustomUIStories;
-import com.mastercard.testing.mtaf.ui.MastercardUIStories;
-
 import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 
 @RunWith(JUnitReportingRunner.class)
