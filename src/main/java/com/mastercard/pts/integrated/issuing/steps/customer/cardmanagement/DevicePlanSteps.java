@@ -4,6 +4,7 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,14 +34,15 @@ public class DevicePlanSteps {
 			@Named("interchange") String association, @Named("cardType") String cardType,
 			@Named("productType") String productType, @Named("activationMode") String activationMode,
 			@Named("deliveryMode") String deliveryMode) {
-		String devicePlan = "";
 		deviceplan.devicePlanDataprovider();
 		deviceplan.setAssociation(association);
 		deviceplan.setProductType(productType);
 		deviceplan.setDeviceType(cardType);
 		deviceplan.setEmbossiongVendor(vendor.getNewVendor());
 		deviceplan.setActivationMode(activationMode);
+		String devicePlan = "";
 		devicePlan = deviceplanflows.createDevicePlan(deviceplan);
+		Assert.assertNotNull(devicePlan);
 		deviceplan.setDevicePlan(devicePlan);
 
 	}
@@ -64,17 +66,16 @@ public class DevicePlanSteps {
 	public void givenUserFillsGeneralDetails(@Named("interchange") String association,
 			@Named("cardType") String cardType, @Named("productType") String productType,
 			@Named("activationMode") String activationMode, @Named("deliveryMode") String deliveryMode) {
-		String devicePlan = "";
-
 		deviceplan.devicePlanDataprovider();
 		deviceplan.setAssociation(association);
 		deviceplan.setProductType(productType);
 		deviceplan.setDeviceType(cardType);
 		deviceplan.setActivationMode(activationMode);
 		deviceplan.setDeliveryMode(deliveryMode);
-		// deviceplan.setEmbossiongVendor(vendor.getVendor());
-		deviceplan.setEmbossiongVendor("HDFCVendor7");
+		deviceplan.setEmbossiongVendor(vendor.getNewVendor());
+		String devicePlan = "";
 		devicePlan = deviceplanflows.createDevicePlan(deviceplan);
+		Assert.assertNotNull(devicePlan);
 		deviceplan.setDevicePlan(devicePlan);
 
 	}

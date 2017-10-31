@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,8 +21,9 @@ public class EmbossingFileSteps {
 	@When("user creates an $file Template")
 	public void whenUserCreatesAnEmbossingFileTemplate(@Named("file") String file) {
 		embossingfile.setTemplateType(file);
-		String EmbossingFile = "";
-		EmbossingFile = embossingtemplateflows.createEmbossingTemplate(embossingfile);
-		embossingfile.setEmbossingFileTemplateName(EmbossingFile);
+		String EmbossingTemplate = "";
+		EmbossingTemplate = embossingtemplateflows.createEmbossingTemplate(embossingfile);
+		Assert.assertNotNull(EmbossingTemplate);
+		embossingfile.setEmbossingFileTemplateName(EmbossingTemplate);
 	}
 }
