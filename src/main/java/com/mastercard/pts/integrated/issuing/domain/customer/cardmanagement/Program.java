@@ -111,6 +111,20 @@ public class Program implements HasCodeAndDescription {
 	private String resetLimitsAddonLimitReset;
 	private String eventsSelectAll;
 	public String loadsWithoutKyc;
+
+	public String Currency;
+	public String Program;
+
+	public String DevicePlanProgram;
+
+	public String WalletType;
+
+	public String WalletPlan1;
+
+	public String WalletPlan2;
+
+	public String WalletPlan3;
+
 	
 	public static Program createWithProvider(DataProvider dataProvider, KeyValueProvider provider){
 		Program programObject = dataProvider.getDataBySimpleClassName(Program.class);
@@ -173,21 +187,6 @@ public class Program implements HasCodeAndDescription {
 	}
 
 
-	public String Currency;
-
-	public String Program;
-
-	public String Interchange;
-
-	public String DevicePlanProgram;
-
-	public String WalletType;
-
-	public String WalletPlan1;
-
-	public String WalletPlan2;
-
-	public String WalletPlan3;
 
 	public String getWalletPlan2() {
 		return WalletPlan2;
@@ -221,21 +220,6 @@ public class Program implements HasCodeAndDescription {
 		WalletType = walletType;
 	}
 
-	public String getDevicePlanProgram() {
-		return DevicePlanProgram;
-	}
-
-	public void setDevicePlanProgram(String devicePlanProgram) {
-		DevicePlanProgram = devicePlanProgram;
-	}
-
-	public String getInterchange() {
-		return Interchange;
-	}
-
-	public void setInterchange(String interchange) {
-		Interchange = interchange;
-	}
 
 	public String getProgram() {
 		return Program;
@@ -253,15 +237,6 @@ public class Program implements HasCodeAndDescription {
 		Currency = currency;
 	}
 
-	public String CurrencyConversionBy;
-
-	public String getCurrencyConversionBy() {
-		return CurrencyConversionBy;
-	}
-
-	public void setCurrencyConversionBy(String currencyConversionBy) {
-		CurrencyConversionBy = currencyConversionBy;
-	}
 
 	public String MaxBalanceWithoutKYC;
 
@@ -273,36 +248,6 @@ public class Program implements HasCodeAndDescription {
 		MaxBalanceWithoutKYC = maxBalanceWithoutKYC;
 	}
 
-	public String getLoadsWithoutKYC() {
-		return LoadsWithoutKYC;
-	}
-
-	public void setLoadsWithoutKYC(String loadsWithoutKYC) {
-		LoadsWithoutKYC = loadsWithoutKYC;
-	}
-
-	public String LoadsWithoutKYC;
-
-	public String ProgramType;
-
-	public String RefundInCurrency;
-
-	public String getRefundInCurrency() {
-		return RefundInCurrency;
-	}
-
-	public void setRefundInCurrency(String refundInCurrency) {
-		RefundInCurrency = refundInCurrency;
-	}
-
-	public String getProgramType() {
-		return ProgramType;
-	}
-
-	public void setProgramType(String programType) {
-		ProgramType = programType;
-
-	}
 
 	public void ProgramDataProvider() {
 		// Program program = new Program();
@@ -310,7 +255,7 @@ public class Program implements HasCodeAndDescription {
 		setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
 		setCurrencyConversionBy(MapUtils.fnGetInputDataFromMap("CurrencyConversionBy"));
 		setMaxBalanceWithoutKYC(MapUtils.fnGetInputDataFromMap("MaximumBalancewithoutKYC"));
-		setLoadsWithoutKYC(MapUtils.fnGetInputDataFromMap("LoadsWithoutKYC"));
+		setLoadsWithoutKyc(MapUtils.fnGetInputDataFromMap("loadsWithoutKyc"));
 
 	}
 	public String getCalenderStartMonth() {
@@ -510,7 +455,6 @@ public class Program implements HasCodeAndDescription {
 	public String getLoadsWithoutKyc() {
 		return loadsWithoutKyc;
 	}
-	public String DevicePlanProgram;
 
 	public String getDevicePlanProgram() {
 		return DevicePlanProgram;

@@ -465,7 +465,7 @@ public class ProgramPage extends AbstractBasePage {
 
 	public void enterLoadsWithoutKYC(Program program) {
 		if (LoadsWithoutKYCTxt.isEnabled())
-			enterValueinTextBox(LoadsWithoutKYCTxt, program.getLoadsWithoutKYC());
+			enterValueinTextBox(LoadsWithoutKYCTxt, program.getLoadsWithoutKyc());
 	}
 
 	public void clickNextButton() {

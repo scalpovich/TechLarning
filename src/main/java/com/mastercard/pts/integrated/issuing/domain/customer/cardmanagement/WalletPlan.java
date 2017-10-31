@@ -47,7 +47,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String walletInactvityRulesInactivityOperation;
 	private String walletInactvityRulesInactivityAfterDays;
 	private String walletInactvityRulesClosureWalletAfterDays;
-	public String Currency;
+
 
 	public String WalletPlanUsage;
 	public static WalletPlan createWithProvider(DataProvider provider, KeyValueProvider keyValueProvider) {
@@ -231,29 +231,7 @@ public class WalletPlan implements HasCodeAndDescription {
 		OpenloopWalletPlan = openloopWalletPlan;
 	}
 
-	public String getWalletType() {
-		return WalletType;
-	}
 
-	public void setWalletType(String walletType) {
-		WalletType = walletType;
-	}
-
-	public String getProgramType() {
-		return ProgramType;
-	}
-
-	public void setProgramType(String programType) {
-		ProgramType = programType;
-	}
-
-	public String getCurrency() {
-		return Currency;
-	}
-
-	public void setCurrency(String currency) {
-		Currency = currency;
-	}
 	public void setWalletType(String walletType) {
 		WalletType = walletType;
 	}
