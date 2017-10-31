@@ -95,7 +95,6 @@ public class UserManagementSteps {
 	public void givenUserIsLoggedInInstitution() {
 		Portal loginPortal = environment.getPortalByType(Portal.TYPE_CUSTOMER);
 		userDefaultInstitution = Institution.createWithProvider(provider).buildAbbreviationAndCode();
-
 		loginWorkflow.logInInstitution(loginPortal, userDefaultInstitution);
 	}
 

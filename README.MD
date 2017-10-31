@@ -6,7 +6,7 @@
 
 E.g.
 
-`mvn clean verify -Denv=stage -Dplatform=chrome`
+`clean verify -Dplatform=chrome -Denv=stageSA -DstoryName=customer -DserenityReport`
 
 Optionally JBehave meta filter could be specified, e.g. `-Dmeta.filter="+SmokeTest"`
 
