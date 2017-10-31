@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.mastercard.MPTS.bdd</groupId>
-		<artifactId>mi-iss-automation</artifactId>
+	<artifactId>mi-iss-automation</artifactId>
 	<name>mi_issuing_insprint_automation</name>
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
@@ -38,13 +38,13 @@
 		<oracle-ojdbc.version>11.2.0</oracle-ojdbc.version>
 		<jackson-databind.version>2.8.9</jackson-databind.version>
 		<json-patch.version>1.9</json-patch.version>
-		
+
 		<embeddables>**/TestStories.java</embeddables>
 		<ignore.failure.in.stories>true</ignore.failure.in.stories>
 		<ignore.failure.in.view>true</ignore.failure.in.view>
 		<generate.view.after.story>true</generate.view.after.story>
 		<story.timout.secs>7200</story.timout.secs>
-		
+
 		<properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
 		<aspectj-maven-plugin.version>1.10</aspectj-maven-plugin.version>
 		<serenity-maven-plugin.version>1.1.36</serenity-maven-plugin.version>
@@ -65,7 +65,7 @@
 		</plugins>
 	</reporting>
 
-	
+
 	<repositories>
 		<repository>
 			<!-- com.sikulix.sikulixapi: jxgrabkey -->
@@ -235,7 +235,7 @@
 			<artifactId>jsch</artifactId>
 			<version>${jsch.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.github.2gis.winium</groupId>
 			<artifactId>winium-webdriver</artifactId>
@@ -246,25 +246,25 @@
 			<groupId>com.sikulix</groupId>
 			<artifactId>sikulixapi</artifactId>
 			<version>${sikulixapi.version}</version>
-		</dependency>			
-        
+		</dependency>
+
 		<dependency>
 			<groupId>com.github.2gis.winium</groupId>
 			<artifactId>winium-elements-desktop</artifactId>
 			<version>${winium-elements-desktop.version}</version>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>com.oracle</groupId>
-		    <artifactId>ojdbc6</artifactId>
-		    <version>${oracle-ojdbc.version}</version>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>${oracle-ojdbc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.lingala.zip4j</groupId>
 			<artifactId>zip4j</artifactId>
 			<version>${zip4j.version}</version>
 		</dependency>
-				<dependency>
+		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.6.9</version>
@@ -273,34 +273,43 @@
 			<groupId>com.jayway.restassured</groupId>
 			<artifactId>rest-assured</artifactId>
 			<version>2.9.0</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>${jackson-databind.version}</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson-databind.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson-databind.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jdk8</artifactId>
 			<version>${jackson-databind.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
 			<version>${jackson-databind.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.github.fge</groupId>
 			<artifactId>json-patch</artifactId>
 			<version>${json-patch.version}</version>
 		</dependency>
 		<dependency>
-			    <groupId>org.springframework</groupId>
-			    <artifactId>spring-jdbc</artifactId>
-			    <version>4.2.5.RELEASE</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>4.2.5.RELEASE</version>
 		</dependency>
 	</dependencies>
 
@@ -346,10 +355,10 @@
 					</execution>
 				</executions>
 			</plugin>
-			
-			
-			
-			
+
+
+
+
 			<plugin>
 				<groupId>org.jbehave</groupId>
 				<artifactId>jbehave-maven-plugin</artifactId>
@@ -386,19 +395,19 @@
 					</execution>
 				</executions>
 				<dependencies>
-				     <dependency>
-				         <groupId>org.codehaus.groovy</groupId>
-				         <artifactId>groovy-all</artifactId>
-				         <version>1.8.4</version>
-				     </dependency>
-				<dependency>
+					<dependency>
+						<groupId>org.codehaus.groovy</groupId>
+						<artifactId>groovy-all</artifactId>
+						<version>1.8.4</version>
+					</dependency>
+					<dependency>
 						<groupId>log4j</groupId>
 						<artifactId>log4j</artifactId>
 						<version>1.2.17</version>
 
 					</dependency>
-				 </dependencies>
-			</plugin>			
+				</dependencies>
+			</plugin>
 			<plugin>
 				<groupId>net.serenity-bdd.maven.plugins</groupId>
 				<artifactId>serenity-maven-plugin</artifactId>

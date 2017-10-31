@@ -18,10 +18,8 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = AdministrationNav.TAB_ADMINISTRATION, treeMenuItems = {
-		AdministrationNav.L1_SETUP,
-		AdministrationNav.L2_HELPDESK_PRIVILEGES,
-		AdministrationNav.L3_ASSIGN_PRODUCT
-		})
+		AdministrationNav.L1_SETUP, AdministrationNav.L2_HELPDESK_PRIVILEGES,
+		AdministrationNav.L3_ASSIGN_PRODUCT })
 public class AssignProductPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory
@@ -37,6 +35,7 @@ public class AssignProductPage extends AbstractBasePage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.elementToBeClickable(userNameOrGroupCodeDDwn));
+		return Arrays.asList(WebElementUtils
+				.elementToBeClickable(userNameOrGroupCodeDDwn));
 	}
 }

@@ -145,6 +145,8 @@ public final class Navigator extends AbstractBasePage {
 		if (!hasClass(tab, "active")) {
 			clickElement(By.xpath(String.format("//a[contains(.,'%s')]",
 					tabTitle)));
+			clickElement(By.xpath(String.format("//a[contains(.,'%s')]",
+					tabTitle)));
 		}
 	}
 
