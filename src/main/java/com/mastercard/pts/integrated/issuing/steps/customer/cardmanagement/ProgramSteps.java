@@ -1,10 +1,14 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import org.jbehave.core.annotations.Named;
+import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.ProgramType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MarketingMessagePlan;
@@ -41,6 +45,46 @@ public class ProgramSteps {
 	@Autowired
 	ProgramFlows programflows;
 
+	@When("user creates a $wallettype wallet Program for $interchange for product $product for program $programType")
+	public void whenUserCreatesAProgramForMastercardForProductPrepaidMultiWallet(@Named("wallettype") String walletType,
+			@Named("interchange") String interchange, @Named("product") String product,
+			@Named("programType") String programType) {
+		program.ProgramDataProvider();
+		program.setInterchange(interchange);
+		devicecreation.setProduct(product);
+		program.setProgramType(programType);
+		program.setWalletType(walletType);
+		program.setWalletPlan1(walletplan.getOpenloopWalletPlan());
+		program.setWalletPlan2(walletplan.getClosedloopWalletPlan());
+		program.setDevicePlanProgram(deviceplan.getDevicePlan());
+		String Program = "";
+		if (product.contains(ProductType.Prepaid) && programType.contains(ProgramType.CORPORATE_GIFT_CARD)
+				|| programType.contains(ProgramType.RETAIL_GENERAL_PURPOSE_CARD)
+				|| programType.contains(ProgramType.CORPORATE_GENERAL_PURPOSE_CARD)) {
+			Program = programflows.createprogramPrepaid(devicecreation, program);
+		}
+
+		if (product.contains(ProductType.Prepaid)
+				&& programType.contains(ProgramType.CORPORATE_TRAVEL_SINGLECURRENCY_CARD)
+				|| programType.contains(ProgramType.RETAIL_TRAVEL_SINGLECURRENCY_CARD)
+				|| programType.contains(ProgramType.RETAIL_GIFT_CARD)) {
+			Program = programflows.createprogramPrepaid(devicecreation, program);
+		}
+
+		if (product.contains(ProductType.Debit)) {
+			Program = programflows.createProgramDebit(devicecreation, program);
+		}
+
+		if (product.contains(ProductType.Prepaid)
+				&& programType.contains(ProgramType.CORPORATE_TRAVEL_MULTICURRENCY_CARD)
+				|| programType.contains(ProgramType.RETAIL_TRAVEL_MULTICURRENCY_CARD)) {
+			Program = programflows.createProgramPrepaidMultiCurrency(devicecreation, program);
+		}
+		Assert.assertNotNull(Program);
+		program.setProgram(Program);
+
+	}
+
 	@When("user creates a Program for $interchange for product $product for program $programType")
 	public void whenUserCreatesAProgramForMastercardForProductPrepaid(@Named("interchange") String interchange,
 			@Named("product") String product, @Named("programType") String programType) {
@@ -76,5 +120,10 @@ public class ProgramSteps {
 			Program = programflows.createProgramPrepaidMultiCurrency(devicecreation, program);
 		}
 		program.setProgramCode(Program);
+	}
+
+	@Then("Program should get created")
+	public void VerifyProgramSuccess() {
+		programflows.VerifyProgramSuccess();
 	}
 }

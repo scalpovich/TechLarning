@@ -31,9 +31,10 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1PROGRAM_SETUP, CardManagementNav.L2_PROGRAM })
 public class ProgramPage extends AbstractBasePage {
+	final Logger logger = LoggerFactory.getLogger(ProgramPage.class);
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(ProgramPage.class);
+	// ------------- Card Management > Institution Parameter Setup > Institution
+	// Currency [ISSS05]
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=programCode]")
 	private MCWebElement programSearchTxt;
@@ -422,6 +423,7 @@ public class ProgramPage extends AbstractBasePage {
 
 	public void selectProgramType(Program program) {
 		selectByVisibleText(ProgramTypeDDwn, program.getProgramType());
+
 	}
 
 	public void selectBaseCurrency(Program program) {
@@ -457,40 +459,46 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	public void enterMaximumBalanceWithoutKYC(Program program) {
-		enterValueinTextBox(MaxBalWithoutKYCTxt, program.getMaximumBalanceWithoutKyc());
+		if (MaxBalWithoutKYCTxt.isEnabled())
+			enterValueinTextBox(MaxBalWithoutKYCTxt, program.getMaxBalanceWithoutKYC());
 	}
 
 	public void enterLoadsWithoutKYC(Program program) {
-		enterValueinTextBox(LoadsWithoutKYCTxt, program.getLoadsWithoutKyc());
+		if (LoadsWithoutKYCTxt.isEnabled())
+			enterValueinTextBox(LoadsWithoutKYCTxt, program.getLoadsWithoutKyc());
 	}
 
 	public void clickNextButton() {
 		ClickButton(NEXTBtn);
 	}
 
-	public void selectWalletPlan1() {
+	public void selectWalletPlan1(Program program) {
 		if (MapUtils.fnGetInputDataFromMap("WalletPlan") != null) {
 			selectByVisibleText(WalletPlan1DDwn, MapUtils.fnGetInputDataFromMap("WalletPlan"));
 		} else {
-			SelectDropDownByIndex(WalletPlan1DDwn, 1);
+			selectByVisibleText(WalletPlan1DDwn, program.getWalletPlan1());
 		}
 	}
 
-	public void selectWalletPlan2() {
+	public void selectWalletPlan2(Program program) {
 		waitForElementVisible(WalletPlan2DDwn);
-		if (MapUtils.fnGetInputDataFromMap("WalletPlan2") != null) {
-			selectByVisibleText(WalletPlan2DDwn, MapUtils.fnGetInputDataFromMap("WalletPlan2"));
-		} else {
-			SelectDropDownByIndex(WalletPlan2DDwn, 2);
+		if (WalletPlan2DDwn.isEnabled()) {
+			if (MapUtils.fnGetInputDataFromMap("WalletPlan2") != null) {
+				selectByVisibleText(WalletPlan2DDwn, MapUtils.fnGetInputDataFromMap("WalletPlan2"));
+			} else {
+				selectByVisibleText(WalletPlan2DDwn, program.getWalletPlan2());
+			}
 		}
 	}
 
-	public void selectWalletPlan3() {
+	public void selectWalletPlan3(Program program) {
 		waitForElementVisible(WalletPlan3DDwn);
-		if (MapUtils.fnGetInputDataFromMap("WalletPlan3") != null) {
-			selectByVisibleText(WalletPlan3DDwn, MapUtils.fnGetInputDataFromMap("WalletPlan3"));
-		} else {
-			SelectDropDownByIndex(WalletPlan3DDwn, 3);
+		if (WalletPlan3DDwn.isEnabled()) {
+			if (MapUtils.fnGetInputDataFromMap("WalletPlan3") != null) {
+				selectByVisibleText(WalletPlan3DDwn, MapUtils.fnGetInputDataFromMap("WalletPlan3"));
+			} else {
+				SelectDropDownByIndex(WalletPlan3DDwn, 3);
+			}
 		}
 	}
 
@@ -499,7 +507,7 @@ public class ProgramPage extends AbstractBasePage {
 		if (MapUtils.fnGetInputDataFromMap("DevicePlanForProgram") != null) {
 			selectByVisibleText(DevicePlan1DDwn, MapUtils.fnGetInputDataFromMap("DevicePlanForProgram"));
 		} else {
-			selectByVisibleText(DevicePlan1DDwn, program.getDevicePlanPlan1());
+			selectByVisibleText(DevicePlan1DDwn, program.getDevicePlanProgram());
 		}
 	}
 
@@ -575,10 +583,12 @@ public class ProgramPage extends AbstractBasePage {
 		selectRefundinCurrency(program);
 	}
 
-	public void selectWalletPLan() {
-		selectWalletPlan1();
-		selectWalletPlan2();
-		selectWalletPlan3();
+	public void selectWalletPLan(Program program) {
+		selectWalletPlan1(program);
+		if ((program.getProgramType().contains("Travel card")) || (program.getWalletType().contains("Multi"))) {
+			selectWalletPlan2(program);
+			// selectWalletPlan3(program);
+		}
 	}
 
 	public void selectDevicePlan(Program program) {
@@ -594,4 +604,5 @@ public class ProgramPage extends AbstractBasePage {
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(programSearchTxt));
 	}
+
 }

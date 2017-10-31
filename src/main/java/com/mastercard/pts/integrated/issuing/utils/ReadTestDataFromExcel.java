@@ -38,7 +38,8 @@ public class ReadTestDataFromExcel {
 		File testDataFile = null;
 		try {
 			testDataFile = new File(System.getProperty("user.dir")
-					+ String.format(file, System.getProperty("environment"), testDataFileName));
+					+ String.format(file, System.getProperty("env"), testDataFileName));
+			logger.info("Test Data file:"+testDataFile);
 		} catch (Exception e) {
 			logger.error("Test Data file not find", e);
 		}
@@ -84,13 +85,15 @@ public class ReadTestDataFromExcel {
 			}
 
 		} catch (FileNotFoundException e) {
-
+			logger.error("File not found");	
 			return null;
 		} catch (IOException e) {
-
+			logger.error("IOException:"+e.getMessage());
+			e.printStackTrace();
 			return null;
 		} catch (Exception e) {
-
+			logger.error("Exception:"+e.getMessage());	
+			e.printStackTrace();
 			return null;
 		} finally {
 			try {

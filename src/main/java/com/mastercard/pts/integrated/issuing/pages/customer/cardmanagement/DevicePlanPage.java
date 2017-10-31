@@ -271,7 +271,7 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:allowFallBack:checkBoxComponent")
 	private MCWebElement allowFallBackChkBx;
-@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
+	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement AddDevicePlanBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanCode:input:inputTextField")
@@ -499,26 +499,28 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void checkCourierTracking(DevicePlan deviceplan) {
-		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
-				|| !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
-				|| !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+		if (!(CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
+				|| CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
+				|| CardType.MOBILE.contains(deviceplan.getDeviceType())
+				|| CardType.ATM_ADMIN.contains(deviceplan.getDeviceType()))) {
 			Assert.assertTrue("courier tracking checkbox is enabled", courierTrackingChkBx.isEnabled());
 			ClickCheckBox(courierTrackingChkBx, true);
 		} else {
 			Assert.assertTrue("courier tracking checkbox is disabled for " + deviceplan.getDeviceType(),
-					courierTrackingChkBx.isEnabled());
+					!(courierTrackingChkBx.isEnabled()));
 		}
 	}
 
 	public void checkManufacturingTracking(DevicePlan deviceplan) {
-		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
-				|| !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
-				|| !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+		if (!(CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
+				|| CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
+				|| CardType.MOBILE.contains(deviceplan.getDeviceType())
+				|| CardType.ATM_ADMIN.contains(deviceplan.getDeviceType()))) {
 			Assert.assertTrue("Manufactoring tracking checkbox dropdown is enabled",
 					ManuFactoringTrackingChkBx.isEnabled());
 		} else {
 			Assert.assertTrue("Manufactoring tracking checkbox disabled for " + deviceplan.getDeviceType(),
-					ManuFactoringTrackingChkBx.isEnabled());
+					!(ManuFactoringTrackingChkBx.isEnabled()));
 		}
 	}
 
@@ -672,32 +674,6 @@ public class DevicePlanPage extends AbstractBasePage {
 			clickEcomCheckBox();
 		}
 	}
-
-	/*
-	 * public void EnterAuthorizationTabDetails(String deviceType, String
-	 * perTransLimit, String totalTransLimit, String velocity, String validity)
-	 * { SelectDropDownByIndex(TransactionSetDDwn, 1); if (deviceType
-	 * .equalsIgnoreCase(Constants.LimitedValidityVirtualCard_String)) {
-	 * addWicketAjaxListeners(getFinder().getWebDriver());
-	 * ClickCheckBox(EcomChkBx, true); logger.info("before third next button");
-	 * ClickButton(Next3Btn); enterText(PerTranscLimitTxt, perTransLimit);
-	 * enterText(TotalTranscLimitTxt, totalTransLimit); enterText(VelocityTxt,
-	 * velocity); enterText(ValidityTxt, validity);
-	 * logger.info("before fourth next button"); ClickButton(Next4Btn); } if
-	 * (deviceType.equalsIgnoreCase(Constants.StaticVirtualCard_String)) {
-	 * addWicketAjaxListeners(getFinder().getWebDriver());
-	 * ClickCheckBox(EcomChkBx, true); logger.info("before third next button");
-	 * ClickButton(Next3Btn);
-	 * 
-	 * } if (deviceType.equals(Constants.EmvCard_String)) {
-	 * logger.info("before third next button"); ClickButton(Next3Btn);
-	 * logger.info("before fourth next button"); ClickButton(Next4Btn);
-	 * SelectDropDownByIndex(ChipTypeDDwn, 1); } // if
-	 * (deviceType.equals("Magnetic Stripe Card [1]")) {
-	 * logger.info("before third next button"); ClickButton(Next3Btn);
-	 * logger.info("before fourth next button"); ClickButton(Next4Btn); // }
-	 * logger.info("after fourth next button"); ClickButton(FinishBtn); }
-	 */
 
 	public boolean verifyErrorsOnDevicePlanPage() {
 		return publishErrorOnPage();

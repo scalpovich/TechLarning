@@ -2,9 +2,11 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.FileType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.EmbossingFile;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Vendor;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.VendorFlows;
@@ -24,17 +26,19 @@ public class VendorSteps {
 	@When("user creates a Vendor of Category $category with $template template attached")
 	public void whenUserCreatesAVendorOfCategoryEmbossingTemplate(@Named("category") String category,
 			@Named("template") String template) {
-		String VendorName = "";
 		vendor.vendorDataProvider();
 		vendor.setEmbossingFileTemp(embossingFile.getEmbossingFileTemplateName());
 		vendor.setVendorCategory(category);
-		if (template.contains("Embossing")) {
-			VendorName = vendorflows.createVendorWithEmbossingTemplate(vendor);
+		String EmbossingVendor = "";
+		if (template.contains(FileType.EMBOSSING_FILE)) {
+			EmbossingVendor = vendorflows.createVendorWithEmbossingTemplate(vendor);
 		}
-		if (template.contains("PINOffset")) {
-			VendorName = vendorflows.createVendorWithPINOffsetTemplate(vendor);
+		if (template.contains(FileType.PINOFFSET_FILE)) {
+			EmbossingVendor = vendorflows.createVendorWithPINOffsetTemplate(vendor);
 		}
-		vendor.setNewVendor(VendorName);
+		Assert.assertNotNull(EmbossingVendor);
+		vendor.setNewVendor(EmbossingVendor);
+
 	}
 
 }

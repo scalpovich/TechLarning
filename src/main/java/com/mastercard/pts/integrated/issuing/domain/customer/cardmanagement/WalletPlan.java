@@ -48,6 +48,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String walletInactvityRulesInactivityAfterDays;
 	private String walletInactvityRulesClosureWalletAfterDays;
 
+
 	public String WalletPlanUsage;
 	public static WalletPlan createWithProvider(DataProvider provider, KeyValueProvider keyValueProvider) {
 		WalletPlan plan = provider.getDataBySimpleClassName(WalletPlan.class);
@@ -186,7 +187,6 @@ public class WalletPlan implements HasCodeAndDescription {
 	public String WalletType;
 
 	public String ProgramType;
-
 	public String WalletPlan;
 
 	public String getWalletPlan() {
@@ -200,6 +200,37 @@ public class WalletPlan implements HasCodeAndDescription {
 	public String getWalletType() {
 		return WalletType;
 	}
+
+	public String OpenloopWalletPlan;
+
+	public String ClosedloopWalletPlan;
+
+	public String getClosedloopWalletPlan() {
+		return ClosedloopWalletPlan;
+	}
+
+	public void setClosedloopWalletPlan(String closedloopWalletPlan) {
+		ClosedloopWalletPlan = closedloopWalletPlan;
+	}
+
+	public String getUsageType() {
+		return usageType;
+	}
+
+	public void setUsageType(String usageType) {
+		this.usageType = usageType;
+	}
+
+	public String usageType;
+
+	public String getOpenloopWalletPlan() {
+		return OpenloopWalletPlan;
+	}
+
+	public void setOpenloopWalletPlan(String openloopWalletPlan) {
+		OpenloopWalletPlan = openloopWalletPlan;
+	}
+
 
 	public void setWalletType(String walletType) {
 		WalletType = walletType;
@@ -267,6 +298,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	public void setCreditPlan(String creditPlan) {
 		this.creditPlan = creditPlan;
 	}
+
 	public String getWalletPlanUsage() {
 		return WalletPlanUsage;
 	}
