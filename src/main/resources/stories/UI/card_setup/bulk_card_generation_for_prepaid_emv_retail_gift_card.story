@@ -7,10 +7,7 @@ I want to create a bulk card request and generate cards for prepaid emv retail g
 
 Meta:
 @StoryName S193810
-@SanityTest
-@author NidhiVyas
-@CardCreation
-
+@SanityCards
 
 Scenario: bulk card generation for prepaid emv retail gift card
 Meta:

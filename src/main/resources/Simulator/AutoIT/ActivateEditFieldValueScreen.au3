@@ -9,9 +9,4 @@
 #ce ----------------------------------------------------------------------------
 
 ; Script Start - Add your code below here
-#RequireAdmin
-
-
-	WinActivate("Edit Field Value", "DE Name")
-
-
+	WinActivate("Edit Field Value", "Close")

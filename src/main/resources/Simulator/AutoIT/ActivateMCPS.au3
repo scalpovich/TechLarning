@@ -9,8 +9,4 @@
 #ce ----------------------------------------------------------------------------
 
 ; Script Start - Add your code below here
-#RequireAdmin
-
 WinActivate("MCPS - MasterCard Clearing Presentment Simulator - 16.Q4", "Test Data Generator")
-
-

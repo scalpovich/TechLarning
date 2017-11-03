@@ -9,9 +9,4 @@
 #ce ----------------------------------------------------------------------------
 
 ; Script Start - Add your code below here
-#RequireAdmin
-
-
-	WinActivate("Edit Subfield Value", "DE Name")
-
-
+	WinActivate("Edit Subfield Value", "Cancel")

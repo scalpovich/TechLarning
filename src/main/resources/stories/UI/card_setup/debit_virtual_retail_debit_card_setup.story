@@ -1,4 +1,4 @@
-debit virtual retail card setup
+debit virtual retail debit card setup
 
 Narrative:
 In order to provide to client easy-to-use payment method for e-commerce retail
@@ -7,11 +7,9 @@ I want to create virtual retail debit card for client
 
 Meta:
 @StoryName S198219
-@SanityTest
-@CardCreation
+@SanityCards
 
-
-Scenario: Set up debit virtual retail card
+Scenario: Set up debit virtual retail debit card
 Meta:
 @TestId TC398504
 Given user is logged in institution

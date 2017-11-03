@@ -1,5 +1,5 @@
 {  
-  "chargeBackAmount":"200",
+  "chargeBackAmount":"10",
   "reasonCode":"4812-Account Number Not on File [4812]",
   "documentation":"Supporting documentation is not required",
   "text":"Verified",

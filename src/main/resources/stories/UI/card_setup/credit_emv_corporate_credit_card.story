@@ -7,8 +7,7 @@ I want to set up a emv corporate credit card program
 
 Meta:
 @StoryName S190639
-@SanityTest
-@CardCreation
+@SanityCards
 
 Scenario: Set up program emv corporate credit card
 Meta:

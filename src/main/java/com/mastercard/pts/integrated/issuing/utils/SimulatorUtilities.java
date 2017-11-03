@@ -6,10 +6,12 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils;
 import org.sikuli.script.FindFailed;
+import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
 import org.slf4j.Logger;
@@ -86,6 +88,11 @@ public class SimulatorUtilities{
 
 	public void pressSpaceBar()
 	{
+		pressSpaceBar(numberOfTabs);
+	}
+	
+	public void pressSpaceBar(int numberOfTabs)
+	{
 		robotOperation("pressSpace", numberOfTabs);
 	}
 
@@ -100,6 +107,11 @@ public class SimulatorUtilities{
 	}
 
 	public void pressPageDown()
+	{
+		pressPageDown(numberOfTabs);
+	}
+	
+	public void pressPageDown(int numberOfTabs)
 	{
 		robotOperation("pageDown", numberOfTabs);
 	}
@@ -217,6 +229,7 @@ public class SimulatorUtilities{
 			}
 			else {
 				Runtime.getRuntime().exec(commandToExecute).waitFor(15, TimeUnit.SECONDS);
+				wait(2000);
 			}
 			wait(2000);
 		}
@@ -260,6 +273,13 @@ public class SimulatorUtilities{
 		performActionClick(getImageOfItem(nameOfSnapshot));
 		wait(1000);
 	}
+	
+	public void clickOnLastMatchingImage(String nameOfSnapshot)
+	{	
+		logger.info(SIKULI_MESSAGE +  nameOfSnapshot);
+		clickOnLastImage(getImageOfItem(nameOfSnapshot));
+		wait(1000);
+	}
 
 	public void performDoubleClickOperation(String nameOfSnapshot)
 	{	
@@ -298,6 +318,20 @@ public class SimulatorUtilities{
 	private void performActionClick(Pattern selectParent) {
 		try {
 				screen.click(selectParent);
+		}
+		catch(Exception e)
+		{
+			logger.debug(ConstantData.SIKUKI_EXCEPTION, e);
+			MiscUtils.propagate(e);
+		}
+	}
+	
+	private void clickOnLastImage(Pattern selectParent) {
+		try {
+			Iterator<Match> it =	screen.findAll(selectParent);
+			while(it.hasNext()){
+			    System.out.println("the match is "+it.next().click());
+			}
 		}
 		catch(Exception e)
 		{
@@ -476,13 +510,12 @@ public class SimulatorUtilities{
 	}
 
 	public String getPinText() {
-		executeAutoITExe("GetPINData");
+		executeAutoITExe("GetPINData.exe");
 
 		String filePath = getTempDirectoryLocationForSimulatorResults() + "\\PINDATA.txt";
 		String content;
 		try {
 			content = FileCreation.getFileContents(filePath);
-			content = content.substring(content.length()-6);
 			return content.replaceAll("\\D+",""); // gets only numbers
 		}		
 		catch(Exception e)	{

@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.utils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -19,6 +20,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.google.common.base.Strings;
+
 public class MiscUtils {
 
 	private MiscUtils() {
@@ -32,6 +35,12 @@ public class MiscUtils {
 		return Integer.parseInt(RandomStringUtils.randomNumeric(number));
 	}
 
+	public static boolean renamePinFile(String A) {
+		File oldfile =new File(A);
+		File newfile =new File(A +"_PinFile");
+		return oldfile.renameTo(newfile);
+	}
+	
 	public static String generateRandomNumberAsString(int number) {
 		return RandomStringUtils.randomNumeric(number);
 	}
@@ -86,6 +95,10 @@ public class MiscUtils {
 	public static String randomAlphabet(int alphabetLenth) {
 		return RandomStringUtils.randomAlphabetic(alphabetLenth);
 	}
+	
+	public static Boolean isNotNullAndEmpty(String variable) {
+		return Strings.isNullOrEmpty(variable);
+	}
 
 	public static void reportToConsole(String message) {
 		System.out.println(message);
@@ -96,15 +109,15 @@ public class MiscUtils {
 	}
 
 	public static String generate10CharAlphaNumeric() {
-		return ("AT" + MiscUtils.generateRandomNumberBetween2Number(1000, 9999) + MiscUtils.randomAlphabet(4)).toUpperCase();
+		return ("TA" + MiscUtils.generateRandomNumberBetween2Number(1000, 9999) + MiscUtils.randomAlphabet(4)).toUpperCase();
 	}
 
 	public static String generate8CharAlphaNumeric() {
-		return ("AT" + MiscUtils.generateRandomNumberBetween2Number(1000, 9999) + MiscUtils.randomAlphabet(2)).toUpperCase();
+		return ("TA" + MiscUtils.generateRandomNumberBetween2Number(1000, 9999) + MiscUtils.randomAlphabet(2)).toUpperCase();
 	}
 
 	public static String generate6CharAlphaNumeric() {
-		return ("A" + MiscUtils.generateRandomNumberBetween2Number(1000, 9999) + MiscUtils.randomAlphabet(1)).toUpperCase();
+		return ("T" + MiscUtils.generateRandomNumberBetween2Number(1000, 9999) + MiscUtils.randomAlphabet(1)).toUpperCase();
 	}
 
 	public static String convertToYYMM(String data) {

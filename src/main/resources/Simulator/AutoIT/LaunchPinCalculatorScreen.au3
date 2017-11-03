@@ -9,7 +9,6 @@
 #ce ----------------------------------------------------------------------------
 
 ; Script Start - Add your code below here
-#RequireAdmin
 
 If WinExists("FINsim - Connect To Device") Then
 	WinActivate("FINsim - Connect To Device", "Please Select Device To Connect To")

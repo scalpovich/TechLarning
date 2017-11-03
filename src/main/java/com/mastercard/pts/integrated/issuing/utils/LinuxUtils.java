@@ -1,7 +1,9 @@
 package com.mastercard.pts.integrated.issuing.utils;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -21,30 +23,15 @@ import com.jcraft.jsch.Session;
 public abstract class LinuxUtils {
 
 	private static final Logger logger = LoggerFactory.getLogger(LinuxUtils.class);
-
+	private static String[] cardData;
+	
 	public interface RemoteConnectionDetails{
 		String getUserName(); 
 		String getPassword(); 
 		String getHostName(); 
 		int getPort();
 	}
-	private static int checkAck(InputStream in) throws IOException {
-		int b = in.read();
-		if (b == 0)
-			return b;
-		if (b == -1)
-			return b;
 
-		if (b == 1 || b == 2) {
-			StringBuffer stringBuffer = new StringBuffer();
-			int c;
-			do {
-				c = in.read();
-				stringBuffer.append((char) c);
-			} while (c != '\n');
-		}
-		return b;
-	}
 	public static void download(RemoteConnectionDetails connectiondetails, String remoteSource,
 			String localDestination ) throws JSchException  {
 		logger.info("Conection Details: {}", connectiondetails);
@@ -64,6 +51,8 @@ public abstract class LinuxUtils {
 		if (!remoteSource.startsWith("/")) {
 			remoteSource = "/" + remoteSource;
 		}
+		
+		
 		String command = "scp -f " + remoteSource;
 
 		Channel channel = session.openChannel("exec");
@@ -199,7 +188,47 @@ public abstract class LinuxUtils {
 		}
 	}
 
+	private static int checkAck(InputStream in) throws IOException {
+		int b = in.read();
+		if (b < 0) 
+			return b;
 
+		if (b == 1 || b == 2) {
+			StringBuilder stringBuilder = new StringBuilder();
+			int c;
+			do {
+				c = in.read();
+				stringBuilder.append((char) c);
+			}
+			while (c != '\n');
+		}
+		return b;
+	}
+
+	
+
+	
+	public static String[] getCardNumberAndExpiryDate(File filePath) {
+  	  int lnNumber = 1;
+      try (BufferedReader br = new BufferedReader(new FileReader(filePath)))
+      {
+	    String strLine;
+	    while ((strLine = br.readLine()) != null)
+	    {
+	    	if (lnNumber == 2)
+	    	{
+	    		strLine = strLine.trim().replaceAll("\\s+"," ");
+	    		String[] data = strLine.trim().split(" ");
+				cardData = data[0].trim().split(":");
+	    		break;
+	    	}
+	    	lnNumber++;
+	    }
+	  } catch (Exception e) {
+		  logger.info("Exception: {}",e.getMessage());
+	    }
+	  	return cardData;
+	  }
 
 	public static Session connectSession(String user, String host, String pwd,
 			int port) throws JSchException, IOException {
@@ -339,6 +368,8 @@ public abstract class LinuxUtils {
 		scp.execute();
 
 	}
+	
+	
 	
 
 }

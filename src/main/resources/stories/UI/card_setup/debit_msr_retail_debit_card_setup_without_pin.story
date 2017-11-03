@@ -1,4 +1,4 @@
-EMV Retail Debit Card Setup
+debit msr retail debit card pinless setup
 
 Narrative:
 In order to provide to client easy-to-use payment method for e-commerce retail
@@ -7,10 +7,9 @@ I want to create a EMV Retail Debit debit card for client
 
 Meta:
 @StoryName S190640
-@SanityTest
-@CardCreation
+@SanityCards
 
-Scenario: Set up program for debit emv retail debit card
+Scenario: Set up debit msr retail debit card pinless
 Meta:
 @TestId TC398366
 
@@ -19,7 +18,7 @@ And device range for program with device plan for "debit" "magnetic stripe" card
 When user creates new device of debit type for new client
 Then device has "normal" status
 
-Scenario: EMV Retail Debit card device production
+Scenario: debit msr retail debit card pinless device production
 Meta:
 @TestId 
 Given user is logged in institution

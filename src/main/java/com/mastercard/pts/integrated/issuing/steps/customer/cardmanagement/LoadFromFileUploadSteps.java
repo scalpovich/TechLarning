@@ -40,7 +40,7 @@ public class LoadFromFileUploadSteps {
 	private KeyValueProvider provider;
 
 	@Autowired
-	private TransactionWorkflow transactionWorkflow;
+	private TransactionWorkflow transWorkflow;
 
 	@Autowired
 	private LinuxBox linuxBox;
@@ -53,7 +53,7 @@ public class LoadFromFileUploadSteps {
 	public void whenUserProcessesBatchForPrepaid(String type){
 		//since data is constant for this transaction, we do not need this data to go into Excel
 		ProcessBatches batch =  ProcessBatches.getBatchData();
-		batch.setBatchName("Load IPM Incoming File [IPM_INCOMING]");
+        //batch.setBatchName("Load IPM Incoming File [IPM_INCOMING]");		
 		batch.setProductType(ProductType.fromShortName(type));
 		HashMap<String, String> hm = (HashMap<String, String>) loadFromFileUploadWorkflow.processUploadBatch(batch);
 		assertEquals("SUCCESS [2]",hm.get("BatchStatus"));	
@@ -102,7 +102,19 @@ public class LoadFromFileUploadSteps {
 	@When("NOT file is successfully generated")
 	public void givenNOTFileIsSuccessfullyGenerated() throws IOException{
 		String filePath =  "CEEData.txt";
-		String fileData = transactionWorkflow.getFileData(filePath);
+		String fileData = transWorkflow.getFileData(filePath);
+		notFileName = loadFromFileUploadWorkflow.getFileNameFromCEEFile(fileData);
+		assertNotNull("IPM fileName is not null", notFileName);
+	}
+	
+	@Given("NOT file is successfully generated for iteration")
+	@Then("NOT file is successfully generated for iteration")
+	@When("NOT file is successfully generated for iteration")
+	public void givenNOTFileIsSuccessfullyGeneratedForIteration() throws IOException{
+		String filePath =  "CEEData.txt";
+		String fileData = transWorkflow.getFileData(filePath);
+		fileData.split(" ");
+//		notFileName = loadFromFileUploadWorkflow.getFileNameFromCEEFile(fileData);
 		notFileName = loadFromFileUploadWorkflow.getFileNameFromCEEFile(fileData);
 		assertNotNull("IPM fileName is not null", notFileName);
 	}

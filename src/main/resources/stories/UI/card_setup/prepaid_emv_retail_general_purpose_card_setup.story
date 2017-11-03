@@ -1,4 +1,4 @@
-prepaid emv retail general purpose card
+prepaid emv retail general purpose card setup
 
 Narrative:
 In order to provide to client easy-to-use payment method for e-commerce retail
@@ -8,8 +8,7 @@ I want to create a prepaid emv retail general purpose card for client
 Meta:
 @StoryName p_emv_retail_general
 @oldReferenceSheet_S203707
-@SanityTest
-@CardCreation
+@SanityCards
 
 Scenario: Set up prepaid emv retail general purpose card
 Meta:

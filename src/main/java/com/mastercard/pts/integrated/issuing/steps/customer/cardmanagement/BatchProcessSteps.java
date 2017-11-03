@@ -84,6 +84,7 @@ public class BatchProcessSteps {
 		BulkDeviceGenerationBatch batch = new BulkDeviceGenerationBatch();
 		batch.setProductType(ProductType.fromShortName(type));
 		batch.setBatchNumber(batchNumber);
+		MiscUtils.reportToConsole("bulk device generation Batch: {}", batchNumber);
 		batchProcessWorkflow.processBulkDeviceGenerationBatch(batch);
 	}
 	
@@ -92,6 +93,7 @@ public class BatchProcessSteps {
 		PreProductionBatch batch = new PreProductionBatch();
 		batch.setProductType(ProductType.fromShortName(type));
 		batch.setBatchNumber(batchNumber);
+		MiscUtils.reportToConsole("Pre-Production Batch: {}", batchNumber);
 		batchProcessWorkflow.processPreProductionBatch(batch);
 	}
 	
@@ -113,7 +115,7 @@ public class BatchProcessSteps {
 		DeviceProductionBatch batch = new DeviceProductionBatch();
 		batch.setProductType(ProductType.fromShortName(type));
 		batch.setBatchNumber(batchNumber);
-		MiscUtils.reportToConsole("**************** Batch Number : **************** " + batchNumber);
+		MiscUtils.reportToConsole("device production Batch: {}", batchNumber);
 		batchProcessWorkflow.processDeviceProductionBatch(batch);
 	}
 	
@@ -127,7 +129,9 @@ public class BatchProcessSteps {
 		PinGenerationBatch batch = new PinGenerationBatch();
 		batch.setProductType(ProductType.fromShortName(type));
 		batch.setBatchNumber(batchNumber);
+		MiscUtils.reportToConsole("pin generation Batch: {}", batchNumber);
 		jobId = batchProcessWorkflow.processPinGenerationBatch(batch);
+		MiscUtils.reportToConsole("pin generation Job Id: {}", jobId);
 	}
 	
 	@When("user processes pin generation batch for $type")	
@@ -143,10 +147,10 @@ public class BatchProcessSteps {
 	@Then("\"$batchName\" batch for $type is successful")
 	@When("\"$batchName\" batch for $type is successful")
 	public void whenMatchingBatchIsExecuted(String batchName, String type){
-		ProcessBatches batch =  ProcessBatches.createWithProvider(provider);
+		ProcessBatches batch =  new ProcessBatches();
 		batch.setProductType(ProductType.fromShortName(type));
 		batch.setBatchName(batchName);
-		assertEquals("SUCCESS [2]", batchProcessWorkflow.processSystemInternalProcessingBatch(batch));			
+		assertEquals("SUCCESS [2]", batchProcessWorkflow.processSystemInternalProcessingBatchWithoutDateCheck(batch));			
 
 	}
 	

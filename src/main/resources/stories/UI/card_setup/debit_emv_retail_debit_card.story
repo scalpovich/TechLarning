@@ -7,8 +7,7 @@ I want to set up a program for debit emv retail debit card
 
 Meta:
 @StoryName S190640
-@SanityTest
-@CardCreation
+@SanityCards
 
 Scenario: Set up program for debit emv retail debit card
 Meta:

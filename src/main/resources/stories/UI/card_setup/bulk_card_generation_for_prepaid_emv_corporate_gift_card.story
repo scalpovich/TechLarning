@@ -8,10 +8,7 @@ I want to create a bulk card request and generate cards for prepaid emv corporat
 Meta:
 @StoryName p_emv_corp_gift_bulk
 @oldReferenceSheet_S193810 
-@SanityTest
-@author NidhiVyas
-@CardCreation
-
+@SanityCards
 
 Scenario: bulk card generation for prepaid emv corporate gift card
 Meta:

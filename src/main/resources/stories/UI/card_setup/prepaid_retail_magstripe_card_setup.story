@@ -7,8 +7,7 @@ I want to create a retail general purpose magnetic stripe preapid card for clien
 
 Meta:
 @StoryName S203706
-@SanityTest
-@CardCreation
+@SanityCards
 
 Scenario: Set up retail magnetic stripe preapid card
 Meta:

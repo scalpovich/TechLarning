@@ -9,8 +9,6 @@
 #ce ----------------------------------------------------------------------------
 
 ; Script Start - Add your code below here
-#RequireAdmin
-
 WinActivate("Select the services you want to load:","Close the Platform")
 
 

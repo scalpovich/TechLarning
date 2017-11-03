@@ -9,7 +9,6 @@
 #ce ----------------------------------------------------------------------------
 
 ; Script Start - Add your code below here
-#RequireAdmin
 
 If WinExists("FINsim - Connect To Server") Then
 	WinActivate("FINsim - Connect To Server", "Server Name:")

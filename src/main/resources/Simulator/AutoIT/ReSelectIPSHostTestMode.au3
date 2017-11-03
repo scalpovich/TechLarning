@@ -9,7 +9,6 @@
 #ce ----------------------------------------------------------------------------
 
 ; Script Start - Add your code below here
-#RequireAdmin
 Opt("WinWaitDelay", 500) ;250 milliseconds
 
 If WinExists("MasterCard Authorization Simulator <MAS16.Q4>") Then

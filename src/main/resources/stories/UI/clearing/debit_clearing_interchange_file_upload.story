@@ -7,6 +7,8 @@ I want to Upload transactions from a file
 
 Meta:
 @StoryName S196456
+@SanityCardsWithClearning
+@FullSanity
 
 Scenario: 01 Load ath file in MCPS and create NOT file of IPM extension
 Meta:
@@ -32,7 +34,7 @@ Given user is logged in institution
 When in batch trace history transaction is successful
 When transaction status is "Matching Pending"
 When "Matching" batch for debit is successful
-Then "Pre-clearing" batch for prepaid is successful
-Then "EOD-Prepaid" batch for prepaid is successful
+Then "Pre-clearing" batch for debit is successful
+Then "EOD-Prepaid" batch for debit is successful
 Then transaction status is "Presentment Matched with authorization"
 And transaction fee is correctly posted
