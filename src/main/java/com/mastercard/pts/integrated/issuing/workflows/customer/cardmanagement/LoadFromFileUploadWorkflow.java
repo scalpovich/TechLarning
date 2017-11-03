@@ -18,6 +18,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.Proce
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.UploadFile;
 
 @Workflow
@@ -27,7 +28,7 @@ public class LoadFromFileUploadWorkflow {
 	private Navigator navigator;
 
 	@Autowired
-	UploadFile upload;
+	UploadFile uploadFile;
 	
 	public Map<String, String> processUploadBatch(ProcessBatches batch){	
 		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
@@ -35,7 +36,7 @@ public class LoadFromFileUploadWorkflow {
 	}
 	
 	public void createFileForUpload(FileCreation file){
-		upload.createTransactionUploadFile(file);
+		uploadFile.createTransactionUploadFile(file);
 	}
 	
 	public void createAdjustmentTransaction(AdjustmentTransaction transaction){
@@ -66,11 +67,12 @@ public class LoadFromFileUploadWorkflow {
 	public File getFileNameFromCEEFile(String fileData){
 		String [] splitString = fileData.split("\\s+");
 		Path p = Paths.get(splitString[5]);
+		MiscUtils.reportToConsole("******************** NotFileName ******************** " + p.getFileName().toFile());
 		return p.getFileName().toFile();
 	}
 	
 	public void loadIncomingIPM(File fileName){
-		upload.uploadIpmFile(fileName);
+		uploadFile.uploadIpmFile(fileName);
 	}
 	
 }
