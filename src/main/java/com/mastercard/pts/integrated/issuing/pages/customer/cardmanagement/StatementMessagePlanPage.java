@@ -120,6 +120,10 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 		verifySearchButton("Search");
 	}
 
+	@Override
+	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
+		return Arrays.asList(WebElementUtils.visibilityOf(planCodeSearchTxt));
+	}
 
 	public void createStatementMessagePlan(StatementMessagePlan plan) {
 		logger.info("Create Statement Message Plan: {}",
@@ -263,10 +267,4 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 		waitForElementVisible(save);
 		ClickButton(save);
 	}
-
-	@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return null;
-	}
-
 }

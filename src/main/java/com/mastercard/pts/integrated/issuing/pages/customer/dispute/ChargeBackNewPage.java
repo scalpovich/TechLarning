@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.dispute;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -44,26 +45,39 @@ public class ChargeBackNewPage extends AbstractDisputePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='atmDocCheck']/span/input")
 	private  MCWebElement docReqCopyReqCbx;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='sourceAmount']//span[@class='labeltextr']")
+	private  MCWebElement transactionAmountTxt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='settlementAmount']/span")
+	private  MCWebElement settlementAmountTxt;
+	
 	public void searchByArn(String arn)
 	{
 		searchByArn(arn, "View Search Result");
 	}
+	
+	public BigDecimal getTransactionAmount() {
+		return new BigDecimal(transactionAmountTxt.getText());
+	}
+	
+	public BigDecimal getSettlementAmount() {
+		return new BigDecimal(settlementAmountTxt.getText());
+	}
+	
+	public BigDecimal getChargeBackAmount() {
+		return getTransactionAmount().subtract(getSettlementAmount());
+	}
 
 	public void triggerChargeBack(ChargeBack cb) {
-		WebElementUtils
-				.enterText(chargeBackAmountTxt, cb.getChargeBackAmount());
-		WebElementUtils.selectDropDownByVisibleText(reasonCodeDwn,
-				cb.getReasonCode());
-		WebElementUtils.selectDropDownByVisibleText(documentationDwn,
-				cb.getDocumentation());
+		WebElementUtils.enterText(chargeBackAmountTxt, getChargeBackAmount());
+		WebElementUtils.selectDropDownByVisibleText(reasonCodeDwn, cb.getReasonCode());
+		WebElementUtils.selectDropDownByVisibleText(documentationDwn, cb.getDocumentation());
 		WebElementUtils.checkCheckbox(feeCbx, cb.isFees());
 		WebElementUtils.enterText(textTxt, cb.getText());
-		WebElementUtils.checkCheckbox(chargebackDateCheckCbx,
-				cb.isChargeBackDateGrater());
-		WebElementUtils.checkCheckbox(copyRequestCheckCbx,
-				cb.isCopyRequestRequired());
-		WebElementUtils
-				.checkCheckbox(docReqCopyReqCbx, cb.isDocumentRequired());
+		pageScrollDown();
+		WebElementUtils.checkCheckbox(chargebackDateCheckCbx, cb.isChargeBackDateGrater());
+		WebElementUtils.checkCheckbox(copyRequestCheckCbx, cb.isCopyRequestRequired());
+		WebElementUtils.checkCheckbox(docReqCopyReqCbx, cb.isDocumentRequired());
 		clickSaveButton();
 	}
 

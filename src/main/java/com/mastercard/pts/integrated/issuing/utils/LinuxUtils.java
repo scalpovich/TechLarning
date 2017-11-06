@@ -205,8 +205,22 @@ public abstract class LinuxUtils {
 		return b;
 	}
 
-	
+	public static void upload(RemoteConnectionDetails connectiondetails, String localsource,
+			String remoteDir) throws JSchException  {
 
+		Scp scp = new Scp();
+		int portSSH = connectiondetails.getPort();
+		String serverSSH = connectiondetails.getHostName();
+		String userSSH = connectiondetails.getUserName(); 
+		String pswdSSH = connectiondetails.getPassword();
+
+		scp.setPort( portSSH );
+		scp.setLocalFile(localsource);
+		scp.setTodir( userSSH + ":" + pswdSSH + "@" + serverSSH + ":" + remoteDir );
+		scp.setProject( new Project() );
+		scp.setTrust( true );
+		scp.execute();
+	}
 	
 	public static String[] getCardNumberAndExpiryDate(File filePath) {
   	  int lnNumber = 1;

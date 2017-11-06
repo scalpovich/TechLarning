@@ -45,6 +45,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "batchId:input:dropdowncomponent")
 	private MCWebElement batchNameDDwn;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "buttonPanel:submitButton")
+	private MCWebElement submitBtn;
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='productType']/select")
 	private MCWebElement productTypeDDwn;
 
@@ -262,9 +265,12 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	public Map<String, String> processUploadBatch(ProcessBatches batch) {
 		logger.info("Process Upload Batch: {}", batch.getBatchName());
 		HashMap<String, String> hm = new HashMap<>();
-		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, batch.getBatchType());
-		WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, batch.getBatchName());
+		WebElementUtils.selectDDByVisibleText(batchTypeDDwn, batch.getBatchType());
+		WebElementUtils.selectDDByVisibleText(batchNameDDwn, batch.getBatchName());
+/*		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, batch.getBatchType());
+		WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, batch.getBatchName());*/
 		selectChkBx.click();
+		WebElementUtils.scrollDown(driver(), 0, 250);
 		submitBtn.click();
 		WebElementUtils.waitForWicket(driver());
 		viewFirstRecord();
@@ -278,6 +284,25 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		hm.put("JobId", jobNumber);
 		hm.put("BatchStatus", batchStatus);
 		return hm;
+	}
+
+	public String processSystemInternalProcessingBatchMatchingBatch(ProcessBatches batch) {
+		
+		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "SYSTEM INTERNAL PROCESSING [B]");
+		selectInternalBatchType(batch.getBatchName());
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+		submitAndVerifyBatch();
+		return batchStatus;
+		
+	}
+
+	public String processSystemInternalProcessingBatchWithoutDateCheck(ProcessBatches batch) {
+		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
+		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "SYSTEM INTERNAL PROCESSING [B]");
+		selectInternalBatchType(batch.getBatchName());
+			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+			submitAndVerifyBatch();
+		return batchStatus;
 	}
 
 	public String processSystemInternalProcessingBatch(ProcessBatches batch) {
@@ -406,6 +431,13 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "DOWNLOAD [D]");
 		WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, batch.getBatchName());
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+	}
+
+	public String ipmDownloadBatch(ProcessBatches batch) {
+		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "DOWNLOAD [D]");
+		WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, batch.getBatchName());
+		submitAndVerifyBatch();
+		return batchStatus;
 	}
 
 	public void selectAccountDumpAndCHDump(ProcessBatches batch) {

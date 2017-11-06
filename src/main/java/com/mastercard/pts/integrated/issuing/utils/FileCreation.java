@@ -123,6 +123,10 @@ public class FileCreation {
 		}
 		return content;
 	}
+	
+	public void setTransactionLine(String transactionLine) {
+		this.transactionLine = transactionLine;
+	}
 
 
 	public static FileCreation createFile(KeyValueProvider provider){
