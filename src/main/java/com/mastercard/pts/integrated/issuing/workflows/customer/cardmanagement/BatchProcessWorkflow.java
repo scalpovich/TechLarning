@@ -84,11 +84,6 @@ public void processDownloadBatch(ProcessBatches batch){
 		
 	}
 
-	public void processDownloadBatch(ProcessBatches batch){
-		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
-		page.selectDownloadBatch(batch);
-	}
-	
 	public String processIpmDownloadBatch(ProcessBatches batch){
 		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
 		return page.ipmDownloadBatch(batch);

@@ -99,13 +99,6 @@ public class InstitutionSelectionPage extends AbstractBasePage {
 	}
 	
 	
-	/**
-	 * @param institutionSelector, e.g. "CANARA [110000]"
-	 */
-	public void selectInstitution(String institutionSelector) {
-		institutionSelect.getSelect().selectByVisibleText(institutionSelector);
-	}
-
 	public void clickConfirm() {
 		confirmButton.click();
 	}

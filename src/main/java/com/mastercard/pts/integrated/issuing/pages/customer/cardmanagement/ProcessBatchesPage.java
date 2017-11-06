@@ -128,9 +128,6 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:inputFiles:0:fileChecked:checkBoxComponent")
 	private MCWebElement selectFirstChkBx;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "buttonPanel:submitButton")
-	private MCWebElement submitBtn;
-
 	@PageElement(findBy = FindBy.NAME, valueToFind = "buttonPanel:Cancel")
 	private MCWebElement cancelBtn;
 

@@ -124,9 +124,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	private static final String	DP_EMV_PLAN_PUT_DATA	 = 	"DP_EMV_PLAN_PUT_DATA";
 	private static final String	DP_EMV_PLAN_PIN_CHANGE	 = 	"DP_EMV_PLAN_PIN_CHANGE";
 	private static final String	DP_EMV_PLAN_PIN_UNBLOCK	 = 	"DP_EMV_PLAN_PIN_UNBLOCK";
-	public String devicePlanCode;
 	public String association;
-	public String productType;
 	public String DeviceType;
 	public String ServiceCode;
 	public String CustomCode;
@@ -139,8 +137,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	public String Validity;
 	public String Velocity;
 	public String embossiongVendor;
-	public String activationMode;
-
+	
 	private String replacementDeviceTechnology;
 	private String fillEMVPlan;
 	private String emvPlanResponse;
@@ -162,7 +159,9 @@ public class DevicePlan implements HasCodeAndDescription {
 	private String pinDataTransmission;
 
 	private String pinGenerationOption;
+	private String devicePlanCode;
 	private String associationType;
+	private String productType;
 	private String deviceType;
 	private String serviceCode;
 	private String deliveryMode;
@@ -172,6 +171,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	private String pictureCode;
 	private String cardProduction;
 	private String embossingVendor;
+	private String activationMode;
 	private String expiryFlag;
 	private String validityOnInitialMonths;
 	private String expiryDate;
@@ -179,6 +179,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	private String baseDeviceJoiningMemberShipPlan;
 	private String transactionLimitPlan;
 	private String afterKYC;
+	private String beforeKYC;
 	private String chipType;
 	private String description;
 	private boolean ecommerceAllowed;
@@ -1001,6 +1002,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		this.validityOnInitialMonths = validityOnInitialMonths;
 	}
 
+
 	public String getBaseDeviceEventBasedPlan() {
 		return baseDeviceEventBasedPlan;
 	}
@@ -1028,7 +1030,15 @@ public class DevicePlan implements HasCodeAndDescription {
 	public String getAfterKYC() {
 		return afterKYC;
 	}
+	
+	public void setBeforeKYC(String beforeKYC) {
+		this.beforeKYC = beforeKYC;
+	}
 
+	public String getBeforeKYC() {
+		return beforeKYC;
+	}
+	
 	public void setAfterKYC(String afterKYC) {
 		this.afterKYC = afterKYC;
 	}
