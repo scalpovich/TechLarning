@@ -5,13 +5,14 @@ import java.util.List;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
-
+@Component
 public class PrepaidStatementPlan implements HasCodeAndDescription {
 
 	private static final String PSP_SUPPRESS_IF_NO_ACTIVITY = "PSP_SUPPRESS_IF_NO_ACTIVITY";

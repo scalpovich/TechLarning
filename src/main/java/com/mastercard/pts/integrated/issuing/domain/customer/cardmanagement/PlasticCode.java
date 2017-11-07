@@ -1,7 +1,9 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
-import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
+import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
+@Component
 public class PlasticCode {
 
 	private String plasticCodeNumber;
