@@ -19,8 +19,9 @@ public class ConstantData {
 	public static final String SAME_TRANSACTION_EXISTS = "Information with same Transaction Rule Plan Code already exists.";
 	public static final String SAME_CREDIT_PLAN_EXISTS = "Information with same Credit Plan Code already exists.";
 	public static final String GENERIC_DESCRIPTION = "AUTOMATION";
-	public static final String TRANSACTION_UPLOAD_FILE_PATH = "/TRANSACTION_UPLOAD/INPUT";
-	public static final String IPM_UPLOAD_FILE_PATH = "/IPM_INCOMING/INPUT";
+	public static final String TRANSACTION_UPLOAD_FILE_PATH = "/home/dc-user/integrated/elt_bo/data/TRANSACTION_UPLOAD/INPUT";
+	public static final String IPM_UPLOAD_FILE_PATH = "/home/dc-user/integrated/elt_bo/data/IPM_INCOMING/INPUT";
+	
 	
 	public static final String VENDOR_MASTER_ADDRESS="PUNE";
 	public static final String  VENDOR_MASTER_COUNTRY="INDIA [356]";
@@ -37,6 +38,7 @@ public class ConstantData {
 	public static final String EXCEPTION = "Exception occurred";
 	public static final String SIKUKI_EXCEPTION = "Image could not be clicked";
 	public static final String MESSAGE_CONSTANT = "Simulator path being set :  ";
+	public static final String  IS_PIN_REQUIRED = "TRUE";
 
 	private ConstantData() {}
 }

@@ -7,8 +7,7 @@ I want to create a retail magnetic stripe debit card for client
 
 Meta:
 @StoryName S198220
-@SanityTest
-@CardCreation
+@SanityCards
 
 Scenario: Setup debit msr retail debit card
 Meta:

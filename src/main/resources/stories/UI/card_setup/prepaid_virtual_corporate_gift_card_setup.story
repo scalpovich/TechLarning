@@ -1,4 +1,4 @@
-Virtual prepaid Card Setup
+prepaid virtual corporate gift card
 
 Narrative:
 In order to provide to client easy-to-use payment method for e-commerce retail
@@ -7,9 +7,7 @@ I want to create virtual corporate gift card prepaid card for client
 
 Meta:
 @StoryName S247705
-@SanityTest
-@CardCreation
-
+@SanityCards
 
 Scenario: Set up prepaid virtual corporate gift card
 Meta:

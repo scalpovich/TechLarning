@@ -27,9 +27,9 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L2_TRANSACTION_PLAN })
 public class TransactionPlanPage extends AbstractBasePage {
 
-
 	private static final Logger logger = LoggerFactory
 			.getLogger(TransactionPlanPage.class);
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=transactionSetCode]")
 	private MCWebElement planCodeSearchTxt;
 
@@ -76,6 +76,11 @@ public class TransactionPlanPage extends AbstractBasePage {
 	public void clickaddTransactionPlan() {
 		clickWhenClickable(addTransactionPlanBtn);
 		switchToAddTransactionPlanFrame();
+
+	}
+	@Override
+	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
+		return Arrays.asList(WebElementUtils.visibilityOf(planCodeSearchTxt));
 	}
 
 	public void switchToAddTransactionPlanFrame() {

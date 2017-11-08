@@ -11,6 +11,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.junit.Assert;
+
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
@@ -48,33 +50,39 @@ public class BatchFileValidator {
 	}
 
 	public BatchFileValidator validate() {
-		/* ArrayList<String> lines = readBatchLines();
+		 ArrayList<String> lines = readBatchLines();
 		
 	int startDataLinesIndex = 0;
 		int endDataLinesIndex = lines.size() - 1;
 		
-		SoftAssert softAssert = new SoftAssert();
+//		SoftAssert softAssert = new SoftAssert();
 		
 		// verify Header if specified
 		if (headerPattern != null) {
-			softAssert.andThat("Header is incorrect", lines.get(startDataLinesIndex),
-					matchesPattern(headerPattern));
+			
+//		Assert.assertTrue(lines.get(startDataLinesIndex).matches(headerPattern));
+			
+		Assert.assertTrue("Failed to match: " + lines.get(startDataLinesIndex) , lines.get(startDataLinesIndex).matches(headerPattern) );  
+//			softAssert.andThat("Header is incorrect", lines.get(startDataLinesIndex),
+//					matchesPattern(headerPattern));
 			startDataLinesIndex++;
 		}
-		
+
 		// verify Trailer if specified
 		if (trailerPattern != null) {
-			softAssert.andThat("Trailer is incorrect", lines.get(endDataLinesIndex),
-					matchesPattern(trailerPattern));
+			Assert.assertTrue("Failed to match: " + lines.get(endDataLinesIndex) , lines.get(endDataLinesIndex).matches(trailerPattern) );  
+			/*softAssert.andThat("Trailer is incorrect", lines.get(endDataLinesIndex),
+					matchesPattern(trailerPattern));*/
 			endDataLinesIndex--;
 		}
 		
 		for (int i = startDataLinesIndex; i <= endDataLinesIndex; i++) {
-			softAssert.andThat("Line is incorrect at index: " + i, lines.get(i),
-					matchesPattern(linePattern));
+			Assert.assertTrue("Failed to match: " + lines.get(i) , lines.get(i).matches(linePattern) );  
+			/*softAssert.andThat("Line is incorrect at index: " + i, lines.get(i),
+					matchesPattern(linePattern));*/
 		}
 		
-		softAssert.assertAll();*/
+//		softAssert.assertAll();
 		return this;
 	}
 	

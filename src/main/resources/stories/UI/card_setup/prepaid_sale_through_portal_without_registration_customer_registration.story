@@ -7,8 +7,7 @@ I want to fill sale related information through portal: Without registration And
 
 Meta:
 @StoryName S193819
-@SanityTest
-@CardCreation
+@SanityCards
 
 Scenario: Prepaid - Admin User - Assign Program to Agency
 Meta:

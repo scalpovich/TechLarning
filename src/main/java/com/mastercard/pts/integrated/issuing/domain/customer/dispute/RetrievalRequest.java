@@ -1,9 +1,13 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.dispute;
 
-import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 
 public class RetrievalRequest {
 
+	private static final String REQUEST_RESPONSE_CODE = "REQUEST_RESPONSE_CODE";
+	private static final String REASON_CODE = "REASON_CODE";
+	private static final String APPLY_FEE = "APPLY_FEE";
+	
 	private String requestResonCode;
 	private String reasonCode;
 	private boolean applyFee;
@@ -34,7 +38,11 @@ public class RetrievalRequest {
 		this.arn = arn;
 	}
 	
-	public static RetrievalRequest createWithProvider(DataProvider provider) {
-		return provider.getDataBySimpleClassName(RetrievalRequest.class);
+	public static RetrievalRequest createWithProvider(KeyValueProvider provider) {
+		RetrievalRequest request = new RetrievalRequest();
+		request.setRequestResonCode(provider.getString(REQUEST_RESPONSE_CODE));
+		request.setReasonCode(provider.getString(REASON_CODE));
+		request.setApplyFee(true);
+		return request;
 	}
 }

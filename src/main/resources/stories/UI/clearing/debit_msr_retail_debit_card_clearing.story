@@ -1,51 +1,56 @@
-Pinless Magnetic Strip Retail Debit Card Authrization & Clearing
+debit_msr_retail_debit_card_clearing
 
 Narrative:
 In order to provide to client easy-to-use multi-purpose debit card
 As an issuer
-I want to create a pinless magnetic stripe retail debit card and perform transactions and clearing
+I want to create a magnetic stripe retail debit card and perform transactions and clearing
 
 Meta:
 @StoryName debit_msr
-@SanityTest
-@Authorisation
+@SanityCardsWithClearning
+@FullSanity
 
-Scenario: 01 Set up retail magnetic stripe pinless debit card
+
+Scenario: Set up retail magnetic stripe retail debit card 
 Meta:
-@TestId TC398508
-Given user is logged in institution
-When User fills Dedupe Plan
-When User fills MCC Rules for debit product
-When User fills Transaction Plan for debit product
-When User fills Transaction Limit Plan for debit product
-When User fills Document Checklist Screen for debit product
-When User fills Device Joining and Membership Fee Plan for debit product
-When User fills Device Event Based Fee Plan for debit product
-When User fills Device Plan for "debit" "magnetic stripe" card with no pin
-When User fills Wallet Plan for debit product
-When User fills Program section for debit product
-When User fills Business Mandatory Fields Screen for debit product
-When User fills Device Range section for debit product
+@TestId 
+
+Given connection to FINSim is established
+When user is logged in institution
+When device range for program with device plan for "debit" "magnetic stripe" card
 When user creates new device of debit type for new client
 When a new device was created
+
+Scenario: Batch file Processing
+Meta:
+@TestId 
 When user processes pre-production batch for debit
 When user processes device production batch for debit
+When user processes pin generation batch for debit
 When user has wallet number information for debit device
 When user performs adjustment transaction
 When user has current wallet balance amount information for debit device
-!-- When user sign out from customer portal
+Then user sign out from customer portal
+
+Scenario: Pin Generation
+Meta:
+@TestId
+When Pin Offset file batch was generated successfully
+When PIN is retrieved successfully with data from Pin Offset File
+When embossing file batch was generated in correct format
+Then FINSim simulator is closed
 
 Scenario: Perform MSR_PURCHASE Authorization transaction
 Meta:
 @TestId 
-Given connection to MAS is established
-When perform an MSR_PURCHASE MAS transaction
+When connection to MAS is established
+When perform an MSR_PURCHASE_PIN MAS transaction
 Then MAS test results are verified
 
 Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
 Meta:
-@TestId
-When perform an MSR_CASH_ADVANCE MAS transaction
+@TestId 
+When perform an MSR_CASH_ADVANCE_PIN MAS transaction on the same card
 Then MAS test results are verified
 
 Scenario: Generate Auth File for Clearing
@@ -63,11 +68,10 @@ When Auth file is loaded into MCPS and processed
 Then NOT file is successfully generated
 When MCPS simulator is closed
 
-Scenario: Upload ipm file from customer portal and process it
+Scenario: Upload NOT file from customer portal and process it
 Meta:
-@TestId TC406665
-!-- Given user is logged in institution
-When NOT file is successfully generated
+@TestId
+Given user is logged in institution
 When User uploads the NOT file
 When user processes batch for debit
 Then in batch trace history transaction is successful
@@ -75,13 +79,16 @@ Then in batch trace history transaction is successful
 Scenario: Matching & Posting to Cardholders account
 Meta:
 @TestId TC406667
-When in batch trace history transaction is successful
 When transaction status is "Matching Pending"
 When "Matching" batch for debit is successful
 Then transaction status is "Presentment Matched with authorization"
 
-Scenario: Program Balance Summary download
+Scenario: Program Balance Summary, Auth and Clearing reports download
 Meta:
 @TestId 
+When pre-clearing and Pre-EOD batches are run
 Then verify report for transactions with Program Balance Summary is downloaded
+And Verify Program Balance Summary is downloaded
+And verify report for Auth is downloaded
+And verify report for Clearing is downloaded
 When user sign out from customer portal

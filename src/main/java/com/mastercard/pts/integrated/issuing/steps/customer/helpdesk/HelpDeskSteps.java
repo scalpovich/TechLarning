@@ -29,10 +29,10 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDes
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
-
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.distribution.Dispatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
+import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -390,7 +390,21 @@ public class HelpDeskSteps {
 		device.setWalletNumber(walletNumber);
 		context.put(ContextConstants.DEVICE, device);
 	}
-
+	
+	@Given("user has wallet number information for $type device which is exsiting")
+	@When("user has wallet number information for $type device which is exsiting")
+	public void givenUserHasWalletNumberInformationForExsisting(String type) {
+		Device device = Device.createWithProvider(provider);
+		ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
+		device.setDeviceNumber(rt.getExistingDevice());
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+		String walletNumber = helpdeskWorkflow.getWalletNumber(device);
+		device.setWalletNumber(walletNumber);
+		context.put(ContextConstants.DEVICE, device);
+	}
+	
 	@Given("user has current wallet balance amount information for $type device")
 	@When("user has current wallet balance amount information for $type device")
 	public void givenUserHasCurrentWalletBalanceAmountInformation(String type) {
@@ -416,9 +430,18 @@ public class HelpDeskSteps {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
 		BigDecimal afterTrnBalanceAmount = helpdeskWorkflow.getWalletBalance(device);
-		BigDecimal transactionAmount = new BigDecimal(device.getTransactionAmount());
-		MathContext mc = new MathContext(2);
-		currentBalanceAmount = currentBalanceAmount.subtract(transactionAmount, mc);
+		BigDecimal transactionAmount = new BigDecimal(Integer.parseInt(device.getTransactionAmount())/100);
+		currentBalanceAmount = currentBalanceAmount.subtract(transactionAmount);
+		assertEquals(currentBalanceAmount, afterTrnBalanceAmount);
+	}
+	
+	@When("after transaction reversal wallet balance amount for $type device is updated correctly")
+	@Then("after transaction reversal wallet balance amount for $type device is updated correctly")
+	public void thenAfterTransactionReversalWalletBalanceAmount(String type) {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
+		BigDecimal afterTrnBalanceAmount = helpdeskWorkflow.getWalletBalance(device);
 		assertEquals(currentBalanceAmount, afterTrnBalanceAmount);
 	}
 

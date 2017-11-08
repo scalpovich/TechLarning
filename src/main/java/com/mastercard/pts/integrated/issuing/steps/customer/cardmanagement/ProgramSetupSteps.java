@@ -42,6 +42,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Wall
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramSetupWorkflow;
 
 @Component
@@ -97,8 +98,6 @@ public class ProgramSetupSteps {
 
 	private PrepaidStatementPlan prepaidStatementPlan;
 	
-	public static Boolean pinRequired = true;
-
 	@When("prepaid $deviceType device is available with balance amount")
 	@Given("prepaid $deviceType device is available with balance amount")
 	@Composite(steps = { 
@@ -575,6 +574,7 @@ public class ProgramSetupSteps {
 		 */
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
@@ -588,6 +588,10 @@ public class ProgramSetupSteps {
 
 	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card")
 	public void whenUserFillsDevicePlanForCrdd(String productType, String deviceType) {
+		//virtual cards are pinless so even if this statement is called by mistatke, we are setting Pin to false
+		if(deviceType.toLowerCase().contains("virtual")) {
+			setPinRequiredToFalse();
+		}
 		devicePlan = DevicePlan.createWithProvider(provider);
 		devicePlan.setProductType(ProductType.fromShortName(productType));
 		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
@@ -595,9 +599,10 @@ public class ProgramSetupSteps {
 		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 		
 		//setting a flag through setter to figure out if the card is pinless card or not. This is used in TransactionSteps to set ExpiryDate incase of PinLess Card
-		if(!ProgramSetupSteps.pinRequired)
+		if("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
 			devicePlan.setIsPinLess("YES");
 			
 		programSetupWorkflow.createDevicePlan(devicePlan);
@@ -807,8 +812,8 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createDeviceRange(deviceRange);
 	}
 	
-	private static void setPinRequiredToFalse() {
-		ProgramSetupSteps.pinRequired = false;
+	private  void setPinRequiredToFalse() {
+		context.put(ConstantData.IS_PIN_REQUIRED, "FALSE");
 	}
 	
 }

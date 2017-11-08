@@ -1,4 +1,4 @@
-prepaid msr retail general purpose card
+prepaid msr retail general purpose card setup
 
 Narrative:
 In order to provide to client easy-to-use multi-purpose prepaid card
@@ -8,8 +8,7 @@ I want to create an magnetic stripe prepaid card and perform various transaction
 Meta:
 @StoryName p_msr_retail_gen_purpose
 @oldReferenceSheet_prepaid_msr
-@SanityTest
-@Authorisation
+@SanityCards
 
 Scenario: Set up prepaid msr retail general purpose card
 Meta:

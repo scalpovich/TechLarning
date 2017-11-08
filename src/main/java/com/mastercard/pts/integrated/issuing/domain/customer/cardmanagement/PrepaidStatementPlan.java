@@ -1,16 +1,16 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
-import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 @Component
 public class PrepaidStatementPlan implements HasCodeAndDescription {
@@ -21,49 +21,16 @@ public class PrepaidStatementPlan implements HasCodeAndDescription {
 
 	private String statementPlanCode;
 	
+	private String description;
+	
+	private String period;
 	public String PrepaidStatementPlan;
 
 	public String ToLot;
 
 	public String PrintDay;
-	private String description;
-	
-	private String period;
 	
 	private boolean suppressIfNoActivity;
-
-	public String getToLot() {
-		return ToLot;
-	}
-
-	public void setToLot(String toLot) {
-		ToLot = toLot;
-	}
-
-	public String getPrintDay() {
-		return PrintDay;
-	}
-
-	public void setPrintDay(String printDay) {
-		PrintDay = printDay;
-	}
-
-	public String getPrepaidStatementPlan() {
-		return PrepaidStatementPlan;
-	}
-
-	public void setPrepaidStatementPlan(String prepaidStatementPlan) {
-		PrepaidStatementPlan = prepaidStatementPlan;
-	}
-
-	public static PrepaidStatementPlan prepaidstatementDataprovider() {
-		PrepaidStatementPlan prepaidstmt = new PrepaidStatementPlan();
-		prepaidstmt.setToLot(MapUtils.fnGetInputDataFromMap("ToLot"));
-		prepaidstmt.setPrintDay(MapUtils.fnGetInputDataFromMap("PrintDay"));
-		return prepaidstmt;
-
-	}
-
 	
 	private List<PrepaidStatementPlanDetails> prepaidStatementPlanDetails = new ArrayList<>();
 	
@@ -121,6 +88,36 @@ public class PrepaidStatementPlan implements HasCodeAndDescription {
 	public void setPrepaidStatementPlanDetails(
 			List<PrepaidStatementPlanDetails> prepaidStatementPlanDetails) {
 		this.prepaidStatementPlanDetails = prepaidStatementPlanDetails;
+	}
+	public String getToLot() {
+		return ToLot;
+	}
+
+	public void setToLot(String toLot) {
+		ToLot = toLot;
+	}
+
+	public String getPrintDay() {
+		return PrintDay;
+	}
+
+	public void setPrintDay(String printDay) {
+		PrintDay = printDay;
+	}
+
+	public String getPrepaidStatementPlan() {
+		return PrepaidStatementPlan;
+	}
+
+	public void setPrepaidStatementPlan(String prepaidStatementPlan) {
+		PrepaidStatementPlan = prepaidStatementPlan;
+	}
+	public static PrepaidStatementPlan prepaidstatementDataprovider() {
+		PrepaidStatementPlan prepaidstmt = new PrepaidStatementPlan();
+		prepaidstmt.setToLot(MapUtils.fnGetInputDataFromMap("ToLot"));
+		prepaidstmt.setPrintDay(MapUtils.fnGetInputDataFromMap("PrintDay"));
+		return prepaidstmt;
+
 	}
 
 	@Override

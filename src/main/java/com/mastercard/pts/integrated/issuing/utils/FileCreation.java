@@ -99,9 +99,7 @@ public class FileCreation {
 		return transactionLine;
 	}
 
-	public void setTransactionLine(String transactionLine) {
-		this.transactionLine = transactionLine;
-	}
+
 	public static String createTransactionLine(String deviceNumber, String walletNumber, KeyValueProvider provider){
 		return deviceNumber + "|" + walletNumber + "|0|" + DateUtils.getDateddMMyyyy() + "|U1|" + provider.getString(TRANSACTION_AMOUNT) 
 				+ "|" + provider.getString(TRANSACTION_CURRENCY) + "||" + DateUtils.getDateddMMyyyy() + "|" + provider.getString(BILLING_AMOUNT) 
@@ -122,6 +120,10 @@ public class FileCreation {
 		    inputStream.close();
 		}
 		return content;
+	}
+	
+	public void setTransactionLine(String transactionLine) {
+		this.transactionLine = transactionLine;
 	}
 
 

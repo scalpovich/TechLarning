@@ -18,13 +18,13 @@ public class AlertSteps {
 	private DataProvider provider;
 
 	@Autowired
-	private DisputeWorkflow disputeWorkflow;
+	private DisputeWorkflow disWorkflow;
 
 	private String eventJobId;
 
 	@When("user searches for alert from database")
 	public void whenUserSearchesForAlertFromDatabase(){
-		eventJobId =disputeWorkflow.getEventTriggerFromDb(Institution.createWithProvider(provider).getCode());
+		eventJobId =disWorkflow.getEventTriggerFromDb(Institution.createWithProvider(provider).getCode());
 	}
 	
 	@Then("verify that alert was successfully triggeredold")

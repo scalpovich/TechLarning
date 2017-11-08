@@ -10,6 +10,7 @@ public class ProcessBatches {
 	
 	private String joBID;
 	private String batchType;
+	
 	private String batchName;
 	private String fileType;
 	private String productType;
@@ -20,8 +21,10 @@ public class ProcessBatches {
 	
 	private static final String BATCH_TYPE = "UPLOAD [U]";
 	
-	private static final String BATCH_NAME = "Transaction Upload [TRANSACTION_UPLOAD]";
+//	private static final String BATCH_NAME = "Transaction Upload [TRANSACTION_UPLOAD]";
+	private static final String BATCH_NAME = "Load IPM Incoming File [IPM_INCOMING]";
 	
+
 
 	public static ProcessBatches createWithProvider(KeyValueProvider provider){
 		ProcessBatches batch = new ProcessBatches();
@@ -57,10 +60,10 @@ public class ProcessBatches {
 	public String getProductType() {
 		return productType;
 	}
-
 	public void setProductType(String productType) {
 		this.productType = productType;
 	}
+
 	public String getBatchName() {
 		return batchName;
 	}

@@ -9,9 +9,4 @@
 #ce ----------------------------------------------------------------------------
 
 ; Script Start - Add your code below here
-#RequireAdmin
-
-
 	WinActivate("Add BIN range", "General")
-
-

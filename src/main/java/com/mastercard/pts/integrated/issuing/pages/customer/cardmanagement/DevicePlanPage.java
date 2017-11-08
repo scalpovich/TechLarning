@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.CardType;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.DeviceType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Vendor;
@@ -40,6 +41,9 @@ public class DevicePlanPage extends AbstractBasePage {
 	MenuSubMenuPage menuSubMenuPage;
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
+	
+	@Autowired
+	private TestContext context;
 
 	public Vendor vendor;
 	// main screen locators
@@ -170,6 +174,9 @@ public class DevicePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnSetAftKyc:input:dropdowncomponent")
 	private MCWebElement iframeAfterKYCDdwn;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnSetBefKyc:input:dropdowncomponent")
+	private MCWebElement iframeBeforeKYCDdwn;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:emvChipType:input:dropdowncomponent")
 	private MCWebElement iframeChipTypeDdwn;
 
@@ -820,6 +827,10 @@ public class DevicePlanPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(iframeAfterKYCDdwn, kycType);
 	}
 
+	public void selectIframeBeforeKYCDdwn(String kycType) {
+		WebElementUtils.selectDropDownByVisibleText(iframeBeforeKYCDdwn, kycType);
+	}
+
 	public void selectIframeChipTypeDdwnDdwn(String chipType) {
 		WebElementUtils.selectDropDownByVisibleText(iframeChipTypeDdwn, chipType);
 	}
@@ -893,21 +904,23 @@ public class DevicePlanPage extends AbstractBasePage {
 
 		fillDevicePlanPage(devicePlan);
 
+		selectIframeBeforeKYCDdwn(devicePlan.getBeforeKYC());
 		selectIframeAfterKYCDdwn(devicePlan.getAfterKYC());
 		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES))
 			selectAllcavv();
 
 		// perform below steps only when pinRequired is true which is the
 		// default state
-		if (ProgramSetupSteps.pinRequired)
+		if("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
 			selectAllPinValidation();
 		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES))
 			selectAllcvccvv();
 		checkExpiryDate();
-		checkCvcCvv();
+		if("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
+			checkCvcCvv();
 		WebElementUtils.checkCheckbox(ecommAllowedChkBx, devicePlan.isEcommerceAllowed());
 
-		if (!devicePlan.getDeviceType().equals(DeviceType.STATIC_VIRTUAL_CARD) && ProgramSetupSteps.pinRequired) {
+		if (!devicePlan.getDeviceType().equals(DeviceType.STATIC_VIRTUAL_CARD) && "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 			WebElementUtils.enterText(pinRetryLimitTxt, devicePlan.getPinRetryLimit());
 		}
 		clickIframeNextButton();
@@ -977,7 +990,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	private void fillPinGenerationSection(DevicePlan devicePlan) {
 		// perform below steps only when pinRequired is true which is the
 		// default state
-		if (ProgramSetupSteps.pinRequired) {
+		if("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 			WebElementUtils.scrollDown(driver(), 0, 250);
 			pinRequiredChk.click();
 			WebElementUtils.selectDropDownByVisibleText(pinDataTransmissionDDwn, devicePlan.getPinDataTransmission());

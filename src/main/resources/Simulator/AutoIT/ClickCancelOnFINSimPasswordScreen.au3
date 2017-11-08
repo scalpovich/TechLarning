@@ -9,7 +9,9 @@
 #ce ----------------------------------------------------------------------------
 
 ; Script Start - Add your code below here
-#RequireAdmin
+#include <MsgBoxConstants.au3>
+#include <WinAPIFiles.au3>
+#include <Constants.au3>
 
 If WinExists("Password Protected Sever") Then
 	WinActivate("Password Protected Sever", "Help")

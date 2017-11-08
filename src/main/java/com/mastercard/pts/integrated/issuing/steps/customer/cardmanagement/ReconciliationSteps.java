@@ -16,6 +16,8 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.R
 
 @Component
 public class ReconciliationSteps {
+	private static final String BATCH_TYPE = "BATCH_TYPE";
+
 	@Autowired
 	private TestContext context;
 
@@ -30,48 +32,43 @@ public class ReconciliationSteps {
 		Assert.assertTrue(reconciliationWorkFlow.verifyReportGenerationRecon());
 	}
 
-	@Then("verify report for Auth is downloaded")
-	public void verifyReportForAuthIsDownloaded() {
-		Assert.assertTrue(reconciliationWorkFlow.verifyReportGeneration());
-	}
-
 	@When("pre-clearing and Pre-EOD batches are run")
-	public void whenPreclearingAndPreEODBatchesAreRun(){
-		
+	public void whenPreclearingAndPreEODBatchesAreRun() {
+
 		List<ProcessBatches> processBatches = new ArrayList<>();
 		ProcessBatches prepaidEodProcessBatch = new ProcessBatches();
-		prepaidEodProcessBatch.setProductType(provider.getString("BATCH_TYPE"));
+		prepaidEodProcessBatch.setProductType(provider.getString(BATCH_TYPE));
 		prepaidEodProcessBatch.setBatchName(provider.getString("BATCH_NAME_PREPAID_EOD"));
 		prepaidEodProcessBatch.setProductType("");
-		
+
 		ProcessBatches preClearingBatch = new ProcessBatches();
-		preClearingBatch.setProductType(provider.getString("BATCH_TYPE"));
+		preClearingBatch.setProductType(provider.getString(BATCH_TYPE));
 		preClearingBatch.setBatchName(provider.getString("BATCH_NAME_PRE_CLEARING"));
 		preClearingBatch.setProductType(provider.getString("PREPAID_PRODUCT_TYPE"));
-		
+
 		processBatches.add(preClearingBatch);
 		processBatches.add(prepaidEodProcessBatch);
-		
+
 		reconciliationWorkFlow.runPreClearingAndPrepaidEodBatch(processBatches);
 	}
 
 	@When("pre-clearing and Loyalty Calc batches are run")
-	public void whenPreclearingAndLoyaltyBatchesAreRun(){
-		
+	public void whenPreclearingAndLoyaltyBatchesAreRun() {
+
 		List<ProcessBatches> processBatches = new ArrayList<>();
 		ProcessBatches prepaidEodProcessBatch = new ProcessBatches();
-		prepaidEodProcessBatch.setProductType(provider.getString("BATCH_TYPE"));
+		prepaidEodProcessBatch.setProductType(provider.getString(BATCH_TYPE));
 		prepaidEodProcessBatch.setBatchName(provider.getString("BATCH_NAME_LOYALTY"));
 		prepaidEodProcessBatch.setProductType("");
-		
+
 		ProcessBatches preClearingBatch = new ProcessBatches();
-		preClearingBatch.setProductType(provider.getString("BATCH_TYPE"));
+		preClearingBatch.setProductType(provider.getString(BATCH_TYPE));
 		preClearingBatch.setBatchName(provider.getString("BATCH_NAME_PRE_CLEARING"));
 		preClearingBatch.setProductType(provider.getString("PREPAID_PRODUCT_TYPE"));
-		
+
 		processBatches.add(preClearingBatch);
 		processBatches.add(prepaidEodProcessBatch);
-		
+
 		reconciliationWorkFlow.runPreClearingAndLoyaltyCalcBatch(processBatches);
 	}
 

@@ -9,7 +9,6 @@
 #ce ----------------------------------------------------------------------------
 
 ; Script Start - Add your code below here
-#RequireAdmin
 #include <AutoItConstants.au3>
 
 

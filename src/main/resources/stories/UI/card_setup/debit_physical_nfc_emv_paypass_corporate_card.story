@@ -7,8 +7,6 @@ I want to create a corporate EMV magnetic stripe pay-pass debit card
 
 Meta:
 @StoryName S224288
-@SanityTest
-@CardCreation
 
 Scenario: Set up Corporate EMV magnetic Stripe Pay-Pass debit card 
 Meta:

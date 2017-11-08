@@ -9,7 +9,6 @@
 #ce ----------------------------------------------------------------------------
 
 ; Script Start - Add your code below here
-#RequireAdmin
 
 If WinExists("Password Protected Sever") Then
 	WinActivate("Password Protected Sever", "Help")

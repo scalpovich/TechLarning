@@ -7,6 +7,8 @@ I want to Upload transactions from a file
 
 Meta:
 @StoryName S193887
+@SanityCardsWithClearning
+@FullSanity
 
 Scenario: 01 Load ath file in MCPS and create NOT file of IPM extension
 Meta:

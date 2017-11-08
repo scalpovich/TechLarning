@@ -11,10 +11,10 @@ Meta:
 Scenario: Debit card clearing
 
 Given Auth file is provided for <iteration>
-And user is logged in institution
 When Auth file is loaded into MCPS and processed
-And NOT file is successfully generated
+And NOT file is successfully generated for iteration
 And User uploads the NOT file
+And user is logged in institution
 And user processes batch for debit
 Then in batch trace history transaction is successful
 And transaction status is "Matching Pending"
@@ -28,12 +28,13 @@ Examples:
 | iteration  |
 | Iteration1 |
 
+
 Scenario: Prepaid card clearing
 
 Given Auth file is provided for <iteration>
 And user is logged in institution
 When Auth file is loaded into MCPS and processed
-And NOT file is successfully generated
+And NOT file is successfully generated for iteration
 And User uploads the NOT file
 And user processes batch for prepaid
 Then in batch trace history transaction is successful

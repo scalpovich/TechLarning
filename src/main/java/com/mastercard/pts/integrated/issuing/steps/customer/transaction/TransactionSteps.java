@@ -1,9 +1,13 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.transaction;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
+import java.awt.AWTException;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jbehave.core.annotations.Alias;
@@ -15,23 +19,30 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.common.base.Strings;
 import com.mastercard.pts.integrated.issuing.configuration.FinSimSimulator;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.AuthorizationTransactionFactory;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ClearingTestCase;
+import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.Transaction;
 import com.mastercard.pts.integrated.issuing.domain.provider.ClearingTestCaseProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.TransactionProvider;
+import com.mastercard.pts.integrated.issuing.pages.ValidationException;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
 
 @Component
 public class TransactionSteps {
 	private static final Logger logger = LoggerFactory.getLogger(TransactionSteps.class);
+
+	private static Boolean sameCard = false;
 
 	@Autowired
 	private TestContext context;
@@ -67,12 +78,41 @@ public class TransactionSteps {
 	public void setTransactionAmount(String transactionAmount) {
 		this.transactionAmount = transactionAmount;
 	}
-
+	
 	@When("perform an $transaction MAS transaction")
 	@Alias("a sample simulator \"$transaction\" is executed")
 	@Given("perform an $transaction MAS transaction")
 	public void givenTransactionIsExecuted(String transaction){
-		givenOptimizedTransactionIsExecuted(transaction);
+		String temp = transaction;
+		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED) );
+		if("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
+			//ECOMM are pinless tranasactions
+			if(!transaction.toLowerCase().contains("ecom"))
+				temp = transaction + "_PIN";
+		}
+
+		performOperationOnSamecard(false);
+		givenOptimizedTransactionIsExecuted(temp);
+	}
+
+	@When("perform an $transaction MAS transaction on the same card")
+	@Alias("a sample simulator \"$transaction\" is executed on the same card")
+	@Given("perform an $transaction MAS transaction on the same card")
+	public void givenTransactionIsExecutedOnTheSameCard(String transaction){
+		String temp = transaction;
+		// we need to use _PIN Profile from MAS test data template
+		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED) );
+		if("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
+			//ECOMM are pinless tranasactions
+			if(!transaction.toLowerCase().contains("ecom"))
+				temp = transaction + "_PIN";
+		}
+		performOperationOnSamecard(true);
+		givenOptimizedTransactionIsExecuted(temp);
+	}
+
+	private static void performOperationOnSamecard(Boolean val) {
+		sameCard = val;
 	}
 
 	@Then("last entry is deleted")
@@ -108,6 +148,9 @@ public class TransactionSteps {
 			// this line of code is temporary as this will only work for Single wallet currency
 			//for multi wallet, we may have to set other setter --> setIssuerCountryCode, setIssuerCurrencyCode, setCardHolderBillingCurrency
 			device.setCurrency(tempData.getCurrency());
+			if("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
+				device.setExpirationDate(devicePlan.getExpiryDate());
+			}
 			//			__________________CURRENCY VAL FROM EXCEL _________
 
 			//  This is a Single Wallet, Single Currency INDIA card
@@ -115,7 +158,7 @@ public class TransactionSteps {
 			//setting values of Card Data Element (Card Profile) which are placed in the "Transaction Templates" sheet
 			setCardDataDynamically(device, transactionData);
 			//setting values of Data Element which are placed in the "Transaction Templates" sheet
-			setDeElementsDynamically(device, transactionData);
+			setDeElementsDynamically(device, transactionData, transaction);
 
 		}
 		// else block for when scripts are running from excel - AuthorizationTransaction_DataDriven alone
@@ -130,15 +173,24 @@ public class TransactionSteps {
 		//		creating & import testcase/transaction file  to temp location ex: C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413
 		transactionData.setTestCase(transactionFactory.createCsvTesCase(transactionData));
 
-		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData);
+		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
 	}
 
-	private void setDeElementsDynamically(Device device, Transaction transactionData) {
+	private void setDeElementsDynamically(Device device, Transaction transactionData, String transaction) {
 
 		if(!"pinless".equalsIgnoreCase(device.getPinNumberForTransaction()))
 			transactionData.setDeKeyValuePairDynamic("052", device.getPinNumberForTransaction());
 		//data format is 12 digits hence leftpad with 0
 		transactionData.setDeKeyValuePairDynamic("004", StringUtils.leftPad(device.getTransactionAmount(), 12, "0" ));
+		if(transaction.contains("BALANCE_INQUIRY")) {
+			//this value is expected to be 0's for Balance Enquiry
+			transactionData.setDeKeyValuePairDynamic("004", "000000000000"); 
+		}
+
+		if(transaction.contains("ECOMMERCE") || !Strings.isNullOrEmpty(device.getCvv2Data())) {
+			//for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInux box
+			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); //Transaction currency code
+		}
 		//  This is a Single Wallet, Single Currency INDIA card
 		transactionData.setDeKeyValuePairDynamic("049", device.getCurrency()); //Transaction currency code
 		transactionData.setDeKeyValuePairDynamic("050", device.getCurrency()); //Settlement currency code
@@ -152,8 +204,8 @@ public class TransactionSteps {
 		transactionData.setCardSequenceNumber(device.getSequenceNumber());
 		transactionData.setPinForTransaction(device.getPinNumberForTransaction());
 		transactionData.setIssuerCountryCode(device.getCurrency()); //"356"; // transactionData.getCurrency(); //356
-		transactionData.setIssuerCurrencyCode((device.getCurrency()));
-		transactionData.setCardHolderBillingCurrency((device.getCurrency()));  //value from DE Element 61_13
+		transactionData.setIssuerCurrencyCode(device.getCurrency());
+		transactionData.setCardHolderBillingCurrency(device.getCurrency());  //value from DE Element 61_13
 	}
 
 	private void setCardDataDynamically(Device device, Transaction transactionData) {
@@ -194,19 +246,37 @@ public class TransactionSteps {
 	@When("Auth file is loaded into MCPS and processed")
 	public void loadAuthFileToMCPS(){
 		arnNumber = transactionWorkflow.loadAuthFileToMCPS(authFilePath);
-		logger.info("ARD number is ", arnNumber);
+		if(arnNumber.isEmpty())
+		{
+			logger.error("*********ARN number is empty");
+		}
+		else 
+		{
+			logger.info("********** ARN number is ", arnNumber);
+		}
+	}
+
+	@Given("update IPM file for trasaction reversal")
+	@When("update IPM file for trasaction reversal")
+	public void addAndmodify0025MessageReversalIndicator() throws AWTException{
+		transactionWorkflow.assignUniqueFileId();
+		transactionWorkflow.addAndmodify0025MessageReversalIndicator();
+		logger.info("updated IPM file for Reversal");
 	}
 
 	@Alias("test results are reported")
 	@When("MAS test results are verified")
 	@Then("MAS test results are verified")
 	public void thenTestResultsAreReported(){
-		Boolean testResults = transactionWorkflow.verifyTestResults();
-		if(testResults)	{
-			logger.info("Transaction is succcessful!");
+		String testResults = transactionWorkflow.verifyTestResults();
+		if(!testResults.toLowerCase().contains("not" ))	{
+			logger.info("Transaction is succcessful!  - Expected Result : ", testResults );
+			assertTrue("Transaction is succcessful!  - Expected Result : " + testResults, true );
 		}
 		else	{
-			logger.error("Transaction failed!");
+			logger.error("Transaction failed!  - Result : ", testResults);
+			assertFalse("Transaction failed!  -  Result : " +  testResults, false);
+			throw new ValidationException("Transaction failed! -  Result : " +  testResults);
 		}
 	}
 
@@ -247,11 +317,31 @@ public class TransactionSteps {
 	@When("transaction status is \"$type\"")
 	@Then("transaction status is \"$type\"")
 	public void thenTransactionStatusIsPresentmentMatched(String type){
-		assertEquals(type, transactionWorkflow.getAuthorizationStatus(arnNumber));			
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		assertEquals(type, transactionWorkflow.getAuthorizationStatus(arnNumber, ts));			
 	}
 
 	@Then("transaction fee is correctly posted")
 	public void thenTransactionFeeIsCorrecltyPosted(){
-		assertEquals(transactionAmount, transactionWorkflow.getFeePostingStatus(arnNumber));
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		assertEquals(transactionAmount, transactionWorkflow.getFeePostingStatus(arnNumber, ts));
 	}
+
+	@Then("search with ARN in transaction screen and balance should be credited")
+	public void thenSearchWithARNInTransactionScreenCheckReversalStatusAndBalanceShouldBeCredited() {
+		ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
+           TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		rt.setArn(context.get(ConstantData.ARN_NUMBER));
+		BigDecimal actualTransactionAmount = new BigDecimal(rt.getAmount());
+           assertEquals(new BigDecimal( transactionWorkflow.getFeePostingStatus(rt.getArn(), ts)), actualTransactionAmount);
+	}
+    
+    @Then("search with ARN in transaction screen and status should be Reversal [R]")
+    public void thenSearchWithARNInTransactionScreenCheckReversalStatusAndStatusShouldBeReversal() {
+           ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
+           TransactionSearch ts = TransactionSearch.getProviderData(provider);
+           rt.setArn(context.get(ConstantData.ARN_NUMBER));
+           assertEquals(transactionWorkflow.searchTransactionWithArnAndGetStatus(rt.getArn(), ts), "Reversal [R]");
+    }
+
 }

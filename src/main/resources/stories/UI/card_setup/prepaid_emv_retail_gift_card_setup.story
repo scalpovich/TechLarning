@@ -1,4 +1,4 @@
-prepaid emv retail giftcard card
+prepaid emv retail gift card
 
 Narrative:
 In order to provide to client easy-to-use payment method for e-commerce retail
@@ -7,11 +7,10 @@ I want to create a prepaid emv retail giftcard card for client
 
 Meta:
 @StoryName S203707
-@SanityTest
-@CardCreation
+@SanityCards
 
 
-Scenario: Set up prepaid emv retail giftcard card
+Scenario: Set up prepaid emv retail giftcard
 Meta:
 @TestId TC398452
 Given user is logged in institution
@@ -19,7 +18,7 @@ And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
 Then device has "normal" status
 
-Scenario: prepaid emv retail giftcard card device production
+Scenario: prepaid emv retail giftcard device production
 Meta:
 @TestId TC408068
 Given user is logged in institution

@@ -1,3 +1,5 @@
+debit emv manual authorization
+
 Narrative:
 In order to provide to client easy-to-use payment method for e-commerce retail
 As an issuer
@@ -5,10 +7,8 @@ I want to create an emv debit card for client and perform manual authorization f
 
 Meta:
 @StoryName S198222
-@SanityTest
-@BVTest
-Authorisation
-
+@NonUIBVTest
+@SanityCardsWithAuthorization
 
 Scenario: Set up emv debit card
 Meta:

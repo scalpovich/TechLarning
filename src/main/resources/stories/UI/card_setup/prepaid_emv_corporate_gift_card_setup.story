@@ -8,9 +8,7 @@ I want to create a prepaid emv corporate giftcard card for client
 Meta:
 @StoryName p_emv_corp_gift
 @oldReferenceSheet_S203707
-@SanityTest
-@CardCreation
-
+@SanityCards
 
 Scenario: Set up prepaid emv corporate giftcard card
 Meta:

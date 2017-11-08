@@ -3,6 +3,8 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 import java.io.File;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.base.Throwables;
@@ -15,6 +17,8 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
 @Workflow
 public class ReconciliationWorkFlow {
+	
+	private static final Logger logger = LoggerFactory.getLogger(TransactionReportsPage.class);
 
 	@Autowired
 	private Navigator navigator;
@@ -42,8 +46,15 @@ public class ReconciliationWorkFlow {
 	public boolean verifyReportGeneration() {
 		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
 		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
-		System.out.println("fileCountBeforeReportGeneration = " + fileCountBeforeReportGeneration);
 		page.generateTransactionAuthReport();
+		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
+		return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
+	}
+	
+	public boolean verifyReportGenerationClearing() {
+		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
+		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
+		page.generateTransactionClearingReport();
 		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
 		return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
 	}
@@ -51,7 +62,7 @@ public class ReconciliationWorkFlow {
 	public boolean verifyReportGenerationRecon() {
 		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
 		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
-		System.out.println("fileCountBeforeReportGeneration = " + fileCountBeforeReportGeneration);
+		logger.info("Number of Files Before Report Generation = {} ", fileCountBeforeReportGeneration);
 		page.generateProgramWiseBalanceSummaryReport();
 		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
 		return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
@@ -85,5 +96,7 @@ public class ReconciliationWorkFlow {
 		}
 		return fileCountAfterDownload;
 	}
+
+
 
 }

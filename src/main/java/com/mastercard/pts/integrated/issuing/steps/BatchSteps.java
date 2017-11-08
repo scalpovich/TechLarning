@@ -3,8 +3,6 @@ package com.mastercard.pts.integrated.issuing.steps;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 import org.jbehave.core.annotations.Then;
@@ -18,17 +16,15 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
-import com.mastercard.pts.integrated.issuing.utils.BatchFileValidator;
+import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 @Component
 public class BatchSteps {
 
-	private static final String DEFAULT_EMBOSSING_LINE = "^(?<deviceNumber> {3}\\d{16}|\\d{19})"
-			+ "\\|(?<expiryDate>\\d{4})\\|(?<pvki>\\d)\\|(?<pvv>\\d{4}| {4})\\|(?<icv>\\d{3}| {3})"
-			+ "\\|(?<cvv>\\d{3}| {3})\\|(?<cvv2>\\d{3}| {3})\\|(?<serviceCode>\\d{3})"
-			+ "(?<checksum>\\d{8})?$";
-
+	/*private static final String DEFAULT_EMBOSSING_LINE = "(?<deviceNumber> {3}\\d{16}|\\d{19}):(?<expiryDate>\\d{4}):(?<serviceCode>\\d{3})(?<pvki>\\d)(?<pvv>\\d{4}| {4})"
+			+"\\?(?<cvv>\\d{3}| {3})(?<icv>\\d{3}| {3}):(?<cvv2>\\d{3}| {3})\\?(?<city>.{50})(?<state>.{50}):(?<country>.{50})(?<addressLine1>.{50})\\|(?<cardPackID>.{24}).*";
+*/
 	private static final String DEFAULT_TRAILER = "TR\\d{8}";
 
 	private static final String DEFAULT_HEADER = "[\\w ]{32}\\d{6}";
@@ -49,33 +45,35 @@ public class BatchSteps {
 	@Then("embossing file batch was generated in correct format")
 	public void  embossingFileWasGeneratedSuccessfully() {
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
-		File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE");
+		try {
+			File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE");
+			String[] fileData = LinuxUtils.getCardNumberAndExpiryDate(batchFile);
 
-		List<Map<String, String>> batchData = BatchFileValidator.forBatch(batchFile)
-				.expectHeader(getHeaderPattern())
-				.expectLine(DEFAULT_EMBOSSING_LINE)
-				.expectTrailer(getTrailerPattern())
-				.validate()
-				.extractData();
+			Device device = context.get(ContextConstants.DEVICE);
+			device.setDeviceNumber(fileData[0]);
+			device.setCvv2Data(fileData[2]);
+			device.setPvkiData(fileData[6]);
+			device.setPvvData(fileData[3]);
+			device.setCvvData(fileData[4]);
+			device.setIcvvData(fileData[5]);
 
-		Map<String, String> deviceData = batchData.get(0);
 
-		Device device = context.get(ContextConstants.DEVICE);
-		device.setCvvData(deviceData.get("cvv"));
-		device.setDeviceNumber(deviceData.get("deviceNumber"));
-		device.setExpirationDate(deviceData.get("expiryDate"));
-		device.setPvvData(deviceData.get("pvv"));
-		device.setIcvvData(deviceData.get("icv"));
-		device.setCvv2Data(deviceData.get("cvv2"));
-		device.setPvkiData(deviceData.get("pvki"));
+			//for format of date to be passed is YYMM
+			String tempDate = fileData[1].substring(fileData[1].length()-2) + fileData[1].substring(0, 2);
+			device.setExpirationDate(tempDate);
+			MiscUtils.reportToConsole("Expiration Data :  " + tempDate );
 
-		MiscUtils.reportToConsole("Device Details :  " + device );
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@When("Pin Offset file batch was generated successfully")
 	@Then("Pin Offset file batch was generated successfully")
 	public void  getPinFileData()
 	{
+		MiscUtils.reportToConsole("******** Pin Offset Start ***** " );
 		String[] values = null;
 		DevicePlan tempdevice = context.get(ContextConstants.DEVICE_PLAN);
 		File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevice.getDevicePlanCode(), tempDirectory.toString(), "PIN");
@@ -88,6 +86,8 @@ public class BatchSteps {
 			device.setPinOffset(values[0]);
 			MiscUtils.reportToConsole("Pin Offset :  " + values[0] );
 			scanner.close();
+			//			reanming file name as sometimes the embosing file name is also same
+			MiscUtils.renamePinFile(batchFile.toString());
 		}
 		catch(NullPointerException | FileNotFoundException e)
 		{

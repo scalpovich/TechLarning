@@ -1,32 +1,25 @@
-Magnetic Strip Retail Debit Card Authorization & Clearing
+Magnetic Strip Prepaid Card Authorization
 
 Narrative:
-In order to provide to client easy-to-use multi-purpose debit card
+In order to provide to client easy-to-use multi-purpose prepaid card
 As an issuer
-I want to create a magnetic stripe retail debit card and perform transactions and clearing
+I want to create an magnetic stripe prepaid card and perform various transaction
 
 Meta:
-@StoryName debit_msr
-@SanityTest
-@Authorisation
+@StoryName prepaid_msr_retail_gift
+@oldReferenceSheet_prepaid_msr
+@SanityCardsWithClearning
+@FullSanity
 
-Scenario: 01 Set up retail magnetic stripe retail debit card 
+Scenario: Set up retail magnetic stripe prepaid card and perform purchase transaction
 Meta:
-@TestId TC406726
-
+@TestId TC406658
 Given user is logged in institution
-When device range for program with device plan for "debit" "magnetic stripe" card
-When user creates new device of debit type for new client
-When a new device was created
-When user processes pre-production batch for debit
-When user processes device production batch for debit
-When user processes pin generation batch for debit
-When user has wallet number information for debit device
-When user performs adjustment transaction
-When user has current wallet balance amount information for debit device
+When prepaid magnetic stripe device is available with balance amount
+When user has current wallet balance amount information for prepaid device
 !-- When user sign out from customer portal
 
-Scenario: 02 Pin Generation 
+Scenario: Pin Generation 
 Meta:
 @TestId 
 Given connection to FINSim is established
@@ -45,25 +38,7 @@ Then MAS test results are verified
 Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
 Meta:
 @TestId 
-When perform an MSR_CASH_ADVANCE MAS transaction
-Then MAS test results are verified
-
-Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
-Meta:
-@TestId 
-When perform an MSR_CASH_WITHDRAWAL MAS transaction
-Then MAS test results are verified
-
-Scenario: Perform MSR_ECOMMERCE Authorization transaction
-Meta:
-@TestId 
-When perform an MSR_ECOMMERCE MAS transaction
-Then MAS test results are verified
-
-Scenario: Perform MSR_POS_BALANCE_INQUIRY Authorization transaction
-Meta:
-@TestId 
-When perform an MSR_POS_BALANCE_INQUIRY MAS transaction
+When perform an MSR_CASH_ADVANCE MAS transaction on the same card
 Then MAS test results are verified
 
 Scenario: Generate Auth File for Clearing
@@ -85,9 +60,8 @@ Scenario: Upload ipm file from customer portal and process it
 Meta:
 @TestId TC406665
 !-- Given user is logged in institution
-When NOT file is successfully generated
 When User uploads the NOT file
-When user processes batch for debit
+When user processes batch for prepaid
 Then in batch trace history transaction is successful
 
 Scenario: Matching & Posting to Cardholders account
@@ -95,11 +69,15 @@ Meta:
 @TestId TC406667
 When in batch trace history transaction is successful
 When transaction status is "Matching Pending"
-When "Matching" batch for debit is successful
+When "Matching" batch for prepaid is successful
 Then transaction status is "Presentment Matched with authorization"
 
-Scenario: Program Balance Summary download
+Scenario: Program Balance Summary, Auth and Clearing reports download
 Meta:
 @TestId 
+When pre-clearing and Pre-EOD batches are run
 Then verify report for transactions with Program Balance Summary is downloaded
+And Verify Program Balance Summary is downloaded
+And verify report for Auth is downloaded
+And verify report for Clearing is downloaded
 When user sign out from customer portal
