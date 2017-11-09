@@ -11,4 +11,4 @@
 ; Script Start - Add your code below here
 #include <MsgBoxConstants.au3>
 
-WinActivate("MasterCard Authorization Simulator <MAS16.Q4>", "Test Options")
+WinActivate($CmdLine[1], "Test Options")

@@ -12,5 +12,5 @@
 #include <AutoItConstants.au3>
 
 
-	WinActivate("MasterCard Authorization Simulator <MAS16.Q4>", "Test Options")
-	ControlClick("MasterCard Authorization Simulator <MAS16.Q4>", "", "Allows configuring the options")
+	WinActivate($CmdLine[1], "Test Options")
+	ControlClick($CmdLine[1], "", "Allows configuring the options")

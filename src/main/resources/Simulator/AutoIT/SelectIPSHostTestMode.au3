@@ -11,9 +11,9 @@
 ; Script Start - Add your code below here
 Opt("WinWaitDelay", 500) ;250 milliseconds
 
-If WinExists("MasterCard Authorization Simulator <MAS16.Q4>") Then
-   WinActivate("MasterCard Authorization Simulator <MAS16.Q4>", "Test Mode")
-	ControlClick("MasterCard Authorization Simulator <MAS16.Q4>","","[NAME:comboBox1]")
+If WinExists($CmdLine[1]) Then
+   WinActivate($CmdLine[1], "Test Mode")
+	ControlClick($CmdLine[1],"","[NAME:comboBox1]")
 	Sleep(1000)
 	Send("{DOWN}")
 	Sleep(1000)
