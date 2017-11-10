@@ -18,14 +18,15 @@ public class SimulatorTestHooks {
 	@BeforeStory
 	public void startSimulatorSession(@Named("SimulatorSession") String simulator) {
 		if (!Strings.isNullOrEmpty(simulator)) {
-			transactionWorkflow.launchWiniumAndSimulator(simulator);
+			transactionWorkflow.testAutoItWithPsExec();
+			//transactionWorkflow.launchWiniumAndSimulator(simulator);
 		}
 	}
 
 	@AfterStory
 	public void stopSimulatorSession(@Named("SimulatorSession") String simulator) {
 		if (!Strings.isNullOrEmpty(simulator)) {
-			transactionWorkflow.closeSimulator(simulator);
+			//transactionWorkflow.closeSimulator(simulator);
 		}
 	}
 }

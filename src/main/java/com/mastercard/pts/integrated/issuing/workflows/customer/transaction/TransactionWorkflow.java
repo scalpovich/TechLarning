@@ -1198,4 +1198,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		executeAutoITExe(CLICK_TEST_RESULTS  + "\"" +SimulatorConstantsData.MDFS_16_X + "\"" );
 		executeAutoITExe(CLICK_TEST_RESULTS  + "\"" +SimulatorConstantsData.MDFS_17_X + "\"" );
 	}
+	
+	public void testAutoItWithPsExec() {
+		executeAutoITExe("TestExe.exe");
+	}
 }

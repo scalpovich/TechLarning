@@ -126,6 +126,7 @@ public class TransactionSteps {
 	@Given("user performs an optimized $transaction MAS transaction")
 	public void givenOptimizedTransactionIsExecuted(String transaction)
 	{
+		transactionWorkflow.testAutoItWithPsExec();
 		Device device = context.get(ContextConstants.DEVICE);
 		//this line of code reads data from the "AuthorizationTransaction_DataDriven.xls" 
 		// at \\Isser-automation-epam\src\main\resources\config\Data folder as the "Transaction Templates" sheet has the template information

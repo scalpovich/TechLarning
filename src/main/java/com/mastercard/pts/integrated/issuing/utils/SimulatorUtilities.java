@@ -222,8 +222,11 @@ public class SimulatorUtilities{
 		try
 		{
 			String path = getResourceFolderPath() + SimulatorConstantsData.AUTOIT_EXE_PATH.replace("\\", "\\\\");
+			String psExecPath = getResourceFolderPath() + "\\Simulator\\PsExec\\PsExec.exe";
+			MiscUtils.reportToConsole("psExecPath "  + psExecPath);
 			logger.info("********* AutoIt Exe being executed :  ",  fileName);
-			String commandToExecute = " cmd /c " + path + fileName;
+			String commandToExecute = " cmd /c " + psExecPath + " "+ path + fileName;
+			MiscUtils.reportToConsole("commandToExecute "  + commandToExecute);
 			if(fileName.contains("SelectIPSHost")) {
 				Runtime.getRuntime().exec(commandToExecute).waitFor(25, TimeUnit.SECONDS);
 				wait(15000);
