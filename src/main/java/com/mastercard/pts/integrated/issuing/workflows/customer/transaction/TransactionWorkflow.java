@@ -376,7 +376,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		List<WebElement> lst = winiumDriver.findElements(By.name("0110 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
 		lst.get(lst.size()-1).click();
 		wait(5000);
-		pressDownArrow();
+		pressDownArrow(3);
 		wait(2000);
 		WebElement tempElement = winiumDriver.findElementByXPath("//*[contains(@AutomationId,'DescriptionTextBox')]");
 		String tempText = tempElement.getText();

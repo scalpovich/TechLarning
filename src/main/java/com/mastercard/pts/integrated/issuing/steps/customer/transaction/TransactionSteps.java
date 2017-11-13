@@ -270,14 +270,18 @@ public class TransactionSteps {
 	@Then("MAS test results are verified")
 	public void thenTestResultsAreReported(){
 		String testResults = transactionWorkflow.verifyTestResults();
-		if(!testResults.toLowerCase().contains("not" ))	{
+		if(testResults.toLowerCase().contains("Validations OK" ))	{
 			logger.info("Transaction is succcessful!  - Expected Result : ", testResults );
 			assertTrue("Transaction is succcessful!  - Expected Result : " + testResults, true );
 		}
-		else	{
-			logger.error("Transaction failed!  - Result : ", testResults);
+		else if(testResults.toLowerCase().contains("Validations Not OK" ))	{
 			assertFalse("Transaction failed!  -  Result : " +  testResults, false);
 			throw new ValidationException("Transaction failed! -  Result : " +  testResults);
+		}
+		else	{
+			logger.error("Transaction failed! ", testResults);
+			assertFalse("Transaction failed! ", false);
+			throw new ValidationException("Transaction failed!");
 		}
 	}
 
