@@ -74,6 +74,8 @@ public class Transaction {
 	private String issuerCurrencyCode;
 
 	private String cardHolderBillingCurrency;
+	
+	private String serviceCode;
 
 	public String getIssuerCurrencyCode() {
 		return issuerCurrencyCode;
@@ -331,5 +333,13 @@ public class Transaction {
 
 	public void setIssuerCountryCode(String issuerCountryCode) {
 		this.issuerCountryCode = issuerCountryCode;
+	}
+
+	public String getServiceCode() {
+		return serviceCode;
+	}
+
+	public void setServiceCode(String serviceCode) {
+		this.serviceCode = serviceCode;
 	}
 }
