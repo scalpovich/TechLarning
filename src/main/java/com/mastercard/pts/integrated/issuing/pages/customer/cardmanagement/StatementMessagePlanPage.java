@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StatementMessageDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StatementMessagePlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -201,12 +201,6 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 		selectProductType(deviceCreation);
 		return StatementPlanDesc + " " + "[" + StatementPlanCode + "]";
 
-	}
-
-	public void clickSaveButton() {
-		WebElementUtils.scrollDown(driver(), 0, 250);
-		clickWhenClickable(save);
-		SwitchToDefaultFrame();
 	}
 
 	public boolean verifyErrorsOnStatementPlanPage() {
