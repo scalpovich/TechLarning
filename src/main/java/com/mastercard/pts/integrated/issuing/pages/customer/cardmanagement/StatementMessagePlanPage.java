@@ -204,6 +204,7 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 	}
 
 	public void clickSaveButton() {
+		WebElementUtils.scrollDown(driver(), 0, 250);
 		clickWhenClickable(save);
 		SwitchToDefaultFrame();
 	}
