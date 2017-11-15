@@ -126,6 +126,19 @@ public class TransactionSteps {
 	@Given("user performs an optimized $transaction MAS transaction")
 	public void givenOptimizedTransactionIsExecuted(String transaction)
 	{
+		Transaction transactionData = generateMasTestDataForTransaction(transaction);
+
+		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
+	}
+	
+	@When("user performs generate TestData for an optimized $transaction MAS transaction")
+	@Given("user performs generate TestData for an optimized $transaction MAS transaction")
+	public void givenGenerateTestDataForOptimizedTransactionIsExecuted(String transaction)
+	{
+		generateMasTestDataForTransaction(transaction);
+	}
+
+	private Transaction generateMasTestDataForTransaction(String transaction) {
 		Device device = context.get(ContextConstants.DEVICE);
 		//this line of code reads data from the "AuthorizationTransaction_DataDriven.xls" 
 		// at \\Isser-automation-epam\src\main\resources\config\Data folder as the "Transaction Templates" sheet has the template information
@@ -172,8 +185,7 @@ public class TransactionSteps {
 		transactionData.setCardProfile(transactionFactory.createCsvCardProfile(transactionData));
 		//		creating & import testcase/transaction file  to temp location ex: C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413
 		transactionData.setTestCase(transactionFactory.createCsvTesCase(transactionData));
-
-		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
+		return transactionData;
 	}
 
 	private void setDeElementsDynamically(Device device, Transaction transactionData, String transaction) {
@@ -269,14 +281,18 @@ public class TransactionSteps {
 	@Then("MAS test results are verified")
 	public void thenTestResultsAreReported(){
 		String testResults = transactionWorkflow.verifyTestResults();
-		if(!testResults.toLowerCase().contains("not" ))	{
+		if(testResults.toLowerCase().contains("Validations OK" ))	{
 			logger.info("Transaction is succcessful!  - Expected Result : ", testResults );
 			assertTrue("Transaction is succcessful!  - Expected Result : " + testResults, true );
 		}
-		else	{
-			logger.error("Transaction failed!  - Result : ", testResults);
+		else if(testResults.toLowerCase().contains("Validations Not OK" ))	{
 			assertFalse("Transaction failed!  -  Result : " +  testResults, false);
 			throw new ValidationException("Transaction failed! -  Result : " +  testResults);
+		}
+		else	{
+			logger.error("Transaction failed! ", testResults);
+			assertFalse("Transaction failed! ", false);
+			throw new ValidationException("Transaction failed!");
 		}
 	}
 

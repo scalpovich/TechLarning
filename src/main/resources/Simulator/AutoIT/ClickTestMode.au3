@@ -12,7 +12,7 @@
 #include <AutoItConstants.au3>
 
 
-	WinActivate("MasterCard Authorization Simulator <MAS16.Q4>", "Test Options")
-	ControlClick("MasterCard Authorization Simulator <MAS16.Q4>", "", "Allows setting the test mode")
+	WinActivate($CmdLine[1], "Test Options")
+	ControlClick($CmdLine[1], "", "Allows setting the test mode")
 
-	WinWait("MasterCard Authorization Simulator <MAS16.Q4>", "[NAME:pictureBox1]", "180")
+	WinWait($CmdLine[1], "[NAME:pictureBox1]", "180")
