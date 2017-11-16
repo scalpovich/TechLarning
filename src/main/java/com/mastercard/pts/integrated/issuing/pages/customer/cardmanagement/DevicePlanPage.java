@@ -947,6 +947,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		{
 			enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
 			// making necessary changes so that this value can be set in the required format so that it can be used when a pinless card is used
+			System.out.println("devicePlan.getValidityOnInitialMonths() == " + devicePlan.getValidityOnInitialMonths());
 			String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
 			devicePlan.setExpiryDate(dateInYYMM);
 		}
