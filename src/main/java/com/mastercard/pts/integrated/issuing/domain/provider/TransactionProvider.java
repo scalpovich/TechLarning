@@ -27,7 +27,6 @@ public class TransactionProvider {
 	private static final String DE = "DE";
 	private static final String SEQUENCE_NUMBER = "SEQUENCE_NUMBER";
 	private static final String EXPIRATION_DATE = "EXPIRATION_DATE";
-	private static final String SERVICE_CODE = "SERVICE_CODE";
 	private static final String PAN = "PAN";
 	private static final String PIN = "PIN";
 	private static final String MERCHANT_PROFILE = "Merchant profile";
@@ -40,7 +39,6 @@ public class TransactionProvider {
 		valueProviders = new HashMap<>();
 		valueProviders.put(PAN, Transaction::getCardNumber);
 		valueProviders.put(PIN, Transaction::getPinForTransaction);
-		valueProviders.put(SERVICE_CODE, Transaction::getServiceCode);
 		valueProviders.put(EXPIRATION_DATE, Transaction::getExpirationYear);
 		valueProviders.put(SEQUENCE_NUMBER, Transaction::getCardSequenceNumber);
 	}
@@ -105,7 +103,6 @@ public class TransactionProvider {
 	private void loadDeviceDataFromExcel(Transaction transaction, Map<String, String> data) {
 		transaction.setCardNumber(data.get(PAN));
 		transaction.setExpirationYear(data.get(EXPIRATION_DATE));
-		transaction.setServiceCode(data.get(SERVICE_CODE));
 		transaction.setCardSequenceNumber(data.get(SEQUENCE_NUMBER));
 		transaction.setPinForTransaction(data.get(PIN));
 	}

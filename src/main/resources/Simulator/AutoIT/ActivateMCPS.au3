@@ -9,4 +9,4 @@
 #ce ----------------------------------------------------------------------------
 
 ; Script Start - Add your code below here
-WinActivate($CmdLine[1], "Test Data Generator")
+WinActivate("MCPS - MasterCard Clearing Presentment Simulator - 16.Q4", "Test Data Generator")

@@ -94,10 +94,8 @@ public class AuthorizationTransactionFactory {
 	}
 	
 	private Entry<String, String> generateDynamicElement(Entry<String, String> entry) {
-		String randNum = RandomStringUtils.randomNumeric(12);
 		if ("037".equals(entry.getKey())) {
-			entry.setValue(randNum);
-			MiscUtils.reportToConsole("RRN Number for transaction : " + randNum);
+			entry.setValue(RandomStringUtils.randomNumeric(12));
 		}
 		return entry;
 	}

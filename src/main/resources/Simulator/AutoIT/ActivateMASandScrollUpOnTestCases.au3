@@ -12,7 +12,7 @@
 #include <AutoItConstants.au3>
 
 
-	WinActivate($CmdLine[1], "Test Options")
-	ControlClick($CmdLine[1], "", "[NAME:fTreeListView]")
+	WinActivate("MasterCard Authorization Simulator <MAS16.Q4>", "Test Options")
+	ControlClick("MasterCard Authorization Simulator <MAS16.Q4>", "", "[NAME:fTreeListView]")
     MouseWheel("up",10)
 

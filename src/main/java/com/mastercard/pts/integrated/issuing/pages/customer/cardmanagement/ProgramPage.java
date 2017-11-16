@@ -469,7 +469,6 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	public void clickNextButton() {
-		WebElementUtils.scrollDown(driver(), 0, 250);
 		ClickButton(NEXTBtn);
 	}
 

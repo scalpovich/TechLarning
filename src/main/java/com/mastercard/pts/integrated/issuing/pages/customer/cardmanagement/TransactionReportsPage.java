@@ -31,8 +31,6 @@ public class TransactionReportsPage extends AbstractBasePage {
 
 	private static final String BOTH = "Both";
 
-	private static final String FILE_TYPE_REPORT = "FILE_TYPE_REPORT";
-
 	@PageElement(findBy = FindBy.NAME, valueToFind = "componentPanel")
 	private MCWebElement selectReportDDwn;
 
@@ -49,37 +47,35 @@ public class TransactionReportsPage extends AbstractBasePage {
 	
 	@PageElement(findBy=FindBy.NAME, valueToFind = "p_product_type:input:dropdowncomponent")
 	private MCWebElement productTypeDDwn;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "p_product_code:input:dropdowncomponent")
-	private MCWebElement programNameDDwn;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:2:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	
+	@PageElement(findBy=FindBy.NAME, valueToFind = "p_product_code:input:dropdowncomponent") 
+	private MCWebElement programNameDDwn; 
+	
+	@PageElement(findBy=FindBy.NAME, valueToFind = "tables:1:rows:2:cols:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement productTypeAuthReportDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:3:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy=FindBy.NAME, valueToFind = "tables:1:rows:3:cols:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement programNameAuthReportDDwn;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
+	
+	@PageElement(findBy=FindBy.NAME, valueToFind = "tables:1:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement authTypeDDwn;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:3:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
+	
+	@PageElement(findBy=FindBy.NAME, valueToFind = "tables:1:rows:3:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement channelDDwn;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:4:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	
+	@PageElement(findBy=FindBy.NAME, valueToFind = "tables:1:rows:4:cols:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement transactionTypeDDwn;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:4:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
+	
+	@PageElement(findBy=FindBy.NAME, valueToFind = "tables:1:rows:4:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement transactionStatusDDwn;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:5:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	
+	@PageElement(findBy=FindBy.NAME, valueToFind = "tables:1:rows:5:cols:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement transactionOriginDDwn;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:5:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
+	
+	@PageElement(findBy=FindBy.NAME, valueToFind = "tables:1:rows:5:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement deviceTypeDDwn;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:2:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
-	private MCWebElement productTypeClearingReportDDwn;
-
+	
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Transaction Reports");
 		verifySearchButton("Go");
@@ -93,7 +89,7 @@ public class TransactionReportsPage extends AbstractBasePage {
 	public void generateProgramWiseBalanceSummaryReport() {
 		WebElementUtils.selectDropDownByVisibleText(selectReportDDwn, provider.getString("PROGRAM_WISE_BALANCE_SUMMARY"));
 		clicksearchButtonElement();
-		WebElementUtils.selectDropDownByVisibleText(fileTypeDDwn, provider.getString(FILE_TYPE_REPORT));
+		WebElementUtils.selectDropDownByVisibleText(fileTypeDDwn, provider.getString("FILE_TYPE_REPORT"));
 		generateReportBtn.click();
 	}
 
@@ -109,15 +105,9 @@ public class TransactionReportsPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(transactionOriginDDwn, BOTH);
 		WebElementUtils.selectDropDownByVisibleText(deviceTypeDDwn, ALL);
 		WebElementUtils.selectDropDownByVisibleText(programNameAuthReportDDwn, ALL);
-		WebElementUtils.selectDropDownByVisibleText(fileTypeAuthReportDDwn, provider.getString(FILE_TYPE_REPORT));
-		generateReportBtn.click();
-	}
 
-	public void generateTransactionClearingReport() {
-		WebElementUtils.selectDropDownByVisibleText(selectReportDDwn, provider.getString("ALL_TRANSACTIONS_REPORT"));
-		clicksearchButtonElement();
-		WebElementUtils.selectDropDownByVisibleText(productTypeClearingReportDDwn, ALL);
-		WebElementUtils.selectDropDownByVisibleText(fileTypeAuthReportDDwn, provider.getString(FILE_TYPE_REPORT));
+
+		WebElementUtils.selectDropDownByVisibleText(fileTypeAuthReportDDwn, provider.getString("FILE_TYPE_REPORT"));
 		generateReportBtn.click();
 	}
 }

@@ -1,6 +1,5 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.dispute;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
@@ -10,13 +9,11 @@ import com.mastercard.pts.integrated.issuing.domain.customer.dispute.ChargeBack;
 import com.mastercard.pts.integrated.issuing.domain.customer.dispute.ChargeBackReversal;
 import com.mastercard.pts.integrated.issuing.domain.customer.dispute.DisputeHistory;
 import com.mastercard.pts.integrated.issuing.domain.customer.dispute.RetrievalRequest;
-import com.mastercard.pts.integrated.issuing.pages.PageObjectFactory;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.dispute.ChargeBackNewPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.dispute.ChargeBackReversalPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.dispute.DisputeHistoryPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.dispute.RetrivalRequestPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.dispute.RetrivalResponsePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.DBUtility;
 import com.mastercard.pts.integrated.issuing.utils.SQLQueriesConstants;
@@ -36,8 +33,6 @@ public class DisputeWorkflow extends SimulatorUtilities{
 	
 	@Autowired
 	TransactionWorkflow transactionWorkFlow;
-
-	private static final Logger logger = Logger.getLogger(PageObjectFactory.class);
 	
 	public String getArnFromDb(String bankCode) {
 		String query=SQLQueriesConstants.FETCH_ARN_QUERY.replaceFirst("BANKCODE", bankCode);
@@ -70,27 +65,20 @@ public class DisputeWorkflow extends SimulatorUtilities{
 	public boolean validateDisputeHistory(DisputeHistory dh) {
 		DisputeHistoryPage page = navigator.navigateToPage(DisputeHistoryPage.class);
 		page.searchDisputeHistoryRecord(dh);
-		String expectedDisputeType = "Retrieval Request";
-		String expectedTransactionType = "Retrieval Request";
-		boolean retrivalRequestFlag = page.validateHistory(expectedDisputeType);
-		boolean chargeBackFlag = page.validateHistory(expectedTransactionType);
-		logger.info("Expected Dispute Type Label ==> " + expectedDisputeType);
-		logger.info("Expected Transaction Type Label ==> " + expectedTransactionType);
+		boolean retrivalRequestFlag = page.validateHistory("Retrieval Request");
+		boolean chargeBackFlag = page.validateHistory("Chargeback");
+		
 		if (retrivalRequestFlag && chargeBackFlag)
 			return true;
-		return false;
-	}
 
-	public void uploadRetResponse(){
-		RetrivalResponsePage page = navigator.navigateToPage(RetrivalResponsePage.class);
-		page.updateRetrievalResponse();
-		
+		return false;
 	}
 	
 	public void downLoadIPMOutgoing() {
 		linuxBox.download("/IPM_OUTGOING/PROC", System.getProperty("user.home"));
 
 	}
+
 
   public void uploadIpmFile()
   {
@@ -101,7 +89,7 @@ public class DisputeWorkflow extends SimulatorUtilities{
   public void uploadBatch(ProcessBatches batch)
   {
 	  ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
-	  page.processUploadBatch(batch);
+  page.processUploadBatch(batch);
   }
   
 }

@@ -1,8 +1,8 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
+
 @Component
 public class PlasticCode {
 
@@ -31,5 +31,5 @@ public class PlasticCode {
 		plasticcode.setDescription("Plastic code");
 		return plasticcode;
 	}
-	
+
 }

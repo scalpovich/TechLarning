@@ -74,31 +74,35 @@ public class AbstractDisputePage extends AbstractBasePage{
 	{
 		WebElementUtils.enterText(arnTxt, arn);
 		clickSearchButton();
-
-		runWithinPopup(popupTitle, () -> {
-			waitForWicket();
-			logger.info("Clicking on row ==> {} ",firstRecordInDataTable.getText());
-			firstRecordInDataTable.click();
-			verifyOperationStatus();
-		});
+		
+		runWithinPopup(
+				popupTitle,
+				() -> {
+					    firstRecordInDataTable.click();
+						verifyNoErrors();
+				});
 	}
+	
 
-	private void verifyUiOperationStatus(String logComment) {
+	private void verifyUiOperationStatus(String logComment)
+	{
 		logger.info(logComment);
 		verifySearchButton("Search");
 	}
-
-	@Override
+	
 	public void verifyOperationStatus() {
 		verifyUiOperationStatus("Chargeback Cancellation");
 	}
-
+	
 	public void verifyOperationStatus(String logComment) {
 		verifyUiOperationStatus(logComment);
 	}
-
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.elementToBeClickable(interchangeDwn), WebElementUtils.elementToBeClickable(arnTxt));
+		return Arrays.asList(
+				WebElementUtils.elementToBeClickable(interchangeDwn),
+				WebElementUtils.elementToBeClickable(arnTxt)
+				);
 	}
 }

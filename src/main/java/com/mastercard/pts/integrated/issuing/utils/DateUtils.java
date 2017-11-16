@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.mastercard.pts.integrated.issuing.utils;
 
 import java.awt.BorderLayout;
@@ -48,13 +45,6 @@ public class DateUtils {
     public static String currentDateddMMyyyy(){
     	Date date = new Date();
         String format = "dd/MM/yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(format);
-        return sdf.format(date);
-    }
-    
-    public static String currentDateYYMMDD(){
-    	Date date = new Date();
-        String format = "yyMMdd";
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(date);
     }
