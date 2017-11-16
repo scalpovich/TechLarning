@@ -24,6 +24,7 @@ public class SimulatorUtilities{
 	private static final String  SELECTED_IMAGE = "_Selected";
 	private static final String SIKULI_MESSAGE = "***** Sikuli click operation is performed on : ";
 	private static final String SIKULI_DOUBLECLICK_MESSAGE = "***** Sikuli double click operation is performed on : ";
+	private static final String SETTEXT_OPERATION = "***** SetText operation is performed. Text set to : ";
 
 	public  void pressTab()
 	{
@@ -49,32 +50,32 @@ public class SimulatorUtilities{
 	{
 		robotOperation("downArrow", numberOfTabs);
 	}
-	
+
 	public void pressUpArrow(int numberOfTabs)
 	{
 		robotOperation("upArrow", numberOfTabs);
 	}
-	
+
 	public void pressDelete(int numberOfTabs)
 	{
 		robotOperation("pressDelete", numberOfTabs);
 	}
-	
+
 	public void pressDelete()
 	{
 		pressDelete(numberOfTabs);
 	}
-	
+
 	public void pressUpArrow()
 	{
 		pressUpArrow(numberOfTabs);
 	}
-	
+
 	public void pressLeftArrow()
 	{
 		pressLeftArrow(numberOfTabs);
 	}
-	
+
 	public void pressLeftArrow(int numberOfTabs )
 	{
 		robotOperation("tabLeft", numberOfTabs);
@@ -90,7 +91,7 @@ public class SimulatorUtilities{
 	{
 		pressSpaceBar(numberOfTabs);
 	}
-	
+
 	public void pressSpaceBar(int numberOfTabs)
 	{
 		robotOperation("pressSpace", numberOfTabs);
@@ -100,7 +101,7 @@ public class SimulatorUtilities{
 	{
 		pressRightArrow(numberOfTabs);
 	}
-	
+
 	public void pressRightArrow(int numberOfTabs)
 	{
 		robotOperation("tabRight", numberOfTabs);
@@ -110,7 +111,7 @@ public class SimulatorUtilities{
 	{
 		pressPageDown(numberOfTabs);
 	}
-	
+
 	public void pressPageDown(int numberOfTabs)
 	{
 		robotOperation("pageDown", numberOfTabs);
@@ -141,7 +142,7 @@ public class SimulatorUtilities{
 					getOtherOperation(operationType, robot);
 				}
 				wait(1000);
-				logger.info("**** Robot/Keyboard Operation performed :  " + operationType);
+				logger.info("**** Robot/Keyboard Operation performed :  ", operationType);
 			}
 			wait(2000);
 		}
@@ -221,8 +222,11 @@ public class SimulatorUtilities{
 		try
 		{
 			String path = getResourceFolderPath() + SimulatorConstantsData.AUTOIT_EXE_PATH.replace("\\", "\\\\");
-			logger.info("********* AutoIt Exe being executed : " + fileName);
-			String commandToExecute = " cmd /c " + path + fileName;
+			String psExecPath = getResourceFolderPath() + "\\Simulator\\PsExec\\PsExec.exe";
+			MiscUtils.reportToConsole("psExecPath "  + psExecPath);
+			logger.info("********* AutoIt Exe being executed :  ",  fileName);
+			String commandToExecute = " cmd /c " + psExecPath + " "+ path + fileName;
+			MiscUtils.reportToConsole("commandToExecute "  + commandToExecute);
 			if(fileName.contains("SelectIPSHost")) {
 				Runtime.getRuntime().exec(commandToExecute).waitFor(25, TimeUnit.SECONDS);
 				wait(15000);
@@ -258,7 +262,7 @@ public class SimulatorUtilities{
 			robot.keyRelease(KeyEvent.VK_V);
 			robot.keyRelease(KeyEvent.VK_CONTROL);
 			wait(1000);
-			logger.info("***** SetText operation is performed. Text set to : " + characters);
+			logger.info(SETTEXT_OPERATION, characters);
 		}
 	}
 
@@ -269,37 +273,37 @@ public class SimulatorUtilities{
 
 	public void performClickOperation(String nameOfSnapshot)
 	{	
-		logger.info(SIKULI_MESSAGE +  nameOfSnapshot);
+		logger.info(SIKULI_MESSAGE ,  nameOfSnapshot);
 		performActionClick(getImageOfItem(nameOfSnapshot));
 		wait(1000);
 	}
-	
+
 	public void clickOnLastMatchingImage(String nameOfSnapshot)
 	{	
-		logger.info(SIKULI_MESSAGE +  nameOfSnapshot);
+		logger.info(SIKULI_MESSAGE,  nameOfSnapshot);
 		clickOnLastImage(getImageOfItem(nameOfSnapshot));
 		wait(1000);
 	}
 
 	public void performDoubleClickOperation(String nameOfSnapshot)
 	{	
-		logger.info(SIKULI_DOUBLECLICK_MESSAGE +  nameOfSnapshot);
+		logger.info(SIKULI_DOUBLECLICK_MESSAGE,  nameOfSnapshot);
 		performActionDoubleClick(getImageOfItem(nameOfSnapshot) );
 		wait(1000);
 	}
-	
+
 	public void performClickOperationOnImages(String nameOfSnapshot)
 	{	
 		String imagesName = nameOfSnapshot + SELECTED_IMAGE;
-		logger.info(SIKULI_MESSAGE +  nameOfSnapshot);
+		logger.info(SIKULI_MESSAGE,  nameOfSnapshot);
 		performActionClickOnImages(getImageOfItem(nameOfSnapshot), getImageOfItem(imagesName) );
 		wait(1000);
 	}
-	
+
 	public void performDoubleClickOperationOnImages(String nameOfSnapshot)
 	{	
 		String imagesNameTemp = nameOfSnapshot + SELECTED_IMAGE;
-		logger.info(SIKULI_DOUBLECLICK_MESSAGE +  nameOfSnapshot);
+		logger.info(SIKULI_DOUBLECLICK_MESSAGE,  nameOfSnapshot);
 		performActionDoubleClickOnImages(getImageOfItem(nameOfSnapshot), getImageOfItem(imagesNameTemp) );
 		wait(1000);
 	}
@@ -317,7 +321,7 @@ public class SimulatorUtilities{
 
 	private void performActionClick(Pattern selectParent) {
 		try {
-				screen.click(selectParent);
+			screen.click(selectParent);
 		}
 		catch(Exception e)
 		{
@@ -325,12 +329,12 @@ public class SimulatorUtilities{
 			MiscUtils.propagate(e);
 		}
 	}
-	
+
 	private void clickOnLastImage(Pattern selectParent) {
 		try {
 			Iterator<Match> it =	screen.findAll(selectParent);
 			while(it.hasNext()){
-			    System.out.println("the match is "+it.next().click());
+				System.out.println("the match is "+it.next().click());
 			}
 		}
 		catch(Exception e)
@@ -339,10 +343,10 @@ public class SimulatorUtilities{
 			MiscUtils.propagate(e);
 		}
 	}
-	
+
 	private void performActionDoubleClick(Pattern selectParent) {
 		try {
-				screen.doubleClick(selectParent);
+			screen.doubleClick(selectParent);
 		}
 		catch(Exception e)
 		{
@@ -366,7 +370,7 @@ public class SimulatorUtilities{
 			MiscUtils.propagate(e);
 		}
 	}
-	
+
 	private void performActionDoubleClickOnImages(Pattern selectParent,  Pattern selectParent1) {
 		try {
 			if(screen.exists(selectParent) != null) {
@@ -410,22 +414,21 @@ public class SimulatorUtilities{
 			return false;
 		}
 	}
-	
+
 	public Boolean areImagesPresent(String screenName)
 	{
 		try
 		{
-			if (screen.exists(getImageOfItem(screenName))!=null)
-			return true;
-			else if (screen.exists(getImageOfItem(screenName + SELECTED_IMAGE))!=null)
-			return true;
+			if (screen.exists(getImageOfItem(screenName))!=null || screen.exists(getImageOfItem(screenName + SELECTED_IMAGE))!=null)
+				return true;
+			else
+				return false;
 		}
 		catch(Exception e)
 		{
 			logger.debug(ConstantData.SIKUKI_EXCEPTION, screenName);
 			return false;
 		}
-		return false;
 	}
 
 	public String getResourceFolderPath()

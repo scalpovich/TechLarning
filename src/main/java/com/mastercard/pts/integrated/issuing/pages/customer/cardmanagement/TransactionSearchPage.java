@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
+
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -43,10 +45,9 @@ public class TransactionSearchPage extends AbstractBasePage {
 
 	private String authorizationStatus;
 	
-	public String searchTransactionWithARN(String arnNumber) {
+	public String searchTransactionWithARN(String arnNumber, TransactionSearch ts) {
 		WebElementUtils.enterText(searchARNTxt, arnNumber);
-		WebElementUtils.selectDropDownByVisibleText(dateDDwn,
-				"Transaction Date [T]");
+		WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
 		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
 		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
 		clickSearchButton();
@@ -60,11 +61,10 @@ public class TransactionSearchPage extends AbstractBasePage {
 		return authorizationStatus;
 	}
 
-	public String searchTransactionWithArnAndGetFee(String arnNumber){
+	public String searchTransactionWithArnAndGetFee(String arnNumber, TransactionSearch ts){
 		int i;
 		WebElementUtils.enterText(searchARNTxt, arnNumber);
-		WebElementUtils.selectDropDownByVisibleText(dateDDwn,
-				"Transaction Date [T]");
+		WebElementUtils.selectDropDownByVisibleText(dateDDwn,ts.getDateType());
 		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
 		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
 		clickSearchButton();
@@ -74,6 +74,21 @@ public class TransactionSearchPage extends AbstractBasePage {
 		}
 		return getCellTextByColumnName(i,"Transaction");
 	}
+	
+	public String searchTransactionWithArnAndGetStatus(String arnNumber, TransactionSearch ts){
+        int i;
+        WebElementUtils.enterText(searchARNTxt, arnNumber);
+        WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
+        WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
+        WebElementUtils.pickDate(toDateTxt, LocalDate.now());
+        clickSearchButton();
+        for(i=1;i<4;i++){
+               if("2".equals(getCellTextByColumnName(i,"Sequence Number")))
+                     break;
+        }
+        return getCellTextByColumnName(i,"Reversal");
+ }
+
 	
 	public void verifyUiOperationStatus() {
 		logger.info("Transaction Search");

@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StatementMessageDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StatementMessagePlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -120,6 +120,10 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 		verifySearchButton("Search");
 	}
 
+	@Override
+	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
+		return Arrays.asList(WebElementUtils.visibilityOf(planCodeSearchTxt));
+	}
 
 	public void createStatementMessagePlan(StatementMessagePlan plan) {
 		logger.info("Create Statement Message Plan: {}",
@@ -199,11 +203,6 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 
 	}
 
-	public void clickSaveButton() {
-		clickWhenClickable(save);
-		SwitchToDefaultFrame();
-	}
-
 	public boolean verifyErrorsOnStatementPlanPage() {
 		return publishErrorOnPage();
 	}
@@ -263,10 +262,4 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 		waitForElementVisible(save);
 		ClickButton(save);
 	}
-
-	@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return null;
-	}
-
 }
