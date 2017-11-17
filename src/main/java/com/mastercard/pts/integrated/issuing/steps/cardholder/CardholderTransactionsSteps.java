@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.cardholder.CardHolderTransactions;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.workflows.cardholder.CardHolderTransactionsWorkFlows;
 
 @Component
 public class CardholderTransactionsSteps extends AbstractBasePage {
