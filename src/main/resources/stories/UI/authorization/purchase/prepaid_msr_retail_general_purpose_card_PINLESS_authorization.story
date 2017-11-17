@@ -1,4 +1,4 @@
-prepaid msr retail general purpose card authorization PIN
+prepaid msr retail general purpose card authorization PINLESS
 
 Narrative:
 In order to check transactions on prepaid msr retail general purpose card 
@@ -27,18 +27,8 @@ When processes device production batch for prepaid
 When user has wallet number information for prepaid device
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
-When processes pin generation batch for prepaid
 Then device has "normal" status
 When user activates device through helpdesk
-
-Scenario: Pin Generation 
-Meta:
-@TestId 
-Given connection to FINSim is established
-When Pin Offset file batch was generated successfully
-When embossing file batch was generated in correct format
-When PIN is retrieved successfully with data from Pin Offset File
-Then FINSim simulator is closed
 
 Scenario: Perform MSR_PURCHASE Authorization transaction
 Meta:
