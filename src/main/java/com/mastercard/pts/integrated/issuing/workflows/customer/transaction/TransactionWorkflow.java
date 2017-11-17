@@ -953,6 +953,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(20000);
 			if(performWiniumOperationIsObjectDisplayed("Password :"))
 			{
+				executeAutoITExe("ActivateFINSimConnectScreen.exe");
 				executeAutoITExe("ClickCancelOnFINSimPasswordScreen.exe");
 				wait(20000);
 			}
