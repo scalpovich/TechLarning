@@ -737,7 +737,34 @@ public abstract class AbstractBasePage extends AbstractPage {
 			return false;
 		}
 	}
+	
 
+	public boolean isElementPresent(MCWebElement ele) {
+		boolean ispresent = false;
+		
+		try {
+			ele.isVisible();
+			ispresent = true;
+			logger.error("Element is visible");
+			
+		} catch (Exception e) {
+			ispresent = false;
+			logger.error("Element is not visible");
+		}
+		return ispresent;		
+	}
+	
+	public boolean waitforElemenet(MCWebElement ele){
+		try {
+			getFinder().waitUntil(ExpectedConditions.visibilityOf((WebElement) ele));
+			return true;
+		} catch (Exception e) {
+			return false; 
+		}
+				
+		 
+	}
+	 
 	public boolean isElementPresent(MCWebElements ele) {
 		boolean ispresent = false;
 		try {
@@ -998,7 +1025,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 		new WebDriverWait(driver(), TIMEOUT).until(ExpectedConditions.elementToBeClickable(ele)).click();
 	}
 
-
+	protected void clickWhenClickableCHP(MCWebElement element) {
+		waitForElementVisible(element);
+		new WebDriverWait(driver(), TIMEOUT).until(
+				elementToBeClickable(element)).click();
+		// waitForWicket(driver());
+	}
 
 	protected void clickWhenClickable(WebElement element) {
 		waitForElementVisible(element);
@@ -1210,7 +1242,32 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 		return errorFields;
 	}
+	public void switchToWindowCHP() {
 
+		try {
+			Set<String> handles;
+
+			/*do {
+				handles = getFinder().getWebDriver().getWindowHandles();
+				logger.info("Number of windows available: " + handles.size());
+			} while (handles.size() < 2);*/
+			handles = getFinder().getWebDriver().getWindowHandles();
+			for (String handle : handles) {
+				if (!handle.equals(getFinder().getWebDriver().getWindowHandle()))
+					getFinder().getWebDriver().switchTo().window(handle);
+			}
+			
+		} catch (Exception e) {
+			logger.error("Unable to Switch Window" + e);
+		}
+	}
+	
+	public void selectByVisibleTexts(MCWebElement ele, String optionName) {
+		waitUntilSelectOptionsPopulated(ele);
+		waitForLoaderToDisappear();
+		ele.getSelect().selectByVisibleText(optionName);
+		waitForLoaderToDisappear();
+	}
 	public boolean publishErrorOnPage() {
 		boolean isAnyErrorPresent = false;
 		Iterator<?> iter = pageErrorValidator().iterator();
@@ -1220,7 +1277,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 		return isAnyErrorPresent;
 	}
-
+	
+	public String getTextFromPage(MCWebElement element){
+		return element.getText();
+	}
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		// TODO Auto-generated method stub
