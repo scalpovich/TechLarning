@@ -189,40 +189,43 @@ public class SimulatorUtilities {
 		}
 	}
 
-	public void executeAutoITExe(String fileName)
-	{
-		try
-		{
-			MiscUtils.reportToConsole("********* AutoIt Exe being executed :  ",  fileName);
-			logger.info("********* AutoIt Exe being executed :  ",  fileName);
-			String path = getResourceFolderPath() + SimulatorConstantsData.AUTOIT_EXE_PATH.replace("\\", "\\\\");
-			
-			String commandToExecute = " cmd /c " + path + fileName + " ";
+	public void executeAutoITExe(String fileName) {
+		try {
+			MiscUtils.reportToConsole(
+					"********* AutoIt Exe being executed :  ", fileName);
+			logger.info("********* AutoIt Exe being executed :  ", fileName);
+			String path = getResourceFolderPath()
+					+ SimulatorConstantsData.AUTOIT_EXE_PATH.replace("\\",
+							"\\\\");
+
+			// String commandToExecute = " cmd /c " + path + fileName + " ";
+			// executeCommand(fileName, commandToExecute);
+
+			String psExecPath = getResourceFolderPath()
+					+ "\\\\Simulator\\\\PsExec\\\\PsExec.exe";
+			String commandToExecute = " cmd /c " + psExecPath + " " + path
+					+ " " + fileName;
 			executeCommand(fileName, commandToExecute);
-			
-			/*String psExecPath = getResourceFolderPath() + "\\\\Simulator\\\\PsExec\\\\PsExec.exe";
-			 commandToExecute = " cmd /c " + psExecPath + " "+ path +" "+ fileName;
-			executeCommand(fileName, commandToExecute);*/
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			logger.debug(ConstantData.EXCEPTION, e);
 			MiscUtils.propagate(e);
 		}
 	}
 
-	private void executeCommand(String fileName, String commandToExecute) throws InterruptedException, IOException {
+	private void executeCommand(String fileName, String commandToExecute)
+			throws InterruptedException, IOException {
 		MiscUtils.reportToConsole("commandToExecute : " + commandToExecute);
-		if(fileName.contains("SelectIPSHost")) {
-			Runtime.getRuntime().exec(commandToExecute).waitFor(25, TimeUnit.SECONDS);
+		if (fileName.contains("SelectIPSHost")) {
+			Runtime.getRuntime().exec(commandToExecute)
+					.waitFor(25, TimeUnit.SECONDS);
 			wait(15000);
-		}
-		else {
-			Runtime.getRuntime().exec(commandToExecute).waitFor(15, TimeUnit.SECONDS);
+		} else {
+			Runtime.getRuntime().exec(commandToExecute)
+					.waitFor(15, TimeUnit.SECONDS);
 			wait(2000);
 		}
 		wait(2000);
-	} 
+	}
 
 	public Boolean isNotNullAndEmpty(String varible) {
 		return varible != null && !varible.isEmpty();
