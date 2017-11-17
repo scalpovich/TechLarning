@@ -204,7 +204,7 @@ public class SimulatorUtilities {
 			String psExecPath = getResourceFolderPath()
 					+ "\\\\Simulator\\\\PsExec\\\\PsExec.exe";
 			String commandToExecute = " cmd /c " + psExecPath + " " + path
-					+ " " + fileName;
+					+ fileName;
 			executeCommand(fileName, commandToExecute);
 		} catch (Exception e) {
 			logger.debug(ConstantData.EXCEPTION, e);
