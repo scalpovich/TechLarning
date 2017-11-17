@@ -9,16 +9,12 @@ Meta:
 @StoryName p_emv_corp_general_purpose
 @SanityCards
 
-Scenario: Set up prepaid emv corporate general purpose card
-Meta:
-@TestId 
+Scenario: Setup - prepaid emv corporate general purpose card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client
 
-Scenario: prepaid emv corporate general purpose card device production
-Meta:
-@TestId 
+Scenario: Device production - prepaid emv corporate general purpose card
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
@@ -28,9 +24,7 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 
-Scenario: Perform EMV_PURCHASE Authorization transaction
-Meta:
-@TestId 
+Scenario: Transaction - EMV_PURCHASE Authorization transaction - prepaid emv corporate general purpose card
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
@@ -38,9 +32,15 @@ And MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify success status
 
-Scenario: Program Balance Summary download
-Meta:
-@TestId 
+Scenario: Transaction - EMV_PURCHASE_WITH_CASHBACK Authorization transaction - prepaid emv corporate general purpose card
+Given connection to MAS is established
+When perform an EMV_PURCHASE_WITH_CASHBACK MAS transaction
+Then MAS test results are verified
+And MAS simulator is closed
+And user is logged in institution
+And search Purchase authorization and verify success status
+
+Scenario: Program Balance Summary report download - prepaid emv corporate general purpose card
 Given user is logged in institution
 When pre-clearing and Pre-EOD batches are run
 Then verify report for transactions with Program Balance Summary is downloaded
