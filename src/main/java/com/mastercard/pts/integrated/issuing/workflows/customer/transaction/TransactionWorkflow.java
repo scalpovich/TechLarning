@@ -950,13 +950,14 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		try
 		{
 			executeAutoITExe("HandleFinSimLicenseValidationProblem.exe");
-			wait(2000);
+			wait(20000);
 			if(performWiniumOperationIsObjectDisplayed("Password :"))
 			{
 				executeAutoITExe("ClickCancelOnFINSimPasswordScreen.exe");
+				wait(20000);
 			}
 			executeAutoITExe("ActivateFINSimConnectScreen.exe");
-
+			wait(20000);
 			pressTab();
 			setText(finSimSimulator.getIpAddress());
 			pressTab(2);
