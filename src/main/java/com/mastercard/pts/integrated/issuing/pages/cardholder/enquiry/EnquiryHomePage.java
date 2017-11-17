@@ -213,4 +213,6 @@ public class EnquiryHomePage extends AbstractBasePage {
 		@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(masterDetailContentTitle));
-}
+
+		}
+}		
