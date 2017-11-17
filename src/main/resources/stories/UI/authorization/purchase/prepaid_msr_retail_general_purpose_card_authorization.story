@@ -9,17 +9,13 @@ Meta:
 @StoryName p_msr_retail_gen_purpose
 @SanityCardsWithAuthorization
 
-Scenario: Set up prepaid msr retail general purpose card
-Meta:
-@TestId TC398484
+Scenario: Setup - prepaid msr retail general purpose card
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
+And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
 Then device has "normal" status
 
-Scenario: prepaid msr retail general purpose card device production
-Meta:
-@TestId TC398484
+Scenario: Device production - prepaid msr retail general purpose card
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
@@ -31,27 +27,28 @@ When processes pin generation batch for prepaid
 Then device has "normal" status
 When user activates device through helpdesk
 
-Scenario: Pin Generation 
-Meta:
-@TestId 
+Scenario: Pin generation - prepaid msr retail general purpose card
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform MSR_PURCHASE Authorization transaction
-Meta:
-@TestId 
+Scenario: Transaction - MSR_PURCHASE_PIN Authorization transaction - prepaid msr retail general purpose card
 When connection to MAS is established
-When perform an MSR_PURCHASE MAS transaction
+When perform an MSR_PURCHASE_PIN MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify success status
 
-Scenario: Program Balance Summary download
-Meta:
-@TestId 
+Scenario: Transaction - MSR_PURCHASE_WITH_CASHBACK_PIN Authorization transaction - prepaid msr retail general purpose card
+When connection to MAS is established
+When perform an MSR_PURCHASE_WITH_CASHBACK_PIN MAS transaction
+Then MAS test results are verified
+And user is logged in institution
+And search Purchase authorization and verify success status
+
+Scenario: Program Balance Summary report download - prepaid msr retail general purpose card
 Given user is logged in institution
 When pre-clearing and Pre-EOD batches are run
 Then verify report for transactions with Program Balance Summary is downloaded

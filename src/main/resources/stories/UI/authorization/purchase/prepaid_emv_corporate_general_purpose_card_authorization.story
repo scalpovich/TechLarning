@@ -24,6 +24,7 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 When processes pin generation batch for prepaid
 Then device has "normal" status
+When user activates device through helpdesk
 
 Scenario: Pin generation - prepaid emv corporate general purpose card
 Given connection to FINSim is established

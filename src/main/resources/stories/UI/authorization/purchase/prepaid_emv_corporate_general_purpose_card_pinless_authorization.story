@@ -23,6 +23,7 @@ When user has wallet number information for prepaid device
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
+When user activates device through helpdesk
 
 Scenario: Transaction - EMV_PURCHASE Authorization transaction - prepaid emv corporate general purpose card
 Given connection to MAS is established

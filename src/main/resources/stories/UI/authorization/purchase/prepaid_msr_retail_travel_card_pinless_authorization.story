@@ -9,17 +9,12 @@ Meta:
 @StoryName p_msr_retail_travel
 @SanityCardsWithAuthorization
 
-Scenario: Set up prepaid msr retail travel card
-Meta:
-@TestId TC398484
+Scenario: Setup - prepaid msr retail travel card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client
-Then device has "normal" status
 
-Scenario: prepaid msr retail travel card device production
-Meta:
-@TestId TC398484
+Scenario: Device production - prepaid msr retail travel card
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
@@ -30,27 +25,21 @@ When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
 
-Scenario: Perform MSR_PURCHASE Authorization transaction
-Meta:
-@TestId 
+Scenario: Transaction - MSR_PURCHASE Authorization transaction - prepaid msr retail travel card
 When connection to MAS is established
 When perform an MSR_PURCHASE MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify success status
 
-Scenario: Perform MSR_PURCHASE_WITH_CASHBACK Authorization transaction
-Meta:
-@TestId 
+Scenario: Transaction - MSR_PURCHASE_WITH_CASHBACK Authorization transaction - prepaid msr retail travel card
 When connection to MAS is established
 When perform an MSR_PURCHASE_WITH_CASHBACK MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify success status
 
-Scenario: Program Balance Summary download
-Meta:
-@TestId 
+Scenario: Program Balance Summary report download - prepaid msr retail travel card
 Given user is logged in institution
 When pre-clearing and Pre-EOD batches are run
 Then verify report for transactions with Program Balance Summary is downloaded

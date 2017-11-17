@@ -198,13 +198,13 @@ public class SimulatorUtilities {
 					+ SimulatorConstantsData.AUTOIT_EXE_PATH.replace("\\",
 							"\\\\");
 
-			// String commandToExecute = " cmd /c " + path + fileName + " ";
-			// executeCommand(fileName, commandToExecute);
+			String commandToExecute = " cmd /c " + path + fileName + " ";
+			executeCommand(fileName, commandToExecute);
 
-			String psExecPath = getResourceFolderPath()
-					+ "\\\\Simulator\\\\PsExec\\\\PsExec.exe";
-			String commandToExecute = " cmd /c " + psExecPath + " " + path
-					+ fileName;
+//			String psExecPath = getResourceFolderPath()
+//					+ "\\\\Simulator\\\\PsExec\\\\PsExec.exe";
+//			String commandToExecute = " cmd /c " + psExecPath + " " + path
+//					+ fileName;
 			executeCommand(fileName, commandToExecute);
 		} catch (Exception e) {
 			logger.debug(ConstantData.EXCEPTION, e);
@@ -246,6 +246,12 @@ public class SimulatorUtilities {
 			wait(1000);
 			logger.info(SETTEXT_OPERATION, characters);
 		}
+	}
+	
+	public void selectAll() throws AWTException{
+		Robot robot = new Robot();
+		robot.keyPress(KeyEvent.VK_CONTROL);
+		robot.keyPress(KeyEvent.VK_A);
 	}
 
 	public void performRightClickOperation(String nameOfSnapshot) {
