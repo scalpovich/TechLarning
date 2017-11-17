@@ -32,9 +32,17 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Transaction - EMV_PURCHASE Authorization transaction - prepaid emv corporate general purpose card
+Scenario: Transaction - EMV_PURCHASE_PIN Authorization transaction - prepaid emv corporate general purpose card
 Given connection to MAS is established
-When perform an EMV_PURCHASE MAS transaction
+When perform an EMV_PURCHASE_PIN MAS transaction
+Then MAS test results are verified
+And MAS simulator is closed
+And user is logged in institution
+And search Purchase authorization and verify success status
+
+Scenario: Transaction - EMV_PURCHASE_WITH_CASHBACK_PIN Authorization transaction - prepaid emv corporate general purpose card
+Given connection to MAS is established
+When perform an EMV_PURCHASE_WITH_CASHBACK_PIN MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
