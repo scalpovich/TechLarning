@@ -193,8 +193,11 @@ public class SimulatorUtilities {
 			String path = getResourceFolderPath() + SimulatorConstantsData.AUTOIT_EXE_PATH.replace("\\", "\\\\");
 			commandToExecute = " cmd /c " + " " + path + fileName + " ";
 
-			// String psExecPath = getResourceFolderPath() + "\\\\Simulator\\\\PsExec\\\\PsExec.exe";
-			// commandToExecute = " cmd /c " + psExecPath + " " + path + fileName;
+			/*
+			 * String psExecPath = getResourceFolderPath() + //
+			 * "\\\\Simulator\\\\PsExec\\\\PsExec.exe"; // commandToExecute =
+			 * " cmd /c " + psExecPath + " " + path + fileName; NO SONAR
+			 */
 
 			executeCommand(fileName, commandToExecute);
 		} catch (Exception e) {
