@@ -2,7 +2,6 @@ package com.mastercard.pts.integrated.issuing.pages.cardholder.enquiry;
 
 import java.util.Arrays;
 import java.util.Collection;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,19 +13,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.domain.EnquiryNav;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
-import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
-
-
-
 
 
 @Component
@@ -99,26 +92,25 @@ public class EnquiryHomePage extends AbstractBasePage {
 		trascationSearchSubmitBtn.click();
 	}
 	public void selectTransactionType(String transactionType){
-		CustomUtils.ThreadDotSleep(1000);
+		waitForElementVisible(transactionTypeDropdown);
 		selectByVisibleTexts(transactionTypeDropdown, transactionType);
 	}
 	
 	public void selectTransactionsCount(){
-		transactionsOptionRdo.click();
+		clickWhenClickable(transactionsOptionRdo);
 	}
 	
 	public void enterTransctionAmount(String transactionAmtValue){
-		CustomUtils.ThreadDotSleep(1000);
+		waitForElementVisible(transactionAmount);
 		enterText(transactionAmount, transactionAmtValue);
 	}
 	
 	public void selectTransactionCurrency(String transcationCurrencyOption){
-		CustomUtils.ThreadDotSleep(1000);
+		waitForElementVisible(transactionCurrency);
 		selectByVisibleTexts(transactionCurrency, transcationCurrencyOption);
 	}
 	
-	public String getTransactionTypeValue(){		
-		
+	public String getTransactionTypeValue(){			
 		return getTextFromPage(transactionType);
 	}
 	
@@ -169,44 +161,38 @@ public class EnquiryHomePage extends AbstractBasePage {
 /*	//Read entire transaction details on Card holder portal
 	public List<ArrayList<String>>  getTransactionDetails1(){
 		List<ArrayList<String>> transRecord = new ArrayList<ArrayList<String>>();
-		
+		int transactionColumn = 7; 
 		List<WebElement> gridRecords = Elements(transactionHistoryGrid);		
 		
-		for(int index=2; index <=gridRecords.size();index++ ){			
-			ArrayList<String> sample = new ArrayList<String>();
-			
-			sample.add(Element("//table[@class='dataview']/tbody/tr["+index+"]/td[5]").getText());
-			sample.add(Element("//table[@class='dataview']/tbody/tr["+index+"]/td[6]").getText());
-			sample.add(Element("//table[@class='dataview']/tbody/tr["+index+"]/td[7]").getText());
-					
-			transRecord.add(sample);			
+		for(int colIndex=5; colIndex <= transactionColumn; colIndex++){
+			for(int rowIndex=2; rowIndex <=gridRecords.size();rowIndex++ ){			
+				ArrayList<String> sample = new ArrayList<String>();
+				sample.add(Element("//table[@class='dataview']/tbody/tr["+rowIndex+"]/td["+colIndex+"]").getText());
+				transRecord.add(sample);			
+			}
 		}
-		
-		return transRecord;
+	 return transRecord;
 	}*/
 	
 	//Read entire transaction details on Card holder portal
 	public Map<Integer,ArrayList<String>>  getTransactionDetails(){
 		
 		Map<Integer,ArrayList<String>> transRecord = new HashMap<Integer,ArrayList<String>>();
-		Integer transactionCounter = 1;			
+		Integer transactionCounter = 1;		
+		int transactionColumn = 8; 
 		List<WebElement> gridRecords = Elements(transactionHistoryGrid);		
 		ArrayList<String> sample ;
-		for(int index=2; index <= gridRecords.size();index++ ){									
-			
-			sample = new ArrayList<String>();			
-			sample.add(Element("//table[@class='dataview']/tbody/tr["+index+"]/td[1]").getText());
-			sample.add(Element("//table[@class='dataview']/tbody/tr["+index+"]/td[2]").getText());
-			sample.add(Element("//table[@class='dataview']/tbody/tr["+index+"]/td[3]").getText());
-			sample.add(Element("//table[@class='dataview']/tbody/tr["+index+"]/td[4]").getText());
-			sample.add(Element("//table[@class='dataview']/tbody/tr["+index+"]/td[5]").getText());
-			sample.add(Element("//table[@class='dataview']/tbody/tr["+index+"]/td[6]").getText());
-			sample.add(Element("//table[@class='dataview']/tbody/tr["+index+"]/td[7]").getText());
-			sample.add(Element("//table[@class='dataview']/tbody/tr["+index+"]/td[8]").getText());
-					
-			transRecord.put(transactionCounter,sample);
-			transactionCounter++;
+		
+		for(int colIndex=1; colIndex <= transactionColumn ;colIndex++ ){
+			for(int rowIndex=2; rowIndex <= gridRecords.size();rowIndex++ ){									
+				
+				sample = new ArrayList<String>();			
+				sample.add(Element("//table[@class='dataview']/tbody/tr["+rowIndex+"]/td["+colIndex+"]").getText());
+				transRecord.put(transactionCounter,sample);
+				transactionCounter++;
+			}
 		}
+
 		return transRecord;
 	}
 	

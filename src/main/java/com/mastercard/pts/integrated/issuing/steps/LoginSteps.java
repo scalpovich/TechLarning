@@ -105,8 +105,11 @@ public class LoginSteps extends AbstractBaseFlows {
 	@Given ("read test data for scenario")
 	public void readScenarioDataSheet(@Named("TCName")String strStoryName,@Named("sheetName")String strSheetName){
 		String f = "TestData";
+		
 		logger.info("Reading entire test data");
+		
 		excelTestData.fnReadEntireTestData(f, strSheetName, "TCName");
+		
 		if (excelTestData == null) {
 			Assert.fail("Unable to read entire test data");
 		} else {

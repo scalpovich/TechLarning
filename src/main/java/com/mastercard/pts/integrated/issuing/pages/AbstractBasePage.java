@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
@@ -31,10 +30,8 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -733,7 +730,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			logger.info("Element is visible");
 			return true;
 		} catch (Exception e) {
-			logger.error("Element is not visible");
+			logger.error("Element is not visible :"+e.fillInStackTrace());
 			return false;
 		}
 	}
@@ -745,11 +742,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 		try {
 			ele.isVisible();
 			ispresent = true;
-			logger.error("Element is visible");
+			logger.info("Element is visible");
 			
 		} catch (Exception e) {
 			ispresent = false;
-			logger.error("Element is not visible");
+			logger.error("Element is not visible :"+e.fillInStackTrace());
 		}
 		return ispresent;		
 	}
@@ -800,7 +797,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			logger.info("Element is invisible");
 			return true;
 		} catch (Exception e) {
-			logger.error("Element is visible");
+			logger.info("Element is visible");
 			return false;
 		}
 	}
