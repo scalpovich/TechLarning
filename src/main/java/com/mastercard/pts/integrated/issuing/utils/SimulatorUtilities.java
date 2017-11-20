@@ -19,8 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SimulatorUtilities {
-	private static final Logger logger = LoggerFactory
-			.getLogger(SimulatorUtilities.class);
+	private static final Logger logger = LoggerFactory.getLogger(SimulatorUtilities.class);
 	private static Screen screen = new Screen();
 	private static int numberOfTabs = 1;
 	private static final String SELECTED_IMAGE = "_Selected";
@@ -119,8 +118,7 @@ public class SimulatorUtilities {
 					getOtherOperation(operationType, robot);
 				}
 				wait(1000);
-				logger.info("**** Robot/Keyboard Operation performed :  ",
-						operationType);
+				logger.info("**** Robot/Keyboard Operation performed :  ", operationType);
 			}
 			wait(2000);
 		} catch (Exception e) {
@@ -191,20 +189,13 @@ public class SimulatorUtilities {
 
 	public void executeAutoITExe(String fileName) {
 		try {
-			MiscUtils.reportToConsole(
-					"********* AutoIt Exe being executed :  ", fileName);
-			logger.info("********* AutoIt Exe being executed :  ", fileName);
-			String path = getResourceFolderPath()
-					+ SimulatorConstantsData.AUTOIT_EXE_PATH.replace("\\",
-							"\\\\");
+			String commandToExecute = "'";
+			String path = getResourceFolderPath() + SimulatorConstantsData.AUTOIT_EXE_PATH.replace("\\", "\\\\");
+			commandToExecute = " cmd /c " + " " + path + fileName + " ";
 
-			String commandToExecute = " cmd /c " + path + fileName + " ";
-			executeCommand(fileName, commandToExecute);
+			// String psExecPath = getResourceFolderPath() + "\\\\Simulator\\\\PsExec\\\\PsExec.exe";
+			// commandToExecute = " cmd /c " + psExecPath + " " + path + fileName;
 
-//			String psExecPath = getResourceFolderPath()
-//					+ "\\\\Simulator\\\\PsExec\\\\PsExec.exe";
-//			String commandToExecute = " cmd /c " + psExecPath + " " + path
-//					+ fileName;
 			executeCommand(fileName, commandToExecute);
 		} catch (Exception e) {
 			logger.debug(ConstantData.EXCEPTION, e);
@@ -212,16 +203,13 @@ public class SimulatorUtilities {
 		}
 	}
 
-	private void executeCommand(String fileName, String commandToExecute)
-			throws InterruptedException, IOException {
+	private void executeCommand(String fileName, String commandToExecute) throws InterruptedException, IOException {
 		MiscUtils.reportToConsole("commandToExecute : " + commandToExecute);
 		if (fileName.contains("SelectIPSHost")) {
-			Runtime.getRuntime().exec(commandToExecute)
-					.waitFor(25, TimeUnit.SECONDS);
+			Runtime.getRuntime().exec(commandToExecute).waitFor(25, TimeUnit.SECONDS);
 			wait(15000);
 		} else {
-			Runtime.getRuntime().exec(commandToExecute)
-					.waitFor(15, TimeUnit.SECONDS);
+			Runtime.getRuntime().exec(commandToExecute).waitFor(15, TimeUnit.SECONDS);
 			wait(2000);
 		}
 		wait(2000);
@@ -235,8 +223,7 @@ public class SimulatorUtilities {
 
 		if (isNotNullAndEmpty(characters)) {
 			Robot robot = new Robot();
-			java.awt.datatransfer.Clipboard clipboard = Toolkit
-					.getDefaultToolkit().getSystemClipboard();
+			java.awt.datatransfer.Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 			StringSelection stringSelection = new StringSelection(characters);
 			clipboard.setContents(stringSelection, null);
 			robot.keyPress(KeyEvent.VK_CONTROL);
@@ -247,8 +234,8 @@ public class SimulatorUtilities {
 			logger.info(SETTEXT_OPERATION, characters);
 		}
 	}
-	
-	public void selectAll() throws AWTException{
+
+	public void selectAll() throws AWTException {
 		Robot robot = new Robot();
 		robot.keyPress(KeyEvent.VK_CONTROL);
 		robot.keyPress(KeyEvent.VK_A);
@@ -279,16 +266,14 @@ public class SimulatorUtilities {
 	public void performClickOperationOnImages(String nameOfSnapshot) {
 		String imagesName = nameOfSnapshot + SELECTED_IMAGE;
 		logger.info(SIKULI_MESSAGE, nameOfSnapshot);
-		performActionClickOnImages(getImageOfItem(nameOfSnapshot),
-				getImageOfItem(imagesName));
+		performActionClickOnImages(getImageOfItem(nameOfSnapshot), getImageOfItem(imagesName));
 		wait(1000);
 	}
 
 	public void performDoubleClickOperationOnImages(String nameOfSnapshot) {
 		String imagesNameTemp = nameOfSnapshot + SELECTED_IMAGE;
 		logger.info(SIKULI_DOUBLECLICK_MESSAGE, nameOfSnapshot);
-		performActionDoubleClickOnImages(getImageOfItem(nameOfSnapshot),
-				getImageOfItem(imagesNameTemp));
+		performActionDoubleClickOnImages(getImageOfItem(nameOfSnapshot), getImageOfItem(imagesNameTemp));
 		wait(1000);
 	}
 
@@ -331,8 +316,7 @@ public class SimulatorUtilities {
 		}
 	}
 
-	private void performActionClickOnImages(Pattern selectParent,
-			Pattern selectParent1) {
+	private void performActionClickOnImages(Pattern selectParent, Pattern selectParent1) {
 		try {
 			if (screen.exists(selectParent) != null) {
 				screen.click(selectParent);
@@ -345,8 +329,7 @@ public class SimulatorUtilities {
 		}
 	}
 
-	private void performActionDoubleClickOnImages(Pattern selectParent,
-			Pattern selectParent1) {
+	private void performActionDoubleClickOnImages(Pattern selectParent, Pattern selectParent1) {
 		try {
 			if (screen.exists(selectParent) != null) {
 				screen.doubleClick(selectParent);
@@ -364,8 +347,7 @@ public class SimulatorUtilities {
 		wait(5000);
 		for (int i = 0; i < 10; i++) {
 			if (isImagePresent(screenName)) {
-				MiscUtils.reportToConsole("Wait for Image : " + screenName
-						+ " iteration number : " + i);
+				MiscUtils.reportToConsole("Wait for Image : " + screenName + " iteration number : " + i);
 				wait(5000);
 				break;
 			}
@@ -383,9 +365,7 @@ public class SimulatorUtilities {
 
 	public Boolean areImagesPresent(String screenName) {
 		try {
-			if (screen.exists(getImageOfItem(screenName)) != null
-					|| screen
-							.exists(getImageOfItem(screenName + SELECTED_IMAGE)) != null)
+			if (screen.exists(getImageOfItem(screenName)) != null || screen.exists(getImageOfItem(screenName + SELECTED_IMAGE)) != null)
 				return true;
 			else
 				return false;
@@ -401,20 +381,16 @@ public class SimulatorUtilities {
 	}
 
 	public String getTempDirectoryLocationForSimulatorResults() {
-		String tempFolder = new DateUtils().getDateyyyyMMdd()
-				+ "_IssuingTests_Simulator";
+		String tempFolder = new DateUtils().getDateyyyyMMdd() + "_IssuingTests_Simulator";
 		// Folder is located in Temp Directory .. Ex:
 		// C:\Users\e071200\AppData\Local\Temp\20170718_IssuingTests_Simulator
-		File resourcesDirectory = new File(System.getProperty("java.io.tmpdir")
-				+ tempFolder);
+		File resourcesDirectory = new File(System.getProperty("java.io.tmpdir") + tempFolder);
 		return resourcesDirectory.getAbsolutePath();
 	}
 
 	private Pattern getImageOfItem(String nameOfSnapshot) {
 
-		String objectName = getResourceFolderPath()
-				+ SimulatorConstantsData.SIKULI_IMAGE_PATH + nameOfSnapshot
-				+ ".PNG";
+		String objectName = getResourceFolderPath() + SimulatorConstantsData.SIKULI_IMAGE_PATH + nameOfSnapshot + ".PNG";
 		if (!fileExists(objectName)) {
 			return null;
 		}
@@ -445,8 +421,7 @@ public class SimulatorUtilities {
 		performDoubleClickOperation(nameOfSnapshot);
 	}
 
-	private void searchAndScrollDownForImage(String nameOfSnapshot,
-			int loopThrough) {
+	private void searchAndScrollDownForImage(String nameOfSnapshot, int loopThrough) {
 		for (int i = 0; i < loopThrough; i++) {
 			if (isImagePresent(nameOfSnapshot)) {
 				break;
@@ -469,8 +444,7 @@ public class SimulatorUtilities {
 	public String getPinText() {
 		executeAutoITExe("GetPINData.exe");
 
-		String filePath = getTempDirectoryLocationForSimulatorResults()
-				+ "\\PINDATA.txt";
+		String filePath = getTempDirectoryLocationForSimulatorResults() + "\\PINDATA.txt";
 		String content;
 		try {
 			content = FileCreation.getFileContents(filePath);

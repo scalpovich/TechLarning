@@ -115,12 +115,12 @@ public class TransactionSteps {
 		sameCard = val;
 	}
 
-	@Then("last entry is deleted")
+/*	@Then("last entry is deleted")
 	@When("last entry is deleted")
 	public void deleteLastTransactionEntry()
 	{
 		transactionWorkflow.removeLastEntry();
-	}
+	}*/
 
 	@When("user performs an optimized $transaction MAS transaction")
 	@Given("user performs an optimized $transaction MAS transaction")
@@ -150,9 +150,11 @@ public class TransactionSteps {
 			//			_____________________FOR PINLESS CARD________________
 			//device plan context is used to get Expiry Date incase of PinLess card
 			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+//			device.setServiceCode(devicePlan.getServiceCode());
 			if("YES".equalsIgnoreCase(devicePlan.getIsPinLess())) {
 				device.setExpirationDate(devicePlan.getExpiryDate());
-				device.setPinNumberForTransaction("PINLESS");
+				device.setPinNumberForTransaction("PINLESS");	
+				
 			}
 			//			_____________________FOR PINLESS CARD________________
 			//			__________________CURRENCY VAL FROM EXCEL _________
@@ -225,6 +227,7 @@ public class TransactionSteps {
 		transactionData.setCardDataElementsDynamic("035.03", device.getExpirationDate());
 		transactionData.setCardDataElementsDynamic("045.02", device.getDeviceNumber());
 		transactionData.setCardDataElementsDynamic("045.06", device.getExpirationDate());
+//		transactionData.setCardDataElementsDynamic("035.04", device.getServiceCode());
 		//	transactionData.setCardDataElementsDynamic("023", "000"); // no validation of card sequence number
 	}
 
@@ -277,10 +280,17 @@ public class TransactionSteps {
 	}
 
 	@Alias("test results are reported")
-	@When("MAS test results are verified")
-	@Then("MAS test results are verified")
-	public void thenTestResultsAreReported(){
-		String testResults = transactionWorkflow.verifyTestResults();
+	@When("$tool test results are verified")
+	@Then("$tool test results are verified")
+	public void thenTestResultsAreReported(String tool){
+		String testResults  = null;
+		if(!"mdfs".toLowerCase().contains(tool)) {
+		 testResults = transactionWorkflow.verifyTestResults();
+		}
+		else {
+			testResults = transactionWorkflow.verifyTestResultsOnMdfs();
+		}
+		
 		if(testResults.toLowerCase().contains("Validations OK" ))	{
 			logger.info("Transaction is succcessful!  - Expected Result : ", testResults );
 			assertTrue("Transaction is succcessful!  - Expected Result : " + testResults, true );
