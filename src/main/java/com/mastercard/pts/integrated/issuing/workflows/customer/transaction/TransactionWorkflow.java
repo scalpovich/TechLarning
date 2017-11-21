@@ -705,7 +705,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 		while (getWindowButtonCount() > 0) {
 			winiumDriver.findElementByName("OK").click();
-			selectLicense(tool);
+			selectLicense();
 			wait(5000);
 		}
 	}
@@ -726,14 +726,18 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(5000);
 		clickTestMode(tool);
 		
+		selectLicense();
+//				selectLicense(tool);
+		wait(5000);
+		waitForImageToAppear("CONNECTED");
+		wait(5000);
+	}
+
+	private void selectLicense() {
 		WebElement dd = winiumDriver.findElementById("comboBox1");
 		ComboBox box = new ComboBox(dd);
 		box.expand();
 		dd.findElement(By.name("IPS Host Testing")).click();
-		//		selectLicense(tool);
-		wait(15000);
-		waitForImageToAppear("CONNECTED");
-		wait(15000);
 	}
 
 	private void connect2IpsHostTestModeOnMdfs() throws FindFailed {
@@ -1059,10 +1063,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void selectLicense(String tool) {
 		if (!isContains(tool, "mdfs")) {
-			
-		
+			executeAutoITExe(SELECT_IPS_HOST_TESTMODE + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"");
 		}
-
 		else
 			selectLicenseOnMdfs();
 	}
