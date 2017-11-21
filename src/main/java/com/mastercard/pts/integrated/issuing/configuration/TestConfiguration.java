@@ -102,8 +102,6 @@ public class TestConfiguration {
 	
 	private String getPortalProperty(String portalType, String propertyName) {
 		String fullProperty = String.format("portal.%s.%s", portalType, propertyName);
-		System.out.println("Property Name: "+ fullProperty+"======="+"Property Value: "+environment.getProperty(fullProperty));
-		
 		return environment.getProperty(fullProperty);
 	}
 }

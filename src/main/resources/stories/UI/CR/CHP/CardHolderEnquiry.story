@@ -14,6 +14,7 @@ Meta:
 @ViewChargeForRefundOnWalletClosure
 @TCName TC_viewChargeForRefundOnWalletClosure
 @sheetName CardHolder
+@testDataFileName testdata
 Given login to cardholder portal as existing Cardholder user
 When check charges for fund transfer
 
