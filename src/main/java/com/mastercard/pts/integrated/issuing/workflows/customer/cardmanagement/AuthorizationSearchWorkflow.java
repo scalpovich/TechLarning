@@ -1,6 +1,5 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
@@ -10,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
-import com.mastercard.pts.integrated.issuing.pages.collect.administration.AdministrationHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.AuthorizationSearchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
@@ -22,7 +20,7 @@ public class AuthorizationSearchWorkflow {
 
 	private static final Logger logger = LoggerFactory.getLogger(AuthorizationSearchPage.class);
 
-	public void verifyAuthTransactionSearch(String type, String state, String deviceNumber) {
+	public void verifyAuthTransactionSearch(String expectedDescription, String expectedCodeAction, String deviceNumber) {
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		page.inputDeviceNumber(deviceNumber);
 		page.inputFromDate(LocalDate.now());
@@ -37,7 +35,9 @@ public class AuthorizationSearchWorkflow {
 		String actualDescription = page.getCellTextByColumnName(1, "Description");
 		logger.info("CodeAction on Authorization Search Page : {} ", actualCodeAction);
 		logger.info("Description on Authorization Search Page : {} ", actualDescription);
-		boolean condition = actualCodeAction.contains(state) && type.equalsIgnoreCase(actualDescription);
-		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
+		logger.info("Expected CodeAction : {} ", expectedCodeAction);
+		logger.info("Expected Description : {} ", expectedDescription);
+		boolean condition = actualCodeAction.contains(expectedCodeAction) && actualDescription.equalsIgnoreCase(expectedDescription);
+		assertTrue("Latest (Row) 'Description' and 'Code Action' does not match on Authorization Search Screen", condition);
 	}
 }
