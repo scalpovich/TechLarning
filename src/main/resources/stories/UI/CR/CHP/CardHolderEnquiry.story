@@ -9,20 +9,71 @@ Meta:
 @CR
 @ChardHolderEnquery
 
-Scenario:To Verify charges for refund on wallet closure 
+Scenario:To Verify charges for Fund Transfer 
 Meta:
-@ViewChargeForRefundOnWalletClosure
-@TCName TC_viewChargeForRefundOnWalletClosure
+@ViewChargeForFundTransfer
+@TCName TC_ViewChargeForFundTransfer
 @sheetName CardHolder
 @testDataFileName testdata
 Given login to cardholder portal as existing Cardholder user
-When check charges for fund transfer
+When check charges for Fund Transfer
+
+
+Scenario:To Verify charges for Intra Client - Wallet to Wallet Transfer(Debit) 
+Meta:
+@ViewChargeForWalletToWalletDebit
+@TCName TC_ViewChargeForWalletToWalletDebit
+@sheetName CardHolder
+@testDataFileName testdata
+Given login to cardholder portal as existing Cardholder user
+When check charges for Intra Client - Wallet to Wallet Transfer(Debit)
+
+Scenario:To Verify charges for Refund on Wallet Closure 
+Meta:
+@ViewChargeForWalletClosure 
+@TCName TC_ViewChargeForWalletClosure
+@sheetName CardHolder
+@testDataFileName testdata
+Given login to cardholder portal as existing Cardholder user
+When check charges for Refund on Wallet Closure
+
+
+Scenario:To Verify charges for Visa Money Transfer Debit
+Meta:
+@ViewChargeForVisaMoneyTransferDebit
+@TCName TC_ViewChargeForVisaMoneyTransferDebit
+@sheetName CardHolder
+@testDataFileName testdata
+Given login to cardholder portal as existing Cardholder user
+When check charges for Visa Money Transfer Debit
+
+
+Scenario:To Verify charges for Intra Bank - Wallet to Wallet Transfer(Debit)
+Meta:
+@ViewChargeForIntraBnkWalletToWalletTransferDebit
+@TCName TC_ViewChargeForIntraBnkWalletToWalletTransferDebit
+@sheetName CardHolder
+@testDataFileName testdata
+Given login to cardholder portal as existing Cardholder user
+When check charges for Intra Bank - Wallet to Wallet Transfer(Debit)
+
+Scenario:To Verify charges for MasterCard MoneySend - Sending
+Meta:
+@ViewChargeForMasterCardMoneySend
+@TCName TC_ViewChargeForMasterCardMoneySend
+@sheetName CardHolder
+@testDataFileName testdata
+Given login to cardholder portal as existing Cardholder user
+When check charges for MasterCard MoneySend - Sending
+Then verify transaction conversation rate
+
 
 Scenario:To Verify transaction history for selected wallet by number of transaction to display
 Meta:
 @ViewTransactionHistoryForWallet
 @TCName TC_viewTransactionHistoryForWallet
 @sheetName CardHolder
+@testDataFileName testdata
 Given login to cardholder portal as existing Cardholder user
 When check transaction history for selected wallet
 
@@ -31,6 +82,7 @@ Meta:
 @ViewTransactionHistoryBetweedPerdiod
 @TCName TC_viewTransactionHistoryForWallet
 @sheetName CardHolder
+@testDataFileName testdata
 Given login to cardholder portal as existing Cardholder user
 When check transaction history between selected duration
 Then verify transaction details

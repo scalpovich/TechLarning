@@ -140,8 +140,7 @@ public class CardHolderTransactions {
 	public void setTransactionStatusFailMessage(String transactionStatusFailMessage) {
 		this.transactionStatusFailMessage = transactionStatusFailMessage;
 	}
-	
-	
+		
 	
 	public String getWalletToWalletTransSucessMsg() {
 		return walletToWalletTransSucessMsg;

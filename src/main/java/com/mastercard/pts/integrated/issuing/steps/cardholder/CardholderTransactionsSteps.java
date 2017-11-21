@@ -3,6 +3,7 @@
  */
 package com.mastercard.pts.integrated.issuing.steps.cardholder;
 
+import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.junit.Assert;
 import org.slf4j.Logger;
@@ -24,11 +25,9 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 	private CardHolderTransactions cardhlTran;
 	
 	@When("cardholder book the cash remittance")
-	public void cardholderBookCashRemittance(){
-		
+	public void cardholderBookCashRemittance(){		
 		cardhlTran = CardHolderTransactions.cardHolderTranscationDataProvider();
-		transactionFlow.openCashRemittanceTransactionPage();
-		
+		transactionFlow.openCashRemittanceTransactionPage();		
 		if(!transactionFlow.checkCashRemittanceAllowedOrNot()){
 			transactionFlow.cashRemittanceBooking(cardhlTran);			
 		}else{			
@@ -40,21 +39,25 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 	public void cancelCashRemittanceRequest(){
 		transactionFlow.openCancelRemittanceTransactionPage();
 	}
-	@When ("check charges for mastercard money send")
+	
+	@When ("fund transfer through MasterCard Money Send")
 	public void checkChargesForMasterCardMoneySend(){		
 		cardhlTran = CardHolderTransactions.cardHolderTranscationDataProvider();
 		transactionFlow.openTransactionPage();
 		transactionFlow.selectMasterCardMoneySend();
 		transactionFlow.masterCardMoneySendForm(cardhlTran);
-		
+	}
+	
+	@Then ("verify $transferType fund transfer stauts")
+	public void verifyFundTransferStatus(){		
+		Assert.assertTrue("Transaction status for fund transfer", transactionFlow.verifyFundTransferStatusOfTransaction());
 	}
 	
 	@When ("check wallet to wallet transfer")
 	public void checkWalletToWalletTransfer(){
 		cardhlTran = CardHolderTransactions.cardHolderTranscationDataProvider();
 		transactionFlow.openTransactionPage();
-		transactionFlow.selectWalletToWalletOption();
-		
+		transactionFlow.selectWalletToWalletOption();		
 		if(transactionFlow.verifyAvailBalanceIntoWallet()){
 			transactionFlow.walletToWalletTransfer(cardhlTran);
 		}else{
@@ -62,7 +65,7 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 		}
 	}
 	
-	@When ("check charges for intra bank fund transfer")
+	@When ("fund transfer through wallet to wallet transfer")
 	public void checkIntraBankFundTransfer(){		
 		cardhlTran = CardHolderTransactions.cardHolderTranscationDataProvider();
 		transactionFlow.selectIntraBankMoneyTransferOption();

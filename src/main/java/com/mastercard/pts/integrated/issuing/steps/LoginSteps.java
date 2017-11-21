@@ -21,7 +21,6 @@ import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.pts.integrated.issuing.workflows.LoginFlows;
 import com.mastercard.pts.integrated.issuing.workflows.LogoutFlows;
 import com.mastercard.pts.integrated.issuing.workflows.QMRReportFlows;
-import com.mastercard.pts.integrated.issuing.domain.cardholder.LoginCardholder;
 
 @Component
 public class LoginSteps extends AbstractBaseFlows {
@@ -113,7 +112,6 @@ public class LoginSteps extends AbstractBaseFlows {
 		if (excelTestData == null) {
 			Assert.fail("Unable to read entire test data");
 		} else {
-
 			excelTestData.fnSetCurrentStoryTestData(strStoryName);
 		}
 	}

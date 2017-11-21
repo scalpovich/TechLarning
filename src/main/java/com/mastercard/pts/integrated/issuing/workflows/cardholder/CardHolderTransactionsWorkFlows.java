@@ -14,7 +14,6 @@ import com.mastercard.pts.integrated.issuing.pages.cardholder.transactions.FundT
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
 
-
 @Component
 public class CardHolderTransactionsWorkFlows extends AbstractBasePage{
 	
@@ -82,11 +81,19 @@ public class CardHolderTransactionsWorkFlows extends AbstractBasePage{
 		fundTransfer.enterTransactionPassword(cardhlfTran.getTransctionPassword());
 		fundTransfer.enterTransactionRemark(cardhlfTran.getTransactionRemark());
 		fundTransfer.confirmTransaction();
-		waitForLoaderToDisappear();		
-		if(fundTransfer.verifyWalletToWalletTransferStatus()){
+		waitForLoaderToDisappear();				
+		if(fundTransfer.verifyFundsTransferSts()){
 				Assert.assertTrue(false);
 		}else{
 				Assert.assertTrue(fundTransfer.checkWalletToWalletTransferStatusMessage().contains(cardhlfTran.getWalletToWalletTransSucessMsg()));
+		}
+	}
+	
+	public boolean verifyFundTransferStatusOfTransaction(){
+		if(fundTransfer.verifyFundTransferSatus()){
+				return true;
+		}else{
+				return false;
 		}
 	}
 	
