@@ -82,6 +82,9 @@ public class TestConfiguration {
 			portal.setAgencyUserName(getPortalProperty(portalType, "user.agency.name"));
 			portal.setBranchUserName(getPortalProperty(portalType, "user.branch.name"));
 			portal.setAgentUserName(getPortalProperty(portalType, "user.agent.name"));
+			portal.setNonfundedAgencyUserName(getPortalProperty(portalType, "user.nonfundedagency.name"));
+			portal.setNonfundedBranchUserName(getPortalProperty(portalType, "user.nonfundedbranch.name"));
+			portal.setNonfundedAgentUserName(getPortalProperty(portalType, "user.nonfundedagent.name"));
 		}
 		else{
 			portal.setUserName(getPortalProperty(portalType, "user.name"));

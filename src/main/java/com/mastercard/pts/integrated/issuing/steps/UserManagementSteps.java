@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.steps;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -13,13 +14,13 @@ import com.mastercard.pts.integrated.issuing.configuration.Portal;
 import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
-import com.mastercard.pts.integrated.issuing.pages.customer.administration.LoginPage;
 import com.mastercard.pts.integrated.issuing.pages.PageObjectFactory;
 import com.mastercard.pts.integrated.issuing.pages.agent.AgentHomePage;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.CardholderHomePage;
 import com.mastercard.pts.integrated.issuing.pages.collect.CollectHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.InstitutionHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.InstitutionSelectionPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.administration.LoginPage;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
 
@@ -45,6 +46,12 @@ public class UserManagementSteps {
 	private static final String BRANCH = "branch";
 
 	private static final String AGENT = "agent";
+	
+	private static final String NON_FUNDED_AGENCY = "nonfundedagency";
+
+	private static final String NON_FUNDED_BRANCH = "nonfundedbranch";
+
+	private static final String NON_FUNDED_AGENT = "nonfundedagent";
 
 	@Autowired
 	private AppEnvironment environment;
@@ -139,6 +146,12 @@ public class UserManagementSteps {
 			loginWorkflow.login(agentPortal.getBranchUserName(), agentPortal.getPassword());
 		else if(AGENT.equalsIgnoreCase(userType))
 			loginWorkflow.login(agentPortal.getAgentUserName(), agentPortal.getPassword());
+		else if(NON_FUNDED_AGENCY.equalsIgnoreCase(userType))
+			loginWorkflow.login(agentPortal.getNonfundedAgencyUserName(), agentPortal.getPassword());
+		else if(NON_FUNDED_BRANCH.equalsIgnoreCase(userType))
+			loginWorkflow.login(agentPortal.getNonfundedBranchUserName(), agentPortal.getPassword());
+		else if(NON_FUNDED_AGENT.equalsIgnoreCase(userType))
+			loginWorkflow.login(agentPortal.getNonfundedAgentUserName(), agentPortal.getPassword());
 	}
 
 	@When("user logs in with incorrect password")

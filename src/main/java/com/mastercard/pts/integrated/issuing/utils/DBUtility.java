@@ -77,6 +77,26 @@ public class DBUtility {
 		return recordColumnValue;
 	}
 	
+	/*
+	 * This method activates agency through DB
+	 */
+	public void activateAgencyThroughDB(String queryString) {
+		try {
+			stmt = getConnection().createStatement();
+		      stmt.executeUpdate(queryString);
+		      conn.commit();
+		} catch (Exception e) {
+			MiscUtils.propagate(e);
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				MiscUtils.propagate(e);
+			}
+		}
+	}
+	
 	public void runSQLScript(Resource sqlFile)
 	{
 			ScriptUtils.executeSqlScript(getConnection(), sqlFile);
