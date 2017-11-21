@@ -778,6 +778,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		String binMaxBinRange = bin.substring(0, 9) + "99";
 
 		try {
+			winiumDriver.findElementByName("Test Options").click();
 			clickTestOptions(transaction);
 
 			activateMas(transaction);
@@ -843,6 +844,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void configureTestOptionsHostAndIP(String tool) {
 		try {
+			winiumDriver.findElementByName("Test Options").click();
 			clickTestOptions(tool);
 
 			String ipAdd = simulator.getIpAddress();
