@@ -1051,8 +1051,12 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private void selectLicense(String tool) {
-		if (!isContains(tool, "mdfs"))
+		if (!isContains(tool, "mdfs")) {
 			executeAutoITExe(SELECT_IPS_HOST_TESTMODE + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"");
+			executeAutoITExe(SELECT_IPS_HOST_TESTMODE + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"");
+			executeAutoITExe(SELECT_IPS_HOST_TESTMODE + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"");
+		}
+
 		else
 			selectLicenseOnMdfs();
 	}
