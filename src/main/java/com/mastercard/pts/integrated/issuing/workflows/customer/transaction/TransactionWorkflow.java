@@ -21,6 +21,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import winium.elements.desktop.ComboBox;
+
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.configuration.FinSimSimulator;
 import com.mastercard.pts.integrated.issuing.configuration.MasSimulator;
@@ -723,7 +725,12 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private void connect2IpsHostTestMode(String tool) throws FindFailed {
 		wait(5000);
 		clickTestMode(tool);
-		selectLicense(tool);
+		
+		WebElement dd = winiumDriver.findElementById("comboBox1");
+		ComboBox box = new ComboBox(dd);
+		box.expand();
+		dd.findElement(By.name("IPS Host Testing")).click();
+		//		selectLicense(tool);
 		wait(15000);
 		waitForImageToAppear("CONNECTED");
 		wait(15000);
@@ -1052,12 +1059,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void selectLicense(String tool) {
 		if (!isContains(tool, "mdfs")) {
-			activateMas("mas");
-			executeAutoITExe(SELECT_IPS_HOST_TESTMODE + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"");
-			activateMas("mas");
-			executeAutoITExe(SELECT_IPS_HOST_TESTMODE + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"");
-			activateMas("mas");
-			executeAutoITExe(SELECT_IPS_HOST_TESTMODE + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"");
+			
+		
 		}
 
 		else
