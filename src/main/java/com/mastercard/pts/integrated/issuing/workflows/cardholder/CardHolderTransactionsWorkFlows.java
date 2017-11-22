@@ -50,9 +50,9 @@ public class CardHolderTransactionsWorkFlows extends AbstractBasePage{
 	}
 	
 	public void selectIntraBankMoneyTransferOption(){
-		
 		clickContinueOnFundtransferButton();
 	}
+	
 	public void clickContinueOnFundtransferButton(){
 		fundTransfer.clickOnContinueFundTransferOption();
 	}

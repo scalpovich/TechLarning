@@ -50,7 +50,7 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 	
 	@Then ("verify $transferType fund transfer stauts")
 	public void verifyFundTransferStatus(){		
-		Assert.assertTrue("Transaction status for fund transfer", transactionFlow.verifyFundTransferStatusOfTransaction());
+		Assert.assertTrue("Fund transfer transaction is failed", transactionFlow.verifyFundTransferStatusOfTransaction());
 	}
 	
 	@When ("check wallet to wallet transfer")

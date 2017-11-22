@@ -70,16 +70,28 @@ public class CardHolderEnquiryWorkflow extends AbstractBaseFlows {
 	
 	public void clickOnSubmitButtonForCharges(){
 		enquiryPage.clickOnSubmitButton();
+		waitForLoaderToDisappear();
+	}
+	
+	public void clickOkBtn(){
+		enquiryPage.clickOkayRestButton();
 	}
 	
 	public void checkTransactionForFundTransfer(String TransactionType){
 		Assert.assertEquals(TransactionType,enquiryPage.checkTransactionType());
 	}
 	
-	public void checkConversionRatesForFundTransfer(String transactionAmount){
-		Assert.assertEquals(transactionAmount,enquiryPage.checkTransactionCharge());
+	public void checkConversionRatesForFundTransfer(String conversactionRate){
+		if(enquiryPage.checkTransactionCharge().matches(".*\\d.*")){
+			Assert.assertTrue("Incorrect conversion rate applied", enquiryPage.checkTransactionCharge().equalsIgnoreCase(conversactionRate));
+		}else{
+			Assert.fail();
+		}
 	}
 	
+	public void checkTotalDebitAmt(String transactionAmount){
+		Assert.assertTrue("Total debit amount is incorrect", enquiryPage.getTotalDebitAmoutForTransaction() >= Integer.valueOf(transactionAmount));
+	}
 	public Map<Integer,ArrayList<String>> getTransactionDetails(){
 		return enquiryPage.getTransactionDetails();
 	}

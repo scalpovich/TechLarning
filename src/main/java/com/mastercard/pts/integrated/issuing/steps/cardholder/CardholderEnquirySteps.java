@@ -39,15 +39,21 @@ public class CardholderEnquirySteps extends AbstractBaseFlows{
 		cardHolderEnqflow.setTransactionAmount(cardholderEnquiry.getTransactionAmount());
 		cardHolderEnqflow.setTransctionCurrency(cardholderEnquiry.getTransactionCurrency());
 		cardHolderEnqflow.clickOnSubmitButtonForCharges();
-			
-		
 	}
 	
 	@Then ("verify transaction conversation rate")
 	public void verifyTransactionConversationRate(){
-		cardHolderEnqflow.checkConversionRatesForFundTransfer(cardholderEnquiry.getConversionCharge());
+		cardHolderEnqflow.checkConversionRatesForFundTransfer(cardholderEnquiry.getConversionCharge());		
+	}
+	
+	@Then ("verify total debit amount for transaction")
+	public void verifyTtlDebitAmoutForTranct(){
+		cardHolderEnqflow.checkTotalDebitAmt(cardholderEnquiry.getTransactionAmount());
+	}
+	
+	@Then ("verify transaction type")
+	public void verifyTransactionsType(){
 		cardHolderEnqflow.checkTransactionForFundTransfer(cardholderEnquiry.getTransactionType());
-		Assert.assertTrue("Incorrect conversation rate is displayed", true);
 	}
 	
 	@When ("check transaction history for selected wallet")
@@ -56,7 +62,6 @@ public class CardholderEnquirySteps extends AbstractBaseFlows{
 		cardHolderEnqflow.navigateToEnquiryTransactionsView();
 		cardHolderEnqflow.selectTransactionsCountOption();
 		cardHolderEnqflow.setNoOfTransactionsToShow(cardholderEnquiry.getNoOfTransactionCount());
-		
 	}
 	
 	@When ("check transaction history between selected duration")

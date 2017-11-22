@@ -73,8 +73,16 @@ public class EnquiryHomePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//li[@id='ViewTransactionHistory']/a")
 	private MCWebElement transactionMenuTab;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//table[@class='modelFormClass']/tbody/tr[12]/td[3]")
+	private MCWebElement totalDebitAmt;
+	
 	private String transactionHistoryGrid = "//table[@class='dataview']/tbody/child::tr";
 	
+	
+	public Integer getTotalDebitAmoutForTransaction(){
+		String debitAmt = getTextFromPage(totalDebitAmt);			
+		return Integer.parseInt(debitAmt.replaceAll("[^0-9]", ""));
+	}
 	
 	public void verifyUiOperationStatus() {
 		logger.info("Enquiry");

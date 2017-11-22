@@ -2,13 +2,11 @@ package com.mastercard.pts.integrated.issuing.pages.cardholder.virtualcard;
 
 import java.util.Arrays;
 import java.util.Collection;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -77,7 +75,24 @@ public class VirtualPrepaidCardRequestPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.ID, valueToFind = "registeredMailId")
 	private MCWebElement registeredMailIdTxt;
-
+	
+	@PageElement(findBy = FindBy.ID, valueToFind="mpts_cardHolderPortal_button_submit")
+	private MCWebElement submitVirtualCardReq;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[@class='SuccessMessageTxt']")
+	private MCWebElement virtualPrparidCardReqestResStatus;
+	
+	
+	public String getVirtualCardRequesResponse(){
+		return getTextFromPage(virtualPrparidCardReqestResStatus);
+	}
+	
+	public void submitRequestforVirtualCrd(){
+		clickWhenClickable(submitVirtualCardReq);
+		waitForLoaderToDisappear();
+	}
+	
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Virtual Prepaid Card Request");
 		verifyTitleCardHolderPortal("Static Virtual Device Request");

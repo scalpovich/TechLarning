@@ -17,7 +17,8 @@ Meta:
 @testDataFileName testdata
 Given login to cardholder portal as existing Cardholder user
 When check charges for Fund Transfer
-
+Then verify total debit amount for transaction
+Then verify transaction conversation rate
 
 Scenario:To Verify charges for Intra Client - Wallet to Wallet Transfer(Debit) 
 Meta:
@@ -27,6 +28,8 @@ Meta:
 @testDataFileName testdata
 Given login to cardholder portal as existing Cardholder user
 When check charges for Intra Client - Wallet to Wallet Transfer(Debit)
+Then verify transaction conversation rate
+Then verify total debit amount for transaction
 
 Scenario:To Verify charges for Refund on Wallet Closure 
 Meta:
@@ -36,7 +39,8 @@ Meta:
 @testDataFileName testdata
 Given login to cardholder portal as existing Cardholder user
 When check charges for Refund on Wallet Closure
-
+Then verify transaction conversation rate
+Then verify total debit amount for transaction
 
 Scenario:To Verify charges for Visa Money Transfer Debit
 Meta:
@@ -46,6 +50,8 @@ Meta:
 @testDataFileName testdata
 Given login to cardholder portal as existing Cardholder user
 When check charges for Visa Money Transfer Debit
+Then verify transaction conversation rate
+Then verify total debit amount for transaction
 
 
 Scenario:To Verify charges for Intra Bank - Wallet to Wallet Transfer(Debit)
@@ -56,6 +62,8 @@ Meta:
 @testDataFileName testdata
 Given login to cardholder portal as existing Cardholder user
 When check charges for Intra Bank - Wallet to Wallet Transfer(Debit)
+Then verify transaction conversation rate
+Then verify total debit amount for transaction
 
 Scenario:To Verify charges for MasterCard MoneySend - Sending
 Meta:
@@ -66,7 +74,7 @@ Meta:
 Given login to cardholder portal as existing Cardholder user
 When check charges for MasterCard MoneySend - Sending
 Then verify transaction conversation rate
-
+Then verify total debit amount for transaction
 
 Scenario:To Verify transaction history for selected wallet by number of transaction to display
 Meta:
