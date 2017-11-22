@@ -6,7 +6,7 @@ As an Agent User
 I want to do Initial Load - Load - Reload through agent portal
 
 Meta:
-@StoryName EMV_LOAD_BALANCE_AGENCY_NONFUND
+@StoryName MWMC_MSR_RTLTRVL_AGNC_NONFUND
 @CR1
 @CardCreation
 
@@ -91,6 +91,16 @@ When user fills General details with product prepaid and submits the form for re
 And user activates device through helpdesk
 Then activation of registered device prepaid is successful and activation date is updated
 And initial load balance in helpdesk updated correctly for prepaid device
+And user sign out from customer portal
+
+Scenario: Prepaid - Setup Multi Currency Through Agent Portal - Non Funded Agent
+
+Given user is logged in agent portal as nonfundedagent user
+When user setup multiple currency for device through agent portal
+Then currency setup for the device is successful
+And user sign out from nonfundedagent portal
+And user is logged in institution
+And currency setup for prepaid device is done correclty and updated in wallet details tab
 And user sign out from customer portal
 
 Scenario: Prepaid - Load Balance Request - Non Funded Agent

@@ -1,10 +1,12 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Collection;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
@@ -23,28 +25,28 @@ public class BulkDeviceRequestPage extends AbstractBasePage {
 	private MCWebElement addBulkDeviceRequestBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "productType:input:dropdowncomponent")
-	private MCWebElement ProductTypeDDwn;
+	private MCWebElement productTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "programCode:input:dropdowncomponent")
-	private MCWebElement ProgramTypeDDwn;
+	private MCWebElement programTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "branchCode:input:dropdowncomponent")
-	private MCWebElement BranchDDwn;
+	private MCWebElement branchDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "corporateClientCode:input:dropdowncomponent")
-	private MCWebElement CorporateClientCodeDDwn;
+	private MCWebElement corporateClientCodeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "quantity:input:inputTextField")
-	private MCWebElement QuantityRequestedTxt;
+	private MCWebElement quantityRequestedTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "devicePlanCode:input:dropdowncomponent")
-	private MCWebElement DevicePlanDDwn;
+	private MCWebElement devicePlanDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement SaveBtn;
 
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "feedbackPanelINFO")
-	private MCWebElement ConfirmationMsgTxt;
+	private MCWebElement confirmationMsgTxt;
 
 	public String createBulkDeviceRequest(String productType, String program, String quantityReq) {
 
@@ -52,17 +54,17 @@ public class BulkDeviceRequestPage extends AbstractBasePage {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		ClickButton(addBulkDeviceRequestBtn);
 		switchToIframe(Constants.ADD_BULK_DEVICE_REQUEST_FRAME);
-		SelectDropDownByText(ProductTypeDDwn, productType);
+		SelectDropDownByText(productTypeDDwn, productType);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByIndex(BranchDDwn, 1);
+		SelectDropDownByIndex(branchDDwn, 1);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByText(ProgramTypeDDwn, program);
+		SelectDropDownByText(programTypeDDwn, program);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByIndex(CorporateClientCodeDDwn, 1);
+		SelectDropDownByIndex(corporateClientCodeDDwn, 1);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByIndex(DevicePlanDDwn, 1);
+		SelectDropDownByIndex(devicePlanDDwn, 1);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(QuantityRequestedTxt, quantityReq);
+		enterText(quantityRequestedTxt, quantityReq);
 		ClickButton(SaveBtn);
 		SwitchToDefaultFrame();
 		return getBatchNumber();
@@ -70,7 +72,7 @@ public class BulkDeviceRequestPage extends AbstractBasePage {
 	}
 
 	public String getBatchNumber() {
-		String strOutputMessage = ConfirmationMsgTxt.getText().split("\\n")[0];
+		String strOutputMessage = confirmationMsgTxt.getText().split("\\n")[0];
 		System.out.println("Request Number " + strOutputMessage);
 		// Record Added Successfully, Batch Number is 17149055
 		String strOuputMessagePattern = "Record\\s*Added\\d*\\s*Successfully\\s*,\\s*Batch\\s*Number\\s*is\\s*";

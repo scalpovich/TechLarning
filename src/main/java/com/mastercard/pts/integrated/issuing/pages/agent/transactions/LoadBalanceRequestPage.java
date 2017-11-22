@@ -94,7 +94,6 @@ public class LoadBalanceRequestPage extends TransactionsAbstractPage {
 	}
 
 	public String performLoadBalanceRequestAndGetRequestReferenceNumber(Device device, LoadBalanceRequest details) {
-		//activateAgencyThroughDB();//This is to activate agency through DB, right now its a workaround for env problem where Agency is getting suspended
 		WebElementUtils.enterText(deviceNumberTxt, device.getDeviceNumber());
 		clickSearchButton();
 		enterTransactionDetails(details.getTransactionDetails());

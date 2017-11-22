@@ -31,11 +31,11 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class DeviceSalePage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory
 			.getLogger(DeviceSalePage.class);
-	private static final String QUERY_STRING_DEVICE_NUMBER_PREPAID_EMV = "SELECT * FROM Device d WHERE d.BANK_CODE  = '121212' AND d.PRODUCT_TYPE = 'D' AND d.STATUS_CODE  = '0' AND d.device_plan_code in (select dp.device_plan_code from device_plan dp where device_type = '2' and dp.bank_code = d.bank_code) order by d.ACTIVATION_DATE desc";
+	private static final String QUERY_STRING_DEVICE_NUMBER_PREPAID_EMV = "SELECT * FROM Device d WHERE d.BANK_CODE  = '121212' AND d.PRODUCT_TYPE = 'P' AND d.STATUS_CODE  = '0' AND d.device_plan_code in (select dp.device_plan_code from device_plan dp where device_type = '2' and dp.bank_code = d.bank_code) order by d.ACTIVATION_DATE desc";
 	private static final String QUERY_STRING_DEVICE_NUMBER_PREPAID_MAGSTRIPE = "SELECT * FROM Device d WHERE d.BANK_CODE  = '121212' AND d.PRODUCT_TYPE = 'P' AND d.STATUS_CODE  = '0' AND d.device_plan_code in (select dp.device_plan_code from device_plan dp where device_type = '1' and dp.bank_code = d.bank_code) order by d.ACTIVATION_DATE desc";
 	private static final String PREPAID = "prepaid";
 	private static final String EMV = "emv";
-	private static final String MAGSTRIPE = "magstripe";
+	private static final String MAGSTRIPE = "magnetic stripe";
 	private static final String DEVICE_NUMBER_COLUMN_NAME = "DEVICE_NUMBER";
 
 	private String activeDeviceNumber;
@@ -485,6 +485,7 @@ public class DeviceSalePage extends AbstractBasePage {
 			selectApplicantProfession(details.getApplicantProfession());
 			clickNextButton();
 		}
+		enterTransactionDetails(details.getInitialLoadTxnDetails());
 		clickSubmitButton();
 	}
 
@@ -496,7 +497,8 @@ public class DeviceSalePage extends AbstractBasePage {
 			activeDeviceNumber = dbUtility.getSingleRecordColumnValueFromDB(
 					QUERY_STRING_DEVICE_NUMBER_PREPAID_EMV,
 					DEVICE_NUMBER_COLUMN_NAME);
-		} else if (PREPAID.equalsIgnoreCase(productType)
+		}
+		if (PREPAID.equalsIgnoreCase(productType)
 				&& MAGSTRIPE.equalsIgnoreCase(deviceType)) {
 			activeDeviceNumber = dbUtility.getSingleRecordColumnValueFromDB(
 					QUERY_STRING_DEVICE_NUMBER_PREPAID_MAGSTRIPE,
