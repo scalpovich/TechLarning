@@ -215,7 +215,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickWhenClickable(addDetailsBtn);
 	}
 
-	protected void clickSearchButton() {
+	public void clickSearchButton() {
 		clickWhenClickable(searhBtn);
 	}
 
@@ -302,13 +302,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return driver().findElement(By.xpath(xpath)).getText().trim();
 	}
 
-	protected String getCellTextByColumnName(int rowNumber, String columnName) {
+	public String getCellTextByColumnName(int rowNumber, String columnName) {
 		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]", rowNumber,
 				columnName);
 		return driver().findElement(By.xpath(xpath)).getText().trim();
 	}
 
-	protected int getRowCountFromTable() {
+	public int getRowCountFromTable() {
 		List<WebElement> tableRecords = driver().findElements(By.xpath("//table[@class='dataview']/tbody//tr"));
 		return tableRecords.size();
 	}

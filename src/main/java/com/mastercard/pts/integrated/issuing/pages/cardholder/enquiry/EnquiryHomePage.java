@@ -11,7 +11,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.EnquiryNav;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -26,9 +25,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Navigation(tabTitle = EnquiryNav.TAB_ENQUIRY)
 public class EnquiryHomePage extends AbstractBasePage {
 	
-	@Autowired
-	private WebDriverProvider driverProvider;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(EnquiryHomePage.class);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "div .Title")
