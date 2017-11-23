@@ -85,7 +85,7 @@ public class EnquiryHomePage extends AbstractBasePage {
 	}
 	
 	public void verifyUiOperationStatus() {
-		logger.info("Enquiry");
+		logger.info("Verify Title on Card Holder Portal Enquiry");
 		verifyTitleCardHolderPortal("Enquiry");
 	}
 	
