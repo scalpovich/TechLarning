@@ -43,13 +43,12 @@ public class LoginSteps extends AbstractBaseFlows {
 
 	@Autowired
 	public LoginFlows loginflows;
-	
+
 	public LoginCardholder loginCardHolderProvider;
 
 	@Given("login to customer portal as newuser")
 	public void LoginForNewUser() {
-		Portal userPortal = appEnvironment
-				.getPortalByType(Portal.TYPE_CUSTOMER);
+		Portal userPortal = appEnvironment.getPortalByType(Portal.TYPE_CUSTOMER);
 		loginflows.LoginWithNewUser(userPortal);
 
 	}
@@ -59,8 +58,7 @@ public class LoginSteps extends AbstractBaseFlows {
 	 * excel sheet
 	 */
 	@Given("login to portal as existing bank as a $user")
-	public void reloginforPrepaid(@Named("TCName") String strStoryName,
-			@Named("sheetName") String strSheetName,
+	public void reloginforPrepaid(@Named("TCName") String strStoryName, @Named("sheetName") String strSheetName,
 			@Named("user") String userType) {
 		String f = "TestData";
 		logger.info("Reading entire test data");
@@ -70,8 +68,7 @@ public class LoginSteps extends AbstractBaseFlows {
 		} else {
 			excelTestData.fnSetCurrentStoryTestData(strStoryName);
 		}
-		login(MapUtils.fnGetInputDataFromMap("UserId"),
-				MapUtils.fnGetInputDataFromMap("Password"));
+		login(MapUtils.fnGetInputDataFromMap("UserId"), MapUtils.fnGetInputDataFromMap("Password"));
 		CustomUtils.ThreadDotSleep(1100);
 		selectInstitute();
 	}
@@ -80,71 +77,69 @@ public class LoginSteps extends AbstractBaseFlows {
 	 * 
 	 * Login into Card Holder portal with valid login details from excel sheet
 	 */
-	@Given ("login to cardholder portal as existing Cardholder user")
-	public void loginToCardholder(){
-			
-			/*String f = "TestData";
-			logger.info("Reading entire test data");
-			excelTestData.fnReadEntireTestData(f, strSheetName, "TCName");
-			
-			if (excelTestData == null) {
-				Assert.fail("Unable to read entire test data");
-			} else {
+	@Given("login to cardholder portal as existing Cardholder user")
+	public void loginToCardholder() {
 
-				excelTestData.fnSetCurrentStoryTestData(strStoryName);
-			}*/
-		
-			loginCardHolderProvider = LoginCardholder.loginCardholderDataProvider();
-			loginCardholder(loginCardHolderProvider.getUserName(),loginCardHolderProvider.getPassWord());
-			switchToWindowCHP();
-			CustomUtils.ThreadDotSleep(1100);
+		/*
+		 * String f = "TestData"; logger.info("Reading entire test data");
+		 * excelTestData.fnReadEntireTestData(f, strSheetName, "TCName");
+		 * 
+		 * if (excelTestData == null) {
+		 * Assert.fail("Unable to read entire test data"); } else {
+		 * 
+		 * excelTestData.fnSetCurrentStoryTestData(strStoryName); }
+		 */
+
+		loginCardHolderProvider = LoginCardholder.loginCardholderDataProvider();
+		loginCardholder(loginCardHolderProvider.getUserName(), loginCardHolderProvider.getPassWord());
+		switchToWindowCHP();
+		CustomUtils.ThreadDotSleep(1100);
 	}
-	
+
 	@BeforeScenario
-	@Given ("read test data for scenario")
-	public void readScenarioDataSheet(@Named("TCName")String strStoryName,@Named("sheetName")String strSheetName){
+	@Given("read test data for scenario")
+	public void readScenarioDataSheet(@Named("TCName") String strStoryName, @Named("sheetName") String strSheetName) {
 		String f = "TestData";
-		
+
 		logger.info("Reading entire test data");
-		
+
 		excelTestData.fnReadEntireTestData(f, strSheetName, "TCName");
-		
+
 		if (excelTestData == null) {
 			Assert.fail("Unable to read entire test data");
 		} else {
 			excelTestData.fnSetCurrentStoryTestData(strStoryName);
 		}
 	}
-	
-	@Given ("open card holder application")
-	public void openCardHolderApplication(){
+
+	@Given("open card holder application")
+	public void openCardHolderApplication() {
 		loginFlows.openCardHolderApplication();
 	}
-	
-	@Given ("first time card holder registeration for login")
-	public void firstTimeCardRegisteration(){
-		loginFlows.signUpCardHolderUser(loginCardHolderProvider.getPassWord(),loginCardHolderProvider.getCardHolderTransPassword(),loginCardHolderProvider.getFirstSequrityQst(),loginCardHolderProvider.getFirstSequrityAnsw(),loginCardHolderProvider.getSecondSequrityQst(),loginCardHolderProvider.getSecondSequrityAnsw());
-		
+
+	@Given("first time card holder registeration for login")
+	public void firstTimeCardRegisteration() {
+		loginFlows.signUpCardHolderUser(loginCardHolderProvider.getPassWord(),
+				loginCardHolderProvider.getCardHolderTransPassword(), loginCardHolderProvider.getFirstSequrityQst(),
+				loginCardHolderProvider.getFirstSequrityAnsw(), loginCardHolderProvider.getSecondSequrityQst(),
+				loginCardHolderProvider.getSecondSequrityAnsw());
+
 	}
+
 	@Then("switch to new window")
-	public void switchToNewWindow(){
+	public void switchToNewWindow() {
 		switchToWindowCHP();
 	}
 
 	@Given("login to bank as a $user")
-	public void Login(@Named("TCName") String strStoryName,
-			@Named("sheetName") String strSheetName,
-			@Named("testDataFileName") String testDataFileName,
-			@Named("user") String userType) {
-		Portal userPortal = appEnvironment
-				.getPortalByType(Portal.TYPE_CUSTOMER);
+	public void Login(@Named("TCName") String strStoryName, @Named("sheetName") String strSheetName,
+			@Named("testDataFileName") String testDataFileName, @Named("user") String userType) {
+		Portal userPortal = appEnvironment.getPortalByType(Portal.TYPE_CUSTOMER);
 		logger.info("Reading entire test data");
 		if (testDataFileName != "") {
-			excelTestData.fnReadEntireTestData(testDataFileName, strSheetName,
-					"TCName");
+			excelTestData.fnReadEntireTestData(testDataFileName, strSheetName, "TCName");
 			if (excelTestData == null) {
-				Assert.fail("Test Data not found for " + strStoryName
-						+ "in File:" + testDataFileName);
+				Assert.fail("Test Data not found for " + strStoryName + "in File:" + testDataFileName);
 			} else {
 				excelTestData.fnSetCurrentStoryTestData(strStoryName);
 			}
@@ -155,35 +150,35 @@ public class LoginSteps extends AbstractBaseFlows {
 
 	@Override
 	@Given("user login to customer portal with $userName and $password")
-	public void login(@Named("userName") String userName,
-			@Named("password") String password) {
+	public void login(@Named("userName") String userName, @Named("password") String password) {
 		loginFlows.loginAsCorporateUser(userName, password);
 
 	}
-	
+
 	@Given("User login to card holder portal with $userName and $passWord")
-	public void loginCardholder(@Named("userName")String userName,@Named("passWord")String passWord){
-			
-			if(loginFlows.loginAsCardholderUser(userName, passWord)){
-				
-				loginFlows.signUpCardHolderUser(loginCardHolderProvider.getPassWord(),loginCardHolderProvider.getCardHolderTransPassword(),loginCardHolderProvider.getFirstSequrityQst(),loginCardHolderProvider.getFirstSequrityAnsw(),loginCardHolderProvider.getSecondSequrityQst(),loginCardHolderProvider.getSecondSequrityAnsw());
-				
-				LoginCardholder.loginCardholderDataProvider().setPassWord("aBcd1234*");
-				loginFlows.loginAsCardholderUserAfterSignUp(userName, passWord);
-			}
+	public void loginCardholder(@Named("userName") String userName, @Named("passWord") String passWord) {
+
+		if (loginFlows.loginAsCardholderUser(userName, passWord)) {
+
+			loginFlows.signUpCardHolderUser(loginCardHolderProvider.getPassWord(),
+					loginCardHolderProvider.getCardHolderTransPassword(), loginCardHolderProvider.getFirstSequrityQst(),
+					loginCardHolderProvider.getFirstSequrityAnsw(), loginCardHolderProvider.getSecondSequrityQst(),
+					loginCardHolderProvider.getSecondSequrityAnsw());
+
+			LoginCardholder.loginCardholderDataProvider().setPassWord("aBcd1234*");
+			loginFlows.loginAsCardholderUserAfterSignUp(userName, passWord);
+		}
 	}
 
 	@When("user selects desired $institution")
-	public void selectsInstitution(
-			@Named("institution") String customerPortalInstitute) {
+	public void selectsInstitution(@Named("institution") String customerPortalInstitute) {
 		customerPortalHomePage.selectInstitution(customerPortalInstitute);
 	}
 
 	@Then("user should be in the home page and validate the institution")
 	public void verifyHomepage() {
 		customerPortalHomePage.verifyHomePage();
-		customerPortalHomePage.verifyInstitution(Constants.variable
-				.get("customerPortalInstitute"));
+		customerPortalHomePage.verifyInstitution(Constants.variable.get("customerPortalInstitute"));
 	}
 
 	@Then("user logouts from customer portal")
@@ -191,16 +186,15 @@ public class LoginSteps extends AbstractBaseFlows {
 		logoutFlows.logoutCorporateUser();
 
 	}
-	
+
 	@Then("user logouts from cardholder portal")
-	public void logutFromCardholderPortal(){
+	public void logutFromCardholderPortal() {
 		logoutFlows.clickLogoutCardHolder();
 	}
 
 	@When("user selects the newly created institution")
 	public void selectsInstitution() {
-		customerPortalHomePage.selectInstitution(MapUtils
-				.fnGetInputDataFromMap("Institution"));
+		customerPortalHomePage.selectInstitution(MapUtils.fnGetInputDataFromMap("Institution"));
 	}
 
 }

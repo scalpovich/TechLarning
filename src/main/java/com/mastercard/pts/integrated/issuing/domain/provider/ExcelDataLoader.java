@@ -24,7 +24,7 @@ public class ExcelDataLoader implements DataLoader {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ExcelDataLoader.class);
 	
-	@Value("config/${env}/Data/TestData.xlsx")
+	@Value("config/${env}/Data/TestData.xls")
 	private String excelPath;
 
 	@Override

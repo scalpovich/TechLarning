@@ -24,6 +24,15 @@ public class VirtualCardLimitedValidityVirtualCardCancellationPage extends Abstr
 	@PageElement(findBy = FindBy.CSS, valueToFind = "div .Title")
 	private MCWebElement masterDetailContentTitle;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//table[@class='modelFormClass']/tbody/tr[3]/td")
+	private MCWebElement prmissionForVirtualCardMsg;
+	
+	
+	
+	public boolean verifyPermissionCardholder(){
+		return isElementPresent(prmissionForVirtualCardMsg);
+	}
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Limited Validity Virtual Card Cancellation");
 		verifyTitleCardHolderPortal("Limited Validity Virtual Card Cancellation");

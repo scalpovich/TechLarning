@@ -79,6 +79,9 @@ public class VirtualPrepaidCardRequestPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.ID, valueToFind="mpts_cardHolderPortal_button_submit")
 	private MCWebElement submitVirtualCardReq;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//table[@class='modelFormClass']/tbody/tr[3]/td")
+	private MCWebElement prmissionForVirtualCardMsg;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[@class='SuccessMessageTxt']")
 	private MCWebElement virtualPrparidCardReqestResStatus;
 	
@@ -100,6 +103,10 @@ public class VirtualPrepaidCardRequestPage extends AbstractBasePage {
 		verifyDeviceDetails();
 		verifyButton("Submit");
 		verifyButton("Cancel");
+	}
+	
+	public boolean verifyPermissionCardholder(){
+		return isElementPresent(prmissionForVirtualCardMsg);
 	}
 
 	@Override

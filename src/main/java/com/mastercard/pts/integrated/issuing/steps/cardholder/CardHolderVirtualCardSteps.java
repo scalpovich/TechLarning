@@ -16,6 +16,7 @@ public class CardHolderVirtualCardSteps extends AbstractBaseSteps{
 	@When ("create virtual prepaid card request")
 	public void createVirtualPrepaidCardReq(){
 		chpVirtualCardFlow.openVirtualCardPage();
+		chpVirtualCardFlow.sbmtRreqForVirtualPrepardCard();
 	}
 	
 	@Then ("verify virtual prepaid card request status")
@@ -25,11 +26,18 @@ public class CardHolderVirtualCardSteps extends AbstractBaseSteps{
 	
 	@When ("request limited validity virtual card")
 	public void requestLimitedValidityVirtualCard(){
+		chpVirtualCardFlow.openVirtualCardPage();
+		chpVirtualCardFlow.sbmtRreqForVirtualPrepardCard();
+	}
+	
+	@When ("cancel limited validity virtual card request")
+	public void cancelReqstLimitedValidityVirtCard(){
+		chpVirtualCardFlow.openCancellationCardRequstPage();
 		
 	}
 	
 	@Then ("verify request status for limited validity virtual card")
 	public void vrfRqstStatusForLimitValidityVirtualCrd(){
-		
+
 	}
 }
