@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -90,6 +91,7 @@ public class InitiateSettlementPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(brancIdDDwn, branchID );
 		WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, programCode);
 		clickSearchButton();
+		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
 		String xpathBuild = "//*[@class='dataview']/tbody/tr[1]";
 		String amountToBeSettled = driver().findElement(By.xpath(xpathBuild+"//td[1]")).getText();
 		WebElementUtils.retryUntil(driver().findElement(By.xpath(xpathBuild+"//td[1]"))::click,
