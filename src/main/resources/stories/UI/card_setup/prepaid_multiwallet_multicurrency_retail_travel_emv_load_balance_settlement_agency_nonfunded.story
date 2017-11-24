@@ -121,11 +121,6 @@ And user is logged in institution
 And balance in helpdesk updated correctly for prepaid device
 And user sign out from customer portal
 
-Scenario: Agency Settlement - Non Funded Agent
-Given user is logged in agent portal as nonfundedagency user
-When user initiates settlement for agency
-Then settlement is initiated successfully
-
 Scenario: Program Balance Summary reports download - Funded Agent
 Given user is logged in institution
 When pre-clearing and Pre-EOD batches are run
