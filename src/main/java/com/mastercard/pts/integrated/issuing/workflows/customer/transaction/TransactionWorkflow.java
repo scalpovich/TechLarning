@@ -725,9 +725,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private void connect2IpsHostTestMode(String tool) throws FindFailed {
 		wait(5000);
 		clickTestMode(tool);
-		
+
 		selectLicense();
-//				selectLicense(tool);
+		// selectLicense(tool);
 		wait(5000);
 		waitForImageToAppear("CONNECTED");
 		wait(5000);
@@ -778,9 +778,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		String binMaxBinRange = bin.substring(0, 9) + "99";
 
 		try {
-			winiumDriver.findElementByName("Test Options").click();
 			clickTestOptions(transaction);
-
 			activateMas(transaction);
 			winiumClickOperation(BIN_TABLE);
 			wait(1000);
@@ -844,17 +842,24 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void configureTestOptionsHostAndIP(String tool) {
 		try {
-			winiumDriver.findElementByName("Test Options").click();
 			clickTestOptions(tool);
-
 			String ipAdd = simulator.getIpAddress();
 			String[] ip = ipAdd.split("\\.");
 			winiumClickOperation("TCP/IP");
-
 			setMasIp(ip);
 		} catch (Exception e) {
 			logger.debug(ConstantData.EXCEPTION, e);
 			MiscUtils.propagate(e);
+		}
+	}
+
+	private void clickTestOption() {
+
+		List<WebElement> allTOButtons = winiumDriver.findElementsByName("Test Options");
+		logger.info("Number of all available buttons = {}", allTOButtons.size());
+		for (WebElement webElement : allTOButtons) {
+			logger.info("Name of Buttons = {} ", webElement.getAttribute("Name"));
+			webElement.click();
 		}
 	}
 
@@ -1066,8 +1071,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private void selectLicense(String tool) {
 		if (!isContains(tool, "mdfs")) {
 			executeAutoITExe(SELECT_IPS_HOST_TESTMODE + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"");
-		}
-		else
+		} else
 			selectLicenseOnMdfs();
 	}
 

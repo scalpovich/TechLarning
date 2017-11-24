@@ -189,7 +189,6 @@ public class SimulatorUtilities {
 
 	public void executeAutoITExe(String fileName) {
 		try {
-			wait(5000);
 			String commandToExecute = "'";
 			String path = getResourceFolderPath() + SimulatorConstantsData.AUTOIT_EXE_PATH.replace("\\", "\\\\");
 			commandToExecute = " cmd /c " + " " + path + fileName + " ";
