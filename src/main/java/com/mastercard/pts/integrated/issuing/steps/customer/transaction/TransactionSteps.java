@@ -279,7 +279,7 @@ public class TransactionSteps {
 	@When("$tool test results are verified")
 	@Then("$tool test results are verified")
 	public void thenTestResultsAreReported(String tool) {
-		String testResults = null;
+		String testResults;
 		if (!"mdfs".contains(tool.toLowerCase())) {
 			testResults = transactionWorkflow.verifyTestResults();
 		} else {

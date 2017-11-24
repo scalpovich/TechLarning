@@ -72,6 +72,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public static final LocalDate futureDate = LocalDate.now().plusDays(100);
 
+	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
+
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
@@ -829,10 +831,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 				jsText = (String) jse.executeScript("return $(arguments[0]).text();", WE);
 				unfound = false; // FOUND IT
 			} catch (StaleElementReferenceException ser) {
+				logger.info(EXCEPTION_MESSAGE, ser.getMessage());
 				unfound = true;
 			} catch (NoSuchElementException nse) {
+				logger.info(EXCEPTION_MESSAGE, nse.getMessage());
 				unfound = true;
 			} catch (Exception e) {
+				logger.info(EXCEPTION_MESSAGE, e.getMessage());
 				logger.info("Unknown error.");
 			}
 		}
@@ -1197,7 +1202,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		// TODO Auto-generated method stub
+		logger.info("Not validaiting any elements, as this is an Abstraction layer to Pages");
 		return null;
 	}
 }
