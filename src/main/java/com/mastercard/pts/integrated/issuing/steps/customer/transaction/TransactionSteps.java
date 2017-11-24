@@ -115,13 +115,6 @@ public class TransactionSteps {
 		sameCard = val;
 	}
 
-	@Then("last entry is deleted")
-	@When("last entry is deleted")
-	public void deleteLastTransactionEntry()
-	{
-		transactionWorkflow.removeLastEntry();
-	}
-
 	@When("user performs an optimized $transaction MAS transaction")
 	@Given("user performs an optimized $transaction MAS transaction")
 	public void givenOptimizedTransactionIsExecuted(String transaction)
@@ -277,25 +270,29 @@ public class TransactionSteps {
 	}
 
 	@Alias("test results are reported")
-	@When("MAS test results are verified")
-	@Then("MAS test results are verified")
-	public void thenTestResultsAreReported(){
-		String testResults = transactionWorkflow.verifyTestResults();
+	@When("$tool test results are verified")
+	@Then("$tool test results are verified")
+	public void thenTestResultsAreReported(String tool){
+		String testResults  = null;
+		if(!"mdfs".toLowerCase().contains(tool)) {
+		 testResults = transactionWorkflow.verifyTestResults();
+		} else {
+			testResults = transactionWorkflow.verifyTestResultsOnMdfs();
+		}
+		
 		if(testResults.toLowerCase().contains("Validations OK" ))	{
 			logger.info("Transaction is succcessful!  - Expected Result : ", testResults );
 			assertTrue("Transaction is succcessful!  - Expected Result : " + testResults, true );
-		}
-		else if(testResults.toLowerCase().contains("Validations Not OK" ))	{
+		} else if(testResults.toLowerCase().contains("Validations Not OK" ))	{
 			assertFalse("Transaction failed!  -  Result : " +  testResults, false);
 			throw new ValidationException("Transaction failed! -  Result : " +  testResults);
-		}
-		else	{
+		} else	{
 			logger.error("Transaction failed! ", testResults);
 			assertFalse("Transaction failed! ", false);
 			throw new ValidationException("Transaction failed!");
 		}
 	}
-
+	
 	@When("connection to $simulator is established")
 	@Then("connection to $simulator is established")
 	@Given("connection to $simulator is established")

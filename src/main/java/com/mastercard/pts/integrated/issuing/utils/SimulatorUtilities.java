@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
@@ -223,19 +224,17 @@ public class SimulatorUtilities{
 		{
 			String path = getResourceFolderPath() + SimulatorConstantsData.AUTOIT_EXE_PATH.replace("\\", "\\\\");
 			String psExecPath = getResourceFolderPath() + "\\Simulator\\PsExec\\PsExec.exe";
-			MiscUtils.reportToConsole("psExecPath "  + psExecPath);
+			String commandToExecute;
+			
 			logger.info("********* AutoIt Exe being executed :  ",  fileName);
-			String commandToExecute = " cmd /c " + psExecPath + " "+ path + fileName;
-			MiscUtils.reportToConsole("commandToExecute "  + commandToExecute);
-			if(fileName.contains("SelectIPSHost")) {
-				Runtime.getRuntime().exec(commandToExecute).waitFor(25, TimeUnit.SECONDS);
-				wait(15000);
-			}
-			else {
-				Runtime.getRuntime().exec(commandToExecute).waitFor(15, TimeUnit.SECONDS);
-				wait(2000);
-			}
-			wait(2000);
+			
+/*			//for local AutoIT execution.. enable the below 2 lines and comment the other 2 lines
+            commandToExecute = " cmd /c " +  " "+ path + fileName;
+            executeCommand(fileName, commandToExecute);
+*/                                    
+            //for remote/Jenkins/command Line -  AutoIT execution.. enable the below 2 lines and comment the other 2 lines
+            commandToExecute = " cmd /c " + psExecPath + " "+ path + fileName;
+            executeCommand(fileName, commandToExecute);
 		}
 		catch(Exception e)
 		{
@@ -244,6 +243,18 @@ public class SimulatorUtilities{
 		}
 	}
 
+	private void executeCommand(String fileName, String commandToExecute) throws InterruptedException, IOException {
+		if(fileName.contains("SelectIPSHost")) {
+			Runtime.getRuntime().exec(commandToExecute).waitFor(25, TimeUnit.SECONDS);
+			wait(15000);
+		}
+		else {
+			Runtime.getRuntime().exec(commandToExecute).waitFor(15, TimeUnit.SECONDS);
+			wait(2000);
+		}
+		wait(2000);
+	}
+	
 	public Boolean isNotNullAndEmpty(String varible)
 	{
 		return varible != null && !varible.isEmpty();
