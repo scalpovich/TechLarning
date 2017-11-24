@@ -20,6 +20,7 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.DBUtility;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
+import com.mastercard.pts.integrated.issuing.utils.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -407,6 +408,7 @@ public class DeviceSalePage extends AbstractBasePage {
 	public void fillApplicationDetails2AndSubmit(String transactionDetails) {
 		clickNextButton();
 		enterTransactionDetails(transactionDetails);
+		SimulatorUtilities.wait(3000);
 		clickSubmitButton();
 	}
 	
