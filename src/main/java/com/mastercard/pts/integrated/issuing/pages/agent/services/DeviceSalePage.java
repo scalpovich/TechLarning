@@ -488,6 +488,7 @@ public class DeviceSalePage extends AbstractBasePage {
 			clickNextButton();
 		}
 		enterTransactionDetails(details.getInitialLoadTxnDetails());
+		SimulatorUtilities.wait(3000);
 		clickSubmitButton();
 	}
 
