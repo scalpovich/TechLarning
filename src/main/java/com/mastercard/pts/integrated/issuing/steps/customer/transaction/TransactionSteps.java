@@ -86,7 +86,7 @@ public class TransactionSteps {
 		String temp = transaction;
 		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));
 		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
-			// ECOMM are pinless tranasactions
+			/** ECOMM are pinless tranasactions */
 			if (!transaction.toLowerCase().contains("ecom"))
 				temp = transaction + "_PIN";
 		}
@@ -100,10 +100,10 @@ public class TransactionSteps {
 	@Given("perform an $transaction MAS transaction on the same card")
 	public void givenTransactionIsExecutedOnTheSameCard(String transaction) {
 		String temp = transaction;
-		// we need to use _PIN Profile from MAS test data template
+		/** we need to use _PIN Profile from MAS test data template */
 		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));
 		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
-			// ECOMM are pinless tranasactions
+			/** ECOMM are pinless tranasactions */
 			if (!transaction.toLowerCase().contains("ecom"))
 				temp = transaction + "_PIN";
 		}
@@ -118,8 +118,7 @@ public class TransactionSteps {
 	/*
 	 * @Then("last entry is deleted")
 	 * 
-	 * @When("last entry is deleted") public void deleteLastTransactionEntry() {
-	 * transactionWorkflow.removeLastEntry(); }
+	 * @When("last entry is deleted") public void deleteLastTransactionEntry() { transactionWorkflow.removeLastEntry(); }
 	 */
 
 	@When("user performs an optimized $transaction MAS transaction")
@@ -138,17 +137,17 @@ public class TransactionSteps {
 
 	private Transaction generateMasTestDataForTransaction(String transaction) {
 		Device device = context.get(ContextConstants.DEVICE);
-		// this line of code reads data from the
-		// "AuthorizationTransaction_DataDriven.xls"
-		// at \\Isser-automation-epam\src\main\resources\config\Data folder as
-		// the "Transaction Templates" sheet has the template information
+		/**
+		 * this line of code reads data from the "AuthorizationTransaction_DataDriven.xls" at \\Isser-automation-epam\src\main\resources\config\Data folder as the "Transaction Templates" sheet has the
+		 * template information
+		 */
 		Transaction transactionData = transactionProvider.loadTransaction(transaction);
 
 		// when data is dynammically passed when scripts run from end-2-end
 		if (device != null) {
-			// _____________________FOR PINLESS CARD________________
-			// device plan context is used to get Expiry Date incase of PinLess
-			// card
+			/**
+			 * _____________________FOR PINLESS CARD________________ device plan context is used to get Expiry Date incase of PinLess card
+			 */
 			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 			// device.setServiceCode(devicePlan.getServiceCode());
 			if ("YES".equalsIgnoreCase(devicePlan.getIsPinLess())) {
@@ -156,54 +155,38 @@ public class TransactionSteps {
 				device.setPinNumberForTransaction("PINLESS");
 
 			}
-			// _____________________FOR PINLESS CARD________________
-			// __________________CURRENCY VAL FROM EXCEL _________
-			// fetching currency value from excel
+			/**
+			 * _____________________FOR PINLESS CARD________________ __________________CURRENCY VAL FROM EXCEL _________ fetching currency value from excel
+			 */
 			Transaction tempData = transactionProvider.createWithProvider(provider);
-			// this line of code is temporary as this will only work for Single
-			// wallet currency
-			// for multi wallet, we may have to set other setter -->
-			// setIssuerCountryCode, setIssuerCurrencyCode,
-			// setCardHolderBillingCurrency
+			/**
+			 * this line of code is temporary as this will only work for Single wallet currency for multi wallet, we may have to set other setter --> setIssuerCountryCode, setIssuerCurrencyCode,
+			 * setCardHolderBillingCurrency
+			 */
 			device.setCurrency(tempData.getCurrency());
 			if ("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
 				device.setExpirationDate(devicePlan.getExpiryDate());
 			}
-			// __________________CURRENCY VAL FROM EXCEL _________
+			/** __________________CURRENCY VAL FROM EXCEL _________ */
 
-			// This is a Single Wallet, Single Currency INDIA card
+			/** This is a Single Wallet, Single Currency INDIA card */
 			settingValuesDynamicallyFromDeviceContext(device, transactionData);
-			// setting values of Card Data Element (Card Profile) which are
-			// placed in the "Transaction Templates" sheet
+			/** setting values of Card Data Element (Card Profile) which are placed in the "Transaction Templates" sheet */
 			setCardDataDynamically(device, transactionData);
-			// setting values of Data Element which are placed in the
-			// "Transaction Templates" sheet
+			/** setting values of Data Element which are placed in the "Transaction Templates" sheet */
 			setDeElementsDynamically(device, transactionData, transaction);
 
 		}
-		// else block for when scripts are running from excel -
-		// AuthorizationTransaction_DataDriven alone
+		/** else block for when scripts are running from excel - AuthorizationTransaction_DataDriven alone */
 		else {
-			transactionData.setIssuerCountryCode(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair().get("049"))); // "356";
-																																			// //
-																																			// transactionData.getCurrency();
-																																			// //356
-			transactionData.setIssuerCurrencyCode(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair().get("049"))); // value
-																																			// from
-																																			// DE
-																																			// Element
-																																			// 49
-			transactionData.setCardHolderBillingCurrency(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair().get("061.13"))); // value
-																																						// from
-																																						// DE
-																																						// Element
-																																						// 61_13
+			transactionData.setIssuerCountryCode(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair().get("049")));
+
+			transactionData.setIssuerCurrencyCode(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair().get("049")));
+			transactionData.setCardHolderBillingCurrency(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair().get("061.13")));
 		}
-		// creating & import card profile to temp location ex:
-		// C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413
+		/** creating & import card profile to temp location ex: C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413 */
 		transactionData.setCardProfile(transactionFactory.createCsvCardProfile(transactionData));
-		// creating & import testcase/transaction file to temp location ex:
-		// C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413
+		/** creating & import testcase/transaction file to temp location ex: C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413 */
 		transactionData.setTestCase(transactionFactory.createCsvTesCase(transactionData));
 		return transactionData;
 	}
@@ -212,35 +195,22 @@ public class TransactionSteps {
 
 		if (!"pinless".equalsIgnoreCase(device.getPinNumberForTransaction()))
 			transactionData.setDeKeyValuePairDynamic("052", device.getPinNumberForTransaction());
-		// data format is 12 digits hence leftpad with 0
+		/** data format is 12 digits hence leftpad with 0 */
 		transactionData.setDeKeyValuePairDynamic("004", StringUtils.leftPad(device.getTransactionAmount(), 12, "0"));
 		if (transaction.contains("BALANCE_INQUIRY")) {
-			// this value is expected to be 0's for Balance Enquiry
+			/** this value is expected to be 0's for Balance Enquiry */
 			transactionData.setDeKeyValuePairDynamic("004", "000000000000");
 		}
 
 		if (transaction.contains("ECOMMERCE") || !Strings.isNullOrEmpty(device.getCvv2Data())) {
-			// for pinless card, we are not performing CVV validation as we do
-			// not know the CVV as this is fetched from embosing file on LInux
-			// box
-			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); // Transaction
-																							// currency
-																							// code
+			/** for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInux box */
+			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); // Transaction currency code
 		}
 		// This is a Single Wallet, Single Currency INDIA card
-		transactionData.setDeKeyValuePairDynamic("049", device.getCurrency()); // Transaction
-																				// currency
-																				// code
-		transactionData.setDeKeyValuePairDynamic("050", device.getCurrency()); // Settlement
-																				// currency
-																				// code
-		transactionData.setDeKeyValuePairDynamic("051", device.getCurrency()); // CardHolder
-																				// billing
-																				// currency
-																				// code
-		transactionData.setDeKeyValuePairDynamic("061.13", device.getCurrency()); // POS
-																					// country
-																					// code
+		transactionData.setDeKeyValuePairDynamic("049", device.getCurrency()); // Transaction currency code
+		transactionData.setDeKeyValuePairDynamic("050", device.getCurrency()); // Settlement currency code
+		transactionData.setDeKeyValuePairDynamic("051", device.getCurrency()); // CardHolder billing currency code
+		transactionData.setDeKeyValuePairDynamic("061.13", device.getCurrency()); // POS country code
 	}
 
 	private void settingValuesDynamicallyFromDeviceContext(Device device, Transaction transactionData) {
@@ -248,15 +218,9 @@ public class TransactionSteps {
 		transactionData.setExpirationYear(device.getExpirationDate());
 		transactionData.setCardSequenceNumber(device.getSequenceNumber());
 		transactionData.setPinForTransaction(device.getPinNumberForTransaction());
-		transactionData.setIssuerCountryCode(device.getCurrency()); // "356"; //
-																	// transactionData.getCurrency();
-																	// //356
+		transactionData.setIssuerCountryCode(device.getCurrency());
 		transactionData.setIssuerCurrencyCode(device.getCurrency());
-		transactionData.setCardHolderBillingCurrency(device.getCurrency()); // value
-																			// from
-																			// DE
-																			// Element
-																			// 61_13
+		transactionData.setCardHolderBillingCurrency(device.getCurrency());
 	}
 
 	private void setCardDataDynamically(Device device, Transaction transactionData) {
@@ -264,10 +228,6 @@ public class TransactionSteps {
 		transactionData.setCardDataElementsDynamic("035.03", device.getExpirationDate());
 		transactionData.setCardDataElementsDynamic("045.02", device.getDeviceNumber());
 		transactionData.setCardDataElementsDynamic("045.06", device.getExpirationDate());
-		// transactionData.setCardDataElementsDynamic("035.04",
-		// device.getServiceCode());
-		// transactionData.setCardDataElementsDynamic("023", "000"); // no
-		// validation of card sequence number
 	}
 
 	@Given("Auth file is provided for $iteration")
