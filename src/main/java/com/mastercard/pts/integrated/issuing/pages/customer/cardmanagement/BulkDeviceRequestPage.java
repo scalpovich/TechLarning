@@ -22,7 +22,7 @@ public class BulkDeviceRequestPage extends AbstractBasePage {
 	MenuSubMenuPage menuSubMenuPage;
 
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
-	private MCWebElement AddBulkDeviceRequestBtn;
+	private MCWebElement addBulkDeviceRequestBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "productType:input:dropdowncomponent")
 	private MCWebElement ProductTypeDDwn;
@@ -52,7 +52,7 @@ public class BulkDeviceRequestPage extends AbstractBasePage {
 
 		menuSubMenuPage.getBulkDeviceRequest().click();
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		ClickButton(AddBulkDeviceRequestBtn);
+		ClickButton(addBulkDeviceRequestBtn);
 		switchToIframe(Constants.ADD_BULK_DEVICE_REQUEST_FRAME);
 		SelectDropDownByText(ProductTypeDDwn, productType);
 		addWicketAjaxListeners(getFinder().getWebDriver());
