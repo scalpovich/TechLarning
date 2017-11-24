@@ -22,49 +22,49 @@ public class BulkDeviceRequestPage extends AbstractBasePage {
 	MenuSubMenuPage menuSubMenuPage;
 
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
-	private MCWebElement addBulkDeviceRequestBtn;
+	private MCWebElement AddBulkDeviceRequestBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "productType:input:dropdowncomponent")
-	private MCWebElement productTypeDDwn;
+	private MCWebElement ProductTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "programCode:input:dropdowncomponent")
-	private MCWebElement programTypeDDwn;
+	private MCWebElement ProgramTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "branchCode:input:dropdowncomponent")
-	private MCWebElement branchDDwn;
+	private MCWebElement BranchDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "corporateClientCode:input:dropdowncomponent")
-	private MCWebElement corporateClientCodeDDwn;
+	private MCWebElement CorporateClientCodeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "quantity:input:inputTextField")
-	private MCWebElement quantityRequestedTxt;
+	private MCWebElement QuantityRequestedTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "devicePlanCode:input:dropdowncomponent")
-	private MCWebElement devicePlanDDwn;
+	private MCWebElement DevicePlanDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement SaveBtn;
 
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "feedbackPanelINFO")
-	private MCWebElement confirmationMsgTxt;
+	private MCWebElement ConfirmationMsgTxt;
 
 	public String createBulkDeviceRequest(String productType, String program, String quantityReq) {
 
 		menuSubMenuPage.getBulkDeviceRequest().click();
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		ClickButton(addBulkDeviceRequestBtn);
+		ClickButton(AddBulkDeviceRequestBtn);
 		switchToIframe(Constants.ADD_BULK_DEVICE_REQUEST_FRAME);
-		SelectDropDownByText(productTypeDDwn, productType);
+		SelectDropDownByText(ProductTypeDDwn, productType);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByIndex(branchDDwn, 1);
+		SelectDropDownByIndex(BranchDDwn, 1);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByText(programTypeDDwn, program);
+		SelectDropDownByText(ProgramTypeDDwn, program);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByIndex(corporateClientCodeDDwn, 1);
+		SelectDropDownByIndex(CorporateClientCodeDDwn, 1);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByIndex(devicePlanDDwn, 1);
+		SelectDropDownByIndex(DevicePlanDDwn, 1);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(quantityRequestedTxt, quantityReq);
+		enterText(QuantityRequestedTxt, quantityReq);
 		ClickButton(SaveBtn);
 		SwitchToDefaultFrame();
 		return getBatchNumber();
@@ -72,7 +72,7 @@ public class BulkDeviceRequestPage extends AbstractBasePage {
 	}
 
 	public String getBatchNumber() {
-		String strOutputMessage = confirmationMsgTxt.getText().split("\\n")[0];
+		String strOutputMessage = ConfirmationMsgTxt.getText().split("\\n")[0];
 		System.out.println("Request Number " + strOutputMessage);
 		// Record Added Successfully, Batch Number is 17149055
 		String strOuputMessagePattern = "Record\\s*Added\\d*\\s*Successfully\\s*,\\s*Batch\\s*Number\\s*is\\s*";
