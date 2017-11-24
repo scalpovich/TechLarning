@@ -6,7 +6,7 @@ As an Agent User
 I want to do Initial Load - Load - Reload through agent portal
 
 Meta:
-@StoryName EMV_LOAD_BALANCE_AGENCY_NONFUND
+@StoryName SWSC_EMV_RTLGFT_AGNC_NONFUND
 @CR1
 @CardCreation
 
@@ -111,11 +111,6 @@ And user sign out from agent portal
 And user is logged in institution
 And balance in helpdesk updated correctly for prepaid device
 And user sign out from customer portal
-
-Scenario: Agency Settlement - Non Funded Agent
-Given user is logged in agent portal as nonfundedagency user
-When user initiates settlement for agency
-Then settlement is initiated successfully
 
 Scenario: Program Balance Summary reports download - Funded Agent
 Given user is logged in institution
