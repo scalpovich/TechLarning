@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -17,54 +18,62 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_SEARCH, CardManagementNav.L2_SEARCH_AUTHORIZATION,
-		CardManagementNav.L3_AUTHORIZATION_SEARCH})
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_SEARCH, CardManagementNav.L2_SEARCH_AUTHORIZATION,
+		CardManagementNav.L3_AUTHORIZATION_SEARCH })
 public class AuthorizationSearchPage extends AbstractBasePage {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(AuthorizationSearchPage.class);
+	private static final Logger logger = LoggerFactory.getLogger(AuthorizationSearchPage.class);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=cardNumber]")
 	private MCWebElement cardNumber;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=referenceNumber]")
 	private MCWebElement referenceNumber;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=authorizationCode]")
 	private MCWebElement authorizationCode;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:1:componentPanel:input:dropdowncomponent")
 	private MCWebElement productType;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=fromDate]")
-	private MCWebElement fromDate;	
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=toDate]")
-	private MCWebElement toDate;	
-	
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='fromDate']/..")
+	private MCWebElement fromDate;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='toDate']/..")
+	private MCWebElement toDate;
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=invalid]")
-	private MCWebElement invalid;	
-	
+	private MCWebElement invalid;
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=branchRefNumber]")
 	private MCWebElement branchRefNumber;
-	
+
 	public void verifyUiOperationStatus() {
 		logger.info("Authorization Search");
 		verifySearchButton("Search");
 	}
 
+	public void inputDeviceNumber(String deviceNumber) {
+		WebElementUtils.enterText(cardNumber, deviceNumber);
+	}
+
+	public void inputFromDate(LocalDate date) {
+		WebElementUtils.pickDate(fromDate, date);
+	}
+
+	public void inputToDate(LocalDate date) {
+		WebElementUtils.pickDate(toDate, date);
+	}
+
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(cardNumber),
-				WebElementUtils.elementToBeClickable(referenceNumber),
-				WebElementUtils.elementToBeClickable(authorizationCode),
-				WebElementUtils.elementToBeClickable(productType),
-				WebElementUtils.elementToBeClickable(fromDate),
-				WebElementUtils.elementToBeClickable(toDate),
-				WebElementUtils.elementToBeClickable(invalid),
-				WebElementUtils.elementToBeClickable(branchRefNumber)
-				);
+		return Arrays.asList(WebElementUtils.elementToBeClickable(cardNumber), WebElementUtils.elementToBeClickable(referenceNumber),
+				WebElementUtils.elementToBeClickable(authorizationCode), WebElementUtils.elementToBeClickable(productType),
+				WebElementUtils.elementToBeClickable(fromDate), WebElementUtils.elementToBeClickable(toDate), WebElementUtils.elementToBeClickable(invalid),
+				WebElementUtils.elementToBeClickable(branchRefNumber));
 	}
+
+
+	
+	
 }
