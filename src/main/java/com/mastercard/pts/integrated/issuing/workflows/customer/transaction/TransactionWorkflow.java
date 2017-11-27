@@ -63,6 +63,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private static final String SEPERATOR= " \"";
 	private static final String MESSAGE_REVERSAL_INDICATOR = "messageReversalIndicator";
 	private static final String BIN_TABLE = "BIN Table";
+	private static final String TEST_CASES =	"Test Cases (Issuer Testing)";
 	
 	@Autowired
 	private MasSimulator simulator;
@@ -294,7 +295,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	{
 		MiscUtils.reportToConsole("******************** importTestCaseFile Started ******************");
 		activateMas(transaction);
-		winiumClickOperation("Test Cases (Issuer Testing)");
+		winiumClickOperation(TEST_CASES);
 		performClickOperation("importFile");
 		wait(8000);
 		executeAutoITExe("ImportTestCase.exe "+ fileName );
@@ -329,7 +330,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 		scrollUpToSelectTest(testcaseName);
 		activateMas(testcaseName);
-		winiumClickOperation("Test Cases (Issuer Testing)");
+		winiumClickOperation(TEST_CASES);
 		performClickOperationOnImages(ISSUER_TEST);
 		pressLeftArrow();
 		performClickOperation("Imported");
@@ -344,7 +345,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(3000);
 		selectTestCaseFromImportedCases(transaction);
 		activateMas(transaction);
-		winiumClickOperation("Test Cases (Issuer Testing)");
+		winiumClickOperation(TEST_CASES);
 		performDoubleClickOperation("RunTest");
 		wait(5000);
 		executeAutoITExe("ActivateStartTestDialogAndClose.exe");
