@@ -14,6 +14,8 @@ import java.util.List;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.winium.DesktopOptions;
 import org.openqa.selenium.winium.WiniumDriver;
 import org.sikuli.script.FindFailed;
@@ -292,6 +294,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	{
 		MiscUtils.reportToConsole("******************** importTestCaseFile Started ******************");
 		activateMas(transaction);
+		winiumClickOperation("Test Cases (Issuer Testing)");
 		performClickOperation("importFile");
 		wait(8000);
 		executeAutoITExe("ImportTestCase.exe "+ fileName );
@@ -326,6 +329,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 		scrollUpToSelectTest(testcaseName);
 		activateMas(testcaseName);
+		winiumClickOperation("Test Cases (Issuer Testing)");
 		performClickOperationOnImages(ISSUER_TEST);
 		pressLeftArrow();
 		performClickOperation("Imported");
@@ -340,6 +344,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(3000);
 		selectTestCaseFromImportedCases(transaction);
 		activateMas(transaction);
+		winiumClickOperation("Test Cases (Issuer Testing)");
 		performDoubleClickOperation("RunTest");
 		wait(5000);
 		executeAutoITExe("ActivateStartTestDialogAndClose.exe");
@@ -350,10 +355,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		MiscUtils.reportToConsole("******************** verifyResults Started ******************");
 		clickTestResults("MAS");
 		wait(8000);
-
 		winiumDriver.findElementByName("Sequential View").click();
 		scrollUpToSelectTestResults("MAS");
-		pressPageDown(2);
+		pressPageDown(4);
 		return getResult();
 	}
 
@@ -362,7 +366,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		MiscUtils.reportToConsole("******************** verifyResults Started ******************");
 		clickTestResultsOnMdfs();
 		wait(8000);
-
 		winiumDriver.findElementByName("Sequential View").click();
 		scrollUpToSelectTestResultsOnMdfs();
 		pressPageDown(2);
@@ -370,16 +373,17 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private String getResult() {
-		List<WebElement> lst = winiumDriver.findElements(By.name("0110 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
+	
+		List<WebElement> lst =  winiumDriver.findElements(By.xpath("//*[contains(@Name, 'Expected Results Summary')]"));
+		//clicking on the last item from bottom
 		lst.get(lst.size()-1).click();
 		wait(5000);
-		pressDownArrow(3);
-		wait(2000);
 		WebElement tempElement = winiumDriver.findElementByXPath("//*[contains(@AutomationId,'DescriptionTextBox')]");
 		String tempText = tempElement.getText();
 		MiscUtils.reportToConsole("Fetching PassResult : " + tempText);
 		return tempText;
 	}
+
 
 	public String loadAuthFileToMCPS(String fullFileNameAndPath) {
 		loadAuthFileIntoMCPS(fullFileNameAndPath);
@@ -746,7 +750,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		clickTestMode(tool);
 		selectLicense(tool);
 		wait(15000);
-		waitForImageToAppear("CONNECTED");
+		waitForExepectedCondition("CONNECTED");
 		wait(15000);
 	}
 	
@@ -755,8 +759,14 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		clickTestModeOnMdfs();
 		selectLicenseOnMdfs();
 		wait(15000);
-		waitForImageToAppear("CONNECTED");
+		waitForExepectedCondition("CONNECTED");
 		wait(15000);
+	}
+	
+	private void waitForExepectedCondition(String nameOfLocator) {
+		WebDriverWait wait = new WebDriverWait(winiumDriver, 20);
+		// Waiting to get connected
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.name(nameOfLocator)));
 	}
 
 	public void addBinRangeAndCurrencyDetailsBasedOnCardNumber(Transaction transactionData, String transaction, Boolean sameCard)
@@ -1050,7 +1060,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("Card Profiles");
 	} 
 
-	private Boolean isContains(String incomingValue, String lookFor) {
+	public Boolean isContains(String incomingValue, String lookFor) {
 		Boolean isContains = false;
 		if(incomingValue.toLowerCase().contains(lookFor.toLowerCase())) 
 			isContains = true;

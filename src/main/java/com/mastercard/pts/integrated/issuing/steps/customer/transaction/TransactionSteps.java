@@ -274,19 +274,19 @@ public class TransactionSteps {
 	@Then("$tool test results are verified")
 	public void thenTestResultsAreReported(String tool){
 		String testResults  = null;
-		if(!"mdfs".toLowerCase().contains(tool)) {
+		if(!transactionWorkflow.isContains(tool, "mdfs")) {
 		 testResults = transactionWorkflow.verifyTestResults();
 		} else {
 			testResults = transactionWorkflow.verifyTestResultsOnMdfs();
 		}
 		
-		if(testResults.toLowerCase().contains("Validations OK" ))	{
+		if(transactionWorkflow.isContains(testResults, "Validations OK")) {
 			logger.info("Transaction is succcessful!  - Expected Result : ", testResults );
 			assertTrue("Transaction is succcessful!  - Expected Result : " + testResults, true );
-		} else if(testResults.toLowerCase().contains("Validations Not OK" ))	{
+		} else if(transactionWorkflow.isContains(testResults, "Validations Not OK"))	{
 			assertFalse("Transaction failed!  -  Result : " +  testResults, false);
 			throw new ValidationException("Transaction failed! -  Result : " +  testResults);
-		} else	{
+		} else {
 			logger.error("Transaction failed! ", testResults);
 			assertFalse("Transaction failed! ", false);
 			throw new ValidationException("Transaction failed!");
