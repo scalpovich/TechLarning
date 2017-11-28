@@ -68,8 +68,8 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 	@When ("fund transfer through wallet to wallet transfer")
 	public void checkIntraBankFundTransfer(){		
 		cardhlTran = CardHolderTransactions.cardHolderTranscationDataProvider();
-		transactionFlow.selectIntraBankMoneyTransferOption();
 		transactionFlow.openTransactionPage();
+		transactionFlow.selectWalletToWalletOption();
 		transactionFlow.interBankMoneyTransfer(cardhlTran);
 	}
 	

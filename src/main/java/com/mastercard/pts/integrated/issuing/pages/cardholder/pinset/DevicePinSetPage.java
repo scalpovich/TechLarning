@@ -32,8 +32,9 @@ public class DevicePinSetPage extends AbstractBasePage{
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//div[@class='dataview-div']/table/tbody/tr[2]")
 	private MCWebElement selectDeviceBtn;
 	
-	public void selectDeviceForPinSet(String cardNumber){
-		
+	
+	//Pending script for Device Pin Set
+	public void selectDeviceForPinSet(String cardNumber){		
 		List<WebElement> rowsList = Elements(deviceGrid);
 		
 		for(int index =2; index <= Elements(deviceGrid).size() ; index++){

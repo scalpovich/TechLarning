@@ -28,7 +28,7 @@ Meta:
 @testDataFileName testdata
 Given login to cardholder portal as existing Cardholder user
 When check charges for Intra Client - Wallet to Wallet Transfer(Debit)
-Then verify transaction conversation rate
+Then verify transaction conversation rateViewChargeForWalletToWalletDebit
 Then verify total debit amount for transaction
 
 Scenario:To Verify charges for Refund on Wallet Closure 
