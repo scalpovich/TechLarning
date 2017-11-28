@@ -25,12 +25,12 @@ public class VirtualCardLimitedValidityVirtualCardCancellationPage extends Abstr
 	private MCWebElement masterDetailContentTitle;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//table[@class='modelFormClass']/tbody/tr[3]/td")
-	private MCWebElement prmissionForVirtualCardMsg;
+	private MCWebElement permissionForVirtualCardMsg;
 	
 	
 	
 	public boolean verifyPermissionCardholder(){
-		return isElementPresent(prmissionForVirtualCardMsg);
+		return isElementPresent(permissionForVirtualCardMsg);
 	}
 	
 	public void verifyUiOperationStatus() {

@@ -32,7 +32,7 @@ public class LoginFlows extends AbstractBaseFlows {
 	}
 	
 	public void signUpCardHolderUser(String loginPass,String trnPass,String firstSequrityQst,String firstSequerAnswer,String secondSequrityQst,String secondSequerAnswer){
-		loginPage.singUpCardHolderUser(loginPass,trnPass,firstSequrityQst,firstSequerAnswer,secondSequrityQst,secondSequerAnswer);	
+		loginPage.signUpCardHolderUser(loginPass,trnPass,firstSequrityQst,firstSequerAnswer,secondSequrityQst,secondSequerAnswer);	
 		acceptSuccessfullCardholderSignUp();
 	}
 	

@@ -71,31 +71,31 @@ public class LoginPage extends AbstractBasePage  {
 	private long timeoutInSec;
 	
 	@PageElement(findBy = FindBy.ID, valueToFind="userAlias")
-	private MCWebElement chpSingUpUserAlias;
+	private MCWebElement chpSignUpUserAlias;
 	
 	@PageElement(findBy = FindBy.ID, valueToFind="newLoginPassword")
 	private MCWebElement chplNewSignUpPassword;
 	
 	@PageElement(findBy = FindBy.ID, valueToFind="confirmLoginPassword")
-	private MCWebElement  chpSignUpPasswordConfir;
+	private MCWebElement  chpSignUpPasswordConfirm;
 	
 	@PageElement(findBy = FindBy.ID, valueToFind="newTxnPassword")
 	private MCWebElement chpSignUpTranPass;
 	
 	@PageElement(findBy = FindBy.ID, valueToFind="confirmTxnPassword")
-	private MCWebElement chpSignUpTranPassConfir;
+	private MCWebElement chpSignUpTranPassConfirm;
 	
 	@PageElement(findBy = FindBy.ID, valueToFind="question")
-	private MCWebElement chpSignUpSequerQstOne;
+	private MCWebElement chpSignUpSeqQuesOne;
 
 	@PageElement(findBy = FindBy.ID, valueToFind="txtAnswer")
-	private MCWebElement chpSignUpSequerQstOneAnsInpt;
+	private MCWebElement chpSignUpSeqQueOneInpt;
 
 	@PageElement(findBy = FindBy.ID, valueToFind="question2")
-	private MCWebElement chpSignUpSequerQstTwo;
+	private MCWebElement chpSignUpSeqQueTwo;
 	
 	@PageElement(findBy = FindBy.ID, valueToFind="txtAnswer2")
-	private MCWebElement chpSignUpSequerQstTwoAnsInpt;
+	private MCWebElement chpSignUpSeqQueTwoAnsInpt;
 	
 	@PageElement(findBy = FindBy.ID, valueToFind="mpts_cardHolderPortal_button_submit")
 	private MCWebElement signUpConfirmBtn;
@@ -169,22 +169,22 @@ public class LoginPage extends AbstractBasePage  {
 		CustomUtils.ThreadDotSleep(3000);
 		enterUserIDCardHolder(uName).enterPwd(pwd).clickSignIn();
 
-		return waitforElemenet(chpSingUpUserAlias);
+		return waitforElemenet(chpSignUpUserAlias);
 	}
 	public void loginToCardholderAfterSignUp(String uName, String pwd) {		
 		CustomUtils.ThreadDotSleep(3000);
 		enterUserIDCardHolder(uName).enterPwd(pwd).clickSignIn();
 	}
 	
-	public void singUpCardHolderUser(String loginPass,String trnPass,String firstSequrityQst,String firstSequerAnswer,String secondSequrityQst,String secondSequerAnswer){
+	public void signUpCardHolderUser(String loginPass,String trnPass,String firstSequrityQst,String firstSequerAnswer,String secondSequrityQst,String secondSequerAnswer){
 		enterText(chplNewSignUpPassword, loginPass);
-		enterText(chpSignUpPasswordConfir,loginPass);
+		enterText(chpSignUpPasswordConfirm,loginPass);
 		enterText(chpSignUpTranPass,trnPass);
-		enterText(chpSignUpTranPassConfir,trnPass);
-		selectByText(chpSignUpSequerQstOne,firstSequrityQst);
-		enterText(chpSignUpSequerQstOneAnsInpt,firstSequerAnswer);
-		selectByText(chpSignUpSequerQstTwo,secondSequrityQst);		
-		enterText(chpSignUpSequerQstTwoAnsInpt,secondSequerAnswer);
+		enterText(chpSignUpTranPassConfirm,trnPass);
+		selectByText(chpSignUpSeqQuesOne,firstSequrityQst);
+		enterText(chpSignUpSeqQueOneInpt,firstSequerAnswer);
+		selectByText(chpSignUpSeqQueTwo,secondSequrityQst);		
+		enterText(chpSignUpSeqQueTwoAnsInpt,secondSequerAnswer);
 		confirmSignUpCardHolder();		
 	}
 	public void confirmSignUpCardHolder(){
