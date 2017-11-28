@@ -13,12 +13,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
-import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -236,8 +236,8 @@ public class DeviceRangePage extends AbstractBasePage {
 		}
 	}
 
+	@Override
 	public void clickSaveButton() {
-		Scrolldown(SaveBtn);
 		clickWhenClickable(SaveBtn);
 		SwitchToDefaultFrame();
 	}
@@ -381,7 +381,7 @@ public class DeviceRangePage extends AbstractBasePage {
 
 					WebElementUtils.selectDropDownByVisibleText(statusDDwn, deviceRange.getStatus());
 
-					pageScrollDown();
+					WebElementUtils.scrollDown(driver(), 100, 250);
 					clickSaveButton();
 
 					verifyNoErrors();
