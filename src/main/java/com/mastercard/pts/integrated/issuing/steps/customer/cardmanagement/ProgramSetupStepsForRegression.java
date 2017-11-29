@@ -31,6 +31,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Tran
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletFeePlanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
+import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramSetupWorkflow;
 
@@ -45,6 +46,9 @@ public class ProgramSetupStepsForRegression {
 
 	@Autowired
 	private KeyValueProvider provider;
+	
+	@Autowired
+	private DataProvider dataProvider;
 
 	@Autowired
 	ProgramSetupSteps programSetupSteps;
@@ -267,7 +271,7 @@ public class ProgramSetupStepsForRegression {
 
 	@When("User filled Device Range section for $type product")
 	public void whenUserFilledDeviceRangeSection(String type) {
-		DeviceRange deviceRange = DeviceRange.createWithProvider(provider, type);
+		DeviceRange deviceRange = DeviceRange.createWithProvider(dataProvider, provider);
 		deviceRange.setProductType(ProductType.fromShortName(type));
 		deviceRange.setProgram(program.buildDescriptionAndCode());
 		deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());

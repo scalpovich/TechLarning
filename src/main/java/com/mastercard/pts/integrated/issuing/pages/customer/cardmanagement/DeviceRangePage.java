@@ -394,6 +394,7 @@ public class DeviceRangePage extends AbstractBasePage {
 		selectProductType(deviceRange.getProductType());
 		selectProgram(deviceRange.getProgram());
 		selectDevicePlanCode(deviceRange.getDevicePlanCode());
+		System.out.println("Issuer Bin:"+deviceRange.getIssuerBin());
 		selectIssuerBin(deviceRange.getIssuerBin());
 		selectBranch(deviceRange.getBranch());
 		addBtn.click();
