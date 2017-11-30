@@ -2,7 +2,6 @@ package com.mastercard.pts.integrated.issuing.configuration;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
-
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.testing.mtaf.ui.configuration.MTAFWebToolsConfiguration;

@@ -72,6 +72,75 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.ID, valueToFind = "selectedTxnCurrency")
 	private MCWebElement selectedTxnCurrencyDDwn;
+	
+	@PageElement(findBy = FindBy.ID, valueToFind="mpts_cardHolderPortal_button_submit")
+	private MCWebElement cashRemittanceSubmitBtn;
+	
+	@PageElement(findBy = FindBy.ID, valueToFind="firstName")
+	private MCWebElement beneficiaryFirstName;
+	
+	@PageElement(findBy = FindBy.ID, valueToFind="middleName")
+	private MCWebElement beneficiaryMiddleName;
+	
+	@PageElement(findBy = FindBy.ID, valueToFind="lastName")
+	private MCWebElement beneficiaryLastName;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[@class='sectionHead']/span")
+	private MCWebElement isCashRemittanceAllowed;
+	
+	public boolean isCashRemittanceAllowedForAccount(){
+	
+		return 	isElementPresent(isCashRemittanceAllowed);
+	}
+	
+	public void enterBeneficiaryFirstName(String firstName){
+		enterText(beneficiaryFirstName, firstName);
+	}
+	
+	public void enterBeneficiaryMiddleName(String middleName){
+		enterText(beneficiaryMiddleName, middleName);
+	}
+
+	public void enterBeneficiaryLastName(String lastName){
+		enterText(beneficiaryLastName, lastName);
+	}
+	
+	public void enterBeneficiaryId(String beneficiaryId){
+		enterText(beneficiaryNationalIdTxt, beneficiaryId);
+	}
+	
+	public void enterBeneficiaryAddress1(String addressLineOne){
+		enterText(address1Txt, addressLineOne);
+	}
+	
+	public void enterBeneficiaryAddress2(String addressLineTwo){
+		enterText(address2Txt, addressLineTwo);
+	}
+	
+	public void enterBeneficiaryAddress3(String addressLineThree){
+		enterText(address3Txt, addressLineThree);
+	}
+	
+	public void enterBeneficiaryStateName(String beneficiaryStateName){
+		SelectDropDownByText(selectedStateDDwn, beneficiaryStateName);
+	}
+	
+	public void enterBeneficiaryCityName(String cityName){
+		enterText(selectedCityTxt, cityName);
+	}
+	
+	public void enterBeneficiaryZipCode(String zipCode){
+		enterText(zipCodeTxt, zipCode);
+	}
+	
+	public void enterBeneficiaryEmailAddress(String emailAddress){
+		enterText(emailIdTxt, emailAddress);
+	}
+	
+	public void enterBeneficiaryMobileNumber(String mobileNumber){
+		enterText(mobileNumberTxt, mobileNumber);
+		
+	}
 
 	public void verifyUiOperationStatus() {
 		logger.info("Cash Remittance Booking");
@@ -92,4 +161,19 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 				WebElementUtils.visibilityOf(emailIdTxt), WebElementUtils.visibilityOf(mobileNumberTxt), WebElementUtils.visibilityOf(txnAmountTxt),
 				WebElementUtils.visibilityOf(selectedTxnCurrencyDDwn));
 	}
+	
+	public void enterRemittanceAmount(String remittanceAmount){
+		enterText(txnAmountTxt, remittanceAmount);
+	}
+	
+	public void enterRemittanceCurrency(String remittanceCurrency){
+		enterText(selectedTxnCurrencyDDwn, remittanceCurrency);
+	}
+	
+	public void submitRemittanceRequst(){
+		ClickButton(cashRemittanceSubmitBtn);
+	}
+	
+
+
 }

@@ -42,7 +42,7 @@ public class TestHooks {
 	@Autowired
 	private DataLoader dataLoader;
 	
-	@BeforeStory
+	//@BeforeStory
 	public void initStoryContext(@Named("StoryName") String storyName) {
 		testContext.initStoryContext(storyName);
 		Optional<Map<String, String>> data = dataLoader.loadData(storyName);
@@ -53,7 +53,7 @@ public class TestHooks {
 		}
 	}
 	
-	@BeforeScenario
+	//@BeforeScenario
 	public void initTimeouts() {
 		Timeouts timeouts = driverProvider.get().manage().timeouts();
 		timeouts.implicitlyWait(imlicitWaitTimeout, TimeUnit.MILLISECONDS);
@@ -63,12 +63,12 @@ public class TestHooks {
 		testContext.put("DRIVER", driverProvider.get());
 	}
 	
-	@AfterScenario
+	//@AfterScenario
 	public void clearCookies() {
 		driverProvider.get().manage().deleteAllCookies();
 	}
 	
-	@AfterStory
+	//@AfterStory
 	public void disposeStoryContext() {
 		testContext.dispose();
 	}
