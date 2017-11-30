@@ -2,9 +2,12 @@ package com.mastercard.pts.integrated.issuing.steps.customer;
 
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SurchargeWailverPlan;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.SurchargeWailverPlanPage;
 import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.administration.UiVerificationAdministrationWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.UiVerificationCardManagementWorkflow;
@@ -36,6 +39,12 @@ public class CustomerUiVerificationSteps {
 
 	@Autowired
 	private LoginWorkflow loginWorkflow;
+	
+	@Autowired
+	private SurchargeWailverPlanPage surchargeWailverPlanPage;
+	
+	@Autowired
+	private SurchargeWailverPlan surchargeWailverPlan;
 
 	@Then("AccountFile page of card management tab is rendered correctly")
 	public void thenAccountFilePageOfCardManagementTabIsRenderedCorrectly() {
@@ -1357,6 +1366,19 @@ public class CustomerUiVerificationSteps {
 	public void thenDeviceStatusPageOfCardManagementTabIsRenderedCorrectly() {
 		uiVerificationCardManagementWorkflow.verifyDeviceStatusPage();
 	}
+	@Then("SurchargeWaiverPlan of card management tab has proper field validation")
+	public void thenSurchargeWaiverPlanOfCardManagementTabHasProperValidation() {
+		surchargeWailverPlan.surchargeWaiverFeePlanDataProvider();
+	uiVerificationCardManagementWorkflow.verifyValidSurchargeWaiverPlanCode(surchargeWailverPlan);
+		
+	}
+	@Then("SurchargeWaiverPlan of card management tab has proper field validation for Invalid scenario")
+	public void thenSurchargeWaiverPlanOfCardManagementTabHasProperValidation_Invalid() {
+		surchargeWailverPlan.surchargeWaiverFeePlanDataProvider();
+	uiVerificationCardManagementWorkflow.verifyInvalidSurchargeWaiverPlanCode(surchargeWailverPlan);
+		
+	}
+	
 
 	@Then("user signs out from customer portal")
 	public void signOutFromPortal() {

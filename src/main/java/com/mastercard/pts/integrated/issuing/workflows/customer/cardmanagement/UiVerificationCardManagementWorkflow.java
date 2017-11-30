@@ -1,10 +1,14 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
+import junit.framework.Assert;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SurchargeWailverPlan;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.*;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 
 @Workflow
 public class UiVerificationCardManagementWorkflow {
@@ -1034,4 +1038,25 @@ public class UiVerificationCardManagementWorkflow {
 		DeviceStatusPage page = navigator.navigateToPage(DeviceStatusPage.class);
 		page.verifyUiOperationStatus();
 	}
+	public void verifyValidSurchargeWaiverPlanCode(SurchargeWailverPlan surchargeWailverPlan) {
+		SurchargeWailverPlanPage page = navigator.navigateToPage(SurchargeWailverPlanPage.class);
+		Assert.assertEquals("WaiverPlan code is as per the format", true, page.enterWaiverPlanValid(surchargeWailverPlan));
+		Assert.assertEquals("WaiverPlan description is as per the format", true, page.enterWaiverPlanDescriptionValid(surchargeWailverPlan));
+		Assert.assertEquals("Currency Error msg is displayed", true, page.currencyValidation());
+		page.currencySelect();
+		page.addDetailsButtonClick();
+		page.addNewButtonClick();
+		
+		
+	}
+	public void verifyInvalidSurchargeWaiverPlanCode(SurchargeWailverPlan surchargeWailverPlan) {
+		SurchargeWailverPlanPage page = navigator.navigateToPage(SurchargeWailverPlanPage.class);
+		Assert.assertEquals("WaiverPlan code is not as per the format", false, page.enterWaiverPlanInvalid(surchargeWailverPlan));
+		Assert.assertEquals("waiverPlanCodeErrorMessage is displayed",Constants.WAIVERPLAN_CODE_ERRMSG, page.waiverPlanCodeErrorMessage());
+		Assert.assertEquals("WaiverPlan description is not as per the format", false, page.enterWaiverPlanDescriptionInvalid(surchargeWailverPlan));
+		Assert.assertEquals("waiverPlanCodeErrorMessage is displayed",Constants.WAIVERPLAN_DESC_ERRMSG, page.waiverPlanDescriptionErrorMessage());
+		
+		
+	}
+	
 }
