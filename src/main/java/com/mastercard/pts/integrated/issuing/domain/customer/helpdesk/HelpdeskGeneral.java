@@ -7,7 +7,11 @@ public class HelpdeskGeneral {
 	private static final String CS_SERVICE_CODE = "CS_SERVICE_CODE";
 	private static final String CURRENCY_SETUP_SERVICE_CODE = "CURRENCY_SETUP_SERVICE_CODE";
 	private static final String HD_CURRENCY_WITH_PRIORITY = "HD_CURRENCY_WITH_PRIORITY";
+	private static final String TRANSACTION_DETAILS = "TRANSACTION_DETAILS";
+	private static final String INITIAL_LOAD_TXN_DETAILS = "INITIAL_LOAD_TXN_DETAILS";
 	
+	private String initialLoadTxnDetails;
+	private String transactionDetails;
 	private String productType;
 	private String cardPackId;
 	private String serviceCode;
@@ -21,10 +25,28 @@ public class HelpdeskGeneral {
 		plan.setServiceCode(provider.getString(CS_SERVICE_CODE));
 		plan.setCurrencySetupServiceCode(provider.getString(CURRENCY_SETUP_SERVICE_CODE));
 		plan.setCurrencyWithPriority(provider.getString(HD_CURRENCY_WITH_PRIORITY));
+		plan.setTransactionDetails(provider.getString(TRANSACTION_DETAILS));
+		plan.setInitialLoadTxnDetails(provider.getString(INITIAL_LOAD_TXN_DETAILS));
 		plan.setNotes(ConstantData.GENERIC_DESCRIPTION);
 		return plan;
 	}
 	
+	public String getInitialLoadTxnDetails() {
+		return initialLoadTxnDetails;
+	}
+
+	public void setInitialLoadTxnDetails(String initialLoadTxnDetails) {
+		this.initialLoadTxnDetails = initialLoadTxnDetails;
+	}
+
+	public String getTransactionDetails() {
+		return transactionDetails;
+	}
+
+	public void setTransactionDetails(String transactionDetails) {
+		this.transactionDetails = transactionDetails;
+	}
+
 	public String getCurrencySetupServiceCode() {
 		return currencySetupServiceCode;
 	}

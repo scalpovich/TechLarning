@@ -21,9 +21,9 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 @Component
 public class ExcelDataLoader implements DataLoader {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(ExcelDataLoader.class);
-	
+
 	@Value("config/${env}/Data/TestData.xls")
 	private String excelPath;
 
@@ -38,25 +38,30 @@ public class ExcelDataLoader implements DataLoader {
 			return Optional.empty();
 		}
 	}
-	
-	private Optional<Map<String, String>> readData(InputStream inputStream, String sheetName) throws BiffException, IOException  {
+
+	private Optional<Map<String, String>> readData(InputStream inputStream, String sheetName)
+			throws BiffException, IOException {
 		Workbook workbook = null;
-		try {
-			workbook = Workbook.getWorkbook(inputStream);
-			if (!Arrays.asList(workbook.getSheetNames()).contains(sheetName)) {
-				return Optional.empty();
-			}
-			Sheet sheet = workbook.getSheet(sheetName);
-			Map<String, String> data = ExcelUtils.readExcel(sheet);
-			return Optional.of(Collections.unmodifiableMap(data));
-		} finally {
-			if (workbook != null) {
-				workbook.close();
-			}
-			
-			if (inputStream != null) {
-				inputStream.close();
+		if (inputStream != null) {
+			try {
+				workbook = Workbook.getWorkbook(inputStream);
+				if (!Arrays.asList(workbook.getSheetNames()).contains(sheetName)) {
+					return Optional.empty();
+				}
+				Sheet sheet = workbook.getSheet(sheetName);
+				Map<String, String> data = ExcelUtils.readExcel(sheet);
+				return Optional.of(Collections.unmodifiableMap(data));
+			} finally {
+				if (workbook != null) {
+					workbook.close();
+				}
+
+				if (inputStream != null) {
+					inputStream.close();
+				}
 			}
 		}
+		return Optional.empty();
 	}
+
 }

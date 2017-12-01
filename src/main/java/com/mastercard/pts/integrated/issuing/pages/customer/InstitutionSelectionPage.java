@@ -13,7 +13,6 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
-import com.mastercard.testing.mtaf.bindings.page.AbstractPage;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 /**
@@ -47,7 +46,6 @@ public class InstitutionSelectionPage extends AbstractBasePage {
 
 		waitForElementVisible(institution);
 		institution.getSelect().selectByVisibleText(instName);
-		confirmButton.click();
 	}
 
 	public void selectInstitution(String... optionName) {

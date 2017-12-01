@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
@@ -31,10 +30,8 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -733,11 +730,38 @@ public abstract class AbstractBasePage extends AbstractPage {
 			logger.info("Element is visible");
 			return true;
 		} catch (Exception e) {
-			logger.error("Element is not visible");
+			logger.error("Element is not visible :"+e.fillInStackTrace());
 			return false;
 		}
 	}
+	
 
+	public boolean isElementPresent(MCWebElement ele) {
+		boolean ispresent = false;
+		
+		try {
+			ele.isVisible();
+			ispresent = true;
+			logger.info("Element is visible");
+			
+		} catch (Exception e) {
+			ispresent = false;
+			logger.error("Element is not visible :"+e.fillInStackTrace());
+		}
+		return ispresent;		
+	}
+	
+	public boolean waitforElemenet(MCWebElement ele){
+		try {
+			getFinder().waitUntil(ExpectedConditions.visibilityOf((WebElement) ele));
+			return true;
+		} catch (Exception e) {
+			return false; 
+		}
+				
+		 
+	}
+	 
 	public boolean isElementPresent(MCWebElements ele) {
 		boolean ispresent = false;
 		try {
@@ -773,7 +797,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			logger.info("Element is invisible");
 			return true;
 		} catch (Exception e) {
-			logger.error("Element is visible");
+			logger.info("Element is visible");
 			return false;
 		}
 	}
@@ -998,7 +1022,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 		new WebDriverWait(driver(), TIMEOUT).until(ExpectedConditions.elementToBeClickable(ele)).click();
 	}
 
-
+	protected void clickWhenClickableCHP(MCWebElement element) {
+		waitForElementVisible(element);
+		new WebDriverWait(driver(), TIMEOUT).until(
+				elementToBeClickable(element)).click();
+		// waitForWicket(driver());
+	}
 
 	protected void clickWhenClickable(WebElement element) {
 		waitForElementVisible(element);
@@ -1210,7 +1239,32 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 		return errorFields;
 	}
+	public void switchToWindowCHP() {
 
+		try {
+			Set<String> handles;
+
+			/*do {
+				handles = getFinder().getWebDriver().getWindowHandles();
+				logger.info("Number of windows available: " + handles.size());
+			} while (handles.size() < 2);*/
+			handles = getFinder().getWebDriver().getWindowHandles();
+			for (String handle : handles) {
+				if (!handle.equals(getFinder().getWebDriver().getWindowHandle()))
+					getFinder().getWebDriver().switchTo().window(handle);
+			}
+			
+		} catch (Exception e) {
+			logger.error("Unable to Switch Window" + e);
+		}
+	}
+	
+	public void selectByVisibleTexts(MCWebElement ele, String optionName) {
+		waitUntilSelectOptionsPopulated(ele);
+		waitForLoaderToDisappear();
+		ele.getSelect().selectByVisibleText(optionName);
+		waitForLoaderToDisappear();
+	}
 	public boolean publishErrorOnPage() {
 		boolean isAnyErrorPresent = false;
 		Iterator<?> iter = pageErrorValidator().iterator();
@@ -1220,7 +1274,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 		return isAnyErrorPresent;
 	}
-
+	
+	public String getTextFromPage(MCWebElement element){
+		return element.getText();
+	}
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		// TODO Auto-generated method stub

@@ -16,6 +16,7 @@ import com.mastercard.pts.integrated.issuing.domain.agent.inventory.Acceptance;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
+import com.mastercard.pts.integrated.issuing.utils.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -95,7 +96,9 @@ public class AcceptancePage extends AbstractBasePage {
 	}
 
 	public void clickTableFirstRecord() {
-		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(tableFirstRecord)).click();
+		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
+		WebElementUtils.retryUntil(tableFirstRecord::click,
+				() -> WebElementUtils.hasClass(getFinder().findOne(FindBy.X_PATH, "//*[@class='dataview']/tbody/tr[1]"), "select"));
 	}
 
 	public void clickModifyButton() {
@@ -130,15 +133,14 @@ public class AcceptancePage extends AbstractBasePage {
 	public int errorElementCount() {
 		return getFinder().getWebDriver().findElements(By.cssSelector(".ResponseTxt")).size();
 	}
-
+	
 	public void acceptDispatch(Acceptance details) {
 		logger.info("Order Acceptance: {}", details.getBranchId());
 
 		selectBranchId(details.getBranchId());
 		selectOrderNumber(details.getOrderNumber());
 		clickSearchButton();
-		WebElementUtils.retryUntil(tableFirstRecord::click,
-				() -> WebElementUtils.hasClass(getFinder().findOne(FindBy.X_PATH, "//*[@class='dataview']/tbody/tr[1]"), "select"));
+		clickTableFirstRecord();
 		clickModifyButton();
 		enterQuantityRecieved(details.getQuantityOrdered());
 		enterCurrentDateddMMyyyy(DateUtils.currentDateddMMyyyy());

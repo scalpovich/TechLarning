@@ -18,7 +18,9 @@ public class DeviceSale {
 	private static final String POSTAL_CODE = "POSTAL_CODE";
 	private static final String DOCUMENT_1_TYPE = "DOCUMENT_1_TYPE";
 	private static final String APPLICANT_PROFESSION = "APPLICANT_PROFESSION";
+	private static final String INITIAL_LOAD_TXN_DETAILS = "INITIAL_LOAD_TXN_DETAILS";
 	
+	private String initialLoadTxnDetails;
 	private String applicantProfession;
 	private String postalCode;
 	private String document1Type;
@@ -60,9 +62,18 @@ public class DeviceSale {
 		plan.setPostalCode(provider.getString(POSTAL_CODE));
 		plan.setDocument1Type(provider.getString(DOCUMENT_1_TYPE));
 		plan.setApplicantProfession(provider.getString(APPLICANT_PROFESSION));
+		plan.setInitialLoadTxnDetails(provider.getString(INITIAL_LOAD_TXN_DETAILS));
 		return plan;
 	}
 	
+	public String getInitialLoadTxnDetails() {
+		return initialLoadTxnDetails;
+	}
+
+	public void setInitialLoadTxnDetails(String initialLoadTxnDetails) {
+		this.initialLoadTxnDetails = initialLoadTxnDetails;
+	}
+
 	public String getApplicantProfession() {
 		return applicantProfession;
 	}
