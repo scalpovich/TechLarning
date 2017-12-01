@@ -2,7 +2,6 @@ package com.mastercard.pts.integrated.issuing.configuration;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
-
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.testing.mtaf.ui.configuration.MTAFWebToolsConfiguration;
@@ -82,6 +80,9 @@ public class TestConfiguration {
 			portal.setAgencyUserName(getPortalProperty(portalType, "user.agency.name"));
 			portal.setBranchUserName(getPortalProperty(portalType, "user.branch.name"));
 			portal.setAgentUserName(getPortalProperty(portalType, "user.agent.name"));
+			portal.setNonfundedAgencyUserName(getPortalProperty(portalType, "user.nonfundedagency.name"));
+			portal.setNonfundedBranchUserName(getPortalProperty(portalType, "user.nonfundedbranch.name"));
+			portal.setNonfundedAgentUserName(getPortalProperty(portalType, "user.nonfundedagent.name"));
 		}
 		else{
 			portal.setUserName(getPortalProperty(portalType, "user.name"));

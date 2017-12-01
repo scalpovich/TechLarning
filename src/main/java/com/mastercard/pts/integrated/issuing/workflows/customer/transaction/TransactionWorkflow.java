@@ -25,9 +25,14 @@ import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.configuration.FinSimSimulator;
 import com.mastercard.pts.integrated.issuing.configuration.MasSimulator;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.Transaction;
+import com.mastercard.pts.integrated.issuing.pages.agent.settlement.InitiateSettlementPage;
+import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceApprovePage;
+import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceRequestPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReversalTransactionPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionSearchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -58,6 +63,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private static final String CLICK_TEST_PREPARATION = "ClickTestPreparation.exe";
 	private static final String CLICK_TEST_RESULTS = "ClickTestResults.exe";
 	private static final String SET_MAS_IP= "SetMASIP.exe ";
+	private LoadBalanceRequestPage lbrpage;
+	private LoadBalanceApprovePage lbapage;
+	private InitiateSettlementPage ispage;
 	
 	@Autowired
 	private MasSimulator simulator;
@@ -72,6 +80,33 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	@Autowired
 	private TestContext context;
+	
+	public void initiateSettlementForAgency(String branchID, String programCode) {
+		ispage = navigator.navigateToPage(InitiateSettlementPage.class);
+		ispage.initiateSettlementForAgency(branchID, programCode);
+	}
+	
+	public String getSettlementInitiativeSuccessMessage() {
+		return ispage.getSettlementInitiativeSuccessMessage();
+	}
+		
+	public String performLoadBalanceRequestAndGetRequestReferenceNumber(Device device, LoadBalanceRequest details) {
+		lbrpage = navigator.navigateToPage(LoadBalanceRequestPage.class);
+		return lbrpage.performLoadBalanceRequestAndGetRequestReferenceNumber(device, details);
+	}
+	
+	public String getLoadBalanceRequestSuccessMessage() {
+		return lbrpage.getLoadBalanceRequestSuccessMessage();
+	}
+	
+	public void performLoadBalanceApprove(Device device, LoadBalanceRequest details) {
+		lbapage = navigator.navigateToPage(LoadBalanceApprovePage.class);
+		lbapage.performLoadBalanceApprove(device, details);
+	}
+	
+	public String getLoadBalanceApproveSuccessMessage() {
+		return lbapage.getLoadBalanceApproveSuccessMessage();
+	}
 	
 	public BigDecimal getTransactionReversalAmount(ReversalTransaction rt) {
 			ReversalTransactionPage page = navigator.navigateToPage(ReversalTransactionPage.class);

@@ -46,6 +46,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private String firstRow;
 	private String status;
 	private String[] values;
+	private String walletBalanceInformation;
 	
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -242,6 +243,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public void clickEndCall() {
+		WebElementUtils.scrollDown(driver(), 0, 250);
 		new WebDriverWait(driver(), timeoutInSec)
 		.until(WebElementUtils.elementToBeClickable(endCallBtn))
 		.click();
@@ -287,7 +289,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			 firstRow = getFirstColumnValueFromTable();
 			 clickCloseButton();
 			});
-			clickEndCall();
+		clickEndCall();
 		return firstRow.isEmpty();
 	}
 	
@@ -414,6 +416,83 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		String walletNumber = getFirstRecordCellTextByColumnNameInEmbeddedTab(WALLET_NUMBER);
 		clickEndCall();
 		return walletNumber;
+	}
+	
+	public String getWalletBalanceInformation(Device device){
+		logger.info("Get Wallet Balance Information for Device: {}", device.getDeviceNumber());
+		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
+		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
+		clickSearchButton();
+		editDeviceLink.click();
+		clickWalletDetailsTab();
+
+		int rowCount = driver().findElements(By.xpath("//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr")).size();
+		for (int j = 1; j <= rowCount; j++)
+				{
+					if (j == 1)
+						walletBalanceInformation = getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency")+":"+getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance")+":"+getCellTextByColumnNameInEmbeddedTab(j, "WALLET_NUMBER");
+					else
+						walletBalanceInformation = walletBalanceInformation+","+getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency")+":"+getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance")+":"+getCellTextByColumnNameInEmbeddedTab(j, "WALLET_NUMBER");
+				}
+		clickEndCall();
+		return walletBalanceInformation;
+	}
+	
+	public boolean verifyBalanceUpdatedCorreclty(String beforeLoadBalanceInformation, String transactionDetailsFromExcel, String afterLoadBalanceInformation){
+		logger.info("Verify Wallet Balance Information for Device");
+
+		String[] beforeLoadBalanceData = beforeLoadBalanceInformation.trim().split(",");
+		String[] transactionData = transactionDetailsFromExcel.trim().split(",");
+		String[] afterLoadBalanceData = afterLoadBalanceInformation.trim().split(",");
+		
+		int count = 0;
+		for (int i = 0; i < transactionData.length; i++)
+		{
+			String[] transactionDataValues = transactionData[i].trim().split(":");
+			String currencyName = transactionDataValues[0];
+			for (int j = 0 ; j < afterLoadBalanceData.length; j++)
+			{
+				String[] beforeLoadBalanceDataValues = beforeLoadBalanceData[j].trim().split(":");
+				String[] afterLoadBalanceDataValues = afterLoadBalanceData[j].trim().split(":");
+					if (currencyName.equalsIgnoreCase(beforeLoadBalanceDataValues[0]))
+					{
+						BigDecimal calculatedBalance = new BigDecimal(beforeLoadBalanceDataValues[1]).add(new BigDecimal(transactionDataValues[1]));
+						if (calculatedBalance.equals(new BigDecimal(afterLoadBalanceDataValues[1])))
+						{
+							count++;
+							break;
+						}
+					}
+			}
+		}
+		return (count == transactionData.length) ? true : false;
+	}
+	
+	public boolean verifyInitialLoadBalanceUpdatedCorreclty(String transactionDetailsFromExcel, String afterLoadBalanceInformation){
+		logger.info("Verify Initial Load Wallet Balance Information for Device");
+
+		String[] transactionData = transactionDetailsFromExcel.trim().split(",");
+		String[] afterLoadBalanceData = afterLoadBalanceInformation.trim().split(",");
+		
+		int count = 0;
+		for (int i = 0; i < transactionData.length; i++)
+		{
+			String[] transactionDataValues = transactionData[i].trim().split(":");
+			String currencyName = transactionDataValues[0];
+			for (int j = 0 ; j < afterLoadBalanceData.length; j++)
+			{
+				String[] afterLoadBalanceDataValues = afterLoadBalanceData[j].trim().split(":");
+					if (currencyName.equalsIgnoreCase(afterLoadBalanceDataValues[0]))
+					{
+						if (new BigDecimal(transactionDataValues[1]).equals(new BigDecimal(afterLoadBalanceDataValues[1])))
+						{
+							count++;
+							break;
+						}
+					}
+			}
+		}
+		return (count == transactionData.length) ? true : false;
 	}
 	
 	public void verifyUiOperationStatus() {

@@ -22,6 +22,10 @@ public class Portal {
 	private String agentUserPassword;
 	private String agentAdminPassword;
 	private String customerAdminPassword;
+	private String nonfundedagencyUserName;
+	private String nonfundedbranchUserName;
+	private String nonfundedagentUserName;
+
 
 	private String url;
 
@@ -218,7 +222,41 @@ public class Portal {
 			this.agentUserName = agentUserName;
 	}
 
+	public String getNonfundedAgentUserName() {
+		return nonfundedagentUserName;
+	}
 
+	public void setNonfundedAgentUserName(String nonfundedagentUserName) {
+		String nonfundedagentUsrName = System.getProperty("nonfundedagentUserName");
+		if (nonfundedagentUsrName != null && !nonfundedagentUsrName.trim().isEmpty())
+			this.nonfundedagentUserName = nonfundedagentUsrName;
+		else
+			this.nonfundedagentUserName = nonfundedagentUserName;
+	}
+	
+	public String getNonfundedBranchUserName() {
+		return nonfundedbranchUserName;
+	}
+
+	public void setNonfundedBranchUserName(String nonfundedbranchUserName) {
+		String nonfundedbranchUsrName = System.getProperty("nonfundedbranchUserName");
+		if (nonfundedbranchUsrName != null && !nonfundedbranchUsrName.trim().isEmpty())
+			this.nonfundedbranchUserName = nonfundedbranchUsrName;
+		else
+			this.nonfundedbranchUserName = nonfundedbranchUserName;
+	}
+
+	public String getNonfundedAgencyUserName() {
+		return nonfundedagencyUserName;
+	}
+
+	public void setNonfundedAgencyUserName(String nonfundedagencyUserName) {
+		String nonfundedagencyUsrName = System.getProperty("nonfundedagencyUserName");
+		if (nonfundedagencyUsrName != null && !nonfundedagencyUsrName.trim().isEmpty())
+			this.nonfundedagencyUserName = nonfundedagencyUsrName;
+		else
+			this.nonfundedagencyUserName = nonfundedagencyUserName;
+	}
 
 	public void setUserName(String userName) {
 		String usrName = System.getProperty("userName");
