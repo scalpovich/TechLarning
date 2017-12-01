@@ -14,7 +14,25 @@ public class SurchargeWailverPlan {
 	private String surchargeWaiverDescriptionInvalid;
 	private String effectiveDate;
 	private String endDate;
+	private String waiverTransactionDescription;
+	private String surchargeRate;
 	
+	public String getSurchargeRate() {
+		return surchargeRate;
+	}
+
+	public void setSurchargeRate(String surchargeRate) {
+		this.surchargeRate = surchargeRate;
+	}
+
+	public String getWaiverTransactionDescription() {
+		return waiverTransactionDescription;
+	}
+
+	public void setWaiverTransactionDescription(String waiverTransactionDescription) {
+		this.waiverTransactionDescription = waiverTransactionDescription;
+	}
+
 	public String getSurchargeWaiverPlanCodeValid() {
 		return surchargeWaiverPlanCodeValid;
 	}
@@ -73,7 +91,8 @@ public class SurchargeWailverPlan {
 		setSurchargeWaiverDescriptionInvalid(CustomUtils.randomAlphaNumeric(5)+"$");
 		setEffectiveDate(MapUtils.fnGetInputDataFromMap("effectiveDate"));
 		setEndDate(MapUtils.fnGetInputDataFromMap("endDate"));
-		
+		setWaiverTransactionDescription(MapUtils.fnGetInputDataFromMap("waiverTransactionDescription"));
+		setSurchargeRate(MapUtils.fnGetInputDataFromMap("surchargeRate"));
 
 	}
 }

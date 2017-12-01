@@ -12,7 +12,7 @@
 #include <AutoItConstants.au3>
 
 
-	WinActivate("MasterCard Authorization Simulator <MAS16.Q4>", "Test Options")
-	ControlClick("MasterCard Authorization Simulator <MAS16.Q4>", "", "Allows analysing the results")
+	WinActivate($CmdLine[1], "Test Options")
+	ControlClick($CmdLine[1], "", "Allows analysing the results")
 
-	WinWait("MasterCard Authorization Simulator <MAS16.Q4>", "[NAME:tabControl1]", "50")
+	WinWait($CmdLine[1], "[NAME:tabControl1]", "50")

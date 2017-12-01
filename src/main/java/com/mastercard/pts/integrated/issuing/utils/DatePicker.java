@@ -37,13 +37,39 @@ public class DatePicker extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='yui-skin-sam']//td[contains(@class,'selectable')]//a")
 	private MCWebElements avaiableFromDatesCalendar;
+	
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@id='ui-datepicker-div']//td/a")
+	private MCWebElements avaiableFromDatesCalendar1;
+	
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='yui-skin-sam']//div[@class='yui-cal-nav-b']//button[contains(@id,'submit')]")
 	private static MCWebElement calendarOkayBtn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='yui-skin-sam']//div[@class='yui-cal-nav-b']//button[contains(@id,'cancel')]")
 	private MCWebElement calendarCancelBtn;
-
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@name='toDate']/../button")
+	private MCWebElement transactionToDate;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@name='fromDate']/../button")
+	private MCWebElement transactionFromDate;
+	
+	@PageElement(findBy =  FindBy.X_PATH, valueToFind ="//input[@id='fromDate']")
+	private MCWebElement fromDateInpt;
+	
+	@PageElement(findBy =  FindBy.X_PATH, valueToFind ="//input[@id='toDate']")
+	private MCWebElement toDateInpt;
+	
+		
+	public void openToDate(){
+		transactionToDate.click();		
+	}
+	
+	public void openFromDate(){
+		transactionFromDate.click();
+	}
+	
 	public void clickDateCal2Icon(String ele) {
 		clickWhenWebElementClickable(Element(ele + dateCalIcon));
 	}
@@ -85,7 +111,7 @@ public class DatePicker extends AbstractBasePage {
 		// avaiableFromDatesCalendar.getElements();
 		elements.get(Integer.parseInt(value) - 1).click();
 	}
-
+	
 	public void clickCalendarMonthYearOkBtn() {
 		clickWhenClickable(calendarOkayBtn);
 	}
@@ -124,7 +150,15 @@ public class DatePicker extends AbstractBasePage {
 		clickCalendarMonthYearOkBtn();
 		setCalendarDay2(Calelement, day);
 	}
-
+	
+	public void setToDate(String toDate){
+		toDateInpt.sendKeys(toDate);
+	}
+	
+	public void setFromDate(String fromDate){
+		fromDateInpt.sendKeys(fromDate);
+	}
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return null;

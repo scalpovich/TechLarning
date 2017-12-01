@@ -13,7 +13,7 @@ Meta:
 Scenario: Scenario1 - Verify that the Issuer is able to create Corporate Travel Card-single currency for Single Wallet Single Currency Type
 Meta:
 @Regression
-@CorporateTravelSingleCurrencyStaticVirtual
+@CorporateTravelSignleCurrencyStaticVirtual
 @TCName TC264321_Embossing File Generation
 @sheetName S205014
 @Stage

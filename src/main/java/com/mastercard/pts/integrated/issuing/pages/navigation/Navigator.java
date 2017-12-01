@@ -3,7 +3,6 @@ package com.mastercard.pts.integrated.issuing.pages.navigation;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ public final class Navigator extends AbstractBasePage {
 	@Autowired
 	private PageObjectFactory pageObjFactory;
 
-@Autowired
+	@Autowired
 	private WebDriverProvider driverProvider;
 
 	@Autowired
@@ -138,16 +137,7 @@ public final class Navigator extends AbstractBasePage {
 	 */
 	public void navigateToTab(String tabTitle) {
 		logger.info("Navigate to {} tab", tabTitle);
-		By tabLocator = By.xpath(String.format("//a[contains(.,'%s')]/..",
-				tabTitle));
-		WebElement tab = AbstractBasePage.fluentWait(() -> driverProvider.get()
-				.findElement(tabLocator));
-		if (!hasClass(tab, "active")) {
-			clickElement(By.xpath(String.format("//a[contains(.,'%s')]",
-					tabTitle)));
-			clickElement(By.xpath(String.format("//a[contains(.,'%s')]",
-					tabTitle)));
-		}
+		clickElement(By.xpath(String.format("//a[contains(.,'%s')]", tabTitle)));
 	}
 
 	/**

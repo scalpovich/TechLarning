@@ -1,8 +1,10 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.transaction;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.AWTException;
@@ -23,8 +25,11 @@ import com.google.common.base.Strings;
 import com.mastercard.pts.integrated.issuing.configuration.FinSimSimulator;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.agent.channelmanagement.AssignPrograms;
+import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.AuthorizationTransactionFactory;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ClearingTestCase;
@@ -126,6 +131,19 @@ public class TransactionSteps {
 	@Given("user performs an optimized $transaction MAS transaction")
 	public void givenOptimizedTransactionIsExecuted(String transaction)
 	{
+		Transaction transactionData = generateMasTestDataForTransaction(transaction);
+
+		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
+	}
+	
+	@When("user performs generate TestData for an optimized $transaction MAS transaction")
+	@Given("user performs generate TestData for an optimized $transaction MAS transaction")
+	public void givenGenerateTestDataForOptimizedTransactionIsExecuted(String transaction)
+	{
+		generateMasTestDataForTransaction(transaction);
+	}
+
+	private Transaction generateMasTestDataForTransaction(String transaction) {
 		Device device = context.get(ContextConstants.DEVICE);
 		//this line of code reads data from the "AuthorizationTransaction_DataDriven.xls" 
 		// at \\Isser-automation-epam\src\main\resources\config\Data folder as the "Transaction Templates" sheet has the template information
@@ -172,8 +190,7 @@ public class TransactionSteps {
 		transactionData.setCardProfile(transactionFactory.createCsvCardProfile(transactionData));
 		//		creating & import testcase/transaction file  to temp location ex: C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413
 		transactionData.setTestCase(transactionFactory.createCsvTesCase(transactionData));
-
-		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
+		return transactionData;
 	}
 
 	private void setDeElementsDynamically(Device device, Transaction transactionData, String transaction) {
@@ -269,14 +286,18 @@ public class TransactionSteps {
 	@Then("MAS test results are verified")
 	public void thenTestResultsAreReported(){
 		String testResults = transactionWorkflow.verifyTestResults();
-		if(!testResults.toLowerCase().contains("not" ))	{
+		if(testResults.toLowerCase().contains("Validations OK" ))	{
 			logger.info("Transaction is succcessful!  - Expected Result : ", testResults );
 			assertTrue("Transaction is succcessful!  - Expected Result : " + testResults, true );
 		}
-		else	{
-			logger.error("Transaction failed!  - Result : ", testResults);
+		else if(testResults.toLowerCase().contains("Validations Not OK" ))	{
 			assertFalse("Transaction failed!  -  Result : " +  testResults, false);
 			throw new ValidationException("Transaction failed! -  Result : " +  testResults);
+		}
+		else	{
+			logger.error("Transaction failed! ", testResults);
+			assertFalse("Transaction failed! ", false);
+			throw new ValidationException("Transaction failed!");
 		}
 	}
 
@@ -343,5 +364,43 @@ public class TransactionSteps {
            rt.setArn(context.get(ConstantData.ARN_NUMBER));
            assertEquals(transactionWorkflow.searchTransactionWithArnAndGetStatus(rt.getArn(), ts), "Reversal [R]");
     }
-
+    
+    @When("user performs load balance request")
+    public void whenUserPerformsLoadBalanceRequest() {
+    	   Device device = context.get(ContextConstants.DEVICE);
+    	   LoadBalanceRequest lbr = LoadBalanceRequest.getProviderData(provider);
+           String loadRequestReferenceNumber = transactionWorkflow.performLoadBalanceRequestAndGetRequestReferenceNumber(device, lbr);
+           lbr.setLoadRequestReferenceNumber(loadRequestReferenceNumber);
+           context.put("LOADBALANCEREQUEST", lbr);
+     }
+    
+    @Then("load balance request is successful")
+    public void thenLoadBalanceRequestIsSuccessful() {
+            assertThat("Load Balance Request Failed", transactionWorkflow.getLoadBalanceRequestSuccessMessage(), containsString("Load balance request forwarded for approval with request number :"));
+    }
+    
+    @When("user performs load balance approve")
+    public void whenUserPerformsLoadBalanceApprove() {
+    	Device device = context.get(ContextConstants.DEVICE);
+    	LoadBalanceRequest lbr = context.get("LOADBALANCEREQUEST");
+    	transactionWorkflow.performLoadBalanceApprove(device, lbr);
+    }
+    
+    @Then("load balance approve is successful")
+    public void thenLoadBalanceApproveIsSuccessful() {
+           assertThat("Load Balance Approve Failed", transactionWorkflow.getLoadBalanceApproveSuccessMessage(), containsString("approved successfully."));
+    }
+    
+    @When("user initiates settlement for agency")
+    public void whenUserInitiatesSettlementForAgency() {
+		Program program = context.get(ContextConstants.PROGRAM);
+		AssignPrograms details = AssignPrograms.createWithProvider(provider);
+		details.setProgramCode(program.buildDescriptionAndCode());
+		transactionWorkflow.initiateSettlementForAgency(details.getBranchId(), details.getProgramCode());
+    }
+    
+    @Then("settlement is initiated successfully")
+    public void thenSettlementIsInitiatedSuccesfully() {
+    	assertThat("Settlement Initiative Failed", transactionWorkflow.getSettlementInitiativeSuccessMessage(), containsString("Settlement initiated successfully and Settlement Referance No :"));
+    }
 }

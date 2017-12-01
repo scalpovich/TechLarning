@@ -12,5 +12,5 @@
 #include <AutoItConstants.au3>
 
 
-	WinActivate("MCPS - MasterCard Clearing Presentment Simulator - 16.Q4", "TDG")
-	ControlClick("MCPS - MasterCard Clearing Presentment Simulator - 16.Q4", "", "TDG")
+	WinActivate($CmdLine[1], "TDG")
+	ControlClick($CmdLine[1], "", "TDG")
