@@ -7,16 +7,16 @@ I want to perform various transaction
 
 Meta:
 @StoryName sample_authorization_Test
-@SimulatorSession MAS
+@SimulatorSession MDFS
 
-Scenario: MSR_PURCHASE transaction
+Scenario: SMS transactions
 
+!-- Given connection to MDFS is established
 When user performs an optimized <transaction> MAS transaction
-Then MAS test results are verified
+Then MDFS test results are verified
 
 Examples:
 |transaction|
-|EMV_PURCHASE|
-|EMV_POS_BALANCE_INQUIRY|
-|EMV_CASH_ADVANCE|
-|MSR_PURCHASE|
+|MDFS_MSR_PURCHASE_WITH_CASHBACK_PIN|
+|MDFS_MSR_PURCHASE_WITH_CASHBACK|
+|MDFS_EMV_PURCHASE_WITH_CASHBACK_PIN|
