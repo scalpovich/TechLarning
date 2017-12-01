@@ -13,6 +13,8 @@ public class SimulatorConstantsData {
 	public static final String WINIUM_DRIVER_EXE_PATH = "\\simulator\\externalLibraries\\Winium.Desktop.Driver.exe";
 
 	public static final String AUTOIT_EXE_PATH = "\\simulator\\AutoIT\\";	
+	
+	public static final String PSEXEC_EXE_PATH =  "\\Simulator\\PsExec\\PsExec.exe";
 
 	public static final String MCPS_EXE_PATH = "C://Program Files (x86)//MasterCard//MCPS 16_Q4//mcps.exe";
 

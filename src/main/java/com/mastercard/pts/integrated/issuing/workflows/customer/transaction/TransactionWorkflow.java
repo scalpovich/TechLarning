@@ -64,6 +64,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private static final String MESSAGE_REVERSAL_INDICATOR = "messageReversalIndicator";
 	private static final String BIN_TABLE = "BIN Table";
 	private static final String TEST_CASES =	"Test Cases (Issuer Testing)";
+	private static final String ADD_BIN_RANGE =	"ActivateAddBINrange.exe";
 	
 	@Autowired
 	private MasSimulator simulator;
@@ -192,15 +193,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			selectLicenseAndConfigure("Credit - Professional", "MAS 16.4");
 			wait(4000);
 			connect2IPSHostModeAndConfigureIP("MAS"); 	
-			
-			//clicking click Test Preparation
-			clickTestPreparations("MAS");
-			performClickTestCases("MAS");
-
-			//clicking click Test Monitor
-			clickTestMonitor("MAS");
-			performClickTestCases("MAS");
-
 		} else if(simulator.toUpperCase().contains("MCPS")) {
 			launchAndConnectToMCPS();
 			
@@ -208,14 +200,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			selectLicenseAndConfigure("Debit - Professional", "MDFS 16.4");
 			wait(4000);
 			connect2IPSHostModeAndConfigureIPOnMdfs(); 	
-
-			//clicking click Test Preparation
-			clickTestPreparationsOnMdfs();
-			performClickTestCases("MDFS");
-
-			//clicking click Test Monitor
-			clickTestMonitorOnMdfs();
-			performClickTestCases("MDFS");
 		}
 	}
 
@@ -800,8 +784,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(2000);
 			performClickOperation("Add New");
 			wait(10000);
+			executeAutoITExe(ADD_BIN_RANGE);
 			winiumClickOperation("General");
-			executeAutoITExe("ActivateAddBINrange.exe");
 			pressTab();
 			setText(binBinMinRange);
 			pressTab();
@@ -811,23 +795,28 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(1000);
 			pressTab();
 			wait(1000);
-			//mdfs has differnet options compared to MAS
 			if(!isContains(transaction, "mdfs")) {
+				executeAutoITExe(ADD_BIN_RANGE);
 				pressTab();
 				wait(1000);
-			}
-			setText(issuerCountryCode);
-			pressTab();
-			//mdfs has differnet options compared to MAS, extra tab needed
-			if(isContains(transaction, "mdfs")) 
+				setText(issuerCountryCode);
 				pressTab();
-			setText(issuerCurrencyCode);
-			pressTab();
-			setText(cardHolderBillingCurrency);
+				setText(issuerCurrencyCode);
+				pressTab();
+				setText(cardHolderBillingCurrency);
+			} else {
+				executeAutoITExe(ADD_BIN_RANGE);
+				setText(issuerCountryCode);
+				pressTab();
+				pressTab();
+				setText(issuerCurrencyCode);
+				pressTab();
+				setText(cardHolderBillingCurrency);
+			}
+			executeAutoITExe(ADD_BIN_RANGE);
 			winiumClickOperation("OK");
 			wait(2000);
-			if(isImagePresent("OK"))
-			{
+			if(isImagePresent("OK")) {
 				performClickOperation("OK");
 				wait(2000);
 			}
@@ -1038,7 +1027,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation(CLOSE);
 	}
 
-
 	private void winiumLicenseSelectOperation(String locator, String tool) {
 		activateMas(tool);
 		List<WebElement> lst = winiumDriver.findElements(By.name(locator));
@@ -1050,11 +1038,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		logger.info(" *****  winiumClick Operation is being performed :  "+ locator);
 		winiumDriver.findElementByName(locator).click();
 	}
-
-	private void performClickTestCases(String tool) {
-		activateMas(tool);
-		winiumClickOperation("Test Cases (Issuer Testing)");
-	} 
 
 	private void performClickCardProfiles (String tool) {
 		activateMas(tool);

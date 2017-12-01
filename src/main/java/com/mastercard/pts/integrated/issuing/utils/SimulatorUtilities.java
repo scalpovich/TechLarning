@@ -225,15 +225,11 @@ public class SimulatorUtilities{
 			String path = getResourceFolderPath() + SimulatorConstantsData.AUTOIT_EXE_PATH.replace("\\", "\\\\");
 			String psExecPath = getResourceFolderPath() + "\\Simulator\\PsExec\\PsExec.exe";
 			String commandToExecute;
-			
 			logger.info("********* AutoIt Exe being executed :  ",  fileName);
-			
-/*			//for local AutoIT execution.. enable the below 2 lines and comment the other 2 lines
-            commandToExecute = " cmd /c " +  " "+ path + fileName;
-            executeCommand(fileName, commandToExecute);
-*/                                    
+                                    
             //for remote/Jenkins/command Line -  AutoIT execution.. enable the below 2 lines and comment the other 2 lines
             commandToExecute = " cmd /c " + psExecPath + " "+ path + fileName;
+//            logger.info("********* commandToExecute  :  " +  commandToExecute);
             executeCommand(fileName, commandToExecute);
 		}
 		catch(Exception e)

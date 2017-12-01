@@ -17,7 +17,7 @@ import com.mastercard.pts.integrated.issuing.utils.ExcelUtils;
 
 @Component
 public class TransactionProvider {
-	
+
 	private static final String TRANSACTION_TEMPLATE = "Transaction template";
 	private static final String SHEET_DATA_DRIVEN = "Data Driven";
 	private static final String SHEET_TRANSACTION_TEMPLATES = "Transaction Templates";
@@ -33,9 +33,9 @@ public class TransactionProvider {
 	private static final String MERCHANT_PROFILE = "Merchant profile";
 	private static final String EXCEL_PATH = "config/Data/AuthorizationTransaction_DataDriven.xls";
 	private static final String CURRENCY = "CURRENCY";
-	
+
 	private final Map<String, Function<Transaction, String>> valueProviders;
-	
+
 	public TransactionProvider() {
 		valueProviders = new HashMap<>();
 		valueProviders.put(PAN, Transaction::getCardNumber);
@@ -44,35 +44,35 @@ public class TransactionProvider {
 		valueProviders.put(EXPIRATION_DATE, Transaction::getExpirationYear);
 		valueProviders.put(SEQUENCE_NUMBER, Transaction::getCardSequenceNumber);
 	}
-	
+
 	public Transaction loadTransaction(String transactionName, Device device) {
 		Map<String, String> templateData = ExcelUtils.readDataBySheetAndColumn(EXCEL_PATH, SHEET_TRANSACTION_TEMPLATES, transactionName);
-		
+
 		Transaction transaction = new Transaction();
 		transaction.setTestCaseToSelect(transactionName);
 		transaction.setMerchantProfile(templateData.get(MERCHANT_PROFILE));
 		transaction.setTransactionProfile(templateData.get(TRANSACTION_PROFILE));
-		
+
 		loadDeviceDataFromDevice(transaction, device);
-		
+
 		transaction.setDeKeyValuePair(parseDataElements(templateData.get(DE), transaction));
 		transaction.setExpectedDataElements(parseDataElements(templateData.get(EXPECTED_DE), transaction));
 		transaction.setCardDataElements(parseDataElements(templateData.get(CARD_DE), transaction));
 		return transaction;
 	}
-	
+
 	public Transaction loadTransaction(String testCaseName) {
 		Map<String, String> deviceData = ExcelUtils.readDataBySheetAndColumn(EXCEL_PATH, SHEET_DATA_DRIVEN, testCaseName);
-		
+
 		String templateName = deviceData.get(TRANSACTION_TEMPLATE);
-		
+
 		Map<String, String> templateData = ExcelUtils.readDataBySheetAndColumn(EXCEL_PATH, SHEET_TRANSACTION_TEMPLATES, templateName);
-		
+
 		Transaction transaction = new Transaction();
 		transaction.setTestCaseToSelect(templateName);
 		transaction.setMerchantProfile(templateData.get(MERCHANT_PROFILE));
 		transaction.setTransactionProfile(templateData.get(TRANSACTION_PROFILE));
-		
+
 		Function<String, String> dataProvider = key -> {
 			String value = deviceData.get(key);
 			if (Strings.isNullOrEmpty(value)) {
@@ -80,21 +80,21 @@ public class TransactionProvider {
 			}
 			return value;
 		};
-		
+
 		loadDeviceDataFromExcel(transaction, deviceData);
-		
+
 		transaction.setDeKeyValuePair(parseDataElements(dataProvider.apply(DE), transaction));
 		transaction.setExpectedDataElements(parseDataElements(dataProvider.apply(EXPECTED_DE), transaction));
 		transaction.setCardDataElements(parseDataElements(dataProvider.apply(CARD_DE), transaction));
 		return transaction;
 	}
-	
+
 	public Transaction createWithProvider(KeyValueProvider provider) {
 		Transaction transactionData  = new Transaction();
 		transactionData.setCurrency(provider.getString(CURRENCY).replaceAll("\\D+","")); // getting numbers only
 		return transactionData;
 	}
-	
+
 	private void loadDeviceDataFromDevice(Transaction transaction, Device device) {
 		transaction.setCardNumber(device.getDeviceNumber());
 		transaction.setExpirationYear(device.getExpirationDate());
@@ -109,15 +109,15 @@ public class TransactionProvider {
 		transaction.setCardSequenceNumber(data.get(SEQUENCE_NUMBER));
 		transaction.setPinForTransaction(data.get(PIN));
 	}
-	
+
 	private Map<String, String> parseDataElements(String elementLines, Transaction transaction) {
 		if (Strings.isNullOrEmpty(elementLines)) {
 			return Collections.emptyMap();
 		}
 		return Arrays.stream(elementLines.split("\r?\n")).map(line -> line.split("="))
-			.collect(toMap(pair -> pair[0], pair -> transformValue(pair[1], transaction)));
+				.collect(toMap(pair -> pair[0], pair -> transformValue(pair[1], transaction)));
 	}
-	
+
 	private String transformValue(String value, Transaction transaction) {
 		if (!value.startsWith("$")) {
 			return value;
@@ -125,6 +125,6 @@ public class TransactionProvider {
 		Function<Transaction, String> provider = valueProviders.get(value.substring(1));
 		return provider != null
 				? provider.apply(transaction)
-				: value;
+						: value;
 	}
 }
