@@ -5,20 +5,21 @@ I want to assert pages
 
 @Meta:
 ABCDE					 
-Scenario: UI verification - Customer Portal - Valid SurchargeWailverPlan, card management tab
+Scenario:1 UI verification - Customer Portal - Valid SurchargeWailverPlan, card management tab
 Meta:
-@TestId TC379084
+@1
 @TCName TC554188
 @sheetName CreditScenarios
 Given login to portal as existing bank as a user
 Then SurchargeWaiverPlan of card management tab has proper field validation
-And user signs out from customer portal
 
-Scenario: UI verification - Customer Portal - Invalid SurchargeWailverPlan, card management tab
+
+Scenario:2 UI verification - Customer Portal - Invalid SurchargeWailverPlan, card management tab
 Meta:
-@TestId TC379084
+@2
 @TCName TC554188
 @sheetName CreditScenarios
 Given login to portal as existing bank as a user
 Then SurchargeWaiverPlan of card management tab has proper field validation for Invalid scenario
-And user signs out from customer portal
+
+

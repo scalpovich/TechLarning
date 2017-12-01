@@ -15,9 +15,11 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
+import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
@@ -58,18 +60,134 @@ public class SurchargeWailverPlanPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='currencyCode']//li")
 	private MCWebElement currencyErrorMsg;
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='networkCode']//li")
+	private MCWebElement interchangeErrorMsg;
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='mcgCode']//li")
+	private MCWebElement mcgErrorMsg;
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='detailDesc']//li")
+	private MCWebElement waiverTransactionDescriptionErrorMsg;
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='effectiveDate']//li")
+	private MCWebElement effectiveDateErrorMsg;
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='endDate']//li")
+	private MCWebElement endDateErrorMsg;
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='waiverRate']//li")
+	private MCWebElement surchargeRateErrorMsg;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mcgCode:input:dropdowncomponent")
 	private MCWebElement mcgDDwn;
 	@PageElement(findBy = FindBy.NAME, valueToFind = "networkCode:input:dropdowncomponent")
 	private MCWebElement interchangeDDwn;
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "networkCode:input:dropdowncomponent")
-	private MCWebElement effectiveDateImg;
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='iddbDp']//img")
-	private MCWebElement endDateImg;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "detailDesc:input:inputTextField")
+	private MCWebElement waiverTransactionDescription;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='yui-calcontainer single withtitle']//following-sibling::img")
+	private MCWebElements dateImage;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Save']")
+	private MCWebElement saveButton;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Cancel']")
+	private MCWebElement cancelButton;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "waiverRate:input:inputTextField")
+	private MCWebElement surchargeRateTxt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Record Added Successfully.']")
+	private MCWebElement validateSuccessMsgDisplay;
 	
 	
-	//input[@value='Add Details']
+	public String effectiveDate="//input[@name='effectiveDate:input:dateTextField']/parent::span/parent::span";
+	public String endDate="//input[@name='endDate:input:dateTextField']/parent::span/parent::span";
+	
+	public boolean successMessageDiplay()
+	{
+		if(validateSuccessMsgDisplay.isVisible())
+		{
+			logger.info("successMsg is displayed");
+			return true;
+		}
+		return false;
+	}
+	public boolean interchangeMsgValidation()
+	{
+		
+		 if(interchangeErrorMsg.isVisible())
+		 {
+			logger.info("interchangeErrorMsg is displayed");
+			 return true;
+		 }
+		 return false;
+	}
+	public boolean mcgMsgValidation()
+	{
+		 if(mcgErrorMsg.isVisible())
+		 {
+			logger.info("mcgErrorMsg is displayed");
+			 return true;
+		 }
+		 return false;
+	}
+	public boolean waiverTransactionMsgDescriptionValidation()
+	{
+		 if(waiverTransactionDescriptionErrorMsg.isVisible())
+		 {
+			logger.info("waiverTransactionDescriptionErrorMsg is displayed");
+			 return true;
+		 }
+		 return false;
+	}
+	public boolean effectiveDateErrorMsgValidation()
+	{
+		 if(effectiveDateErrorMsg.isVisible())
+		 {
+			logger.info("effectiveDescriptionErrorMsg is displayed");
+			 return true;
+		 }
+		 return false;
+	}
+	public boolean endDateErrorMsgValidation()
+	{
+		 if(endDateErrorMsg.isVisible())
+		 {
+			logger.info("endDateErrorMsg is displayed");
+			 return true;
+		 }
+		 return false;
+	}
+	public boolean surchargeRateErrorMsgValidation()
+	{
+		 if(surchargeRateErrorMsg.isVisible())
+		 {
+			logger.info("surchargeRateErrorMsg is displayed");
+			 return true;
+		 }
+		 return false;
+	}
+	
+	public void enterWaiverTransactionDescription(SurchargeWailverPlan surchargeWailverPlan)
+	{
+		enterValueinTextBox(waiverTransactionDescription,surchargeWailverPlan.getWaiverTransactionDescription());
+	}
+	public void effectiveDateSelect(DatePicker datePicker,SurchargeWailverPlan surchargeWailverPlan)
+	{
+		datePicker.setDateCalendar2(surchargeWailverPlan.getEffectiveDate(),effectiveDate);
+	
+	}
+	public void endDateSelect(DatePicker datePicker,SurchargeWailverPlan surchargeWailverPlan)
+	{
+		datePicker.setDateCalendar2(surchargeWailverPlan.getEndDate(),endDate);
+	
+	}
+	public void enterSurchargeRate(SurchargeWailverPlan surchargeWailverPlan)
+	{   enterValueinTextBox(surchargeRateTxt,"");
+		enterValueinTextBox(surchargeRateTxt,surchargeWailverPlan.getSurchargeRate());
+		logger.info(String.valueOf(Double.parseDouble(surchargeWailverPlan.getSurchargeRate())));
+		if(Double.parseDouble(surchargeWailverPlan.getSurchargeRate())>=0.0000001)
+		{
+		Assert.assertTrue("surchargeWailverPlan value is not correct", true);
+		}
+	}
 	public void verifyUiOperationStatus() {
 		logger.info("Surcharge Waiver Plan");
 		verifyUiOperation("Add Surcharge Waiver Plan");
@@ -107,10 +225,10 @@ public class SurchargeWailverPlanPage extends AbstractBasePage {
 		String a = surchargeWaiverPlanCodeTxt.getAttribute("value");
 		String[] b = a.split("");
 		if (a.matches("[A-Z0-9\\_]*") && b[0].matches("[A-Z0-9]")&& b[b.length - 1].matches("[A-Z0-9]")) {
-			System.out.println("Pass");
+			logger.info("waiverPlanValidation is successfull");
 			return true;
 		}
-		System.out.println("Fail");
+		logger.info("waiverPlanValidation is not successfull");
 		return false;
 		
 	}
@@ -119,10 +237,10 @@ public class SurchargeWailverPlanPage extends AbstractBasePage {
 		String a = surchargeWaiverPlandescriptionTxt.getAttribute("value");
         String[] b = a.split("");
        if (a.matches("[a-zA-Z0-9\\s\\.\\,\\&\\#\\:\\*\\(\\)\\-\\[\\]]*")&& b[0].matches("[a-zA-Z0-9]")) {
-    	   System.out.println("Pass");
+    	   logger.info("waiverPlanDescriptionValidation is successfull");
 			return true;
 		}
-       System.out.println("Fail");
+       logger.info("waiverPlanDescriptionValidation is successfull");
 		return false;
 	}
 	
@@ -131,7 +249,7 @@ public class SurchargeWailverPlanPage extends AbstractBasePage {
 		 clickWhenClickable(addDetailsBtn);
 		 if(currencyErrorMsg.isVisible())
 		 {
-			 System.out.println("Currency error msg is displayed");
+			 logger.info("Currency error msg is displayed");
 			 return true;
 		 }
 		 return false;
@@ -148,6 +266,9 @@ public class SurchargeWailverPlanPage extends AbstractBasePage {
 	public void addNewButtonClick()
 	{
 		clickWhenClickable(addButton);
+		SwitchToDefaultFrame();
+		switchToIframe(Constants.ADD_SURCHARGE_WAIVER_PLAN_DETAIL);
+		
 	}
     
 	public String waiverPlanCodeErrorMessage()
@@ -167,6 +288,20 @@ public class SurchargeWailverPlanPage extends AbstractBasePage {
 	public void mcgSelect()
 	{
 		mcgDDwn.getSelect().selectByIndex(1);
+	}
+	
+	public void saveButtonClick()
+	{
+	clickWhenClickable(saveButton);
+	}
+	public void saveButtonClickInner()
+	{
+    switchToIframe(Constants.ADD_SURCHARGE_WAIVER_FEE_PLAN);
+	clickWhenClickable(saveButton);
+	}
+	public void cancelButtonClick()
+	{
+		clickWhenClickable(cancelButton);
 	}
 	
 	@Override

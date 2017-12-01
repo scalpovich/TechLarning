@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SurchargeWailverPlan;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.SurchargeWailverPlanPage;
+import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.administration.UiVerificationAdministrationWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.UiVerificationCardManagementWorkflow;
@@ -45,6 +46,9 @@ public class CustomerUiVerificationSteps {
 	
 	@Autowired
 	private SurchargeWailverPlan surchargeWailverPlan;
+	
+	@Autowired
+	DatePicker datePicker;
 
 	@Then("AccountFile page of card management tab is rendered correctly")
 	public void thenAccountFilePageOfCardManagementTabIsRenderedCorrectly() {
@@ -1369,7 +1373,7 @@ public class CustomerUiVerificationSteps {
 	@Then("SurchargeWaiverPlan of card management tab has proper field validation")
 	public void thenSurchargeWaiverPlanOfCardManagementTabHasProperValidation() {
 		surchargeWailverPlan.surchargeWaiverFeePlanDataProvider();
-	uiVerificationCardManagementWorkflow.verifyValidSurchargeWaiverPlanCode(surchargeWailverPlan);
+	uiVerificationCardManagementWorkflow.verifyValidSurchargeWaiverPlanCode(surchargeWailverPlan,datePicker);
 		
 	}
 	@Then("SurchargeWaiverPlan of card management tab has proper field validation for Invalid scenario")
