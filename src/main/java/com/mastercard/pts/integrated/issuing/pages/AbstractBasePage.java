@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
@@ -32,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -69,6 +71,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private static final Logger logger = LoggerFactory.getLogger(AbstractBasePage.class);
 
 	public static final LocalDate futureDate = LocalDate.now().plusDays(100);
+	public static final LocalDate futureEndDate = LocalDate.now().plusDays(150);
 
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -159,12 +162,17 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Contact Information')]")
 	private MCWebElement contactInformation;
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Card Management']")
+	private MCWebElement cardManagementTab;
 
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
 		MCAnnotationProcessor.initializeSuper(this, finderProvider);
 	}
-
+    public void cardManagementTabinView()
+    {
+    	Scrolldown(cardManagementTab);
+    }
 	protected void clickOkButton() {
 		clickWhenClickable(okButton);
 	}
@@ -458,7 +466,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		waitForWicket();
 	}
 
-	private void clickWhenClickableDoNotWaitForWicket(MCWebElement element) {
+	protected void clickWhenClickableDoNotWaitForWicket(MCWebElement element) {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
 	}
 
@@ -1274,7 +1282,26 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 		return isAnyErrorPresent;
 	}
-	
+	public boolean selectByVisibleTextValidate(MCWebElement ele,
+			String optionName) {
+		String optionVisbleText = "";
+		waitUntilSelectOptionsPopulated(ele);
+		List<WebElement> selectedOptions = ele.getSelect().getOptions();
+		for (WebElement element : selectedOptions) {
+			if (element.getText().toUpperCase()
+					.contains(optionName.toUpperCase())) {
+				optionVisbleText = element.getText();
+				
+				break;
+			}
+		}
+		ele.getSelect().selectByVisibleText(optionVisbleText);
+
+		// waitForWicket(driver());
+		waitForLoaderToDisappear();
+		waitForPageToLoad(driver());
+		return false;
+	}
 	public String getTextFromPage(MCWebElement element){
 		return element.getText();
 	}

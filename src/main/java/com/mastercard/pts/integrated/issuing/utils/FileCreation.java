@@ -17,6 +17,11 @@ import org.springframework.stereotype.Component;
 import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CurrencyExchangeRatesPage;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Vendor;
+import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 @Component
 public class FileCreation {
@@ -31,6 +36,16 @@ public class FileCreation {
 
 	@Autowired
 	ReadTestDataFromExcel dataReader;
+	@Autowired
+	DevicePlan deviceplan;
+	@Autowired
+	NewDevice newDevice;
+	@Autowired
+	Program program;
+	@Autowired
+	Vendor vendor;
+	@Autowired
+	HelpDeskGeneral helpDeskGeneral;
 
 	private static final String INSTITUTION_CODE = "INSTITUTION_CODE";
 
@@ -427,7 +442,8 @@ public class FileCreation {
 		this.getUploadedValues = uploadedValues;
 	}
 
-	public String createApplicationUploadFile(String INSTITUTION_CODE) {
+	public String createApplicationUploadFile(String INSTITUTION_CODE,
+			String customerType) {
 		int totalRecords = 0;
 		List<String> uploadedValues = new ArrayList<String>();
 		String FileName = "APPPR" + INSTITUTION_CODE
@@ -436,8 +452,9 @@ public class FileCreation {
 		HashMap<String, HashMap<String, String>> applicationUploadMap;
 		File file = new File(FileName);
 		String remoteDir = Constants.APPLICATION_UPLOAD_PREPAID_FILE_PATH;
-		applicationUploadMap = dataReader.dataProvider("AllUploadTestData",
-				"Prepaid Card File");
+		applicationUploadMap = dataReader.dataProviderFileUpload(
+				"AllUploadTestData", "Prepaid Card File");
+		System.out.println("applicationUploadMap" + applicationUploadMap);
 		try (PrintWriter writer = new PrintWriter(file)) {
 			writer.println("HD|" + INSTITUTION_CODE + "|"
 					+ DateUtils.getDateTimeDDMMYYYYHHMMSS() + "|" + "2.0");
@@ -445,21 +462,39 @@ public class FileCreation {
 			for (int i = 0; i < applicationUploadMap.size(); i++) {
 				if (true == dataReader
 						.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
-					/*
-					 * for ( Map.Entry<String, String> entry : ThreadLocalWorker
-					 * .getTestContext().getApplicationUploadData().entrySet())
-					 * { String key = entry.getKey(); String value =
-					 * entry.getValue(); uploadedValues.add(key+"="+value);
-					 * setGetUploadedValues(uploadedValues); }
-					 */
-					writer.println(getUploadFileFromDatamap("Concatenated Application Record"));
-					totalRecords++;
-					if (true == dataReader
-							.iterateUploadDataFromExcelMap("Test Record "
-									+ (i + 1))) {
-						writer.println(getUploadFileFromDatamap("Concatenated Application Record"));
-						totalRecords++;
+					String name = CustomUtils.randomString(9).toUpperCase();
+					helpDeskGeneral.setFirstName(name);
+					if (customerType.equals("Individual")) {
+						writer.println(getUploadFileFromDatamap(
+								"Concatenated Application Record")
+								.replace("%B%", INSTITUTION_CODE)
+								.replace("%t%", "0")
+								.replace("%P%", program.getProgramCode())
+								.replace("%D%", deviceplan.getDevicePlanCode())
+								.replace("%b%", vendor.getBranchCode())
+								.replace("%N", name));
+					} else if (customerType.equals("Corporate")) {
+						writer.println(getUploadFileFromDatamap(
+								"Concatenated Application Record")
+								.replace("%B%", INSTITUTION_CODE)
+								.replace("%t%", "1")
+								.replace("%P%", program.getProgramCode())
+								.replace("%D%", deviceplan.getDevicePlanCode())
+								.replace("%b%", vendor.getBranchCode())
+								.replace("%N", name));
+					} else if (customerType.equals("Bank Staff")) {
+						writer.println(getUploadFileFromDatamap(
+								"Concatenated Application Record")
+								.replace("%B%", INSTITUTION_CODE)
+								.replace("%t%", "2")
+								.replace("%P%", program.getProgramCode())
+								.replace("%D%", deviceplan.getDevicePlanCode())
+								.replace("%b%", vendor.getBranchCode())
+								.replace("%N", name));
 					}
+
+					totalRecords++;
+
 				}
 
 				writer.print("FT|" + createRecordNumber(9, totalRecords));

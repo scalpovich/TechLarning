@@ -459,5 +459,66 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		}
 		return dateFromUI;
 	}
+	public boolean verifyFileProcessUpload(ProcessBatches processBatchesDomain,
+			String FileName) {
+		FileCreation.filenameStatic = FileName;
+		String elementXpath = String.format("//span[contains(text(),'%s')]",
+				FileCreation.filenameStatic);
+		Boolean isProcessed = false;
+		String statusXpath = elementXpath
+				+ "//parent::td//following-sibling::td/a";
+		CustomUtils.ThreadDotSleep(20000);
+		getFinder().getWebDriver().findElement(By.xpath(statusXpath)).click();
+		switchToIframe(Constants.VIEW_BATCH_DETAILS);
 
+		// unless it is completed, refresh it - No of attempts: 5
+		for (int i = 0; i < 5; i++) {
+			if (processBatchStatusTxt.getText().equalsIgnoreCase("PENDING [0]")
+					|| processBatchStatusTxt.getText().equalsIgnoreCase(
+							"IN PROCESS [1]")) {
+				ClickButton(closeBtn);
+				waitForLoaderToDisappear();
+				getFinder().getWebDriver().switchTo().defaultContent();
+				waitForLoaderToDisappear();
+				getFinder().getWebDriver().findElement(By.xpath(statusXpath))
+						.click();
+				switchToIframe(Constants.VIEW_BATCH_DETAILS);
+				waitForLoaderToDisappear();
+				waitForElementVisible(processBatchStatusTxt);
+			} else if (processBatchStatusTxt.getText().equalsIgnoreCase(
+					"SUCCESS [2]")) {
+
+				if (rejectedCountTxt.getText().contains("0")
+						|| rejectedCountTxt.getText().contains("-")) {
+
+					isProcessed = true;
+					break;
+				}
+
+				else {
+					ClickButton(tracesLink);
+					getBatchTraces();
+					break;
+				}
+
+			} else if (processBatchStatusTxt.getText().equalsIgnoreCase(
+					"FAILED [3]")) {
+				ClickButton(tracesLink);
+				getBatchTraces();
+				break;
+			}
+		}
+		processBatchesDomain.setJoBID(processBatchjobIDTxt.getText());
+		System.out.println("JobID=" + processBatchesDomain.getJoBID());
+		ClickButton(closeBtn);
+		waitForPageToLoad(getFinder().getWebDriver());
+		//CustomUtils.ThreadDotSleep(5000);
+		getFinder().getWebDriver().switchTo().defaultContent();
+		//CustomUtils.ThreadDotSleep(5000);
+		cardManagementTabinView();
+		//getFinder().getWebDriver().switchTo().defaultContent();
+		//CustomUtils.ThreadDotSleep(9000);
+		return isProcessed;
+	}
 }
+

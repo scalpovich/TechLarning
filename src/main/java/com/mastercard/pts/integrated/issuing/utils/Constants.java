@@ -16,7 +16,8 @@ public class Constants {
 	public static final String Record_Cannot_Be_deleted = "Plan is attached to Device Range. Cannot delete record";
 
 	public static final String ADD_USER = "Add User";
-
+	public static final String ADD_LOYALTY_PROMOTION_MAPPING = "Add Loyalty Plan & Promotion Mapping";
+	public static final String EDIT_PROGRAM_FRAME = "Edit Program";
 	public static String BATCH_NAME = "Device Production";
 
 	public static String EDIT_BATCH_DEFINITION = "Edit Batch Definition";
@@ -361,7 +362,7 @@ public class Constants {
 
 	public static final String UPLOAD_FILE_PATH = "/home/dc-user/integrated/elt_bo/data/102030/RUPAY_INCOMING";
 
-	public static final String APPLICATION_UPLOAD_PREPAID_FILE_PATH = "/home/dc-user/integrated/elt_bo/data/VIETNAM/input";
+	public static final String APPLICATION_UPLOAD_PREPAID_FILE_PATH = "/home/dc-user/integrated/elt_bo/data/121212/input";
 
 	public static final String GENERIC_DESCRIPTION = "AUTOMATION";
 

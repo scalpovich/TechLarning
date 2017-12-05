@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 
+import junit.framework.Assert;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
@@ -55,14 +57,14 @@ public class HelpDeskSteps {
 
 	@Autowired
 	private KeyValueProvider provider;
-@Autowired
+    @Autowired
 	HelpDeskFlows helpdeskFlows;
 
 	EventAndAlerts eventAndAlerts = new EventAndAlerts();
 
 	ChangeAddressRequest changeAddressRequest;
-
-	HelpDeskGeneral helpdeskgettersetter = new HelpDeskGeneral();
+	@Autowired
+	HelpDeskGeneral helpdeskgettersetter;
 
 	DeviceCreation deviceCreation;
 
@@ -545,5 +547,13 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.storeActivationDate();
 		helpdeskWorkflow.clickEndCall();
 		assertThat("Device has incorrect Activation Date", helpdeskWorkflow.activationDate(), equalTo(DateUtils.currentDateddMMyyyy()));
+	}
+	@When("User search for device on search screen for product type $prepaid and validates the status as $NORMAL [0]")
+	public void thenUserSearchForDeviceOnSearchScreenPrepaid(String productType, String status) {
+		helpdeskgettersetter.setProductType(ProductType.fromShortName(productType));
+
+		String actualStatus=helpdeskFlows.searchForDevicePrepaid(helpdeskgettersetter);
+		Assert.assertEquals("status is not normal",status, actualStatus);
+
 	}
 }

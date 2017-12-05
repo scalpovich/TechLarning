@@ -13,7 +13,7 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-public class PreProductionBatch extends AbstractBasePage {
+public class PreProductionBatch1 extends AbstractBasePage {
 	@Autowired
 	MenuSubMenuPage menuSubMenuPage;
 

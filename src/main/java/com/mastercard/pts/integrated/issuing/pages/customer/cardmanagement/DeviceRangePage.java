@@ -158,30 +158,31 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	public void selectProgram() {
 		waitForElementVisible(ProgramDDwn);
-		if (MapUtils.fnGetInputDataFromMap("Program") != null) {
+		if (MapUtils.fnGetInputDataFromMap("Program") != null && !MapUtils.fnGetInputDataFromMap("Program").isEmpty()) {
 			selectByVisibleText(ProgramDDwn, MapUtils.fnGetInputDataFromMap("Program"));
 		} else {
-			selectByVisibleText(ProgramDDwn, program.getProgramCode());
+			selectByVisibleText(ProgramDDwn, program.getProgram());
 		}
 
 	}
 
 	public void selectDevicePlan() {
 		waitForElementVisible(DevicePlanCodeDDwn);
-		if (MapUtils.fnGetInputDataFromMap("DevicePlan") != null) {
+		if (MapUtils.fnGetInputDataFromMap("DevicePlan") != null && !MapUtils.fnGetInputDataFromMap("DevicePlan").isEmpty() ) {
 			selectByVisibleText(DevicePlanCodeDDwn, MapUtils.fnGetInputDataFromMap("DevicePlan"));
 		} else {
-			selectByVisibleText(DevicePlanCodeDDwn, deviceplan.getDevicePlan());
+			selectByVisibleText(DevicePlanCodeDDwn, /*deviceplan.getDevicePlan()*/program.getDevicePlanProgram());
 		}
 	}
 
 	public void selectIssuerBIN() {
 		waitForElementVisible(IssuerBINDDwn);
-		if (MapUtils.fnGetInputDataFromMap("DMSIssuerBIN") != null) {
+		if (MapUtils.fnGetInputDataFromMap("DMSIssuerBIN") == "") {
 			selectByVisibleText(IssuerBINDDwn, MapUtils.fnGetInputDataFromMap("DMSIssuerBIN"));
-		} else if (MapUtils.fnGetInputDataFromMap("SMSIssuerBIN") != null) {
+		} else if (MapUtils.fnGetInputDataFromMap("SMSIssuerBIN") == "") {
 			selectByVisibleText(IssuerBINDDwn, MapUtils.fnGetInputDataFromMap("SMSIssuerBIN"));
 		}
+		IssuerBINDDwn.getSelect().selectByIndex(1);
 	}
 
 	public void selectBranch() {
@@ -193,7 +194,7 @@ public class DeviceRangePage extends AbstractBasePage {
 	}
 
 	public void enterFromDeviceNo() {
-		if (MapUtils.fnGetInputDataFromMap("FromDeviceNo") != null) {
+		if (MapUtils.fnGetInputDataFromMap("FromDeviceNo") == "") {
 			enterValueinTextBox(FromDeviceNumberTxt, MapUtils.fnGetInputDataFromMap("FromDeviceNo"));
 		} else {
 			i = Integer.valueOf(CustomUtils.randomNumbers(6)) + 1;
@@ -203,7 +204,7 @@ public class DeviceRangePage extends AbstractBasePage {
 	}
 
 	public void enterToDeviceNo() {
-		if (MapUtils.fnGetInputDataFromMap("ToDeviceNo") != null) {
+		if (MapUtils.fnGetInputDataFromMap("ToDeviceNo") == "") {
 			enterValueinTextBox(ToDeviceNumberTxt, MapUtils.fnGetInputDataFromMap("ToDeviceNo"));
 		} else {
 			enterValueinTextBox(ToDeviceNumberTxt, String.valueOf(i) + Constants.ToDevice);
@@ -259,10 +260,11 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	public void addDeviceRange(DeviceCreation devicecreation) {
 		selectProduct(devicecreation);
+		waitForWicket(getFinder().getWebDriver());
 		selectProgram();
 		selectDevicePlan();
 		selectIssuerBIN();
-		selectBranch();
+	    selectBranch();
 		clickAddButton();
 	}
 

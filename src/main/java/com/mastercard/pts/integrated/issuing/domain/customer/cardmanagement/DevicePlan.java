@@ -137,7 +137,6 @@ public class DevicePlan implements HasCodeAndDescription {
 	public String Validity;
 	public String Velocity;
 	public String embossiongVendor;
-	
 	private String replacementDeviceTechnology;
 	private String fillEMVPlan;
 	private String emvPlanResponse;
@@ -160,6 +159,7 @@ public class DevicePlan implements HasCodeAndDescription {
 
 	private String pinGenerationOption;
 	private String devicePlanCode;
+	private String devicePlanCode1;
 	private String associationType;
 	private String productType;
 	private String deviceType;
@@ -376,8 +376,6 @@ public class DevicePlan implements HasCodeAndDescription {
 
 		return plan;
 	}
-
-	
 	public String getTransSetPresentmentTimeLimit() {
 		return transSetPresentmentTimeLimit;
 	}
@@ -548,7 +546,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	public void setEmvPlanLcota(String emvPlanLcota) {
 		this.emvPlanLcota = emvPlanLcota;
 	}
-
+	
 	public String getEmvPlanApplicationBlock() {
 		return emvPlanApplicationBlock;
 	}
@@ -1167,6 +1165,14 @@ public String getActivationMode() {
 		DeliveryMode = deliveryMode;
 	}
 
+	public String getDevicePlanCode1() {
+		return devicePlanCode1;
+	}
+
+	public void setDevicePlanCode1(String devicePlanCode1) {
+		this.devicePlanCode1 = devicePlanCode1;
+	}
+
 	public String getValidity() {
 		return Validity;
 	}
@@ -1213,6 +1219,7 @@ public String getActivationMode() {
 		// DevicePlan deviceplan = new DevicePlan();
 		setDevicePlanCode(CustomUtils.randomNumbers(5));
 		setValidateonInitialMonths(CustomUtils.randomNumbers(2));
+		setDeviceType(MapUtils.fnGetInputDataFromMap("DeviceType"));
 		setServiceCode(MapUtils.fnGetInputDataFromMap("ServiceCode"));
 		setCustomCode(MapUtils.fnGetInputDataFromMap("CustomCode"));
 		setExpiryFlag(MapUtils.fnGetInputDataFromMap("ExpiryFlag"));

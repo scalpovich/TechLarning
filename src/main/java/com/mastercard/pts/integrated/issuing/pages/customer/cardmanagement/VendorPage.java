@@ -88,6 +88,8 @@ public class VendorPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
 	private MCWebElement CancelBtn;
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[@name='branchCode:input:dropdowncomponent']/option[2]")
+	private MCWebElement vendorValue;
 
 	public void clickaddVenor() {
 		clickWhenClickable(AddVendorBtn);
@@ -114,7 +116,8 @@ public class VendorPage extends AbstractBasePage {
 	}
 
 	public void selectBranchCode(Vendor vendor) {
-		selectByText(CategoryDDwn, vendor.getBranchCode());
+		BranchDDwn.getSelect().selectByIndex(1);
+		//vendor.setBranchCode(vendorValueinString());
 	}
 
 	public void selectDeviceProductionCheckBox() {
@@ -184,7 +187,7 @@ public class VendorPage extends AbstractBasePage {
 		vendorcode = enterVendorCode();
 		vendorName = enterVendorName();
 		selectVendorCategory(vendor);
-		// selectBranchCode(vendor);
+		selectBranchCode(vendor);
 		return vendorName + " " + "[" + vendorcode + "]";
 	}
 
@@ -203,9 +206,9 @@ public class VendorPage extends AbstractBasePage {
 
 	public void addressDetails(Vendor vendor) {
 		enterAddressLine1(vendor);
+		enterAddressLine2(vendor);
 		selectCountry(vendor);
 		enterPostalCode(vendor);
-		enterAddressLine2(vendor);
 	}
 
 	public void contactDetails(Vendor vendor) {
@@ -214,10 +217,16 @@ public class VendorPage extends AbstractBasePage {
 		selectMobileNumber(vendor);
 		enterMobileNumber();
 		enterEmail(vendor);
-	}
+	    //enterPostalCode(vendor);
+		}
 
 	public boolean verifyErrorsOnVendorPage() {
 		return publishErrorOnPage();
+	}
+	public String vendorValueinString() {
+		String[] a = vendorValue.getText().split("\\[");
+		String[] b = a[1].split("\\]");
+        return b[0];
 	}
 
 	public void verifyNewVendorSuccess() {

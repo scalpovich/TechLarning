@@ -30,7 +30,9 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_REPORTS, CardManagementNav.L2_BATCH_PROCESSING})
+		CardManagementNav.L1_OPERATION,
+		CardManagementNav.L2_PROCESSING_BATCHES,
+		CardManagementNav.L3PROCESS_BATCHES })
 
 public class BatchProcessingPage extends AbstractBasePage {
 
@@ -39,9 +41,7 @@ public class BatchProcessingPage extends AbstractBasePage {
 	@Autowired
 	QMRPDFUtility pdfUtil;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "componentPanel")
-	private MCWebElement selectReportDDwn;
-@PageElement(findBy = FindBy.NAME, valueToFind = "batchType:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "batchType:input:dropdowncomponent")
 	public MCWebElement batchTypeDDwn;
 	// ProcessingBatches
 
@@ -369,10 +369,10 @@ public class BatchProcessingPage extends AbstractBasePage {
 		verifySearchButton("Go");
 	}
 
-	@Override
+	/*@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
 				WebElementUtils.elementToBeClickable(selectReportDDwn)
 				);
-	}
+	}*/
 }

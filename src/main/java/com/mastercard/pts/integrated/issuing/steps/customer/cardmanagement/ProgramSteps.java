@@ -16,6 +16,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Prep
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StatementMessagePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.NewLoyaltyPlan;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramFlows;
 
 @Component
@@ -44,6 +45,8 @@ public class ProgramSteps {
 
 	@Autowired
 	ProgramFlows programflows;
+	@Autowired
+	NewLoyaltyPlan newLoyaltyPlan;
 
 	@When("user creates a $wallettype wallet Program for $interchange for product $product for program $programType")
 	public void whenUserCreatesAProgramForMastercardForProductPrepaidMultiWallet(@Named("wallettype") String walletType,
@@ -56,19 +59,22 @@ public class ProgramSteps {
 		program.setWalletType(walletType);
 		program.setWalletPlan1(walletplan.getOpenloopWalletPlan());
 		program.setWalletPlan2(walletplan.getClosedloopWalletPlan());
-		program.setDevicePlanProgram(deviceplan.getDevicePlan());
+		System.out.println("DevicePlan:"+deviceplan.getDevicePlan());
+		program.setDevicePlanProgram("DevicePlan" + " " + "["+ deviceplan.getDevicePlan() + "]");
 		String Program = "";
 		if (product.contains(ProductType.Prepaid) && programType.contains(ProgramType.CORPORATE_GIFT_CARD)
 				|| programType.contains(ProgramType.RETAIL_GENERAL_PURPOSE_CARD)
 				|| programType.contains(ProgramType.CORPORATE_GENERAL_PURPOSE_CARD)) {
-			Program = programflows.createprogramPrepaid(devicecreation, program);
+			Program = programflows.createprogramPrepaid(devicecreation, program,newLoyaltyPlan.getLoyaltyPlan());
+			sDNUncheckProgram(Program);
 		}
 
 		if (product.contains(ProductType.Prepaid)
 				&& programType.contains(ProgramType.CORPORATE_TRAVEL_SINGLECURRENCY_CARD)
 				|| programType.contains(ProgramType.RETAIL_TRAVEL_SINGLECURRENCY_CARD)
 				|| programType.contains(ProgramType.RETAIL_GIFT_CARD)) {
-			Program = programflows.createprogramPrepaid(devicecreation, program);
+			Program = programflows.createprogramPrepaid(devicecreation, program,newLoyaltyPlan.getLoyaltyPlan());
+			sDNUncheckProgram(Program);
 		}
 
 		if (product.contains(ProductType.Debit)) {
@@ -79,6 +85,7 @@ public class ProgramSteps {
 				&& programType.contains(ProgramType.CORPORATE_TRAVEL_MULTICURRENCY_CARD)
 				|| programType.contains(ProgramType.RETAIL_TRAVEL_MULTICURRENCY_CARD)) {
 			Program = programflows.createProgramPrepaidMultiCurrency(devicecreation, program);
+			sDNUncheckProgram(Program);
 		}
 		Assert.assertNotNull(Program);
 		program.setProgram(Program);
@@ -98,12 +105,12 @@ public class ProgramSteps {
 		if (product.contains("Prepaid") && programType.contains("Corporate Travel card - Single currency")
 				|| programType.contains("Retail Travel card - Single currency")
 				|| programType.contains("Corporate General Purpose")) {
-			Program = programflows.createprogramPrepaid(devicecreation, program);
+			Program = programflows.createprogramPrepaid(devicecreation, program,newLoyaltyPlan.getLoyaltyPlan());
 		}
 
 		if (product.contains("Prepaid") && programType.contains("Corporate Gift Card")
 				|| programType.contains("Retail General Purpose")) {
-			Program = programflows.createprogramPrepaid(devicecreation, program);
+			Program = programflows.createprogramPrepaid(devicecreation, program,newLoyaltyPlan.getLoyaltyPlan());
 		}
 
 		if (product.contains("Prepaid") && programType.contains("Corporate General Purpose - Multi Wallet")
@@ -121,7 +128,13 @@ public class ProgramSteps {
 		}
 		program.setProgramCode(Program);
 	}
+	public void sDNUncheckProgram(String value) {
+		String[] a = value.split("\\[");
+		String[] b = a[1].split("\\]");
 
+		programflows.programEdit(b[0]);
+		program.setProgramCode(b[0]);
+	}
 	@Then("Program should get created")
 	public void VerifyProgramSuccess() {
 		programflows.VerifyProgramSuccess();

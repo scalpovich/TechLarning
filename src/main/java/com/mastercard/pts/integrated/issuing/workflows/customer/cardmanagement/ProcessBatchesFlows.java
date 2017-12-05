@@ -24,7 +24,10 @@ public class ProcessBatchesFlows {
 			ProcessBatches processBatchesDomainPage) {
 		return processBatchesPage.verifyFileProcess(processBatchesDomainPage);
 	}
-
+	public boolean verifyFileProcessFlowsUpload(
+			ProcessBatches processBatchesDomainPage, String FileName) {
+		return processBatchesPage.verifyFileProcessUpload(processBatchesDomainPage, FileName);
+	}
 	public boolean verifyErrorMessageFlows(String errorType) {
 		return processBatchesPage.verifyErrorMessage(errorType);
 	}
