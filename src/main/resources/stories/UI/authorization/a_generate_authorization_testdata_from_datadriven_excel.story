@@ -8,12 +8,11 @@ I want to perform various transaction
 Meta:
 @StoryName generate_authorization_testdata_from_datadriven_excel
 
-Scenario: MSR_PURCHASE transaction
+Scenario: Test Data Generation
 
 When user performs generate TestData for an optimized <transaction> MAS transaction
 
 Examples:
 |transaction|
-|MDFS_MSR_PURCHASE_WITH_CASHBACK_PIN|
-|MDFS_MSR_PURCHASE_WITH_CASHBACK	|
-|MDFS_EMV_PURCHASE_WITH_CASHBACK_PIN|
+|MSR_PURCHASE|
+|MSR_POS_BALANCE_INQUIRY|
