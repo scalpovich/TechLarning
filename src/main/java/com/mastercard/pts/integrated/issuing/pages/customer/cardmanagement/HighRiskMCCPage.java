@@ -41,7 +41,7 @@ public class HighRiskMCCPage extends AbstractBasePage {
 
 	public void verifyUiOperationStatus() {
 		logger.info("High Risk MCC");
-		addHighRiskMCC();
+		//addHighRiskMCC();
 		verifyUiOperation("Add High Risk MCC");
 	}
 	

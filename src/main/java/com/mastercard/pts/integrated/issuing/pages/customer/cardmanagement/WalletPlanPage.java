@@ -118,12 +118,12 @@ public class WalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectCurrency(WalletPlan walletplan) {
-		selectByVisibleText(CurrencyDDwn, walletplan.getCurrency());
+		selectByVisibleText(CurrencyDDwn, walletplan.getCurrencyWalletPlan());
 	}
 
 	public void selectProduct(DeviceCreation deviceCreation) {
 		selectByVisibleText(ProductTypeDDwn, deviceCreation.getProduct());
-	}
+		}
 
 	public void selectProgramType(WalletPlan walletplan) {
 		selectByVisibleText(ProgrameTypeDDwn, walletplan.getProgramType());
@@ -205,6 +205,7 @@ public class WalletPlanPage extends AbstractBasePage {
 		waitForLoaderToDisappear();
 		selectProgramType(walletplan);
 		waitForPageToLoad(getFinder().getWebDriver());
+		//selectProduct(devicecreation);
 		selectWalletUsage(walletplan);
 		enterDummyAccountNumber();
 		enterReservedAmount();

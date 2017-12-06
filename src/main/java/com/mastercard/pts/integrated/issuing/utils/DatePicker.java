@@ -1,6 +1,5 @@
 package com.mastercard.pts.integrated.issuing.utils;
 
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
@@ -112,7 +111,6 @@ public class DatePicker extends AbstractBasePage {
 		// avaiableFromDatesCalendar.getElements();
 		elements.get(Integer.parseInt(value) - 1).click();
 	}
-
 	public void clickCalendarMonthYearOkBtn() {
 		clickWhenClickable(calendarOkayBtn);
 	}

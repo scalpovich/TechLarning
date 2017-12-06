@@ -74,9 +74,11 @@ public class ReadTestDataFromExcel {
 			for (int i = 1; i <= rowCount; i++) {
 				singleStoryTestData = new HashMap<String, String>();
 				Row row = excelSheet.getRow(i);
+				if(row!=null)
 				for (int j = 0; j < row.getLastCellNum(); j++) {
 					row.getCell(j).setCellType(Cell.CELL_TYPE_STRING);
-					if (!(row.getCell(j) == null || row.getCell(j).getStringCellValue().equals("")))
+					//logger.info("Value of cell index" +j+"Value of cell"+row.getCell(j).getStringCellValue());
+					if (!(row.getCell(j) == null && row.getCell(j).getStringCellValue().equals("")&& row.getCell(j).getStringCellValue().isEmpty()))
 						singleStoryTestData.put(strHeaders.get(j), row.getCell(j).getStringCellValue());
 				}
 
@@ -109,6 +111,67 @@ public class ReadTestDataFromExcel {
 
 		return entireTestData;
 	}
+	public HashMap<String, HashMap<String, String>> dataProviderFileUpload(
+			String testDataFileName, String strSheetName) {
+
+		entireTestData = new HashMap<String, HashMap<String, String>>();
+		HashMap<String, String> rowData = null;
+		List<String> strHeaders = new ArrayList<String>();
+		FileInputStream inputStream;
+		XSSFWorkbook excelWB = null;
+		Sheet excelSheet;
+
+		try {
+
+			inputStream = new FileInputStream(testDataFile(testDataFileName));
+			excelWB = new XSSFWorkbook(inputStream);
+			excelSheet = excelWB.getSheet(strSheetName);
+			int rowCount = excelSheet.getLastRowNum();
+			Row headerRow = excelSheet.getRow(0);
+
+			for (int j = 0; j < headerRow.getLastCellNum(); j++) {
+				strHeaders.add(j, headerRow.getCell(j).getStringCellValue());
+			}
+
+			for (int i = 1; i <= rowCount; i++) {
+				rowData = new HashMap<String, String>();
+				if (i == 8) {
+					Row row = excelSheet.getRow(i);
+					for (int j = 0; j < row.getLastCellNum(); j++) {
+						row.getCell(j).setCellType(Cell.CELL_TYPE_STRING);
+						if (row.getCell(j) != null
+								&& row.getCell(j).getStringCellValue() != null
+								&& !(row.getCell(j).getStringCellValue()
+										.isEmpty())) {
+
+							rowData.put(strHeaders.get(j), row.getCell(j)
+									.getStringCellValue());
+						}
+					}
+					MapUtils.fnAddValueToMap(entireTestData, row.getCell(0)
+							.getStringCellValue(), rowData);
+				}
+			}
+
+		} catch (FileNotFoundException e) {
+			logger.error("Test Data file not find", e);
+		} catch (IOException e) {
+
+			return null;
+		} catch (Exception e) {
+			return null;
+		} finally {
+			try {
+				if (excelWB != null) {
+					excelWB.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return entireTestData;
+	}
+
 
 	public HashMap<String, HashMap<String, String>> dataProvider(String testDataFileName, String strSheetName) {
 
@@ -136,7 +199,7 @@ public class ReadTestDataFromExcel {
 				Row row = excelSheet.getRow(i);
 				for (int j = 0; j < row.getLastCellNum(); j++) {
 					row.getCell(j).setCellType(Cell.CELL_TYPE_STRING);
-					if (!(row.getCell(j) == null || row.getCell(j).getStringCellValue().equals("")))
+					if (!(row.getCell(j) == null || row.getCell(j).getStringCellValue().equals(""))&& row.getCell(j).getStringCellValue() != null&& !(row.getCell(j).getStringCellValue().isEmpty()))
 						rowData.put(strHeaders.get(j), row.getCell(j).getStringCellValue());
 				}
 				MapUtils.fnAddValueToMap(entireTestData, row.getCell(0).getStringCellValue(), rowData);

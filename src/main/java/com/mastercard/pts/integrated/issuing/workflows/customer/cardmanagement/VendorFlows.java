@@ -30,6 +30,7 @@ public class VendorFlows extends MenuFlows {
 	}
 
 	public String createVendorWithEmbossingTemplate(Vendor vendor) {
+		cardManagementTabinView();
 		VendorPage vendorpage = navigator.navigateToPage(VendorPage.class);
 		vendorpage.clickaddVenor();
 		newVendor = vendorpage.addVendorDetails(vendor);

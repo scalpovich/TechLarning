@@ -67,7 +67,7 @@ public class Program implements HasCodeAndDescription {
 	private String currencyConversionBy;
 	private String walletPlanPlan1;
 	private String devicePlanPlan1;
-	private String otherPlanStatementMessagePlan;
+    private String otherPlanStatementMessagePlan;
 	private String otherPlanMarketingMessagePlan;
 	private String creditLimit;
 	private String maximumCreditLimit;
@@ -110,11 +110,11 @@ public class Program implements HasCodeAndDescription {
 	private String resetLimitsCashLimitReset;
 	private String resetLimitsAddonLimitReset;
 	private String eventsSelectAll;
-	public String loadsWithoutKyc;
-
-	public String Currency;
+	private String institute;
+    public String loadsWithoutKyc;
+		public String Currency;
 	public String Program;
-
+	
 	public String DevicePlanProgram;
 
 	public String WalletType;
@@ -186,8 +186,8 @@ public class Program implements HasCodeAndDescription {
 		return programObject;
 	}
 
-
-
+	
+   
 	public String getWalletPlan2() {
 		return WalletPlan2;
 	}
@@ -253,9 +253,11 @@ public class Program implements HasCodeAndDescription {
 		// Program program = new Program();
 		setRefundInCurrency("Program");
 		setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
+		setBaseCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
 		setCurrencyConversionBy(MapUtils.fnGetInputDataFromMap("CurrencyConversionBy"));
 		setMaxBalanceWithoutKYC(MapUtils.fnGetInputDataFromMap("MaximumBalancewithoutKYC"));
-		setLoadsWithoutKyc(MapUtils.fnGetInputDataFromMap("loadsWithoutKyc"));
+		setLoadsWithoutKyc(MapUtils.fnGetInputDataFromMap("LoadsWithoutKYC"));
+		setInstitute(MapUtils.fnGetInputDataFromMap("institute"));
 
 	}
 	public String getCalenderStartMonth() {
@@ -592,14 +594,6 @@ public class Program implements HasCodeAndDescription {
 		this.walletPlanPlan1 = walletPlanPlan1;
 	}
 
-	public String getDevicePlanPlan1() {
-		return devicePlanPlan1;
-	}
-
-	public void setDevicePlanPlan1(String devicePlanPlan1) {
-		this.devicePlanPlan1 = devicePlanPlan1;
-	}
-
 	public String getOtherPlanStatementMessagePlan() {
 		return otherPlanStatementMessagePlan;
 	}
@@ -721,6 +715,14 @@ public class Program implements HasCodeAndDescription {
 
 	public void setPrepaidStatementPlan(String prepaidStatementPlan) {
 		this.prepaidStatementPlan = prepaidStatementPlan;
+	}
+	
+	public String getInstitute() {
+		return institute;
+	}
+
+	public void setInstitute(String institute) {
+		this.institute = institute;
 	}
 
 	@Override

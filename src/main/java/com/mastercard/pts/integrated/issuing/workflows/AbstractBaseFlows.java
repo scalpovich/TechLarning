@@ -53,7 +53,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.NewDe
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.OfficePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PictureCodePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PlasticCodePage;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PreProductionBatch;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PreProductionBatchpage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PrepaidMessagePlanPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProgramPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.StatementMessagePlanPage;
@@ -221,7 +221,7 @@ public class AbstractBaseFlows extends AbstractBasePage {
 	public DeviceGenerationPage deviceGenerationPage;
 
 	@Autowired
-	public PreProductionBatch preProductionBatchPage;
+	public PreProductionBatchpage preProductionBatchPage;
 
 	@Autowired
 	public DeviceProductionPage deviceProductionPage;
