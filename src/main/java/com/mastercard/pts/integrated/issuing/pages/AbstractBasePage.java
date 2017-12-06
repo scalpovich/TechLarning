@@ -1280,26 +1280,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 		return isAnyErrorPresent;
 	}
-	public boolean selectByVisibleTextValidate(MCWebElement ele,
-			String optionName) {
-		String optionVisbleText = "";
-		waitUntilSelectOptionsPopulated(ele);
-		List<WebElement> selectedOptions = ele.getSelect().getOptions();
-		for (WebElement element : selectedOptions) {
-			if (element.getText().toUpperCase()
-					.contains(optionName.toUpperCase())) {
-				optionVisbleText = element.getText();
-				
-				break;
-			}
-		}
-		ele.getSelect().selectByVisibleText(optionVisbleText);
-
-		// waitForWicket(driver());
-		waitForLoaderToDisappear();
-		waitForPageToLoad(driver());
-		return false;
-	}
 	public String getTextFromPage(MCWebElement element){
 		return element.getText();
 	}

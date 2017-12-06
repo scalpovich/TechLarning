@@ -88,9 +88,6 @@ public class VendorPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
 	private MCWebElement CancelBtn;
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[@name='branchCode:input:dropdowncomponent']/option[2]")
-	private MCWebElement vendorValue;
-
 	public void clickaddVenor() {
 		clickWhenClickable(AddVendorBtn);
 		switchToAddVenorFrame();

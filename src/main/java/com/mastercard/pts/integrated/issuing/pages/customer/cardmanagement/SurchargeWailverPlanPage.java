@@ -30,13 +30,6 @@ public class SurchargeWailverPlanPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(SurchargeWailverPlanPage.class);
-
-	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=waiverPlanCode]")
-	private MCWebElement waiverPlanCode;
-
-	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=description]")
-	private MCWebElement description;
-
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[@class='addR']")
 	private MCWebElement addButton;
 
@@ -307,7 +300,7 @@ public class SurchargeWailverPlanPage extends AbstractBasePage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(waiverPlanCode),
-				WebElementUtils.elementToBeClickable(description));
+				WebElementUtils.elementToBeClickable(surchargeWaiverPlanCodeTxt),
+				WebElementUtils.elementToBeClickable(surchargeWaiverPlandescriptionTxt));
 	}
 }

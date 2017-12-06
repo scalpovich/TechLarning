@@ -649,7 +649,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		selectCardPackGenerationTemplate();
 		waitForLoaderToDisappear();
 		waitForPageToLoad(getFinder().getWebDriver());
-		//enterCustomCode(deviceplan);
+		enterCustomCode(deviceplan);
 		selectPlasticId();
 		waitForPageToLoad(getFinder().getWebDriver());
 		selectPictureCode();

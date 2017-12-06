@@ -27,6 +27,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -491,8 +492,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		return dateFromUI;
 	}
 	public boolean verifyFileProcessUpload(ProcessBatches processBatchesDomain,
-			String FileName) {
-		FileCreation.filenameStatic = FileName;
+			String fileName) {
+		FileCreation.filenameStatic = fileName;
 		String elementXpath = String.format("//span[contains(text(),'%s')]",
 				FileCreation.filenameStatic);
 		Boolean isProcessed = false;
@@ -540,8 +541,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			}
 		}
 		processBatchesDomain.setJoBID(processBatchjobIDTxt.getText());
-		System.out.println("JobID=" + processBatchesDomain.getJoBID());
-		ClickButton(closeBtn);
+		MiscUtils.reportToConsole("JobID: {}", processBatchesDomain.getJoBID());
+	    ClickButton(closeBtn);
 		waitForPageToLoad(getFinder().getWebDriver());
 		//CustomUtils.ThreadDotSleep(5000);
 		getFinder().getWebDriver().switchTo().defaultContent();

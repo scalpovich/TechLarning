@@ -24,16 +24,14 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 	public class PreProductionBatchPage extends AbstractBasePage{
 	
 	private static final Logger logger = LoggerFactory.getLogger(PreProductionBatchPage.class);
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
-	private MCWebElement ProductTypeDDwn;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value = 'Search'][@type = 'submit']")
-	private MCWebElement SearchBtn;
+	private MCWebElement searchBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "productionPanel:BasicDataTable:datatable:body:rows:1:cells:8:cell:columnCheckBox")
-	private MCWebElement PreProductionBatchRecordChkBx;
+	private MCWebElement preProductionBatchRecordChkBx;
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value ='Process Selected'][@type= 'submit']")
-	private MCWebElement ProcessSelectedBtn;
+	private MCWebElement processSelectedBtn;
 
 	  @PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	  private MCWebElement productTypeDDwn;
@@ -60,18 +58,18 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 	  public void processPreProductionBatch1(PreProductionBatch batch) {
 
 			waitForLoaderToDisappear();
-            SelectDropDownByText(ProductTypeDDwn, batch.getProductType());
+            SelectDropDownByText(productTypeDDwn, batch.getProductType());
 			waitUntilIsLoaded();
 			logger.info(batch.getJobID());
 			enterText(sourceJobIdTxt, batch.getJobID());
-			ClickButton(SearchBtn);
+			ClickButton(searchBtn);
 			String batchNumberWebElement = "//table[@class='dataview']//tbody/tr/td[3]/span";
 			String batchNumber = getFinder().getWebDriver().findElement(By.xpath(batchNumberWebElement)).getText().trim();
-			logger.info("BatchNumber:" + batchNumber);
+			logger.info("BatchNumber - {} ", batchNumber);
 			batch.setBatchNumber(batchNumber);
-			ClickButton(SearchBtn);
-			ClickCheckBox(PreProductionBatchRecordChkBx, true);
-			ClickButton(ProcessSelectedBtn);
+			ClickButton(searchBtn);
+			ClickCheckBox(preProductionBatchRecordChkBx, true);
+			ClickButton(processSelectedBtn);
 			verifyOperationStatus();
 			SwitchToDefaultFrame();
 

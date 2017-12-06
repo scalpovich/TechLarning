@@ -24,7 +24,7 @@ public class HighRiskMerchantLocationPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(HighRiskMerchantLocationPage.class);
 	
-	public static final String TEXT = "123";
+	public static final String TEXT = "123"+CustomUtils.randomAlphaNumeric(2);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=acquirerId]")
 	private MCWebElement acquirerId;
@@ -60,12 +60,12 @@ public class HighRiskMerchantLocationPage extends AbstractBasePage {
 	}
 
 	private void addNewHighRiskMerchantLocation() {
-		WebElementUtils.enterText(acquirerId, TEXT+CustomUtils.randomAlphaNumeric(2));
-		WebElementUtils.enterText(merchantId, TEXT+CustomUtils.randomAlphaNumeric(2));
-		WebElementUtils.enterText(merchantLocationDescription, TEXT+CustomUtils.randomAlphaNumeric(2));
-		WebElementUtils.enterText(merchantLocationId, TEXT+CustomUtils.randomAlphaNumeric(2));
+		WebElementUtils.enterText(acquirerId, TEXT);
+		WebElementUtils.enterText(merchantId, TEXT);
+		WebElementUtils.enterText(merchantLocationDescription, TEXT);
+		WebElementUtils.enterText(merchantLocationId, TEXT);
 		WebElementUtils.pickDate(effectiveDateDPkr, futureDate);
-		WebElementUtils.pickDate(endDateDPkr, futureDate);
+		WebElementUtils.pickDate(endDateDPkr, futureEndDate);
 		clickSaveButton();
 	}
 

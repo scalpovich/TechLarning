@@ -158,7 +158,7 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	public void selectProgram() {
 		waitForElementVisible(ProgramDDwn);
-		if (MapUtils.fnGetInputDataFromMap("Program") != null && !MapUtils.fnGetInputDataFromMap("Program").isEmpty()) {
+		if (!MapUtils.fnGetInputDataFromMap("Program").isEmpty()) {
 			selectByVisibleText(ProgramDDwn, MapUtils.fnGetInputDataFromMap("Program"));
 		} else {
 			selectByVisibleText(ProgramDDwn, program.getProgram());
@@ -168,7 +168,7 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	public void selectDevicePlan() {
 		waitForElementVisible(DevicePlanCodeDDwn);
-		if (MapUtils.fnGetInputDataFromMap("DevicePlan") != null && !MapUtils.fnGetInputDataFromMap("DevicePlan").isEmpty() ) {
+		if (!MapUtils.fnGetInputDataFromMap("DevicePlan").isEmpty() ) {
 			selectByVisibleText(DevicePlanCodeDDwn, MapUtils.fnGetInputDataFromMap("DevicePlan"));
 		} else {
 			selectByVisibleText(DevicePlanCodeDDwn, /*deviceplan.getDevicePlan()*/program.getDevicePlanProgram());
@@ -177,9 +177,9 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	public void selectIssuerBIN() {
 		waitForElementVisible(IssuerBINDDwn);
-		if (MapUtils.fnGetInputDataFromMap("DMSIssuerBIN") == "") {
+		if (!MapUtils.fnGetInputDataFromMap("DMSIssuerBIN").isEmpty()) {
 			selectByVisibleText(IssuerBINDDwn, MapUtils.fnGetInputDataFromMap("DMSIssuerBIN"));
-		} else if (MapUtils.fnGetInputDataFromMap("SMSIssuerBIN") == "") {
+		} else if (!MapUtils.fnGetInputDataFromMap("SMSIssuerBIN").isEmpty()) {
 			selectByVisibleText(IssuerBINDDwn, MapUtils.fnGetInputDataFromMap("SMSIssuerBIN"));
 		}
 		IssuerBINDDwn.getSelect().selectByIndex(1);
@@ -194,7 +194,7 @@ public class DeviceRangePage extends AbstractBasePage {
 	}
 
 	public void enterFromDeviceNo() {
-		if (MapUtils.fnGetInputDataFromMap("FromDeviceNo") == "") {
+		if (!MapUtils.fnGetInputDataFromMap("FromDeviceNo").isEmpty()) {
 			enterValueinTextBox(FromDeviceNumberTxt, MapUtils.fnGetInputDataFromMap("FromDeviceNo"));
 		} else {
 			i = Integer.valueOf(CustomUtils.randomNumbers(6)) + 1;
@@ -204,7 +204,7 @@ public class DeviceRangePage extends AbstractBasePage {
 	}
 
 	public void enterToDeviceNo() {
-		if (MapUtils.fnGetInputDataFromMap("ToDeviceNo") == "") {
+		if (!MapUtils.fnGetInputDataFromMap("ToDeviceNo").isEmpty()) {
 			enterValueinTextBox(ToDeviceNumberTxt, MapUtils.fnGetInputDataFromMap("ToDeviceNo"));
 		} else {
 			enterValueinTextBox(ToDeviceNumberTxt, String.valueOf(i) + Constants.ToDevice);
