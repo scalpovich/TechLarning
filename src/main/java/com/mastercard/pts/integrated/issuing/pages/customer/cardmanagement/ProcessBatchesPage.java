@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Throwables;
+import com.mastercard.pts.integrated.issuing.domain.BatchType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -148,12 +149,42 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='recRejectCnt']/span/span")
 	private MCWebElements rejectedCountTxt;
+	
+	public void selectBatchType(String option) {
+		selectByVisibleText(batchTypeDDwn, option);
+	}
 
+	public void selectBatchName(String option) {
+		selectByVisibleText(batchNameDDwn, option);
+	}
+	public void clickSubmitBtn() {
+		clickWhenClickable(submitBtn);
+	}
+	
+	public static final String FILE_CHK_BOX = "//span[.='%s']/following::input[1]";
+	public static final String JOB_ID = "//span[.='%s']/following::span[1]";
+	public static final String JOB_STATUS = "//span[.='%s']/following::a[1]";
+	public String retrieveJobID(String fileName) {
+		return Element(JOB_ID.replace("%s", fileName)).getText();
+	}
+	public void checkFileCheckBox(String filename) {
+		waitForElementVisible(submitBtn);
+		waitForElementVisible(Element(FILE_CHK_BOX.replace("%s", filename)));
+		clickWhenWebElementClickable(Element(FILE_CHK_BOX.replace("%s", filename)));
+	}
+
+	public void checkAndSumbitFile(String fileName) {
+		checkFileCheckBox(fileName);
+		clickSubmitBtn();
+	}
 	private By tracesDescription = By
 			.xpath("//table[@class='modelFormClass']//table[@class='dataview']//tr//child::td[position()=4]");
 
 	private List<String> errorDescription = new ArrayList<String>();
-
+	public void processUploadBatch(String batchName) {
+		selectBatchType(BatchType.UPLOAD);
+		selectBatchName(batchName);
+	}
 	public void processBatch(String uploadedFileName,
 			ProcessBatches processBatchesDomain) {
 		String elementXpath = String.format("//span[contains(text(),'%s')]",

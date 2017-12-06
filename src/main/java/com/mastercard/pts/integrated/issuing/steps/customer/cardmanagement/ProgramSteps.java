@@ -59,7 +59,6 @@ public class ProgramSteps {
 		program.setWalletType(walletType);
 		program.setWalletPlan1(walletplan.getOpenloopWalletPlan());
 		program.setWalletPlan2(walletplan.getClosedloopWalletPlan());
-		System.out.println("DevicePlan:"+deviceplan.getDevicePlan());
 		program.setDevicePlanProgram("DevicePlan" + " " + "["+ deviceplan.getDevicePlan() + "]");
 		String Program = "";
 		if (product.contains(ProductType.Prepaid) && programType.contains(ProgramType.CORPORATE_GIFT_CARD)

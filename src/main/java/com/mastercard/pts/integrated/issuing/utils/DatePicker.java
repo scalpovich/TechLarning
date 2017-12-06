@@ -111,7 +111,6 @@ public class DatePicker extends AbstractBasePage {
 		// avaiableFromDatesCalendar.getElements();
 		elements.get(Integer.parseInt(value) - 1).click();
 	}
-	
 	public void clickCalendarMonthYearOkBtn() {
 		clickWhenClickable(calendarOkayBtn);
 	}

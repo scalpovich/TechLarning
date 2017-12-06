@@ -33,13 +33,6 @@ public class BatchProcessFlows extends MenuFlows{
 	
 	final Logger loggers = LoggerFactory.getLogger(this.getClass());
 
-	public String processUploadBatches(String batchName, String fileName) {
-		processBatch = navigator.navigateToPage(BatchProcessingPage.class);
-		processBatch.processUploadBatch(batchName);
-		processBatch.checkAndSumbitFile(fileName);
-		return processBatch.retrieveJobID(fileName);
-	}
-
 	public void processDownloadloadBatches(String batchName) {
 		processBatch = navigator.navigateToPage(BatchProcessingPage.class);
 		processBatch.processDownloadBatch(batchName);

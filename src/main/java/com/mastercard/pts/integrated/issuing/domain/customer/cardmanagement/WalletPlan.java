@@ -321,11 +321,9 @@ public class WalletPlan implements HasCodeAndDescription {
 		WalletPlanUsage = walletPlanUsage;
 	}
 
-	public void /*WalletPlan*/ walletplanDataprovider() {
-		//WalletPlan walletplan = new WalletPlan();
-		/*walletplan.*/setCurrencyWalletPlan(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
-		/*walletplan.*/setWalletPlanUsage(MapUtils.fnGetInputDataFromMap("WalletplanUsage"));
-		//return walletplan;
+	public void  walletplanDataprovider() {
+	setCurrencyWalletPlan(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
+	setWalletPlanUsage(MapUtils.fnGetInputDataFromMap("WalletplanUsage"));
 	}
 
 	

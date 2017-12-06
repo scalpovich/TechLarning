@@ -22,8 +22,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.DataLoader;
 @Component
 public class TestHooks {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(TestHooks.class);
+	private static final Logger logger = LoggerFactory.getLogger(TestHooks.class);
 
 	@Autowired
 	private TestContext testContext;

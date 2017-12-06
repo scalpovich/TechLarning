@@ -27,8 +27,11 @@ public class LoginPage extends AbstractBasePage  {
 	final Logger llogger = LoggerFactory.getLogger(LoginPage.class);
 	public static final String AUTHENTIFICATION_FAILED_COLLECT = "Authentication failed. "
 			+ "You have used an invalid user name, password or client certificate."; 
+	
 	public static final String AUTHENTIFICATION_FAILED_CARDHOLDER = "LOGON FAILED- Invalid User ID";
 	public static final String AUTHENTIFICATION_FAILED = "Invalid UserId/Password.";
+	
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[type='text']")
 	private MCWebElement userIdInput;
 	

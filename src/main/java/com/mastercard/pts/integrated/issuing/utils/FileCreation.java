@@ -454,7 +454,7 @@ public class FileCreation {
 		String remoteDir = Constants.APPLICATION_UPLOAD_PREPAID_FILE_PATH;
 		applicationUploadMap = dataReader.dataProviderFileUpload(
 				"AllUploadTestData", "Prepaid Card File");
-		System.out.println("applicationUploadMap" + applicationUploadMap);
+		logger.info("applicationUploadMap" + applicationUploadMap);
 		try (PrintWriter writer = new PrintWriter(file)) {
 			writer.println("HD|" + INSTITUTION_CODE + "|"
 					+ DateUtils.getDateTimeDDMMYYYYHHMMSS() + "|" + "2.0");

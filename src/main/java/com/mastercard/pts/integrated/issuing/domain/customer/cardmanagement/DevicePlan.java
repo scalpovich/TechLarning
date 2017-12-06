@@ -159,7 +159,6 @@ public class DevicePlan implements HasCodeAndDescription {
 
 	private String pinGenerationOption;
 	private String devicePlanCode;
-	private String devicePlanCode1;
 	private String associationType;
 	private String productType;
 	private String deviceType;
@@ -1160,17 +1159,8 @@ public String getActivationMode() {
 	public String getDeliveryMode() {
 		return DeliveryMode;
 	}
-
-	public void setDeliveryMode(String deliveryMode) {
+    public void setDeliveryMode(String deliveryMode) {
 		DeliveryMode = deliveryMode;
-	}
-
-	public String getDevicePlanCode1() {
-		return devicePlanCode1;
-	}
-
-	public void setDevicePlanCode1(String devicePlanCode1) {
-		this.devicePlanCode1 = devicePlanCode1;
 	}
 
 	public String getValidity() {

@@ -41,15 +41,6 @@ public class CustomerUiVerificationSteps {
 	@Autowired
 	private LoginWorkflow loginWorkflow;
 	
-	@Autowired
-	private SurchargeWailverPlanPage surchargeWailverPlanPage;
-	
-	@Autowired
-	private SurchargeWailverPlan surchargeWailverPlan;
-	
-	@Autowired
-	DatePicker datePicker;
-
 	@Then("AccountFile page of card management tab is rendered correctly")
 	public void thenAccountFilePageOfCardManagementTabIsRenderedCorrectly() {
 		uiVerificationCardManagementWorkflow.verifyAccountFilePage();
@@ -1370,20 +1361,6 @@ public class CustomerUiVerificationSteps {
 	public void thenDeviceStatusPageOfCardManagementTabIsRenderedCorrectly() {
 		uiVerificationCardManagementWorkflow.verifyDeviceStatusPage();
 	}
-	@Then("SurchargeWaiverPlan of card management tab has proper field validation")
-	public void thenSurchargeWaiverPlanOfCardManagementTabHasProperValidation() {
-		surchargeWailverPlan.surchargeWaiverFeePlanDataProvider();
-	uiVerificationCardManagementWorkflow.verifyValidSurchargeWaiverPlanCode(surchargeWailverPlan,datePicker);
-		
-	}
-	@Then("SurchargeWaiverPlan of card management tab has proper field validation for Invalid scenario")
-	public void thenSurchargeWaiverPlanOfCardManagementTabHasProperValidation_Invalid() {
-		surchargeWailverPlan.surchargeWaiverFeePlanDataProvider();
-	uiVerificationCardManagementWorkflow.verifyInvalidSurchargeWaiverPlanCode(surchargeWailverPlan);
-		
-	}
-	
-
 	@Then("user signs out from customer portal")
 	public void signOutFromPortal() {
 		loginWorkflow.signOutCustomer();

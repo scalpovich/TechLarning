@@ -1,7 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Collection;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -73,15 +72,12 @@ public class DeviceProductionPage extends AbstractBasePage {
 		logger.info("Device-Production Batch: {}", batch.getBatchNumber());
 		WebElementUtils.enterText(BatchNumberTxt, batch.getBatchNumber());
 		ClickButton(SearchBtn);
-		CustomUtils.ThreadDotSleep(5000);
 		if (DeviceProductionBatchRecordChkBx.isVisible()) {
 			ClickCheckBox(DeviceProductionBatchRecordChkBx, true);
 		} else {
 			ClickButton(SearchBtn);
-			CustomUtils.ThreadDotSleep(10000);
-		}
+			}
 		ClickButton(ProcessSelectedBtn);
-		CustomUtils.ThreadDotSleep(5000);
 		verifyOperationStatus();
 
 	}

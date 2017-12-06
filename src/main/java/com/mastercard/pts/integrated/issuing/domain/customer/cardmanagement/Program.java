@@ -59,7 +59,6 @@ public class Program implements HasCodeAndDescription {
 	private String refundInCurrency;
 	private String description;
 	private String programCode;
-	private String programCode1;
 	private String interchange;
 	private String product;
 	private String programType;
@@ -67,6 +66,7 @@ public class Program implements HasCodeAndDescription {
 	private String calendarStartMonth;
 	private String currencyConversionBy;
 	private String walletPlanPlan1;
+	private String devicePlanPlan1;
     private String otherPlanStatementMessagePlan;
 	private String otherPlanMarketingMessagePlan;
 	private String creditLimit;
@@ -77,7 +77,6 @@ public class Program implements HasCodeAndDescription {
 	private String cashLimitReset;
 	private String addOnLimitReset;
 	private String maximumBalanceWithoutKyc;
-	private String maximumBalanceWithoutKyc1;
 	private String numberOfLoadsAllowedWithoutKyc;
 	private String dedupPlan;
 	private String documentChecklistPlan;
@@ -113,9 +112,7 @@ public class Program implements HasCodeAndDescription {
 	private String eventsSelectAll;
 	private String institute;
     public String loadsWithoutKyc;
-	
-
-	public String Currency;
+		public String Currency;
 	public String Program;
 	
 	public String DevicePlanProgram;
@@ -189,14 +186,9 @@ public class Program implements HasCodeAndDescription {
 		return programObject;
 	}
 
-	public String getProgramCode1() {
-		return programCode1;
-	}
-
-	public void setProgramCode1(String programCode1) {
-		this.programCode1 = programCode1;
-	}
-    public String getWalletPlan2() {
+	
+   
+	public String getWalletPlan2() {
 		return WalletPlan2;
 	}
 

@@ -48,7 +48,7 @@ public class ApplicationUploadSteps {
 	@When("user creates $application_upload_file batch file and uploads it on server for $customerType")
 	public void createFileForApplicationUpload(@Named("application_upload_file") String batchName,@Named("customerType") String customerType){	
 		 String fileName=fileCreation.createApplicationUploadFile(program.getInstitute(),customerType);
-		processBatch.setJoBID(batchProcessingFlows.processUploadBatches(batchName, fileName));
+		processBatch.setJoBID(processBatchesFlows.processUploadBatches(batchName, fileName));
 			//CustomUtils.ThreadDotSleep(8000);
 		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(processBatch, fileName));
 	}

@@ -11,14 +11,6 @@ public class PreProductionBatch {
 
 	private String jobID;
 
-	public String getJobID() {
-		return jobID;
-	}
-
-	public void setJobID(String jobID) {
-		this.jobID = jobID;
-	}
-
 	public String getProductType() {
 		return productType;
 	}
@@ -33,6 +25,14 @@ public class PreProductionBatch {
 
 	public void setBatchNumber(String batchNumber) {
 		this.batchNumber = batchNumber;
+	}
+
+	public String getJobID() {
+		return jobID;
+	}
+
+	public void setJobID(String jobID) {
+		this.jobID = jobID;
 	}
 
 }

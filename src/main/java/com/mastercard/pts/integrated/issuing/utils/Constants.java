@@ -14,8 +14,7 @@ public class Constants {
 	public static final String Record_SAVED_Successfully = "Records saved successfully.";
 
 	public static final String Record_Cannot_Be_deleted = "Plan is attached to Device Range. Cannot delete record";
-
-	public static final String ADD_USER = "Add User";
+    public static final String ADD_USER = "Add User";
 	public static final String ADD_LOYALTY_PROMOTION_MAPPING = "Add Loyalty Plan & Promotion Mapping";
 	public static final String EDIT_PROGRAM_FRAME = "Edit Program";
 	public static String BATCH_NAME = "Device Production";

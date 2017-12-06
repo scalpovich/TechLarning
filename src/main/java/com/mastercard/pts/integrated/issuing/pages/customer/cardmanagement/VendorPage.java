@@ -114,10 +114,8 @@ public class VendorPage extends AbstractBasePage {
 	public void selectVendorCategory(Vendor vendor) {
 		selectByVisibleText(CategoryDDwn, vendor.getVendorCategory());
 	}
-
-	public void selectBranchCode(Vendor vendor) {
+    public void selectBranchCode(Vendor vendor) {
 		BranchDDwn.getSelect().selectByIndex(1);
-		//vendor.setBranchCode(vendorValueinString());
 	}
 
 	public void selectDeviceProductionCheckBox() {
@@ -219,16 +217,9 @@ public class VendorPage extends AbstractBasePage {
 		enterEmail(vendor);
 	    //enterPostalCode(vendor);
 		}
-
-	public boolean verifyErrorsOnVendorPage() {
+    public boolean verifyErrorsOnVendorPage() {
 		return publishErrorOnPage();
 	}
-	public String vendorValueinString() {
-		String[] a = vendorValue.getText().split("\\[");
-		String[] b = a[1].split("\\]");
-        return b[0];
-	}
-
 	public void verifyNewVendorSuccess() {
 		if (!verifyErrorsOnVendorPage()) {
 			logger.info("Vendor Added Successfully");
