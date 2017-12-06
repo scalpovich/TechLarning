@@ -9,13 +9,27 @@ Meta:
 @StoryName S196301
 @SanityCards
 
-Scenario: Transactions upload and processing for prepaid emv retail gift card
+Scenario: Set up prepaid emv retail gift card
 Meta:
 @TestId TC408598
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
-And user performs adjustment transaction
-And user creates and uploads transaction file
+Then device has "normal" status
+
+Scenario: prepaid emv retail prepaid card device production
+Meta:
+@TestId 
+Given user is logged in institution
+And a new device was created
+When processes pre-production batch for debit
+When processes device production batch for debit
+Then device has "normal" status
+
+Scenario: prepaid emv adjustment and file upload transaction
+Meta:
+@TestId 
+Given user is logged in institution
+When user creates and uploads transaction file
 And user processes upload batch for prepaid
 Then in batch trace history transaction is successful using job id
