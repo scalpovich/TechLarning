@@ -264,6 +264,7 @@ public class AbstractBaseFlows extends AbstractBasePage {
 	public void selectInstitute() {
 		institutionSelectionPage.selectInstitution(MapUtils
 				.fnGetInputDataFromMap("InstitutionName"));
+		institutionSelectionPage.clickConfirm();
 	}
 
 	public void loginAsAdmin() {
