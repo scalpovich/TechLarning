@@ -42,8 +42,7 @@ public class HelpDeskFlows extends AbstractBasePage {
 	}
 
 	public void searchForDevice(HelpDeskGeneral helpdeskgettersetter) {
-		searchpanelhelpdesk.searchDevice(helpdeskgettersetter.getProductType(),
-				helpdeskgettersetter.getDeviceNumber());
+		searchpanelhelpdesk.searchDevice(helpdeskgettersetter.getProductType(),helpdeskgettersetter.getDeviceNumber());
 		searchpanelhelpdesk.clickEditBtn();
 	}
 
@@ -144,5 +143,13 @@ public class HelpDeskFlows extends AbstractBasePage {
 			logger.info("Multiple wallets added succesfully");
 		}
 		generalPage.endCall();
+	}
+	public String searchForDevicePrepaid(HelpDeskGeneral helpdeskgettersetter) {
+        cardManagementTabinView();
+		generalPage = navigator.navigateToPage(GeneralPage.class);
+        String status=searchpanelhelpdesk.searchDeviceUsingName(helpdeskgettersetter.getProductType(),helpdeskgettersetter.getFirstName());
+		searchpanelhelpdesk.clickSearchBtn();
+		return status;
+		/* searchpanelhelpdesk.clickEditBtn(); */
 	}
 }

@@ -2,7 +2,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.Collection;
-
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -24,6 +24,14 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 	public class PreProductionBatchPage extends AbstractBasePage{
 	
 	private static final Logger logger = LoggerFactory.getLogger(PreProductionBatchPage.class);
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value = 'Search'][@type = 'submit']")
+	private MCWebElement searchBtn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "productionPanel:BasicDataTable:datatable:body:rows:1:cells:8:cell:columnCheckBox")
+	private MCWebElement preProductionBatchRecordChkBx;
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value ='Process Selected'][@type= 'submit']")
+	private MCWebElement processSelectedBtn;
 
 	  @PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	  private MCWebElement productTypeDDwn;
@@ -47,7 +55,25 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		  verifyOperationStatus();
 	  }
 
+	  public void processPreProductionBatch1(PreProductionBatch batch) {
 
+			waitForLoaderToDisappear();
+            SelectDropDownByText(productTypeDDwn, batch.getProductType());
+			waitUntilIsLoaded();
+			logger.info(batch.getJobID());
+			enterText(sourceJobIdTxt, batch.getJobID());
+			ClickButton(searchBtn);
+			String batchNumberWebElement = "//table[@class='dataview']//tbody/tr/td[3]/span";
+			String batchNumber = getFinder().getWebDriver().findElement(By.xpath(batchNumberWebElement)).getText().trim();
+			logger.info("BatchNumber - {} ", batchNumber);
+			batch.setBatchNumber(batchNumber);
+			ClickButton(searchBtn);
+			ClickCheckBox(preProductionBatchRecordChkBx, true);
+			ClickButton(processSelectedBtn);
+			verifyOperationStatus();
+			SwitchToDefaultFrame();
+
+		}
 	public void verifyUiOperationStatus() {
 		logger.info("Pre-Prodcution Batch");
 		verifySearchButton("Search");

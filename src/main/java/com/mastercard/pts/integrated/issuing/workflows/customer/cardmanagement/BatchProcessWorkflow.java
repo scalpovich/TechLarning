@@ -18,9 +18,10 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PinGe
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PreProductionBatchPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.workflows.MenuFlows;
 
 @Workflow
-public class BatchProcessWorkflow {
+public class BatchProcessWorkflow extends MenuFlows{
 
 	@Autowired
 	private Navigator navigator;
@@ -34,13 +35,14 @@ public class BatchProcessWorkflow {
 		BulkDeviceGenerationBatchPage page = navigator.navigateToPage(BulkDeviceGenerationBatchPage.class);
 		page.processBulkDeviceGenerationBatch(batch);
 	}
-
-	public void processPreProductionBatch(PreProductionBatch batch){	
+    public void processPreProductionBatch(PreProductionBatch batch){
+		cardManagementTabinView();
 		PreProductionBatchPage page = navigator.navigateToPage(PreProductionBatchPage.class);
-		page.processPreProductionBatch(batch);
+		page.processPreProductionBatch1(batch);
 	}
 
-	public void processDeviceProductionBatch(DeviceProductionBatch batch){	
+	public void processDeviceProductionBatch(DeviceProductionBatch batch){
+        cardManagementTabinView();
 		DeviceProductionBatchPage page = navigator.navigateToPage(DeviceProductionBatchPage.class);
 		page.processDeviceProductionBatch(batch);
 	}

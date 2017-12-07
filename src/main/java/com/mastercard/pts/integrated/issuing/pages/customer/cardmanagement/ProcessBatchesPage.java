@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Throwables;
+import com.mastercard.pts.integrated.issuing.domain.BatchType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -26,6 +27,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -148,12 +150,42 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='recRejectCnt']/span/span")
 	private MCWebElements rejectedCountTxt;
+	
+	public void selectBatchType(String option) {
+		selectByVisibleText(batchTypeDDwn, option);
+	}
 
+	public void selectBatchName(String option) {
+		selectByVisibleText(batchNameDDwn, option);
+	}
+	public void clickSubmitBtn() {
+		clickWhenClickable(submitBtn);
+	}
+	
+	public static final String FILE_CHK_BOX = "//span[.='%s']/following::input[1]";
+	public static final String JOB_ID = "//span[.='%s']/following::span[1]";
+	public static final String JOB_STATUS = "//span[.='%s']/following::a[1]";
+	public String retrieveJobID(String fileName) {
+		return Element(JOB_ID.replace("%s", fileName)).getText();
+	}
+	public void checkFileCheckBox(String filename) {
+		waitForElementVisible(submitBtn);
+		waitForElementVisible(Element(FILE_CHK_BOX.replace("%s", filename)));
+		clickWhenWebElementClickable(Element(FILE_CHK_BOX.replace("%s", filename)));
+	}
+
+	public void checkAndSumbitFile(String fileName) {
+		checkFileCheckBox(fileName);
+		clickSubmitBtn();
+	}
 	private By tracesDescription = By
 			.xpath("//table[@class='modelFormClass']//table[@class='dataview']//tr//child::td[position()=4]");
 
 	private List<String> errorDescription = new ArrayList<String>();
-
+	public void processUploadBatch(String batchName) {
+		selectBatchType(BatchType.UPLOAD);
+		selectBatchName(batchName);
+	}
 	public void processBatch(String uploadedFileName,
 			ProcessBatches processBatchesDomain) {
 		String elementXpath = String.format("//span[contains(text(),'%s')]",
@@ -459,5 +491,66 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		}
 		return dateFromUI;
 	}
+	public boolean verifyFileProcessUpload(ProcessBatches processBatchesDomain,
+			String fileName) {
+		FileCreation.filenameStatic = fileName;
+		String elementXpath = String.format("//span[contains(text(),'%s')]",
+				FileCreation.filenameStatic);
+		Boolean isProcessed = false;
+		String statusXpath = elementXpath
+				+ "//parent::td//following-sibling::td/a";
+		CustomUtils.ThreadDotSleep(20000);
+		getFinder().getWebDriver().findElement(By.xpath(statusXpath)).click();
+		switchToIframe(Constants.VIEW_BATCH_DETAILS);
 
+		// unless it is completed, refresh it - No of attempts: 5
+		for (int i = 0; i < 5; i++) {
+			if (processBatchStatusTxt.getText().equalsIgnoreCase("PENDING [0]")
+					|| processBatchStatusTxt.getText().equalsIgnoreCase(
+							"IN PROCESS [1]")) {
+				ClickButton(closeBtn);
+				waitForLoaderToDisappear();
+				getFinder().getWebDriver().switchTo().defaultContent();
+				waitForLoaderToDisappear();
+				getFinder().getWebDriver().findElement(By.xpath(statusXpath))
+						.click();
+				switchToIframe(Constants.VIEW_BATCH_DETAILS);
+				waitForLoaderToDisappear();
+				waitForElementVisible(processBatchStatusTxt);
+			} else if (processBatchStatusTxt.getText().equalsIgnoreCase(
+					"SUCCESS [2]")) {
+
+				if (rejectedCountTxt.getText().contains("0")
+						|| rejectedCountTxt.getText().contains("-")) {
+
+					isProcessed = true;
+					break;
+				}
+
+				else {
+					ClickButton(tracesLink);
+					getBatchTraces();
+					break;
+				}
+
+			} else if (processBatchStatusTxt.getText().equalsIgnoreCase(
+					"FAILED [3]")) {
+				ClickButton(tracesLink);
+				getBatchTraces();
+				break;
+			}
+		}
+		processBatchesDomain.setJoBID(processBatchjobIDTxt.getText());
+		MiscUtils.reportToConsole("JobID: {}", processBatchesDomain.getJoBID());
+	    ClickButton(closeBtn);
+		waitForPageToLoad(getFinder().getWebDriver());
+		//CustomUtils.ThreadDotSleep(5000);
+		getFinder().getWebDriver().switchTo().defaultContent();
+		//CustomUtils.ThreadDotSleep(5000);
+		cardManagementTabinView();
+		//getFinder().getWebDriver().switchTo().defaultContent();
+		//CustomUtils.ThreadDotSleep(9000);
+		return isProcessed;
+	}
 }
+
