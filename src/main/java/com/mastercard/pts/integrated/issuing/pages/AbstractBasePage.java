@@ -72,6 +72,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private static final Logger logger = LoggerFactory.getLogger(AbstractBasePage.class);
 
 	public static final LocalDate futureDate = LocalDate.now().plusDays(100);
+	public static final LocalDate futureEndDate = LocalDate.now().plusDays(150);
 
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -464,7 +465,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		waitForWicket();
 	}
 
-	private void clickWhenClickableDoNotWaitForWicket(MCWebElement element) {
+	protected void clickWhenClickableDoNotWaitForWicket(MCWebElement element) {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
 	}
 

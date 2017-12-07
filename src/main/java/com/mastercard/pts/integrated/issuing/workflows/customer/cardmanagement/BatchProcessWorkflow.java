@@ -36,14 +36,12 @@ public class BatchProcessWorkflow extends MenuFlows{
 		page.processBulkDeviceGenerationBatch(batch);
 	}
     public void processPreProductionBatch(PreProductionBatch batch){
-		cardManagementTabinView();
 		PreProductionBatchPage page = navigator.navigateToPage(PreProductionBatchPage.class);
 		page.processPreProductionBatch1(batch);
 	}
 
 	public void processDeviceProductionBatch(DeviceProductionBatch batch){
-        cardManagementTabinView();
-		DeviceProductionBatchPage page = navigator.navigateToPage(DeviceProductionBatchPage.class);
+       	DeviceProductionBatchPage page = navigator.navigateToPage(DeviceProductionBatchPage.class);
 		page.processDeviceProductionBatch(batch);
 	}
 	

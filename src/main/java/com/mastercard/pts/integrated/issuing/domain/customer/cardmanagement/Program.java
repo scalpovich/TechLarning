@@ -593,6 +593,14 @@ public class Program implements HasCodeAndDescription {
 	public void setWalletPlanPlan1(String walletPlanPlan1) {
 		this.walletPlanPlan1 = walletPlanPlan1;
 	}
+	
+	public String getDevicePlanPlan1() {
+		return devicePlanPlan1;
+	}
+
+	public void setDevicePlanPlan1(String devicePlanPlan1) {
+		this.devicePlanPlan1 = devicePlanPlan1;
+	}
 
 	public String getOtherPlanStatementMessagePlan() {
 		return otherPlanStatementMessagePlan;

@@ -17,7 +17,6 @@ public class DevicePlanFlows extends MenuFlows {
 
 	public String createDevicePlan(DevicePlan deviceplan) {
 		String devicePlanName;
-		cardManagementTabinView();
 		DevicePlanPage deviceplanpage = navigator.navigateToPage(DevicePlanPage.class);
 		deviceplanpage.AddDevicePlan();
 		devicePlanName = deviceplanpage.provideGeneralDetails(deviceplan);
