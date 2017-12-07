@@ -10,9 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
-
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -28,7 +27,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory
 			.getLogger(TransactionSearchPage.class);
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:inputTextField")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:0:componentPanel:input:inputTextField")
 	private MCWebElement searchARNTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.//*[text()='Authorization Status :']]/following-sibling::td[1]")
@@ -40,12 +39,16 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='toDate']/..")
 	private MCWebElement toDateTxt;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:1:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:6:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement dateDDwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
+	private MCWebElement productTypeDDwn;
 
 	private String authorizationStatus;
 	
 	public String searchTransactionWithARN(String arnNumber, TransactionSearch ts) {
+		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
 		WebElementUtils.enterText(searchARNTxt, arnNumber);
 		WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
 		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
@@ -63,6 +66,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 
 	public String searchTransactionWithArnAndGetFee(String arnNumber, TransactionSearch ts){
 		int i;
+		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
 		WebElementUtils.enterText(searchARNTxt, arnNumber);
 		WebElementUtils.selectDropDownByVisibleText(dateDDwn,ts.getDateType());
 		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
@@ -77,6 +81,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 	
 	public String searchTransactionWithArnAndGetStatus(String arnNumber, TransactionSearch ts){
         int i;
+		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
         WebElementUtils.enterText(searchARNTxt, arnNumber);
         WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
         WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
