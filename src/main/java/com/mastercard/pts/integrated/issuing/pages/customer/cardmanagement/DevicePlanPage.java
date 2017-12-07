@@ -478,11 +478,11 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectPlasticId() {
-		SelectDropDownByIndex(PlasticIdDDwn, 1);
+		PlasticIdDDwn.getSelect().selectByIndex(1);
 	}
 
 	public void selectPictureCode() {
-		SelectDropDownByIndex(PictureCodeDDwn, 1);
+		PictureCodeDDwn.getSelect().selectByIndex(1);
 	}
 
 	public void selectEmbossingVendor(DevicePlan deviceplan) {
@@ -564,11 +564,11 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectEventBasedFeePlan() {
-		SelectDropDownByIndex(EventBasedFeePlanDDwn, 1);
+		SelectDropDownByIndex(EventBasedFeePlanDDwn, 3);
 	}
 
 	public void selectJoiningMembershipFeePlan() {
-		SelectDropDownByIndex(MembershipFeePlanDDwn, 1);
+		SelectDropDownByIndex(MembershipFeePlanDDwn, 3);
 	}
 
 	public void selectTransactionLimitPlan() {
