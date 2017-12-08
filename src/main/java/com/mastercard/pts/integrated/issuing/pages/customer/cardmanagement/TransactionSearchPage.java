@@ -27,7 +27,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory
 			.getLogger(TransactionSearchPage.class);
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:0:componentPanel:input:inputTextField")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=microfilmRefNumber]")
 	private MCWebElement searchARNTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.//*[text()='Authorization Status :']]/following-sibling::td[1]")
@@ -39,10 +39,10 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='toDate']/..")
 	private MCWebElement toDateTxt;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:6:componentList:0:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[text()='Date']/following-sibling::td[2]")
 	private MCWebElement dateDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[text()='Product Type']/following-sibling::td[2]")
 	private MCWebElement productTypeDDwn;
 
 	private String authorizationStatus;
