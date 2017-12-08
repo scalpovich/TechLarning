@@ -73,7 +73,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private LoadBalanceRequestPage lbrpage;
 	private LoadBalanceApprovePage lbapage;
 	private InitiateSettlementPage ispage;
-	
+
 	@Autowired
 	private MasSimulator simulator;
 
@@ -87,69 +87,69 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	@Autowired
 	private TestContext context;
-	
+
 	public void initiateSettlementForAgency(String branchID, String programCode) {
 		ispage = navigator.navigateToPage(InitiateSettlementPage.class);
 		ispage.initiateSettlementForAgency(branchID, programCode);
 	}
-	
+
 	public String getSettlementInitiativeSuccessMessage() {
 		return ispage.getSettlementInitiativeSuccessMessage();
 	}
-		
+
 	public String performLoadBalanceRequestAndGetRequestReferenceNumber(Device device, LoadBalanceRequest details) {
 		lbrpage = navigator.navigateToPage(LoadBalanceRequestPage.class);
 		return lbrpage.performLoadBalanceRequestAndGetRequestReferenceNumber(device, details);
 	}
-	
+
 	public String getLoadBalanceRequestSuccessMessage() {
 		return lbrpage.getLoadBalanceRequestSuccessMessage();
 	}
-	
+
 	public void performLoadBalanceApprove(Device device, LoadBalanceRequest details) {
 		lbapage = navigator.navigateToPage(LoadBalanceApprovePage.class);
 		lbapage.performLoadBalanceApprove(device, details);
 	}
-	
+
 	public String getLoadBalanceApproveSuccessMessage() {
 		return lbapage.getLoadBalanceApproveSuccessMessage();
 	}
-	
+
 	public BigDecimal getTransactionReversalAmount(ReversalTransaction rt) {
-			ReversalTransactionPage page = navigator.navigateToPage(ReversalTransactionPage.class);
-			return page.getTransactionReversalAmount(rt);
+		ReversalTransactionPage page = navigator.navigateToPage(ReversalTransactionPage.class);
+		return page.getTransactionReversalAmount(rt);
 	}
-	
+
 	public void addAndmodify0025MessageReversalIndicator() {
-        try {
-        	
-        			activateMcps();
-                    winiumDriver.findElementByName("1240/200 First Presentment").click();
-                    winiumDriver.findElementByName("Add a field to the current message").click();
-                    searchForImageAndPerformDoubleClick("messageReversalIndicator");
-                    activateEditField();
-                    performClickOperation("AddRemove");
-                    wait(2000);
-                    searchForImageAndPerformDoubleClick("messageReversalIndicator");
-                    wait(3000);
-                    executeAutoITExe("ActivateEditSubfieldValueScreen.exe");
-                    winiumDriver.findElementByName("Central Site Processing Date Of Original Message").click();
-                    winiumDriver.findElementByName("Edit Subfield Value - Format: n(6) [YYMMDD] ").sendKeys("");
-            		wait(2000);
-            		pressTab();
-                    setText("");
-                    setText(DateUtils.currentDateYYMMDD());
-                    wait(2000);
-                    executeAutoITExe("ActivateEditSubfieldAndClickOK.exe");
-                    wait(2000);
-                    winiumDriver.findElementByName("Set Value").click();
-                    winiumDriver.findElementByName(CLOSE).click();
-                    //saving this file after modifications
-                    performClickOperation("Save");
-            		performClickOperation("OK");
-            		wait(2000);
-        	} catch (Exception e) {
-        }
+		try {
+
+			activateMcps();
+			winiumDriver.findElementByName("1240/200 First Presentment").click();
+			winiumDriver.findElementByName("Add a field to the current message").click();
+			searchForImageAndPerformDoubleClick("messageReversalIndicator");
+			activateEditField();
+			performClickOperation("AddRemove");
+			wait(2000);
+			searchForImageAndPerformDoubleClick("messageReversalIndicator");
+			wait(3000);
+			executeAutoITExe("ActivateEditSubfieldValueScreen.exe");
+			winiumDriver.findElementByName("Central Site Processing Date Of Original Message").click();
+			winiumDriver.findElementByName("Edit Subfield Value - Format: n(6) [YYMMDD] ").sendKeys("");
+			wait(2000);
+			pressTab();
+			setText("");
+			setText(DateUtils.currentDateYYMMDD());
+			wait(2000);
+			executeAutoITExe("ActivateEditSubfieldAndClickOK.exe");
+			wait(2000);
+			winiumDriver.findElementByName("Set Value").click();
+			winiumDriver.findElementByName(CLOSE).click();
+			//saving this file after modifications
+			performClickOperation("Save");
+			performClickOperation("OK");
+			wait(2000);
+		} catch (Exception e) {
+		}
 	}
 
 	public void performOptimizedMasTransaction(String transaction, Transaction transactionData, Boolean sameCard)
@@ -230,7 +230,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			connect2IPSHostModeAndConfigureIP("MAS"); 	
 		} else if(simulator.toUpperCase().contains("MCPS")) {
 			launchAndConnectToMCPS();
-			
+
 		} else if(simulator.toUpperCase().contains("MDFS")) {
 			selectLicenseAndConfigure("Debit - Professional", "MDFS 16.4");
 			wait(4000);
@@ -393,7 +393,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private String getResult() {
-	
+
 		List<WebElement> lst =  winiumDriver.findElements(By.xpath("//*[contains(@Name, 'Expected Results Summary')]"));
 		//clicking on the last item from bottom
 		lst.get(lst.size()-1).click();
@@ -507,9 +507,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			logger.debug("Exception occurred while editing fields", e);
 			MiscUtils.propagate(e);
 		}
-	 return arnNumber;
+		return arnNumber;
 	}
-	
+
 	private void activateEditField()
 	{
 		executeAutoITExe("ActivateEditFieldValueScreen.exe");
@@ -583,7 +583,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void loadDownloadedIpmFileAndProcess(String fileName) {
 		try {
-		activateMcps();
+			activateMcps();
 			clickTDG();
 			performClickOperation("folder"); //open ipm file
 			wait(2000);
@@ -591,8 +591,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(5000);
 			performClickOperation("Add file to CEE");
 			wait(2000);
-    		performClickOperation("processFiles");
-    		performClickOperation("OK");
+			performClickOperation("processFiles");
+			performClickOperation("OK");
 
 		} catch (Exception e) {
 			logger.debug("Exception occurred while loading file in MCPS", e);
@@ -727,7 +727,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			throw MiscUtils.propagate(e);
 		}
 	}
-	
+
 	public void connect2IPSHostModeAndConfigureIPOnMdfs()
 	{
 		try {
@@ -752,7 +752,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(5000);
 		}
 	}
-	
+
 	private void reconnect2IpsHostTestModeOnMdfs() {
 		clickTestModeOnMdfs();		
 		reSelectLicenseOnMdfs();
@@ -773,7 +773,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		waitForExepectedCondition("CONNECTED");
 		wait(15000);
 	}
-	
+
 	private void connect2IpsHostTestModeOnMdfs() throws FindFailed {
 		wait(5000);
 		clickTestModeOnMdfs();
@@ -782,7 +782,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		waitForExepectedCondition("CONNECTED");
 		wait(15000);
 	}
-	
+
 	private void waitForExepectedCondition(String nameOfLocator) {
 		WebDriverWait wait = new WebDriverWait(winiumDriver, 20);
 		// Waiting to get connected
@@ -793,11 +793,16 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	{
 		//we do not have to perform this step if it same card on which operations are being performed
 		if(!sameCard) {
-			configureBinRange(transactionData, transaction);
+			if(!isContains(transaction, "mdfs")) {
+				configureBinRangeForMas(transactionData);
+			} else {
+				configureBinRangeForMdfs(transactionData);
+			}
 		}
 	}
 
-	private void configureBinRange(Transaction transactionData, String transaction)
+
+	private void configureBinRangeForMdfs(Transaction transactionData)
 	{
 		String bin = transactionData.getCardNumber();
 		String issuerCountryCode = transactionData.getIssuerCountryCode() ; //"356"; // transactionData.getCurrency(); //356
@@ -809,9 +814,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 		try
 		{
-			clickTestOptions(transaction);
+			clickTestOptions("MDFS");
 
-			activateMas(transaction);	
+			activateMas("MDFS");	
 			winiumClickOperation(BIN_TABLE);
 			wait(1000);
 			//clicking again just incase as test will fais if this click fails
@@ -830,25 +835,70 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(1000);
 			pressTab();
 			wait(1000);
-			if(!isContains(transaction, "mdfs")) {
-				executeAutoITExe(ADD_BIN_RANGE);
-				pressTab();
-				wait(1000);
-				setText(issuerCountryCode);
-				pressTab();
-				setText(issuerCurrencyCode);
-				pressTab();
-				setText(cardHolderBillingCurrency);
-			} else {
-				executeAutoITExe(ADD_BIN_RANGE);
-				setText(issuerCountryCode);
-				pressTab();
-				pressTab();
-				setText(issuerCurrencyCode);
-				pressTab();
-				setText(cardHolderBillingCurrency);
-			}
+			//			executeAutoITExe(ADD_BIN_RANGE);
+			setText(issuerCountryCode);
+			pressTab();
+			pressTab();
+			setText(issuerCurrencyCode);
+			pressTab();
+			setText(cardHolderBillingCurrency);
 			executeAutoITExe(ADD_BIN_RANGE);
+			winiumClickOperation("OK");
+			wait(2000);
+			if(isImagePresent("OK")) {
+				performClickOperation("OK");
+				wait(2000);
+			}
+		}
+		catch(Exception e)
+		{
+			logger.debug(ConstantData.EXCEPTION, e);
+			MiscUtils.propagate(e);
+		}
+	}
+
+	private void configureBinRangeForMas(Transaction transactionData)
+	{
+		String bin = transactionData.getCardNumber();
+		String issuerCountryCode = transactionData.getIssuerCountryCode() ; //"356"; // transactionData.getCurrency(); //356
+		String issuerCurrencyCode =  transactionData.getIssuerCurrencyCode();  //value from DE Element 49
+		String cardHolderBillingCurrency = transactionData.getCardHolderBillingCurrency(); //value from DE Element 61_13
+
+		String binBinMinRange = bin.substring(0, 9) + "00";
+		String binMaxBinRange = bin.substring(0, 9) + "99";
+
+		try
+		{
+			clickTestOptions("MAS");
+
+			activateMas("MAS");	
+			winiumClickOperation(BIN_TABLE);
+			wait(1000);
+			//clicking again just incase as test will fais if this click fails
+			winiumClickOperation(BIN_TABLE);
+			wait(2000);
+			performClickOperation("Add New");
+			wait(10000);
+			executeAutoITExe(ADD_BIN_RANGE);
+			winiumClickOperation("General");
+			pressTab();
+			setText(binBinMinRange);
+			pressTab();
+			setText(binMaxBinRange);
+			wait(1000);
+			pressTab();
+			wait(1000);
+			pressTab();
+			wait(1000);
+			//			executeAutoITExe(ADD_BIN_RANGE);
+			pressTab();
+			wait(1000);
+			setText(issuerCountryCode);
+			pressTab();
+			setText(issuerCurrencyCode);
+			pressTab();
+			setText(cardHolderBillingCurrency);
+			//			executeAutoITExe(ADD_BIN_RANGE);
 			winiumClickOperation("OK");
 			wait(2000);
 			if(isImagePresent("OK")) {
@@ -897,7 +947,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			MiscUtils.propagate(e);
 		}
 	}
-		
+
 	private void setMasIp(String[] ip) {
 		String parameters;
 		//for keying ip and port on MAS 16.x if present
@@ -905,7 +955,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 				+  PATH_BUILDER + getValue(ip[3]) + "\"";
 		setMasIpAddress(parameters);
 	}
-	
+
 	private void configureTestOptionsHostAndIPOnMdfs()
 	{
 		try {
@@ -914,7 +964,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			String ipAdd = simulator.getIpAddress();
 			String[] ip = ipAdd.split("\\.");
 			winiumClickOperation("TCP/IP");              
-			
+
 			setMasIpOnMdfs(ip);
 		}
 		catch(Exception e)
@@ -923,7 +973,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			MiscUtils.propagate(e);
 		}
 	}
-	
+
 	private void setMasIpOnMdfs(String[] ip) {
 		String parameters;
 		//for keying ip and port on MAS 16.x if present
@@ -931,7 +981,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 				+  PATH_BUILDER + getValue(ip[3]) + "\"";
 		setMasIpAddress(parameters);
 	}
-	
+
 	private void setMasIpAddress(String parameter) {
 		executeAutoITExe(SET_MAS_IP + parameter );
 		MiscUtils.reportToConsole(" ******* Parameter for setMasIp : ******"  + parameter );     
@@ -1036,7 +1086,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
 		return page.searchTransactionWithArnAndGetFee(arnNumber, ts);
 	}
-	
+
 	public String searchTransactionWithArnAndGetStatus(String arnNumber, TransactionSearch ts){
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
 		return page.searchTransactionWithArnAndGetStatus(arnNumber, ts);
