@@ -28,6 +28,7 @@ import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
+
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP, CardManagementNav.L2_DEVICE_CONFIGURATION,
 		CardManagementNav.L3_DEVICE_PLAN })
@@ -456,7 +457,6 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectExpiryFlag(DevicePlan deviceplan) {
-		waitForElementVisible(ExpiryFlagDDwn);
 		selectByVisibleText(ExpiryFlagDDwn, deviceplan.getExpiryFlag());
 		if (deviceplan.getExpiryFlag().contains("Fixed")) {
 			enterValueinTextBox(ExpiryDateTxt, deviceplan.getExpiryDate());
@@ -479,11 +479,11 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	public void selectPlasticId() {
 		PlasticIdDDwn.getSelect().selectByIndex(1);
-		}
+	}
 
 	public void selectPictureCode() {
 		PictureCodeDDwn.getSelect().selectByIndex(1);
-		}
+	}
 
 	public void selectEmbossingVendor(DevicePlan deviceplan) {
 		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
@@ -554,7 +554,6 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	public void enterCustomCode(DevicePlan deviceplan) {
 		if (CustomCodeTxt.isEnabled()) {
-			waitForElementVisible(CustomCodeTxt);
 			enterValueinTextBox(CustomCodeTxt, deviceplan.getCustomCode());
 		}
 	}
@@ -913,11 +912,11 @@ public class DevicePlanPage extends AbstractBasePage {
 		// default state
 		if("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
 			selectAllPinValidation();
-		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES))
+		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES)){
 			selectAllcvccvv();
-		checkExpiryDate();
-		if("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
 			checkCvcCvv();
+		}
+		checkExpiryDate();
 		WebElementUtils.checkCheckbox(ecommAllowedChkBx, devicePlan.isEcommerceAllowed());
 
 		if (!devicePlan.getDeviceType().equals(DeviceType.STATIC_VIRTUAL_CARD) && "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {

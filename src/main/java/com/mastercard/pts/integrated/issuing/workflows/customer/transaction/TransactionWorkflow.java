@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.configuration.FinSimSimulator;
 import com.mastercard.pts.integrated.issuing.configuration.MasSimulator;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
@@ -462,6 +463,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			winiumDriver.findElementByName(CLOSE).click();
 			aRN = addAcquirerReferenceData(trimmedRrn);
 			MiscUtils.reportToConsole("rRN :  trimmedRrn : aRN  -  " + rRN  + " : - : "  + trimmedRrn  + " : - :"  + aRN  );
+			updatePanNumber(SimulatorConstantsData.SAMPLE_PAN_NUMBER);
 			performClickOperation(MESSAGE_TYPE_INDICATOR); // selecting the table
 			pressPageUp();
 			clickMiddlePresentmentAndMessageTypeIndicator();
@@ -476,6 +478,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			winiumDriver.findElementByName(CLOSE).click();
 			addField();
 			loadIpmFile(getIpmFileName());
+			Device device = context.get(ContextConstants.DEVICE);
+			updatePanNumber(device.getDeviceNumber());
 			assignUniqueFileId();
 		} catch (Exception e) {
 			logger.debug("Exception occurred while editing fields", e);
@@ -484,6 +488,19 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		return aRN;
 	}
 
+	private void updatePanNumber(String cardNumber) throws AWTException{
+		activateMcps();
+		clickMiddlePresentmentAndMessageTypeIndicator();
+		searchForImageAndPerformDoubleClick("Primary Account Number (PAN)");
+		winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
+		setText("");
+		setText(cardNumber);
+		wait(2000);
+		performClickOperation(SET_VALUE);
+		wait(2000);
+		winiumDriver.findElementByName(CLOSE).click();
+			}
+	
 	public String assignUniqueARN(){
 		String rRN = MiscUtils.generateRandomNumberAsString(12);
 		String arnNumber = "";
