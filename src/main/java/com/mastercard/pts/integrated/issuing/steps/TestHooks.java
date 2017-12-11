@@ -22,7 +22,8 @@ import com.mastercard.pts.integrated.issuing.domain.provider.DataLoader;
 @Component
 public class TestHooks {
 
-	private static final Logger logger = LoggerFactory.getLogger(TestHooks.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(TestHooks.class);
 
 	@Autowired
 	private TestContext testContext;
@@ -59,7 +60,6 @@ public class TestHooks {
 		timeouts.implicitlyWait(imlicitWaitTimeout, TimeUnit.MILLISECONDS);
 		timeouts.pageLoadTimeout(pageWaitTimeout, TimeUnit.SECONDS);
 		timeouts.setScriptTimeout(scriptWaitTimeout, TimeUnit.SECONDS);
-
 		testContext.put("DRIVER", driverProvider.get());
 	}
 

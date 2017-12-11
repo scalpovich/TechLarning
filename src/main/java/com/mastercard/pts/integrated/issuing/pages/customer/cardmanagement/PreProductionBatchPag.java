@@ -13,20 +13,11 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-public class PreProductionBatch extends AbstractBasePage {
+public class PreProductionBatchPag extends AbstractBasePage {
 	@Autowired
 	MenuSubMenuPage menuSubMenuPage;
 
-	// ------------- Card Management > Institution Parameter Setup > Institution
-	// Currency [ISSS05]
-
-	/*
-	 * @PageElement(findBy = FindBy.NAME, valueToFind =
-	 * "searchDiv:searchButtonPanel:buttonCol:searchButton") private
-	 * MCWebElement Search;
-	 */
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
+		@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement ProductTypeDDwn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value = 'Search'][@type = 'submit']")

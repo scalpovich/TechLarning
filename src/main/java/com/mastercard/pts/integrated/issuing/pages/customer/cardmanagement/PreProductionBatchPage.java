@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.Collection;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -59,7 +61,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 			waitForLoaderToDisappear();
             SelectDropDownByText(productTypeDDwn, batch.getProductType());
-			waitUntilIsLoaded();
+            CustomUtils.ThreadDotSleep(8000);
 			logger.info(batch.getJobID());
 			enterText(sourceJobIdTxt, batch.getJobID());
 			ClickButton(searchBtn);

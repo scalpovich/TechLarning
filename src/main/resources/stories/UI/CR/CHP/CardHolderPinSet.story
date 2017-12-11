@@ -11,6 +11,7 @@ Meta:
 @TCName TC_createPinSetRquest
 @sheetName CardHolder
 @testDataFileName data
-Given login to cardholder portal as existing Cardholder user
+
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When PIN set request for card
-!-- Then verify PIN set reuqest status
