@@ -7,6 +7,7 @@ So that initial data setup is ready
 Meta:
 @CreditRegression
 @SurchargePlan
+@Author Saikat Sengupta
 
 Scenario: Scenario1 - Defining Surcharge Plan
 Meta:
@@ -22,8 +23,11 @@ Then surcharge plan should get created successfully
 Scenario: Scenario2 - Mandatory fields validation while adding surcharge plan
 Meta:
 @TC554186_Mandatory_Field_Validation
+@TCName TC554186_Mandatory_Field_Validation
+@sheetName Surcharge_Plan
+@testDataFileName testdata
 
 Given login to portal as existing bank as a Customerusercred
-When user does not fill mandatory fields for SurchargePlan
+When user does not fill mandatory fields
 Then appropriate validation should be triggered
 
