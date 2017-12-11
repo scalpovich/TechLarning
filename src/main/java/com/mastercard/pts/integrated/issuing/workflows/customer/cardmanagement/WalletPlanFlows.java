@@ -15,9 +15,11 @@ public class WalletPlanFlows extends MenuFlows {
 	@Autowired
 	Navigator navigator;
 	
+	private WalletPlanPage page;
+	
 	public void createCreditWalletPlanForWhiteListedMCG(WalletPlan plan) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
-		WalletPlanPage page = navigator.navigateToPage(WalletPlanPage.class);
+		page = navigator.navigateToPage(WalletPlanPage.class);
 		page.clickaddWalletPLan();
 		page.enterGeneralDetails(plan);
 		page.enterCreditConfigDetails();
@@ -31,60 +33,69 @@ public class WalletPlanFlows extends MenuFlows {
 
 	public String createOpenWalletPlan(DeviceCreation deviceCreation, WalletPlan walletplan) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
-		WalletPlanPage walletplanpage = navigator.navigateToPage(WalletPlanPage.class);
-		walletplanpage.clickaddWalletPLan();
-		String walletPlan = walletplanpage.addWalletPlanGeneral(deviceCreation, walletplan);
-		walletplanpage.selectOpenWalletUsage();
-		walletplanpage.clickNextButton();
-		walletplanpage.clickFinishButton();
+		page = navigator.navigateToPage(WalletPlanPage.class);
+		page.clickaddWalletPLan();
+		String walletPlan = page.addWalletPlanGeneral(deviceCreation, walletplan);
+		page.selectOpenWalletUsage();
+		page.clickNextButton();
+		page.clickFinishButton();
+		
 		return walletPlan;
-
 	}
 
 	public String createClosedWalletPlan(DeviceCreation deviceCreation, WalletPlan walletplan) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
-		WalletPlanPage walletplanpage = navigator.navigateToPage(WalletPlanPage.class);
-		walletplanpage.clickaddWalletPLan();
-		String walletPlan = walletplanpage.addWalletPlanGeneral(deviceCreation, walletplan);
-		walletplanpage.selectClosedWalletUsage();
-		walletplanpage.clickNextButton();
-		walletplanpage.clickFinishButton();
+		page = navigator.navigateToPage(WalletPlanPage.class);
+		page.clickaddWalletPLan();
+		String walletPlan = page.addWalletPlanGeneral(deviceCreation, walletplan);
+		page.selectClosedWalletUsage();
+		page.clickNextButton();
+		page.clickFinishButton();
+		
 		return walletPlan;
-
 	}
 
 	public String createClosedWhitelistedMCGWalletPlan(DeviceCreation deviceCreation, WalletPlan walletplan) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
-		WalletPlanPage walletplanpage = navigator.navigateToPage(WalletPlanPage.class);
-		walletplanpage.clickaddWalletPLan();
-		String walletPlan = walletplanpage.addWalletPlanGeneral(deviceCreation, walletplan);
-		walletplanpage.selectClosedWalletUsage();
-		walletplanpage.selectWhiteListedMCGPlan();
-		walletplanpage.clickNextButton();
-		walletplanpage.clickFinishButton();
+		page = navigator.navigateToPage(WalletPlanPage.class);
+		page.clickaddWalletPLan();
+		String walletPlan = page.addWalletPlanGeneral(deviceCreation, walletplan);
+		page.selectClosedWalletUsage();
+		page.selectWhiteListedMCGPlan();
+		page.clickNextButton();
+		page.clickFinishButton();
+		
 		return walletPlan;
 	}
 
 	public String createWhitelistedMerchantWalletPlan(DeviceCreation deviceCreation, WalletPlan walletplan) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
-		WalletPlanPage walletplanpage = navigator.navigateToPage(WalletPlanPage.class);
-		walletplanpage.clickaddWalletPLan();
-		String walletPlan = walletplanpage.addWalletPlanGeneral(deviceCreation, walletplan);
-		walletplanpage.selectWhiteListedMerchantPlan();
-		walletplanpage.clickNextButton();
-		walletplanpage.clickFinishButton();
+		page = navigator.navigateToPage(WalletPlanPage.class);
+		page.clickaddWalletPLan();
+		String walletPlan = page.addWalletPlanGeneral(deviceCreation, walletplan);
+		page.selectWhiteListedMerchantPlan();
+		page.clickNextButton();
+		page.clickFinishButton();
+		
 		return walletPlan;
 	}
 
 	public String createMutltiWalletPLan(DeviceCreation deviceCreation, WalletPlan walletplan) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
-		WalletPlanPage walletplanpage = navigator.navigateToPage(WalletPlanPage.class);
-		walletplanpage.clickaddWalletPLan();
-		String walletPlan = walletplanpage.addWalletPlanGeneral(deviceCreation, walletplan);
-		walletplanpage.selectWhiteListedMCGPlan();
-		walletplanpage.selectWhiteListedMerchantPlan();
-		walletplanpage.clickNextButton();
-		walletplanpage.clickFinishButton();
+		page = navigator.navigateToPage(WalletPlanPage.class);
+		page.clickaddWalletPLan();
+		String walletPlan = page.addWalletPlanGeneral(deviceCreation, walletplan);
+		page.selectWhiteListedMCGPlan();
+		page.selectWhiteListedMerchantPlan();
+		page.clickNextButton();
+		page.clickFinishButton();
+		
 		return walletPlan;
+	}
+	
+	public String getFeedbackText() {
+		page.SwitchToDefaultFrame();
+		
+		return page.getFeedbackInfo();
 	}
 }

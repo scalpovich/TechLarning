@@ -24,10 +24,10 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP,
 		CardManagementNav.L2_WALLET_CONFIGURATION, CardManagementNav.L3_WALLET_PLAN })
 public class WalletPlanPage extends AbstractBasePage {
-	
+
 	final Logger logger = LoggerFactory.getLogger(WalletPlanPage.class);
 	private static final int FIRST_OPTION = 1;
-	
+
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addWalletPlanBtn;
 
@@ -100,10 +100,10 @@ public class WalletPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:inactiveToCloseDays:input:inputTextField")
 	private MCWebElement daysCloseWalletAfterTxt;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class = 'feedbackPanelERROR']")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span.feedbackPanelERROR")
 	private MCWebElement panelError;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class = 'feedbackPanelINFO']")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span.feedbackPanelINFO")
 	private MCWebElement panelInfo;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "buttons:cancel")
@@ -259,6 +259,10 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	public boolean verifyErrorsOnWalletPlanPagePage() {
 		return publishErrorOnPage();
+	}
+
+	public String getFeedbackInfo() {
+		return panelInfo.getText();
 	}
 
 	public void verifyWalletPlanSuccess() {

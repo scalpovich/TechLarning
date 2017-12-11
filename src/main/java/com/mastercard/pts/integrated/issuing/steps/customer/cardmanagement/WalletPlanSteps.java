@@ -1,15 +1,18 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import org.jbehave.core.annotations.Named;
+import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.WalletType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.WalletPlanFlows;
+
+import junit.framework.Assert;
 
 @Component
 public class WalletPlanSteps {
@@ -71,6 +74,11 @@ public class WalletPlanSteps {
 		plan = WalletPlan.getWalletPlanDataFromExcel();
 		plan.setProgramType(programType);
 		walletplanflows.createCreditWalletPlanForWhiteListedMCG(plan);
+	}
+	
+	@Then("wallet plan should get created successfully")
+	public void verifySurchargePlan() {
+		Assert.assertEquals(ConstantData.RECORD_ADDED_SUCCESSFULLY, walletplanflows.getFeedbackText());
 	}
 
 }
