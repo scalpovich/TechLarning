@@ -24,11 +24,10 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP,
 		CardManagementNav.L2_WALLET_CONFIGURATION, CardManagementNav.L3_WALLET_PLAN })
 public class WalletPlanPage extends AbstractBasePage {
+	
 	final Logger logger = LoggerFactory.getLogger(WalletPlanPage.class);
-
-	// ------------- Card Management > Institution Parameter Setup > Institution
-	// Currency [ISSS05]
-
+	private static final int FIRST_OPTION = 1;
+	
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addWalletPlanBtn;
 
@@ -59,8 +58,17 @@ public class WalletPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:dummyAccountNumber:input:inputTextField")
 	private MCWebElement dummyAccountNumberTxt;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnLimitPlanCode:input:dropdowncomponent")
+	private MCWebElement transactionLimitPlanDDwn;
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:minBalanceForTxn:input:inputAmountField")
 	private MCWebElement reservedAmountTxt;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:surchargePlanCode:input:dropdowncomponent")
+	private MCWebElement surchargePlanDDwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:surchargeWaiverPlanCode:input:dropdowncomponent")
+	private MCWebElement surchargeWaiverPlanDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:walletFeePlanCode:input:dropdowncomponent")
 	private MCWebElement walletFeePlanDDwn;
@@ -71,11 +79,26 @@ public class WalletPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:whiteListedMidPlan:input:dropdowncomponent")
 	private MCWebElement whiteListedMerchantPlanDDwn;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:mcgAuthBlockingPlan:input:dropdowncomponent")
+	private MCWebElement mcgAuthBlockingPlanDDwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:mcgLimitPlan:input:dropdowncomponent")
+	private MCWebElement mcgLimitPlanDDwn;
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name = 'buttons:next'][@value ='Next >']")
 	private MCWebElement nextBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "buttons:finish")
 	private MCWebElement finishBtn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:refundAllowed:checkBoxComponent")
+	private MCWebElement allowRefundChkBox;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:inactivityDays:input:inputTextField")
+	private MCWebElement daysInactiveAfterTxt;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:inactiveToCloseDays:input:inputTextField")
+	private MCWebElement daysCloseWalletAfterTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class = 'feedbackPanelERROR']")
 	private MCWebElement panelError;
@@ -121,8 +144,52 @@ public class WalletPlanPage extends AbstractBasePage {
 		selectByVisibleText(currencyDDwn, walletplan.getCurrency());
 	}
 
+	public void checkAllowRefund() {
+		ClickButton(allowRefundChkBox);
+	}
+
 	public void selectProduct(DeviceCreation deviceCreation) {
 		selectByVisibleText(productTypeDDwn, deviceCreation.getProduct());
+	}
+
+	public void selectProductType(WalletPlan plan) {
+		selectByVisibleText(productTypeDDwn, plan.getProductType());
+	}
+
+	public void selectCreditPlan() {
+		if (creditPlanDDwn.isEnabled()) {
+			SelectDropDownByIndex(creditPlanDDwn, FIRST_OPTION);
+		}
+	}
+
+	public void selectBillingCycleCode() {
+		if (billingCycleCodeDDwn.isEnabled()) {
+			SelectDropDownByIndex(billingCycleCodeDDwn, FIRST_OPTION);
+		}
+	}
+
+	public void selectTransactionLimitPlan() {
+		if (transactionLimitPlanDDwn.isEnabled()) {
+			SelectDropDownByIndex(transactionLimitPlanDDwn, FIRST_OPTION);
+		}
+	}
+
+	public void selectSurchargePlan() {
+		if (surchargePlanDDwn.isEnabled()) {
+			SelectDropDownByIndex(surchargePlanDDwn, FIRST_OPTION);
+		}
+	}
+
+	public void selectSurchargeWaiverPlan() {
+		if (surchargeWaiverPlanDDwn.isEnabled()) {
+			SelectDropDownByIndex(surchargeWaiverPlanDDwn, FIRST_OPTION);
+		}
+	}
+
+	public void selectWalletFeePlan() {
+		if (walletFeePlanDDwn.isEnabled()) {
+			SelectDropDownByIndex(walletFeePlanDDwn, FIRST_OPTION);
+		}
 	}
 
 	public void selectProgramType(WalletPlan walletplan) {
@@ -134,11 +201,13 @@ public class WalletPlanPage extends AbstractBasePage {
 			selectByVisibleText(usageDDwn, "Open Loop");
 		}
 	}
+
 	public void selectWalletUsage(WalletPlan walletplan) {
 		if (usageDDwn.isEnabled()) {
 			selectByVisibleText(usageDDwn, walletplan.getWalletPlanUsage());
 		}
 	}
+
 	public void selectClosedWalletUsage() {
 		if (usageDDwn.isEnabled()) {
 			selectByVisibleText(usageDDwn, "Closed Loop");
@@ -159,20 +228,30 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	public void selectWhiteListedMCGPlan() {
 		if (whiteListedMCGPlanDDwn.isEnabled()) {
-			SelectDropDownByIndex(whiteListedMCGPlanDDwn, 1);
+			SelectDropDownByIndex(whiteListedMCGPlanDDwn, FIRST_OPTION);
 		}
 	}
 
 	public void selectWhiteListedMerchantPlan() {
 		if (whiteListedMerchantPlanDDwn.isEnabled()) {
-			SelectDropDownByIndex(whiteListedMerchantPlanDDwn, 1);
+			SelectDropDownByIndex(whiteListedMerchantPlanDDwn, FIRST_OPTION);
 		}
 	}
 
+	@Override
 	public void clickNextButton() {
 		clickWhenClickable(nextBtn);
 	}
 
+	public void enterInactiveAfterDays() {
+		enterValueinTextBox(daysInactiveAfterTxt, CustomUtils.randomNumbers(1));
+	}
+
+	public void enterCloseWalletAfterDays() {
+		enterValueinTextBox(daysCloseWalletAfterTxt, (CustomUtils.randomNumbers(1) + 1));
+	}
+
+	@Override
 	public void clickFinishButton() {
 		clickWhenClickable(finishBtn);
 		SwitchToDefaultFrame();
@@ -209,6 +288,35 @@ public class WalletPlanPage extends AbstractBasePage {
 		enterDummyAccountNumber();
 		enterReservedAmount();
 		return walletPlanDesc + " " + "[" + walletPlancode + "]";
+	}
+
+	public void enterGeneralDetails(WalletPlan plan) {
+		enterWalletPlanCode();
+		enterWalletPlanDescription();
+		selectCurrency(plan);
+		CustomUtils.ThreadDotSleep(1000);
+		selectProductType(plan);
+		CustomUtils.ThreadDotSleep(1000);
+		selectProgramType(plan);
+		CustomUtils.ThreadDotSleep(1000);
+		selectWalletUsage(plan);
+	}
+
+	public void enterCreditConfigDetails() {
+		selectCreditPlan();
+		selectBillingCycleCode();
+	}
+
+	public void enterPlanUsageLimitsFeesDetails() {
+		selectTransactionLimitPlan();
+		selectSurchargePlan();
+		selectSurchargeWaiverPlan();
+		selectWalletFeePlan();
+	}
+
+	public void enterWalletInactivityRuleDetails() {
+		enterInactiveAfterDays();
+		enterCloseWalletAfterDays();
 	}
 
 	@Override

@@ -14,6 +14,20 @@ public class WalletPlanFlows extends MenuFlows {
 
 	@Autowired
 	Navigator navigator;
+	
+	public void createCreditWalletPlanForWhiteListedMCG(WalletPlan plan) {
+		waitForElementVisible(menuSubMenuPage.getCardManagement());
+		WalletPlanPage page = navigator.navigateToPage(WalletPlanPage.class);
+		page.clickaddWalletPLan();
+		page.enterGeneralDetails(plan);
+		page.enterCreditConfigDetails();
+		page.enterPlanUsageLimitsFeesDetails();
+		page.selectWhiteListedMCGPlan();
+		page.clickNextButton();
+		page.checkAllowRefund();
+		page.enterWalletInactivityRuleDetails();
+		page.clickFinishButton();
+	}
 
 	public String createOpenWalletPlan(DeviceCreation deviceCreation, WalletPlan walletplan) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());

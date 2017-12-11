@@ -12,10 +12,20 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 @Component
 public class WalletPlan implements HasCodeAndDescription {
+	private static final String RETAIL_CREDIT_CARD_PART = "Retail Credit Card";
+	private static final String RETAIL_CREDIT_CARD_FULL = "Retail Credit Card [9]";
 	private static final String PROGRAM_TYPE = "PROGRAM_TYPE";
 	private static final String WP_CURRENCY	 = 	"WP_CURRENCY";
+	private static final String WP_PRODUCT_TYPE	 = 	"WP_PRODUCT_TYPE";
 	private static final String WP_PROGRAM_TYPE	 = 	"WP_PROGRAM_TYPE";
 	private static final String WP_USAGE	 = 	"WP_USAGE";
+	private static final String WP_CREDIT_PLAN	 = 	"WP_CREDIT_PLAN";
+	private static final String WP_BILLING_CYCLE_CODE	 = 	"WP_BILLING_CYCLE_CODE";
+	private static final String WP_TRANSACTION_LIMIT_PLAN = "WP_TRANSACTION_LIMIT_PLAN";
+	private static final String WP_RESERVED_AMOUNT = "WP_RESERVED_AMOUNT";
+	private static final String WP_SURCHARGE_PLAN = "WP_SURCHARGE_PLAN";
+	private static final String WP_SURCHARGE_WAIVER_PLAN = "WP_SURCHARGE_WAIVER_PLAN";
+	private static final String WP_WALLET_FEE_PLAN = "WP_WALLET_FEE_PLAN";
 	private static final String WP_CASHOUT_REMITTANCE_REQUEST_EXPIRY_DAYS	 = 	"WP_CASHOUT_REMITTANCE_REQUEST_EXPIRY_DAYS";
 	private static final String WP_CASHOUT_REVERSE_REMITTANCE_FEE_ON_CANCELLATION	 = 	"WP_CASHOUT_REVERSE_REMITTANCE_FEE_ON_CANCELLATION";
 	private static final String WP_REFUND_ALLOW_REFUND	 = 	"WP_REFUND_ALLOW_REFUND";
@@ -35,8 +45,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String usage;
 	private String dummyAccountNumber;
 	private String billingCyleCode;
-	private String creditPlan;
-	
+	private String creditPlan;	
 	private String cashoutRemittanceRequestExpiryDays;
 	private String cashoutReverseRemittanceFeeOnCancellation;
 	private String refundAllowRefund;
@@ -47,13 +56,91 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String walletInactvityRulesInactivityOperation;
 	private String walletInactvityRulesInactivityAfterDays;
 	private String walletInactvityRulesClosureWalletAfterDays;
-
-
 	private String walletPlanUsage;
-	public static WalletPlan createWithProvider(DataProvider provider, KeyValueProvider keyValueProvider) {
-		WalletPlan plan = provider.getDataBySimpleClassName(WalletPlan.class);
+	private String walletType;
+	private String usageType;
+	private String walletPlan;
+	private String openloopWalletPlan;
+	private String closedloopWalletPlan;
+	private String transactionLimitPlan; 
+	private String reservedAmount;
+	private String surchargePlan;
+	private String surchargeWaiverPlan;
+	private String walletFeePlan;
+	
+	public String getTransactionLimitPlan() {
+		return transactionLimitPlan;
+	}
+
+	public void setTransactionLimitPlan(String transactionLimitPlan) {
+		this.transactionLimitPlan = transactionLimitPlan;
+	}
+
+	public String getReservedAmount() {
+		return reservedAmount;
+	}
+
+	public void setReservedAmount(String reservedAmount) {
+		this.reservedAmount = reservedAmount;
+	}
+
+	public String getSurchargePlan() {
+		return surchargePlan;
+	}
+
+	public void setSurchargePlan(String surchargePlan) {
+		this.surchargePlan = surchargePlan;
+	}
+
+	public String getSurchargeWaiverPlan() {
+		return surchargeWaiverPlan;
+	}
+
+	public void setSurchargeWaiverPlan(String surchargeWaiverPlan) {
+		this.surchargeWaiverPlan = surchargeWaiverPlan;
+	}
+
+	public String getWalletFeePlan() {
+		return walletFeePlan;
+	}
+
+	public void setWalletFeePlan(String walletFeePlan) {
+		this.walletFeePlan = walletFeePlan;
+	}
+	
+	private static void setGenericData(WalletPlan plan) {
 		plan.setWalletPlanCode(MiscUtils.generate10CharAlphaNumeric());
 		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);
+	}
+	
+	private static void setCreditConfig(WalletPlan plan) {
+		plan.setCreditPlan(MapUtils.fnGetInputDataFromMap(WP_CREDIT_PLAN));
+		plan.setBillingCyleCode(MapUtils.fnGetInputDataFromMap(WP_BILLING_CYCLE_CODE));
+	}
+	
+	private static void setUsageLimitsFees(WalletPlan plan) {
+		plan.setTransactionLimitPlan(MapUtils.fnGetInputDataFromMap(WP_TRANSACTION_LIMIT_PLAN));
+		plan.setReservedAmount(MapUtils.fnGetInputDataFromMap(WP_RESERVED_AMOUNT));
+		plan.setSurchargePlan(MapUtils.fnGetInputDataFromMap(WP_SURCHARGE_PLAN));
+		plan.setSurchargeWaiverPlan(MapUtils.fnGetInputDataFromMap(WP_SURCHARGE_WAIVER_PLAN));
+		plan.setWalletFeePlan(MapUtils.fnGetInputDataFromMap(WP_WALLET_FEE_PLAN));
+	}
+	
+	public static WalletPlan getWalletPlanDataFromExcel() {
+		WalletPlan plan = new WalletPlan();
+		setGenericData(plan);
+		plan.setCurrency(MapUtils.fnGetInputDataFromMap(WP_CURRENCY));
+		plan.setProductType(MapUtils.fnGetInputDataFromMap(WP_PRODUCT_TYPE));
+		plan.setWalletPlanUsage(MapUtils.fnGetInputDataFromMap(WP_USAGE));
+		setCreditConfig(plan);
+		setUsageLimitsFees(plan);
+		
+		return plan;
+	}
+	
+	public static WalletPlan createWithProvider(DataProvider provider, KeyValueProvider keyValueProvider) {
+		WalletPlan plan = provider.getDataBySimpleClassName(WalletPlan.class);
+		setGenericData(plan);
 		plan.setProgramType(keyValueProvider.getString(PROGRAM_TYPE));
 		plan.setDummyAccountNumber(RandomStringUtils.randomNumeric(6));
 		return plan;
@@ -61,8 +148,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	
 	public static WalletPlan createWithProvider(KeyValueProvider provider) {
 		WalletPlan plan = new WalletPlan();
-		plan.setWalletPlanCode(MiscUtils.generate10CharAlphaNumeric());
-		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);
+		setGenericData(plan);
 		plan.setProgramType(provider.getString(WP_PROGRAM_TYPE));
 		plan.setCurrency(provider.getString(WP_CURRENCY));
 		plan.setUsage(provider.getString(WP_USAGE));
@@ -184,9 +270,6 @@ public class WalletPlan implements HasCodeAndDescription {
 	public void setProductType(String productType) {
 		this.productType = productType;
 	}
-	private String walletType;
-
-	private String walletPlan;
 
 	public String getWalletPlan() {
 		return walletPlan;
@@ -199,10 +282,6 @@ public class WalletPlan implements HasCodeAndDescription {
 	public String getWalletType() {
 		return walletType;
 	}
-
-	private String openloopWalletPlan;
-
-	private String closedloopWalletPlan;
 
 	public String getClosedloopWalletPlan() {
 		return closedloopWalletPlan;
@@ -220,8 +299,6 @@ public class WalletPlan implements HasCodeAndDescription {
 		this.usageType = usageType;
 	}
 
-	private String usageType;
-
 	public String getOpenloopWalletPlan() {
 		return openloopWalletPlan;
 	}
@@ -230,19 +307,20 @@ public class WalletPlan implements HasCodeAndDescription {
 		this.openloopWalletPlan = openloopWalletPlan;
 	}
 
-
 	public void setWalletType(String walletType) {
 		this.walletType = walletType;
 	}
-
-
 	
 	public String getProgramType() {
 		return programType;
 	}
 
 	public void setProgramType(String programType) {
-		this.programType = programType;
+		String actualProgramType = programType;
+		if (programType.equalsIgnoreCase(RETAIL_CREDIT_CARD_PART)) {
+			actualProgramType = RETAIL_CREDIT_CARD_FULL;
+		}
+		this.programType = actualProgramType;
 	}
 	
 	public String getUsage() {
