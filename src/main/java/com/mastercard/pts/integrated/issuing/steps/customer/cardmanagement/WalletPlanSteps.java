@@ -25,45 +25,45 @@ public class WalletPlanSteps {
 
 	@When("user creates a Open loop wallet plan of $walletType type for program $Programtype for $product")
 	public void whenUserCreatesAopenloopWalletPlan(@Named("walletType") String walletType,
-			@Named("Programtype") String Programtype, @Named("product") String product) {
-		walletplan.walletplanDataprovider();
+			@Named("Programtype") String programType, @Named("product") String product) {
+		WalletPlan.walletplanDataprovider();
 		walletplan.setWalletType(walletType);
-		walletplan.setProgramType(Programtype);
+		walletplan.setProgramType(programType);
 		deviceCreation.setProduct(product);
-		String WalletPlan = "";
+		String walletPlan = "";
 		if (walletType.contains(WalletType.DEFAULT_WALLET)) {
-			WalletPlan = walletplanflows.createOpenWalletPlan(deviceCreation, walletplan);
+			walletPlan = walletplanflows.createOpenWalletPlan(deviceCreation, walletplan);
 		}
 		if (walletType.contains(WalletType.WHITELISTEDMCG_WALLET)) {
-			WalletPlan = walletplanflows.createClosedWhitelistedMCGWalletPlan(deviceCreation, walletplan);
+			walletPlan = walletplanflows.createClosedWhitelistedMCGWalletPlan(deviceCreation, walletplan);
 		}
 		if (walletType.contains(WalletType.WHITELISTEDMERCHANT_WALLET)) {
-			WalletPlan = walletplanflows.createWhitelistedMerchantWalletPlan(deviceCreation, walletplan);
+			walletPlan = walletplanflows.createWhitelistedMerchantWalletPlan(deviceCreation, walletplan);
 		}
 
-		Assert.assertNotNull(WalletPlan);
-		walletplan.setOpenloopWalletPlan(WalletPlan);
+		Assert.assertNotNull(walletPlan);
+		walletplan.setOpenloopWalletPlan(walletPlan);
 	}
 
 	@When("user creates a Closed loop wallet plan of $walletType type for program $Programtype for $product")
 	public void whenUserCreatesAclosedloopWalletPlan(@Named("walletType") String walletType,
-			@Named("Programtype") String Programtype, @Named("product") String product) {
-		walletplan.walletplanDataprovider();
+			@Named("Programtype") String programType, @Named("product") String product) {
+		WalletPlan.walletplanDataprovider();
 		walletplan.setWalletType(walletType);
-		walletplan.setProgramType(Programtype);
+		walletplan.setProgramType(programType);
 		deviceCreation.setProduct(product);
-		String WalletPlan = "";
+		String walletPlan = "";
 		if (walletType.contains(WalletType.DEFAULT_WALLET)) {
-			WalletPlan = walletplanflows.createClosedWalletPlan(deviceCreation, walletplan);
+			walletPlan = walletplanflows.createClosedWalletPlan(deviceCreation, walletplan);
 		}
 		if (walletType.contains(WalletType.WHITELISTEDMCG_WALLET)) {
-			WalletPlan = walletplanflows.createClosedWhitelistedMCGWalletPlan(deviceCreation, walletplan);
+			walletPlan = walletplanflows.createClosedWhitelistedMCGWalletPlan(deviceCreation, walletplan);
 		}
 		if (walletType.contains(WalletType.WHITELISTEDMERCHANT_WALLET)) {
-			WalletPlan = walletplanflows.createWhitelistedMerchantWalletPlan(deviceCreation, walletplan);
+			walletPlan = walletplanflows.createWhitelistedMerchantWalletPlan(deviceCreation, walletplan);
 		}
-		Assert.assertNotNull(WalletPlan);
-		walletplan.setClosedloopWalletPlan(WalletPlan);
+		Assert.assertNotNull(walletPlan);
+		walletplan.setClosedloopWalletPlan(walletPlan);
 	}
 
 }

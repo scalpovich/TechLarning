@@ -49,7 +49,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String walletInactvityRulesClosureWalletAfterDays;
 
 
-	public String WalletPlanUsage;
+	private String walletPlanUsage;
 	public static WalletPlan createWithProvider(DataProvider provider, KeyValueProvider keyValueProvider) {
 		WalletPlan plan = provider.getDataBySimpleClassName(WalletPlan.class);
 		plan.setWalletPlanCode(MiscUtils.generate10CharAlphaNumeric());
@@ -184,33 +184,32 @@ public class WalletPlan implements HasCodeAndDescription {
 	public void setProductType(String productType) {
 		this.productType = productType;
 	}
-	public String WalletType;
+	private String walletType;
 
-	public String ProgramType;
-	public String WalletPlan;
+	private String walletPlan;
 
 	public String getWalletPlan() {
-		return WalletPlan;
+		return walletPlan;
 	}
 
 	public void setWalletPlan(String walletPlan) {
-		WalletPlan = walletPlan;
+		this.walletPlan = walletPlan;
 	}
 
 	public String getWalletType() {
-		return WalletType;
+		return walletType;
 	}
 
-	public String OpenloopWalletPlan;
+	private String openloopWalletPlan;
 
-	public String ClosedloopWalletPlan;
+	private String closedloopWalletPlan;
 
 	public String getClosedloopWalletPlan() {
-		return ClosedloopWalletPlan;
+		return closedloopWalletPlan;
 	}
 
 	public void setClosedloopWalletPlan(String closedloopWalletPlan) {
-		ClosedloopWalletPlan = closedloopWalletPlan;
+		this.closedloopWalletPlan = closedloopWalletPlan;
 	}
 
 	public String getUsageType() {
@@ -221,19 +220,19 @@ public class WalletPlan implements HasCodeAndDescription {
 		this.usageType = usageType;
 	}
 
-	public String usageType;
+	private String usageType;
 
 	public String getOpenloopWalletPlan() {
-		return OpenloopWalletPlan;
+		return openloopWalletPlan;
 	}
 
 	public void setOpenloopWalletPlan(String openloopWalletPlan) {
-		OpenloopWalletPlan = openloopWalletPlan;
+		this.openloopWalletPlan = openloopWalletPlan;
 	}
 
 
 	public void setWalletType(String walletType) {
-		WalletType = walletType;
+		this.walletType = walletType;
 	}
 
 
@@ -300,11 +299,11 @@ public class WalletPlan implements HasCodeAndDescription {
 	}
 
 	public String getWalletPlanUsage() {
-		return WalletPlanUsage;
+		return walletPlanUsage;
 	}
 
 	public void setWalletPlanUsage(String walletPlanUsage) {
-		WalletPlanUsage = walletPlanUsage;
+		this.walletPlanUsage = walletPlanUsage;
 	}
 
 	public static WalletPlan walletplanDataprovider() {

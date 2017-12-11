@@ -33,58 +33,58 @@ public class WalletPlanPage extends AbstractBasePage {
 	private MCWebElement addWalletPlanBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:walletPlanCode:input:inputTextField")
-	private MCWebElement WalletPlancodeTxt;
+	private MCWebElement walletPlancodeTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:description:input:inputTextField")
-	private MCWebElement DescriptionTxt;
+	private MCWebElement descriptionTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:currencyCode:input:dropdowncomponent")
-	private MCWebElement CurrencyDDwn;
+	private MCWebElement currencyDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:productType:input:dropdowncomponent")
-	private MCWebElement ProductTypeDDwn;
+	private MCWebElement productTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:walletPlanType:input:dropdowncomponent")
-	private MCWebElement ProgrameTypeDDwn;
+	private MCWebElement programeTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:walletUsage:input:dropdowncomponent")
-	private MCWebElement UsageDDwn;
+	private MCWebElement usageDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:creditPlan:input:dropdowncomponent")
-	private MCWebElement CreditPlanDDwn;
+	private MCWebElement creditPlanDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:billingCycleCode:input:dropdowncomponent")
-	private MCWebElement BillingCycleCodeDDwn;
+	private MCWebElement billingCycleCodeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:dummyAccountNumber:input:inputTextField")
-	private MCWebElement DummyAccountNumberTxt;
+	private MCWebElement dummyAccountNumberTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:minBalanceForTxn:input:inputAmountField")
-	private MCWebElement ReservedAmountTxt;
+	private MCWebElement reservedAmountTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:walletFeePlanCode:input:dropdowncomponent")
-	private MCWebElement WalletFeePlanDDwn;
+	private MCWebElement walletFeePlanDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:whiteListedMcgCode:input:dropdowncomponent")
-	private MCWebElement WhiteListedMCGPlanDDwn;
+	private MCWebElement whiteListedMCGPlanDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:whiteListedMidPlan:input:dropdowncomponent")
-	private MCWebElement WhiteListedMerchantPlanDDwn;
+	private MCWebElement whiteListedMerchantPlanDDwn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name = 'buttons:next'][@value ='Next >']")
-	private MCWebElement NextBtn;
+	private MCWebElement nextBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "buttons:finish")
 	private MCWebElement finishBtn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class = 'feedbackPanelERROR']")
-	private MCWebElement PanelError;
+	private MCWebElement panelError;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class = 'feedbackPanelINFO']")
-	private MCWebElement PanelInfo;
+	private MCWebElement panelInfo;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "buttons:cancel")
-	private MCWebElement CancelBtn;
+	private MCWebElement cancelBtn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "///div[3]/div[4]/div[2]/div[2]/span/div[1]/ul/li/span")
 	private MCWebElement msg;
@@ -100,77 +100,77 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	public String enterWalletPlanCode() {
 		if (MapUtils.fnGetInputDataFromMap("WalletPlancode") != null) {
-			enterValueinTextBox(WalletPlancodeTxt, MapUtils.fnGetInputDataFromMap("WalletPlancode"));
+			enterValueinTextBox(walletPlancodeTxt, MapUtils.fnGetInputDataFromMap("WalletPlancode"));
 		} else {
-			enterValueinTextBox(WalletPlancodeTxt, CustomUtils.randomNumbers(5));
+			enterValueinTextBox(walletPlancodeTxt, CustomUtils.randomNumbers(5));
 		}
-		return WalletPlancodeTxt.getAttribute("value");
+		return walletPlancodeTxt.getAttribute("value");
 	}
 
 	public String enterWalletPlanDescription() {
 		if (MapUtils.fnGetInputDataFromMap("WalletPlanDescription") != null) {
-			enterValueinTextBox(DescriptionTxt, MapUtils.fnGetInputDataFromMap("WalletPlanDescription"));
+			enterValueinTextBox(descriptionTxt, MapUtils.fnGetInputDataFromMap("WalletPlanDescription"));
 		} else {
-			enterValueinTextBox(DescriptionTxt, "wallet plan");
+			enterValueinTextBox(descriptionTxt, "wallet plan");
 		}
-		return DescriptionTxt.getAttribute("value");
+		return descriptionTxt.getAttribute("value");
 
 	}
 
 	public void selectCurrency(WalletPlan walletplan) {
-		selectByVisibleText(CurrencyDDwn, walletplan.getCurrency());
+		selectByVisibleText(currencyDDwn, walletplan.getCurrency());
 	}
 
 	public void selectProduct(DeviceCreation deviceCreation) {
-		selectByVisibleText(ProductTypeDDwn, deviceCreation.getProduct());
+		selectByVisibleText(productTypeDDwn, deviceCreation.getProduct());
 	}
 
 	public void selectProgramType(WalletPlan walletplan) {
-		selectByVisibleText(ProgrameTypeDDwn, walletplan.getProgramType());
+		selectByVisibleText(programeTypeDDwn, walletplan.getProgramType());
 	}
 
 	public void selectOpenWalletUsage() {
-		if (UsageDDwn.isEnabled()) {
-			selectByVisibleText(UsageDDwn, "Open Loop");
+		if (usageDDwn.isEnabled()) {
+			selectByVisibleText(usageDDwn, "Open Loop");
 		}
 	}
 	public void selectWalletUsage(WalletPlan walletplan) {
-		if (UsageDDwn.isEnabled()) {
-			selectByVisibleText(UsageDDwn, walletplan.getWalletPlanUsage());
+		if (usageDDwn.isEnabled()) {
+			selectByVisibleText(usageDDwn, walletplan.getWalletPlanUsage());
 		}
 	}
 	public void selectClosedWalletUsage() {
-		if (UsageDDwn.isEnabled()) {
-			selectByVisibleText(UsageDDwn, "Closed Loop");
+		if (usageDDwn.isEnabled()) {
+			selectByVisibleText(usageDDwn, "Closed Loop");
 		}
 	}
 
 	public void enterDummyAccountNumber() {
-		if (DummyAccountNumberTxt.isEnabled()) {
-			enterValueinTextBox(DummyAccountNumberTxt, CustomUtils.randomNumbers(16));
+		if (dummyAccountNumberTxt.isEnabled()) {
+			enterValueinTextBox(dummyAccountNumberTxt, CustomUtils.randomNumbers(16));
 		}
 	}
 
 	public void enterReservedAmount() {
-		if (ReservedAmountTxt.isEnabled()) {
-			enterValueinTextBox(ReservedAmountTxt, "1" + CustomUtils.randomNumbers(5));
+		if (reservedAmountTxt.isEnabled()) {
+			enterValueinTextBox(reservedAmountTxt, "1" + CustomUtils.randomNumbers(5));
 		}
 	}
 
 	public void selectWhiteListedMCGPlan() {
-		if (WhiteListedMCGPlanDDwn.isEnabled()) {
-			SelectDropDownByIndex(WhiteListedMCGPlanDDwn, 1);
+		if (whiteListedMCGPlanDDwn.isEnabled()) {
+			SelectDropDownByIndex(whiteListedMCGPlanDDwn, 1);
 		}
 	}
 
 	public void selectWhiteListedMerchantPlan() {
-		if (WhiteListedMerchantPlanDDwn.isEnabled()) {
-			SelectDropDownByIndex(WhiteListedMerchantPlanDDwn, 1);
+		if (whiteListedMerchantPlanDDwn.isEnabled()) {
+			SelectDropDownByIndex(whiteListedMerchantPlanDDwn, 1);
 		}
 	}
 
 	public void clickNextButton() {
-		clickWhenClickable(NextBtn);
+		clickWhenClickable(nextBtn);
 	}
 
 	public void clickFinishButton() {
@@ -188,16 +188,16 @@ public class WalletPlanPage extends AbstractBasePage {
 			SwitchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
-			clickWhenClickable(CancelBtn);
+			clickWhenClickable(cancelBtn);
 			SwitchToDefaultFrame();
 		}
 	}
 
 	public String addWalletPlanGeneral(DeviceCreation devicecreation, WalletPlan walletplan) {
 		String walletPlancode;
-		String WalletPlanDesc;
+		String walletPlanDesc;
 		walletPlancode = enterWalletPlanCode();
-		WalletPlanDesc = enterWalletPlanDescription();
+		walletPlanDesc = enterWalletPlanDescription();
 		selectCurrency(walletplan);
 		waitForPageToLoad(getFinder().getWebDriver());
 		selectProduct(devicecreation);
@@ -208,7 +208,7 @@ public class WalletPlanPage extends AbstractBasePage {
 		selectWalletUsage(walletplan);
 		enterDummyAccountNumber();
 		enterReservedAmount();
-		return WalletPlanDesc + " " + "[" + walletPlancode + "]";
+		return walletPlanDesc + " " + "[" + walletPlancode + "]";
 	}
 
 	@Override
