@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SurchargePlan;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.SurchargePlanWorkflows;
 
 import junit.framework.Assert;
@@ -17,7 +18,6 @@ public class SurchargePlanSteps {
 	SurchargePlanWorkflows surchargePlanWorkflows;
 	
 	private SurchargePlan surchargePlan;
-	private static final String SUCCESS_MESSAGE = "Record Added Successfully.";
 
 	@When("user creates surcharge plan with details")
 	public void createSurchargePlan() {
@@ -27,7 +27,7 @@ public class SurchargePlanSteps {
 
 	@Then("surcharge plan should get created successfully")
 	public void verifySurchargePlan() {
-		Assert.assertEquals(SUCCESS_MESSAGE, surchargePlanWorkflows.getFeedbackText());
+		Assert.assertEquals(ConstantData.RECORD_ADDED_SUCCESSFULLY, surchargePlanWorkflows.getFeedbackText());
 		Assert.assertFalse(surchargePlanWorkflows.isNoRecordsFoundInTableView(surchargePlan));
 	}
 	
