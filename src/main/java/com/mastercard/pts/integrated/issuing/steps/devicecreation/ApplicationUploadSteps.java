@@ -59,7 +59,7 @@ public class ApplicationUploadSteps {
 		search.verifyApplicationUploadSuccess(searchDomain);
 	}
 
-	@When("processes pre-production batch $type")
+	@When("processes pre-production batch Prepaid")
 	public void whenProcessesPreproductionBatchForPrepaid(String type) {
 
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
@@ -67,7 +67,7 @@ public class ApplicationUploadSteps {
 		batchProcessFlows.processPreProductionBatch(preProductionBatch);
 	}
 
-	@When("processes device production batch $type")
+	@When("processes device production batch Prepaid")
 	public void whenProcessesDeviceProductionBatch(String type) {
 		DeviceProductionBatch batch = new DeviceProductionBatch();
 		batch.setProductType(ProductType.fromShortName(type));
