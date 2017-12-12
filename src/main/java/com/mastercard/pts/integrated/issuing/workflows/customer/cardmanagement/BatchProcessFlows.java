@@ -110,12 +110,10 @@ public class BatchProcessFlows extends MenuFlows{
 		processBatch.processSystemInternalBatch(batchName);
 	}
 	public void processPreProductionBatch(PreProductionBatch batch) {
-		cardManagementTabinView();
 		PreProductionBatchPage page = navigator.navigateToPage(PreProductionBatchPage.class);
 		page.processPreProductionBatch1(batch);
 	}
 	public void processDeviceProductionBatch(DeviceProductionBatch batch) {
-		cardManagementTabinView();
 		deviceProductionPage = navigator.navigateToPage(DeviceProductionPage.class);
 		deviceProductionPage.processDeviceProductionBatch(batch);
 	}

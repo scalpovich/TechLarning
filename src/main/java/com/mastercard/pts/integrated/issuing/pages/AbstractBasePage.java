@@ -1322,10 +1322,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public String getTextFromPage(MCWebElement element) {
 		return element.getText();
 	}
-	public void cardManagementTabinView()
-    {
-	Scrolldown(cardManagement);
-     }
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		// TODO Auto-generated method stub
