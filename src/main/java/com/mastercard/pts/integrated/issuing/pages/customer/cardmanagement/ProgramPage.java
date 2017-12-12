@@ -615,6 +615,10 @@ public class ProgramPage extends AbstractBasePage {
 		selectMarketingMessagePlan();
 		selectByVisibleText(loyaltyPlanDDwn, loyaltyPlan);
 	}
+	public void selectOtherPlans1() {
+		selectStatementMessagePlan();
+		selectMarketingMessagePlan();
+			}
 	public void enterProgramValue(String a) {
 
 		enterValueinTextBox(enterProgram, a);

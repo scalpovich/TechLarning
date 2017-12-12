@@ -75,6 +75,7 @@ public class FileCreation {
 	private static final String SELL_RATE = "DEST_CURRENCY";
 
 	private static final String UPLOAD_FILENAME = "UploadFile";
+	private static final String corporateClientCode="12121217222000002";
 
 	private String filename;
 
@@ -472,7 +473,8 @@ public class FileCreation {
 								.replace("%P%", program.getProgramCode())
 								.replace("%D%", deviceplan.getDevicePlanCode())
 								.replace("%b%", vendor.getBranchCode())
-								.replace("%N", name));
+								.replace("%Z%", "")
+								.replace("%N%", name));
 					} else if (customerType.equals("Corporate")) {
 						writer.println(getUploadFileFromDatamap(
 								"Concatenated Application Record")
@@ -481,7 +483,8 @@ public class FileCreation {
 								.replace("%P%", program.getProgramCode())
 								.replace("%D%", deviceplan.getDevicePlanCode())
 								.replace("%b%", vendor.getBranchCode())
-								.replace("%N", name));
+								.replace("%Z%", corporateClientCode)
+								.replace("%N%", name));
 					} else if (customerType.equals("Bank Staff")) {
 						writer.println(getUploadFileFromDatamap(
 								"Concatenated Application Record")
@@ -490,7 +493,8 @@ public class FileCreation {
 								.replace("%P%", program.getProgramCode())
 								.replace("%D%", deviceplan.getDevicePlanCode())
 								.replace("%b%", vendor.getBranchCode())
-								.replace("%N", name));
+								.replace("%Z%", "")
+								.replace("%N%", name));
 					}
 
 					totalRecords++;

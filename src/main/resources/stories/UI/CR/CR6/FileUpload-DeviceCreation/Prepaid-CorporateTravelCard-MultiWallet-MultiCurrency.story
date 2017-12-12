@@ -19,7 +19,7 @@ When user creates a Device Plan for Mastercard for Magnetic Stripe and Prepaid c
 When user creates a Multi wallet Program for Mastercard for product Prepaid for program Corporate Travel card - Multi currency
 Then Program should get created
 When user creates a Device Range for product Prepaid
-When user creates Application Upload Prepaid batch file and uploads it on server for Individual
+When user creates Application Upload Prepaid batch file and uploads it on server for Corporate
 When processes pre-production batch prepaid
 When processes device production batch prepaid
 When User search for device on search screen for product type prepaid and validates the status as NORMAL
