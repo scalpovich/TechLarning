@@ -6,7 +6,7 @@ Meta:
 All				 
 Scenario: Loyalty program setup
 Meta:
-@CR6
+@CR
 @PrepaidProgramCorporateGeneralSingleWallet
 @TCName TC264328_Embossing File Generation
 @sheetName S205014
@@ -20,10 +20,6 @@ When user adds promotionPlan
 When user maps promotionPlan with loyaltyPlan
 When user creates a Single wallet Program for Mastercard for product Prepaid for program Retail General Purpose
 Then Program should get created
-!-- When user creates a Device Range for product Prepaid
-!-- Then user should be able to create Magnetic Stripe card for Prepaid product for Individual customer
-!-- When user sets up a adjustment Transaction Details
-!-- When user process the batch in order to calculate the loyalty points
-!-- Then User is able to redeem the points
+
 
 

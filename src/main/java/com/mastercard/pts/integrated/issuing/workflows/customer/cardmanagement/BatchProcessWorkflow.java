@@ -37,7 +37,7 @@ public class BatchProcessWorkflow extends MenuFlows{
 	}
     public void processPreProductionBatch(PreProductionBatch batch){
 		PreProductionBatchPage page = navigator.navigateToPage(PreProductionBatchPage.class);
-		page.processPreProductionBatch1(batch);
+		page.processPreProductionBatch(batch);
 	}
 
 	public void processDeviceProductionBatch(DeviceProductionBatch batch){
