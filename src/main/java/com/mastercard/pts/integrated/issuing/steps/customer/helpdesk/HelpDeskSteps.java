@@ -366,6 +366,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.setActiveDeviceNumberByCardPackId(helpdeskGeneral, registeredType);
 		Device device = Device.createWithProvider(provider);
 		device.setDeviceNumber(helpdeskGeneral.getDeviceNumber());
+		device.setExistingDeviceNumber(helpdeskGeneral.getDeviceNumber());
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		context.put(ContextConstants.DEVICE, device);
 		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);

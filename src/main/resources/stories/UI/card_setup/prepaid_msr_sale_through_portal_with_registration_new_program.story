@@ -13,7 +13,7 @@ Scenario: Prepaid - Admin User - Assign Program to Agency
 Meta:
 @TestId TC406247
 Given user is logged in institution
-And bulk card generation for prepaid emv is completed
+And bulk card generation for prepaid magnetic stripe is completed
 And user sign out from customer portal
 And user is logged in agent portal as admin user
 When user fills information to assign program to agency and submits form
@@ -68,11 +68,11 @@ When user fills status details and submits the form
 Then status column updates with type of order accepted
 And user sign out from agent portal
 
-Scenario: Prepaid - Agent User - Device Sale with new program Registration
+Scenario: Prepaid - Agent User - Device Sale with Registration
 Meta:
-@TestId TC406259
+@TestId TC406210
 Given user is logged in agent portal as agent user
-When user fills program details with new program for prepaid product emv device
+When user fills program details with registration
 Then registration is successful
 And user sign out from agent portal
 
@@ -106,7 +106,7 @@ Scenario: Prepaid - New Program to Existing Device - Admin User - Assign Program
 Meta:
 @TestId TC406247
 Given user is logged in institution
-And bulk card generation for prepaid emv is completed
+And bulk card generation for prepaid magnetic stripe is completed
 And user sign out from customer portal
 And user is logged in agent portal as admin user
 When user fills information to assign program to agency and submits form
@@ -165,7 +165,7 @@ Scenario: Prepaid - New Program to Existing Device - Agent User - Device Sale wi
 Meta:
 @TestId TC406259
 Given user is logged in agent portal as agent user
-When user fills program details with new program for prepaid product emv device
+When user fills program details with new program for prepaid product magnetic stripe device
 Then registration is successful
 And user sign out from agent portal
 
@@ -186,7 +186,7 @@ Then status should be normal
 And sale date is updated in general details
 And user sign out from customer portal
 
-Scenario: Prepaid -New Program to Existing Device - Customer User - Help Desk Activate Device
+Scenario: Prepaid - New Program to Existing Device - Customer User - Help Desk Activate Device
 Meta:
 @TestId TC406263
 Given user is logged in institution
