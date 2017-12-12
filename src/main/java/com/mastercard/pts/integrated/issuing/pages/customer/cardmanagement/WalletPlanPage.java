@@ -152,7 +152,7 @@ public class WalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectCurrency(WalletPlan walletplan) {
-		selectByVisibleText(CurrencyDDwn, walletplan.getCurrency());
+		selectByVisibleText(currencyDDwn, walletplan.getCurrency());
 	}
 
 	public void checkAllowRefund() {

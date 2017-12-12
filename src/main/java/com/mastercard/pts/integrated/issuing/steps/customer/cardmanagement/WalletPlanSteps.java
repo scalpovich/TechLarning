@@ -29,7 +29,7 @@ public class WalletPlanSteps {
 	@When("user creates a Open loop wallet plan of $walletType type for program $Programtype for $product")
 	public void whenUserCreatesAopenloopWalletPlan(@Named("walletType") String walletType,
 			@Named("Programtype") String programType, @Named("product") String product) {
-		WalletPlan.walletplanDataprovider();
+		plan.walletplanDataprovider();
 		plan.setWalletType(walletType);
 		plan.setProgramType(programType);
 		deviceCreation.setProduct(product);
@@ -51,7 +51,7 @@ public class WalletPlanSteps {
 	@When("user creates a Closed loop wallet plan of $walletType type for program $Programtype for $product")
 	public void whenUserCreatesAclosedloopWalletPlan(@Named("walletType") String walletType,
 			@Named("Programtype") String programType, @Named("product") String product) {
-		WalletPlan.walletplanDataprovider();
+		plan.walletplanDataprovider();
 		plan.setWalletType(walletType);
 		plan.setProgramType(programType);
 		deviceCreation.setProduct(product);
