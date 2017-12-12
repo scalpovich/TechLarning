@@ -21,27 +21,28 @@ import com.mastercard.pts.integrated.issuing.domain.provider.DataLoader;
 
 @Component
 public class TestHooks {
-	
-	private static final Logger logger = LoggerFactory.getLogger(TestHooks.class);
-	
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(TestHooks.class);
+
 	@Autowired
 	private TestContext testContext;
-	
+
 	@Autowired
 	private WebDriverProvider driverProvider;
-	
+
 	@Value("${defailt.wait.implicitly.timeout_in_msec}")
 	private long imlicitWaitTimeout;
-	
+
 	@Value("${default.wait.page.timeout_in_sec}")
 	private long pageWaitTimeout;
-	
+
 	@Value("${default.wait.script.timeout_in_sec}")
 	private long scriptWaitTimeout;
-	
+
 	@Autowired
 	private DataLoader dataLoader;
-	
+
 	@BeforeStory
 	public void initStoryContext(@Named("StoryName") String storyName) {
 		testContext.initStoryContext(storyName);
@@ -52,22 +53,21 @@ public class TestHooks {
 			logger.info("There is no data set for story {}", storyName);
 		}
 	}
-	
+
 	@BeforeScenario
 	public void initTimeouts() {
 		Timeouts timeouts = driverProvider.get().manage().timeouts();
 		timeouts.implicitlyWait(imlicitWaitTimeout, TimeUnit.MILLISECONDS);
 		timeouts.pageLoadTimeout(pageWaitTimeout, TimeUnit.SECONDS);
 		timeouts.setScriptTimeout(scriptWaitTimeout, TimeUnit.SECONDS);
-		
 		testContext.put("DRIVER", driverProvider.get());
 	}
-	
+
 	@AfterScenario
 	public void clearCookies() {
 		driverProvider.get().manage().deleteAllCookies();
 	}
-	
+
 	@AfterStory
 	public void disposeStoryContext() {
 		testContext.dispose();

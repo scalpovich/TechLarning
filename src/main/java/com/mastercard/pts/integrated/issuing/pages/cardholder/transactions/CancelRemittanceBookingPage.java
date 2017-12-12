@@ -25,9 +25,38 @@ public class CancelRemittanceBookingPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "div .Title")
 	private MCWebElement masterDetailContentTitle;
 
+	@PageElement(findBy  =FindBy.X_PATH, valueToFind="//td[@class='ResponseTxt']")
+	private MCWebElement cancelRemittanceErrorMsg;
+	
+	@PageElement(findBy  =FindBy.ID, valueToFind="mpts_cardHolderPortal_button_ok")
+	private MCWebElement cancelRemittanceOkBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH,valueToFind="//td[@class='ResponseTxt']")
+	private MCWebElement noDataFoundMsg;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="")
+	private MCWebElement confirmCashRemittanceBookingMsg;
+	
+	public void clickOnOkBtn(){
+		ClickButton(cancelRemittanceOkBtn);
+	}
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Cancel Remittance Booking");
 		verifyTitleCardHolderPortal("Cancel Remittance Booking");
+	
+	}
+	
+	public String checkCancelRemittanceMsg(){
+		return getTextFromPage(cancelRemittanceErrorMsg);
+	}
+	
+	public String checkMasterDetailedContentTitle(){
+		return getTextFromPage(masterDetailContentTitle);
+	}
+	
+	public String checkNoDataFoundMsg(){
+		return getTextFromPage(noDataFoundMsg);
 	}
 
 	@Override

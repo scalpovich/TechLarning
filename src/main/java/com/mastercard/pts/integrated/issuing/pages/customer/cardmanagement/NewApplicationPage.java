@@ -6,9 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Arrays;
 import java.util.Collection;
-
 import net.serenitybdd.core.annotations.findby.By;
-
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -16,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.deviceCreation.NewApplication;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;

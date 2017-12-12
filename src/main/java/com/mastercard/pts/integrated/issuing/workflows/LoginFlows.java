@@ -22,7 +22,27 @@ public class LoginFlows extends AbstractBaseFlows {
 	public void loginAsCorporateUser(String uName, String pwd) {
 		loginPage.loginTo(uName, pwd);
 	}
-
+	
+	public boolean loginAsCardholderUser(String userName,String passWord){
+		return loginPage.loginToCardholder(userName, passWord);
+	}
+	
+	public void loginAsCardholderUserAfterSignUp(String userName,String passWord){
+		loginPage.loginToCardholderAfterSignUp(userName, passWord);
+	}
+	
+	public void signUpCardHolderUser(String loginPass,String trnPass,String firstSequrityQst,String firstSequerAnswer,String secondSequrityQst,String secondSequerAnswer){
+		loginPage.signUpCardHolderUser(loginPass,trnPass,firstSequrityQst,firstSequerAnswer,secondSequrityQst,secondSequerAnswer);	
+		acceptSuccessfullCardholderSignUp();
+	}
+	
+	public void acceptSuccessfullCardholderSignUp(){
+		getFinder().getWebDriver().switchTo().alert().accept();
+	}
+	
+	public void openCardHolderApplication(){
+		loginPage.loadAppURL();
+	}
 	public void Login(Portal portal, String userType) {
 		getFinder().getWebDriver().get(portal.getUrl());
 /*		if (userType.equalsIgnoreCase("CustomerUser")) {

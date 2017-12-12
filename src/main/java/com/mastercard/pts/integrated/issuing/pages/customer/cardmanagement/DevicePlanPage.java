@@ -1,9 +1,9 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import org.junit.Assert;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.CardType;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.CardType;
 import com.mastercard.pts.integrated.issuing.domain.DeviceType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Vendor;
@@ -22,9 +22,8 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.Constants;
-import com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement.ProgramSetupSteps;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -479,11 +478,11 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectPlasticId() {
-		SelectDropDownByIndex(PlasticIdDDwn, 1);
+		PlasticIdDDwn.getSelect().selectByIndex(1);
 	}
 
 	public void selectPictureCode() {
-		SelectDropDownByIndex(PictureCodeDDwn, 1);
+		PictureCodeDDwn.getSelect().selectByIndex(1);
 	}
 
 	public void selectEmbossingVendor(DevicePlan deviceplan) {
@@ -565,11 +564,11 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectEventBasedFeePlan() {
-		SelectDropDownByIndex(EventBasedFeePlanDDwn, 1);
+		SelectDropDownByIndex(EventBasedFeePlanDDwn, 3);
 	}
 
 	public void selectJoiningMembershipFeePlan() {
-		SelectDropDownByIndex(MembershipFeePlanDDwn, 1);
+		SelectDropDownByIndex(MembershipFeePlanDDwn, 3);
 	}
 
 	public void selectTransactionLimitPlan() {
@@ -913,11 +912,11 @@ public class DevicePlanPage extends AbstractBasePage {
 		// default state
 		if("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
 			selectAllPinValidation();
-		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES))
+		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES)){
 			selectAllcvccvv();
-		checkExpiryDate();
-		if("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
 			checkCvcCvv();
+		}
+		checkExpiryDate();
 		WebElementUtils.checkCheckbox(ecommAllowedChkBx, devicePlan.isEcommerceAllowed());
 
 		if (!devicePlan.getDeviceType().equals(DeviceType.STATIC_VIRTUAL_CARD) && "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {

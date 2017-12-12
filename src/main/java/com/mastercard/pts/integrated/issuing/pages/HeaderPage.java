@@ -36,6 +36,7 @@ public class HeaderPage extends AbstractPage{
 
     public void signOutCustomer(){
     	signOutCustomerLnk.click();
+    	
     }
     
     public void signOutCollect(){

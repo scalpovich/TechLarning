@@ -9,6 +9,16 @@ public class TransactionSearch {
 		return dateType;
 	}
 
+	private String productType;
+	
+	public String getProductType() {
+		return productType;
+	}
+
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
+	
 	public void setDateType(String dateType) {
 		this.dateType = dateType;
 	}
@@ -17,6 +27,7 @@ public class TransactionSearch {
 	{
 		TransactionSearch ts=new TransactionSearch();
 		ts.setDateType(provider.getString("DATE_TYPE"));
+		ts.setProductType(provider.getString("PRODUCT_TYPE"));
 		return ts;
 	}
 }

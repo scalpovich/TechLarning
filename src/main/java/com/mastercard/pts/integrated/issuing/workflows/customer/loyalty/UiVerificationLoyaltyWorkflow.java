@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.loyalty;
 
+import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
@@ -35,12 +36,13 @@ public class  UiVerificationLoyaltyWorkflow{
 		GiftRewardCataloguePage page = navigator.navigateToPage(GiftRewardCataloguePage.class);
 		page.verifyUiOperationStatus();
 	}
-
+   @When("user adds loyaltyPlan")
 	public void verifyLoyaltyPlanPage() {
 		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
 		page.verifyUiOperationStatus();
 	}
-
+    
+   @When("user maps promotionPlan with loyaltyPlan")
 	public void verifyLoyaltyPlanPromotionMappingPage() {
 		LoyaltyPlanPromotionMappingPage page = navigator.navigateToPage(LoyaltyPlanPromotionMappingPage.class);
 		page.verifyUiOperationStatus();
@@ -55,7 +57,7 @@ public class  UiVerificationLoyaltyWorkflow{
 		LoyaltyTransactionPlanPage page = navigator.navigateToPage(LoyaltyTransactionPlanPage.class);
 		page.verifyUiOperationStatus();
 	}
-
+    @When("user adds promotionPlan")
 	public void verifyPromotionPlanPage() {
 		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
 		page.verifyUiOperationStatus();

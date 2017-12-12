@@ -16,7 +16,7 @@ And ViewProfile page of profile tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-{metaByRow=true}
+!-- {metaByRow=true}
 |Meta:           | type   |
 |@TestId TC378867| admin  |
 |@TestId TC411887| agency |
@@ -31,7 +31,7 @@ And EntityDetails page of profile tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-{metaByRow=true}
+!-- {metaByRow=true}
 |Meta:           | type   |        expectedvalue	   |
 |@TestId TC378866| agency | Agency Profile Information |
 |@TestId TC411890| branch | Branch Profile Information |
