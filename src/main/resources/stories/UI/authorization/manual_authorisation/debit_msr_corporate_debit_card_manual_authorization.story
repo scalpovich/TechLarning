@@ -1,26 +1,26 @@
-debit emv manual authorization
+MSR corporate debit card manual authorization
 
 Narrative:
-In order to provide to client easy-to-use payment method for e-commerce retail
+In order to provide to client easy-to-use payment method for e-commerce corporate
 As an issuer
-I want to create an emv debit card for client and perform manual authorization from customer portal
+I want to create an msr debit card for client and perform manual authorization from customer portal
 
 Meta:
-@StoryName S198222
+@StoryName debit_cdc_manual_auth
 @NonUIBVTest
-@SanityCardsWithAuthorization
+@CRCardsWithAuthorization
 
-Scenario: Set up emv debit card
+Scenario: Set up msr corporate debit card
 Meta:
-@TestId TC407061
+@TestId 
 Given user is logged in institution
-And device range for program with device plan for "debit" "emv" card
+And device range for program with device plan for "debit" "msr" card
 When user creates new device of debit type for new client
 Then device has "normal" status
 
-Scenario: emv debit card device production
+Scenario: msr debit card device production
 Meta:
-@TestId TC408234
+@TestId 
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for debit
@@ -28,9 +28,9 @@ When processes device production batch for debit
 When processes pin generation batch for debit
 Then device has "normal" status
 
-Scenario: emv debit card authorization
+Scenario: msr debit card authorization
 Meta:
-@TestId TC408235
+@TestId 
 Given user is logged in institution
 And a new device was created
 When user raises an authorization request

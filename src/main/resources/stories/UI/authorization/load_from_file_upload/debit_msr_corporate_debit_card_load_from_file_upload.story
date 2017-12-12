@@ -7,7 +7,7 @@ I want to Upload transactions from a file for msr corporate debit card
 
 Meta:
 @StoryName debit_cdc_load_from_file
-@SanityCards
+@CRCardsWithAuthorization
 
 Scenario: Set up Msr corporate debit card
 Meta:

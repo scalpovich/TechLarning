@@ -7,7 +7,7 @@ I want to Upload transactions from a file for prepaid emv corporate general purp
 
 Meta:
 @StoryName prepaid_cgpc_load_from_file
-@SanityCards
+@CRCardsWithAuthorization
 
 Scenario: Set up prepaid emv corporate general purpose card
 Meta:

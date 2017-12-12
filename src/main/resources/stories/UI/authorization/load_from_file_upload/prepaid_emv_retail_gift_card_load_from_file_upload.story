@@ -7,7 +7,7 @@ I want to Upload transactions from a file for prepaid emv retail gift card
 
 Meta:
 @StoryName S196301
-@SanityCards
+@CRCardsWithAuthorization
 
 Scenario: Set up prepaid emv retail gift card
 Meta:
