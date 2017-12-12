@@ -16,13 +16,13 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CurrencyExchangeRatesPage;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Vendor;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CurrencyExchangeRatesPage;
 @Component
 public class FileCreation {
 	private static final Logger logger = LoggerFactory
@@ -58,6 +58,8 @@ public class FileCreation {
 	private static final String TRANSACTION_AMOUNT = "TRANSACTION_AMOUNT";
 
 	private static final String TRANSACTION_CURRENCY = "TRANSACTION_CURRENCY";
+	
+	private static final String TRANSACTION_CODE = "TRANSACTION_CODE";
 
 	// Currency Exchange Rates
 	private static final String CER_SEQUENCE = "CER_SEQUENCE";
@@ -116,9 +118,10 @@ public class FileCreation {
 
 
 	public static String createTransactionLine(String deviceNumber, String walletNumber, KeyValueProvider provider){
-		return deviceNumber + "|" + walletNumber + "|0|" + DateUtils.getDateddMMyyyy() + "|U1|" + provider.getString(TRANSACTION_AMOUNT) 
-				+ "|" + provider.getString(TRANSACTION_CURRENCY) + "||" + DateUtils.getDateddMMyyyy() + "|" + provider.getString(BILLING_AMOUNT) 
-				+ "|" + provider.getString(BILLING_CURRENCY) + "|" + ConstantData.GENERIC_DESCRIPTION + "|||" + "00000000";
+		return deviceNumber + "|" + walletNumber + "|0|" + DateUtils.getDateddMMyyyy() + "|" + provider.getString(TRANSACTION_CODE) + "|"  
+				+ provider.getString(TRANSACTION_AMOUNT) + "|" + provider.getString(TRANSACTION_CURRENCY) + "||" + DateUtils.getDateddMMyyyy() 
+				+ "|" + provider.getString(BILLING_AMOUNT) + "|" + provider.getString(BILLING_CURRENCY) + "|" + ConstantData.GENERIC_DESCRIPTION 
+				+ "|||" + "00000000";
 	}
 
 	public static String getFileContents(String file) throws IOException

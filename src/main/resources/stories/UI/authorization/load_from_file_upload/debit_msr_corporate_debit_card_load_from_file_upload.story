@@ -6,7 +6,7 @@ As an issuer
 I want to Upload transactions from a file for msr corporate debit card
 
 Meta:
-@StoryName S196301
+@StoryName debit_cdc_load_from_file
 @SanityCards
 
 Scenario: Set up Msr corporate debit card
