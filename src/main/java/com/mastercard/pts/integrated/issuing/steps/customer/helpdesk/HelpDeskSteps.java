@@ -547,7 +547,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickEndCall();
 		assertThat("Device has incorrect Activation Date", helpdeskWorkflow.activationDate(), equalTo(DateUtils.currentDateddMMyyyy()));
 	}
-	@When("User search for device on search screen for product type $prepaid and validates the status as $NORMAL [0]")
+	@When("User search for device on search screen for product type $prepaid and validates the status as $NORMAL")
 	public void thenUserSearchForDeviceOnSearchScreenPrepaid(String productType, String status) {
 		helpdeskgettersetter.setProductType(ProductType.fromShortName(productType));
 

@@ -85,6 +85,8 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 		enterText(this.firstNameInput, String.valueOf(name));
 		waitForElementVisible(searchBtn);
 		searchBtn.click();
-		return normalStatus.getText();
+		String[]a=normalStatus.getText().split("\\[");
+		System.out.println("status:"+a[0].trim());
+		return a[0].trim();
 	}
 }

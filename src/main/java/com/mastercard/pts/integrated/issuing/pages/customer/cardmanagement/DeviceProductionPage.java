@@ -72,12 +72,14 @@ public class DeviceProductionPage extends AbstractBasePage {
 		CustomUtils.ThreadDotSleep(5000);
 		WebElementUtils.enterText(BatchNumberTxt, batch.getBatchNumber());
 		ClickButton(SearchBtn);
+		CustomUtils.ThreadDotSleep(5000);
 		if (DeviceProductionBatchRecordChkBx.isVisible()) {
 			ClickCheckBox(DeviceProductionBatchRecordChkBx, true);
 		} else {
 			ClickButton(SearchBtn);
 			}
 		ClickButton(ProcessSelectedBtn);
+		CustomUtils.ThreadDotSleep(5000);
 		verifyOperationStatus();
 
 	}

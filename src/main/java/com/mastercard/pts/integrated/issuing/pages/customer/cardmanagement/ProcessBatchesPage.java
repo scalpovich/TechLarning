@@ -543,8 +543,11 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		processBatchesDomain.setJoBID(processBatchjobIDTxt.getText());
 		MiscUtils.reportToConsole("JobID: {}", processBatchesDomain.getJoBID());
 	    ClickButton(closeBtn);
-		waitForPageToLoad(driver());		
-		getFinder().getWebDriver().switchTo().defaultContent();		
+		waitForPageToLoad(getFinder().getWebDriver());	
+		//CustomUtils.ThreadDotSleep(5000);
+		getFinder().getWebDriver().switchTo().defaultContent();
+		cardManagementTabinView();
+		//CustomUtils.ThreadDotSleep(5000);
 		return isProcessed;
 	}
 }

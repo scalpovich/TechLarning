@@ -163,6 +163,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Contact Information')]")
 	private MCWebElement contactInformation;
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Card Management']")
+	private MCWebElement cardManagement;
 
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -1320,7 +1322,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public String getTextFromPage(MCWebElement element) {
 		return element.getText();
 	}
-
+	public void cardManagementTabinView()
+    {
+	Scrolldown(cardManagement);
+     }
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		// TODO Auto-generated method stub

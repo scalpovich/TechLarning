@@ -25,6 +25,6 @@ When user creates a Device Range for product Prepaid;
 When user creates Application Upload Prepaid batch file and uploads it on server for Individual
 When processes pre-production batch prepaid
 When processes device production batch prepaid
-When User search for device on search screen for product type prepaid and validates the status as NORMAL [0]
+When User search for device on search screen for product type prepaid and validates the status as NORMAL
 Then user logouts from customer portal
 

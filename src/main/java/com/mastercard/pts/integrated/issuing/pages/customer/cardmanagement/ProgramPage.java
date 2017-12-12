@@ -613,7 +613,7 @@ public class ProgramPage extends AbstractBasePage {
 	public void selectOtherPlans(String loyaltyPlan) {
 		selectStatementMessagePlan();
 		selectMarketingMessagePlan();
-		//selectByVisibleText(loyaltyPlanDDwn, loyaltyPlan);
+		selectByVisibleText(loyaltyPlanDDwn, loyaltyPlan);
 	}
 	public void enterProgramValue(String a) {
 

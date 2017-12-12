@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
@@ -22,7 +23,8 @@ import com.mastercard.pts.integrated.issuing.utils.FileUtils;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.workflows.MenuFlows;
 
-@Component
+//@Component
+@Workflow
 public class BatchProcessFlows extends MenuFlows{
 
 	@Autowired
@@ -108,10 +110,12 @@ public class BatchProcessFlows extends MenuFlows{
 		processBatch.processSystemInternalBatch(batchName);
 	}
 	public void processPreProductionBatch(PreProductionBatch batch) {
+		cardManagementTabinView();
 		PreProductionBatchPage page = navigator.navigateToPage(PreProductionBatchPage.class);
 		page.processPreProductionBatch1(batch);
 	}
 	public void processDeviceProductionBatch(DeviceProductionBatch batch) {
+		cardManagementTabinView();
 		deviceProductionPage = navigator.navigateToPage(DeviceProductionPage.class);
 		deviceProductionPage.processDeviceProductionBatch(batch);
 	}
