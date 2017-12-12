@@ -16,6 +16,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -33,9 +34,15 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:walletPlanCode:input:inputTextField")
 	private MCWebElement walletPlancodeTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='walletPlanCode']")
+	private MCWebElement walletPlancodeSearchTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:description:input:inputTextField")
 	private MCWebElement descriptionTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
+	private MCWebElement searchTable;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:currencyCode:input:dropdowncomponent")
 	private MCWebElement currencyDDwn;
@@ -128,6 +135,10 @@ public class WalletPlanPage extends AbstractBasePage {
 			enterValueinTextBox(walletPlancodeTxt, CustomUtils.randomNumbers(5));
 		}
 		return walletPlancodeTxt.getAttribute("value");
+	}
+	
+	public void enterWalletPlanCode(WalletPlan plan) {
+		enterValueinTextBox(walletPlancodeTxt, plan.getWalletPlanCode());
 	}
 
 	public String enterWalletPlanDescription() {
@@ -264,6 +275,14 @@ public class WalletPlanPage extends AbstractBasePage {
 	public String getFeedbackInfo() {
 		return panelInfo.getText();
 	}
+	
+	public void searchByWalletPlanCode(WalletPlan plan) {
+		enterValueinTextBox(walletPlancodeSearchTxt, plan.getWalletPlanCode());
+	}
+	
+	public boolean isTextPresentInTable(String text) {
+		return WebElementUtils.isTextAvailableinTable(searchTable, text);
+	}
 
 	public void verifyWalletPlanSuccess() {
 		if (!verifyErrorsOnWalletPlanPagePage()) {
@@ -295,7 +314,7 @@ public class WalletPlanPage extends AbstractBasePage {
 	}
 
 	public void enterGeneralDetails(WalletPlan plan) {
-		enterWalletPlanCode();
+		enterWalletPlanCode(plan);
 		enterWalletPlanDescription();
 		selectCurrency(plan);
 		CustomUtils.ThreadDotSleep(1000);

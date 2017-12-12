@@ -8,6 +8,7 @@ import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 @Component
@@ -109,7 +110,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	}
 	
 	private static void setGenericData(WalletPlan plan) {
-		plan.setWalletPlanCode(MiscUtils.generate10CharAlphaNumeric());
+		plan.setWalletPlanCode(CustomUtils.randomNumbers(5));
 		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);
 	}
 	

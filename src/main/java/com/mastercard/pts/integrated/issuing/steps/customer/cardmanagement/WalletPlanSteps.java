@@ -79,6 +79,7 @@ public class WalletPlanSteps {
 	@Then("wallet plan should get created successfully")
 	public void verifySurchargePlan() {
 		Assert.assertEquals(ConstantData.RECORD_ADDED_SUCCESSFULLY, walletplanflows.getFeedbackText());
+		Assert.assertTrue(walletplanflows.isRecordFoundInTable(plan));
 	}
 
 }

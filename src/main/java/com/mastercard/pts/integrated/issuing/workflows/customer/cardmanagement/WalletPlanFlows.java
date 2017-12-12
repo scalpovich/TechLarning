@@ -14,9 +14,9 @@ public class WalletPlanFlows extends MenuFlows {
 
 	@Autowired
 	Navigator navigator;
-	
+
 	private WalletPlanPage page;
-	
+
 	public void createCreditWalletPlanForWhiteListedMCG(WalletPlan plan) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
 		page = navigator.navigateToPage(WalletPlanPage.class);
@@ -39,7 +39,7 @@ public class WalletPlanFlows extends MenuFlows {
 		page.selectOpenWalletUsage();
 		page.clickNextButton();
 		page.clickFinishButton();
-		
+
 		return walletPlan;
 	}
 
@@ -51,7 +51,7 @@ public class WalletPlanFlows extends MenuFlows {
 		page.selectClosedWalletUsage();
 		page.clickNextButton();
 		page.clickFinishButton();
-		
+
 		return walletPlan;
 	}
 
@@ -64,7 +64,7 @@ public class WalletPlanFlows extends MenuFlows {
 		page.selectWhiteListedMCGPlan();
 		page.clickNextButton();
 		page.clickFinishButton();
-		
+
 		return walletPlan;
 	}
 
@@ -76,7 +76,7 @@ public class WalletPlanFlows extends MenuFlows {
 		page.selectWhiteListedMerchantPlan();
 		page.clickNextButton();
 		page.clickFinishButton();
-		
+
 		return walletPlan;
 	}
 
@@ -89,13 +89,21 @@ public class WalletPlanFlows extends MenuFlows {
 		page.selectWhiteListedMerchantPlan();
 		page.clickNextButton();
 		page.clickFinishButton();
-		
+
 		return walletPlan;
 	}
-	
+
 	public String getFeedbackText() {
 		page.SwitchToDefaultFrame();
-		
+
 		return page.getFeedbackInfo();
+	}
+
+	public boolean isRecordFoundInTable(WalletPlan plan) {
+		page.SwitchToDefaultFrame();
+		page.searchByWalletPlanCode(plan);
+		page.clickSearchButton();
+		
+		return page.isTextPresentInTable(plan.getWalletPlanCode());
 	}
 }

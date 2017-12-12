@@ -311,7 +311,7 @@ public class WebElementUtils {
 			int columnscount = columnsrow.size();
 
 			// Loop will execute till the last cell of that specific row.
-			for (int col = 1; col < columnscount; col++) {
+			for (int col = 0; col < columnscount; col++) {
 				// To retrieve text from that specific cell.
 
 				if (columnsrow.get(col).getText().equals(text)) {
