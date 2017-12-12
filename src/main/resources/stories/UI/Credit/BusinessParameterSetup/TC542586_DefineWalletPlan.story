@@ -9,7 +9,7 @@ Meta:
 @WalletPlan
 @Author Saikat Sengupta
 
-Scenario: Scenario1 - Defining Surcharge Plan
+Scenario: Scenario1 - Defining Wallet Plan
 Meta:
 @sheetName Wallet_Plan
 @testDataFileName testdata
