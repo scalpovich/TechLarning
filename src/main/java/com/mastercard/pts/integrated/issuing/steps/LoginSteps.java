@@ -79,24 +79,12 @@ public class LoginSteps extends AbstractBaseFlows {
 	 */
 	@Given("login to cardholder portal as existing Cardholder user")
 	public void loginToCardholder() {
-
-		/*
-		 * String f = "TestData"; logger.info("Reading entire test data");
-		 * excelTestData.fnReadEntireTestData(f, strSheetName, "TCName");
-		 * 
-		 * if (excelTestData == null) {
-		 * Assert.fail("Unable to read entire test data"); } else {
-		 * 
-		 * excelTestData.fnSetCurrentStoryTestData(strStoryName); }
-		 */
-
 		loginCardHolderProvider = LoginCardholder.loginCardholderDataProvider();
 		loginCardholder(loginCardHolderProvider.getUserName(), loginCardHolderProvider.getPassWord());
 		switchToWindowCHP();
 		CustomUtils.ThreadDotSleep(1100);
 	}
 
-	@BeforeScenario
 	@Given("read test data for scenario")
 	public void readScenarioDataSheet(@Named("TCName") String strStoryName, @Named("sheetName") String strSheetName) {
 		String f = "TestData";

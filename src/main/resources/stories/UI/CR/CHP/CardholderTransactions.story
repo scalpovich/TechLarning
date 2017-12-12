@@ -17,7 +17,8 @@ Meta:
 @TCName TC_visaMoneyTransfer
 @sheetName CardHolder
 @testDataFileName testdata
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When fund transfer through wallet to wallet transfer
 Then verify Visa Money Transfer fund transfer stauts
 !-- Then cardholder logouts from cardholder portal
@@ -28,7 +29,8 @@ Meta:
 @TCName TC_visaMoneyTransfer
 @sheetName CardHolder
 @testDataFileName testdata
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When fund transfer through wallet to wallet transfer
 Then verify Visa Money Transfer fund transfer stauts
 !-- Then cardholder logouts from cardholder portal
@@ -40,7 +42,8 @@ Meta:
 @TCName TC_walletToWalletTransfer
 @sheetName CardHolder
 @testDataFileName testdata
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When fund transfer through wallet to wallet transfer
 Then verify wallet to wallet transfer fund transfer stauts
 !-- Then cardholder logouts from cardholder portal
@@ -51,7 +54,8 @@ Meta:
 @TCName TC_checkInterbankTransfer
 @sheetName CardHolder
 @testDataFileName testdata
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When check charges for intra bank fund transfer
 Then verify Intra bank fund transfer fund transfer stauts
 !-- Then cardholder logouts from cardholder portal
@@ -62,7 +66,8 @@ Meta:
 @TCName TC_masterCardMoneyTransfer
 @sheetName CardHolder
 @testDataFileName testdata
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When fund transfer through MasterCard Money Send
 Then verify MasterCard Money send fund transfer stauts
 !-- Then cardholder logouts from cardholder portal
@@ -73,7 +78,8 @@ Meta:
 @TCName TC_cashRemittanceBookting
 @sheetName CardHolder
 @testDataFileName testdata
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When cardholder book the cash remittance
 !-- Then cardholder logouts from cardholder portal
 
@@ -84,6 +90,7 @@ Meta:
 @TCName TC_cancelCashRemittanceBookting
 @sheetName CardHolder
 @testDataFileName testdata
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When cardholder cancel the cash remittance
 !-- Then cardholder logouts from cardholder portal

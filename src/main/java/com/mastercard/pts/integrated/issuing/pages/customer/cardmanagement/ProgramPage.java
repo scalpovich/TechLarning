@@ -18,6 +18,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -32,9 +33,6 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L1PROGRAM_SETUP, CardManagementNav.L2_PROGRAM })
 public class ProgramPage extends AbstractBasePage {
 	final Logger logger = LoggerFactory.getLogger(ProgramPage.class);
-
-	// ------------- Card Management > Institution Parameter Setup > Institution
-	// Currency [ISSS05]
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=programCode]")
 	private MCWebElement programSearchTxt;
@@ -483,8 +481,10 @@ public class ProgramPage extends AbstractBasePage {
 			enterValueinTextBox(LoadsWithoutKYCTxt, program.getLoadsWithoutKyc());
 	}
 
+	@Override
 	public void clickNextButton() {
 		ClickButton(NEXTBtn);
+		SimulatorUtilities.wait(2000);
 	}
 
 	public void selectWalletPlan1(Program program) {
@@ -603,7 +603,6 @@ public class ProgramPage extends AbstractBasePage {
 		selectWalletPlan1(program);
 		if ((program.getProgramType().contains("Travel card")) || (program.getWalletType().contains("Multi"))) {
 			selectWalletPlan2(program);
-			// selectWalletPlan3(program);
 		}
 	}
 
@@ -614,7 +613,7 @@ public class ProgramPage extends AbstractBasePage {
 	public void selectOtherPlans(String loyaltyPlan) {
 		selectStatementMessagePlan();
 		selectMarketingMessagePlan();
-		selectByVisibleText(loyaltyPlanDDwn, loyaltyPlan);
+		//selectByVisibleText(loyaltyPlanDDwn, loyaltyPlan);
 	}
 	public void enterProgramValue(String a) {
 

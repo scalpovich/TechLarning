@@ -69,7 +69,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	}
 	public void processDeviceProductionBatch(DeviceProductionBatch batch) {
-		logger.info("Device-Production Batch: {}", batch.getBatchNumber());
+		CustomUtils.ThreadDotSleep(5000);
 		WebElementUtils.enterText(BatchNumberTxt, batch.getBatchNumber());
 		ClickButton(SearchBtn);
 		if (DeviceProductionBatchRecordChkBx.isVisible()) {

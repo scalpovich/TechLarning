@@ -67,9 +67,8 @@ public class ProgramFlows extends MenuFlows {
 		programpage.clickNextButton();
 		programpage.selectWalletPLan(program);
 		programpage.selectDevicePlan(program);
-		//programpage.selectOtherPlans();
-		programpage.clickNextButton();
-		programpage.clickNextButton();
+		programpage.clickNextButton();			
+		programpage.clickNextButton();		
 		program.setProgram(PROGRAM);
 		programpage.clickFinishButton();
 		return PROGRAM;

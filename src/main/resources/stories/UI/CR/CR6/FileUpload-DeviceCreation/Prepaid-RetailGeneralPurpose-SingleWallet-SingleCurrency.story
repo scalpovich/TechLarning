@@ -1,16 +1,14 @@
 Narrative:
 As a(n)  Customer portal user 
 I want to onborad prepaid customer using application upload 
-So that Prepaid customer can get onboarded and use device for transaction
-@Meta:
-Atul_Test7
+So that Prepaid customer can get onboarded  Retail General Purpose single wallet single currency and use device for transaction
 
-Scenario:1 Verify system allows onboarding for new prepaid customer using application upload funcationality
+Scenario: Verify system allows onboarding for new prepaid customer Retail general Purpose single wallet single currency using application upload funcationality
 Meta:
-@CR6
-@Scenario1_AddLoyaltyPlan
-@TCName TC1LoyaltyPlanCreation
-@sheetName LoyaltyPlan
+@CR
+@Scenario1_Retail General Purpose_SingleWallet_SingleCurrency
+@TCName TC_Application_Upload_Prepaid
+@sheetName Prepaid_Application_Upload
 @FileUpload
 
 Given login to portal as existing bank as a Customeruser
@@ -25,8 +23,8 @@ When user creates a Single wallet Program for Mastercard for product Prepaid for
 Then Program should get created
 When user creates a Device Range for product Prepaid;
 When user creates Application Upload Prepaid batch file and uploads it on server for Individual
-When processes pre-production batch for prepaid
-When processes device production batch for prepaid
+When processes pre-production batch prepaid
+When processes device production batch prepaid
 When User search for device on search screen for product type prepaid and validates the status as NORMAL [0]
 Then user logouts from customer portal
 

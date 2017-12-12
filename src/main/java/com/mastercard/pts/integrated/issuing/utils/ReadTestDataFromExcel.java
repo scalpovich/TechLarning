@@ -54,7 +54,6 @@ public class ReadTestDataFromExcel {
 		HashMap<String, String> singleStoryTestData;
 		List<String> strHeaders = new ArrayList<String>();
 		int columnIndex = 0;
-		//File file = new File(filepath);
 		FileInputStream inputStream;
 		XSSFWorkbook excelWB = null;
 		Sheet excelSheet;
@@ -74,14 +73,13 @@ public class ReadTestDataFromExcel {
 			for (int i = 1; i <= rowCount; i++) {
 				singleStoryTestData = new HashMap<String, String>();
 				Row row = excelSheet.getRow(i);
-				if(row!=null)
+				if(row!=null){
 				for (int j = 0; j < row.getLastCellNum(); j++) {
 					row.getCell(j).setCellType(Cell.CELL_TYPE_STRING);
-					//logger.info("Value of cell index" +j+"Value of cell"+row.getCell(j).getStringCellValue());
 					if (!(row.getCell(j) == null && row.getCell(j).getStringCellValue().equals("")&& row.getCell(j).getStringCellValue().isEmpty()))
 						singleStoryTestData.put(strHeaders.get(j), row.getCell(j).getStringCellValue());
 				}
-
+			}
 				MapUtils.fnAddValueToMap(entireTestData, row.getCell(columnIndex).getStringCellValue(),
 						singleStoryTestData);
 			}
