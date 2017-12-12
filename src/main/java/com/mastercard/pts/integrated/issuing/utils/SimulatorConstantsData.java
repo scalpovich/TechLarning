@@ -30,5 +30,7 @@ public class SimulatorConstantsData {
 	
 	public static final String MDFS_LICENSE_TYPE_16X = "MAS 16.4";
 	
+	public static final String SAMPLE_PAN_NUMBER = "2222550010000018";
+	
 	private SimulatorConstantsData() {}
 }

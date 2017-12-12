@@ -152,7 +152,7 @@ public class WalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectCurrency(WalletPlan walletplan) {
-		selectByVisibleText(currencyDDwn, walletplan.getCurrency());
+		selectByVisibleText(CurrencyDDwn, walletplan.getCurrency());
 	}
 
 	public void checkAllowRefund() {
@@ -307,6 +307,7 @@ public class WalletPlanPage extends AbstractBasePage {
 		waitForLoaderToDisappear();
 		selectProgramType(walletplan);
 		waitForPageToLoad(getFinder().getWebDriver());
+		//selectProduct(devicecreation);
 		selectWalletUsage(walletplan);
 		enterDummyAccountNumber();
 		enterReservedAmount();

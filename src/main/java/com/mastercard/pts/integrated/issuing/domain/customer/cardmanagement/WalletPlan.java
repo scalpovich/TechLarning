@@ -43,10 +43,12 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String currency;
 	private String productType;
 	private String programType;
+	private String product;
 	private String usage;
 	private String dummyAccountNumber;
 	private String billingCyleCode;
 	private String creditPlan;	
+	private String currencyWalletPlan;
 	private String cashoutRemittanceRequestExpiryDays;
 	private String cashoutReverseRemittanceFeeOnCancellation;
 	private String refundAllowRefund;
@@ -166,7 +168,20 @@ public class WalletPlan implements HasCodeAndDescription {
 		plan.setWalletInactvityRulesClosureWalletAfterDays(provider.getString(WP_WALLET_INACTVITY_RULES_CLOSURE_WALLET_AFTER_DAYS));
 		return plan;
 	}
-	
+	public String getProduct() {
+		return product;
+	}
+
+	public void setProduct(String product) {
+		this.product = product;
+	}
+	public String getCurrencyWalletPlan() {
+		return currencyWalletPlan;
+	}
+
+	public void setCurrencyWalletPlan(String currencyWalletPlan) {
+		this.currencyWalletPlan = currencyWalletPlan;
+	}
 	public String getCashoutRemittanceRequestExpiryDays() {
 		return cashoutRemittanceRequestExpiryDays;
 	}
@@ -385,11 +400,9 @@ public class WalletPlan implements HasCodeAndDescription {
 		this.walletPlanUsage = walletPlanUsage;
 	}
 
-	public static WalletPlan walletplanDataprovider() {
-		WalletPlan walletplan = new WalletPlan();
-		walletplan.setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
-		walletplan.setWalletPlanUsage(MapUtils.fnGetInputDataFromMap("WalletplanUsage"));
-		return walletplan;
+	public void  walletplanDataprovider() {
+	setCurrencyWalletPlan(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
+	setWalletPlanUsage(MapUtils.fnGetInputDataFromMap("WalletplanUsage"));
 	}
 
 	

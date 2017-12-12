@@ -28,10 +28,10 @@ public class LoginPage extends AbstractBasePage  {
 	public static final String AUTHENTIFICATION_FAILED_COLLECT = "Authentication failed. "
 			+ "You have used an invalid user name, password or client certificate."; 
 	
-	public static final String AUTHENTIFICATION_FAILED = "Authentication failed. "
-			+ "Please enter valid User ID or Password.";
+	public static final String AUTHENTIFICATION_FAILED_CARDHOLDER = "LOGON FAILED- Invalid User ID";
+	public static final String AUTHENTIFICATION_FAILED = "Invalid UserId/Password.";
 	
-
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[type='text']")
 	private MCWebElement userIdInput;
 	
@@ -306,6 +306,21 @@ public class LoginPage extends AbstractBasePage  {
 			return errorMessageLbl.toString();
 		} catch (TimeoutException e) {
 			llogger.info("Operation Status message {}: " + "No Status is updated");
+			llogger.debug("Error message {}: ", e);
+			return null;
+		}
+	}
+	public String getErrorMessageCollect() {
+		try {
+			WebElement errorMessageLbl = new WebDriverWait(driver(),
+					timeoutInSec)
+					.until(ExpectedConditions.visibilityOfElementLocated(By
+							.xpath("//span[@class='feedbackPanelERROR']/span")));
+			llogger.info("Error message : {}", errorMessageLbl.getText());
+			return errorMessageLbl.getText();
+		} catch (TimeoutException e) {
+			llogger.info("Operation Status message {}: "
+					+ "No Status is updated");
 			llogger.debug("Error message {}: ", e);
 			return null;
 		}

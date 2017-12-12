@@ -1,5 +1,3 @@
-!-- e07168
-
 Narrative:
 As a Cardhodler
 I want to able to loing into cardholder portal 
@@ -15,7 +13,8 @@ Meta:
 @TCName TC_RequestVirtualPrepaidCard
 @sheetName CardHolder
 @testDataFileName testdata
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When create virtual prepaid card request
 Then verify virtual prepaid card request status
 
@@ -24,7 +23,8 @@ Scenario:Create request for Limited Validity Virtual Card
 @TCName TC_RequestLimitedValidityVirtualCard
 @sheetName CardHolder
 @testDataFileName testdata
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When request limited validity virtual card
 Then verify request status for limited validity virtual card
 
@@ -33,6 +33,7 @@ Scenario:Cancel the requested limited validity virtual card
 @TCName TC_CancelRequestedLimitedValidityVirtualCard
 @sheetName CardHolder
 @testDataFileName testdata
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When cancel limited validity virtual card request
 Then verify request status for limited validity virtual card

@@ -30,7 +30,7 @@ Meta:
 @TestId TC378871
 Given user is logged in agent portal as agent user
 When user navigates to checker page
-Then checker page is loaded and master detail content title is Card Sale Checker
+Then checker page is loaded and master detail content title is Device Sale Checker
 And Checker page of services tab is rendered correctly
 And user sign out from agent portal
 

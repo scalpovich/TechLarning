@@ -15,7 +15,8 @@ Meta:
 @TCName TC_ViewChargeForFundTransfer
 @sheetName CardHolder
 @testDataFileName testdata
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When check charges for Fund Transfer
 Then verify total debit amount for transaction
 Then verify transaction conversation rate
@@ -26,9 +27,9 @@ Meta:
 @TCName TC_ViewChargeForWalletToWalletDebit
 @sheetName CardHolder
 @testDataFileName testdata
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When check charges for Intra Client - Wallet to Wallet Transfer(Debit)
-Then verify transaction conversation rateViewChargeForWalletToWalletDebit
 Then verify total debit amount for transaction
 
 Scenario:To Verify charges for Refund on Wallet Closure 
@@ -37,7 +38,8 @@ Meta:
 @TCName TC_ViewChargeForWalletClosure
 @sheetName CardHolder
 @testDataFileName testdata
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When check charges for Refund on Wallet Closure
 Then verify transaction conversation rate
 Then verify total debit amount for transaction
@@ -48,7 +50,8 @@ Meta:
 @TCName TC_ViewChargeForVisaMoneyTransferDebit
 @sheetName CardHolder
 @testDataFileName testdata
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When check charges for Visa Money Transfer Debit
 Then verify transaction conversation rate
 Then verify total debit amount for transaction
@@ -60,7 +63,8 @@ Meta:
 @TCName TC_ViewChargeForIntraBnkWalletToWalletTransferDebit
 @sheetName CardHolder
 @testDataFileName testdata
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When check charges for Intra Bank - Wallet to Wallet Transfer(Debit)
 Then verify transaction conversation rate
 Then verify total debit amount for transaction
@@ -71,7 +75,8 @@ Meta:
 @TCName TC_ViewChargeForMasterCardMoneySend
 @sheetName CardHolder
 @testDataFileName testdata
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When check charges for MasterCard MoneySend - Sending
 Then verify transaction conversation rate
 Then verify total debit amount for transaction
@@ -82,7 +87,8 @@ Meta:
 @TCName TC_viewTransactionHistoryForWallet
 @sheetName CardHolder
 @testDataFileName testdata
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When check transaction history for selected wallet
 
 Scenario:To Verify transaction history for selected wallet between selected from and to date
@@ -91,6 +97,7 @@ Meta:
 @TCName TC_viewTransactionHistoryForWallet
 @sheetName CardHolder
 @testDataFileName testdata
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When check transaction history between selected duration
 Then verify transaction details
