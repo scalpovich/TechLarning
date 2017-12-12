@@ -22,8 +22,8 @@ Meta:
 @TestId 
 Given user is logged in institution
 And a new device was created
-When processes pre-production batch for debit
-When processes device production batch for debit
+When processes pre-production batch for prepaid
+When processes device production batch for prepaid
 Then device has "normal" status
 
 Scenario: prepaid emv adjustment and file upload transaction

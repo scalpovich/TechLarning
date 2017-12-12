@@ -1,35 +1,35 @@
-Prepaid authorisation: Load from file Upload and portals for prepaid msr retail gift card
+prepaid corporate gift card msr manual authorization
 
 Narrative:
 In order to provide to client easy-to-use payment method for e-commerce retail
 As an issuer
-I want to Upload transactions from a file for prepaid msr retail gift card
+I want to create an msr prepaid card for client and perform manual authorization from customer portal
 
 Meta:
-@StoryName prepaid_rtc_load_from_file
-@SanityCards
+@StoryName prepaid_cgc_manual_auth
+@CRCardsWithAuthorization
 
-Scenario: Set up prepaid msr retail gift card
+Scenario: Set up msr prepaid card
 Meta:
-@TestId
+@TestId TC407061
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
 Then device has "normal" status
 
-Scenario: prepaid msr retail prepaid card device production
+Scenario: msr prepaid card device production
 Meta:
-@TestId 
+@TestId TC408234
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 Then device has "normal" status
 
-Scenario: prepaid msr adjustment and file upload transaction
+Scenario: msr prepaid card authorization
 Meta:
-@TestId 
+@TestId TC408235
 Given user is logged in institution
-When user creates and uploads transaction file
-And user processes upload batch for prepaid
-Then in batch trace history transaction is successful using job id
+And a new device was created
+When user raises an authorization request
+Then status of request is "approved"
