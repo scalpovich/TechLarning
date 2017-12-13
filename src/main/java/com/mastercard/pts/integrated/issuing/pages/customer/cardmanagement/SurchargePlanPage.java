@@ -37,61 +37,61 @@ public class SurchargePlanPage extends AbstractBasePage {
 	DatePicker datePicker;
 
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
-	private MCWebElement add;
+	private MCWebElement addBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=surchargeFeePlanCode]")
-	private MCWebElement surchargePlanCode;
+	private MCWebElement surchargePlanCodeTxtBx;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=description]")
-	private MCWebElement description;
+	private MCWebElement descriptionTxtBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "currencyCode:input:dropdowncomponent")
-	private MCWebElement currency;
+	private MCWebElement currencyDDwn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@id=//label[text()='System Calculated']/@for]")
-	private MCWebElement systemCalculatedSurchargeSource;
+	private MCWebElement systemCalculatedSurchargeSourceRadioBtn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@id=//label[text()='Network Calculated']/@for]")
-	private MCWebElement networkCalculatedSurchargeSource;
+	private MCWebElement networkCalculatedSurchargeSourceRadioBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Add Details']")
-	private MCWebElement addDetails;
+	private MCWebElement addDetailsBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "networkCode:input:dropdowncomponent")
-	private MCWebElement interchange;
+	private MCWebElement interchangeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mcgCode:input:dropdowncomponent")
-	private MCWebElement mcg;
+	private MCWebElement mcgDDwn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[input[@name='effectiveDate:input:dateTextField']]//img")
-	private MCWebElement effectiveDate;
+	private MCWebElement effectiveDatePicker;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[input[@name='endDate:input:dateTextField']]//img")
-	private MCWebElement endDate;
+	private MCWebElement endDatePicker;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "detailDesc:input:inputTextField")
-	private MCWebElement feeTransactionDescription;
+	private MCWebElement feeTransactionDescriptionTxtBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "feesRate:input:inputTextField")
-	private MCWebElement surchargeRate;
+	private MCWebElement surchargeRateTxtBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "fixedSurchargeAmount:input:inputAmountField")
-	private MCWebElement fixedSurchargeAmt;
+	private MCWebElement fixedSurchargeAmtTxtBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "minSurchargeAmount:input:inputAmountField")
-	private MCWebElement minSurchargeAmt;
+	private MCWebElement minSurchargeAmtTxtBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "maxSurchargeAmount:input:inputAmountField")
-	private MCWebElement maxSurchargeAmt;
+	private MCWebElement maxSurchargeAmtTxtBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElement save;
+	private MCWebElement saveBtn;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.feedbackPanelINFO")
-	private MCWebElement feedback;
+	private MCWebElement feedbackPanel;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='surchargeFeePlanCode']")
-	private MCWebElement planCodeSearchBox;
+	private MCWebElement planCodeSearchTxtBx;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "td.norecords-td span.norecords")
 	private MCWebElement noRecordsCell;
@@ -105,12 +105,12 @@ public class SurchargePlanPage extends AbstractBasePage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.elementToBeClickable(surchargePlanCode),
-				WebElementUtils.elementToBeClickable(description));
+		return Arrays.asList(WebElementUtils.elementToBeClickable(surchargePlanCodeTxtBx),
+				WebElementUtils.elementToBeClickable(descriptionTxtBx));
 	}
 
 	public void addSurchargePlan() {
-		ClickButton(add);
+		ClickButton(addBtn);
 		switchToSurchargePlanFrame();
 	}
 	
@@ -119,15 +119,15 @@ public class SurchargePlanPage extends AbstractBasePage {
 	}
 
 	public void enterSurchargePlanCode(SurchargePlan plan) {
-		enterValueinTextBox(surchargePlanCode, plan.getSurchargePlanCode());
+		enterValueinTextBox(surchargePlanCodeTxtBx, plan.getSurchargePlanCode());
 	}
 
 	public void enterDescription(SurchargePlan plan) {
-		enterValueinTextBox(description, plan.getDescription());
+		enterValueinTextBox(descriptionTxtBx, plan.getDescription());
 	}
 
 	public void selectCurrency(SurchargePlan plan) {
-		SelectDropDownByText(currency, plan.getCurrency());
+		SelectDropDownByText(currencyDDwn, plan.getCurrency());
 	}
 
 	public void selectSurchargeSource(SurchargePlan plan) {
@@ -139,11 +139,11 @@ public class SurchargePlanPage extends AbstractBasePage {
 
 		switch (scSource) {
 		case SYSTEM_CALCULATED:
-			surchargeSource = systemCalculatedSurchargeSource;
+			surchargeSource = systemCalculatedSurchargeSourceRadioBtn;
 			break;
 
 		case NETWORK_CALCULATED:
-			surchargeSource = networkCalculatedSurchargeSource;
+			surchargeSource = networkCalculatedSurchargeSourceRadioBtn;
 			break;
 
 		default:
@@ -154,12 +154,12 @@ public class SurchargePlanPage extends AbstractBasePage {
 	}
 
 	public void addDetails() {
-		ClickButton(addDetails);
+		ClickButton(addDetailsBtn);
 	}
 
 	public void addSurchargePlanDetail() {
 		switchToFrame(surchargePlanDetailsIframeId);
-		ClickButton(add);
+		ClickButton(addBtn);
 	}
 
 	public void switchToSurchargePlanDetailFrame() {
@@ -167,11 +167,11 @@ public class SurchargePlanPage extends AbstractBasePage {
 	}
 
 	public void selectInterchange(SurchargePlan plan) {
-		SelectDropDownByText(interchange, plan.getInterchange());
+		SelectDropDownByText(interchangeDDwn, plan.getInterchange());
 	}
 
 	public void selectMCG(SurchargePlan plan) {
-		SelectDropDownByText(mcg, plan.getMcg());
+		SelectDropDownByText(mcgDDwn, plan.getMcg());
 	}
 
 	public void pickEffectiveDate(SurchargePlan plan) {
@@ -183,41 +183,41 @@ public class SurchargePlanPage extends AbstractBasePage {
 	}
 
 	public void enterFeeTransactionDescription(SurchargePlan plan) {
-		enterValueinTextBox(feeTransactionDescription, plan.getFeeTransactionDesc());
+		enterValueinTextBox(feeTransactionDescriptionTxtBx, plan.getFeeTransactionDesc());
 	}
 
 	public void enterSurchargeRate(SurchargePlan plan) {
-		enterValueinTextBox(surchargeRate, plan.getSurchargeRate());
+		enterValueinTextBox(surchargeRateTxtBx, plan.getSurchargeRate());
 	}
 
 	public void enterFixedSurchargeAmount(SurchargePlan plan) {
-		enterValueinTextBox(fixedSurchargeAmt, plan.getFixedSurchargeAmt());
+		enterValueinTextBox(fixedSurchargeAmtTxtBx, plan.getFixedSurchargeAmt());
 	}
 
 	public void enterMinSurchargeAmount(SurchargePlan plan) {
-		enterValueinTextBox(minSurchargeAmt, plan.getMinSurchargeAmt());
+		enterValueinTextBox(minSurchargeAmtTxtBx, plan.getMinSurchargeAmt());
 	}
 
 	public void enterMaxSurchargeAmount(SurchargePlan plan) {
-		enterValueinTextBox(maxSurchargeAmt, plan.getMaxSurchargeAmt());
+		enterValueinTextBox(maxSurchargeAmtTxtBx, plan.getMaxSurchargeAmt());
 	}
 
 	public void save() {
-		ClickButton(save);
+		ClickButton(saveBtn);
 	}
 		
 	public void enterPlanCodeInSearchBox(SurchargePlan plan) {
-		enterValueinTextBox(planCodeSearchBox, plan.getSurchargePlanCode());
+		enterValueinTextBox(planCodeSearchTxtBx, plan.getSurchargePlanCode());
 	}
 	
 	public void saveMain() {
 		SwitchToDefaultFrame();
 		switchToSurchargePlanFrame();
-		ClickButton(save);
+		ClickButton(saveBtn);
 	}
 	
 	public String getFeedbackText() {
-		return feedback.getText();
+		return feedbackPanel.getText();
 	}
 	
 	public Boolean isNoRecordsFoundInTableView() {
