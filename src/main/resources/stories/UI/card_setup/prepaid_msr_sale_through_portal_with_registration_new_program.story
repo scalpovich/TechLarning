@@ -6,8 +6,8 @@ As an Agent User
 I want to fill sale related information through portal: new program with registration
 
 Meta:
-@StoryName S193816
-@SanityCards
+@StoryName S1938162
+@CR1
 
 Scenario: Prepaid - Admin User - Assign Program to Agency
 Meta:

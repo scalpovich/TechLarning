@@ -111,6 +111,7 @@ public class Program implements HasCodeAndDescription {
 	private String resetLimitsCashLimitReset;
 	private String resetLimitsAddonLimitReset;
 	private String eventsSelectAll;
+	private String institute;
 	public String loadsWithoutKyc;
 
 	public String Currency;
@@ -725,6 +726,14 @@ public class Program implements HasCodeAndDescription {
 		this.prepaidStatementPlan = prepaidStatementPlan;
 	}
 
+	public String getInstitute() {
+		return institute;
+	}
+
+	public void setInstitute(String institute) {
+		this.institute = institute;
+	}
+	
 	@Override
 	public String toString() {
 		return MiscUtils.toString(this);
