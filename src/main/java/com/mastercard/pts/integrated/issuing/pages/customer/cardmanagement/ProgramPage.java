@@ -18,6 +18,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -32,9 +33,6 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L1PROGRAM_SETUP, CardManagementNav.L2_PROGRAM })
 public class ProgramPage extends AbstractBasePage {
 	final Logger logger = LoggerFactory.getLogger(ProgramPage.class);
-
-	// ------------- Card Management > Institution Parameter Setup > Institution
-	// Currency [ISSS05]
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=programCode]")
 	private MCWebElement programSearchTxt;
@@ -233,6 +231,20 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "buttons:cancel")
 	private MCWebElement CancelBtn;
+	@PageElement(findBy = FindBy.NAME, valueToFind = "ofacScreeningOfNewApp:checkBoxComponent")
+	private MCWebElement sdnCheckBox;
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
+	private MCWebElement enterProgram;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:buttonPanel:buttonCol:searchButton")
+	private MCWebElement search;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//following-sibling::td[4]/span/a")
+	private MCWebElement editProgram;
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Save']")
+	public MCWebElement save;
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:loyaltyPlanCode:input:dropdowncomponent")
+	private MCWebElement loyaltyPlanDDwn;
 
 	public void addProgram(String programCode) {
 		WebElementUtils.enterText(programTxt, programCode);
@@ -364,6 +376,7 @@ public class ProgramPage extends AbstractBasePage {
 		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
 			WebElementUtils.selectDropDownByOptionalVisibleText(stmtPlanCodeDDwn, program.getPrepaidStatementPlan());
 		}
+		waitForLoaderToDisappear();
 		clickNextButton();
 		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 			fillDataForCreditCard(program);
@@ -394,7 +407,7 @@ public class ProgramPage extends AbstractBasePage {
 
 	public String enterProgramCode() {
 		waitForElementVisible(ProgramTxt);
-		if (MapUtils.fnGetInputDataFromMap("ProgramCode") != null) {
+		if (MapUtils.fnGetInputDataFromMap("ProgramCode") == "") {
 			enterValueinTextBox(ProgramTxt, MapUtils.fnGetInputDataFromMap("ProgramCode"));
 		} else {
 			enterValueinTextBox(ProgramTxt, CustomUtils.randomNumbers(4));
@@ -468,8 +481,10 @@ public class ProgramPage extends AbstractBasePage {
 			enterValueinTextBox(LoadsWithoutKYCTxt, program.getLoadsWithoutKyc());
 	}
 
+	@Override
 	public void clickNextButton() {
 		ClickButton(NEXTBtn);
+		SimulatorUtilities.wait(2000);
 	}
 
 	public void selectWalletPlan1(Program program) {
@@ -504,9 +519,10 @@ public class ProgramPage extends AbstractBasePage {
 
 	public void selectDevicePlan1(Program program) {
 		waitForElementVisible(DevicePlan1DDwn);
-		if (MapUtils.fnGetInputDataFromMap("DevicePlanForProgram") != null) {
+		if (MapUtils.fnGetInputDataFromMap("DevicePlanForProgram") == "") {
 			selectByVisibleText(DevicePlan1DDwn, MapUtils.fnGetInputDataFromMap("DevicePlanForProgram"));
 		} else {
+			logger.info("DevicePlanProgram:"+program.getDevicePlanProgram());
 			selectByVisibleText(DevicePlan1DDwn, program.getDevicePlanProgram());
 		}
 	}
@@ -587,7 +603,6 @@ public class ProgramPage extends AbstractBasePage {
 		selectWalletPlan1(program);
 		if ((program.getProgramType().contains("Travel card")) || (program.getWalletType().contains("Multi"))) {
 			selectWalletPlan2(program);
-			// selectWalletPlan3(program);
 		}
 	}
 
@@ -595,10 +610,28 @@ public class ProgramPage extends AbstractBasePage {
 		selectDevicePlan1(program);
 	}
 
-	public void selectOtherPlans() {
+	public void selectOtherPlans(String loyaltyPlan) {
 		selectStatementMessagePlan();
 		selectMarketingMessagePlan();
+		//selectByVisibleText(loyaltyPlanDDwn, loyaltyPlan);
 	}
+	public void enterProgramValue(String a) {
+
+		enterValueinTextBox(enterProgram, a);
+		clickWhenClickable(search);
+		waitForElementVisible(editProgram);
+		Scrolldown(editProgram);
+		clickWhenClickableDoNotWaitForWicket(editProgram);
+		CustomUtils.ThreadDotSleep(2000);
+		switchToEditProgramframe();
+		ClickCheckBox(sdnCheckBox, false);
+		clickWhenClickable(save);
+	}
+
+	public void switchToEditProgramframe() {
+		switchToIframe(Constants.EDIT_PROGRAM_FRAME);
+	}
+
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

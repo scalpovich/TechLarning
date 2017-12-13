@@ -30,19 +30,19 @@ Then user is logged into agent portal successfully
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+{metaByRow=true}
 |Meta:           | type   |
 |@TestId TC406081| admin  |
 |@TestId TC411892| agency |
 |@TestId TC411893| branch |
 |@TestId TC411894| agent  |
 
-Scenario: Non-UI Verification - Successful login to collect portal
-Meta:
-@TestId TC406082
-Given user is on login page of collect portal
-When user logs in with valid credentials
-Then user is logged into collect portal successfully
+!-- Scenario: Non-UI Verification - Successful login to collect portal
+!-- Meta:
+!-- @TestId TC406082
+!-- Given user is on login page of collect portal
+!-- When user logs in with valid credentials
+!-- Then user is logged into collect portal successfully
 
 Scenario: Non-UI Verification - Default institute selected in list of available institutions on login to customer portal
 Meta:
@@ -60,16 +60,18 @@ When user logs in with valid credentials
 And user confirms selection of institution
 Then selected institution page is displayed
 
-Scenario: Non-UI Verification - Cannot login with incorrect password
-Given user is on login page of <type> portal
+Meta:
+@TestId TC406087
+Given user is on login page of customer portal
 When user logs in with incorrect password
 Then user sees message that user name or password is incorrect
 
-Examples:
-!-- {metaByRow=true}
-|Meta:           | type      |
-|@TestId TC406087| customer  |
-|@TestId TC411895| cardholder|
+Scenario: Non-UI Verification - Cannot login with incorrect password
+Meta:
+@TestId TC411895
+Given user is on login page of cardholder portal
+When user logs in with incorrect password
+Then user sees message that user name or password is incorrect for cardholder portal
 
 Scenario: Non-UI Verification - Cannot login with incorrect password for collect portal
 Meta:

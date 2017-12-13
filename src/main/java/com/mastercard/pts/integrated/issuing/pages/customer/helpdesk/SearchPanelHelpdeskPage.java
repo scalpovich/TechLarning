@@ -35,7 +35,8 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:inputTextField")
 	private MCWebElement firstName;
-
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:inputCodeField")
+	private MCWebElement firstNameInput;
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:1:componentPanel:input:inputTextField")
 	private MCWebElement deviceNumber;
 
@@ -53,7 +54,9 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = ".//*[@alt='Edit Record']")
 	private MCWebElement editBtn;
-
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr//following-sibling::td[7]/span")
+	private MCWebElement normalStatus;
+	
 	public MCWebElement getEditBtn() {
 		return editBtn;
 	}
@@ -65,12 +68,23 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 		enterText(this.deviceNumber, deviceNumber);
 		waitForElementVisible(searchBtn);
 		searchBtn.click();
-		CustomUtils.ThreadDotSleep(2000);
-		//getFinder().getWebDriver().findElement(By.xpath(".//*[@alt='Edit Record']")).click();
+	   //getFinder().getWebDriver().findElement(By.xpath(".//*[@alt='Edit Record']")).click();
 	}
 
 	public void clickEditBtn() {
 		waitForElementVisible(editBtn);
 		editBtn.click();
+	}
+	public void clickSearchBtn() {
+		waitForElementVisible(searchBtn);
+		searchBtn.click();
+	}
+	public String searchDeviceUsingName(String productType, String name) {
+		waitForElementVisible(this.productType);
+		SelectDropDownByText(this.productType, productType);
+		enterText(this.firstNameInput, String.valueOf(name));
+		waitForElementVisible(searchBtn);
+		searchBtn.click();
+		return normalStatus.getText();
 	}
 }

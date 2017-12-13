@@ -41,10 +41,15 @@ public class DevicePlanSteps {
 		deviceplan.setEmbossiongVendor(vendor.getNewVendor());
 		deviceplan.setActivationMode(activationMode);
 		String devicePlan = "";
-		devicePlan = deviceplanflows.createDevicePlan(deviceplan);
+		 devicePlan = deviceplanflows.createDevicePlan(deviceplan);
 		Assert.assertNotNull(devicePlan);
 		deviceplan.setDevicePlan(devicePlan);
 
+	}
+
+	@When("user wants to mandatory field validations on add device plan page")
+	public void errorValidationStepforaddDevicePlan() {
+		deviceplanflows.validateErrormsg(deviceplan);
 	}
 
 	@When("user save device plan")

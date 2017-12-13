@@ -38,10 +38,9 @@ public class BatchProcessingPage extends AbstractBasePage {
 			.getLogger(BatchProcessingPage.class);
 	@Autowired
 	QMRPDFUtility pdfUtil;
-
 	@PageElement(findBy = FindBy.NAME, valueToFind = "componentPanel")
 	private MCWebElement selectReportDDwn;
-@PageElement(findBy = FindBy.NAME, valueToFind = "batchType:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "batchType:input:dropdowncomponent")
 	public MCWebElement batchTypeDDwn;
 	// ProcessingBatches
 

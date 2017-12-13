@@ -46,7 +46,7 @@ public class DisputesManagementReportPage extends AbstractDisputePage {
 	public void downloadPotentialChargeBackReport() {
 		WebElementUtils.selectDropDownByVisibleText(selectReportDDwn, provider.getString("SELECT_REPORT"));
 		searchButtonElement.click();
-		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, provider.getString("PRODUCT_TYPE"));
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, provider.getString("REPORT_PRODUCT_TYPE"));
 		WebElementUtils.selectDropDownByVisibleText(fileTypeDDwn, provider.getString("FILE_TYPE"));
 		generateReportBtn.click();
 	}

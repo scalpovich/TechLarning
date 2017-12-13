@@ -191,7 +191,7 @@ public class Vendor {
 	}
 
 	public void setAddressLine2(String addressLine2) {
-		addressLine2 = addressLine2;
+		this.addressLine2 = addressLine2;
 	}
 
 	public String getCountry() {
@@ -251,8 +251,8 @@ public class Vendor {
 	}
 
 	public void vendorDataProvider() {
-		setAddressLine1(MapUtils.fnGetInputDataFromMap("addressLine1"));
-		setAddressLine2(MapUtils.fnGetInputDataFromMap("addressLine2"));
+		setAddressLine1(MapUtils.fnGetInputDataFromMap("AddressLine1"));
+		setAddressLine2(MapUtils.fnGetInputDataFromMap("AddressLine2"));
 		setCountry(MapUtils.fnGetInputDataFromMap("country"));
 		setBranchCode(MapUtils.fnGetInputDataFromMap("BranchCode"));
 		setPINFileTemplateName(MapUtils.fnGetInputDataFromMap("PINFileTempName"));

@@ -4,9 +4,11 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
@@ -52,7 +54,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public String pageValidationCheck = "//ol/li";
 	public String ERRORPANEL = "//li[@class='feedbackPanelERROR']";
-	private static final By INFO_MESSAGE_LOCATOR = By.cssSelector(":not([style]) > .feedbackPanel span.feedbackPanelINFO");
+	private static final By INFO_MESSAGE_LOCATOR = By
+			.cssSelector(":not([style]) > .feedbackPanel span.feedbackPanelINFO");
 
 	private static final String FIRST_ROW_SELECT = ".dataview tbody span";
 
@@ -69,6 +72,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private static final Logger logger = LoggerFactory.getLogger(AbstractBasePage.class);
 
 	public static final LocalDate futureDate = LocalDate.now().plusDays(100);
+	public static final LocalDate futureEndDate = LocalDate.now().plusDays(150);
 
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -196,7 +200,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected void clickCreateButton() {
 		clickWhenClickable(createBtn);
 	}
-	
+
 	public void clickSaveButton() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		clickWhenClickable(saveBtn);
@@ -303,8 +307,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	public String getCellTextByColumnName(int rowNumber, String columnName) {
-		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]", rowNumber,
-				columnName);
+		String xpath = String.format(
+				"//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]",
+				rowNumber, columnName);
 		return driver().findElement(By.xpath(xpath)).getText().trim();
 	}
 
@@ -321,7 +326,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return getCellTextByColumnNameInEmbeddedTab(1, columnName);
 	}
 
-
 	protected Boolean verifyAddDetailsButtonIsVisible() {
 		// looks like method should be renamed
 		return saveBtn.isEnabled();
@@ -333,13 +337,14 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void verifyResponseMessage() {
-		WebElement responseMessage = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By
-				.cssSelector(".SuccessMessageTxt")));
+		WebElement responseMessage = new WebDriverWait(driver(), timeoutInSec)
+				.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".SuccessMessageTxt")));
 		logger.info(RESPONSE_MESSAGE, responseMessage.getText());
 	}
 
 	protected void verifyOperationStatus() {
-		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
+		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec)
+				.until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
 	}
 
@@ -357,7 +362,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected String getSuccessMessage() {
 		try {
-			WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
+			WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec)
+					.until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 			logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
 			return successMessageLbl.toString();
 		} catch (NoSuchElementException e) {
@@ -369,13 +375,14 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected String getCodeFromInfoMessage(String codeDescription) {
 		return driver().findElements(INFO_MESSAGE_LOCATOR).stream().map(WebElement::getText)
-				.filter(text -> StringUtils.containsIgnoreCase(text, codeDescription)).map(text -> text.replaceAll("\\D+", "")).findFirst()
+				.filter(text -> StringUtils.containsIgnoreCase(text, codeDescription))
+				.map(text -> text.replaceAll("\\D+", "")).findFirst()
 				.orElseThrow(() -> new ValidationException("Missing code: " + codeDescription));
 	}
 
 	protected void verifyErrorMessage() {
-		WebElement errorMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By
-				.cssSelector("span.feedbackPanelERROR")));
+		WebElement errorMessageLbl = new WebDriverWait(driver(), timeoutInSec)
+				.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.feedbackPanelERROR")));
 		logger.info("Error message : {}", errorMessageLbl.getText());
 	}
 
@@ -396,8 +403,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected String getErrorMessage() {
 		try {
-			WebElement errorMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By
-					.cssSelector("span.feedbackPanelERROR")));
+			WebElement errorMessageLbl = new WebDriverWait(driver(), timeoutInSec)
+					.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.feedbackPanelERROR")));
 			logger.info("Error message : {}", errorMessageLbl.getText());
 			return errorMessageLbl.toString();
 		} catch (TimeoutException e) {
@@ -408,8 +415,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void verifyNoErrors() {
-		List<WebElement> messages = driver().findElements(
-				By.cssSelector(".feedbackPanelWARNING, .feedbackPanelERROR, .ketchup-error-container-alt[style*=block]"));
+		List<WebElement> messages = driver().findElements(By
+				.cssSelector(".feedbackPanelWARNING, .feedbackPanelERROR, .ketchup-error-container-alt[style*=block]"));
 		if (!messages.isEmpty()) {
 			String errors = messages.stream().map(WebElement::getText).collect(Collectors.joining("\n"));
 			throw new ValidationException(errors);
@@ -432,9 +439,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected boolean verifyDuplicateAndClickCancel() {
 		String message = getMessageFromFeedbackPanel();
-		if (message != null
-				&& (message.contains("Effective Date and End Date should not overlap for same Country") || message.contains("Error in Insertion/Save") || message
-						.contains("Business Calendar setup already exists for logged in Institution for same Effective Date"))) {
+		if (message != null && (message.contains("Effective Date and End Date should not overlap for same Country")
+				|| message.contains("Error in Insertion/Save") || message.contains(
+						"Business Calendar setup already exists for logged in Institution for same Effective Date"))) {
 			clickCancelButton();
 			return true;
 		}
@@ -458,24 +465,25 @@ public abstract class AbstractBasePage extends AbstractPage {
 		waitForWicket();
 	}
 
-	private void clickWhenClickableDoNotWaitForWicket(MCWebElement element) {
+	protected void clickWhenClickableDoNotWaitForWicket(MCWebElement element) {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
 	}
 
 	protected void verifyRecordMarkedForUpdationStatusWarning() {
-		WebElement warningMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By
-				.cssSelector("span.feedbackPanelWARNING")));
+		WebElement warningMessageLbl = new WebDriverWait(driver(), timeoutInSec)
+				.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.feedbackPanelWARNING")));
 		logger.info("Warning message: {}", warningMessageLbl.getText());
 	}
 
 	protected void verifyRecordMarkedForUpdationStatusSuccess() {
-		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
+		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec)
+				.until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
 	}
 
 	protected void verifyOnAgentPortal() {
-		WebElement userName = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By
-				.xpath("//div[@class='credentials']//label")));
+		WebElement userName = new WebDriverWait(driver(), timeoutInSec)
+				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='credentials']//label")));
 		logger.info("On Agent Portal: {}", userName.getText());
 	}
 
@@ -493,8 +501,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected String getBatchNumberFromFeedbackPanel() {
-		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By
-				.cssSelector("span.feedbackPanelINFO")));
+		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec)
+				.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.feedbackPanelINFO")));
 		String batchNumber = successMessageLbl.getText().replaceAll("\\D+", "");
 		logger.info("batch number: {}", batchNumber);
 		return batchNumber;
@@ -524,7 +532,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 		try {
 			WebElementUtils.waitForWicket(driver());
 			for (int l = 0; l < 21; l++) {
-				while ("PENDING [0]".equalsIgnoreCase(batchStatus.getText()) || "IN PROCESS [1]".equalsIgnoreCase(batchStatus.getText()))
+				while ("PENDING [0]".equalsIgnoreCase(batchStatus.getText())
+						|| "IN PROCESS [1]".equalsIgnoreCase(batchStatus.getText()))
 					Thread.sleep(10000); // waiting for page auto refresh
 			}
 		} catch (NoSuchElementException | InterruptedException e) {
@@ -534,15 +543,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void verifySearchButton(String buttonLabel) {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(searchButtonElement));
-		Assert.assertTrue("Error Message -  Button Label - Expected Result : " + buttonLabel + ACTUAL_RESULT_LABEL + searchButtonElement.getText(),
-				buttonLabel.contains(searchButtonElement.getText()));
+		Assert.assertTrue("Error Message -  Button Label - Expected Result : " + buttonLabel + ACTUAL_RESULT_LABEL
+				+ searchButtonElement.getText(), buttonLabel.contains(searchButtonElement.getText()));
 		logger.info(RESPONSE_MESSAGE, searchButtonElement.getText());
 	}
 
 	protected void verifyPopup(String popupName) {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(popupNameElement));
-		Assert.assertTrue("Error Message - Popup Name - Expecting Result : " + popupName + ACTUAL_RESULT_LABEL + popupNameElement.getText(),
-				popupName.contains(popupNameElement.getText()));
+		Assert.assertTrue("Error Message - Popup Name - Expecting Result : " + popupName + ACTUAL_RESULT_LABEL
+				+ popupNameElement.getText(), popupName.contains(popupNameElement.getText()));
 		logger.info(RESPONSE_MESSAGE, popupNameElement.getText());
 	}
 
@@ -552,8 +561,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 		boolean isAlertPresent = alert != null;
 		if (isAlertPresent) {
 			actualAlertText = alert.getText();
-			Assert.assertTrue("Error Message - Delete Alert - Expected Result : " + expectedAlertText + ACTUAL_RESULT_LABEL + actualAlertText,
-					actualAlertText.contains(expectedAlertText));
+			Assert.assertTrue("Error Message - Delete Alert - Expected Result : " + expectedAlertText
+					+ ACTUAL_RESULT_LABEL + actualAlertText, actualAlertText.contains(expectedAlertText));
 			alert.dismiss();
 		}
 		if (!isAlertPresent) {
@@ -580,7 +589,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 			if (isDeleteColumnPresent()) {
 				deleteFirstRecord();
-				verifyDeleteRecordAlert(name.replaceAll("Add.*", "Are you sure you want to delete the highlighted record?"));
+				verifyDeleteRecordAlert(
+						name.replaceAll("Add.*", "Are you sure you want to delete the highlighted record?"));
 			}
 		}
 	}
@@ -597,7 +607,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 			clickX2Close();
 			if (isDeleteColumnPresent()) {
 				deleteFirstRecord();
-				verifyDeleteRecordAlert(name.replaceAll("Add.*", "Are you sure you want to delete the highlighted record?"));
+				verifyDeleteRecordAlert(
+						name.replaceAll("Add.*", "Are you sure you want to delete the highlighted record?"));
 			}
 		}
 	}
@@ -605,34 +616,41 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected void verifyHomePageCollectPortal(String text) {
 
 		if ("home".equalsIgnoreCase(text))
-			Assert.assertTrue("Error Message - Expected Result : " + text + ACTUAL_RESULT_LABEL + heading.getText(), heading.getText().contains(text));
+			Assert.assertTrue("Error Message - Expected Result : " + text + ACTUAL_RESULT_LABEL + heading.getText(),
+					heading.getText().contains(text));
 		else {
-			Assert.assertTrue("Error Message - Expected Result : Welcome to " + text + ACTUAL_RESULT_LABEL + paragraph.getText(),
+			Assert.assertTrue(
+					"Error Message - Expected Result : Welcome to " + text + ACTUAL_RESULT_LABEL + paragraph.getText(),
 					paragraph.getText().contains("Welcome to " + text));
-			Assert.assertTrue("Error Message - Expected Result : " + text + ACTUAL_RESULT_LABEL + heading.getText(), heading.getText().contains(text));
+			Assert.assertTrue("Error Message - Expected Result : " + text + ACTUAL_RESULT_LABEL + heading.getText(),
+					heading.getText().contains(text));
 		}
 	}
 
 	protected void verifyDeviceDetails() {
 		boolean deviceNumberLength = deviceNumber.getText().trim().length() > 0;
-		Assert.assertTrue("Error Message - Device Number Length - Expected Result : Length Greater Than Zero | Actual Result : "
-				+ deviceNumber.getText().trim().length(), deviceNumberLength);
+		Assert.assertTrue(
+				"Error Message - Device Number Length - Expected Result : Length Greater Than Zero | Actual Result : "
+						+ deviceNumber.getText().trim().length(),
+				deviceNumberLength);
 	}
 
 	protected void verifyWalletDetails() {
 		boolean walletNumberLength = walletNumber.getText().trim().length() > 0;
-		Assert.assertTrue("Error Message - Wallet Number Length - Expected Result : Length Greater Than Zero | Actual Result : "
-				+ walletNumber.getText().trim().length(), walletNumberLength);
+		Assert.assertTrue(
+				"Error Message - Wallet Number Length - Expected Result : Length Greater Than Zero | Actual Result : "
+						+ walletNumber.getText().trim().length(),
+				walletNumberLength);
 	}
 
 	public String getMasterDetailContentTitle() {
-		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle)).getText();
+		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle))
+				.getText();
 	}
 
 	protected void verifyTitleCardHolderPortal(String text) {
-		Assert.assertTrue(
-				"Error Message - Title of Cradholder Portal - Expected Result : " + text + ACTUAL_RESULT_LABEL + getMasterDetailContentTitle().trim(),
-				getMasterDetailContentTitle().trim().contains(text));
+		Assert.assertTrue("Error Message - Title of Cradholder Portal - Expected Result : " + text + ACTUAL_RESULT_LABEL
+				+ getMasterDetailContentTitle().trim(), getMasterDetailContentTitle().trim().contains(text));
 	}
 
 	protected void verifyButton(String text) {
@@ -646,13 +664,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void verifyContactInformation() {
 		Assert.assertTrue(
-				"Error Message - Contanct Information Not Present - Expected Result : Contact Information | Actual Result : " + contactInformation.getText(),
+				"Error Message - Contanct Information Not Present - Expected Result : Contact Information | Actual Result : "
+						+ contactInformation.getText(),
 				CONTACT_INFORMATION_EXPECTED.equals(contactInformation.getText()));
 	}
 
 	protected String getDate() {
 		return getFirstColumnValueFromTable().substring(0, 8);
 	}
+
 	public void enterValueinTextBox(MCWebElement txtBoxElement, String value) {
 		waitForElementVisible(txtBoxElement);
 		if (value != null && !value.isEmpty()) {
@@ -730,38 +750,36 @@ public abstract class AbstractBasePage extends AbstractPage {
 			logger.info("Element is visible");
 			return true;
 		} catch (Exception e) {
-			logger.error("Element is not visible :"+e.fillInStackTrace());
+			logger.error("Element is not visible :" + e.fillInStackTrace());
 			return false;
 		}
 	}
-	
 
 	public boolean isElementPresent(MCWebElement ele) {
 		boolean ispresent = false;
-		
+
 		try {
 			ele.isVisible();
 			ispresent = true;
 			logger.info("Element is visible");
-			
+
 		} catch (Exception e) {
 			ispresent = false;
-			logger.error("Element is not visible :"+e.fillInStackTrace());
+			logger.error("Element is not visible :" + e.fillInStackTrace());
 		}
-		return ispresent;		
+		return ispresent;
 	}
-	
-	public boolean waitforElemenet(MCWebElement ele){
+
+	public boolean waitforElemenet(MCWebElement ele) {
 		try {
 			getFinder().waitUntil(ExpectedConditions.visibilityOf((WebElement) ele));
 			return true;
 		} catch (Exception e) {
-			return false; 
+			return false;
 		}
-				
-		 
+
 	}
-	 
+
 	public boolean isElementPresent(MCWebElements ele) {
 		boolean ispresent = false;
 		try {
@@ -1024,8 +1042,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void clickWhenClickableCHP(MCWebElement element) {
 		waitForElementVisible(element);
-		new WebDriverWait(driver(), TIMEOUT).until(
-				elementToBeClickable(element)).click();
+		new WebDriverWait(driver(), TIMEOUT).until(elementToBeClickable(element)).click();
 		// waitForWicket(driver());
 	}
 
@@ -1239,32 +1256,35 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 		return errorFields;
 	}
+
 	public void switchToWindowCHP() {
 
 		try {
 			Set<String> handles;
 
-			/*do {
-				handles = getFinder().getWebDriver().getWindowHandles();
-				logger.info("Number of windows available: " + handles.size());
-			} while (handles.size() < 2);*/
+			/*
+			 * do { handles = getFinder().getWebDriver().getWindowHandles();
+			 * logger.info("Number of windows available: " + handles.size()); } while
+			 * (handles.size() < 2);
+			 */
 			handles = getFinder().getWebDriver().getWindowHandles();
 			for (String handle : handles) {
 				if (!handle.equals(getFinder().getWebDriver().getWindowHandle()))
 					getFinder().getWebDriver().switchTo().window(handle);
 			}
-			
+
 		} catch (Exception e) {
 			logger.error("Unable to Switch Window" + e);
 		}
 	}
-	
+
 	public void selectByVisibleTexts(MCWebElement ele, String optionName) {
 		waitUntilSelectOptionsPopulated(ele);
 		waitForLoaderToDisappear();
 		ele.getSelect().selectByVisibleText(optionName);
 		waitForLoaderToDisappear();
 	}
+
 	public boolean publishErrorOnPage() {
 		boolean isAnyErrorPresent = false;
 		Iterator<?> iter = pageErrorValidator().iterator();
@@ -1274,15 +1294,38 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 		return isAnyErrorPresent;
 	}
-	
-	public String getTextFromPage(MCWebElement element){
+
+	public String getTextFromPage(MCWebElement element) {
 		return element.getText();
 	}
-	
+
+	public Map<String, String> pageErrorValidator(String ERRORPANEL) {
+		Map<String, String> errorFields = new HashMap<String, String>();
+		String errorMessage;
+		String elementName;
+		if (iselementPresent(Elements(pageValidationCheck))) {
+			for (WebElement ele : Elements(pageValidationCheck)) {
+				if (ele != null) {
+					errorMessage = ele.getText();
+					elementName = getChildElement(ele, "./preceding::td[1][@class='displayName']").getText();
+					errorFields.put(elementName, errorMessage);
+
+				}
+			}
+		}
+		return errorFields;
+	}
+
+	public void enterText(WebElement field, String fieldValue) {
+		System.out.println("Entering text for field: " + fieldValue);
+		waitForElementVisible(field);
+		field.clear();
+		field.sendKeys(fieldValue);
+	}
+
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 }
-

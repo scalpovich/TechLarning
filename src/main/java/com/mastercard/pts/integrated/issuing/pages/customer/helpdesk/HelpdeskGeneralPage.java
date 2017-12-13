@@ -269,6 +269,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
     }
 
 	public String getDeviceStatus(Device device) {
+		logger.info("Fetching information for : {}", device.getDeviceNumber());
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();

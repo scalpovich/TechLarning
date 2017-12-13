@@ -7,10 +7,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.NewLoyaltyPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -23,9 +26,12 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(LoyaltyPlanPage.class);
 	private static final String TEXT = "TEST";
-	private static final int NUMBER = 1;
+	private static final int NUMBER = 3;
+	private static final int NUMBER1 = 1;
 	private static final String ADD_LOYALTY_PLAN = "Add Loyalty Plan";
-
+	private static final String currency="INR [356]";
+	@Autowired
+	NewLoyaltyPlan newLoyaltyPlan;
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
 	private MCWebElement loyaltyPlanCodeTxt;
 
@@ -81,17 +87,18 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 	}
 
 	private void addLoyaltyPlan() {
-		WebElementUtils.enterText(lytPlanCodeTxt, MiscUtils.generate10CharAlphaNumeric());
+		WebElementUtils.enterText(lytPlanCodeTxt, CustomUtils.randomAlphaNumeric(5).toUpperCase());
 		WebElementUtils.enterText(lytDescriptionTxt, TEXT);
-		WebElementUtils.selectDropDownByIndex(currencyDDwn, NUMBER);
+	    WebElementUtils.selectDropDownByVisibleText(currencyDDwn, currency);
 		WebElementUtils.enterText(lytValidityNumTxt, NUMBER);
 		WebElementUtils.pickDate(planStartDateDPkr, futureDate);
 		WebElementUtils.enterText(maxPtsPerCycleTxt, NUMBER);
-		WebElementUtils.selectDropDownByIndex(periodUnitDDwn, NUMBER);
+		WebElementUtils.selectDropDownByIndex(periodUnitDDwn, NUMBER1);
 		WebElementUtils.enterText(lytMinPtsTxt, NUMBER);
 		WebElementUtils.enterText(lytGraceDaysTxt, NUMBER);
 		WebElementUtils.enterText(lytRedeemPtsTxt, NUMBER);
 		WebElementUtils.enterText(lytRedeemAmtTxt, NUMBER);
+		newLoyaltyPlan.setLoyaltyPlan(lytPlanCodeTxt.getAttribute("value"));
 		clickSaveButton();
 	}
 
