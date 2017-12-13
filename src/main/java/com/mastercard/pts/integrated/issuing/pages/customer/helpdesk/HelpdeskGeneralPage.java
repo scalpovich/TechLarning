@@ -265,6 +265,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
     			break;
     		}
     	}
+     	logger.info("Active Device Number is: {}",activeDeviceNumber);
     	helpdeskGeneral.setDeviceNumber(activeDeviceNumber);
     }
 
