@@ -14,6 +14,4 @@ When user performs generate TestData for an optimized <transaction> MAS transact
 
 Examples:
 |transaction|
-|MDFS_MSR_PURCHASE_WITH_CASHBACK_PIN|
-|MDFS_MSR_PURCHASE_WITH_CASHBACK	|
-|MDFS_EMV_PURCHASE_WITH_CASHBACK_PIN|
+|EMV_PURCHASE_WITH_CASHBACK|
