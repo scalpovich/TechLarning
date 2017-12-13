@@ -8,6 +8,7 @@ I want to fill sale related information through portal: new program with registr
 Meta:
 @StoryName S1938162
 @sanitycards
+@CR1
 
 Scenario: Prepaid - Admin User - Assign Program to Agency
 Meta:
