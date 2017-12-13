@@ -231,6 +231,7 @@ public final class Navigator extends AbstractBasePage {
 	}
 	
 	private void clickElement(By locator) {
+		WebElementUtils.scrollToElement(driver(), finderProvider.get().getWebDriver().findElement(locator));
 		WebElementUtils.retryUntilNoErrors(() -> finderProvider.get().getWebDriver().findElement(locator).click());
 	}
 

@@ -220,8 +220,7 @@ public class WebElementUtils {
 	}
 
 	public static <R> R fluentWait(Supplier<R> condition) {
-		return new FluentWait<Object>(new Object()).ignoring(WebDriverException.class).withTimeout(TIMEOUT, TimeUnit.SECONDS)
-				.until((com.google.common.base.Function<Object, R>) o -> condition.get());
+		return new FluentWait<Object>(new Object()).ignoring(WebDriverException.class).withTimeout(TIMEOUT, TimeUnit.SECONDS).until((com.google.common.base.Function<Object, R>) o -> condition.get());
 	}
 
 	public static void retryUntilNoErrors(Runnable action) {
@@ -330,5 +329,10 @@ public class WebElementUtils {
 
 	public static void scrollToElement(WebDriver driver, MCWebElement element) {
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+	}
+
+	public static void scrollToElement(WebDriver driver, WebElement element) {
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+
 	}
 }
