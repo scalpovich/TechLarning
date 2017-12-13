@@ -316,11 +316,11 @@ public class WalletPlanPage extends AbstractBasePage {
 		enterWalletPlanCode(plan);
 		enterWalletPlanDescription();
 		selectCurrency(plan);
-		CustomUtils.ThreadDotSleep(1000);
+		waitForPageToLoad(getFinder().getWebDriver());
 		selectProductType(plan);
-		CustomUtils.ThreadDotSleep(1000);
+		waitForPageToLoad(getFinder().getWebDriver());
 		selectProgramType(plan);
-		CustomUtils.ThreadDotSleep(1000);
+		waitForPageToLoad(getFinder().getWebDriver());
 		selectWalletUsage(plan);
 	}
 
