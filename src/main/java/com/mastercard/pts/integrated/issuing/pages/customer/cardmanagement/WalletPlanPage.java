@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -159,8 +158,8 @@ public class WalletPlanPage extends AbstractBasePage {
 		ClickButton(allowRefundChkBox);
 	}
 
-	public void selectProduct(DeviceCreation deviceCreation) {
-		selectByVisibleText(productTypeDDwn, deviceCreation.getProduct());
+	public void selectProduct(WalletPlan plan) {
+		selectByVisibleText(productTypeDDwn, plan.getProductType());
 	}
 
 	public void selectProductType(WalletPlan plan) {
@@ -295,19 +294,18 @@ public class WalletPlanPage extends AbstractBasePage {
 		}
 	}
 
-	public String addWalletPlanGeneral(DeviceCreation devicecreation, WalletPlan walletplan) {
+	public String addWalletPlanGeneral(WalletPlan walletplan) {
 		String walletPlancode;
 		String walletPlanDesc;
 		walletPlancode = enterWalletPlanCode();
 		walletPlanDesc = enterWalletPlanDescription();
 		selectCurrency(walletplan);
 		waitForPageToLoad(getFinder().getWebDriver());
-		selectProduct(devicecreation);
+		selectProduct(walletplan);
 		waitForPageToLoad(getFinder().getWebDriver());
 		waitForLoaderToDisappear();
 		selectProgramType(walletplan);
 		waitForPageToLoad(getFinder().getWebDriver());
-		//selectProduct(devicecreation);
 		selectWalletUsage(walletplan);
 		enterDummyAccountNumber();
 		enterReservedAmount();

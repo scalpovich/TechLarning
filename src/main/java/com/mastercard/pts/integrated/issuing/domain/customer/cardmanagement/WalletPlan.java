@@ -1,14 +1,13 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
-import org.springframework.stereotype.Component;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 @Component
@@ -112,7 +111,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	}
 	
 	private static void setGenericData(WalletPlan plan) {
-		plan.setWalletPlanCode(CustomUtils.randomNumbers(5));
+		plan.setWalletPlanCode(MiscUtils.generate10CharAlphaNumeric());
 		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);
 	}
 	
@@ -400,9 +399,9 @@ public class WalletPlan implements HasCodeAndDescription {
 		this.walletPlanUsage = walletPlanUsage;
 	}
 
-	public void  walletplanDataprovider() {
-	setCurrencyWalletPlan(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
-	setWalletPlanUsage(MapUtils.fnGetInputDataFromMap("WalletplanUsage"));
+	public void walletplanDataprovider() {
+		setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
+		setWalletPlanUsage(MapUtils.fnGetInputDataFromMap("WalletplanUsage"));
 	}
 
 	

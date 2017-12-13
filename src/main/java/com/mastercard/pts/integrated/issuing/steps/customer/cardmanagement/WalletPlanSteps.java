@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.WalletType;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.WalletPlanFlows;
@@ -16,9 +15,6 @@ import junit.framework.Assert;
 
 @Component
 public class WalletPlanSteps {
-
-	@Autowired
-	DeviceCreation deviceCreation;
 
 	@Autowired
 	WalletPlan plan;
@@ -32,16 +28,16 @@ public class WalletPlanSteps {
 		plan.walletplanDataprovider();
 		plan.setWalletType(walletType);
 		plan.setProgramType(programType);
-		deviceCreation.setProduct(product);
+		plan.setProductType(product);
 		String walletPlan = "";
 		if (walletType.contains(WalletType.DEFAULT_WALLET)) {
-			walletPlan = walletplanflows.createOpenWalletPlan(deviceCreation, plan);
+			walletPlan = walletplanflows.createOpenWalletPlan(plan);
 		}
 		if (walletType.contains(WalletType.WHITELISTEDMCG_WALLET)) {
-			walletPlan = walletplanflows.createClosedWhitelistedMCGWalletPlan(deviceCreation, plan);
+			walletPlan = walletplanflows.createClosedWhitelistedMCGWalletPlan(plan);
 		}
 		if (walletType.contains(WalletType.WHITELISTEDMERCHANT_WALLET)) {
-			walletPlan = walletplanflows.createWhitelistedMerchantWalletPlan(deviceCreation, plan);
+			walletPlan = walletplanflows.createWhitelistedMerchantWalletPlan(plan);
 		}
 
 		Assert.assertNotNull(walletPlan);
@@ -54,16 +50,16 @@ public class WalletPlanSteps {
 		plan.walletplanDataprovider();
 		plan.setWalletType(walletType);
 		plan.setProgramType(programType);
-		deviceCreation.setProduct(product);
+		plan.setProductType(product);
 		String walletPlan = "";
 		if (walletType.contains(WalletType.DEFAULT_WALLET)) {
-			walletPlan = walletplanflows.createClosedWalletPlan(deviceCreation, plan);
+			walletPlan = walletplanflows.createClosedWalletPlan(plan);
 		}
 		if (walletType.contains(WalletType.WHITELISTEDMCG_WALLET)) {
-			walletPlan = walletplanflows.createClosedWhitelistedMCGWalletPlan(deviceCreation, plan);
+			walletPlan = walletplanflows.createClosedWhitelistedMCGWalletPlan(plan);
 		}
 		if (walletType.contains(WalletType.WHITELISTEDMERCHANT_WALLET)) {
-			walletPlan = walletplanflows.createWhitelistedMerchantWalletPlan(deviceCreation, plan);
+			walletPlan = walletplanflows.createWhitelistedMerchantWalletPlan(plan);
 		}
 		Assert.assertNotNull(walletPlan);
 		plan.setClosedloopWalletPlan(walletPlan);
