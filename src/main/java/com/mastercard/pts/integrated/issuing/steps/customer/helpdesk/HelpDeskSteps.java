@@ -552,7 +552,14 @@ public class HelpDeskSteps {
 		helpdeskgettersetter.setProductType(ProductType.fromShortName(productType));
 
 		String actualStatus=helpdeskFlows.searchForDevicePrepaid(helpdeskgettersetter);
-		Assert.assertEquals("status is not normal",status, actualStatus);
+		if(actualStatus.contains(status))
+		{
+		Assert.assertTrue("status of newly created device is normal ", true);
+		}
+		else
+		{
+		Assert.assertTrue("status of newly created device is not normal ", false);
+		}
 
 	}
 }
