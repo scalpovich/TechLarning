@@ -347,7 +347,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	private MCWebElement CustomCodeTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Next >']")
-	private MCWebElement NextBtn;
+	public MCWebElement NextBtn;
 	/*
 	 * @PageElement(findBy = FindBy.X_PATH, valueToFind = "") private
 	 * MCWebElement Next2Btn;
