@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.agent.channelmanagement.AssignPrograms;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -95,7 +94,7 @@ public class AssignProgramsBranchPage extends AbstractBasePage {
 		selectAgency(details.getAgency());
 		selectBranchId(details.getBranchId());
 		clickSearchButton();
-		SimulatorUtilities.wait(30000);//this to wait till the table gets loaded
+		waitForPageToLoad(getFinder().getWebDriver());//this to wait till the table gets loaded
 		WebElementUtils.scrollDown(driver(), 0, 999);
 		selectProgramCode(details.getProgramCode());
 		selectDeviceType(details.getDeviceType());
