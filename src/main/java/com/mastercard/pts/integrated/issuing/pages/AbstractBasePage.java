@@ -163,6 +163,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Contact Information')]")
 	private MCWebElement contactInformation;
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Card Management']")
+	private MCWebElement cardManagement;
 
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -1257,28 +1259,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return errorFields;
 	}
 
-	public Map<String, String> pageErrorValidator(String ERRORPANEL) {
-		Map<String, String> errorFields = new HashMap<String, String>();
-		String errorMessage;
-		String elementName;
-		if (iselementPresent(Elements(ERRORPANEL))) {
-			errorFields.put("Error on page" + "::::::",
-					getChildElement(Elements(ERRORPANEL).get(0), "//span").getText());
-		}
-		if (iselementPresent(Elements(pageValidationCheck))) {
-			// System.out.println(Elements(pageValidationCheck).size());
-			for (WebElement ele : Elements(pageValidationCheck)) {
-				if (ele != null) {
-					errorMessage = ele.getText();
-					elementName = getChildElement(ele, "./preceding::td[1][@class='displayName']").getText();
-					errorFields.put(elementName, errorMessage);
-
-				}
-			}
-		}
-		return errorFields;
-	}
-
 	public void switchToWindowCHP() {
 
 		try {
@@ -1319,6 +1299,29 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public String getTextFromPage(MCWebElement element) {
 		return element.getText();
+	}
+	public Map<String, String> pageErrorValidator(String ERRORPANEL) {
+		Map<String, String> errorFields = new HashMap<String, String>();
+		String errorMessage;
+		String elementName;
+		if (iselementPresent(Elements(pageValidationCheck))) {
+			for (WebElement ele : Elements(pageValidationCheck)) {
+				if (ele != null) {
+					errorMessage = ele.getText();
+					elementName = getChildElement(ele, "./preceding::td[1][@class='displayName']").getText();
+					errorFields.put(elementName, errorMessage);
+
+				}
+			}
+		}
+		return errorFields;
+	}
+
+	public void enterText(WebElement field, String fieldValue) {
+		System.out.println("Entering text for field: " + fieldValue);
+		waitForElementVisible(field);
+		field.clear();
+		field.sendKeys(fieldValue);
 	}
 
 	@Override
