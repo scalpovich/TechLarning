@@ -16,9 +16,8 @@ public class Program implements HasCodeAndDescription {
 	private static final String CASH_LIMIT_RESET = "CASH_LIMIT_RESET";
 	private static final String CASH_LIMIT_TYPE = "CASH_LIMIT_TYPE";
 	private static final String PROGRAM_TYPE = "PROGRAM_TYPE";
-	private static final String INTERCHANGE = "INTERCHANGE";
 	private static final String REFUND_IN_CURRENCY = "REFUND_IN_CURRENCY";
-	private static final String PGM_INTERCHANGE	 = 	"PGM_INTERCHANGE";
+	private static final String INTERCHANGE	 = 	"INTERCHANGE";
 	private static final String PGM_PROGRAM_TYPE	 = 	"PGM_PROGRAM_TYPE";
 	private static final String PGM_BASE_CURRENCY	 = 	"PGM_BASE_CURRENCY";
 	private static final String PGM_NO_OF_CURRENCY_ALLOWED	 = 	"PGM_NO_OF_CURRENCY_ALLOWED";
@@ -68,7 +67,7 @@ public class Program implements HasCodeAndDescription {
 	private String currencyConversionBy;
 	private String walletPlanPlan1;
 	private String devicePlanPlan1;
-	private String otherPlanStatementMessagePlan;
+    private String otherPlanStatementMessagePlan;
 	private String otherPlanMarketingMessagePlan;
 	private String creditLimit;
 	private String maximumCreditLimit;
@@ -112,11 +111,10 @@ public class Program implements HasCodeAndDescription {
 	private String resetLimitsAddonLimitReset;
 	private String eventsSelectAll;
 	private String institute;
-	public String loadsWithoutKyc;
-
-	public String Currency;
+    public String loadsWithoutKyc;
+		public String Currency;
 	public String Program;
-
+	
 	public String DevicePlanProgram;
 
 	public String WalletType;
@@ -132,8 +130,8 @@ public class Program implements HasCodeAndDescription {
 		Program programObject = dataProvider.getDataBySimpleClassName(Program.class);
 		programObject.setProgramCode(MiscUtils.generate6CharAlphaNumeric());
 		programObject.setDescription(ConstantData.GENERIC_DESCRIPTION);
-		programObject.setProgramType(provider.getString(PROGRAM_TYPE));
 		programObject.setInterchange(provider.getString(INTERCHANGE));
+		programObject.setProgramType(provider.getString(PROGRAM_TYPE));
 		programObject.setMaximumBalanceWithoutKyc(RandomStringUtils.randomNumeric(4));
 		programObject.setNumberOfLoadsAllowedWithoutKyc(String.valueOf(RandomUtils.nextInt(1,99)));
 		programObject.setCreditLimit(RandomStringUtils.randomNumeric(5));
@@ -154,7 +152,7 @@ public class Program implements HasCodeAndDescription {
 		Program programObject = new Program();
 		programObject.setProgramCode(MiscUtils.generate6CharAlphaNumeric());
 		programObject.setDescription(ConstantData.GENERIC_DESCRIPTION);
-		programObject.setInterchange(provider.getString(PGM_INTERCHANGE));
+		programObject.setInterchange(provider.getString(INTERCHANGE));
 		programObject.setProgramType(provider.getString(PGM_PROGRAM_TYPE));
 		programObject.setBaseCurrency(provider.getString(PGM_BASE_CURRENCY));
 		programObject.setNoOfCurrencyAllowed(provider.getString(PGM_NO_OF_CURRENCY_ALLOWED));
@@ -189,8 +187,8 @@ public class Program implements HasCodeAndDescription {
 		return programObject;
 	}
 
-
-
+	
+   
 	public String getWalletPlan2() {
 		return WalletPlan2;
 	}
@@ -256,9 +254,11 @@ public class Program implements HasCodeAndDescription {
 		// Program program = new Program();
 		setRefundInCurrency("Program");
 		setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
+		setBaseCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
 		setCurrencyConversionBy(MapUtils.fnGetInputDataFromMap("CurrencyConversionBy"));
 		setMaxBalanceWithoutKYC(MapUtils.fnGetInputDataFromMap("MaximumBalancewithoutKYC"));
-		setLoadsWithoutKyc(MapUtils.fnGetInputDataFromMap("loadsWithoutKyc"));
+		setLoadsWithoutKyc(MapUtils.fnGetInputDataFromMap("LoadsWithoutKYC"));
+		setInstitute(MapUtils.fnGetInputDataFromMap("institute"));
 
 	}
 	public String getCalenderStartMonth() {
@@ -594,7 +594,7 @@ public class Program implements HasCodeAndDescription {
 	public void setWalletPlanPlan1(String walletPlanPlan1) {
 		this.walletPlanPlan1 = walletPlanPlan1;
 	}
-
+	
 	public String getDevicePlanPlan1() {
 		return devicePlanPlan1;
 	}
@@ -725,7 +725,7 @@ public class Program implements HasCodeAndDescription {
 	public void setPrepaidStatementPlan(String prepaidStatementPlan) {
 		this.prepaidStatementPlan = prepaidStatementPlan;
 	}
-
+	
 	public String getInstitute() {
 		return institute;
 	}
@@ -733,7 +733,7 @@ public class Program implements HasCodeAndDescription {
 	public void setInstitute(String institute) {
 		this.institute = institute;
 	}
-	
+
 	@Override
 	public String toString() {
 		return MiscUtils.toString(this);
