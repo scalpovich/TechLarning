@@ -477,6 +477,7 @@ public class HelpDeskSteps {
 
 	@Given("user activates device through helpdesk")
 	@When("user activates device through helpdesk")
+	@Then("user activates device through helpdesk")
 	public void whenUserActivatesDeviceThroughHelpDesk() {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskWorkflow.clickCustomerCareEditLink();
