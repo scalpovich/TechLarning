@@ -168,8 +168,7 @@ public class ServicesSteps {
 		deviceSale.setProgram(program.buildDescriptionAndCode());
 		deviceSale.setCardPackId(dispatch.getLastCardPackId());
 		device = context.get(ContextConstants.DEVICE);
-		String activeDeviceNumber = device.getExistingDeviceNumber();
-		deviceSale.setPrimaryDeviceNumber(activeDeviceNumber);
+		deviceSale.setPrimaryDeviceNumber(device.getExistingDeviceNumber());
 		servicesWorkflow.deviceSaleThroughNewProgram(deviceSale);
 	}
 	
