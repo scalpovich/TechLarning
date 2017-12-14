@@ -548,12 +548,19 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickEndCall();
 		assertThat("Device has incorrect Activation Date", helpdeskWorkflow.activationDate(), equalTo(DateUtils.currentDateddMMyyyy()));
 	}
-	@When("User search for device on search screen for product type $prepaid and validates the status as $NORMAL [0]")
+	@When("User search for device on search screen for product type $prepaid and validates the status as $NORMAL")
 	public void thenUserSearchForDeviceOnSearchScreenPrepaid(String productType, String status) {
 		helpdeskgettersetter.setProductType(ProductType.fromShortName(productType));
 
 		String actualStatus=helpdeskFlows.searchForDevicePrepaid(helpdeskgettersetter);
-		Assert.assertEquals("status is not normal",status, actualStatus);
+		if(actualStatus.contains(status))
+		{
+		Assert.assertTrue("status of newly created device is normal ", true);
+		}
+		else
+		{
+		Assert.assertTrue("status of newly created device is not normal ", false);
+		}
 
 	}
 }
