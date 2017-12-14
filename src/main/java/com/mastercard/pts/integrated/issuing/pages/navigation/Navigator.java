@@ -13,6 +13,7 @@ import com.google.common.base.Preconditions;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.PageObjectFactory;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementFinderProvider;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -221,6 +222,7 @@ public final class Navigator extends AbstractBasePage {
 	}
 	
 	private void clickElement(By locator) {
+		SimulatorUtilities.wait(1000);
         WebElementUtils.scrollToElement(driver(), finderProvider.get().getWebDriver().findElement(locator));
         WebElementUtils.retryUntilNoErrors(() -> finderProvider.get().getWebDriver().findElement(locator).click());
  }
