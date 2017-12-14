@@ -13,7 +13,6 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 @Component
 public class WalletPlan implements HasCodeAndDescription {
 	private static final String RETAIL_CREDIT_CARD_PART = "Retail Credit Card";
-	private static final String RETAIL_CREDIT_CARD_FULL = "Retail Credit Card [9]";
 	private static final String PROGRAM_TYPE = "PROGRAM_TYPE";
 	private static final String WP_CURRENCY	 = 	"WP_CURRENCY";
 	private static final String WP_PRODUCT_TYPE	 = 	"WP_PRODUCT_TYPE";
@@ -331,11 +330,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	}
 
 	public void setProgramType(String programType) {
-		String actualProgramType = programType;
-		if (programType.equalsIgnoreCase(RETAIL_CREDIT_CARD_PART)) {
-			actualProgramType = RETAIL_CREDIT_CARD_FULL;
-		}
-		this.programType = actualProgramType;
+		this.programType = programType;
 	}
 	
 	public String getUsage() {
