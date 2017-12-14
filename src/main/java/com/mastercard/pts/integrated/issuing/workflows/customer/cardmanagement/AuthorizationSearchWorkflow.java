@@ -10,15 +10,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.pages.collect.administration.AdministrationHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.AuthorizationSearchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 
 @Workflow
 public class AuthorizationSearchWorkflow {
 
 	@Autowired
 	private Navigator navigator;
+	
+	@Autowired
+	private TestContext context;
 
 	private static final Logger logger = LoggerFactory.getLogger(AuthorizationSearchPage.class);
 
@@ -32,9 +37,21 @@ public class AuthorizationSearchWorkflow {
 		int rowCount = page.getRowCountFromTable();
 		logger.info("Row Count on Authorization Search Page : {} ", rowCount);
 		assertTrue("No Rows Found on Authorization Search Page", rowCount > 0);
+		String actualCodeAction;
+		String actualDescription;
+		
 
-		String actualCodeAction = page.getCellTextByColumnName(1, "Code Action");
-		String actualDescription = page.getCellTextByColumnName(1, "Description");
+		if(context.get(ConstantData.TRANSACTION_NAME).toString().contains("PREAUTH") && rowCount > 1)
+		{
+			 actualCodeAction = page.getCellTextByColumnName(2, "Code Action");
+			 actualDescription = page.getCellTextByColumnName(2, "Description");
+		}
+		else
+		{
+			 actualCodeAction = page.getCellTextByColumnName(1, "Code Action");
+			 actualDescription = page.getCellTextByColumnName(1, "Description");
+		}
+
 		logger.info("CodeAction on Authorization Search Page : {} ", actualCodeAction);
 		logger.info("Description on Authorization Search Page : {} ", actualDescription);
 		boolean condition = actualCodeAction.contains(state) && type.equalsIgnoreCase(actualDescription);

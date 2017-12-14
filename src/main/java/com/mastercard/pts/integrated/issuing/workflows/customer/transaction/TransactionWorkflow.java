@@ -395,7 +395,15 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private String getResult() {
 	
-		List<WebElement> lst =  winiumDriver.findElements(By.xpath("//*[contains(@Name, 'Expected Results Summary')]"));
+		List<WebElement> lst = null;
+		if(context.get(ConstantData.TRANSACTION_NAME).toString().contains("COMPLETION"))
+		{
+		lst=winiumDriver.findElements(By.name("0130 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
+		}
+		else
+		{
+	    lst=winiumDriver.findElements(By.name("0110 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
+		}
 		//clicking on the last item from bottom
 		lst.get(lst.size()-1).click();
 		wait(5000);
@@ -711,7 +719,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			winiumLicenseSelectOperation(licenseTypeToSelect, licenseFor);
 			winiumClickOperation("Select");
 			wait(15000);
-
+			executeAutoITExe("ActivateSelectServices.exe");
 			if(getLoadServicesScreen() > 0)	{
 				executeAutoITExe("ActivateSelectServices.exe");
 				wait(2000);
@@ -883,7 +891,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private void fillEmvChipKeySetDetails() {
 		executeAutoITExe("ActivateEditCardProfile.exe");
 		winiumClickOperation("ICC Related Data");
-		performClickOperation("MChipKeySetDropDown");
+		winiumClickOperation("Drop Down Button");
 		wait(1000);
 		winiumClickOperation("00999 - Example ETEC1 - 0213");	
 		wait(1000);

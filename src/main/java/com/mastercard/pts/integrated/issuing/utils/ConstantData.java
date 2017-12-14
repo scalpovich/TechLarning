@@ -39,6 +39,9 @@ public class ConstantData {
 	public static final String SIKUKI_EXCEPTION = "Image could not be clicked";
 	public static final String MESSAGE_CONSTANT = "Simulator path being set :  ";
 	public static final String  IS_PIN_REQUIRED = "TRUE";
+	
+	public static final String  TRANSACTION_NAME = "transaction";
+	public static final String  DATAELEMENT_037 = "data037";
 
 	private ConstantData() {}
 }
