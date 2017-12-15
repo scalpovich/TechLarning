@@ -350,12 +350,21 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 		scrollUpToSelectTest(testcaseName);
 		activateMas(testcaseName);
-		winiumClickOperation(TEST_CASES);
+		winiumClickOperation(TEST_CASES.toString());
 		performClickOperationOnImages(ISSUER_TEST);
 		pressLeftArrow();
 		performClickOperation("Imported");
 		pressRightArrow(4);
 		pressPageDown();
+		
+//		scrollUpToSelectTest(testcaseName);
+//		activateMas(testcaseName);
+//		winiumClickOperation("Test Cases (Issuer Testing)");
+//		performClickOperationOnImages(ISSUER_TEST);
+//		pressLeftArrow();
+//		performClickOperation("Imported");
+//		pressRightArrow(4);
+//		pressPageDown();
 	}
 
 	private void performExecution(String transaction) {

@@ -73,6 +73,7 @@ public class Device {
 	private String vip;
 	private String encodedName;
 	private String middleName2;
+	private String serviceCode;
 	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -472,6 +473,13 @@ public class Device {
 		this.vip = vip;
 	}
 	
+	public String getServiceCode() {
+		return serviceCode;
+	}
+
+	public void setServiceCode(String serviceCode) {
+		this.serviceCode = serviceCode;
+	}
 
 
 }

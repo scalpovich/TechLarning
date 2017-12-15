@@ -37,7 +37,11 @@ public class AuthorizationSearchWorkflow {
 		String actualDescription = page.getCellTextByColumnName(1, "Description");
 		logger.info("CodeAction on Authorization Search Page : {} ", actualCodeAction);
 		logger.info("Description on Authorization Search Page : {} ", actualDescription);
-		boolean condition = actualCodeAction.contains(state) && type.equalsIgnoreCase(actualDescription);
+		
+		logger.info("type on Authorization Search Page : {} ", type);
+		logger.info("state on Authorization Search Page : {} ", state);
+		
+		boolean condition = actualCodeAction.contains(state) && actualDescription.contains(type);
 		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
 	}
 }
