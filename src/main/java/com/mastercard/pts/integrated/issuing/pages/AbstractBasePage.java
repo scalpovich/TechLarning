@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
@@ -34,6 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -1323,7 +1325,14 @@ public abstract class AbstractBasePage extends AbstractPage {
 		field.clear();
 		field.sendKeys(fieldValue);
 	}
-
+	public void waitForElementEnabled(MCWebElement element) {
+	    try {
+	    	WebDriverWait wait = new WebDriverWait(getFinder().getWebDriver(), 20, ELEMENT_WAIT_MAX);
+	    	wait.until((ExpectedCondition<Boolean>)driver -> element.isEnabled());
+	    } catch (Exception e) {
+	    	logger.info( e + " : " + "Timed out waiting for element: " + element);
+	    }
+	}
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		// TODO Auto-generated method stub

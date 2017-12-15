@@ -1,10 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.credit;
 
 import org.jbehave.core.annotations.Then;
-import org.jbehave.core.annotations.When;
-import org.jbehave.core.model.ExamplesTable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,39 +11,24 @@ import com.mastercard.pts.integrated.issuing.workflows.credit.SurchargeWaiverPla
 
 @Component
 public class surchargeWaiverPlanStep {
-	private static final Logger logger = LoggerFactory.getLogger(surchargeWaiverPlanStep.class);
 	@Autowired
 	 SurchargeWailverPlanPage surchargeWailverPlanPage;
-	
 	@Autowired
 	 SurchargeWailverPlan surchargeWailverPlan;
 	@Autowired
      SurchargeWaiverPlanWorkflow surchargeWaiverPlanWorkflow;
 	@Autowired
 	DatePicker datePicker;
-	
-	//@Then("surchargeWaiverPlan of card management tab has proper field validation")
-	@When("surchargeWaiverPlan of card management tab has proper field validation for below fields:$tagTable")
-	public void thenSurchargeWaiverPlanOfCardManagementTabHasProperValidation(ExamplesTable tagTable) {
+
+	@Then("User navigates to Add Surcharge Waiver Fee Plan Page and adds a valid Fee Plan by entering valid values")
+	public void thenSurchargeWaiverPlanOfCardManagementTab() {
 		surchargeWailverPlan.surchargeWaiverFeePlanDataProvider();
-		for (int i = 0; i < tagTable.getRows().size(); i++) {
-
-			String tagName = tagTable.getRow(i).get(
-					tagTable.getHeaders().get(0));
-			String expTagvalue = tagTable.getRow(i).get(
-					tagTable.getHeaders().get(1));
-			
-	         logger.info("Value of i"+i+"tagname"+tagName+"expected"+expTagvalue);
-	         surchargeWaiverPlanWorkflow.verifyValidSurchargeWaiverPlanCode(surchargeWailverPlan,datePicker,tagName,expTagvalue);
-
-		}
-		
+		surchargeWaiverPlanWorkflow.verifyValidSurchargeWaiverPlanCode(surchargeWailverPlan);
 		
 	}
-	@Then("surchargeWaiverPlan of card management tab has proper field validation for Invalid scenario")
-	public void thenSurchargeWaiverPlanOfCardManagementTabHasProperValidationInvalid() {
-		surchargeWailverPlan.surchargeWaiverFeePlanDataProvider();
-		surchargeWaiverPlanWorkflow.verifyInvalidSurchargeWaiverPlanCode(surchargeWailverPlan);
+	@Then("User navigates to Add Surcharge Waiver Detail Fee Plan Page and adds a valid plan by entering valid values")
+	public void thenSurchargeWaiverPlanDetailOfCardManagementTab() {
+	surchargeWaiverPlanWorkflow.addSurchargeWaiverPlanDetails(surchargeWailverPlan,datePicker);
 		
 	}
 	
