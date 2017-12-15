@@ -19,6 +19,7 @@ public class SurchargeWaiverPlanWorkflow {
 	SurchargeWailverPlanPage page;
 	
 	public void verifyValidSurchargeWaiverPlanCode(SurchargeWailverPlan surchargeWailverPlan/*,String tagName,String expectedValue*/) {
+		SurchargeWailverPlanPage page = navigator.navigateToPage(SurchargeWailverPlanPage.class);
 		page.enterWaiverPlanValid(surchargeWailverPlan);
 		page.enterWaiverPlanDescriptionValid(surchargeWailverPlan);
 		page.currencySelect();
