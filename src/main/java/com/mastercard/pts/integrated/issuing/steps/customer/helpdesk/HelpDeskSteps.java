@@ -522,6 +522,14 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickEndCall();
 		assertThat("Device has incorrect Sale Date", helpdeskWorkflow.saleDate(), equalTo(DateUtils.currentDateddMMyyyy()));
 	}
+	
+	@Then("device activated and activation date is updated in general details")
+	public void thenActivationDateIsUpdatedGeneralDetails() {
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.storeActivationDate();
+		helpdeskWorkflow.clickEndCall();
+		assertThat("Device has incorrect Activation Date", helpdeskWorkflow.activationDate(), equalTo(DateUtils.currentDateddMMyyyy()));
+	}
 
 	@Then("delivery date is updated in general details")
 	public void thenDeliveryDateIsUpdatedGeneralDetails() {
