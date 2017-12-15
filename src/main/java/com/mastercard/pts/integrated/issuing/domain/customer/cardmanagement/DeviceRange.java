@@ -10,8 +10,8 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 public class DeviceRange {
 
 	private static final int BIN_RANGE_SIZE = 10;
-	private static final String	ISSUER_BIN	 = 	"ISSUER_BIN";
-	private static final String	BRANCH	 = 	"BRANCH";
+	private static final String	DR_ISSUER_BIN	 = 	"DR_ISSUER_BIN";
+	private static final String	DR_BRANCH	 = 	"DR_BRANCH";
 	private static final String	DR_CARD_TYPE	 = 	"DR_CARD_TYPE";
 	private static final String	DR_ENDPOINT_MODE	 = 	"DR_ENDPOINT_MODE";
 	private static final String	DR_INTERFACE_NAME	 = 	"DR_INTERFACE_NAME";
@@ -47,18 +47,14 @@ public class DeviceRange {
 		return new String[] { from, to };
 	}
 	
-	public static DeviceRange createWithProvider(DataProvider dprovider, KeyValueProvider provider, String... tags){
+	public static DeviceRange createWithProvider(DataProvider provider, String... tags){
 		String[] deviceRange = generateDeviceRange(BIN_RANGE_SIZE);
 		
-		DeviceRange range = dprovider.getDataBySimpleClassName(DeviceRange.class, tags);
+		DeviceRange range = provider.getDataBySimpleClassName(DeviceRange.class, tags);
 		range.setFromDeviceNumber(deviceRange[0]);
 		range.setToDeviceNumber(deviceRange[1]);
-
-		range.setIssuerBin(provider.getString(ISSUER_BIN));
-		range.setBranch(provider.getString(BRANCH));
 		return range;
 	}
-	
 
 	public static DeviceRange createWithProvider(KeyValueProvider provider, String... tags){
 		String[] deviceRange = generateDeviceRange(BIN_RANGE_SIZE);
@@ -67,8 +63,8 @@ public class DeviceRange {
 		range.setToDeviceNumber(deviceRange[1]);
 
 		range.setCardType(provider.getString(DR_CARD_TYPE));
-		range.setIssuerBin(provider.getString(ISSUER_BIN));
-		range.setBranch(provider.getString(BRANCH));
+		range.setIssuerBin(provider.getString(DR_ISSUER_BIN));
+		range.setBranch(provider.getString(DR_BRANCH));
 		range.setEndPointMode(provider.getString(DR_ENDPOINT_MODE));
 		range.setInterfaceName(provider.getString(DR_INTERFACE_NAME));
 		range.setRoutingType(provider.getString(DR_ROUTING_TYPE));

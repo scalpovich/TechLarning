@@ -805,14 +805,14 @@ public class ProgramSetupSteps {
 
 	@When("User fills Device Range section for $type product")
 	public void whenUserFillsDeviceRangeSection(String type) {
-		DeviceRange deviceRange = DeviceRange.createWithProvider(dataProvider, provider, type);
+		DeviceRange deviceRange = DeviceRange.createWithProvider(provider, type);
 		deviceRange.setProductType(ProductType.fromShortName(type));
 		deviceRange.setProgram(program.buildDescriptionAndCode());
 		deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
 
 		programSetupWorkflow.createDeviceRange(deviceRange);
 	}
-	
+		
 	private  void setPinRequiredToFalse() {
 		context.put(ConstantData.IS_PIN_REQUIRED, "FALSE");
 	}
