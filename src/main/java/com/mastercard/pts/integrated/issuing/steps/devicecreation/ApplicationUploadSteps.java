@@ -51,7 +51,7 @@ public class ApplicationUploadSteps {
 		processBatch.setJoBID(processBatchesFlows.processUploadBatches(batchName, fileName));
 			//CustomUtils.ThreadDotSleep(8000);
 		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(processBatch, fileName));
-	}
+		}
 	
 	@Then("The file will process the records successfully if all the all the business mandatory field are configured in file")
 	public void verifyApplicationFileUpload(){
@@ -59,7 +59,7 @@ public class ApplicationUploadSteps {
 		search.verifyApplicationUploadSuccess(searchDomain);
 	}
 
-	@When("processes pre-production batch Prepaid")
+	@When("processes pre-production batch $type")
 	public void whenProcessesPreproductionBatchForPrepaid(String type) {
 
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
@@ -67,7 +67,7 @@ public class ApplicationUploadSteps {
 		batchProcessFlows.processPreProductionBatch(preProductionBatch);
 	}
 
-	@When("processes device production batch Prepaid")
+	@When("processes device production batch $type")
 	public void whenProcessesDeviceProductionBatch(String type) {
 		DeviceProductionBatch batch = new DeviceProductionBatch();
 		batch.setProductType(ProductType.fromShortName(type));

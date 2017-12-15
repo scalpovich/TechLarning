@@ -21,10 +21,10 @@ When user adds promotionPlan
 When user maps promotionPlan with loyaltyPlan
 When user creates a Single wallet Program for Mastercard for product Prepaid for program Retail General Purpose
 Then Program should get created
-When user creates a Device Range for product Prepaid;
+When user creates a Device Range for product Prepaid
 When user creates Application Upload Prepaid batch file and uploads it on server for Individual
 When processes pre-production batch prepaid
 When processes device production batch prepaid
-When User search for device on search screen for product type prepaid and validates the status as NORMAL [0]
+When User search for device on search screen for product type prepaid and validates the status as NORMAL
 Then user logouts from customer portal
 
