@@ -10,10 +10,46 @@ Meta:
 @SanityCardsWithClearning
 @FullSanity
 
+Scenario: Set up program for debit emv retail debit card
+Meta:
+@TestId TC398366
+Given user is logged in institution
+And device range for program with device plan for "debit" "emv" card without pin
+When user creates new device of debit type for new client
+Then device has "normal" status
+When user sign out from customer portal
+
+Scenario: EMV Retail Debit card device production
+Meta:
+@TestId 
+Given user is logged in institution
+And a new device was created
+When processes pre-production batch for debit
+When processes device production batch for debit
+When user has wallet number information for debit device
+When user performs adjustment transaction
+When user has current wallet balance amount information for debit device
+Then device has "normal" status
+Then user activates device through helpdesk
+When user sign out from customer portal
+
+Scenario: Perform EMV_PURCHASE Authorization transaction
+Meta:
+@TestId 
+Given connection to MAS is established
+When perform an EMV_PURCHASE MAS transaction
+Then MAS test results are verified
+
+Scenario: Generate Auth File for Clearing
+Meta:
+@TestId 
+When Auth file is generated after transaction
+When MAS simulator is closed
+
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
 Meta:
 @TestId 
-
+Given connection to MCPS is established
 When Auth file is generated
 When Auth file is loaded into MCPS and processed
 Then NOT file is successfully generated

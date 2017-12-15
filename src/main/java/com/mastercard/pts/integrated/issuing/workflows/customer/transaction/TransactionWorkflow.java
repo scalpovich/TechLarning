@@ -463,6 +463,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			winiumDriver.findElementByName(CLOSE).click();
 			aRN = addAcquirerReferenceData(trimmedRrn);
 			MiscUtils.reportToConsole("rRN :  trimmedRrn : aRN  -  " + rRN  + " : - : "  + trimmedRrn  + " : - :"  + aRN  );
+			System.out.println("PAN number" + SimulatorConstantsData.SAMPLE_PAN_NUMBER);
 			updatePanNumber(SimulatorConstantsData.SAMPLE_PAN_NUMBER);
 			performClickOperation(MESSAGE_TYPE_INDICATOR); // selecting the table
 			pressPageUp();

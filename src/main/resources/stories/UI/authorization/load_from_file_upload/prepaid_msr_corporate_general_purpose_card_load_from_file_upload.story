@@ -30,6 +30,8 @@ Scenario: prepaid msr adjustment and file upload transaction
 Meta:
 @TestId 
 Given user is logged in institution
+When user has wallet balance information for prepaid device
 When user creates and uploads transaction file
-And user processes upload batch for prepaid
+And user processes transaction upload batch for prepaid
 Then in batch trace history transaction is successful using job id
+Then balance in helpdesk updated correctly for prepaid device

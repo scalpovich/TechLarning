@@ -697,6 +697,7 @@ public class ProgramSetupSteps {
 
 	@When("User fills Transaction Plan for $type product")
 	public void whenUserFillsTransactionPlan(String type) {
+		setPinRequiredToTrue();
 		transactionPlan = TransactionPlan.createWithProvider(dataProvider);
 		transactionPlan.setProductType(ProductType.fromShortName(type));
 

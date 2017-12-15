@@ -133,4 +133,15 @@ public class LoadFromFileUploadSteps {
 		jobId =hm.get("JobId");			
 
 	}
+	
+	@When("user processes transaction upload batch for $type")
+	public void whenUserProcessesTransactionUploadBatchForPrepaid(String type){
+		ProcessBatches batch =  ProcessBatches.getBatchData();
+        batch.setBatchName("Transaction Upload [TRANSACTION_UPLOAD]");		
+		batch.setProductType(ProductType.fromShortName(type));
+		HashMap<String, String> hm = (HashMap<String, String>) loadFromFileUploadWorkflow.processUploadBatch(batch);
+		assertEquals("SUCCESS [2]",hm.get("BatchStatus"));	
+		jobId =hm.get("JobId");			
+
+	}
 }
