@@ -189,16 +189,14 @@ public class SimulatorUtilities {
 
 	public void executeAutoITExe(String fileName) {
 		try {
-			String commandToExecute = "'";
 			String path = getResourceFolderPath() + SimulatorConstantsData.AUTOIT_EXE_PATH.replace("\\", "\\\\");
-			commandToExecute = " cmd /c " + " " + path + fileName + " ";
+			String psExecPath = getResourceFolderPath() + SimulatorConstantsData.PSEXEC_EXE_PATH.replace("\\", "\\\\");
+			String commandToExecute;
+			logger.info("********* AutoIt Exe being executed :  ", fileName);
 
-			/*
-			 * String psExecPath = getResourceFolderPath() + //
-			 * "\\\\Simulator\\\\PsExec\\\\PsExec.exe"; // commandToExecute =
-			 * " cmd /c " + psExecPath + " " + path + fileName; NO SONAR
-			 */
-
+			// for remote/Jenkins/command Line - AutoIT execution.. enable the below 2 lines and comment the other 2 lines
+			commandToExecute = " cmd /c " + psExecPath + " " + path + fileName;
+			logger.info("********* commandToExecute  :  ", commandToExecute);
 			executeCommand(fileName, commandToExecute);
 		} catch (Exception e) {
 			logger.debug(ConstantData.EXCEPTION, e);
@@ -207,7 +205,6 @@ public class SimulatorUtilities {
 	}
 
 	private void executeCommand(String fileName, String commandToExecute) throws InterruptedException, IOException {
-		MiscUtils.reportToConsole("commandToExecute : " + commandToExecute);
 		if (fileName.contains("SelectIPSHost")) {
 			Runtime.getRuntime().exec(commandToExecute).waitFor(25, TimeUnit.SECONDS);
 			wait(15000);
@@ -302,7 +299,7 @@ public class SimulatorUtilities {
 		try {
 			Iterator<Match> it = screen.findAll(selectParent);
 			while (it.hasNext()) {
-				System.out.println("the match is " + it.next().click());
+				logger.info("The match is ", it.next().click());
 			}
 		} catch (Exception e) {
 			logger.debug(ConstantData.SIKUKI_EXCEPTION, e);
@@ -362,16 +359,22 @@ public class SimulatorUtilities {
 			return screen.exists(getImageOfItem(screenName)) != null;
 		} catch (Exception e) {
 			logger.debug(ConstantData.SIKUKI_EXCEPTION, screenName);
+			logger.error(e.getMessage());
 			return false;
 		}
 	}
 
 	public Boolean areImagesPresent(String screenName) {
 		try {
-			if (screen.exists(getImageOfItem(screenName)) != null || screen.exists(getImageOfItem(screenName + SELECTED_IMAGE)) != null)
+			if (screen.exists(getImageOfItem(screenName)) != null)
 				return true;
-			else
+			else if (screen.exists(getImageOfItem(screenName + SELECTED_IMAGE)) != null)
+				return true;
+			else {
+				logger.info("Check areImagesPresent in Simululator Utilities");
 				return false;
+			}
+
 		} catch (Exception e) {
 			logger.debug(ConstantData.SIKUKI_EXCEPTION, screenName);
 			return false;
@@ -385,8 +388,7 @@ public class SimulatorUtilities {
 
 	public String getTempDirectoryLocationForSimulatorResults() {
 		String tempFolder = new DateUtils().getDateyyyyMMdd() + "_IssuingTests_Simulator";
-		// Folder is located in Temp Directory .. Ex:
-		// C:\Users\e071200\AppData\Local\Temp\20170718_IssuingTests_Simulator
+		// Folder is located in Temp Directory .. Ex: C:\Users\e071200\AppData\Local\Temp\20170718_IssuingTests_Simulator
 		File resourcesDirectory = new File(System.getProperty("java.io.tmpdir") + tempFolder);
 		return resourcesDirectory.getAbsolutePath();
 	}
