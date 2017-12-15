@@ -308,9 +308,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	/*
-	 * public void removeLastEntry() { clickTestPreparations(); activateMas();
-	 * performClickOperation("Imported"); pressPageDown(); pressDelete();
-	 * wait(5000); }
+	 * public void removeLastEntry() { clickTestPreparations(); activateMas(); performClickOperation("Imported"); pressPageDown(); pressDelete(); wait(5000); }
 	 */
 
 	private void selectTestCaseFromImportedCases(String testcaseName) {
@@ -854,7 +852,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private void clickTestOption() {
-
 		List<WebElement> allTOButtons = winiumDriver.findElementsByName("Test Options");
 		logger.info("Number of all available buttons = {}", allTOButtons.size());
 		for (WebElement webElement : allTOButtons) {
@@ -871,10 +868,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setMasIpAddress(parameters);
 		// for keying ip and port on MAS 17.x if present
 		/*
-		 * parameters = "\"" + SimulatorConstantsData.MAS_17_X + PATH_BUILDER +
-		 * simulator.getPort() + PATH_BUILDER + getValue( ip[0]) + PATH_BUILDER
-		 * + getValue(ip[1]) + PATH_BUILDER + getValue(ip[2]) + PATH_BUILDER +
-		 * getValue(ip[3]) + "\""; setMasIpAddress(parameters);
+		 * parameters = "\"" + SimulatorConstantsData.MAS_17_X + PATH_BUILDER + simulator.getPort() + PATH_BUILDER + getValue( ip[0]) + PATH_BUILDER + getValue(ip[1]) + PATH_BUILDER + getValue(ip[2])
+		 * + PATH_BUILDER + getValue(ip[3]) + "\""; setMasIpAddress(parameters);
 		 */
 	}
 
@@ -901,10 +896,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setMasIpAddress(parameters);
 		// for keying ip and port on MAS 17.x if present
 		/*
-		 * parameters = "\"" + SimulatorConstantsData.MDFS_17_X + PATH_BUILDER +
-		 * simulator.getPort() + PATH_BUILDER + getValue( ip[0]) + PATH_BUILDER
-		 * + getValue(ip[1]) + PATH_BUILDER + getValue(ip[2]) + PATH_BUILDER +
-		 * getValue(ip[3]) + "\""; setMasIpAddress(parameters);
+		 * parameters = "\"" + SimulatorConstantsData.MDFS_17_X + PATH_BUILDER + simulator.getPort() + PATH_BUILDER + getValue( ip[0]) + PATH_BUILDER + getValue(ip[1]) + PATH_BUILDER + getValue(ip[2])
+		 * + PATH_BUILDER + getValue(ip[3]) + "\""; setMasIpAddress(parameters);
 		 */
 	}
 

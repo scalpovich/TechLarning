@@ -20,23 +20,14 @@ public class SimulatorConstantsData {
 
 	public static final String MAS_16_X = "MasterCard Authorization Simulator <MAS16.Q4>";
 
-	// public static final String MAS_17_X = "MasterCard Authorization Simulator <MAS17.Q4 SP1 - IPS Host Testing>";
-
 	public static final String MDFS_16_X = "MasterCard Debit Financial Simulator <MDFS16.Q4>";
-
-	// public static final String MDFS_17_X = "MasterCard Debit Financial Simulator <MDFS17.Q4 SP1 - IPS Host Testing>";
 
 	public static final String MCPS_16_X = "MCPS - MasterCard Clearing Presentment Simulator - 16.Q4";
 
-	// public static final String MCPS_17_X = "MCPS - MasterCard Clearing Presentment Simulator - 16.Q4";
-	
 	public static final String MAS_LICENSE_TYPE_16X = "MAS 16.4";
-	
-	// public static final String MAS_LICENSE_TYPE_17X = "MAS 17.4";
 
 	public static final String MDFS_LICENSE_TYPE_16X = "MDFS 16.4";
-	
-	// public static final String MDFS_LICENSE_TYPE_17X = "MDFS 17.4";
-	
-	private SimulatorConstantsData() {}
+
+	private SimulatorConstantsData() {
+	}
 }
