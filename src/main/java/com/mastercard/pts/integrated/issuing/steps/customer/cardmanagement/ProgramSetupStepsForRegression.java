@@ -271,7 +271,7 @@ public class ProgramSetupStepsForRegression {
 
 	@When("User filled Device Range section for $type product")
 	public void whenUserFilledDeviceRangeSection(String type) {
-		DeviceRange deviceRange = DeviceRange.createWithProvider(dataProvider, type);
+		DeviceRange deviceRange = DeviceRange.createWithProvider(provider, type);
 		deviceRange.setProductType(ProductType.fromShortName(type));
 		deviceRange.setProgram(program.buildDescriptionAndCode());
 		deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
