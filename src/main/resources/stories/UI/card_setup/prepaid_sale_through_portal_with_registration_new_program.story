@@ -69,11 +69,10 @@ When user fills status details and submits the form
 Then status column updates with type of order accepted
 And user sign out from agent portal
 
-Scenario: Prepaid - Agent User - Device Sale with new program Registration
-Meta:
-@TestId TC406259
+Scenario: Prepaid - Agent User - Device Sale with Registration
+
 Given user is logged in agent portal as agent user
-When user fills program details with new program for prepaid product emv device
+When user fills program details with registration
 Then registration is successful
 And user sign out from agent portal
 
