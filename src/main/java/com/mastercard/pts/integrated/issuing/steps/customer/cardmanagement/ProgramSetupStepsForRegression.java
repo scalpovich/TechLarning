@@ -31,7 +31,6 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Tran
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletFeePlanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
-import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramSetupWorkflow;
 
@@ -46,9 +45,6 @@ public class ProgramSetupStepsForRegression {
 
 	@Autowired
 	private KeyValueProvider provider;
-	
-	@Autowired
-	private DataProvider dataProvider;
 
 	@Autowired
 	ProgramSetupSteps programSetupSteps;
