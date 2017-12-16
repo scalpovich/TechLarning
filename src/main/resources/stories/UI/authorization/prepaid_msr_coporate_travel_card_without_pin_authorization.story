@@ -43,7 +43,17 @@ Given connection to MAS is established
 When perform an MSR_CASH_ADVANCE MAS transaction
 Then user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
-Then MAS simulator is closed
+Then user sign out from customer portal
+
+Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
+Meta:
+@TestId 
+When perform an MSR_CASH_WITHDRAWAL MAS transaction
+Then MAS test results are verified
+Then user is logged in institution
+Then search CWD authorization and verify 000-Successful status
+Then user sign out from customer portal
+When MAS simulator is closed
 
 Scenario: Program Balance Summary download
 Meta:

@@ -6,11 +6,11 @@ As an issuer
 I want to authorize transactions for prepaid emv retail general purpose card
 
 Meta:
-@StoryName p_emv_coprporate_travel
+@StoryName p_emv_retail_travel
 @oldReferenceSheet_S203707
 @CRCardsPinlessWithAuthorization
 
-Scenario: Set up prepaid emv corporate travel card
+Scenario: Set up prepaid emv retail travel card
 Meta:
 @TestId TC398452
 Given user is logged in institution
@@ -18,7 +18,7 @@ And device range for program with device plan for "prepaid" "emv" card without p
 When user creates new device of prepaid type for new client
 
 
-Scenario: prepaidemv corporate travel card device production
+Scenario: prepaid emv retail travel card device production
 Meta:
 @TestId TC408068
 Given user is logged in institution
@@ -35,6 +35,14 @@ Then device has "normal" status
 Then user activates device through helpdesk
 Then user sign out from customer portal
 
+Scenario: Pin Generation 
+Meta:
+@TestId 
+Given connection to FINSim is established
+When Pin Offset file batch was generated successfully
+When embossing file batch was generated in correct format
+When PIN is retrieved successfully with data from Pin Offset File
+Then FINSim simulator is closed
 
 Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
 Meta:

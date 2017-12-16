@@ -10,15 +10,15 @@ Meta:
 @oldReferenceSheet_S203707
 @CRCardsPinlessWithAuthorization
 
-Scenario: Set up prepaid emv corporate travel card
+
+Scenario: Set up prepaid msr corporate travel card
 Meta:
 @TestId TC398452
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card without pin
+And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client
 
-
-Scenario: prepaidemv corporate travel card device production
+Scenario: prepaid msr corporate travel card device production
 Meta:
 @TestId TC408068
 Given user is logged in institution
@@ -36,19 +36,28 @@ Then user activates device through helpdesk
 Then user sign out from customer portal
 
 
-Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
+Scenario: Pin Generation 
+Meta:
+@TestId 
+Given connection to FINSim is established
+When Pin Offset file batch was generated successfully
+When embossing file batch was generated in correct format
+When PIN is retrieved successfully with data from Pin Offset File
+Then FINSim simulator is closed
+
+Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
 Meta:
 @TestId 
 Given connection to MAS is established
-When perform an EMV_CASH_ADVANCE MAS transaction
+When perform an MSR_CASH_ADVANCE MAS transaction
 Then user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
 Then user sign out from customer portal
 
-Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
+Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
 Meta:
 @TestId 
-When perform an EMV_CASH_WITHDRAWAL MAS transaction
+When perform an MSR_CASH_WITHDRAWAL MAS transaction
 Then MAS test results are verified
 Then user is logged in institution
 Then search CWD authorization and verify 000-Successful status
