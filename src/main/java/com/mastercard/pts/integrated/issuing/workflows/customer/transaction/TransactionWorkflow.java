@@ -748,8 +748,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public void addBinRangeAndCurrencyDetailsBasedOnCardNumber(Transaction transactionData, String transaction, Boolean sameCard) {
-		// we do not have to perform this step if it same card on which
-		// operations are being performed
+		// we do not have to perform this step if it same card on which operations are being performed
 		if (!sameCard) {
 			configureBinRange(transactionData, transaction);
 		}
@@ -757,20 +756,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void configureBinRange(Transaction transactionData, String transaction) {
 		String bin = transactionData.getCardNumber();
-		String issuerCountryCode = transactionData.getIssuerCountryCode(); // "356";
-																			// //
-																			// transactionData.getCurrency();
-																			// //356
-		String issuerCurrencyCode = transactionData.getIssuerCurrencyCode(); // value
-																				// from
-																				// DE
-																				// Element
-																				// 49
-		String cardHolderBillingCurrency = transactionData.getCardHolderBillingCurrency(); // value
-																							// from
-																							// DE
-																							// Element
-																							// 61_13
+		String issuerCountryCode = transactionData.getIssuerCountryCode(); // "356"; transactionData.getCurrency();
+		String issuerCurrencyCode = transactionData.getIssuerCurrencyCode(); // value from DE Element 49
+		String cardHolderBillingCurrency = transactionData.getCardHolderBillingCurrency(); // value from DE Element 61_13
 
 		String binBinMinRange = bin.substring(0, 9) + "00";
 		String binMaxBinRange = bin.substring(0, 9) + "99";
@@ -866,10 +854,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		parameters = "\"" + SimulatorConstantsData.MAS_16_X + PATH_BUILDER + simulator.getPort() + PATH_BUILDER + getValue(ip[0]) + PATH_BUILDER + getValue(ip[1]) + PATH_BUILDER + getValue(ip[2])
 				+ PATH_BUILDER + getValue(ip[3]) + "\"";
 		setMasIpAddress(parameters);
-		// for keying ip and port on MAS 17.x if present
 		/*
-		 * parameters = "\"" + SimulatorConstantsData.MAS_17_X + PATH_BUILDER + simulator.getPort() + PATH_BUILDER + getValue( ip[0]) + PATH_BUILDER + getValue(ip[1]) + PATH_BUILDER + getValue(ip[2])
-		 * + PATH_BUILDER + getValue(ip[3]) + "\""; setMasIpAddress(parameters);
+		 * for keying ip and port on MAS 17.x if present parameters = "\"" + SimulatorConstantsData.MAS_17_X + PATH_BUILDER + simulator.getPort() + PATH_BUILDER + getValue( ip[0]) + PATH_BUILDER +
+		 * getValue(ip[1]) + PATH_BUILDER + getValue(ip[2]) + PATH_BUILDER + getValue(ip[3]) + "\""; setMasIpAddress(parameters);
 		 */
 	}
 
@@ -880,7 +867,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			String ipAdd = simulator.getIpAddress();
 			String[] ip = ipAdd.split("\\.");
 			winiumClickOperation("TCP/IP");
-
 			setMasIpOnMdfs(ip);
 		} catch (Exception e) {
 			logger.debug(ConstantData.EXCEPTION, e);
@@ -894,10 +880,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		parameters = "\"" + SimulatorConstantsData.MDFS_16_X + PATH_BUILDER + simulator.getPort() + PATH_BUILDER + getValue(ip[0]) + PATH_BUILDER + getValue(ip[1]) + PATH_BUILDER + getValue(ip[2])
 				+ PATH_BUILDER + getValue(ip[3]) + "\"";
 		setMasIpAddress(parameters);
-		// for keying ip and port on MAS 17.x if present
 		/*
-		 * parameters = "\"" + SimulatorConstantsData.MDFS_17_X + PATH_BUILDER + simulator.getPort() + PATH_BUILDER + getValue( ip[0]) + PATH_BUILDER + getValue(ip[1]) + PATH_BUILDER + getValue(ip[2])
-		 * + PATH_BUILDER + getValue(ip[3]) + "\""; setMasIpAddress(parameters);
+		 * for keying ip and port on MAS 17.x if present parameters = "\"" + SimulatorConstantsData.MDFS_17_X + PATH_BUILDER + simulator.getPort() + PATH_BUILDER + getValue( ip[0]) + PATH_BUILDER +
+		 * getValue(ip[1]) + PATH_BUILDER + getValue(ip[2]) + PATH_BUILDER + getValue(ip[3]) + "\""; setMasIpAddress(parameters);
 		 */
 	}
 
@@ -968,17 +953,13 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		try {
 			winiumDriver.findElementByName("User Name:").sendKeys("Automation");
 			wait(2000);
-			// Ex: SelectValuesFromPinOffsetCalculator.exe "5877650150876119"
-			// "EE9A8BACEE127B4B2DC900D8EEA9221D" "1234567890123456" "4" "12"
-			// "F" "7782" "4"
-			// NO SONAR...
+			// Ex: SelectValuesFromPinOffsetCalculator.exe "5877650150876119" "EE9A8BACEE127B4B2DC900D8EEA9221D" "1234567890123456" "4" "12" "F" "7782" "4"
 			String parameters = "\"" + transactionData.getCardNumber() + PATH_BUILDER + transactionData.getPinKey() + PATH_BUILDER + transactionData.getDecimalisationTable() + PATH_BUILDER
 					+ transactionData.getValidationDataStart() + PATH_BUILDER + transactionData.getCardLength() + PATH_BUILDER + transactionData.getPad() + PATH_BUILDER
 					+ transactionData.getOffSetForCard() + PATH_BUILDER + transactionData.getPinLength() + "\"";
 			MiscUtils.reportToConsole(" ******* Parameter for SelectValuesFromPinOffsetCalculator : ******" + parameters);
 			executeAutoITExe("SelectValuesFromPinOffsetCalculator.exe " + parameters);
 			wait(7000);
-
 			return getPinText();
 		} catch (Exception e) {
 			logger.debug(ConstantData.EXCEPTION, e);
@@ -1018,7 +999,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(10000);
 		String text = winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
 		context.put("IssuerCardReference", text);
-
 		winiumClickOperation(CLOSE);
 		performDoubleClickOperation(MESSAGE_REVERSAL_INDICATOR);
 		executeAutoITExe("GetVauleFromMessageReversalIndicator.exe");
@@ -1033,11 +1013,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		MiscUtils.reportToConsole("winiumLicenseSelectOperation Count : " + lst);
 		lst.get(0).click();
 	}
-
-	//
-	// private void winiumClickOperation(String locator) {
-	// winiumClickOperationWithoutActiviate(locator);
-	// }
 
 	private void winiumClickOperation(String locator) {
 		logger.info(" *****  winiumClick Operation is being performed :  " + locator);

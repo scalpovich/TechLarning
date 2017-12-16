@@ -1,9 +1,9 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import org.junit.Assert;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.CardType;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.CardType;
 import com.mastercard.pts.integrated.issuing.domain.DeviceType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Vendor;
@@ -22,8 +22,8 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -348,16 +348,11 @@ public class DevicePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Next >']")
 	private MCWebElement NextBtn;
 	/*
-	 * @PageElement(findBy = FindBy.X_PATH, valueToFind = "") private
-	 * MCWebElement Next2Btn;
+	 * @PageElement(findBy = FindBy.X_PATH, valueToFind = "") private MCWebElement Next2Btn;
 	 * 
-	 * @PageElement(findBy = FindBy.X_PATH, valueToFind =
-	 * "//div[2]/div/form/table/tbody/tr/td[2]/table/tbody/tr[4]/td/span/table/tbody/tr/td/span[2]/input"
-	 * ) private MCWebElement Next3Btn;
+	 * @PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[2]/div/form/table/tbody/tr/td[2]/table/tbody/tr[4]/td/span/table/tbody/tr/td/span[2]/input" ) private MCWebElement Next3Btn;
 	 * 
-	 * @PageElement(findBy = FindBy.X_PATH, valueToFind =
-	 * "//div[2]/div/form/table/tbody/tr/td[2]/table/tbody/tr[4]/td/span/table/tbody/tr/td/span[2]/input"
-	 * ) private MCWebElement Next4Btn;
+	 * @PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[2]/div/form/table/tbody/tr/td[2]/table/tbody/tr[4]/td/span/table/tbody/tr/td/span[2]/input" ) private MCWebElement Next4Btn;
 	 */
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:deviceEvtFeePlanCodeCard1:input:dropdowncomponent")
 	private MCWebElement EventBasedFeePlanDDwn;
@@ -919,9 +914,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		// filling date when flag is fixed
 		if ("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
 			enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
-			// making necessary changes so that this value can be set in the
-			// required format so that it can be used when a pinless card is
-			// used
+			// making necessary changes so that this value can be set in the required format so that it can be used when a pinless card is used
 			logger.info("Validity On Initial Months = ", devicePlan.getValidityOnInitialMonths());
 			String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
 			devicePlan.setExpiryDate(dateInYYMM);
@@ -942,8 +935,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	private String getValueInYYMMFormatForExpiryDate(String dateVal) {
-		// for format of date to be passed is YYMM .Ex: Input is 10-2022..
-		// output should be 2210
+		// for format of date to be passed is YYMM .Ex: Input is 10-2022.. output should be 2210
 		String[] tempArr = dateVal.split("-");
 		String tempVal = dateVal.substring(dateVal.length() - 2);
 		return tempVal + tempArr[0];

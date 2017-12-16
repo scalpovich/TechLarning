@@ -144,8 +144,7 @@ public class ProgramSetupSteps {
 			"When user fills General details with product prepaid and submits the form for registered device", "When user activates device through helpdesk" })
 	public void whenUserFillsDataForPrepaidDeviceAndRegistersWithNewProgram(String deviceType) {
 		/*
-		 * This is a composite step for creating prepaid device and activating
-		 * it
+		 * This is a composite step for creating prepaid device and activating it
 		 */
 	}
 
@@ -169,8 +168,7 @@ public class ProgramSetupSteps {
 			"When user is logged in institution", "When user fills General details with product prepaid and submits the form for registered device", "When user activates device through helpdesk" })
 	public void whenUserFillsDataForPrepaidDeviceWithOutRegistrationAndWithCustomerRegistration(String deviceType) {
 		/*
-		 * This is a composite step for creating prepaid device and activating
-		 * it
+		 * This is a composite step for creating prepaid device and activating it
 		 */
 	}
 
@@ -193,8 +191,7 @@ public class ProgramSetupSteps {
 			"When user fills General details with product prepaid and submits the form for notregistered device" })
 	public void whenUserFillsDataForPrepaidDeviceWithOutRegistration(String deviceType) {
 		/*
-		 * This is a composite step for creating prepaid device and activating
-		 * it
+		 * This is a composite step for creating prepaid device and activating it
 		 */
 	}
 
@@ -218,8 +215,7 @@ public class ProgramSetupSteps {
 			"When user fills General details with product prepaid and submits the form for registered device", "When user activates device through helpdesk" })
 	public void whenUserFillsDataForPrepaidDeviceWithRegistrationAndActivatesTheDevice(String deviceType) {
 		/*
-		 * This is a composite step for creating prepaid device and activating
-		 * it
+		 * This is a composite step for creating prepaid device and activating it
 		 */
 	}
 
@@ -357,13 +353,8 @@ public class ProgramSetupSteps {
 		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
 		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
 		/*
-		 * Below two line code creates template count in DB, it reaches max
-		 * count 999 on continuous script execution, fetching existing values
-		 * through excel This can be used when need arises to execute script for
-		 * template creation
-		 * devicePlan.setCardPackIdGenerationTemplate(cardPackIDTemplate
-		 * .buildDescriptionAndCode());
-		 * devicePlan.setDeviceIdGenerationTemplate(
+		 * Below two line code creates template count in DB, it reaches max count 999 on continuous script execution, fetching existing values through excel This can be used when need arises to
+		 * execute script for template creation devicePlan.setCardPackIdGenerationTemplate(cardPackIDTemplate .buildDescriptionAndCode()); devicePlan.setDeviceIdGenerationTemplate(
 		 * deviceTemplate.buildDescriptionAndCode());
 		 */
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
@@ -396,9 +387,7 @@ public class ProgramSetupSteps {
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 
-		// setting a flag through setter to figure out if the card is pinless
-		// card or not. This is used in TransactionSteps to set ExpiryDate
-		// incase of PinLess Card
+		// setting a flag through setter to figure out if the card is pinless card or not. This is used in TransactionSteps to set ExpiryDate incase of PinLess Card
 		if ("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
 			devicePlan.setIsPinLess("YES");
 
@@ -494,8 +483,7 @@ public class ProgramSetupSteps {
 
 	@When("User fills Transaction Plan for $type product")
 	public void whenUserFillsTransactionPlan(String type) {
-		// setting the context for IS PIN REQUIRED to a default state. This
-		// value is reset or set accordingly for Virtual and pinless cards
+		// setting the context for IS PIN REQUIRED to a default state. This value is reset or set accordingly for Virtual and pinless cards
 		setPinRequiredToDefaultState();
 		transactionPlan = TransactionPlan.createWithProvider(dataProvider);
 		transactionPlan.setProductType(ProductType.fromShortName(type));
@@ -508,15 +496,12 @@ public class ProgramSetupSteps {
 		deviceJoiningAndMemberShipFeePlan = DeviceJoiningAndMemberShipFeePlan.createWithProvider(dataProvider);
 		deviceJoiningAndMemberShipFeePlan.setProductType(ProductType.fromShortName(type));
 		DeviceJoiningAndMemberShipFeePlanDetails details = DeviceJoiningAndMemberShipFeePlanDetails.createWithProvider(dataProvider);
-
-		// for credit card, an additonal value is added in
-		// DeviceJoiningAndMembershipFeePlanPage.JSON
+		// for credit card, an additonal value is added in DeviceJoiningAndMembershipFeePlanPage.JSON
 		if (ProductType.fromShortName(type).toUpperCase().contains("CREDIT")) {
 			details.setPostIssuanceFeeOn(details.getPostIssuanceFeeOnForCreditCard());
 		}
 
 		deviceJoiningAndMemberShipFeePlan.getDeviceJoiningAndMemberShipFeePlanDetails().add(details);
-
 		programSetupWorkflow.createDeviceJoiningAndMemberShipFeePlan(deviceJoiningAndMemberShipFeePlan);
 	}
 
