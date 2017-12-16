@@ -25,6 +25,7 @@ And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 Then device has "normal" status
+Then user activates device through helpdesk
 
 Scenario: prepaid msr adjustment and file upload transaction
 Meta:

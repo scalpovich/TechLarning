@@ -25,6 +25,7 @@ And a new device was created
 When processes pre-production batch for debit
 When processes device production batch for debit
 Then device has "normal" status
+Then user activates device through helpdesk
 
 Scenario: debit emv adjustment and file upload transaction
 Meta:
