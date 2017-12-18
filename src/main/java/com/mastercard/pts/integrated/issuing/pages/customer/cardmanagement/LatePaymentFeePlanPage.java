@@ -1,13 +1,9 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
@@ -44,8 +40,10 @@ public class LatePaymentFeePlanPage extends AbstractBasePage {
 	private MCWebElement latePaymentFeeValueDateDdwn;
 	@PageElement(findBy = FindBy.NAME, valueToFind = "currencyCode:input:dropdowncomponent")
 	private MCWebElement currencyDdwn;
-	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Add Details']")
 	private MCWebElement addDetailsBtn;
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Save']")
+	private MCWebElement saveBtn;
 	@PageElement(findBy = FindBy.NAME, valueToFind = "lpcRangeAmount:input:inputAmountField")
 	private MCWebElement maximumRangeAmountTxt;
 	@PageElement(findBy = FindBy.NAME, valueToFind = "lpcLimitFixed:input:inputAmountField")
@@ -58,27 +56,24 @@ public class LatePaymentFeePlanPage extends AbstractBasePage {
 	public void addLatePaymentFeePlan() {
 		clickWhenClickable(addBtn);
 		switchToIframe(addLatePaymentFeePlanFrame);
-		getFinder().getWebDriver().switchTo().frame("_wicket_window_12");
 		WebElementUtils.enterText(lpcPlanCode,CustomUtils.RandomNumbers(3));
 		WebElementUtils.enterText(description, CustomUtils.RandomAlphabet().toUpperCase());
 		WebElementUtils.selectDropDownByIndex(chargeLPCOnDdwn,1);
 		WebElementUtils.selectDropDownByIndex(latePaymentFeeValueDateDdwn,1);
 		WebElementUtils.selectDropDownByIndex(currencyDdwn,1);
 		clickWhenClickable(addDetailsBtn);
+		CustomUtils.ThreadDotSleep(3000);
 		clickWhenClickable(addBtn);
 		SwitchToDefaultFrame();
 		switchToIframe(addLatePaymentFeePlanDetails);
 		WebElementUtils.enterText(maximumRangeAmountTxt,CustomUtils.RandomNumbers(9));
 		WebElementUtils.enterText(fixedTxt, CustomUtils.RandomNumbers(5));
-		clickWhenClickable(addDetailsBtn);
-		clickWhenClickable(addDetailsBtn);
-	}
+		clickWhenClickable(saveBtn);
+		SwitchToDefaultFrame();
+	    switchToIframe(addLatePaymentFeePlanFrame);
+	    CustomUtils.ThreadDotSleep(4000);
+	    waitForElementVisible(saveBtn);
+		clickWhenClickable(saveBtn);
+		}
 
-	@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(lpcPlanCode),
-				WebElementUtils.elementToBeClickable(description)
-				);
 	}
-}

@@ -22,8 +22,7 @@ public class surchargeWaiverPlanStep {
 
 	@Then("User navigates to Add Surcharge Waiver Fee Plan Page and adds a valid Fee Plan by entering valid values")
 	public void thenSurchargeWaiverPlanOfCardManagementTab() {
-		surchargeWailverPlan.surchargeWaiverFeePlanDataProvider();
-		surchargeWaiverPlanWorkflow.verifyValidSurchargeWaiverPlanCode(surchargeWailverPlan);
+	surchargeWaiverPlanWorkflow.verifyValidSurchargeWaiverPlanCode(surchargeWailverPlan);
 		
 	}
 	@Then("User navigates to Add Surcharge Waiver Detail Fee Plan Page and adds a valid plan by entering valid values")

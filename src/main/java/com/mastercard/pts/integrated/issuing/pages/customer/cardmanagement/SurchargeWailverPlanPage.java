@@ -13,7 +13,9 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Surc
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.DatePicker;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -102,6 +104,10 @@ public class SurchargeWailverPlanPage extends AbstractBasePage {
 	}
 	public void enterWaiverTransactionDescription(SurchargeWailverPlan surchargeWailverPlan)
 	{
+		surchargeWailverPlan.setEffectiveDate(Constants.effectiveDate);
+		surchargeWailverPlan.setEndDate(Constants.endDate);
+		surchargeWailverPlan.setWaiverTransactionDescription(Constants.waiverTransactionDescription);
+		surchargeWailverPlan.setSurchargeRate(Constants.surchargeRate);
 		enterValueinTextBox(waiverTransactionDescription,surchargeWailverPlan.getWaiverTransactionDescription());
 	}
 	public void effectiveDateSelect(DatePicker datePicker,SurchargeWailverPlan surchargeWailverPlan)
@@ -126,6 +132,7 @@ public class SurchargeWailverPlanPage extends AbstractBasePage {
 		logger.info("Surcharge Waiver Plan");
 		clickWhenClickable(addButton);
 		switchToIframe(Constants.ADD_SURCHARGE_WAIVER_FEE_PLAN);
+		surchargeWailverPlan.setSurchargeWaiverPlanCodeValid(CustomUtils.randomAlphaNumeric(5).toUpperCase());
 		enterValueinTextBox(surchargeWaiverPlanCodeTxt, surchargeWailverPlan.getSurchargeWaiverPlanCodeValid());
         clickWhenClickable(addDetailsBtn);
 		}
@@ -138,6 +145,7 @@ public class SurchargeWailverPlanPage extends AbstractBasePage {
 		}
 	
 	public void enterWaiverPlanDescriptionValid(SurchargeWailverPlan surchargeWailverPlan) {
+		surchargeWailverPlan.setSurchargeWaiverDescriptionValid(CustomUtils.randomAlphaNumeric(5));
 		enterValueinTextBox(surchargeWaiverPlandescriptionTxt,surchargeWailverPlan.getSurchargeWaiverDescriptionValid() );
 		 clickWhenClickable(addDetailsBtn);
 		}
@@ -186,18 +194,15 @@ public class SurchargeWailverPlanPage extends AbstractBasePage {
 	}
 	public void saveButtonClickInner()
 	{
-    switchToIframe(Constants.ADD_SURCHARGE_WAIVER_FEE_PLAN);
-	clickWhenClickable(saveButton);
+		SwitchToDefaultFrame();
+	    switchToIframe(Constants.ADD_SURCHARGE_WAIVER_FEE_PLAN);
+	    CustomUtils.ThreadDotSleep(4000);
+	    waitForElementVisible(saveButton);
+		clickWhenClickable(saveButton);
 	}
 	public void cancelButtonClick()
 	{
 		clickWhenClickable(cancelButton);
 	}
 	
-	@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(surchargeWaiverPlanCodeTxt),
-				WebElementUtils.elementToBeClickable(surchargeWaiverPlandescriptionTxt));
-	}
 }
