@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.math.BigDecimal;
 
 import junit.framework.Assert;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
@@ -475,6 +476,7 @@ public class HelpDeskSteps {
 		assertEquals(currentBalanceAmount, afterTrnBalanceAmount);
 	}
 
+	@Then("user activates device through helpdesk")
 	@Given("user activates device through helpdesk")
 	@When("user activates device through helpdesk")
 	public void whenUserActivatesDeviceThroughHelpDesk() {

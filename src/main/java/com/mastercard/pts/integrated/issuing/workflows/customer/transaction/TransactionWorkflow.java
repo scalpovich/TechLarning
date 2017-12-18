@@ -473,7 +473,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			setText("");
 			setText("999684");
 			wait(2000);
-			performClickOperation(SET_VALUE);
+			winiumDriver.findElementByName("Set Value").click();
 			wait(2000);
 			winiumDriver.findElementByName(CLOSE).click();
 			addField();
@@ -496,7 +496,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setText("");
 		setText(cardNumber);
 		wait(2000);
-		performClickOperation(SET_VALUE);
+		winiumDriver.findElementByName("Set Value").click();
 		wait(2000);
 		winiumDriver.findElementByName(CLOSE).click();
 			}
@@ -545,7 +545,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setText(rRN);
 		winiumDriver.findElementByName("OK").click();
 		wait(2000);
-		performClickOperation(SET_VALUE);
+		winiumDriver.findElementByName("Set Value").click();
 		String aRN = winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
 		wait(2000);
 		winiumDriver.findElementByName(CLOSE).click();
@@ -566,7 +566,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setText("");
 		setText("999684");
 		wait(2000);
-		performClickOperation(SET_VALUE);
+		winiumDriver.findElementByName("Set Value").click();
 		wait(2000);
 		winiumDriver.findElementByName(CLOSE).click();
 		performClickOperation("Save");
@@ -575,6 +575,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		performClickOperation("Add file to CEE");
 		wait(2000);
 		winiumDriver.findElementByName("Process File(s)").click();
+		wait(5000);
 		executeAutoITExe("GetCEEData.exe");				
 	}
 
@@ -641,7 +642,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setText(value);
 		winiumDriver.findElementByName("OK").click();
 		wait(2000);
-		performClickOperation(SET_VALUE);		
+		winiumDriver.findElementByName("Set Value").click();
 		wait(2000);
 		winiumDriver.findElementByName(CLOSE).click();
 	}
