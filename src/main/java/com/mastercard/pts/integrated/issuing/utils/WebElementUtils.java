@@ -331,4 +331,10 @@ public class WebElementUtils {
 	public static void scrollToElement(WebDriver driver, MCWebElement element) {
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
 	}
+	public static void scrollToElement(WebDriver driver, WebElement element) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+}
+
+	
+
 }
