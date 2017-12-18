@@ -8,7 +8,7 @@ I want to authorize transactions for prepaid msr retail general purpose card
 Meta:
 @StoryName p_msr_retail_gen_purpose
 @oldReferenceSheet_prepaid_msr
-@CRCardsPinlessWithAuthorization
+@CRCardsWithAuthorization
 
 Scenario: Set up prepaid msr retail general purpose card
 Meta:
@@ -30,6 +30,8 @@ Then device has "normal" status
 When user has wallet number information for prepaid device
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
+Then device has "normal" status
+Then user activates device through helpdesk
 
 Scenario: Pin Generation 
 Meta:

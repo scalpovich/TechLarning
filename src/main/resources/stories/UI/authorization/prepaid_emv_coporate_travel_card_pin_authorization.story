@@ -8,7 +8,7 @@ I want to authorize transactions for prepaid emv retail general purpose card
 Meta:
 @StoryName p_emv_coprporate_travel
 @oldReferenceSheet_S203707
-@CRCardsPinlessWithAuthorization
+@CRCardsWithAuthorization
 
 Scenario: Set up prepaid emv corporate travel card
 Meta:

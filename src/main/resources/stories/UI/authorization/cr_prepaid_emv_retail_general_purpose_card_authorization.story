@@ -8,7 +8,7 @@ I want to authorize transactions for prepaid emv retail general purpose card
 Meta:
 @StoryName p_emv_retail_general
 @oldReferenceSheet_S203707
-@CRCardsPinlessWithAuthorization
+@CRCardsWithAuthorization
 
 Scenario: Set up prepaid emv retail general purpose card
 Meta:
@@ -30,6 +30,7 @@ When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 When processes pin generation batch for prepaid
 Then device has "normal" status
+Then user activates device through helpdesk
 
 Scenario: Pin Generation 
 Meta:
