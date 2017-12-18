@@ -1,20 +1,19 @@
-prepaid msr retail gift card authorization PINLESS
+prepaid msr retail travel multi wallet multi currency card authorization PINLESS
 
 Narrative:
-In order to check transactions on prepaid msr retail gift card 
+In order to provide a retail client various transactions
 As an issuer
-I want to authorize transactions for prepaid msr retail gift card 
+I want to create a prepaid msr retail travel multi wallet multi currency card and test various transactions
 
 Meta:
-@StoryName p_msr_retail_gift
+@StoryName p_msr_retail_travel_mwmc
 
-Scenario: Setup - prepaid msr retail gift card
+Scenario: Setup - prepaid msr retail travel multi wallet multi currency card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client
-Then device has "normal" status
 
-Scenario: Device production - prepaid msr retail gift card
+Scenario: Device production - prepaid msr retail travel multi wallet multi currency card
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
@@ -25,21 +24,23 @@ When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
 
-Scenario: Transaction - MSR_PURCHASE Authorization transaction - prepaid msr retail gift card
-When connection to MAS is established
+Scenario: Transaction - msr_PURCHASE Authorization transaction - prepaid msr retail travel multi wallet multi currency card
+Given connection to MAS is established
 When perform an MSR_PURCHASE MAS transaction
 Then MAS test results are verified
+And MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify Successful status
 
-Scenario: Transaction - MSR_PURCHASE_WITH_CASHBACK Authorization transaction - prepaid msr retail gift card
-When connection to MAS is established
+Scenario: Transaction - msr_PURCHASE_WITH_CASHBACK Authorization transaction - prepaid msr retail travel multi wallet multi currency card
+Given connection to MAS is established
 When perform an MSR_PURCHASE_WITH_CASHBACK MAS transaction
 Then MAS test results are verified
+And MAS simulator is closed
 And user is logged in institution
 And search Purchase with Cash back authorization and verify Successful status
 
-Scenario: Program Balance Summary report download - prepaid msr retail gift card
+Scenario: Program Balance Summary report download - prepaid msr retail travel multi wallet multi currency card
 Given user is logged in institution
 When pre-clearing and Pre-EOD batches are run
 Then verify report for transactions with Program Balance Summary is downloaded

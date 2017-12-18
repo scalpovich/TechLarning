@@ -7,7 +7,6 @@ I want to create a prepaid emv corporate general purpose card and test various t
 
 Meta:
 @StoryName p_emv_corp_general_purpose
-@SanityCards
 
 Scenario: Setup - prepaid emv corporate general purpose card
 Given user is logged in institution

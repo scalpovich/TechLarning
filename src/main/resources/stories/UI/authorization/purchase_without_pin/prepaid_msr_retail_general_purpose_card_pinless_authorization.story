@@ -7,7 +7,6 @@ I want to authorize transactions for prepaid msr retail general purpose card
 
 Meta:
 @StoryName p_msr_retail_gen_purpose
-@SanityCardsWithAuthorization
 
 Scenario: Setup - prepaid msr retail general purpose card
 Given user is logged in institution

@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils.RemoteConnectionDetails;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
@@ -115,7 +114,6 @@ public class LinuxBox implements RemoteConnectionDetails {
 
 	@Override
 	public String toString() {
-		return "LinuxBoxConfiguration [hostName=" + hostName + ", port=" + port
-				+ ", userName=" + userName + "]";
+		return "LinuxBoxConfiguration [hostName=" + hostName + ", port=" + port + ", userName=" + userName + "]";
 	}
 }

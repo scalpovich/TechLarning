@@ -7,7 +7,6 @@ I want to create a prepaid emv corporate gift card and test various transactions
 
 Meta:
 @StoryName p_emv_corp_gift
-@SanityCards
 
 Scenario: Setup - prepaid emv corporate gift card
 Given user is logged in institution
