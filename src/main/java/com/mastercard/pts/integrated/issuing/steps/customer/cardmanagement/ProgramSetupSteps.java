@@ -592,7 +592,6 @@ public class ProgramSetupSteps {
 		if(deviceType.toLowerCase().contains("virtual")) {
 			setPinRequiredToFalse();
 		}
-		setPinRequiredToTrue();
 		devicePlan = DevicePlan.createWithProvider(provider);
 		devicePlan.setProductType(ProductType.fromShortName(productType));
 		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
@@ -698,6 +697,7 @@ public class ProgramSetupSteps {
 
 	@When("User fills Transaction Plan for $type product")
 	public void whenUserFillsTransactionPlan(String type) {
+		setPinRequiredToDefaultState();
 		transactionPlan = TransactionPlan.createWithProvider(dataProvider);
 		transactionPlan.setProductType(ProductType.fromShortName(type));
 
@@ -817,8 +817,7 @@ public class ProgramSetupSteps {
 		context.put(ConstantData.IS_PIN_REQUIRED, "FALSE");
 	}
 
-	private  void setPinRequiredToTrue() {
+	private  void setPinRequiredToDefaultState() {
 		context.put(ConstantData.IS_PIN_REQUIRED, "TRUE");
 	}
-
 }
