@@ -6,14 +6,14 @@ As an issuer
 I want to authorize transactions for prepaid emv retail general purpose card
 
 Meta:
-@StoryName p_emv_retail_general
+@StoryName p_emv_retail_travel
 
-Scenario: Set up prepaid emv retail general purpose card
+Scenario: Set up prepaid emv retail Travel card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client
 
-Scenario: prepaid emv retail general purpose card device production
+Scenario: prepaid emv retail Travel card device production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
@@ -24,7 +24,7 @@ When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
 
-Scenario: Transaction - EMV_PREAUTH Authorization transaction - prepaid emv retail travel card
+Scenario: Transaction - EMV_PREAUTH and EMV_COMPLETION Authorization transaction - prepaid emv retail travel card
 Given connection to MAS is established
 When perform an EMV_PREAUTH MAS transaction
 Then MAS test results are verified
