@@ -8,13 +8,12 @@ I want to create a EMV Corporate debit card for client
 Meta:
 @StoryName d_emv_corp
 
-Scenario: Setup - debit emv corp debit card
+Scenario: Transaction - EMV_PURCHASE and EMV_PURCHASE_WITH_CASHBACK Authorization transaction - debit emv corp debit card
 Given user is logged in institution
-And device range for program with device plan for "debit" "emv" card
+And device range for program with device plan for "debit" "emv" card without pin
 When user creates new device of debit type for new client
 Then device has "normal" status
-
-Scenario: Device production - debit emv corp debit card
+And user sign out from customer portal
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for debit
@@ -24,24 +23,21 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for debit device
 Then device has "normal" status
 When user activates device through helpdesk
-
-Scenario: Transaction - EMV_PURCHASE Authorization transaction - debit emv corp debit card
+And user sign out from customer portal
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify Successful status
-
-Scenario: Transaction - EMV_PURCHASE_WITH_CASHBACK Authorization transaction - debit emv corp debit card
+And user sign out from customer portal
 Given connection to MAS is established
 When perform an EMV_PURCHASE_WITH_CASHBACK MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify Successful status
-
-Scenario: Program Balance Summary report download - debit emv corp debit card
+And user sign out from customer portal
 Given user is logged in institution
 When pre-clearing and Pre-EOD batches are run
 Then verify report for transactions with Program Balance Summary is downloaded

@@ -1,19 +1,18 @@
-prepaid emv retail travel multi wallet multi currency card authorization PINLESS
+prepaid msr retail general purpose card authorization PINLESS
 
 Narrative:
-In order to provide a retail client various transactions
+In order to check transactions on prepaid msr retail travel card 
 As an issuer
-I want to create a prepaid emv retail travel multi wallet multi currency card and test various transactions
+I want to authorize transactions for prepaid msr retail travel card 
 
 Meta:
-@StoryName p_emv_retail_travel_mwmc
+@StoryName p_msr_retail_travel
 
-Scenario: Setup - prepaid emv retail travel multi wallet multi currency card
+Scenario: Transaction - EMV_PURCHASE and EMV_PURCHASE_WITH_CASHBACK Authorization transaction - prepaid msr retail travel card multi wallet multi currency
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card without pin
+And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client
-
-Scenario: Device production - prepaid emv retail travel multi wallet multi currency card
+And user sign out from customer portal
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
@@ -23,24 +22,19 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
-
-Scenario: Transaction - EMV_PURCHASE Authorization transaction - prepaid emv retail travel multi wallet multi currency card
-Given connection to MAS is established
-When perform an EMV_PURCHASE MAS transaction
+And user sign out from customer portal
+When connection to MAS is established
+When perform an MSR_PURCHASE MAS transaction
 Then MAS test results are verified
-And MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify Successful status
-
-Scenario: Transaction - EMV_PURCHASE_WITH_CASHBACK Authorization transaction - prepaid emv retail travel multi wallet multi currency card
-Given connection to MAS is established
-When perform an EMV_PURCHASE_WITH_CASHBACK MAS transaction
+And user sign out from customer portal
+When connection to MAS is established
+When perform an MSR_PURCHASE_WITH_CASHBACK MAS transaction
 Then MAS test results are verified
-And MAS simulator is closed
 And user is logged in institution
-And search Purchase with Cash back authorization and verify Successful status
-
-Scenario: Program Balance Summary report download - prepaid emv retail travel multi wallet multi currency card
+And search Purchase authorization and verify Successful status
+And user sign out from customer portal
 Given user is logged in institution
 When pre-clearing and Pre-EOD batches are run
 Then verify report for transactions with Program Balance Summary is downloaded
