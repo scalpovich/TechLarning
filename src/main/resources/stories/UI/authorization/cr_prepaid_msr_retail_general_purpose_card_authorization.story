@@ -32,6 +32,7 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
+And user sign out from customer portal
 
 Scenario: Pin Generation 
 Meta:
@@ -42,16 +43,20 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform MSR_ECOMMERCE Authorization transaction
-Meta:
-@TestId 
-When connection to MAS is established
-When perform an MSR_ECOMMERCE MAS transaction
-Then MAS test results are verified
-
 Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
 Meta:
 @TestId 
 When perform an MSR_CASH_WITHDRAWAL MAS transaction
+Then MAS test results are verified
+Then user is logged in institution
+Then search CWD authorization and verify 000-Successful status
+And user sign out from customer portal
+
+
+Scenario: Perform MSR_ECOMMERCE Authorization transaction
+Meta:
+@TestId 
+Given connection to MAS is established
+When perform an MSR_ECOMMERCE MAS transaction
 Then MAS test results are verified
 When MAS simulator is closed

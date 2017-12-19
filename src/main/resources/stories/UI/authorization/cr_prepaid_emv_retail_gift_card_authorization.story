@@ -30,6 +30,7 @@ When processes device production batch for prepaid
 When processes pin generation batch for prepaid
 Then device has "normal" status
 Then user activates device through helpdesk
+And user sign out from customer portal
 
 Scenario: Pin Generation 
 Meta:
@@ -43,8 +44,11 @@ Then FINSim simulator is closed
 Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
 Meta:
 @TestId
+Given connection to MAS is established
 When perform an EMV_CASH_ADVANCE MAS transaction
 Then MAS test results are verified
+Then user is logged in institution
+Then search Cash Advance authorization and verify 000-Successful status
 When MAS simulator is closed
 
 Scenario: Program Balance Summary download

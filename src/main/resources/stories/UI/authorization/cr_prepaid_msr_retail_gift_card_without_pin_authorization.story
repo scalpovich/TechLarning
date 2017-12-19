@@ -36,8 +36,11 @@ And user sign out from customer portal
 Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
 Meta:
 @TestId
+Given connection to MAS is established
 When perform an MSR_CASH_ADVANCE MAS transaction
 Then MAS test results are verified
+Then user is logged in institution
+Then search Cash Advance authorization and verify 000-Successful status
 When MAS simulator is closed
 
 Scenario: Program Balance Summary download
