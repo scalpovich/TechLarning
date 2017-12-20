@@ -355,8 +355,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		pressLeftArrow();
 		performClickOperation("Imported");
 		pressRightArrow(4);
-		pressPageDown();
-	
+		pressPageDown();	
 	}
 
 	private void performExecution(String transaction) {

@@ -592,7 +592,6 @@ public class ProgramSetupSteps {
 		if(deviceType.toLowerCase().contains("virtual")) {
 			setPinRequiredToFalse();
 		}
-		//setPinRequiredToTrue();
 		devicePlan = DevicePlan.createWithProvider(provider);
 		devicePlan.setProductType(ProductType.fromShortName(productType));
 		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
