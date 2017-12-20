@@ -57,7 +57,7 @@ public class BatchSteps {
 			device.setCvvData(fileData[4]);
 			device.setIcvvData(fileData[5]);
 
-
+			MiscUtils.reportToConsole("******** setCvv2Data " + " : " +  fileData[2] + " - "  + "  setPvvData " + " : " +  fileData[3] + " - "  + " setCvvData  " + " : " +  fileData[4] + " - "  + " setIcvvData " + " : " +  fileData[5] + "  ***** ");
 			//for format of date to be passed is YYMM
 			String tempDate = fileData[1].substring(fileData[1].length()-2) + fileData[1].substring(0, 2);
 			device.setExpirationDate(tempDate);
@@ -76,7 +76,7 @@ public class BatchSteps {
 		MiscUtils.reportToConsole("******** Pin Offset Start ***** " );
 		String[] values = null;
 		DevicePlan tempdevice = context.get(ContextConstants.DEVICE_PLAN);
-		File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevice.getDevicePlanCode(), tempDirectory.toString(), "PIN");
+		File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevice.getDevicePlanCode(), tempDirectory.toString(), "Pin");
 		Device device = context.get(ContextConstants.DEVICE);
 		try(Scanner scanner = new Scanner(batchFile)){
 			while(scanner.hasNext()){

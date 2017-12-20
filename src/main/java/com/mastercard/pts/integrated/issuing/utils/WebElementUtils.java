@@ -311,7 +311,7 @@ public class WebElementUtils {
 			int columnscount = columnsrow.size();
 
 			// Loop will execute till the last cell of that specific row.
-			for (int col = 1; col < columnscount; col++) {
+			for (int col = 0; col < columnscount; col++) {
 				// To retrieve text from that specific cell.
 
 				if (columnsrow.get(col).getText().equals(text)) {
@@ -331,4 +331,10 @@ public class WebElementUtils {
 	public static void scrollToElement(WebDriver driver, MCWebElement element) {
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
 	}
+	public static void scrollToElement(WebDriver driver, WebElement element) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+}
+
+	
+
 }

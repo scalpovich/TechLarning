@@ -12,6 +12,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProgramPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.workflows.MenuFlows;
 
 @Component
@@ -38,7 +39,7 @@ public class ProgramFlows extends MenuFlows {
 		return aProgramCodes;
 	}
 
-	public String createprogramPrepaid(DeviceCreation deviceCreation, Program program) {
+	public String createprogramPrepaid(DeviceCreation deviceCreation, Program program,String loyaltyPlan) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
 		programpage = navigator.navigateToPage(ProgramPage.class);
 		programpage.clickAddProgram();
@@ -48,11 +49,12 @@ public class ProgramFlows extends MenuFlows {
 		programpage.clickNextButton();
 		programpage.selectWalletPLan(program);
 		programpage.selectDevicePlan(program);
-		programpage.selectOtherPlans();
+		programpage.selectOtherPlans(loyaltyPlan);
 		programpage.clickNextButton();
 		programpage.clickNextButton();
+		program.setProgram(PROGRAM);
 		programpage.clickFinishButton();
-		return PROGRAM;
+	    return PROGRAM;
 	}
 
 	public String createProgramPrepaidMultiCurrency(DeviceCreation deviceCreation, Program program) {
@@ -65,9 +67,10 @@ public class ProgramFlows extends MenuFlows {
 		programpage.clickNextButton();
 		programpage.selectWalletPLan(program);
 		programpage.selectDevicePlan(program);
-		programpage.selectOtherPlans();
-		programpage.clickNextButton();
-		programpage.clickNextButton();
+		programpage.selectOtherPlans1();
+		programpage.clickNextButton();			
+		programpage.clickNextButton();		
+		program.setProgram(PROGRAM);
 		programpage.clickFinishButton();
 		return PROGRAM;
 	}
@@ -84,11 +87,16 @@ public class ProgramFlows extends MenuFlows {
 		programpage.selectDevicePlan(program);
 		programpage.clickNextButton();
 		programpage.clickNextButton();
+		program.setProgram(PROGRAM);
 		programpage.clickFinishButton();
 		return PROGRAM;
 	}
 
 	public void VerifyProgramSuccess() {
 		programpage.verifyNewProgramSuccess();
+	}
+	public void programEdit(String a) {
+		ProgramPage programpage = navigator.navigateToPage(ProgramPage.class);
+		programpage.enterProgramValue(a);
 	}
 }

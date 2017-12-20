@@ -41,6 +41,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.TransactionProvider
 import com.mastercard.pts.integrated.issuing.pages.ValidationException;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.VisaTestCaseNameKeyValuePair;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
 
 @Component
@@ -70,11 +71,20 @@ public class TransactionSteps {
 	@Autowired
 	private ClearingTestCaseProvider clearingTestCaseProvider;
 
+	@Autowired
+	private VisaTestCaseNameKeyValuePair visaTestCaseNameKeyValuePair;
+	
 	private String authFilePath;
 
 	private String arnNumber;
 
 	private String transactionAmount = "20.00";
+	
+	private static String PASS_MESSAGE = "Transaction is succcessful!  - Expected Result : ";
+	
+	private static String FAILED = "Transaction failed! ";
+	
+	private static String FAIL_MESSAGE =  FAILED + " -  Result : ";
 
 	public String getTransactionAmount() {
 		return transactionAmount;
@@ -89,6 +99,7 @@ public class TransactionSteps {
 	@Given("perform an $transaction MAS transaction")
 	public void givenTransactionIsExecuted(String transaction){
 		String temp = transaction;
+		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED) );
 		if("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 			//ECOMM are pinless tranasactions
@@ -192,12 +203,13 @@ public class TransactionSteps {
 			transactionData.setDeKeyValuePairDynamic("052", device.getPinNumberForTransaction());
 		//data format is 12 digits hence leftpad with 0
 		transactionData.setDeKeyValuePairDynamic("004", StringUtils.leftPad(device.getTransactionAmount(), 12, "0" ));
-		if(transaction.contains("BALANCE_INQUIRY")) {
+		if(transactionWorkflow.isContains(transaction, "BALANCE_INQUIRY")) {
 			//this value is expected to be 0's for Balance Enquiry
 			transactionData.setDeKeyValuePairDynamic("004", "000000000000"); 
 		}
 
-		if(transaction.contains("ECOMMERCE") || !Strings.isNullOrEmpty(device.getCvv2Data())) {
+		//changed ECOMMERCE to ECOM 
+		if(transactionWorkflow.isContains(transaction, "ecom") || !Strings.isNullOrEmpty(device.getCvv2Data())) {
 			//for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInux box
 			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); //Transaction currency code
 		}
@@ -316,15 +328,6 @@ public class TransactionSteps {
 		device.setPinNumberForTransaction(pinNumber);
 	}
 
-	@When("PIN is retrieved successfully with sample data from Pin Offset File")
-	@Then("PIN is retrieved successfully with sample data from Pin Offset File")
-	public void thenPINIsRetrievedSuccessfullyBasedOnSampleData(){
-		Transaction transactionData = Transaction.fetchDataForFinSim(finSimConfig);
-
-		String pinNumber = transactionWorkflow.getPinNumber(transactionData);
-		MiscUtils.reportToConsole("FINSim PIN Number generated : " + pinNumber );
-	}
-
 	@When("$simulatorName simulator is closed")
 	@Then("$simulatorName simulator is closed")
 	public void thenclosesimulator(String simulatorName){
@@ -400,4 +403,43 @@ public class TransactionSteps {
     public void thenSettlementIsInitiatedSuccesfully() {
     	assertThat("Settlement Initiative Failed", transactionWorkflow.getSettlementInitiativeSuccessMessage(), containsString("Settlement initiated successfully and Settlement Referance No :"));
     }
+    
+	@When("perform an $transaction VISA transaction")
+	@Given("perform an $transaction VISA transaction")
+	public void givenVisaTransactionIsExecuted(String transaction){
+		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED) );
+		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseDetails(transaction.toUpperCase());
+		performOperationOnSamecard(false);
+		
+//		Transaction transactionData = generateMasTestDataForTransaction(transaction);
+		MiscUtils.reportToConsole("VISA Transaction being performed : " + transactionName );
+		
+//		transactionWorkflow.performVisaTransaction(transaction, transactionData, sameCard);
+		transactionWorkflow.performVisaTransaction(transactionName);
+	}
+	
+	@When("$tool test results are verified for $transaction")
+	@Then("$tool test results are verified for $transaction")
+	public void thenVisaTestResultsAreReported(String tool, String transaction) {
+		String testResults  = null;
+		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseDetails(transaction.toUpperCase());
+		
+		 testResults = transactionWorkflow.verifyVisaOutput(transactionName);
+		 transactionWorkflow.browserMaximize(); // maximing browser
+		 //reporting Temporary Status
+		 if(transactionWorkflow.isContains(testResults, "temporary status"))	{
+			 logger.info(PASS_MESSAGE, testResults );
+				assertTrue(PASS_MESSAGE + testResults, true );
+			} else if(transactionWorkflow.isContains(testResults, "validations ok")) {
+			logger.info(PASS_MESSAGE, testResults );
+			assertTrue(PASS_MESSAGE + testResults, true );
+		} else if(transactionWorkflow.isContains(testResults, "validations not ok"))	{
+			assertFalse(FAIL_MESSAGE +  testResults, false);
+			throw new ValidationException(FAIL_MESSAGE +  testResults);
+		} else {
+			logger.error(FAILED, testResults);
+			assertFalse(FAILED, false);
+			throw new ValidationException(FAILED);
+		}
+	}
 }

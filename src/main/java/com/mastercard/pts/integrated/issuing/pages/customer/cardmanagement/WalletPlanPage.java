@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -16,6 +15,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -24,67 +24,96 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP,
 		CardManagementNav.L2_WALLET_CONFIGURATION, CardManagementNav.L3_WALLET_PLAN })
 public class WalletPlanPage extends AbstractBasePage {
-	final Logger logger = LoggerFactory.getLogger(WalletPlanPage.class);
 
-	// ------------- Card Management > Institution Parameter Setup > Institution
-	// Currency [ISSS05]
+	final Logger logger = LoggerFactory.getLogger(WalletPlanPage.class);
+	private static final int FIRST_OPTION = 1;
 
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addWalletPlanBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:walletPlanCode:input:inputTextField")
-	private MCWebElement WalletPlancodeTxt;
+	private MCWebElement walletPlancodeTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='walletPlanCode']")
+	private MCWebElement walletPlancodeSearchTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:description:input:inputTextField")
-	private MCWebElement DescriptionTxt;
+	private MCWebElement descriptionTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
+	private MCWebElement searchTable;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:currencyCode:input:dropdowncomponent")
-	private MCWebElement CurrencyDDwn;
+	private MCWebElement currencyDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:productType:input:dropdowncomponent")
-	private MCWebElement ProductTypeDDwn;
+	private MCWebElement productTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:walletPlanType:input:dropdowncomponent")
-	private MCWebElement ProgrameTypeDDwn;
+	private MCWebElement programeTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:walletUsage:input:dropdowncomponent")
-	private MCWebElement UsageDDwn;
+	private MCWebElement usageDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:creditPlan:input:dropdowncomponent")
-	private MCWebElement CreditPlanDDwn;
+	private MCWebElement creditPlanDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:billingCycleCode:input:dropdowncomponent")
-	private MCWebElement BillingCycleCodeDDwn;
+	private MCWebElement billingCycleCodeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:dummyAccountNumber:input:inputTextField")
-	private MCWebElement DummyAccountNumberTxt;
+	private MCWebElement dummyAccountNumberTxt;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnLimitPlanCode:input:dropdowncomponent")
+	private MCWebElement transactionLimitPlanDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:minBalanceForTxn:input:inputAmountField")
-	private MCWebElement ReservedAmountTxt;
+	private MCWebElement reservedAmountTxt;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:surchargePlanCode:input:dropdowncomponent")
+	private MCWebElement surchargePlanDDwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:surchargeWaiverPlanCode:input:dropdowncomponent")
+	private MCWebElement surchargeWaiverPlanDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:walletFeePlanCode:input:dropdowncomponent")
-	private MCWebElement WalletFeePlanDDwn;
+	private MCWebElement walletFeePlanDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:whiteListedMcgCode:input:dropdowncomponent")
-	private MCWebElement WhiteListedMCGPlanDDwn;
+	private MCWebElement whiteListedMCGPlanDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:whiteListedMidPlan:input:dropdowncomponent")
-	private MCWebElement WhiteListedMerchantPlanDDwn;
+	private MCWebElement whiteListedMerchantPlanDDwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:mcgAuthBlockingPlan:input:dropdowncomponent")
+	private MCWebElement mcgAuthBlockingPlanDDwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:mcgLimitPlan:input:dropdowncomponent")
+	private MCWebElement mcgLimitPlanDDwn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name = 'buttons:next'][@value ='Next >']")
-	private MCWebElement NextBtn;
+	private MCWebElement nextBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "buttons:finish")
 	private MCWebElement finishBtn;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class = 'feedbackPanelERROR']")
-	private MCWebElement PanelError;
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:refundAllowed:checkBoxComponent")
+	private MCWebElement allowRefundChkBox;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class = 'feedbackPanelINFO']")
-	private MCWebElement PanelInfo;
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:inactivityDays:input:inputTextField")
+	private MCWebElement daysInactiveAfterTxt;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:inactiveToCloseDays:input:inputTextField")
+	private MCWebElement daysCloseWalletAfterTxt;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span.feedbackPanelERROR")
+	private MCWebElement panelError;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span.feedbackPanelINFO")
+	private MCWebElement panelInfo;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "buttons:cancel")
-	private MCWebElement CancelBtn;
+	private MCWebElement cancelBtn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "///div[3]/div[4]/div[2]/div[2]/span/div[1]/ul/li/span")
 	private MCWebElement msg;
@@ -100,79 +129,139 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	public String enterWalletPlanCode() {
 		if (MapUtils.fnGetInputDataFromMap("WalletPlancode") != null) {
-			enterValueinTextBox(WalletPlancodeTxt, MapUtils.fnGetInputDataFromMap("WalletPlancode"));
+			enterValueinTextBox(walletPlancodeTxt, MapUtils.fnGetInputDataFromMap("WalletPlancode"));
 		} else {
-			enterValueinTextBox(WalletPlancodeTxt, CustomUtils.randomNumbers(5));
+			enterValueinTextBox(walletPlancodeTxt, CustomUtils.randomNumbers(5));
 		}
-		return WalletPlancodeTxt.getAttribute("value");
+		return walletPlancodeTxt.getAttribute("value");
+	}
+	
+	public void enterWalletPlanCode(WalletPlan plan) {
+		enterValueinTextBox(walletPlancodeTxt, plan.getWalletPlanCode());
 	}
 
 	public String enterWalletPlanDescription() {
 		if (MapUtils.fnGetInputDataFromMap("WalletPlanDescription") != null) {
-			enterValueinTextBox(DescriptionTxt, MapUtils.fnGetInputDataFromMap("WalletPlanDescription"));
+			enterValueinTextBox(descriptionTxt, MapUtils.fnGetInputDataFromMap("WalletPlanDescription"));
 		} else {
-			enterValueinTextBox(DescriptionTxt, "wallet plan");
+			enterValueinTextBox(descriptionTxt, "wallet plan");
 		}
-		return DescriptionTxt.getAttribute("value");
+		return descriptionTxt.getAttribute("value");
 
 	}
 
 	public void selectCurrency(WalletPlan walletplan) {
-		selectByVisibleText(CurrencyDDwn, walletplan.getCurrency());
+		selectByVisibleText(currencyDDwn, walletplan.getCurrency());
 	}
 
-	public void selectProduct(DeviceCreation deviceCreation) {
-		selectByVisibleText(ProductTypeDDwn, deviceCreation.getProduct());
+	public void checkAllowRefund() {
+		ClickButton(allowRefundChkBox);
+	}
+
+	public void selectProduct(WalletPlan plan) {
+		selectByVisibleText(productTypeDDwn, plan.getProductType());
+	}
+
+	public void selectProductType(WalletPlan plan) {
+		selectByVisibleText(productTypeDDwn, plan.getProductType());
+	}
+
+	public void selectCreditPlan() {
+		if (creditPlanDDwn.isEnabled()) {
+			SelectDropDownByIndex(creditPlanDDwn, FIRST_OPTION);
+		}
+	}
+
+	public void selectBillingCycleCode() {
+		if (billingCycleCodeDDwn.isEnabled()) {
+			SelectDropDownByIndex(billingCycleCodeDDwn, FIRST_OPTION);
+		}
+	}
+
+	public void selectTransactionLimitPlan() {
+		if (transactionLimitPlanDDwn.isEnabled()) {
+			SelectDropDownByIndex(transactionLimitPlanDDwn, FIRST_OPTION);
+		}
+	}
+
+	public void selectSurchargePlan() {
+		if (surchargePlanDDwn.isEnabled()) {
+			SelectDropDownByIndex(surchargePlanDDwn, FIRST_OPTION);
+		}
+	}
+
+	public void selectSurchargeWaiverPlan() {
+		if (surchargeWaiverPlanDDwn.isEnabled()) {
+			SelectDropDownByIndex(surchargeWaiverPlanDDwn, FIRST_OPTION);
+		}
+	}
+
+	public void selectWalletFeePlan() {
+		if (walletFeePlanDDwn.isEnabled()) {
+			SelectDropDownByIndex(walletFeePlanDDwn, FIRST_OPTION);
+		}
 	}
 
 	public void selectProgramType(WalletPlan walletplan) {
-		selectByVisibleText(ProgrameTypeDDwn, walletplan.getProgramType());
+		selectByVisibleText(programeTypeDDwn, walletplan.getProgramType());
 	}
 
 	public void selectOpenWalletUsage() {
-		if (UsageDDwn.isEnabled()) {
-			selectByVisibleText(UsageDDwn, "Open Loop");
+		if (usageDDwn.isEnabled()) {
+			selectByVisibleText(usageDDwn, "Open Loop");
 		}
 	}
+
 	public void selectWalletUsage(WalletPlan walletplan) {
-		if (UsageDDwn.isEnabled()) {
-			selectByVisibleText(UsageDDwn, walletplan.getWalletPlanUsage());
+		if (usageDDwn.isEnabled()) {
+			selectByVisibleText(usageDDwn, walletplan.getWalletPlanUsage());
 		}
 	}
+
 	public void selectClosedWalletUsage() {
-		if (UsageDDwn.isEnabled()) {
-			selectByVisibleText(UsageDDwn, "Closed Loop");
+		if (usageDDwn.isEnabled()) {
+			selectByVisibleText(usageDDwn, "Closed Loop");
 		}
 	}
 
 	public void enterDummyAccountNumber() {
-		if (DummyAccountNumberTxt.isEnabled()) {
-			enterValueinTextBox(DummyAccountNumberTxt, CustomUtils.randomNumbers(16));
+		if (dummyAccountNumberTxt.isEnabled()) {
+			enterValueinTextBox(dummyAccountNumberTxt, CustomUtils.randomNumbers(16));
 		}
 	}
 
 	public void enterReservedAmount() {
-		if (ReservedAmountTxt.isEnabled()) {
-			enterValueinTextBox(ReservedAmountTxt, "1" + CustomUtils.randomNumbers(5));
+		if (reservedAmountTxt.isEnabled()) {
+			enterValueinTextBox(reservedAmountTxt, "1" + CustomUtils.randomNumbers(5));
 		}
 	}
 
 	public void selectWhiteListedMCGPlan() {
-		if (WhiteListedMCGPlanDDwn.isEnabled()) {
-			SelectDropDownByIndex(WhiteListedMCGPlanDDwn, 1);
+		if (whiteListedMCGPlanDDwn.isEnabled()) {
+			SelectDropDownByIndex(whiteListedMCGPlanDDwn, FIRST_OPTION);
 		}
 	}
 
 	public void selectWhiteListedMerchantPlan() {
-		if (WhiteListedMerchantPlanDDwn.isEnabled()) {
-			SelectDropDownByIndex(WhiteListedMerchantPlanDDwn, 1);
+		if (whiteListedMerchantPlanDDwn.isEnabled()) {
+			SelectDropDownByIndex(whiteListedMerchantPlanDDwn, FIRST_OPTION);
 		}
 	}
 
+	@Override
 	public void clickNextButton() {
-		clickWhenClickable(NextBtn);
+		clickWhenClickable(nextBtn);
 	}
 
+	public void enterInactiveAfterDays() {
+		enterValueinTextBox(daysInactiveAfterTxt, CustomUtils.randomNumbers(1));
+	}
+
+	public void enterCloseWalletAfterDays() {
+		enterValueinTextBox(daysCloseWalletAfterTxt, (CustomUtils.randomNumbers(1) + 1));
+	}
+
+	@Override
 	public void clickFinishButton() {
 		clickWhenClickable(finishBtn);
 		SwitchToDefaultFrame();
@@ -182,25 +271,37 @@ public class WalletPlanPage extends AbstractBasePage {
 		return publishErrorOnPage();
 	}
 
+	public String getFeedbackInfo() {
+		return panelInfo.getText();
+	}
+	
+	public void searchByWalletPlanCode(WalletPlan plan) {
+		enterValueinTextBox(walletPlancodeSearchTxt, plan.getWalletPlanCode());
+	}
+	
+	public boolean isTextPresentInTable(String text) {
+		return WebElementUtils.isTextAvailableinTable(searchTable, text);
+	}
+
 	public void verifyWalletPlanSuccess() {
 		if (!verifyErrorsOnWalletPlanPagePage()) {
 			logger.info("Wallet Plan Added Successfully");
 			SwitchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
-			clickWhenClickable(CancelBtn);
+			clickWhenClickable(cancelBtn);
 			SwitchToDefaultFrame();
 		}
 	}
 
-	public String addWalletPlanGeneral(DeviceCreation devicecreation, WalletPlan walletplan) {
+	public String addWalletPlanGeneral(WalletPlan walletplan) {
 		String walletPlancode;
-		String WalletPlanDesc;
+		String walletPlanDesc;
 		walletPlancode = enterWalletPlanCode();
-		WalletPlanDesc = enterWalletPlanDescription();
+		walletPlanDesc = enterWalletPlanDescription();
 		selectCurrency(walletplan);
 		waitForPageToLoad(getFinder().getWebDriver());
-		selectProduct(devicecreation);
+		selectProduct(walletplan);
 		waitForPageToLoad(getFinder().getWebDriver());
 		waitForLoaderToDisappear();
 		selectProgramType(walletplan);
@@ -208,7 +309,36 @@ public class WalletPlanPage extends AbstractBasePage {
 		selectWalletUsage(walletplan);
 		enterDummyAccountNumber();
 		enterReservedAmount();
-		return WalletPlanDesc + " " + "[" + walletPlancode + "]";
+		return walletPlanDesc + " " + "[" + walletPlancode + "]";
+	}
+
+	public void enterGeneralDetails(WalletPlan plan) {
+		enterWalletPlanCode(plan);
+		enterWalletPlanDescription();
+		selectCurrency(plan);
+		waitForPageToLoad(getFinder().getWebDriver());
+		selectProductType(plan);
+		waitForPageToLoad(getFinder().getWebDriver());
+		selectProgramType(plan);
+		waitForPageToLoad(getFinder().getWebDriver());
+		selectWalletUsage(plan);
+	}
+
+	public void enterCreditConfigDetails() {
+		selectCreditPlan();
+		selectBillingCycleCode();
+	}
+
+	public void enterPlanUsageLimitsFeesDetails() {
+		selectTransactionLimitPlan();
+		selectSurchargePlan();
+		selectSurchargeWaiverPlan();
+		selectWalletFeePlan();
+	}
+
+	public void enterWalletInactivityRuleDetails() {
+		enterInactiveAfterDays();
+		enterCloseWalletAfterDays();
 	}
 
 	@Override

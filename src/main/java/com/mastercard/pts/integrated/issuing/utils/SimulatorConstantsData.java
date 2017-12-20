@@ -10,6 +10,10 @@ public class SimulatorConstantsData {
 
 	public static final String MDFS_EXE_PATH = MAS_EXE_PATH + " " + "C://ProgramData//MasterCard//OTP//Data_MDFS_16_4_0//MDFS 16.4.xprj";
 
+	public static final String VISA_EXE_PATH = "C://Program Files (x86)//Vts3//Appl//VTS3.exe";
+	
+	public static final String VISA_INPUT_FILE_PATH =  "\\Simulator\\VisaInputFile\\DMS_TEST_FILE.stf";
+	
 	public static final String WINIUM_DRIVER_EXE_PATH = "\\simulator\\externalLibraries\\Winium.Desktop.Driver.exe";
 
 	public static final String AUTOIT_EXE_PATH = "\\simulator\\AutoIT\\";	
@@ -29,6 +33,8 @@ public class SimulatorConstantsData {
 	public static final String MAS_LICENSE_TYPE_16X = "MAS 16.4";
 	
 	public static final String MDFS_LICENSE_TYPE_16X = "MAS 16.4";
+	
+	public static final String SAMPLE_PAN_NUMBER = "2222550010000018";
 	
 	private SimulatorConstantsData() {}
 }

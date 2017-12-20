@@ -81,7 +81,7 @@ public abstract class LinuxUtils {
 		config.put("StrictHostKeyChecking", "no");
 		session.setConfig(config);
 		session.connect();
-		String cmd = "find `pwd` -name \"*" + lookUpFor + "*\"";
+		String cmd = "find /home/dc-user/integrated/elt_bo/data -name \"*" + lookUpFor + "*\"";
 
 		Channel channel=session.openChannel("exec");
 		((ChannelExec)channel).setCommand(cmd);
@@ -206,7 +206,7 @@ public abstract class LinuxUtils {
 	}
 
 	public static void upload(RemoteConnectionDetails connectiondetails, String localsource,
-			String remoteDir) throws JSchException  {
+			String remoteDir) throws JSchException, InterruptedException  {
 
 		Scp scp = new Scp();
 		int portSSH = connectiondetails.getPort();
@@ -220,6 +220,7 @@ public abstract class LinuxUtils {
 		scp.setProject( new Project() );
 		scp.setTrust( true );
 		scp.execute();
+		Thread.sleep(60000); // long sleep as file permission cron job runs every minute
 	}
 	
 	public static String[] getCardNumberAndExpiryDate(File filePath) {

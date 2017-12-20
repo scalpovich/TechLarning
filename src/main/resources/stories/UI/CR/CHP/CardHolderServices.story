@@ -14,7 +14,8 @@ Meta:
 @deviceReplaceService
 @TCName TC_deviceReplaceService
 @sheetName CardHolder
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When request for device replace
 
 Scenario: Device can be blocked from cardholder portal
@@ -22,7 +23,8 @@ Meta:
 @deviceBlockFromCardholder
 @TCName TC_deviceBlockFromCardHolder
 @sheetName CardHolder
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When service request for block card
 Then verify that card is getting blocked
 
@@ -32,7 +34,8 @@ Meta:
 @deviceUnblockFromCardholder
 @TCName TC_deviceUnblockFromCardholder
 @sheetName CardHolder
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When service request for unblock card
 Then verify that card is unbloked successfully
 
@@ -41,7 +44,8 @@ Meta:
 @walletActivateFromCardHolder
 @TCName TC_walletActivateFromCardHolder
 @sheetName CardHolder
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When service request for activate wallet
 Then verify that wallet is geting activated
 
@@ -50,7 +54,8 @@ Meta:
 @walletDeActivateFromCardHolder
 @TCName TC_walletDeActivateFromCardHolder
 @sheetName CardHolder
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When service request for deactivate wallet
 
 
@@ -59,7 +64,8 @@ Meta:
 @activateEcomForLifeLong
 @TCName TC_activateEcomForLifeLong
 @sheetName CardHolder
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When activate ecom transaction for Life Long Activate duration
 Then verify ecom transaction activation status
 
@@ -68,10 +74,11 @@ Meta:
 @activateEcomForNHours
 @TCName TC_activateEcomForNHours
 @sheetName CardHolder
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When activate ecom transaction for Activation for 'n' hours duration
 Then ecom transaction  activation 10
-Then verify ecom transaction activation status
+And verify ecom transaction activation status
 
 
 Scenario: Activation E-Com transaction for specified date
@@ -79,7 +86,8 @@ Meta:
 @activationEcomForDuration
 @TCName TC_activationEcomForDuration
 @sheetName CardHolder
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When activate ecom transaction for Activation in Period duration
 Then activation of ecom transaction from 03/11/2017 to 15/11/2017
 Then verify ecom transaction activation status
@@ -90,7 +98,8 @@ Meta:
 @activationForInternationalUse
 @TCName TC_activationForInternationalUse
 @sheetName CardHolder
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When activate international service for Activation in Period duration
 Then activation of international use from 03/11/2017 to 15/11/2017
 
@@ -99,7 +108,8 @@ Meta:
 @activationNHoursForInternationalUse
 @TCName TC_activationNHoursForInternationalUse
 @sheetName CardHolder
-Given login to cardholder portal as existing Cardholder user
+Given read test data for scenario
+And login to cardholder portal as existing Cardholder user
 When activate international service for Activation for 'n' hours duration
 Then international use activation hours is 5
 

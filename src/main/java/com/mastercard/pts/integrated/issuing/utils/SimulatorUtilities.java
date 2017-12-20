@@ -229,7 +229,7 @@ public class SimulatorUtilities{
                                     
             //for remote/Jenkins/command Line -  AutoIT execution.. enable the below 2 lines and comment the other 2 lines
             commandToExecute = " cmd /c " + psExecPath + " "+ path + fileName;
-//            logger.info("********* commandToExecute  :  " +  commandToExecute);
+           MiscUtils.reportToConsole("********* commandToExecute  :  " +  commandToExecute);
             executeCommand(fileName, commandToExecute);
 		}
 		catch(Exception e)

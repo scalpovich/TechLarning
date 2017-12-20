@@ -39,7 +39,7 @@ Meta:
 @TestId TC378884
 Given user is logged in agent portal as agent user
 When user navigates to balance refund request page
-Then balance refund request page is loaded and master detail content title is Cancel Wallet Request
+Then balance refund request page is loaded and master detail content title is Refund Wallet - Request
 And BalanceRefundRequest page of transactions tab is rendered correctly
 And user sign out from agent portal
 

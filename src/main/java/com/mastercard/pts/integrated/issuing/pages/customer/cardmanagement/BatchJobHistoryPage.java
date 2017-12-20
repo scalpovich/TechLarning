@@ -69,6 +69,8 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		int i;
 		logger.info("Searching for jobId: {}", jobId);
 		WebElementUtils.enterText(jobIdTxt, jobId);
+		WebElementUtils.pickDate(fromJobStartDttmDPkr, LocalDate.now());
+		WebElementUtils.pickDate(toJobStartDttmDPkr, LocalDate.now());
 		clickSearchButton();
 		for (int k = 0; k < 11; k++) {
 			if (!waitForRow())

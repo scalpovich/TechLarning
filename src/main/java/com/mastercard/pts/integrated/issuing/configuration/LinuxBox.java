@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils.RemoteConnectionDetails;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
@@ -42,14 +41,16 @@ public class LinuxBox implements RemoteConnectionDetails {
 
 	public File downloadByLookUpForPartialFileName(String lokupForFile, String localDestination, String whatAreWeLookingFile) {
 		logger.info("Download {} -> {} at folder", lokupForFile, localDestination);
+		MiscUtils.reportToConsole("downloadByLookUpForPartialFileName -> ", lokupForFile + " -  " +  localDestination);
 		String fileName = null;
 		String[] temp = null;
 		try {
 			fileName = LinuxUtils.getFileAbsolutePath(this, lokupForFile);
 			temp = fileName.split("\n");
 			for (int i = 0; i < temp.length; i++) {
-				if (temp[i].toUpperCase().contains(whatAreWeLookingFile)) {
+				if (temp[i].contains(whatAreWeLookingFile)) {
 					LinuxUtils.download(this, temp[i], localDestination);
+					MiscUtils.reportToConsole("********Return Path :  ***** " + Paths.get(localDestination).resolve(Paths.get(temp[i]).getFileName()).toFile()  );
 					return Paths.get(localDestination).resolve(Paths.get(temp[i]).getFileName()).toFile();
 				}
 			}

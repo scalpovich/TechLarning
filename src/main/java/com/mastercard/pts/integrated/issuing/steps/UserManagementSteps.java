@@ -22,7 +22,10 @@ import com.mastercard.pts.integrated.issuing.pages.customer.InstitutionHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.InstitutionSelectionPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.LoginPage;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
+
+import org.apache.commons.lang.RandomStringUtils;
 
 @Component
 public class UserManagementSteps {
@@ -156,7 +159,7 @@ public class UserManagementSteps {
 
 	@When("user logs in with incorrect password")
 	public void whenUserLogsInWithIncorrectPassword() {
-		loginWorkflow.login(portal.getUserName(), INCORRECT_PASSCODE);
+		loginWorkflow.login(portal.getUserName()+ RandomStringUtils.randomAlphabetic(2), INCORRECT_PASSCODE);
 	}
 
 	@When("user logs in with incorrect password as $userType user")
@@ -164,13 +167,13 @@ public class UserManagementSteps {
 		Portal agentPortal = environment.getPortalByType(Portal.TYPE_AGENT);
 		loginWorkflow.openLoginPageForPortal(agentPortal);
 		if (ADMIN.equalsIgnoreCase(userType))
-			loginWorkflow.login(agentPortal.getAdminUserName(), INCORRECT_PASSCODE);
+			loginWorkflow.login(agentPortal.getAdminUserName()+ CustomUtils.randomString(2), INCORRECT_PASSCODE);
 		else if(AGENCY.equalsIgnoreCase(userType))
-			loginWorkflow.login(agentPortal.getAgencyUserName(), INCORRECT_PASSCODE);
+			loginWorkflow.login(agentPortal.getAgencyUserName()+ CustomUtils.randomString(2), INCORRECT_PASSCODE);
 		else if(BRANCH.equalsIgnoreCase(userType))
-			loginWorkflow.login(agentPortal.getBranchUserName(), INCORRECT_PASSCODE);
+			loginWorkflow.login(agentPortal.getBranchUserName()+ CustomUtils.randomString(2), INCORRECT_PASSCODE);
 		else if(AGENT.equalsIgnoreCase(userType))
-			loginWorkflow.login(agentPortal.getAgentUserName(), INCORRECT_PASSCODE);
+			loginWorkflow.login(agentPortal.getAgentUserName()+ CustomUtils.randomString(2), INCORRECT_PASSCODE);
 	}
 
 	@When("user confirms selection of institution")
@@ -206,7 +209,7 @@ public class UserManagementSteps {
 	public void thenUserSeesMessageThatUserNameOrPasswordIsIncorrectOnAgentPortal() {
 		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
 		String loginErrorMessage = loginPage.getErrorMessage();
-		Assert.assertTrue("Incorrect login error message or Login is Successful", loginErrorMessage.isEmpty());
+		Assert.assertTrue("Incorrect login error message or Login is Successful", !loginErrorMessage.isEmpty());
 		Assert.assertEquals("Incorrect login error message",LoginPage.AUTHENTIFICATION_FAILED, loginErrorMessage); //NOSONAR: isPresent() is checked in assertTrue statement
 	}
 
@@ -220,7 +223,7 @@ public class UserManagementSteps {
 	public void thenUserSeesMessageThatUserNameOrPasswordIsIncorrect() {
 		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
 		String loginErrorMessage = loginPage.getErrorMessage();
-		Assert.assertTrue("Incorrect login error message or Login is Successful", loginErrorMessage.isEmpty());
+		Assert.assertTrue("Incorrect login error message or Login is Successful", !loginErrorMessage.isEmpty());
 		Assert.assertEquals("Incorrect login error message", LoginPage.AUTHENTIFICATION_FAILED, loginErrorMessage); //NOSONAR: isPresent() is checked in assertTrue statement
 	}
 
@@ -228,10 +231,16 @@ public class UserManagementSteps {
 	public void thenUserSeesMessageThatUserNameOrPasswordIsIncorrectForCollectPortal() {
 		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
 		String loginErrorMessage = loginPage.getErrorMessage();
-		Assert.assertTrue("Incorrect login error message or Login is Successful", loginErrorMessage.isEmpty());
+		Assert.assertTrue("Incorrect login error message or Login is Successful", !loginErrorMessage.isEmpty());
 		Assert.assertEquals("Incorrect login error message", LoginPage.AUTHENTIFICATION_FAILED_COLLECT, loginErrorMessage); //NOSONAR: isPresent() is checked in assertTrue statement 
 	}
-
+	@Then("user sees message that user name or password is incorrect for cardholder portal")
+	public void thenUserSeesMessageThatUserNameOrPasswordIsIncorrectForCardholderPortal() {
+		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
+		String loginErrorMessage = loginPage.getErrorMessageCollect();
+		Assert.assertTrue("login error message found",!loginErrorMessage.isEmpty());
+		Assert.assertEquals("Incorrect login error message",LoginPage.AUTHENTIFICATION_FAILED_CARDHOLDER, loginErrorMessage);
+	}
 	@Then("list of available institutions is displayed")
 	public void thenListOfAvailableInstitutionsIsDisplayed() {
 		InstitutionSelectionPage page = pageFactory.getPage(InstitutionSelectionPage.class);

@@ -33,6 +33,7 @@ public class TransactionProvider {
 	private static final String MERCHANT_PROFILE = "Merchant profile";
 	private static final String EXCEL_PATH = "config/Data/AuthorizationTransaction_DataDriven.xls";
 	private static final String CURRENCY = "CURRENCY";
+	private static final String CVV2 = "CVV2_FOR_ECOMM";
 
 	private final Map<String, Function<Transaction, String>> valueProviders;
 
@@ -43,6 +44,7 @@ public class TransactionProvider {
 		valueProviders.put(SERVICE_CODE, Transaction::getServiceCode);
 		valueProviders.put(EXPIRATION_DATE, Transaction::getExpirationYear);
 		valueProviders.put(SEQUENCE_NUMBER, Transaction::getCardSequenceNumber);
+		valueProviders.put(CVV2, Transaction::getCvvData2);
 	}
 
 	public Transaction loadTransaction(String transactionName, Device device) {
@@ -100,6 +102,7 @@ public class TransactionProvider {
 		transaction.setExpirationYear(device.getExpirationDate());
 		transaction.setCardSequenceNumber(device.getSequenceNumber());
 		transaction.setPinForTransaction(device.getPinNumberForTransaction());
+		transaction.setCvvData2(device.getCvv2Data());
 	}
 
 	private void loadDeviceDataFromExcel(Transaction transaction, Map<String, String> data) {
@@ -108,6 +111,7 @@ public class TransactionProvider {
 		transaction.setServiceCode(data.get(SERVICE_CODE));
 		transaction.setCardSequenceNumber(data.get(SEQUENCE_NUMBER));
 		transaction.setPinForTransaction(data.get(PIN));
+		transaction.setCvvData2(data.get(CVV2));
 	}
 
 	private Map<String, String> parseDataElements(String elementLines, Transaction transaction) {
