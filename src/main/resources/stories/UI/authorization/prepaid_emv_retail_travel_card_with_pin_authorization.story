@@ -14,7 +14,7 @@ Scenario: Set up prepaid emv retail travel card
 Meta:
 @TestId TC398452
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card without pin
+And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
 
 
@@ -25,6 +25,7 @@ Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
+When processes pin generation batch for prepaid
 Then device has "normal" status
 When user has wallet number information for debit device
 Then user sign out from customer portal
@@ -49,6 +50,7 @@ Meta:
 @TestId 
 Given connection to MAS is established
 When perform an EMV_CASH_ADVANCE MAS transaction
+Then MAS test results are verified
 Then user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
 Then user sign out from customer portal
@@ -56,7 +58,7 @@ Then user sign out from customer portal
 Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
 Meta:
 @TestId 
-When perform an EMV_CASH_WITHDRAWAL MAS transaction
+When perform an EMV_CASH_WITHDRAWAL MAS transaction on the same card
 Then MAS test results are verified
 Then user is logged in institution
 Then search CWD authorization and verify 000-Successful status

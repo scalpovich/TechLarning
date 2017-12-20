@@ -14,7 +14,7 @@ Scenario: Set up prepaid emv corporate travel card
 Meta:
 @TestId TC398452
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card without pin
+And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
 
 
@@ -25,6 +25,7 @@ Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
+When processes pin generation batch for prepaid
 Then device has "normal" status
 When user has wallet number information for debit device
 Then user sign out from customer portal
@@ -42,7 +43,7 @@ Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
-Then FINSim simulator is closed 
+When FINSim simulator is closed
 
 Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
 Meta:

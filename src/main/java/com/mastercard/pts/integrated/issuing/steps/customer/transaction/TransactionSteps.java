@@ -89,6 +89,7 @@ public class TransactionSteps {
 	@Given("perform an $transaction MAS transaction")
 	public void givenTransactionIsExecuted(String transaction){
 		String temp = transaction;
+		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED) );
 		if("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 			//ECOMM are pinless tranasactions
