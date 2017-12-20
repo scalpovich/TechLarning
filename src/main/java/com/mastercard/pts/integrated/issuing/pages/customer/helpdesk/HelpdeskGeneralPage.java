@@ -253,7 +253,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, helpdeskGeneral.getProductType());
 		WebElementUtils.enterText(cardPackIdTxt, helpdeskGeneral.getCardPackId());
 		clickSearchButton();
-		SimulatorUtilities.wait(3000);
+		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
 		if(REGISTERED.equalsIgnoreCase(registeredType))
 			status = DeviceStatus.NORMAL;
 		else if(NOT_REGISTERED.equalsIgnoreCase(registeredType))
