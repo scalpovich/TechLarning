@@ -507,8 +507,6 @@ public class DeviceSalePage extends AbstractBasePage {
 					QUERY_STRING_DEVICE_NUMBER_PREPAID_MAGSTRIPE,
 					DEVICE_NUMBER_COLUMN_NAME);
 		}
-		logger.info("Active Device Number is: {}",
-				activeDeviceNumber);
 		return activeDeviceNumber;
 	}
 }
