@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.common.base.Strings;
 import com.mastercard.pts.integrated.issuing.configuration.FinSimSimulator;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
@@ -199,7 +198,7 @@ public class TransactionSteps {
 
 	private void setDeElementsDynamically(Device device, Transaction transactionData, String transaction) {
 
-		if(!"pinless".equalsIgnoreCase(device.getPinNumberForTransaction()))
+		if(!"pinless".equalsIgnoreCase(device.getPinNumberForTransaction()) && !transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE")) //ecomm transactions cannot have a PIN
 			transactionData.setDeKeyValuePairDynamic("052", device.getPinNumberForTransaction());
 		//data format is 12 digits hence leftpad with 0
 		transactionData.setDeKeyValuePairDynamic("004", StringUtils.leftPad(device.getTransactionAmount(), 12, "0" ));
@@ -209,7 +208,7 @@ public class TransactionSteps {
 		}
 
 		//changed ECOMMERCE to ECOM 
-		if(transactionWorkflow.isContains(transaction, "ecom") || !Strings.isNullOrEmpty(device.getCvv2Data())) {
+		if(transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE")) {
 			//for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInux box
 			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); //Transaction currency code
 		}

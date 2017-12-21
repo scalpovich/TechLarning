@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +18,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
@@ -28,6 +31,8 @@ public class BatchSteps {
 	private static final String DEFAULT_TRAILER = "TR\\d{8}";
 
 	private static final String DEFAULT_HEADER = "[\\w ]{32}\\d{6}";
+	
+	private static final Logger logger = LoggerFactory.getLogger(BatchSteps.class);
 
 	@Autowired
 	private KeyValueProvider provider;
@@ -46,26 +51,28 @@ public class BatchSteps {
 	public void  embossingFileWasGeneratedSuccessfully() {
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		try {
-			File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE");
+			File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "Device");
 			String[] fileData = LinuxUtils.getCardNumberAndExpiryDate(batchFile);
-
+			MiscUtils.reportToConsole("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[4] + " - "  + " setIcvvData " + " : " +  fileData[5] + "  ***** ");
+			
 			Device device = context.get(ContextConstants.DEVICE);
+		
 			device.setDeviceNumber(fileData[0]);
 			device.setCvv2Data(fileData[2]);
-			device.setPvkiData(fileData[6]);
-			device.setPvvData(fileData[3]);
-			device.setCvvData(fileData[4]);
-			device.setIcvvData(fileData[5]);
+//			device.setPvvData(fileData[3]);
+			device.setCvvData(fileData[3]);
+			device.setIcvvData(fileData[4]);
+			device.setPvkiData(fileData[5]);
 
-			MiscUtils.reportToConsole("******** setCvv2Data " + " : " +  fileData[2] + " - "  + "  setPvvData " + " : " +  fileData[3] + " - "  + " setCvvData  " + " : " +  fileData[4] + " - "  + " setIcvvData " + " : " +  fileData[5] + "  ***** ");
 			//for format of date to be passed is YYMM
 			String tempDate = fileData[1].substring(fileData[1].length()-2) + fileData[1].substring(0, 2);
 			device.setExpirationDate(tempDate);
 			MiscUtils.reportToConsole("Expiration Data :  " + tempDate );
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
+			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
+			throw MiscUtils.propagate(e);
 		}
 	}
 
@@ -96,7 +103,9 @@ public class BatchSteps {
 				device.setPinOffset("pin not retrieved");
 				MiscUtils.reportToConsole("Pin Offset :  " + "pin not retrieved");
 			}
-			MiscUtils.propagate(e);
+			MiscUtils.reportToConsole("getPinFileData Exception :  " + e.toString());
+			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
+			throw MiscUtils.propagate(e);
 		}
 	}
 

@@ -143,7 +143,7 @@ public class SimulatorUtilities{
 					getOtherOperation(operationType, robot);
 				}
 				wait(1000);
-				logger.info("**** Robot/Keyboard Operation performed :  ", operationType);
+				logger.info("**** Robot/Keyboard Operation performed :  " + operationType);
 			}
 			wait(2000);
 		}
@@ -225,7 +225,7 @@ public class SimulatorUtilities{
 			String path = getResourceFolderPath() + SimulatorConstantsData.AUTOIT_EXE_PATH.replace("\\", "\\\\");
 			String psExecPath = getResourceFolderPath() + "\\Simulator\\PsExec\\PsExec.exe";
 			String commandToExecute;
-			logger.info("********* AutoIt Exe being executed :  ",  fileName);
+			logger.info("********* AutoIt Exe being executed :  " +  fileName);
                                     
             //for remote/Jenkins/command Line -  AutoIT execution.. enable the below 2 lines and comment the other 2 lines
             commandToExecute = " cmd /c " + psExecPath + " "+ path + fileName;
@@ -234,7 +234,7 @@ public class SimulatorUtilities{
 		}
 		catch(Exception e)
 		{
-			logger.debug(ConstantData.EXCEPTION, e);
+			logger.debug(ConstantData.EXCEPTION + e);
 			MiscUtils.propagate(e);
 		}
 	}
@@ -269,7 +269,7 @@ public class SimulatorUtilities{
 			robot.keyRelease(KeyEvent.VK_V);
 			robot.keyRelease(KeyEvent.VK_CONTROL);
 			wait(1000);
-			logger.info(SETTEXT_OPERATION, characters);
+			logger.info(SETTEXT_OPERATION + characters);
 		}
 	}
 
@@ -280,21 +280,21 @@ public class SimulatorUtilities{
 
 	public void performClickOperation(String nameOfSnapshot)
 	{	
-		logger.info(SIKULI_MESSAGE ,  nameOfSnapshot);
+		logger.info(SIKULI_MESSAGE +  nameOfSnapshot);
 		performActionClick(getImageOfItem(nameOfSnapshot));
 		wait(1000);
 	}
 
 	public void clickOnLastMatchingImage(String nameOfSnapshot)
 	{	
-		logger.info(SIKULI_MESSAGE,  nameOfSnapshot);
+		logger.info(SIKULI_MESSAGE +   nameOfSnapshot);
 		clickOnLastImage(getImageOfItem(nameOfSnapshot));
 		wait(1000);
 	}
 
 	public void performDoubleClickOperation(String nameOfSnapshot)
 	{	
-		logger.info(SIKULI_DOUBLECLICK_MESSAGE,  nameOfSnapshot);
+		logger.info(SIKULI_DOUBLECLICK_MESSAGE +  nameOfSnapshot);
 		performActionDoubleClick(getImageOfItem(nameOfSnapshot) );
 		wait(1000);
 	}
@@ -302,7 +302,7 @@ public class SimulatorUtilities{
 	public void performClickOperationOnImages(String nameOfSnapshot)
 	{	
 		String imagesName = nameOfSnapshot + SELECTED_IMAGE;
-		logger.info(SIKULI_MESSAGE,  nameOfSnapshot);
+		logger.info(SIKULI_MESSAGE  +  nameOfSnapshot);
 		performActionClickOnImages(getImageOfItem(nameOfSnapshot), getImageOfItem(imagesName) );
 		wait(1000);
 	}
@@ -310,7 +310,7 @@ public class SimulatorUtilities{
 	public void performDoubleClickOperationOnImages(String nameOfSnapshot)
 	{	
 		String imagesNameTemp = nameOfSnapshot + SELECTED_IMAGE;
-		logger.info(SIKULI_DOUBLECLICK_MESSAGE,  nameOfSnapshot);
+		logger.info(SIKULI_DOUBLECLICK_MESSAGE +  nameOfSnapshot);
 		performActionDoubleClickOnImages(getImageOfItem(nameOfSnapshot), getImageOfItem(imagesNameTemp) );
 		wait(1000);
 	}
@@ -321,7 +321,7 @@ public class SimulatorUtilities{
 			screen.rightClick(nameOfSnapshot);
 		}
 		catch(Exception e)	{
-			logger.debug(ConstantData.SIKUKI_EXCEPTION, nameOfSnapshot);
+			logger.debug(ConstantData.SIKUKI_EXCEPTION  + nameOfSnapshot);
 			MiscUtils.propagate(e);
 		}
 	}
@@ -332,7 +332,7 @@ public class SimulatorUtilities{
 		}
 		catch(Exception e)
 		{
-			logger.debug(ConstantData.SIKUKI_EXCEPTION, e);
+			logger.debug(ConstantData.SIKUKI_EXCEPTION + e);
 			MiscUtils.propagate(e);
 		}
 	}
@@ -346,7 +346,7 @@ public class SimulatorUtilities{
 		}
 		catch(Exception e)
 		{
-			logger.debug(ConstantData.SIKUKI_EXCEPTION, e);
+			logger.debug(ConstantData.SIKUKI_EXCEPTION  + e);
 			MiscUtils.propagate(e);
 		}
 	}
@@ -357,7 +357,7 @@ public class SimulatorUtilities{
 		}
 		catch(Exception e)
 		{
-			logger.debug(ConstantData.SIKUKI_EXCEPTION, e);
+			logger.debug(ConstantData.SIKUKI_EXCEPTION  + e);
 			MiscUtils.propagate(e);
 		}
 	}
@@ -373,7 +373,7 @@ public class SimulatorUtilities{
 		}
 		catch(Exception e)
 		{
-			logger.debug(ConstantData.SIKUKI_EXCEPTION, e);
+			logger.debug(ConstantData.SIKUKI_EXCEPTION + e);
 			MiscUtils.propagate(e);
 		}
 	}
@@ -389,7 +389,7 @@ public class SimulatorUtilities{
 		}
 		catch(Exception e)
 		{
-			logger.debug(ConstantData.SIKUKI_EXCEPTION, e);
+			logger.debug(ConstantData.SIKUKI_EXCEPTION + e);
 			MiscUtils.propagate(e);
 		}
 	}
@@ -417,7 +417,7 @@ public class SimulatorUtilities{
 		}
 		catch(Exception e)
 		{
-			logger.debug(ConstantData.SIKUKI_EXCEPTION, screenName);
+			logger.debug(ConstantData.SIKUKI_EXCEPTION + screenName);
 			return false;
 		}
 	}
@@ -433,7 +433,7 @@ public class SimulatorUtilities{
 		}
 		catch(Exception e)
 		{
-			logger.debug(ConstantData.SIKUKI_EXCEPTION, screenName);
+			logger.debug(ConstantData.SIKUKI_EXCEPTION + screenName);
 			return false;
 		}
 	}
@@ -465,7 +465,7 @@ public class SimulatorUtilities{
 		}
 		catch(Exception e)
 		{
-			logger.debug(ConstantData.SIKUKI_EXCEPTION, nameOfSnapshot);
+			logger.debug(ConstantData.SIKUKI_EXCEPTION + nameOfSnapshot);
 			return null;
 		}
 	}
@@ -529,7 +529,7 @@ public class SimulatorUtilities{
 			return content.replaceAll("\\D+",""); // gets only numbers
 		}		
 		catch(Exception e)	{
-			logger.debug(ConstantData.EXCEPTION, e);
+			logger.debug(ConstantData.EXCEPTION  + e);
 			MiscUtils.propagate(e);
 			return null;
 		}

@@ -33,7 +33,7 @@ public class TransactionProvider {
 	private static final String MERCHANT_PROFILE = "Merchant profile";
 	private static final String EXCEL_PATH = "config/Data/AuthorizationTransaction_DataDriven.xls";
 	private static final String CURRENCY = "CURRENCY";
-	private static final String CVV2 = "CVV2_FOR_ECOMM";
+	private static final String CVV2 = "CVV2";
 
 	private final Map<String, Function<Transaction, String>> valueProviders;
 

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils.RemoteConnectionDetails;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
@@ -46,15 +47,19 @@ public class LinuxBox implements RemoteConnectionDetails {
 		String[] temp = null;
 		try {
 			fileName = LinuxUtils.getFileAbsolutePath(this, lokupForFile);
+			MiscUtils.reportToConsole("********fileName from LinuxUtils.getFileAbsolutePath :  ***** ", fileName);
 			temp = fileName.split("\n");
 			for (int i = 0; i < temp.length; i++) {
 				if (temp[i].contains(whatAreWeLookingFile)) {
 					LinuxUtils.download(this, temp[i], localDestination);
+					MiscUtils.reportToConsole("********localDestination :  ***** ", localDestination);
 					MiscUtils.reportToConsole("********Return Path :  ***** " + Paths.get(localDestination).resolve(Paths.get(temp[i]).getFileName()).toFile()  );
 					return Paths.get(localDestination).resolve(Paths.get(temp[i]).getFileName()).toFile();
 				}
 			}
 		} catch (Exception e) {
+			MiscUtils.reportToConsole("downloadByLookUpForPartialFileName Exception :  " + e.toString());
+			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
 			throw MiscUtils.propagate(e);
 		}
 		return null;
@@ -65,7 +70,9 @@ public class LinuxBox implements RemoteConnectionDetails {
 		try {
 			LinuxUtils.upload(this, localSource, remoteDir);
 		} catch (Exception e) {
-			MiscUtils.propagate(e);
+			MiscUtils.reportToConsole("upload Exception :  " + e.toString());
+			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
+			throw MiscUtils.propagate(e);
 		}
 	}
 
