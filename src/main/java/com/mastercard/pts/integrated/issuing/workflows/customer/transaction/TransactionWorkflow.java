@@ -393,7 +393,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		return getResult();
 	}
 
-	private String getResult() {
+	/*private String getResult() {
 	
 		List<WebElement> lst = null;
 		if(context.get(ConstantData.TRANSACTION_NAME).toString().contains("COMPLETION"))
@@ -411,7 +411,30 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		String tempText = tempElement.getText();
 		MiscUtils.reportToConsole("Fetching PassResult : " + tempText);
 		return tempText;
-	}
+	}*/
+	private String getResult() {
+        
+        List<WebElement> lst = null;
+        if(context.get(ConstantData.TRANSACTION_NAME).toString().contains("COMPLETION"))
+        {
+        lst=winiumDriver.findElements(By.name("0130 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
+        }
+        else
+        {
+      lst=winiumDriver.findElements(By.name("0110 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
+        }
+        //clicking on the last item from bottom
+        lst.get(lst.size()-1).click();
+        wait(5000);
+        List<WebElement> results = winiumDriver.findElementsByXPath("//*[contains(@Name,'Expected Results Summary:')]");
+        System.out.println("Expected Results Summary: size  = "+results);
+        results.get(lst.size()-1).click();
+        WebElement tempElement = winiumDriver.findElementByXPath("//*[contains(@AutomationId,'DescriptionTextBox')]");
+        String tempText = tempElement.getText();
+        MiscUtils.reportToConsole("Fetching PassResult : " + tempText);
+        return tempText;
+  }
+
 
 
 	public String loadAuthFileToMCPS(String fullFileNameAndPath) {
