@@ -1,11 +1,10 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
-import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
-import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 public class DeviceRange {
