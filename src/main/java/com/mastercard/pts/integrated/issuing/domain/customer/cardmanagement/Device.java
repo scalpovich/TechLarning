@@ -47,6 +47,7 @@ public class Device {
 	private String clientCode;
 	private String walletNumber;
 	private String deviceNumber;
+	private String existingDeviceNumber;
 	private String photoIndicator;
 	private String batchNumber;
 	private String sequenceNumber;
@@ -110,7 +111,14 @@ public class Device {
 		return device;
 	}
 
-	
+	public String getExistingDeviceNumber() {
+		return existingDeviceNumber;
+	}
+
+	public void setExistingDeviceNumber(String existingDeviceNumber) {
+		this.existingDeviceNumber = existingDeviceNumber;
+	}
+
 	public String getEncodedName() {
 		return encodedName;
 	}

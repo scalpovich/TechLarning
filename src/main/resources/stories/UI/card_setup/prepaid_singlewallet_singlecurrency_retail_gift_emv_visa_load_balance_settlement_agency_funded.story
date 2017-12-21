@@ -1,12 +1,12 @@
-Prepiad: Non Funded Agency : Initial Load - Load - Reload - Preclearing - EOD - Program Balance Reports
+Prepiad: Funded Agent : Initial Load - Load - Reload - Settlement - Preclearing - EOD - Program Balance Reports
 
 Narrative:
 In order to do prepaid load
-As an Agent User
+As an Agency User
 I want to do Initial Load - Load - Reload through agent portal
 
 Meta:
-@StoryName MWMC_EMV_CORPTRVL_AGNC_NONFUND
+@StoryName SWSC_EMV_RTLGFT_AGNC_FUND
 @CR1
 @CardCreation
 
@@ -36,7 +36,7 @@ And user sign out from agent portal
 
 Scenario: Prepaid - Agency User - Order Request
 
-Given user is logged in agent portal as nonfundedagency user
+Given user is logged in agent portal as agency user
 When user fills order details and submits the form
 Then order is successful
 And user sign out from agent portal
@@ -50,28 +50,28 @@ And user sign out from customer portal
 
 Scenario: Prepaid - Agency User - Order Acceptance
 
-Given user is logged in agent portal as nonfundedagency user
+Given user is logged in agent portal as agency user
 When user fills the order acceptance details and submits the form
 Then order acceptance is successful
 And user sign out from agent portal
 
 Scenario: Prepaid - Agency User - Status
 
-Given user is logged in agent portal as nonfundedagency user
+Given user is logged in agent portal as agency user
 When user fills status details and submits the form
 Then status column updates with type of order accepted
 And user sign out from agent portal
 
 Scenario: Prepaid - Agent User - Device Sale with Registration
 
-Given user is logged in agent portal as nonfundedagent user
+Given user is logged in agent portal as agent user
 When user fills program details with registration
 Then registration is successful
 And user sign out from agent portal
 
 Scenario: Prepaid - Agent User - Application Approval
 
-Given user is logged in agent portal as nonfundedagent user
+Given user is logged in agent portal as agent user
 When user fills card sale checker details and submits the form
 Then approval is successful
 And user sign out from agent portal
@@ -93,34 +93,29 @@ Then activation of registered device prepaid is successful and activation date i
 And initial load balance in helpdesk updated correctly for prepaid device
 And user sign out from customer portal
 
-Scenario: Prepaid - Setup Multi Currency Through Agent Portal - Non Funded Agent
+Scenario: Prepaid - Load Balance Request - Funded Agent
 
-Given user is logged in agent portal as nonfundedagent user
-When user setup multiple currency for device through agent portal
-Then currency setup for the device is successful
-And user sign out from nonfundedagent portal
-And user is logged in institution
-And currency setup for prepaid device is done correclty and updated in wallet details tab
-And user sign out from customer portal
-
-Scenario: Prepaid - Load Balance Request - Non Funded Agent
-
-Given user is logged in agent portal as nonfundedagent user
+Given user is logged in agent portal as agent user
 When user performs load balance request
 Then load balance request is successful
 And user sign out from agent portal
 
-Scenario: Prepaid - Approve the Load Request - Non Funded Agent
+Scenario: Prepaid - Approve the Load Request - Funded Agent
 Given user is logged in institution
 When user has wallet balance information for prepaid device
 And user sign out from customer portal
-And user is logged in agent portal as nonfundedagent user
+And user is logged in agent portal as agent user
 And user performs load balance approve
 Then load balance approve is successful
 And user sign out from agent portal
 And user is logged in institution
 And balance in helpdesk updated correctly for prepaid device
 And user sign out from customer portal
+
+Scenario: Agency Settlement - Funded Agent
+Given user is logged in agent portal as agency user
+When user initiates settlement for agency
+Then settlement is initiated successfully
 
 Scenario: Program Balance Summary reports download - Funded Agent
 Given user is logged in institution
