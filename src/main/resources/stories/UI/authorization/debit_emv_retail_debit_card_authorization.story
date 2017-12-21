@@ -29,6 +29,7 @@ When processes pre-production batch for debit
 When processes device production batch for debit
 When processes pin generation batch for debit
 Then device has "normal" status
+Then user activates device through helpdesk
 
 Scenario: Pin Generation 
 Meta:

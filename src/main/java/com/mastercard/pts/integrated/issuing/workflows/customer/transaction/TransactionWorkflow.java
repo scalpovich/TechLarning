@@ -355,7 +355,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		pressLeftArrow();
 		performClickOperation("Imported");
 		pressRightArrow(4);
-		pressPageDown();
+		pressPageDown();	
 	}
 
 	private void performExecution(String transaction) {
@@ -407,7 +407,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		//clicking on the last item from bottom
 		lst.get(lst.size()-1).click();
 		wait(5000);
-		WebElement tempElement = winiumDriver.findElementByXPath("//*[contains(@AutomationId,'DescriptionTextBox')]");
+		WebElement tempElement = winiumDriver.findElementByXPath("//*[contains(@AutomationId,'DescriptionTextBox')]");	
 		String tempText = tempElement.getText();
 		MiscUtils.reportToConsole("Fetching PassResult : " + tempText);
 		return tempText;
@@ -1014,7 +1014,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			setText(finSimSimulator.getPort());
 			pressTab();
 			pressEnter();
-			wait(5000);
+			 wait(5000);
 			executeAutoITExe("ActivateFINSimPasswordScreen.exe");
 			setText(finSimSimulator.getPassword());
 			wait(5000);
