@@ -3,10 +3,11 @@ Prepiad Sale Through Portal
 Narrative:
 In order to do prepaid card sale
 As an Agent User
-I want to fill sale related information through portal: With registration
+I want to sale the card through agent portal, do an Initial Load and activate 
+
 
 Meta:
-@StoryName S193814
+@StoryName S1938142
 @SanityCards
 @CR1
 
@@ -86,20 +87,12 @@ When user fills card sale checker details and submits the form
 Then approval is successful
 And user sign out from agent portal
 
-Scenario: Prepaid - Customer User - Help Desk Status
+Scenario: Prepaid - Customer User - Help Desk Status and device activated
 Meta:
 @TestId TC406215
 Given user is logged in institution
 When user fills General details with product prepaid and submits the form for registered device
 Then status should be normal
-And sale date is updated in general details
+And device activated and activation date is updated in general details
 And user sign out from customer portal
 
-Scenario: Prepaid - Customer User - Help Desk Activate Device
-Meta:
-@TestId TC406216
-Given user is logged in institution
-When user fills General details with product prepaid and submits the form for registered device
-And user activates device through helpdesk
-Then activation of registered device prepaid is successful and activation date is updated
-And user sign out from customer portal
