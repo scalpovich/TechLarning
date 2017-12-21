@@ -11,7 +11,7 @@ Meta:
 
 Scenario: Card setup - prepaid emv corporate general purpose card
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card without pin
+And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
 
 Scenario: Device production - prepaid emv corporate general purpose card 
