@@ -76,14 +76,6 @@ When user fills card sale checker details and submits the form
 Then approval is successful
 And user sign out from agent portal
 
-Scenario: Prepaid - Customer User - Help Desk Status
-
-Given user is logged in institution
-When user fills General details with product prepaid and submits the form for registered device
-Then status should be normal
-And sale date is updated in general details
-And user sign out from customer portal
-
 Scenario: Prepaid - Customer User - Help Desk Status and activation
 
 Given user is logged in institution
