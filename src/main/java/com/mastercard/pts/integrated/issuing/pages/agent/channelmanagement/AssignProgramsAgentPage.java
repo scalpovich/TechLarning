@@ -98,6 +98,7 @@ public class AssignProgramsAgentPage extends AbstractBasePage {
 		selectBranchId(details.getBranchId());
 		selectAgentId(details.getAgentId());
 		clickSearchButton();
+		SimulatorUtilities.wait(5000);
 		//work around for the defect assigning program - repeating as AgentId dropDown value is not retained after search
 		selectAgentId(details.getAgentId());
 		clickSearchButton();
