@@ -59,22 +59,22 @@ public class ApplicationUploadSteps {
 		search.verifyApplicationUploadSuccess(searchDomain);
 	}
 
-	@When("processes pre-production batch $type")
+	/*@When("processes pre-production batch $type")
 	public void whenProcessesPreproductionBatchForPrepaid(String type) {
 
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
 		preProductionBatch.setJobID(processBatch.getJoBID());
 		batchProcessFlows.processPreProductionBatch(preProductionBatch);
-	}
+	}*/
 
-	@When("processes device production batch $type")
+	/*@When("processes device production batch $type")
 	public void whenProcessesDeviceProductionBatch(String type) {
 		DeviceProductionBatch batch = new DeviceProductionBatch();
 		batch.setProductType(ProductType.fromShortName(type));
 		batch.setBatchNumber(preProductionBatch.getBatchNumber());
 		MiscUtils.reportToConsole("device production Batch: {}",preProductionBatch.getBatchNumber());
 		batchProcessFlows.processDeviceProductionBatch(batch);
-	}
+	}*/
 
 	
 }
