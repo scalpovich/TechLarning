@@ -393,17 +393,21 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		return getResult();
 	}
 
-	/*private String getResult() {
+	private String getResult() {
 	
-		List<WebElement> lst = null;
-		if(context.get(ConstantData.TRANSACTION_NAME).toString().contains("COMPLETION"))
-		{
-		lst=winiumDriver.findElements(By.name("0130 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
-		}
-		else
-		{
-	    lst=winiumDriver.findElements(By.name("0110 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
-		}
+		 List<WebElement> lst = null;
+	        if(context.get(ConstantData.TRANSACTION_NAME).toString().equalsIgnoreCase("EMV_COMPLETION"))
+	        {
+	        lst=winiumDriver.findElements(By.name("0130 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
+	        }
+	        else if(context.get(ConstantData.TRANSACTION_NAME).toString().equalsIgnoreCase("MSR_COMPLETION"))
+	        {
+	        lst=winiumDriver.findElements(By.name("0130 : IPS to NTW Rcvd (NETWORK2ISSUERSTREAM1)"));
+	        }
+	        else
+	        {
+	         lst=winiumDriver.findElements(By.name("0110 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
+	        }
 		//clicking on the last item from bottom
 		lst.get(lst.size()-1).click();
 		wait(5000);
@@ -411,18 +415,22 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		String tempText = tempElement.getText();
 		MiscUtils.reportToConsole("Fetching PassResult : " + tempText);
 		return tempText;
-	}*/
-	private String getResult() {
+	}
+	/*private String getResult() {
         
-        List<WebElement> lst = null;
-        if(context.get(ConstantData.TRANSACTION_NAME).toString().contains("COMPLETION"))
-        {
-        lst=winiumDriver.findElements(By.name("0130 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
-        }
-        else
-        {
-      lst=winiumDriver.findElements(By.name("0110 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
-        }
+		 List<WebElement> lst = null;
+	        if(context.get(ConstantData.TRANSACTION_NAME).toString().equalsIgnoreCase("EMV_COMPLETION"))
+	        {
+	        lst=winiumDriver.findElements(By.name("0130 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
+	        }
+	        else if(context.get(ConstantData.TRANSACTION_NAME).toString().equalsIgnoreCase("MSR_COMPLETION"))
+	        {
+	        lst=winiumDriver.findElements(By.name("0130 : IPS to NTW Rcvd (NETWORK2ISSUERSTREAM1)"));
+	        }
+	        else
+	        {
+	         lst=winiumDriver.findElements(By.name("0110 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
+	        }
         //clicking on the last item from bottom
         lst.get(lst.size()-1).click();
         wait(5000);
@@ -433,7 +441,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
         String tempText = tempElement.getText();
         MiscUtils.reportToConsole("Fetching PassResult : " + tempText);
         return tempText;
-  }
+  }*/
 
 
 
