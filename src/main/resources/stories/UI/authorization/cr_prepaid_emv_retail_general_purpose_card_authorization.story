@@ -1,15 +1,16 @@
-prepaid emv retail giftcard card authorization
+prepaid emv retail general purpose card authorization
 
 Narrative:
-In order to check transactions on prepaid emv retail giftcard card 
+In order to check transactions on prepaid emv retail general purpose card
 As an issuer
-I want to authorize transactions for prepaid emv retail giftcard card
+I want to authorize transactions for prepaid emv retail general purpose card
 
 Meta:
-@StoryName S203707
-@SanityCardsWithAuthorization
+@StoryName p_emv_retail_general
+@oldReferenceSheet_S203707
+@CRCardsWithAuthorization
 
-Scenario: Set up prepaid emv retail giftcard card
+Scenario: Set up prepaid emv retail general purpose card
 Meta:
 @TestId TC398452
 Given user is logged in institution
@@ -30,7 +31,7 @@ When processes device production batch for prepaid
 When processes pin generation batch for prepaid
 Then device has "normal" status
 Then user activates device through helpdesk
-
+And user sign out from customer portal
 
 Scenario: Pin Generation 
 Meta:
@@ -43,15 +44,16 @@ Then FINSim simulator is closed
 
 Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
 Meta:
-@TestId
+@TestId 
+Given connection to MAS is established
 When perform an EMV_CASH_ADVANCE MAS transaction
 Then MAS test results are verified
-When MAS simulator is closed
+Then user is logged in institution
+Then search Cash Advance authorization and verify 000-Successful status
 
-Scenario: Perform EMV_POS_BALANCE_INQUIRY Authorization transaction
+Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
 Meta:
 @TestId 
-When connection to MAS is established
-When perform an EMV_POS_BALANCE_INQUIRY MAS transaction
+When perform an EMV_CASH_WITHDRAWAL MAS transaction
 Then MAS test results are verified
 When MAS simulator is closed

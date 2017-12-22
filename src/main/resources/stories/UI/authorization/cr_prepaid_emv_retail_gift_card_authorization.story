@@ -7,7 +7,7 @@ I want to authorize transactions for prepaid emv retail giftcard card
 
 Meta:
 @StoryName S203707
-@SanityCardsWithAuthorization
+@CRCardsWithAuthorization
 
 Scenario: Set up prepaid emv retail giftcard card
 Meta:
@@ -30,7 +30,7 @@ When processes device production batch for prepaid
 When processes pin generation batch for prepaid
 Then device has "normal" status
 Then user activates device through helpdesk
-
+And user sign out from customer portal
 
 Scenario: Pin Generation 
 Meta:
@@ -44,14 +44,17 @@ Then FINSim simulator is closed
 Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
 Meta:
 @TestId
+Given connection to MAS is established
 When perform an EMV_CASH_ADVANCE MAS transaction
 Then MAS test results are verified
+Then user is logged in institution
+Then search Cash Advance authorization and verify 000-Successful status
 When MAS simulator is closed
 
-Scenario: Perform EMV_POS_BALANCE_INQUIRY Authorization transaction
+Scenario: Program Balance Summary download
 Meta:
 @TestId 
-When connection to MAS is established
-When perform an EMV_POS_BALANCE_INQUIRY MAS transaction
-Then MAS test results are verified
-When MAS simulator is closed
+Given user is logged in institution
+When pre-clearing and Pre-EOD batches are run
+Then verify report for transactions with Program Balance Summary is downloaded
+And user sign out from customer portal
