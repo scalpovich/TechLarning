@@ -8,7 +8,7 @@ I want to authorize transactions for prepaid msr retail travel card
 Meta:
 @StoryName p_msr_retail_travel
 
-Scenario: Transaction - EMV_PURCHASE and EMV_PURCHASE_WITH_CASHBACK Authorization transaction - prepaid msr retail travel card multi wallet multi currency
+Scenario: Transaction - prepaid msr retail travel card multi wallet multi currency - EMV_PURCHASE and EMV_PURCHASE_WITH_CASHBACK Authorization transaction
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client

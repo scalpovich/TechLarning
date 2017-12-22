@@ -8,7 +8,7 @@ I want to authorize transactions for prepaid emv retail gift card
 Meta:
 @StoryName p_emv_retail_gift
 
-Scenario: Transaction - EMV_PURCHASE and EMV_PURCHASE_WITH_CASHBACK Authorization transaction - prepaid emv retail gift card
+Scenario: Transaction - prepaid emv retail gift card - EMV_PURCHASE and EMV_PURCHASE_WITH_CASHBACK Authorization transaction
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client

@@ -8,7 +8,7 @@ I want to create a prepaid emv corporate general purpose card and test various t
 Meta:
 @StoryName p_emv_corp_general_purpose
 
-Scenario: Transaction - EMV_PURCHASE and EMV_PURCHASE_WITH_CASHBACK Authorization transaction - prepaid emv corporate general purpose card
+Scenario: Transaction - prepaid emv corporate general purpose card - EMV_PURCHASE and EMV_PURCHASE_WITH_CASHBACK Authorization transaction
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client

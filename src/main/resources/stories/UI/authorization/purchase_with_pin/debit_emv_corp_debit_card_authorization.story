@@ -8,7 +8,7 @@ I want to create a EMV Corporate debit card for client
 Meta:
 @StoryName d_emv_corp
 
-Scenario: Transaction - EMV_PURCHASE and EMV_PURCHASE_WITH_CASHBACK Authorization transaction - debit emv corp debit card
+Scenario: Transaction - debit emv corp debit card - EMV_PURCHASE and EMV_PURCHASE_WITH_CASHBACK Authorization transaction
 Given user is logged in institution
 And device range for program with device plan for "debit" "emv" card
 When user creates new device of debit type for new client
