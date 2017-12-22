@@ -368,7 +368,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation(TEST_CASES);
 		performDoubleClickOperation("RunTest");
 		wait(5000);
-		executeAutoITExe("ActivateStartTestDialogAndClose.exe");
+		//executeAutoITExe("ActivateStartTestDialogAndClose.exe");
+		activateMas(transaction);
+		winiumClickOperation("OK");
 	}
 
 	public String verifyResults()
@@ -408,13 +410,16 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	        {
 	         lst=winiumDriver.findElements(By.name("0110 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
 	        }
-		//clicking on the last item from bottom
-		lst.get(lst.size()-1).click();
-		wait(5000);
-		WebElement tempElement = winiumDriver.findElementByXPath("//*[contains(@AutomationId,'DescriptionTextBox')]");
-		String tempText = tempElement.getText();
-		MiscUtils.reportToConsole("Fetching PassResult : " + tempText);
-		return tempText;
+	        //clicking on the last item from bottom
+	        lst.get(lst.size()-1).click();
+	        wait(5000);
+	        List<WebElement> results = winiumDriver.findElementsByXPath("//*[contains(@Name,'Expected Results Summary:')]");
+	        System.out.println("Expected Results Summary: size  = "+results);
+	        results.get(results.size()-1).click();
+	        WebElement tempElement = winiumDriver.findElementByXPath("//*[contains(@AutomationId,'DescriptionTextBox')]");
+	        String tempText = tempElement.getText();
+	        MiscUtils.reportToConsole("Fetching PassResult : " + tempText);
+	        return tempText;
 	}
 	/*private String getResult() {
         
