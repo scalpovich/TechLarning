@@ -8,7 +8,7 @@ I want to create a prepaid emv corporate travel multi wallet multi currency card
 Meta:
 @StoryName p_emv_corp_travel_mwmc
 
-Scenario: Transaction - EMV_PURCHASE and EMV_PURCHASE_WITH_CASHBACK Authorization transaction - prepaid emv corporate travel multi wallet multi currency card
+Scenario: Transaction - prepaid emv corporate travel multi wallet multi currency card - EMV_PURCHASE and EMV_PURCHASE_WITH_CASHBACK Authorization transaction
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client

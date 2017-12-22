@@ -9,7 +9,7 @@ Meta:
 @StoryName p_msr_retail_travel
 @SanityCardsWithAuthorization
 
-Scenario: Transaction - MSR_PURCHASE_PIN Authorization transaction - prepaid msr retail travel card
+Scenario: Transaction - prepaid msr retail travel card - MSR_PURCHASE and MSR_PURCHASE_WITH_CASHBACK Authorization transaction
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
@@ -31,13 +31,13 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 When connection to MAS is established
-When perform an MSR_PURCHASE_PIN MAS transaction
+When perform an MSR_PURCHASE MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify success status
 And user sign out from customer portal
 When connection to MAS is established
-When perform an MSR_PURCHASE_WITH_CASHBACK_PIN MAS transaction
+When perform an MSR_PURCHASE_WITH_CASHBACK MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify success status

@@ -1,16 +1,16 @@
-prepaid msr retail general purpose card authorization PINLESS
+prepaid msr retail general purpose card authorization
 
 Narrative:
-In order to check transactions on prepaid msr retail travel card 
+In order to check transactions on prepaid msr retail travel mwmc card 
 As an issuer
-I want to authorize transactions for prepaid msr retail travel card 
+I want to authorize transactions for prepaid msr retail travel mwmc card 
 
 Meta:
-@StoryName p_msr_retail_travel
+@StoryName p_msr_retail_travel_mwmc
 
-Scenario: Transaction - prepaid msr retail travel card multi wallet multi currency - EMV_PURCHASE and EMV_PURCHASE_WITH_CASHBACK Authorization transaction
+Scenario: Transaction - prepaid msr retail travel card multi wallet multi currency - MSR_PURCHASE and MSR_PURCHASE_WITH_CASHBACK Authorization transaction
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
+And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
 And user sign out from customer portal
 Given user is logged in institution

@@ -1,4 +1,4 @@
-debit emv corporate card setup
+debit emv corporate card authorisation PIN
 
 Narrative:
 In order to provide to client easy-to-use payment method for e-commerce retail
