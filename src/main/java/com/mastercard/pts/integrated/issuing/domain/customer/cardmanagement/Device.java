@@ -47,6 +47,7 @@ public class Device {
 	private String clientCode;
 	private String walletNumber;
 	private String deviceNumber;
+	private String existingDeviceNumber;
 	private String photoIndicator;
 	private String batchNumber;
 	private String sequenceNumber;
@@ -73,6 +74,7 @@ public class Device {
 	private String vip;
 	private String encodedName;
 	private String middleName2;
+	private String serviceCode;
 	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -109,7 +111,14 @@ public class Device {
 		return device;
 	}
 
-	
+	public String getExistingDeviceNumber() {
+		return existingDeviceNumber;
+	}
+
+	public void setExistingDeviceNumber(String existingDeviceNumber) {
+		this.existingDeviceNumber = existingDeviceNumber;
+	}
+
 	public String getEncodedName() {
 		return encodedName;
 	}
@@ -472,6 +481,13 @@ public class Device {
 		this.vip = vip;
 	}
 	
+	public String getServiceCode() {
+		return serviceCode;
+	}
+
+	public void setServiceCode(String serviceCode) {
+		this.serviceCode = serviceCode;
+	}
 
 
 }

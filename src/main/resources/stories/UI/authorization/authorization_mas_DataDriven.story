@@ -16,5 +16,4 @@ Then MAS test results are verified
 
 Examples:
 |transaction|
-|MSR_PURCHASE|
-|MSR_POS_BALANCE_INQUIRY|
+|EMV_CASH_ADVANCE|

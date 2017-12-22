@@ -9,6 +9,7 @@ Meta:
 @StoryName EMV_LOAD_BALANCE_AGENCY_FUNDED
 @CR1
 @CardCreation
+@InitialLoadAndLoad
 
 Scenario: Prepaid - Admin User - Assign Program to Agency
 

@@ -697,6 +697,7 @@ public class ProgramSetupSteps {
 
 	@When("User fills Transaction Plan for $type product")
 	public void whenUserFillsTransactionPlan(String type) {
+		//setting the context for IS PIN REQUIRED to a default state. This value is reset or set accordingly for Virtual and pinless cards
 		setPinRequiredToDefaultState();
 		transactionPlan = TransactionPlan.createWithProvider(dataProvider);
 		transactionPlan.setProductType(ProductType.fromShortName(type));
@@ -812,9 +813,13 @@ public class ProgramSetupSteps {
 
 		programSetupWorkflow.createDeviceRange(deviceRange);
 	}
-	
+		
 	private  void setPinRequiredToFalse() {
 		context.put(ConstantData.IS_PIN_REQUIRED, "FALSE");
+	}
+
+	private  void setPinRequiredToTrue() {
+		context.put(ConstantData.IS_PIN_REQUIRED, "TRUE");
 	}
 
 	private  void setPinRequiredToDefaultState() {

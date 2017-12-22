@@ -9,6 +9,7 @@ Meta:
 @StoryName SWSC_MSR_RTLTRVL_AGNC_NONFUND
 @CR1
 @CardCreation
+@InitialLoadAndLoad
 
 Scenario: Prepaid - Admin User - Assign Program to Agency
 

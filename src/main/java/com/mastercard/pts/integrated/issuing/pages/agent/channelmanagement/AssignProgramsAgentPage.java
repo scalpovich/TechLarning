@@ -101,8 +101,8 @@ public class AssignProgramsAgentPage extends AbstractBasePage {
 		//work around for the defect assigning program - repeating as AgentId dropDown value is not retained after search
 		selectAgentId(details.getAgentId());
 		clickSearchButton();
-		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
-		WebElementUtils.scrollDown(driver(), 0, 350);
+		SimulatorUtilities.wait(30000);//this to wait till the table gets loaded
+		WebElementUtils.scrollDown(driver(), 0, 999);
 		selectProgramCode(details.getProgramCode());
 		selectDeviceType(details.getDeviceType());
 		clickAddButton();

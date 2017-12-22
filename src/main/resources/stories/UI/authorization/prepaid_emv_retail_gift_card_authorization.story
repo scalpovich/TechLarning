@@ -28,6 +28,8 @@ And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 When processes pin generation batch for prepaid
+Then device has "normal" status
+Then user activates device through helpdesk
 
 
 Scenario: Pin Generation 
@@ -38,6 +40,13 @@ When Pin Offset file batch was generated successfully
 When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
+
+Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
+Meta:
+@TestId
+When perform an EMV_CASH_ADVANCE MAS transaction
+Then MAS test results are verified
+When MAS simulator is closed
 
 Scenario: Perform EMV_POS_BALANCE_INQUIRY Authorization transaction
 Meta:

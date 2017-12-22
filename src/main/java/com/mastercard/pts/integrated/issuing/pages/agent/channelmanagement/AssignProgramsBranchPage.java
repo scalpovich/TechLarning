@@ -95,8 +95,8 @@ public class AssignProgramsBranchPage extends AbstractBasePage {
 		selectAgency(details.getAgency());
 		selectBranchId(details.getBranchId());
 		clickSearchButton();
-		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
-		WebElementUtils.scrollDown(driver(), 0, 350);
+		SimulatorUtilities.wait(30000);//this to wait till the table gets loaded
+		WebElementUtils.scrollDown(driver(), 0, 999);
 		selectProgramCode(details.getProgramCode());
 		selectDeviceType(details.getDeviceType());
 		clickAddButton();

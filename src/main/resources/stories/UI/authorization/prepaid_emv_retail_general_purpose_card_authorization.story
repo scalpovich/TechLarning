@@ -30,6 +30,7 @@ When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 When processes pin generation batch for prepaid
 Then device has "normal" status
+Then user activates device through helpdesk
 
 Scenario: Pin Generation 
 Meta:
