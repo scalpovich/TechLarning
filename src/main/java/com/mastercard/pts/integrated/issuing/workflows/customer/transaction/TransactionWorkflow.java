@@ -407,7 +407,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			lst = winiumDriver.findElements(By.name("0110 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
 		// clicking on the last item from bottom
 		lst.get(lst.size() - 1).click();
-		wait(5000);
+		wait(1000);
+		List<WebElement> results = winiumDriver.findElementsByXPath("//*[contains(@Name,'Expected Results Summary:')]");
+		logger.info("Expected Results Summary for Validations OK / Not OK : size  = {} ", results);
+		results.get(lst.size() - 1).click();
+		wait(1000);
 		WebElement tempElement = winiumDriver.findElementByXPath("//*[contains(@AutomationId,'DescriptionTextBox')]");
 		String tempText = tempElement.getText();
 		MiscUtils.reportToConsole("Fetching PassResult : " + tempText);
