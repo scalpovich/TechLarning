@@ -103,6 +103,7 @@ public class BatchProcessSteps {
 		whenProcessesPreproductionBatchForPrepaid(type);
 	}
 	
+	@Then("a new device was created")
 	@When("a new device was created")
 	@Given("a new device was created")
 	public void givenANewDeviceWasCreated() {

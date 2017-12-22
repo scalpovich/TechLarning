@@ -83,7 +83,7 @@ public class AdjustmentTransactionPage extends AbstractBasePage {
 					clickSaveButton();
 				});
 
-		//verifyOperationStatus();
+		verifyOperationStatus();
 	}
 
 	public void addAdjustmentTransactionDetails(
