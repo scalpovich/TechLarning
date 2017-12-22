@@ -331,6 +331,8 @@ public class ProgramPage extends AbstractBasePage {
 			selectProduct(program.getProduct());
 			selectProgramType(program.getProgramType());
 			selectBaseCurrency(program.getBaseCurrency());
+			program.setProgramCodeDevice(program.getDescription()+" "+"["+program.getProgramCode()+"]");
+			logger.info("Program added :"+program.getDescription()+" "+"["+program.getProgramCode()+"]");
 			if (program.getProgramType().contains("Multi")){
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());			
 				selectRefundInCurrency(program.getRefundInCurrency());

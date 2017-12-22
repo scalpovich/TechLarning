@@ -67,6 +67,7 @@ public class AdministrationCardHolderPortalPage  extends AbstractBasePage{
 	}
 	
 	public void selectProgramByCode(String productCode){	
+		logger.info("Program Code: {}", productCode);
 		waitForElementVisible(selectProgramCode);
 		WebElementUtils.selectDropDownByVisibleText(selectProgramCode, productCode);
 	}
