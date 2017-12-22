@@ -786,7 +786,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		clickTestMode(tool);
 		selectLicense(tool);
 		wait(15000);
-		waitForImageToAppear("CONNECTED");
+		// waitForImageToAppear("CONNECTED");
 		wait(15000);
 	}
 
