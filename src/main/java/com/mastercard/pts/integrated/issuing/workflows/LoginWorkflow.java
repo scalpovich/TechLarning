@@ -45,6 +45,7 @@ public class LoginWorkflow {
 		if (institution != null && !institution.trim().isEmpty())
 			institutionSelector = institution;
 		page.selectInstitution(institutionSelector);
+		page.clickConfirm();
 	}
 
 	public void logInInstitution(Portal portal, String institution) {

@@ -43,7 +43,6 @@ public class InstitutionSelectionPage extends AbstractBasePage {
 	}
 
 	public void selectInstitution(String instName) {
-
 		waitForElementVisible(institution);
 		institution.getSelect().selectByVisibleText(instName);
 	}
