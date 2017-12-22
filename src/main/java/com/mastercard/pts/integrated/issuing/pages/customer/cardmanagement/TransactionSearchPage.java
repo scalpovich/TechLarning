@@ -44,8 +44,19 @@ public class TransactionSearchPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[text()='Product Type']/following-sibling::td[2]")
 	private MCWebElement productTypeDDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//div[@class='tab_container_privileges']/div/table/tbody/tr[2]/td[4]/span/span")
+	private MCWebElement transactionAmout;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:6:componentList:0:componentPanel:input:dropdowncomponent")
+	private MCWebElement tranDateDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
+	private MCWebElement productTypeSelect;
 
 	private String authorizationStatus;
+	
+	private String transactionAmount = null;
 	
 	public String searchTransactionWithARN(String arnNumber, TransactionSearch ts) {
 		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
@@ -63,7 +74,24 @@ public class TransactionSearchPage extends AbstractBasePage {
 
 		return authorizationStatus;
 	}
+	
+	public String searchTransactionWithDeviceNumber(String deviceNumber,TransactionSearch ts){
+		WebElementUtils.selectDropDownByVisibleText(productTypeSelect,ts.getProductType());
+		WebElementUtils.enterText(searchARNTxt, deviceNumber);
+		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
+		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
+		WebElementUtils.selectDDByVisibleText(tranDateDDwn,ts.getDateType());		
+		clickSearchButton();
+		viewFirstRecord();
+		runWithinPopup("View Transactions", () -> {
+			logger.info("Retrieving transaction Amount");
+			transactionAmount = transactionAmout.getText();
+			clickCloseButton();
+		});
 
+		return transactionAmount;
+	}
+	
 	public String searchTransactionWithArnAndGetFee(String arnNumber, TransactionSearch ts){
 		int i;
 		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());

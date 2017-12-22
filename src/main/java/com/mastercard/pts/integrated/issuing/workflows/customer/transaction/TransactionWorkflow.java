@@ -169,10 +169,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(1000);
 			performClickOperation("Edit Node");
 			wait(4000);
-
+			
 			fillEmvChipKeySetDetails();
 		}
-
+		
 		importAndLoadTestCase(transactionData.getTestCase(), transaction);
 
 		performExecution(transaction);
@@ -342,6 +342,16 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(6000);
 		executeAutoITExe("ImportCardProfile.exe "+ filePath );
 	}
+
+//	public void removeLastEntry()
+//	{
+//		clickTestPreparations();
+//		activateMas();
+//		performClickOperation("Imported");
+//		pressPageDown();
+//		pressDelete();
+//		wait(5000);
+//	}
 
 	private void selectTestCaseFromImportedCases(String testcaseName)
 	{
@@ -1057,6 +1067,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
 		return page.searchTransactionWithARN(arnNumber, ts);
 	}
+	
+	public String getTransactionAmount(String deviceNumber, TransactionSearch trn){
+		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
+		return page.searchTransactionWithDeviceNumber(deviceNumber, trn);
+	}
 
 	public String getFeePostingStatus(String arnNumber, TransactionSearch ts){
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
@@ -1220,6 +1235,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		else
 			clickTestPreparationsOnMdfs();
 	}
+		
 
 	public void clickTestPreparationsOnMdfs() {
 		executeAutoITExe(CLICK_TEST_PREPARATION   + SEPERATOR + SimulatorConstantsData.MDFS_16_X + "\"" );

@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.helpdesk;
 
+import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 
@@ -9,7 +10,8 @@ public class HelpdeskGeneral {
 	private static final String HD_CURRENCY_WITH_PRIORITY = "HD_CURRENCY_WITH_PRIORITY";
 	private static final String TRANSACTION_DETAILS = "TRANSACTION_DETAILS";
 	private static final String INITIAL_LOAD_TXN_DETAILS = "INITIAL_LOAD_TXN_DETAILS";
-	
+	private static final String TRANSACTION_NOTE ="TRANSACTION_NOTE";
+	private String transactionNote;
 	private String initialLoadTxnDetails;
 	private String transactionDetails;
 	private String productType;
@@ -19,6 +21,7 @@ public class HelpdeskGeneral {
 	private String deviceNumber;
 	private String currencySetupServiceCode;
 	private String currencyWithPriority;
+	private String newWalletNumber;
 	
 	public static HelpdeskGeneral createWithProvider(KeyValueProvider provider) {
 		HelpdeskGeneral plan = new HelpdeskGeneral();
@@ -28,7 +31,13 @@ public class HelpdeskGeneral {
 		plan.setTransactionDetails(provider.getString(TRANSACTION_DETAILS));
 		plan.setInitialLoadTxnDetails(provider.getString(INITIAL_LOAD_TXN_DETAILS));
 		plan.setNotes(ConstantData.GENERIC_DESCRIPTION);
+		plan.setProductType(ProductType.PREPAID);
+		plan.setProductType(provider.getString(TRANSACTION_NOTE));		
 		return plan;
+	}
+	
+	public String getNewWalletNumber() {
+		return newWalletNumber;
 	}
 	
 	public String getInitialLoadTxnDetails() {
@@ -47,6 +56,18 @@ public class HelpdeskGeneral {
 		this.transactionDetails = transactionDetails;
 	}
 
+	public void setNewWalletNumber(String newWalletNumber) {
+		this.newWalletNumber = newWalletNumber;
+	}
+	
+	public String getTransactionNote() {
+		return transactionNote;
+	}
+
+	public void setTransactionNote(String transactionNote) {
+		this.transactionNote = transactionNote;
+	}
+	
 	public String getCurrencySetupServiceCode() {
 		return currencySetupServiceCode;
 	}

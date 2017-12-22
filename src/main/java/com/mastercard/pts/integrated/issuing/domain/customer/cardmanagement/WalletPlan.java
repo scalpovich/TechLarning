@@ -60,6 +60,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String walletPlanUsage;
 	private String walletType;
 	private String usageType;
+	private String WalletPlanUsage;
 	private String walletPlan;
 	private String openloopWalletPlan;
 	private String closedloopWalletPlan;
@@ -68,6 +69,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String surchargePlan;
 	private String surchargeWaiverPlan;
 	private String walletFeePlan;
+
 	
 	public String getTransactionLimitPlan() {
 		return transactionLimitPlan;
@@ -313,6 +315,8 @@ public class WalletPlan implements HasCodeAndDescription {
 		this.usageType = usageType;
 	}
 
+
+
 	public String getOpenloopWalletPlan() {
 		return openloopWalletPlan;
 	}
@@ -324,6 +328,8 @@ public class WalletPlan implements HasCodeAndDescription {
 	public void setWalletType(String walletType) {
 		this.walletType = walletType;
 	}
+
+
 	
 	public String getProgramType() {
 		return programType;
@@ -387,16 +393,18 @@ public class WalletPlan implements HasCodeAndDescription {
 	}
 
 	public String getWalletPlanUsage() {
-		return walletPlanUsage;
+		return WalletPlanUsage;
 	}
 
 	public void setWalletPlanUsage(String walletPlanUsage) {
-		this.walletPlanUsage = walletPlanUsage;
+		WalletPlanUsage = walletPlanUsage;
 	}
 
-	public void walletplanDataprovider() {
-		setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
-		setWalletPlanUsage(MapUtils.fnGetInputDataFromMap("WalletplanUsage"));
+	public static WalletPlan walletplanDataprovider() {
+		WalletPlan walletplan = new WalletPlan();
+		walletplan.setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
+		walletplan.setWalletPlanUsage(MapUtils.fnGetInputDataFromMap("WalletplanUsage"));
+		return walletplan;
 	}
 
 	

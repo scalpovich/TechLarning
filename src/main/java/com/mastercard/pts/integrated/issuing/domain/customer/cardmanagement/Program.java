@@ -57,6 +57,7 @@ public class Program implements HasCodeAndDescription {
 	
 	private String walletToWalletTransferType;
 	private String refundInCurrency;
+	private String programCodeDevice;
 	private String description;
 	private String programCode;
 	private String interchange;
@@ -112,7 +113,7 @@ public class Program implements HasCodeAndDescription {
 	private String eventsSelectAll;
 	private String institute;
     public String loadsWithoutKyc;
-		public String Currency;
+	public String Currency;
 	public String Program;
 	
 	public String DevicePlanProgram;
@@ -187,7 +188,14 @@ public class Program implements HasCodeAndDescription {
 	}
 
 	
-   
+	public String getProgramCodeDevice() {
+		return programCodeDevice;
+	}
+
+	public void setProgramCodeDevice(String programCodeDevice) {
+		this.programCodeDevice = programCodeDevice;
+	}
+
 	public String getWalletPlan2() {
 		return WalletPlan2;
 	}

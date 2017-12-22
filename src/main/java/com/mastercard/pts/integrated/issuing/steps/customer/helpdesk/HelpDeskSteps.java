@@ -5,8 +5,9 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
-
+import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
@@ -31,6 +32,15 @@ import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ServiceCode;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ServiceRequestDropDownValues;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDeskFlows;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.distribution.Dispatch;
+import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
+import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -571,6 +581,30 @@ public class HelpDeskSteps {
 		{
 		Assert.assertTrue("status of newly created device is not normal ", false);
 		}
-
 	}
+	
+	@Then ("currency setup for device")
+	public void searchDevice(){
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);		
+		Device device = context.get(ContextConstants.DEVICE); 		
+		thenUserNavigatesToGeneralInHelpdesk(); 	        
+		helpdeskWorkflow.searchByDeviceNumber(device);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.setupDeviceCurrency(helpdeskGeneral);
+		device.setNewWalletNumber(helpdeskGeneral.getNewWalletNumber());
+	}
+	
+	
+	@When ("wallet to wallet transfer selected account")
+	public void walletToWalletTransfer(){
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		//helpdeskWorkflow.setupDeviceCurrency(helpdeskGeneral);			
+		Device device = context.get(ContextConstants.DEVICE);
+		thenUserNavigatesToGeneralInHelpdesk();
+		helpdeskWorkflow.searchByDeviceNumber(device);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.walletToWalletTransfer(device);
+		
+	}	
+	
 }

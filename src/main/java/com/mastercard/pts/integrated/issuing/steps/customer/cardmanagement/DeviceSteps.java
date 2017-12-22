@@ -40,6 +40,7 @@ public class DeviceSteps {
 		
 		deviceWorkflow.createDevice(device);
 		context.put(ContextConstants.DEVICE, device);
+	
 	}
 	
 	@Then("$type device plan and program are made available for Device Creation")

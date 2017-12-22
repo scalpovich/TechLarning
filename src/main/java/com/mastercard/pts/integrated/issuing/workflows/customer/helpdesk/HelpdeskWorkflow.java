@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk;
 
 import java.math.BigDecimal;
 
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
@@ -34,6 +35,10 @@ public class HelpdeskWorkflow {
 		
 	public void searchWithDeviceNumber(HelpdeskGeneral helpdeskGeneral){
 		helpDeskPage.searchWithDeviceNumber(helpdeskGeneral);	
+	}
+
+	public void searchByDeviceNumber(Device device){
+		helpDeskPage.searchByDeviceNumber(device);	
 	}
 	
 	public String getDeviceNumberStatus() {
@@ -90,6 +95,9 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.getWalletNumber(device);
 	}
 	
+	public void walletToWalletTransfer(Device device){
+		helpDeskPage.walletToWalletTransfer(device);
+	}
 	public String getWalletBalanceInformation(Device device) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		return helpDeskPage.getWalletBalanceInformation(device);

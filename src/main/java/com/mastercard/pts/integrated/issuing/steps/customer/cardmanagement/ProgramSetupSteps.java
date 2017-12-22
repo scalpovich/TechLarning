@@ -694,7 +694,20 @@ public class ProgramSetupSteps {
 		}
 		programSetupWorkflow.createWalletPlan(walletPlan);
 	}
-
+	
+	@When("User fills Wallet Plan for $type product and program $programtype")
+	public void userFillsWalletPlan(String type,String programtype) {
+		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
+		walletPlan.setProductType(ProductType.fromShortName(type));
+		walletPlan.setProgramType(programtype);
+		
+		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
+			walletPlan.setCreditPlan(creditCardCreditPlan.buildAbbreviationAndCode());
+			walletPlan.setBillingCyleCode(creditCardBillingCycle.buildDescriptionAndCode());
+		}
+		programSetupWorkflow.createWalletPlan(walletPlan);
+	}
+	
 	@When("User fills Transaction Plan for $type product")
 	public void whenUserFillsTransactionPlan(String type) {
 		setPinRequiredToDefaultState();
@@ -753,7 +766,31 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
 	}
+	
+	@When("User fills Program section for $type product and program $programType")
+	public void UserFillsProgramSection(String type ,String programType ) {
+		program = Program.createWithProvider(dataProvider, provider);
+		program.setProduct(ProductType.fromShortName(type));
+		program.setProgramType(programType);
+		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
+			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
+			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+		}
+		program.setWalletPlanPlan1(walletPlan.buildDescriptionAndCode());
+		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
 
+		program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
+		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
+		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
+
+		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID)) {
+			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+		}
+
+		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
+		context.put(ContextConstants.PROGRAM, program);
+	}
+	
 	@When("User fills Dedupe Plan")
 	public void whenUserFillsDedupePlan() {
 		dedupePlan = DedupePlan.generateDynamicTestData();
@@ -812,7 +849,7 @@ public class ProgramSetupSteps {
 
 		programSetupWorkflow.createDeviceRange(deviceRange);
 	}
-		
+	
 	private  void setPinRequiredToFalse() {
 		context.put(ConstantData.IS_PIN_REQUIRED, "FALSE");
 	}
@@ -820,4 +857,6 @@ public class ProgramSetupSteps {
 	private  void setPinRequiredToDefaultState() {
 		context.put(ConstantData.IS_PIN_REQUIRED, "TRUE");
 	}
+	
+	
 }

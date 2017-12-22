@@ -8,10 +8,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -22,8 +24,10 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT,
 	treeMenuItems = { CardManagementNav.L1_OPERATION, CardManagementNav.L2_PROCESSING_BATCHES, CardManagementNav.L3_PRE_PRODUCTION_BATCH})
-
 	public class PreProductionBatchPage extends AbstractBasePage{
+	
+	@Autowired
+	MenuSubMenuPage menuSubMenuPage;
 	
 	private static final Logger logger = LoggerFactory.getLogger(PreProductionBatchPage.class);
 	
@@ -46,6 +50,19 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 	  
 	  @PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:1:componentPanel:input:inputTextField")
 	  private MCWebElement sourceJobIdTxt;
+	  
+	  
+	  public void preproduction(String product, String batchNum) {
+			menuSubMenuPage.getPreProductionBatch().click();
+			SelectDropDownByText(productTypeDDwn, product);
+			if (batchNum != null) {
+				enterText(batchNumberTxt, batchNum);
+			}
+			ClickButton(searchBtn);
+			ClickCheckBox(preProductionBatchRecordChkBx, true);
+			ClickButton(processSelectedBtn);
+			SwitchToDefaultFrame();
+		}
 	  
 	  public void processPreProductionBatch(PreProductionBatch batch){
 		  logger.info("Pre-Production Batch: {}", batch.getBatchNumber());

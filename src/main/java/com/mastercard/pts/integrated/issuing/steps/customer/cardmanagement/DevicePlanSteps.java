@@ -41,7 +41,7 @@ public class DevicePlanSteps {
 		deviceplan.setEmbossiongVendor(vendor.getNewVendor());
 		deviceplan.setActivationMode(activationMode);
 		String devicePlan = "";
-		 devicePlan = deviceplanflows.createDevicePlan(deviceplan);
+		devicePlan = deviceplanflows.createDevicePlan(deviceplan);
 		Assert.assertNotNull(devicePlan);
 		deviceplan.setDevicePlan(devicePlan);
 

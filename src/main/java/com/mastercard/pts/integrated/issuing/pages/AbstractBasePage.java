@@ -34,6 +34,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+
+import com.google.common.base.CharMatcher;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -54,12 +56,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public String pageValidationCheck = "//ol/li";
 	public String ERRORPANEL = "//li[@class='feedbackPanelERROR']";
-	private static final By INFO_MESSAGE_LOCATOR = By
-			.cssSelector(":not([style]) > .feedbackPanel span.feedbackPanelINFO");
+	private static final By INFO_MESSAGE_LOCATOR = By.cssSelector(":not([style]) > .feedbackPanel span.feedbackPanelINFO");
+	
+	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
 
 	private static final String FIRST_ROW_SELECT = ".dataview tbody span";
 
 	private static final String SUCCESS_MESSAGE = "Success message: {}";
+	
+	private static final String WALLET_NUMBER = "Wallet number: {}";
 
 	public static final String ERROR_MESSAGE = "Error: {}";
 
@@ -349,7 +354,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 				.until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
 	}
-
+	
+	protected String getWalletNumber() {
+		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
+		logger.info(WALLET_NUMBER, CharMatcher.DIGIT.retainFrom(walletNumber.getText()));		
+		return CharMatcher.DIGIT.retainFrom(walletNumber.getText());
+	}
+	
 	protected boolean waitForRow() {
 		try {
 			waitForWicket();
@@ -556,7 +567,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 				+ popupNameElement.getText(), popupName.contains(popupNameElement.getText()));
 		logger.info(RESPONSE_MESSAGE, popupNameElement.getText());
 	}
-
+	
+	protected void accpetPopup() {
+		Alert alert = driver().switchTo().alert();
+		boolean isAlertPresent = alert != null;
+		if(isAlertPresent){
+			alert.accept();
+		}
+	}
+	
 	protected void verifyDeleteRecordAlert(String expectedAlertText) {
 		Alert alert = driver().switchTo().alert();
 		String actualAlertText = null;
@@ -1044,7 +1063,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void clickWhenClickableCHP(MCWebElement element) {
 		waitForElementVisible(element);
-		new WebDriverWait(driver(), TIMEOUT).until(elementToBeClickable(element)).click();
+		new WebDriverWait(driver(), TIMEOUT).until(
+				elementToBeClickable(element)).click();
 		// waitForWicket(driver());
 	}
 
@@ -1274,12 +1294,14 @@ public abstract class AbstractBasePage extends AbstractPage {
 				if (!handle.equals(getFinder().getWebDriver().getWindowHandle()))
 					getFinder().getWebDriver().switchTo().window(handle);
 			}
-
+			//Accept the alert for CHP login
+			accpetPopup();			
+			
 		} catch (Exception e) {
 			logger.error("Unable to Switch Window" + e);
 		}
 	}
-
+	
 	public void selectByVisibleTexts(MCWebElement ele, String optionName) {
 		waitUntilSelectOptionsPopulated(ele);
 		waitForLoaderToDisappear();
@@ -1296,8 +1318,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 		return isAnyErrorPresent;
 	}
-
-	public String getTextFromPage(MCWebElement element) {
+	
+	public String getTextFromPage(MCWebElement element){
 		return element.getText();
 	}
 	public Map<String, String> pageErrorValidator(String ERRORPANEL) {
@@ -1330,3 +1352,4 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return null;
 	}
 }
+

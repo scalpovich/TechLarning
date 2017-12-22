@@ -70,6 +70,7 @@ public class LoadFromFileUploadSteps {
 
 	@Given("user performs adjustment transaction")
 	@When("user performs adjustment transaction")
+	@Then("user performs adjustment transaction")
 	public void whenUserPerformsAdjustmentTransaction(){
 		Device device = context.get(ContextConstants.DEVICE);
 		AdjustmentTransaction transaction = AdjustmentTransaction.createWithProvider(provider);
@@ -79,6 +80,7 @@ public class LoadFromFileUploadSteps {
 		transaction.getAdjustmentTransactionDetails().add(details);
 		loadFromFileUploadWorkflow.createAdjustmentTransaction(transaction);
 	}
+	
 	@Given("in batch trace history transaction is successful")
 	@Then("in batch trace history transaction is successful")
 	@When("in batch trace history transaction is successful")

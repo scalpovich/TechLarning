@@ -4,6 +4,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 
 public class TransactionSearch {
 	private String dateType;
+	private String productTyp;
 	
 	public String getDateType() {
 		return dateType;
@@ -27,7 +28,9 @@ public class TransactionSearch {
 	{
 		TransactionSearch ts=new TransactionSearch();
 		ts.setDateType(provider.getString("DATE_TYPE"));
-		ts.setProductType(provider.getString("PRODUCT_TYPE"));
+		ts.setProductType(provider.getString("PRODUCT_TYP"));
+//		ts.setDateType(provider.getString("ACCOUNT_TYPE"));
+		
 		return ts;
 	}
 }

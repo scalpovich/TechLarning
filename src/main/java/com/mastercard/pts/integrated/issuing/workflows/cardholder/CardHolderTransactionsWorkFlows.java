@@ -6,7 +6,11 @@ package com.mastercard.pts.integrated.issuing.workflows.cardholder;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.CardHolderTransactions;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.transactions.CancelRemittanceBookingPage;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.transactions.CashRemittanceBookingPage;
@@ -27,6 +31,9 @@ public class CardHolderTransactionsWorkFlows extends AbstractBasePage{
 	@Autowired
 	CashRemittanceBookingPage cashRemittanceBookingPage;
 	
+	@Autowired
+	private TestContext context;
+
 	public void openTransactionPage(){
 			navigator.navigateToPage(FundTransferPage.class);
 	}
@@ -106,6 +113,17 @@ public class CardHolderTransactionsWorkFlows extends AbstractBasePage{
 		waitForLoaderToDisappear();
 	}
 	
+	public void interBankMoneyTransfer(){		
+		CardHolderTransactions cardhlTran = context.get(ContextConstants.CARDHOLDER);
+		fundTransfer.enterBeneficiaryWalletNumber(cardhlTran.getWalletNumFromAmountTransfer());
+		fundTransfer.enterBeneficiaryCardNumber(cardhlTran.getWalletNumFromAmountTransfer());
+		fundTransfer.enterAmountToTranfer(cardhlTran.getWalletNumFromAmountTransfer());
+		fundTransfer.selectCurrencyForIntraBankTranfer(cardhlTran.getWalletNumFromAmountTransfer());
+		fundTransfer.submitIntraBankMoneyTranferRequest();
+		waitForLoaderToDisappear();
+	}
+	
+
 	public boolean checkCashRemittanceAllowedOrNot(){
 		boolean isPresentElement = false;
 		if(cashRemittanceBookingPage.isCashRemittanceAllowedForAccount()){

@@ -1361,6 +1361,7 @@ public class CustomerUiVerificationSteps {
 	public void thenDeviceStatusPageOfCardManagementTabIsRenderedCorrectly() {
 		uiVerificationCardManagementWorkflow.verifyDeviceStatusPage();
 	}
+
 	@Then("user signs out from customer portal")
 	public void signOutFromPortal() {
 		loginWorkflow.signOutCustomer();

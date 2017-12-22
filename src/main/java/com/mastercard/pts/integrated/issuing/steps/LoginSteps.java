@@ -12,13 +12,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.configuration.AppEnvironment;
 import com.mastercard.pts.integrated.issuing.configuration.Portal;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.LoginCardholder;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceCreateDevicePage;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.ReadTestDataFromExcel;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.pts.integrated.issuing.workflows.LoginFlows;
+import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.LogoutFlows;
 import com.mastercard.pts.integrated.issuing.workflows.QMRReportFlows;
 
@@ -34,7 +41,10 @@ public class LoginSteps extends AbstractBaseFlows {
 
 	@Autowired
 	public QMRReportFlows qmrReportFlows;
-
+	
+	@Autowired
+	private LoginWorkflow loginWorkflow;
+	
 	@Autowired
 	private ReadTestDataFromExcel excelTestData;
 
@@ -43,8 +53,30 @@ public class LoginSteps extends AbstractBaseFlows {
 
 	@Autowired
 	public LoginFlows loginflows;
-
+	
+	@Autowired
+	public DeviceCreateDevicePage deviceCreationPage;
+	
+	@Autowired
+	private TestContext context;
+	
+	@Autowired
+	private KeyValueProvider provider;
+	
+	
+	
 	public LoginCardholder loginCardHolderProvider;
+	
+	
+	@Given("login with chp")
+	public void loginInCardholder(){			
+		getFinder().getWebDriver().manage().deleteAllCookies();
+		getFinder().getWebDriver().get("http://ech-10-168-129-135.mastercard.int:25003/integratedIssuing-cardholderPortal/WebPages/Login.jsp");
+		Device device = context.get(ContextConstants.DEVICE);
+		loginCardholder(device.getClientCode(),device.getClientCode());
+		switchToWindowCHP();
+		CustomUtils.ThreadDotSleep(1100);
+	}
 
 	@Given("login to customer portal as newuser")
 	public void LoginForNewUser() {
@@ -85,6 +117,7 @@ public class LoginSteps extends AbstractBaseFlows {
 		CustomUtils.ThreadDotSleep(1100);
 	}
 
+	//@BeforeScenario
 	@Given("read test data for scenario")
 	public void readScenarioDataSheet(@Named("TCName") String strStoryName, @Named("sheetName") String strSheetName) {
 		String f = "TestData";
@@ -105,7 +138,7 @@ public class LoginSteps extends AbstractBaseFlows {
 		loginFlows.openCardHolderApplication();
 	}
 
-	@Given("first time card holder registeration for login")
+	@Given("card holder registeration for login")
 	public void firstTimeCardRegisteration() {
 		loginFlows.signUpCardHolderUser(loginCardHolderProvider.getPassWord(),
 				loginCardHolderProvider.getCardHolderTransPassword(), loginCardHolderProvider.getFirstSequrityQst(),
@@ -113,6 +146,15 @@ public class LoginSteps extends AbstractBaseFlows {
 				loginCardHolderProvider.getSecondSequrityAnsw());
 
 	}
+	
+	@Then("card holder signup with valid details")
+	public void cardHolderSignUp(){
+		Device device = context.get(ContextConstants.DEVICE);
+		loginWorkflow.login(device.getClientCode(), device.getClientCode());
+		loginFlows.signUpCardHolderPortal(device.getClientCode(),device.getNewTransPassword());
+		switchToNewWindow();
+	}
+	
 
 	@Then("switch to new window")
 	public void switchToNewWindow() {

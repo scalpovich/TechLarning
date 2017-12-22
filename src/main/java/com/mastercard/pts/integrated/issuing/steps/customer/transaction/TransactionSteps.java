@@ -16,6 +16,7 @@ import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -338,6 +339,20 @@ public class TransactionSteps {
 	public void thenTransactionStatusIsPresentmentMatched(String type){
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		assertEquals(type, transactionWorkflow.getAuthorizationStatus(arnNumber, ts));			
+	}
+	
+	@Then("wallet to wallet transfer transaction status is \"$transactionStatus\"")
+	public void transactionStatusIsPresentCheck(String transactionStatus){
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		assertEquals(transactionStatus, transactionWorkflow.getTransactionAmount("5887658132769110", ts));
+
+	}
+	
+	@Then("verify wallet to wallet transfer transaction amount")
+	public void transactionAmountStatusIsPresentCheck(){
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		assertEquals("100000.00", transactionWorkflow.getTransactionAmount(device.getDeviceNumber(), ts));
 	}
 
 	@Then("transaction fee is correctly posted")
