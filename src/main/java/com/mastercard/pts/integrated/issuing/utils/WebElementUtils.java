@@ -294,29 +294,22 @@ public class WebElementUtils {
 
 	public static boolean isTextAvailableinTable(MCWebElement tableHandle, String text) {
 		WebElement table = asWebElement(tableHandle);
-
 		// To locate rows of table.
 		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
-
 		// To calculate no of rows In table.
 		int rowscount = rowstable.size();
 		// Loop will execute till the last row of table.
 		for (int row = 1; row < rowscount; row++) {
-
 			// To locate columns(cells) of that specific row.
 			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
-
 			// To calculate no of columns(cells) In that specific row.
 			int columnscount = columnsrow.size();
-
 			// Loop will execute till the last cell of that specific row.
-			for (int col = 1; col < columnscount; col++) {
+			for (int col = 0; col < columnscount; col++) {
 				// To retrieve text from that specific cell.
-
 				if (columnsrow.get(col).getText().equals(text)) {
 					return true;
 				}
-
 			}
 		}
 		return false;

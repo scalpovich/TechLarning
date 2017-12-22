@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.agent.services.Checker;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -122,6 +123,7 @@ public class CheckerPage extends AbstractBasePage {
 	}
 
 	public void clickTableFirstRecord() {
+		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
 		WebElementUtils.retryUntil(tableFirstRecord::click,
 				() -> WebElementUtils.hasClass(getFinder().findOne(FindBy.X_PATH, "//*[@class='dataview']/tbody/tr[1]"), "select"));
 	}

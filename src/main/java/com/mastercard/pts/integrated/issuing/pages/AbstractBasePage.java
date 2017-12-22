@@ -4,9 +4,11 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
@@ -71,6 +73,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private static final Logger logger = LoggerFactory.getLogger(AbstractBasePage.class);
 
 	public static final LocalDate futureDate = LocalDate.now().plusDays(100);
+
+	public static final LocalDate futureEndDate = LocalDate.now().plusDays(150);
 
 	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
 
@@ -163,6 +167,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Contact Information')]")
 	private MCWebElement contactInformation;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Card Management']")
+	private MCWebElement cardManagement;
 
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -454,7 +461,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		waitForWicket();
 	}
 
-	private void clickWhenClickableDoNotWaitForWicket(MCWebElement element) {
+	protected void clickWhenClickableDoNotWaitForWicket(MCWebElement element) {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
 	}
 
@@ -716,9 +723,34 @@ public abstract class AbstractBasePage extends AbstractPage {
 			logger.info("Element is visible");
 			return true;
 		} catch (Exception e) {
-			logger.error("Element is not visible");
+			logger.error("Element is not visible :" + e.fillInStackTrace());
 			return false;
 		}
+	}
+
+	public boolean isElementPresent(MCWebElement ele) {
+		boolean ispresent = false;
+
+		try {
+			ele.isVisible();
+			ispresent = true;
+			logger.info("Element is visible");
+
+		} catch (Exception e) {
+			ispresent = false;
+			logger.error("Element is not visible :" + e.fillInStackTrace());
+		}
+		return ispresent;
+	}
+
+	public boolean waitforElemenet(MCWebElement ele) {
+		try {
+			getFinder().waitUntil(ExpectedConditions.visibilityOf((WebElement) ele));
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+
 	}
 
 	public boolean isElementPresent(MCWebElements ele) {
@@ -952,8 +984,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 		}
 		ele.getSelect().selectByVisibleText(optionVisbleText);
-
-		// waitForWicket(driver());
 		waitForLoaderToDisappear();
 		waitForPageToLoad(driver());
 	}
@@ -981,6 +1011,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public void clickWhenWebElementClickable(WebElement ele) {
 		new WebDriverWait(driver(), TIMEOUT).until(ExpectedConditions.elementToBeClickable(ele)).click();
+	}
+
+	protected void clickWhenClickableCHP(MCWebElement element) {
+		waitForElementVisible(element);
+		new WebDriverWait(driver(), TIMEOUT).until(elementToBeClickable(element)).click();
 	}
 
 	protected void clickWhenClickable(WebElement element) {
@@ -1021,7 +1056,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		} catch (Exception ex) {
 			logger.info("Unable to switch to frame :" + strFrame);
 			throw ex;
-			// Assert.fail(ex.getMessage());
 		} finally {
 			wait = null;
 		}
@@ -1177,17 +1211,35 @@ public abstract class AbstractBasePage extends AbstractPage {
 			errorFields.add("Error on page" + "::::::" + getChildElement(Elements(ERRORPANEL).get(0), "//span").getText());
 		}
 		if (iselementPresent(Elements(pageValidationCheck))) {
-			// System.out.println(Elements(pageValidationCheck).size());
 			for (WebElement ele : Elements(pageValidationCheck)) {
 				if (ele != null) {
 					errorMessage = ele.getText();
 					elementName = getChildElement(ele, "./preceding::td[1][@class='displayName']").getText();
 					errorFields.add(elementName + "::::::" + errorMessage);
-
 				}
 			}
 		}
 		return errorFields;
+	}
+
+	public void switchToWindowCHP() {
+		try {
+			Set<String> handles;
+			handles = getFinder().getWebDriver().getWindowHandles();
+			for (String handle : handles) {
+				if (!handle.equals(getFinder().getWebDriver().getWindowHandle()))
+					getFinder().getWebDriver().switchTo().window(handle);
+			}
+		} catch (Exception e) {
+			logger.error("Unable to Switch Window --> {} ", e);
+		}
+	}
+
+	public void selectByVisibleTexts(MCWebElement ele, String optionName) {
+		waitUntilSelectOptionsPopulated(ele);
+		waitForLoaderToDisappear();
+		ele.getSelect().selectByVisibleText(optionName);
+		waitForLoaderToDisappear();
 	}
 
 	public boolean publishErrorOnPage() {
@@ -1198,6 +1250,33 @@ public abstract class AbstractBasePage extends AbstractPage {
 			isAnyErrorPresent = true;
 		}
 		return isAnyErrorPresent;
+	}
+
+	public String getTextFromPage(MCWebElement element) {
+		return element.getText();
+	}
+
+	public Map<String, String> pageErrorValidator(String ERRORPANEL) {
+		Map<String, String> errorFields = new HashMap<String, String>();
+		String errorMessage;
+		String elementName;
+		if (iselementPresent(Elements(pageValidationCheck))) {
+			for (WebElement ele : Elements(pageValidationCheck)) {
+				if (ele != null) {
+					errorMessage = ele.getText();
+					elementName = getChildElement(ele, "./preceding::td[1][@class='displayName']").getText();
+					errorFields.put(elementName, errorMessage);
+				}
+			}
+		}
+		return errorFields;
+	}
+
+	public void enterText(WebElement field, String fieldValue) {
+		logger.info("Entering text for field: {} ", fieldValue);
+		waitForElementVisible(field);
+		field.clear();
+		field.sendKeys(fieldValue);
 	}
 
 	@Override

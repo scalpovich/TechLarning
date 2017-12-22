@@ -373,8 +373,7 @@ public class ProgramSetupSteps {
 
 	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card")
 	public void whenUserFillsDevicePlanForCrdd(String productType, String deviceType) {
-		// virtual cards are pinless so even if this statement is called by
-		// mistatke, we are setting Pin to false
+		// virtual cards are pinless so even if this statement is called by mistake, we are setting Pin to false
 		if (deviceType.toLowerCase().contains("virtual")) {
 			setPinRequiredToFalse();
 		}
@@ -530,9 +529,8 @@ public class ProgramSetupSteps {
 		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
 		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
 
-		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID)) {
+		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID))
 			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
-		}
 
 		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
@@ -576,10 +574,10 @@ public class ProgramSetupSteps {
 	public void whenUserFillsCreditPlan() {
 		// setting Test Data
 		creditCardCreditPlan = CreditCardCreditPlan.createWithProvider(provider);
-		// TransactionRulePlan & PaymentPriorityPlan are expected to come from
-		// related methods hence fetching data
-		// from them and setting them again below into setTransactionRulePlan &
-		// setPaymentPriorityPlan
+		/*
+		 * TransactionRulePlan & PaymentPriorityPlan are expected to come from related methods hence fetching data from them and setting them again below into setTransactionRulePlan &
+		 * setPaymentPriorityPlan
+		 */
 		creditCardCreditPlan.setTransactionRulePlan(transactionRulePlanTestDataObject.buildDescriptionAndCode());
 
 		creditCardCreditPlan.setPaymentPriorityPlan(paymentPrioritytestDataObject.buildDescriptionAndCode());

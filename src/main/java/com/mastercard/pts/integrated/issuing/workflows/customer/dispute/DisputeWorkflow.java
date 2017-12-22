@@ -28,6 +28,7 @@ public class DisputeWorkflow extends SimulatorUtilities {
 
 	@Autowired
 	private Navigator navigator;
+	
 	@Autowired
 	private LinuxBox linuxBox;
 

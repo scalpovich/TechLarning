@@ -27,6 +27,8 @@ When processes device production batch for debit
 When user has wallet number information for debit device
 When user performs adjustment transaction
 When user has current wallet balance amount information for debit device
+Then device has "normal" status
+Then user activates device through helpdesk
 
 Scenario: Perform EMV_PURCHASE Authorization transaction
 Meta:

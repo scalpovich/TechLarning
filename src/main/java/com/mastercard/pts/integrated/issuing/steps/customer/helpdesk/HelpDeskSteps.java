@@ -1,48 +1,49 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.helpdesk;
-import org.jbehave.core.annotations.Named;
-
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
+
 
 import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
+import com.mastercard.pts.integrated.issuing.domain.customer.distribution.Dispatch;
+import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
+import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ChangeAddressRequest;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.EventAndAlerts;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ServiceCode;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ServiceRequestDropDownValues;
-import com.mastercard.pts.integrated.issuing.utils.MapUtils;
-import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDeskFlows;
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
-import com.mastercard.pts.integrated.issuing.context.TestContext;
-import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.distribution.Dispatch;
-import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
-import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDeskFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpdeskWorkflow;
 
 @Component
 public class HelpDeskSteps {
 	private HelpdeskGeneral helpdeskGeneral;
 	private BigDecimal currentBalanceAmount;
+	private String beforeLoadBalanceInformation;
 	private static final String STATUS_INCORRECT_INFO_MSG = "Device has incorrect status";
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
 	@Autowired
@@ -367,6 +368,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.setActiveDeviceNumberByCardPackId(helpdeskGeneral, registeredType);
 		Device device = Device.createWithProvider(provider);
 		device.setDeviceNumber(helpdeskGeneral.getDeviceNumber());
+		device.setExistingDeviceNumber(helpdeskGeneral.getDeviceNumber());
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		context.put(ContextConstants.DEVICE, device);
 		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
@@ -405,6 +407,36 @@ public class HelpDeskSteps {
 		context.put(ContextConstants.DEVICE, device);
 	}
 	
+	@Given("user has wallet balance information for $type device")
+	@When("user has wallet balance information for $type device")
+	public void givenUserHasWalletBalanceInformation(String type) {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+		beforeLoadBalanceInformation = helpdeskWorkflow.getWalletBalanceInformation(device);
+	}
+	
+	@When("balance in helpdesk updated correctly for $type device")
+	@Then("balance in helpdesk updated correctly for $type device")
+	public void thenBalanceInHelpDeskUpdatedCorrectly(String type) {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+		assertTrue(helpdeskWorkflow.verifyBalanceUpdatedCorreclty(beforeLoadBalanceInformation, helpdeskGeneral.getTransactionDetails(), helpdeskWorkflow.getWalletBalanceInformation(device)));
+	}
+	
+	@When("initial load balance in helpdesk updated correctly for $type device")
+	@Then("initial load balance in helpdesk updated correctly for $type device")
+	public void thenInitialLoadBalanceInHelpDeskUpdatedCorrectly(String type) {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+		assertTrue(helpdeskWorkflow.verifyInitialLoadBalanceUpdatedCorreclty(helpdeskGeneral.getInitialLoadTxnDetails(), helpdeskWorkflow.getWalletBalanceInformation(device)));
+	}
+	
 	@Given("user has current wallet balance amount information for $type device")
 	@When("user has current wallet balance amount information for $type device")
 	public void givenUserHasCurrentWalletBalanceAmountInformation(String type) {
@@ -430,7 +462,7 @@ public class HelpDeskSteps {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
 		BigDecimal afterTrnBalanceAmount = helpdeskWorkflow.getWalletBalance(device);
-		BigDecimal transactionAmount = new BigDecimal(Integer.parseInt(device.getTransactionAmount())/100);
+		BigDecimal transactionAmount = new BigDecimal(device.getTransactionAmount());
 		currentBalanceAmount = currentBalanceAmount.subtract(transactionAmount);
 		assertEquals(currentBalanceAmount, afterTrnBalanceAmount);
 	}
@@ -445,6 +477,7 @@ public class HelpDeskSteps {
 		assertEquals(currentBalanceAmount, afterTrnBalanceAmount);
 	}
 
+	@Then("user activates device through helpdesk")
 	@Given("user activates device through helpdesk")
 	@When("user activates device through helpdesk")
 	public void whenUserActivatesDeviceThroughHelpDesk() {
@@ -491,6 +524,14 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickEndCall();
 		assertThat("Device has incorrect Sale Date", helpdeskWorkflow.saleDate(), equalTo(DateUtils.currentDateddMMyyyy()));
 	}
+	
+	@Then("device activated and activation date is updated in general details")
+	public void thenActivationDateIsUpdatedGeneralDetails() {
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.storeActivationDate();
+		helpdeskWorkflow.clickEndCall();
+		assertThat("Device has incorrect Activation Date", helpdeskWorkflow.activationDate(), equalTo(DateUtils.currentDateddMMyyyy()));
+	}
 
 	@Then("delivery date is updated in general details")
 	public void thenDeliveryDateIsUpdatedGeneralDetails() {
@@ -516,5 +557,20 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.storeActivationDate();
 		helpdeskWorkflow.clickEndCall();
 		assertThat("Device has incorrect Activation Date", helpdeskWorkflow.activationDate(), equalTo(DateUtils.currentDateddMMyyyy()));
+	}
+	@When("User search for device on search screen for product type $prepaid and validates the status as $NORMAL")
+	public void thenUserSearchForDeviceOnSearchScreenPrepaid(String productType, String status) {
+		helpdeskgettersetter.setProductType(ProductType.fromShortName(productType));
+
+		String actualStatus=helpdeskFlows.searchForDevicePrepaid(helpdeskgettersetter);
+		if(actualStatus.contains(status))
+		{
+		Assert.assertTrue("status of newly created device is normal ", true);
+		}
+		else
+		{
+		Assert.assertTrue("status of newly created device is not normal ", false);
+		}
+
 	}
 }

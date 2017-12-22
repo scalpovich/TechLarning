@@ -14,6 +14,7 @@ import com.google.common.base.Preconditions;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.PageObjectFactory;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementFinderProvider;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -22,37 +23,35 @@ import com.mastercard.testing.mtaf.bindings.page.AbstractPage;
 
 @Component
 public final class Navigator extends AbstractBasePage {
-	
+
 	private final Logger logger = LoggerFactory.getLogger(Navigator.class);
-	
+
 	@Autowired
 	private PageObjectFactory pageObjFactory;
 
-@Autowired
+	@Autowired
 	private WebDriverProvider driverProvider;
 
 	@Autowired
 	private ElementFinderProvider finderProvider;
-	
+
 	@Value("${default.wait.timeout_in_sec}")
 	private long waitTimeout;
 
 	/**
-	 * Method navigate to page by page object's class, using  @Navigation annotation
+	 * Method navigate to page by page object's class, using @Navigation annotation
 	 * 
 	 * E.g. Page Object should have following annotation
-	 * @Navigation (tabTitle = AdministrationNav.TAB_TITLE , menuItemsTree
-	 *             ={AdministrationNav.Setup, AdministrationNav._Role})
+	 * 
+	 * @Navigation (tabTitle = AdministrationNav.TAB_TITLE , menuItemsTree ={AdministrationNav.Setup, AdministrationNav._Role})
 	 * 
 	 * @param pageObjectClass
 	 * @return
 	 */
 	public <T extends AbstractPage> T navigateToPage(Class<T> pageObjectClass) {
-		
+
 		Navigation nav = pageObjectClass.getAnnotation(Navigation.class);
-		Preconditions.checkArgument(nav != null,
-				"Please specify @Navigation for class: %s",
-				pageObjectClass.getName());
+		Preconditions.checkArgument(nav != null, "Please specify @Navigation for class: %s", pageObjectClass.getName());
 
 		if (nav.treeMenuItems().length == 0) {
 			navigateToTab(nav.tabTitle());
@@ -70,8 +69,8 @@ public final class Navigator extends AbstractBasePage {
 	 * Method navigate to page by page name
 	 * 
 	 * E.g. Page Object should have following annotation
-	 * @Navigation (tabTitle = AdministrationNav.TAB_TITLE , menuItemsTree
-	 *             ={AdministrationNav.Setup, AdministrationNav._Role})
+	 * 
+	 * @Navigation (tabTitle = AdministrationNav.TAB_TITLE , menuItemsTree ={AdministrationNav.Setup, AdministrationNav._Role})
 	 * 
 	 * @param pageObjectClass
 	 * @return
@@ -80,20 +79,17 @@ public final class Navigator extends AbstractBasePage {
 	public <T extends AbstractPage> T navigateToPage(String pageName) {
 		return navigateToPage((Class<T>) pageObjFactory.getPage(pageName).getClass());
 	}
-	
+
 	/**
-	 * Method navigates to page by page object's annotation and checks if page is
-	 * available 
-	 * E.g. Page Object should have following annotation
+	 * Method navigates to page by page object's annotation and checks if page is available E.g. Page Object should have following annotation
 	 * 
-	 * @Navigation (tabTitle = AdministrationNav.TAB_TITLE , menuItemsTree
-	 *             ={AdministrationNav.Setup, AdministrationNav._Role})
+	 * @Navigation (tabTitle = AdministrationNav.TAB_TITLE , menuItemsTree ={AdministrationNav.Setup, AdministrationNav._Role})
 	 * @param pageObjectClass
 	 * @return
 	 */
 	public <T extends AbstractPage> boolean isPageAvailable(Class<T> pageObjectClass) {
 		boolean isPathAvailable = true;
-		
+
 		T page = null;
 		try {
 			page = navigateToPage(pageObjectClass);
@@ -104,27 +100,25 @@ public final class Navigator extends AbstractBasePage {
 
 		return isPathAvailable && page.isLoaded();
 	}
-	
+
 	/**
-	 * Method navigates to page by page name and checks if page is
-	 * available 
-	 * E.g. Page Object should have following annotation
+	 * Method navigates to page by page name and checks if page is available E.g. Page Object should have following annotation
 	 * 
-	 * @Navigation (tabTitle = AdministrationNav.TAB_TITLE , menuItemsTree
-	 *             ={AdministrationNav.Setup, AdministrationNav._Role})
+	 * @Navigation (tabTitle = AdministrationNav.TAB_TITLE , menuItemsTree ={AdministrationNav.Setup, AdministrationNav._Role})
 	 * @param pageObjectClass
 	 * @return
 	 */
-	public boolean isPageAvailable(String pageName) {	
+	public boolean isPageAvailable(String pageName) {
 		return isPageAvailable(pageObjFactory.getPage(pageName).getClass());
 	}
 
 	/**
-	 * Method click on tab, then click on a menu item, next menu item is taking
-	 * as nested menu item.
+	 * Method click on tab, then click on a menu item, next menu item is taking as nested menu item.
 	 * 
-	 * @param tabTitle  - tab title
-	 * @param menuItemsTree - it is array of menuIDs
+	 * @param tabTitle
+	 *            - tab title
+	 * @param menuItemsTree
+	 *            - it is array of menuIDs
 	 */
 	public void navigateToPath(String tabTitle, String... menuItemsTree) {
 		navigateToTab(tabTitle);
@@ -138,15 +132,11 @@ public final class Navigator extends AbstractBasePage {
 	 */
 	public void navigateToTab(String tabTitle) {
 		logger.info("Navigate to {} tab", tabTitle);
-		By tabLocator = By.xpath(String.format("//a[contains(.,'%s')]/..",
-				tabTitle));
-		WebElement tab = AbstractBasePage.fluentWait(() -> driverProvider.get()
-				.findElement(tabLocator));
+		By tabLocator = By.xpath(String.format("//a[contains(.,'%s')]/..", tabTitle));
+		WebElement tab = AbstractBasePage.fluentWait(() -> driverProvider.get().findElement(tabLocator));
 		if (!hasClass(tab, "active")) {
-			clickElement(By.xpath(String.format("//a[contains(.,'%s')]",
-					tabTitle)));
-			clickElement(By.xpath(String.format("//a[contains(.,'%s')]",
-					tabTitle)));
+			clickElement(By.xpath(String.format("//a[contains(.,'%s')]", tabTitle)));
+			clickElement(By.xpath(String.format("//a[contains(.,'%s')]", tabTitle)));
 		}
 	}
 
@@ -170,10 +160,8 @@ public final class Navigator extends AbstractBasePage {
 	}
 
 	private void clickNode(String treeMenuItem) {
-		MCWebElement node = WebElementUtils.fluentWait(() -> finderProvider.get()
-				.findOne(FindBy.ID, treeMenuItem));
-		if (!WebElementUtils.hasClass(node, "p1-active") &&
-				!WebElementUtils.hasClass(node, "p2-active")) {
+		MCWebElement node = WebElementUtils.fluentWait(() -> finderProvider.get().findOne(FindBy.ID, treeMenuItem));
+		if (!WebElementUtils.hasClass(node, "p1-active") && !WebElementUtils.hasClass(node, "p2-active")) {
 			clickElement(By.id(treeMenuItem));
 		}
 	}
@@ -185,8 +173,7 @@ public final class Navigator extends AbstractBasePage {
 	}
 
 	/**
-	 * Methods walks through navigation (starts from tab) and check if menu
-	 * items is available
+	 * Methods walks through navigation (starts from tab) and check if menu items is available
 	 * 
 	 * @param tabTitle
 	 * @param treeMenuItems
@@ -197,8 +184,7 @@ public final class Navigator extends AbstractBasePage {
 	}
 
 	/**
-	 * Methods walks through navigation (w/o clicking on tab) and check if menu
-	 * items is available
+	 * Methods walks through navigation (w/o clicking on tab) and check if menu items is available
 	 * 
 	 * @param treeMenuItems
 	 * @return boolean
@@ -207,17 +193,16 @@ public final class Navigator extends AbstractBasePage {
 		try {
 			navigateToTreeLeaf(treeMenuItems);
 		} catch (TimeoutException e) {
-			logger.debug("Tree navigation path {} is not available: {}",
-					String.join(" > ", treeMenuItems), e);
+			logger.debug("Tree navigation path {} is not available: {}", String.join(" > ", treeMenuItems), e);
 			return false;
 		}
-        return true;  
+		return true;
 	}
 
 	/**
 	 * Method checks if the tab is available
 	 * 
-	 * @param tabTitle  
+	 * @param tabTitle
 	 * @return boolean
 	 */
 	public boolean isNavigationPathAvailable(String tabTitle) {
@@ -227,10 +212,11 @@ public final class Navigator extends AbstractBasePage {
 			logger.debug("Tab navigation {} is not available: {}", tabTitle, e);
 			return false;
 		}
-        return true;       
+		return true;
 	}
-	
+
 	private void clickElement(By locator) {
+		SimulatorUtilities.wait(1000);
 		WebElementUtils.scrollToElement(driver(), finderProvider.get().getWebDriver().findElement(locator));
 		WebElementUtils.retryUntilNoErrors(() -> finderProvider.get().getWebDriver().findElement(locator).click());
 	}

@@ -118,7 +118,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 
 	public String enterEmbossingFileCode() {
 		if (MapUtils.fnGetInputDataFromMap("Embosscode") != null) {
-			enterValueinTextBox(EmbossingFileTemplateCodeTxt, MapUtils.fnGetInputDataFromMap("Embosscode"));
+			enterValueinTextBox(EmbossingFileTemplateCodeTxt, MapUtils.fnGetInputDataFromMap("Embosscode")+CustomUtils.randomAlphaNumeric(3).toUpperCase());
 		} else {
 			enterValueinTextBox(EmbossingFileTemplateCodeTxt, CustomUtils.randomNumbers(3));
 		}
@@ -152,12 +152,15 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 			SwitchToDefaultFrame();
 			switchToAddEmbossingTemplateFrame();
 			clickAddSubdetails();
-			switchToAddRecordFieldFormatFrame();
 			enterSequenceNoTxt();
 			selectField();
 			clickSaveButton();
+			CustomUtils.ThreadDotSleep(3000);
+			waitForPageToLoad(getFinder().getWebDriver());
+			SwitchToDefaultFrame();
 			addOrderFormatRecord();
 			switchToAddEmbossingTemplateFrame();
+			CustomUtils.ThreadDotSleep(3000);
 			clickSaveButton();
 		} else {
 			logger.info("Error in Record Addition");
@@ -181,6 +184,8 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 	}
 
 	public void selectField() {
+		//addWicketAjaxListeners(getFinder().getWebDriver());
+		waitForElementVisible(FieldDDwn);
 		selectByVisibleText(FieldDDwn, "CARD NUMBER [DEVICE_NUMBER]");
 	}
 

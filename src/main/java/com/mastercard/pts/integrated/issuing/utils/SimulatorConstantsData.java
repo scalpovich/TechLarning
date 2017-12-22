@@ -10,6 +10,10 @@ public class SimulatorConstantsData {
 
 	public static final String MDFS_EXE_XML_PATH = "C://ProgramData//MasterCard//OTP//Data_MDFS_16_4_0//MDFS 16.4.xprj";
 
+	public static final String MDFS_EXE_PATH = MAS_EXE_PATH + " " + "C://ProgramData//MasterCard//OTP//Data_MDFS_16_4_0//MDFS 16.4.xprj";
+
+	public static final String MCPS_17_X = "MCPS - MasterCard Clearing Presentment Simulator - 16.Q4";
+
 	public static final String WINIUM_DRIVER_EXE_PATH = "\\Simulator\\externalLibraries\\Winium.Desktop.Driver.exe";
 
 	public static final String AUTOIT_EXE_PATH = "\\Simulator\\AutoIT\\";
@@ -27,6 +31,8 @@ public class SimulatorConstantsData {
 	public static final String MAS_LICENSE_TYPE_16X = "MAS 16.4";
 
 	public static final String MDFS_LICENSE_TYPE_16X = "MDFS 16.4";
+
+	public static final String SAMPLE_PAN_NUMBER = "2222550010000018";
 
 	private SimulatorConstantsData() {
 	}

@@ -14,6 +14,8 @@ import java.util.List;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.winium.DesktopOptions;
 import org.openqa.selenium.winium.WiniumDriver;
 import org.sikuli.script.FindFailed;
@@ -26,10 +28,16 @@ import winium.elements.desktop.ComboBox;
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.configuration.FinSimSimulator;
 import com.mastercard.pts.integrated.issuing.configuration.MasSimulator;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.Transaction;
+import com.mastercard.pts.integrated.issuing.pages.agent.settlement.InitiateSettlementPage;
+import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceApprovePage;
+import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceRequestPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReversalTransactionPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionSearchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -63,6 +71,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private static final String SEPERATOR = " \"";
 	private static final String MESSAGE_REVERSAL_INDICATOR = "messageReversalIndicator";
 	private static final String BIN_TABLE = "BIN Table";
+	private static final String TEST_CASES = "Test Cases (Issuer Testing)";
+	private static final String ADD_BIN_RANGE = "ActivateAddBINrange.exe";
+	private LoadBalanceRequestPage lbrpage;
+	private LoadBalanceApprovePage lbapage;
+	private InitiateSettlementPage ispage;
 
 	@Autowired
 	private MasSimulator simulator;
@@ -77,6 +90,33 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	@Autowired
 	private TestContext context;
+
+	public void initiateSettlementForAgency(String branchID, String programCode) {
+		ispage = navigator.navigateToPage(InitiateSettlementPage.class);
+		ispage.initiateSettlementForAgency(branchID, programCode);
+	}
+
+	public String getSettlementInitiativeSuccessMessage() {
+		return ispage.getSettlementInitiativeSuccessMessage();
+	}
+
+	public String performLoadBalanceRequestAndGetRequestReferenceNumber(Device device, LoadBalanceRequest details) {
+		lbrpage = navigator.navigateToPage(LoadBalanceRequestPage.class);
+		return lbrpage.performLoadBalanceRequestAndGetRequestReferenceNumber(device, details);
+	}
+
+	public String getLoadBalanceRequestSuccessMessage() {
+		return lbrpage.getLoadBalanceRequestSuccessMessage();
+	}
+
+	public void performLoadBalanceApprove(Device device, LoadBalanceRequest details) {
+		lbapage = navigator.navigateToPage(LoadBalanceApprovePage.class);
+		lbapage.performLoadBalanceApprove(device, details);
+	}
+
+	public String getLoadBalanceApproveSuccessMessage() {
+		return lbapage.getLoadBalanceApproveSuccessMessage();
+	}
 
 	public BigDecimal getTransactionReversalAmount(ReversalTransaction rt) {
 		ReversalTransactionPage page = navigator.navigateToPage(ReversalTransactionPage.class);
@@ -265,7 +305,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		DesktopOptions options = new DesktopOptions();
 		MiscUtils.reportToConsole(ConstantData.MESSAGE_CONSTANT + SimulatorConstantsData.MAS_EXE_PATH);
 		options.setApplicationPath(SimulatorConstantsData.MAS_EXE_PATH);
-		// options.setArguments(SimulatorConstantsData.MDFS_EXE_XML_PATH );
 		return options;
 	}
 
@@ -281,6 +320,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private void importTestCaseFile(String fileName, String transaction) {
 		MiscUtils.reportToConsole("******************** importTestCaseFile Started ******************");
 		activateMas(transaction);
+		winiumClickOperation(TEST_CASES);
 		performClickOperation("importFile");
 		wait(8000);
 		executeAutoITExe("ImportTestCase.exe " + fileName);
@@ -302,7 +342,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		activateMas(transaction);
 		performClickCardProfiles(transaction);
 		winiumDriver.findElementByName("Card Profiles").findElement(By.name("toolStrip1")).findElement(By.name("toolStripButton1")).click();
-		// performClickOperation("ImportCardProfile");
 		wait(6000);
 		executeAutoITExe("ImportCardProfile.exe " + filePath);
 	}
@@ -317,6 +356,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 		scrollUpToSelectTest(testcaseName);
 		activateMas(testcaseName);
+		winiumClickOperation(TEST_CASES);
 		performClickOperationOnImages(ISSUER_TEST);
 		pressLeftArrow();
 		performClickOperation("Imported");
@@ -331,6 +371,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(3000);
 		selectTestCaseFromImportedCases(transaction);
 		activateMas(transaction);
+		winiumClickOperation(TEST_CASES);
 		performDoubleClickOperation("RunTest");
 		wait(5000);
 		executeAutoITExe("ActivateStartTestDialogAndClose.exe");
@@ -359,11 +400,14 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private String getResult() {
-		List<WebElement> lst = winiumDriver.findElements(By.name("0110 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
+		List<WebElement> lst = null;
+		if (context.get(ConstantData.TRANSACTION_NAME).toString().contains("COMPLETION"))
+			lst = winiumDriver.findElements(By.name("0130 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
+		else
+			lst = winiumDriver.findElements(By.name("0110 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
+		// clicking on the last item from bottom
 		lst.get(lst.size() - 1).click();
 		wait(5000);
-		pressDownArrow(3);
-		wait(2000);
 		WebElement tempElement = winiumDriver.findElementByXPath("//*[contains(@AutomationId,'DescriptionTextBox')]");
 		String tempText = tempElement.getText();
 		MiscUtils.reportToConsole("Fetching PassResult : " + tempText);
@@ -382,7 +426,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			executeAutoITExe("ActivateMCPSImportSuccessMessageDialog.exe");
 			handleDialogs();
 		} catch (Exception e) {
-			logger.debug("Exception occurred while loading file in MCPS", e);
+			logger.debug("Exception occurred while loading file in MCPS {} ", e);
 			MiscUtils.propagate(e);
 		}
 	}
@@ -425,8 +469,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			winiumDriver.findElementByName(CLOSE).click();
 			aRN = addAcquirerReferenceData(trimmedRrn);
 			MiscUtils.reportToConsole("rRN :  trimmedRrn : aRN  -  " + rRN + " : - : " + trimmedRrn + " : - :" + aRN);
-			performClickOperation(MESSAGE_TYPE_INDICATOR); // selecting the
-															// table
+			updatePanNumber(SimulatorConstantsData.SAMPLE_PAN_NUMBER);
+			performClickOperation(MESSAGE_TYPE_INDICATOR); // selecting the table
 			pressPageUp();
 			clickMiddlePresentmentAndMessageTypeIndicator();
 			searchForImageAndPerformDoubleClick("Forwarding Institution Identification Code");
@@ -435,17 +479,32 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			setText("");
 			setText("999684");
 			wait(2000);
-			performClickOperation(SET_VALUE);
+			winiumDriver.findElementByName("Set Value").click();
 			wait(2000);
 			winiumDriver.findElementByName(CLOSE).click();
 			addField();
 			loadIpmFile(getIpmFileName());
+			Device device = context.get(ContextConstants.DEVICE);
+			updatePanNumber(device.getDeviceNumber());
 			assignUniqueFileId();
 		} catch (Exception e) {
 			logger.debug("Exception occurred while editing fields", e);
 			MiscUtils.propagate(e);
 		}
 		return aRN;
+	}
+
+	private void updatePanNumber(String cardNumber) throws AWTException {
+		activateMcps();
+		clickMiddlePresentmentAndMessageTypeIndicator();
+		searchForImageAndPerformDoubleClick("Primary Account Number (PAN)");
+		winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
+		setText("");
+		setText(cardNumber);
+		wait(2000);
+		winiumDriver.findElementByName("Set Value").click();
+		wait(2000);
+		winiumDriver.findElementByName(CLOSE).click();
 	}
 
 	public String assignUniqueARN() {
@@ -491,7 +550,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setText(rRN);
 		winiumDriver.findElementByName("OK").click();
 		wait(2000);
-		performClickOperation(SET_VALUE);
+		winiumDriver.findElementByName("Set Value").click();
 		String aRN = winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
 		wait(2000);
 		winiumDriver.findElementByName(CLOSE).click();
@@ -512,7 +571,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setText("");
 		setText("999684");
 		wait(2000);
-		performClickOperation(SET_VALUE);
+		winiumDriver.findElementByName("Set Value").click();
 		wait(2000);
 		winiumDriver.findElementByName(CLOSE).click();
 		performClickOperation("Save");
@@ -521,6 +580,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		performClickOperation("Add file to CEE");
 		wait(2000);
 		winiumDriver.findElementByName("Process File(s)").click();
+		wait(5000);
 		executeAutoITExe("GetCEEData.exe");
 	}
 
@@ -588,6 +648,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumDriver.findElementByName("OK").click();
 		wait(2000);
 		performClickOperation(SET_VALUE);
+		winiumDriver.findElementByName("Set Value").click();
 		wait(2000);
 		winiumDriver.findElementByName(CLOSE).click();
 	}
@@ -653,7 +714,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			winiumLicenseSelectOperation(licenseTypeToSelect, licenseFor);
 			winiumClickOperation("Select");
 			wait(15000);
-
+			executeAutoITExe("ActivateSelectServices.exe");
 			if (getLoadServicesScreen() > 0) {
 				executeAutoITExe("ActivateSelectServices.exe");
 				wait(2000);
@@ -703,7 +764,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 		while (getWindowButtonCount() > 0) {
 			winiumDriver.findElementByName("OK").click();
-			selectLicense();
+			selectLicense(tool);
 			wait(5000);
 		}
 	}
@@ -723,12 +784,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private void connect2IpsHostTestMode(String tool) throws FindFailed {
 		wait(5000);
 		clickTestMode(tool);
-
-		selectLicense();
-		// selectLicense(tool);
-		wait(5000);
+		selectLicense(tool);
+		wait(15000);
 		waitForImageToAppear("CONNECTED");
-		wait(5000);
+		wait(15000);
 	}
 
 	private void selectLicense() {
@@ -743,8 +802,14 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		clickTestModeOnMdfs();
 		selectLicenseOnMdfs();
 		wait(15000);
-		waitForImageToAppear("CONNECTED");
+		waitForExepectedCondition("CONNECTED");
 		wait(15000);
+	}
+
+	private void waitForExepectedCondition(String nameOfLocator) {
+		WebDriverWait wait = new WebDriverWait(winiumDriver, 20);
+		// Waiting to get connected
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.name(nameOfLocator)));
 	}
 
 	public void addBinRangeAndCurrencyDetailsBasedOnCardNumber(Transaction transactionData, String transaction, Boolean sameCard) {
@@ -773,9 +838,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(2000);
 			performClickOperation("Add New");
 			wait(10000);
-			// waitForImageToAppear("Add BIN Range");
+			executeAutoITExe(ADD_BIN_RANGE);
 			winiumClickOperation("General");
-			executeAutoITExe("ActivateAddBINrange.exe");
 			pressTab();
 			setText(binBinMinRange);
 			pressTab();
@@ -787,17 +851,24 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(1000);
 			// mdfs has differnet options compared to MAS
 			if (!isContains(transaction, "mdfs")) {
+				executeAutoITExe(ADD_BIN_RANGE);
 				pressTab();
 				wait(1000);
-			}
-			setText(issuerCountryCode);
-			pressTab();
-			// mdfs has differnet options compared to MAS, extra tab needed
-			if (isContains(transaction, "mdfs"))
+				setText(issuerCountryCode);
 				pressTab();
-			setText(issuerCurrencyCode);
-			pressTab();
-			setText(cardHolderBillingCurrency);
+				setText(issuerCurrencyCode);
+				pressTab();
+				setText(cardHolderBillingCurrency);
+			} else {
+				executeAutoITExe(ADD_BIN_RANGE);
+				setText(issuerCountryCode);
+				pressTab();
+				pressTab();
+				setText(issuerCurrencyCode);
+				pressTab();
+				setText(cardHolderBillingCurrency);
+			}
+			executeAutoITExe(ADD_BIN_RANGE);
 			winiumClickOperation("OK");
 			wait(2000);
 			if (isImagePresent("OK")) {
@@ -813,7 +884,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private void fillEmvChipKeySetDetails() {
 		executeAutoITExe("ActivateEditCardProfile.exe");
 		winiumClickOperation("ICC Related Data");
-		performClickOperation("MChipKeySetDropDown");
+		winiumClickOperation("Drop Down Button");
 		wait(1000);
 		winiumClickOperation("00999 - Example ETEC1 - 0213");
 		wait(1000);
@@ -1029,7 +1100,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("Card Profiles");
 	}
 
-	private Boolean isContains(String incomingValue, String lookFor) {
+	public Boolean isContains(String incomingValue, String lookFor) {
 		Boolean isContains = false;
 		if (incomingValue.toLowerCase().contains(lookFor.toLowerCase()))
 			isContains = true;
@@ -1037,9 +1108,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private void selectLicense(String tool) {
-		if (!isContains(tool, "mdfs")) {
+		if (!isContains(tool, "mdfs"))
 			executeAutoITExe(SELECT_IPS_HOST_TESTMODE + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"");
-		} else
+		else
 			selectLicenseOnMdfs();
 	}
 

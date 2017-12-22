@@ -37,6 +37,7 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	@Autowired
 	MenuSubMenuPage menuSubMenuPage;
+
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
@@ -44,7 +45,6 @@ public class DevicePlanPage extends AbstractBasePage {
 	private TestContext context;
 
 	public Vendor vendor;
-	// main screen locators
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[@class='field'][1]/input")
 	private MCWebElement devicePlanCodeTxt;
 
@@ -346,14 +346,8 @@ public class DevicePlanPage extends AbstractBasePage {
 	private MCWebElement CustomCodeTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Next >']")
-	private MCWebElement NextBtn;
-	/*
-	 * @PageElement(findBy = FindBy.X_PATH, valueToFind = "") private MCWebElement Next2Btn;
-	 * 
-	 * @PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[2]/div/form/table/tbody/tr/td[2]/table/tbody/tr[4]/td/span/table/tbody/tr/td/span[2]/input" ) private MCWebElement Next3Btn;
-	 * 
-	 * @PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[2]/div/form/table/tbody/tr/td[2]/table/tbody/tr[4]/td/span/table/tbody/tr/td/span[2]/input" ) private MCWebElement Next4Btn;
-	 */
+	public MCWebElement NextBtn;
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:deviceEvtFeePlanCodeCard1:input:dropdowncomponent")
 	private MCWebElement EventBasedFeePlanDDwn;
 
@@ -467,11 +461,11 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectPlasticId() {
-		SelectDropDownByIndex(PlasticIdDDwn, 1);
+		PlasticIdDDwn.getSelect().selectByIndex(1);
 	}
 
 	public void selectPictureCode() {
-		SelectDropDownByIndex(PictureCodeDDwn, 1);
+		PictureCodeDDwn.getSelect().selectByIndex(1);
 	}
 
 	public void selectEmbossingVendor(DevicePlan deviceplan) {
@@ -540,11 +534,11 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectJoiningMembershipFeePlan() {
-		SelectDropDownByIndex(MembershipFeePlanDDwn, 1);
+		SelectDropDownByIndex(MembershipFeePlanDDwn, 3);
 	}
 
 	public void selectTransactionLimitPlan() {
-		SelectDropDownByIndex(TransactionLimitPlanDDwn, 1);
+		SelectDropDownByIndex(TransactionLimitPlanDDwn, 3);
 	}
 
 	public void next() {
@@ -868,7 +862,6 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	private void createDevicePlanContinuation(DevicePlan devicePlan) {
-
 		cvvCvv2PinGenerationSelectionScreen(devicePlan);
 
 		fillDevicePlanPage(devicePlan);
@@ -877,18 +870,15 @@ public class DevicePlanPage extends AbstractBasePage {
 		selectIframeAfterKYCDdwn(devicePlan.getAfterKYC());
 		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES))
 			selectAllcavv();
-
-		// perform below steps only when pinRequired is true which is the
-		// default state
+		// perform below steps only when pinRequired is true which is the default state
 		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
 			selectAllPinValidation();
-		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES))
+		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES)) {
 			selectAllcvccvv();
-		checkExpiryDate();
-		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
 			checkCvcCvv();
+		}
+		checkExpiryDate();
 		WebElementUtils.checkCheckbox(ecommAllowedChkBx, devicePlan.isEcommerceAllowed());
-
 		if (!devicePlan.getDeviceType().equals(DeviceType.STATIC_VIRTUAL_CARD) && "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 			WebElementUtils.enterText(pinRetryLimitTxt, devicePlan.getPinRetryLimit());
 		}
@@ -955,8 +945,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	private void fillPinGenerationSection(DevicePlan devicePlan) {
-		// perform below steps only when pinRequired is true which is the
-		// default state
+		// perform below steps only when pinRequired is true which is the default state
 		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 			WebElementUtils.scrollDown(driver(), 0, 250);
 			pinRequiredChk.click();

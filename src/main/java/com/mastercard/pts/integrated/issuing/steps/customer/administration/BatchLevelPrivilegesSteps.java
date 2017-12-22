@@ -48,7 +48,7 @@ public class BatchLevelPrivilegesSteps {
 
 	@Given("abc")
 	public void abc() {
-		fileCreation.createApplicationUploadFile("100000");
+		//fileCreation.createApplicationUploadFile("100000");
 	}
 
 	@When("admin provides batch level privileges for the the newly created $user")
