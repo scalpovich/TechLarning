@@ -53,7 +53,7 @@ public class BatchSteps {
 		try {
 			File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "Device");
 			String[] fileData = LinuxUtils.getCardNumberAndExpiryDate(batchFile);
-			MiscUtils.reportToConsole("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[4] + " - "  + " setIcvvData " + " : " +  fileData[5] + "  ***** ");
+			MiscUtils.reportToConsole("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3] + " - "  + " setIcvvData " + " : " +  fileData[4] + "  ***** ");
 			
 			Device device = context.get(ContextConstants.DEVICE);
 		

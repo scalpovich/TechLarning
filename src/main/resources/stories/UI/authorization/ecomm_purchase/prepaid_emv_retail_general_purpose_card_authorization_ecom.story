@@ -1,20 +1,21 @@
-ECOMM_PURCHASE transaction on prepaid msr retail general purpose card
+ECOMM_PURCHASE transaction on prepaid emv retail general purpose card authorization
 
 Narrative:
-In order to check transactions on prepaid msr retail general purpose card 
+In order to check transactions on prepaid emv retail general purpose card
 As an issuer
-I want to authorize transactions for prepaid msr retail general purpose card 
+I want to authorize transactions for prepaid emv retail general purpose card
 
 Meta:
-@StoryName p_msr_retail_gen_purpose
+@StoryName p_emv_retail_general
+@oldReferenceSheet_S203707
 @SanityCardsWithAuthorization
 
-Scenario: Set up prepaid msr retail general purpose card and perform ECOMM_Purchase transaction
+Scenario: Set up prepaid emv retail general purpose card and perform ECOMM_Purchase transaction
 Meta:
-@TestId TC398484
+@TestId TC398452
 
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "magnetic stripe" card
+And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
 Then device has "normal" status
 When user has wallet number information for prepaid device

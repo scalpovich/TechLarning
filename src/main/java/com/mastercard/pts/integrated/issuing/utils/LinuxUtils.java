@@ -238,6 +238,7 @@ public abstract class LinuxUtils {
 	    	if (lnNumber == 2)
 	    	{
 	    		strLine = strLine.trim().replaceAll("\\s+"," ");
+	    		MiscUtils.reportToConsole("*********   File Data *******  " + strLine);
 	    		String[] data = strLine.trim().split(" ");
 				cardData = data[0].trim().split(":");
 	    		break;
