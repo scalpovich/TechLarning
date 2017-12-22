@@ -1,4 +1,4 @@
-Prepiad: Funded Agent : Initial Load - Load - Reload - Settlement - Preclearing - EOD - Program Balance Reports
+Prepiad: Funded Agent : Load Activate
 
 Narrative:
 In order to do prepaid load
