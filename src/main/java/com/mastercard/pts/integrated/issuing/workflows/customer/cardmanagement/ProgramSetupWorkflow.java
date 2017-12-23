@@ -166,6 +166,11 @@ public class ProgramSetupWorkflow {
 		WalletConfigurationWalletPlanPage page = navigator.navigateToPage(WalletConfigurationWalletPlanPage.class);
 		page.addWalletPlanData(walletPlan);
 	}
+	
+	public void createWalletPlan1(WalletPlan walletPlan) {
+		WalletConfigurationWalletPlanPage page = navigator.navigateToPage(WalletConfigurationWalletPlanPage.class);
+		page.addWalletPlanData1(walletPlan);
+	}
 
 	public void createProgram(Program program, String productType ) {
 		ProgramPage page = navigator.navigateToPage(ProgramPage.class);

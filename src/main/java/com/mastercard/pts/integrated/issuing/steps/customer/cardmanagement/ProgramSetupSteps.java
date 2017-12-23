@@ -708,6 +708,19 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createWalletPlan(walletPlan);
 	}
 	
+	@When("fills Wallet Plan for $type product and program $programtype")
+	public void FillsWalletPlan(String type,String programtype) {
+		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
+		walletPlan.setProductType(ProductType.fromShortName(type));
+		walletPlan.setProgramType(programtype);
+		
+		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
+			walletPlan.setCreditPlan(creditCardCreditPlan.buildAbbreviationAndCode());
+			walletPlan.setBillingCyleCode(creditCardBillingCycle.buildDescriptionAndCode());
+		}
+		programSetupWorkflow.createWalletPlan1(walletPlan);
+	}
+	
 	@When("User fills Transaction Plan for $type product")
 	public void whenUserFillsTransactionPlan(String type) {
 		//setting the context for IS PIN REQUIRED to a default state. This value is reset or set accordingly for Virtual and pinless cards

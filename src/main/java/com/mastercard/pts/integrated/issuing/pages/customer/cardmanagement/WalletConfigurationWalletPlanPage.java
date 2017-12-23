@@ -146,6 +146,28 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			});
 		verifyOperationStatus();
 	}
+	
+	// Method to fill data in Add Wallet Plan Data
+	public void addWalletPlanData1(WalletPlan walletPlan) {
+		logger.info("Create Wallet Plan: {}", walletPlan.getWalletPlanCode());
+		clickAddNewButton();
+
+		runWithinPopup("Add Wallet Plan", () -> {
+			String productType = walletPlan.getProductType();
+			inputWalletPlanCode(walletPlan.getWalletPlanCode());
+			inputDescription(walletPlan.getDescription());
+			selectCurrency(walletPlan.getCurrency());
+			selectProductType(productType);
+			selectProgramType(walletPlan.getProgramType());
+			selectUsage(walletPlan.getUsage());
+
+			fillDetailsBasedOnCarddType1(walletPlan, productType);
+
+			clickNextButton(); // Click on next button
+				clickFinishButton(); // click on finish button
+			});
+		verifyOperationStatus();
+	}
 
 	private void fillDetailsBasedOnCArdType(WalletPlan walletPlan,
 			String productType) {
@@ -163,6 +185,21 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 	
 	private void fillDetailsBasedOnCarddType(WalletPlan walletPlan,
+			String productType) {
+		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
+			selectCreditPlan(walletPlan.getCreditPlan());
+			selectBillingCyleCode(walletPlan.getBillingCyleCode());
+		}
+		if (productType.equalsIgnoreCase(ProductType.DEBIT)) {
+			WebElementUtils.enterText(dummyAccountNumberTxt,
+					walletPlan.getDummyAccountNumber());
+		}
+		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
+			inputReservedAmount();
+		}
+	}
+	
+	private void fillDetailsBasedOnCarddType1(WalletPlan walletPlan,
 			String productType) {
 		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 			selectCreditPlan(walletPlan.getCreditPlan());

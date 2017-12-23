@@ -23,7 +23,7 @@ When User fills Document Checklist Screen for prepaid product
 When User fills Device Joining and Membership Fee Plan for prepaid product
 When User fills Device Event Based Fee Plan for prepaid product
 When User fills Device Plan for "prepaid" "emv" card with no pin
-When User fills Wallet Plan for prepaid product and program Corporate Travel Card - Multi Currency [6]
+When fills Wallet Plan for prepaid product and program Corporate Travel Card - Multi Currency [6]
 When User fills Program section for prepaid product and program Corporate Travel Card - Multi Currency [6]
 When User fills Business Mandatory Fields Screen for prepaid product
 When User fills Device Range section for prepaid product
@@ -47,7 +47,7 @@ When User fills Document Checklist Screen for prepaid product
 When User fills Device Joining and Membership Fee Plan for prepaid product
 When User fills Device Event Based Fee Plan for prepaid product
 When User fills Device Plan for "prepaid" "magnetic stripe" card with no pin
-When User fills Wallet Plan for prepaid product and program Corporate Travel Card - Multi Currency [6]
+When fills Wallet Plan for prepaid product and program Corporate Travel Card - Multi Currency [6]
 When User fills Program section for prepaid product and program Corporate Travel Card - Multi Currency [6]
 When User fills Business Mandatory Fields Screen for prepaid product
 When User fills Device Range section for prepaid product
@@ -71,7 +71,7 @@ When User fills Document Checklist Screen for prepaid product
 When User fills Device Joining and Membership Fee Plan for prepaid product
 When User fills Device Event Based Fee Plan for prepaid product
 When User fills Device Plan for "prepaid" "emv" card with no pin
-When User fills Wallet Plan for prepaid product and program Retail Travel Card - Multi Currency [2]
+When fills Wallet Plan for prepaid product and program Retail Travel Card - Multi Currency [2]
 When User fills Program section for prepaid product and program Retail Travel Card - Multi Currency [2]
 When User fills Business Mandatory Fields Screen for prepaid product
 When User fills Device Range section for prepaid product
@@ -95,7 +95,7 @@ When User fills Document Checklist Screen for prepaid product
 When User fills Device Joining and Membership Fee Plan for prepaid product
 When User fills Device Event Based Fee Plan for prepaid product
 When User fills Device Plan for "prepaid" "magnetic stripe" card with no pin
-When User fills Wallet Plan for prepaid product and program Retail Travel Card - Multi Currency [2]
+When fills Wallet Plan for prepaid product and program Retail Travel Card - Multi Currency [2]
 When User fills Program section for prepaid product and program Retail Travel Card - Multi Currency [2]
 When User fills Business Mandatory Fields Screen for prepaid product
 When User fills Device Range section for prepaid product
