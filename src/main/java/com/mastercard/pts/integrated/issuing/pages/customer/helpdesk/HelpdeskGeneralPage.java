@@ -353,6 +353,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();
+			helpdeskGeneral.setNewWalletNumber(getWalletNumber());
 			clickOKButtonPopup();			
 		});
 		//There is a delay in page rendering
@@ -534,7 +535,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		
 	public void selectWalleToTransfer(String walletNumber){
 		int walletRows = driver().findElements(By.xpath("//td[@id='toCurrencyDataTable']/descendant::tr")).size();
-		 for(int rowIndex=3; rowIndex <= walletRows; rowIndex++){
+		 for(int rowIndex=3; rowIndex <= walletRows; rowIndex++){			 
+			 waitForWicket();			
 			 if(walletNumber.equals(driver().findElement(By.xpath("//td[@id='toCurrencyDataTable']/descendant::tr["+rowIndex+"]/td[2]")).getText())){
 				 driver().findElement(By.xpath("//td[@id='toCurrencyDataTable']/descendant::tr["+rowIndex+"]/td[7]")).click();
 				 break;
@@ -549,6 +551,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public void selectDeviceToTransferFunds(String deviceToTransfer){
+		WebElementUtils.elementToBeClickable(toDeviceDropDn);
+		WebElementUtils.waitForWicket(driver());
+		SimulatorUtilities.wait(3000);
 		WebElementUtils.selectDropDownByValue(toDeviceDropDn, deviceToTransfer);
 	}
 	

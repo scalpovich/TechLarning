@@ -35,7 +35,9 @@ public class WalletPlan implements HasCodeAndDescription {
 	private static final String WP_WALLET_INACTVITY_RULES_INACTIVITY_OPERATION	 = 	"WP_WALLET_INACTVITY_RULES_INACTIVITY_OPERATION";
 	private static final String WP_WALLET_INACTVITY_RULES_INACTIVITY_AFTER_DAYS	 = 	"WP_WALLET_INACTVITY_RULES_INACTIVITY_AFTER_DAYS";
 	private static final String WP_WALLET_INACTVITY_RULES_CLOSURE_WALLET_AFTER_DAYS	 = 	"WP_WALLET_INACTVITY_RULES_CLOSURE_WALLET_AFTER_DAYS";
-
+	private static final String WP_WALLET_RESERVERD_AMOUNT= "WP_WALLET_RESERVERD_AMOUNT";
+	
+	private String walletReserveAmount;
 	private String description;
 	private String walletPlanCode;
 	private String currency;
@@ -71,6 +73,15 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String walletFeePlan;
 
 	
+	public String getWalletReserveAmount() {
+		return walletReserveAmount;
+	}
+
+	public void setWalletReserveAmount(String walletReserveAmount) {
+		this.walletReserveAmount = walletReserveAmount;
+	}
+
+
 	public String getTransactionLimitPlan() {
 		return transactionLimitPlan;
 	}
@@ -145,6 +156,7 @@ public class WalletPlan implements HasCodeAndDescription {
 		WalletPlan plan = provider.getDataBySimpleClassName(WalletPlan.class);
 		setGenericData(plan);
 		plan.setProgramType(keyValueProvider.getString(PROGRAM_TYPE));
+		plan.setReservedAmount(keyValueProvider.getString(WP_WALLET_RESERVERD_AMOUNT));
 		plan.setDummyAccountNumber(RandomStringUtils.randomNumeric(6));
 		return plan;
 	}

@@ -176,15 +176,15 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		clickAddNewButton();
 
 		runWithinPopup("Add Device", () -> {
-			fillDeviceInformation(device);
-			fillBatchDetails(device);
-			fillCustomerTypeProgramCodeAndDeviceDetails(device);
+				fillDeviceInformation(device);
+				fillBatchDetails(device);
+				fillCustomerTypeProgramCodeAndDeviceDetails(device);
 
-			clickNextButton();
+				clickNextButton();
+				
+				fillProfileAndAddressDetailsAndClickNext(device);
 
-			fillProfileAndAddressDetailsAndClickNext(device);
-
-			// skip wallet extra fields
+				// skip wallet extra fields
 				clickFinishButton();
 
 				verifyNoErrors();

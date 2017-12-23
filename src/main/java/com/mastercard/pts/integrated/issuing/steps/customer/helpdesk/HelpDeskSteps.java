@@ -587,8 +587,7 @@ public class HelpDeskSteps {
 		thenUserNavigatesToGeneralInHelpdesk();
 		helpdeskWorkflow.searchByDeviceNumber(device);
 		helpdeskWorkflow.clickCustomerCareEditLink();
-		helpdeskWorkflow.walletToWalletTransfer(device);
-		
+		helpdeskWorkflow.walletToWalletTransfer(device);		
 	}	
 	
 }

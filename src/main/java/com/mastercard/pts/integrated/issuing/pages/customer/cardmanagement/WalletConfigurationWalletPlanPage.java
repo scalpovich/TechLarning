@@ -109,6 +109,11 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		WebElementUtils.enterText(reservedAmountTxt,
 				String.valueOf(reservedAmount));
 	}
+	
+	public void enterReservedAmount(String reserverAmount){
+		WebElementUtils.enterText(reservedAmountTxt,
+				reserverAmount);
+	}
 
 	@Override
 	public void clickNextButton() {
@@ -134,7 +139,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			selectProgramType(walletPlan.getProgramType());
 			selectUsage(walletPlan.getUsage());
 
-			fillDetailsBasedOnCArdType(walletPlan, productType);
+			fillDetailsBasedOnCarddType(walletPlan, productType);
 
 			clickNextButton(); // Click on next button
 				clickFinishButton(); // click on finish button
@@ -154,6 +159,21 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		}
 		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
 			inputReservedAmount();
+		}
+	}
+	
+	private void fillDetailsBasedOnCarddType(WalletPlan walletPlan,
+			String productType) {
+		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
+			selectCreditPlan(walletPlan.getCreditPlan());
+			selectBillingCyleCode(walletPlan.getBillingCyleCode());
+		}
+		if (productType.equalsIgnoreCase(ProductType.DEBIT)) {
+			WebElementUtils.enterText(dummyAccountNumberTxt,
+					walletPlan.getDummyAccountNumber());
+		}
+		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
+			enterReservedAmount(walletPlan.getReservedAmount());
 		}
 	}
 

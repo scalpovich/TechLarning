@@ -40,6 +40,10 @@ public class HelpdeskGeneral {
 		return newWalletNumber;
 	}
 	
+	public void setNewWalletNumber(String newWalletNumber) {
+		this.newWalletNumber = newWalletNumber;
+	}
+	
 	public String getInitialLoadTxnDetails() {
 		return initialLoadTxnDetails;
 	}
@@ -56,9 +60,6 @@ public class HelpdeskGeneral {
 		this.transactionDetails = transactionDetails;
 	}
 
-	public void setNewWalletNumber(String newWalletNumber) {
-		this.newWalletNumber = newWalletNumber;
-	}
 	
 	public String getTransactionNote() {
 		return transactionNote;
