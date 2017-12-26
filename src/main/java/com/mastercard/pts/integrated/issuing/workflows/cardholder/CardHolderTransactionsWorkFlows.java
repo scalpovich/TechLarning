@@ -151,7 +151,7 @@ public class CardHolderTransactionsWorkFlows extends AbstractBasePage{
 		cashRemittanceBookingPage.enterBeneficiaryZipCode(cardhlTran.getBeneficiaryZIPCode());
 		cashRemittanceBookingPage.enterBeneficiaryEmailAddress(cardhlTran.getBeneficiaryEmailAddress());
 		cashRemittanceBookingPage.enterBeneficiaryMobileNumber(cardhlTran.getBeneficiaryMobileNumber());
-		cashRemittanceBookingPage.enterRemittanceAmount(cardhlTran.getBeneficiaryRemittanceAamount());
+		cashRemittanceBookingPage.enterRemittanceAmount(cardhlTran.getBeneficiaryRemittanceAmount());
 		cashRemittanceBookingPage.enterRemittanceCurrency(cardhlTran.getBeneficiaryRemittanceCurrency());
 		submitCashRemittanceBookingRequest();
 	}

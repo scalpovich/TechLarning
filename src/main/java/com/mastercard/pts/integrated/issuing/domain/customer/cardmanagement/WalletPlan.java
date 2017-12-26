@@ -409,7 +409,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	}
 
 	public void setWalletPlanUsage(String walletPlanUsage) {
-		WalletPlanUsage = walletPlanUsage;
+		this.WalletPlanUsage = walletPlanUsage;
 	}
 
 	public static WalletPlan walletplanDataprovider() {

@@ -5,11 +5,11 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.DeviceType;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.ProgramType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ApplicationBusinessMandatoryFields;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ApplicationDocumentChecklist;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardBillingCycle;
@@ -713,7 +713,28 @@ public class ProgramSetupSteps {
 		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
 		walletPlan.setProductType(ProductType.fromShortName(type));
 		walletPlan.setProgramType(programtype);
+				
+		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
+			walletPlan.setCreditPlan(creditCardCreditPlan.buildAbbreviationAndCode());
+			walletPlan.setBillingCyleCode(creditCardBillingCycle.buildDescriptionAndCode());
+		}
+		programSetupWorkflow.createWalletPlan1(walletPlan);
+	}
+	
+	@When("wallet Plan for $type product and program $programtype with usage $usageType")
+	public void addWalletPlan(String type,String programtype,String usageType) {
+		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
+		walletPlan.setProductType(ProductType.fromShortName(type));
+		walletPlan.setProgramType(programtype);
 		
+		if(ProgramType.OPEN_LOOP.contains(usageType)){
+			
+			walletPlan.setUsage(ProgramType.OPEN_LOOP);
+		}else{
+			
+			walletPlan.setUsage(ProgramType.CLOSED_LOOP);
+		}
+
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			walletPlan.setCreditPlan(creditCardCreditPlan.buildAbbreviationAndCode());
 			walletPlan.setBillingCyleCode(creditCardBillingCycle.buildDescriptionAndCode());
@@ -783,6 +804,30 @@ public class ProgramSetupSteps {
 	
 	@When("User fills Program section for $type product and program $programType")
 	public void UserFillsProgramSection(String type ,String programType ) {
+		program = Program.createWithProvider(dataProvider, provider);
+		program.setProduct(ProductType.fromShortName(type));
+		program.setProgramType(programType);
+		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
+			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
+			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+		}
+		program.setWalletPlanPlan1(walletPlan.buildDescriptionAndCode());
+		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
+
+		program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
+		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
+		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
+
+		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID)) {
+			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+		}
+
+		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
+		context.put(ContextConstants.PROGRAM, program);
+	}
+	
+	@When("fills Program section for $type product and program $programType")
+	public void FillsProgramSection(String type ,String programType ) {
 		program = Program.createWithProvider(dataProvider, provider);
 		program.setProduct(ProductType.fromShortName(type));
 		program.setProgramType(programType);
@@ -875,6 +920,4 @@ public class ProgramSetupSteps {
 	private  void setPinRequiredToDefaultState() {
 		context.put(ConstantData.IS_PIN_REQUIRED, "TRUE");
 	}
-	
-	
 }

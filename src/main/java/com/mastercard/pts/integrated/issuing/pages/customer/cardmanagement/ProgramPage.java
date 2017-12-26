@@ -241,11 +241,19 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//following-sibling::td[4]/span/a")
 	private MCWebElement editProgram;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Save']")
 	public MCWebElement save;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:loyaltyPlanCode:input:dropdowncomponent")
 	private MCWebElement loyaltyPlanDDwn;
-
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:allowFtIncOnClosedUsage:checkBoxComponent")
+	private MCWebElement receiveCheckBx;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:allowFtOutOnClosedUsage:checkBoxComponent")
+	private MCWebElement sendCheckBx;
+	
 	public void addProgram(String programCode) {
 		WebElementUtils.enterText(programTxt, programCode);
 	}
@@ -297,6 +305,14 @@ public class ProgramPage extends AbstractBasePage {
 
 	public void addnumberOfLoadsAllowedWithoutKyc(String numberOfLoadsAllowedWithoutKyc) {
 		WebElementUtils.enterText(numberOfLoadsAllowedWithoutKycTxt, numberOfLoadsAllowedWithoutKyc);
+	}
+	
+	public void receiveFundTransferForUsage(){
+		WebElementUtils.checkCheckbox(receiveCheckBx, true);
+	}
+	
+	public void sendFundTransferForUsage(){
+		WebElementUtils.checkCheckbox(sendCheckBx, true);
 	}
 
 	public void selectWalletPlanPlan1(String walletPlanPlan1) {
@@ -359,6 +375,8 @@ public class ProgramPage extends AbstractBasePage {
 		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
 			addMaximumBalanceWithoutKyc(program.getMaximumBalanceWithoutKyc());
 			addnumberOfLoadsAllowedWithoutKyc(program.getNumberOfLoadsAllowedWithoutKyc());
+			receiveFundTransferForUsage();
+			sendFundTransferForUsage();
 			selectRefundInCurrency(program.getRefundInCurrency());
 		}
 		

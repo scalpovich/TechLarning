@@ -14,33 +14,32 @@ public class CardHolderTransactions {
 	
 	private static final String CARD_NUMBER = "CARD_NUMBER" ;
 	private static final String TRANSFER_AMOUNT = "TRANSFER_AMOUNT";
-	private static final String CURRANCY_NAME = "CURRANCY_NAME";
+	private static final String CURRENCY_NAME = "CURRANCY_NAME";
 	private static final String CONTACT_NUMBER = "CONTACT_NUMBER";
 	private static final String TRANSFER_NAME = "TRANSFER_NAME";
 	private static final String TRANSFER_MEMO = "TRANSFER_MEMO";
 	private static final String TRANSACTION_PASSWORD = "TRANSACTION_PASSWORD";
 	private static final String TRANSACTION_REMARK = "TRANSACTION_REMARK";
-	private static final String WALLET_TRANSFER_AMOUNNT = "WALLET_TRANSFER_AMOUNNT";
-	private static final String WALEET_TRANSFER_CURRANCY = "WALEET_TRANSFER_CURRANCY";
+	private static final String WALLET_TRANSFER_AMOUNT = "WALLET_TRANSFER_AMOUNNT";
+	private static final String WALLET_TRANSFER_CURRENCY  = "WALEET_TRANSFER_CURRANCY";
 	private static final String WALLET_NUM_FROM_AMOUNT_TRANSFER = "WALLET_NUM_FROM_AMOUNT_TRANSFER";
 	private static final String TRANSACTION_STATUS_FAIL_MESSAGE = "TRANSACTION_STATUS_FAIL_MESSAGE";
-	private static final String WALLET_TO_WALLET_TRANS_CUCESSMSG = "WALLET_TO_WALLET_TRANS_CUCESSMSG";
-	
+	private static final String WALLET_TO_WALLET_TRANS_CUCCESS_MSG = "WALLET_TO_WALLET_TRANS_CUCESSMSG";
 	
 	//Cash Remittance booking
 	private static final String BENEFICIARY_ID = "BENEFICIARY_ID";
-	private static final String BENEFICIARY_FIRSTNAME = "BENEFICIARY_FIRSTNAME";
-	private static final String BENEFICIARY_MIDDLENAME = "BENEFICIARY_MIDDLENAME";
-	private static final String BENEFICIARY_LASTNAME = "BENEFICIARY_LASTNAME";
-	private static final String BENEFICIARY_ADDRESSLINE1 = "BENEFICIARY_ADDRESSLINE1";
-	private static final String BENEFICIARY_ADDRESSLINE2 = "BENEFICIARY_ADDRESSLINE2";
-	private static final String BENEFICIARY_ADDRESSLINE3 = "BENEFICIARY_ADDRESSLINE3";
-	private static final String BENEFICIARY_COUNTRYNAME = "BENEFICIARY_COUNTRYNAME";	
-	private static final String BENEFICIARY_STATENAME = "BENEFICIARY_STATENAME";
-	private static final String BENEFICIARY_CITYNAME = "BENEFICIARY_CITYNAME";
-	private static final String BENEFICIARY_ZIPCODE = "BENEFICIARY_ZIPCODE";
-	private static final String BENEFICIARY_EMAILADDRESS = "BENEFICIARY_EMAILADDRESS";
-	private static final String BENEFICIARY_MOBILENUMBER = "BENEFICIARY_MOBILENUMBER";
+	private static final String BENEFICIARY_FIRST_NAME = "BENEFICIARY_FIRSTNAME";
+	private static final String BENEFICIARY_MIDDLE_NAME = "BENEFICIARY_MIDDLENAME";
+	private static final String BENEFICIARY_LAST_NAME = "BENEFICIARY_LASTNAME";
+	private static final String BENEFICIARY_ADDRESS_LINE1 = "BENEFICIARY_ADDRESSLINE1";
+	private static final String BENEFICIARY_ADDRESS_LINE2 = "BENEFICIARY_ADDRESSLINE2";
+	private static final String BENEFICIARY_ADDRESS_LINE3 = "BENEFICIARY_ADDRESSLINE3";
+	private static final String BENEFICIARY_COUNTRY_NAME = "BENEFICIARY_COUNTRYNAME";	
+	private static final String BENEFICIARY_STATE_NAME = "BENEFICIARY_STATENAME";
+	private static final String BENEFICIARY_CITY_NAME = "BENEFICIARY_CITYNAME";
+	private static final String BENEFICIARY_ZIP_CODE = "BENEFICIARY_ZIPCODE";
+	private static final String BENEFICIARY_EMAIL_ADDRESS = "BENEFICIARY_EMAILADDRESS";
+	private static final String BENEFICIARY_MOBILE_NUMBER = "BENEFICIARY_MOBILENUMBER";
 	private static final String BENEFICIARY_REMITTANCE_AMOUNT = "BENEFICIARY_REMITTANCE_AMOUNT";
 	private static final String BENEFICIARY_REMITTANCE_CURRENCY = "BENEFICIARY_REMITTANCE_CURRENCY";
 	
@@ -73,7 +72,7 @@ public class CardHolderTransactions {
 	private String beneficiaryZIPCode;
 	private String beneficiaryEmailAddress;
 	private String beneficiaryMobileNumber;
-	private String beneficiaryRemittanceAamount;
+	private String beneficiaryRemittanceAmount;
 	private String beneficiaryRemittanceCurrency;
 	
 		
@@ -155,11 +154,12 @@ public class CardHolderTransactions {
 	public void setBeneficiaryMobileNumber(String beneficiaryMobileNumber) {
 		this.beneficiaryMobileNumber = beneficiaryMobileNumber;
 	}
-	public String getBeneficiaryRemittanceAamount() {
-		return beneficiaryRemittanceAamount;
+	public String getBeneficiaryRemittanceAmount() {
+		return beneficiaryRemittanceAmount;
 	}
-	public void setBeneficiaryRemittanceAamount(String beneficiaryRemittanceAamount) {
-		this.beneficiaryRemittanceAamount = beneficiaryRemittanceAamount;
+
+	public void setBeneficiaryRemittanceAmount(String beneficiaryRemittanceAmount) {
+		this.beneficiaryRemittanceAmount = beneficiaryRemittanceAmount;
 	}
 	public String getBeneficiaryRemittanceCurrency() {
 		return beneficiaryRemittanceCurrency;
@@ -285,16 +285,16 @@ public class CardHolderTransactions {
 		CardHolderTransactions cardTranHol = new CardHolderTransactions();
 		cardTranHol.setCardNumber(provider.getString(CARD_NUMBER));
 		cardTranHol.setContactNumber(provider.getString(CONTACT_NUMBER));
-		cardTranHol.setCurrencyName(provider.getString(CURRANCY_NAME));
+		cardTranHol.setCurrencyName(provider.getString(CURRENCY_NAME));
 		cardTranHol.setTransferAmount(provider.getString(TRANSFER_AMOUNT));
 		cardTranHol.setTransferName(provider.getString(TRANSFER_NAME));		
 		cardTranHol.setTransferMemo(provider.getString(TRANSFER_MEMO));
 		cardTranHol.setTransctionPassword(provider.getString(TRANSACTION_PASSWORD));
 		cardTranHol.setTransactionRemark(provider.getString(TRANSACTION_REMARK));
-		cardTranHol.setWalletTransferAmount(provider.getString(WALLET_TRANSFER_AMOUNNT));
-		cardTranHol.setWalletTransferCurrency(provider.getString(WALEET_TRANSFER_CURRANCY));
+		cardTranHol.setWalletTransferAmount(provider.getString(WALLET_TRANSFER_AMOUNT));
+		cardTranHol.setWalletTransferCurrency(provider.getString(WALLET_TRANSFER_CURRENCY));
 		cardTranHol.setWalletNumFromAmountTransfer(provider.getString(WALLET_NUM_FROM_AMOUNT_TRANSFER));
-		cardTranHol.setWalletToWalletTransSucessMsg(provider.getString(WALLET_TO_WALLET_TRANS_CUCESSMSG));
+		cardTranHol.setWalletToWalletTransSucessMsg(provider.getString(WALLET_TO_WALLET_TRANS_CUCCESS_MSG));
 		return cardTranHol;
 	}
 	
@@ -313,7 +313,7 @@ public class CardHolderTransactions {
 		cardTranHol.setBeneficiaryZIPCode(MapUtils.fnGetInputDataFromMap("beneficiaryZIPCode"));
 		cardTranHol.setBeneficiaryEmailAddress(MapUtils.fnGetInputDataFromMap("beneficiaryEmailAddress"));
 		cardTranHol.setBeneficiaryMobileNumber(MapUtils.fnGetInputDataFromMap("beneficiaryMobileNumber"));
-		cardTranHol.setBeneficiaryRemittanceAamount(MapUtils.fnGetInputDataFromMap("beneficiaryRemittanceAamount"));
+		cardTranHol.setBeneficiaryRemittanceAmount(MapUtils.fnGetInputDataFromMap("beneficiaryRemittanceAamount"));
 		cardTranHol.setBeneficiaryRemittanceCurrency(MapUtils.fnGetInputDataFromMap("beneficiaryRemittanceCurrency"));		
 		
 		return cardTranHol;
@@ -322,19 +322,19 @@ public class CardHolderTransactions {
 	public static CardHolderTransactions cardholderCashRemit(KeyValueProvider provider){
 		CardHolderTransactions cardTranHol = new CardHolderTransactions();
 		cardTranHol.setBeneficiaryID(provider.getString(BENEFICIARY_ID));
-		cardTranHol.setBeneficiaryFirstName(provider.getString(BENEFICIARY_FIRSTNAME));
-		cardTranHol.setBeneficiaryMiddleName(provider.getString(BENEFICIARY_MIDDLENAME));
-		cardTranHol.setBeneficiaryLastName(provider.getString(BENEFICIARY_LASTNAME));
-		cardTranHol.setBeneficiaryAddressLine1(provider.getString(BENEFICIARY_ADDRESSLINE1));
-		cardTranHol.setBeneficiaryAddressLine2(provider.getString(BENEFICIARY_ADDRESSLINE2));
-		cardTranHol.setBeneficiaryCountryName(provider.getString(BENEFICIARY_COUNTRYNAME));
-		cardTranHol.setBeneficiaryAddressLine3(provider.getString(BENEFICIARY_ADDRESSLINE3));
-		cardTranHol.setBeneficiaryStateName(provider.getString(BENEFICIARY_STATENAME));
-		cardTranHol.setBeneficiaryCityName(provider.getString(BENEFICIARY_CITYNAME));
-		cardTranHol.setBeneficiaryZIPCode(provider.getString(BENEFICIARY_ZIPCODE));
-		cardTranHol.setBeneficiaryEmailAddress(provider.getString(BENEFICIARY_EMAILADDRESS));
-		cardTranHol.setBeneficiaryRemittanceAamount(provider.getString(BENEFICIARY_REMITTANCE_AMOUNT));
-		cardTranHol.setBeneficiaryMobileNumber(provider.getString(BENEFICIARY_MOBILENUMBER));
+		cardTranHol.setBeneficiaryFirstName(provider.getString(BENEFICIARY_FIRST_NAME));
+		cardTranHol.setBeneficiaryMiddleName(provider.getString(BENEFICIARY_MIDDLE_NAME));
+		cardTranHol.setBeneficiaryLastName(provider.getString(BENEFICIARY_LAST_NAME));
+		cardTranHol.setBeneficiaryAddressLine1(provider.getString(BENEFICIARY_ADDRESS_LINE1));
+		cardTranHol.setBeneficiaryAddressLine2(provider.getString(BENEFICIARY_ADDRESS_LINE2));
+		cardTranHol.setBeneficiaryCountryName(provider.getString(BENEFICIARY_COUNTRY_NAME));
+		cardTranHol.setBeneficiaryAddressLine3(provider.getString(BENEFICIARY_ADDRESS_LINE3));
+		cardTranHol.setBeneficiaryStateName(provider.getString(BENEFICIARY_STATE_NAME));
+		cardTranHol.setBeneficiaryCityName(provider.getString(BENEFICIARY_CITY_NAME));
+		cardTranHol.setBeneficiaryZIPCode(provider.getString(BENEFICIARY_ZIP_CODE));
+		cardTranHol.setBeneficiaryEmailAddress(provider.getString(BENEFICIARY_EMAIL_ADDRESS));
+		cardTranHol.setBeneficiaryRemittanceAmount(provider.getString(BENEFICIARY_REMITTANCE_AMOUNT));
+		cardTranHol.setBeneficiaryMobileNumber(provider.getString(BENEFICIARY_MOBILE_NUMBER));
 		cardTranHol.setBeneficiaryRemittanceCurrency(provider.getString(BENEFICIARY_REMITTANCE_CURRENCY));		
 		
 		return cardTranHol;
