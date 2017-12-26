@@ -98,7 +98,7 @@ public class CreditPlanPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(@class,'mandatoryFlag')]")
 	private MCWebElement mandatoryValues;
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(@class,'mandatory')]/parent::span/parent::td/preceding-sibling::td/span")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(@class,'mandatoryFlag')]/parent::span/parent::td/preceding-sibling::td[@class='displayName']/span")
 	private MCWebElement mandatoryValuesHeaders;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[@class='headers']/th[@class='wicket_orderNone']/a/span")
@@ -156,6 +156,14 @@ public class CreditPlanPage extends AbstractBasePage {
 		logger.info("Credit Plan");
 		
 		verifyUiOperation("Add Credit Plan");
+	}
+	
+	public Map<String,String>mandatoryValuesInPage()
+	{
+		Map<String,String>mandatoryValues=new LinkedHashMap<>();
+		
+		return mandatoryValues;
+		
 	}
 	
 	public Map<String,String> valuesInFirstRow() {

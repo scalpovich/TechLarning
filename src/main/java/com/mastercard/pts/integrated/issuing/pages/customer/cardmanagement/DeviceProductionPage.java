@@ -75,7 +75,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	}
 	public void processDeviceProductionBatch(DeviceProductionBatch batch) {
 		WebElementUtils.enterText(BatchNumberTxt, batch.getBatchNumber());
-		ClickButton(SearchBtn);
+		/*ClickButton(SearchBtn);
 		if(rowSize.getElements().size()==0)
 		{
 			ClickButton(SearchBtn);
@@ -85,7 +85,8 @@ public class DeviceProductionPage extends AbstractBasePage {
 		} else {
 			ClickButton(SearchBtn);
 			}
-		ClickButton(ProcessSelectedBtn);
+		ClickButton(ProcessSelectedBtn);*/
+		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 
 	}
