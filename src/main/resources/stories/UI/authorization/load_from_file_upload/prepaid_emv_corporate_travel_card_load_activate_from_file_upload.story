@@ -9,7 +9,7 @@ Meta:
 @StoryName prepaid_emv_ctc_load_actv_file
 @CRCardsWithAuthorization
 
-Scenario: Set up prepaid emv corporate general purpose card
+Scenario: Set up prepaid emv corporate travel card
 Meta:
 @TestId 
 Given user is logged in institution

@@ -9,7 +9,7 @@ Meta:
 @StoryName prepaid_msr_cgpc_load_actv_file
 @CRCardsWithAuthorization
 
-Scenario: Set up prepaid emv corporate general purpose card
+Scenario: Set up prepaid msr corporate general purpose card
 Meta:
 @TestId 
 Given user is logged in institution
