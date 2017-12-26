@@ -6,10 +6,7 @@ As an issuer
 I want to authorize transactions for prepaid emv retail general purpose card
 
 Meta:
-@StoryName p_emv_coprporate_travel
-@couldBeNewSheet debit_msr
-@oldReferenceSheet_S203707
-@CRCardsWithAuthorization
+@StoryName prepaid_ctc_load_from_file
 @ECOM_PURCHASE
 
 Scenario: ECOMM_PURCHASE transaction on prepaid msr corporate travel card
