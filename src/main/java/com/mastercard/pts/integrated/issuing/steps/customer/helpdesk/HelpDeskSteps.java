@@ -6,11 +6,12 @@ import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 
-import junit.framework.Assert;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,14 +57,14 @@ public class HelpDeskSteps {
 
 	@Autowired
 	private KeyValueProvider provider;
-    @Autowired
+@Autowired
 	HelpDeskFlows helpdeskFlows;
 
 	EventAndAlerts eventAndAlerts = new EventAndAlerts();
 
 	ChangeAddressRequest changeAddressRequest;
-	@Autowired
-	HelpDeskGeneral helpdeskgettersetter;
+
+	HelpDeskGeneral helpdeskgettersetter = new HelpDeskGeneral();
 
 	DeviceCreation deviceCreation;
 
@@ -367,6 +368,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.setActiveDeviceNumberByCardPackId(helpdeskGeneral, registeredType);
 		Device device = Device.createWithProvider(provider);
 		device.setDeviceNumber(helpdeskGeneral.getDeviceNumber());
+		device.setExistingDeviceNumber(helpdeskGeneral.getDeviceNumber());
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		context.put(ContextConstants.DEVICE, device);
 		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
@@ -475,6 +477,7 @@ public class HelpDeskSteps {
 		assertEquals(currentBalanceAmount, afterTrnBalanceAmount);
 	}
 
+	@Then("user activates device through helpdesk")
 	@Given("user activates device through helpdesk")
 	@When("user activates device through helpdesk")
 	public void whenUserActivatesDeviceThroughHelpDesk() {
@@ -520,6 +523,14 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.storeSaleDate();
 		helpdeskWorkflow.clickEndCall();
 		assertThat("Device has incorrect Sale Date", helpdeskWorkflow.saleDate(), equalTo(DateUtils.currentDateddMMyyyy()));
+	}
+	
+	@Then("device activated and activation date is updated in general details")
+	public void thenActivationDateIsUpdatedGeneralDetails() {
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.storeActivationDate();
+		helpdeskWorkflow.clickEndCall();
+		assertThat("Device has incorrect Activation Date", helpdeskWorkflow.activationDate(), equalTo(DateUtils.currentDateddMMyyyy()));
 	}
 
 	@Then("delivery date is updated in general details")

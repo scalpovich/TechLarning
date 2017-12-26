@@ -32,6 +32,7 @@ public class ServicesSteps {
 		
 	private Dispatch dispatch;
 	private DeviceSale deviceSale;
+	private Device device;
 	
 	@Autowired
 	private TestContext context;
@@ -166,8 +167,8 @@ public class ServicesSteps {
 		deviceSale = DeviceSale.createWithProvider(provider);
 		deviceSale.setProgram(program.buildDescriptionAndCode());
 		deviceSale.setCardPackId(dispatch.getLastCardPackId());
-		String activeDeviceNumber = servicesWorkflow.getActiveDeviceNumberFromDb(productType, deviceType);
-		deviceSale.setPrimaryDeviceNumber(activeDeviceNumber);
+		device = context.get(ContextConstants.DEVICE);
+		deviceSale.setPrimaryDeviceNumber(device.getExistingDeviceNumber());
 		servicesWorkflow.deviceSaleThroughNewProgram(deviceSale);
 	}
 	

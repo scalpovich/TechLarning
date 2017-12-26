@@ -89,6 +89,7 @@ public class TransactionSteps {
 	@Given("perform an $transaction MAS transaction")
 	public void givenTransactionIsExecuted(String transaction){
 		String temp = transaction;
+		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED) );
 		if("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 			//ECOMM are pinless tranasactions
@@ -148,6 +149,7 @@ public class TransactionSteps {
 			//			_____________________FOR PINLESS CARD________________
 			//device plan context is used to get Expiry Date incase of PinLess card
 			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+			device.setServiceCode(devicePlan.getServiceCode());
 			if("YES".equalsIgnoreCase(devicePlan.getIsPinLess())) {
 				device.setExpirationDate(devicePlan.getExpiryDate());
 				device.setPinNumberForTransaction("PINLESS");
@@ -223,6 +225,7 @@ public class TransactionSteps {
 		transactionData.setCardDataElementsDynamic("035.03", device.getExpirationDate());
 		transactionData.setCardDataElementsDynamic("045.02", device.getDeviceNumber());
 		transactionData.setCardDataElementsDynamic("045.06", device.getExpirationDate());
+		transactionData.setCardDataElementsDynamic("035.04", device.getServiceCode());
 		//	transactionData.setCardDataElementsDynamic("023", "000"); // no validation of card sequence number
 	}
 

@@ -355,7 +355,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		pressLeftArrow();
 		performClickOperation("Imported");
 		pressRightArrow(4);
-		pressPageDown();
+		pressPageDown();	
 	}
 
 	private void performExecution(String transaction) {
@@ -395,11 +395,19 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private String getResult() {
 	
-		List<WebElement> lst =  winiumDriver.findElements(By.xpath("//*[contains(@Name, 'Expected Results Summary')]"));
+		List<WebElement> lst = null;
+		if(context.get(ConstantData.TRANSACTION_NAME).toString().contains("COMPLETION"))
+		{
+		lst=winiumDriver.findElements(By.name("0130 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
+		}
+		else
+		{
+	    lst=winiumDriver.findElements(By.name("0110 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
+		}
 		//clicking on the last item from bottom
 		lst.get(lst.size()-1).click();
 		wait(5000);
-		WebElement tempElement = winiumDriver.findElementByXPath("//*[contains(@AutomationId,'DescriptionTextBox')]");
+		WebElement tempElement = winiumDriver.findElementByXPath("//*[contains(@AutomationId,'DescriptionTextBox')]");	
 		String tempText = tempElement.getText();
 		MiscUtils.reportToConsole("Fetching PassResult : " + tempText);
 		return tempText;
@@ -473,7 +481,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			setText("");
 			setText("999684");
 			wait(2000);
-			performClickOperation(SET_VALUE);
+			winiumDriver.findElementByName("Set Value").click();
 			wait(2000);
 			winiumDriver.findElementByName(CLOSE).click();
 			addField();
@@ -496,7 +504,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setText("");
 		setText(cardNumber);
 		wait(2000);
-		performClickOperation(SET_VALUE);
+		winiumDriver.findElementByName("Set Value").click();
 		wait(2000);
 		winiumDriver.findElementByName(CLOSE).click();
 			}
@@ -545,7 +553,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setText(rRN);
 		winiumDriver.findElementByName("OK").click();
 		wait(2000);
-		performClickOperation(SET_VALUE);
+		winiumDriver.findElementByName("Set Value").click();
 		String aRN = winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
 		wait(2000);
 		winiumDriver.findElementByName(CLOSE).click();
@@ -566,7 +574,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setText("");
 		setText("999684");
 		wait(2000);
-		performClickOperation(SET_VALUE);
+		winiumDriver.findElementByName("Set Value").click();
 		wait(2000);
 		winiumDriver.findElementByName(CLOSE).click();
 		performClickOperation("Save");
@@ -575,6 +583,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		performClickOperation("Add file to CEE");
 		wait(2000);
 		winiumDriver.findElementByName("Process File(s)").click();
+		wait(5000);
 		executeAutoITExe("GetCEEData.exe");				
 	}
 
@@ -641,7 +650,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setText(value);
 		winiumDriver.findElementByName("OK").click();
 		wait(2000);
-		performClickOperation(SET_VALUE);		
+		winiumDriver.findElementByName("Set Value").click();
 		wait(2000);
 		winiumDriver.findElementByName(CLOSE).click();
 	}
@@ -711,7 +720,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			winiumLicenseSelectOperation(licenseTypeToSelect, licenseFor);
 			winiumClickOperation("Select");
 			wait(15000);
-
+			executeAutoITExe("ActivateSelectServices.exe");
 			if(getLoadServicesScreen() > 0)	{
 				executeAutoITExe("ActivateSelectServices.exe");
 				wait(2000);
@@ -883,7 +892,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private void fillEmvChipKeySetDetails() {
 		executeAutoITExe("ActivateEditCardProfile.exe");
 		winiumClickOperation("ICC Related Data");
-		performClickOperation("MChipKeySetDropDown");
+		winiumClickOperation("Drop Down Button");
 		wait(1000);
 		winiumClickOperation("00999 - Example ETEC1 - 0213");	
 		wait(1000);
@@ -1005,7 +1014,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			setText(finSimSimulator.getPort());
 			pressTab();
 			pressEnter();
-			wait(5000);
+			 wait(5000);
 			executeAutoITExe("ActivateFINSimPasswordScreen.exe");
 			setText(finSimSimulator.getPassword());
 			wait(5000);
