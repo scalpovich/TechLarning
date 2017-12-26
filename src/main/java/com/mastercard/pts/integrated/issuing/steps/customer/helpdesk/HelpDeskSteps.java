@@ -57,14 +57,14 @@ public class HelpDeskSteps {
 
 	@Autowired
 	private KeyValueProvider provider;
-@Autowired
+    @Autowired
 	HelpDeskFlows helpdeskFlows;
 
 	EventAndAlerts eventAndAlerts = new EventAndAlerts();
 
 	ChangeAddressRequest changeAddressRequest;
-
-	HelpDeskGeneral helpdeskgettersetter = new HelpDeskGeneral();
+	@Autowired
+	HelpDeskGeneral helpdeskgettersetter;
 
 	DeviceCreation deviceCreation;
 
