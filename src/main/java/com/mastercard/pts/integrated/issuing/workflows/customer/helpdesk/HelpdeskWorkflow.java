@@ -1,10 +1,7 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk;
 
 import java.math.BigDecimal;
-
-import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;

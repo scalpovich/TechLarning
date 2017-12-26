@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -14,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
@@ -249,6 +247,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public void clickOKButtonPopup(){
+		SimulatorUtilities.wait(3000);
 		new WebDriverWait(driver(), timeoutInSec)
 		.until(WebElementUtils.elementToBeClickable(okBtn))
 		.click();
@@ -522,11 +521,14 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		verifySearchButton("Search");
 	}
 		
-	public void selectWalleFromTransfer(String walletNumber){		
+	public void selectWalleFromTransfer(String walletNumber){
+		SimulatorUtilities.wait(3000);
 		driver().findElement(By.xpath("//td[@id='fromCurrencyDataTable']//./td/span[text()='"+walletNumber+"']//..//..//td//input")).click();
+		
 	}
 	
 	public void selectWalleToTransfer(String walletNumber){
+		SimulatorUtilities.wait(3000);
 		driver().findElement(By.xpath("//td[@id='toCurrencyDataTable']//./td/span[text()='"+walletNumber+"']//..//..//td//input")).click();		
 	}
 	
@@ -537,9 +539,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public void selectDeviceToTransferFunds(String deviceToTransfer){
-		WebElementUtils.elementToBeClickable(toDeviceDropDn);
 		WebElementUtils.waitForWicket(driver());
 		SimulatorUtilities.wait(3000);
+		WebElementUtils.elementToBeClickable(toDeviceDropDn);
 		WebElementUtils.selectDropDownByValue(toDeviceDropDn, deviceToTransfer);
 	}
 	
