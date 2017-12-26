@@ -7,6 +7,7 @@ I want to authorize transactions for prepaid emv retail general purpose card
 
 Meta:
 @StoryName p_emv_coprporate_travel
+@couldBeNewSheet debit_msr
 @oldReferenceSheet_S203707
 @CRCardsWithAuthorization
 @ECOM_PURCHASE

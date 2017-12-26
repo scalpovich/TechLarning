@@ -6,7 +6,8 @@ As an issuer
 I want to create a prepaid msr corporate gift card and test various transactions
 
 Meta:
-@StoryName p_msr_corp_gift
+@StoryName prepaid_cgc_load_from_file
+@couldBeNewSheet debit_msr
 @SanityCards
 @ECOM_PURCHASE
 

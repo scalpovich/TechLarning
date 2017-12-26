@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for prepaid msr retail travel card 
 
 Meta:
-@StoryName p_msr_retail_travel
+@StoryName prepaid_rtc_load_from_file
 @SanityCardsWithAuthorization
 @ECOM_PURCHASE
 

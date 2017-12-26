@@ -6,9 +6,7 @@ As an issuer
 I want to create a magnetic stripe Corporate debit card for client
 
 Meta:
-@StoryName d_emv_corp
-@oldReferenceSheet_S198220
-@SanityCards
+@StoryName S198222
 @ECOM_PURCHASE
 
 Scenario: ECOMM_PURCHASE transaction on magnetic stripe Corporate debit card

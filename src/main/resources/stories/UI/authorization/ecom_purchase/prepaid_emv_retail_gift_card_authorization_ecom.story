@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for prepaid emv retail giftcard card
 
 Meta:
-@StoryName S203707
+@StoryName p_emv_retail_gift
 @CRCardsWithAuthorization
 @ECOM_PURCHASE
 
