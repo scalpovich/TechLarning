@@ -49,7 +49,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "processSelected")
 	private MCWebElement ProcessSelectedBtn;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr")
 	private MCWebElements rowSize;
 	
 	public void deviceproduction(String prodType, String batchNum, String DeviceNumber) {
