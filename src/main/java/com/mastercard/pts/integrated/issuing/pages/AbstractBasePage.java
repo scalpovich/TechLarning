@@ -584,6 +584,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 		if (!isNoRecordsFoundInTable()) {
 			viewFirstRecord();
+			CustomUtils.ThreadDotSleep(3000);
 			verifyPopup(name.replaceFirst("Add", "View"));
 			clickX2Close();
 			if (isEditColumnPresent()) {
@@ -593,6 +594,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 			if (isDeleteColumnPresent()) {
 				deleteFirstRecord();
+				CustomUtils.ThreadDotSleep(3000);
 				verifyDeleteRecordAlert(
 						name.replaceAll("Add.*", "Are you sure you want to delete the highlighted record?"));
 			}

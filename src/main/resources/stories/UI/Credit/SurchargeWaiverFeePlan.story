@@ -11,5 +11,6 @@ Scenario:1 UI verification - Customer Portal - Valid SurchargeWailverPlan, card 
 Given user is logged in institution
 Then User navigates to Add Surcharge Waiver Fee Plan Page and adds a valid Fee Plan by entering valid values
 And User navigates to Add Surcharge Waiver Detail Fee Plan Page and adds a valid plan by entering valid values
-
+Then user search the record added based on filter Values
+And user verifies edit operation
 

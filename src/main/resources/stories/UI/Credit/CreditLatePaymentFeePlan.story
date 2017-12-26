@@ -10,5 +10,5 @@ CreditLatePaymentFeePlan
 Scenario:1  Customer Portal-Adding a Late Payment Fee Plan
 Given user is logged in institution
 When user navigates to Late Payment Fee Plan and adds a new Late Payment Fee Plan
-Then LatePaymentFeePlan page of card management tab is rendered correctly
-And user signs out from customer portal
+Then user search the record added based on filter Values
+And user verifies edit operation

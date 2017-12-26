@@ -17,9 +17,12 @@ public class CreditPlanWorkFlow {
 	 page = navigator.navigateToPage(CreditPlanPage.class);
 	 page.addcreditplan();
 	}
-    public void verifyViewandEditOperations()
+    public void verifyRecordsInTableBasedOnFilter()
     {
-    	page = navigator.navigateToPage(CreditPlanPage.class);
-    	page.verifyUiOperationStatus();
+     page.enterFilterValuesBasedOnRecordCreated();
+    }
+    public void verifyEditOperationForAddedRecord()
+    {
+     page.editFunctionalityCheck();
     }
 }

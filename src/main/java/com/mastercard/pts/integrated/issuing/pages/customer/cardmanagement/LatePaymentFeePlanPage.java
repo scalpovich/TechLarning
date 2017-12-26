@@ -62,7 +62,7 @@ public class LatePaymentFeePlanPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByIndex(latePaymentFeeValueDateDdwn,1);
 		WebElementUtils.selectDropDownByIndex(currencyDdwn,1);
 		clickWhenClickable(addDetailsBtn);
-		CustomUtils.ThreadDotSleep(3000);
+		waitForElementVisible(addBtn);
 		clickWhenClickable(addBtn);
 		SwitchToDefaultFrame();
 		switchToIframe(addLatePaymentFeePlanDetails);
@@ -71,7 +71,7 @@ public class LatePaymentFeePlanPage extends AbstractBasePage {
 		clickWhenClickable(saveBtn);
 		SwitchToDefaultFrame();
 	    switchToIframe(addLatePaymentFeePlanFrame);
-	    CustomUtils.ThreadDotSleep(4000);
+	   CustomUtils.ThreadDotSleep(4000);
 	    waitForElementVisible(saveBtn);
 		clickWhenClickable(saveBtn);
 		}

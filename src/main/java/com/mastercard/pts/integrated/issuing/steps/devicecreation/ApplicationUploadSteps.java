@@ -13,7 +13,6 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreP
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SearchApplicationDetails;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessFlows;
@@ -59,7 +58,7 @@ public class ApplicationUploadSteps {
 		search.verifyApplicationUploadSuccess(searchDomain);
 	}
 
-	@When("processes pre-production batch $type")
+	@When("processes $type pre-production batch")
 	public void whenProcessesPreproductionBatchForPrepaid(String type) {
 
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
@@ -67,7 +66,7 @@ public class ApplicationUploadSteps {
 		batchProcessFlows.processPreProductionBatch(preProductionBatch);
 	}
 
-	@When("processes device production batch $type")
+	@When("processes $type device production batch")
 	public void whenProcessesDeviceProductionBatch(String type) {
 		DeviceProductionBatch batch = new DeviceProductionBatch();
 		batch.setProductType(ProductType.fromShortName(type));

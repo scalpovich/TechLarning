@@ -1,10 +1,12 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
+import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
-
+@Component
 public class CreditCardCreditPlan implements HasCodeAndDescription {
 	
 	private String creditPlanCode;
