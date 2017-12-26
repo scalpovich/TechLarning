@@ -521,27 +521,13 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		logger.info("General");
 		verifySearchButton("Search");
 	}
-	
-	public void selectWalleFromTransfer(String walletNumber){
 		
-		 int walletRows = driver().findElements(By.xpath("//td[@id='fromCurrencyDataTable']/descendant::tr")).size();
-		 for(int rowIndex=3; rowIndex <= walletRows; rowIndex++){
-			 if(walletNumber.equals(driver().findElement(By.xpath("//td[@id='fromCurrencyDataTable']/descendant::tr["+rowIndex+"]/td[2]")).getText())){
-				 driver().findElement(By.xpath("//td[@id='fromCurrencyDataTable']/descendant::tr["+rowIndex+"]/td[7]")).click();
-				 break;
-			 }
-		 }
+	public void selectWalleFromTransfer(String walletNumber){		
+		driver().findElement(By.xpath("//td[@id='fromCurrencyDataTable']//./td/span[text()='"+walletNumber+"']//..//..//td//input")).click();
 	}
-		
+	
 	public void selectWalleToTransfer(String walletNumber){
-		int walletRows = driver().findElements(By.xpath("//td[@id='toCurrencyDataTable']/descendant::tr")).size();
-		 for(int rowIndex=3; rowIndex <= walletRows; rowIndex++){			 
-			 waitForWicket();			
-			 if(walletNumber.equals(driver().findElement(By.xpath("//td[@id='toCurrencyDataTable']/descendant::tr["+rowIndex+"]/td[2]")).getText())){
-				 driver().findElement(By.xpath("//td[@id='toCurrencyDataTable']/descendant::tr["+rowIndex+"]/td[7]")).click();
-				 break;
-			 }
-		 }
+		driver().findElement(By.xpath("//td[@id='toCurrencyDataTable']//./td/span[text()='"+walletNumber+"']//..//..//td//input")).click();		
 	}
 	
 	public void clickSaveButtonPopup(){
