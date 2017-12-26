@@ -343,7 +343,7 @@ public class TransactionSteps {
 		assertEquals(type, transactionWorkflow.getAuthorizationStatus(arnNumber, ts));			
 	}
 	
-	@Then("wallet to wallet transfer transaction status is \"$transactionStatus\"")
+	@Then("wallet to wallet transfer transaction status is $transactionStatus")
 	public void transactionStatusIsPresentCheck(String transactionStatus){
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		assertEquals(transactionStatus, transactionWorkflow.getTransactionAmount("5887658132769110", ts));

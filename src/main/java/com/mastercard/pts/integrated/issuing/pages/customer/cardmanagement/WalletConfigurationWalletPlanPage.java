@@ -139,7 +139,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			selectProgramType(walletPlan.getProgramType());
 			selectUsage(walletPlan.getUsage());
 
-			fillDetailsBasedOnCarddType(walletPlan, productType);
+			fillDetailsBasedOnCardType(walletPlan, productType);
 
 			clickNextButton(); // Click on next button
 				clickFinishButton(); // click on finish button
@@ -169,22 +169,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		verifyOperationStatus();
 	}
 
-	private void fillDetailsBasedOnCArdType(WalletPlan walletPlan,
-			String productType) {
-		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
-			selectCreditPlan(walletPlan.getCreditPlan());
-			selectBillingCyleCode(walletPlan.getBillingCyleCode());
-		}
-		if (productType.equalsIgnoreCase(ProductType.DEBIT)) {
-			WebElementUtils.enterText(dummyAccountNumberTxt,
-					walletPlan.getDummyAccountNumber());
-		}
-		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
-			inputReservedAmount();
-		}
-	}
-	
-	private void fillDetailsBasedOnCarddType(WalletPlan walletPlan,
+	private void fillDetailsBasedOnCardType(WalletPlan walletPlan,
 			String productType) {
 		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 			selectCreditPlan(walletPlan.getCreditPlan());

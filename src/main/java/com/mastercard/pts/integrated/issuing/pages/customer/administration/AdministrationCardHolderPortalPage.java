@@ -76,10 +76,6 @@ public class AdministrationCardHolderPortalPage  extends AbstractBasePage{
 		WebElementUtils.selectAllOptionsInListBox(availableMenusLstBx);
 	}
 	
-	public void submitChpConfig(){
-		clickWhenClickable(submitConfig);
-	}
-	
 	public void addSelectedMenus(){
 		clickWhenClickable(addMenuOpts);
 	}

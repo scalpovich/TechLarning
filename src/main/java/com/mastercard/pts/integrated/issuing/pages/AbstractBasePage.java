@@ -568,7 +568,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		logger.info(RESPONSE_MESSAGE, popupNameElement.getText());
 	}
 	
-	protected void accpetPopup() {
+	protected void acceptPopup() {
 		Alert alert = driver().switchTo().alert();
 		boolean isAlertPresent = alert != null;
 		if(isAlertPresent){
@@ -1295,7 +1295,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 					getFinder().getWebDriver().switchTo().window(handle);
 			}
 			//Accept the alert for CHP login
-			accpetPopup();			
+			acceptPopup();			
 			
 		} catch (Exception e) {
 			logger.error("Unable to Switch Window" + e);

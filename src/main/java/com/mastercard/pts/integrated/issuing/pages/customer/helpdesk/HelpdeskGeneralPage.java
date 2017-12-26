@@ -144,7 +144,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind="udf20:input:dropdowncomponent")
 	private MCWebElement toDeviceDropDn;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind="//span[@class='feedbackPanelINFO']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//span[@class='feedbackPanelINFO']")
 	private MCWebElement walletToWalletConfirMsg;
 	
 	@Override

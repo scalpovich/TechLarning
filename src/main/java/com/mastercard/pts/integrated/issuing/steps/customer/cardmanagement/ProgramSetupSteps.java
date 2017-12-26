@@ -721,7 +721,7 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createWalletPlan1(walletPlan);
 	}
 	
-	@When("wallet Plan for $type product and program $programtype with usage $usageType")
+	@When("create wallet Plan for $type product and program $programtype with usage $usageType")
 	public void addWalletPlan(String type,String programtype,String usageType) {
 		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
 		walletPlan.setProductType(ProductType.fromShortName(type));

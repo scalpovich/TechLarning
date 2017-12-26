@@ -10,15 +10,15 @@ import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 public class CardHolderPortalMenuConfigWorkFlow {
 	
 	@Autowired
-	AdministrationCardHolderPortalPage adminiConfigPortal;
+	AdministrationCardHolderPortalPage adminConfigPortal;
 	
 	public void navigateToCardHolderPortalPage(){
-		adminiConfigPortal.navigateToCardHolderConfigPage();
+		adminConfigPortal.navigateToCardHolderConfigPage();
 		
 	}
 	
 	public void addMenuOptionsToaccess(String deviceType,String programCode){
-		adminiConfigPortal.addMenusToAccessForCardHolderPortal(deviceType,programCode);
+		adminConfigPortal.addMenusToAccessForCardHolderPortal(deviceType,programCode);
 	}
 	
 	

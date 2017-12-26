@@ -133,13 +133,13 @@ public class LoginSteps extends AbstractBaseFlows {
 		}
 	}
 
-	@Given("open card holder application")
+	@Given("open cardholder application")
 	public void openCardHolderApplication() {
 		loginFlows.openCardHolderApplication();
 	}
 
-	@Given("card holder registeration for login")
-	public void firstTimeCardRegisteration() {
+	@Given("cardholder registration for login")
+	public void firstTimeCardRegistration() {
 		loginFlows.signUpCardHolderUser(loginCardHolderProvider.getPassWord(),
 				loginCardHolderProvider.getCardHolderTransPassword(), loginCardHolderProvider.getFirstSequrityQst(),
 				loginCardHolderProvider.getFirstSequrityAnsw(), loginCardHolderProvider.getSecondSequrityQst(),
@@ -147,7 +147,7 @@ public class LoginSteps extends AbstractBaseFlows {
 
 	}
 	
-	@Then("card holder signup with valid details")
+	@Then("cardholder signup with valid details")
 	public void cardHolderSignUp(){
 		Device device = context.get(ContextConstants.DEVICE);
 		loginWorkflow.login(device.getClientCode(), device.getClientCode());
