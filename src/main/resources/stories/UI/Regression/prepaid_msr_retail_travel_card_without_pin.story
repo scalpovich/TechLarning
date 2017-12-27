@@ -31,6 +31,7 @@ When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
 And user sign out from customer portal
+When embossing file batch was generated in correct format
 
 Scenario: Transaction - MSR_PREAUTH and MSR_COMPLETION Authorization transaction
 Given connection to MAS is established
