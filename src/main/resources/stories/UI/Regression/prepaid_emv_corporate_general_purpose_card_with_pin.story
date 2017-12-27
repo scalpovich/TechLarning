@@ -56,12 +56,14 @@ Then user is logged in institution
 And search "Purchase with Cash back" authorization and verify Success status
 And user sign out from customer portal
 
+Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
 When perform an EMV_CASH_ADVANCE MAS transaction
 Then MAS test results are verified
 Then user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
 And user sign out from customer portal
 
+Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
 When perform an EMV_CASH_WITHDRAWAL MAS transaction
 Then MAS test results are verified
 

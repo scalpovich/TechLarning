@@ -33,6 +33,7 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
+Scenario: Perform MSR_PREAUTH and MSR_COMPLETION Authorization transactions
 When connection to MAS is established
 When perform an MSR_PREAUTH MAS transaction
 Then MAS test results are verified
@@ -52,6 +53,7 @@ Then user is logged in institution
 And search Purchase authorization and verify success status
 And user sign out from customer portal
 
+Scenario: Perform MSR_PURCHASE_WITH_REFUND Authorization transaction
 When perform an MSR_PURCHASE_WITH_REFUND MAS transaction
 Then MAS test results are verified
 
