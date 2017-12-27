@@ -37,9 +37,6 @@ public class AdministrationCardHolderPortalPage  extends AbstractBasePage{
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="programCode:input:dropdowncomponent")
 	private MCWebElement selectProgramCode;	
-
-	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@type='submit'][2]")
-	private MCWebElement submitConfig;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "select[name^=menuPalette]")
 	private MCWebElement availableMenusLstBx;
