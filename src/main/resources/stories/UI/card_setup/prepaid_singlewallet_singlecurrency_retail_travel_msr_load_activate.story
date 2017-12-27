@@ -9,6 +9,7 @@ Meta:
 @StoryName SWSC_MSR_RTLTRVL_LOAD_ACTIVATE
 @CR1
 @CardCreation
+@LoadActivate
 
 Scenario: Prepaid - Admin User - Assign Program to Agency
 
