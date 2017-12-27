@@ -33,14 +33,11 @@ public class AdministrationCardHolderPortalPage  extends AbstractBasePage{
 	private MCWebElement addProgramConfig; 
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="productType:input:dropdowncomponent")
-	private MCWebElement selectProductTyp;
+	private MCWebElement selectProductType;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="programCode:input:dropdowncomponent")
-	private MCWebElement selectProgramCode;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind="programCode:input:dropdowncomponent")
-	private MCWebElement saveConfig;
-	
+	private MCWebElement selectProgramCode;	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@type='submit'][2]")
 	private MCWebElement submitConfig;
 	
@@ -63,7 +60,7 @@ public class AdministrationCardHolderPortalPage  extends AbstractBasePage{
 	}
 	
 	public void selectProductByType(String productType){	
-		WebElementUtils.selectDropDownByVisibleText(selectProductTyp, productType);		
+		WebElementUtils.selectDropDownByVisibleText(selectProductType, productType);		
 	}
 	
 	public void selectProgramByCode(String productCode){	

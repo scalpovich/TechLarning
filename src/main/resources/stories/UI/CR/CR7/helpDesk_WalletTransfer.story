@@ -22,8 +22,8 @@ When User fills Document Checklist Screen for prepaid product
 When User fills Device Joining and Membership Fee Plan for prepaid product
 When User fills Device Event Based Fee Plan for prepaid product
 When User fills Device Plan for "prepaid" "emv" card with no pin
-When create wallet Plan for prepaid product and program Retail General Purpose Card [4] with usage Open Loop
-When create wallet Plan for prepaid product and program Retail General Purpose Card [4] with usage Closed Loop
+When user creates a Open_loop wallet plan of default type for program Retail General Purpose for Prepaid
+When user creates a Closed loop wallet plan of White listed MCG type for program Retail General Purpose for Prepaid
 When fills Program section for prepaid product and program Retail General Purpose Card [4]
 When User fills Business Mandatory Fields Screen for prepaid product
 When User fills Device Range section for prepaid product
