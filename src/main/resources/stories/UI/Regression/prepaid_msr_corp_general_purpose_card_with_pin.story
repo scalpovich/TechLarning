@@ -55,7 +55,44 @@ And user sign out from customer portal
 When perform an MSR_PURCHASE_WITH_REFUND MAS transaction
 Then MAS test results are verified
 
+Scenario: Generate Auth File for Clearing
+Meta:
+@TestId 
+When Auth file is generated after transaction
+When MAS simulator is closed
+And user sign out from customer portal
+
+Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
+Meta:
+@TestId 
+Given connection to MCPS is established
+When Auth file is generated
+When Auth file is loaded into MCPS and processed
+Then NOT file is successfully generated
+When MCPS simulator is closed
+
+Scenario: Upload ipm file from customer portal and process it
+Meta:
+@TestId 
 Given user is logged in institution
+When User uploads the NOT file
+When user processes batch for prepaid
+Then in batch trace history transaction is successful
+
+Scenario: Matching & Posting to Cardholders account
+Meta:
+@TestId 
+When in batch trace history transaction is successful
+When transaction status is "Matching Pending"
+When "Matching" batch for prepaid is successful
+Then transaction status is "Presentment Matched with authorization"
+
+Scenario: Program Balance Summary, Auth and Clearing reports download
+Meta:
+@TestId 
 When pre-clearing and Pre-EOD batches are run
 Then verify report for transactions with Program Balance Summary is downloaded
-And user sign out from customer portal
+And Verify Program Balance Summary is downloaded
+And verify report for Auth is downloaded
+And verify report for Clearing is downloaded
+When user sign out from customer portal
