@@ -24,30 +24,30 @@ import com.mastercard.pts.integrated.issuing.utils.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
 
 @Workflow
-public class DisputeWorkflow extends SimulatorUtilities{
+public class DisputeWorkflow extends SimulatorUtilities {
 
 	@Autowired
 	private Navigator navigator;
 	
 	@Autowired
 	private LinuxBox linuxBox;
-	
+
 	@Autowired
 	private DBUtility dbUtils;
-	
+
 	@Autowired
 	TransactionWorkflow transactionWorkFlow;
 
 	private static final Logger logger = Logger.getLogger(PageObjectFactory.class);
-	
+
 	public String getArnFromDb(String bankCode) {
-		String query=SQLQueriesConstants.FETCH_ARN_QUERY.replaceFirst("BANKCODE", bankCode);
-		return dbUtils.getSingleRecordColumnValueFromDB(query,"MICROFILM_REF_NUMBER");
+		String query = SQLQueriesConstants.FETCH_ARN_QUERY.replaceFirst("BANKCODE", bankCode);
+		return dbUtils.getSingleRecordColumnValueFromDB(query, "MICROFILM_REF_NUMBER");
 	}
 
 	public String getEventTriggerFromDb(String bankCode) {
-		String query=SQLQueriesConstants.FETCH_TRIGGER_QUERY.replaceFirst("BANKCODE", bankCode);
-		return dbUtils.getSingleRecordColumnValueFromDB(query,"EVT_JOB_ID");
+		String query = SQLQueriesConstants.FETCH_TRIGGER_QUERY.replaceFirst("BANKCODE", bankCode);
+		return dbUtils.getSingleRecordColumnValueFromDB(query, "EVT_JOB_ID");
 	}
 
 	public void createRetrievalRequest(RetrievalRequest rr) {
@@ -82,27 +82,26 @@ public class DisputeWorkflow extends SimulatorUtilities{
 		return false;
 	}
 
-	public void uploadRetResponse(){
+	public void uploadRetResponse() {
 		RetrivalResponsePage page = navigator.navigateToPage(RetrivalResponsePage.class);
 		page.updateRetrievalResponse();
-		
+
 	}
-	
+
 	public void downLoadIPMOutgoing() {
 		linuxBox.download("/IPM_OUTGOING/PROC", System.getProperty("user.home"));
 
 	}
 
-  public void uploadIpmFile()
-  {
-	  String filePath= System.getProperty("user.dir") + "src//main/resources/uploadIPM";
-	  linuxBox.upload(filePath, "/IPM_INCOMING/INPUT");
-	  
-  }
-  public void uploadBatch(ProcessBatches batch)
-  {
-	  ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
-	  page.processUploadBatch(batch);
-  }
-  
+	public void uploadIpmFile() {
+		String filePath = System.getProperty("user.dir") + "src//main/resources/uploadIPM";
+		linuxBox.upload(filePath, "/IPM_INCOMING/INPUT");
+
+	}
+
+	public void uploadBatch(ProcessBatches batch) {
+		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
+		page.processUploadBatch(batch);
+	}
+
 }
