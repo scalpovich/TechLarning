@@ -2,9 +2,8 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
-import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 @Component
 public class ProcessBatches {
 	
@@ -60,6 +59,7 @@ public class ProcessBatches {
 	public String getProductType() {
 		return productType;
 	}
+
 	public void setProductType(String productType) {
 		this.productType = productType;
 	}

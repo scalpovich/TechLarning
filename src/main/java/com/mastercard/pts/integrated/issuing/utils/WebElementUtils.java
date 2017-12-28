@@ -220,8 +220,7 @@ public class WebElementUtils {
 	}
 
 	public static <R> R fluentWait(Supplier<R> condition) {
-		return new FluentWait<Object>(new Object()).ignoring(WebDriverException.class).withTimeout(TIMEOUT, TimeUnit.SECONDS)
-				.until((com.google.common.base.Function<Object, R>) o -> condition.get());
+		return new FluentWait<Object>(new Object()).ignoring(WebDriverException.class).withTimeout(TIMEOUT, TimeUnit.SECONDS).until((com.google.common.base.Function<Object, R>) o -> condition.get());
 	}
 
 	public static void retryUntilNoErrors(Runnable action) {
@@ -295,29 +294,22 @@ public class WebElementUtils {
 
 	public static boolean isTextAvailableinTable(MCWebElement tableHandle, String text) {
 		WebElement table = asWebElement(tableHandle);
-
 		// To locate rows of table.
 		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
-
 		// To calculate no of rows In table.
 		int rowscount = rowstable.size();
 		// Loop will execute till the last row of table.
 		for (int row = 1; row < rowscount; row++) {
-
 			// To locate columns(cells) of that specific row.
 			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
-
 			// To calculate no of columns(cells) In that specific row.
 			int columnscount = columnsrow.size();
-
 			// Loop will execute till the last cell of that specific row.
 			for (int col = 0; col < columnscount; col++) {
 				// To retrieve text from that specific cell.
-
 				if (columnsrow.get(col).getText().equals(text)) {
 					return true;
 				}
-
 			}
 		}
 		return false;
@@ -331,10 +323,9 @@ public class WebElementUtils {
 	public static void scrollToElement(WebDriver driver, MCWebElement element) {
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
 	}
+
 	public static void scrollToElement(WebDriver driver, WebElement element) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
-}
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
 
-	
-
+	}
 }
