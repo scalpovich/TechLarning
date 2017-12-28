@@ -78,6 +78,9 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:walletPlanCode1:input:dropdowncomponent")
 	private MCWebElement walletPlanPlan1DDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:walletPlanCode2:input:dropdowncomponent")
+	private MCWebElement walletPlanPlan2DDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanCode1:input:dropdowncomponent")
 	private MCWebElement devicePlanPlan1DDwn;
@@ -320,6 +323,10 @@ public class ProgramPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(walletPlanPlan1DDwn, walletPlanPlan1);
 	}
 	
+	public void selectWalletPlanPlan2(String walletPlanPlan1) {
+		WebElementUtils.selectDropDownByVisibleText(walletPlanPlan2DDwn, walletPlanPlan1);
+	}
+	
 	public void selectRefundInCurrency(String refundInCurrency) {
 		if(refundInCurrencyDDwn.isEnabled())
 		WebElementUtils.selectDropDownByVisibleText(refundInCurrencyDDwn, refundInCurrency);
@@ -365,6 +372,35 @@ public class ProgramPage extends AbstractBasePage {
 		});
 		verifyOperationStatus();
 	}
+	
+	public void addsProgramData(Program program, String productType) {
+		logger.info("Add Program: {}", program.getProgramCode());
+		clickAddNewButton();
+
+		runWithinPopup("Add Program", () -> {
+			addProgram(program.getProgramCode());
+			addDescription(program.getDescription());
+			selectInterchange(program.getInterchange());
+			selectProduct(program.getProduct());
+			selectProgramType(program.getProgramType());
+			selectBaseCurrency(program.getBaseCurrency());
+			program.setProgramCodeDevice(program.getDescription()+" "+"["+program.getProgramCode()+"]");
+			logger.info("Program added :"+program.getDescription()+" "+"["+program.getProgramCode()+"]");
+			if (program.getProgramType().contains("Multi")){
+				addNumberOfCurrency(program.getNoOfCurrencyAllowed());			
+				selectRefundInCurrency(program.getRefundInCurrency());
+				selectWalletToWalletTransferType(program.getWalletToWalletTransferType());
+				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
+					selectReferenceCurrency(program.getReferenceCurrency());
+			}if (!productType.equalsIgnoreCase(ProductType.DEBIT))
+				selectCurrencyConversionBy(program.getCurrencyConversionBy());
+			selectCalendarStartMonth(program.getCalendarStartMonth());
+			fillExtraSection(program, productType);
+			clickNextButton();
+			clickFinishButton();
+		});
+		verifyOperationStatus();
+	}
 
 	private void addNumberOfCurrency(String numberOfCurrencyAllowed){
 		noOfCurrencyAllowedTxt.clearField();
@@ -382,7 +418,44 @@ public class ProgramPage extends AbstractBasePage {
 		}
 		
 		clickNextButton();
+		selectWalletPlanPlan1(program.getWalletPlanPlan1());		
+		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
+		if (!productType.equalsIgnoreCase(ProductType.DEBIT)) {
+			selectOtherPlanStatementMessagePlan(program.getOtherPlanStatementMessagePlan());
+			selectOtherPlanMarketingMessagePlan(program.getOtherPlanMarketingMessagePlan());
+		}
+
+		WebElementUtils.selectDropDownByOptionalVisibleText(dedupePlanCodeDDwn,
+				program.getDedupPlan());
+		WebElementUtils.selectDropDownByOptionalVisibleText(documentPlanCodeDDwn, program.getDocumentChecklistPlan());
+		WebElementUtils.selectDropDownByOptionalVisibleText(mccRulePlanCodeDDwn, program.getMmcRulePlan());
+
+		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
+			WebElementUtils.selectDropDownByOptionalVisibleText(stmtPlanCodeDDwn, program.getPrepaidStatementPlan());
+		}
+		waitForLoaderToDisappear();
+		clickNextButton();
+		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
+			fillDataForCreditCard(program);
+		}
+	}
+	
+	private void fillExtraSection(Program program, String productType) {
+		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
+			addMaximumBalanceWithoutKyc(program.getMaximumBalanceWithoutKyc());
+			addnumberOfLoadsAllowedWithoutKyc(program.getNumberOfLoadsAllowedWithoutKyc());
+			receiveFundTransferForUsage();
+			sendFundTransferForUsage();
+			selectRefundInCurrency(program.getRefundInCurrency());
+		}
+		
+		clickNextButton();
+		
+		logger.info("Assign second Wallet :" + program.getWalletPlanPlan1());
 		selectWalletPlanPlan1(program.getWalletPlanPlan1());
+		logger.info("Assign second Wallet :" + program.getWalletPlanPlan2());
+		
+		selectWalletPlanPlan2(program.getWalletPlanPlan2());
 		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
 		if (!productType.equalsIgnoreCase(ProductType.DEBIT)) {
 			selectOtherPlanStatementMessagePlan(program.getOtherPlanStatementMessagePlan());

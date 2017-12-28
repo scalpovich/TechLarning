@@ -154,15 +154,17 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 
 		runWithinPopup("Add Wallet Plan", () -> {
 			String productType = walletPlan.getProductType();
+			
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
 			inputDescription(walletPlan.getDescription());
+			
 			selectCurrency(walletPlan.getCurrency());
 			selectProductType(productType);
 			selectProgramType(walletPlan.getProgramType());
 			selectUsage(walletPlan.getUsage());
 
 			fillDetailsBasedOnCarddType1(walletPlan, productType);
-
+			//Select White listed MSG
 			clickNextButton(); // Click on next button
 				clickFinishButton(); // click on finish button
 			});

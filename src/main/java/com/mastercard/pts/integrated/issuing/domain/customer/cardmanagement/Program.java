@@ -67,6 +67,7 @@ public class Program implements HasCodeAndDescription {
 	private String calendarStartMonth;
 	private String currencyConversionBy;
 	private String walletPlanPlan1;
+	private String walletPlanPlan2;
 	private String devicePlanPlan1;
     private String otherPlanStatementMessagePlan;
 	private String otherPlanMarketingMessagePlan;
@@ -600,6 +601,14 @@ public class Program implements HasCodeAndDescription {
 
 	public void setWalletPlanPlan1(String walletPlanPlan1) {
 		this.walletPlanPlan1 = walletPlanPlan1;
+	}
+	
+	public String getWalletPlanPlan2() {
+		return walletPlanPlan2;
+	}
+
+	public void setWalletPlanPlan2(String walletPlanPlan2) {
+		this.walletPlanPlan2 = walletPlanPlan2;
 	}
 	
 	public String getDevicePlanPlan1() {

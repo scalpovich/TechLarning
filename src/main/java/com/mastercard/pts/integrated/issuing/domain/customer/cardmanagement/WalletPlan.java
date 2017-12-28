@@ -71,7 +71,24 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String surchargePlan;
 	private String surchargeWaiverPlan;
 	private String walletFeePlan;
+	private String firstWallet;
+	private String secondWallet;
+	
+	public String getSecondWallet() {
+		return secondWallet;
+	}
 
+	public void setSecondWallet(String secondWallet) {
+		this.secondWallet = secondWallet;
+	}
+
+	public String getFirstWallet() {
+		return firstWallet;
+	}
+
+	public void setFirstWallet(String firstWallet) {
+		this.firstWallet = firstWallet;
+	}
 	
 	public String getWalletReserveAmount() {
 		return walletReserveAmount;
@@ -327,8 +344,6 @@ public class WalletPlan implements HasCodeAndDescription {
 		this.usageType = usageType;
 	}
 
-
-
 	public String getOpenloopWalletPlan() {
 		return openloopWalletPlan;
 	}
@@ -424,4 +439,5 @@ public class WalletPlan implements HasCodeAndDescription {
 	public String toString() {
 		return MiscUtils.toString(this);
 	}
+
 }

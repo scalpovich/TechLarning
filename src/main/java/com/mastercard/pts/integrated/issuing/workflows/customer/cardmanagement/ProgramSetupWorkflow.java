@@ -169,14 +169,19 @@ public class ProgramSetupWorkflow {
 	
 	public void createWalletPlan1(WalletPlan walletPlan) {
 		WalletConfigurationWalletPlanPage page = navigator.navigateToPage(WalletConfigurationWalletPlanPage.class);
-		page.addWalletPlanData1(walletPlan);
+		page.addWalletPlanData1(walletPlan);		
 	}
 
 	public void createProgram(Program program, String productType ) {
 		ProgramPage page = navigator.navigateToPage(ProgramPage.class);
 		page.addProgramData(program, productType);
 	}
-
+	
+	public void createAddProgram(Program program, String productType ) {
+		ProgramPage page = navigator.navigateToPage(ProgramPage.class);
+		page.addsProgramData(program, productType);
+	}
+	
 	public void createDeviceRange(DeviceRange deviceRange) {
 		DeviceRangePage page = navigator.navigateToPage(DeviceRangePage.class);
 		page.addDeviceRangeData(deviceRange);
