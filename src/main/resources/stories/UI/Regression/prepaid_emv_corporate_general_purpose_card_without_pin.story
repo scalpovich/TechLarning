@@ -7,6 +7,8 @@ I want to create a prepaid emv corporate general purpose card and test various t
 
 Meta:
 @StoryName p_emv_corp_general_purpose
+@AuthorizationRegression
+@AuthorizationRegressionGroup2
 Scenario: Setup - prepaid emv corporate general purpose card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin
@@ -22,6 +24,8 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
+Then user sign out from customer portal
+Then embossing file batch was generated in correct format
 
 Scenario: Transaction - EMV_PREAUTH  and EMV_COMPLETION Authorization transaction - prepaid emv corporate general purpose card
 Given connection to MAS is established

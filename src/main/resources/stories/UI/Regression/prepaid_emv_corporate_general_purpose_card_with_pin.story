@@ -7,6 +7,9 @@ I want to create a prepaid emv corporate general purpose card and test various t
 
 Meta:
 @StoryName p_emv_corp_general_purpose
+@AuthorizationRegression
+@AuthorizationRegressionGroup2
+
 Scenario: Setup - prepaid emv corporate general purpose card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card

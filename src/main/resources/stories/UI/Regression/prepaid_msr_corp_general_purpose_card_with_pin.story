@@ -7,6 +7,8 @@ I want to authorize transactions for prepaid msr corporate general purpose card
 
 Meta:
 @StoryName p_msr_corp_general_purpose
+@AuthorizationRegression
+@AuthorizationRegressionGroup2
 
 Scenario: prepaid msr corporate general purpose card > Device production - prepaid msr gift card > Perform MSR_PREAUTH and MSR_AUTH Authorization transaction > Program Balance Summary download
 Given user is logged in institution
