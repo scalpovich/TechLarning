@@ -9,7 +9,8 @@ Meta:
 @StoryName p_emv_coprporate_travel
 @oldReferenceSheet_S203707
 @CRCardsWithAuthorizationRegression
-
+@AuthorizationRegression
+@AuthorizationRegressionGroup3
 
 Scenario: Set up prepaid msr corporate travel card
 Meta:

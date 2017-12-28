@@ -9,6 +9,9 @@ Meta:
 @StoryName p_emv_coprporate_travel
 @oldReferenceSheet_S203707
 @CRCardsWithAuthorizationRegression
+@AuthorizationRegression
+@AuthorizationRegressionGroup3
+
 
 Scenario: Set up prepaid emv corporate travel card
 Meta:
@@ -35,6 +38,7 @@ When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
 Then user sign out from customer portal
+
 
 Scenario: Pin Generation 
 Meta:
