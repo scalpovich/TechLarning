@@ -28,6 +28,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import winium.elements.desktop.ComboBox;
+
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.configuration.FinSimSimulator;
 import com.mastercard.pts.integrated.issuing.configuration.MasSimulator;
@@ -1216,15 +1218,24 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		return isContains;
 	}
 
+	private void selectLicense() {
+		WebElement dd = winiumDriver.findElementById("comboBox1");
+		ComboBox box = new ComboBox(dd);
+		box.expand();
+		dd.findElement(By.name("IPS Host Testing")).click();
+	}
+	
 	private void selectLicense(String tool) {
 		if(!isContains(tool, "mdfs")) 
-			executeAutoITExe(SELECT_IPS_HOST_TESTMODE + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"" );
+//			executeAutoITExe(SELECT_IPS_HOST_TESTMODE + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"" );
+			selectLicense();
 		else
 			selectLicenseOnMdfs();
 	}
 
 	private void selectLicenseOnMdfs() {
-		executeAutoITExe(SELECT_IPS_HOST_TESTMODE  + SEPERATOR + SimulatorConstantsData.MDFS_16_X + "\"" );
+//		executeAutoITExe(SELECT_IPS_HOST_TESTMODE  + SEPERATOR + SimulatorConstantsData.MDFS_16_X + "\"" );
+		selectLicense();
 	}
 
 	private void reSelectLicense(String tool) {

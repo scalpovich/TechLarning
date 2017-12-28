@@ -1,8 +1,8 @@
 #cs ----------------------------------------------------------------------------
 
  AutoIt Version: 3.3.14.2
- Author:         myName
 
+ Author:         myName
  Script Function:
 	Template AutoIt script.
 
@@ -14,9 +14,13 @@
 #include <Constants.au3>
 
     WinActivate("FINsim - Connect To Device", "Please Select Device To Connect To")
-	ControlClick("FINsim - Connect To Device", "", "Select")
-	Sleep(5000)
-
+	ControlSetText("FINsim - Connect To Device", "", "[CLASS:Edit; INSTANCE:2]", "Automation")
+	ControlSetText("FINsim - Connect To Device", "", "[CLASS:Edit; INSTANCE:1]", "DEV_MDS-OFT")
+		Sleep(5000)
+		
+	ControlClick("FINsim - Connect To Device", "", "Select") 
+		Sleep(5000)
+		
     WinActivate("[CLASS:FINsim. The EFT Simulator]", "Card To Use For Transactions")
 	Send ("!T")
     Send ("o")
@@ -36,8 +40,8 @@
 	ControlSetText("PIN Offset Calculator","","Edit2", $CmdLine[2])
 	ControlSetText("PIN Offset Calculator","","Edit3", $CmdLine[3])
 
-	ControlCommand("PIN Offset Calculator", "", "[CLASS:ComboBox; INSTANCE:1]", "SelectString", $CmdLine[4])
 	ControlCommand("PIN Offset Calculator", "", "[CLASS:ComboBox; INSTANCE:2]", "SelectString", $CmdLine[5])
+	ControlCommand("PIN Offset Calculator", "", "[CLASS:ComboBox; INSTANCE:1]", "SelectString", $CmdLine[4])
 	ControlCommand("PIN Offset Calculator", "", "[CLASS:ComboBox; INSTANCE:3]", "SelectString", $CmdLine[6])
 	ControlSetText("PIN Offset Calculator","","Edit4", $CmdLine[7])
 	ControlCommand("PIN Offset Calculator", "", "[CLASS:ComboBox; INSTANCE:4]", "SelectString", $CmdLine[8])
