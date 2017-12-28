@@ -259,14 +259,14 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			launchAndConnectToFinSim();
 
 		} else if(simulator.toUpperCase().contains("MAS")) {
-			selectLicenseAndConfigure("Credit - Professional", "MAS 16.4");
+			selectLicenseAndConfigure(SimulatorConstantsData.SELECT_MAS_LICENSE, SimulatorConstantsData.MAS_LICENSE_TYPE_16X);
 			wait(4000);
 			connect2IPSHostModeAndConfigureIP("MAS"); 	
 		} else if(simulator.toUpperCase().contains("MCPS")) {
 			launchAndConnectToMCPS();
 
 		} else if(simulator.toUpperCase().contains("MDFS")) {
-			selectLicenseAndConfigure("Debit - Professional", "MDFS 16.4");
+			selectLicenseAndConfigure(SimulatorConstantsData.SELECT_MDFS_LICENSE, SimulatorConstantsData.MDFS_LICENSE_TYPE_16X);
 			wait(4000);
 			connect2IPSHostModeAndConfigureIPOnMdfs(); 	
 		} else if(simulator.toUpperCase().contains("VISA")) {
@@ -749,9 +749,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		try
 		{
 			String licenseForSelection = null;
-			if(licenseFor.toUpperCase().contains("MAS 16.4"))
+			//changed from MAS 16.x to MAS so that this works for all versions of MAS
+			if(licenseFor.toUpperCase().contains("MAS"))
 				licenseForSelection = SimulatorConstantsData.MAS_LICENSE_TYPE_16X;
-			else if(licenseFor.toUpperCase().contains("MDFS 16.4"))
+			//changed from MDFS 16.x to MDFS so that this works for all versions of MDFS
+			else if(licenseFor.toUpperCase().contains("MDFS"))
 				licenseForSelection = SimulatorConstantsData.MDFS_LICENSE_TYPE_16X;
 
 			MiscUtils.reportToConsole("selectLicenseAndConfigure  : " + licenseForSelection);

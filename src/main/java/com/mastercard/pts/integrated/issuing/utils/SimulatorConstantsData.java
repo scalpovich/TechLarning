@@ -28,13 +28,15 @@ public class SimulatorConstantsData {
 
 	public static final String MCPS_16_X = "MCPS - MasterCard Clearing Presentment Simulator - 16.Q4";
 
-	public static final String MCPS_17_X = "MCPS - MasterCard Clearing Presentment Simulator - 16.Q4";
-	
 	public static final String MAS_LICENSE_TYPE_16X = "MAS 16.4";
 	
 	public static final String MDFS_LICENSE_TYPE_16X = "MAS 16.4";
 	
 	public static final String SAMPLE_PAN_NUMBER = "2222550010000018";
+	
+	public static final String SELECT_MAS_LICENSE = "Credit - Professional";
+	
+	public static final String SELECT_MDFS_LICENSE = "Debit - Professional";
 	
 	private SimulatorConstantsData() {}
 }
