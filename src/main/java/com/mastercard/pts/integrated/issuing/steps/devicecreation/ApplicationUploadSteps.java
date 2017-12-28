@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.devicecreation;
 
+import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -59,22 +60,22 @@ public class ApplicationUploadSteps {
 		search.verifyApplicationUploadSuccess(searchDomain);
 	}
 
-	/*@When("processes pre-production batch $type")
+	@Alias("processes pre-production batch $type")
 	public void whenProcessesPreproductionBatchForPrepaid(String type) {
 
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
 		preProductionBatch.setJobID(processBatch.getJoBID());
 		batchProcessFlows.processPreProductionBatch(preProductionBatch);
-	}*/
+	}
 
-	/*@When("processes device production batch $type")
+	@Alias("processes device production batch $type")
 	public void whenProcessesDeviceProductionBatch(String type) {
 		DeviceProductionBatch batch = new DeviceProductionBatch();
 		batch.setProductType(ProductType.fromShortName(type));
 		batch.setBatchNumber(preProductionBatch.getBatchNumber());
 		MiscUtils.reportToConsole("device production Batch: {}",preProductionBatch.getBatchNumber());
 		batchProcessFlows.processDeviceProductionBatch(batch);
-	}*/
+	}
 
 	
 }
