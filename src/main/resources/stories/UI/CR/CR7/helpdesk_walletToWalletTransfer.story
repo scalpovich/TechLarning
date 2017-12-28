@@ -152,3 +152,4 @@ Then device has "normal" status
 Then user performs adjustment transaction
 Then currency setup for device
 When wallet to wallet transfer selected account
+Then verify wallet to wallet transfer transaction amount
