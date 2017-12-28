@@ -17,7 +17,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
 @Workflow
 public class ReconciliationWorkFlow {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(TransactionReportsPage.class);
 
 	@Autowired
@@ -32,11 +32,11 @@ public class ReconciliationWorkFlow {
 			processBatch.processSystemInternalProcessingBatch(batch.get(1));
 		}
 	}
-	
+
 	public void runPreClearingAndLoyaltyCalcBatch(List<ProcessBatches> batch) {
-			ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
-			processBatch.processSystemInternalProcessingBatch(batch.get(1));
-		}
+		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
+		processBatch.processSystemInternalProcessingBatch(batch.get(1));
+	}
 
 	public String runPreClearingBatch(ProcessBatches batch) {
 		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
@@ -50,7 +50,7 @@ public class ReconciliationWorkFlow {
 		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
 		return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
 	}
-	
+
 	public boolean verifyReportGenerationClearing() {
 		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
 		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
@@ -58,7 +58,7 @@ public class ReconciliationWorkFlow {
 		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
 		return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
 	}
-	
+
 	public boolean verifyReportGenerationRecon() {
 		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
 		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
@@ -96,7 +96,5 @@ public class ReconciliationWorkFlow {
 		}
 		return fileCountAfterDownload;
 	}
-
-
 
 }

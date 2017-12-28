@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -19,10 +20,6 @@ import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.SimulatorUtilities;
-import com.mastercard.pts.integrated.issuing.domain.ProductType;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
-import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
-import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -57,7 +54,7 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//img[@class='iconButton']")
 	private MCWebElement imageIcon;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=noOfCurrencyAllowed]")
 	private MCWebElement noOfCurrencyAllowedTxt;
 
@@ -69,7 +66,7 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:transferType:input:dropdowncomponent")
 	private MCWebElement walletToWalletTransferTypeDDwn;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:referenceCurrency:input:dropdowncomponent")
 	private MCWebElement referenceCurrencyDDwn;
 
@@ -105,6 +102,7 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:cashLimitVariable:input:inputTextField")
 	private MCWebElement percentageOfCreditLimitTxt;
+
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addProgramBtn;
 
@@ -200,7 +198,6 @@ public class ProgramPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:refundInCurrency:input:dropdowncomponent")
 	private MCWebElement refundInCurrencyDDwn;
-	
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#dedupePlanCode select")
 	private MCWebElement dedupePlanCodeDDwn;
@@ -213,6 +210,7 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#stmtPlanCode select")
 	private MCWebElement stmtPlanCodeDDwn;
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:cashLimitCycleIndicatior:input:dropdowncomponent")
 	private MCWebElement CashLimitResetDDwn;
 
@@ -223,6 +221,7 @@ public class ProgramPage extends AbstractBasePage {
 	 * @PageElement(findBy = FindBy.NAME, valueToFind = "Textbox_NAME") private
 	 * MCWebElement NEXT2;
 	 */
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "buttons:finish")
 	private MCWebElement FinishBtn;
 
@@ -231,8 +230,10 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "buttons:cancel")
 	private MCWebElement CancelBtn;
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "ofacScreeningOfNewApp:checkBoxComponent")
 	private MCWebElement sdnCheckBox;
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
 	private MCWebElement enterProgram;
 
@@ -253,7 +254,7 @@ public class ProgramPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:allowFtOutOnClosedUsage:checkBoxComponent")
 	private MCWebElement sendCheckBx;
-	
+
 	public void addProgram(String programCode) {
 		WebElementUtils.enterText(programTxt, programCode);
 	}
@@ -294,7 +295,7 @@ public class ProgramPage extends AbstractBasePage {
 	public void selectWalletToWalletTransferType(String walletToWalletTransferType) {
 		WebElementUtils.selectDropDownByVisibleText(walletToWalletTransferTypeDDwn, walletToWalletTransferType);
 	}
-	
+
 	public void selectReferenceCurrency(String referenceCurrency) {
 		WebElementUtils.selectDropDownByVisibleText(referenceCurrencyDDwn, referenceCurrency);
 	}
@@ -306,7 +307,7 @@ public class ProgramPage extends AbstractBasePage {
 	public void addnumberOfLoadsAllowedWithoutKyc(String numberOfLoadsAllowedWithoutKyc) {
 		WebElementUtils.enterText(numberOfLoadsAllowedWithoutKycTxt, numberOfLoadsAllowedWithoutKyc);
 	}
-	
+
 	public void receiveFundTransferForUsage(){
 		WebElementUtils.checkCheckbox(receiveCheckBx, true);
 	}
@@ -416,6 +417,7 @@ public class ProgramPage extends AbstractBasePage {
 		logger.info("Program");
 		verifySearchButton("Search");
 	}
+
 	public void clickAddProgram() {
 		clickWhenClickable(addProgramBtn);
 		switchToAddProgramframe();
@@ -555,13 +557,11 @@ public class ProgramPage extends AbstractBasePage {
 	public void selectMarketingMessagePlan() {
 		waitForElementVisible(MarketingMessagePlanDDwn);
 		SelectDropDownByIndex(MarketingMessagePlanDDwn, 1);
-
 	}
 
 	public void clickFinishButton() {
 		clickWhenClickable(FinishBtn);
 		SwitchToDefaultFrame();
-
 	}
 
 	public boolean verifyErrorsOnProgramPage() {
@@ -635,12 +635,13 @@ public class ProgramPage extends AbstractBasePage {
 		selectMarketingMessagePlan();
 		selectByVisibleText(loyaltyPlanDDwn, loyaltyPlan);
 	}
+
 	public void selectOtherPlans1() {
 		selectStatementMessagePlan();
 		selectMarketingMessagePlan();
-			}
-	public void enterProgramValue(String a) {
+		}
 
+	public void enterProgramValue(String a) {
 		enterValueinTextBox(enterProgram, a);
 		clickWhenClickable(search);
 		waitForElementVisible(editProgram);
@@ -661,5 +662,4 @@ public class ProgramPage extends AbstractBasePage {
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(programSearchTxt));
 	}
-
 }
