@@ -46,7 +46,7 @@ Then user is logged in institution
 And search Purchase authorization and verify success status
 And user sign out from customer portal
 
-Scenario: Perform EMV_PURCHASE Authorization transaction
+Scenario: Perform EMV_PURCHASE_WITH_CASHBACK Authorization transaction
 When perform an EMV_PURCHASE_WITH_CASHBACK MAS transaction
 Then MAS test results are verified
 Then user is logged in institution
