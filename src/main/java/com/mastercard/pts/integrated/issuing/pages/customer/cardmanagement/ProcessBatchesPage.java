@@ -1,14 +1,14 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
@@ -35,8 +35,7 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_OPERATION, CardManagementNav.L2_PROCESSING_BATCHES,
-		CardManagementNav.L3PROCESS_BATCHES })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_OPERATION, CardManagementNav.L2_PROCESSING_BATCHES, CardManagementNav.L3PROCESS_BATCHES })
 public class ProcessBatchesPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
@@ -150,7 +149,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='recRejectCnt']/span/span")
 	private MCWebElements rejectedCountTxt;
-	
+
 	public void selectBatchType(String option) {
 		selectByVisibleText(batchTypeDDwn, option);
 	}
@@ -158,16 +157,19 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	public void selectBatchName(String option) {
 		selectByVisibleText(batchNameDDwn, option);
 	}
+
 	public void clickSubmitBtn() {
 		clickWhenClickable(submitBtn);
 	}
-	
+
 	public static final String FILE_CHK_BOX = "//span[.='%s']/following::input[1]";
 	public static final String JOB_ID = "//span[.='%s']/following::span[1]";
 	public static final String JOB_STATUS = "//span[.='%s']/following::a[1]";
+
 	public String retrieveJobID(String fileName) {
 		return Element(JOB_ID.replace("%s", fileName)).getText();
 	}
+
 	public void checkFileCheckBox(String filename) {
 		waitForElementVisible(submitBtn);
 		waitForElementVisible(Element(FILE_CHK_BOX.replace("%s", filename)));
@@ -178,28 +180,25 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		checkFileCheckBox(fileName);
 		clickSubmitBtn();
 	}
-	private By tracesDescription = By
-			.xpath("//table[@class='modelFormClass']//table[@class='dataview']//tr//child::td[position()=4]");
+
+	private By tracesDescription = By.xpath("//table[@class='modelFormClass']//table[@class='dataview']//tr//child::td[position()=4]");
 
 	private List<String> errorDescription = new ArrayList<String>();
+
 	public void processUploadBatch(String batchName) {
 		selectBatchType(BatchType.UPLOAD);
 		selectBatchName(batchName);
 	}
-	public void processBatch(String uploadedFileName,
-			ProcessBatches processBatchesDomain) {
-		String elementXpath = String.format("//span[contains(text(),'%s')]",
-				uploadedFileName);
-		String selectXpath = elementXpath
-				+ "//parent::td//following-sibling::td/input";
+
+	public void processBatch(String uploadedFileName, ProcessBatches processBatchesDomain) {
+		String elementXpath = String.format("//span[contains(text(),'%s')]", uploadedFileName);
+		String selectXpath = elementXpath + "//parent::td//following-sibling::td/input";
 		selectByVisibleText(batchTypeDdwn, processBatchesDomain.getBatchType());
 		CustomUtils.ThreadDotSleep(500);
 		selectByVisibleText(batchNameDdwn, processBatchesDomain.getBatchName());
 		CustomUtils.ThreadDotSleep(2000);
-		WebElement uploadedFilename = getFinder().getWebDriver().findElement(
-				By.xpath(elementXpath));
-		WebElement checkbox = getFinder().getWebDriver().findElement(
-				By.xpath(selectXpath));
+		WebElement uploadedFilename = getFinder().getWebDriver().findElement(By.xpath(elementXpath));
+		WebElement checkbox = getFinder().getWebDriver().findElement(By.xpath(selectXpath));
 
 		waitForElementVisible(selectFirstChkBx);
 		if (uploadedFileName.equalsIgnoreCase(uploadedFilename.getText())) {
@@ -212,30 +211,23 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 
 	public boolean verifyFileProcess(ProcessBatches processBatchesDomain) {
-		String elementXpath = String.format("//span[contains(text(),'%s')]",
-				FileCreation.filenameStatic);
+		String elementXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic);
 		Boolean isProcessed = false;
-		String statusXpath = elementXpath
-				+ "//parent::td//following-sibling::td/a";
+		String statusXpath = elementXpath + "//parent::td//following-sibling::td/a";
 		CustomUtils.ThreadDotSleep(500);
 		getFinder().getWebDriver().findElement(By.xpath(statusXpath)).click();
 		switchToIframe(Constants.VIEW_BATCH_DETAILS);
 
 		// unless it is completed, refresh it - No of attempts: 5
 		for (int i = 0; i < 5; i++) {
-			if (processBatchStatusTxt.getText().equalsIgnoreCase("PENDING [0]")
-					|| processBatchStatusTxt.getText().equalsIgnoreCase(
-							"IN PROCESS [1]")) {
+			if (processBatchStatusTxt.getText().equalsIgnoreCase("PENDING [0]") || processBatchStatusTxt.getText().equalsIgnoreCase("IN PROCESS [1]")) {
 				ClickButton(closeBtn);
 				getFinder().getWebDriver().switchTo().defaultContent();
-				getFinder().getWebDriver().findElement(By.xpath(statusXpath))
-						.click();
+				getFinder().getWebDriver().findElement(By.xpath(statusXpath)).click();
 				switchToIframe(Constants.VIEW_BATCH_DETAILS);
 				waitForElementVisible(processBatchStatusTxt);
-			} else if (processBatchStatusTxt.getText().equalsIgnoreCase(
-					"SUCCESS [2]")) {
-				if (rejectedCountTxt.getText().contains("0")
-						|| rejectedCountTxt.getText().contains("-")) {
+			} else if (processBatchStatusTxt.getText().equalsIgnoreCase("SUCCESS [2]")) {
+				if (rejectedCountTxt.getText().contains("0") || rejectedCountTxt.getText().contains("-")) {
 					isProcessed = true;
 					break;
 				} else {
@@ -243,8 +235,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 					getBatchTraces();
 					break;
 				}
-			} else if (processBatchStatusTxt.getText().equalsIgnoreCase(
-					"FAILED [3]")) {
+			} else if (processBatchStatusTxt.getText().equalsIgnoreCase("FAILED [3]")) {
 				ClickButton(tracesLink);
 				getBatchTraces();
 				break;
@@ -260,8 +251,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	public void getBatchTraces() {
 		getFinder().getWebDriver().switchTo().defaultContent();
 		switchToIframe(Constants.TROUBLESHOOTING_TRACES);
-		List<WebElement> tracesList = getFinder().getWebDriver().findElements(
-				tracesDescription);
+		List<WebElement> tracesList = getFinder().getWebDriver().findElements(tracesDescription);
 
 		for (WebElement element : tracesList) {
 			errorDescription.add(element.getText());
@@ -283,21 +273,22 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		propertyFileKey = "cer.errormessage." + key;
 
 		for (int j = 0; j < errorDescription.size(); j++) {
-			if (env.getProperty(propertyFileKey).equalsIgnoreCase(
-					errorDescription.get(j))) {
+			if (env.getProperty(propertyFileKey).equalsIgnoreCase(errorDescription.get(j))) {
 				isSimilar = true;
 				break;
 			}
 		}
 		return isSimilar;
 	}
+
 	public Map<String, String> processUploadBatch(ProcessBatches batch) {
 		logger.info("Process Upload Batch: {}", batch.getBatchName());
 		HashMap<String, String> hm = new HashMap<>();
 		WebElementUtils.selectDDByVisibleText(batchTypeDDwn, batch.getBatchType());
 		WebElementUtils.selectDDByVisibleText(batchNameDDwn, batch.getBatchName());
-/*		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, batch.getBatchType());
-		WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, batch.getBatchName());*/
+		/*
+		 * WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, batch.getBatchType()); WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, batch.getBatchName());
+		 */
 		selectChkBx.click();
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		submitBtn.click();
@@ -316,21 +307,21 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 
 	public String processSystemInternalProcessingBatchMatchingBatch(ProcessBatches batch) {
-		
+
 		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "SYSTEM INTERNAL PROCESSING [B]");
 		selectInternalBatchType(batch.getBatchName());
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		submitAndVerifyBatch();
 		return batchStatus;
-		
+
 	}
 
 	public String processSystemInternalProcessingBatchWithoutDateCheck(ProcessBatches batch) {
 		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
 		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "SYSTEM INTERNAL PROCESSING [B]");
 		selectInternalBatchType(batch.getBatchName());
-			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-			submitAndVerifyBatch();
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+		submitAndVerifyBatch();
 		return batchStatus;
 	}
 
@@ -366,7 +357,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 		else if ("EOD-Prepaid".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "End Of Day - Prepaid [EOD]");
-		
+
 		else if ("Loyalty-Calc".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Loyalty Calculation [LYT_CALC]");
 	}
@@ -475,7 +466,6 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		WebElementUtils.selectDDByVisibleText(productTypeDDwn, batch.getProductType());
 	}
 
-	
 	public Date getDateFromUI(SimpleDateFormat dateFormatter, ProcessBatches batch) throws ParseException {
 		Date dateFromUI = new Date();
 		String businessDate = "";
@@ -491,50 +481,37 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		}
 		return dateFromUI;
 	}
-	public boolean verifyFileProcessUpload(ProcessBatches processBatchesDomain,
-			String fileName) {
+
+	public boolean verifyFileProcessUpload(ProcessBatches processBatchesDomain, String fileName) {
 		FileCreation.filenameStatic = fileName;
-		String elementXpath = String.format("//span[contains(text(),'%s')]",
-				FileCreation.filenameStatic);
+		String elementXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic);
 		Boolean isProcessed = false;
-		String statusXpath = elementXpath
-				+ "//parent::td//following-sibling::td/a";
+		String statusXpath = elementXpath + "//parent::td//following-sibling::td/a";
 		CustomUtils.ThreadDotSleep(20000);
 		getFinder().getWebDriver().findElement(By.xpath(statusXpath)).click();
 		switchToIframe(Constants.VIEW_BATCH_DETAILS);
 
 		// unless it is completed, refresh it - No of attempts: 5
 		for (int i = 0; i < 5; i++) {
-			if (processBatchStatusTxt.getText().equalsIgnoreCase("PENDING [0]")
-					|| processBatchStatusTxt.getText().equalsIgnoreCase(
-							"IN PROCESS [1]")) {
+			if (processBatchStatusTxt.getText().equalsIgnoreCase("PENDING [0]") || processBatchStatusTxt.getText().equalsIgnoreCase("IN PROCESS [1]")) {
 				ClickButton(closeBtn);
 				waitForLoaderToDisappear();
 				getFinder().getWebDriver().switchTo().defaultContent();
 				waitForLoaderToDisappear();
-				getFinder().getWebDriver().findElement(By.xpath(statusXpath))
-						.click();
+				getFinder().getWebDriver().findElement(By.xpath(statusXpath)).click();
 				switchToIframe(Constants.VIEW_BATCH_DETAILS);
 				waitForLoaderToDisappear();
 				waitForElementVisible(processBatchStatusTxt);
-			} else if (processBatchStatusTxt.getText().equalsIgnoreCase(
-					"SUCCESS [2]")) {
-
-				if (rejectedCountTxt.getText().contains("0")
-						|| rejectedCountTxt.getText().contains("-")) {
-
+			} else if (processBatchStatusTxt.getText().equalsIgnoreCase("SUCCESS [2]")) {
+				if (rejectedCountTxt.getText().contains("0") || rejectedCountTxt.getText().contains("-")) {
 					isProcessed = true;
 					break;
-				}
-
-				else {
+				} else {
 					ClickButton(tracesLink);
 					getBatchTraces();
 					break;
 				}
-
-			} else if (processBatchStatusTxt.getText().equalsIgnoreCase(
-					"FAILED [3]")) {
+			} else if (processBatchStatusTxt.getText().equalsIgnoreCase("FAILED [3]")) {
 				ClickButton(tracesLink);
 				getBatchTraces();
 				break;
@@ -542,10 +519,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		}
 		processBatchesDomain.setJoBID(processBatchjobIDTxt.getText());
 		MiscUtils.reportToConsole("JobID: {}", processBatchesDomain.getJoBID());
-	    ClickButton(closeBtn);
-		waitForPageToLoad(getFinder().getWebDriver());	
+		ClickButton(closeBtn);
+		waitForPageToLoad(getFinder().getWebDriver());
 		getFinder().getWebDriver().switchTo().defaultContent();
-			return isProcessed;
+		return isProcessed;
 	}
 }
-

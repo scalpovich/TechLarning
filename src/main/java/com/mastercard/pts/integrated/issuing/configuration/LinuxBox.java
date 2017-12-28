@@ -114,7 +114,6 @@ public class LinuxBox implements RemoteConnectionDetails {
 
 	@Override
 	public String toString() {
-		return "LinuxBoxConfiguration [hostName=" + hostName + ", port=" + port
-				+ ", userName=" + userName + "]";
+		return "LinuxBoxConfiguration [hostName=" + hostName + ", port=" + port + ", userName=" + userName + "]";
 	}
 }

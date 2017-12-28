@@ -36,29 +36,21 @@ public abstract class CustomJBehaveStories extends JUnitStories {
 
 	private final Logger log = Logger.getLogger(super.getClass());
 	private ApplicationContext applicationContext;
-	protected static Logger LOGER = Logger	.getLogger(CustomJBehaveStories.class);
+	protected static Logger LOGER = Logger.getLogger(CustomJBehaveStories.class);
 	protected ApplicationContext context;
 
 	public CustomJBehaveStories() {
 		this.context = getContextInstance();
 
 		Embedder embedder = configuredEmbedder();
-		embedder.embedderControls().doIgnoreFailureInStories(true)
-		.useStoryTimeoutInSecs(getStoryTimeOutInSecs())
-		.doFailOnStoryTimeout(false).doGenerateViewAfterStories(true)
-		.doIgnoreFailureInView(false).doVerboseFailures(true);
+		embedder.embedderControls().doIgnoreFailureInStories(true).useStoryTimeoutInSecs(getStoryTimeOutInSecs()).doFailOnStoryTimeout(false).doGenerateViewAfterStories(true)
+				.doIgnoreFailureInView(false).doVerboseFailures(true);
 	}
 
 	@Override
 	public Configuration configuration() {
-		return new MostUsefulConfiguration()
-		.useStoryReporterBuilder(getStoryReporterBuilder())
-		.useStoryControls(
-				new StoryControls().doResetStateBeforeScenario(true))
-				.useParameterControls(
-						new ParameterControls()
-						.useDelimiterNamedParameters(true))
-						.useParameterConverters(getConverters());
+		return new MostUsefulConfiguration().useStoryReporterBuilder(getStoryReporterBuilder()).useStoryControls(new StoryControls().doResetStateBeforeScenario(true))
+				.useParameterControls(new ParameterControls().useDelimiterNamedParameters(true)).useParameterConverters(getConverters());
 	}
 
 	@Override
@@ -71,13 +63,9 @@ public abstract class CustomJBehaveStories extends JUnitStories {
 		List paths = null;
 		String storyName = System.getProperty("storyName");
 		if (StringUtils.isNotEmpty(storyName)) {
-			paths = new StoryFinder().findPaths(
-					CodeLocations.codeLocationFromClass(super.getClass()),
-					"**/stories/" + storyName, "");
+			paths = new StoryFinder().findPaths(CodeLocations.codeLocationFromClass(super.getClass()), "**/stories/" + storyName, "");
 		} else {
-			paths = new StoryFinder().findPaths(
-					CodeLocations.codeLocationFromClass(super.getClass()),
-					"**/stories/*.story", "");
+			paths = new StoryFinder().findPaths(CodeLocations.codeLocationFromClass(super.getClass()), "**/stories/*.story", "");
 		}
 
 		return paths;
@@ -96,16 +84,13 @@ public abstract class CustomJBehaveStories extends JUnitStories {
 			return getFormatType(strs, formats);
 		}
 
-		return new Format[] { Format.IDE_CONSOLE, Format.STATS,
-				new MCCustomFormat(getContextInstance().getEnvironment()),
-				Format.XML };
+		return new Format[] { Format.IDE_CONSOLE, Format.STATS, new MCCustomFormat(getContextInstance().getEnvironment()), Format.XML };
 	}
 
 	private Format[] getFormatType(StringTokenizer strs, Format[] formats) {
 		int i = 0;
 
-		while (strs.hasMoreTokens()) 
-		{
+		while (strs.hasMoreTokens()) {
 			String format = strs.nextToken().toUpperCase();
 
 			if (format.equals(Format.ANSI_CONSOLE.name())) {
@@ -135,21 +120,18 @@ public abstract class CustomJBehaveStories extends JUnitStories {
 	}
 
 	private Format[] getFormat(Format[] formats, int i) {
-		if (i != formats.length) 
-		{
+		if (i != formats.length) {
 			LOGER.info("Actual length with valid type" + i);
 
 			Format[] result = new Format[i];
 			int j = 0;
-			for (Format format : formats) 
-			{
+			for (Format format : formats) {
 				result[(j++)] = format;
 				if (j == i) {
 					break;
 				}
 			}
-			for (Format format : result) 
-			{
+			for (Format format : result) {
 				LOGER.info("Format:" + format);
 			}
 			return result;
@@ -160,12 +142,9 @@ public abstract class CustomJBehaveStories extends JUnitStories {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected ParameterConverters getConverters() {
 		List converters = new ArrayList();
-		converters.add(new PropertyParameterConverter(this.context
-				.getEnvironment()));
-		converters.add(new PropertyExamplesTableConverter(this.context
-				.getEnvironment()));
-		converters.add(new PropertyObjectParameterConverter(this.context
-				.getEnvironment()));
+		converters.add(new PropertyParameterConverter(this.context.getEnvironment()));
+		converters.add(new PropertyExamplesTableConverter(this.context.getEnvironment()));
+		converters.add(new PropertyObjectParameterConverter(this.context.getEnvironment()));
 		return new ParameterConverters().addConverters(converters);
 	}
 
@@ -177,35 +156,27 @@ public abstract class CustomJBehaveStories extends JUnitStories {
 	}
 
 	protected ALMReport getAlmReport() {
-		ALMService almService = (ALMService) getContextInstance().getBean(
-				ALMService.class);
+		ALMService almService = (ALMService) getContextInstance().getBean(ALMService.class);
 		return new ALMReport(almService);
 	}
 
 	private boolean isAlmReportEnabled() {
-		return ((System.getProperty("almIntegration") == null) ? false
-				: Boolean.parseBoolean(System.getProperty("almIntegration")));
+		return ((System.getProperty("almIntegration") == null) ? false : Boolean.parseBoolean(System.getProperty("almIntegration")));
 	}
 
 	protected StoryReporterBuilder getStoryReporterBuilder() {
 		if (SerenitySupport.isSerenityIntegrationEnabled()) {
-			return new SerenityStoryBuilder().withFormats(storyFormat())
-					.withReporters(getReporters());
+			return new SerenityStoryBuilder().withFormats(storyFormat()).withReporters(getReporters());
 		}
 
-		return new StoryReporterBuilder().withFormats(storyFormat())
-				.withReporters(getReporters())
-				.withFailureTraceCompression(true);
+		return new StoryReporterBuilder().withFormats(storyFormat()).withReporters(getReporters()).withFailureTraceCompression(true);
 	}
 
 	public long getStoryTimeOutInSecs() {
 		try {
-			return  (System.getProperty("jbehave.story.timeout") == null) ? this.DEFAULT_STORY_TIMEOUT_SECS
-					.intValue() : Integer.parseInt(System
-							.getProperty("jbehave.story.timeout"));
+			return (System.getProperty("jbehave.story.timeout") == null) ? this.DEFAULT_STORY_TIMEOUT_SECS.intValue() : Integer.parseInt(System.getProperty("jbehave.story.timeout"));
 		} catch (NumberFormatException ex) {
-			this.log.error(
-					"Invalid format for 'jbehave.story.timeout' parameter.", ex);
+			this.log.error("Invalid format for 'jbehave.story.timeout' parameter.", ex);
 		}
 		return this.DEFAULT_STORY_TIMEOUT_SECS.intValue();
 	}

@@ -345,7 +345,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(6000);
 		executeAutoITExe("ImportCardProfile.exe " + filePath);
 	}
-
 	private void selectTestCaseFromImportedCases(String testcaseName) {
 		MiscUtils.reportToConsole("******************** selectTestCaseFromImportedCases Started ******************");
 		MiscUtils.reportToConsole("******************** TRANSACTION to SELECT : " + testcaseName + " ******************");
@@ -410,7 +409,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		lst.get(lst.size() - 1).click();
 		wait(1000);
 		List<WebElement> results = winiumDriver.findElementsByXPath("//*[contains(@Name,'Expected Results Summary:')]");
-		System.out.println("Expected Results Summary: size  = " + results);
+		logger.info("Expected Results Summary for Validations OK / Not OK : size  = {} ", results);
 		results.get(results.size() - 1).click();
 		wait(1000);
 		WebElement tempElement = winiumDriver.findElementByXPath("//*[contains(@AutomationId,'DescriptionTextBox')]");
@@ -819,8 +818,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public void addBinRangeAndCurrencyDetailsBasedOnCardNumber(Transaction transactionData, String transaction, Boolean sameCard) {
-		// we do not have to perform this step if it same card on which
-		// operations are being performed
+		// we do not have to perform this step if it same card on which operations are being performed
 		if (!sameCard) {
 			configureBinRange(transactionData, transaction);
 		}
@@ -828,18 +826,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void configureBinRange(Transaction transactionData, String transaction) {
 		String bin = transactionData.getCardNumber();
-		String issuerCountryCode = transactionData.getIssuerCountryCode(); // "356";
-																			// transactionData.getCurrency();
-		String issuerCurrencyCode = transactionData.getIssuerCurrencyCode(); // value
-																				// from
-																				// DE
-																				// Element
-																				// 49
-		String cardHolderBillingCurrency = transactionData.getCardHolderBillingCurrency(); // value
-																							// from
-																							// DE
-																							// Element
-																							// 61_13
+		String issuerCountryCode = transactionData.getIssuerCountryCode(); // "356"; transactionData.getCurrency();
+		String issuerCurrencyCode = transactionData.getIssuerCurrencyCode(); // value from DE Element 49
+		String cardHolderBillingCurrency = transactionData.getCardHolderBillingCurrency(); // value from DE Element 61_13
 
 		String binBinMinRange = bin.substring(0, 9) + "00";
 		String binMaxBinRange = bin.substring(0, 9) + "99";
@@ -942,11 +931,16 @@ public class TransactionWorkflow extends SimulatorUtilities {
 				+ PATH_BUILDER + getValue(ip[3]) + "\"";
 		setMasIpAddress(parameters);
 		/*
+<<<<<<< HEAD
 		 * for keying ip and port on MAS 17.x if present parameters = "\"" +
 		 * SimulatorConstantsData.MAS_17_X + PATH_BUILDER + simulator.getPort()
 		 * + PATH_BUILDER + getValue( ip[0]) + PATH_BUILDER + getValue(ip[1]) +
 		 * PATH_BUILDER + getValue(ip[2]) + PATH_BUILDER + getValue(ip[3]) +
 		 * "\""; setMasIpAddress(parameters);
+=======
+		 * for keying ip and port on MAS 17.x if present parameters = "\"" + SimulatorConstantsData.MAS_17_X + PATH_BUILDER + simulator.getPort() + PATH_BUILDER + getValue( ip[0]) + PATH_BUILDER +
+		 * getValue(ip[1]) + PATH_BUILDER + getValue(ip[2]) + PATH_BUILDER + getValue(ip[3]) + "\""; setMasIpAddress(parameters);
+>>>>>>> 8b5dcdc43ad1c6f6f34ecfb3f509bc28f3b51b83
 		 */
 	}
 
@@ -971,11 +965,16 @@ public class TransactionWorkflow extends SimulatorUtilities {
 				+ PATH_BUILDER + getValue(ip[3]) + "\"";
 		setMasIpAddress(parameters);
 		/*
+<<<<<<< HEAD
 		 * for keying ip and port on MAS 17.x if present parameters = "\"" +
 		 * SimulatorConstantsData.MDFS_17_X + PATH_BUILDER + simulator.getPort()
 		 * + PATH_BUILDER + getValue( ip[0]) + PATH_BUILDER + getValue(ip[1]) +
 		 * PATH_BUILDER + getValue(ip[2]) + PATH_BUILDER + getValue(ip[3]) +
 		 * "\""; setMasIpAddress(parameters);
+=======
+		 * for keying ip and port on MAS 17.x if present parameters = "\"" + SimulatorConstantsData.MDFS_17_X + PATH_BUILDER + simulator.getPort() + PATH_BUILDER + getValue( ip[0]) + PATH_BUILDER +
+		 * getValue(ip[1]) + PATH_BUILDER + getValue(ip[2]) + PATH_BUILDER + getValue(ip[3]) + "\""; setMasIpAddress(parameters);
+>>>>>>> 8b5dcdc43ad1c6f6f34ecfb3f509bc28f3b51b83
 		 */
 	}
 
@@ -1046,9 +1045,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		try {
 			winiumDriver.findElementByName("User Name:").sendKeys("Automation");
 			wait(2000);
-			// Ex: SelectValuesFromPinOffsetCalculator.exe "5877650150876119"
-			// "EE9A8BACEE127B4B2DC900D8EEA9221D" "1234567890123456" "4" "12"
-			// "F" "7782" "4"
+			// Ex: SelectValuesFromPinOffsetCalculator.exe "5877650150876119" "EE9A8BACEE127B4B2DC900D8EEA9221D" "1234567890123456" "4" "12" "F" "7782" "4"
 			String parameters = "\"" + transactionData.getCardNumber() + PATH_BUILDER + transactionData.getPinKey() + PATH_BUILDER + transactionData.getDecimalisationTable() + PATH_BUILDER
 					+ transactionData.getValidationDataStart() + PATH_BUILDER + transactionData.getCardLength() + PATH_BUILDER + transactionData.getPad() + PATH_BUILDER
 					+ transactionData.getOffSetForCard() + PATH_BUILDER + transactionData.getPinLength() + "\"";
