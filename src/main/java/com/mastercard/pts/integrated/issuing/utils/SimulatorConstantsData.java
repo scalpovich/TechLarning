@@ -12,13 +12,13 @@ public class SimulatorConstantsData {
 
 	public static final String VISA_EXE_PATH = "C://Program Files (x86)//Vts3//Appl//VTS3.exe";
 	
-	public static final String VISA_INPUT_FILE_PATH =  "\\Simulator\\VisaInputFile\\DMS_TEST_FILE.stf";
+	public static final String VISA_INPUT_FILE_PATH =  "\\simulator\\VisaInputFile\\DMS_TEST_FILE.stf";
 	
 	public static final String WINIUM_DRIVER_EXE_PATH = "\\simulator\\externalLibraries\\Winium.Desktop.Driver.exe";
 
 	public static final String AUTOIT_EXE_PATH = "\\simulator\\AutoIT\\";	
 	
-	public static final String PSEXEC_EXE_PATH =  "\\Simulator\\PsExec\\PsExec.exe";
+	public static final String PSEXEC_EXE_PATH =  "\\simulator\\PsExec\\PsExec.exe";
 
 	public static final String MCPS_EXE_PATH = "C://Program Files (x86)//MasterCard//MCPS 16_Q4//mcps.exe";
 

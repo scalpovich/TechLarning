@@ -148,11 +148,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			activateMcps();
 			winiumClickOperation("1240/200 First Presentment");
 			winiumClickOperation("Add a field to the current message");
-			searchForImageAndPerformDoubleClick("messageReversalIndicator");
+			searchForImageAndPerformDoubleClick(MESSAGE_REVERSAL_INDICATOR);
 			activateEditField();
 			performClickOperation("AddRemove");
 			wait(2000);
-			searchForImageAndPerformDoubleClick("messageReversalIndicator");
+			searchForImageAndPerformDoubleClick(MESSAGE_REVERSAL_INDICATOR);
 			wait(3000);
 			executeAutoITExe("ActivateEditSubfieldValueScreen.exe");
 			winiumClickOperation("Central Site Processing Date Of Original Message");
