@@ -25,7 +25,7 @@ public class SimulatorUtilities{
 	private static final String  SELECTED_IMAGE = "_Selected";
 	private static final String SIKULI_MESSAGE = "***** Sikuli click operation is performed on : ";
 	private static final String SIKULI_DOUBLECLICK_MESSAGE = "***** Sikuli double click operation is performed on : ";
-	private static final String SETTEXT_OPERATION = "***** SetText operation is performed. Text set to : ";
+	private static final String SETTEXT_OPERATION = "***** SetText operation is performed. Text set to : {}";
 
 	public  void pressTab()
 	{
@@ -143,7 +143,7 @@ public class SimulatorUtilities{
 					getOtherOperation(operationType, robot);
 				}
 				wait(1000);
-				logger.info("**** Robot/Keyboard Operation performed :  ", operationType);
+				logger.info("**** Robot/Keyboard Operation performed :  {}", operationType);
 			}
 			wait(2000);
 		}
@@ -225,7 +225,7 @@ public class SimulatorUtilities{
 			String path = getResourceFolderPath() + SimulatorConstantsData.AUTOIT_EXE_PATH.replace("\\", "\\\\");
 			String psExecPath = getResourceFolderPath() + "\\Simulator\\PsExec\\PsExec.exe";
 			String commandToExecute;
-			logger.info("********* AutoIt Exe being executed :  ",  fileName);
+			logger.info("********* AutoIt Exe being executed :  {}",  fileName);
                                     
             //for remote/Jenkins/command Line -  AutoIT execution.. enable the below 2 lines and comment the other 2 lines
             commandToExecute = " cmd /c " + psExecPath + " "+ path + fileName;
