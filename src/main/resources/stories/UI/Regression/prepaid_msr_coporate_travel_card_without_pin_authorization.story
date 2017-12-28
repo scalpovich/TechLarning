@@ -43,28 +43,35 @@ When perform an MSR_PREAUTH MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth authorization and verify Success status
-When perform an MSR_COMPLETION MAS transaction
+Then user sign out from customer portal
+When perform an MSR_COMPLETION MAS transaction on the same card
 Then MAS test results are verified
+And user is logged in institution
 And search Pre-Auth Completion authorization and verify Success status
+Then user sign out from customer portal
 
 Scenario: Perform MSR_PURCHASE_WITH_CASHBACK Authorization transaction
 Meta:
 @TestId 
-When perform an MSR_PURCHASE_WITH_CASHBACK MAS transaction
+When perform an MSR_PURCHASE_WITH_CASHBACK MAS transaction on the same card
 Then MAS test results are verified
+And user is logged in institution
 And search Purchase authorization and verify success status
+Then user sign out from customer portal
 
 Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
 Meta:
 @TestId 
-When perform an MSR_CASH_ADVANCE MAS transaction
+When perform an MSR_CASH_ADVANCE MAS transaction on the same card
 Then MAS test results are verified
+And user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
+Then user sign out from customer portal
 
 Scenario: Perform MSR_PURCHASE_WITH_REFUND Authorization transaction
 Meta:
 @TestId 
-When perform an MSR_PURCHASE_WITH_REFUND MAS transaction
+When perform an MSR_PURCHASE_WITH_REFUND MAS transaction on the same card
 Then MAS test results are verified
 
 Scenario: Perform MSR_POS_BALANCE_INQUIRY Authorization transaction
@@ -76,21 +83,23 @@ Then MAS test results are verified
 Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
 Meta:
 @TestId 
-When perform an MSR_CASH_WITHDRAWAL MAS transaction
+When perform an MSR_CASH_WITHDRAWAL MAS transaction on the same card
 Then MAS test results are verified
 
 Scenario: Perform ECOMM_PURCHASE Authorization transaction
 Meta:
 @TestId 
-When perform an ECOMM_PURCHASE MAS transaction
+When perform an ECOMM_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
 
 Scenario: Perform MSR_PURCHASE Authorization transaction
 Meta:
 @TestId 
-When perform an MSR_PURCHASE MAS transaction
+When perform an MSR_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
+And user is logged in institution
 And search Purchase authorization and verify success status
+Then user sign out from customer portal
 
 Scenario: Generate Auth File for Clearing
 Meta:

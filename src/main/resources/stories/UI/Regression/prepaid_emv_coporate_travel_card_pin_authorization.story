@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for prepaid emv retail general purpose card
 
 Meta:
-@StoryName p_emv_coprporate_travel
+@StoryName p_emv_corp_travel
 @oldReferenceSheet_S203707
 @CRCardsWithAuthorizationRegression
 @AuthorizationRegression
@@ -55,29 +55,37 @@ When perform an EMV_PREAUTH MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth authorization and verify Success status
-When perform an EMV_COMPLETION MAS transaction
+Then user sign out from customer portal
+When perform an EMV_COMPLETION MAS transaction on the same card
 Then MAS test results are verified
+And user is logged in institution
 And search Pre-Auth Completion authorization and verify Success status
+Then user sign out from customer portal
 
 Scenario: Perform EMV_PURCHASE_WITH_CASHBACK Authorization transaction
 Meta:
 @TestId 
-When perform an EMV_PURCHASE_WITH_CASHBACK MAS transaction
+When perform an EMV_PURCHASE_WITH_CASHBACK MAS transaction on the same card
 Then MAS test results are verified
+And user is logged in institution
 And search Purchase authorization and verify success status
+And user sign out from customer portal
 
 Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
 Meta:
 @TestId 
-When perform an EMV_CASH_ADVANCE MAS transaction
+When perform an EMV_CASH_ADVANCE MAS transaction on the same card
 Then MAS test results are verified
+And user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
+And user sign out from customer portal
 
 Scenario: Perform EMV_PURCHASE_WITH_REFUND Authorization transaction
 Meta:
 @TestId 
-When perform an EMV_PURCHASE_WITH_REFUND MAS transaction
+When perform an EMV_PURCHASE_WITH_REFUND MAS transaction on the same card
 Then MAS test results are verified
+
 
 Scenario: Perform EMV_POS_BALANCE_INQUIRY Authorization transaction
 Meta:
@@ -85,31 +93,36 @@ Meta:
 When perform an EMV_POS_BALANCE_INQUIRY MAS transaction on the same card
 Then MAS test results are verified
 
+
 Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
 Meta:
 @TestId 
-When perform an EMV_CASH_WITHDRAWAL MAS transaction
+When perform an EMV_CASH_WITHDRAWAL MAS transaction on the same card
 Then MAS test results are verified
+
 
 Scenario: Perform ECOMM_PURCHASE Authorization transaction
 Meta:
 @TestId 
-When perform an ECOMM_PURCHASE MAS transaction
+When perform an ECOMM_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
+
 
 Scenario: Perform EMV_PURCHASE Authorization transaction
 Meta:
 @TestId 
-When perform an EMV_PURCHASE MAS transaction
+When perform an EMV_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
+And user is logged in institution
 And search Purchase authorization and verify success status
+And user sign out from customer portal
 
 Scenario: Generate Auth File for Clearing
 Meta:
 @TestId 
 When Auth file is generated after transaction
 When MAS simulator is closed
-And user sign out from customer portal
+
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
 Meta:

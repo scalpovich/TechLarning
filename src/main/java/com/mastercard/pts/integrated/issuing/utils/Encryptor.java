@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import org.apache.log4j.Logger;
 
-import com.google.common.base.Throwables;
 import com.mastercard.testing.utils.encryption.EncryptUtils;
 
 public class Encryptor {
