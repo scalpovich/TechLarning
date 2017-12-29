@@ -18,9 +18,6 @@ Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
 Then device has "normal" status
-When user has wallet number information for debit device
-When user performs adjustment transaction
-When user has current wallet balance amount information for prepaid device
 
 Scenario: prepaid emv retail general purpose card device production
 Meta:
@@ -33,7 +30,6 @@ When processes pin generation batch for prepaid
 Then device has "normal" status
 Then user activates device through helpdesk
 
-
 Scenario: Pin Generation 
 Meta:
 @TestId 
@@ -43,13 +39,15 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Transaction - EMV_PREAUTH and EMV_COMPLETION Authorization transaction
+Scenario: Transaction - MSR_PREAUTH Authorization transaction
 Given connection to MAS is established
-When perform an EMV_PREAUTH MAS transaction
+When perform an MSR_PREAUTH MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth authorization and verify Success status
-When perform an EMV_COMPLETION MAS transaction
+
+Scenario: Transaction - MSR_COMPLETION Authorization transaction
+When perform an MSR_COMPLETION MAS transaction
 Then MAS test results are verified
 And search Pre-Auth Completion authorization and verify Success status
 
@@ -112,7 +110,7 @@ Given connection to MCPS is established
 When Auth file is generated
 When Auth file is loaded into MCPS and processed
 Then NOT file is successfully generated
-When MCPS simulator is closed
+And MCPS simulator is closed
 
 Scenario: Upload ipm file from customer portal and process it
 Meta:
@@ -138,4 +136,4 @@ Then verify report for transactions with Program Balance Summary is downloaded
 And Verify Program Balance Summary is downloaded
 And verify report for Auth is downloaded
 And verify report for Clearing is downloaded
-When user sign out from customer portal
+And user sign out from customer portal
