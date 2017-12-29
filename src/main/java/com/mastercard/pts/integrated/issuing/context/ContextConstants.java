@@ -16,5 +16,7 @@ public class ContextConstants {
 	
 	public static final String CARDHOLDER = "CARDHOLDER";
 	
+	public static final String WALLET = "WALLET";
+	
 	private ContextConstants() {}
 }

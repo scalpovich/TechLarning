@@ -164,9 +164,11 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			selectUsage(walletPlan.getUsage());
 
 			fillDetailsBasedOnCarddType1(walletPlan, productType);
+			
 			//Select White listed MSG
+			
 			clickNextButton(); // Click on next button
-				clickFinishButton(); // click on finish button
+			clickFinishButton(); // click on finish button
 			});
 		verifyOperationStatus();
 	}

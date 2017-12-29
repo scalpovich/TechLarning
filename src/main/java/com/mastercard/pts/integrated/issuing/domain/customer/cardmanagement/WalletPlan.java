@@ -2,7 +2,6 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
@@ -59,7 +58,6 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String walletInactvityRulesInactivityOperation;
 	private String walletInactvityRulesInactivityAfterDays;
 	private String walletInactvityRulesClosureWalletAfterDays;
-	private String walletPlanUsage;
 	private String walletType;
 	private String usageType;
 	private String WalletPlanUsage;

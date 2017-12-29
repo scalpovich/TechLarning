@@ -19,6 +19,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Cred
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardPaymentPriority;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardTransactionRulePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DedupePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceJoiningAndMemberShipFeePlan;
@@ -507,28 +508,6 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createWalletPlan1(walletPlan);
 	}
 	
-	@When("create wallet Plan for \"$type\" product and program \"$programtype\" with usage \"$usageType\"")
-	public void addWalletPlan(@Named("type")String type, @Named("programtype")String programtype, @Named("usageType")String usageType) {
-		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
-		walletPlan.setProductType(ProductType.fromShortName(type));
-		walletPlan.setProgramType(programtype);
-		
-		if(ProgramType.OPEN_LOOP.contains(usageType))			
-			walletPlan.setUsage(ProgramType.OPEN_LOOP);
-		else			
-			walletPlan.setUsage(ProgramType.CLOSED_LOOP);
-		
-		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-			walletPlan.setCreditPlan(creditCardCreditPlan.buildAbbreviationAndCode());
-			walletPlan.setBillingCyleCode(creditCardBillingCycle.buildDescriptionAndCode());
-		}
-		programSetupWorkflow.createWalletPlan1(walletPlan);
-
-		if(ProgramType.OPEN_LOOP.contains(usageType))			
-			walletPlan.setFirstWallet(walletPlan.buildDescriptionAndCode());
-		else			
-			walletPlan.setSecondWallet(walletPlan.buildDescriptionAndCode());
-	}
 	
 	@When("User fills Transaction Plan for $type product")
 	public void whenUserFillsTransactionPlan(String type) {
@@ -610,6 +589,33 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.PROGRAM, program);
 	}
 	
+	@When("create wallet Plan for \"$type\" product and program \"$programtype\" with usage \"$usageType\"")
+	public void addWalletPlan(@Named("type")String type, @Named("programtype")String programtype, @Named("usageType")String usageType) {
+		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
+		walletPlan.setProductType(ProductType.fromShortName(type));
+		walletPlan.setProgramType(programtype);
+		
+		if(ProgramType.OPEN_LOOP.contains(usageType))			
+			walletPlan.setUsage(ProgramType.OPEN_LOOP);
+		else			
+			walletPlan.setUsage(ProgramType.CLOSED_LOOP);
+		
+		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
+			walletPlan.setCreditPlan(creditCardCreditPlan.buildAbbreviationAndCode());
+			walletPlan.setBillingCyleCode(creditCardBillingCycle.buildDescriptionAndCode());
+		}
+		
+		programSetupWorkflow.createWalletPlan1(walletPlan);
+		context.put(ContextConstants.WALLET, walletPlan);
+		
+		WalletPlan wallets = context.get(ContextConstants.WALLET);
+		
+		if(ProgramType.OPEN_LOOP.contains(usageType))			
+			wallets.setFirstWallet(wallets.buildDescriptionAndCode());
+		else			
+			wallets.setSecondWallet(wallets.buildDescriptionAndCode());
+	}
+	
 	@When("fills Program section for $type product and program $programType")
 	public void fillsProgramSection(String type ,String programType ) {
 		program = Program.createWithProvider(dataProvider, provider);
@@ -620,10 +626,12 @@ public class ProgramSetupSteps {
 			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
 			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
 		}
-		program.setWalletPlanPlan1(walletPlan.getFirstWallet());
-		program.setWalletPlanPlan2(walletPlan.getSecondWallet());
+		
+		WalletPlan wallets = context.get(ContextConstants.WALLET);
+		program.setWalletPlanPlan1(wallets.getFirstWallet());
+		program.setWalletPlanPlan2(wallets.getSecondWallet());
+		
 		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
-
 		program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
 		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
 		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());

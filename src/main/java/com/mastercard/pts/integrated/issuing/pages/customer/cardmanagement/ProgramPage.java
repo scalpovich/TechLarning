@@ -453,9 +453,9 @@ public class ProgramPage extends AbstractBasePage {
 		
 		logger.info("Assign second Wallet :" + program.getWalletPlanPlan1());
 		selectWalletPlanPlan1(program.getWalletPlanPlan1());
-		logger.info("Assign second Wallet :" + program.getWalletPlanPlan2());
-		
+		logger.info("Assign second Wallet :" + program.getWalletPlanPlan2());		
 		selectWalletPlanPlan2(program.getWalletPlanPlan2());
+		
 		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
 		if (!productType.equalsIgnoreCase(ProductType.DEBIT)) {
 			selectOtherPlanStatementMessagePlan(program.getOtherPlanStatementMessagePlan());

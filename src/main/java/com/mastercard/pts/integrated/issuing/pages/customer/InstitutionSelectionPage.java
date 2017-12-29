@@ -43,8 +43,7 @@ public class InstitutionSelectionPage extends AbstractBasePage {
 	public void selectInstitution(String instName) {
 
 		waitForElementVisible(institution);
-		institution.getSelect().selectByVisibleText(instName);
-		confirmButton.click();
+		institution.getSelect().selectByVisibleText(instName);		
 	}
 
 	public void selectInstitution(String... optionName) {
