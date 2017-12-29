@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for prepaid emv retail general purpose card
 
 Meta:
-@StoryName p_emv_corporate_general
+@StoryName p_emv_corp_general_purpose
 @oldReferenceSheet_S203707
 @CRCardsPinlessWithAuthorization
 
