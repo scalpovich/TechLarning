@@ -931,16 +931,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 				+ PATH_BUILDER + getValue(ip[3]) + "\"";
 		setMasIpAddress(parameters);
 		/*
-<<<<<<< HEAD
-		 * for keying ip and port on MAS 17.x if present parameters = "\"" +
-		 * SimulatorConstantsData.MAS_17_X + PATH_BUILDER + simulator.getPort()
-		 * + PATH_BUILDER + getValue( ip[0]) + PATH_BUILDER + getValue(ip[1]) +
-		 * PATH_BUILDER + getValue(ip[2]) + PATH_BUILDER + getValue(ip[3]) +
-		 * "\""; setMasIpAddress(parameters);
-=======
 		 * for keying ip and port on MAS 17.x if present parameters = "\"" + SimulatorConstantsData.MAS_17_X + PATH_BUILDER + simulator.getPort() + PATH_BUILDER + getValue( ip[0]) + PATH_BUILDER +
 		 * getValue(ip[1]) + PATH_BUILDER + getValue(ip[2]) + PATH_BUILDER + getValue(ip[3]) + "\""; setMasIpAddress(parameters);
->>>>>>> 8b5dcdc43ad1c6f6f34ecfb3f509bc28f3b51b83
 		 */
 	}
 
@@ -965,16 +957,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 				+ PATH_BUILDER + getValue(ip[3]) + "\"";
 		setMasIpAddress(parameters);
 		/*
-<<<<<<< HEAD
-		 * for keying ip and port on MAS 17.x if present parameters = "\"" +
-		 * SimulatorConstantsData.MDFS_17_X + PATH_BUILDER + simulator.getPort()
-		 * + PATH_BUILDER + getValue( ip[0]) + PATH_BUILDER + getValue(ip[1]) +
-		 * PATH_BUILDER + getValue(ip[2]) + PATH_BUILDER + getValue(ip[3]) +
-		 * "\""; setMasIpAddress(parameters);
-=======
 		 * for keying ip and port on MAS 17.x if present parameters = "\"" + SimulatorConstantsData.MDFS_17_X + PATH_BUILDER + simulator.getPort() + PATH_BUILDER + getValue( ip[0]) + PATH_BUILDER +
 		 * getValue(ip[1]) + PATH_BUILDER + getValue(ip[2]) + PATH_BUILDER + getValue(ip[3]) + "\""; setMasIpAddress(parameters);
->>>>>>> 8b5dcdc43ad1c6f6f34ecfb3f509bc28f3b51b83
 		 */
 	}
 
