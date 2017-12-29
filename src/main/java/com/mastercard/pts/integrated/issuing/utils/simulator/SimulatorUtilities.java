@@ -1,4 +1,4 @@
-package com.mastercard.pts.integrated.issuing.utils;
+package com.mastercard.pts.integrated.issuing.utils.simulator;
 
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -17,6 +17,11 @@ import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.DateUtils;
+import com.mastercard.pts.integrated.issuing.utils.FileCreation;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 public class SimulatorUtilities {
 	private static final Logger logger = LoggerFactory.getLogger(SimulatorUtilities.class);
@@ -428,7 +433,7 @@ public class SimulatorUtilities {
 		}
 	}
 
-	private Boolean fileExists(String filePathString) {
+	public Boolean fileExists(String filePathString) {
 		return new File(filePathString).exists();
 	}
 

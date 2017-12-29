@@ -40,7 +40,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.TransactionProvider
 import com.mastercard.pts.integrated.issuing.pages.ValidationException;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
-import com.mastercard.pts.integrated.issuing.utils.VisaTestCaseNameKeyValuePair;
+import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKeyValuePair;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
 
 @Component
