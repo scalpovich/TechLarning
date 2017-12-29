@@ -30,6 +30,7 @@ When processes device production batch for debit
 When processes pin generation batch for debit
 Then device has "normal" status
 Then user activates device through helpdesk
+Then embossing file batch was generated in correct format
 
 Scenario: Perform EMV_POS_BALANCE_INQUIRY Authorization transaction
 Meta:
