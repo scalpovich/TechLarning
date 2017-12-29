@@ -18,7 +18,7 @@ public class SimulatorConstantsData {
 		public static final String VISA_INPUT_FILE_PATH =  "\\simulator\\VisaInputFile\\DMS_TEST_FILE.stf";
 		// _________________________________________________________________________
 		// SIMULATOR EXE PATHS TO INVOKE _______________________________________
-		public static final String MAS_EXE_PATH = "C://Program Files (x86)//MasterCard//OTP 7.32.1003//Bin//MSPMCW.exe"; // need to modify this
+		public static String MAS_EXE_PATH; 
 		public static final String FINSIM_EXE_PATH = "\\\\simulator\\\\FINSimExe\\\\ATClient.exe";
 		public static final String VISA_EXE_PATH = "C://Program Files (x86)//Vts3//Appl//VTS3.exe";
 		public static final String MCPS_EXE_PATH = "C://Program Files (x86)//MasterCard//MCPS 16_Q4//mcps.exe";
@@ -26,17 +26,16 @@ public class SimulatorConstantsData {
 		// MAS & MDFS LICENSE SELECTION _______________________________________
 		public static final String SELECT_MAS_LICENSE = "Credit - Professional";
 		public static final String SELECT_MDFS_LICENSE = "Debit - Professional";
-		public static final String MAS_LICENSE_TYPE_16X = "MAS 16.4";  // need to modify this
+		public static String MAS_LICENSE_TYPE = "MAS 16.4";  // need to modify this
 		public static final String MDFS_LICENSE_TYPE_16X = "MAS 16.4"; // need to modify this
 		// _________________________________________________________________________
 
 		// MAS  & MDFS LICENSE SELECTION _______________________________________
-		
-	public static String MAS_16_X = "MasterCard Authorization Simulator <MAS16.Q4>"; // need to modify this
+	public static String MAS_PARENT_HANDLE;
 
-	public static final String MDFS_16_X = "MasterCard Debit Financial Simulator <MDFS16.Q4>";
+	public static final String MDFS_PARENT_HANDLE = "MasterCard Debit Financial Simulator <MDFS16.Q4>";
 
-	public static final String MCPS_16_X = "MCPS - MasterCard Clearing Presentment Simulator - 16.Q4";
+	public static final String MCPS_PARENT_HANDLE = "MCPS - MasterCard Clearing Presentment Simulator - 16.Q4";
 	
 	public static final String SAMPLE_PAN_NUMBER = "2222550010000018";
 	
