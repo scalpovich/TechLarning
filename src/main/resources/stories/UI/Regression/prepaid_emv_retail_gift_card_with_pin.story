@@ -13,7 +13,7 @@ Meta:
 
 Scenario: Set up prepaid emv retail giftcard card
 Meta:
-@TestId TC398452
+@TestId
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
@@ -24,7 +24,7 @@ When user has current wallet balance amount information for prepaid device
 
 Scenario: prepaid emv retail general purpose card device production
 Meta:
-@TestId TC408068
+@TestId
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
