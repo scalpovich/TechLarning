@@ -207,6 +207,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		waitForWicket();
 		// fetching batch number and setting it for further use
 		device.setBatchNumber(batchNumberTxt.getText());
+		logger.info(" *********** Batch number *********** " + device.getBatchNumber());
 		clickNextButton();
 	}
 

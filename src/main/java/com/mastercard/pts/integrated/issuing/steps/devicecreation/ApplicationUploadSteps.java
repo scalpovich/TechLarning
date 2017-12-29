@@ -14,7 +14,6 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreP
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SearchApplicationDetails;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessFlows;
@@ -76,6 +75,4 @@ public class ApplicationUploadSteps {
 		MiscUtils.reportToConsole("device production Batch: {}",preProductionBatch.getBatchNumber());
 		batchProcessFlows.processDeviceProductionBatch(batch);
 	}
-
-	
 }
