@@ -341,7 +341,9 @@ public class ProgramPage extends AbstractBasePage {
 				selectCurrencyConversionBy(program.getCurrencyConversionBy());
 			selectCalendarStartMonth(program.getCalendarStartMonth());
 			fillExtraSections(program, productType);
+			waitForLoaderToDisappear();
 			clickNextButton();
+			waitForLoaderToDisappear();
 			clickFinishButton();
 		});
 		verifyOperationStatus();
@@ -381,6 +383,7 @@ public class ProgramPage extends AbstractBasePage {
 		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 			fillDataForCreditCard(program);
 		}
+	
 	}
 
 	private void fillDataForCreditCard(Program program) {
@@ -390,6 +393,7 @@ public class ProgramPage extends AbstractBasePage {
 		WebElementUtils.enterText(cashLimitAmountTxt, program.getCashLimitAmount());
 		WebElementUtils.selectDropDownByVisibleText(cashLimitResetDDwn, program.getCashLimitReset());
 		WebElementUtils.selectDropDownByVisibleText(addOnLimitResetDDwn, program.getAddOnLimitReset());
+		WebElementUtils.enterText(cashLimitAmountTxt, program.getCashLimitAmount());
 	}
 
 	public void verifyUiOperationStatus() {

@@ -1,22 +1,16 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.CreditCardPlans;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SurchargeWailverPlan;
-import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.DatePicker;
-import com.mastercard.pts.integrated.issuing.utils.MapUtils;
-import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
@@ -26,8 +20,9 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
 		CardManagementNav.L2_SURCHARGE_WAIVER_PLAN })
-public class SurchargeWailverPlanPage extends AbstractBasePage {
-
+public class SurchargeWailverPlanPage extends AbstractCreditPage {
+@Autowired
+CreditCardPlans creditCardPlans;
 	private static final Logger logger = LoggerFactory
 			.getLogger(SurchargeWailverPlanPage.class);
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[@class='addR']")
@@ -132,31 +127,18 @@ public class SurchargeWailverPlanPage extends AbstractBasePage {
 		logger.info("Surcharge Waiver Plan");
 		clickWhenClickable(addButton);
 		switchToIframe(Constants.ADD_SURCHARGE_WAIVER_FEE_PLAN);
+		saveOrDetailsOrSearchClick();
+		mandatoryLabels();
+		mandatoryFields();
 		surchargeWailverPlan.setSurchargeWaiverPlanCodeValid(CustomUtils.randomAlphaNumeric(5).toUpperCase());
 		enterValueinTextBox(surchargeWaiverPlanCodeTxt, surchargeWailverPlan.getSurchargeWaiverPlanCodeValid());
-        clickWhenClickable(addDetailsBtn);
-		}
-	public void enterWaiverPlanInvalid(SurchargeWailverPlan surchargeWailverPlan) {
-		logger.info("Surcharge Waiver Plan");
-		clickWhenClickable(addButton);
-		switchToIframe(Constants.ADD_SURCHARGE_WAIVER_FEE_PLAN);
-		enterValueinTextBox(surchargeWaiverPlanCodeTxt, surchargeWailverPlan.getSurchargeWaiverPlanCodeInvalid());
-		 clickWhenClickable(addDetailsBtn);
-		}
-	
-	public void enterWaiverPlanDescriptionValid(SurchargeWailverPlan surchargeWailverPlan) {
 		surchargeWailverPlan.setSurchargeWaiverDescriptionValid(CustomUtils.randomAlphaNumeric(5));
 		enterValueinTextBox(surchargeWaiverPlandescriptionTxt,surchargeWailverPlan.getSurchargeWaiverDescriptionValid() );
-		 clickWhenClickable(addDetailsBtn);
-		}
-	public void enterWaiverPlanDescriptionInvalid(SurchargeWailverPlan surchargeWailverPlan) {
-		enterValueinTextBox(surchargeWaiverPlandescriptionTxt,surchargeWailverPlan.getSurchargeWaiverDescriptionInvalid() );
-		 clickWhenClickable(addDetailsBtn);
-		}	
-	public void currencySelect()
-	{
 		currencyDDwn.getSelect().selectByIndex(2);
-	}
+		creditCardPlans.setMandatoryValuesWithLabels(mandatoryValuesWithLabels(mandatoryFields(),mandatoryLabels()));
+		logger.info("MandatoryLabelswithValues: {}", creditCardPlans.getMandatoryValuesWithLabels());
+        clickWhenClickable(addDetailsBtn);
+		}
 	public void addDetailsButtonClick()
 	{
 		clickWhenClickable(addDetailsBtn);
@@ -169,16 +151,6 @@ public class SurchargeWailverPlanPage extends AbstractBasePage {
 		
 	}
     
-	public String waiverPlanCodeErrorMessage()
-	{
-		return waiverPlanErrorMsg.getText();
-		
-	}
-	public String waiverPlanDescriptionErrorMessage()
-	{
-		return descriptionErrorMsg.getText();
-		
-	}
 	public void interchangeSelect()
 	{
 		interchangeDDwn.getSelect().selectByIndex(1);

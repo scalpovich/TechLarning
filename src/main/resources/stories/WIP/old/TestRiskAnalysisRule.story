@@ -4,14 +4,12 @@ In order to add and verify Surcharge Waiver Fee Plan under customer portal cardm
 As a user
 I want to assert pages
 Meta:
-@AddSurchargeWaiverFeePlan
+@CreditRegression
 @StoryName CreditScenarios
 Scenario:1 UI verification - Customer Portal - Valid SurchargeWailverPlan, card management tab
 @ValidScenario
 Given user is logged in institution
-Then User navigates to Add Surcharge Waiver Fee Plan Page and adds a valid Fee Plan by entering valid values
-And User navigates to Add Surcharge Waiver Detail Fee Plan Page and adds a valid plan by entering valid values
+When User navigates to Risk Analysis Rule Page and adds a valid Plan by entering valid values
 Then user search the record added based on filter Values
-And user verifies edit operation
 And user verifies delete operation
 

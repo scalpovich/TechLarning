@@ -19,10 +19,14 @@ public class CreditPlanWorkFlow {
 	}
     public void verifyRecordsInTableBasedOnFilter()
     {
-     page.enterFilterValuesBasedOnRecordCreated();
+     page.searchFunctionalityCheck();
     }
     public void verifyEditOperationForAddedRecord()
     {
      page.editFunctionalityCheck();
+    }
+    public void verifyDeleteOperationForAddedRecord()
+    {
+    page.deleteFunctionalityCheck();
     }
 }

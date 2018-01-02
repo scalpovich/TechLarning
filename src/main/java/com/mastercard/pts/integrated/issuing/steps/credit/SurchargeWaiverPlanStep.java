@@ -10,7 +10,7 @@ import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.workflows.credit.SurchargeWaiverPlanWorkflow;
 
 @Component
-public class surchargeWaiverPlanStep {
+public class SurchargeWaiverPlanStep {
 	@Autowired
 	 SurchargeWailverPlanPage surchargeWailverPlanPage;
 	@Autowired
@@ -22,7 +22,7 @@ public class surchargeWaiverPlanStep {
 
 	@Then("User navigates to Add Surcharge Waiver Fee Plan Page and adds a valid Fee Plan by entering valid values")
 	public void thenSurchargeWaiverPlanOfCardManagementTab() {
-	surchargeWaiverPlanWorkflow.verifyValidSurchargeWaiverPlanCode(surchargeWailverPlan);
+	surchargeWaiverPlanWorkflow.addValidSurchargeWaiverPlan(surchargeWailverPlan);
 		
 	}
 	@Then("User navigates to Add Surcharge Waiver Detail Fee Plan Page and adds a valid plan by entering valid values")

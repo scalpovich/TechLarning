@@ -17,7 +17,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L1_PROGRAM_SETUP,
 		CardManagementNav.L2_CREDIT_CARD_BILLING,
 		CardManagementNav.L3_LATE_PAYMENT_FEE_PLAN})
-public class LatePaymentFeePlanPage extends AbstractBasePage {
+public class LatePaymentFeePlanPage extends AbstractCreditPage {
 
 	private static final Logger logger = LoggerFactory.getLogger(LatePaymentFeePlanPage.class);
     private static final String addLatePaymentFeePlanFrame="Add Late Payment Fee Plan";
@@ -56,11 +56,15 @@ public class LatePaymentFeePlanPage extends AbstractBasePage {
 	public void addLatePaymentFeePlan() {
 		clickWhenClickable(addBtn);
 		switchToIframe(addLatePaymentFeePlanFrame);
+		clickAddDetailsButton();
+		mandatoryLabels();
+		mandatoryFields();
 		WebElementUtils.enterText(lpcPlanCode,CustomUtils.RandomNumbers(3));
-		WebElementUtils.enterText(description, CustomUtils.RandomAlphabet().toUpperCase());
+		WebElementUtils.enterText(description, CustomUtils.randomAlphaNumeric(4).toUpperCase());
 		WebElementUtils.selectDropDownByIndex(chargeLPCOnDdwn,1);
 		WebElementUtils.selectDropDownByIndex(latePaymentFeeValueDateDdwn,1);
 		WebElementUtils.selectDropDownByIndex(currencyDdwn,1);
+		creditCardPlans.setMandatoryValuesWithLabels(mandatoryValuesWithLabels(mandatoryFields(),mandatoryLabels()));
 		clickWhenClickable(addDetailsBtn);
 		waitForElementVisible(addBtn);
 		clickWhenClickable(addBtn);

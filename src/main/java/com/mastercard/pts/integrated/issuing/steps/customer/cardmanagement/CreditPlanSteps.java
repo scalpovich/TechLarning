@@ -25,4 +25,9 @@ public void whenUserVerifiesAndEditCreditPlan()
 {
 	creditPlanWorkFlow.verifyEditOperationForAddedRecord();
 }
+@Then("user verifies delete operation")
+public void whenUserVerifiesAndDeleteCreditPlan()
+{
+	creditPlanWorkFlow.verifyDeleteOperationForAddedRecord();
+}
 }

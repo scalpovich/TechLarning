@@ -12,3 +12,4 @@ Given user is logged in institution
 When user navigates to Late Payment Fee Plan and adds a new Late Payment Fee Plan
 Then user search the record added based on filter Values
 And user verifies edit operation
+And user verifies delete operation

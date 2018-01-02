@@ -14,4 +14,5 @@ Given user is logged in institution
 When user navigates to Credit Plan Page and add a creditPlan
 Then user search the record added based on filter Values
 And user verifies edit operation
+And user verifies delete operation
 

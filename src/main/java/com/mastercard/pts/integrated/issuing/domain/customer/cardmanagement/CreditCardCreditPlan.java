@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
@@ -21,9 +23,9 @@ public class CreditCardCreditPlan implements HasCodeAndDescription {
 	private String minimumDue;	
 	private String totalDue;	
 	private String paymentPriorityPlan;	
-	private String allowedPercentage;	
-
-	private static final String PAYMENT_DATE = "PAYMENT_DATE";
+	private String allowedPercentage;
+	
+    private static final String PAYMENT_DATE = "PAYMENT_DATE";
 
 	private static final String UNPAID_DATE = "UNPAID_DATE";
 	

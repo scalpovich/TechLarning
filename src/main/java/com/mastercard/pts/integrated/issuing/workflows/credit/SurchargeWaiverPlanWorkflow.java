@@ -18,11 +18,9 @@ public class SurchargeWaiverPlanWorkflow {
 	@Autowired
 	SurchargeWailverPlanPage page;
 	
-	public void verifyValidSurchargeWaiverPlanCode(SurchargeWailverPlan surchargeWailverPlan/*,String tagName,String expectedValue*/) {
+	public void addValidSurchargeWaiverPlan(SurchargeWailverPlan surchargeWailverPlan) {
 		page = navigator.navigateToPage(SurchargeWailverPlanPage.class);
 		page.enterWaiverPlanValid(surchargeWailverPlan);
-		page.enterWaiverPlanDescriptionValid(surchargeWailverPlan);
-		page.currencySelect();
 		page.addDetailsButtonClick();
 		page.addNewButtonClick(); 
 		CustomUtils.ThreadDotSleep(3000);

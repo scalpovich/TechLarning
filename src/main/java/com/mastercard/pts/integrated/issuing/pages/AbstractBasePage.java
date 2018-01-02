@@ -73,8 +73,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public static final LocalDate futureDate = LocalDate.now().plusDays(100);
 	public static final LocalDate futureEndDate = LocalDate.now().plusDays(150);
-
-	@Value("${default.wait.timeout_in_sec}")
+	
+    @Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='credentials']//label")
