@@ -622,4 +622,3 @@ public class ProgramPage extends AbstractBasePage {
 		return Arrays.asList(WebElementUtils.visibilityOf(programSearchTxt));
 	}
 }
->>>>>>> bc34a547afb6b3fc1bdde3389cc5df69823b9eeb
