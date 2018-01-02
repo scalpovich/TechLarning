@@ -41,7 +41,7 @@ public class AbstractCreditPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@class='displayName wrap-search']")
 	private MCWebElements filterHeaders;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='top']//div[@id='searchForm']//table/tbody/tr//td[@class='field']/child::*")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='top']//div[@id='searchForm']//table/tbody/tr//td[@class='field']/child::input | //div[@class='top']//div[@id='searchForm']//table/tbody/tr//td[@class='field']/child::select")
 	private MCWebElements commonXpathForFilter;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@class='searchButton']//input")
