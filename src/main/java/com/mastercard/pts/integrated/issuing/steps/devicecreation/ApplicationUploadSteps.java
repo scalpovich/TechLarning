@@ -77,6 +77,4 @@ public class ApplicationUploadSteps {
 		MiscUtils.reportToConsole("device production Batch: {}",preProductionBatch.getBatchNumber());
 		batchProcessFlows.processDeviceProductionBatch(batch);
 	}
-
-	
 }

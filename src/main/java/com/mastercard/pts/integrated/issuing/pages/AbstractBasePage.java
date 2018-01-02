@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
@@ -34,6 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -54,8 +56,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public String pageValidationCheck = "//ol/li";
 	public String ERRORPANEL = "//li[@class='feedbackPanelERROR']";
-	private static final By INFO_MESSAGE_LOCATOR = By
-			.cssSelector(":not([style]) > .feedbackPanel span.feedbackPanelINFO");
+	private static final By INFO_MESSAGE_LOCATOR = By.cssSelector(":not([style]) > .feedbackPanel span.feedbackPanelINFO");
 
 	private static final String FIRST_ROW_SELECT = ".dataview tbody span";
 
@@ -72,9 +73,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private static final Logger logger = LoggerFactory.getLogger(AbstractBasePage.class);
 
 	public static final LocalDate futureDate = LocalDate.now().plusDays(100);
+
 	public static final LocalDate futureEndDate = LocalDate.now().plusDays(150);
-	
-    @Value("${default.wait.timeout_in_sec}")
+
+    private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
+
+	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='credentials']//label")
@@ -163,6 +167,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Contact Information')]")
 	private MCWebElement contactInformation;
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Card Management']")
 	private MCWebElement cardManagement;
 
@@ -302,16 +307,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 	 * @return trimmed cell text
 	 */
 	protected String getCellTextByColumnNameInEmbeddedTab(int rowNumber, String columnName) {
-		String xpath = String.format(
-				"//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]",
-				rowNumber, columnName);
+		String xpath = String.format("//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]", rowNumber,
+				columnName);
 		return driver().findElement(By.xpath(xpath)).getText().trim();
 	}
 
 	public String getCellTextByColumnName(int rowNumber, String columnName) {
-		String xpath = String.format(
-				"//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]",
-				rowNumber, columnName);
+		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]", rowNumber, columnName);
 		return driver().findElement(By.xpath(xpath)).getText().trim();
 	}
 
@@ -339,14 +341,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void verifyResponseMessage() {
-		WebElement responseMessage = new WebDriverWait(driver(), timeoutInSec)
-				.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".SuccessMessageTxt")));
+		WebElement responseMessage = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".SuccessMessageTxt")));
 		logger.info(RESPONSE_MESSAGE, responseMessage.getText());
 	}
 
 	protected void verifyOperationStatus() {
-		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec)
-				.until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
+		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
 	}
 
@@ -364,8 +364,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected String getSuccessMessage() {
 		try {
-			WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec)
-					.until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
+			WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 			logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
 			return successMessageLbl.toString();
 		} catch (NoSuchElementException e) {
@@ -376,15 +375,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected String getCodeFromInfoMessage(String codeDescription) {
-		return driver().findElements(INFO_MESSAGE_LOCATOR).stream().map(WebElement::getText)
-				.filter(text -> StringUtils.containsIgnoreCase(text, codeDescription))
-				.map(text -> text.replaceAll("\\D+", "")).findFirst()
-				.orElseThrow(() -> new ValidationException("Missing code: " + codeDescription));
+		return driver().findElements(INFO_MESSAGE_LOCATOR).stream().map(WebElement::getText).filter(text -> StringUtils.containsIgnoreCase(text, codeDescription))
+				.map(text -> text.replaceAll("\\D+", "")).findFirst().orElseThrow(() -> new ValidationException("Missing code: " + codeDescription));
 	}
 
 	protected void verifyErrorMessage() {
-		WebElement errorMessageLbl = new WebDriverWait(driver(), timeoutInSec)
-				.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.feedbackPanelERROR")));
+		WebElement errorMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.feedbackPanelERROR")));
 		logger.info("Error message : {}", errorMessageLbl.getText());
 	}
 
@@ -405,8 +401,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected String getErrorMessage() {
 		try {
-			WebElement errorMessageLbl = new WebDriverWait(driver(), timeoutInSec)
-					.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.feedbackPanelERROR")));
+			WebElement errorMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.feedbackPanelERROR")));
 			logger.info("Error message : {}", errorMessageLbl.getText());
 			return errorMessageLbl.toString();
 		} catch (TimeoutException e) {
@@ -417,8 +412,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void verifyNoErrors() {
-		List<WebElement> messages = driver().findElements(By
-				.cssSelector(".feedbackPanelWARNING, .feedbackPanelERROR, .ketchup-error-container-alt[style*=block]"));
+		List<WebElement> messages = driver().findElements(By.cssSelector(".feedbackPanelWARNING, .feedbackPanelERROR, .ketchup-error-container-alt[style*=block]"));
 		if (!messages.isEmpty()) {
 			String errors = messages.stream().map(WebElement::getText).collect(Collectors.joining("\n"));
 			throw new ValidationException(errors);
@@ -441,9 +435,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected boolean verifyDuplicateAndClickCancel() {
 		String message = getMessageFromFeedbackPanel();
-		if (message != null && (message.contains("Effective Date and End Date should not overlap for same Country")
-				|| message.contains("Error in Insertion/Save") || message.contains(
-						"Business Calendar setup already exists for logged in Institution for same Effective Date"))) {
+		if (message != null
+				&& (message.contains("Effective Date and End Date should not overlap for same Country") || message.contains("Error in Insertion/Save") || message
+						.contains("Business Calendar setup already exists for logged in Institution for same Effective Date"))) {
 			clickCancelButton();
 			return true;
 		}
@@ -472,20 +466,17 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void verifyRecordMarkedForUpdationStatusWarning() {
-		WebElement warningMessageLbl = new WebDriverWait(driver(), timeoutInSec)
-				.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.feedbackPanelWARNING")));
+		WebElement warningMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.feedbackPanelWARNING")));
 		logger.info("Warning message: {}", warningMessageLbl.getText());
 	}
 
 	protected void verifyRecordMarkedForUpdationStatusSuccess() {
-		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec)
-				.until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
+		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
 	}
 
 	protected void verifyOnAgentPortal() {
-		WebElement userName = new WebDriverWait(driver(), timeoutInSec)
-				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='credentials']//label")));
+		WebElement userName = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='credentials']//label")));
 		logger.info("On Agent Portal: {}", userName.getText());
 	}
 
@@ -503,8 +494,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected String getBatchNumberFromFeedbackPanel() {
-		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec)
-				.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.feedbackPanelINFO")));
+		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.feedbackPanelINFO")));
 		String batchNumber = successMessageLbl.getText().replaceAll("\\D+", "");
 		logger.info("batch number: {}", batchNumber);
 		return batchNumber;
@@ -534,8 +524,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		try {
 			WebElementUtils.waitForWicket(driver());
 			for (int l = 0; l < 21; l++) {
-				while ("PENDING [0]".equalsIgnoreCase(batchStatus.getText())
-						|| "IN PROCESS [1]".equalsIgnoreCase(batchStatus.getText()))
+				while ("PENDING [0]".equalsIgnoreCase(batchStatus.getText()) || "IN PROCESS [1]".equalsIgnoreCase(batchStatus.getText()))
 					Thread.sleep(10000); // waiting for page auto refresh
 			}
 		} catch (NoSuchElementException | InterruptedException e) {
@@ -545,15 +534,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void verifySearchButton(String buttonLabel) {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(searchButtonElement));
-		Assert.assertTrue("Error Message -  Button Label - Expected Result : " + buttonLabel + ACTUAL_RESULT_LABEL
-				+ searchButtonElement.getText(), buttonLabel.contains(searchButtonElement.getText()));
+		Assert.assertTrue("Error Message -  Button Label - Expected Result : " + buttonLabel + ACTUAL_RESULT_LABEL + searchButtonElement.getText(), buttonLabel.contains(searchButtonElement.getText()));
 		logger.info(RESPONSE_MESSAGE, searchButtonElement.getText());
 	}
 
 	protected void verifyPopup(String popupName) {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(popupNameElement));
-		Assert.assertTrue("Error Message - Popup Name - Expecting Result : " + popupName + ACTUAL_RESULT_LABEL
-				+ popupNameElement.getText(), popupName.contains(popupNameElement.getText()));
+		Assert.assertTrue("Error Message - Popup Name - Expecting Result : " + popupName + ACTUAL_RESULT_LABEL + popupNameElement.getText(), popupName.contains(popupNameElement.getText()));
 		logger.info(RESPONSE_MESSAGE, popupNameElement.getText());
 	}
 
@@ -563,8 +550,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		boolean isAlertPresent = alert != null;
 		if (isAlertPresent) {
 			actualAlertText = alert.getText();
-			Assert.assertTrue("Error Message - Delete Alert - Expected Result : " + expectedAlertText
-					+ ACTUAL_RESULT_LABEL + actualAlertText, actualAlertText.contains(expectedAlertText));
+			Assert.assertTrue("Error Message - Delete Alert - Expected Result : " + expectedAlertText + ACTUAL_RESULT_LABEL + actualAlertText, actualAlertText.contains(expectedAlertText));
 			alert.dismiss();
 		}
 		if (!isAlertPresent) {
@@ -591,8 +577,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 			if (isDeleteColumnPresent()) {
 				deleteFirstRecord();
-				verifyDeleteRecordAlert(
-						name.replaceAll("Add.*", "Are you sure you want to delete the highlighted record?"));
+				verifyDeleteRecordAlert(name.replaceAll("Add.*", "Are you sure you want to delete the highlighted record?"));
 			}
 		}
 	}
@@ -609,8 +594,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			clickX2Close();
 			if (isDeleteColumnPresent()) {
 				deleteFirstRecord();
-				verifyDeleteRecordAlert(
-						name.replaceAll("Add.*", "Are you sure you want to delete the highlighted record?"));
+				verifyDeleteRecordAlert(name.replaceAll("Add.*", "Are you sure you want to delete the highlighted record?"));
 			}
 		}
 	}
@@ -618,41 +602,30 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected void verifyHomePageCollectPortal(String text) {
 
 		if ("home".equalsIgnoreCase(text))
-			Assert.assertTrue("Error Message - Expected Result : " + text + ACTUAL_RESULT_LABEL + heading.getText(),
-					heading.getText().contains(text));
+			Assert.assertTrue("Error Message - Expected Result : " + text + ACTUAL_RESULT_LABEL + heading.getText(), heading.getText().contains(text));
 		else {
-			Assert.assertTrue(
-					"Error Message - Expected Result : Welcome to " + text + ACTUAL_RESULT_LABEL + paragraph.getText(),
-					paragraph.getText().contains("Welcome to " + text));
-			Assert.assertTrue("Error Message - Expected Result : " + text + ACTUAL_RESULT_LABEL + heading.getText(),
-					heading.getText().contains(text));
+			Assert.assertTrue("Error Message - Expected Result : Welcome to " + text + ACTUAL_RESULT_LABEL + paragraph.getText(), paragraph.getText().contains("Welcome to " + text));
+			Assert.assertTrue("Error Message - Expected Result : " + text + ACTUAL_RESULT_LABEL + heading.getText(), heading.getText().contains(text));
 		}
 	}
 
 	protected void verifyDeviceDetails() {
 		boolean deviceNumberLength = deviceNumber.getText().trim().length() > 0;
-		Assert.assertTrue(
-				"Error Message - Device Number Length - Expected Result : Length Greater Than Zero | Actual Result : "
-						+ deviceNumber.getText().trim().length(),
-				deviceNumberLength);
+		Assert.assertTrue("Error Message - Device Number Length - Expected Result : Length Greater Than Zero | Actual Result : " + deviceNumber.getText().trim().length(), deviceNumberLength);
 	}
 
 	protected void verifyWalletDetails() {
 		boolean walletNumberLength = walletNumber.getText().trim().length() > 0;
-		Assert.assertTrue(
-				"Error Message - Wallet Number Length - Expected Result : Length Greater Than Zero | Actual Result : "
-						+ walletNumber.getText().trim().length(),
-				walletNumberLength);
+		Assert.assertTrue("Error Message - Wallet Number Length - Expected Result : Length Greater Than Zero | Actual Result : " + walletNumber.getText().trim().length(), walletNumberLength);
 	}
 
 	public String getMasterDetailContentTitle() {
-		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle))
-				.getText();
+		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle)).getText();
 	}
 
 	protected void verifyTitleCardHolderPortal(String text) {
-		Assert.assertTrue("Error Message - Title of Cradholder Portal - Expected Result : " + text + ACTUAL_RESULT_LABEL
-				+ getMasterDetailContentTitle().trim(), getMasterDetailContentTitle().trim().contains(text));
+		Assert.assertTrue("Error Message - Title of Cradholder Portal - Expected Result : " + text + ACTUAL_RESULT_LABEL + getMasterDetailContentTitle().trim(), getMasterDetailContentTitle().trim()
+				.contains(text));
 	}
 
 	protected void verifyButton(String text) {
@@ -665,9 +638,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void verifyContactInformation() {
-		Assert.assertTrue(
-				"Error Message - Contanct Information Not Present - Expected Result : Contact Information | Actual Result : "
-						+ contactInformation.getText(),
+		Assert.assertTrue("Error Message - Contanct Information Not Present - Expected Result : Contact Information | Actual Result : " + contactInformation.getText(),
 				CONTACT_INFORMATION_EXPECTED.equals(contactInformation.getText()));
 	}
 
@@ -817,7 +788,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			logger.info("Element is invisible");
 			return true;
 		} catch (Exception e) {
-			logger.info("Element is visible");
+			logger.error("Element is visible");
 			return false;
 		}
 	}
@@ -847,12 +818,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public boolean waitForLoaderToDisappear() {
 		try {
 			WebDriverWait waitForElement = new WebDriverWait(getFinder().getWebDriver(), 50, ELEMENT_WAIT_MAX);
-			waitForElement.until(ExpectedConditions
-					.not(ExpectedConditions.visibilityOf(Element("//img[contains(@src,'loading')]"))));
+			waitForElement.until(ExpectedConditions.not(ExpectedConditions.visibilityOf(Element("//img[contains(@src,'loading')]"))));
 			logger.info("Loader is present");
 			return true;
 		} catch (Exception e) {
-			logger.error("Loader is not present");
+			logger.error("Loader is not present : {} ", e);
 			return false;
 		}
 	}
@@ -893,10 +863,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 				jsText = (String) jse.executeScript("return $(arguments[0]).text();", WE);
 				unfound = false; // FOUND IT
 			} catch (StaleElementReferenceException ser) {
+				logger.info(EXCEPTION_MESSAGE, ser.getMessage());
 				unfound = true;
 			} catch (NoSuchElementException nse) {
+				logger.info(EXCEPTION_MESSAGE, nse.getMessage());
 				unfound = true;
 			} catch (Exception e) {
+				logger.info(EXCEPTION_MESSAGE, e.getMessage());
 				logger.info("Unknown error.");
 			}
 		}
@@ -1011,8 +984,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 		}
 		ele.getSelect().selectByVisibleText(optionVisbleText);
-
-		// waitForWicket(driver());
 		waitForLoaderToDisappear();
 		waitForPageToLoad(driver());
 	}
@@ -1045,7 +1016,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected void clickWhenClickableCHP(MCWebElement element) {
 		waitForElementVisible(element);
 		new WebDriverWait(driver(), TIMEOUT).until(elementToBeClickable(element)).click();
-		// waitForWicket(driver());
 	}
 
 	protected void clickWhenClickable(WebElement element) {
@@ -1086,7 +1056,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		} catch (Exception ex) {
 			logger.info("Unable to switch to frame :" + strFrame);
 			throw ex;
-			// Assert.fail(ex.getMessage());
 		} finally {
 			wait = null;
 		}
@@ -1130,14 +1099,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public void switchToIframe(String caption) {
 		WebDriverWait wait = new WebDriverWait(getFinder().getWebDriver(), 80);
-		By frameSelector = By.xpath(
-				String.format("//h3[contains(text(), '%s')]/ancestor::div//iframe[@class='wicket_modal']", caption));
+		By frameSelector = By.xpath(String.format("//h3[contains(text(), '%s')]/ancestor::div//iframe[@class='wicket_modal']", caption));
 		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameSelector));
 	}
 
 	public static void addWicketAjaxListeners(WebDriver driver) {
-		String javascript = "if (typeof tk  == 'undefined') {"
-				+ "tk = {activeAjaxCount: 0, ajaxCallsTried: 0, ajaxCallsCompleted: 0};"
+		String javascript = "if (typeof tk  == 'undefined') {" + "tk = {activeAjaxCount: 0, ajaxCallsTried: 0, ajaxCallsCompleted: 0};"
 				+ "Wicket.Ajax.registerPreCallHandler(function(){tk.activeAjaxCount++;tk.ajaxCallsTried++;});"
 				+ "Wicket.Ajax.registerPostCallHandler(function(){tk.activeAjaxCount--;tk.ajaxCallsCompleted++;});}";
 		executeJavascript(driver, javascript);
@@ -1157,9 +1124,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	public static <R> R fluentWait(Supplier<R> condition) {
-		return new FluentWait<Object>(new Object()).ignoring(WebDriverException.class)
-				.withTimeout(TIMEOUT, TimeUnit.SECONDS)
-				.until((com.google.common.base.Function<Object, R>) o -> condition.get());
+		return new FluentWait<Object>(new Object()).ignoring(WebDriverException.class).withTimeout(TIMEOUT, TimeUnit.SECONDS).until((com.google.common.base.Function<Object, R>) o -> condition.get());
 	}
 
 	public static void retryUntilNoErrors(Runnable action) {
@@ -1202,6 +1167,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	public void ClickButton(MCWebElement BtnName) {
+		WebElementUtils.scrollDown(driver(), 0, 250);
 		BtnName.click();
 		// addWicketAjaxListeners(getFinder().getWebDriver());
 	}
@@ -1242,17 +1208,14 @@ public abstract class AbstractBasePage extends AbstractPage {
 		String errorMessage;
 		String elementName;
 		if (iselementPresent(Elements(ERRORPANEL))) {
-			errorFields
-					.add("Error on page" + "::::::" + getChildElement(Elements(ERRORPANEL).get(0), "//span").getText());
+			errorFields.add("Error on page" + "::::::" + getChildElement(Elements(ERRORPANEL).get(0), "//span").getText());
 		}
 		if (iselementPresent(Elements(pageValidationCheck))) {
-			// System.out.println(Elements(pageValidationCheck).size());
 			for (WebElement ele : Elements(pageValidationCheck)) {
 				if (ele != null) {
 					errorMessage = ele.getText();
 					elementName = getChildElement(ele, "./preceding::td[1][@class='displayName']").getText();
 					errorFields.add(elementName + "::::::" + errorMessage);
-
 				}
 			}
 		}
@@ -1260,23 +1223,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	public void switchToWindowCHP() {
-
 		try {
 			Set<String> handles;
-
-			/*
-			 * do { handles = getFinder().getWebDriver().getWindowHandles();
-			 * logger.info("Number of windows available: " + handles.size()); } while
-			 * (handles.size() < 2);
-			 */
 			handles = getFinder().getWebDriver().getWindowHandles();
 			for (String handle : handles) {
 				if (!handle.equals(getFinder().getWebDriver().getWindowHandle()))
 					getFinder().getWebDriver().switchTo().window(handle);
 			}
-
 		} catch (Exception e) {
-			logger.error("Unable to Switch Window" + e);
+			logger.error("Unable to Switch Window --> {} ", e);
 		}
 	}
 
@@ -1300,6 +1255,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public String getTextFromPage(MCWebElement element) {
 		return element.getText();
 	}
+
 	public Map<String, String> pageErrorValidator(String ERRORPANEL) {
 		Map<String, String> errorFields = new HashMap<String, String>();
 		String errorMessage;
@@ -1310,7 +1266,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 					errorMessage = ele.getText();
 					elementName = getChildElement(ele, "./preceding::td[1][@class='displayName']").getText();
 					errorFields.put(elementName, errorMessage);
-
 				}
 			}
 		}
@@ -1318,7 +1273,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	public void enterText(WebElement field, String fieldValue) {
-		System.out.println("Entering text for field: " + fieldValue);
+		logger.info("Entering text for field: {} ", fieldValue);
 		waitForElementVisible(field);
 		field.clear();
 		field.sendKeys(fieldValue);
@@ -1333,7 +1288,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		// TODO Auto-generated method stub
+		logger.info("Not validaiting any elements, as this is an Abstraction layer to Pages");
 		return null;
 	}
 }
