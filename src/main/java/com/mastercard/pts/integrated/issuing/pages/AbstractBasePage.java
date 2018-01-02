@@ -47,6 +47,7 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.AbstractPage;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
+import com.thoughtworks.selenium.webdriven.commands.GetText;
 
 public abstract class AbstractBasePage extends AbstractPage {
 	final static int ELEMENT_WAIT_MAX = 6000;
@@ -57,9 +58,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public String pageValidationCheck = "//ol/li";
 	public String ERRORPANEL = "//li[@class='feedbackPanelERROR']";
 	private static final By INFO_MESSAGE_LOCATOR = By.cssSelector(":not([style]) > .feedbackPanel span.feedbackPanelINFO");
+
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
 
-private static final String FIRST_ROW_SELECT = ".dataview tbody span";
+	private static final String FIRST_ROW_SELECT = ".dataview tbody span";
 
 	private static final String SUCCESS_MESSAGE = "Success message: {}";
 	
@@ -173,7 +175,7 @@ private static final String FIRST_ROW_SELECT = ".dataview tbody span";
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Card Management']")
 	private MCWebElement cardManagement;
-
+	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
 		MCAnnotationProcessor.initializeSuper(this, finderProvider);
@@ -387,7 +389,7 @@ private static final String FIRST_ROW_SELECT = ".dataview tbody span";
 		return driver().findElements(INFO_MESSAGE_LOCATOR).stream().map(WebElement::getText).filter(text -> StringUtils.containsIgnoreCase(text, codeDescription))
 				.map(text -> text.replaceAll("\\D+", "")).findFirst().orElseThrow(() -> new ValidationException("Missing code: " + codeDescription));
 	}
-
+	
 	protected void verifyErrorMessage() {
 		WebElement errorMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.feedbackPanelERROR")));
 		logger.info("Error message : {}", errorMessageLbl.getText());

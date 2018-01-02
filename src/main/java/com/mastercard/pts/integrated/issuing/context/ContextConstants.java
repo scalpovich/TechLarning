@@ -18,5 +18,7 @@ public class ContextConstants {
 	
 	public static final String WALLET = "WALLET";
 	
+	public static final String MCG = "MCG";
+	
 	private ContextConstants() {}
 }

@@ -21,5 +21,12 @@ public class MCGFlows extends MenuFlows {
 		mcgpage.verifyNewMCGSuccess();
 		return MCG;
 	}
+	
+	public String addNewMCG() {
+		waitForElementVisible(menusubmenuPage.getCardManagement());
+		MCGPage mcgpage = navigator.navigateToPage(MCGPage.class);
+		mcgpage.clickaddMCG();		
+		return mcgpage.addMCGDetails();
+	}
 
 }

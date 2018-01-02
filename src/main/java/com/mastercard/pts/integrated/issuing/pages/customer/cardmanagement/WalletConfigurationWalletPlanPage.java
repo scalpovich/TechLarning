@@ -2,13 +2,11 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.Collection;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -55,6 +53,9 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=minBalanceForTxn]")
 	private MCWebElement reservedAmountTxt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[@name='view:whiteListedMcgCode:input:dropdowncomponent']")
+	private MCWebElement whiteListedMsg;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value=Finish]")
 	private MCWebElement finishBtn;
@@ -114,7 +115,11 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		WebElementUtils.enterText(reservedAmountTxt,
 				reserverAmount);
 	}
-
+	
+	public void selectWhiteListMSG(String msgCode){
+		WebElementUtils.selectDropDownByVisibleText(whiteListedMsg,msgCode);
+	}
+	
 	@Override
 	public void clickNextButton() {
 		nextBtn.click();
@@ -156,17 +161,12 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			String productType = walletPlan.getProductType();
 			
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
-			inputDescription(walletPlan.getDescription());
-			
+			inputDescription(walletPlan.getDescription());		
 			selectCurrency(walletPlan.getCurrency());
 			selectProductType(productType);
 			selectProgramType(walletPlan.getProgramType());
 			selectUsage(walletPlan.getUsage());
-
 			fillDetailsBasedOnCarddType1(walletPlan, productType);
-			
-			//Select White listed MSG
-			
 			clickNextButton(); // Click on next button
 			clickFinishButton(); // click on finish button
 			});
@@ -200,6 +200,8 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		}
 		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
 			enterReservedAmount(walletPlan.getReservedAmount());
+			logger.info("White listed MCG {}", walletPlan.getWhiteMcgCode());
+			selectWhiteListMSG(walletPlan.getWhiteMcgCode());
 		}
 	}
 

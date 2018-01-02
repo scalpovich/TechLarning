@@ -6,6 +6,8 @@ import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.jcabi.log.Logger;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.DeviceType;
@@ -19,7 +21,6 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Cred
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardPaymentPriority;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardTransactionRulePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DedupePlan;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceJoiningAndMemberShipFeePlan;
@@ -28,6 +29,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePriorityPassIDAndCardPackIDTemplate;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCCRulePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCG;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MarketingMessageDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MarketingMessagePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PrepaidStatementPlan;
@@ -45,6 +47,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Wall
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.MCGFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramSetupWorkflow;
 
 @Component
@@ -61,6 +64,12 @@ public class ProgramSetupSteps {
 
 	@Autowired
 	private DataProvider dataProvider;
+	
+	@Autowired
+	MCGFlows mcgflows;
+
+	@Autowired
+	MCG mcg;
 
 	private DeviceJoiningAndMemberShipFeePlan deviceJoiningAndMemberShipFeePlan;
 
@@ -589,31 +598,44 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.PROGRAM, program);
 	}
 	
+
+	@When("user fills Merchant Category Group")	
+	public void fillsCreatesMCG() {
+		context.put(ContextConstants.MCG, mcg);
+		String msg = mcgflows.addNewMCG();
+		mcg.setMCG(msg);			
+	}
+	
 	@When("create wallet Plan for \"$type\" product and program \"$programtype\" with usage \"$usageType\"")
 	public void addWalletPlan(@Named("type")String type, @Named("programtype")String programtype, @Named("usageType")String usageType) {
 		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
 		walletPlan.setProductType(ProductType.fromShortName(type));
 		walletPlan.setProgramType(programtype);
+		walletPlan.setProgramType(programtype);
+		MCG mcgs = context.get(ContextConstants.MCG);
+		walletPlan.setWhiteMcgCode(mcgs.getMCG());
 		
-		if(ProgramType.OPEN_LOOP.contains(usageType))			
+		if(ProgramType.OPEN_LOOP.contains(usageType)){			
 			walletPlan.setUsage(ProgramType.OPEN_LOOP);
-		else			
+			context.put(ContextConstants.WALLET, walletPlan);			
+		}
+		else{			
 			walletPlan.setUsage(ProgramType.CLOSED_LOOP);
+		}
 		
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			walletPlan.setCreditPlan(creditCardCreditPlan.buildAbbreviationAndCode());
 			walletPlan.setBillingCyleCode(creditCardBillingCycle.buildDescriptionAndCode());
 		}
 		
-		programSetupWorkflow.createWalletPlan1(walletPlan);
-		context.put(ContextConstants.WALLET, walletPlan);
+		programSetupWorkflow.createWalletPlan1(walletPlan);		
 		
 		WalletPlan wallets = context.get(ContextConstants.WALLET);
 		
 		if(ProgramType.OPEN_LOOP.contains(usageType))			
-			wallets.setFirstWallet(wallets.buildDescriptionAndCode());
+			wallets.setFirstWallet(walletPlan.buildDescriptionAndCode());
 		else			
-			wallets.setSecondWallet(wallets.buildDescriptionAndCode());
+			wallets.setSecondWallet(walletPlan.buildDescriptionAndCode());
 	}
 	
 	@When("fills Program section for $type product and program $programType")

@@ -71,7 +71,7 @@ public class MCGPage extends AbstractBasePage {
 
 	public void verifyNewMCGSuccess() {
 		if (!verifyErrorsOnMCGPage()) {
-			logger.info("Vendor Added Successfully");
+			logger.info("Record Added Successfully");
 			SwitchToDefaultFrame();
 		} else {
 			logger.info("Error in Vendor Addition");

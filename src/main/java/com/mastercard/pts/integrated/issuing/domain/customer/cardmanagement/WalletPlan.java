@@ -71,6 +71,17 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String walletFeePlan;
 	private String firstWallet;
 	private String secondWallet;
+	private String whiteMcgCode;
+	
+
+	public String getWhiteMcgCode() {
+		return whiteMcgCode;
+	}
+
+	public void setWhiteMcgCode(String whiteMcgCode) {
+		this.whiteMcgCode = whiteMcgCode;
+	}
+	
 	
 	public String getSecondWallet() {
 		return secondWallet;
