@@ -14,5 +14,4 @@ When user performs generate TestData for an optimized <transaction> MAS transact
 
 Examples:
 |transaction|
-|EMV_CASH_ADVANCE|
-|MSR_POS_BALANCE_INQUIRY|
+|EMV_PURCHASE|

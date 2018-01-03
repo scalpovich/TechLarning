@@ -148,6 +148,8 @@ public class CheckerPage extends AbstractBasePage {
 		clickSearchButton();
 		clickTableFirstRecord();
 		clickModifyButton();
+		SimulatorUtilities.wait(5000);//this to wait till the page gets loaded
+		WebElementUtils.scrollDown(driver(), 0, 350);
 		enterComment(details.getComment());
 		clickApproveButton();
 	}

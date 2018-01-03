@@ -97,11 +97,13 @@ public class BatchProcessSteps {
 		batchProcessWorkflow.processPreProductionBatch(batch);
 	}
 	
+	@Then("user processes pre-production batch for $type")
 	@When("user processes pre-production batch for $type")
 	public void whenUserProcessesPreproductionBatchForPrepaid(String type){
 		whenProcessesPreproductionBatchForPrepaid(type);
 	}
 	
+	@Then("a new device was created")
 	@When("a new device was created")
 	@Given("a new device was created")
 	public void givenANewDeviceWasCreated() {
@@ -119,6 +121,7 @@ public class BatchProcessSteps {
 		batchProcessWorkflow.processDeviceProductionBatch(batch);
 	}
 	
+	@Then("user processes device production batch for $type")
 	@When("user processes device production batch for $type")
 	public void whenUserProcessesDeviceProductionBatch(String type){
 		whenProcessesDeviceProductionBatch(type);

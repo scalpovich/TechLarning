@@ -118,7 +118,7 @@ public class SimulatorUtilities {
 					getOtherOperation(operationType, robot);
 				}
 				wait(1000);
-				logger.info("**** Robot/Keyboard Operation performed :  ", operationType);
+				logger.info("**** Robot/Keyboard Operation performed :  " + operationType);
 			}
 			wait(2000);
 		} catch (Exception e) {
@@ -192,14 +192,16 @@ public class SimulatorUtilities {
 			String path = getResourceFolderPath() + SimulatorConstantsData.AUTOIT_EXE_PATH.replace("\\", "\\\\");
 			String psExecPath = getResourceFolderPath() + SimulatorConstantsData.PSEXEC_EXE_PATH.replace("\\", "\\\\");
 			String commandToExecute;
-			logger.info("********* AutoIt Exe being executed :  {} ", fileName);
-
-			// for remote/Jenkins/command Line - AutoIT execution.. enable the below 2 lines and comment the other 2 lines
-			commandToExecute = " cmd /c " + psExecPath + " " + path + fileName;
-			logger.info("********* commandToExecute  :  {}", commandToExecute);
-			executeCommand(fileName, commandToExecute);
-		} catch (Exception e) {
-			logger.debug(ConstantData.EXCEPTION, e);
+			logger.info("********* AutoIt Exe being executed :  " +  fileName);
+                                    
+            //for remote/Jenkins/command Line -  AutoIT execution.. enable the below 2 lines and comment the other 2 lines
+            commandToExecute = " cmd /c " + psExecPath + " "+ path + fileName;
+           MiscUtils.reportToConsole("********* commandToExecute  :  " +  commandToExecute);
+            executeCommand(fileName, commandToExecute);
+		}
+		catch(Exception e)
+		{
+			logger.debug(ConstantData.EXCEPTION + e);
 			MiscUtils.propagate(e);
 		}
 	}
@@ -231,7 +233,7 @@ public class SimulatorUtilities {
 			robot.keyRelease(KeyEvent.VK_V);
 			robot.keyRelease(KeyEvent.VK_CONTROL);
 			wait(1000);
-			logger.info(SETTEXT_OPERATION, characters);
+			logger.info(SETTEXT_OPERATION + characters);
 		}
 	}
 
@@ -245,43 +247,46 @@ public class SimulatorUtilities {
 		performRightClick(getImageForSelectedItem(nameOfSnapshot));
 	}
 
-	public void performClickOperation(String nameOfSnapshot) {
-		logger.info(SIKULI_MESSAGE, nameOfSnapshot);
+	public void performClickOperation(String nameOfSnapshot)
+	{	
+		logger.info(SIKULI_MESSAGE +  nameOfSnapshot);
 		performActionClick(getImageOfItem(nameOfSnapshot));
 		wait(1000);
 	}
 
 	public void clickOnLastMatchingImage(String nameOfSnapshot) {
-		logger.info(SIKULI_MESSAGE, nameOfSnapshot);
+		logger.info(SIKULI_MESSAGE + nameOfSnapshot);
 		clickOnLastImage(getImageOfItem(nameOfSnapshot));
 		wait(1000);
 	}
 
-	public void performDoubleClickOperation(String nameOfSnapshot) {
-		logger.info(SIKULI_DOUBLECLICK_MESSAGE, nameOfSnapshot);
-		performActionDoubleClick(getImageOfItem(nameOfSnapshot));
+	public void performDoubleClickOperation(String nameOfSnapshot)
+	{	
+		logger.info(SIKULI_DOUBLECLICK_MESSAGE +  nameOfSnapshot);
+		performActionDoubleClick(getImageOfItem(nameOfSnapshot) );
 		wait(1000);
 	}
 
 	public void performClickOperationOnImages(String nameOfSnapshot) {
 		String imagesName = nameOfSnapshot + SELECTED_IMAGE;
-		logger.info(SIKULI_MESSAGE, nameOfSnapshot);
-		performActionClickOnImages(getImageOfItem(nameOfSnapshot), getImageOfItem(imagesName));
+		logger.info(SIKULI_MESSAGE  +  nameOfSnapshot);
+		performActionClickOnImages(getImageOfItem(nameOfSnapshot), getImageOfItem(imagesName) );
 		wait(1000);
 	}
 
 	public void performDoubleClickOperationOnImages(String nameOfSnapshot) {
 		String imagesNameTemp = nameOfSnapshot + SELECTED_IMAGE;
-		logger.info(SIKULI_DOUBLECLICK_MESSAGE, nameOfSnapshot);
-		performActionDoubleClickOnImages(getImageOfItem(nameOfSnapshot), getImageOfItem(imagesNameTemp));
+		logger.info(SIKULI_DOUBLECLICK_MESSAGE +  nameOfSnapshot);
+		performActionDoubleClickOnImages(getImageOfItem(nameOfSnapshot), getImageOfItem(imagesNameTemp) );
 		wait(1000);
 	}
 
 	private void performRightClick(Pattern nameOfSnapshot) {
 		try {
 			screen.rightClick(nameOfSnapshot);
-		} catch (Exception e) {
-			logger.debug(ConstantData.SIKUKI_EXCEPTION, nameOfSnapshot);
+		}
+		catch(Exception e)	{
+			logger.debug(ConstantData.SIKUKI_EXCEPTION  + nameOfSnapshot);
 			MiscUtils.propagate(e);
 		}
 	}
@@ -289,8 +294,10 @@ public class SimulatorUtilities {
 	private void performActionClick(Pattern selectParent) {
 		try {
 			screen.click(selectParent);
-		} catch (Exception e) {
-			logger.debug(ConstantData.SIKUKI_EXCEPTION, e);
+		}
+		catch(Exception e)
+		{
+			logger.debug(ConstantData.SIKUKI_EXCEPTION + e);
 			MiscUtils.propagate(e);
 		}
 	}
@@ -301,8 +308,10 @@ public class SimulatorUtilities {
 			while (it.hasNext()) {
 				logger.info("The match is ", it.next().click());
 			}
-		} catch (Exception e) {
-			logger.debug(ConstantData.SIKUKI_EXCEPTION, e);
+		}
+		catch(Exception e)
+		{
+			logger.debug(ConstantData.SIKUKI_EXCEPTION  + e);
 			MiscUtils.propagate(e);
 		}
 	}
@@ -310,8 +319,10 @@ public class SimulatorUtilities {
 	private void performActionDoubleClick(Pattern selectParent) {
 		try {
 			screen.doubleClick(selectParent);
-		} catch (Exception e) {
-			logger.debug(ConstantData.SIKUKI_EXCEPTION, e);
+		}
+		catch(Exception e)
+		{
+			logger.debug(ConstantData.SIKUKI_EXCEPTION  + e);
 			MiscUtils.propagate(e);
 		}
 	}
@@ -323,8 +334,10 @@ public class SimulatorUtilities {
 			} else {
 				screen.click(selectParent1);
 			}
-		} catch (Exception e) {
-			logger.debug(ConstantData.SIKUKI_EXCEPTION, e);
+		}
+		catch(Exception e)
+		{
+			logger.debug(ConstantData.SIKUKI_EXCEPTION + e);
 			MiscUtils.propagate(e);
 		}
 	}
@@ -354,11 +367,15 @@ public class SimulatorUtilities {
 		}
 	}
 
-	public Boolean isImagePresent(String screenName) {
-		try {
-			return screen.exists(getImageOfItem(screenName)) != null;
-		} catch (Exception e) {
-			logger.debug(ConstantData.SIKUKI_EXCEPTION, screenName);
+	public Boolean isImagePresent(String screenName)
+	{
+		try
+		{
+			return screen.exists(getImageOfItem(screenName))!=null;
+		}
+		catch(Exception e)
+		{
+			logger.debug(ConstantData.SIKUKI_EXCEPTION + screenName);
 			logger.error(e.getMessage());
 			return false;
 		}
@@ -374,9 +391,10 @@ public class SimulatorUtilities {
 				logger.info("Check areImagesPresent in Simululator Utilities");
 				return false;
 			}
-
-		} catch (Exception e) {
-			logger.debug(ConstantData.SIKUKI_EXCEPTION, screenName);
+		}
+		catch(Exception e)
+		{
+			logger.debug(ConstantData.SIKUKI_EXCEPTION + screenName);
 			return false;
 		}
 	}
@@ -402,8 +420,10 @@ public class SimulatorUtilities {
 
 		try {
 			return new Pattern(objectName).similar(0.75F);
-		} catch (Exception e) {
-			logger.debug(ConstantData.SIKUKI_EXCEPTION, nameOfSnapshot);
+		}
+		catch(Exception e)
+		{
+			logger.debug(ConstantData.SIKUKI_EXCEPTION + nameOfSnapshot);
 			return null;
 		}
 	}
@@ -453,9 +473,10 @@ public class SimulatorUtilities {
 		String content;
 		try {
 			content = FileCreation.getFileContents(filePath);
-			return content.replaceAll("\\D+", ""); // gets only numbers
-		} catch (Exception e) {
-			logger.debug(ConstantData.EXCEPTION, e);
+			return content.replaceAll("\\D+",""); // gets only numbers
+		}		
+		catch(Exception e)	{
+			logger.debug(ConstantData.EXCEPTION  + e);
 			MiscUtils.propagate(e);
 			return null;
 		}
