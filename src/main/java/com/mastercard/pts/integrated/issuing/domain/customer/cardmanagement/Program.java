@@ -16,6 +16,7 @@ public class Program implements HasCodeAndDescription {
 	private static final String CASH_LIMIT_RESET = "CASH_LIMIT_RESET";
 	private static final String CASH_LIMIT_TYPE = "CASH_LIMIT_TYPE";
 	private static final String PROGRAM_TYPE = "PROGRAM_TYPE";
+	private static final String INTERCHANGE = "INTERCHANGE";
 	private static final String REFUND_IN_CURRENCY = "REFUND_IN_CURRENCY";
 	private static final String PGM_INTERCHANGE	 = 	"PGM_INTERCHANGE";
 	private static final String PGM_PROGRAM_TYPE	 = 	"PGM_PROGRAM_TYPE";
@@ -131,6 +132,7 @@ public class Program implements HasCodeAndDescription {
 		programObject.setProgramCode(MiscUtils.generate6CharAlphaNumeric());
 		programObject.setDescription(ConstantData.GENERIC_DESCRIPTION);
 		programObject.setProgramType(provider.getString(PROGRAM_TYPE));
+		programObject.setInterchange(provider.getString(INTERCHANGE));
 		programObject.setMaximumBalanceWithoutKyc(RandomStringUtils.randomNumeric(4));
 		programObject.setNumberOfLoadsAllowedWithoutKyc(String.valueOf(RandomUtils.nextInt(1,99)));
 		programObject.setCreditLimit(RandomStringUtils.randomNumeric(5));

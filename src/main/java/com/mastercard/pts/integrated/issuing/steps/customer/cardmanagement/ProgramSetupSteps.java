@@ -594,6 +594,16 @@ public class ProgramSetupSteps {
 
 		programSetupWorkflow.createDeviceRange(deviceRange);
 	}
+	
+	@When("User fills Device Range section for $type product for visa interface")
+	public void whenUserFillsDeviceRangeSectionVisaInterface(String type) {
+		DeviceRange deviceRange = DeviceRange.createDataWithProvider(dataProvider, provider, type);
+		deviceRange.setProductType(ProductType.fromShortName(type));
+		deviceRange.setProgram(program.buildDescriptionAndCode());
+		deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
+
+		programSetupWorkflow.createDeviceRange(deviceRange);
+	}
 
 	private void setPinRequiredToFalse() {
 		context.put(ConstantData.IS_PIN_REQUIRED, "FALSE");
