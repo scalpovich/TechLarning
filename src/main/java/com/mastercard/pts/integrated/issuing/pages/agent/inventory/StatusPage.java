@@ -21,7 +21,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Navigation(tabTitle = InventoryNav.TAB_INVENTORY, treeMenuItems = { InventoryNav.L1_ORDER, InventoryNav.L2_STATUS })
 public class StatusPage extends InventoryAbstractPage {
 	private static final Logger logger = LoggerFactory.getLogger(OrderPage.class);
-
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#orderNo")
 	private MCWebElement orderNumberTxt;
 
@@ -52,6 +52,11 @@ public class StatusPage extends InventoryAbstractPage {
 				WebElementUtils.visibilityOf(statusDDwn), WebElementUtils.visibilityOf(orderFromDateDPkr), WebElementUtils.visibilityOf(orderToDateDPkr));
 	}
 
+	public void clickSearchButtonWithOrderNumber() {
+		new WebDriverWait(driver(), timeoutInSec).until(
+				WebElementUtils.elementToBeClickable(searchBtn)).click();
+	}
+	
 	public void selectBranchId(String branchId) {
 		WebElementUtils.selectDropDownByVisibleText(brancIdDDwn, branchId);
 	}

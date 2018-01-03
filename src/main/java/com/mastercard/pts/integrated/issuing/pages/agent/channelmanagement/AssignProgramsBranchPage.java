@@ -29,6 +29,9 @@ public class AssignProgramsBranchPage extends AbstractBasePage {
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Search']")
+	private MCWebElement searchBtn;
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "div .Title")
 	private MCWebElement masterDetailContentTitle;
 
@@ -60,6 +63,12 @@ public class AssignProgramsBranchPage extends AbstractBasePage {
 		return Arrays.asList(WebElementUtils.visibilityOf(branchIdDdwn),WebElementUtils.visibilityOf(agencyIdDdwn));
 	}
 
+	@Override
+	public void clickSearchButton() {
+		new WebDriverWait(driver(), timeoutInSec).until(
+				WebElementUtils.elementToBeClickable(searchBtn)).click();
+	}
+	
 	public String getMasterDetailContentTitleText() {
 		logger.info("Corporate User View Edit Master Detail Tilte Text: {}");
 		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle)).getText();

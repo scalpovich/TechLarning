@@ -25,6 +25,9 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		TransactionsNav.L2_LOAD_BALANCE_APPROVE })
 public class LoadBalanceApprovePage extends TransactionsAbstractPage {
 	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Search']")
+	private MCWebElement searchBtn;
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#Submit")
 	private MCWebElement submitBtn;
 
@@ -46,7 +49,13 @@ public class LoadBalanceApprovePage extends TransactionsAbstractPage {
 				WebElementUtils.visibilityOf(masterDetailContentTitle),
 				WebElementUtils.visibilityOf(deviceNumberTxt));
 	}
-
+	
+	@Override
+	public void clickSearchButton() {
+		new WebDriverWait(driver(), timeoutInSec).until(
+				WebElementUtils.elementToBeClickable(searchBtn)).click();
+	}
+	
 	public void clickModifyButton() {
 		new WebDriverWait(driver(), timeoutInSec).until(
 				WebElementUtils.elementToBeClickable(modifyBtn)).click();

@@ -20,6 +20,9 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Navigation(tabTitle = ServicesNav.TAB_SERVICES, treeMenuItems = { ServicesNav.L1_TRAVEL_CARD_CURRENCY_MANAGEMENT, ServicesNav.L2_CURRENCY_SETUP })
 public class CurrencySetupPage extends ServicesAbstractPage {
 	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Search']")
+	private MCWebElement searhBtn;
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#accountCurrency")
 	private MCWebElement accountCurrencyDdwn;
 	
@@ -41,6 +44,11 @@ public class CurrencySetupPage extends ServicesAbstractPage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(masterDetailContentTitle), WebElementUtils.visibilityOf(cardNumberTxt));
+	}
+	
+	public void clickSearchButtonWithDeviceNumber() {
+		new WebDriverWait(driver(), timeoutInSec).until(
+				WebElementUtils.elementToBeClickable(searhBtn)).click();
 	}
 	
 	public void clickAddButton() {
@@ -80,7 +88,7 @@ public class CurrencySetupPage extends ServicesAbstractPage {
 	
 	public void setupCurrency(CurrencySetup details, Device device) {
 		enterDeviceNumber(device.getDeviceNumber());
-		clickSearchButton();
+		clickSearchButtonWithDeviceNumber();
 		String[] values = details.getCurrencyWithPriority().trim().split(",");
 		for (int i = 0; i < values.length ; i++) {
 			String[] data = values[i].trim().split(":");
