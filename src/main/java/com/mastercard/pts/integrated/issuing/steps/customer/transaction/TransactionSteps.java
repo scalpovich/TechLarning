@@ -319,14 +319,6 @@ public class TransactionSteps {
 		device.setPinNumberForTransaction(pinNumber);
 	}
 
-	@When("PIN is retrieved successfully with sample data from Pin Offset File")
-	@Then("PIN is retrieved successfully with sample data from Pin Offset File")
-	public void thenPINIsRetrievedSuccessfullyBasedOnSampleData() {
-		Transaction transactionData = Transaction.fetchDataForFinSim(finSimConfig);
-
-		String pinNumber = transactionWorkflow.getPinNumber(transactionData);
-		MiscUtils.reportToConsole("FINSim PIN Number generated : " + pinNumber);
-	}
 
 	@When("$simulatorName simulator is closed")
 	@Then("$simulatorName simulator is closed")
