@@ -46,6 +46,7 @@ Then FINSim simulator is closed
 Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
 Meta:
 @TestId 
+Given connection to MAS is established
 When perform an MSR_CASH_WITHDRAWAL MAS transaction
 Then MAS test results are verified
 Then user is logged in institution
@@ -56,7 +57,6 @@ And user sign out from customer portal
 Scenario: Perform MSR_ECOMMERCE Authorization transaction
 Meta:
 @TestId 
-Given connection to MAS is established
 When perform an MSR_ECOMMERCE MAS transaction
 Then MAS test results are verified
 When MAS simulator is closed

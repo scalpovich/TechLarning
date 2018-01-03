@@ -1,23 +1,25 @@
-prepaid emv retail general purpose card authorization
+prepaid emv corporate giftcard card
 
 Narrative:
-In order to check transactions on prepaid emv retail general purpose card
+In order to provide to client easy-to-use payment method for e-commerce retail
 As an issuer
-I want to authorize transactions for prepaid emv retail general purpose card
+I want to create a prepaid emv corporate giftcard card for client
 
 Meta:
-@StoryName p_emv_retail_general
+@StoryName p_emv_corp_gift
 @oldReferenceSheet_S203707
-@CRCardsPinlessWithAuthorization
+@CRCardsWithAuthorization
 
-Scenario: Set up prepaid emv retail general purpose card
+
+Scenario: Set up prepaid emv corporate giftcard card
 Meta:
-@TestId TC398452
+@TestId 
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client
+Then device has "normal" status
 
-Scenario: prepaid emv retail general purpose card device production
+Scenario: prepaid emv corporate giftcard card device production
 Meta:
 @TestId TC408068
 Given user is logged in institution
@@ -42,15 +44,6 @@ Given connection to MAS is established
 When perform an EMV_CASH_ADVANCE MAS transaction
 Then user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
-Then MAS simulator is closed
-
-
-Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
-Meta:
-@TestId 
-When perform an EMV_CASH_WITHDRAWAL MAS transaction
-Then MAS test results are verified
-When MAS simulator is closed
 
 Scenario: Program Balance Summary download
 Meta:
