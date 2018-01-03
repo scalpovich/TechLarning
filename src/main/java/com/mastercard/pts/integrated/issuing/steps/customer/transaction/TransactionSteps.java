@@ -133,9 +133,11 @@ public class TransactionSteps {
 	@When("user performs an optimized $transaction MAS transaction")
 	@Given("user performs an optimized $transaction MAS transaction")
 	public void givenOptimizedTransactionIsExecuted(String transaction) {
+		transactionWorkflow.browserMinimize(); //minimizing browser for smooth operation of MAS/MDFS
 		Transaction transactionData = generateMasTestDataForTransaction(transaction);
 
 		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
+		transactionWorkflow.browserMaximize(); //restoring browser after operation of MAS/MDFS
 	}
 
 	@When("user performs generate TestData for an optimized $transaction MAS transaction")

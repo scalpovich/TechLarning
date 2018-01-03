@@ -6,6 +6,7 @@ public class SimulatorConstantsData {
 		public static final String KILL_WINIUM_PROCESS = "Winium.Desktop.Driver";
 		public static final String KILL_FINSIM_PROCESS = "ATClient";
 		public static final String KILL_MAS_PROCESS = "MSPMCW"; 
+		public static final String KILL_MAS17_PROCESS = "MSPMCW1741"; 
 		public static final String KILL_MCPS_PROCESS = "MCPS";
 		public static final String KILL_MDFS_PROCESS = "MSPMCW";
 		public static final String KILL_VTS_PROCESS = "VTS3";

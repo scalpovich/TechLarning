@@ -35,6 +35,7 @@ import com.mastercard.pts.integrated.issuing.configuration.FinSimSimulator;
 import com.mastercard.pts.integrated.issuing.configuration.MasSimulator;
 import com.mastercard.pts.integrated.issuing.configuration.MdfsSimulator;
 import com.mastercard.pts.integrated.issuing.configuration.VtsSimulator;
+import com.mastercard.pts.integrated.issuing.configuration.WhichSimulatorVersionToChoose;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
@@ -102,6 +103,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	@Autowired
 	private FinSimSimulator finSimSimulator;
+
+	@Autowired
+	private WhichSimulatorVersionToChoose simulatorVersion;
 
 	@Autowired
 	private Navigator navigator;
@@ -247,12 +251,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public void launchWiniumAndSimulator(String simulator) {
-		MiscUtils.killProcessFromTaskManager("WINIUM");		
-		MiscUtils.killProcessFromTaskManager(simulator);
-
 		//to fetch latest MAS details installed on the machine
 		if(simulator.toUpperCase().contains("MAS"))
-			new MasDetailsKeyValuePair().toString();
+			getMasDetails();
+
+		closeSimulator(simulator);
 
 		try {
 			startWiniumDriverWithSimulator(simulator);
@@ -262,7 +265,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 		if(simulator.toUpperCase().contains("FINSIM")) {
 			launchAndConnectToFinSim();
-			
+
 		} else if(simulator.toUpperCase().contains("MAS")) {
 			selectLicenseAndConfigure(SimulatorConstantsData.SELECT_MAS_LICENSE, SimulatorConstantsData.MAS_LICENSE_TYPE);
 			wait(4000);
@@ -442,16 +445,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private String getResult() {
-
-		List<WebElement> lst = null;
-		if(context.get(ConstantData.TRANSACTION_NAME).toString().contains("COMPLETION"))
-		{
-			lst=winiumDriver.findElements(By.name("0130 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
-		}
-		else
-		{
-			lst=winiumDriver.findElements(By.name("0110 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
-		}
+		List<WebElement> lst = winiumDriver.findElements(By.xpath("//*[contains(@Name, 'Expected Results Summary')]"));
 		//clicking on the last item from bottom
 		lst.get(lst.size()-1).click();
 		wait(5000);
@@ -769,8 +763,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			executeAutoITExe("ActivateLicenseProfiles.exe");
 			winiumLicenseSelectOperation(licenseTypeToSelect, licenseFor);
 			winiumClickOperation("Select");
-			wait(15000);
+			wait(20000);
 			executeAutoITExe("ActivateSelectServices.exe");
+			
 			if(getLoadServicesScreen() > 0)	{
 				executeAutoITExe("ActivateSelectServices.exe");
 				wait(2000);
@@ -966,7 +961,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(1000);
 			pressTab();
 			wait(1000);
-			//			executeAutoITExe(ADD_BIN_RANGE);
 			pressTab();
 			wait(1000);
 			setText(issuerCountryCode);
@@ -974,9 +968,14 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			setText(issuerCurrencyCode);
 			pressTab();
 			setText(cardHolderBillingCurrency);
-			//			executeAutoITExe(ADD_BIN_RANGE);
+
+			//	pressTab(7); // In MAS 17.x, the OK button does not show up until we scroll down hence tabbing so that the focus goes to OK button
+
+			winiumClickOperation("General");
+			pressShiftTab();
+
 			winiumClickOperation("OK");
-			wait(2000);
+			wait(4000);
 			if(isImagePresent("OK")) {
 				performClickOperation("OK");
 				wait(2000);
@@ -1015,6 +1014,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	public void closeSimulator(String name) 
 	{
 		winiumDriver = null;
+		//to kill previous instance of MAS 17
+		if(SimulatorConstantsData.MAS_LICENSE_TYPE.contains("17"))
+			name = "MAS17";
+		MiscUtils.killProcessFromTaskManager("WINIUM");
 		MiscUtils.killProcessFromTaskManager(name);
 	}
 
@@ -1484,5 +1487,14 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void browserMaximize() {
 		webProvider.get().manage().window().maximize();
+	}
+
+	private void getMasDetails() { 
+		MasDetailsKeyValuePair.initializeMasData();
+		if(!simulatorVersion.getMasVersion().toUpperCase().contains("LATEST")) {
+			MasDetailsKeyValuePair.getSpecificMasVersionDetails(simulatorVersion.getMasVersion());
+		} else {
+			MasDetailsKeyValuePair.getLatestVersionMasDetailsInstalledOnMachine();
+		}
 	}
 }

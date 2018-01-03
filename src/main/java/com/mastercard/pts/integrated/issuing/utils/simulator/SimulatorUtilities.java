@@ -39,6 +39,14 @@ public class SimulatorUtilities {
 	public void pressTab(int numberOfTabs) {
 		robotOperation("tab", numberOfTabs);
 	}
+	
+	public void pressShiftTab() {
+		pressShiftTab(numberOfTabs);
+	}
+
+	public void pressShiftTab(int numberOfTabs) {
+		robotOperation("shiftTab", numberOfTabs);
+	}
 
 	public void pressDownArrow() {
 		pressDownArrow(numberOfTabs);
@@ -173,6 +181,13 @@ public class SimulatorUtilities {
 			break;
 		case "tabRight":
 			robot.keyPress(KeyEvent.VK_RIGHT);
+			break;
+		case "shiftTab":
+			robot.keyPress(KeyEvent.VK_SHIFT);
+			robot.keyPress(KeyEvent.VK_TAB);
+			robot.delay(100);
+			robot.keyRelease(KeyEvent.VK_SHIFT);
+			robot.keyRelease(KeyEvent.VK_TAB);
 			break;
 		default:
 			break;

@@ -82,6 +82,8 @@ public class MiscUtils {
 				temptaskName = SimulatorConstantsData.KILL_VTS_PROCESS;
 			} else if ("MDFS".equalsIgnoreCase(taskName)) {
 				temptaskName = SimulatorConstantsData.KILL_MDFS_PROCESS;
+			} else if ("MAS17".equalsIgnoreCase(taskName)) {
+					temptaskName = SimulatorConstantsData.KILL_MAS17_PROCESS;
 			}
 			command = "taskkill /F /IM " + temptaskName + ".exe";
 			Runtime.getRuntime().exec(command).waitFor(10, TimeUnit.SECONDS);

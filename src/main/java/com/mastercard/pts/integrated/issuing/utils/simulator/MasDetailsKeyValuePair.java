@@ -3,9 +3,13 @@ package com.mastercard.pts.integrated.issuing.utils.simulator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 public class MasDetailsKeyValuePair {
+	private static final Logger logger = LoggerFactory.getLogger(MasDetailsKeyValuePair.class);
 
 	private static final String MAS_18_Q2 = "MAS 18.Q2";
 	private static final String MAS_17_Q4 = "MAS 17.Q4";
@@ -17,14 +21,14 @@ public class MasDetailsKeyValuePair {
 	//add more installations here along with EXE path details
 	private static void setMasInstallationVersionData() {
 		masInstallationVersionKeyValuePair.put(MAS_18_Q2, "C://Program Files (x86)//MasterCard//OTP 7.32.1016//Bin//MSPMCW.exe");
-		masInstallationVersionKeyValuePair.put(MAS_17_Q4, "C://Program Files (x86)//MasterCard//OTP 7.32.1014//Bin//MSPMCW.exe");
+		masInstallationVersionKeyValuePair.put(MAS_17_Q4, "C://Program Files (x86)//MasterCard//OTP 7.32.1014//Bin//MSPMCW1741.exe");
 		masInstallationVersionKeyValuePair.put(MAS_16_Q4, "C://Program Files (x86)//MasterCard//OTP 7.32.1003//Bin//MSPMCW.exe");
 	}
 
 	//add more parent Window handle property based on the title seen on the version of MAS
 	private static void setMasParentWindowHandlerPropertyVersionData() {
 		masParentWindowHandlerPropertyKeyValuePair.put(MAS_18_Q2, "MasterCard Authorization Simulator <MAS17.Q4 SP1>");
-		masParentWindowHandlerPropertyKeyValuePair.put(MAS_17_Q4, "MasterCard Authorization Simulator <MAS17.Q4 SP1>");
+		masParentWindowHandlerPropertyKeyValuePair.put(MAS_17_Q4, "MasterCard Authorization Simulator <MAS17.Q4 SP1 - IPS Host Testing>");
 		masParentWindowHandlerPropertyKeyValuePair.put(MAS_16_Q4, "MasterCard Authorization Simulator <MAS16.Q4>");
 	}
 
@@ -43,7 +47,22 @@ public class MasDetailsKeyValuePair {
 		return masLicenseTypeToSelect.get(key.toUpperCase());
 	}
 
-	private static void getLatestVersionMasDetailsInstalledOnMachine() {
+	private static void setMasParentWindowHandlerInLegacyConstant(String value) {
+		SimulatorConstantsData.MAS_PARENT_HANDLE = value;
+		MiscUtils.reportToConsole("MAS_PARENT_HANDLE    : " + SimulatorConstantsData.MAS_PARENT_HANDLE );
+	}
+
+	private static void setMasLicenseToSelectValueInLegacyConstant(String value) {
+		SimulatorConstantsData.MAS_LICENSE_TYPE = value;
+		MiscUtils.reportToConsole("MAS_LICENSE_TYPE    : " + SimulatorConstantsData.MAS_LICENSE_TYPE );
+	}
+
+	private static void setMasExePathValueInLegacyConstant(String value) {
+		SimulatorConstantsData.MAS_EXE_PATH = value;
+		MiscUtils.reportToConsole("MAS_EXE_PATH    : " + SimulatorConstantsData.MAS_EXE_PATH );
+	}
+
+	public static void getLatestVersionMasDetailsInstalledOnMachine() {
 		String parentWindowHandle;
 		String licenseToSelect;
 
@@ -63,32 +82,47 @@ public class MasDetailsKeyValuePair {
 				setMasExePathValueInLegacyConstant(entry.getValue());
 
 				MiscUtils.reportToConsole("getLatestVersionMasDetailsInstalledOnMachine <--> versionNumber = " +  entry.getKey() + " ---  exePath = " + entry.getValue() + " ---  parentWindowHandler = " + parentWindowHandle + " ---  licenseToSelect = " + licenseToSelect);
+				logger.info("MAS Details  <--> versionNumber = " +  entry.getKey() + " ---  exePath = " + entry.getValue() + " ---  parentWindowHandler = " + parentWindowHandle + " ---  licenseToSelect = " + licenseToSelect);
 				return;
 			}
 		}
 	}
 
-	private static void setMasParentWindowHandlerInLegacyConstant(String value) {
-		SimulatorConstantsData.MAS_PARENT_HANDLE = value;
-		MiscUtils.reportToConsole("MAS_PARENT_HANDLE    : " + SimulatorConstantsData.MAS_PARENT_HANDLE );
-	}
-
-	private static void setMasLicenseToSelectValueInLegacyConstant(String value) {
-		SimulatorConstantsData.MAS_LICENSE_TYPE = value;
-		MiscUtils.reportToConsole("MAS_LICENSE_TYPE    : " + SimulatorConstantsData.MAS_LICENSE_TYPE );
-	}
-
-	private static void setMasExePathValueInLegacyConstant(String value) {
-		SimulatorConstantsData.MAS_EXE_PATH = value;
-		MiscUtils.reportToConsole("MAS_EXE_PATH    : " + SimulatorConstantsData.MAS_EXE_PATH );
-	}
-	
-	public MasDetailsKeyValuePair() { 
+	public static void initializeMasData() {
 		//initailizing and setting the value in Map's for masInstallationVersionKeyValuePair & masParentWindowHandlerPropertyKeyValuePair
 		setMasInstallationVersionData();
 		setMasParentWindowHandlerPropertyVersionData();
 		setMasLicenseToSelectData();
-		getLatestVersionMasDetailsInstalledOnMachine();
+	}
+
+	public static void getSpecificMasVersionDetails(String version) { 
+		String parentWindowHandle;
+		String licenseToSelect;
+
+		SimulatorUtilities simulatorUtilities = new SimulatorUtilities();
+		// using for-each loop for iteration over Map.entrySet()
+		for (Map.Entry<String,String> entry : masInstallationVersionKeyValuePair.entrySet()) {
+			
+			MiscUtils.reportToConsole("MAS Exe being searched for <--> version.toLowerCase().trim() = " + version.toLowerCase().trim() + " : : " + entry.getKey().toLowerCase().trim());
+			MiscUtils.reportToConsole("MAS Exe being searched for <--> versionNumber = " + entry.getKey() + " ---  exePath = " + entry.getValue());
+			if(version.trim().equalsIgnoreCase(entry.getKey().trim())) { 
+				Boolean exeExists = simulatorUtilities.fileExists(entry.getValue());
+				//get & set details only when both the set version in the WhichSimulatorVersionToChoose.Java in "Configuration" and the versionNumber are same
+				if(exeExists) {
+					parentWindowHandle = getMasParentWindowHandlerProperty(entry.getKey());
+					licenseToSelect = getMasLicenseToSelect(entry.getKey());
+
+					//setting the latest MAS properties to legacy constants  so that no other code needs to be updated
+					setMasParentWindowHandlerInLegacyConstant(parentWindowHandle);
+					setMasLicenseToSelectValueInLegacyConstant(licenseToSelect);
+					setMasExePathValueInLegacyConstant(entry.getValue());
+
+					MiscUtils.reportToConsole("getSpecificMasVersionDetails <--> versionNumber = " +  entry.getKey() + " ---  exePath = " + entry.getValue() + " ---  parentWindowHandler = " + parentWindowHandle + " ---  licenseToSelect = " + licenseToSelect);
+					logger.info("MAS Details  <--> versionNumber = " +  entry.getKey() + " ---  exePath = " + entry.getValue() + " ---  parentWindowHandler = " + parentWindowHandle + " ---  licenseToSelect = " + licenseToSelect);
+					return;
+				}
+			}
+		}
 	}
 
 	@Override
