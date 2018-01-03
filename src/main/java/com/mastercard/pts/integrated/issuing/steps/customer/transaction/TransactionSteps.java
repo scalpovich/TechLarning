@@ -346,7 +346,6 @@ public class TransactionSteps {
 	public void transactionStatusIsPresentCheck(String transactionStatus){
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		assertEquals(transactionStatus, transactionWorkflow.getTransactionAmount("5887658132769110", ts));
-
 	}
 	
 	@Then("verify wallet to wallet transfer transaction amount")

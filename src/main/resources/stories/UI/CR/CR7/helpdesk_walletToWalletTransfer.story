@@ -33,6 +33,7 @@ Then user performs adjustment transaction
 Then currency setup for device
 When wallet to wallet transfer selected account
 
+
 Scenario: To Verify functionality of wallet transfer from mastercard interchange by msr card with program Corporate Travel Card - Multi Currency
 Given user is logged in institution
 When User fills Statement Message Plan for prepaid product
