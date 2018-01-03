@@ -49,7 +49,7 @@ public class DeviceRange {
 		return new String[] { from, to };
 	}
 	
-	public static DeviceRange createDataWithProvider(DataProvider dprovider, KeyValueProvider provider, String... tags){
+	public static DeviceRange createWithProvider(DataProvider dprovider, KeyValueProvider provider, String... tags){
 		String[] deviceRange = generateDeviceRange(BIN_RANGE_SIZE);
 		DeviceRange range = dprovider.getDataBySimpleClassName(DeviceRange.class, tags);
 		range.setFromDeviceNumber(deviceRange[0]);

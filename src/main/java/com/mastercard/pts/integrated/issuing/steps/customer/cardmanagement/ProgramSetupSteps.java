@@ -597,7 +597,7 @@ public class ProgramSetupSteps {
 	
 	@When("User fills Device Range section for $type product for visa interface")
 	public void whenUserFillsDeviceRangeSectionVisaInterface(String type) {
-		DeviceRange deviceRange = DeviceRange.createDataWithProvider(dataProvider, provider, type);
+		DeviceRange deviceRange = DeviceRange.createWithProvider(dataProvider, provider, type);
 		deviceRange.setProductType(ProductType.fromShortName(type));
 		deviceRange.setProgram(program.buildDescriptionAndCode());
 		deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
