@@ -42,7 +42,7 @@ public class AssignProgramsSteps {
 			"When User fills Device Event Based Fee Plan for prepaid product",
 			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card",
 			"When User fills Wallet Plan for prepaid product",
-			"When User fills Program section for prepaid product",
+			"User fills Program section for prepaid product for visa interface",
 			"When User fills Business Mandatory Fields Screen for prepaid product",
 			"User fills Device Range section for prepaid product for visa interface",
 			"When user creates a bulk device production request for prepaid",
