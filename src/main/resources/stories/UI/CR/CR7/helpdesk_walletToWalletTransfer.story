@@ -24,7 +24,7 @@ When User fills Device Event Based Fee Plan for prepaid product
 When User fills Device Plan for "prepaid" "emv" card with no pin
 When fills Wallet Plan for prepaid product and program Corporate Travel Card - Multi Currency [6]
 When User fills Program section for prepaid product and program Corporate Travel Card - Multi Currency [6]
-When User fills Business Mandatory Fields Screen for prepaid product
+When User fills Business Mandatory Fields Screen for prepaid product with Corporate
 When User fills Device Range section for prepaid product
 When add menus to access card holder portal
 When user creates new device of prepaid type for new client
@@ -32,6 +32,7 @@ Then device has "normal" status
 Then user performs adjustment transaction
 Then currency setup for device
 When wallet to wallet transfer selected account
+Then search with device in transaction screen and status for wallet to wallet transfer transaction
 
 
 Scenario: To Verify functionality of wallet transfer from mastercard interchange by msr card with program Corporate Travel Card - Multi Currency
@@ -49,7 +50,7 @@ When User fills Device Event Based Fee Plan for prepaid product
 When User fills Device Plan for "prepaid" "magnetic stripe" card with no pin
 When fills Wallet Plan for prepaid product and program Corporate Travel Card - Multi Currency [6]
 When User fills Program section for prepaid product and program Corporate Travel Card - Multi Currency [6]
-When User fills Business Mandatory Fields Screen for prepaid product
+When User fills Business Mandatory Fields Screen for prepaid product with Corporate
 When User fills Device Range section for prepaid product
 When add menus to access card holder portal
 When user creates new device of prepaid type for new client
@@ -57,7 +58,7 @@ Then device has "normal" status
 Then user performs adjustment transaction
 Then currency setup for device
 When wallet to wallet transfer selected account
-Then search with device in transaction screen and status for wallet to wallet transfer transaction
+
 
 Scenario: To Verify functionality of wallet transfer from mastercard interchange by emv card with program Retail Travel Card - Multi Currency
 Given user is logged in institution
@@ -74,7 +75,7 @@ When User fills Device Event Based Fee Plan for prepaid product
 When User fills Device Plan for "prepaid" "emv" card with no pin
 When fills Wallet Plan for prepaid product and program Retail Travel Card - Multi Currency [2]
 When User fills Program section for prepaid product and program Retail Travel Card - Multi Currency [2]
-When User fills Business Mandatory Fields Screen for prepaid product
+When User fills Business Mandatory Fields Screen for prepaid product with Individual
 When User fills Device Range section for prepaid product
 When add menus to access card holder portal
 When user creates new device of prepaid type for new client
@@ -98,7 +99,7 @@ When User fills Device Event Based Fee Plan for prepaid product
 When User fills Device Plan for "prepaid" "magnetic stripe" card with no pin
 When fills Wallet Plan for prepaid product and program Retail Travel Card - Multi Currency [2]
 When User fills Program section for prepaid product and program Retail Travel Card - Multi Currency [2]
-When User fills Business Mandatory Fields Screen for prepaid product
+When User fills Business Mandatory Fields Screen for prepaid product with Individual
 When User fills Device Range section for prepaid product
 When add menus to access card holder portal
 When user creates new device of prepaid type for new client
@@ -122,7 +123,7 @@ When User fills Device Event Based Fee Plan for prepaid product
 When User fills Device Plan for "prepaid" "magnetic stripe" card with no pin
 When fills Wallet Plan for prepaid product and program Corporate General Purpose Card [8]
 When User fills Program section for prepaid product and program Corporate General Purpose Card [8]
-When User fills Business Mandatory Fields Screen for prepaid product
+When User fills Business Mandatory Fields Screen for prepaid product with Corporate
 When User fills Device Range section for prepaid product
 When add menus to access card holder portal
 When user creates new device of prepaid type for new client
@@ -146,7 +147,7 @@ When User fills Device Event Based Fee Plan for prepaid product
 When User fills Device Plan for "prepaid" "emv" card with no pin
 When fills Wallet Plan for prepaid product and program Corporate General Purpose Card [8]
 When User fills Program section for prepaid product and program Corporate General Purpose Card [8]
-When User fills Business Mandatory Fields Screen for prepaid product
+When User fills Business Mandatory Fields Screen for prepaid product with Corporate
 When User fills Device Range section for prepaid product
 When add menus to access card holder portal
 When user creates new device of prepaid type for new client
@@ -170,7 +171,7 @@ When User fills Device Event Based Fee Plan for prepaid product
 When User fills Device Plan for "prepaid" "magnetic stripe" card with no pin
 When fills Wallet Plan for prepaid product and program Retail General Purpose Card [4]
 When User fills Program section for prepaid product and program Retail General Purpose Card [4]
-When User fills Business Mandatory Fields Screen for prepaid product
+When User fills Business Mandatory Fields Screen for prepaid product with Individual
 When User fills Device Range section for prepaid product
 When add menus to access card holder portal
 When user creates new device of prepaid type for new client
@@ -194,7 +195,7 @@ When User fills Device Event Based Fee Plan for prepaid product
 When User fills Device Plan for "prepaid" "emv" card with no pin
 When fills Wallet Plan for prepaid product and program Retail General Purpose Card [4]
 When User fills Program section for prepaid product and program Retail General Purpose Card [4]
-When User fills Business Mandatory Fields Screen for prepaid product
+When User fills Business Mandatory Fields Screen for prepaid product with Individual
 When User fills Device Range section for prepaid product
 When add menus to access card holder portal
 When user creates new device of prepaid type for new client

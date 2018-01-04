@@ -371,8 +371,8 @@ public class TransactionSteps {
     public void thenSearchWithDeviceInTransactionScreenCheckReversalStatusAndStatusShouldBeReversal() {
            ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
            TransactionSearch ts = TransactionSearch.getProviderData(provider);
-           rt.setArn(context.get(ConstantData.ARN_NUMBER));
-           assertEquals(transactionWorkflow.searchTransactionWithArnAndGetStatus(rt.getArn(), ts), "Reversal [R]");
+           Device device = context.get(ContextConstants.DEVICE);
+           assertEquals(transactionWorkflow.searchTransactionWithDeviceAndGetStatus(device.getDeviceNumber(), ts), "Reversal [R]");
     }      
 
     @When("user performs load balance request")

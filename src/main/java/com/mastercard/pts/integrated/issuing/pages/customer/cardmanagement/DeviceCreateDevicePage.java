@@ -133,6 +133,12 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:stmtHardCopyReq:input:dropdowncomponent")
 	private MCWebElement statementPreferenceDDwn;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//ul[@class='feedbackPanel']//.//li[4]/span")
+	private MCWebElement createdWalletList;
+	
+	public String getWalletsFromPage(){
+		return getTextFromPage(createdWalletList);
+	}
 
 	public void selectAppliedForProduct(String product) {
 		WebElementUtils.selectDropDownByVisibleText(appliedForProdutDDwn, product);
@@ -227,7 +233,8 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		sm.pressPageUp();
 		
 		device.setClientCode(getCodeFromInfoMessage("client"));
-		device.setWalletNumber(getWalletsId(getWalletsFromPage()));		
+		device.setWalletNumber(getCodeFromInfoMessage("wallet"));
+//		device.setWalletNumber(getWalletsId(getWalletsFromPage()));
 		device.setDeviceNumber(getCodeFromInfoMessage("device(s)"));
 	}
 	

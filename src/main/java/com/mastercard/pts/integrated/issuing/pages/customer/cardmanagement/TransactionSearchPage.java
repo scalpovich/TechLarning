@@ -120,7 +120,22 @@ public class TransactionSearchPage extends AbstractBasePage {
                      break;
         }
         return getCellTextByColumnName(i,"Reversal");
- }
+	}
+	
+	public String searchTransactionWithDeviceAndGetStatus(String deviceNumber, TransactionSearch ts){
+        int i;
+		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
+        WebElementUtils.enterText(searchARNTxt, deviceNumber);
+        WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
+        WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
+        WebElementUtils.pickDate(toDateTxt, LocalDate.now());
+        clickSearchButton();
+        for(i=1;i<4;i++){
+               if("2".equals(getCellTextByColumnName(i,"Sequence Number")))
+                     break;
+        }
+        return getCellTextByColumnName(i,"Description");
+	}
 
 	
 	public void verifyUiOperationStatus() {

@@ -458,6 +458,14 @@ public class ProgramSetupSteps {
 
 		programSetupWorkflow.fillDocumentChecklist(documentCheckListPlan);
 	}
+	
+	@When("User fills Document Checklist Screen for $type product with $customerType customer")
+	public void userFillsDocumentChecklistScreen(String type) {
+		documentCheckListPlan = ApplicationDocumentChecklist.generateDynamicTestData();
+		documentCheckListPlan.setProductType(ProductType.fromShortName(type));
+
+		programSetupWorkflow.fillDocumentChecklist(documentCheckListPlan);
+	}
 
 	@When("User fills Wallet Fee Plan for $type product")
 	public void whenUserFillsWalletFeePlan(String type) {
@@ -475,6 +483,17 @@ public class ProgramSetupSteps {
 	public void whenUserFillsBusinessMandatoryFieldsScreen(String type) {
 		ApplicationBusinessMandatoryFields testDataObject = ApplicationBusinessMandatoryFields.createWithProvider(provider);
 		testDataObject.setProductType(ProductType.fromShortName(type));
+		testDataObject.setCustomerType(ProductType.fromShortName(type));
+		testDataObject.setProgramCode(program.buildDescriptionAndCode());
+		programSetupWorkflow.fillBusinessMandatoryFields(testDataObject);
+
+	}
+	
+	@When("User fills Business Mandatory Fields Screen for $type product with $customerType")
+	public void whenUserFillsBusinessMandatoryFieldsScreen(String type,String customeType) {
+		ApplicationBusinessMandatoryFields testDataObject = ApplicationBusinessMandatoryFields.createWithProvider(provider);
+		testDataObject.setProductType(ProductType.fromShortName(type));
+		testDataObject.setCustomerType(ProductType.fromShortName(customeType));
 		testDataObject.setProgramCode(program.buildDescriptionAndCode());
 		programSetupWorkflow.fillBusinessMandatoryFields(testDataObject);
 

@@ -522,10 +522,13 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 		
 	public void selectWalleFromTransfer(String walletNumber){
+		waitForElementVisible(Element("//td[@id='fromCurrencyDataTable']"));
 		clickWhenClickable(Element("//td[@id='fromCurrencyDataTable']//./td/span[text()='"+walletNumber+"']//..//..//td//input"));
 	}
 	
 	public void selectWalleToTransfer(String walletNumber){
+		waitForElementVisible(Element("//td[@id='toCurrencyDataTable']"));
+		waitForWicket();
 		clickWhenClickable(Element("//td[@id='toCurrencyDataTable']//./td/span[text()='"+walletNumber+"']//..//..//td//input"));
 	}
 	
@@ -554,14 +557,15 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public void walletToWalletTransfer(Device device) {
-		logger.info("Wallet To Wallet Transfer: {}", device.getNewWalletNumber());
 		selectServiceCode("Wallet To Wallet Transfer [465]");
 		clickGoButton();		
 		runWithinPopup("465 - Wallet To Wallet Transfer", () -> {			
 			selectWalleFromTransfer(device.getWalletNumber());
-			selectDeviceToTransferFunds(device.getDeviceNumber());
-			selectWalleToTransfer(getWalletNumber());
-			//selectWalleToTransfer(device.getNewWalletNumber());
+			logger.info("Wallet from transfer the fund: {}", device.getWalletNumber());
+			selectDeviceToTransferFunds(device.getDeviceNumber());			
+			//selectWalleToTransfer(getWalletNumber());			
+			logger.info("Wallet to transfer the fund: {}", device.getNewWalletNumber());
+			selectWalleToTransfer(device.getNewWalletNumber());
 			enterAmountToDebit(device.getTransactionAmount());
 			enterNoteForTransaction("Notes for Wallet to Wallet transfer");
 			clickSaveButtonPopup();
