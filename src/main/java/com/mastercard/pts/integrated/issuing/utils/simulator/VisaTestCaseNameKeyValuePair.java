@@ -1,4 +1,4 @@
-package com.mastercard.pts.integrated.issuing.utils;
+package com.mastercard.pts.integrated.issuing.utils.simulator;
 
 import java.util.HashMap;
 import java.util.Map;

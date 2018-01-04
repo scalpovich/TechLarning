@@ -1,4 +1,4 @@
-Independent DMS authorization 
+Independent DMS authorization Version 16.Q4
 
 Narrative:
 In order to perform all Authorization transaction
@@ -16,4 +16,4 @@ Then MAS test results are verified
 
 Examples:
 |transaction|
-|EMV_CASH_ADVANCE|
+|ECOMM_PURCHASE|
