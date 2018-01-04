@@ -514,7 +514,7 @@ public class ProgramSetupSteps {
 			walletPlan.setCreditPlan(creditCardCreditPlan.buildAbbreviationAndCode());
 			walletPlan.setBillingCyleCode(creditCardBillingCycle.buildDescriptionAndCode());
 		}
-		programSetupWorkflow.createWalletPlan1(walletPlan);
+		programSetupWorkflow.createNewWalletPlan(walletPlan);
 	}
 	
 	
@@ -574,6 +574,30 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.PROGRAM, program);
 	}
 	
+	@When("User fills Program section for $type product and program $programType")
+	public void userFillsProgramSection(String type ,String programType ) {
+		program = Program.createWithProvider(dataProvider, provider);
+		program.setProduct(ProductType.fromShortName(type));
+		program.setProgramType(programType);
+		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
+			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
+			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+		}
+		program.setWalletPlanPlan1(walletPlan.buildDescriptionAndCode());
+		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
+
+		program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
+		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
+		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
+
+		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID)) {
+			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+		}
+
+		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
+		context.put(ContextConstants.PROGRAM, program);
+	}
+	
 	@When("User fills Program section for $type product for visa interface")
 	public void whenUserFillsProgramSectionVisaInterface(String type) {
 		program = Program.createDataWithProvider(dataProvider, provider);
@@ -626,7 +650,7 @@ public class ProgramSetupSteps {
 			walletPlan.setBillingCyleCode(creditCardBillingCycle.buildDescriptionAndCode());
 		}
 		
-		programSetupWorkflow.createWalletPlan1(walletPlan);		
+		programSetupWorkflow.createNewWalletPlan(walletPlan);		
 		
 		WalletPlan wallets = context.get(ContextConstants.WALLET);
 		

@@ -37,11 +37,11 @@ public class LoginFlows extends AbstractBaseFlows {
 	}
 	
 	public void signUpCardHolderPortal(String currentTranPass, String newTranPass){
-		loginPage.setTransPassword(currentTranPass,newTranPass);
+		loginPage.createTransPassword(currentTranPass,newTranPass);
 	}
 	
 	public void acceptSuccessfullCardholderSignUp(){
-		getFinder().getWebDriver().switchTo().alert().accept();
+		driver().switchTo().alert().accept();
 	}
 	
 	public void openCardHolderApplication(){

@@ -18,7 +18,6 @@ public class WalletPlanFlows extends MenuFlows {
 	private WalletPlanPage page;
 	
 	public String createOpenWalletPlan(DeviceCreation deviceCreation, WalletPlan walletplan) {
-		waitForElementVisible(menuSubMenuPage.getCardManagement());
 		WalletPlanPage walletplanpage = navigator.navigateToPage(WalletPlanPage.class);
 		walletplanpage.clickaddWalletPLan();
 		String walletPlan = walletplanpage.addWalletPlanGeneral(deviceCreation, walletplan);
@@ -77,7 +76,6 @@ public class WalletPlanFlows extends MenuFlows {
 	}
 
 	public String createClosedWhitelistedMCGWalletPlan(DeviceCreation deviceCreation, WalletPlan walletplan) {
-		waitForElementVisible(menuSubMenuPage.getCardManagement());
 		WalletPlanPage walletplanpage = navigator.navigateToPage(WalletPlanPage.class);
 		walletplanpage.clickaddWalletPLan();
 		String walletPlan = walletplanpage.addWalletPlanGeneral(deviceCreation, walletplan);
@@ -101,7 +99,6 @@ public class WalletPlanFlows extends MenuFlows {
 	}
 	
 	public String createWhitelistedMerchantWalletPlan(DeviceCreation deviceCreation, WalletPlan walletplan) {
-		waitForElementVisible(menuSubMenuPage.getCardManagement());
 		WalletPlanPage walletplanpage = navigator.navigateToPage(WalletPlanPage.class);
 		walletplanpage.clickaddWalletPLan();
 		String walletPlan = walletplanpage.addWalletPlanGeneral(deviceCreation, walletplan);
@@ -121,7 +118,6 @@ public class WalletPlanFlows extends MenuFlows {
 		return walletPlan;
 	}
 	public String createMutltiWalletPLan(DeviceCreation deviceCreation, WalletPlan walletplan) {
-		waitForElementVisible(menuSubMenuPage.getCardManagement());
 		WalletPlanPage walletplanpage = navigator.navigateToPage(WalletPlanPage.class);
 		walletplanpage.clickaddWalletPLan();
 		String walletPlan = walletplanpage.addWalletPlanGeneral(deviceCreation, walletplan);

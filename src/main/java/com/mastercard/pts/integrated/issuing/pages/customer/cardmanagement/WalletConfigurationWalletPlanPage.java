@@ -153,7 +153,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 	
 	// Method to fill data in Add Wallet Plan Data
-	public void addWalletPlanData1(WalletPlan walletPlan) {
+	public void addNewWalletPlanData(WalletPlan walletPlan) {
 		logger.info("Create Wallet Plan: {}", walletPlan.getWalletPlanCode());
 		clickAddNewButton();
 
@@ -166,7 +166,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			selectProductType(productType);
 			selectProgramType(walletPlan.getProgramType());
 			selectUsage(walletPlan.getUsage());
-			fillDetailsBasedOnCarddType1(walletPlan, productType);
+			fillDetailsBasedOnCarddType(walletPlan, productType);
 			clickNextButton(); // Click on next button
 			clickFinishButton(); // click on finish button
 			});
@@ -188,7 +188,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		}
 	}
 	
-	private void fillDetailsBasedOnCarddType1(WalletPlan walletPlan,
+	private void fillDetailsBasedOnCarddType(WalletPlan walletPlan,
 			String productType) {
 		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 			selectCreditPlan(walletPlan.getCreditPlan());
@@ -200,8 +200,10 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		}
 		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
 			enterReservedAmount(walletPlan.getReservedAmount());
-			logger.info("White listed MCG {}", walletPlan.getWhiteMcgCode());
-			selectWhiteListMSG(walletPlan.getWhiteMcgCode());
+			if(walletPlan.getWhiteMcgCode() != null){
+				logger.info("White listed MCG {}", walletPlan.getWhiteMcgCode());
+				selectWhiteListMSG(walletPlan.getWhiteMcgCode());
+			}
 		}
 	}
 

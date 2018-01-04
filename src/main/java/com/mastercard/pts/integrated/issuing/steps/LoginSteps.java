@@ -117,7 +117,6 @@ public class LoginSteps extends AbstractBaseFlows {
 		CustomUtils.ThreadDotSleep(1100);
 	}
 
-	//@BeforeScenario
 	@Given("read test data for scenario")
 	public void readScenarioDataSheet(@Named("TCName") String strStoryName, @Named("sheetName") String strSheetName) {
 		String f = "TestData";

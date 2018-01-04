@@ -191,7 +191,7 @@ public class LoginPage extends AbstractBasePage  {
 		confirmSignUpCardHolder();		
 	}
 	
-	public void setTransPassword(String currentPass,String newTrnPass){
+	public void createTransPassword(String currentPass,String newTrnPass){
 		enterText(currentPassword,currentPass);
 		enterText(chpSignUpTranPass,newTrnPass);
 		enterText(chpSignUpTranPassConfirm,newTrnPass);

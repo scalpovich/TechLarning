@@ -20,6 +20,6 @@ public class DeviceWorkflow {
 
 	public void createDevice(Device device) {
 		DeviceCreateDevicePage page = navigator.navigateToPage(DeviceCreateDevicePage.class);
-		page.createDevice1(device);
+		page.createNewDevice(device);
 	}
 }

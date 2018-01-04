@@ -522,14 +522,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 		
 	public void selectWalleFromTransfer(String walletNumber){
-		SimulatorUtilities.wait(3000);
-		driver().findElement(By.xpath("//td[@id='fromCurrencyDataTable']//./td/span[text()='"+walletNumber+"']//..//..//td//input")).click();
-		
+		clickWhenClickable(Element("//td[@id='fromCurrencyDataTable']//./td/span[text()='"+walletNumber+"']//..//..//td//input"));
 	}
 	
 	public void selectWalleToTransfer(String walletNumber){
-		SimulatorUtilities.wait(3000);
-		driver().findElement(By.xpath("//td[@id='toCurrencyDataTable']//./td/span[text()='"+walletNumber+"']//..//..//td//input")).click();		
+		clickWhenClickable(Element("//td[@id='toCurrencyDataTable']//./td/span[text()='"+walletNumber+"']//..//..//td//input"));
 	}
 	
 	public void clickSaveButtonPopup(){
@@ -540,7 +537,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	public void selectDeviceToTransferFunds(String deviceToTransfer){
 		WebElementUtils.waitForWicket(driver());
-		SimulatorUtilities.wait(3000);
 		WebElementUtils.elementToBeClickable(toDeviceDropDn);
 		WebElementUtils.selectDropDownByValue(toDeviceDropDn, deviceToTransfer);
 	}
@@ -564,7 +560,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		runWithinPopup("465 - Wallet To Wallet Transfer", () -> {			
 			selectWalleFromTransfer(device.getWalletNumber());
 			selectDeviceToTransferFunds(device.getDeviceNumber());
-			selectWalleToTransfer(device.getNewWalletNumber());
+			selectWalleToTransfer(getWalletNumber());
+			//selectWalleToTransfer(device.getNewWalletNumber());
 			enterAmountToDebit(device.getTransactionAmount());
 			enterNoteForTransaction("Notes for Wallet to Wallet transfer");
 			clickSaveButtonPopup();

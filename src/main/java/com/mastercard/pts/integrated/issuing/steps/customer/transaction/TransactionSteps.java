@@ -343,7 +343,7 @@ public class TransactionSteps {
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		assertEquals(type, transactionWorkflow.getAuthorizationStatus(arnNumber, ts));
 	}
-
+	
 	@Then("transaction fee is correctly posted")
 	public void thenTransactionFeeIsCorrecltyPosted() {
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
@@ -366,6 +366,14 @@ public class TransactionSteps {
            rt.setArn(context.get(ConstantData.ARN_NUMBER));
            assertEquals(transactionWorkflow.searchTransactionWithArnAndGetStatus(rt.getArn(), ts), "Reversal [R]");
     }
+    
+    @Then("search with device in transaction screen and status for wallet to wallet transfer transaction")
+    public void thenSearchWithDeviceInTransactionScreenCheckReversalStatusAndStatusShouldBeReversal() {
+           ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
+           TransactionSearch ts = TransactionSearch.getProviderData(provider);
+           rt.setArn(context.get(ConstantData.ARN_NUMBER));
+           assertEquals(transactionWorkflow.searchTransactionWithArnAndGetStatus(rt.getArn(), ts), "Reversal [R]");
+    }      
 
     @When("user performs load balance request")
     public void whenUserPerformsLoadBalanceRequest() {

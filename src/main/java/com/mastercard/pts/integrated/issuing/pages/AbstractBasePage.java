@@ -176,9 +176,16 @@ public abstract class AbstractBasePage extends AbstractPage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Card Management']")
 	private MCWebElement cardManagement;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//ul[@class='feedbackPanel']//.//li[4]/span")
+	private MCWebElement createdWalletList;
+	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
 		MCAnnotationProcessor.initializeSuper(this, finderProvider);
+	}
+	
+	public String getWalletsFromPage(){
+		return getTextFromPage(createdWalletList);
 	}
 
 	protected void clickOkButton() {
