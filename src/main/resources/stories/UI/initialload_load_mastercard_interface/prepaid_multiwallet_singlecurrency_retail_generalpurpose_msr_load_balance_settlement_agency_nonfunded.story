@@ -6,7 +6,7 @@ As an Agent User
 I want to do Initial Load - Load - Reload through agent portal
 
 Meta:
-@StoryName MWMC_MSR_RTLGP_AGNC_NONFUND
+@StoryName MWSC_MSR_RTLGP_AGNC_NONFUND
 @CR1
 @CardCreation
 @InitialLoadAndLoad
