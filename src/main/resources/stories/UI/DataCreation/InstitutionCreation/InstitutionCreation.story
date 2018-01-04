@@ -6,7 +6,7 @@ So that I can automate New Users and Institution Creation.
 Meta:
 @UI
 @all
-@TCInstitutionUserIntegration
+@InstitutionAndUserCreation
 
 Scenario:1 New Institution creation prepaid
 
@@ -14,7 +14,7 @@ Meta:
 @TCName TC1InstituteCreation
 @testDataFileName testdata
 @sheetName Institute
-@TC1234
+@PrepaidInstitutionAndUserCreation
 @all
 
 Given login to bank as a Bankadmin
@@ -29,7 +29,7 @@ Meta:
 @TCName TC1InstituteCreation
 @testDataFileName testdata
 @sheetName Institute
-@DebitInstitution
+@DebitInstitutionAndUserCreation
 @all
 
 Given login to bank as a Bankadmin

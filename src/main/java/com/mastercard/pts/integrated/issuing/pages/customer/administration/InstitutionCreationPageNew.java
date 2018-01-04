@@ -439,8 +439,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 						institution.getMobileCountryCode());
 				enterValueinTextBox(agentMobileNumber, institution.getMobilenumber());
 				enterValueinTextBox(Email, institution.getEmailID());
-				clickWhenClickable(generalTab);
-				
+				clickWhenClickable(generalTab);				
 			}
 			selectTimeZone(institution);
 			
