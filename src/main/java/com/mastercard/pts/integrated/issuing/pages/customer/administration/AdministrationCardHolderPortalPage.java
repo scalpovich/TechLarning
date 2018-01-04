@@ -51,7 +51,7 @@ public class AdministrationCardHolderPortalPage  extends AbstractBasePage{
 	public void clickAddMenuConfig(){
 		clickWhenClickable(addProgramConfig);
 	}
-
+	
 	public void selectProductByType(String productType){	
 		WebElementUtils.selectDropDownByVisibleText(selectProductType, productType);		
 	}
