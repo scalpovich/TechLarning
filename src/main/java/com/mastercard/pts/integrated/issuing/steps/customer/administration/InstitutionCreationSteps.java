@@ -34,7 +34,9 @@ public class InstitutionCreationSteps extends AbstractBaseFlows {
 	@When("user enter details to create new $institutionType Institution")
 	public void createNewInstituion(
 			@Named("Institutetype") String institutionType) {
+		
 		logger.info("user should be able to create new Institution");
+		
 		instutionCreation = InstitutionCreation.getInstitutionData();
 		instutionCreation.setInstitutionType(institutionType);
 		instituteCreationflows.institutionCreation(instutionCreation);

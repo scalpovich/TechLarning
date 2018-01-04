@@ -6,12 +6,16 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.WebUtils;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.ProcessingCenterNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.SimulatorUtilities;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -30,6 +34,9 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	// ------------- Processing Center > Setup > Master Parameters > Institution
 	// [CESM01]
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[.='General']")
+	private MCWebElement generalTab; 
+	
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addInstitution;
 
@@ -192,8 +199,39 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mpinEnabled:checkBoxComponent")
 	private MCWebElement mpinChkBx;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "issuerSmsProvider:checkBoxComponent")
-	private MCWebElement issuerSmsProviderChkBx;
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[.='Agent Portal']")
+	private MCWebElement agentPortalTab;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "agtID:input:inputTextField")
+	private MCWebElement poratlAdminID;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "agtName:input:inputTextField")
+	private MCWebElement portalAdminName;
+	
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "agtAddress1:input:inputTextField")
+	private MCWebElement agentAddressline1;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "agtAddress2:input:inputTextField")
+	private MCWebElement agentAddressline2;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "agentCountryCode:input:dropdowncomponent")
+	private MCWebElement agentCountryCode;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "agtZipCode:input:inputTextField")
+	private MCWebElement agentZipCode;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "agtPhone1:input:inputTextField")
+	private MCWebElement agentPhone;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "agtMobileCntryCode:input:dropdowncomponent")
+	private MCWebElement agentMobileCountrycode;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "agtPhone2:input:inputTextField")
+	private MCWebElement agentMobileNumber;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "agtMailId:input:inputTextField")
+	private MCWebElement Email;
 
 	/**
 	 * Click add button and switch to frame
@@ -269,8 +307,6 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	@SuppressWarnings("deprecation")
 	public void enterAccountNumberLength(InstitutionCreation institute) {
 		if (checkAccountLenghtValidation()) {
-			Assert.assertTrue(accNoLengthTxtBx.getAttribute("disabled")
-					.isEmpty());
 			enterValueinTextBox(accNoLengthTxtBx,
 					institute.getAccountNumberLength());
 		}
@@ -389,12 +425,25 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 			if (institution.getInstitutionType().equalsIgnoreCase(
 					Constants.PREPAID)) {
 				selectInstitutionReferenceCurrency(institution);
+				checkAgentPortalSupport();
+				clickWhenClickable(agentPortalTab);
+				enterText(poratlAdminID,MiscUtils.generateRandomNumberAsString(6));
+				enterText(portalAdminName, MiscUtils.generate6CharAlphaNumeric());
+				enterText(agentAddressline1, institution.getAddressLine1());
+				enterText(agentAddressline2, institution.getAddressLine2());
+				selectValueFromDropDown(agentCountryCode, institution.getCountry());
+				enterText(agentZipCode, institution.getPostalCode());
+				waitForLoaderToDisappear();
+				enterValueinTextBox(agentPhone, institution.getPhoneNumb());
+				selectValueFromDropDown(agentMobileCountrycode,
+						institution.getMobileCountryCode());
+				enterValueinTextBox(agentMobileNumber, institution.getMobilenumber());
+				enterValueinTextBox(Email, institution.getEmailID());
+				clickWhenClickable(generalTab);
+				
 			}
 			selectTimeZone(institution);
-			if (institution.getInstitutionType().equalsIgnoreCase(
-					Constants.PREPAID)) {
-				checkAgentPortalSupport();
-			}
+			
 			if (institution.getInstitutionType().equalsIgnoreCase(
 					Constants.CREDIT)) {
 				checkCollectportalSupport();
@@ -466,6 +515,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 			SwitchToDefaultFrame();
 			enterNewInstitutionName(instution);
 			searchNewInstitution();
+			SimulatorUtilities.wait(10000);
 			for (MCWebElement element : resultTableRow.getElements()) {
 				System.out.println(instution.getInstitutionName());
 				System.out.println(instution.getInstitutionCode());
@@ -532,7 +582,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	public void provideAdaptiveAuthentication() {
 		selectCheckBox(adaptiveEcommChkBx, "adaptiveEcomm");
 		selectCheckBox(mpinChkBx, "mpin");
-		selectCheckBox(issuerSmsProviderChkBx, "issuerSmsProvider");
+		//selectCheckBox(issuerSmsProviderChkBx, "issuerSmsProvider");
 	}
 
 }
