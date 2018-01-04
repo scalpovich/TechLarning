@@ -536,7 +536,7 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.PROGRAM, program);
 	}
 	
-	@When("User fills Program section for $type product for visa interface")
+	@When("User fills Program section for $type product for an interface")
 	public void whenUserFillsProgramSectionVisaInterface(String type) {
 		program = Program.createDataWithProvider(dataProvider, provider);
 		program.setProduct(ProductType.fromShortName(type));
@@ -617,7 +617,7 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createDeviceRange(deviceRange);
 	}
 	
-	@When("User fills Device Range section for $type product for visa interface")
+	@When("User fills Device Range section for $type product for an interface")
 	public void whenUserFillsDeviceRangeSectionVisaInterface(String type) {
 		DeviceRange deviceRange = DeviceRange.createWithProvider(dataProvider, provider, type);
 		deviceRange.setProductType(ProductType.fromShortName(type));
