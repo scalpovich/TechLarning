@@ -18,8 +18,8 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Clie
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -133,13 +133,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:stmtHardCopyReq:input:dropdowncomponent")
 	private MCWebElement statementPreferenceDDwn;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//ul[@class='feedbackPanel']//.//li[4]/span")
-	private MCWebElement createdWalletList;
 
-	public String getWalletsFromPage(){
-		return getTextFromPage(createdWalletList);
-	}
-	
 	public void selectAppliedForProduct(String product) {
 		WebElementUtils.selectDropDownByVisibleText(appliedForProdutDDwn, product);
 	}
@@ -182,15 +176,15 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		clickAddNewButton();
 
 		runWithinPopup("Add Device", () -> {
-				fillDeviceInformation(device);
-				fillBatchDetails(device);
-				fillCustomerTypeProgramCodeAndDeviceDetails(device);
+			fillDeviceInformation(device);
+			fillBatchDetails(device);
+			fillCustomerTypeProgramCodeAndDeviceDetails(device);
 
-				clickNextButton();
-				
-				fillProfileAndAddressDetailsAndClickNext(device);
+			clickNextButton();
 
-				// skip wallet extra fields
+			fillProfileAndAddressDetailsAndClickNext(device);
+
+			// skip wallet extra fields
 				clickFinishButton();
 
 				verifyNoErrors();
@@ -205,43 +199,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		device.setClientCode(getCodeFromInfoMessage("client"));
 		device.setWalletNumber(getCodeFromInfoMessage("wallet"));
 		device.setDeviceNumber(getCodeFromInfoMessage("device(s)"));
-	}
-	
-	public void createDevice1(Device device) {
-		logger.info("Add Device for program: {}", device.getProgramCode());
-		clickAddNewButton();
-
-		runWithinPopup("Add Device", () -> {
-				fillDeviceInformation(device);
-				fillBatchDetails(device);
-				fillCustomerTypeProgramCodeAndDeviceDetails(device);
-
-				clickNextButton();
-				
-				fillProfileAndAddressDetailsAndClickNext(device);
-
-				// skip wallet extra fields
-				clickFinishButton();
-
-				verifyNoErrors();
-			});
-
-		verifyOperationStatus();
-
-		//scolling "PageUp" is needed here as the Menu item is not visible
-		SimulatorUtilities sm = new SimulatorUtilities();
-		sm.pressPageUp();
-		
-		device.setClientCode(getCodeFromInfoMessage("client"));
-		device.setWalletNumber(getWalletsId(getWalletsFromPage()));		
-		device.setDeviceNumber(getCodeFromInfoMessage("device(s)"));
-	}
-	
-	public String getWalletsId(String wallets){		
-		String walletList[] = wallets.split(" : ");
-		String walletLists[] = walletList[1].split(", ");
-		logger.info("Wallet aaded :[%s]",walletLists[0]);
-		return walletLists[0];
 	}
 
 	private void fillBatchDetails(Device device) {

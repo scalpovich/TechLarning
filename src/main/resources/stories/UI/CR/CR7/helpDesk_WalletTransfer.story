@@ -31,6 +31,6 @@ When User fills Device Range section for prepaid product
 When add menus to access card holder portal
 When user creates new device of prepaid type for new client
 Then device has "normal" status
-Then user performs adjustment transaction
+Then user performs adjustment transaction for multi wallet
 Then currency setup for device
 When wallet to wallet transfer selected account

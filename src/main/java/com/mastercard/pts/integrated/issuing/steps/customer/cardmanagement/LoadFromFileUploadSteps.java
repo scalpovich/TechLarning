@@ -6,11 +6,15 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,13 +27,16 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Adju
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.steps.customer.transaction.TransactionSteps;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
 
 @Component
 public class LoadFromFileUploadSteps {
-
+	
+	private static final Logger logger = LoggerFactory.getLogger(LoadFromFileUploadSteps.class);
+	
 	@Autowired
 	private LoadFromFileUploadWorkflow loadFromFileUploadWorkflow;
 
@@ -80,6 +87,28 @@ public class LoadFromFileUploadSteps {
 		transaction.getAdjustmentTransactionDetails().add(details);
 		loadFromFileUploadWorkflow.createAdjustmentTransaction(transaction);
 	}
+	
+	@Given("user performs adjustment transaction for multi wallet")
+	@When("user performs adjustment transaction for multi wallet")
+	@Then("user performs adjustment transaction for multi wallet")
+	public void whenUserPerformsAdjustmentTransactionForMultiWallet(){
+		Device device = context.get(ContextConstants.DEVICE);
+		AdjustmentTransaction transaction = AdjustmentTransaction.createWithProvider(provider);
+		AdjustmentTransactionDetails details = AdjustmentTransactionDetails.createTransactionWithDetails();
+		List<String> walletNumbers = new ArrayList<String>();
+		int index = 0;
+		while (index < device.getWalletNumber().length()) {
+		    int walletLenght = 16;
+			walletNumbers.add(device.getWalletNumber().substring(index, Math.min(index + walletLenght,device.getWalletNumber().length())));
+		    index += walletLenght;
+		}
+		logger.info("Adjustment transaction for wallet:", walletNumbers.get(0));
+		details.setDeviceNumber(device.getDeviceNumber());
+		details.setWalletNumber(walletNumbers.get(0));
+		transaction.getAdjustmentTransactionDetails().add(details);
+		loadFromFileUploadWorkflow.createAdjustmentTransaction(transaction);
+	}
+	
 	
 	@Given("in batch trace history transaction is successful")
 	@Then("in batch trace history transaction is successful")

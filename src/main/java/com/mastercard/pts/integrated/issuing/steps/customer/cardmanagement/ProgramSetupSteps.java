@@ -574,11 +574,10 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.PROGRAM, program);
 	}
 	
-	@When("User fills Program section for $type product and program $programType")
-	public void UserFillsProgramSection(String type ,String programType ) {
-		program = Program.createWithProvider(dataProvider, provider);
+	@When("User fills Program section for $type product for visa interface")
+	public void whenUserFillsProgramSectionVisaInterface(String type) {
+		program = Program.createDataWithProvider(dataProvider, provider);
 		program.setProduct(ProductType.fromShortName(type));
-		program.setProgramType(programType);
 		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
 			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
 			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
@@ -590,9 +589,8 @@ public class ProgramSetupSteps {
 		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
 		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
 
-		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID)) {
+		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID))
 			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
-		}
 
 		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
@@ -661,7 +659,6 @@ public class ProgramSetupSteps {
 		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID)) {
 			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
 		}
-
 		programSetupWorkflow.createAddProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
 	}
@@ -725,7 +722,17 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createDeviceRange(deviceRange);
 	}
 	
-	private  void setPinRequiredToFalse() {
+	@When("User fills Device Range section for $type product for visa interface")
+	public void whenUserFillsDeviceRangeSectionVisaInterface(String type) {
+		DeviceRange deviceRange = DeviceRange.createWithProvider(dataProvider, provider, type);
+		deviceRange.setProductType(ProductType.fromShortName(type));
+		deviceRange.setProgram(program.buildDescriptionAndCode());
+		deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
+
+		programSetupWorkflow.createDeviceRange(deviceRange);
+	}
+
+	private void setPinRequiredToFalse() {
 		context.put(ConstantData.IS_PIN_REQUIRED, "FALSE");
 	}
 

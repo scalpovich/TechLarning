@@ -35,6 +35,7 @@ import com.mastercard.pts.integrated.issuing.configuration.FinSimSimulator;
 import com.mastercard.pts.integrated.issuing.configuration.MasSimulator;
 import com.mastercard.pts.integrated.issuing.configuration.MdfsSimulator;
 import com.mastercard.pts.integrated.issuing.configuration.VtsSimulator;
+import com.mastercard.pts.integrated.issuing.configuration.WhichSimulatorVersionToChoose;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
@@ -52,8 +53,9 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
-import com.mastercard.pts.integrated.issuing.utils.SimulatorConstantsData;
-import com.mastercard.pts.integrated.issuing.utils.SimulatorUtilities;
+import com.mastercard.pts.integrated.issuing.utils.simulator.MasDetailsKeyValuePair;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorConstantsData;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
 @Workflow
 public class TransactionWorkflow extends SimulatorUtilities {
@@ -86,10 +88,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private InitiateSettlementPage ispage;
 	private static final String VTS_COMM_HANDLER = "VTS Communications Handler (1)";
 	private static final String SET_VTS_IP= "SetVTSIP.exe ";
-	
+	private static final String WINIUM_LOG_COMMENT = " *****  winiumClick Operation is being performed :  ";
 	@Autowired
 	private WebDriverProvider webProvider;
-	
+
 	@Autowired
 	private MasSimulator simulator;
 
@@ -101,6 +103,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	@Autowired
 	private FinSimSimulator finSimSimulator;
+
+	@Autowired
+	private WhichSimulatorVersionToChoose simulatorVersion;
 
 	@Autowired
 	private Navigator navigator;
@@ -193,7 +198,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 			fillEmvChipKeySetDetails();
 		}
-/*		
+		/*		
 		//filling CVV data for PREAUTH and COMPLETION
 		if(isContains(transaction, "PREAUTH")) {// ideally CVV number gets added to card profile until and unless it validation is unchecked from device plan
 			activateMas(transaction);
@@ -205,7 +210,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 			fillCvvData(transactionData.getCvvData()); // Prabhu
 		}
-*/		
+		 */		
 		importAndLoadTestCase(transactionData.getTestCase(), transaction);
 
 		performExecution(transaction);
@@ -246,8 +251,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public void launchWiniumAndSimulator(String simulator) {
-		MiscUtils.killProcessFromTaskManager("WINIUM");		
-		MiscUtils.killProcessFromTaskManager(simulator);
+		//to fetch latest MAS details installed on the machine
+		if(simulator.toUpperCase().contains("MAS"))
+			getMasDetails();
+
+		closeSimulator(simulator);
 
 		try {
 			startWiniumDriverWithSimulator(simulator);
@@ -259,7 +267,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			launchAndConnectToFinSim();
 
 		} else if(simulator.toUpperCase().contains("MAS")) {
-			selectLicenseAndConfigure(SimulatorConstantsData.SELECT_MAS_LICENSE, SimulatorConstantsData.MAS_LICENSE_TYPE_16X);
+			selectLicenseAndConfigure(SimulatorConstantsData.SELECT_MAS_LICENSE, SimulatorConstantsData.MAS_LICENSE_TYPE);
 			wait(4000);
 			connect2IPSHostModeAndConfigureIP("MAS"); 	
 		} else if(simulator.toUpperCase().contains("MCPS")) {
@@ -289,7 +297,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			logger.debug("Exception occurred while starting Winium", e);
 			MiscUtils.propagate(e);
 		}
-
 	}
 
 	private DesktopOptions launchSimulator(String serviceName) {
@@ -337,7 +344,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		options.setApplicationPath(SimulatorConstantsData.MAS_EXE_PATH );
 		return options;
 	}
-	
+
 	private DesktopOptions launchVISA() {
 		DesktopOptions options = new DesktopOptions();
 		MiscUtils.reportToConsole(ConstantData.MESSAGE_CONSTANT  + SimulatorConstantsData.VISA_EXE_PATH );
@@ -438,16 +445,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private String getResult() {
-
-		List<WebElement> lst = null;
-		if(context.get(ConstantData.TRANSACTION_NAME).toString().contains("COMPLETION"))
-		{
-		lst=winiumDriver.findElements(By.name("0130 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
-		}
-		else
-		{
-	    lst=winiumDriver.findElements(By.name("0110 : NTW to APS Rcvd (ACQUIRERSTREAM1)"));
-		}
+		List<WebElement> lst = winiumDriver.findElements(By.xpath("//*[contains(@Name, 'Expected Results Summary')]"));
 		//clicking on the last item from bottom
 		lst.get(lst.size()-1).click();
 		wait(5000);
@@ -551,8 +549,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("Set Value");
 		wait(2000);
 		winiumClickOperation(CLOSE);
-			}
-	
+	}
+
 	public String assignUniqueARN(){
 		String rRN = MiscUtils.generateRandomNumberAsString(12);
 		String arnNumber = "";
@@ -751,7 +749,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			String licenseForSelection = null;
 			//changed from MAS 16.x to MAS so that this works for all versions of MAS
 			if(licenseFor.toUpperCase().contains("MAS"))
-				licenseForSelection = SimulatorConstantsData.MAS_LICENSE_TYPE_16X;
+				licenseForSelection = SimulatorConstantsData.MAS_LICENSE_TYPE;
 			//changed from MDFS 16.x to MDFS so that this works for all versions of MDFS
 			else if(licenseFor.toUpperCase().contains("MDFS"))
 				licenseForSelection = SimulatorConstantsData.MDFS_LICENSE_TYPE_16X;
@@ -765,8 +763,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			executeAutoITExe("ActivateLicenseProfiles.exe");
 			winiumLicenseSelectOperation(licenseTypeToSelect, licenseFor);
 			winiumClickOperation("Select");
-			wait(15000);
+			wait(20000);
 			executeAutoITExe("ActivateSelectServices.exe");
+			
 			if(getLoadServicesScreen() > 0)	{
 				executeAutoITExe("ActivateSelectServices.exe");
 				wait(2000);
@@ -962,7 +961,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(1000);
 			pressTab();
 			wait(1000);
-			//			executeAutoITExe(ADD_BIN_RANGE);
 			pressTab();
 			wait(1000);
 			setText(issuerCountryCode);
@@ -970,9 +968,14 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			setText(issuerCurrencyCode);
 			pressTab();
 			setText(cardHolderBillingCurrency);
-			//			executeAutoITExe(ADD_BIN_RANGE);
+
+			//	pressTab(7); // In MAS 17.x, the OK button does not show up until we scroll down hence tabbing so that the focus goes to OK button
+
+			winiumClickOperation("General");
+			pressShiftTab();
+
 			winiumClickOperation("OK");
-			wait(2000);
+			wait(4000);
 			if(isImagePresent("OK")) {
 				performClickOperation("OK");
 				wait(2000);
@@ -995,9 +998,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("OK");
 		wait(1000);
 	}
-	
+
 	private void fillCvvData(String cvvData) {
-		
+
 		String cvvDataValue = "000" + cvvData;
 		executeAutoITExe("ActivateEditCardProfile.exe");
 		winiumClickOperation("Track Data");
@@ -1007,10 +1010,14 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("OK");
 		wait(1000);
 	}
-	
+
 	public void closeSimulator(String name) 
 	{
 		winiumDriver = null;
+		//to kill previous instance of MAS 17
+		if(SimulatorConstantsData.MAS_LICENSE_TYPE.contains("17"))
+			name = "MAS17";
+		MiscUtils.killProcessFromTaskManager("WINIUM");
 		MiscUtils.killProcessFromTaskManager(name);
 	}
 
@@ -1035,7 +1042,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private void setMasIp(String[] ip) {
 		String parameters;
 		//for keying ip and port on MAS 16.x if present
-		parameters =   "\"" + SimulatorConstantsData.MAS_16_X + PATH_BUILDER + simulator.getPort() + PATH_BUILDER + getValue( ip[0]) + PATH_BUILDER  + getValue(ip[1]) +  PATH_BUILDER + getValue(ip[2])
+		parameters =   "\"" + SimulatorConstantsData.MAS_PARENT_HANDLE + PATH_BUILDER + simulator.getPort() + PATH_BUILDER + getValue( ip[0]) + PATH_BUILDER  + getValue(ip[1]) +  PATH_BUILDER + getValue(ip[2])
 				+  PATH_BUILDER + getValue(ip[3]) + "\"";
 		setMasIpAddress(parameters);
 	}
@@ -1061,7 +1068,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private void setMasIpOnMdfs(String[] ip) {
 		String parameters;
 		//for keying ip and port on MAS 16.x if present
-		parameters =   "\"" + SimulatorConstantsData.MDFS_16_X + PATH_BUILDER + mdfsSimulator.getPort() + PATH_BUILDER + getValue( ip[0]) + PATH_BUILDER  + getValue(ip[1]) +  PATH_BUILDER + getValue(ip[2])
+		parameters =   "\"" + SimulatorConstantsData.MDFS_PARENT_HANDLE + PATH_BUILDER + mdfsSimulator.getPort() + PATH_BUILDER + getValue( ip[0]) + PATH_BUILDER  + getValue(ip[1]) +  PATH_BUILDER + getValue(ip[2])
 				+  PATH_BUILDER + getValue(ip[3]) + "\"";
 		setMasIpAddress(parameters);
 	}
@@ -1122,7 +1129,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			setText(finSimSimulator.getPort());
 			pressTab();
 			pressEnter();
-			 wait(5000);
+			wait(5000);
 			executeAutoITExe("ActivateFINSimPasswordScreen.exe");
 			setText(finSimSimulator.getPassword());
 			wait(5000);
@@ -1165,11 +1172,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
 		return page.searchTransactionWithARN(arnNumber, ts);
 	}
-	
-	public String getTransactionAmount(String deviceNumber, TransactionSearch trn){
-		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
-		return page.searchTransactionWithDeviceNumber(deviceNumber, trn);
-	}
 
 	public String getFeePostingStatus(String arnNumber, TransactionSearch ts){
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
@@ -1209,7 +1211,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private void winiumClickOperation(String locator) {
-		logger.info(" *****  winiumClick Operation is being performed :  "+ locator);
+		logger.info(WINIUM_LOG_COMMENT + locator);
 		winiumDriver.findElementByName(locator).click();
 	}
 
@@ -1231,51 +1233,51 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		box.expand();
 		dd.findElement(By.name("IPS Host Testing")).click();
 	}
-	
+
 	private void selectLicense(String tool) {
 		if(!isContains(tool, "mdfs")) 
-//			executeAutoITExe(SELECT_IPS_HOST_TESTMODE + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"" );
+			//			executeAutoITExe(SELECT_IPS_HOST_TESTMODE + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"" );
 			selectLicense();
 		else
 			selectLicenseOnMdfs();
 	}
 
 	private void selectLicenseOnMdfs() {
-//		executeAutoITExe(SELECT_IPS_HOST_TESTMODE  + SEPERATOR + SimulatorConstantsData.MDFS_16_X + "\"" );
+		//		executeAutoITExe(SELECT_IPS_HOST_TESTMODE  + SEPERATOR + SimulatorConstantsData.MDFS_16_X + "\"" );
 		selectLicense();
 	}
 
 	private void reSelectLicense(String tool) {
 		if(!isContains(tool, "mdfs")) 
-			executeAutoITExe(RESELECT_IPS_HOST_TESTMODE  + SEPERATOR +SimulatorConstantsData.MAS_16_X + "\"" );
+			executeAutoITExe(RESELECT_IPS_HOST_TESTMODE  + SEPERATOR +SimulatorConstantsData.MAS_PARENT_HANDLE + "\"" );
 		else
 			reSelectLicenseOnMdfs();
 	}
 
 	private void reSelectLicenseOnMdfs() {
-		executeAutoITExe(RESELECT_IPS_HOST_TESTMODE  + SEPERATOR +SimulatorConstantsData.MDFS_16_X + "\"" );
+		executeAutoITExe(RESELECT_IPS_HOST_TESTMODE  + SEPERATOR +SimulatorConstantsData.MDFS_PARENT_HANDLE + "\"" );
 	}
 
 	private void scrollUpToSelectTest(String tool) {
 		if(!isContains(tool, "mdfs")) 
-			executeAutoITExe(SCROLL_UP_ON_TESTCASES   + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"" );
+			executeAutoITExe(SCROLL_UP_ON_TESTCASES   + SEPERATOR + SimulatorConstantsData.MAS_PARENT_HANDLE + "\"" );
 		else
 			scrollUpToSelectTestOnMdfs();
 	}
 
 	private void scrollUpToSelectTestOnMdfs() {
-		executeAutoITExe(SCROLL_UP_ON_TESTCASES  + SEPERATOR + SimulatorConstantsData.MDFS_16_X + "\"" );
+		executeAutoITExe(SCROLL_UP_ON_TESTCASES  + SEPERATOR + SimulatorConstantsData.MDFS_PARENT_HANDLE + "\"" );
 	}
 
 	private void scrollUpToSelectTestResults(String tool) {
 		if(!isContains(tool, "mdfs")) 
-			executeAutoITExe(SCROLL_UP_ON_TESTRESULTS + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"" );
+			executeAutoITExe(SCROLL_UP_ON_TESTRESULTS + SEPERATOR + SimulatorConstantsData.MAS_PARENT_HANDLE + "\"" );
 		else
 			scrollUpToSelectTestResultsOnMdfs();
 	}
 
 	private void scrollUpToSelectTestResultsOnMdfs() {
-		executeAutoITExe(SCROLL_UP_ON_TESTRESULTS   + SEPERATOR + SimulatorConstantsData.MDFS_16_X + "\"" );
+		executeAutoITExe(SCROLL_UP_ON_TESTRESULTS   + SEPERATOR + SimulatorConstantsData.MDFS_PARENT_HANDLE + "\"" );
 	}
 
 	private void handleDialogs() { 
@@ -1284,82 +1286,81 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void activateMas(String tool) {
 		if(!isContains(tool, "mdfs")) 
-			executeAutoITExe(ACTIVATE_MAS   + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"" );
+			executeAutoITExe(ACTIVATE_MAS   + SEPERATOR + SimulatorConstantsData.MAS_PARENT_HANDLE + "\"" );
 		else
 			activateMdfs();
 	}
 
 	public void activateMdfs() {
-		executeAutoITExe(ACTIVATE_MAS  + SEPERATOR + SimulatorConstantsData.MDFS_16_X + "\"" );
+		executeAutoITExe(ACTIVATE_MAS  + SEPERATOR + SimulatorConstantsData.MDFS_PARENT_HANDLE + "\"" );
 		wait(1000);
 	}
 
 	private void activateMcps() {
-		executeAutoITExe("ActivateMCPS.exe"  + SEPERATOR + SimulatorConstantsData.MCPS_16_X + "\"" );
+		executeAutoITExe("ActivateMCPS.exe"  + SEPERATOR + SimulatorConstantsData.MCPS_PARENT_HANDLE + "\"" );
 		wait(1000);
 	}
 
 	private void clickTDG() {
-		executeAutoITExe("ClickTDG.exe"  + SEPERATOR + SimulatorConstantsData.MCPS_16_X + "\"" );
+		executeAutoITExe("ClickTDG.exe"  + SEPERATOR + SimulatorConstantsData.MCPS_PARENT_HANDLE + "\"" );
 	}
 
 	public void clickTestOptions(String tool) {
 		if(!isContains(tool, "mdfs")) 
-			executeAutoITExe(CLICK_TEST_OPTIONS   + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"" );
+			executeAutoITExe(CLICK_TEST_OPTIONS   + SEPERATOR + SimulatorConstantsData.MAS_PARENT_HANDLE + "\"" );
 		else
 			clickTestOptionsOnMdfs();
 	}
 
 	public void clickTestOptionsOnMdfs() {
-		executeAutoITExe(CLICK_TEST_OPTIONS  + SEPERATOR + SimulatorConstantsData.MDFS_16_X + "\"" );
+		executeAutoITExe(CLICK_TEST_OPTIONS  + SEPERATOR + SimulatorConstantsData.MDFS_PARENT_HANDLE + "\"" );
 	}
 
 	public void clickTestMonitor(String tool) {
 		if(!isContains(tool, "mdfs")) 
-			executeAutoITExe( CLICK_TEST_MONITOR   + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"" );
+			executeAutoITExe( CLICK_TEST_MONITOR   + SEPERATOR + SimulatorConstantsData.MAS_PARENT_HANDLE + "\"" );
 		else
 			clickTestMonitorOnMdfs();
 	}
 
 	public void clickTestMonitorOnMdfs() {
-		executeAutoITExe(CLICK_TEST_MONITOR  + SEPERATOR + SimulatorConstantsData.MDFS_16_X + "\"" );
+		executeAutoITExe(CLICK_TEST_MONITOR  + SEPERATOR + SimulatorConstantsData.MDFS_PARENT_HANDLE + "\"" );
 	}
 
 	public void clickTestMode(String tool) {
 		if(!isContains(tool, "mdfs")) 
-			executeAutoITExe(CLICK_TEST_MODE  + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"" );
+			executeAutoITExe(CLICK_TEST_MODE  + SEPERATOR + SimulatorConstantsData.MAS_PARENT_HANDLE + "\"" );
 		else
 			clickTestModeOnMdfs();
 	}
 
 	public void clickTestModeOnMdfs() {
-		executeAutoITExe(CLICK_TEST_MODE  + SEPERATOR + SimulatorConstantsData.MDFS_16_X + "\"" );
+		executeAutoITExe(CLICK_TEST_MODE  + SEPERATOR + SimulatorConstantsData.MDFS_PARENT_HANDLE + "\"" );
 	}
 
 	public void clickTestPreparations(String tool) {
 		if(!isContains(tool, "mdfs")) 
-			executeAutoITExe(CLICK_TEST_PREPARATION  + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"" );
+			executeAutoITExe(CLICK_TEST_PREPARATION  + SEPERATOR + SimulatorConstantsData.MAS_PARENT_HANDLE + "\"" );
 		else
 			clickTestPreparationsOnMdfs();
 	}
-		
 
 	public void clickTestPreparationsOnMdfs() {
-		executeAutoITExe(CLICK_TEST_PREPARATION   + SEPERATOR + SimulatorConstantsData.MDFS_16_X + "\"" );
+		executeAutoITExe(CLICK_TEST_PREPARATION   + SEPERATOR + SimulatorConstantsData.MDFS_PARENT_HANDLE + "\"" );
 		wait(5000);
 	}
 
 	public void clickTestResults(String tool) {
 		if(!isContains(tool, "mdfs")) 
-			executeAutoITExe(CLICK_TEST_RESULTS  + SEPERATOR + SimulatorConstantsData.MAS_16_X + "\"" );
+			executeAutoITExe(CLICK_TEST_RESULTS  + SEPERATOR + SimulatorConstantsData.MAS_PARENT_HANDLE + "\"" );
 		else
 			clickTestResultsOnMdfs();
 	}
 
 	public void clickTestResultsOnMdfs() {
-		executeAutoITExe(CLICK_TEST_RESULTS   + SEPERATOR + SimulatorConstantsData.MDFS_16_X + "\"" );
+		executeAutoITExe(CLICK_TEST_RESULTS   + SEPERATOR + SimulatorConstantsData.MDFS_PARENT_HANDLE + "\"" );
 	}
-	
+
 	public void connectAndStartVtsCommunication() { 
 		activateVts();
 		//path has be put in "\" only hence the replace statement 
@@ -1433,10 +1434,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		editFeildValues("F2", "1234567890123456"); //Primary Account Number
 		editFeildValues("F14", "1234567890123456"); //Expiry Date
 		winiumClickOperation("Yes");
-		
+
 		//clicking OK on the Message Editor screen
 		winiumClickOperation("OK");
-		
+
 		executeVisaTest();
 	}
 
@@ -1457,7 +1458,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation(fieldNumber);
 		executeAutoITExe("SetValueInVisaMessageEditor.exe " + parameter);
 	}
-	
+
 	public void executeVisaTest() {
 		MiscUtils.reportToConsole(" ******* executeVisaTest ******" );     
 		winiumClickOperation("Execute Test");
@@ -1468,23 +1469,32 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		executeAutoITExe("visaTestExeution.exe");
 		winiumClickOperation("Minimize");
 	}
-	
+
 	public String verifyVisaOutput(String selection) {
 		MiscUtils.reportToConsole(" ******* verifyVisaOutput ******" );     
 		selectVisaTestCaseToMakeDataElementChange(selection);
 		// here we are not sure as to what are we verifying
-		
+
 		//finally browserMaximize
 		browserMaximize();
-		
+
 		return "Temporary Status";
 	}
-	
+
 	public void browserMinimize() {
 		webProvider.get().manage().window().setPosition(new Point(-2000, 0));
 	}
-	
+
 	public void browserMaximize() {
 		webProvider.get().manage().window().maximize();
+	}
+
+	private void getMasDetails() { 
+		MasDetailsKeyValuePair.initializeMasData();
+		if(!simulatorVersion.getMasVersion().toUpperCase().contains("LATEST")) {
+			MasDetailsKeyValuePair.getSpecificMasVersionDetails(simulatorVersion.getMasVersion());
+		} else {
+			MasDetailsKeyValuePair.getLatestVersionMasDetailsInstalledOnMachine();
+		}
 	}
 }
