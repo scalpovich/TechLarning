@@ -11,10 +11,6 @@ public class CardHolderPortalMenuConfigWorkFlow {
 	@Autowired
 	AdministrationCardHolderPortalPage adminConfigPortal;
 	
-	public void navigateToCardHolderPortalPage(){
-		adminConfigPortal.navigateToCardHolderConfigPage();
-		
-	}
 	
 	public void addMenuOptionsToaccess(String deviceType,String programCode){
 		adminConfigPortal.addMenusToAccessForCardHolderPortal(deviceType,programCode);
