@@ -30,7 +30,6 @@ Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify Successful status
 And user sign out from customer portal
-When connection to MAS is established
 When perform an EMV_PURCHASE_WITH_CASHBACK MAS transaction
 Then MAS test results are verified
 And user is logged in institution
