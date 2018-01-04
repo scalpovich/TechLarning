@@ -14,9 +14,8 @@ Scenario: Set up prepaid msr retail general purpose card
 Meta:
 @TestId TC406658
 Given user is logged in institution
-When prepaid magnetic stripe device is available with balance amount
-When user has current wallet balance amount information for prepaid device
-When user sign out from customer portal
+And device range for program with device plan for "prepaid" "magnetic stripe" card
+When user creates new device of prepaid type for new client
 
 Scenario: Pin Generation 
 Meta:

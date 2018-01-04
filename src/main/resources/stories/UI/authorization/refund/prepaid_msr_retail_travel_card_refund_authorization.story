@@ -15,7 +15,7 @@ Scenario: Set up prepaid msr retail travel card
 Meta:
 @TestId
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
+And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
 
 Scenario: prepaid msr retail travel card device production

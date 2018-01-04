@@ -14,7 +14,7 @@ Scenario: Set up prepaid msr corporate general purpose card
 Meta:
 @TestId TC398452
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
+And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
 
 Scenario: prepaid msr corporate general purpose card device production
