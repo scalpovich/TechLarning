@@ -30,6 +30,9 @@ public class TransactionSearchPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=microfilmRefNumber]")
 	private MCWebElement searchARNTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=cardNumber]")
+	private MCWebElement searchDeviceTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.//*[text()='Authorization Status :']]/following-sibling::td[1]")
 	private MCWebElement authorizationStatusTxt;
@@ -76,23 +79,6 @@ public class TransactionSearchPage extends AbstractBasePage {
 		return authorizationStatus;
 	}
 	
-	public String searchTransactionWithDeviceNumber(String deviceNumber,TransactionSearch ts){
-		WebElementUtils.selectDropDownByVisibleText(productTypeSelect,ts.getProductType());
-		WebElementUtils.enterText(searchARNTxt, deviceNumber);
-		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
-		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
-		WebElementUtils.selectDDByVisibleText(tranDateDDwn,ts.getDateType());		
-		clickSearchButton();
-		viewFirstRecord();
-		runWithinPopup("View Transactions", () -> {
-			logger.info("Retrieving transaction Amount");
-			transactionAmount = transactionAmout.getText();
-			clickCloseButton();
-		});
-
-		return transactionAmount;
-	}
-	
 	public String searchTransactionWithArnAndGetFee(String arnNumber, TransactionSearch ts){
 		int i;
 		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
@@ -126,7 +112,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 	public String searchTransactionWithDeviceAndGetStatus(Device device, TransactionSearch ts){
         int i;
 		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
-        WebElementUtils.enterText(searchARNTxt, device.getDeviceNumber());
+        WebElementUtils.enterText(searchDeviceTxt, device.getDeviceNumber());
         WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
         WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
         WebElementUtils.pickDate(toDateTxt, LocalDate.now());
