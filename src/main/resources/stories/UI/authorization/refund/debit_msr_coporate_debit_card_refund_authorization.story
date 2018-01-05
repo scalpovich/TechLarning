@@ -1,38 +1,37 @@
-prepaid msr retail general purpose card authorization
+debit msr corporate debit card authorization
 
 Narrative:
-In order to provide to client easy-to-use multi-purpose prepaid card
+In order to check transactions on debit msr corporate debit card
 As an issuer
-I want to create an magnetic stripe prepaid card and perform various transaction
+I want to authorize transactions for debit msr corporate debit card
 
 Meta:
-@StoryName p_emv_retail_gift
-@oldReferenceSheet_prepaid_msr
-@SanityCardsWithAuthorization
+@StoryName p_emv_corp_gift
+@oldReferenceSheet_S203707
+@CRCardsWithAuthorization
 
-Scenario: Set up prepaid msr retail gift card authorization pinless
+Scenario: Set up debit msr corporate debit card
 Meta:
-@TestId TC398484
+@TestId TC398452
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "magnetic stripe" card
-When user creates new device of prepaid type for new client
-Then device has "normal" status
+And device range for program with device plan for "debit" "magnetic stripe" card
+When user creates new device of debit type for new client
 
-Scenario: prepaid msr corporate gift card device production
+Scenario: debit msr corporate debit card device production
 Meta:
 @TestId TC408068
 Given user is logged in institution
 And a new device was created
-When processes pre-production batch for prepaid
-When processes device production batch for prepaid
-When processes pin generation batch for prepaid
+When processes pre-production batch for debit
+When processes device production batch for debit
+When processes pin generation batch for debit
 
 Then device has "normal" status
 When user has wallet number information for debit device
 Then user sign out from customer portal
 Then user is logged in institution
 When user performs adjustment transaction
-When user has current wallet balance amount information for prepaid device
+When user has current wallet balance amount information for debit device
 Then device has "normal" status
 Then user activates device through helpdesk
 Then user sign out from customer portal
@@ -61,4 +60,3 @@ Meta:
 Given user is logged in institution
 When pre-clearing and Pre-EOD batches are run
 Then verify report for transactions with Program Balance Summary is downloaded
-And user sign out from customer portal

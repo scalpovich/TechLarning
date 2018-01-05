@@ -42,16 +42,18 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform MSR_ECOMMERCE Authorization transaction
+Scenario: Perform MSR_REFUND Authorization transaction
 Meta:
 @TestId 
-When connection to MAS is established
-When perform an MSR_ECOMMERCE MAS transaction
-Then MAS test results are verified
+Given connection to MAS is established
+When perform an MSR_REFUND MAS transaction
+Then user is logged in institution
+Then search Refund authorization and verify 000-Successful status
+Then user sign out from customer portal
 
-Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
+Scenario: Program Balance Summary download
 Meta:
 @TestId 
-When perform an MSR_CASH_WITHDRAWAL MAS transaction
-Then MAS test results are verified
-When MAS simulator is closed
+Given user is logged in institution
+When pre-clearing and Pre-EOD batches are run
+Then verify report for transactions with Program Balance Summary is downloaded

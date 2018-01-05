@@ -1,39 +1,49 @@
-prepaid msr retail general purpose card authorization
+debit msr retail debit card authorization
 
 Narrative:
-In order to check transactions on prepaid msr retail general purpose card 
+In order to provide to client easy-to-use debit msr retail debit card
 As an issuer
-I want to authorize transactions for prepaid msr retail general purpose card 
+I want to create an magnetic stripe debit msr retail debit card and perform refund transaction
 
 Meta:
-@StoryName p_msr_retail_travel
+@StoryName p_emv_retail_gift
 @oldReferenceSheet_prepaid_msr
-@CRCardsPinlessWithAuthorization
+@SanityCardsWithAuthorization
 
-
-Scenario: Set up prepaid msr retail travel card
+Scenario: Set up debit msr retail debit card
 Meta:
-@TestId
+@TestId TC406658
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
+And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
 
-Scenario: prepaid msr retail travel card device production
+Scenario: debit msr corporate debit card device production
 Meta:
-@TestId TC398484
+@TestId TC408068
 Given user is logged in institution
 And a new device was created
-When processes pre-production batch for prepaid
-When processes device production batch for prepaid
+When processes pre-production batch for debit
+When processes device production batch for debit
+When processes pin generation batch for debit
+
 Then device has "normal" status
 When user has wallet number information for debit device
 Then user sign out from customer portal
 Then user is logged in institution
 When user performs adjustment transaction
-When user has current wallet balance amount information for prepaid device
+When user has current wallet balance amount information for debit device
 Then device has "normal" status
 Then user activates device through helpdesk
 Then user sign out from customer portal
+
+Scenario: Pin Generation 
+Meta:
+@TestId 
+Given connection to FINSim is established
+When Pin Offset file batch was generated successfully
+When embossing file batch was generated in correct format
+When PIN is retrieved successfully with data from Pin Offset File
+Then FINSim simulator is closed
 
 Scenario: Perform MSR_REFUND Authorization transaction
 Meta:
