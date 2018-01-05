@@ -1,4 +1,4 @@
-prepaid msr retail general purpose card authorization PINLESS
+prepaid msr corporate general purpose card authorization PINLESS
 
 Narrative:
 In order to check transactions on prepaid msr corporate general purpose card 

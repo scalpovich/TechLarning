@@ -1,4 +1,4 @@
-prepaid msr retail general purpose card authorization
+prepaid msr corporate general purpose card authorization
 
 Narrative:
 In order to check transactions on prepaid msr corporate general purpose card 
@@ -8,13 +8,14 @@ I want to authorize transactions for prepaid msr corporate general purpose card
 Meta:
 @StoryName p_msr_corp_general_purpose
 
-Scenario: prepaid msr corporate general purpose card > Device production - prepaid msr gift card > Pin Generation > Perform MSR_PREAUTH and MSR_AUTH Authorization transaction > Program Balance Summary download
+Scenario: prepaid msr corporate general purpose card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
 Then device has "normal" status
 And user sign out from customer portal
 
+Scenario: Device production - prepaid msr general purpose card
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
@@ -27,12 +28,14 @@ Then device has "normal" status
 When user activates device through helpdesk
 And user sign out from customer portal
 
+Scenario:Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
+Scenario: Perform MSR_PREAUTH and MSR_AUTH Authorization transaction
 When connection to MAS is established
 When perform an MSR_PREAUTH MAS transaction
 Then MAS test results are verified
@@ -46,6 +49,7 @@ And user is logged in institution
 And search Pre-Auth Completion authorization and verify Success status
 And user sign out from customer portal
 
+Scenario: Program Balance Summary download
 Given user is logged in institution
 When pre-clearing and Pre-EOD batches are run
 Then verify report for transactions with Program Balance Summary is downloaded

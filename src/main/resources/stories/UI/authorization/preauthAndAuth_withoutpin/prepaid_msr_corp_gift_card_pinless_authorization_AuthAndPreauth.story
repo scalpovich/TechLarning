@@ -1,4 +1,4 @@
-prepaid msr retail gift card authorization PINLESS
+prepaid msr corporate gift card authorization PINLESS
 
 Narrative:
 In order to check transactions on prepaid msr corporate gift card 
