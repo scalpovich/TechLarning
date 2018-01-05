@@ -1,27 +1,26 @@
-prepaid msr retail general purpose card authorization PIN
+prepaid emv retail gift card authorization PINLESS
 
 Narrative:
-In order to check transactions on prepaid msr retail general purpose card 
+In order to check transactions on prepaid emv retail gift card 
 As an issuer
-I want to authorize transactions for prepaid msr retail general purpose card 
+I want to authorize transactions for prepaid emv retail gift card 
 
 Meta:
-@StoryName p_msr_retail_gen_purpose
-@SanityCardsWithAuthorization
+@StoryName p_emv_retail_gift
 
-Scenario: Transaction - MSR_PURCHASE_PIN Authorization transaction - prepaid msr retail general purpose card
+Scenario: Transaction - prepaid emv retail gift card - EMV_PURCHASE and EMV_PURCHASE_WITH_CASHBACK Authorization transaction
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "magnetic stripe" card
+And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
-Then device has "normal" status
-And user sign out from customer portalGiven user is logged in institution
+And user sign out from customer portal
+Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
+When processes pin generation batch for prepaid
 When user has wallet number information for prepaid device
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
-When processes pin generation batch for prepaid
 Then device has "normal" status
 When user activates device through helpdesk
 And user sign out from customer portal
@@ -30,17 +29,17 @@ When Pin Offset file batch was generated successfully
 When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
-When connection to MAS is established
-When perform an MSR_PURCHASE_PIN MAS transaction
+Given connection to MAS is established
+When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
 And user is logged in institution
-And search Purchase authorization and verify success status
+And search Purchase authorization and verify Successful status
 And user sign out from customer portal
-When connection to MAS is established
-When perform an MSR_PURCHASE_WITH_CASHBACK_PIN MAS transaction
+When perform an EMV_PURCHASE_WITH_CASHBACK MAS transaction
 Then MAS test results are verified
+And MAS simulator is closed
 And user is logged in institution
-And search Purchase authorization and verify success status
+And search Purchase with Cash back authorization and verify Successful status
 And user sign out from customer portal
 Given user is logged in institution
 When pre-clearing and Pre-EOD batches are run
