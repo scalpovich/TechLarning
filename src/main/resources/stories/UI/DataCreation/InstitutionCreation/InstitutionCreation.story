@@ -11,7 +11,7 @@ Meta:
 Scenario:1 New Institution creation prepaid
 
 Meta:
-@TCName TC1InstituteCreation
+@TCName TCInstituteCreationPR
 @testDataFileName testdata
 @sheetName Institute
 @PrepaidInstitutionAndUserCreation
@@ -26,7 +26,7 @@ Then user should be able to create new user
 Scenario:2 New Institution creation Debit
 
 Meta:
-@TCName TC1InstituteCreation
+@TCName TCInstituteCreationDC
 @testDataFileName testdata
 @sheetName Institute
 @DebitInstitutionAndUserCreation
