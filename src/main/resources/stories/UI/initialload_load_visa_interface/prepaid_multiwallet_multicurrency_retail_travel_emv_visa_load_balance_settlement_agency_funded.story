@@ -3,7 +3,7 @@ Prepiad: Funded Agent : Initial Load - Load - Reload - Settlement - Preclearing 
 Narrative:
 In order to do prepaid load
 As an Agency User
-I want to do Initial Load - Load - Reload through agent portal
+I want to do Initial Load - Load - Reload through agent portal visa interface
 
 Meta:
 @StoryName MWMC_EMV_V_RTLTRVL_AGNC_FUND
