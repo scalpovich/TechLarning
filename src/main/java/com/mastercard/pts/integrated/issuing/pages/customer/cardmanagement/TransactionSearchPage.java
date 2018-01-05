@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -122,10 +123,10 @@ public class TransactionSearchPage extends AbstractBasePage {
         return getCellTextByColumnName(i,"Reversal");
 	}
 	
-	public String searchTransactionWithDeviceAndGetStatus(String deviceNumber, TransactionSearch ts){
+	public String searchTransactionWithDeviceAndGetStatus(Device device, TransactionSearch ts){
         int i;
 		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
-        WebElementUtils.enterText(searchARNTxt, deviceNumber);
+        WebElementUtils.enterText(searchARNTxt, device.getDeviceNumber());
         WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
         WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
         WebElementUtils.pickDate(toDateTxt, LocalDate.now());
