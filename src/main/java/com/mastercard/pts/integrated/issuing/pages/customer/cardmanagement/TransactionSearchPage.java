@@ -111,16 +111,20 @@ public class TransactionSearchPage extends AbstractBasePage {
 	
 	public String searchTransactionWithDeviceAndGetStatus(Device device, TransactionSearch ts){
         int i;
-        logger.info("Select product", device.getProductType());
-		
+        logger.info("Select product {}", device.getProductType());
         WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
-		logger.info("Search transaction for device",device.getDeviceNumber());
-		
+        
+		logger.info("Search transaction for device {}",device.getDeviceNumber());		
         WebElementUtils.enterText(searchDeviceTxt, device.getDeviceNumber());
-        WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
-       
+        
         WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
         WebElementUtils.pickDate(toDateTxt, LocalDate.now());
+        
+        waitForWicket();
+        logger.info("Search with transaction Date {}",device.getTransactionDateType());	
+        WebElementUtils.elementToBeClickable(dateDDwn);
+        WebElementUtils.selectDropDownByVisibleText(dateDDwn, device.getTransactionDateType());  
+        
         clickSearchButton();
         for(i=1;i<4;i++){
                if("2".equals(getCellTextByColumnName(i,"Sequence Number")))

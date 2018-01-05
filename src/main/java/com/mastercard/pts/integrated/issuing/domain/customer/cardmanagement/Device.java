@@ -30,6 +30,8 @@ public class Device {
 	private static final String ND_ENCODED_NAME = "ND_ENCODED_NAME";
 	private static final String CHP_NEW_PASSWORD = "CHP_NEW_PASSWORD";
 	private static final String PRODUCT_TYPE = "PRODUCT_TYPE";
+	private static final String DATE_TYPE = "DATE_TYPE";
+	
 	
 
 	private String currentTransPassword;
@@ -84,6 +86,7 @@ public class Device {
 	private String middleName2;
 	private String serviceCode;
 	private String productType;
+	private String transactionDateType;
 	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -108,6 +111,7 @@ public class Device {
 		device.setNewTransPassword(provider.getString(CHP_NEW_PASSWORD));
 		device.setConfirmNewTransPassword(provider.getString(CHP_NEW_PASSWORD));	
 		device.setProductType(provider.getString(PRODUCT_TYPE));
+		device.setTransactionDateType(provider.getString(DATE_TYPE));
 		
 		return device;
 	}
@@ -541,6 +545,14 @@ public class Device {
 
 	public void setServiceCode(String serviceCode) {
 		this.serviceCode = serviceCode;
+	}
+
+	public String getTransactionDateType() {
+		return transactionDateType;
+	}
+
+	public void setTransactionDateType(String transactionDateType) {
+		this.transactionDateType = transactionDateType;
 	}
 
 }
