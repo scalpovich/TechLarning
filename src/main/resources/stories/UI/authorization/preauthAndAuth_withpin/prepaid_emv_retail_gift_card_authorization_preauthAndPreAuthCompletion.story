@@ -1,4 +1,4 @@
-prepaid msr retail gift card pinless authorization
+prepaid EMV retail gift card pinless authorization
 
 Narrative:
 In order to check transactions on prepaid emv retail gift card

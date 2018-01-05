@@ -1,4 +1,4 @@
-prepaid emv corporate gift card authorization
+prepaid EMV corporate gift card authorization
 
 Narrative:
 In order to provide a corporate client various transactions

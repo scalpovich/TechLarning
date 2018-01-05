@@ -1,4 +1,4 @@
-prepaid emv retail general purpose card authorization
+prepaid EMV retail general purpose card authorization
 
 Narrative:
 In order to check transactions on prepaid emv retail general purpose card

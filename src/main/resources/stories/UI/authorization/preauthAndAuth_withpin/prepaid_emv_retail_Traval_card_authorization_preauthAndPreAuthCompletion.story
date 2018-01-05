@@ -1,4 +1,4 @@
-prepaid emv retail Travel card authorization
+prepaid EMV retail Travel card authorization
 
 Narrative:
 In order to check transactions on prepaid emv Travel card

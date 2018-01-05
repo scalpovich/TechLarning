@@ -1,9 +1,9 @@
 prepaid msr retail gift card authorization PINLESS
 
 Narrative:
-In order to check transactions on prepaid msr retail general purpose card 
+In order to check transactions on prepaid msr retail gift card 
 As an issuer
-I want to authorize transactions for prepaid msr retail general purpose card 
+I want to authorize transactions for prepaid msr retail gift card 
 
 Meta:
 @StoryName p_msr_retail_gift

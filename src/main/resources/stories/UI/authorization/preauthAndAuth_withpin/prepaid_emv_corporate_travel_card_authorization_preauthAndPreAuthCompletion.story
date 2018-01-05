@@ -1,4 +1,4 @@
-prepaid emv corporate travel card authorization
+prepaid EMV corporate travel card authorization
 
 Narrative:
 In order to provide a corporate client various transactions

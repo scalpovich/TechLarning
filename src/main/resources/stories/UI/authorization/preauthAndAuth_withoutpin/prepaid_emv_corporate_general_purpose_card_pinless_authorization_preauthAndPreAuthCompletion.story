@@ -1,4 +1,4 @@
-prepaid emv corporate general purpose card authorization PINLESS
+prepaid EMV corporate general purpose card authorization PINLESS
 
 Narrative:
 In order to provide a corporate client various transactions

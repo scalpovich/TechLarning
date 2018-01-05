@@ -1,4 +1,4 @@
-prepaid emv corporate travel card authorization PINLESS
+prepaid EMV corporate travel card authorization PINLESS
 
 Narrative:
 In order to provide a corporate client various transactions

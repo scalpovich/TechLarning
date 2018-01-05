@@ -1,4 +1,4 @@
-prepaid msr retail general purpose card authorization
+prepaid msr retail traval card authorization
 
 Narrative:
 In order to check transactions on prepaid msr corporate travel card 

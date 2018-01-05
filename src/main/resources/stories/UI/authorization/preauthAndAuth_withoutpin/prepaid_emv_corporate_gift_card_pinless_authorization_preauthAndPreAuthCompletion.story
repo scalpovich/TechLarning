@@ -1,4 +1,4 @@
-prepaid emv corporate gift card authorization PINLESS
+prepaid EMV corporate gift card authorization PINLESS
 
 Narrative:
 In order to provide a corporate client various transactions
