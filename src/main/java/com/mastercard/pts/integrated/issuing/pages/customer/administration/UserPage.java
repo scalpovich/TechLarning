@@ -195,12 +195,15 @@ public class UserPage extends UserCreation{
 	}
 
 	public void assignInstituteToUser(InstitutionCreation instituteCreation) {
+		Scrolldown(Element(institutionAssignedToUser.replace("%s",
+				instituteCreation.getInstitutionName())));
 		clickWhenClickable(Element(institutionAssignedToUser.replace("%s",
 				instituteCreation.getInstitutionName())));
 	}
 
-	public void assignDefaultInstituteToUser(
-			InstitutionCreation instituteCreation) {
+	public void assignDefaultInstituteToUser(InstitutionCreation instituteCreation) {
+		Scrolldown(Element(defaultinstitution.replace("%s",
+				instituteCreation.getInstitutionName())));
 		clickWhenClickable(Element(defaultinstitution.replace("%s",
 				instituteCreation.getInstitutionName())));
 	}
@@ -258,8 +261,8 @@ public class UserPage extends UserCreation{
 			selectMobileCountryCode(userCreation);
 			enterMobileNumber(userCreation);
 			enterUserAccountExpiryDate(userCreation);
-			selectConcurentLoginAllowed(userCreation);
-			enterMaximumConcurrentUser(userCreation);
+			//selectConcurentLoginAllowed(userCreation);
+			//enterMaximumConcurrentUser(userCreation);
 		} catch (Exception e) {
 			logger.error("Error in providing details for user creation" + e);
 		}

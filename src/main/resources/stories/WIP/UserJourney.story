@@ -61,4 +61,22 @@ And admin provides the helpdesk level privileges - Assign Service Code for the t
 And user creates institution setup for prepaid type mastercard
 
 
+Scenario: Institution Creation and Setup
+Meta:
+@InstitutionAndUserCreation
+@TCName TC_UserJourney1
+@testDataFileName testdata
+@sheetName UserJourney1
+Given login to bank as a Bankadmin
+When user creates Debit institution and a user
+And admin selects the newly created institution
+And admin provides the screen level privileges for the the newly created user
+And admin provides the report level privileges for the the newly created user
+!-- And admin provides batch level privileges for the the newly created user
+And admin provides the helpdesk level privileges - User Groups for the the newly created user
+And admin provides the helpdesk level privileges - Assign Product for the the newly created user
+And admin provides the helpdesk level privileges - Assign Service Code for the the newly created user
+And user creates institution setup for prepaid type mastercard
+
+
 
