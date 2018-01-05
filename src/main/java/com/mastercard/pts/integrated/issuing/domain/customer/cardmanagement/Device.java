@@ -29,6 +29,7 @@ public class Device {
 	private static final String ND_MIDDLE_NAME_2 = "ND_MIDDLE_NAME_2";
 	private static final String ND_ENCODED_NAME = "ND_ENCODED_NAME";
 	private static final String CHP_NEW_PASSWORD = "CHP_NEW_PASSWORD";
+	private static final String PRODUCT_TYPE = "PRODUCT_TYPE";
 	
 
 	private String currentTransPassword;
@@ -82,6 +83,7 @@ public class Device {
 	private String encodedName;
 	private String middleName2;
 	private String serviceCode;
+	private String productType;
 	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -104,7 +106,8 @@ public class Device {
 		device.setOtherInfoStatementPreference(provider.getString(ND_OTHERINFO_STATEMENT_PREFERENCE));
 		device.setOtherInfoFaxNo(provider.getString(ND_OTHERINFO_FAX_NO));
 		device.setNewTransPassword(provider.getString(CHP_NEW_PASSWORD));
-		device.setConfirmNewTransPassword(provider.getString(CHP_NEW_PASSWORD));		
+		device.setConfirmNewTransPassword(provider.getString(CHP_NEW_PASSWORD));	
+		device.setProductType(provider.getString(PRODUCT_TYPE));
 		
 		return device;
 	}
@@ -119,6 +122,14 @@ public class Device {
 		device.setOtherInfoRegisterForDncr(provider.getString(ND_OTHERINFO_REGISTER_FOR_DCNR));
 		device.setOtherInfoSmsAlertRequired(provider.getString(ND_OTHERINFO_SMS_ALERT_REQUIRED));
 		return device;
+	}
+	
+	public String getProductType() {
+		return productType;
+	}
+
+	public void setProductType(String productType) {
+		this.productType = productType;
 	}
 	
 	public String getCurrentTransPassword() {
@@ -531,6 +542,5 @@ public class Device {
 	public void setServiceCode(String serviceCode) {
 		this.serviceCode = serviceCode;
 	}
-
 
 }

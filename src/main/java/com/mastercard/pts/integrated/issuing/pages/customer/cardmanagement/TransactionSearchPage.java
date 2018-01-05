@@ -111,9 +111,14 @@ public class TransactionSearchPage extends AbstractBasePage {
 	
 	public String searchTransactionWithDeviceAndGetStatus(Device device, TransactionSearch ts){
         int i;
-		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
+        logger.info("Select product", device.getProductType());
+		
+        WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
+		logger.info("Search transaction for device",device.getDeviceNumber());
+		
         WebElementUtils.enterText(searchDeviceTxt, device.getDeviceNumber());
         WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
+       
         WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
         WebElementUtils.pickDate(toDateTxt, LocalDate.now());
         clickSearchButton();
