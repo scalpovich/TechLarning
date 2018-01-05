@@ -122,8 +122,8 @@ public class TransactionSearchPage extends AbstractBasePage {
         
         waitForWicket();
         logger.info("Search with transaction Date {}",device.getTransactionDateType());	
-        WebElementUtils.elementToBeClickable(dateDDwn);
-        WebElementUtils.selectDropDownByVisibleText(dateDDwn, device.getTransactionDateType());  
+        WebElementUtils.elementToBeClickable(tranDateDDwn);
+        WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, device.getTransactionDateType());  
         
         clickSearchButton();
         for(i=1;i<4;i++){
