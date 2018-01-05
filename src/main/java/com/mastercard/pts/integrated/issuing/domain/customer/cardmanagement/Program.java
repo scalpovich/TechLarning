@@ -67,8 +67,8 @@ public class Program implements HasCodeAndDescription {
 	private String baseCurrency;
 	private String calendarStartMonth;
 	private String currencyConversionBy;
-	private String walletPlanPlan1;
-	private String walletPlanPlan2;
+	private String firstWalletPlan;
+	private String secondWalletPlan;
 	private String devicePlanPlan1;
     private String otherPlanStatementMessagePlan;
 	private String otherPlanMarketingMessagePlan;
@@ -619,20 +619,20 @@ public class Program implements HasCodeAndDescription {
 		this.currencyConversionBy = currencyConversionBy;
 	}
 	
-	public String getWalletPlanPlan1() {
-		return walletPlanPlan1;
+	public String getFirstWalletPlan() {
+		return firstWalletPlan;
 	}
 
-	public void setWalletPlanPlan1(String walletPlanPlan1) {
-		this.walletPlanPlan1 = walletPlanPlan1;
+	public void setFirstWalletPlan(String firstWalletPlan) {
+		this.firstWalletPlan = firstWalletPlan;
 	}
 	
-	public String getWalletPlanPlan2() {
-		return walletPlanPlan2;
+	public String getSecondWalletPlan() {
+		return secondWalletPlan;
 	}
 
-	public void setWalletPlanPlan2(String walletPlanPlan2) {
-		this.walletPlanPlan2 = walletPlanPlan2;
+	public void setSecondWalletPlan(String secondWalletPlan) {
+		this.secondWalletPlan = secondWalletPlan;
 	}
 	
 	public String getDevicePlanPlan1() {

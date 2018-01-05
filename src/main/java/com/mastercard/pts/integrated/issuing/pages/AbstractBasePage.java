@@ -57,9 +57,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public String pageValidationCheck = "//ol/li";
 	public String ERRORPANEL = "//li[@class='feedbackPanelERROR']";
-	private static final By INFO_MESSAGE_LOCATOR = By.cssSelector(":not([style]) > .feedbackPanel span.feedbackPanelINFO");
-
-	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
+	private static final By INFO_MESSAGE_LOCATOR = By.cssSelector(":not([style]) > .feedbackPanel span.feedbackPanelINFO");	
 
 	private static final String FIRST_ROW_SELECT = ".dataview tbody span";
 
@@ -357,11 +355,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
 	}
 	
-	protected String getWalletNumber() {
-		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
-		logger.info(WALLET_NUMBER, CharMatcher.DIGIT.retainFrom(walletNumber.getText()));		
-		return CharMatcher.DIGIT.retainFrom(walletNumber.getText());
-	}
+
 	
 	protected boolean waitForRow() {
 		try {

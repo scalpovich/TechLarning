@@ -7,12 +7,15 @@ import java.util.Collection;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import com.google.common.base.CharMatcher;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
@@ -145,6 +148,13 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//span[@class='feedbackPanelINFO']")
 	private MCWebElement walletToWalletConfirMsg;
 	
+	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
+	
+	protected String getWalletNumber() {
+		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
+		logger.info(WALLET_NUMBER, CharMatcher.DIGIT.retainFrom(walletNumber.getText()));		
+		return CharMatcher.DIGIT.retainFrom(walletNumber.getText());
+	}
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(productTypeSearchDDwn),
@@ -523,6 +533,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		
 	public void selectWalleFromTransfer(String walletNumber){
 		waitForElementVisible(Element("//td[@id='fromCurrencyDataTable']"));
+		waitForWicket();
 		clickWhenClickable(Element("//td[@id='fromCurrencyDataTable']//./td/span[text()='"+walletNumber+"']//..//..//td//input"));
 	}
 	
@@ -533,9 +544,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public void clickSaveButtonPopup(){
-		new WebDriverWait(driver(), timeoutInSec)
-		.until(WebElementUtils.elementToBeClickable(saveBtn))
-		.click();
+		clickWhenClickable(saveBtn);
 	}
 	
 	public void selectDeviceToTransferFunds(String deviceToTransfer){

@@ -418,7 +418,7 @@ public class ProgramPage extends AbstractBasePage {
 		}
 		
 		clickNextButton();
-		selectWalletPlanPlan1(program.getWalletPlanPlan1());		
+		selectWalletPlanPlan1(program.getFirstWalletPlan());		
 		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
 		if (!productType.equalsIgnoreCase(ProductType.DEBIT)) {
 			selectOtherPlanStatementMessagePlan(program.getOtherPlanStatementMessagePlan());
@@ -451,10 +451,10 @@ public class ProgramPage extends AbstractBasePage {
 		
 		clickNextButton();
 		
-		logger.info("Assign second Wallet :" + program.getWalletPlanPlan1());
-		selectWalletPlanPlan1(program.getWalletPlanPlan1());
-		logger.info("Assign second Wallet :" + program.getWalletPlanPlan2());		
-		selectWalletPlanPlan2(program.getWalletPlanPlan2());
+		logger.info("Assign second Wallet :" + program.getSecondWalletPlan());
+		selectWalletPlanPlan1(program.getSecondWalletPlan());
+		logger.info("Assign second Wallet :" + program.getSecondWalletPlan());		
+		selectWalletPlanPlan2(program.getSecondWalletPlan());
 		
 		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
 		if (!productType.equalsIgnoreCase(ProductType.DEBIT)) {

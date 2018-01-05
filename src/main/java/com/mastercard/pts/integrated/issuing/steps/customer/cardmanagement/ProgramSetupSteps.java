@@ -691,8 +691,8 @@ public class ProgramSetupSteps {
 		}
 		
 		WalletPlan wallets = context.get(ContextConstants.WALLET);
-		program.setWalletPlanPlan1(wallets.getFirstWallet());
-		program.setWalletPlanPlan2(wallets.getSecondWallet());
+		program.setFirstWalletPlan(wallets.getFirstWallet());
+		program.setSecondWalletPlan(wallets.getSecondWallet());
 		
 		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
 		program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
