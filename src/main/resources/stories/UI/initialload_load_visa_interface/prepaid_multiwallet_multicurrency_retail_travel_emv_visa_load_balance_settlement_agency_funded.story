@@ -3,7 +3,7 @@ Prepiad: Funded Agent : Initial Load - Load - Reload - Settlement - Preclearing 
 Narrative:
 In order to do prepaid load
 As an Agency User
-I want to do Initial Load - Load - Reload through agent portal
+I want to do Initial Load - Load - Reload through agent portal visa interface
 
 Meta:
 @StoryName MWMC_EMV_V_RTLTRVL_AGNC_FUND
@@ -13,7 +13,7 @@ Meta:
 Scenario: Prepaid - Admin User - Assign Program to Agency
 
 Given user is logged in institution
-And bulk card generation for prepaid emv is completed for visa interface
+And bulk card generation for prepaid emv is completed for an interface
 And user sign out from customer portal
 And user is logged in agent portal as admin user
 When user fills information to assign program to agency and submits form

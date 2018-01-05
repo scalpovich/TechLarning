@@ -5,12 +5,10 @@ In order to do prepaid load
 As an Agency User
 I want to sale the card through agent portal, do an Initial Load and activate 
 
-
 Meta:
-@StoryName SWSC_EMV_RTLGP_LOAD_ACTIVATE
+@StoryName MWMC_EMV_RTLTRVL_LOAD_ACTIVATE
 @CR1
 @CardCreation
-@LoadActivate
 
 Scenario: Prepaid - Admin User - Assign Program to Agency
 
@@ -78,13 +76,18 @@ When user fills card sale checker details and submits the form
 Then approval is successful
 And user sign out from agent portal
 
-Scenario: Prepaid - Customer User - Help Desk Status and device activated
+Scenario: Prepaid - Customer User - Help Desk Status and activation
 
 Given user is logged in institution
 When user fills General details with product prepaid and submits the form for registered device
 Then status should be normal
 And device activated and activation date is updated in general details
 And user sign out from customer portal
+
+Scenario: Agency Settlement - Funded Agent
+Given user is logged in agent portal as agency user
+When user initiates settlement for agency
+Then settlement is initiated successfully
 
 Scenario: Program Balance Summary reports download - Funded Agent
 Given user is logged in institution
