@@ -57,6 +57,7 @@ Then device has "normal" status
 Then user performs adjustment transaction
 Then currency setup for device
 When wallet to wallet transfer selected account
+Then search with device in transaction screen and status for wallet to wallet transfer transaction
 
 
 Scenario: To Verify functionality of wallet transfer from mastercard interchange by emv card with program Retail Travel Card - Multi Currency
@@ -82,6 +83,7 @@ Then device has "normal" status
 Then user performs adjustment transaction
 Then currency setup for device
 When wallet to wallet transfer selected account
+Then search with device in transaction screen and status for wallet to wallet transfer transaction
 
 Scenario: To Verify functionality of wallet transfer from mastercard interchange by msr card with program Retail Travel Card - Multi Currency
 Given user is logged in institution
@@ -106,6 +108,7 @@ Then device has "normal" status
 Then user performs adjustment transaction
 Then currency setup for device
 When wallet to wallet transfer selected account
+Then search with device in transaction screen and status for wallet to wallet transfer transaction
 
 Scenario: To Verify functionality of wallet transfer from mastercard interchange by msr card with program Corporate General Purpose Card
 Given user is logged in institution
@@ -130,6 +133,7 @@ Then device has "normal" status
 Then user performs adjustment transaction
 Then currency setup for device
 When wallet to wallet transfer selected account
+Then search with device in transaction screen and status for wallet to wallet transfer transaction
 
 Scenario: To Verify functionality of wallet transfer from mastercard interchange by emv card with program Corporate General Purpose Card
 Given user is logged in institution
@@ -154,6 +158,7 @@ Then device has "normal" status
 Then user performs adjustment transaction
 Then currency setup for device
 When wallet to wallet transfer selected account
+Then search with device in transaction screen and status for wallet to wallet transfer transaction
 
 Scenario: To Verify functionality of wallet transfer from mastercard interchange by msr card with Retail General Purpose Card
 Given user is logged in institution
@@ -178,6 +183,7 @@ Then device has "normal" status
 Then user performs adjustment transaction
 Then currency setup for device
 When wallet to wallet transfer selected account
+Then search with device in transaction screen and status for wallet to wallet transfer transaction
 
 Scenario: To Verify functionality of wallet transfer from mastercard interchange by emv card with Retail General Purpose Card
 Given user is logged in institution
@@ -202,3 +208,4 @@ Then device has "normal" status
 Then user performs adjustment transaction
 Then currency setup for device
 When wallet to wallet transfer selected account
+Then search with device in transaction screen and status for wallet to wallet transfer transaction

@@ -114,18 +114,24 @@ public class TransactionSearchPage extends AbstractBasePage {
         logger.info("Select product {}", device.getProductType());
         WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
         
+        //WebElementUtils.selectDropDownByVisibleText(productTypeSelect, "Prepaid [P]");
+        
 		logger.info("Search transaction for device {}",device.getDeviceNumber());		
         WebElementUtils.enterText(searchDeviceTxt, device.getDeviceNumber());
+        
+        //WebElementUtils.enterText(searchDeviceTxt, "5887650051457710");
         
         WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
         WebElementUtils.pickDate(toDateTxt, LocalDate.now());
         
         waitForWicket();
-        logger.info("Search with transaction Date {}",device.getTransactionDateType());	
+        //logger.info("Search with transaction Date {}",device.getTransactionDateType());	
         WebElementUtils.elementToBeClickable(tranDateDDwn);
-        WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, device.getTransactionDateType());  
+        //WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, device.getTransactionDateType());
+        WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
         
         clickSearchButton();
+        waitForWicket();
         for(i=1;i<4;i++){
                if("2".equals(getCellTextByColumnName(i,"Sequence Number")))
                      break;
