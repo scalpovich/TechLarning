@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
 @Component
 public class UploadFile extends SimulatorUtilities{
