@@ -13,7 +13,7 @@ Scenario: Set up prepaid msr retail general purpose card
 Meta:
 @TestId 
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card for an interface
+And device range for program with device plan for "prepaid" "magnetic stripe" card for an interface
 When user creates new device of prepaid type for new client
 Then device has "normal" status
 
@@ -24,4 +24,5 @@ Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
+When processes pin generation batch for prepaid
 Then device has "normal" status
