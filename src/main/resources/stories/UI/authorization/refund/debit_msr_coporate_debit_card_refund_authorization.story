@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for debit msr corporate debit card
 
 Meta:
-@StoryName p_emv_corp_gift
+@StoryName d_emv_corp
 @oldReferenceSheet_S203707
 @CRCardsWithAuthorization
 

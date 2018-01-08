@@ -6,7 +6,7 @@ As an issuer
 I want to create an magnetic stripe debit msr retail debit card and perform refund transaction
 
 Meta:
-@StoryName p_emv_retail_gift
+@StoryName d_msr_retail
 @oldReferenceSheet_prepaid_msr
 @SanityCardsWithAuthorization
 
