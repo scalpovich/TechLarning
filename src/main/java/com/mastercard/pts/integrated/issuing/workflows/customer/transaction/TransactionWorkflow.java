@@ -54,6 +54,7 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.MasDetailsKeyValuePair;
+import com.mastercard.pts.integrated.issuing.utils.simulator.MdfsDetailsKeyValuePair;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorConstantsData;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
@@ -82,7 +83,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private static final String MESSAGE_REVERSAL_INDICATOR = "messageReversalIndicator";
 	private static final String BIN_TABLE = "BIN Table";
 	private static final String TEST_CASES =	"Test Cases (Issuer Testing)";
-	private static final String ADD_BIN_RANGE =	"ActivateAddBINrange.exe";
+	private static final String ADD_BIN_RANGE_SCROLL = "AddBinRangeScrolling.exe";
+	private static final String ADD_BIN_RANGE_MAKE_OK_VISIBLE = "AddBinRangeMakeOkVisible.exe";
 	private LoadBalanceRequestPage lbrpage;
 	private LoadBalanceApprovePage lbapage;
 	private InitiateSettlementPage ispage;
@@ -251,10 +253,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public void launchWiniumAndSimulator(String simulator) {
-		//to fetch latest MAS details installed on the machine
-		if(simulator.toUpperCase().contains("MAS"))
-			getMasDetails();
-
+		//to fetch required Simulator installed on the machine or read value from WhichSimulatorVersionToChoose.java
+		launchRequiredSimulatorSession(simulator);
+        // close older session of simulator if open 
 		closeSimulator(simulator);
 
 		try {
@@ -274,7 +275,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			launchAndConnectToMCPS();
 
 		} else if(simulator.toUpperCase().contains("MDFS")) {
-			selectLicenseAndConfigure(SimulatorConstantsData.SELECT_MDFS_LICENSE, SimulatorConstantsData.MDFS_LICENSE_TYPE_16X);
+			selectLicenseAndConfigure(SimulatorConstantsData.SELECT_MDFS_LICENSE, SimulatorConstantsData.MDFS_LICENSE_TYPE);
 			wait(4000);
 			connect2IPSHostModeAndConfigureIPOnMdfs(); 	
 		} else if(simulator.toUpperCase().contains("VISA")) {
@@ -752,7 +753,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 				licenseForSelection = SimulatorConstantsData.MAS_LICENSE_TYPE;
 			//changed from MDFS 16.x to MDFS so that this works for all versions of MDFS
 			else if(licenseFor.toUpperCase().contains("MDFS"))
-				licenseForSelection = SimulatorConstantsData.MDFS_LICENSE_TYPE_16X;
+				licenseForSelection = SimulatorConstantsData.MDFS_LICENSE_TYPE;
 
 			MiscUtils.reportToConsole("selectLicenseAndConfigure  : " + licenseForSelection);
 
@@ -765,7 +766,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			winiumClickOperation("Select");
 			wait(20000);
 			executeAutoITExe("ActivateSelectServices.exe");
-			
+
 			if(getLoadServicesScreen() > 0)	{
 				executeAutoITExe("ActivateSelectServices.exe");
 				wait(2000);
@@ -895,7 +896,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(2000);
 			performClickOperation("Add New");
 			wait(10000);
-			executeAutoITExe(ADD_BIN_RANGE);
+			executeAutoITExe(ADD_BIN_RANGE_SCROLL);
 			winiumClickOperation("General");
 			pressTab();
 			setText(binBinMinRange);
@@ -906,14 +907,19 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(1000);
 			pressTab();
 			wait(1000);
-			//			executeAutoITExe(ADD_BIN_RANGE);
-			setText(issuerCountryCode);
+			setText("00"); // fianancial Network Code
 			pressTab();
+			setText(issuerCountryCode);
+			pressEnter();
+//			pressTab();
 			pressTab();
 			setText(issuerCurrencyCode);
 			pressTab();
 			setText(cardHolderBillingCurrency);
-			executeAutoITExe(ADD_BIN_RANGE);
+			
+			// In MDFS 17.x, the OK button does not show up until we scroll down hence tabbing so that the focus goes to OK button
+			executeAutoITExe(ADD_BIN_RANGE_MAKE_OK_VISIBLE);
+			
 			winiumClickOperation("OK");
 			wait(2000);
 			if(isImagePresent("OK")) {
@@ -950,7 +956,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(2000);
 			performClickOperation("Add New");
 			wait(10000);
-			executeAutoITExe(ADD_BIN_RANGE);
+			executeAutoITExe(ADD_BIN_RANGE_SCROLL);
 			winiumClickOperation("General");
 			pressTab();
 			setText(binBinMinRange);
@@ -969,10 +975,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			pressTab();
 			setText(cardHolderBillingCurrency);
 
-			//	pressTab(7); // In MAS 17.x, the OK button does not show up until we scroll down hence tabbing so that the focus goes to OK button
-
-			winiumClickOperation("General");
-			pressShiftTab();
+		// In MAS 17.x, the OK button does not show up until we scroll down hence tabbing so that the focus goes to OK button
+			executeAutoITExe(ADD_BIN_RANGE_MAKE_OK_VISIBLE);
 
 			winiumClickOperation("OK");
 			wait(4000);
@@ -1017,6 +1021,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		//to kill previous instance of MAS 17
 		if(SimulatorConstantsData.MAS_LICENSE_TYPE.contains("17"))
 			name = "MAS17";
+		if(SimulatorConstantsData.MDFS_LICENSE_TYPE.contains("17"))
+			name = "MDFS17";
+
 		MiscUtils.killProcessFromTaskManager("WINIUM");
 		MiscUtils.killProcessFromTaskManager(name);
 	}
@@ -1495,6 +1502,24 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			MasDetailsKeyValuePair.getSpecificMasVersionDetails(simulatorVersion.getMasVersion());
 		} else {
 			MasDetailsKeyValuePair.getLatestVersionMasDetailsInstalledOnMachine();
+		}
+	}
+
+	private void getMdfsDetails() { 
+		MdfsDetailsKeyValuePair.initializeMdfsData();
+		if(!simulatorVersion.getMdfsVersion().toUpperCase().contains("LATEST")) {
+			MdfsDetailsKeyValuePair.getSpecificMdfsVersionDetails(simulatorVersion.getMdfsVersion());
+		} else {
+			MdfsDetailsKeyValuePair.getLatestVersionMdfsDetailsInstalledOnMachine();
+		}
+	}
+
+	private void launchRequiredSimulatorSession(String simulator) {
+		//to fetch latest MAS details installed on the machine
+		if(simulator.toUpperCase().contains("MAS")) {
+			getMasDetails();
+		} else if(simulator.toUpperCase().contains("MDFS")) {
+			getMdfsDetails(); 
 		}
 	}
 }
