@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.common.base.Strings;
 import com.mastercard.pts.integrated.issuing.configuration.FinSimSimulator;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
@@ -41,6 +40,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.TransactionProvider
 import com.mastercard.pts.integrated.issuing.pages.ValidationException;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKeyValuePair;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
 
 @Component
@@ -70,11 +70,20 @@ public class TransactionSteps {
 	@Autowired
 	private ClearingTestCaseProvider clearingTestCaseProvider;
 
+	@Autowired
+	private VisaTestCaseNameKeyValuePair visaTestCaseNameKeyValuePair;
+	
 	private String authFilePath;
 
 	private String arnNumber;
 
 	private String transactionAmount = "20.00";
+	
+	private static String PASS_MESSAGE = "Transaction is succcessful!  - Expected Result : ";
+	
+	private static String FAILED = "Transaction failed! ";
+	
+	private static String FAIL_MESSAGE =  FAILED + " -  Result : ";
 
 	public String getTransactionAmount() {
 		return transactionAmount;
@@ -124,9 +133,11 @@ public class TransactionSteps {
 	@When("user performs an optimized $transaction MAS transaction")
 	@Given("user performs an optimized $transaction MAS transaction")
 	public void givenOptimizedTransactionIsExecuted(String transaction) {
+		transactionWorkflow.browserMinimize(); //minimizing browser for smooth operation of MAS/MDFS
 		Transaction transactionData = generateMasTestDataForTransaction(transaction);
 
 		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
+		transactionWorkflow.browserMaximize(); //restoring browser after operation of MAS/MDFS
 	}
 
 	@When("user performs generate TestData for an optimized $transaction MAS transaction")
@@ -193,20 +204,21 @@ public class TransactionSteps {
 
 	private void setDeElementsDynamically(Device device, Transaction transactionData, String transaction) {
 
-		if (!"pinless".equalsIgnoreCase(device.getPinNumberForTransaction()))
+		if(!"pinless".equalsIgnoreCase(device.getPinNumberForTransaction()) && !transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE")) //ecomm transactions cannot have a PIN
 			transactionData.setDeKeyValuePairDynamic("052", device.getPinNumberForTransaction());
-		/** data format is 12 digits hence leftpad with 0 */
-		transactionData.setDeKeyValuePairDynamic("004", StringUtils.leftPad(device.getTransactionAmount(), 12, "0"));
-		if (transaction.contains("BALANCE_INQUIRY")) {
-			/** this value is expected to be 0's for Balance Enquiry */
-			transactionData.setDeKeyValuePairDynamic("004", "000000000000");
+		//data format is 12 digits hence leftpad with 0
+		transactionData.setDeKeyValuePairDynamic("004", StringUtils.leftPad(device.getTransactionAmount(), 12, "0" ));
+		if(transactionWorkflow.isContains(transaction, "BALANCE_INQUIRY")) {
+			//this value is expected to be 0's for Balance Enquiry
+			transactionData.setDeKeyValuePairDynamic("004", "000000000000"); 
 		}
 
-		if (transaction.contains("ECOMMERCE") || !Strings.isNullOrEmpty(device.getCvv2Data())) {
-			/** for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInux box */
-			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); // Transaction currency code
+		//changed ECOMMERCE to ECOM 
+		if(transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE")) {
+			//for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInux box
+			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); //Transaction currency code
 		}
-		// This is a Single Wallet, Single Currency INDIA card
+		//  This is a Single Wallet, Single Currency INDIA card
 		transactionData.setDeKeyValuePairDynamic("049", device.getCurrency()); // Transaction currency code
 		transactionData.setDeKeyValuePairDynamic("050", device.getCurrency()); // Settlement currency code
 		transactionData.setDeKeyValuePairDynamic("051", device.getCurrency()); // CardHolder billing currency code
@@ -282,7 +294,7 @@ public class TransactionSteps {
 	public void thenTestResultsAreReported(String tool) {
 		String testResults;
 		if (!"mdfs".contains(tool.toLowerCase())) {
-			testResults = transactionWorkflow.verifyTestResults();
+		 testResults = transactionWorkflow.verifyTestResults();
 		} else {
 			testResults = transactionWorkflow.verifyTestResultsOnMdfs();
 		}
@@ -291,8 +303,8 @@ public class TransactionSteps {
 			logger.info("Expected Result :- ", testResults);
 			assertTrue("Transaction is succcessful!  - Expected Result : " + testResults, true);
 		} else if (testResults.contains("Validations Not OK")) {
-			assertFalse("Transaction failed!  -  Result : " + testResults, false);
-			throw new ValidationException("Transaction failed! -  Result : " + testResults);
+			assertFalse("Transaction failed!  -  Result : " +  testResults, false);
+			throw new ValidationException("Transaction failed! -  Result : " +  testResults);
 		} else {
 			logger.error("Test Results retrieved from Simulator :- ", testResults);
 			assertFalse("Transaction failed! ", false);
@@ -318,15 +330,6 @@ public class TransactionSteps {
 		device.setPinNumberForTransaction(pinNumber);
 	}
 
-	@When("PIN is retrieved successfully with sample data from Pin Offset File")
-	@Then("PIN is retrieved successfully with sample data from Pin Offset File")
-	public void thenPINIsRetrievedSuccessfullyBasedOnSampleData() {
-		Transaction transactionData = Transaction.fetchDataForFinSim(finSimConfig);
-
-		String pinNumber = transactionWorkflow.getPinNumber(transactionData);
-		MiscUtils.reportToConsole("FINSim PIN Number generated : " + pinNumber);
-	}
-
 	@When("$simulatorName simulator is closed")
 	@Then("$simulatorName simulator is closed")
 	public void thenclosesimulator(String simulatorName) {
@@ -350,56 +353,95 @@ public class TransactionSteps {
 	@Then("search with ARN in transaction screen and balance should be credited")
 	public void thenSearchWithARNInTransactionScreenCheckReversalStatusAndBalanceShouldBeCredited() {
 		ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
-		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+           TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		rt.setArn(context.get(ConstantData.ARN_NUMBER));
 		BigDecimal actualTransactionAmount = new BigDecimal(rt.getAmount());
 		assertEquals(new BigDecimal(transactionWorkflow.getFeePostingStatus(rt.getArn(), ts)), actualTransactionAmount);
 	}
 
-	@Then("search with ARN in transaction screen and status should be Reversal [R]")
-	public void thenSearchWithARNInTransactionScreenCheckReversalStatusAndStatusShouldBeReversal() {
-		ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
-		TransactionSearch ts = TransactionSearch.getProviderData(provider);
-		rt.setArn(context.get(ConstantData.ARN_NUMBER));
-		assertEquals(transactionWorkflow.searchTransactionWithArnAndGetStatus(rt.getArn(), ts), "Reversal [R]");
-	}
+    @Then("search with ARN in transaction screen and status should be Reversal [R]")
+    public void thenSearchWithARNInTransactionScreenCheckReversalStatusAndStatusShouldBeReversal() {
+           ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
+           TransactionSearch ts = TransactionSearch.getProviderData(provider);
+           rt.setArn(context.get(ConstantData.ARN_NUMBER));
+           assertEquals(transactionWorkflow.searchTransactionWithArnAndGetStatus(rt.getArn(), ts), "Reversal [R]");
+    }
 
-	@When("user performs load balance request")
-	public void whenUserPerformsLoadBalanceRequest() {
-		Device device = context.get(ContextConstants.DEVICE);
-		LoadBalanceRequest lbr = LoadBalanceRequest.getProviderData(provider);
-		String loadRequestReferenceNumber = transactionWorkflow.performLoadBalanceRequestAndGetRequestReferenceNumber(device, lbr);
-		lbr.setLoadRequestReferenceNumber(loadRequestReferenceNumber);
-		context.put("LOADBALANCEREQUEST", lbr);
-	}
+    @When("user performs load balance request")
+    public void whenUserPerformsLoadBalanceRequest() {
+    	   Device device = context.get(ContextConstants.DEVICE);
+    	   LoadBalanceRequest lbr = LoadBalanceRequest.getProviderData(provider);
+           String loadRequestReferenceNumber = transactionWorkflow.performLoadBalanceRequestAndGetRequestReferenceNumber(device, lbr);
+           lbr.setLoadRequestReferenceNumber(loadRequestReferenceNumber);
+           context.put("LOADBALANCEREQUEST", lbr);
+     }
 
-	@Then("load balance request is successful")
-	public void thenLoadBalanceRequestIsSuccessful() {
-		assertThat("Load Balance Request Failed", transactionWorkflow.getLoadBalanceRequestSuccessMessage(), containsString("Load balance request forwarded for approval with request number :"));
-	}
+    @Then("load balance request is successful")
+    public void thenLoadBalanceRequestIsSuccessful() {
+            assertThat("Load Balance Request Failed", transactionWorkflow.getLoadBalanceRequestSuccessMessage(), containsString("Load balance request forwarded for approval with request number :"));
+    }
 
-	@When("user performs load balance approve")
-	public void whenUserPerformsLoadBalanceApprove() {
-		Device device = context.get(ContextConstants.DEVICE);
-		LoadBalanceRequest lbr = context.get("LOADBALANCEREQUEST");
-		transactionWorkflow.performLoadBalanceApprove(device, lbr);
-	}
+    @When("user performs load balance approve")
+    public void whenUserPerformsLoadBalanceApprove() {
+    	Device device = context.get(ContextConstants.DEVICE);
+    	LoadBalanceRequest lbr = context.get("LOADBALANCEREQUEST");
+    	transactionWorkflow.performLoadBalanceApprove(device, lbr);
+    }
 
-	@Then("load balance approve is successful")
-	public void thenLoadBalanceApproveIsSuccessful() {
-		assertThat("Load Balance Approve Failed", transactionWorkflow.getLoadBalanceApproveSuccessMessage(), containsString("approved successfully."));
-	}
+    @Then("load balance approve is successful")
+    public void thenLoadBalanceApproveIsSuccessful() {
+           assertThat("Load Balance Approve Failed", transactionWorkflow.getLoadBalanceApproveSuccessMessage(), containsString("approved successfully."));
+    }
 
-	@When("user initiates settlement for agency")
-	public void whenUserInitiatesSettlementForAgency() {
+    @When("user initiates settlement for agency")
+    public void whenUserInitiatesSettlementForAgency() {
 		Program program = context.get(ContextConstants.PROGRAM);
 		AssignPrograms details = AssignPrograms.createWithProvider(provider);
 		details.setProgramCode(program.buildDescriptionAndCode());
 		transactionWorkflow.initiateSettlementForAgency(details.getBranchId(), details.getProgramCode());
-	}
+    }
 
-	@Then("settlement is initiated successfully")
-	public void thenSettlementIsInitiatedSuccesfully() {
-		assertThat("Settlement Initiative Failed", transactionWorkflow.getSettlementInitiativeSuccessMessage(), containsString("Settlement initiated successfully and Settlement Referance No :"));
+    @Then("settlement is initiated successfully")
+    public void thenSettlementIsInitiatedSuccesfully() {
+    	assertThat("Settlement Initiative Failed", transactionWorkflow.getSettlementInitiativeSuccessMessage(), containsString("Settlement initiated successfully and Settlement Referance No :"));
+    }
+    
+	@When("perform an $transaction VISA transaction")
+	@Given("perform an $transaction VISA transaction")
+	public void givenVisaTransactionIsExecuted(String transaction){
+		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED) );
+		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseDetails(transaction.toUpperCase());
+		performOperationOnSamecard(false);
+		
+//		Transaction transactionData = generateMasTestDataForTransaction(transaction);
+		MiscUtils.reportToConsole("VISA Transaction being performed : " + transactionName );
+		
+//		transactionWorkflow.performVisaTransaction(transaction, transactionData, sameCard);
+		transactionWorkflow.performVisaTransaction(transactionName);
+	}
+	
+	@When("$tool test results are verified for $transaction")
+	@Then("$tool test results are verified for $transaction")
+	public void thenVisaTestResultsAreReported(String tool, String transaction) {
+		String testResults  = null;
+		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseDetails(transaction.toUpperCase());
+		
+		 testResults = transactionWorkflow.verifyVisaOutput(transactionName);
+		 transactionWorkflow.browserMaximize(); // maximing browser
+		 //reporting Temporary Status
+		 if(transactionWorkflow.isContains(testResults, "temporary status"))	{
+			 logger.info(PASS_MESSAGE, testResults );
+				assertTrue(PASS_MESSAGE + testResults, true );
+			} else if(transactionWorkflow.isContains(testResults, "validations ok")) {
+			logger.info(PASS_MESSAGE, testResults );
+			assertTrue(PASS_MESSAGE + testResults, true );
+		} else if(transactionWorkflow.isContains(testResults, "validations not ok"))	{
+			assertFalse(FAIL_MESSAGE +  testResults, false);
+			throw new ValidationException(FAIL_MESSAGE +  testResults);
+		} else {
+			logger.error(FAILED, testResults);
+			assertFalse(FAILED, false);
+			throw new ValidationException(FAILED);
+		}
 	}
 }

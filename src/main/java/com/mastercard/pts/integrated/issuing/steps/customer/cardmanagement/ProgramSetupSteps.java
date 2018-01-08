@@ -309,6 +309,28 @@ public class ProgramSetupSteps {
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaid(String deviceType) {
 		// composite step
 	}
+	
+	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin for an interface")
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product for an interface",
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product for an interface" })
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinForAnInterface(String deviceType) {
+		// composite step
+	}
+	
+	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card for an interface")
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product for an interface",
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product for an interface" })
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidForAnInterface(String deviceType) {
+		// composite step
+	}
 
 	@When("User fills Statement Message Plan for $type product")
 	public void whenUserFillsStatementMessagePlanForProductType(String type) {
@@ -535,6 +557,28 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
 	}
+	
+	@When("User fills Program section for $type product for an interface")
+	public void whenUserFillsProgramSectionVisaInterface(String type) {
+		program = Program.createDataWithProvider(dataProvider, provider);
+		program.setProduct(ProductType.fromShortName(type));
+		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
+			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
+			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+		}
+		program.setWalletPlanPlan1(walletPlan.buildDescriptionAndCode());
+		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
+
+		program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
+		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
+		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
+
+		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID))
+			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+
+		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
+		context.put(ContextConstants.PROGRAM, program);
+	}
 
 	@When("User fills Dedupe Plan")
 	public void whenUserFillsDedupePlan() {
@@ -588,6 +632,16 @@ public class ProgramSetupSteps {
 	@When("User fills Device Range section for $type product")
 	public void whenUserFillsDeviceRangeSection(String type) {
 		DeviceRange deviceRange = DeviceRange.createWithProvider(dataProvider, type);
+		deviceRange.setProductType(ProductType.fromShortName(type));
+		deviceRange.setProgram(program.buildDescriptionAndCode());
+		deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
+
+		programSetupWorkflow.createDeviceRange(deviceRange);
+	}
+	
+	@When("User fills Device Range section for $type product for an interface")
+	public void whenUserFillsDeviceRangeSectionVisaInterface(String type) {
+		DeviceRange deviceRange = DeviceRange.createWithProvider(dataProvider, provider, type);
 		deviceRange.setProductType(ProductType.fromShortName(type));
 		deviceRange.setProgram(program.buildDescriptionAndCode());
 		deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());

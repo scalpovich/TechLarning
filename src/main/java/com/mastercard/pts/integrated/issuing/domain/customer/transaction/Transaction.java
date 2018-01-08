@@ -37,6 +37,8 @@ public class Transaction {
 	private String pinForTransaction;
 
 	private String cvvData;
+	
+	private String cvvData2;
 
 	private Map<String, String> cardDataElements = new LinkedHashMap<>();
 
@@ -128,34 +130,6 @@ public class Transaction {
 		transactionData.setOffSetForCard((device.getPinOffset().substring(1, 5)));
 		transactionData.setPinLength(provider.getString(FINSIM_PIN_LENGHT));
 
-		return transactionData;
-	}
-
-	public static Transaction fetchDataForFinSim(FinSimSimulator finSimConfig) {
-		Transaction transactionData  = new Transaction();
-		transactionData.setCardNumber("5877657327160814");
-		transactionData.setPinKey(finSimConfig.getPinKey());
-		transactionData.setDecimalisationTable(finSimConfig.getDecimalizationValue());
-		transactionData.setValidationDataStart("4");
-		transactionData.setCardLength("12");
-		transactionData.setPad("F");
-		transactionData.setOffSetForCard("2162");
-		transactionData.setPinLength("4");
-		return transactionData;
-	}
-
-	public static Transaction createWithProviderAndGenerateTestData() {
-		Transaction transactionData  = new Transaction();
-		transactionData.setTransactionAmount("1000");
-		transactionData.setCurrency("356"); // getting numbers only
-		transactionData.setPinForTransaction("7224"); // PIN is coming from FINSIM //7224 // MSR CARD
-		//		transactionData.setPinForTransaction(""); // PIN is coming from FINSIM //7224 // EMV CARD
-		transactionData.setCardNumber("5877657327160814"); // MSR CARD
-		//		transactionData.setCardNumber("2222550010000018"); // EMV CARD
-		transactionData.setCardSequenceNumber("456");
-		transactionData.setCvvData("");
-		//		transactionData.setExpirationYear("1117"); // EMV 
-		transactionData.setExpirationYear("1217"); // MSR
 		return transactionData;
 	}
 
@@ -341,5 +315,13 @@ public class Transaction {
 
 	public void setServiceCode(String serviceCode) {
 		this.serviceCode = serviceCode;
+	}
+
+	public String getCvvData2() {
+		return cvvData2;
+	}
+
+	public void setCvvData2(String cvvData2) {
+		this.cvvData2 = cvvData2;
 	}
 }

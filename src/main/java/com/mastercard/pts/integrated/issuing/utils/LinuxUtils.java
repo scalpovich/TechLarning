@@ -63,7 +63,9 @@ public abstract class LinuxUtils {
 		try {
 			transferFile(remoteSource, localDestination, channel);
 		} catch (IOException e) {
-			MiscUtils.propagate(e);
+			MiscUtils.reportToConsole("download Exception :  " + e.toString());
+			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
+			throw MiscUtils.propagate(e);
 		}
 	}
 	
@@ -82,6 +84,7 @@ public abstract class LinuxUtils {
 		session.setConfig(config);
 		session.connect();
 		String cmd = "find /home/dc-user/integrated/elt_bo/data -name \"*" + lookUpFor + "*\"";
+		MiscUtils.reportToConsole("Linux Command to search for file  -  " + cmd );
 
 		Channel channel=session.openChannel("exec");
 		((ChannelExec)channel).setCommand(cmd);
@@ -111,8 +114,9 @@ public abstract class LinuxUtils {
 			}
 			catch(Exception e)
 			{
-				logger.debug(ConstantData.EXCEPTION, e);
-				MiscUtils.propagate(e);
+				MiscUtils.reportToConsole("getFileFromLinuxBox Exception :  " + e.toString());
+				logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
+				throw MiscUtils.propagate(e);
 			}
 		}
 		channel.disconnect();
@@ -224,6 +228,7 @@ public abstract class LinuxUtils {
 	}
 	
 	public static String[] getCardNumberAndExpiryDate(File filePath) {
+		MiscUtils.reportToConsole("*********   starting getCardNumberAndExpiryDate *******  ");
   	  int lnNumber = 1;
       try (BufferedReader br = new BufferedReader(new FileReader(filePath)))
       {
@@ -233,6 +238,7 @@ public abstract class LinuxUtils {
 	    	if (lnNumber == 2)
 	    	{
 	    		strLine = strLine.trim().replaceAll("\\s+"," ");
+	    		MiscUtils.reportToConsole("*********   File Data *******  " + strLine);
 	    		String[] data = strLine.trim().split(" ");
 				cardData = data[0].trim().split(":");
 	    		break;
@@ -240,7 +246,9 @@ public abstract class LinuxUtils {
 	    	lnNumber++;
 	    }
 	  } catch (Exception e) {
-		  logger.info("Exception: {}",e.getMessage());
+			MiscUtils.reportToConsole("getCardNumberAndExpiryDate Exception :  " + e.toString());
+			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
+			throw MiscUtils.propagate(e);
 	    }
 	  	return cardData;
 	  }
