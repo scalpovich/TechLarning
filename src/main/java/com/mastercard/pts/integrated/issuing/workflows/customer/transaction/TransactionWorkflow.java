@@ -694,10 +694,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void selectMCPSLicense() {
 		wait(5000);
-		executeAutoITExe("ActivateLicenseProfiles.exe");
+		executeAutoITExe("ActivateLicenseProfiles.exe");		
+		winiumLicenseSelectOperation("License profiles");		
 		performClickOperation("License profiles");
-		performClickOperation("Select");
-		wait(5000);
+		performClickOperation("Select");		
+		wait(15000);
 	}
 
 	public void selectLicenseAndConfigure(String licenseTypeToSelect, String licenseFor) {
@@ -885,17 +886,38 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		}
 	}
 
-	private void fillEmvChipKeySetDetails() {
+	private void fillEmvChipKeySetDetails() {				
+
+		if("stagesa".equalsIgnoreCase(getEnv().toString()))
+			selectMChipKeySetForStageSA();
+		else
+			selectMChipKeySetDemoAutomation();		
+	}
+
+	public void selectMChipKeySetForStageSA()
+	{
 		executeAutoITExe("ActivateEditCardProfile.exe");
-		winiumClickOperation("ICC Related Data");
-		winiumClickOperation("Drop Down Button");
-		wait(1000);
-		winiumClickOperation("00999 - Example ETEC1 - 0213");
+		winiumClickOperation("ICC Related Data");	
+		performClickOperation("MChipKeySetDropDown");
+		wait(1000);	
+		winiumClickOperation("00998 - Example ETEC1 - 0213");
 		wait(1000);
 		winiumClickOperation("OK");
 		wait(1000);
 	}
-
+	
+	public void selectMChipKeySetDemoAutomation()
+	{
+		executeAutoITExe("ActivateEditCardProfile.exe");
+		winiumClickOperation("ICC Related Data");	
+		performClickOperation("MChipKeySetDropDown");
+		wait(1000);
+		winiumClickOperation("00999 - Example ETEC1 - 0213");	
+		wait(1000);
+		winiumClickOperation("OK");
+		wait(1000);
+	}	
+	
 	public void closeSimulator(String name) {
 		winiumDriver = null;
 		MiscUtils.killProcessFromTaskManager(name);
@@ -913,6 +935,12 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			MiscUtils.propagate(e);
 		}
 	}
+	
+	public String getEnv()
+	{
+		logger.info("System.getProperty ENV :"+System.getProperty("env").toString());
+		return System.getProperty("env").toString();
+	}	
 
 	private void clickTestOption() {
 		List<WebElement> allTOButtons = winiumDriver.findElementsByName("Test Options");
@@ -1089,6 +1117,12 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		lst.get(0).click();
 	}
 
+	private void winiumLicenseSelectOperation(String locator) {
+		List<WebElement> lst = winiumDriver.findElements(By.name(locator));
+		MiscUtils.reportToConsole("winiumLicenseSelectOperation Count : " + lst);
+		lst.get(0).click();
+	}
+	
 	private void winiumClickOperation(String locator) {
 		logger.info(" *****  winiumClick Operation is being performed :  " + locator);
 		winiumDriver.findElementByName(locator).click();

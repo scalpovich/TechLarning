@@ -57,6 +57,7 @@ public class LoadFromFileUploadSteps {
 		batch.setProductType(ProductType.fromShortName(type));
 		HashMap<String, String> hm = (HashMap<String, String>) loadFromFileUploadWorkflow.processUploadBatch(batch);
 		assertEquals("SUCCESS [2]",hm.get("BatchStatus"));	
+		jobId =hm.get("JobId");		
 	}
 
 	@When("user creates and uploads transaction file")

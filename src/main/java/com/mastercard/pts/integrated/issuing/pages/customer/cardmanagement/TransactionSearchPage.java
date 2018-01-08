@@ -30,7 +30,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=microfilmRefNumber]")
 	private MCWebElement searchARNTxt;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.//*[text()='Authorization Status :']]/following-sibling::td[1]")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.//*[text()='Authorization Status :']]/following-sibling::td[1]/span")
 	private MCWebElement authorizationStatusTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='fromDate']/..")
@@ -39,16 +39,16 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='toDate']/..")
 	private MCWebElement toDateTxt;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[text()='Date']/following-sibling::td[2]")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[text()='Date']/following-sibling::td[2]/select")
 	private MCWebElement dateDDwn;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[text()='Product Type']/following-sibling::td[2]")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[text()='Product Type']/following-sibling::td[2]/select")
 	private MCWebElement productTypeDDwn;
 
 	private String authorizationStatus;
 	
 	public String searchTransactionWithARN(String arnNumber, TransactionSearch ts) {
-		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, ts.getProductType());
 		WebElementUtils.enterText(searchARNTxt, arnNumber);
 		WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
 		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
