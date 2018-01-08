@@ -27,7 +27,7 @@ When User fills Program section for prepaid product and program Corporate Travel
 When User fills Business Mandatory Fields Screen for prepaid product with Corporate
 When User fills Device Range section for prepaid product
 When add menus to access card holder portal
-When user creates new device of prepaid type for new client
+When user creates new device of prepaid type for new client of Corporate customer
 Then device has "normal" status
 Then user performs adjustment transaction
 Then currency setup for device
@@ -52,7 +52,7 @@ When User fills Program section for prepaid product and program Corporate Travel
 When User fills Business Mandatory Fields Screen for prepaid product with Corporate
 When User fills Device Range section for prepaid product
 When add menus to access card holder portal
-When user creates new device of prepaid type for new client
+When user creates new device of prepaid type for new client of Corporate customer
 Then device has "normal" status
 Then user performs adjustment transaction
 Then currency setup for device
@@ -78,7 +78,7 @@ When User fills Program section for prepaid product and program Retail Travel Ca
 When User fills Business Mandatory Fields Screen for prepaid product with Individual
 When User fills Device Range section for prepaid product
 When add menus to access card holder portal
-When user creates new device of prepaid type for new client
+When user creates new device of prepaid type for new client of Individual customer
 Then device has "normal" status
 Then user performs adjustment transaction
 Then currency setup for device
@@ -103,7 +103,7 @@ When User fills Program section for prepaid product and program Retail Travel Ca
 When User fills Business Mandatory Fields Screen for prepaid product with Individual
 When User fills Device Range section for prepaid product
 When add menus to access card holder portal
-When user creates new device of prepaid type for new client
+When user creates new device of prepaid type for new client of Individual customer
 Then device has "normal" status
 Then user performs adjustment transaction
 Then currency setup for device
@@ -131,6 +131,11 @@ When User fills Business Mandatory Fields Screen for prepaid product with Corpor
 When User fills Device Range section for prepaid product
 When add menus to access card holder portal
 When user creates new device of prepaid type for new client of Corporate customer
+Then device has "normal" status
+Then user get attached wallet details for device
+Then user performs adjustment transaction
+When wallet to wallet transfer for general purpose account
+Then search with device in transaction screen and status for wallet to wallet transfer transaction
 
 Scenario: To Verify functionality of wallet transfer from mastercard interchange by emv card with program Corporate General Purpose Card
 Given user is logged in institution
