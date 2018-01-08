@@ -373,6 +373,35 @@ public class ProgramPage extends AbstractBasePage {
 		verifyOperationStatus();
 	}
 	
+	public void addProgramForMultiWallet(Program program, String productType) {
+		logger.info("Add Program: {}", program.getProgramCode());
+		clickAddNewButton();
+
+		runWithinPopup("Add Program", () -> {
+			addProgram(program.getProgramCode());
+			addDescription(program.getDescription());
+			selectInterchange(program.getInterchange());
+			selectProduct(program.getProduct());
+			selectProgramType(program.getProgramType());
+			selectBaseCurrency(program.getBaseCurrency());
+			program.setProgramCodeDevice(program.getDescription()+" "+"["+program.getProgramCode()+"]");
+			logger.info("Program added :"+program.getDescription()+" "+"["+program.getProgramCode()+"]");
+			if (program.getProgramType().contains("Multi")){
+				addNumberOfCurrency(program.getNoOfCurrencyAllowed());			
+				selectRefundInCurrency(program.getRefundInCurrency());
+				selectWalletToWalletTransferType(program.getWalletToWalletTransferType());
+				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
+					selectReferenceCurrency(program.getReferenceCurrency());
+			}if (!productType.equalsIgnoreCase(ProductType.DEBIT))
+				selectCurrencyConversionBy(program.getCurrencyConversionBy());
+			selectCalendarStartMonth(program.getCalendarStartMonth());
+			fillExtraSections(program, productType);
+			clickNextButton();
+			clickFinishButton();
+		});
+		verifyOperationStatus();
+	}
+	
 	public void addsProgramData(Program program, String productType) {
 		logger.info("Add Program: {}", program.getProgramCode());
 		clickAddNewButton();
@@ -451,8 +480,8 @@ public class ProgramPage extends AbstractBasePage {
 		
 		clickNextButton();
 		
-		logger.info("Assign second Wallet :" + program.getSecondWalletPlan());
-		selectWalletPlanPlan1(program.getSecondWalletPlan());
+		logger.info("Assign first Wallet :" + program.getFirstWalletPlan());
+		selectWalletPlanPlan1(program.getFirstWalletPlan());
 		logger.info("Assign second Wallet :" + program.getSecondWalletPlan());		
 		selectWalletPlanPlan2(program.getSecondWalletPlan());
 		

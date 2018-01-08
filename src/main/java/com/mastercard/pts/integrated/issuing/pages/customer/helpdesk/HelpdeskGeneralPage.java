@@ -572,7 +572,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			selectWalleFromTransfer(device.getWalletNumber());
 			logger.info("Wallet from transfer the fund: {}", device.getWalletNumber());
 			selectDeviceToTransferFunds(device.getDeviceNumber());			
-			//selectWalleToTransfer(getWalletNumber());			
 			logger.info("Wallet to transfer the fund: {}", device.getNewWalletNumber());
 			selectWalleToTransfer(device.getNewWalletNumber());
 			enterAmountToDebit(device.getTransactionAmount());

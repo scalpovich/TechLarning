@@ -177,6 +177,11 @@ public class ProgramSetupWorkflow {
 		page.addProgramData(program, productType);
 	}
 	
+	public void createNewProgram(Program program, String productType ) {
+		ProgramPage page = navigator.navigateToPage(ProgramPage.class);
+		page.addProgramForMultiWallet(program, productType);
+	}
+	
 	public void createAddProgram(Program program, String productType ) {
 		ProgramPage page = navigator.navigateToPage(ProgramPage.class);
 		page.addsProgramData(program, productType);

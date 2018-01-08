@@ -652,7 +652,6 @@ public class ProgramSetupSteps {
 		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
 		walletPlan.setProductType(ProductType.fromShortName(type));
 		walletPlan.setProgramType(programtype);
-		walletPlan.setProgramType(programtype);
 		MCG mcgs = context.get(ContextConstants.MCG);
 		walletPlan.setWhiteMcgCode(mcgs.getMCG());
 		
@@ -661,7 +660,7 @@ public class ProgramSetupSteps {
 			context.put(ContextConstants.WALLET, walletPlan);			
 		}
 		else{			
-			walletPlan.setUsage(ProgramType.CLOSED_LOOP);
+			walletPlan.setUsage(ProgramType.CLOSED_LOOP);			
 		}
 		
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
@@ -673,10 +672,12 @@ public class ProgramSetupSteps {
 		
 		WalletPlan wallets = context.get(ContextConstants.WALLET);
 		
-		if(ProgramType.OPEN_LOOP.contains(usageType))			
+		if(ProgramType.OPEN_LOOP.contains(usageType)){				
 			wallets.setFirstWallet(walletPlan.buildDescriptionAndCode());
-		else			
+		}else{			
 			wallets.setSecondWallet(walletPlan.buildDescriptionAndCode());
+			
+		}
 	}
 	
 	@When("fills Program section for $type product and program $programType")

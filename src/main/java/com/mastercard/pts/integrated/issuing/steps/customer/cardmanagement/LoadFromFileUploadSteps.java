@@ -26,7 +26,9 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Adju
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AdjustmentTransactionDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.WalletDetailsPage;
 import com.mastercard.pts.integrated.issuing.steps.customer.transaction.TransactionSteps;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
@@ -86,6 +88,14 @@ public class LoadFromFileUploadSteps {
 		details.setWalletNumber(device.getWalletNumber());
 		transaction.getAdjustmentTransactionDetails().add(details);
 		loadFromFileUploadWorkflow.createAdjustmentTransaction(transaction);
+	}
+	
+	@Then("user get attached wallet details for device")
+	public void getWalletDetailsForDevice(){
+		Device device = context.get(ContextConstants.DEVICE);
+		List<String> wallets = loadFromFileUploadWorkflow.searchWalletDetailsPage(device);		
+		device.setWalletNumber(wallets.get(0));
+		device.setNewWalletNumber(wallets.get(1));		
 	}
 	
 	@Given("user performs adjustment transaction for multi wallet")

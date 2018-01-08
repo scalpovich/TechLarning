@@ -590,4 +590,14 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.walletToWalletTransfer(device);		
 	}	
 	
+	@When ("wallet to wallet transfer for general purpose account")
+	public void walletToWalletFundTransfer(){
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);	
+		Device device = context.get(ContextConstants.DEVICE);
+		thenUserNavigatesToGeneralInHelpdesk();
+		helpdeskWorkflow.searchByDeviceNumber(device);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.walletToWalletTransfer(device);		
+	}
+	
 }

@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -986,6 +987,16 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 		}
 		return null;
+	}
+	
+	public List<String> getListOfElements(String ele){
+		List<WebElement> list = driver().findElements(By.xpath(ele));
+		List<String> elementTextData = new ArrayList<String>();
+		
+		for(WebElement e: list){
+			elementTextData.add(e.getText()); 
+		}
+		return elementTextData;
 	}
 
 	public void selectByVisibleText(MCWebElement ele, String optionName) {
