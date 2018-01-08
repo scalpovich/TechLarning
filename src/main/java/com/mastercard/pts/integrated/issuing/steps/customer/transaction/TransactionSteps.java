@@ -16,6 +16,7 @@ import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -372,7 +373,7 @@ public class TransactionSteps {
            ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
            TransactionSearch ts = TransactionSearch.getProviderData(provider);
            Device device = context.get(ContextConstants.DEVICE);
-           assertEquals(transactionWorkflow.searchTransactionWithDeviceAndGetStatus(device, ts),containsString("IC W2W CR(Intra Client - Wallet to Wallet Transfer(Credit))"));
+           Assert.assertTrue("successfully completed the wallet to wallet fund transfer", transactionWorkflow.searchTransactionWithDeviceAndGetStatus(device, ts).contains(" Wallet to Wallet Transfer(Credit)"));
     }      
 
     @When("user performs load balance request")
