@@ -8,11 +8,12 @@ I want to authorize transactions for prepaid msr retail gift card
 Meta:
 @StoryName p_msr_retail_gift
 
-Scenario: Setup - prepaid msr retail gift card > Device production - prepaid msr retail gift > Perform MSR_PREAUTH and MSR_AUTH Authorization transaction > Program Balance Summary download
+Scenario: Transaction - prepaid msr retail gift card - EMV_PREAUTH  and EMV_COMPLETION Authorization transaction 
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client
 Then device has "normal" status
+And user sign out from customer portal
 
 Given user is logged in institution
 And a new device was created

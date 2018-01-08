@@ -8,12 +8,12 @@ I want to create a prepaid emv corporate gift card and test various transactions
 Meta:
 @StoryName p_emv_corp_gift
 
-Scenario: Setup - prepaid emv corporate gift card
+Scenario: Transaction - prepaid emv corporate gift card - EMV_PREAUTH  and EMV_COMPLETION Authorization transaction 
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client
+And user sign out from customer portal
 
-Scenario: Device production - prepaid emv corporate gift card 
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
@@ -23,8 +23,8 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
+And user sign out from customer portal
 
-Scenario: Transaction - EMV_PREAUTH Authorization transaction - prepaid emv corporate gift card
 Given connection to MAS is established
 When perform an EMV_PREAUTH MAS transaction
 Then MAS test results are verified
@@ -36,7 +36,6 @@ And MAS simulator is closed
 And user is logged in institution
 And search Pre-Auth Completion authorization and verify Success status
 
-Scenario: Program Balance Summary report download - prepaid emv corporate gift card
 Given user is logged in institution
 When pre-clearing and Pre-EOD batches are run
 Then verify report for transactions with Program Balance Summary is downloaded

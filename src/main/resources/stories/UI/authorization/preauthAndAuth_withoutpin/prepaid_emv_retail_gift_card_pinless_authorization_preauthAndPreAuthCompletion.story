@@ -1,4 +1,4 @@
-prepaid EMV retail gift card pinless authorization
+prepaid EMV retail gift card authorization PINLESS
 
 Narrative:
 In order to provide to client easy-to-use multi-purpose prepaid card pinless
@@ -8,12 +8,12 @@ I want to create an magnetic stripe prepaid card pinless and perform various tra
 Meta:
 @StoryName p_emv_retail_gift
 
-Scenario: Set up prepaid EMV retail gift card authorization pinless
+Scenario: Transaction - prepaid emv retail gift card - EMV_PREAUTH  and EMV_COMPLETION Authorization transaction 
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client
+And user sign out from customer portal
 
-Scenario: prepaid EMV retail gift card authorization pinless device production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
@@ -23,10 +23,8 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
+And user sign out from customer portal
 
-Scenario: Perform EMV_PREAUTH and EMV_COMPLETION Authorization transaction
-Meta:
-@TestId
 Given connection to MAS is established
 When perform an EMV_PREAUTH MAS transaction
 Then MAS test results are verified
@@ -38,9 +36,6 @@ And MAS simulator is closed
 And user is logged in institution
 And search Pre-Auth Completion authorization and verify Success status
 
-Scenario: Program Balance Summary download
-Meta:
-@TestId 
 Given user is logged in institution
 When pre-clearing and Pre-EOD batches are run
 Then verify report for transactions with Program Balance Summary is downloaded

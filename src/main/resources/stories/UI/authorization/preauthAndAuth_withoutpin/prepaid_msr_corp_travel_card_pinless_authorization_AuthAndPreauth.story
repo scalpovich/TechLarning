@@ -1,4 +1,4 @@
-prepaid msr corporate traval card authorization
+prepaid msr corporate traval card authorization PINLESS
 
 Narrative:
 In order to check transactions on prepaid msr corporate travel card 
@@ -8,7 +8,7 @@ I want to authorize transactions for prepaid msr corporate travel card
 Meta:
 @StoryName p_msr_corp_travel
 
-Scenario: prepaid msr corporate travel card > Device production - prepaid msr travel card > Perform MSR_PREAUTH and MSR_AUTH Authorization transaction > Program Balance Summary download
+Scenario: Transaction - prepaid msr corporate traval card - EMV_PREAUTH  and EMV_COMPLETION Authorization transaction 
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client

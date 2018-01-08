@@ -8,7 +8,7 @@ I want to authorize transactions for prepaid msr corporate general purpose card
 Meta:
 @StoryName p_msr_corp_general_purpose
 
-Scenario: prepaid msr corporate general purpose card > Device production - prepaid msr gift card > Perform MSR_PREAUTH and MSR_AUTH Authorization transaction > Program Balance Summary download
+Scenario: Transaction - prepaid msr corporate general purpose card - EMV_PREAUTH  and EMV_COMPLETION Authorization transaction 
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client
