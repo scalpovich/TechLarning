@@ -20,7 +20,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.dispute.RetrivalResp
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.DBUtility;
 import com.mastercard.pts.integrated.issuing.utils.SQLQueriesConstants;
-import com.mastercard.pts.integrated.issuing.utils.SimulatorUtilities;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
 
 @Workflow
