@@ -84,7 +84,6 @@ public abstract class LinuxUtils {
 		session.setConfig(config);
 		session.connect();
 		String cmd = "find /home/dc-user/integrated/elt_bo/data -name \"*" + lookUpFor + "*\"";
-		//MiscUtils.reportToConsole("Linux Command to search for file  -  " + cmd );
 
 		Channel channel=session.openChannel("exec");
 		((ChannelExec)channel).setCommand(cmd);
@@ -114,12 +113,10 @@ public abstract class LinuxUtils {
 			}
 			catch(Exception e)
 			{
-				MiscUtils.reportToConsole("getFileFromLinuxBox Exception :  " + e.toString());
-				logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
-				throw MiscUtils.propagate(e);
+				logger.debug(ConstantData.EXCEPTION, e);
+				MiscUtils.propagate(e);
 			}
 		}
-		in.close();
 		channel.disconnect();
 		session.disconnect();
 		return result;
