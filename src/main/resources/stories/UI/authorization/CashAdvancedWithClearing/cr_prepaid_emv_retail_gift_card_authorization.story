@@ -7,7 +7,7 @@ I want to authorize transactions for prepaid emv retail giftcard card
 
 Meta:
 @StoryName S203707
-@CRCardsWithAuthorization
+@CRCardsWithAuthorizationCashAdvancedWithClearing
 
 Scenario: Set up prepaid emv retail giftcard card
 Meta:

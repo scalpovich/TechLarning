@@ -1,47 +1,55 @@
-prepaid msr retail gift card pinless authorization
+prepaid emv corporate giftcard card
 
 Narrative:
-In order to provide to client easy-to-use multi-purpose prepaid card pinless
+In order to provide to client easy-to-use payment method for e-commerce retail
 As an issuer
-I want to create an magnetic stripe prepaid card pinless and perform various transaction
+I want to create a prepaid emv corporate giftcard card for client
 
 Meta:
-@StoryName prepaid_msr_retail_gift
-@oldReferenceSheet_prepaid_msr
-@CRCardsPinlessWithAuthorization
+@StoryName p_emv_corp_gift
+@oldReferenceSheet_S203707
+@CRCardsWithAuthorizationCashAdvancedWithClearing
 
-Scenario: Set up prepaid msr retail gift card authorization pinless
+
+Scenario: Set up prepaid emv corporate giftcard card
 Meta:
-@TestId TC398484
+@TestId 
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
+And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client
 Then device has "normal" status
 
-Scenario: prepaid msr retail gift card authorization pinless device production
+Scenario: prepaid emv corporate giftcard card device production
 Meta:
 @TestId TC408068
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
+Then user sign out from customer portal
+Then user is logged in institution
 Then device has "normal" status
-When user has wallet number information for prepaid device
+When user has wallet number information for debit device
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
-And user sign out from customer portal
+Then user sign out from customer portal
 
-Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
+
+Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
 Meta:
-@TestId
+@TestId 
 Given connection to MAS is established
-When perform an MSR_CASH_ADVANCE MAS transaction
+When perform an EMV_CASH_ADVANCE MAS transaction
 Then MAS test results are verified
-Then user is logged in institution
-Then search Cash Advance authorization and verify 000-Successful status
+
+Scenario: Generate Auth File for Clearing
+Meta:
+@TestId 
+When Auth file is generated after transaction
 When MAS simulator is closed
+
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
 Meta:
