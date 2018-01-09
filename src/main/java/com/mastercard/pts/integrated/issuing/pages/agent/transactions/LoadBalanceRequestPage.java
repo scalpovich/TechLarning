@@ -30,6 +30,9 @@ public class LoadBalanceRequestPage extends TransactionsAbstractPage {
 	@Autowired
 	private DBUtility dbUtility;
 
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Search']")
+	private MCWebElement searchBtn;
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Submit']")
 	private MCWebElement submitBtn;
 
@@ -55,6 +58,12 @@ public class LoadBalanceRequestPage extends TransactionsAbstractPage {
 				WebElementUtils.visibilityOf(deviceNumberTxt));
 	}
 
+	@Override
+	public void clickSearchButton() {
+		new WebDriverWait(driver(), timeoutInSec).until(
+				WebElementUtils.elementToBeClickable(searchBtn)).click();
+	}
+	
 	public void clickSubmitButton() {
 		new WebDriverWait(driver(), timeoutInSec).until(
 				WebElementUtils.elementToBeClickable(submitBtn)).click();

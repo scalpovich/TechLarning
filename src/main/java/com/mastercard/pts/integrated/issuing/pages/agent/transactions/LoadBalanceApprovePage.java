@@ -13,8 +13,8 @@ import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalan
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
-import com.mastercard.pts.integrated.issuing.utils.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -24,6 +24,9 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		TransactionsNav.L1_LOAD_BALANCE,
 		TransactionsNav.L2_LOAD_BALANCE_APPROVE })
 public class LoadBalanceApprovePage extends TransactionsAbstractPage {
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Search']")
+	private MCWebElement searchBtn;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#Submit")
 	private MCWebElement submitBtn;
@@ -46,7 +49,13 @@ public class LoadBalanceApprovePage extends TransactionsAbstractPage {
 				WebElementUtils.visibilityOf(masterDetailContentTitle),
 				WebElementUtils.visibilityOf(deviceNumberTxt));
 	}
-
+	
+	@Override
+	public void clickSearchButton() {
+		new WebDriverWait(driver(), timeoutInSec).until(
+				WebElementUtils.elementToBeClickable(searchBtn)).click();
+	}
+	
 	public void clickModifyButton() {
 		new WebDriverWait(driver(), timeoutInSec).until(
 				WebElementUtils.elementToBeClickable(modifyBtn)).click();

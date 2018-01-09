@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.configuration.AppEnvironment;
 import com.mastercard.pts.integrated.issuing.configuration.Portal;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.LoginCardholder;
@@ -19,6 +20,7 @@ import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.ReadTestDataFromExcel;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.pts.integrated.issuing.workflows.LoginFlows;
+import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.LogoutFlows;
 import com.mastercard.pts.integrated.issuing.workflows.QMRReportFlows;
 
@@ -43,7 +45,11 @@ public class LoginSteps extends AbstractBaseFlows {
 
 	@Autowired
 	public LoginFlows loginflows;
-
+	
+	@Autowired
+	public UserManagementSteps user;
+	
+	
 	public LoginCardholder loginCardHolderProvider;
 
 	@Given("login to customer portal as newuser")
@@ -132,8 +138,11 @@ public class LoginSteps extends AbstractBaseFlows {
 				excelTestData.fnSetCurrentStoryTestData(strStoryName);
 			}
 		}
-		loginflows.Login(userPortal, userType);
-
+		
+		if(userType.contains("Bank"))
+			user.givenUserIsLoggedInCustomerPortal();
+		else
+			user.givenUserIsLoggedInInstitution();
 	}
 
 	@Override
