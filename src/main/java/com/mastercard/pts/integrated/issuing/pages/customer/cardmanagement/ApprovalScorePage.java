@@ -2,8 +2,14 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -17,11 +23,13 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_APPLICATION,
 		CardManagementNav.L3_CREDIT, CardManagementNav.L4_APPROVAL_SCORE })
 
-public class ApprovalScorePage extends AbstractCreditPage {
+public class ApprovalScorePage extends AbstractBasePage {
+	@Autowired
+	private TestContext context;
+	@Autowired
+	CreditCardPlan creditCardPlans;
     private static final String ADDAPPROVERSCORE_FRAME="Add Approval Score";
-	private static final Logger logger = LoggerFactory
-			.getLogger(RiskAnalysisRulePage.class);
-
+	private static final Logger logger = LoggerFactory.getLogger(ApprovalScorePage.class);
 	@PageElement(findBy = FindBy.NAME, valueToFind = "prodCode:input:dropdowncomponent")
 	private MCWebElement programDDwn;
 	@PageElement(findBy = FindBy.NAME, valueToFind = "actionCode:input:dropdowncomponent")
@@ -41,18 +49,20 @@ public class ApprovalScorePage extends AbstractCreditPage {
 	private MCWebElement table;
 	
 	public void addApprovalScore() {
+		Program program=context.get(ContextConstants.PROGRAM);
 		clickWhenClickable(addBtn);
 		switchToIframe(ADDAPPROVERSCORE_FRAME);
 		clickSaveButton();
 		mandatoryLabels();
 		mandatoryFields();
-		WebElementUtils.selectDropDownByIndex(programDDwn,3);
+		WebElementUtils.selectDropDownByVisibleText(programDDwn,program.buildDescriptionAndCode());
 		WebElementUtils.selectDropDownByIndex(actionDDwn,1);
 		WebElementUtils.enterText(startRangeValueTxt,CustomUtils.RandomNumbers(5));
 		WebElementUtils.enterText(endRangeValueTxt,CustomUtils.RandomNumbers(6));
 		creditCardPlans.setMandatoryValuesWithLabels(mandatoryValuesWithLabels(mandatoryFields(),mandatoryLabels()));
 		clickSaveButton();
-		CustomUtils.ThreadDotSleep(5000);
+		waitForLoaderToDisappear();
+		//CustomUtils.ThreadDotSleep(5000);
 		}
 	
 	public void verifyUiOperationStatus() {

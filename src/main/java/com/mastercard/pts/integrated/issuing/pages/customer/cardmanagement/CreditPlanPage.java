@@ -2,14 +2,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
-import junit.framework.Assert;
-
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -17,33 +10,31 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.CreditCardPlans;
+import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardCreditPlan;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.ConstantData;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
-import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
+/**
+ * @author e076177
+ *
+ */
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1_PROGRAM_SETUP,
 		CardManagementNav.L2_CREDIT_CARD_BILLING,
 		CardManagementNav.L3_CREDIT_PLAN})
-public class CreditPlanPage extends AbstractCreditPage {
+public class CreditPlanPage extends AbstractBasePage {
     @Autowired
     KeyValueProvider provider;
     @Autowired
-    CreditCardCreditPlan creditCardCreditPlan;
-    @Autowired
-    CreditCardPlans creditCardPlans;
-    
-    
+    CreditCardPlan creditCardPlans;
+   
 	private static final Logger logger = LoggerFactory.getLogger(CreditPlanPage.class);
     private static final String CREDITPLAN_FRAME="Add Credit Plan";
     
@@ -98,35 +89,103 @@ public class CreditPlanPage extends AbstractCreditPage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement save;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='feedbackPanelERROR']")
+	private MCWebElement errorCodeAlreadyExists;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Record Added Successfully.']")
+	private MCWebElement validateSuccessMsgDisplay;
+	
+	public boolean successMessageDiplay()
+	{
+		if(validateSuccessMsgDisplay.isVisible())
+		{
+			logger.info("successMsg is displayed");
+			return true;
+		}
+		return false;
+	}
     public void addcreditplan() {
-		CreditCardCreditPlan.createWithProvider(provider);
-		clickWhenClickable(addCreditPlan);
+    	clickWhenClickable(addCreditPlan);
 		switchToIframe(CREDITPLAN_FRAME);
-		clickSaveButton();
+		}
+    public void addMandatoryLabelsAndFields()
+    {
+    	clickSaveButton();
 		mandatoryLabels();
 		mandatoryFields();
-		WebElementUtils.enterText(creditPlanCode, CreditCardCreditPlan.createWithProvider(provider).getCreditPlanCode());
-		WebElementUtils.enterText(description, CreditCardCreditPlan.createWithProvider(provider).getDescription());
-		WebElementUtils.enterText(abbreviation, CreditCardCreditPlan.createWithProvider(provider).getAbbreviation());
-		WebElementUtils.selectDropDownByIndex(paymentDate,1);
-		waitForElementEnabled(paymentDateDays);
-		WebElementUtils.enterText(paymentDateDays,CreditCardCreditPlan.createWithProvider(provider).getPaymentDueDateDays());
-		WebElementUtils.selectDropDownByIndex(unpaidDate,1);
-		waitForElementEnabled(unpaidDateDays);
-		WebElementUtils.enterText(unpaidDateDays,CreditCardCreditPlan.createWithProvider(provider).getUnpaidDateDays());
-		WebElementUtils.selectDropDownByIndex(transactionRulePlan, 1);
-		WebElementUtils.selectDropDownByIndex(currencyddwn, 1);
-		WebElementUtils.enterText(minimumDue, CreditCardCreditPlan.createWithProvider(provider).getMinimumDue());
-		WebElementUtils.enterText(totalDue, CreditCardCreditPlan.createWithProvider(provider).getTotalDue());
-		WebElementUtils.selectDropDownByIndex(paymentPriorityPlan, 1);
-		WebElementUtils.enterText(allowedPercentage, CreditCardCreditPlan.createWithProvider(provider).getAllowedPercentage());
-		creditCardPlans.setMandatoryValuesWithLabels(mandatoryValuesWithLabels(mandatoryFields(),mandatoryLabels()));
+    }
+    
+    public void settingMandatoryValuesWithLabels()
+    {
+    	creditCardPlans.setMandatoryValuesWithLabels(mandatoryValuesWithLabels(mandatoryFields(),mandatoryLabels()));
 		logger.info("MandatoryLabelswithValues: {}", creditCardPlans.getMandatoryValuesWithLabels());
-		clickSaveButton();
+    }
+    
+    public void saveButtonClick()
+    {
+          clickSaveButton();
+    }
+    
+    public boolean creditPlanAlreadyExists()
+    {
+		return errorCodeAlreadyExists.isVisible();
+    	
+    }
+    public void enterCreditPlanCode(CreditCardCreditPlan creditCardCreditPlan)
+    {
+       WebElementUtils.enterText(creditPlanCode, creditCardCreditPlan.getCreditPlanCode());	
+    }
+    public void enterCreditPlanDescription(CreditCardCreditPlan creditCardCreditPlan)
+    {
+       WebElementUtils.enterText(description, creditCardCreditPlan.getDescription());	
+    }
+    public void enterCreditPlanAbbreviation(CreditCardCreditPlan creditCardCreditPlan)
+    {
+       WebElementUtils.enterText(abbreviation, creditCardCreditPlan.getAbbreviation());	
+    }
+    public void selectPaymentDate()
+    {
+    	WebElementUtils.selectDropDownByIndex(paymentDate,1);
+    	waitForElementEnabled(paymentDateDays);
+    }
+    public void enterPaymentDateDays(CreditCardCreditPlan creditCardCreditPlan)
+    {
+    	WebElementUtils.enterText(paymentDateDays,creditCardCreditPlan.getPaymentDueDateDays());
+    }
+    public void selectUnpaidDate()
+    {
+    	WebElementUtils.selectDropDownByIndex(unpaidDate,1);
+		waitForElementEnabled(unpaidDateDays);
+    } 
+    public void enterUnpaidDateDays(CreditCardCreditPlan creditCardCreditPlan)
+    {
+    	WebElementUtils.enterText(unpaidDateDays,creditCardCreditPlan.getUnpaidDateDays());
+    }
+    public void selectTransactionRulePlan()
+    {
+    	WebElementUtils.selectDropDownByIndex(transactionRulePlan, 1);
+    } 
+    public void selectCurrency()
+    {
+    	WebElementUtils.selectDropDownByIndex(currencyddwn, 1);
+    } 
+    public void enterMinimumDue(CreditCardCreditPlan creditCardCreditPlan)
+    {
+    	WebElementUtils.enterText(minimumDue, creditCardCreditPlan.getMinimumDue());
+    }
+    public void enterTotalDue(CreditCardCreditPlan creditCardCreditPlan)
+    {
+    	WebElementUtils.enterText(totalDue, creditCardCreditPlan.getTotalDue());
+    }
+    public void selectPaymentPriorityPlan()
+    {
+        WebElementUtils.selectDropDownByIndex(paymentPriorityPlan, 1);
+    }
+    public void enterAllowedPercentage(CreditCardCreditPlan creditCardCreditPlan)
+    {
+    	WebElementUtils.enterText(allowedPercentage, creditCardCreditPlan.getAllowedPercentage());
+    }
 	
-		
-	}
-        
 	public void verifyUiOperationStatus() {
 		logger.info("Credit Plan");
 		

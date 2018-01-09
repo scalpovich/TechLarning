@@ -5,8 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.CreditCardPlans;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SurchargeWailverPlan;
+import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SurchargeWaiverPlan;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
@@ -16,15 +17,19 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
+/**
+ * @author e076177
+ *
+ */
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
 		CardManagementNav.L2_SURCHARGE_WAIVER_PLAN })
-public class SurchargeWailverPlanPage extends AbstractCreditPage {
+public class SurchargeWaiverPlanPage extends AbstractBasePage {
 @Autowired
-CreditCardPlans creditCardPlans;
-	private static final Logger logger = LoggerFactory
-			.getLogger(SurchargeWailverPlanPage.class);
+CreditCardPlan creditCardPlans;
+	private static final Logger logger = LoggerFactory.getLogger(SurchargeWaiverPlanPage.class);
+	 public static final String ADD_SURCHARGE_WAIVER_PLAN_DETAIL="Add Surcharge Waiver Plan Detail";
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[@class='addR']")
 	private MCWebElement addButton;
 
@@ -97,25 +102,21 @@ CreditCardPlans creditCardPlans;
 		}
 		return false;
 	}
-	public void enterWaiverTransactionDescription(SurchargeWailverPlan surchargeWailverPlan)
+	public void enterWaiverTransactionDescription(SurchargeWaiverPlan surchargeWailverPlan)
 	{
-		surchargeWailverPlan.setEffectiveDate(Constants.effectiveDate);
-		surchargeWailverPlan.setEndDate(Constants.endDate);
-		surchargeWailverPlan.setWaiverTransactionDescription(Constants.waiverTransactionDescription);
-		surchargeWailverPlan.setSurchargeRate(Constants.surchargeRate);
-		enterValueinTextBox(waiverTransactionDescription,surchargeWailverPlan.getWaiverTransactionDescription());
+	enterValueinTextBox(waiverTransactionDescription,surchargeWailverPlan.getWaiverTransactionDescription());
 	}
-	public void effectiveDateSelect(DatePicker datePicker,SurchargeWailverPlan surchargeWailverPlan)
+	public void effectiveDateSelect(DatePicker datePicker,SurchargeWaiverPlan surchargeWailverPlan)
 	{
 		datePicker.setDateCalendar2(surchargeWailverPlan.getEffectiveDate(),effectiveDate);
 	
 	}
-	public void endDateSelect(DatePicker datePicker,SurchargeWailverPlan surchargeWailverPlan)
+	public void endDateSelect(DatePicker datePicker,SurchargeWaiverPlan surchargeWailverPlan)
 	{
 		datePicker.setDateCalendar2(surchargeWailverPlan.getEndDate(),endDate);
 	
 	}
-	public void enterSurchargeRate(SurchargeWailverPlan surchargeWailverPlan)
+	public void enterSurchargeRate(SurchargeWaiverPlan surchargeWailverPlan)
 	{   enterValueinTextBox(surchargeRateTxt,"");
 		enterValueinTextBox(surchargeRateTxt,surchargeWailverPlan.getSurchargeRate());
 }
@@ -123,22 +124,37 @@ CreditCardPlans creditCardPlans;
 		verifyUiOperation("Add Surcharge Waiver Plan");
 	}
 
-	public void enterWaiverPlanValid(SurchargeWailverPlan surchargeWailverPlan) {
-		logger.info("Surcharge Waiver Plan");
+	public void addButtonToEnterSurchargeWaiverPlanFrame()
+	{
 		clickWhenClickable(addButton);
 		switchToIframe(Constants.ADD_SURCHARGE_WAIVER_FEE_PLAN);
-		saveOrDetailsOrSearchClick();
+	}
+	public void addMandatoryLabelsAndFields()
+    {
+	    addDetailsButtonClick();
 		mandatoryLabels();
 		mandatoryFields();
-		surchargeWailverPlan.setSurchargeWaiverPlanCodeValid(CustomUtils.randomAlphaNumeric(5).toUpperCase());
-		enterValueinTextBox(surchargeWaiverPlanCodeTxt, surchargeWailverPlan.getSurchargeWaiverPlanCodeValid());
-		surchargeWailverPlan.setSurchargeWaiverDescriptionValid(CustomUtils.randomAlphaNumeric(5));
-		enterValueinTextBox(surchargeWaiverPlandescriptionTxt,surchargeWailverPlan.getSurchargeWaiverDescriptionValid() );
-		currencyDDwn.getSelect().selectByIndex(2);
-		creditCardPlans.setMandatoryValuesWithLabels(mandatoryValuesWithLabels(mandatoryFields(),mandatoryLabels()));
-		logger.info("MandatoryLabelswithValues: {}", creditCardPlans.getMandatoryValuesWithLabels());
-        clickWhenClickable(addDetailsBtn);
-		}
+    }
+	public void enterSurchargeWaiverPlanCode(SurchargeWaiverPlan surchargeWailverPlan)
+	{
+	enterValueinTextBox(surchargeWaiverPlanCodeTxt, surchargeWailverPlan.getSurchargeWaiverPlanCodeValid());
+	}
+	
+	public void enterSurchargeWaiverPlanDescription(SurchargeWaiverPlan surchargeWailverPlan)
+	{
+	enterValueinTextBox(surchargeWaiverPlandescriptionTxt, surchargeWailverPlan.getSurchargeWaiverDescriptionValid());
+	}
+
+	public void selectCurrency()
+	{
+	  currencyDDwn.getSelect().selectByIndex(2);
+	}
+	
+	 public void settingMandatoryValuesWithLabels()
+	 {
+	   creditCardPlans.setMandatoryValuesWithLabels(mandatoryValuesWithLabels(mandatoryFields(),mandatoryLabels()));
+	   logger.info("MandatoryLabelswithValues: {}", creditCardPlans.getMandatoryValuesWithLabels());
+	 }
 	public void addDetailsButtonClick()
 	{
 		clickWhenClickable(addDetailsBtn);
@@ -147,7 +163,7 @@ CreditCardPlans creditCardPlans;
 	{
 		clickWhenClickable(addButton);
 		SwitchToDefaultFrame();
-		switchToIframe(Constants.ADD_SURCHARGE_WAIVER_PLAN_DETAIL);
+		switchToIframe(ADD_SURCHARGE_WAIVER_PLAN_DETAIL);
 		
 	}
     
@@ -168,7 +184,7 @@ CreditCardPlans creditCardPlans;
 	{
 		SwitchToDefaultFrame();
 	    switchToIframe(Constants.ADD_SURCHARGE_WAIVER_FEE_PLAN);
-	    CustomUtils.ThreadDotSleep(4000);
+	    waitForLoaderToDisappear();
 	    waitForElementVisible(saveButton);
 		clickWhenClickable(saveButton);
 	}

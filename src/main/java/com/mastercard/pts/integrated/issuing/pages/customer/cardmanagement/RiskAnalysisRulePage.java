@@ -5,25 +5,30 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.CreditCardPlans;
+import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardCreditPlan;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
+/**
+ * @author e076177
+ *
+ */
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_APPLICATION,
 		CardManagementNav.L3_CREDIT, CardManagementNav.L4_RISK_ANALYSIS_RULE })
-public class RiskAnalysisRulePage extends AbstractCreditPage{
+public class RiskAnalysisRulePage extends AbstractBasePage{
 	 @Autowired
 	 CreditCardCreditPlan creditCardCreditPlan;
 	 @Autowired
-	 CreditCardPlans creditCardPlans;
-    private static final String ADDRISKAANALYSISRULE_FRAME="Add Risk Analysis Rule";
+	 CreditCardPlan creditCardPlans;
+	 
+    private static final String ADD_RISK_AANALYSIS_RULE_FRAME="Add Risk Analysis Rule";
 	private static final Logger logger = LoggerFactory
 			.getLogger(RiskAnalysisRulePage.class);
 
@@ -42,34 +47,51 @@ public class RiskAnalysisRulePage extends AbstractCreditPage{
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addBtn;
 	
-    public void addRiskAnalysisRuleplan() {
+   public void addButtonToEnterRiskAnalysisRulePlanFrame()
+	{
 		clickWhenClickable(addBtn);
-		switchToIframe(ADDRISKAANALYSISRULE_FRAME);
+		switchToIframe(ADD_RISK_AANALYSIS_RULE_FRAME);
+	}
+	public void addMandatoryLabelsAndFields()
+    {
 		clickSaveButton();
 		mandatoryLabels();
 		mandatoryFields();
-		WebElementUtils.selectDropDownByIndex(programDDwn,1);
+    }
+	public void selectProgram()
+	{
+		WebElementUtils.selectDropDownByIndex(programDDwn, 1);
+	}
+	public void selectField()
+	{
 		WebElementUtils.selectDropDownByIndex(fieldNameDDwn,1);
+	}
+	public void selectOperator()
+	{
 		WebElementUtils.selectDropDownByIndex(operatorDDwn,1);
+	}
+	public void selectFieldName2()
+	{
 		WebElementUtils.selectDropDownByIndex(fieldName2DDwn,1);
+	}
+	public void appendButtonClick()
+	{
 		clickWhenClickable(appendBtn);
-		CustomUtils.ThreadDotSleep(4000);
-		creditCardPlans.setMandatoryValuesWithLabels(mandatoryValuesWithLabels(mandatoryFields(),mandatoryLabels()));
-		logger.info("MandatoryLabelswithValues: {}", creditCardPlans.getMandatoryValuesWithLabels());
-		clickSaveButton();
-		waitForLoaderToDisappear();
-		
-		}
-	
+		waitForPageToLoad(getFinder().getWebDriver());
+	}
+	 public void settingMandatoryValuesWithLabels()
+	 {
+	   creditCardPlans.setMandatoryValuesWithLabels(mandatoryValuesWithLabels(mandatoryFields(),mandatoryLabels()));
+	   logger.info("MandatoryLabelswithValues: {}", creditCardPlans.getMandatoryValuesWithLabels());
+	 }
+	 public void saveButtonClick()
+	 {
+		 clickSaveButton();
+		 waitForLoaderToDisappear();
+	 }
 	public void verifyUiOperationStatus() {
 		logger.info("Risk Analysis Rule");
 		verifyUiOperation("Add Risk Analysis Rule");
 	}
    
-   
-	/*@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.elementToBeClickable(program),
-				WebElementUtils.elementToBeClickable(ruleId));
-	}*/
 }

@@ -4,7 +4,7 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.workflows.credit.ApprovalScoreWorkFlow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ApprovalScoreWorkFlow;
 
 @Component
 public class ApprovalScoreSteps {
@@ -14,8 +14,7 @@ public class ApprovalScoreSteps {
 	public void userAddsAApprovalScore()
 	{
 		approvalScoreWorkFlow.userAddsNewApprovalScore();
-		//approvalScoreWorkFlow.verifyIsRecordAddedinTable();
-	}
+		}
    @When("user verifies edit and verify Approval Score") 
     public void userVerifiesAndEditsApprovalScore()
     {

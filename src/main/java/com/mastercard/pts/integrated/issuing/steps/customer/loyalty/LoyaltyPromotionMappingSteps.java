@@ -9,7 +9,7 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.loyalty.UiVerifi
 public class LoyaltyPromotionMappingSteps {
 	@Autowired	
 	private UiVerificationLoyaltyWorkflow uiVerificationLoyaltyWorkflow;
-	@When("user maps promotionPlan with loyaltyPlan")
+	@When("user maps promotion Plan with loyalty Plan")
 	public void loyaltyPromotionMappingAdd()
 	{
 		uiVerificationLoyaltyWorkflow.verifyLoyaltyPlanPromotionMappingPage();

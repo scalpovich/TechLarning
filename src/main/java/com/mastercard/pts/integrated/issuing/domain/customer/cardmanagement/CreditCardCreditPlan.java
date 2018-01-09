@@ -1,7 +1,5 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
-import java.util.Map;
-
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;

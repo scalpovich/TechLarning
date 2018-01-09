@@ -8,8 +8,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -24,7 +28,8 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 	treeMenuItems = { CardManagementNav.L1_OPERATION, CardManagementNav.L2_PROCESSING_BATCHES, CardManagementNav.L3_PRE_PRODUCTION_BATCH})
 
 	public class PreProductionBatchPage extends AbstractBasePage{
-	
+	@Autowired
+	private TestContext context;
 	private static final Logger logger = LoggerFactory.getLogger(PreProductionBatchPage.class);
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value = 'Search'][@type = 'submit']")
@@ -69,6 +74,20 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 			String batchNumber = getFinder().getWebDriver().findElement(By.xpath(batchNumberWebElement)).getText().trim();
 			logger.info("BatchNumber - {} ", batchNumber);
 			batch.setBatchNumber(batchNumber);
+			ClickButton(searchBtn);
+			ClickCheckBox(preProductionBatchRecordChkBx, true);
+			ClickButton(processSelectedBtn);
+			verifyOperationStatus();
+			SwitchToDefaultFrame();
+
+		}
+	  public void processPreProductionBatchNewApplication(PreProductionBatch batch) {
+
+			waitForLoaderToDisappear();
+          SelectDropDownByText(productTypeDDwn, batch.getProductType());
+           CustomUtils.ThreadDotSleep(8000);
+           Device device=context.get(ContextConstants.DEVICE);
+			enterText(batchNumberTxt,device.getBatchNumber() );
 			ClickButton(searchBtn);
 			ClickCheckBox(preProductionBatchRecordChkBx, true);
 			ClickButton(processSelectedBtn);

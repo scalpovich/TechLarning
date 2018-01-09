@@ -1,13 +1,13 @@
 !-- author: e076177
 Narrative:
-In order to add and Verify ApprovalScore under customer portal cardmanagement tab
+In order to a create a Credit Device under customer portal cardmanagement tab
 As a user
 I want to assert pages
 
 Meta:
 CreditRegression
 @StoryName S190639					 
-Scenario:1 UI verification - Customer Portal - User is able to add Approval Score for Credit Device SetUp
+Scenario:1 UI verification - Customer Portal - User is able to add Approval Score,Risk analysis for Credit Device SetUp and creates a Credit Device Using New Application
 Meta:
 @UserAddsApprovalScore
 Given user is logged in institution
@@ -29,11 +29,10 @@ And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product
 And User fills MCC Rules for credit product
 And User fills Program section for credit product
-When user navigates to Approval Score Page and add a approvalScore
-Then user search the record added based on filter Values
-And user verifies edit operation
-And user verifies delete operation
-And User fills Business Mandatory Fields Screen for credit product
-And User fills Device Range section for credit product
-Then credit device plan and program are made available for Device Creation
+And user navigates to Approval Score Page and add a approvalScore
+And User adds a Risk Analysis Rule Plan by entering valid values
+When User fills Device Range section for credit product
+Then credit device is created
+When credit processes pre-production batch using new Application
+When processes credit device production batch
 

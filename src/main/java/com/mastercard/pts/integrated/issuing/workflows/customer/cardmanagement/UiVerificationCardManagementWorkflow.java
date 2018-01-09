@@ -5,7 +5,7 @@ import junit.framework.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SurchargeWailverPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SurchargeWaiverPlan;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.*;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
@@ -852,7 +852,7 @@ public class UiVerificationCardManagementWorkflow {
 	}
 
 	public void verifySurchargeWailverPlanPage() {
-		SurchargeWailverPlanPage page = navigator.navigateToPage(SurchargeWailverPlanPage.class);
+		SurchargeWaiverPlanPage page = navigator.navigateToPage(SurchargeWaiverPlanPage.class);
 		page.verifyUiOperationStatus();
 	}
 

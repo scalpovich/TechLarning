@@ -9,9 +9,9 @@ Meta:
 Scenario:1 UI verification - Customer Portal - Valid SurchargeWailverPlan, card management tab
 @ValidScenario
 Given user is logged in institution
-Then User navigates to Add Surcharge Waiver Fee Plan Page and adds a valid Fee Plan by entering valid values
-And User navigates to Add Surcharge Waiver Detail Fee Plan Page and adds a valid plan by entering valid values
-Then user search the record added based on filter Values
-And user verifies edit operation
-And user verifies delete operation
+When User Adds Surcharge Waiver Fee Plan by entering valid values
+And User Adds Surcharge Waiver Detail Fee Plan by entering valid values
+Then user searches the added Surcharge Waiver Detail Fee Plan based on filter Values
+And user verifies edit operation of added Surcharge Waiver Detail Fee Plan
+And user verifies delete operation of added Surcharge Waiver Detail Fee Plan
 

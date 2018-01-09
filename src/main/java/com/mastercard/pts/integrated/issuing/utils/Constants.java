@@ -413,13 +413,7 @@ public class Constants {
 	public static final String MEMBERSHIP_FEE = "Membership";
 
 	public static final String ACCOUNTTYPE_SAVINGS = "Saving Account";
-
 	public static final String STATEMENT_PLAN = "Statement Plan";
-    public static final String ADD_SURCHARGE_WAIVER_PLAN_DETAIL="Add Surcharge Waiver Plan Detail";
-	public static final String MARKETING_PLAN = "Marketing Message Plan";
-	public static final String effectiveDate="March/10/2018";
-	public static final String endDate="March/10/2028";
-	public static final String surchargeRate="1";
-	public static final String waiverTransactionDescription="surcharge";
-	
+    public static final String MARKETING_PLAN = "Marketing Message Plan";
+
 }

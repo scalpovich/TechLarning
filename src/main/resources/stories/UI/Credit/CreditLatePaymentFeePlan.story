@@ -9,7 +9,7 @@ CreditLatePaymentFeePlan
 @StoryName CreditScenarios					 
 Scenario:1  Customer Portal-Adding a Late Payment Fee Plan
 Given user is logged in institution
-When user navigates to Late Payment Fee Plan and adds a new Late Payment Fee Plan
-Then user search the record added based on filter Values
-And user verifies edit operation
-And user verifies delete operation
+When user adds a new Late Payment Fee Plan
+Then user searches the added LatePaymentfee plan based on filter Values
+And user verifies edit operation of LatePaymentfee plan
+And user verifies delete operation of LatePaymentfee plan

@@ -9,7 +9,7 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.loyalty.UiVerifi
 public class PromotionPlanSteps {
 	@Autowired	
 	private UiVerificationLoyaltyWorkflow uiVerificationLoyaltyWorkflow;
-	@When("user adds promotionPlan")
+	@When("user adds promotion Plan")
 	public void addPromotionPlan()
 	{
 		uiVerificationLoyaltyWorkflow.verifyPromotionPlanPage();

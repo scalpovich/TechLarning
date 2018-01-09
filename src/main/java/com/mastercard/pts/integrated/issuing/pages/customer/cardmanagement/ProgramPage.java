@@ -366,6 +366,7 @@ public class ProgramPage extends AbstractBasePage {
 
 		if (productType.equalsIgnoreCase(ProductType.PREPAID))
 			WebElementUtils.selectDropDownByOptionalVisibleText(stmtPlanCodeDDwn, program.getPrepaidStatementPlan());
+		waitForLoaderToDisappear();
 		clickNextButton();
 		if (productType.equalsIgnoreCase(ProductType.CREDIT))
 			fillDataForCreditCard(program);
@@ -378,6 +379,7 @@ public class ProgramPage extends AbstractBasePage {
 		WebElementUtils.enterText(cashLimitAmountTxt, program.getCashLimitAmount());
 		WebElementUtils.selectDropDownByVisibleText(cashLimitResetDDwn, program.getCashLimitReset());
 		WebElementUtils.selectDropDownByVisibleText(addOnLimitResetDDwn, program.getAddOnLimitReset());
+		CustomUtils.ThreadDotSleep(10000);
 	}
 
 	public void verifyUiOperationStatus() {

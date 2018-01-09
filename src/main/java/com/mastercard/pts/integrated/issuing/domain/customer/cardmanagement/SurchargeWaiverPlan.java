@@ -2,11 +2,16 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
+/**
+ * @author e076177
+ *
+ */
 @Component
-public class SurchargeWailverPlan {
+public class SurchargeWaiverPlan {
   
 	private String surchargeWaiverPlanCodeValid;
 	private String surchargeWaiverDescriptionValid;
@@ -16,7 +21,10 @@ public class SurchargeWailverPlan {
 	private String endDate;
 	private String waiverTransactionDescription;
 	private String surchargeRate;
-	
+	private static final String EFFECTIVE_DATE = "EFFECTIVE_DATE";
+    private static final String END_DATE = "END_DATE";
+	private static final String WAIVER_TRANSACTION_DESCRIPTION = "WAIVER_TRANSACTION_DESCRIPTION";
+	private static final String SURCHARGE_RATE="SURCHARGE_RATE";
 	public String getSurchargeRate() {
 		return surchargeRate;
 	}
@@ -84,15 +92,17 @@ public class SurchargeWailverPlan {
 		this.endDate = endDate;
 	}
 
-	public void surchargeWaiverFeePlanDataProvider() {
-		setSurchargeWaiverPlanCodeValid(CustomUtils.randomAlphaNumeric(5).toUpperCase());
-		setSurchargeWaiverDescriptionValid(CustomUtils.randomAlphaNumeric(5));
-		setSurchargeWaiverPlanCodeInvalid(CustomUtils.randomAlphaNumeric(5).toLowerCase());
-		setSurchargeWaiverDescriptionInvalid(CustomUtils.randomAlphaNumeric(5)+"$");
-		setEffectiveDate(MapUtils.fnGetInputDataFromMap("effectiveDate"));
-		setEndDate(MapUtils.fnGetInputDataFromMap("endDate"));
-		setWaiverTransactionDescription(MapUtils.fnGetInputDataFromMap("waiverTransactionDescription"));
-		setSurchargeRate(MapUtils.fnGetInputDataFromMap("surchargeRate"));
+	public static SurchargeWaiverPlan surchargeWaiverFeePlanDataProvider(KeyValueProvider provider) {
+		SurchargeWaiverPlan surchargeWailverPlan=new SurchargeWaiverPlan();
+		surchargeWailverPlan.setSurchargeWaiverPlanCodeValid(CustomUtils.randomAlphaNumeric(5).toUpperCase());
+		surchargeWailverPlan.setSurchargeWaiverDescriptionValid(CustomUtils.randomAlphaNumeric(5));
+		surchargeWailverPlan.setSurchargeWaiverPlanCodeInvalid(CustomUtils.randomAlphaNumeric(5).toLowerCase());
+		surchargeWailverPlan.setSurchargeWaiverDescriptionInvalid(CustomUtils.randomAlphaNumeric(5)+"$");
+		surchargeWailverPlan.setEffectiveDate(provider.getString(EFFECTIVE_DATE));
+		surchargeWailverPlan.setEndDate(provider.getString(END_DATE));
+		surchargeWailverPlan.setWaiverTransactionDescription(provider.getString(WAIVER_TRANSACTION_DESCRIPTION));
+		surchargeWailverPlan.setSurchargeRate(provider.getString(SURCHARGE_RATE));
+		return surchargeWailverPlan;
 
 	}
 }

@@ -11,7 +11,7 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.loyalty.UiVerifi
 public class LoyaltyPlanSteps {
 @Autowired	
 private UiVerificationLoyaltyWorkflow uiVerificationLoyaltyWorkflow;
-@When("user adds loyaltyPlan")
+@When("user adds loyalty Plan")
 public void addLoyaltyPlan()
 {
 	uiVerificationLoyaltyWorkflow.verifyLoyaltyPlanPage();

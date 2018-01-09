@@ -1,4 +1,4 @@
-package com.mastercard.pts.integrated.issuing.workflows.credit;
+package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
