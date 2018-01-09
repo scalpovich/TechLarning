@@ -6,14 +6,15 @@ As an Agency User
 I want to sale the card through agent portal, do an Initial Load and activate
 
 Meta:
-@StoryName MWMC_MSR_RTLTRVL_LOAD_ACTIVATE
+@StoryName SWSC_EMV_RTLTRVL_LOAD_ACTIVATE
 @CR1
 @CardCreation
+@LoadActivate
 
 Scenario: Prepaid - Admin User - Assign Program to Agency
 
 Given user is logged in institution
-And bulk card generation for prepaid magnetic stripe is completed
+And bulk card generation for prepaid emv is completed
 And user sign out from customer portal
 And user is logged in agent portal as admin user
 When user fills information to assign program to agency and submits form
@@ -76,10 +77,22 @@ When user fills card sale checker details and submits the form
 Then approval is successful
 And user sign out from agent portal
 
-Scenario: Prepaid - Customer User - Help Desk Status and activation
+Scenario: Prepaid - Customer User - Help Desk Status and device activated
 
 Given user is logged in institution
 When user fills General details with product prepaid and submits the form for registered device
 Then status should be normal
 And device activated and activation date is updated in general details
+And user sign out from customer portal
+
+Scenario: Agency Settlement - Funded Agent
+Given user is logged in agent portal as agency user
+When user initiates settlement for agency
+Then settlement is initiated successfully
+
+Scenario: Program Balance Summary reports download - Funded Agent
+Given user is logged in institution
+When pre-clearing and Pre-EOD batches are run
+Then verify report for transactions with Program Balance Summary is downloaded
+And Verify Program Balance Summary is downloaded
 And user sign out from customer portal

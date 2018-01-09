@@ -21,6 +21,7 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.google.common.base.Strings;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorConstantsData;
 
 public class MiscUtils {
 
@@ -40,7 +41,7 @@ public class MiscUtils {
 		File newfile =new File(A +"_PinFile");
 		return oldfile.renameTo(newfile);
 	}
-	
+
 	public static String generateRandomNumberAsString(int number) {
 		return RandomStringUtils.randomNumeric(number);
 	}
@@ -70,14 +71,18 @@ public class MiscUtils {
 			String temptaskName = null;
 			String command = null;
 			if ("FINSIM".equalsIgnoreCase(taskName)) {
-				temptaskName = "ATClient";
-			} else if ("MCPS".equalsIgnoreCase(taskName)) {
-				temptaskName = "MCPS";
-			} else if ("MAS".equalsIgnoreCase(taskName)) {
-				temptaskName = "MSPMCW";
+				temptaskName = SimulatorConstantsData.KILL_FINSIM_PROCESS;
 			} else if ("WINIUM".equalsIgnoreCase(taskName)) {
-				temptaskName = "Winium.Desktop.Driver";
-			}
+				temptaskName = SimulatorConstantsData.KILL_WINIUM_PROCESS;
+			} else if ("VTS".equalsIgnoreCase(taskName)) {
+				temptaskName = SimulatorConstantsData.KILL_VTS_PROCESS;
+			} else if ("MCPS".equalsIgnoreCase(taskName)) {
+				temptaskName = SimulatorConstantsData.KILL_MCPS_PROCESS;
+			} else if ("MAS".equalsIgnoreCase(taskName) || ("MDFS".equalsIgnoreCase(taskName))) {
+				temptaskName = SimulatorConstantsData.KILL_MAS_PROCESS;
+			}  else if ("MAS17".equalsIgnoreCase(taskName) || ("MDFS17".equalsIgnoreCase(taskName))) {
+				temptaskName = SimulatorConstantsData.KILL_MAS17_PROCESS;
+			} 
 			command = "taskkill /F /IM " + temptaskName + ".exe";
 			Runtime.getRuntime().exec(command).waitFor(10, TimeUnit.SECONDS);
 		} catch (Exception e) {
@@ -95,7 +100,7 @@ public class MiscUtils {
 	public static String randomAlphabet(int alphabetLenth) {
 		return RandomStringUtils.randomAlphabetic(alphabetLenth);
 	}
-	
+
 	public static Boolean isNotNullAndEmpty(String variable) {
 		return Strings.isNullOrEmpty(variable);
 	}

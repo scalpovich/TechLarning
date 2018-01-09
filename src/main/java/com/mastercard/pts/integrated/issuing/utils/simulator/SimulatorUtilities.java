@@ -1,4 +1,4 @@
-package com.mastercard.pts.integrated.issuing.utils;
+package com.mastercard.pts.integrated.issuing.utils.simulator;
 
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -18,6 +18,11 @@ import org.sikuli.script.Screen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.DateUtils;
+import com.mastercard.pts.integrated.issuing.utils.FileCreation;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+
 public class SimulatorUtilities {
 	private static final Logger logger = LoggerFactory.getLogger(SimulatorUtilities.class);
 	private static Screen screen = new Screen();
@@ -33,6 +38,14 @@ public class SimulatorUtilities {
 
 	public void pressTab(int numberOfTabs) {
 		robotOperation("tab", numberOfTabs);
+	}
+	
+	public void pressShiftTab() {
+		pressShiftTab(numberOfTabs);
+	}
+
+	public void pressShiftTab(int numberOfTabs) {
+		robotOperation("shiftTab", numberOfTabs);
 	}
 
 	public void pressDownArrow() {
@@ -168,6 +181,13 @@ public class SimulatorUtilities {
 			break;
 		case "tabRight":
 			robot.keyPress(KeyEvent.VK_RIGHT);
+			break;
+		case "shiftTab":
+			robot.keyPress(KeyEvent.VK_SHIFT);
+			robot.keyPress(KeyEvent.VK_TAB);
+			robot.delay(100);
+			robot.keyRelease(KeyEvent.VK_SHIFT);
+			robot.keyRelease(KeyEvent.VK_TAB);
 			break;
 		default:
 			break;
@@ -428,7 +448,7 @@ public class SimulatorUtilities {
 		}
 	}
 
-	private Boolean fileExists(String filePathString) {
+	public Boolean fileExists(String filePathString) {
 		return new File(filePathString).exists();
 	}
 

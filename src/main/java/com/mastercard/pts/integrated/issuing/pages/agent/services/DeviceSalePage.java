@@ -20,8 +20,8 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.DBUtility;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
-import com.mastercard.pts.integrated.issuing.utils.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -405,9 +405,10 @@ public class DeviceSalePage extends AbstractBasePage {
 		selectApplicantProfession(details.getApplicantProfession());
 	}
 
-	public void fillApplicationDetails2AndSubmit(String transactionDetails) {
+	public void fillApplicationDetails2AndSubmit(String isInitialLoad, String transactionDetails) {
 		clickNextButton();
-		enterTransactionDetails(transactionDetails);
+		if ("YES".equalsIgnoreCase(isInitialLoad))
+			enterTransactionDetails(transactionDetails);
 		SimulatorUtilities.wait(3000);
 		clickSubmitButton();
 	}
@@ -442,7 +443,7 @@ public class DeviceSalePage extends AbstractBasePage {
 		fillApplicationDetails1(details);
 		selectDocument1Type(details.getDocument1Type());
 		enterLegalId1(details.getLegalId());
-		fillApplicationDetails2AndSubmit(details.getInitialLoadTxnDetails());
+		fillApplicationDetails2AndSubmit(details.getIsInitialLoad(), details.getInitialLoadTxnDetails());
 	}
 
 	public void deviceSaleWithoutRegistration(DeviceSale details) {
@@ -469,7 +470,7 @@ public class DeviceSalePage extends AbstractBasePage {
 		fillApplicationDetails1(details);
 		selectDocument1Type(details.getDocument1Type());
 		enterLegalId1(details.getLegalId());
-		fillApplicationDetails2AndSubmit(details.getInitialLoadTxnDetails());
+		fillApplicationDetails2AndSubmit(details.getIsInitialLoad(), details.getInitialLoadTxnDetails());
 	}
 
 	public void deviceSaleThroughNewProgram(DeviceSale details) {
@@ -487,7 +488,8 @@ public class DeviceSalePage extends AbstractBasePage {
 			selectApplicantProfession(details.getApplicantProfession());
 			clickNextButton();
 		}
-		enterTransactionDetails(details.getInitialLoadTxnDetails());
+		if ("YES".equalsIgnoreCase(details.getIsInitialLoad()))
+			enterTransactionDetails(details.getInitialLoadTxnDetails());
 		SimulatorUtilities.wait(3000);
 		clickSubmitButton();
 	}
