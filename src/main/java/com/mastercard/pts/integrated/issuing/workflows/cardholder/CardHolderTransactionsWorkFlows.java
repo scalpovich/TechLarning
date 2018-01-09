@@ -52,8 +52,7 @@ public class CardHolderTransactionsWorkFlows extends AbstractBasePage{
 	}
 	
 	public void selectWalletToWalletOption(){
-		fundTransfer.selectWalletToWalletTransferOption();
-		clickContinueOnFundtransferButton();
+		fundTransfer.selectWalletToWalletTransferOption();		
 	}
 	
 	public void selectIntraBankMoneyTransferOption(){

@@ -16,7 +16,7 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = TransactionsNav.TAB_TRANSACTIONS, treeMenuItems = { TransactionsNav.L1_FUND_TRANSFER })
+@Navigation(tabTitle = TransactionsNav.TAB_TRANSACTIONS)
 public class FundTransferPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(FundTransferPage.class);
 
