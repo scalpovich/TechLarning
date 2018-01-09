@@ -65,6 +65,7 @@ public class MasDetailsKeyValuePair {
 	public static void getLatestVersionMasDetailsInstalledOnMachine() {
 		String parentWindowHandle;
 		String licenseToSelect;
+		String logComments;
 
 		SimulatorUtilities simulatorUtilities = new SimulatorUtilities();
 		// using for-each loop for iteration over Map.entrySet()
@@ -80,9 +81,10 @@ public class MasDetailsKeyValuePair {
 				setMasParentWindowHandlerInLegacyConstant(parentWindowHandle);
 				setMasLicenseToSelectValueInLegacyConstant(licenseToSelect);
 				setMasExePathValueInLegacyConstant(entry.getValue());
-
-				MiscUtils.reportToConsole("getLatestVersionMasDetailsInstalledOnMachine <--> versionNumber = " +  entry.getKey() + " ---  exePath = " + entry.getValue() + " ---  parentWindowHandler = " + parentWindowHandle + " ---  licenseToSelect = " + licenseToSelect);
-				logger.info("MAS Details  <--> versionNumber = " +  entry.getKey() + " ---  exePath = " + entry.getValue() + " ---  parentWindowHandler = " + parentWindowHandle + " ---  licenseToSelect = " + licenseToSelect);
+				
+				logComments =  "versionNumber = " +  entry.getKey() + " ---  exePath = " + entry.getValue() + " ---  parentWindowHandler = " + parentWindowHandle + " ---  licenseToSelect = " + licenseToSelect;
+				MiscUtils.reportToConsole("getLatestVersionMasDetailsInstalledOnMachine <--> " + logComments);
+				logger.info("MAS Details  <--> "+ logComments);
 				return;
 			}
 		}
@@ -98,6 +100,7 @@ public class MasDetailsKeyValuePair {
 	public static void getSpecificMasVersionDetails(String version) { 
 		String parentWindowHandle;
 		String licenseToSelect;
+		String logComments;
 
 		SimulatorUtilities simulatorUtilities = new SimulatorUtilities();
 		// using for-each loop for iteration over Map.entrySet()
@@ -117,8 +120,9 @@ public class MasDetailsKeyValuePair {
 					setMasLicenseToSelectValueInLegacyConstant(licenseToSelect);
 					setMasExePathValueInLegacyConstant(entry.getValue());
 
-					MiscUtils.reportToConsole("getSpecificMasVersionDetails <--> versionNumber = " +  entry.getKey() + " ---  exePath = " + entry.getValue() + " ---  parentWindowHandler = " + parentWindowHandle + " ---  licenseToSelect = " + licenseToSelect);
-					logger.info("MAS Details  <--> versionNumber = " +  entry.getKey() + " ---  exePath = " + entry.getValue() + " ---  parentWindowHandler = " + parentWindowHandle + " ---  licenseToSelect = " + licenseToSelect);
+					logComments =  "versionNumber = " +  entry.getKey() + " ---  exePath = " + entry.getValue() + " ---  parentWindowHandler = " + parentWindowHandle + " ---  licenseToSelect = " + licenseToSelect;
+					MiscUtils.reportToConsole("getSpecificMasVersionDetails <--> " + logComments);
+					logger.info("MAS Details  <--> "+ logComments);
 					return;
 				}
 			}
