@@ -23,7 +23,6 @@ public class CreditLimitWorkFlow {
 		creditLimitRulePage.selectFieldName();
 		creditLimitRulePage.selectOperator();
 		creditLimitRulePage.selectValue();
-		//creditLimitRulePage.selectInsert();
 		creditLimitRulePage.selectLimitType();
 		creditLimitRulePage.enterCreditLimit();
 		creditLimitRulePage.enterMaxCreditLimit();
