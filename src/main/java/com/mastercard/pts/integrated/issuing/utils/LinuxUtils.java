@@ -84,7 +84,7 @@ public abstract class LinuxUtils {
 		session.setConfig(config);
 		session.connect();
 		String cmd = "find /home/dc-user/integrated/elt_bo/data -name \"*" + lookUpFor + "*\"";
-		MiscUtils.reportToConsole("Linux Command to search for file  -  " + cmd );
+		//MiscUtils.reportToConsole("Linux Command to search for file  -  " + cmd );
 
 		Channel channel=session.openChannel("exec");
 		((ChannelExec)channel).setCommand(cmd);
@@ -119,6 +119,7 @@ public abstract class LinuxUtils {
 				throw MiscUtils.propagate(e);
 			}
 		}
+		in.close();
 		channel.disconnect();
 		session.disconnect();
 		return result;
