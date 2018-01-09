@@ -7,7 +7,7 @@ I want to authorize transactions for debit emv retail debit card pinless
 
 Meta:
 @StoryName d_emv_retail
-@CRCardsWithAuthorizationCashAdvancedWithClearing
+
 
 Scenario: Setup - debit emv retail debit card
 Given user is logged in institution

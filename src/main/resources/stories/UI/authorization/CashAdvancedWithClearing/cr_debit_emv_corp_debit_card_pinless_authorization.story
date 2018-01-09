@@ -7,7 +7,7 @@ I want to create a EMV Corporate debit card for client
 
 Meta:
 @StoryName d_emv_corp
-@CRCardsWithAuthorizationCashAdvancedWithClearing
+
 
 Scenario: Setup debit emv corp debit card 
 Given user is logged in institution
