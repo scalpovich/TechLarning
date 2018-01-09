@@ -12,10 +12,18 @@ public class ApprovalScoreWorkFlow {
 	private Navigator navigator;
 	@Autowired
     ApprovalScorePage approvalScorePage;
-	public void userAddsNewApprovalScore()
+	public boolean userAddsNewApprovalScore()
 	{
 		approvalScorePage = navigator.navigateToPage(ApprovalScorePage.class);
-		approvalScorePage.addApprovalScore();
+		approvalScorePage.addApproverScorePlan();
+		approvalScorePage.addMandatoryLabelsAndFields();
+		approvalScorePage.selectProgram();
+		approvalScorePage.selectAction();
+		approvalScorePage.enterStartRangeValue();
+		approvalScorePage.enterEndRangeValue();
+		approvalScorePage.settingMandatoryValuesWithLabels();
+		approvalScorePage.saveButtonClick();
+		return approvalScorePage.successMessageDiplay();
 	}
 	public void userVerifiesAndEditsNewApprovalScore()
 	{

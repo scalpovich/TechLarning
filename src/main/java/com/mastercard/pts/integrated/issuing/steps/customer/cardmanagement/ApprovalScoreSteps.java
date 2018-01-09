@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,8 @@ public class ApprovalScoreSteps {
     @When("user navigates to Approval Score Page and add a approvalScore")
 	public void userAddsAApprovalScore()
 	{
-		approvalScoreWorkFlow.userAddsNewApprovalScore();
+		Boolean approvalScore=approvalScoreWorkFlow.userAddsNewApprovalScore();
+		Assert.assertTrue("ApprovalScore is added successfully", approvalScore);
 		}
    @When("user verifies edit and verify Approval Score") 
     public void userVerifiesAndEditsApprovalScore()

@@ -1,8 +1,10 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.RiskAnalysisRuleWorkFlow;
 
 /**
@@ -16,6 +18,7 @@ public class RiskAnalysisSteps {
 	@When("User adds a Risk Analysis Rule Plan by entering valid values")
 	public void whenUserCreatesACreditPlan()
 	{
-		riskAnalysisRuleWorkFlow.userCreatesAValidRiskAnalysisRulePlan();
+		Boolean riskAnalysisRule=riskAnalysisRuleWorkFlow.userCreatesAValidRiskAnalysisRulePlan();
+		Assert.assertTrue("RiskAnalysis Rule has been added successfully", riskAnalysisRule);
 	}
 }

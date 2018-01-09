@@ -28,7 +28,7 @@ public class ApprovalScorePage extends AbstractBasePage {
 	private TestContext context;
 	@Autowired
 	CreditCardPlan creditCardPlans;
-    private static final String ADDAPPROVERSCORE_FRAME="Add Approval Score";
+    private static final String ADD_APPROVER_SCORE_FRAME="Add Approval Score";
 	private static final Logger logger = LoggerFactory.getLogger(ApprovalScorePage.class);
 	@PageElement(findBy = FindBy.NAME, valueToFind = "prodCode:input:dropdowncomponent")
 	private MCWebElement programDDwn;
@@ -48,32 +48,65 @@ public class ApprovalScorePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "dataview")
 	private MCWebElement table;
 	
-	public void addApprovalScore() {
-		Program program=context.get(ContextConstants.PROGRAM);
-		clickWhenClickable(addBtn);
-		switchToIframe(ADDAPPROVERSCORE_FRAME);
-		clickSaveButton();
-		mandatoryLabels();
-		mandatoryFields();
-		WebElementUtils.selectDropDownByVisibleText(programDDwn,program.buildDescriptionAndCode());
-		WebElementUtils.selectDropDownByIndex(actionDDwn,1);
-		WebElementUtils.enterText(startRangeValueTxt,CustomUtils.RandomNumbers(5));
-		WebElementUtils.enterText(endRangeValueTxt,CustomUtils.RandomNumbers(6));
-		creditCardPlans.setMandatoryValuesWithLabels(mandatoryValuesWithLabels(mandatoryFields(),mandatoryLabels()));
-		clickSaveButton();
-		waitForLoaderToDisappear();
-		//CustomUtils.ThreadDotSleep(5000);
-		}
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Record Added Successfully.']")
+	private MCWebElement validateSuccessMsgDisplay;
 	
+	public boolean successMessageDiplay()
+	{
+		if(validateSuccessMsgDisplay.isVisible())
+		{
+			logger.info("successMsg is displayed");
+			return true;
+		}
+		return false;
+	}
+	
+	   public void addApproverScorePlan() {
+	    	clickWhenClickable(addBtn);
+			switchToIframe(ADD_APPROVER_SCORE_FRAME);
+			}
+	    public void addMandatoryLabelsAndFields()
+	    {
+	    	clickSaveButton();
+			mandatoryLabels();
+			mandatoryFields();
+	    }
+	    
+	    public void selectProgram()
+	    {
+	    	Program program=context.get(ContextConstants.PROGRAM);
+	    	WebElementUtils.selectDropDownByVisibleText(programDDwn,program.buildDescriptionAndCode());
+	    }
+	    
+	    public void selectAction()
+	    {
+	    	WebElementUtils.selectDropDownByIndex(actionDDwn,1);
+	    }
+	    
+	    public void enterStartRangeValue()
+	    {
+	    	WebElementUtils.enterText(startRangeValueTxt,CustomUtils.RandomNumbers(5));
+	    }
+	    
+	    public void enterEndRangeValue()
+	    {
+	    	WebElementUtils.enterText(endRangeValueTxt,CustomUtils.RandomNumbers(6));
+	    }
+	    
+	    public void settingMandatoryValuesWithLabels()
+	    {
+	    	creditCardPlans.setMandatoryValuesWithLabels(mandatoryValuesWithLabels(mandatoryFields(),mandatoryLabels()));
+			logger.info("MandatoryLabelswithValues: {}", creditCardPlans.getMandatoryValuesWithLabels());
+	    }
+	    
+	    public void saveButtonClick()
+	    {
+	    	clickSaveButton();
+			waitForLoaderToDisappear();
+	    }
 	public void verifyUiOperationStatus() {
 		logger.info("Add Approval Score");
 		verifyUiOperation("Add Approval Score");
 	}
    
-   
-	/*@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.elementToBeClickable(program),
-				WebElementUtils.elementToBeClickable(ruleId));
-	}*/
 }

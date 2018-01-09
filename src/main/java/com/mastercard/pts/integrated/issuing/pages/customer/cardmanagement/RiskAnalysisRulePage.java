@@ -47,6 +47,18 @@ public class RiskAnalysisRulePage extends AbstractBasePage{
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addBtn;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Record Added Successfully.']")
+	private MCWebElement validateSuccessMsgDisplay;
+	
+	public boolean successMessageDiplay()
+	{
+		if(validateSuccessMsgDisplay.isVisible())
+		{
+			logger.info("successMsg is displayed");
+			return true;
+		}
+		return false;
+	}
    public void addButtonToEnterRiskAnalysisRulePlanFrame()
 	{
 		clickWhenClickable(addBtn);

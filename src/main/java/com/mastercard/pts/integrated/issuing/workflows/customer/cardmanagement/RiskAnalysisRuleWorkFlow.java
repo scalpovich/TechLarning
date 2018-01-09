@@ -16,7 +16,7 @@ public class RiskAnalysisRuleWorkFlow {
 	private Navigator navigator;
 	private RiskAnalysisRulePage page;
 	
-	public void userCreatesAValidRiskAnalysisRulePlan()
+	public boolean userCreatesAValidRiskAnalysisRulePlan()
 	{
 	 page = navigator.navigateToPage(RiskAnalysisRulePage.class);
 	 page.addButtonToEnterRiskAnalysisRulePlanFrame();
@@ -28,6 +28,7 @@ public class RiskAnalysisRuleWorkFlow {
 	 page.appendButtonClick();
 	 page.settingMandatoryValuesWithLabels();
 	 page.saveButtonClick();
+	 return page.successMessageDiplay();
 	}
    
 }
