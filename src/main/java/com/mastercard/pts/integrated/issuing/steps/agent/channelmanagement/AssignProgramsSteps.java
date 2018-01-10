@@ -29,7 +29,7 @@ public class AssignProgramsSteps {
 	@Autowired
 	private KeyValueProvider provider;
 	
-	@Given("bulk card generation for prepaid $deviceType is completed for visa interface")
+	@Given("bulk card generation for prepaid $deviceType is completed for an interface")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
 			"When User fills Marketing Message Plan for prepaid product",
 			"When User fills Prepaid Statement Plan",
@@ -42,15 +42,15 @@ public class AssignProgramsSteps {
 			"When User fills Device Event Based Fee Plan for prepaid product",
 			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card",
 			"When User fills Wallet Plan for prepaid product",
-			"User fills Program section for prepaid product for visa interface",
+			"When User fills Program section for prepaid product for an interface",
 			"When User fills Business Mandatory Fields Screen for prepaid product",
-			"User fills Device Range section for prepaid product for visa interface",
+			"When User fills Device Range section for prepaid product for an interface",
 			"When user creates a bulk device production request for prepaid",
 			"When processes created bulk device generation request for prepaid",
 			"When processes pre-production batch for prepaid",
 			"When processes device production batch for prepaid",
 			"When processes pin generation batch for prepaid"})
-	public void givenBulkCardGenerationForPrepaidIsCompletedVisaInterface(String deviceType){
+	public void givenBulkCardGenerationForPrepaidIsCompletedAnInterface(String deviceType){
 		/*
 		 * This is a composite step to be executed before assigning a program
 		 */

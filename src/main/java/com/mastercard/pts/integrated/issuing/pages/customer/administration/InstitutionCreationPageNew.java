@@ -12,6 +12,8 @@ import com.mastercard.pts.integrated.issuing.pages.customer.navigation.Processin
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -24,12 +26,15 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		ProcessingCenterNav.L3_INSTITUTION })
 public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
-	final Logger logger = LoggerFactory
+	final Logger logg = LoggerFactory
 			.getLogger(InstitutionCreationPageNew.class);
 
 	// ------------- Processing Center > Setup > Master Parameters > Institution
 	// [CESM01]
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[.='General']")
+	private MCWebElement generalTab; 
+	
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addInstitution;
 
@@ -97,7 +102,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	private MCWebElement custCareContactNoTxtBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "customerCareEmailId:input:inputTextField")
-	private MCWebElement General_emailIdTxtBx;
+	private MCWebElement generalEmailIdTxtBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "customerCareFax:input:inputTextField")
 	private MCWebElement custCareFaxTxtBx;
@@ -165,19 +170,17 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody//tr")
 	private MCWebElements resultTableRow;
 
-	private String TAB = "//a[.='%s']";
+	private String tab = "//a[.='%s']";
 
 	private String activeTab = "//li[@class='activetb']/a";
 
-	private String TabWithError = "//ul[@class='tabs']//span[@class='tabError']/..";
-
-	private String instituteSelectionVal = "//div[@id='institution_selector']//li/a[contains(text(),'%s')]";
+	private String tabWithError = "//ul[@class='tabs']//span[@class='tabError']/..";
 
 	// ------------- Processing Center > Setup > Master Parameters > Institution
 	// > Add Institution > Agent portal
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[.='Agent Portal']")
-	private MCWebElements agentPortaltab;
+	private MCWebElement agentPortalTab;
 
 	// ------------- Processing Center > Setup > Master Parameters > Institution
 	// > Add Institution > Collect portal
@@ -191,9 +194,36 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mpinEnabled:checkBoxComponent")
 	private MCWebElement mpinChkBx;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "issuerSmsProvider:checkBoxComponent")
-	private MCWebElement issuerSmsProviderChkBx;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "agtID:input:inputTextField")
+	private MCWebElement poratlAdminID;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "agtName:input:inputTextField")
+	private MCWebElement portalAdminName;	
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "agtAddress1:input:inputTextField")
+	private MCWebElement agentAddressline1;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "agtAddress2:input:inputTextField")
+	private MCWebElement agentAddressline2;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "agentCountryCode:input:dropdowncomponent")
+	private MCWebElement agentCountryCode;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "agtZipCode:input:inputTextField")
+	private MCWebElement agentZipCode;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "agtPhone1:input:inputTextField")
+	private MCWebElement agentPhone;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "agtMobileCntryCode:input:dropdowncomponent")
+	private MCWebElement agentMobileCountrycode;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "agtPhone2:input:inputTextField")
+	private MCWebElement agentMobileNumber;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "agtMailId:input:inputTextField")
+	private MCWebElement email;
 
 	/**
 	 * Click add button and switch to frame
@@ -227,7 +257,6 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	public void selectInstitutionCurrency(InstitutionCreation institute) {
 		selectValueFromDropDown(this.institutionCurrency,
 				institute.getInstitutionCurrency());
-
 	}
 
 	public void selectInstitutionReferenceCurrency(InstitutionCreation institute) {
@@ -238,7 +267,6 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	public void selectDefaultlanguage(InstitutionCreation institute) {
 		selectValueFromDropDown(defaulLanguageDrpDwn,
 				institute.getDefaultLanguage());
-
 	}
 
 	public void selectTimeZone(InstitutionCreation institute) {
@@ -266,17 +294,14 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 		return selectCheckBox(rsaSuportChkBx, "RSA Support");
 	}
 
-	@SuppressWarnings("deprecation")
+	
 	public void enterAccountNumberLength(InstitutionCreation institute) {
 		if (checkAccountLenghtValidation()) {
-			Assert.assertTrue(accNoLengthTxtBx.getAttribute("disabled")
-					.isEmpty());
 			enterValueinTextBox(accNoLengthTxtBx,
 					institute.getAccountNumberLength());
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	public void enterClientNumberLength(InstitutionCreation institute) {
 		if (checkClientLengthCheckValidation()) {
 			Assert.assertTrue(clientNoLengthTxtBx.getAttribute("disabled") == null);
@@ -301,15 +326,15 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public void enterGeneralTabEmailID(InstitutionCreation institute) {
-		enterValueinTextBox(General_emailIdTxtBx, institute.getEmailID());
+		enterValueinTextBox(generalEmailIdTxtBx, institute.getEmailID());
 	}
 
 	public void enterCustomerFax(InstitutionCreation institute) {
 		enterValueinTextBox(custCareFaxTxtBx, institute.getCustomerCareFax());
 	}
 
-	public void navigateToTab(String TabName) {
-		Element(TAB.replace("%s", TabName)).click();
+	public void navigateToTab(String tabName) {
+		Element(tab.replace("%s", tabName)).click();
 	}
 
 	public void enterContactName(InstitutionCreation institute) {
@@ -389,12 +414,24 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 			if (institution.getInstitutionType().equalsIgnoreCase(
 					Constants.PREPAID)) {
 				selectInstitutionReferenceCurrency(institution);
+				checkAgentPortalSupport();
+				clickWhenClickable(agentPortalTab);
+				enterText(poratlAdminID,MiscUtils.generateRandomNumberAsString(6));
+				enterText(portalAdminName, MiscUtils.generate6CharAlphaNumeric());
+				enterText(agentAddressline1, institution.getAddressLine1());
+				enterText(agentAddressline2, institution.getAddressLine2());
+				selectValueFromDropDown(agentCountryCode, institution.getCountry());
+				enterText(agentZipCode, institution.getPostalCode());
+				waitForLoaderToDisappear();
+				enterValueinTextBox(agentPhone, institution.getPhoneNumb());
+				selectValueFromDropDown(agentMobileCountrycode,
+						institution.getMobileCountryCode());
+				enterValueinTextBox(agentMobileNumber, institution.getMobilenumber());
+				enterValueinTextBox(email, institution.getEmailID());
+				clickWhenClickable(generalTab);				
 			}
 			selectTimeZone(institution);
-			if (institution.getInstitutionType().equalsIgnoreCase(
-					Constants.PREPAID)) {
-				checkAgentPortalSupport();
-			}
+			
 			if (institution.getInstitutionType().equalsIgnoreCase(
 					Constants.CREDIT)) {
 				checkCollectportalSupport();
@@ -408,7 +445,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 			selectFinancialYearStartMonth(institution);
 			selectSDNPlan(institution);
 		} catch (Exception e) {
-			logger.error("Error in providing general details" + e);
+			logg.error("Error in providing general details" + e);
 		}
 	}
 
@@ -418,7 +455,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 			enterGeneralTabEmailID(instution);
 			enterCustomerFax(instution);
 		} catch (Exception e) {
-			logger.error("Error in providing general details" + e);
+			logg.error("Error in providing general details" + e);
 		}
 	}
 
@@ -430,7 +467,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 			enterMobileNumberCountryCode(instution);
 			enterAddressTabEmailID(instution);
 		} catch (Exception e) {
-			logger.error("Error in providing personal details" + e);
+			logg.error("Error in providing personal details" + e);
 		}
 	}
 
@@ -444,14 +481,14 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 			enterAddressLine2(instution);
 			waitForLoaderToDisappear();
 		} catch (Exception e) {
-			logger.error("Error in providing address details" + e);
+			logg.error("Error in providing address details" + e);
 		}
 	}
 
 	public boolean verifyErrorsOnInstitutePage() {
 		boolean isAnyError = false;
 		if (iselementPresent(Elements(activeTab))) {
-			for (WebElement element : Elements(TabWithError)) {
+			for (WebElement element : Elements(tabWithError)) {
 				element.click();
 				pageErrorValidator();
 			}
@@ -460,17 +497,14 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 		return isAnyError;
 	}
 
-	@SuppressWarnings("deprecation")
 	public void verifyNewInstituteCreationSuccess(InstitutionCreation instution) {
 		if (!verifyErrorsOnInstitutePage()) {
 			SwitchToDefaultFrame();
 			enterNewInstitutionName(instution);
 			searchNewInstitution();
+			SimulatorUtilities.wait(10000);
 			for (MCWebElement element : resultTableRow.getElements()) {
-				System.out.println(instution.getInstitutionName());
-				System.out.println(instution.getInstitutionCode());
-				System.out.println(element.getText());
-				Assert.assertTrue(element.getText().contains(
+			Assert.assertTrue(element.getText().contains(
 						instution.getInstitutionName()));
 				Assert.assertTrue(element.getText().contains(
 						instution.getInstitutionCode()));
@@ -482,9 +516,8 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 		MapUtils.fnSetInputDataToInputMap("InstitutionName",
 				MapUtils.fnGetInputDataFromMap("InstitutionName") + " ["
 						+ instutionCreation.getInstitutionCode() + "]");
-		logger.info("***************************InstitutionName*******************************"
-				+ MapUtils.fnGetInputDataFromMap("InstitutionName"));
-		MapUtils.fnSetInputDataToInputMap("InstitutionCode",
+		
+			MapUtils.fnSetInputDataToInputMap("InstitutionCode",
 				instutionCreation.getInstitutionCode());
 	}
 
@@ -492,22 +525,11 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 		enterValueinTextBox(institutionName, institute.getInstitutionName());
 	}
 
-	public void Save() {
+	public void save() {
 		clickWhenClickable(saveBtn);
 		waitForLoaderToDisappear();
 	}
-
-	@SuppressWarnings("deprecation")
-	public boolean agentPortalSupport() {
-		boolean getAgentPortal = false;
-		if (true == checkAgentPortalSupport()) {
-			Assert.assertTrue(isElementPresent(agentPortaltab));
-			clickWhenClickable(agentPortaltab.getElements().get(0));
-			getAgentPortal = true;
-		}
-		return getAgentPortal;
-	}
-
+	
 	public void provideInstitutionType(InstitutionCreation institution) {
 		try {
 			if (institution.getInstitutionType().equalsIgnoreCase(
@@ -524,7 +546,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 				checkCredit();
 			}
 		} catch (Exception e) {
-			logger.error("Error in selecting intitutionType "
+			logg.error("Error in selecting intitutionType "
 					+ institution.getInstitutionType() + ":::" + e);
 		}
 	}
@@ -532,7 +554,6 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	public void provideAdaptiveAuthentication() {
 		selectCheckBox(adaptiveEcommChkBx, "adaptiveEcomm");
 		selectCheckBox(mpinChkBx, "mpin");
-		selectCheckBox(issuerSmsProviderChkBx, "issuerSmsProvider");
 	}
 
 }

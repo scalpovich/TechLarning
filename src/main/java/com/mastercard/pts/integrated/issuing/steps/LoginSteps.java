@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.configuration.AppEnvironment;
 import com.mastercard.pts.integrated.issuing.configuration.Portal;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
@@ -62,8 +63,8 @@ public class LoginSteps extends AbstractBaseFlows {
 	
 	@Autowired
 	private KeyValueProvider provider;
-	
-	
+
+	public UserManagementSteps user;
 	
 	public LoginCardholder loginCardHolderProvider;
 	
@@ -173,8 +174,11 @@ public class LoginSteps extends AbstractBaseFlows {
 				excelTestData.fnSetCurrentStoryTestData(strStoryName);
 			}
 		}
-		loginflows.Login(userPortal, userType);
-
+		
+		if(userType.contains("Bank"))
+			user.givenUserIsLoggedInCustomerPortal();
+		else
+			user.givenUserIsLoggedInInstitution();
 	}
 
 	@Override

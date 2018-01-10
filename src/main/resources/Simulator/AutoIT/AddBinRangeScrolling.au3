@@ -9,4 +9,12 @@
 #ce ----------------------------------------------------------------------------
 
 ; Script Start - Add your code below here
-	WinActivate("Add BIN range", "General")
+#include <AutoItConstants.au3>
+
+
+	WinActivate("Add BIN Range", "General")
+	ControlClick("Add BIN Range", "", "[NAME:Text2]")
+    Send("{SHIFTDOWN}")
+	Send("{TAB}")
+	Send("{TAB}")
+	Send("{SHIFTUP}")
