@@ -124,9 +124,9 @@ When User fills Device Joining and Membership Fee Plan for prepaid product
 When User fills Device Event Based Fee Plan for prepaid product
 When User fills Device Plan for "prepaid" "magnetic stripe" card with no pin
 When user fills Merchant Category Group
-When create wallet Plan for "prepaid" product and program "Retail General Purpose Card [4]" with usage "Open Loop"
-When create wallet Plan for "prepaid" product and program "Retail General Purpose Card [4]" with usage "Closed Loop"
-When fills Program section for prepaid product and program Retail General Purpose Card [4]
+When create wallet Plan for "prepaid" product and program "Corporate General Purpose Card [8]" with usage "Open Loop"
+When create wallet Plan for "prepaid" product and program "Corporate General Purpose Card [8]" with usage "Closed Loop"
+When fills Program section for prepaid product and program Corporate General Purpose Card [8]
 When User fills Business Mandatory Fields Screen for prepaid product with Corporate
 When User fills Device Range section for prepaid product
 When add menus to access card holder portal
@@ -151,9 +151,9 @@ When User fills Device Joining and Membership Fee Plan for prepaid product
 When User fills Device Event Based Fee Plan for prepaid product
 When User fills Device Plan for "prepaid" "emv" card with no pin
 When user fills Merchant Category Group
-When create wallet Plan for "prepaid" product and program "Retail General Purpose Card [4]" with usage "Open Loop"
-When create wallet Plan for "prepaid" product and program "Retail General Purpose Card [4]" with usage "Closed Loop"
-When fills Program section for prepaid product and program Retail General Purpose Card [4]
+When create wallet Plan for "prepaid" product and program "Corporate General Purpose Card [8]" with usage "Open Loop"
+When create wallet Plan for "prepaid" product and program "Corporate General Purpose Card [8]" with usage "Closed Loop"
+When fills Program section for prepaid product and program Corporate General Purpose Card [8]
 When User fills Business Mandatory Fields Screen for prepaid product with Corporate
 When User fills Device Range section for prepaid product
 When add menus to access card holder portal
