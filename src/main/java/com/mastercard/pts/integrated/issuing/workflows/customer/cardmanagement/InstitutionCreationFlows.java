@@ -19,10 +19,9 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 	InstitutionCreationPageNew institute;
 
 	@Autowired
-	LoginPage loginPage;
+	LoginPage lgnPage;
 
 	public void institutionCreation(InstitutionCreation institutionCreation) {
-
 		institute = navigator.navigateToPage(InstitutionCreationPageNew.class);
 		institute.clickAddBtn();
 		institute.provideInstitutionDetails(institutionCreation);
@@ -33,7 +32,7 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 		institute.navigateToTab("Address");
 		institute.providePersonalDetailsAdressTab(institutionCreation);
 		institute.provideAddressDetails(institutionCreation);
-		institute.Save();
+		institute.save();
 	}
 
 	public void checkSuccessfullInstitutionCreation(
@@ -42,7 +41,7 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 	}
 
 	public void selectNewlyCreatedInstitutionFlows() {
-		loginPage.loginTo(MapUtils.fnGetInputDataFromMap("UserId"),
+		lgnPage.loginTo(MapUtils.fnGetInputDataFromMap("UserId"),
 				MapUtils.fnGetInputDataFromMap("Password"));
 		selectInstitute();
 	}

@@ -405,9 +405,10 @@ public class DeviceSalePage extends AbstractBasePage {
 		selectApplicantProfession(details.getApplicantProfession());
 	}
 
-	public void fillApplicationDetails2AndSubmit(String transactionDetails) {
+	public void fillApplicationDetails2AndSubmit(String isInitialLoad, String transactionDetails) {
 		clickNextButton();
-		enterTransactionDetails(transactionDetails);
+		if ("YES".equalsIgnoreCase(isInitialLoad))
+			enterTransactionDetails(transactionDetails);
 		SimulatorUtilities.wait(3000);
 		clickSubmitButton();
 	}
@@ -442,7 +443,7 @@ public class DeviceSalePage extends AbstractBasePage {
 		fillApplicationDetails1(details);
 		selectDocument1Type(details.getDocument1Type());
 		enterLegalId1(details.getLegalId());
-		fillApplicationDetails2AndSubmit(details.getInitialLoadTxnDetails());
+		fillApplicationDetails2AndSubmit(details.getIsInitialLoad(), details.getInitialLoadTxnDetails());
 	}
 
 	public void deviceSaleWithoutRegistration(DeviceSale details) {
@@ -469,7 +470,7 @@ public class DeviceSalePage extends AbstractBasePage {
 		fillApplicationDetails1(details);
 		selectDocument1Type(details.getDocument1Type());
 		enterLegalId1(details.getLegalId());
-		fillApplicationDetails2AndSubmit(details.getInitialLoadTxnDetails());
+		fillApplicationDetails2AndSubmit(details.getIsInitialLoad(), details.getInitialLoadTxnDetails());
 	}
 
 	public void deviceSaleThroughNewProgram(DeviceSale details) {
@@ -487,7 +488,8 @@ public class DeviceSalePage extends AbstractBasePage {
 			selectApplicantProfession(details.getApplicantProfession());
 			clickNextButton();
 		}
-		enterTransactionDetails(details.getInitialLoadTxnDetails());
+		if ("YES".equalsIgnoreCase(details.getIsInitialLoad()))
+			enterTransactionDetails(details.getInitialLoadTxnDetails());
 		SimulatorUtilities.wait(3000);
 		clickSubmitButton();
 	}
