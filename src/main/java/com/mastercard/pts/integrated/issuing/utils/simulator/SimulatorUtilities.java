@@ -6,11 +6,17 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
@@ -31,7 +37,45 @@ public class SimulatorUtilities {
 	private static final String SIKULI_MESSAGE = "***** Sikuli click operation is performed on : ";
 	private static final String SIKULI_DOUBLECLICK_MESSAGE = "***** Sikuli double click operation is performed on : ";
 	private static final String SETTEXT_OPERATION = "***** SetText operation is performed. Text set to : ";
+	
+    private FileInputStream fis = null;
+    private FileOutputStream fos = null;
+    private XSSFWorkbook workbook = null;
+    private XSSFSheet sheet = null;
+    private XSSFRow row = null;
+    private XSSFCell cell = null;
 
+    public void setCellData(String xlFilePath, String sheetName, String colName, String value) {
+      try {
+        fis = new FileInputStream(xlFilePath);
+   		workbook = new XSSFWorkbook(fis);
+        int colNum = -1;
+        sheet  = workbook.getSheet(sheetName);
+        row = sheet.getRow(0);
+        for (int i = 0; i < row.getLastCellNum(); i++) {
+            if (row.getCell(i).getStringCellValue().trim().contains(colName)) {
+                 colNum = i;
+                 break;
+                }
+            }
+        sheet.autoSizeColumn(colNum);
+        row = sheet.getRow(1);
+        if(row==null)
+        	row = sheet.createRow(1);
+        cell = row.getCell(colNum);
+        if(cell == null)
+            cell = row.createCell(colNum);
+        cell.setCellValue(value);
+        fis.close();
+        fos = new FileOutputStream(xlFilePath);
+        workbook.write(fos);
+        fos.close();
+        }
+        catch (Exception ex) {
+            logger.info("Exception "+ ex);
+        }
+    }
+	
 	public void pressTab() {
 		pressTab(numberOfTabs);
 	}
