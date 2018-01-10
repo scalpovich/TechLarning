@@ -79,6 +79,18 @@ public class LoadFromFileUploadSteps {
 		transaction.getAdjustmentTransactionDetails().add(details);
 		loadFromFileUploadWorkflow.createAdjustmentTransaction(transaction);
 	}
+
+	@When("user performs adjustment transaction for second wallet")
+	public void whenUserPerformsAdjustmentTransactionForAllWallets(){
+		Device device = context.get(ContextConstants.DEVICE);
+		AdjustmentTransaction transaction = AdjustmentTransaction.createWithProvider(provider);
+		AdjustmentTransactionDetails details = AdjustmentTransactionDetails.createTransactionWithDetails();
+		details.setDeviceNumber(device.getDeviceNumber());
+		details.setWalletNumber(device.getWalletNumber2());
+		transaction.getAdjustmentTransactionDetails().add(details);
+		loadFromFileUploadWorkflow.createAdjustmentTransaction(transaction);
+	}
+
 	@Given("in batch trace history transaction is successful")
 	@Then("in batch trace history transaction is successful")
 	@When("in batch trace history transaction is successful")

@@ -367,6 +367,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 					String currencyName = data[0].trim();
 					if (getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency").equalsIgnoreCase(currencyName))
 					{
+						device.setWalletNumber2(getCellTextByColumnNameInEmbeddedTab(j, "Wallet Number"));
 						count++;
 						break;
 					}
