@@ -394,7 +394,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(6000);
 		executeAutoITExe("ImportCardProfile.exe "+ filePath );
 	}
-
 	private void selectTestCaseFromImportedCases(String testcaseName)
 	{
 		MiscUtils.reportToConsole("******************** selectTestCaseFromImportedCases Started ******************");
@@ -420,7 +419,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation(TEST_CASES);
 		performDoubleClickOperation("RunTest");
 		wait(5000);
-		executeAutoITExe("ActivateStartTestDialogAndClose.exe");
+		activateMas(transaction);
+		winiumClickOperation("OK");
 	}
 
 	public String verifyResults()
@@ -515,7 +515,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			aRN = addAcquirerReferenceData(trimmedRrn);
 			MiscUtils.reportToConsole("rRN :  trimmedRrn : aRN  -  " + rRN  + " : - : "  + trimmedRrn  + " : - :"  + aRN  );
 			updatePanNumber(SimulatorConstantsData.SAMPLE_PAN_NUMBER);
-			performClickOperation(MESSAGE_TYPE_INDICATOR); // selecting the table
+			performClickOperation(MESSAGE_TYPE_INDICATOR); // selecting the
+															// table
 			pressPageUp();
 			clickMiddlePresentmentAndMessageTypeIndicator();
 			searchForImageAndPerformDoubleClick("Forwarding Institution Identification Code");
