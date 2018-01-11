@@ -69,6 +69,9 @@ public class AcceptancePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".SuccessMessageTxt")
 	private MCWebElement acceptanceMessage;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Download in xls']")
+	private MCWebElement downloadinXLSBtn;
 
 	public void verifyUiOperationStatus() {
 		logger.info("Acceptance");
@@ -109,6 +112,11 @@ public class AcceptancePage extends AbstractBasePage {
 
 	public void clickModifyButton() {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(modifyBtn)).click();
+	}
+	
+	public void clickDownloadinXLSButton() {
+		new WebDriverWait(driver(), timeoutInSec).until(
+				WebElementUtils.elementToBeClickable(downloadinXLSBtn)).click();
 	}
 
 	public void enterQuantityRecieved(String quantityOrdered) {
@@ -151,6 +159,7 @@ public class AcceptancePage extends AbstractBasePage {
 		enterQuantityRecieved(details.getQuantityOrdered());
 		enterCurrentDateddMMyyyy(DateUtils.currentDateddMMyyyy());
 		enterMemo(details.getMemo());
+		clickDownloadinXLSButton();
 		clickSubmitButton();
 	}
 }
