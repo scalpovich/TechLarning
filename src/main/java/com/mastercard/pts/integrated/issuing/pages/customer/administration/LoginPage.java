@@ -97,6 +97,9 @@ public class LoginPage extends AbstractBasePage  {
 	@PageElement(findBy = FindBy.ID, valueToFind="txtAnswer2")
 	private MCWebElement chpSignUpSeqQueTwoAnsInpt;
 	
+	@PageElement(findBy = FindBy.ID, valueToFind="oldTxnPassword")
+	private MCWebElement currentPassword;
+	
 	@PageElement(findBy = FindBy.ID, valueToFind="mpts_cardHolderPortal_button_submit")
 	private MCWebElement signUpConfirmBtn;
 	
@@ -186,6 +189,13 @@ public class LoginPage extends AbstractBasePage  {
 		selectByText(chpSignUpSeqQueTwo,secondSequrityQst);		
 		enterText(chpSignUpSeqQueTwoAnsInpt,secondSequerAnswer);
 		confirmSignUpCardHolder();		
+	}
+	
+	public void createTransPassword(String currentPass,String newTrnPass){
+		enterText(currentPassword,currentPass);
+		enterText(chpSignUpTranPass,newTrnPass);
+		enterText(chpSignUpTranPassConfirm,newTrnPass);
+		confirmSignUpCardHolder();			
 	}
 	public void confirmSignUpCardHolder(){
 		ClickButton(signUpConfirmBtn);

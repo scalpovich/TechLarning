@@ -13,7 +13,13 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.configuration.AppEnvironment;
 import com.mastercard.pts.integrated.issuing.configuration.Portal;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.LoginCardholder;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceCreateDevicePage;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -36,7 +42,10 @@ public class LoginSteps extends AbstractBaseFlows {
 
 	@Autowired
 	public QMRReportFlows qmrReportFlows;
-
+	
+	@Autowired
+	private LoginWorkflow loginWorkflow;
+	
 	@Autowired
 	private ReadTestDataFromExcel excelTestData;
 
@@ -47,10 +56,28 @@ public class LoginSteps extends AbstractBaseFlows {
 	public LoginFlows loginflows;
 	
 	@Autowired
+	public DeviceCreateDevicePage deviceCreationPage;
+	
+	@Autowired
+	private TestContext context;
+	
+	@Autowired
+	private KeyValueProvider provider;
+
 	public UserManagementSteps user;
 	
-	
 	public LoginCardholder loginCardHolderProvider;
+	
+	
+	@Given("login with chp")
+	public void loginInCardholder(){			
+		getFinder().getWebDriver().manage().deleteAllCookies();
+		getFinder().getWebDriver().get("http://ech-10-168-129-135.mastercard.int:25003/integratedIssuing-cardholderPortal/WebPages/Login.jsp");
+		Device device = context.get(ContextConstants.DEVICE);
+		loginCardholder(device.getClientCode(),device.getClientCode());
+		switchToWindowCHP();
+		CustomUtils.ThreadDotSleep(1100);
+	}
 
 	@Given("login to customer portal as newuser")
 	public void LoginForNewUser() {
@@ -106,19 +133,28 @@ public class LoginSteps extends AbstractBaseFlows {
 		}
 	}
 
-	@Given("open card holder application")
+	@Given("open cardholder application")
 	public void openCardHolderApplication() {
 		loginFlows.openCardHolderApplication();
 	}
 
-	@Given("first time card holder registeration for login")
-	public void firstTimeCardRegisteration() {
+	@Given("cardholder registration for login")
+	public void firstTimeCardRegistration() {
 		loginFlows.signUpCardHolderUser(loginCardHolderProvider.getPassWord(),
 				loginCardHolderProvider.getCardHolderTransPassword(), loginCardHolderProvider.getFirstSequrityQst(),
 				loginCardHolderProvider.getFirstSequrityAnsw(), loginCardHolderProvider.getSecondSequrityQst(),
 				loginCardHolderProvider.getSecondSequrityAnsw());
 
 	}
+	
+	@Then("cardholder signup with valid details")
+	public void cardHolderSignUp(){
+		Device device = context.get(ContextConstants.DEVICE);
+		loginWorkflow.login(device.getClientCode(), device.getClientCode());
+		loginFlows.signUpCardHolderPortal(device.getClientCode(),device.getNewTransPassword());
+		switchToNewWindow();
+	}
+	
 
 	@Then("switch to new window")
 	public void switchToNewWindow() {
