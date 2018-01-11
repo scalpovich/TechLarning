@@ -7,6 +7,8 @@ public class AdministrationNav {
 	public static final String L1_SETUP = "SYS000";
 
 	public static final String L2_ROLE = "ADS001";
+	
+	public static final String L2_CARD_HOLDER_CONFIG = "ADS006";
 
 	public static final String L2_USER = "ADS002";
 

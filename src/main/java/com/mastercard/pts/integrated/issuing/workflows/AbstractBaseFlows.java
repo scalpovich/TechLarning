@@ -69,6 +69,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.Walle
 import com.mastercard.pts.integrated.issuing.pages.customer.processingcenter.ProcessingCenterPage;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.workflows.customer.administration.CardHolderPortalMenuConfigWorkFlow;
 
 public class AbstractBaseFlows extends AbstractBasePage {
 
@@ -261,10 +262,14 @@ public class AbstractBaseFlows extends AbstractBasePage {
 
 	@Autowired
 	public CustomerPortalHomePage customerPortalHomePage;
-
+	
 	@Autowired
 	public CustomerPortalUserCreationPage customerPortalUserCreationPage;
-
+	
+	@Autowired
+	public CardHolderPortalMenuConfigWorkFlow chpMenuConfig;
+	
+	
 	public void selectInstitute() {
 		institutionSelectionPage.selectInstitution(MapUtils
 				.fnGetInputDataFromMap("InstitutionName"));
