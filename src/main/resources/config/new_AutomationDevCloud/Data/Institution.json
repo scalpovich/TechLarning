@@ -1,0 +1,32 @@
+{  
+   "name":"AUTO",
+   "code":"121212",
+   "abbreviation":"AUTO",
+   "debit":true,
+   "credit":true,
+   "prepaid":true,
+   "agentPortalSupport":true,
+   "collectPortalSupport":true,
+   "defaultLanguage":"English [en]",
+   "timeZone":"GMT",
+   "ccNumber":"020654579",
+   "ccEmail":"prabhu.ramaswamy@mastercard.com",
+   "contactName":"Test User",
+   "phone":"1234567890",
+   "mobileNum":"1234567890",
+   "mobileCountryCode":"IND [+91]",
+   "email":"prabhu.ramaswamy@mastercard.com",
+   "address1":"Pune",
+   "address2":"Pune",
+   "country":"INDIA [356]",
+   "state":"MAHARASHTRA [MAH]",
+   "city":"PUNE [PUN]",
+   "postalCode":{  
+      "customerPortal":"411021",
+      "agentPortal":"411014",
+      "collectPortal":"411014"
+   },
+   "portalAdminName":"Admin",
+   "institutionCurrency":"INR [356]",
+   "portalAdminId":"Admin"
+}

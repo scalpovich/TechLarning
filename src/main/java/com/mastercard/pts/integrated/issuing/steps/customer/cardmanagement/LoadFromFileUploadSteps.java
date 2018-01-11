@@ -57,6 +57,7 @@ public class LoadFromFileUploadSteps {
 		batch.setProductType(ProductType.fromShortName(type));
 		HashMap<String, String> hm = (HashMap<String, String>) loadFromFileUploadWorkflow.processUploadBatch(batch);
 		assertEquals("SUCCESS [2]",hm.get("BatchStatus"));	
+		jobId =hm.get("JobId");
 	}
 
 	@When("user creates and uploads transaction file")
@@ -70,6 +71,7 @@ public class LoadFromFileUploadSteps {
 
 	@Given("user performs adjustment transaction")
 	@When("user performs adjustment transaction")
+	@Then("user performs adjustment transaction")
 	public void whenUserPerformsAdjustmentTransaction(){
 		Device device = context.get(ContextConstants.DEVICE);
 		AdjustmentTransaction transaction = AdjustmentTransaction.createWithProvider(provider);
@@ -126,7 +128,6 @@ public class LoadFromFileUploadSteps {
 		String filePath =  "CEEData.txt";
 		String fileData = transWorkflow.getFileData(filePath);
 		fileData.split(" ");
-//		notFileName = loadFromFileUploadWorkflow.getFileNameFromCEEFile(fileData);
 		notFileName = loadFromFileUploadWorkflow.getFileNameFromCEEFile(fileData);
 		assertNotNull("IPM fileName is not null", notFileName);
 	}
