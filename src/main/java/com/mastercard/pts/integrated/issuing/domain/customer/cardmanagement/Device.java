@@ -28,8 +28,17 @@ public class Device {
 	private static final String ND_VIP	 = 	"ND_VIP";
 	private static final String ND_MIDDLE_NAME_2 = "ND_MIDDLE_NAME_2";
 	private static final String ND_ENCODED_NAME = "ND_ENCODED_NAME";
+	private static final String CHP_NEW_PASSWORD = "CHP_NEW_PASSWORD";
+	private static final String PRODUCT_TYPE = "PRODUCT_TYPE";
+	private static final String DATE_TYPE = "DATE_TYPE";
+	
 	
 
+	private String currentTransPassword;
+	private String newTransPassword;
+	private String confirmNewTransPassword;
+	
+	
 	private String corporateClientCode;
 	private String appliedForProduct;
 	private String applicationType;
@@ -46,6 +55,7 @@ public class Device {
 	private Address currentAddress;
 	private String clientCode;
 	private String walletNumber;
+	private String newWalletNumber;
 	private String deviceNumber;
 	private String existingDeviceNumber;
 	private String photoIndicator;
@@ -75,6 +85,8 @@ public class Device {
 	private String encodedName;
 	private String middleName2;
 	private String serviceCode;
+	private String productType;
+	private String transactionDateType;
 	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -96,6 +108,11 @@ public class Device {
 		device.setEncodedName(provider.getString(ND_ENCODED_NAME));
 		device.setOtherInfoStatementPreference(provider.getString(ND_OTHERINFO_STATEMENT_PREFERENCE));
 		device.setOtherInfoFaxNo(provider.getString(ND_OTHERINFO_FAX_NO));
+		device.setNewTransPassword(provider.getString(CHP_NEW_PASSWORD));
+		device.setConfirmNewTransPassword(provider.getString(CHP_NEW_PASSWORD));	
+		device.setProductType(provider.getString(PRODUCT_TYPE));
+		device.setTransactionDateType(provider.getString(DATE_TYPE));
+		
 		return device;
 	}
 	
@@ -110,7 +127,31 @@ public class Device {
 		device.setOtherInfoSmsAlertRequired(provider.getString(ND_OTHERINFO_SMS_ALERT_REQUIRED));
 		return device;
 	}
+	
+	public String getProductType() {
+		return productType;
+	}
 
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
+	
+	public String getCurrentTransPassword() {
+		return currentTransPassword;
+	}
+
+	public void setCurrentTransPassword(String currentTransPassword) {
+		this.currentTransPassword = currentTransPassword;
+	}
+
+	public String getNewTransPassword() {
+		return newTransPassword;
+	}
+
+	public void setNewTransPassword(String newTransPassword) {
+		this.newTransPassword = newTransPassword;
+	}
+	
 	public String getExistingDeviceNumber() {
 		return existingDeviceNumber;
 	}
@@ -119,6 +160,14 @@ public class Device {
 		this.existingDeviceNumber = existingDeviceNumber;
 	}
 
+	public String getConfirmNewTransPassword() {
+		return confirmNewTransPassword;
+	}
+
+	public void setConfirmNewTransPassword(String confirmNewTransPassword) {
+		this.confirmNewTransPassword = confirmNewTransPassword;
+	}
+	
 	public String getEncodedName() {
 		return encodedName;
 	}
@@ -280,7 +329,16 @@ public class Device {
 	public void setClientCode(String clientCode) {
 		this.clientCode = clientCode;
 	}
+	
 
+	public String getNewWalletNumber() {
+		return newWalletNumber;
+	}
+
+	public void setNewWalletNumber(String newWalletNumber) {
+		this.newWalletNumber = newWalletNumber;
+	}
+	
 	public String getWalletNumber() {
 		return walletNumber;
 	}
@@ -489,5 +547,12 @@ public class Device {
 		this.serviceCode = serviceCode;
 	}
 
+	public String getTransactionDateType() {
+		return transactionDateType;
+	}
+
+	public void setTransactionDateType(String transactionDateType) {
+		this.transactionDateType = transactionDateType;
+	}
 
 }

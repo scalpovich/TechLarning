@@ -24,9 +24,9 @@ public class ConstantData {
 	
 	
 	public static final String VENDOR_MASTER_ADDRESS="PUNE";
-	public static final String  VENDOR_MASTER_COUNTRY="INDIA [356]";
-	public static final String  VENDOR_MASTER_CONTACT_PERSON="TESTTTRE";
-	public static final String  VENDOR_MASTER_MOBILE_COUNTRY_CODE="IND [+91]";
+	public static final String VENDOR_MASTER_COUNTRY="INDIA [356]";
+	public static final String VENDOR_MASTER_CONTACT_PERSON="TESTTTRE";
+	public static final String VENDOR_MASTER_MOBILE_COUNTRY_CODE="IND [+91]";
 	public static final String VENDOR_MASTER_MOBILE_NUMBER="67890765";
 	public static final String VENDOR_MASTER_PHONE_NO="656789765";
 	public static final String VENDOR_MASTER_EMAIL="a@c.com";
@@ -38,7 +38,7 @@ public class ConstantData {
 	public static final String EXCEPTION = "Exception occurred {}";
 	public static final String SIKUKI_EXCEPTION = "Image could not be clicked";
 	public static final String MESSAGE_CONSTANT = "Simulator path being set :  ";
-	public static final String  IS_PIN_REQUIRED = "TRUE";
+	public static final String IS_PIN_REQUIRED = "TRUE";
 	
 	public static final String  TRANSACTION_NAME = "transaction";
 	public static final String  DATAELEMENT_037 = "data037";

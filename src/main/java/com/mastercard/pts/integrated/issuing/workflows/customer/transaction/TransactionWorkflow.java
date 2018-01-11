@@ -738,10 +738,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void selectMCPSLicense(){
 		wait(5000);
-		executeAutoITExe("ActivateLicenseProfiles.exe");
+		executeAutoITExe("ActivateLicenseProfiles.exe");		
+		winiumLicenseSelectOperation("License profiles");		
 		performClickOperation("License profiles");
-		performClickOperation("Select");
-		wait(5000);
+		performClickOperation("Select");		
+		wait(10000);
 	}
 
 	public void selectLicenseAndConfigure(String licenseTypeToSelect, String licenseFor)
@@ -1190,6 +1191,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
 		return page.searchTransactionWithArnAndGetStatus(arnNumber, ts);
 	} 
+	
+	public String searchTransactionWithDeviceAndGetStatus(Device device, TransactionSearch ts){
+		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
+		return page.searchTransactionWithDeviceAndGetStatus(device, ts);
+	} 
 
 	public String getDecimalisationTableValue(String text)
 	{
@@ -1218,6 +1224,12 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		lst.get(0).click();
 	}
 
+	private void winiumLicenseSelectOperation(String locator) {
+		List<WebElement> lst = winiumDriver.findElements(By.name(locator));
+		MiscUtils.reportToConsole("winiumLicenseSelectOperation Count : " + lst);
+		lst.get(0).click();
+	}
+	
 	private void winiumClickOperation(String locator) {
 		logger.info(WINIUM_LOG_COMMENT + locator);
 		winiumDriver.findElementByName(locator).click();

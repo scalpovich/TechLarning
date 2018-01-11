@@ -26,7 +26,8 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP, CardManagementNav.L2_PROGRAM })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
+		CardManagementNav.L1PROGRAM_SETUP, CardManagementNav.L2_PROGRAM })
 public class ProgramPage extends AbstractBasePage {
 	final Logger logger = LoggerFactory.getLogger(ProgramPage.class);
 
@@ -77,6 +78,9 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:walletPlanCode1:input:dropdowncomponent")
 	private MCWebElement walletPlanPlan1DDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:walletPlanCode2:input:dropdowncomponent")
+	private MCWebElement walletPlanPlan2DDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanCode1:input:dropdowncomponent")
 	private MCWebElement devicePlanPlan1DDwn;
@@ -183,12 +187,18 @@ public class ProgramPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:referenceCurrency:input:dropdowncomponent")
 	private MCWebElement ReferenceCurrency;
 
+	/*
+	 * @PageElement(findBy = FindBy.NAME, valueToFind =
+	 * "view:cashLimitVariable:input:inputTextField") private MCWebElement
+	 * PercentageofCreditLimit;
+	 */
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:cashLimitCycleIndicatior:input:dropdowncomponent")
 	private MCWebElement cashLimitResetDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:addOnLimitCycleIndicatior:input:dropdowncomponent")
 	private MCWebElement addOnLimitResetDDwn;
-
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:refundInCurrency:input:dropdowncomponent")
 	private MCWebElement refundInCurrencyDDwn;
 
@@ -210,6 +220,11 @@ public class ProgramPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:addOnLimitCycleIndicatior:input:dropdowncomponent")
 	private MCWebElement AddOnLimitResetDDwn;
 
+	/*
+	 * @PageElement(findBy = FindBy.NAME, valueToFind = "Textbox_NAME") private
+	 * MCWebElement NEXT2;
+	 */
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "buttons:finish")
 	private MCWebElement FinishBtn;
 
@@ -230,12 +245,18 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//following-sibling::td[4]/span/a")
 	private MCWebElement editProgram;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Save']")
 	public MCWebElement save;
-
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:loyaltyPlanCode:input:dropdowncomponent")
 	private MCWebElement loyaltyPlanDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:allowFtIncOnClosedUsage:checkBoxComponent")
+	private MCWebElement receiveCheckBx;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:allowFtOutOnClosedUsage:checkBoxComponent")
+	private MCWebElement sendCheckBx;
 
 	public void addProgram(String programCode) {
 		WebElementUtils.enterText(programTxt, programCode);
@@ -264,9 +285,9 @@ public class ProgramPage extends AbstractBasePage {
 	public void enterNoOfCurrencyAllowed(String noOfCurrencyAllowed) {
 		WebElementUtils.enterText(noOfCurrencyAllowedTxt, noOfCurrencyAllowed);
 	}
-
+	
 	public void selectCurrencyConversionBy(String currencyConversionBy) {
-		if (currencyConversionByDDwn.isEnabled())
+		if(currencyConversionByDDwn.isEnabled())
 			WebElementUtils.selectDropDownByVisibleText(currencyConversionByDDwn, currencyConversionBy);
 	}
 
@@ -290,13 +311,25 @@ public class ProgramPage extends AbstractBasePage {
 		WebElementUtils.enterText(numberOfLoadsAllowedWithoutKycTxt, numberOfLoadsAllowedWithoutKyc);
 	}
 
+	public void receiveFundTransferForUsage(){
+		WebElementUtils.checkCheckbox(receiveCheckBx, true);
+	}
+	
+	public void sendFundTransferForUsage(){
+		WebElementUtils.checkCheckbox(sendCheckBx, true);
+	}
+
 	public void selectWalletPlanPlan1(String walletPlanPlan1) {
 		WebElementUtils.selectDropDownByVisibleText(walletPlanPlan1DDwn, walletPlanPlan1);
 	}
-
+	
+	public void selectWalletPlanPlan2(String walletPlanPlan1) {
+		WebElementUtils.selectDropDownByVisibleText(walletPlanPlan2DDwn, walletPlanPlan1);
+	}
+	
 	public void selectRefundInCurrency(String refundInCurrency) {
-		if (refundInCurrencyDDwn.isEnabled())
-			WebElementUtils.selectDropDownByVisibleText(refundInCurrencyDDwn, refundInCurrency);
+		if(refundInCurrencyDDwn.isEnabled())
+		WebElementUtils.selectDropDownByVisibleText(refundInCurrencyDDwn, refundInCurrency);
 	}
 
 	public void selectDevicePlanPlan1DDwn(String devicePlanPlan1) {
@@ -322,14 +355,15 @@ public class ProgramPage extends AbstractBasePage {
 			selectProduct(program.getProduct());
 			selectProgramType(program.getProgramType());
 			selectBaseCurrency(program.getBaseCurrency());
-			if (program.getProgramType().contains("Multi")) {
-				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
+			program.setProgramCodeDevice(program.getDescription()+" "+"["+program.getProgramCode()+"]");
+			logger.info("Program added :"+program.getDescription()+" "+"["+program.getProgramCode()+"]");
+			if (program.getProgramType().contains("Multi")){
+				addNumberOfCurrency(program.getNoOfCurrencyAllowed());			
 				selectRefundInCurrency(program.getRefundInCurrency());
 				selectWalletToWalletTransferType(program.getWalletToWalletTransferType());
 				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
 					selectReferenceCurrency(program.getReferenceCurrency());
-			}
-			if (!productType.equalsIgnoreCase(ProductType.DEBIT))
+			}if (!productType.equalsIgnoreCase(ProductType.DEBIT))
 				selectCurrencyConversionBy(program.getCurrencyConversionBy());
 			selectCalendarStartMonth(program.getCalendarStartMonth());
 			fillExtraSections(program, productType);
@@ -338,8 +372,66 @@ public class ProgramPage extends AbstractBasePage {
 		});
 		verifyOperationStatus();
 	}
+	
+	public void addProgramForMultiWallet(Program program, String productType) {
+		logger.info("Add Program: {}", program.getProgramCode());
+		clickAddNewButton();
 
-	private void addNumberOfCurrency(String numberOfCurrencyAllowed) {
+		runWithinPopup("Add Program", () -> {
+			addProgram(program.getProgramCode());
+			addDescription(program.getDescription());
+			selectInterchange(program.getInterchange());
+			selectProduct(program.getProduct());
+			selectProgramType(program.getProgramType());
+			selectBaseCurrency(program.getBaseCurrency());
+			program.setProgramCodeDevice(program.getDescription()+" "+"["+program.getProgramCode()+"]");
+			logger.info("Program added :"+program.getDescription()+" "+"["+program.getProgramCode()+"]");
+			if (program.getProgramType().contains("Multi")){
+				addNumberOfCurrency(program.getNoOfCurrencyAllowed());			
+				selectRefundInCurrency(program.getRefundInCurrency());
+				selectWalletToWalletTransferType(program.getWalletToWalletTransferType());
+				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
+					selectReferenceCurrency(program.getReferenceCurrency());
+			}if (!productType.equalsIgnoreCase(ProductType.DEBIT))
+				selectCurrencyConversionBy(program.getCurrencyConversionBy());
+			selectCalendarStartMonth(program.getCalendarStartMonth());
+			fillExtraSections(program, productType);
+			clickNextButton();
+			clickFinishButton();
+		});
+		verifyOperationStatus();
+	}
+	
+	public void addsProgramData(Program program, String productType) {
+		logger.info("Add Program: {}", program.getProgramCode());
+		clickAddNewButton();
+
+		runWithinPopup("Add Program", () -> {
+			addProgram(program.getProgramCode());
+			addDescription(program.getDescription());
+			selectInterchange(program.getInterchange());
+			selectProduct(program.getProduct());
+			selectProgramType(program.getProgramType());
+			selectBaseCurrency(program.getBaseCurrency());
+			program.setProgramCodeDevice(program.getDescription()+" "+"["+program.getProgramCode()+"]");
+			logger.info("Program added :"+program.getDescription()+" "+"["+program.getProgramCode()+"]");
+			if (program.getProgramType().contains("Multi")){
+				addNumberOfCurrency(program.getNoOfCurrencyAllowed());			
+				selectRefundInCurrency(program.getRefundInCurrency());
+				selectWalletToWalletTransferType(program.getWalletToWalletTransferType());
+				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
+					selectReferenceCurrency(program.getReferenceCurrency());
+			}if (!productType.equalsIgnoreCase(ProductType.DEBIT))
+				selectCurrencyConversionBy(program.getCurrencyConversionBy());
+			selectCalendarStartMonth(program.getCalendarStartMonth());
+			fillExtraSection(program, productType);
+			clickNextButton();
+			clickFinishButton();
+		});
+		verifyOperationStatus();
+	}
+
+	private void addNumberOfCurrency(String numberOfCurrencyAllowed){
 		noOfCurrencyAllowedTxt.clearField();
 		WebElementUtils.acceptAlert(driver());
 		enterNoOfCurrencyAllowed(numberOfCurrencyAllowed);
@@ -349,26 +441,69 @@ public class ProgramPage extends AbstractBasePage {
 		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
 			addMaximumBalanceWithoutKyc(program.getMaximumBalanceWithoutKyc());
 			addnumberOfLoadsAllowedWithoutKyc(program.getNumberOfLoadsAllowedWithoutKyc());
+			receiveFundTransferForUsage();
+			sendFundTransferForUsage();
 			selectRefundInCurrency(program.getRefundInCurrency());
 		}
-
+		
 		clickNextButton();
-		selectWalletPlanPlan1(program.getWalletPlanPlan1());
+		selectWalletPlanPlan1(program.getFirstWalletPlan());		
 		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
 		if (!productType.equalsIgnoreCase(ProductType.DEBIT)) {
 			selectOtherPlanStatementMessagePlan(program.getOtherPlanStatementMessagePlan());
 			selectOtherPlanMarketingMessagePlan(program.getOtherPlanMarketingMessagePlan());
 		}
 
-		WebElementUtils.selectDropDownByOptionalVisibleText(dedupePlanCodeDDwn, program.getDedupPlan());
+		WebElementUtils.selectDropDownByOptionalVisibleText(dedupePlanCodeDDwn,
+				program.getDedupPlan());
 		WebElementUtils.selectDropDownByOptionalVisibleText(documentPlanCodeDDwn, program.getDocumentChecklistPlan());
 		WebElementUtils.selectDropDownByOptionalVisibleText(mccRulePlanCodeDDwn, program.getMmcRulePlan());
 
-		if (productType.equalsIgnoreCase(ProductType.PREPAID))
+		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
 			WebElementUtils.selectDropDownByOptionalVisibleText(stmtPlanCodeDDwn, program.getPrepaidStatementPlan());
+		}
+		waitForLoaderToDisappear();
 		clickNextButton();
-		if (productType.equalsIgnoreCase(ProductType.CREDIT))
+		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 			fillDataForCreditCard(program);
+		}
+	}
+	
+	private void fillExtraSection(Program program, String productType) {
+		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
+			addMaximumBalanceWithoutKyc(program.getMaximumBalanceWithoutKyc());
+			addnumberOfLoadsAllowedWithoutKyc(program.getNumberOfLoadsAllowedWithoutKyc());
+			receiveFundTransferForUsage();
+			sendFundTransferForUsage();
+			selectRefundInCurrency(program.getRefundInCurrency());
+		}
+		
+		clickNextButton();
+		
+		logger.info("Assign first Wallet :" + program.getFirstWalletPlan());
+		selectWalletPlanPlan1(program.getFirstWalletPlan());
+		logger.info("Assign second Wallet :" + program.getSecondWalletPlan());		
+		selectWalletPlanPlan2(program.getSecondWalletPlan());
+		
+		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
+		if (!productType.equalsIgnoreCase(ProductType.DEBIT)) {
+			selectOtherPlanStatementMessagePlan(program.getOtherPlanStatementMessagePlan());
+			selectOtherPlanMarketingMessagePlan(program.getOtherPlanMarketingMessagePlan());
+		}
+
+		WebElementUtils.selectDropDownByOptionalVisibleText(dedupePlanCodeDDwn,
+				program.getDedupPlan());
+		WebElementUtils.selectDropDownByOptionalVisibleText(documentPlanCodeDDwn, program.getDocumentChecklistPlan());
+		WebElementUtils.selectDropDownByOptionalVisibleText(mccRulePlanCodeDDwn, program.getMmcRulePlan());
+
+		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
+			WebElementUtils.selectDropDownByOptionalVisibleText(stmtPlanCodeDDwn, program.getPrepaidStatementPlan());
+		}
+		waitForLoaderToDisappear();
+		clickNextButton();
+		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
+			fillDataForCreditCard(program);
+		}
 	}
 
 	private void fillDataForCreditCard(Program program) {
@@ -396,10 +531,11 @@ public class ProgramPage extends AbstractBasePage {
 
 	public String enterProgramCode() {
 		waitForElementVisible(ProgramTxt);
-		if (MapUtils.fnGetInputDataFromMap("ProgramCode") == "")
+		if (MapUtils.fnGetInputDataFromMap("ProgramCode") == "") {
 			enterValueinTextBox(ProgramTxt, MapUtils.fnGetInputDataFromMap("ProgramCode"));
-		else
+		} else {
 			enterValueinTextBox(ProgramTxt, CustomUtils.randomNumbers(4));
+		}
 		return ProgramTxt.getAttribute("value");
 	}
 
@@ -476,38 +612,43 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	public void selectWalletPlan1(Program program) {
-		if (MapUtils.fnGetInputDataFromMap("WalletPlan") != null)
+		if (MapUtils.fnGetInputDataFromMap("WalletPlan") != null) {
 			selectByVisibleText(WalletPlan1DDwn, MapUtils.fnGetInputDataFromMap("WalletPlan"));
-		else
+		} else {
 			selectByVisibleText(WalletPlan1DDwn, program.getWalletPlan1());
+		}
 	}
 
 	public void selectWalletPlan2(Program program) {
 		waitForElementVisible(WalletPlan2DDwn);
 		if (WalletPlan2DDwn.isEnabled()) {
-			if (MapUtils.fnGetInputDataFromMap("WalletPlan2") != null)
+			if (MapUtils.fnGetInputDataFromMap("WalletPlan2") != null) {
 				selectByVisibleText(WalletPlan2DDwn, MapUtils.fnGetInputDataFromMap("WalletPlan2"));
-			else
+			} else {
 				selectByVisibleText(WalletPlan2DDwn, program.getWalletPlan2());
+			}
 		}
 	}
 
 	public void selectWalletPlan3(Program program) {
 		waitForElementVisible(WalletPlan3DDwn);
 		if (WalletPlan3DDwn.isEnabled()) {
-			if (MapUtils.fnGetInputDataFromMap("WalletPlan3") != null)
+			if (MapUtils.fnGetInputDataFromMap("WalletPlan3") != null) {
 				selectByVisibleText(WalletPlan3DDwn, MapUtils.fnGetInputDataFromMap("WalletPlan3"));
-			else
+			} else {
 				SelectDropDownByIndex(WalletPlan3DDwn, 3);
+			}
 		}
 	}
 
 	public void selectDevicePlan1(Program program) {
 		waitForElementVisible(DevicePlan1DDwn);
-		if (MapUtils.fnGetInputDataFromMap("DevicePlanForProgram") == "")
+		if (MapUtils.fnGetInputDataFromMap("DevicePlanForProgram") == "") {
 			selectByVisibleText(DevicePlan1DDwn, MapUtils.fnGetInputDataFromMap("DevicePlanForProgram"));
-		else
+		} else {
+			logger.info("DevicePlanProgram:"+program.getDevicePlanProgram());
 			selectByVisibleText(DevicePlan1DDwn, program.getDevicePlanProgram());
+		}
 	}
 
 	public void selectStatementMessagePlan() {
@@ -582,8 +723,9 @@ public class ProgramPage extends AbstractBasePage {
 
 	public void selectWalletPLan(Program program) {
 		selectWalletPlan1(program);
-		if ((program.getProgramType().contains("Travel card")) || (program.getWalletType().contains("Multi")))
+		if ((program.getProgramType().contains("Travel card")) || (program.getWalletType().contains("Multi"))) {
 			selectWalletPlan2(program);
+		}
 	}
 
 	public void selectDevicePlan(Program program) {
@@ -599,7 +741,7 @@ public class ProgramPage extends AbstractBasePage {
 	public void selectOtherPlans1() {
 		selectStatementMessagePlan();
 		selectMarketingMessagePlan();
-	}
+		}
 
 	public void enterProgramValue(String a) {
 		enterValueinTextBox(enterProgram, a);
@@ -616,6 +758,7 @@ public class ProgramPage extends AbstractBasePage {
 	public void switchToEditProgramframe() {
 		switchToIframe(Constants.EDIT_PROGRAM_FRAME);
 	}
+
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
