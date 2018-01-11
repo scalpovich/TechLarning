@@ -115,8 +115,10 @@ public class AcceptancePage extends AbstractBasePage {
 	}
 	
 	public void clickDownloadinXLSButton() {
+		WebElementUtils.scrollDown(driver(), 0, 250);
 		new WebDriverWait(driver(), timeoutInSec).until(
 				WebElementUtils.elementToBeClickable(downloadinXLSBtn)).click();
+		SimulatorUtilities.wait(5000);//this delay to wait till the file is downloaded
 	}
 
 	public void enterQuantityRecieved(String quantityOrdered) {
@@ -128,7 +130,6 @@ public class AcceptancePage extends AbstractBasePage {
 	}
 
 	public void clickSubmitButton() {
-		WebElementUtils.scrollDown(driver(), 0, 250);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(submitBtn)).click();
 	}
 
