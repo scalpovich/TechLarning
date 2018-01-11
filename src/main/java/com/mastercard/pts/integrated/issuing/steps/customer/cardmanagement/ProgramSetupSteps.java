@@ -483,7 +483,6 @@ public class ProgramSetupSteps {
 	public void whenUserFillsBusinessMandatoryFieldsScreen(String type) {
 		ApplicationBusinessMandatoryFields testDataObject = ApplicationBusinessMandatoryFields.createWithProvider(provider);
 		testDataObject.setProductType(ProductType.fromShortName(type));
-		testDataObject.setCustomerType(ProductType.fromShortName(type));
 		testDataObject.setProgramCode(program.buildDescriptionAndCode());
 		programSetupWorkflow.fillBusinessMandatoryFields(testDataObject);
 
