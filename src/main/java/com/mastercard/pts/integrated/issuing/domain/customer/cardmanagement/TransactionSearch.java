@@ -27,7 +27,7 @@ public class TransactionSearch {
 	{
 		TransactionSearch ts=new TransactionSearch();
 		ts.setDateType(provider.getString("DATE_TYPE"));
-		ts.setProductType(provider.getString("PREPAID_PRODUCT_TYPE"));
+		ts.setProductType(provider.getString("PRODUCT_TYPE"));
 		return ts;
 	}
 }
