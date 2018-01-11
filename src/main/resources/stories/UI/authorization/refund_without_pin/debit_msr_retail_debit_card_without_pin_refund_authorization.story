@@ -1,4 +1,4 @@
-debit msr retail debit card pinless authorization
+Debit msr retail debit card refund without pin authorization
 
 Narrative:
 In order to provide to client easy-to-use debit msr retail debit card
@@ -10,7 +10,7 @@ Meta:
 @oldReferenceSheet_debit_msr
 @SanityCardsPinlessWithAuthorization
 
-Scenario: Set up debit msr retail debit card authorization pinless
+Scenario: Set up Debit msr retail debit card and perform refund without pin authorization
 Meta:
 @TestId TC398484
 Given user is logged in institution

@@ -1,4 +1,4 @@
-debit msr corporate debit card authorization
+Debit msr corporate debit card refund without pin authorization
 
 Narrative:
 In order to check transactions on debit msr corporate debit card
@@ -10,7 +10,7 @@ Meta:
 @oldReferenceSheet_S203707
 @CRCardsPinlessWithAuthorization
 
-Scenario: Set up debit msr corporate debit card
+Scenario: Set up Debit msr corporate debit card and perform refund without pin authorization
 Meta:
 @TestId TC398452
 Given user is logged in institution

@@ -1,4 +1,4 @@
-prepaid msr corporate general purpose card authorization
+Prepaid msr corporate general purpose card and perform refund without pin authorization
 
 Narrative:
 In order to check transactions on prepaid msr corporate general purpose card
@@ -10,7 +10,7 @@ Meta:
 @oldReferenceSheet_S203707
 @CRCardsPinlessWithAuthorization
 
-Scenario: Set up prepaid msr corporate general purpose card
+Scenario: Set up prepaid msr corporate general purpose cards and perform refund without pin authorization
 Meta:
 @TestId TC398452
 Given user is logged in institution

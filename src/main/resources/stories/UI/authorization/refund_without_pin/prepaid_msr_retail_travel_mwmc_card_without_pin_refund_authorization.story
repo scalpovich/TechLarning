@@ -1,4 +1,4 @@
-prepaid msr retail general purpose card authorization
+Prepaid msr retail travel card multi currency refund without pin authorization
 
 Narrative:
 In order to check transactions on prepaid msr retail travel mwmc card 
@@ -8,7 +8,7 @@ I want to authorize transactions for prepaid msr retail travel mwmc card
 Meta:
 @StoryName p_msr_retail_travel_mwmc
 
-Scenario: Transaction - prepaid msr retail travel card multi wallet multi currency - MSR_PURCHASE and MSR_PURCHASE_WITH_CASHBACK Authorization transaction
+Scenario: Setup multi-currency prepaid msr retail travel card and perfomr refund without pin authorization
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client

@@ -1,4 +1,4 @@
-prepaid msr retail gift card pinless authorization
+Prepaid msr retail gift card refund without pin authorization
 
 Narrative:
 In order to provide to client easy-to-use multi-purpose prepaid card pinless
@@ -10,7 +10,7 @@ Meta:
 @oldReferenceSheet_prepaid_msr
 @SanityCardsPinlessWithAuthorization
 
-Scenario: Set up prepaid msr retail gift card authorization pinless
+Scenario: Set up prepaid msr retail gift card and perform refund without pin authorization
 Meta:
 @TestId TC398484
 Given user is logged in institution
