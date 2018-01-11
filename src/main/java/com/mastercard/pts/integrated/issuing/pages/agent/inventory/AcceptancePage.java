@@ -70,9 +70,9 @@ public class AcceptancePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".SuccessMessageTxt")
 	private MCWebElement acceptanceMessage;
 	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Download in xls']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@id='mpts_agentPortal_modifyIntraBranch_downloadinXLS']")
 	private MCWebElement downloadinXLSBtn;
-
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Acceptance");
 		verifyButton("Search");
