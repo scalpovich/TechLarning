@@ -61,6 +61,9 @@ public class DispatchPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "memoDispatch:input:textAreaComponent")
 	private MCWebElement memoTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Download in xls']")
+	private MCWebElement downloadinXLSBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".feedbackPanelINFO")
 	private MCWebElement successMessage;
@@ -105,7 +108,12 @@ public class DispatchPage extends AbstractBasePage {
 		new WebDriverWait(driver(), timeoutInSec).until(
 				WebElementUtils.elementToBeClickable(submitBtn)).click();
 	}
-
+	
+	public void clickDownloadinXLSButton() {
+		new WebDriverWait(driver(), timeoutInSec).until(
+				WebElementUtils.elementToBeClickable(downloadinXLSBtn)).click();
+	}
+	
 	public void clickOKButton() {
 		new WebDriverWait(driver(), timeoutInSec).until(
 				WebElementUtils.elementToBeClickable(okBtn)).click();
@@ -142,6 +150,7 @@ public class DispatchPage extends AbstractBasePage {
 							details.getEffectiveDate());
 					enterQuantityToDispatch(details.getQuantityToDispatch());
 					enterMemo(details.getMemo());
+					clickDownloadinXLSButton();
 					clickSaveButton();
 					cardPackIdCreationMessage = getDisptachSuccessMessage();
 					clickOKButton();
