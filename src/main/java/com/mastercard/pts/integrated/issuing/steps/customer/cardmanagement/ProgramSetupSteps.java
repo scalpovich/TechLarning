@@ -7,7 +7,6 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.jcabi.log.Logger;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.DeviceType;
@@ -483,7 +482,6 @@ public class ProgramSetupSteps {
 	public void whenUserFillsBusinessMandatoryFieldsScreen(String type) {
 		ApplicationBusinessMandatoryFields testDataObject = ApplicationBusinessMandatoryFields.createWithProvider(provider);
 		testDataObject.setProductType(ProductType.fromShortName(type));
-		testDataObject.setCustomerType(ProductType.fromShortName(type));
 		testDataObject.setProgramCode(program.buildDescriptionAndCode());
 		programSetupWorkflow.fillBusinessMandatoryFields(testDataObject);
 
