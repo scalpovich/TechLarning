@@ -151,12 +151,13 @@ public class AcceptancePage extends AbstractBasePage {
 	
 	public void acceptDispatch(Acceptance details) {
 		logger.info("Order Acceptance: {}", details.getBranchId());
-
+		
 		selectBranchId(details.getBranchId());
 		selectOrderNumber(details.getOrderNumber());
 		clickSearchButton();
 		clickTableFirstRecord();
 		clickModifyButton();
+		driver().manage().window().maximize();
 		enterQuantityRecieved(details.getQuantityOrdered());
 		enterCurrentDateddMMyyyy(DateUtils.currentDateddMMyyyy());
 		enterMemo(details.getMemo());
