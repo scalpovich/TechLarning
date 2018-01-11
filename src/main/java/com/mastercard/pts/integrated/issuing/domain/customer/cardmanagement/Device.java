@@ -107,6 +107,10 @@ public class Device {
 		device.setEncodedName(provider.getString(ND_ENCODED_NAME));
 		device.setOtherInfoStatementPreference(provider.getString(ND_OTHERINFO_STATEMENT_PREFERENCE));
 		device.setOtherInfoFaxNo(provider.getString(ND_OTHERINFO_FAX_NO));
+		device.setNewTransPassword(provider.getString(CHP_NEW_PASSWORD));
+		device.setConfirmNewTransPassword(provider.getString(CHP_NEW_PASSWORD));	
+		device.setProductType(provider.getString(PRODUCT_TYPE));
+		device.setTransactionDateType(provider.getString(DATE_TYPE));
 		return device;
 	}
 	
@@ -512,7 +516,6 @@ public class Device {
 		return currency;
 	}
 
-
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
@@ -540,5 +543,11 @@ public class Device {
 		this.serviceCode = serviceCode;
 	}
 
+	public String getTransactionDateType() {
+		return transactionDateType;
+	}
 
+	public void setTransactionDateType(String transactionDateType) {
+		this.transactionDateType = transactionDateType;
+	}
 }
