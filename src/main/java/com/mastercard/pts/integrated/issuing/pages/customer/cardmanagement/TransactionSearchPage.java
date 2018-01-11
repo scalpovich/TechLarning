@@ -34,7 +34,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=cardNumber]")
 	private MCWebElement searchDeviceTxt;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.//*[text()='Authorization Status :']]/following-sibling::td[1]")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.//*[text()='Authorization Status :']]/following-sibling::td[1]/span")
 	private MCWebElement authorizationStatusTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='fromDate']/..")
@@ -43,10 +43,10 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='toDate']/..")
 	private MCWebElement toDateTxt;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[text()='Date']/following-sibling::td[2]")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[text()='Date']/following-sibling::td[2]/select")
 	private MCWebElement dateDDwn;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[text()='Product Type']/following-sibling::td[2]")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[text()='Product Type']/following-sibling::td[2]/select")
 	private MCWebElement productTypeDDwn;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//div[@class='tab_container_privileges']/div/table/tbody/tr[2]/td[4]/span/span")

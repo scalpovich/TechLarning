@@ -32,25 +32,42 @@ Given connection to MAS is established
 When perform an EMV_PREAUTH MAS transaction
 Then MAS test results are verified
 And user is logged in institution
-And search Pre-Auth authorization and verify Success status
+And search Pre-Auth authorization and verify 000-Successful status
 When perform an EMV_COMPLETION MAS transaction
 Then MAS test results are verified
 And user is logged in institution
-And search Pre-Auth Completion authorization and verify Success status
+And search Pre-Auth Completion authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: Perform EMV_PURCHASE Authorization transaction
 When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
 Then user is logged in institution
-And search Purchase authorization and verify success status
+And search Purchase authorization and verify 000-Successful status
+And user sign out from customer portal
+
+Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
+Meta:
+@TestId 
+When perform an EMV_CASH_ADVANCE MAS transaction on the same card
+Then MAS test results are verified
+And user is logged in institution
+Then search Cash Advance authorization and verify 000-Successful status
+Then user sign out from customer portal
+
+Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
+Meta:
+@TestId 
+When perform an EMV_CASH_WITHDRAWAL MAS transaction on the same card
+Then MAS test results are verified
+And search CWD authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: Perform EMV_PURCHASE_WITH_CASHBACK Authorization transaction
 When perform an EMV_PURCHASE_WITH_CASHBACK MAS transaction
 Then MAS test results are verified
 Then user is logged in institution
-And search "Purchase with Cash back" authorization and verify Success status
+And search "Purchase with Cash back" authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
@@ -63,13 +80,16 @@ And user sign out from customer portal
 Scenario: Perform ECOMM_PURCHASE Authorization transaction
 When perform an ECOMM_PURCHASE MAS transaction
 Then MAS test results are verified
+Then user is logged in institution
+Then search E-Commerce Transaction authorization and verify 000-Successful status
+And user sign out from customer portal
 
 Scenario: Perform EMV_POS_BALANCE_INQUIRY Authorization transaction
 When perform an EMV_POS_BALANCE_INQUIRY MAS transaction
 Then MAS test results are verified
-
-Scenario: Program Balance Summary report download - prepaid emv corporate general purpose card
-Given user is logged in institution
-When pre-clearing and Pre-EOD batches are run
-Then verify report for transactions with Program Balance Summary is downloaded
+Then user is logged in institution
+Then search Balance Inquiry authorization and verify 000-Successful status
 And user sign out from customer portal
+
+
+
