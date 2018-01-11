@@ -7,7 +7,7 @@ I want to authorize transactions for debit emv retail debit card pinless
 
 Meta:
 @StoryName d_emv_retail
-
+@CRCardsWithAuthorizationCashAdvancedWithClearing
 
 Scenario: Setup - debit emv retail debit card
 Given user is logged in institution
@@ -68,10 +68,3 @@ When "Matching" batch for prepaid is successful
 Then transaction status is "Presentment Matched with authorization"
 Then user sign out from customer portal
 
-Scenario: Program Balance Summary download
-Meta:
-@TestId 
-Given user is logged in institution
-When pre-clearing and Pre-EOD batches are run
-Then verify report for transactions with Program Balance Summary is downloaded
-Then user sign out from customer portal

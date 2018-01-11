@@ -75,11 +75,3 @@ When transaction status is "Matching Pending"
 When "Matching" batch for prepaid is successful
 Then transaction status is "Presentment Matched with authorization"
 Then user sign out from customer portal
-
-Scenario: Program Balance Summary download
-Meta:
-@TestId 
-Given user is logged in institution
-When pre-clearing and Pre-EOD batches are run
-Then verify report for transactions with Program Balance Summary is downloaded
-Then user sign out from customer portal

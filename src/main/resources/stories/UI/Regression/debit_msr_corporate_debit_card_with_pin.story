@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for debit emv retail debit card
 
 Meta:
-@StoryName debit_msr
+@StoryName d_msr_corp
 @SanityCardsWithAuthorization
 
 Scenario: Set up program for debit emv retail debit card
