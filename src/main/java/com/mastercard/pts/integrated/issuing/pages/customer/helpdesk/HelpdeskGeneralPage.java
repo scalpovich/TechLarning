@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -155,6 +156,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		logger.info(WALLET_NUMBER, CharMatcher.DIGIT.retainFrom(walletNumber.getText()));		
 		return CharMatcher.DIGIT.retainFrom(walletNumber.getText());
 	}
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(productTypeSearchDDwn),
@@ -389,6 +391,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 					String currencyName = data[0].trim();
 					if (getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency").equalsIgnoreCase(currencyName))
 					{
+						device.setWalletNumber2(getCellTextByColumnNameInEmbeddedTab(j, "Wallet Number"));
 						count++;
 						break;
 					}
@@ -403,7 +406,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.enterText(deviceNumberSearchTxt, helpdeskGeneral.getDeviceNumber());
 		clickSearchButton();
 	}
-	
+
 	public void searchByDeviceNumber(Device device){
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
@@ -530,7 +533,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		logger.info("General");
 		verifySearchButton("Search");
 	}
-		
+
 	public void selectWalleFromTransfer(String walletNumber){
 		waitForElementVisible(Element("//td[@id='fromCurrencyDataTable']"));
 		waitForWicket();
@@ -572,8 +575,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			selectWalleFromTransfer(device.getWalletNumber());
 			logger.info("Wallet from transfer the fund: {}", device.getWalletNumber());
 			selectDeviceToTransferFunds(device.getDeviceNumber());			
-			logger.info("Wallet to transfer the fund: {}", device.getNewWalletNumber());
-			selectWalleToTransfer(device.getNewWalletNumber());
+			logger.info("Wallet to transfer the fund: {}", device.getWalletNumber2());
+			selectWalleToTransfer(device.getWalletNumber2());
 			enterAmountToDebit(device.getTransactionAmount());
 			enterNoteForTransaction("Notes for Wallet to Wallet transfer");
 			clickSaveButtonPopup();
