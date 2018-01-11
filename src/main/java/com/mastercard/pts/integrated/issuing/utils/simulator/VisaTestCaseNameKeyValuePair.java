@@ -21,7 +21,7 @@ public class VisaTestCaseNameKeyValuePair {
 
 	public String getVisaTestCaseToSelect(String key) {
 		setVisaTestData();
-		return visaTestCaseDetailsKeyValuePair.get(key.toUpperCase());
+		return visaTestCaseDetailsKeyValuePair.get(key);
 	}
 
 	public String getVisaTestDataFileNameToUpload(String key) {

@@ -12,13 +12,13 @@ public class VtsSimulator {
 	private static final Logger logger = LoggerFactory.getLogger(VtsSimulator.class);
 
 	//ConnectionStringForVTS
-	@Value("${simulator.vts.hostPort}")
+	@Value("${simulator.vts.host.port}")
 	private String hostPort; 
 
-	@Value("${simulator.vts.hostIpAddress}")
+	@Value("${simulator.vts.host.ipaddress}")
 	private String hostIpAddress; 
 	
-	@Value("${simulator.vts.vtsIpAddress}")
+	@Value("${simulator.vts.vts.ipaddress}")
 	private String vtsIpAddress; 
 
 	public String getHostPort() {

@@ -14,3 +14,4 @@ Scenario: VISA transactions
 !-- Given connection to VISA is established
 When perform an LoadAndActivate VISA transaction
 Then VISA test results are verified for LoadAndActivate
+Then VISA simulator is closed
