@@ -18,6 +18,13 @@
     ControlClick("Information", "", "OK")
 
     WinActivate("Test Execution (1)")
-    ControlClick("Test Execution (1)", "", "[CLASS:Button; INSTANCE:15]")
 
-	WinActivate("VTS Communications Handler (1)")
+	While 1
+	    ; checking to read text "1" from Recieved Messages - Total
+	 Local $sText = ControlGetText ("Test Execution (1)", "", "[CLASS:Static; INSTANCE:15]")
+	 Sleep(1000)
+    If $sText = "1" Then
+        ExitLoop
+    EndIf
+   WEnd
+    ControlClick("Test Execution (1)", "", "[CLASS:Button; INSTANCE:15]")

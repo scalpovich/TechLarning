@@ -15,6 +15,18 @@
    WinActivate("Visa Test System")
    WinMenuSelectItem("Visa Test System", "", "&Edit", "&Variables Manager...")
 
-   WinActivate("Variables Manager")
-   sleep(2000)
+   WinWaitActive("Variables Manager","", "100")
+
    WinSetState("Variables Manager", "", @SW_MAXIMIZE)
+
+   WinMenuSelectItem("Variables Manager", "", "&File", "&Import from Excel Document")
+   sleep(4000)
+
+   ControlSetText("Open","","[CLASS:Edit; INSTANCE:1]", $CmdLine[1]) ; setting text in the path section
+   sleep(1000)
+   ControlClick("Open","","[CLASS:Button; INSTANCE:1]") ; click on Open button
+   sleep(6000)
+
+   ControlClick("Variables Manager","","[CLASS:Button; INSTANCE:1]")  ;pressing the OK dialog on successful import dialog
+
+   WinSetState("Variables Manager", "", @SW_MINIMIZE ) ; mimimizing window

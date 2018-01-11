@@ -42,7 +42,8 @@ public class HelpDeskFlows extends AbstractBasePage {
 	}
 
 	public void searchForDevice(HelpDeskGeneral helpdeskgettersetter) {
-		searchpanelhelpdesk.searchDevice(helpdeskgettersetter.getProductType(),helpdeskgettersetter.getDeviceNumber());
+		searchpanelhelpdesk.searchDevice(helpdeskgettersetter.getProductType(),
+				helpdeskgettersetter.getDeviceNumber());
 		searchpanelhelpdesk.clickEditBtn();
 	}
 

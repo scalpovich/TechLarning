@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -122,6 +122,10 @@ public class WalletPlanPage extends AbstractBasePage {
 		clickWhenClickable(addWalletPlanBtn);
 		switchToAddWalletPlanFrame();
 	}
+	
+	public void selectProduct(DeviceCreation deviceCreation) {
+		selectByVisibleText(productTypeDDwn, deviceCreation.getProduct());
+	}
 
 	public void switchToAddWalletPlanFrame() {
 		switchToIframe(Constants.ADD_WALLET_PLAN_FRAME);
@@ -195,13 +199,30 @@ public class WalletPlanPage extends AbstractBasePage {
 			SelectDropDownByIndex(surchargeWaiverPlanDDwn, FIRST_OPTION);
 		}
 	}
-
+	
+	public String addWalletPlanGeneral(DeviceCreation devicecreation, WalletPlan walletplan) {
+		String walletPlancode;
+		String WalletPlanDesc;
+		walletPlancode = enterWalletPlanCode();
+		WalletPlanDesc = enterWalletPlanDescription();
+		selectCurrency(walletplan);
+		waitForPageToLoad(getFinder().getWebDriver());
+		selectProduct(devicecreation);
+		waitForPageToLoad(getFinder().getWebDriver());
+		waitForLoaderToDisappear();
+		selectProgramType(walletplan);
+		waitForPageToLoad(getFinder().getWebDriver());
+		selectWalletUsage(walletplan);
+		enterDummyAccountNumber();
+		enterReservedAmount();
+		return WalletPlanDesc + " " + "[" + walletPlancode + "]";
+	}
 	public void selectWalletFeePlan() {
 		if (walletFeePlanDDwn.isEnabled()) {
 			SelectDropDownByIndex(walletFeePlanDDwn, FIRST_OPTION);
 		}
 	}
-
+	
 	public void selectProgramType(WalletPlan walletplan) {
 		selectByVisibleText(programeTypeDDwn, walletplan.getProgramType());
 	}

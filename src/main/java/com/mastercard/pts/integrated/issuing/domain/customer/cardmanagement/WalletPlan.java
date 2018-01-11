@@ -2,7 +2,6 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
@@ -35,7 +34,9 @@ public class WalletPlan implements HasCodeAndDescription {
 	private static final String WP_WALLET_INACTVITY_RULES_INACTIVITY_OPERATION	 = 	"WP_WALLET_INACTVITY_RULES_INACTIVITY_OPERATION";
 	private static final String WP_WALLET_INACTVITY_RULES_INACTIVITY_AFTER_DAYS	 = 	"WP_WALLET_INACTVITY_RULES_INACTIVITY_AFTER_DAYS";
 	private static final String WP_WALLET_INACTVITY_RULES_CLOSURE_WALLET_AFTER_DAYS	 = 	"WP_WALLET_INACTVITY_RULES_CLOSURE_WALLET_AFTER_DAYS";
-
+	private static final String WP_WALLET_RESERVERD_AMOUNT= "WP_WALLET_RESERVERD_AMOUNT";
+	
+	private String walletReserveAmount;
 	private String description;
 	private String walletPlanCode;
 	private String currency;
@@ -57,9 +58,9 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String walletInactvityRulesInactivityOperation;
 	private String walletInactvityRulesInactivityAfterDays;
 	private String walletInactvityRulesClosureWalletAfterDays;
-	private String walletPlanUsage;
 	private String walletType;
 	private String usageType;
+	private String WalletPlanUsage;
 	private String walletPlan;
 	private String openloopWalletPlan;
 	private String closedloopWalletPlan;
@@ -68,7 +69,45 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String surchargePlan;
 	private String surchargeWaiverPlan;
 	private String walletFeePlan;
+	private String firstWallet;
+	private String secondWallet;
+	private String whiteMcgCode;
 	
+
+	public String getWhiteMcgCode() {
+		return whiteMcgCode;
+	}
+
+	public void setWhiteMcgCode(String whiteMcgCode) {
+		this.whiteMcgCode = whiteMcgCode;
+	}
+	
+	
+	public String getSecondWallet() {
+		return secondWallet;
+	}
+
+	public void setSecondWallet(String secondWallet) {
+		this.secondWallet = secondWallet;
+	}
+
+	public String getFirstWallet() {
+		return firstWallet;
+	}
+
+	public void setFirstWallet(String firstWallet) {
+		this.firstWallet = firstWallet;
+	}
+	
+	public String getWalletReserveAmount() {
+		return walletReserveAmount;
+	}
+
+	public void setWalletReserveAmount(String walletReserveAmount) {
+		this.walletReserveAmount = walletReserveAmount;
+	}
+
+
 	public String getTransactionLimitPlan() {
 		return transactionLimitPlan;
 	}
@@ -143,6 +182,7 @@ public class WalletPlan implements HasCodeAndDescription {
 		WalletPlan plan = provider.getDataBySimpleClassName(WalletPlan.class);
 		setGenericData(plan);
 		plan.setProgramType(keyValueProvider.getString(PROGRAM_TYPE));
+		plan.setReservedAmount(keyValueProvider.getString(WP_WALLET_RESERVERD_AMOUNT));
 		plan.setDummyAccountNumber(RandomStringUtils.randomNumeric(6));
 		return plan;
 	}
@@ -324,6 +364,8 @@ public class WalletPlan implements HasCodeAndDescription {
 	public void setWalletType(String walletType) {
 		this.walletType = walletType;
 	}
+
+
 	
 	public String getProgramType() {
 		return programType;
@@ -387,16 +429,18 @@ public class WalletPlan implements HasCodeAndDescription {
 	}
 
 	public String getWalletPlanUsage() {
-		return walletPlanUsage;
+		return WalletPlanUsage;
 	}
 
 	public void setWalletPlanUsage(String walletPlanUsage) {
-		this.walletPlanUsage = walletPlanUsage;
+		this.WalletPlanUsage = walletPlanUsage;
 	}
 
-	public void walletplanDataprovider() {
-		setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
-		setWalletPlanUsage(MapUtils.fnGetInputDataFromMap("WalletplanUsage"));
+	public static WalletPlan walletplanDataprovider() {
+		WalletPlan walletplan = new WalletPlan();
+		walletplan.setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
+		walletplan.setWalletPlanUsage(MapUtils.fnGetInputDataFromMap("WalletplanUsage"));
+		return walletplan;
 	}
 
 	
@@ -404,4 +448,5 @@ public class WalletPlan implements HasCodeAndDescription {
 	public String toString() {
 		return MiscUtils.toString(this);
 	}
+
 }
