@@ -410,21 +410,21 @@ public class TransactionSteps {
 	@Given("perform an $transaction VISA transaction")
 	public void givenVisaTransactionIsExecuted(String transaction){
 		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED) );
-		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseDetails(transaction.toUpperCase());
+
 		performOperationOnSamecard(false);
 		
 //		Transaction transactionData = generateMasTestDataForTransaction(transaction);
-		MiscUtils.reportToConsole("VISA Transaction being performed : " + transactionName );
+		MiscUtils.reportToConsole("VISA Transaction being performed : " + transaction );
 		
 //		transactionWorkflow.performVisaTransaction(transaction, transactionData, sameCard);
-		transactionWorkflow.performVisaTransaction(transactionName);
+		transactionWorkflow.performVisaTransaction(transaction);
 	}
 	
 	@When("$tool test results are verified for $transaction")
 	@Then("$tool test results are verified for $transaction")
 	public void thenVisaTestResultsAreReported(String tool, String transaction) {
 		String testResults  = null;
-		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseDetails(transaction.toUpperCase());
+		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseToSelect(transaction);
 		
 		 testResults = transactionWorkflow.verifyVisaOutput(transactionName);
 		 transactionWorkflow.browserMaximize(); // maximing browser

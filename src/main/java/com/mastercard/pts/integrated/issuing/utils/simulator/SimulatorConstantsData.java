@@ -15,7 +15,7 @@ public class SimulatorConstantsData {
 		public static final String AUTOIT_EXE_PATH = "\\simulator\\AutoIT\\";
 		public static final String PSEXEC_EXE_PATH = "\\simulator\\PsExec\\PsExec.exe";
 		public static final String SIKULI_IMAGE_PATH = "\\\\simulator\\\\images\\\\";
-		public static final String VISA_INPUT_FILE_PATH =  "\\simulator\\VisaInputFile\\DMS_TEST_FILE.stf";
+		public static final String VISA_INPUT_FILE_PATH =  "\\simulator\\VisaInputFile\\";
 		// _________________________________________________________________________
 		// SIMULATOR EXE PATHS TO INVOKE _______________________________________
 		public static String MAS_EXE_PATH;  // same exe is invoked for both MAS and MCPS

@@ -57,6 +57,7 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.MasDetailsKeyValueP
 import com.mastercard.pts.integrated.issuing.utils.simulator.MdfsDetailsKeyValuePair;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorConstantsData;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
+import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKeyValuePair;
 
 @Workflow
 public class TransactionWorkflow extends SimulatorUtilities {
@@ -116,6 +117,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	@Autowired
 	private TestContext context;
+	
+	@Autowired
+	private VisaTestCaseNameKeyValuePair visaTestCaseNameKeyValuePair;
 
 	public void initiateSettlementForAgency(String branchID, String programCode) {
 		ispage = navigator.navigateToPage(InitiateSettlementPage.class);
@@ -1370,8 +1374,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void connectAndStartVtsCommunication() { 
 		activateVts();
-		//path has be put in "\" only hence the replace statement 
-		String vtsInputFilePath = getResourceFolderPath().replace("\\\\", "\\") + SimulatorConstantsData.VISA_INPUT_FILE_PATH;
+
 		WebElement visaTestSystemFrame = winiumDriver.findElement(By.xpath("*[starts-with(@Name, 'Visa Test System')]"));
 		visaTestSystemFrame.click();
 		winiumClickOperation("Start Communications");
@@ -1388,23 +1391,33 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			throw new ValidationException("VTS connection is NOT succcessful!");
 		}
 		winiumClickOperation("Minimize");
-		wait(2000);
+	}
+	
+	private void loadVisaInputFile(String transaction) {
+		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestDataFileNameToUpload(transaction);
+//		String transactionToSelect = visaTestCaseNameKeyValuePair.getVisaTestCaseToSelect(transaction);
+		
+		//path has be put in "\" only hence the replace statement 
+		String vtsInputFilePath = getResourceFolderPath().replace("\\\\", "\\") + SimulatorConstantsData.VISA_INPUT_FILE_PATH + transactionName +".stf";
+		
+		WebElement visaTestSystemFrame = winiumDriver.findElement(By.xpath("*[starts-with(@Name, 'Visa Test System')]"));
+		visaTestSystemFrame.click();
 		winiumClickOperation("Open");
 		wait(2000);
 		executeAutoITExe("ImportVisaTestFile.exe " + vtsInputFilePath);
 		wait(3000);
-
-		collapseTreeMenuOnVts();
+		
+//		collapseTreeMenuOnVts(transactionToSelect);
 	}
 
-	private void collapseTreeMenuOnVts() {
+	private void collapseTreeMenuOnVts(String selection) {
 		activateVts();
-		winiumClickOperation("Refund Reversal");
+		winiumClickOperation(selection);
 		pressEnter();
 		pressLeftArrow();
 
 		int i = 0;
-		while (i < 25) { 
+		while (i < 7) { 
 			pressDownArrow();
 			pressLeftArrow();
 			i++;
@@ -1427,7 +1440,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void setVtsIpAddress() {
 		//for keying ip and port on VTS if present
-		String parameter =   "\"" + vtsSimulator.getIpAddress() + PATH_BUILDER + vtsSimulator.getPort() + "\"";
+		String parameter =   "\"" + vtsSimulator.getVtsIpAddress() + PATH_BUILDER + vtsSimulator.getHostIpAddress() + PATH_BUILDER + vtsSimulator.getHostPort() + "\"";
 
 		executeAutoITExe(SET_VTS_IP + parameter );
 		MiscUtils.reportToConsole(" ******* Parameter for setVtsIpAddress : ******"  + parameter );     
@@ -1436,7 +1449,14 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	//	public void performVisaTransaction(String transaction, Transaction transactionData, Boolean sameCard) {
 	public void performVisaTransaction(String transaction) {
 		browserMinimize();
-		selectVisaTestCaseToMakeDataElementChange(transaction);
+		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseToSelect(transaction);
+		MiscUtils.reportToConsole("VISA Transaction Name : " + transactionName );
+		
+		loadVisaInputFile(transaction);
+		
+		loadVisaTestGroupTemplate();
+		
+		selectVisaTestCaseToMakeDataElementChange(transactionName);
 		// not sure what other data element value to be modified at this point in time
 		editFeildValues("F2", "1234567890123456"); //Primary Account Number
 		editFeildValues("F14", "1234567890123456"); //Expiry Date
@@ -1447,6 +1467,17 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 		executeVisaTest();
 	}
+	
+	private void navigateToVariableManager() { 
+		executeAutoITExe("VTSNavigateToVariablesManager.exe ");
+	}
+	
+	private void loadVisaTestGroupTemplate() { 
+		//method to load the excel template after navigating to VariableManager and importing the File to generate new Automation Test Group Template
+		navigateToVariableManager();
+		
+		//waiting for Praveen's code to update excel with values from device Context
+	}
 
 	private void selectVisaTestCaseToMakeDataElementChange(String selection) {
 		MiscUtils.reportToConsole(" ******* selectVisaTestCaseToMakeDataElementChange ******" );     
@@ -1454,6 +1485,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation(selection);
 		pressEnter();
 		pressRightArrow();
+		//write coded to select properties file and set default Test Group;
 		pressDownArrow(2);
 		executeAutoITExe("selectVisaMessageEditor.exe");
 	}
