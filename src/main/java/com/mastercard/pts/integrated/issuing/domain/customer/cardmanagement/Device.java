@@ -28,7 +28,15 @@ public class Device {
 	private static final String ND_VIP	 = 	"ND_VIP";
 	private static final String ND_MIDDLE_NAME_2 = "ND_MIDDLE_NAME_2";
 	private static final String ND_ENCODED_NAME = "ND_ENCODED_NAME";
+	private static final String CHP_NEW_PASSWORD = "CHP_NEW_PASSWORD";
+	private static final String PRODUCT_TYPE = "PRODUCT_TYPE";
+	private static final String DATE_TYPE = "DATE_TYPE";
 	
+	
+
+	private String currentTransPassword;
+	private String newTransPassword;
+	private String confirmNewTransPassword;
 
 	private String corporateClientCode;
 	private String appliedForProduct;
@@ -76,6 +84,8 @@ public class Device {
 	private String encodedName;
 	private String middleName2;
 	private String serviceCode;
+	private String productType;
+	private String transactionDateType;
 	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -132,6 +142,38 @@ public class Device {
 		return ND_OTHERINFO_STATEMENT_PREFERENCE;
 	}
 
+	public String getProductType() {
+		return productType;
+	}
+
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
+	
+	public String getCurrentTransPassword() {
+		return currentTransPassword;
+	}
+
+	public void setCurrentTransPassword(String currentTransPassword) {
+		this.currentTransPassword = currentTransPassword;
+	}
+
+	public String getNewTransPassword() {
+		return newTransPassword;
+	}
+
+	public void setNewTransPassword(String newTransPassword) {
+		this.newTransPassword = newTransPassword;
+	}
+	
+	public String getConfirmNewTransPassword() {
+		return confirmNewTransPassword;
+	}
+
+	public void setConfirmNewTransPassword(String confirmNewTransPassword) {
+		this.confirmNewTransPassword = confirmNewTransPassword;
+	}
+	
 	public static String getNdOtherinfoFaxNo() {
 		return ND_OTHERINFO_FAX_NO;
 	}
