@@ -241,7 +241,7 @@ public class ProgramSetupStepsForRegression {
 			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
 			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
 		}
-		program.setWalletPlanPlan1(walletPlan.buildDescriptionAndCode());
+		program.setFirstWalletPlan(walletPlan.buildDescriptionAndCode());
 		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
 
 		program.setDedupPlan(dedupePlan.buildDescriptionAndCode());

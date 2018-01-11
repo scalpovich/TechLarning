@@ -1190,6 +1190,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
 		return page.searchTransactionWithArnAndGetStatus(arnNumber, ts);
 	} 
+	
+	public String searchTransactionWithDeviceAndGetStatus(Device device, TransactionSearch ts){
+		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
+		return page.searchTransactionWithDeviceAndGetStatus(device, ts);
+	} 
 
 	public String getDecimalisationTableValue(String text)
 	{

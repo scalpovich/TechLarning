@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.google.common.base.CharMatcher;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
@@ -135,6 +136,25 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()[contains(.,'Device Details')]]")
 	private MCWebElement deviceDetailsLnk;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind="udf9:input:inputAmountField")
+	private MCWebElement debitAmtInpt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="memo1:input:textAreaComponent")
+	private MCWebElement transactionNotesInpt;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind="udf20:input:dropdowncomponent")
+	private MCWebElement toDeviceDropDn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//span[@class='feedbackPanelINFO']")
+	private MCWebElement walletToWalletConfirMsg;
+	
+	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
+	
+	protected String getWalletNumber() {
+		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
+		logger.info(WALLET_NUMBER, CharMatcher.DIGIT.retainFrom(walletNumber.getText()));		
+		return CharMatcher.DIGIT.retainFrom(walletNumber.getText());
+	}
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(productTypeSearchDDwn),
@@ -237,6 +257,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public void clickOKButtonPopup(){
+		SimulatorUtilities.wait(3000);
 		new WebDriverWait(driver(), timeoutInSec)
 		.until(WebElementUtils.elementToBeClickable(okBtn))
 		.click();
@@ -341,6 +362,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();
+			helpdeskGeneral.setNewWalletNumber(getWalletNumber());
 			clickOKButtonPopup();			
 		});
 		//There is a delay in page rendering
@@ -379,6 +401,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void searchWithDeviceNumber(HelpdeskGeneral helpdeskGeneral) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, helpdeskGeneral.getProductType());
 		WebElementUtils.enterText(deviceNumberSearchTxt, helpdeskGeneral.getDeviceNumber());
+		clickSearchButton();
+	}
+	
+	public void searchByDeviceNumber(Device device){
+		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
+		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
 	}
 	
@@ -502,5 +530,55 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		logger.info("General");
 		verifySearchButton("Search");
 	}
-
+		
+	public void selectWalleFromTransfer(String walletNumber){
+		waitForElementVisible(Element("//td[@id='fromCurrencyDataTable']"));
+		waitForWicket();
+		clickWhenClickable(Element("//td[@id='fromCurrencyDataTable']//./td/span[text()='"+walletNumber+"']//..//..//td//input"));
+	}
+	
+	public void selectWalleToTransfer(String walletNumber){
+		waitForElementVisible(Element("//td[@id='toCurrencyDataTable']"));
+		waitForWicket();
+		clickWhenClickable(Element("//td[@id='toCurrencyDataTable']//./td/span[text()='"+walletNumber+"']//..//..//td//input"));
+	}
+	
+	public void clickSaveButtonPopup(){
+		clickWhenClickable(saveBtn);
+	}
+	
+	public void selectDeviceToTransferFunds(String deviceToTransfer){
+		WebElementUtils.waitForWicket(driver());
+		WebElementUtils.elementToBeClickable(toDeviceDropDn);
+		WebElementUtils.selectDropDownByValue(toDeviceDropDn, deviceToTransfer);
+	}
+	
+	public void enterAmountToDebit(String amountToTransfer){
+		WebElementUtils.enterText(debitAmtInpt, amountToTransfer);
+	}
+	
+	public void enterNoteForTransaction(String transactionNote){
+		WebElementUtils.enterText(transactionNotesInpt, transactionNote);
+	}
+	
+	public String verifyTheWalletToWalletTransactionStatus(){
+		return getTextFromPage(walletToWalletConfirMsg);
+	}
+	
+	public void walletToWalletTransfer(Device device) {
+		selectServiceCode("Wallet To Wallet Transfer [465]");
+		clickGoButton();		
+		runWithinPopup("465 - Wallet To Wallet Transfer", () -> {			
+			selectWalleFromTransfer(device.getWalletNumber());
+			logger.info("Wallet from transfer the fund: {}", device.getWalletNumber());
+			selectDeviceToTransferFunds(device.getDeviceNumber());			
+			logger.info("Wallet to transfer the fund: {}", device.getNewWalletNumber());
+			selectWalleToTransfer(device.getNewWalletNumber());
+			enterAmountToDebit(device.getTransactionAmount());
+			enterNoteForTransaction("Notes for Wallet to Wallet transfer");
+			clickSaveButtonPopup();
+			clickOKButtonPopup();
+		});
+		clickEndCall();
+	}
 }
