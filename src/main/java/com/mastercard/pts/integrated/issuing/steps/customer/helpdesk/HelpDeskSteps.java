@@ -5,6 +5,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
@@ -29,11 +30,12 @@ import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ServiceCode;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ServiceRequestDropDownValues;
-import com.mastercard.pts.integrated.issuing.utils.MapUtils;
-import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDeskFlows;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
+import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDeskFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpdeskWorkflow;
 
 @Component
@@ -47,12 +49,14 @@ public class HelpDeskSteps {
 	private TestContext context;
 
 	@Autowired
+	private Navigator navigator;
+
+	@Autowired
 	private HelpdeskWorkflow helpdeskWorkflow;
 
 	@Autowired
 	private KeyValueProvider provider;
-	
-	@Autowired
+@Autowired
 	HelpDeskFlows helpdeskFlows;
 
 	EventAndAlerts eventAndAlerts = new EventAndAlerts();
@@ -369,7 +373,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
 	}
 	
-	@Then("currency setup for $type device is done correclty and updated in wallet details tab")
+	@Then("currency setup for $type device is done correctly and updated in wallet details tab")
 	public void thenCurrencySetupForDeviceIsDoneCorrectlyAndUpdatedInWalletDetailsTab(String type) {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
@@ -485,6 +489,8 @@ public class HelpDeskSteps {
 	@When("user setup device currency through helpdesk")
 	public void whenUserSetupDeviceCurrencyThroughHelpDesk() {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskWorkflow.getDeviceStatus(device);
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.setupDeviceCurrency(helpdeskGeneral);
 	}
@@ -566,38 +572,6 @@ public class HelpDeskSteps {
 		{
 		Assert.assertTrue("status of newly created device is not normal ", false);
 		}
+
 	}
-	
-	@Then ("currency setup for device")
-	public void searchDevice(){
-		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);		
-		Device device = context.get(ContextConstants.DEVICE); 		
-		thenUserNavigatesToGeneralInHelpdesk(); 	        
-		helpdeskWorkflow.searchByDeviceNumber(device);
-		helpdeskWorkflow.clickCustomerCareEditLink();
-		helpdeskWorkflow.setupDeviceCurrency(helpdeskGeneral);
-		device.setNewWalletNumber(helpdeskGeneral.getNewWalletNumber());
-	}
-	
-	
-	@When ("wallet to wallet transfer selected account")
-	public void walletToWalletTransfer(){
-		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);	
-		Device device = context.get(ContextConstants.DEVICE);
-		thenUserNavigatesToGeneralInHelpdesk();
-		helpdeskWorkflow.searchByDeviceNumber(device);
-		helpdeskWorkflow.clickCustomerCareEditLink();
-		helpdeskWorkflow.walletToWalletTransfer(device);		
-	}	
-	
-	@When ("wallet to wallet transfer for general purpose account")
-	public void walletToWalletFundTransfer(){
-		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);	
-		Device device = context.get(ContextConstants.DEVICE);
-		thenUserNavigatesToGeneralInHelpdesk();
-		helpdeskWorkflow.searchByDeviceNumber(device);
-		helpdeskWorkflow.clickCustomerCareEditLink();
-		helpdeskWorkflow.walletToWalletTransfer(device);		
-	}
-	
 }

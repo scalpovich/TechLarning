@@ -85,5 +85,5 @@ Scenario: Prepaid - Setup Multi Currency Through Customer Portal
 Given user is logged in institution
 When user fills General details with product prepaid and submits the form for registered device
 And user setup device currency through helpdesk
-Then currency setup for prepaid device is done correclty and updated in wallet details tab
+Then currency setup for prepaid device is done correctly and updated in wallet details tab
 And user sign out from customer portal

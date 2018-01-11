@@ -37,8 +37,7 @@ public class Device {
 	private String currentTransPassword;
 	private String newTransPassword;
 	private String confirmNewTransPassword;
-	
-	
+
 	private String corporateClientCode;
 	private String appliedForProduct;
 	private String applicationType;
@@ -55,7 +54,7 @@ public class Device {
 	private Address currentAddress;
 	private String clientCode;
 	private String walletNumber;
-	private String newWalletNumber;
+	private String walletNumber2;
 	private String deviceNumber;
 	private String existingDeviceNumber;
 	private String photoIndicator;
@@ -112,7 +111,6 @@ public class Device {
 		device.setConfirmNewTransPassword(provider.getString(CHP_NEW_PASSWORD));	
 		device.setProductType(provider.getString(PRODUCT_TYPE));
 		device.setTransactionDateType(provider.getString(DATE_TYPE));
-		
 		return device;
 	}
 	
@@ -127,7 +125,27 @@ public class Device {
 		device.setOtherInfoSmsAlertRequired(provider.getString(ND_OTHERINFO_SMS_ALERT_REQUIRED));
 		return device;
 	}
-	
+
+	public String getExistingDeviceNumber() {
+		return existingDeviceNumber;
+	}
+
+	public void setExistingDeviceNumber(String existingDeviceNumber) {
+		this.existingDeviceNumber = existingDeviceNumber;
+	}
+
+	public String getEncodedName() {
+		return encodedName;
+	}
+
+	public void setEncodedName(String encodedName) {
+		this.encodedName = encodedName;
+	}
+
+	public static String getNdOtherinfoStatementPreference() {
+		return ND_OTHERINFO_STATEMENT_PREFERENCE;
+	}
+
 	public String getProductType() {
 		return productType;
 	}
@@ -152,14 +170,6 @@ public class Device {
 		this.newTransPassword = newTransPassword;
 	}
 	
-	public String getExistingDeviceNumber() {
-		return existingDeviceNumber;
-	}
-
-	public void setExistingDeviceNumber(String existingDeviceNumber) {
-		this.existingDeviceNumber = existingDeviceNumber;
-	}
-
 	public String getConfirmNewTransPassword() {
 		return confirmNewTransPassword;
 	}
@@ -168,18 +178,6 @@ public class Device {
 		this.confirmNewTransPassword = confirmNewTransPassword;
 	}
 	
-	public String getEncodedName() {
-		return encodedName;
-	}
-
-	public void setEncodedName(String encodedName) {
-		this.encodedName = encodedName;
-	}
-
-	public static String getNdOtherinfoStatementPreference() {
-		return ND_OTHERINFO_STATEMENT_PREFERENCE;
-	}
-
 	public static String getNdOtherinfoFaxNo() {
 		return ND_OTHERINFO_FAX_NO;
 	}
@@ -329,22 +327,21 @@ public class Device {
 	public void setClientCode(String clientCode) {
 		this.clientCode = clientCode;
 	}
-	
 
-	public String getNewWalletNumber() {
-		return newWalletNumber;
-	}
-
-	public void setNewWalletNumber(String newWalletNumber) {
-		this.newWalletNumber = newWalletNumber;
-	}
-	
 	public String getWalletNumber() {
 		return walletNumber;
 	}
 
 	public void setWalletNumber(String walletNumber) {
 		this.walletNumber = walletNumber;
+	}
+
+	public String getWalletNumber2() {
+		return walletNumber2;
+	}
+
+	public void setWalletNumber2(String walletNumber2) {
+		this.walletNumber2 = walletNumber2;
 	}
 
 	public String getDeviceNumber() {
@@ -519,7 +516,6 @@ public class Device {
 		return currency;
 	}
 
-
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
@@ -554,5 +550,4 @@ public class Device {
 	public void setTransactionDateType(String transactionDateType) {
 		this.transactionDateType = transactionDateType;
 	}
-
 }
