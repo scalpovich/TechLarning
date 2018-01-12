@@ -421,8 +421,8 @@ public class TransactionSteps {
 		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED) );
 
 		performOperationOnSamecard(false);
-
-		MiscUtils.reportToConsole("VISA Transaction being performed : " + transaction );
+		
+		logMessage("VISA Transaction being performed : ", transaction);
  		transactionWorkflow.performVisaTransaction(transaction);
 	}
 
@@ -431,15 +431,16 @@ public class TransactionSteps {
 	public void thenVisaTestResultsAreReported(String tool, String transaction) {
 		String testResults  = null;
 		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseToSelect(transaction);
-		MiscUtils.reportToConsole("VISA Transaction Test Case Name : " + transactionName );
+		logMessage("VISA Transaction Test Case Name : ", transactionName );
 
 		testResults = transactionWorkflow.verifyVisaOutput(transactionName);
 		transactionWorkflow.browserMaximize(); // maximing browser
 		
 		if(transactionWorkflow.isContains(testResults, "validations ok")) {
-			logger.info(PASS_MESSAGE, testResults );
+			logMessage(PASS_MESSAGE, testResults);
 			assertTrue(PASS_MESSAGE + testResults, true );
 		} else if(transactionWorkflow.isContains(testResults, "validations not ok"))	{
+			logger.error(FAIL_MESSAGE, testResults);
 			assertFalse(FAIL_MESSAGE +  testResults, false);
 			throw new ValidationException(FAIL_MESSAGE +  testResults);
 		} else {
@@ -447,5 +448,10 @@ public class TransactionSteps {
 			assertFalse(FAILED, false);
 			throw new ValidationException(FAILED);
 		}
+	}
+	
+	private void logMessage(String message1, String message2) {
+	logger.info(message1, message2 );
+	MiscUtils.reportToConsole(message1 + message2 );
 	}
 }

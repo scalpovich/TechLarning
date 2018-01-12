@@ -25,8 +25,22 @@
    ControlSetText("Open","","[CLASS:Edit; INSTANCE:1]", $CmdLine[1]) ; setting text in the path section
    sleep(1000)
    ControlClick("Open","","[CLASS:Button; INSTANCE:1]") ; click on Open button
-   sleep(6000)
+   sleep(10000)
 
-   ControlClick("Variables Manager","","[CLASS:Button; INSTANCE:1]")  ;pressing the OK dialog on successful import dialog
+   WinWaitActive("Variables Manager")
 
-   WinSetState("Variables Manager", "", @SW_MINIMIZE ) ; mimimizing window
+   While ProceedClickOK() <> 1
+	  WEnd
+
+
+Func ProceedClickOK()
+  If ControlCommand ("Variables Manager", "", "[CLASS:Button; INSTANCE:1]", "IsEnabled") Then
+    ControlClick("Variables Manager","","[CLASS:Button; INSTANCE:1]")
+	Sleep(1000)
+    WinMenuSelectItem("Variables Manager", "", "&File", "E&xit") ; closing the window
+    sleep(3000)
+    WinWaitClose("Variables Manager")
+    Return 1
+  EndIf
+  Return 0
+EndFunc
