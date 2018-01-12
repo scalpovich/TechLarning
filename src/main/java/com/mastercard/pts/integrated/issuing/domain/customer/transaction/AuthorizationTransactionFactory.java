@@ -101,7 +101,7 @@ public class AuthorizationTransactionFactory {
 	private Entry<String, String> generateDynamicElement(Entry<String, String> entry) {
 		String randNum = RandomStringUtils.randomNumeric(12);
 		if ("037".equals(entry.getKey())) {
-			//Prabhu - commenting this code temporarily as Lokesh is working on modifiying this randNum assignment to Setters and getters rather than Context for Pre-Auith and Auth-Completion
+			//Lokesh - uncommenting this code as TRANSACTION NAME is set in context at all level of execution
 			if(context.get(ConstantData.TRANSACTION_NAME).toString().contains("PREAUTH"))
 			{
 				context.put("DATAELEMENT_037", randNum);
