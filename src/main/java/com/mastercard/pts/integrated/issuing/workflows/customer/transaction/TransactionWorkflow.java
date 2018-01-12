@@ -420,7 +420,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation(TEST_CASES);
 		performDoubleClickOperation("RunTest");
 		wait(5000);
-		executeAutoITExe("ActivateStartTestDialogAndClose.exe");
+		//executeAutoITExe("ActivateStartTestDialogAndClose.exe");
+		winiumClickOperation("OK");
 	}
 
 	public String verifyResults()
@@ -748,7 +749,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		try
 		{
 			String licenseForSelection = null;
-			//changed from MAS 16.x to MAS so that this works for all versions of MAS
+			//changed from MAS 16.x to MAS so th+at this works for all versions of MAS
 			if(licenseFor.toUpperCase().contains("MAS"))
 				licenseForSelection = SimulatorConstantsData.MAS_LICENSE_TYPE;
 			//changed from MDFS 16.x to MDFS so that this works for all versions of MDFS
@@ -762,6 +763,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			}
 
 			executeAutoITExe("ActivateLicenseProfiles.exe");
+			webProvider.get().manage().window().setPosition(new Point(-2000, 0));
 			winiumLicenseSelectOperation(licenseTypeToSelect, licenseFor);
 			winiumClickOperation("Select");
 			wait(20000);

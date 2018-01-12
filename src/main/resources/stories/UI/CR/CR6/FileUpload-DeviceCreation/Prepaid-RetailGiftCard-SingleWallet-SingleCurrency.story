@@ -16,9 +16,9 @@ When user creates a Open loop wallet plan of default type for program Retail Gif
 When user creates an Embossing File Template
 When user creates a Vendor of Category Personalization with Embossing template attached
 When user creates a Device Plan for Mastercard for Magnetic Stripe and Prepaid card,choose activation On Production and delivery mode Mail
-When user adds loyaltyPlan
-When user adds promotionPlan
-When user maps promotionPlan with loyaltyPlan
+When user adds loyalty Plan
+When user adds promotion Plan
+When user maps promotion Plan with loyalty Plan
 When user creates a Single wallet Program for Mastercard for product Prepaid for program Retail Gift Card
 Then Program should get created
 When user creates a Device Range for product Prepaid
