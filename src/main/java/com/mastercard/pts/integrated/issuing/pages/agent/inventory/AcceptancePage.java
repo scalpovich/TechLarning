@@ -70,9 +70,9 @@ public class AcceptancePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".SuccessMessageTxt")
 	private MCWebElement acceptanceMessage;
 	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Download in xls']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@id='mpts_agentPortal_modifyIntraBranch_downloadinXLS']")
 	private MCWebElement downloadinXLSBtn;
-
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Acceptance");
 		verifyButton("Search");
@@ -115,8 +115,10 @@ public class AcceptancePage extends AbstractBasePage {
 	}
 	
 	public void clickDownloadinXLSButton() {
+		WebElementUtils.scrollDown(driver(), 0, 250);
 		new WebDriverWait(driver(), timeoutInSec).until(
 				WebElementUtils.elementToBeClickable(downloadinXLSBtn)).click();
+		SimulatorUtilities.wait(5000);//this delay to wait till the file is downloaded
 	}
 
 	public void enterQuantityRecieved(String quantityOrdered) {
@@ -128,7 +130,6 @@ public class AcceptancePage extends AbstractBasePage {
 	}
 
 	public void clickSubmitButton() {
-		WebElementUtils.scrollDown(driver(), 0, 250);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(submitBtn)).click();
 	}
 
@@ -150,12 +151,13 @@ public class AcceptancePage extends AbstractBasePage {
 	
 	public void acceptDispatch(Acceptance details) {
 		logger.info("Order Acceptance: {}", details.getBranchId());
-
+		
 		selectBranchId(details.getBranchId());
 		selectOrderNumber(details.getOrderNumber());
 		clickSearchButton();
 		clickTableFirstRecord();
 		clickModifyButton();
+		driver().manage().window().maximize();
 		enterQuantityRecieved(details.getQuantityOrdered());
 		enterCurrentDateddMMyyyy(DateUtils.currentDateddMMyyyy());
 		enterMemo(details.getMemo());
