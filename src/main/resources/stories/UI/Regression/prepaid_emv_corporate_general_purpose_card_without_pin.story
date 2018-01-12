@@ -55,14 +55,6 @@ And user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
 Then user sign out from customer portal
 
-Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
-Meta:
-@TestId 
-When perform an EMV_CASH_WITHDRAWAL MAS transaction on the same card
-Then MAS test results are verified
-And search CWD authorization and verify 000-Successful status
-And user sign out from customer portal
-
 Scenario: Perform EMV_PURCHASE_WITH_CASHBACK Authorization transaction
 When perform an EMV_PURCHASE_WITH_CASHBACK MAS transaction
 Then MAS test results are verified
