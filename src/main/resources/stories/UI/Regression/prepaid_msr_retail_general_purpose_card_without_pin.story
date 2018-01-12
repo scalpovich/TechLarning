@@ -1,4 +1,4 @@
-prepaid msr retail general purpose card authorization
+prepaid msr retail general purpose card authorization PINLESS
 
 Narrative:
 In order to check transactions on prepaid msr retail general purpose card
@@ -89,10 +89,3 @@ Meta:
 When perform an MSR_PURCHASE MAS transaction
 Then MAS test results are verified
 And search Purchase authorization and verify success status
-
-Scenario: Program Balance Summary download
-Meta:
-@TestId 
-Given user is logged in institution
-When pre-clearing and Pre-EOD batches are run
-Then verify report for transactions with Program Balance Summary is downloaded

@@ -1,4 +1,4 @@
-prepaid emv retail giftcard card piness authorization
+prepaid emv retail giftcard card pinless authorization
 
 Narrative:
 In order to check transactions on prepaid emv retail giftcard card piness
@@ -70,12 +70,6 @@ Meta:
 When perform an EMV_POS_BALANCE_INQUIRY MAS transaction on the same card
 Then MAS test results are verified
 
-Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
-Meta:
-@TestId 
-When perform an EMV_CASH_WITHDRAWAL MAS transaction
-Then MAS test results are verified
-
 Scenario: Perform ECOMM_PURCHASE Authorization transaction
 Meta:
 @TestId 
@@ -88,10 +82,3 @@ Meta:
 When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
 And search Purchase authorization and verify success status
-
-Scenario: Program Balance Summary download
-Meta:
-@TestId 
-Given user is logged in institution
-When pre-clearing and Pre-EOD batches are run
-Then verify report for transactions with Program Balance Summary is downloaded

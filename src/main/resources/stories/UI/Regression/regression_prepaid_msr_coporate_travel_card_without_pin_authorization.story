@@ -1,4 +1,4 @@
-prepaid emv retail travel card authorization
+regression prepaid msr corporate travel card authorization PINLESS
 
 Narrative:
 In order to check transactions on prepaid emv retail general purpose card
@@ -78,12 +78,6 @@ Scenario: Perform MSR_POS_BALANCE_INQUIRY Authorization transaction
 Meta:
 @TestId
 When perform an MSR_POS_BALANCE_INQUIRY MAS transaction on the same card
-Then MAS test results are verified
-
-Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
-Meta:
-@TestId 
-When perform an MSR_CASH_WITHDRAWAL MAS transaction on the same card
 Then MAS test results are verified
 
 Scenario: Perform ECOMM_PURCHASE Authorization transaction
