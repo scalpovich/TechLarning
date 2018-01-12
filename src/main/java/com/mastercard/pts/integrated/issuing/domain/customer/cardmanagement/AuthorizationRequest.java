@@ -1,7 +1,5 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
-import org.apache.commons.lang3.RandomStringUtils;
-
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 
@@ -10,7 +8,9 @@ public class AuthorizationRequest {
 	private static final String CURRENCY = "CURRENCY";
 
 	private static final String MCC_CODE = "MCC";
-		
+	
+	private static final String TRANSACTION_AMOUNT = "TRANSACTION_AMOUNT";
+	
 	private String deviceNumber;
 	
 	private String transactionCurrency;
@@ -25,7 +25,7 @@ public class AuthorizationRequest {
 		AuthorizationRequest request = new AuthorizationRequest();
 		request.setTransactionCurrency(provider.getString(CURRENCY));
 		request.setMcc(provider.getString(MCC_CODE));
-		request.setTransactionAmount(RandomStringUtils.randomNumeric(3));
+		request.setTransactionAmount(provider.getString(TRANSACTION_AMOUNT));
 		request.setMemo(ConstantData.GENERIC_DESCRIPTION);
 		return request;
 	}
