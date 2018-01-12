@@ -1443,7 +1443,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	public void disconnectAndCloseVts() {
 		executeAutoITExe("CloseVTS.exe");
 	}
-
+/*
 	public void disconnectVts() {
 		WebElement visaTestSystemFrame = winiumDriver.findElement(By.xpath("*[starts-with(@Name, 'Visa Test System')]"));
 		visaTestSystemFrame.click();
@@ -1452,7 +1452,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation(VTS_COMM_HANDLER);
 		winiumClickOperation("Stop Line");
 		wait(2000);
-	}
+	}*/
 
 	private void setVtsIpAddress() {
 		//for keying ip and port on VTS if present
@@ -1515,38 +1515,62 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation(fieldNumber);
 		executeAutoITExe("SetValueInVisaMessageEditor.exe " + parameter);
 	}
+	
+	private String getFeildDescriptionFromLogViewer(String propertyByName) {
+		MiscUtils.reportToConsole(" ******* getFeildDescriptionFromLogViewer ******" );     
+		
+		executeAutoITExe("VtsManageLogViewer.exe");
+		WebElement logViewerFrame = winiumDriver.findElement(By.name("Incoming Message"));
+		if(!logViewerFrame.isDisplayed()) {
+			return "Visa Incomming Message for transaction did not come";
+		}
+		logViewerFrame.click();
+		winiumClickOperation("F2"); //selecting this to be able to scroll on the page and F2 is always visible even when we are at the botton of the frame
+		pressPageUp(); //scrolling to top of frame
+		if(winiumDriver.findElement(By.name(propertyByName)).isDisplayed()) {
+					winiumClickOperation(propertyByName);
+		} else {
+			logViewerFrame.click();
+			pressPageDown(2); // scrolling down to the end of the page
+			winiumClickOperation(propertyByName);
+		}
+		//fetching Description of F39 which may look like this - "Name: Response Code, Expected Value: ValidValue, Actual Value: {Expected, But Not Received}"
+		return winiumDriver.findElement(By.name(propertyByName)).getAttribute("Description");
+	}
 
 	public void executeVisaTest() {
 		MiscUtils.reportToConsole(" ******* executeVisaTest ******" );     
 		winiumClickOperation("Execute Test");
 		wait(5000);
-		/*WebElement tempElement = winiumDriver.findElementByXPath("//*[contains(@AutomationId,'1036')]");
-		String tempText = tempElement.getText();
-		MiscUtils.reportToConsole("Total Recieveing Messages on Test Execution in VISA: " + tempText);*/
 		executeAutoITExe("visaTestExeution.exe");
 	}
 
 	public String verifyVisaOutput(String transaction) {
+		String results;
 		MiscUtils.reportToConsole(" ******* verifyVisaOutput ******" );     
 		
 		winiumClickOperation(transaction);
 		pressEnter();
 		pressDownArrow(2); // to select the Out Req
 		winiumClickOperation("View Detail Log");
+		wait(3000);
 		// here we are not sure as to what are we verifying
 		Actions action = new Actions(winiumDriver);
 		List<WebElement> lst = winiumDriver.findElements(By.name("Info"));
 		//clicking on the last item from bottom
 		lst.get(0).click();
 		action.doubleClick(lst.get(0)).perform(); 
+		pressPageUp(2); // ensuring we are for sure selecting the 1st item in the group. Sometimes Warning comes up hence pageup
 		// outout screen comes up on double clicking on the first item in the list
 		winiumClickOperation("Maximize");
 		
-		//Prabhu - to change .. output F39 is not coming up as of now.. need to change this 1 section to click on item F39 and fetch output from Desctription section and pass the output as return from this method
-		//finally browserMaximize
+		results = getVisaResult();
 		browserMaximize();
-
-		return "Temporary Status";
+		return results;
+	}
+	
+	private String getVisaResult() {
+		return getFeildDescriptionFromLogViewer("F39");
 	}
 
 	public void browserMinimize() {
@@ -1608,8 +1632,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			sm.setCellData(vtsTestGroupInputFilePath, sheetName,"F035.04 - SVCCODE",  device.getServiceCode());
 		} else {
 			//else block implemented for Testing purpose.. keys in static data in the excel "VisaUploadTemplate.xls" @ ..\\src\main\resources\Simulator\VisaInputFile
-			sm.setCellData(vtsTestGroupInputFilePath, sheetName, "F002 - PAN", "12345678910111213");
-			sm.setCellData(vtsTestGroupInputFilePath, sheetName, "F014 - EXPDATE", MiscUtils.generateRandomNumberBetween2Number(18, 25) + MiscUtils.generateRandomNumberBetween2Number(1, 12) );
+			sm.setCellData(vtsTestGroupInputFilePath, sheetName, "F002 - PAN", "4761340000000019");
+			sm.setCellData(vtsTestGroupInputFilePath, sheetName, "F014 - EXPDATE", "2210" );
 			sm.setCellData(vtsTestGroupInputFilePath, sheetName,"F023 - CARD SEQ NUM", "111");
 			sm.setCellData(vtsTestGroupInputFilePath, sheetName,"F035.04 - SVCCODE",  "101");
 		}

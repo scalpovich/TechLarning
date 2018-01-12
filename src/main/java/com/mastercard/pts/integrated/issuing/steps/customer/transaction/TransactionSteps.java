@@ -423,9 +423,7 @@ public class TransactionSteps {
 		performOperationOnSamecard(false);
 
 		MiscUtils.reportToConsole("VISA Transaction being performed : " + transaction );
-
-		//transactionWorkflow.performVisaTransaction(transaction, transactionData, sameCard);
-		transactionWorkflow.performVisaTransaction(transaction);
+ 		transactionWorkflow.performVisaTransaction(transaction);
 	}
 
 	@When("$tool test results are verified for $transaction")
@@ -437,11 +435,8 @@ public class TransactionSteps {
 
 		testResults = transactionWorkflow.verifyVisaOutput(transactionName);
 		transactionWorkflow.browserMaximize(); // maximing browser
-		//reporting Temporary Status
-		if(transactionWorkflow.isContains(testResults, "temporary status"))	{
-			logger.info(PASS_MESSAGE, testResults );
-			assertTrue(PASS_MESSAGE + testResults, true );
-		} else if(transactionWorkflow.isContains(testResults, "validations ok")) {
+		
+		if(transactionWorkflow.isContains(testResults, "validations ok")) {
 			logger.info(PASS_MESSAGE, testResults );
 			assertTrue(PASS_MESSAGE + testResults, true );
 		} else if(transactionWorkflow.isContains(testResults, "validations not ok"))	{
