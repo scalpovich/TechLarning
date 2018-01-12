@@ -56,7 +56,7 @@ Meta:
 When perform an MSR_PURCHASE_WITH_CASHBACK MAS transaction on the same card
 Then MAS test results are verified
 And user is logged in institution
-And search Purchase authorization and verify success status
+And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 
 Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
@@ -92,7 +92,7 @@ Meta:
 When perform an MSR_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
 And user is logged in institution
-And search Purchase authorization and verify success status
+And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 
 Scenario: Generate Auth File for Clearing
