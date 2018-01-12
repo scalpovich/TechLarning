@@ -36,3 +36,4 @@ When user creates and uploads transaction file
 And user processes transaction upload batch for prepaid
 Then in batch trace history transaction is successful using job id
 And balance in helpdesk updated correctly for prepaid device
+And user sign out from customer portal

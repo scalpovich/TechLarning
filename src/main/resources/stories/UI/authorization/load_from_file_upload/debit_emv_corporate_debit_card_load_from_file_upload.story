@@ -25,7 +25,6 @@ And a new device was created
 When processes pre-production batch for debit
 When processes device production batch for debit
 Then device has "normal" status
-Then user activates device through helpdesk
 
 Scenario: debit emv adjustment and file upload transaction
 Meta:
@@ -36,3 +35,4 @@ When user creates and uploads transaction file
 And user processes transaction upload batch for debit
 Then in batch trace history transaction is successful using job id
 Then balance in helpdesk updated correctly for debit device
+And user sign out from customer portal

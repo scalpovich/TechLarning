@@ -39,7 +39,7 @@ public class ManualAuthorizationSteps {
 	
 	@Then("status of request is \"approved\"")
 	public void thenStatusOfRequestIsapproved(){
-	 assertThat("Authorization was approved", successMessage, containsString("Authorization is successful"));
+		 assertThat("Authorization is successful", successMessage, containsString("Authorization is successful"));
 
 	}
 }

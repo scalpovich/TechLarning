@@ -43,6 +43,8 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 	@PageElement(findBy = FindBy.NAME, valueToFind = "memo:input:textAreaComponent")
 	private MCWebElement memoTxt;
 
+	private String successMessage = null;
+	
 	public String addAuthorizationRequest(AuthorizationRequest request){
 		logger.info("Authorization Request: {}", request.getDeviceNumber());
 		clickAddNewButton();
@@ -53,10 +55,12 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 			WebElementUtils.selectDropDownByVisibleText(mccDDwn, request.getMcc());
 			WebElementUtils.enterText(memoTxt, request.getMemo());
 			clickSaveButton();
-			verifyNoErrors();
-		});
-		return getSuccessMessage();
-
+			successMessage = getSuccessMessage();
+			logger.info("Success Meesage: " + successMessage);
+			clickOkButton();
+			});
+		
+		return successMessage;
 	}
 	
 	public void verifyUiOperationStatus() {
