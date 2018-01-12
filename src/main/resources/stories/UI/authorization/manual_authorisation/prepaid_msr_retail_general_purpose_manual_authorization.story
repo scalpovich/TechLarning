@@ -6,7 +6,7 @@ As an issuer
 I want to create an msr prepaid card for client and perform manual authorization from customer portal
 
 Meta:
-@StoryName prepaid_cgpr_manual_auth
+@StoryName prepaid_rgpc_manual_auth
 @CRCardsWithAuthorization
 
 Scenario: Set up msr prepaid card
