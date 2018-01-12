@@ -742,7 +742,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumLicenseSelectOperation("License profiles");		
 		performClickOperation("License profiles");
 		performClickOperation("Select");		
-		wait(10000);
+		wait(15000);
 	}
 
 	public void selectLicenseAndConfigure(String licenseTypeToSelect, String licenseFor)
