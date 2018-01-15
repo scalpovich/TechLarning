@@ -1497,4 +1497,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			MasDetailsKeyValuePair.getLatestVersionMasDetailsInstalledOnMachine();
 		}
 	}
+	
+	public String getARN(String deviceNumber, TransactionSearch ts){
+		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
+		return page.searchTransactionWithDevice(deviceNumber, ts);
+	}
 }

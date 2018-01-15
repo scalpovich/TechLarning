@@ -19,13 +19,12 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_SEARCH, CardManagementNav.L2_TRANSACTION,
-		CardManagementNav.L3_TRANSACTION_SEARCH })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_SEARCH, CardManagementNav.L2_TRANSACTION, CardManagementNav.L3_TRANSACTION_SEARCH })
 public class TransactionSearchPage extends AbstractBasePage {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(TransactionSearchPage.class);
+	private static final Logger logger = LoggerFactory.getLogger(TransactionSearchPage.class);
+
+	private static final long FROM_DATE = 89;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=microfilmRefNumber]")
 	private MCWebElement searchARNTxt;
@@ -39,14 +38,33 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='toDate']/..")
 	private MCWebElement toDateTxt;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[text()='Date']/following-sibling::td[2]")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:6:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement dateDDwn;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[text()='Product Type']/following-sibling::td[2]")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement productTypeDDwn;
 
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=cardNumber]")
+	private MCWebElement cardNumberTxt;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr/td/span[contains(text(),'DR')]/../../td[1]/span/a/span")
+	private MCWebElement retrieveARNLabel;
+
 	private String authorizationStatus;
-	
+
+	public String searchTransactionWithDevice(String deviceNumber, TransactionSearch ts) {
+		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
+		WebElementUtils.enterText(cardNumberTxt, deviceNumber);
+		WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
+		WebElementUtils.pickDate(fromDateTxt, LocalDate.now().minusDays(FROM_DATE));
+		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
+		clickSearchButton();
+		waitforElemenet(retrieveARNLabel);
+		String retrievedARN = retrieveARNLabel.getText();
+		logger.info("retrievedARN {} ", retrievedARN);
+		return retrievedARN;
+	}
+
 	public String searchTransactionWithARN(String arnNumber, TransactionSearch ts) {
 		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
 		WebElementUtils.enterText(searchARNTxt, arnNumber);
@@ -60,41 +78,39 @@ public class TransactionSearchPage extends AbstractBasePage {
 			authorizationStatus = authorizationStatusTxt.getText();
 			clickCloseButton();
 		});
-
 		return authorizationStatus;
 	}
 
-	public String searchTransactionWithArnAndGetFee(String arnNumber, TransactionSearch ts){
+	public String searchTransactionWithArnAndGetFee(String arnNumber, TransactionSearch ts) {
 		int i;
 		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
 		WebElementUtils.enterText(searchARNTxt, arnNumber);
-		WebElementUtils.selectDropDownByVisibleText(dateDDwn,ts.getDateType());
+		WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
 		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
 		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
 		clickSearchButton();
-		for(i=1;i<4;i++){
-			if("2".equals(getCellTextByColumnName(i,"Sequence Number")))
+		for (i = 1; i < 4; i++) {
+			if ("2".equals(getCellTextByColumnName(i, "Sequence Number")))
 				break;
 		}
-		return getCellTextByColumnName(i,"Transaction");
+		return getCellTextByColumnName(i, "Transaction");
 	}
-	
-	public String searchTransactionWithArnAndGetStatus(String arnNumber, TransactionSearch ts){
-        int i;
-		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
-        WebElementUtils.enterText(searchARNTxt, arnNumber);
-        WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
-        WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
-        WebElementUtils.pickDate(toDateTxt, LocalDate.now());
-        clickSearchButton();
-        for(i=1;i<4;i++){
-               if("2".equals(getCellTextByColumnName(i,"Sequence Number")))
-                     break;
-        }
-        return getCellTextByColumnName(i,"Reversal");
- }
 
-	
+	public String searchTransactionWithArnAndGetStatus(String arnNumber, TransactionSearch ts) {
+		int i;
+		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
+		WebElementUtils.enterText(searchARNTxt, arnNumber);
+		WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
+		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
+		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
+		clickSearchButton();
+		for (i = 1; i < 4; i++) {
+			if ("2".equals(getCellTextByColumnName(i, "Sequence Number")))
+				break;
+		}
+		return getCellTextByColumnName(i, "Reversal");
+	}
+
 	public void verifyUiOperationStatus() {
 		logger.info("Transaction Search");
 		verifySearchButton("Search");
@@ -104,5 +120,4 @@ public class TransactionSearchPage extends AbstractBasePage {
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(searchARNTxt));
 	}
-
 }

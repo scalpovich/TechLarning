@@ -444,4 +444,14 @@ public class TransactionSteps {
 			throw new ValidationException(FAILED);
 		}
 	}
+	
+	@Then("ARN is retrieved from transaction search page")
+	public void arnIsRetrievedFromTransactionSearchPage() {
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		String deviceNumber=device.getDeviceNumber();
+//		String deviceNumber="5877654779528317";
+		String arn = transactionWorkflow.getARN(deviceNumber, ts);
+		logger.info("ARN = {} ", arn);
+	}
 }
