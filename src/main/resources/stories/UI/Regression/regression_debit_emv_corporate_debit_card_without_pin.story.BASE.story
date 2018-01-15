@@ -1,4 +1,4 @@
-debit emv corporate debit card withoutPin
+debit emv retail debit card withoutPin
 
 Narrative:
 In order to check transactions on debit emv retail card
@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for debit emv retail debit card
 
 Meta:
-@StoryName d_emv_corp
+@StoryName S190640
 @SanityCardsWithAuthorization
 
 Scenario: Set up program for debit emv retail debit card
