@@ -19,7 +19,9 @@ public class DeviceSale {
 	private static final String DOCUMENT_1_TYPE = "DOCUMENT_1_TYPE";
 	private static final String APPLICANT_PROFESSION = "APPLICANT_PROFESSION";
 	private static final String INITIAL_LOAD_TXN_DETAILS = "INITIAL_LOAD_TXN_DETAILS";
+	private static final String IS_INITIAL_LOAD = "IS_INITIAL_LOAD";
 	
+	private String isInitialLoad;
 	private String initialLoadTxnDetails;
 	private String applicantProfession;
 	private String postalCode;
@@ -63,9 +65,18 @@ public class DeviceSale {
 		plan.setDocument1Type(provider.getString(DOCUMENT_1_TYPE));
 		plan.setApplicantProfession(provider.getString(APPLICANT_PROFESSION));
 		plan.setInitialLoadTxnDetails(provider.getString(INITIAL_LOAD_TXN_DETAILS));
+		plan.setIsInitialLoad(provider.getString(IS_INITIAL_LOAD));
 		return plan;
 	}
 	
+	public String getIsInitialLoad() {
+		return isInitialLoad;
+	}
+
+	public void setIsInitialLoad(String isInitialLoad) {
+		this.isInitialLoad = isInitialLoad;
+	}
+
 	public String getInitialLoadTxnDetails() {
 		return initialLoadTxnDetails;
 	}

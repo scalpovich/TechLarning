@@ -14,9 +14,10 @@ public class DevicePlanFlows extends MenuFlows {
 
 	@Autowired
 	Navigator navigator;
+	
 	@Autowired
 	ErrorMessages errorValidator;
-
+	
 	public String createDevicePlan(DevicePlan deviceplan) {
 		String devicePlanName;
 		DevicePlanPage deviceplanpage = navigator.navigateToPage(DevicePlanPage.class);

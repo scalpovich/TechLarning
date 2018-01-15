@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.Adjus
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.BatchJobHistoryPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.BatchTraceHistoryPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.WalletDetailsPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
@@ -39,6 +41,10 @@ public class LoadFromFileUploadWorkflow {
 		uploadFile.createTransactionUploadFile(file);
 	}
 	
+	public List<String> searchWalletDetailsPage(Device device){
+		WalletDetailsPage page = navigator.navigateToPage(WalletDetailsPage.class);
+		return page.getWalletDetails(device);
+	}
 	public void createAdjustmentTransaction(AdjustmentTransaction transaction){
 		AdjustmentTransactionPage page = navigator.navigateToPage(AdjustmentTransactionPage.class);
 		page.addAdjustmentTransaction(transaction);

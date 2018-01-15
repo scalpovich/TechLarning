@@ -40,6 +40,25 @@ public class DeviceSteps {
 		
 		deviceWorkflow.createDevice(device);
 		context.put(ContextConstants.DEVICE, device);
+	
+	}
+	
+	@When("user creates new device of $type type for new client of $customerType customer")
+	public void userCreatesNewDeviceForNewClient(String type,String customerType) {
+		Device device = Device.createWithProvider(provider);
+		device.setCustomerType(ProductType.fromShortName(customerType));
+		
+		Program program = context.get(ContextConstants.PROGRAM);
+		device.setAppliedForProduct(program.getProduct());
+		device.setProgramCode(program.buildDescriptionAndCode());		
+		
+		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+		device.setDeviceType1(devicePlan.getDeviceType());
+		
+		deviceWorkflow.createDevice(device);
+		context.put(ContextConstants.DEVICE, device);
+	
 	}
 	
 	@Then("$type device plan and program are made available for Device Creation")

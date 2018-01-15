@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -56,11 +57,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public String pageValidationCheck = "//ol/li";
 	public String ERRORPANEL = "//li[@class='feedbackPanelERROR']";
-	private static final By INFO_MESSAGE_LOCATOR = By.cssSelector(":not([style]) > .feedbackPanel span.feedbackPanelINFO");
+	private static final By INFO_MESSAGE_LOCATOR = By.cssSelector(":not([style]) > .feedbackPanel span.feedbackPanelINFO");	
 
 	private static final String FIRST_ROW_SELECT = ".dataview tbody span";
 
 	private static final String SUCCESS_MESSAGE = "Success message: {}";
+	
+	private static final String WALLET_NUMBER = "Wallet number: {}";
 
 	public static final String ERROR_MESSAGE = "Error: {}";
 
@@ -171,10 +174,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Card Management']")
 	private MCWebElement cardManagement;
 
+	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
 		MCAnnotationProcessor.initializeSuper(this, finderProvider);
 	}
+
 
 	protected void clickOkButton() {
 		clickWhenClickable(okButton);
@@ -349,7 +354,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
 	}
+	
 
+	
 	protected boolean waitForRow() {
 		try {
 			waitForWicket();
@@ -366,7 +373,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		try {
 			WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 			logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
-			return successMessageLbl.toString();
+			return successMessageLbl.getText();
 		} catch (NoSuchElementException e) {
 			logger.info("No Status is updated");
 			logger.debug("Error", e);
@@ -378,7 +385,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return driver().findElements(INFO_MESSAGE_LOCATOR).stream().map(WebElement::getText).filter(text -> StringUtils.containsIgnoreCase(text, codeDescription))
 				.map(text -> text.replaceAll("\\D+", "")).findFirst().orElseThrow(() -> new ValidationException("Missing code: " + codeDescription));
 	}
-
+	
 	protected void verifyErrorMessage() {
 		WebElement errorMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.feedbackPanelERROR")));
 		logger.info("Error message : {}", errorMessageLbl.getText());
@@ -543,7 +550,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 		Assert.assertTrue("Error Message - Popup Name - Expecting Result : " + popupName + ACTUAL_RESULT_LABEL + popupNameElement.getText(), popupName.contains(popupNameElement.getText()));
 		logger.info(RESPONSE_MESSAGE, popupNameElement.getText());
 	}
-
+	
+	protected void acceptPopup() {
+		Alert alert = driver().switchTo().alert();
+		boolean isAlertPresent = alert != null;
+		if(isAlertPresent){
+			alert.accept();
+		}
+	}
+	
 	protected void verifyDeleteRecordAlert(String expectedAlertText) {
 		Alert alert = driver().switchTo().alert();
 		String actualAlertText = null;
@@ -972,6 +987,16 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 		return null;
 	}
+	
+	public List<String> getListOfElements(String ele){
+		List<WebElement> list = driver().findElements(By.xpath(ele));
+		List<String> elementTextData = new ArrayList<String>();
+		
+		for(WebElement e: list){
+			elementTextData.add(e.getText()); 
+		}
+		return elementTextData;
+	}
 
 	public void selectByVisibleText(MCWebElement ele, String optionName) {
 		String optionVisbleText = "";
@@ -1015,7 +1040,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void clickWhenClickableCHP(MCWebElement element) {
 		waitForElementVisible(element);
-		new WebDriverWait(driver(), TIMEOUT).until(elementToBeClickable(element)).click();
+		new WebDriverWait(driver(), TIMEOUT).until(
+				elementToBeClickable(element)).click();
+		// waitForWicket(driver());
 	}
 
 	protected void clickWhenClickable(WebElement element) {
@@ -1230,11 +1257,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 				if (!handle.equals(getFinder().getWebDriver().getWindowHandle()))
 					getFinder().getWebDriver().switchTo().window(handle);
 			}
+			acceptPopup();			
+
 		} catch (Exception e) {
 			logger.error("Unable to Switch Window --> {} ", e);
 		}
 	}
-
+	
 	public void selectByVisibleTexts(MCWebElement ele, String optionName) {
 		waitUntilSelectOptionsPopulated(ele);
 		waitForLoaderToDisappear();
@@ -1251,8 +1280,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 		return isAnyErrorPresent;
 	}
-
-	public String getTextFromPage(MCWebElement element) {
+	
+	public String getTextFromPage(MCWebElement element){
 		return element.getText();
 	}
 
@@ -1285,3 +1314,4 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return null;
 	}
 }
+

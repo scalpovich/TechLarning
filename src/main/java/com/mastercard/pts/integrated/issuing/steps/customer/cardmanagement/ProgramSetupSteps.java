@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.DeviceType;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.ProgramType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ApplicationBusinessMandatoryFields;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ApplicationDocumentChecklist;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardBillingCycle;
@@ -26,6 +28,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePriorityPassIDAndCardPackIDTemplate;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCCRulePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCG;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MarketingMessageDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MarketingMessagePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PrepaidStatementPlan;
@@ -43,6 +46,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Wall
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.MCGFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramSetupWorkflow;
 
 @Component
@@ -59,6 +63,12 @@ public class ProgramSetupSteps {
 
 	@Autowired
 	private DataProvider dataProvider;
+	
+	@Autowired
+	MCGFlows mcgflows;
+
+	@Autowired
+	MCG mcg;
 
 	private DeviceJoiningAndMemberShipFeePlan deviceJoiningAndMemberShipFeePlan;
 
@@ -298,17 +308,6 @@ public class ProgramSetupSteps {
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPin(String deviceType) {
 		// composite step
 	}
-
-	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card")
-	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
-			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
-			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
-			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
-			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product" })
-	public void givenDeviceRangeForProgramWithDevicePlanforPrepaid(String deviceType) {
-		// composite step
-	}
 	
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin for an interface")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
@@ -329,6 +328,17 @@ public class ProgramSetupSteps {
 			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product for an interface",
 			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product for an interface" })
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidForAnInterface(String deviceType) {
+		// composite step
+	}
+
+	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card")
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product" })
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaid(String deviceType) {
 		// composite step
 	}
 
@@ -469,6 +479,14 @@ public class ProgramSetupSteps {
 
 		programSetupWorkflow.fillDocumentChecklist(documentCheckListPlan);
 	}
+	
+	@When("User fills Document Checklist Screen for $type product with $customerType customer")
+	public void userFillsDocumentChecklistScreen(String type) {
+		documentCheckListPlan = ApplicationDocumentChecklist.generateDynamicTestData();
+		documentCheckListPlan.setProductType(ProductType.fromShortName(type));
+
+		programSetupWorkflow.fillDocumentChecklist(documentCheckListPlan);
+	}
 
 	@When("User fills Wallet Fee Plan for $type product")
 	public void whenUserFillsWalletFeePlan(String type) {
@@ -490,6 +508,16 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.fillBusinessMandatoryFields(testDataObject);
 
 	}
+	
+	@When("User fills Business Mandatory Fields Screen for $type product with $customerType")
+	public void whenUserFillsBusinessMandatoryFieldsScreen(String type,String customeType) {
+		ApplicationBusinessMandatoryFields testDataObject = ApplicationBusinessMandatoryFields.createWithProvider(provider);
+		testDataObject.setProductType(ProductType.fromShortName(type));
+		testDataObject.setCustomerType(ProductType.fromShortName(customeType));
+		testDataObject.setProgramCode(program.buildDescriptionAndCode());
+		programSetupWorkflow.fillBusinessMandatoryFields(testDataObject);
+
+	}
 
 	@When("User fills Wallet Plan for $type product")
 	public void whenUserFillsWalletPlan(String type) {
@@ -501,7 +529,34 @@ public class ProgramSetupSteps {
 		}
 		programSetupWorkflow.createWalletPlan(walletPlan);
 	}
-
+	
+	@When("User fills Wallet Plan for $type product and program $programtype")
+	public void userFillsWalletPlan(String type,String programtype) {
+		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
+		walletPlan.setProductType(ProductType.fromShortName(type));
+		walletPlan.setProgramType(programtype);
+		
+		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
+			walletPlan.setCreditPlan(creditCardCreditPlan.buildAbbreviationAndCode());
+			walletPlan.setBillingCyleCode(creditCardBillingCycle.buildDescriptionAndCode());
+		}
+		programSetupWorkflow.createWalletPlan(walletPlan);
+	}
+	
+	@When("fills Wallet Plan for $type product and program $programtype")
+	public void FillsWalletPlan(String type,String programtype) {
+		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
+		walletPlan.setProductType(ProductType.fromShortName(type));
+		walletPlan.setProgramType(programtype);
+				
+		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
+			walletPlan.setCreditPlan(creditCardCreditPlan.buildAbbreviationAndCode());
+			walletPlan.setBillingCyleCode(creditCardBillingCycle.buildDescriptionAndCode());
+		}
+		programSetupWorkflow.createNewWalletPlan(walletPlan);
+	}
+	
+	
 	@When("User fills Transaction Plan for $type product")
 	public void whenUserFillsTransactionPlan(String type) {
 		// setting the context for IS PIN REQUIRED to a default state. This value is reset or set accordingly for Virtual and pinless cards
@@ -544,7 +599,7 @@ public class ProgramSetupSteps {
 			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
 			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
 		}
-		program.setWalletPlanPlan1(walletPlan.buildDescriptionAndCode());
+		program.setFirstWalletPlan(walletPlan.buildDescriptionAndCode());
 		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
 
 		program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
@@ -558,7 +613,31 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.PROGRAM, program);
 	}
 	
-	@When("User fills Program section for $type product for an interface")
+	@When("User fills Program section for $type product and program $programType")
+	public void userFillsProgramSection(String type ,String programType ) {
+		program = Program.createWithProvider(dataProvider, provider);
+		program.setProduct(ProductType.fromShortName(type));
+		program.setProgramType(programType);
+		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
+			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
+			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+		}
+		program.setFirstWalletPlan(walletPlan.buildDescriptionAndCode());
+		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
+
+		program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
+		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
+		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
+
+		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID)) {
+			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+		}
+
+		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
+		context.put(ContextConstants.PROGRAM, program);
+	}
+	
+	@When("User fills Program section for $type product for visa interface")
 	public void whenUserFillsProgramSectionVisaInterface(String type) {
 		program = Program.createDataWithProvider(dataProvider, provider);
 		program.setProduct(ProductType.fromShortName(type));
@@ -566,7 +645,7 @@ public class ProgramSetupSteps {
 			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
 			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
 		}
-		program.setWalletPlanPlan1(walletPlan.buildDescriptionAndCode());
+		program.setFirstWalletPlan(walletPlan.buildDescriptionAndCode());
 		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
 
 		program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
@@ -579,7 +658,75 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
 	}
+	
 
+	@When("user fills Merchant Category Group")	
+	public void fillsCreatesMCG() {
+		context.put(ContextConstants.MCG, mcg);
+		String msg = mcgflows.addNewMCG();
+		mcg.setMCG(msg);			
+	}
+	
+	@When("create wallet Plan for \"$type\" product and program \"$programtype\" with usage \"$usageType\"")
+	public void addWalletPlan(@Named("type")String type, @Named("programtype")String programtype, @Named("usageType")String usageType) {
+		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
+		walletPlan.setProductType(ProductType.fromShortName(type));
+		walletPlan.setProgramType(programtype);
+		MCG mcgs = context.get(ContextConstants.MCG);
+		walletPlan.setWhiteMcgCode(mcgs.getMCG());
+		
+		if(ProgramType.OPEN_LOOP.contains(usageType)){			
+			walletPlan.setUsage(ProgramType.OPEN_LOOP);
+			context.put(ContextConstants.WALLET, walletPlan);			
+		}
+		else{			
+			walletPlan.setUsage(ProgramType.CLOSED_LOOP);			
+		}
+		
+		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
+			walletPlan.setCreditPlan(creditCardCreditPlan.buildAbbreviationAndCode());
+			walletPlan.setBillingCyleCode(creditCardBillingCycle.buildDescriptionAndCode());
+		}
+		
+		programSetupWorkflow.createNewWalletPlan(walletPlan);		
+		
+		WalletPlan wallets = context.get(ContextConstants.WALLET);
+		
+		if(ProgramType.OPEN_LOOP.contains(usageType)){				
+			wallets.setFirstWallet(walletPlan.buildDescriptionAndCode());
+		}else{			
+			wallets.setSecondWallet(walletPlan.buildDescriptionAndCode());
+			
+		}
+	}
+	
+	@When("fills Program section for $type product and program $programType")
+	public void fillsProgramSection(String type ,String programType ) {
+		program = Program.createWithProvider(dataProvider, provider);
+		program.setProduct(ProductType.fromShortName(type));
+		program.setProgramType(programType);
+		
+		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
+			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
+			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+		}
+		
+		WalletPlan wallets = context.get(ContextConstants.WALLET);
+		program.setFirstWalletPlan(wallets.getFirstWallet());
+		program.setSecondWalletPlan(wallets.getSecondWallet());
+		
+		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
+		program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
+		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
+		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
+
+		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID)) {
+			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+		}
+		programSetupWorkflow.createAddProgram(program, ProductType.fromShortName(type));
+		context.put(ContextConstants.PROGRAM, program);
+	}
+	
 	@When("User fills Dedupe Plan")
 	public void whenUserFillsDedupePlan() {
 		dedupePlan = DedupePlan.generateDynamicTestData();
@@ -639,7 +786,7 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createDeviceRange(deviceRange);
 	}
 	
-	@When("User fills Device Range section for $type product for an interface")
+	@When("User fills Device Range section for $type product for visa interface")
 	public void whenUserFillsDeviceRangeSectionVisaInterface(String type) {
 		DeviceRange deviceRange = DeviceRange.createWithProvider(dataProvider, provider, type);
 		deviceRange.setProductType(ProductType.fromShortName(type));
