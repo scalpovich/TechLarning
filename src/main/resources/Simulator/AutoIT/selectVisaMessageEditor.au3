@@ -12,7 +12,9 @@
    #include <WinAPIFiles.au3>
    #include <Constants.au3>
 
-    WinActivate("[CLASS:Visa Test System Sapphire Window Class (1)]")
-	Send("!em")
-	WinActivate("Message Editor")
-	ControlCommand("Message Editor", "", "[CLASS:Button; INSTANCE:4]", "Uncheck", "")
+   WinActivate("Visa Test System")
+   WinMenuSelectItem("Visa Test System", "", "&Edit", "&Message Editor...")
+   Send("!em")
+   WinWaitActive("Message Editor", "" , 50)
+   WinSetState("Message Editor", "", @SW_MAXIMIZE)
+   ControlCommand("Message Editor", "", "[CLASS:Button; INSTANCE:4]", "Uncheck", "")

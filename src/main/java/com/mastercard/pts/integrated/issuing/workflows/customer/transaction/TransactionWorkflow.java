@@ -19,6 +19,7 @@ import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.winium.DesktopOptions;
@@ -40,6 +41,7 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.Transaction;
@@ -57,6 +59,7 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.MasDetailsKeyValueP
 import com.mastercard.pts.integrated.issuing.utils.simulator.MdfsDetailsKeyValuePair;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorConstantsData;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
+import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKeyValuePair;
 
 @Workflow
 public class TransactionWorkflow extends SimulatorUtilities {
@@ -91,6 +94,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private static final String VTS_COMM_HANDLER = "VTS Communications Handler (1)";
 	private static final String SET_VTS_IP= "SetVTSIP.exe ";
 	private static final String WINIUM_LOG_COMMENT = " *****  winiumClick Operation is being performed :  ";
+	private String vtsTestGroupInputFilePath = getResourceFolderPath().replace("\\\\", "\\") + SimulatorConstantsData.VISA_EXCEL_TEMPLATE_FILE_PATH ;
+	private static final String RESULT_IDENTIFIER = "Refresh";
+	private static final String VISA_FAILURE_MESSAGE = "Visa Incomming Message for transaction did not come";
+
 	@Autowired
 	private WebDriverProvider webProvider;
 
@@ -116,6 +123,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	@Autowired
 	private TestContext context;
+
+	@Autowired
+	private VisaTestCaseNameKeyValuePair visaTestCaseNameKeyValuePair;
 
 	public void initiateSettlementForAgency(String branchID, String programCode) {
 		ispage = navigator.navigateToPage(InitiateSettlementPage.class);
@@ -255,7 +265,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	public void launchWiniumAndSimulator(String simulator) {
 		//to fetch required Simulator installed on the machine or read value from WhichSimulatorVersionToChoose.java
 		launchRequiredSimulatorSession(simulator);
-        // close older session of simulator if open 
+		// close older session of simulator if open 
 		closeSimulator(simulator);
 
 		try {
@@ -516,7 +526,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			MiscUtils.reportToConsole("rRN :  trimmedRrn : aRN  -  " + rRN  + " : - : "  + trimmedRrn  + " : - :"  + aRN  );
 			updatePanNumber(SimulatorConstantsData.SAMPLE_PAN_NUMBER);
 			performClickOperation(MESSAGE_TYPE_INDICATOR); // selecting the
-															// table
+			// table
 			pressPageUp();
 			clickMiddlePresentmentAndMessageTypeIndicator();
 			searchForImageAndPerformDoubleClick("Forwarding Institution Identification Code");
@@ -913,15 +923,15 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			pressTab();
 			setText(issuerCountryCode);
 			pressEnter();
-//			pressTab();
+			//			pressTab();
 			pressTab();
 			setText(issuerCurrencyCode);
 			pressTab();
 			setText(cardHolderBillingCurrency);
-			
+
 			// In MDFS 17.x, the OK button does not show up until we scroll down hence tabbing so that the focus goes to OK button
 			executeAutoITExe(ADD_BIN_RANGE_MAKE_OK_VISIBLE);
-			
+
 			winiumClickOperation("OK");
 			wait(2000);
 			if(isImagePresent("OK")) {
@@ -977,7 +987,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			pressTab();
 			setText(cardHolderBillingCurrency);
 
-		// In MAS 17.x, the OK button does not show up until we scroll down hence tabbing so that the focus goes to OK button
+			// In MAS 17.x, the OK button does not show up until we scroll down hence tabbing so that the focus goes to OK button
 			executeAutoITExe(ADD_BIN_RANGE_MAKE_OK_VISIBLE);
 
 			winiumClickOperation("OK");
@@ -1025,6 +1035,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			name = "MAS17";
 		if(SimulatorConstantsData.MDFS_LICENSE_TYPE.contains("17"))
 			name = "MDFS17";
+
+		if(name.equalsIgnoreCase("visa")) 
+			disconnectAndCloseVts();
 
 		MiscUtils.killProcessFromTaskManager("WINIUM");
 		MiscUtils.killProcessFromTaskManager(name);
@@ -1191,7 +1204,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
 		return page.searchTransactionWithArnAndGetStatus(arnNumber, ts);
 	} 
-	
+
 	public String searchTransactionWithDeviceAndGetStatus(Device device, TransactionSearch ts){
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
 		return page.searchTransactionWithDeviceAndGetStatus(device, ts);
@@ -1383,8 +1396,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void connectAndStartVtsCommunication() { 
 		activateVts();
-		//path has be put in "\" only hence the replace statement 
-		String vtsInputFilePath = getResourceFolderPath().replace("\\\\", "\\") + SimulatorConstantsData.VISA_INPUT_FILE_PATH;
+
 		WebElement visaTestSystemFrame = winiumDriver.findElement(By.xpath("*[starts-with(@Name, 'Visa Test System')]"));
 		visaTestSystemFrame.click();
 		winiumClickOperation("Start Communications");
@@ -1401,23 +1413,31 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			throw new ValidationException("VTS connection is NOT succcessful!");
 		}
 		winiumClickOperation("Minimize");
-		wait(2000);
+	}
+
+	private void loadVisaInputFile(String transaction) {
+		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestDataFileNameToUpload(transaction);
+		//path has be put in "\" only hence the replace statement 
+		String vtsInputFilePath = getResourceFolderPath().replace("\\\\", "\\") + SimulatorConstantsData.VISA_INPUT_FILE_PATH + transactionName +".stf";
+		logMessage("Loading Visa Input File ", vtsInputFilePath);
+		WebElement visaTestSystemFrame = winiumDriver.findElement(By.xpath("*[starts-with(@Name, 'Visa Test System')]"));
+		visaTestSystemFrame.click();
 		winiumClickOperation("Open");
 		wait(2000);
 		executeAutoITExe("ImportVisaTestFile.exe " + vtsInputFilePath);
 		wait(3000);
 
-		collapseTreeMenuOnVts();
+		//		collapseTreeMenuOnVts(transactionToSelect);
 	}
 
-	private void collapseTreeMenuOnVts() {
+	private void collapseTreeMenuOnVts(String selection) {
 		activateVts();
-		winiumClickOperation("Refund Reversal");
+		winiumClickOperation(selection);
 		pressEnter();
 		pressLeftArrow();
 
 		int i = 0;
-		while (i < 25) { 
+		while (i < 7) { 
 			pressDownArrow();
 			pressLeftArrow();
 			i++;
@@ -1428,47 +1448,53 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		executeAutoITExe("ActivateVTSAndHandleOKDialog.exe");
 	}
 
-	public void disconnectVts() {
-		WebElement visaTestSystemFrame = winiumDriver.findElement(By.xpath("*[starts-with(@Name, 'Visa Test System')]"));
-		visaTestSystemFrame.click();
-		winiumClickOperation("Start Communications");
-		wait(2000);
-		winiumClickOperation(VTS_COMM_HANDLER);
-		winiumClickOperation("Stop Line");
-		wait(2000);
+	public void disconnectAndCloseVts() {
+		executeAutoITExe("vtsCloseIncomingAndLogViewer.exe"); // close VTS
+		executeAutoITExe("CloseVTS.exe");
 	}
 
 	private void setVtsIpAddress() {
 		//for keying ip and port on VTS if present
-		String parameter =   "\"" + vtsSimulator.getIpAddress() + PATH_BUILDER + vtsSimulator.getPort() + "\"";
+		String parameter =   "\"" + vtsSimulator.getVtsIpAddress() + PATH_BUILDER + vtsSimulator.getHostIpAddress() + PATH_BUILDER + vtsSimulator.getHostPort() + "\"";
 
 		executeAutoITExe(SET_VTS_IP + parameter );
-		MiscUtils.reportToConsole(" ******* Parameter for setVtsIpAddress : ******"  + parameter );     
+		logMessage(" ******* Parameter for setVtsIpAddress : ******"  , parameter );     
 	}
 
-	//	public void performVisaTransaction(String transaction, Transaction transactionData, Boolean sameCard) {
 	public void performVisaTransaction(String transaction) {
 		browserMinimize();
-		selectVisaTestCaseToMakeDataElementChange(transaction);
-		// not sure what other data element value to be modified at this point in time
-		editFeildValues("F2", "1234567890123456"); //Primary Account Number
-		editFeildValues("F14", "1234567890123456"); //Expiry Date
-		winiumClickOperation("Yes");
+		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseToSelect(transaction);
+		logMessage("VISA Transaction Test Case Name : ",  transactionName );
+		
+		loadVisaInputFile(transaction);
+		//method to change values in Excel based on Device Context values so that this file can be uploaded into the system
+		setValuesInExcelTemplateBasedOnDeviceContext();
+		loadVisaTestGroupTemplate();
 
-		//clicking OK on the Message Editor screen
-		winiumClickOperation("OK");
+		selectVisaTestCaseToMakeDataElementChange(transactionName);
 
 		executeVisaTest();
 	}
 
-	private void selectVisaTestCaseToMakeDataElementChange(String selection) {
+	private void navigateToVariableManagerAndLoadTestGroupTemplate() { 
+		executeAutoITExe("VTSNavigateToVariablesManager.exe"  + SEPERATOR + vtsTestGroupInputFilePath + "\"");
+		executeAutoITExe("VTSHandleVariablesManager.exe");
+	}
+
+	private void loadVisaTestGroupTemplate() { 
+		//method to load the excel template after navigating to VariableManager and importing the File to generate new Automation Test Group Template
+		navigateToVariableManagerAndLoadTestGroupTemplate();
+	}
+
+	private void selectVisaTestCaseToMakeDataElementChange(String transaction) {
 		MiscUtils.reportToConsole(" ******* selectVisaTestCaseToMakeDataElementChange ******" );     
 		activateVts();
-		winiumClickOperation(selection);
+		winiumClickOperation(transaction);
 		pressEnter();
-		pressRightArrow();
-		pressDownArrow(2);
-		executeAutoITExe("selectVisaMessageEditor.exe");
+		pressDownArrow(1); // to select Properties
+		executeAutoITExe("VtsSetDefaultAutoamtionCardInProperties.exe"); 	// to select properties file and set default Test Group;
+		winiumClickOperation(transaction);
+		pressEnter();
 	}
 
 	private void editFeildValues(String fieldNumber, String value) {
@@ -1479,26 +1505,91 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		executeAutoITExe("SetValueInVisaMessageEditor.exe " + parameter);
 	}
 
-	public void executeVisaTest() {
-		MiscUtils.reportToConsole(" ******* executeVisaTest ******" );     
-		winiumClickOperation("Execute Test");
-		wait(5000);
-		/*WebElement tempElement = winiumDriver.findElementByXPath("//*[contains(@AutomationId,'1036')]");
-		String tempText = tempElement.getText();
-		MiscUtils.reportToConsole("Total Recieveing Messages on Test Execution in VISA: " + tempText);*/
-		executeAutoITExe("visaTestExeution.exe");
-		winiumClickOperation("Minimize");
+	private String getFeildDescriptionFromLogViewer(String propertyByName) {
+		String resultResponse = "validations ok";
+		String tempValue;
+		MiscUtils.reportToConsole(" ******* getFeildDescriptionFromLogViewer ******" );     
+
+		executeAutoITExe("VtsManageLogViewer.exe");
+		WebElement logViewerFrame = winiumDriver.findElement(By.name("Incoming Message"));
+		if(!logViewerFrame.isDisplayed()) {
+			logMessage(VISA_FAILURE_MESSAGE, "");
+			return VISA_FAILURE_MESSAGE;
+		}
+		logViewerFrame.click();
+		winiumClickOperation("F2"); //selecting this to be able to scroll on the page and F2 is always visible even when we are at the botton of the frame
+		pressPageUp(); //scrolling to top of frame
+		if(winiumDriver.findElement(By.name(propertyByName)).isDisplayed()) {
+			winiumClickOperation(propertyByName);
+		} else {
+			logViewerFrame.click();
+			pressPageDown(2); // scrolling down to the end of the page
+			winiumClickOperation(propertyByName);
+		}
+		List<WebElement> result= winiumDriver.findElement(By.name(propertyByName)).findElements(By.xpath("./*[contains(@LocalizedControlType, 'text')]"));
+		//printing values .. not needed but left it so that values can be seen in console
+		for(WebElement e : result) {
+			MiscUtils.reportToConsole(e.getAttribute("Name"));
+			}
+		//getting value from last section from F39 list item
+		tempValue = result.get(result.size()-1).getAttribute("Name");
+		logMessage("F39 response is : ", tempValue);		
+		if(tempValue.toString() != "00") 
+			resultResponse =  "validations not ok";
+		
+		logMessage("Visa Output Response Set to : ", resultResponse);	
+		return resultResponse;
 	}
 
-	public String verifyVisaOutput(String selection) {
+	public void executeVisaTest() {
+		MiscUtils.reportToConsole(" ******* executeVisaTest ******" );
+		//delete older logs from Detail Log
+		//deleteOldLogs();  // sometimes system is not responding when we delete old logs and click on Execute Test.. it crashes
+		winiumClickOperation("Execute Test");
+		wait(5000);
+		executeAutoITExe("visaTestExeution.exe");
+	}
+
+	public String verifyVisaOutput(String transaction) {
+		String results;
 		MiscUtils.reportToConsole(" ******* verifyVisaOutput ******" );     
-		selectVisaTestCaseToMakeDataElementChange(selection);
+
+		winiumClickOperation(transaction);
+		pressEnter();
+		//		pressDownArrow(2); // to select the Out Req
+		winiumClickOperation("View Detail Log");
+		wait(9000); // transaction does not always reflect immediately hence the wait
+		winiumClickOperation(RESULT_IDENTIFIER);
+		wait(1000);
+		winiumClickOperation(RESULT_IDENTIFIER);
+		wait(1000);
+		winiumClickOperation(RESULT_IDENTIFIER);
+
 		// here we are not sure as to what are we verifying
+		Actions action = new Actions(winiumDriver);
+		List<WebElement> lst = winiumDriver.findElements(By.name("0110 ISO Message, INCOMING. Match found"));
+		if(lst.isEmpty()) {
+			logMessage(VISA_FAILURE_MESSAGE, "");
+			return VISA_FAILURE_MESSAGE;
+		}
+		//clicking on the last item from bottom
+		lst.get(0).click();
+		action.doubleClick(lst.get(0)).perform(); 
+		// outout screen comes up on double clicking on the first item in the list
+		winiumClickOperation("Maximize");
 
-		//finally browserMaximize
+		results = getVisaResult();
 		browserMaximize();
+		return results;
+	}
 
-		return "Temporary Status";
+	private void deleteOldLogs() { 
+		executeAutoITExe("vtsDeleteOlderLogViewerLogs.exe");
+		executeAutoITExe("vtsCloseLogViewer.exe"); // when there are no previous logs in the logger, then the above exe will leave the logger window open hence to close it.. thsi call
+	}
+
+	private String getVisaResult() {
+		return getFeildDescriptionFromLogViewer("F39");
 	}
 
 	public void browserMinimize() {
@@ -1534,5 +1625,41 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		} else if(simulator.toUpperCase().contains("MDFS")) {
 			getMdfsDetails(); 
 		}
+	}
+
+	private void setValuesInExcelTemplateBasedOnDeviceContext() {
+		Device device = context.get(ContextConstants.DEVICE);
+		SimulatorUtilities sm = new SimulatorUtilities();
+		String sheetName = "Card Groups";
+		// when data is dynamically passed when scripts run from end-2-end
+		if (device != null) {
+			// _____________________FOR PINLESS CARD________________ device plan context is used to get Expiry Date incase of PinLess card
+			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+			device.setServiceCode(devicePlan.getServiceCode());
+			if ("YES".equalsIgnoreCase(devicePlan.getIsPinLess())) {
+				device.setExpirationDate(devicePlan.getExpiryDate());
+				device.setPinNumberForTransaction("PINLESS");
+			}
+			// _____________________FOR PINLESS CARD________________ __________________CURRENCY VAL FROM EXCEL _________ fetching currency value from excel
+			if ("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
+				device.setExpirationDate(devicePlan.getExpiryDate());
+			}
+
+			sm.setCellData(vtsTestGroupInputFilePath, sheetName, "F002 - PAN", device.getDeviceNumber());
+			sm.setCellData(vtsTestGroupInputFilePath, sheetName, "F014 - EXPDATE", device.getExpirationDate());
+			sm.setCellData(vtsTestGroupInputFilePath, sheetName,"F023 - CARD SEQ NUM", device.getSequenceNumber());
+			sm.setCellData(vtsTestGroupInputFilePath, sheetName,"F035.04 - SVCCODE",  device.getServiceCode());
+		} else {
+			//else block implemented for Testing purpose.. keys in static data in the excel "VisaUploadTemplate.xls" @ ..\\src\main\resources\Simulator\VisaInputFile
+			sm.setCellData(vtsTestGroupInputFilePath, sheetName, "F002 - PAN", "4761340000000019");
+			sm.setCellData(vtsTestGroupInputFilePath, sheetName, "F014 - EXPDATE", "2210" );
+			sm.setCellData(vtsTestGroupInputFilePath, sheetName,"F023 - CARD SEQ NUM", "111");
+			sm.setCellData(vtsTestGroupInputFilePath, sheetName,"F035.04 - SVCCODE",  "101");
+		}
+	}
+
+	private void logMessage(String message1, String message2) {
+		logger.info(message1, message2 );
+		MiscUtils.reportToConsole(message1 + message2 );
 	}
 }
