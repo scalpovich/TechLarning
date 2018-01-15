@@ -574,4 +574,37 @@ public class HelpDeskSteps {
 		}
 
 	}
+	
+	@Then ("currency setup for device")
+	public void searchDevice(){
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);		
+		Device device = context.get(ContextConstants.DEVICE); 		
+		thenUserNavigatesToGeneralInHelpdesk(); 	        
+		helpdeskWorkflow.searchByDeviceNumber(device);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.setupDeviceCurrency(helpdeskGeneral);
+		device.setNewWalletNumber(helpdeskGeneral.getNewWalletNumber());
+	}
+	
+	
+	@When ("wallet to wallet transfer selected account")
+	public void walletToWalletTransfer(){
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);	
+		Device device = context.get(ContextConstants.DEVICE);
+		thenUserNavigatesToGeneralInHelpdesk();
+		helpdeskWorkflow.searchByDeviceNumber(device);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.walletToWalletTransfer(device);		
+	}	
+	
+	@When ("wallet to wallet transfer for general purpose account")
+	public void walletToWalletFundTransfer(){
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);	
+		Device device = context.get(ContextConstants.DEVICE);
+		thenUserNavigatesToGeneralInHelpdesk();
+		helpdeskWorkflow.searchByDeviceNumber(device);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.walletToWalletTransfer(device);		
+	}
+	
 }
