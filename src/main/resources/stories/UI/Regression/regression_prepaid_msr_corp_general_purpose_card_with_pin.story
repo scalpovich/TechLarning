@@ -1,83 +1,64 @@
-debit emv retail debit card withPin
+prepaid msr corp general purpose card authorization
 
 Narrative:
-In order to check transactions on debit emv retail card
+In order to check transactions on prepaid msr corporate general purpose card 
 As an issuer
-I want to authorize transactions for debit emv retail debit card
+I want to authorize transactions for prepaid msr corporate general purpose card 
 
 Meta:
-@StoryName d_msr_corp
-@SanityCardsWithAuthorization
+@StoryName p_msr_corp_general_purpose
+@AuthorizationRegression
+@AuthorizationRegressionGroup2
 
-Scenario: Set up program for debit emv retail debit card
-Meta:
-@TestId TC398366
+Scenario: prepaid msr corporate general purpose card > Device production - prepaid msr gift card > Perform MSR_PREAUTH and MSR_AUTH Authorization transaction > Program Balance Summary download
 Given user is logged in institution
-And device range for program with device plan for "debit" "emv" card
-When user creates new device of debit type for new client
+And device range for program with device plan for "prepaid" "magnetic stripe" card
+When user creates new device of prepaid type for new client
 Then device has "normal" status
-When user has wallet number information for debit device
-When user performs adjustment transaction
-When user has current wallet balance amount information for debit device
+And user sign out from customer portal
 
-Scenario: debit emv retail debit card device production
-Meta:
-@TestId TC408068
 Given user is logged in institution
 And a new device was created
-When processes pre-production batch for debit
-When processes device production batch for debit
-When processes pin generation batch for debit
+When processes pre-production batch for prepaid
+When processes device production batch for prepaid
+When processes pin generation batch for prepaid
+When user has wallet number information for prepaid device
+When user performs adjustment transaction
+When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
-Then user activates device through helpdesk
+When user activates device through helpdesk
+And user sign out from customer portal
 
 Scenario: Pin Generation 
-Meta:
-@TestId 
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform EMV_POS_BALANCE_INQUIRY Authorization transaction
-Meta:
-@TestId 
-Given connection to MAS is established
-When perform an EMV_POS_BALANCE_INQUIRY MAS transaction
-Then MAS test results are verified
-
-Scenario: Perform MSR_PURCHASE_WITH_REFUND Authorization transaction
-Given connection to MAS is established
-When perform an MSR_PURCHASE_WITH_REFUND MAS transaction
-Then MAS test results are verified
-
-Scenario: Perform ECOMM_PURCHASE Authorization transaction
-When perform an ECOMM_PURCHASE MAS transaction
-Then MAS test results are verified
-
-Scenario: Transaction - EMV_PREAUTH  and EMV_COMPLETION Authorization transaction - prepaid emv corporate general purpose card
-When perform an EMV_PREAUTH MAS transaction
+Scenario: Perform MSR_PREAUTH and MSR_COMPLETION Authorization transactions
+When connection to MAS is established
+When perform an MSR_PREAUTH MAS transaction
 Then MAS test results are verified
 And user is logged in institution
-And search Pre-Auth authorization and verify Success status
-When perform an EMV_COMPLETION MAS transaction
+And search Pre-Auth authorization and verify 000-Successful status
+And user sign out from customer portal
+When perform an MSR_COMPLETION MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth Completion authorization and verify Success status
+And user sign out from customer portal
 
-Scenario: Perform EMV_ECOMMERCE Authorization transaction
-Meta:
-@TestId 
-When perform an EMV_ECOMMERCE MAS transaction
+Scenario: Perform EMV_PURCHASE Authorization transaction
+When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
+Then user is logged in institution
+And search Purchase authorization and verify 000-Successful status
+And user sign out from customer portal
 
-Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
-Meta:
-@TestId
-When perform an EMV_CASH_WITHDRAWAL MAS transaction
+Scenario: Perform MSR_PURCHASE_WITH_REFUND Authorization transaction
+When perform an MSR_PURCHASE_WITH_REFUND MAS transaction
 Then MAS test results are verified
-When MAS simulator is closed
 
 Scenario: Generate Auth File for Clearing
 Meta:

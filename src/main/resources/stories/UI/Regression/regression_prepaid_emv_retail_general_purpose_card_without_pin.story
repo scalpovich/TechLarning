@@ -38,17 +38,17 @@ Given connection to MAS is established
 When perform an EMV_PREAUTH MAS transaction
 Then MAS test results are verified
 And user is logged in institution
-And search Pre-Auth authorization and verify Success status
+And search Pre-Auth authorization and verify 000-Successful status
 When perform an EMV_COMPLETION MAS transaction
 Then MAS test results are verified
-And search Pre-Auth Completion authorization and verify Success status
+And search Pre-Auth Completion authorization and verify 000-Successful status
 
 Scenario: Perform EMV_PURCHASE_WITH_CASHBACK Authorization transaction
 Meta:
 @TestId 
 When perform an EMV_PURCHASE_WITH_CASHBACK MAS transaction
 Then MAS test results are verified
-And search Purchase authorization and verify success status
+And search Purchase authorization and verify s000-Successful status
 
 Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
 Meta:
@@ -80,4 +80,4 @@ Meta:
 @TestId 
 When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
-And search Purchase authorization and verify success status
+And search Purchase authorization and verify 000-Successful status

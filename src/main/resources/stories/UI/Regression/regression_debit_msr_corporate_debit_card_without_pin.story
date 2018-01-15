@@ -1,4 +1,4 @@
-debit emv retail debit card withoutPin
+debit msr corporate debit card withoutPin
 
 Narrative:
 In order to check transactions on debit emv retail card
@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for debit emv retail debit card
 
 Meta:
-@StoryName S190640
+@StoryName d_msr_corp
 @SanityCardsWithAuthorization
 
 Scenario: Set up program for debit emv retail debit card
@@ -39,31 +39,20 @@ Given connection to MAS is established
 When perform an EMV_POS_BALANCE_INQUIRY MAS transaction
 Then MAS test results are verified
 
-Scenario: Perform EMV_PURCHASE Authorization transaction
+Scenario: Perform MSR_PURCHASE_WITH_REFUND Authorization transaction
 Given connection to MAS is established
-When perform an EMV_PURCHASE MAS transaction
+When perform an MSR_PURCHASE_WITH_REFUND MAS transaction
 Then MAS test results are verified
-
-Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
-Given connection to MAS is established
-When perform an EMV_CASH_ADVANCE MAS transaction
-Then MAS test results are verified
-
-Scenario: Perform EMV_PURCHASE_WITH_CASHBACK Authorization transaction
-Given connection to MAS is established
-When perform an EMV_PURCHASE_WITH_CASHBACK MAS transaction
-Then MAS test results are verified
-
 
 Scenario: Transaction - EMV_PREAUTH  and EMV_COMPLETION Authorization transaction - prepaid emv corporate general purpose card
 When perform an EMV_PREAUTH MAS transaction
 Then MAS test results are verified
 And user is logged in institution
-And search Pre-Auth authorization and verify Success status
+And search Pre-Auth authorization and verify 000-Successful status
 When perform an EMV_COMPLETION MAS transaction
 Then MAS test results are verified
 And user is logged in institution
-And search Pre-Auth Completion authorization and verify Success status
+And search Pre-Auth Completion authorization and verify 000-Successful status
 
 
 Scenario: Perform EMV_ECOMMERCE Authorization transaction
@@ -71,10 +60,3 @@ Meta:
 @TestId 
 When perform an EMV_ECOMMERCE MAS transaction
 Then MAS test results are verified
-
-Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
-Meta:
-@TestId
-When perform an EMV_CASH_WITHDRAWAL MAS transaction
-Then MAS test results are verified
-When MAS simulator is closed

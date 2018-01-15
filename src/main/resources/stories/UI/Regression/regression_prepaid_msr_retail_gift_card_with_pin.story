@@ -1,77 +1,63 @@
-regression prepaid msr corporate travel card authorization PINLESS
+prepaid msr retail general purpose card authorization
 
 Narrative:
-In order to check transactions on prepaid emv retail general purpose card
+In order to provide to client easy-to-use multi-purpose prepaid card
 As an issuer
-I want to authorize transactions for prepaid emv retail general purpose card
+I want to create an magnetic stripe prepaid card and perform various transaction
 
 Meta:
-@StoryName p_emv_corp_travel
-@oldReferenceSheet_S203707
-@CRCardsWithAuthorizationRegression
+@StoryName prepaid_msr_retail_gift
+@oldReferenceSheet_prepaid_msr
 @AuthorizationRegression
 @AuthorizationRegressionGroup3
 
-Scenario: Set up prepaid msr corporate travel card
+Scenario: Set up prepaid msr retail general purpose card
 Meta:
-@TestId TC398452
+@TestId
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
-When user creates new device of prepaid type for new client
+When prepaid magnetic stripe device is available with balance amount
+Then device has "normal" status
+And user sign out from customer portal
 
-Scenario: prepaid msr corporate travel card device production
+Scenario: Pin Generation 
 Meta:
-@TestId TC408068
-Given user is logged in institution
-And a new device was created
-When processes pre-production batch for prepaid
-When processes device production batch for prepaid
-Then device has "normal" status
-When user has wallet number information for debit device
-Then user sign out from customer portal
-Then user is logged in institution
-When user performs adjustment transaction
-When user has current wallet balance amount information for prepaid device
-Then device has "normal" status
-Then user activates device through helpdesk
-Then user sign out from customer portal
-Then embossing file batch was generated in correct format
+@TestId 
+Given connection to FINSim is established
+When Pin Offset file batch was generated successfully
+When embossing file batch was generated in correct format
+When PIN is retrieved successfully with data from Pin Offset File
+Then FINSim simulator is closed
 
-Scenario: Transaction - MSR_PREAUTH and MSR_COMPLETION Authorization transaction
+Scenario: Transaction - MSR_PREAUTH Authorization transaction
 Given connection to MAS is established
 When perform an MSR_PREAUTH MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth authorization and verify Success status
-Then user sign out from customer portal
-When perform an MSR_COMPLETION MAS transaction on the same card
+
+Scenario: Transaction - MSR_COMPLETION Authorization transaction
+When perform an MSR_COMPLETION MAS transaction
 Then MAS test results are verified
-And user is logged in institution
-And search Pre-Auth Completion authorization and verify Success status
-Then user sign out from customer portal
+And search Pre-Auth Completion authorization and verify 000-Successful status
 
 Scenario: Perform MSR_PURCHASE_WITH_CASHBACK Authorization transaction
 Meta:
 @TestId 
-When perform an MSR_PURCHASE_WITH_CASHBACK MAS transaction on the same card
+When perform an MSR_PURCHASE_WITH_CASHBACK MAS transaction
 Then MAS test results are verified
-And user is logged in institution
-And search Purchase authorization and verify 000-Successful status
-Then user sign out from customer portal
+Then search PURCHASE authorization and verify 000-Successful status
 
 Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
 Meta:
 @TestId 
-When perform an MSR_CASH_ADVANCE MAS transaction on the same card
+When perform an MSR_CASH_ADVANCE MAS transaction
 Then MAS test results are verified
-And user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
-Then user sign out from customer portal
 
 Scenario: Perform MSR_PURCHASE_WITH_REFUND Authorization transaction
 Meta:
 @TestId 
-When perform an MSR_PURCHASE_WITH_REFUND MAS transaction on the same card
+When perform an MSR_PURCHASE_WITH_REFUND MAS transaction
 Then MAS test results are verified
 
 Scenario: Perform MSR_POS_BALANCE_INQUIRY Authorization transaction
@@ -80,20 +66,24 @@ Meta:
 When perform an MSR_POS_BALANCE_INQUIRY MAS transaction on the same card
 Then MAS test results are verified
 
+Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
+Meta:
+@TestId 
+When perform an MSR_CASH_WITHDRAWAL MAS transaction
+Then MAS test results are verified
+
 Scenario: Perform ECOMM_PURCHASE Authorization transaction
 Meta:
 @TestId 
-When perform an ECOMM_PURCHASE MAS transaction on the same card
+When perform an ECOMM_PURCHASE MAS transaction
 Then MAS test results are verified
 
 Scenario: Perform MSR_PURCHASE Authorization transaction
 Meta:
 @TestId 
-When perform an MSR_PURCHASE MAS transaction on the same card
+When perform an MSR_PURCHASE MAS transaction
 Then MAS test results are verified
-And user is logged in institution
-And search Purchase authorization and verify 000-Successful status
-Then user sign out from customer portal
+Then search PURCHASE authorization and verify 000-Successful status
 
 Scenario: Generate Auth File for Clearing
 Meta:
@@ -109,7 +99,7 @@ Given connection to MCPS is established
 When Auth file is generated
 When Auth file is loaded into MCPS and processed
 Then NOT file is successfully generated
-When MCPS simulator is closed
+And MCPS simulator is closed
 
 Scenario: Upload ipm file from customer portal and process it
 Meta:
@@ -135,4 +125,4 @@ Then verify report for transactions with Program Balance Summary is downloaded
 And Verify Program Balance Summary is downloaded
 And verify report for Auth is downloaded
 And verify report for Clearing is downloaded
-When user sign out from customer portal
+And user sign out from customer portal
