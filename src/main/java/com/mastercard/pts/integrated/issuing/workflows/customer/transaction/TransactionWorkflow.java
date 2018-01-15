@@ -1234,7 +1234,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		activateMas(tool);
 		List<WebElement> lst = winiumDriver.findElements(By.name(locator));
 		MiscUtils.reportToConsole("winiumLicenseSelectOperation Count : " + lst);
-		lst.get(1).click();
+		lst.get(0).click();
 	}
 
 	private void winiumLicenseSelectOperation(String locator) {
