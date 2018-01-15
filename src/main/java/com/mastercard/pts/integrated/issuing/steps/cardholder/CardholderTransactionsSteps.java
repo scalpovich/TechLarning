@@ -10,7 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.CardHolderTransactions;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.workflows.cardholder.CardHolderTransactionsWorkFlows;
 
@@ -21,6 +25,12 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 	
 	@Autowired
 	private CardHolderTransactionsWorkFlows transactionFlow;
+	
+	@Autowired
+	KeyValueProvider provider;
+	
+	@Autowired
+	private TestContext context;
 	
 	private CardHolderTransactions cardhlTran;
 	
@@ -70,6 +80,16 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 		cardhlTran = CardHolderTransactions.cardHolderTranscationDataProvider();
 		transactionFlow.openTransactionPage();
 		transactionFlow.selectWalletToWalletOption();
+		transactionFlow.interBankMoneyTransfer(cardhlTran);
+	}
+	
+	@When ("wallet to wallet fund transfer")
+	public void walletToWalletTransfer(){		
+		cardhlTran = CardHolderTransactions.cardHolderTransDataProvider(provider);
+		context.put(ContextConstants.CARDHOLDER, cardhlTran);
+		transactionFlow.openTransactionPage();
+		transactionFlow.selectWalletToWalletOption();
+		CardHolderTransactions cardhlTran = context.get(ContextConstants.CARDHOLDER);
 		transactionFlow.interBankMoneyTransfer(cardhlTran);
 	}
 	

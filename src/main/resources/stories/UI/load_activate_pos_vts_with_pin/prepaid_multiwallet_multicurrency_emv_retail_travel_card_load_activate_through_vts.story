@@ -27,4 +27,10 @@ When processes device production batch for prepaid
 When processes pin generation batch for prepaid
 Then device has "normal" status
 
+Scenario: VISA Load and Activate transaction
+Given connection to VISA is established
+When perform an LoadAndActivate VISA transaction
+Then VISA test results are verified for LoadAndActivate
+Then VISA simulator is closed
+
 

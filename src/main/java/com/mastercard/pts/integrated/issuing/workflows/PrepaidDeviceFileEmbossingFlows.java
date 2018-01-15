@@ -99,7 +99,7 @@ public class PrepaidDeviceFileEmbossingFlows extends MenuFlows {
 
 	public void RunPreProductionBatch() {
 		menuSubMenuPage.clickMenuSubOption(menuSubMenuPage.getOperation(), menuSubMenuPage.getProcessingBatches());
-		preProductionBatch.preproduction(MapUtils.fnGetInputDataFromMap("ProductType"),
+		preProductionBatchPage.preproduction(MapUtils.fnGetInputDataFromMap("ProductType"),
 				MapUtils.fnGetInputDataFromMap("BatchNumber"));
 	}
 

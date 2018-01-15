@@ -40,67 +40,58 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Transaction - EMV_PREAUTH and EMV_COMPLETION Authorization transaction
+Scenario: Transaction - EMV_PREAUTH  and EMV_COMPLETION Authorization transaction - prepaid emv corporate general purpose card
 Given connection to MAS is established
 When perform an EMV_PREAUTH MAS transaction
 Then MAS test results are verified
 And user is logged in institution
-And search Pre-Auth authorization and verify Success status
+And search Pre-Auth authorization and verify 000-Successful status
 When perform an EMV_COMPLETION MAS transaction
 Then MAS test results are verified
-And search Pre-Auth Completion authorization and verify Success status
-
-Scenario: Perform EMV_PURCHASE_WITH_CASHBACK Authorization transaction
-Meta:
-@TestId 
-When perform an EMV_PURCHASE_WITH_CASHBACK MAS transaction
-Then MAS test results are verified
-And search Purchase authorization and verify success status
-
-Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
-Meta:
-@TestId 
-When perform an EMV_CASH_ADVANCE MAS transaction
-Then MAS test results are verified
-Then search Cash Advance authorization and verify 000-Successful status
-
-Scenario: Perform EMV_PURCHASE_WITH_REFUND Authorization transaction
-Meta:
-@TestId 
-When perform an EMV_PURCHASE_WITH_REFUND MAS transaction
-Then MAS test results are verified
-
-Scenario: Perform EMV_POS_BALANCE_INQUIRY Authorization transaction
-Meta:
-@TestId
-When perform an EMV_POS_BALANCE_INQUIRY MAS transaction on the same card
-Then MAS test results are verified
-
-Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
-Meta:
-@TestId 
-When perform an EMV_CASH_WITHDRAWAL MAS transaction
-Then MAS test results are verified
-
-Scenario: Perform ECOMM_PURCHASE Authorization transaction
-Meta:
-@TestId 
-When perform an ECOMM_PURCHASE MAS transaction
-Then MAS test results are verified
+And user is logged in institution
+And search Pre-Auth Completion authorization and verify 000-Successful status
+And user sign out from customer portal
 
 Scenario: Perform EMV_PURCHASE Authorization transaction
-Meta:
-@TestId 
 When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
-And search Purchase authorization and verify success status
+Then user is logged in institution
+And search Purchase authorization and verify 000-Successful status
+And user sign out from customer portal
+
+Scenario: Perform EMV_PURCHASE_WITH_CASHBACK Authorization transaction
+When perform an EMV_PURCHASE_WITH_CASHBACK MAS transaction
+Then MAS test results are verified
+Then user is logged in institution
+And search "Purchase with Cash back" authorization and verify 000-Successful status
+And user sign out from customer portal
+
+Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
+When perform an EMV_CASH_ADVANCE MAS transaction
+Then MAS test results are verified
+Then user is logged in institution
+Then search Cash Advance authorization and verify 000-Successful status
+And user sign out from customer portal
+
+Scenario: Perform ECOMM_PURCHASE Authorization transaction
+When perform an ECOMM_PURCHASE MAS transaction
+Then MAS test results are verified
+Then user is logged in institution
+Then search E-Commerce Transaction authorization and verify 000-Successful status
+And user sign out from customer portal
+
+Scenario: Perform EMV_POS_BALANCE_INQUIRY Authorization transaction
+When perform an EMV_POS_BALANCE_INQUIRY MAS transaction
+Then MAS test results are verified
+Then user is logged in institution
+Then search Balance Inquiry authorization and verify 000-Successful status
+And user sign out from customer portal
 
 Scenario: Generate Auth File for Clearing
 Meta:
 @TestId 
 When Auth file is generated after transaction
 When MAS simulator is closed
-And user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
 Meta:

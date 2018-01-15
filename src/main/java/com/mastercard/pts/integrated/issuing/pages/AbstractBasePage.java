@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -37,7 +38,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
@@ -52,9 +52,10 @@ import com.mastercard.testing.mtaf.bindings.page.AbstractPage;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 public abstract class AbstractBasePage extends AbstractPage {
+
 	@Autowired
 	CreditCardPlan creditCardPlans;
-	
+
 	final static int ELEMENT_WAIT_MAX = 6000;
 
 	private static final long TIMEOUT = 100;
@@ -62,11 +63,17 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public String pageValidationCheck = "//ol/li";
 	public String ERRORPANEL = "//li[@class='feedbackPanelERROR']";
-	private static final By INFO_MESSAGE_LOCATOR = By.cssSelector(":not([style]) > .feedbackPanel span.feedbackPanelINFO");
+
+	private static final By INFO_MESSAGE_LOCATOR = By.cssSelector(":not([style]) > .feedbackPanel span.feedbackPanelINFO");	
+
 
 	private static final String FIRST_ROW_SELECT = ".dataview tbody span";
 
 	private static final String SUCCESS_MESSAGE = "Success message: {}";
+
+	
+	private static final String WALLET_NUMBER = "Wallet number: {}";
+
 
 	public static final String ERROR_MESSAGE = "Error: {}";
 
@@ -82,7 +89,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public static final LocalDate futureEndDate = LocalDate.now().plusDays(150);
 
-    private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
+
+	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
+
 
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -176,6 +185,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Card Management']")
 	private MCWebElement cardManagement;
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='dataview-div']/table//tbody/tr[1]/td/span/child::a/span")
 	private MCWebElement uniqueAddedCode;
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='dataview-div']/table//tbody/tr[1]/td/span[string-length( text()) > 2]")
@@ -231,10 +241,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@type='submit' or @name='save']")
 	private MCWebElement saveOrDetailsOrSearchBtn;
 
+	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
 		MCAnnotationProcessor.initializeSuper(this, finderProvider);
 	}
+
 
 	protected void clickOkButton() {
 		clickWhenClickable(okButton);
@@ -426,7 +438,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 		try {
 			WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 			logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
-			return successMessageLbl.toString();
+
+			return successMessageLbl.getText();
+
 		} catch (NoSuchElementException e) {
 			logger.info("No Status is updated");
 			logger.debug("Error", e);
@@ -604,6 +618,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 		logger.info(RESPONSE_MESSAGE, popupNameElement.getText());
 	}
 
+	
+	protected void acceptPopup() {
+		Alert alert = driver().switchTo().alert();
+		boolean isAlertPresent = alert != null;
+		if(isAlertPresent){
+			alert.accept();
+		}
+	}
+	
 	protected void verifyDeleteRecordAlert(String expectedAlertText) {
 		Alert alert = driver().switchTo().alert();
 		String actualAlertText = null;
@@ -1032,6 +1055,16 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 		return null;
 	}
+	
+	public List<String> getListOfElements(String ele){
+		List<WebElement> list = driver().findElements(By.xpath(ele));
+		List<String> elementTextData = new ArrayList<String>();
+		
+		for(WebElement e: list){
+			elementTextData.add(e.getText()); 
+		}
+		return elementTextData;
+	}
 
 	public void selectByVisibleText(MCWebElement ele, String optionName) {
 		String optionVisbleText = "";
@@ -1075,7 +1108,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void clickWhenClickableCHP(MCWebElement element) {
 		waitForElementVisible(element);
-		new WebDriverWait(driver(), TIMEOUT).until(elementToBeClickable(element)).click();
+
+		new WebDriverWait(driver(), TIMEOUT).until(
+				elementToBeClickable(element)).click();
+		// waitForWicket(driver());
+
 	}
 
 	protected void clickWhenClickable(WebElement element) {
@@ -1290,6 +1327,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 				if (!handle.equals(getFinder().getWebDriver().getWindowHandle()))
 					getFinder().getWebDriver().switchTo().window(handle);
 			}
+
+			acceptPopup();			
+
+
 		} catch (Exception e) {
 			logger.error("Unable to Switch Window --> {} ", e);
 		}
@@ -1312,7 +1353,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return isAnyErrorPresent;
 	}
 
-	public String getTextFromPage(MCWebElement element) {
+	
+	public String getTextFromPage(MCWebElement element){
+
 		return element.getText();
 	}
 
@@ -1338,6 +1381,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		field.clear();
 		field.sendKeys(fieldValue);
 	}
+
 	public void waitForElementEnabled(MCWebElement element) {
 	    try {
 	    	WebDriverWait wait = new WebDriverWait(getFinder().getWebDriver(), 20, ELEMENT_WAIT_MAX);
@@ -1526,6 +1570,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 				frameSwitch.getElements();
 				return frameSwitch.getElements().size();
 				 }
+
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		logger.info("Not validaiting any elements, as this is an Abstraction layer to Pages");

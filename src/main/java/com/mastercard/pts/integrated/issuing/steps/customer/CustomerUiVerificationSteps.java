@@ -2,13 +2,9 @@ package com.mastercard.pts.integrated.issuing.steps.customer;
 
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SurchargeWaiverPlan;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.SurchargeWaiverPlanPage;
-import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.administration.UiVerificationAdministrationWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.UiVerificationCardManagementWorkflow;
@@ -1361,6 +1357,7 @@ public class CustomerUiVerificationSteps {
 	public void thenDeviceStatusPageOfCardManagementTabIsRenderedCorrectly() {
 		uiVerificationCardManagementWorkflow.verifyDeviceStatusPage();
 	}
+
 	@Then("user signs out from customer portal")
 	public void signOutFromPortal() {
 		loginWorkflow.signOutCustomer();

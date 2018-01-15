@@ -11,9 +11,13 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.configuration.AppEnvironment;
 import com.mastercard.pts.integrated.issuing.configuration.Portal;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.pages.customer.administration.LoginPage;
 import com.mastercard.pts.integrated.issuing.pages.PageObjectFactory;
 import com.mastercard.pts.integrated.issuing.pages.agent.AgentHomePage;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.CardholderHomePage;
@@ -67,7 +71,10 @@ public class UserManagementSteps {
 
 	@Autowired
 	private KeyValueProvider keyValueProvider;
-
+	
+	@Autowired
+	private TestContext context;
+	
 	@Autowired
 	private DataProvider provider;
 
@@ -132,7 +139,13 @@ public class UserManagementSteps {
 	public void whenUserLogsInWithValidCredentials() {
 		loginWorkflow.login(portal.getUserName(), portal.getPassword());
 	}
-
+	
+	@Given("user logs in with valid login details")
+	public void loginWithValidLoginDetails(){
+		Device device = context.get(ContextConstants.DEVICE);
+		loginWorkflow.login(device.getClientCode(), device.getClientCode());
+	}
+	
 	@When("user logs in with valid credentials as $userType user")
 	public void whenUserLogsInWithValidCredentialsAsUsertTypeUser(String userType) {
 		Portal agentPortal = environment.getPortalByType(Portal.TYPE_AGENT);

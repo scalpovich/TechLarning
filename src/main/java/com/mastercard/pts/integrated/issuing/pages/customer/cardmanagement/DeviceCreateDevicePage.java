@@ -26,7 +26,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_ACTIVITY, CardManagementNav.L2_DEVICE,
-		CardManagementNav.L3_NEW_DEVICE})
+		CardManagementNav.L3_NEW_DEVICE })
 public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(DeviceCreateDevicePage.class);
@@ -133,6 +133,12 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:stmtHardCopyReq:input:dropdowncomponent")
 	private MCWebElement statementPreferenceDDwn;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//ul[@class='feedbackPanel']//.//li[4]/span")
+	private MCWebElement createdWalletList;
+	
+	public String getWalletsFromPage(){
+		return getTextFromPage(createdWalletList);
+	}
 
 	public void selectAppliedForProduct(String product) {
 		WebElementUtils.selectDropDownByVisibleText(appliedForProdutDDwn, product);
@@ -200,7 +206,45 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		device.setWalletNumber(getCodeFromInfoMessage("wallet"));
 		device.setDeviceNumber(getCodeFromInfoMessage("device(s)"));
 	}
+	
+	public void createNewDevice(Device device) {
+		logger.info("Add Device for program: {}", device.getProgramCode());
+		clickAddNewButton();
 
+		runWithinPopup("Add Device", () -> {
+				fillDeviceInformation(device);
+				fillBatchDetails(device);
+				fillCustomerTypeProgramCodeAndDeviceDetails(device);
+
+				clickNextButton();
+				
+				fillProfileAndAddressDetailsAndClickNext(device);
+
+				// skip wallet extra fields
+				clickFinishButton();
+
+				verifyNoErrors();
+			});
+
+		verifyOperationStatus();
+
+		//scolling "PageUp" is needed here as the Menu item is not visible
+		SimulatorUtilities sm = new SimulatorUtilities();
+		sm.pressPageUp();
+		
+		device.setClientCode(getCodeFromInfoMessage("client"));
+		device.setWalletNumber(getCodeFromInfoMessage("wallet"));
+//		device.setWalletNumber(getWalletsId(getWalletsFromPage()));
+		device.setDeviceNumber(getCodeFromInfoMessage("device(s)"));
+	}
+	
+	public String getWalletsId(String wallets){		
+		String walletList[] = wallets.split(" : ");
+		String walletLists[] = walletList[1].split(", ");
+		logger.info("Wallet aaded :[%s]",walletLists[0]);
+		return walletLists[0];
+	}
+	
 	private void fillBatchDetails(Device device) {
 		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
 		generateDeviceBatchBtn.click();

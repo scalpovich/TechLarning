@@ -4,7 +4,10 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCG;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.MCGFlows;
 
 @Component
@@ -15,8 +18,8 @@ public class MCGSteps {
 
 	@Autowired
 	MCG mcg;
-
-	@When("user creates MCG")
+	
+	@When("user creates MCG")	
 	public void whenUserCreatesMCG() {
 		String MCG = mcgflows.addMCG();
 		mcg.setMCG(MCG);

@@ -41,8 +41,4 @@ And user navigates to application details screen
 When upload get rejected and application should move to Incomplete applications
 Then user should be able to complete the incomplete application
 When user completes complete the incomplete application
-Then user should be able to process it using Pre-production, Device production 
-
-
-
-
+Then user should be able to process it using Pre-production, Device production

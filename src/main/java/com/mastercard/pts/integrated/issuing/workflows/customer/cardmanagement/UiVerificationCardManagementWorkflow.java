@@ -1,16 +1,11 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
-import junit.framework.Assert;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SurchargeWaiverPlan;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.*;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
-import com.mastercard.pts.integrated.issuing.utils.Constants;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
-import com.mastercard.pts.integrated.issuing.utils.DatePicker;
+
 
 @Workflow
 public class UiVerificationCardManagementWorkflow {

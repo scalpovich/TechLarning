@@ -1,4 +1,4 @@
-Regression prepaid msr retail general purpose card authorization
+prepaid msr retail general purpose card authorization
 
 Narrative:
 In order to check transactions on prepaid msr retail travel card 
