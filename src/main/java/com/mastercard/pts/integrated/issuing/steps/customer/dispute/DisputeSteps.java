@@ -125,7 +125,8 @@ public class DisputeSteps{
 	@When("a retrival request is created using ARN Number")
 	public void whenARetrivalRequestIsCreatedUsingARNNumber(){
 		RetrievalRequest rr = RetrievalRequest.createWithProvider(keyProvider);
-		rr.setArn(context.get(ConstantData.ARN_NUMBER));
+		//rr.setArn(context.get(ConstantData.ARN_NUMBER));
+		rr.setArn("02223527305449659127942");		
 	 	disputeWorkflow.createRetrievalRequest(rr);
 	}
 	

@@ -11,4 +11,6 @@ Meta:
 
 Scenario: To create retrival request for transaction on prepaird mastercard card
 Given user is logged in institution
-And a retrival request is created using ARN Number
+When a retrival request is created using ARN Number
+And Download the IPM file
+And Charge back is created for a transaction

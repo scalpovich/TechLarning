@@ -26,7 +26,7 @@ When fills Wallet Plan for prepaid product and program Corporate Travel Card - M
 When User fills Program section for prepaid product and program Corporate Travel Card - Multi Currency [6]
 When User fills Business Mandatory Fields Screen for prepaid product with Corporate
 When User fills Device Range section for prepaid product
-When add menus to access card holder portal
+!-- When add menus to access card holder portal
 When user creates new device of prepaid type for new client
 Then device has "normal" status
 Then user performs adjustment transaction
