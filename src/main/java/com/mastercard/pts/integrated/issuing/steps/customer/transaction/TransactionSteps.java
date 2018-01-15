@@ -73,17 +73,17 @@ public class TransactionSteps {
 
 	@Autowired
 	private VisaTestCaseNameKeyValuePair visaTestCaseNameKeyValuePair;
-	
+
 	private String authFilePath;
 
 	private String arnNumber;
 
 	private String transactionAmount = "20.00";
-	
+
 	private static String PASS_MESSAGE = "Transaction is succcessful!  - Expected Result : ";
-	
+
 	private static String FAILED = "Transaction failed! ";
-	
+
 	private static String FAIL_MESSAGE =  FAILED + " -  Result : ";
 
 	public String getTransactionAmount() {
@@ -135,6 +135,8 @@ public class TransactionSteps {
 	@Given("user performs an optimized $transaction MAS transaction")
 	public void givenOptimizedTransactionIsExecuted(String transaction) {
 		transactionWorkflow.browserMinimize(); //minimizing browser for smooth operation of MAS/MDFS
+		//Storing transaction name in context to use it at runtime
+		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		Transaction transactionData = generateMasTestDataForTransaction(transaction);
 
 		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
@@ -144,6 +146,8 @@ public class TransactionSteps {
 	@When("user performs generate TestData for an optimized $transaction MAS transaction")
 	@Given("user performs generate TestData for an optimized $transaction MAS transaction")
 	public void givenGenerateTestDataForOptimizedTransactionIsExecuted(String transaction) {
+		//Storing transaction name in context to use it at runtime
+		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		generateMasTestDataForTransaction(transaction);
 	}
 
@@ -212,7 +216,8 @@ public class TransactionSteps {
 		if(transactionWorkflow.isContains(transaction, "BALANCE_INQUIRY")) {
 			//this value is expected to be 0's for Balance Enquiry
 			transactionData.setDeKeyValuePairDynamic("004", "000000000000"); 
-		}
+		}		
+		
 
 		//changed ECOMMERCE to ECOM 
 		if(transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE")) {
@@ -295,7 +300,7 @@ public class TransactionSteps {
 	public void thenTestResultsAreReported(String tool) {
 		String testResults;
 		if (!"mdfs".contains(tool.toLowerCase())) {
-		 testResults = transactionWorkflow.verifyTestResults();
+			testResults = transactionWorkflow.verifyTestResults();
 		} else {
 			testResults = transactionWorkflow.verifyTestResultsOnMdfs();
 		}
@@ -344,7 +349,7 @@ public class TransactionSteps {
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		assertEquals(type, transactionWorkflow.getAuthorizationStatus(arnNumber, ts));
 	}
-	
+
 	@Then("transaction fee is correctly posted")
 	public void thenTransactionFeeIsCorrecltyPosted() {
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
@@ -354,97 +359,95 @@ public class TransactionSteps {
 	@Then("search with ARN in transaction screen and balance should be credited")
 	public void thenSearchWithARNInTransactionScreenCheckReversalStatusAndBalanceShouldBeCredited() {
 		ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
-           TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		rt.setArn(context.get(ConstantData.ARN_NUMBER));
 		BigDecimal actualTransactionAmount = new BigDecimal(rt.getAmount());
 		assertEquals(new BigDecimal(transactionWorkflow.getFeePostingStatus(rt.getArn(), ts)), actualTransactionAmount);
 	}
 
-    @Then("search with ARN in transaction screen and status should be Reversal [R]")
-    public void thenSearchWithARNInTransactionScreenCheckReversalStatusAndStatusShouldBeReversal() {
-           ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
-           TransactionSearch ts = TransactionSearch.getProviderData(provider);
-           rt.setArn(context.get(ConstantData.ARN_NUMBER));
-           assertEquals(transactionWorkflow.searchTransactionWithArnAndGetStatus(rt.getArn(), ts), "Reversal [R]");
-    }
-    
-    @Then("search with device in transaction screen and status for wallet to wallet transfer transaction")
-    public void thenSearchWithDeviceInTransactionScreenCheckReversalStatusAndStatusShouldBeReversal() {
-           ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
-           TransactionSearch ts = TransactionSearch.getProviderData(provider);
-           Device device = context.get(ContextConstants.DEVICE);
-           Assert.assertTrue("successfully completed the wallet to wallet fund transfer", transactionWorkflow.searchTransactionWithDeviceAndGetStatus(device, ts).contains(" Wallet to Wallet Transfer(Credit)"));
-    }      
+	@Then("search with ARN in transaction screen and status should be Reversal [R]")
+	public void thenSearchWithARNInTransactionScreenCheckReversalStatusAndStatusShouldBeReversal() {
+		ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		rt.setArn(context.get(ConstantData.ARN_NUMBER));
+		assertEquals(transactionWorkflow.searchTransactionWithArnAndGetStatus(rt.getArn(), ts), "Reversal [R]");
+	}
 
-    @When("user performs load balance request")
-    public void whenUserPerformsLoadBalanceRequest() {
-    	   Device device = context.get(ContextConstants.DEVICE);
-    	   LoadBalanceRequest lbr = LoadBalanceRequest.getProviderData(provider);
-           String loadRequestReferenceNumber = transactionWorkflow.performLoadBalanceRequestAndGetRequestReferenceNumber(device, lbr);
-           lbr.setLoadRequestReferenceNumber(loadRequestReferenceNumber);
-           context.put("LOADBALANCEREQUEST", lbr);
-     }
+	@Then("search with device in transaction screen and status for wallet to wallet transfer transaction")
+	public void thenSearchWithDeviceInTransactionScreenCheckReversalStatusAndStatusShouldBeReversal() {
+		ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		Assert.assertTrue("successfully completed the wallet to wallet fund transfer", transactionWorkflow.searchTransactionWithDeviceAndGetStatus(device, ts).contains(" Wallet to Wallet Transfer(Credit)"));
+	}      
 
-    @Then("load balance request is successful")
-    public void thenLoadBalanceRequestIsSuccessful() {
-            assertThat("Load Balance Request Failed", transactionWorkflow.getLoadBalanceRequestSuccessMessage(), containsString("Load balance request forwarded for approval with request number :"));
-    }
+	@When("user performs load balance request")
+	public void whenUserPerformsLoadBalanceRequest() {
+		Device device = context.get(ContextConstants.DEVICE);
+		LoadBalanceRequest lbr = LoadBalanceRequest.getProviderData(provider);
+		String loadRequestReferenceNumber = transactionWorkflow.performLoadBalanceRequestAndGetRequestReferenceNumber(device, lbr);
+		lbr.setLoadRequestReferenceNumber(loadRequestReferenceNumber);
+		context.put("LOADBALANCEREQUEST", lbr);
+	}
 
-    @When("user performs load balance approve")
-    public void whenUserPerformsLoadBalanceApprove() {
-    	Device device = context.get(ContextConstants.DEVICE);
-    	LoadBalanceRequest lbr = context.get("LOADBALANCEREQUEST");
-    	transactionWorkflow.performLoadBalanceApprove(device, lbr);
-    }
+	@Then("load balance request is successful")
+	public void thenLoadBalanceRequestIsSuccessful() {
+		assertThat("Load Balance Request Failed", transactionWorkflow.getLoadBalanceRequestSuccessMessage(), containsString("Load balance request forwarded for approval with request number :"));
+	}
 
-    @Then("load balance approve is successful")
-    public void thenLoadBalanceApproveIsSuccessful() {
-           assertThat("Load Balance Approve Failed", transactionWorkflow.getLoadBalanceApproveSuccessMessage(), containsString("approved successfully."));
-    }
+	@When("user performs load balance approve")
+	public void whenUserPerformsLoadBalanceApprove() {
+		Device device = context.get(ContextConstants.DEVICE);
+		LoadBalanceRequest lbr = context.get("LOADBALANCEREQUEST");
+		transactionWorkflow.performLoadBalanceApprove(device, lbr);
+	}
 
-    @When("user initiates settlement for agency")
-    public void whenUserInitiatesSettlementForAgency() {
+	@Then("load balance approve is successful")
+	public void thenLoadBalanceApproveIsSuccessful() {
+		assertThat("Load Balance Approve Failed", transactionWorkflow.getLoadBalanceApproveSuccessMessage(), containsString("approved successfully."));
+	}
+
+	@When("user initiates settlement for agency")
+	public void whenUserInitiatesSettlementForAgency() {
 		Program program = context.get(ContextConstants.PROGRAM);
 		AssignPrograms details = AssignPrograms.createWithProvider(provider);
 		details.setProgramCode(program.buildDescriptionAndCode());
 		transactionWorkflow.initiateSettlementForAgency(details.getBranchId(), details.getProgramCode());
-    }
+	}
 
-    @Then("settlement is initiated successfully")
-    public void thenSettlementIsInitiatedSuccesfully() {
-    	assertThat("Settlement Initiative Failed", transactionWorkflow.getSettlementInitiativeSuccessMessage(), containsString("Settlement initiated successfully and Settlement Referance No :"));
-    }
-    
+	@Then("settlement is initiated successfully")
+	public void thenSettlementIsInitiatedSuccesfully() {
+		assertThat("Settlement Initiative Failed", transactionWorkflow.getSettlementInitiativeSuccessMessage(), containsString("Settlement initiated successfully and Settlement Referance No :"));
+	}
+
 	@When("perform an $transaction VISA transaction")
 	@Given("perform an $transaction VISA transaction")
 	public void givenVisaTransactionIsExecuted(String transaction){
+		//Storing transaction name in context to use it at runtime
+				context.put(ConstantData.TRANSACTION_NAME, transaction);
 		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED) );
-		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseDetails(transaction.toUpperCase());
+
 		performOperationOnSamecard(false);
 		
-//		Transaction transactionData = generateMasTestDataForTransaction(transaction);
-		MiscUtils.reportToConsole("VISA Transaction being performed : " + transactionName );
-		
-//		transactionWorkflow.performVisaTransaction(transaction, transactionData, sameCard);
-		transactionWorkflow.performVisaTransaction(transactionName);
+		logMessage("VISA Transaction being performed : ", transaction);
+ 		transactionWorkflow.performVisaTransaction(transaction);
 	}
-	
+
 	@When("$tool test results are verified for $transaction")
 	@Then("$tool test results are verified for $transaction")
 	public void thenVisaTestResultsAreReported(String tool, String transaction) {
 		String testResults  = null;
-		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseDetails(transaction.toUpperCase());
+		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseToSelect(transaction);
+		logMessage("VISA Transaction Test Case Name : ", transactionName );
+
+		testResults = transactionWorkflow.verifyVisaOutput(transactionName);
+		transactionWorkflow.browserMaximize(); // maximing browser
 		
-		 testResults = transactionWorkflow.verifyVisaOutput(transactionName);
-		 transactionWorkflow.browserMaximize(); // maximing browser
-		 //reporting Temporary Status
-		 if(transactionWorkflow.isContains(testResults, "temporary status"))	{
-			 logger.info(PASS_MESSAGE, testResults );
-				assertTrue(PASS_MESSAGE + testResults, true );
-			} else if(transactionWorkflow.isContains(testResults, "validations ok")) {
-			logger.info(PASS_MESSAGE, testResults );
+		if(transactionWorkflow.isContains(testResults, "validations ok")) {
+			logMessage(PASS_MESSAGE, testResults);
 			assertTrue(PASS_MESSAGE + testResults, true );
 		} else if(transactionWorkflow.isContains(testResults, "validations not ok"))	{
+			logger.error(FAIL_MESSAGE, testResults);
 			assertFalse(FAIL_MESSAGE +  testResults, false);
 			throw new ValidationException(FAIL_MESSAGE +  testResults);
 		} else {
@@ -452,5 +455,10 @@ public class TransactionSteps {
 			assertFalse(FAILED, false);
 			throw new ValidationException(FAILED);
 		}
+	}
+	
+	private void logMessage(String message1, String message2) {
+	logger.info(message1, message2 );
+	MiscUtils.reportToConsole(message1 + message2 );
 	}
 }
