@@ -45,7 +45,7 @@ public class TestConfiguration {
 		try {
 			temp = Files.createTempDirectory(new DateUtils().getDateyyyyMMdd() + "_IssuingTests_");
 			if (System.getProperty(PLATFORM).equalsIgnoreCase(CHROME)) {
-				Runtime.getRuntime().exec("cmd /c start \"\" src\\main\\resources\\config\\killChromeDriver.bat");
+				Runtime.getRuntime().exec("cmd /c src\\main\\resources\\config\\killChromeDriver.bat");
 				logger.info("Killed all chromedriver.exe instances");
 			}
 		} catch (Exception e) {
