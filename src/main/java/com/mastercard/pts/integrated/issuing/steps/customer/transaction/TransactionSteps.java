@@ -212,7 +212,8 @@ public class TransactionSteps {
 		if(transactionWorkflow.isContains(transaction, "BALANCE_INQUIRY")) {
 			//this value is expected to be 0's for Balance Enquiry
 			transactionData.setDeKeyValuePairDynamic("004", "000000000000"); 
-		}
+		}		
+		
 
 		//changed ECOMMERCE to ECOM 
 		if(transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE")) {

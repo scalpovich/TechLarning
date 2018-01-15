@@ -253,7 +253,8 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	public void enterReservedAmount() {
 		if (reservedAmountTxt.isEnabled()) {
-			enterValueinTextBox(reservedAmountTxt, "1" + CustomUtils.randomNumbers(5));
+			//enterValueinTextBox(reservedAmountTxt, "1" + CustomUtils.randomNumbers(5));
+			enterValueinTextBox(reservedAmountTxt, "0");
 		}
 	}
 
