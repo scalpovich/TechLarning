@@ -71,10 +71,3 @@ Meta:
 @TestId 
 When perform an EMV_ECOMMERCE MAS transaction
 Then MAS test results are verified
-
-Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
-Meta:
-@TestId
-When perform an EMV_CASH_WITHDRAWAL MAS transaction
-Then MAS test results are verified
-When MAS simulator is closed
