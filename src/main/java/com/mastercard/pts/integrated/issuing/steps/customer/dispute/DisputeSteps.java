@@ -27,6 +27,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.dispute.ChargeBack;
 import com.mastercard.pts.integrated.issuing.domain.customer.dispute.ChargeBackReversal;
 import com.mastercard.pts.integrated.issuing.domain.customer.dispute.DisputeHistory;
 import com.mastercard.pts.integrated.issuing.domain.customer.dispute.RetrievalRequest;
+import com.mastercard.pts.integrated.issuing.domain.customer.dispute.SecondChargeBack;
 import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
@@ -136,6 +137,13 @@ public class DisputeSteps{
 		disputeWorkflow.createChargeBackRequest(cb);
 	}
 	
+	@When("SecondCharge back is created for a transaction")
+	 public void whenSecondChargeBackIsCreatedForATransaction(){
+		SecondChargeBack sb = SecondChargeBack.getSecondChargeBack(keyProvider);
+		sb.setArn(context.get(ConstantData.ARN_NUMBER));
+		disputeWorkflow.createSecondChargeBack(sb);
+	}
+	
 	@When("Charge back reversal is created for a transaction")
 	public void whenChargeBackReversalIsCreatedForATransaction(){
 		ChargeBackReversal cb=ChargeBackReversal.createWithProvider(provider);
@@ -169,6 +177,15 @@ public class DisputeSteps{
 		Assert.assertTrue(helpDeskWorkflow.getWalletBalance(device).subtract(context.get("walletBalanceBeforeChargeback"))== new BigDecimal(cb.getChargeBackAmount()));
 	}
 	
+	@When("validate the SecondCharge back amount credited to the card holder in help desk screen")
+	  public void whenvalidattheSecondChargebackamountcreditedtothecardholderinhelpdeskscreen(){
+		
+		Device device = new Device();
+		device.setDeviceNumber(keyProvider.getString("DEVICE_NUMBER"));
+		device.setAppliedForProduct(ProductType.fromShortName("PREPAID"));
+		SecondChargeBack sb=SecondChargeBack.createWithProvider(provider);
+		Assert.assertTrue(helpDeskWorkflow.getWalletBalance(device).subtract(context.get("walletBalanceBeforeChargeback"))== new BigDecimal(sb.getSecondChargeBackAmount()));
+	}
 
 	@When("Generate outgoing IPM file and check for Message Reversal Indicator,Card Issuer Reference Data")
 	public void whenGenerateOutgoingIPMFileAndCheckForMessageReversalIndicatorCardIssuerReferenceData(){

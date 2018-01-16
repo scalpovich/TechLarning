@@ -1,25 +1,16 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.dispute;
 
-public class ChargeBackAbstractClass {
+public class SecondChargeBackNew {
 
-	private String chargeBackAmount;
 	private String SecondchargeBackAmount;
-	private String reasonCode;
-	private String documentation;
-	private boolean fees;
+	private String SecondchargeBackreasonCode;
+	private String SecondChargeBackdocumentation;
+	private boolean SecondChargeBackfees;
 	private String text;
 	private boolean isChargeBackDateGrater;
 	private boolean isCopyRequestRequired;
 	private boolean isDocumentRequired;
 	private String arn;
-
-	public String getChargeBackAmount() {
-		return chargeBackAmount;
-	}
-
-	public void setChargeBackAmount(String chargeBackAmount) {
-		this.chargeBackAmount = chargeBackAmount;
-	}
 
 	public String getSecondChargeBackAmount() {
 		return SecondchargeBackAmount;
@@ -29,28 +20,28 @@ public class ChargeBackAbstractClass {
 		this.SecondchargeBackAmount = SecondchargeBackAmount;
 	}
 
-	public String getReasonCode() {
-		return reasonCode;
+	public String getSecondChargeBackReasonCode() {
+		return SecondchargeBackreasonCode;
 	}
 
-	public void setReasonCode(String reasonCode) {
-		this.reasonCode = reasonCode;
+	public void setSecondChargeBackReasonCode(String SecondchargeBackreasonCode) {
+		this.SecondchargeBackreasonCode = SecondchargeBackreasonCode;
 	}
 
 	public String getDocumentation() {
-		return documentation;
+		return SecondChargeBackdocumentation;
 	}
 
-	public void setDocumentation(String documentation) {
-		this.documentation = documentation;
+	public void setDocumentation(String SecondChargeBackdocumentation) {
+		this.SecondChargeBackdocumentation = SecondChargeBackdocumentation;
 	}
 
 	public boolean isFees() {
-		return fees;
+		return SecondChargeBackfees;
 	}
 
-	public void setFees(boolean fees) {
-		this.fees = fees;
+	public void setFees(boolean SecondChargeBackfees) {
+		this.SecondChargeBackfees = SecondChargeBackfees;
 	}
 
 	public String getText() {
