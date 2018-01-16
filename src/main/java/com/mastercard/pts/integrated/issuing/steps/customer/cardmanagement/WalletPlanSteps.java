@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.WalletType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
@@ -23,15 +24,15 @@ public class WalletPlanSteps {
 	DeviceCreation deviceCreation;
 
 	@Autowired
-	WalletPlan walletplan;
-
-	@Autowired
 	WalletPlanFlows walletplanflows;
 
+	@Autowired
+	TestContext context;
+	
 	@When("user creates a Open loop wallet plan of $walletType type for program $Programtype for $product")
 	public void whenUserCreatesAopenloopWalletPlan(@Named("walletType") String walletType,
 			@Named("Programtype") String programType, @Named("product") String product) {
-		plan.walletplanDataprovider();
+		plan=WalletPlan.walletplanDataprovider();
 		plan.setWalletType(walletType);
 		plan.setProgramType(programType);
 		plan.setProductType(product);
@@ -53,7 +54,7 @@ public class WalletPlanSteps {
 	@When("user creates a Closed loop wallet plan of $walletType type for program $Programtype for $product")
 	public void whenUserCreatesAclosedloopWalletPlan(@Named("walletType") String walletType,
 			@Named("Programtype") String programType, @Named("product") String product) {
-		plan.walletplanDataprovider();
+		plan=WalletPlan.walletplanDataprovider();
 		plan.setWalletType(walletType);
 		plan.setProgramType(programType);
 		plan.setProductType(product);

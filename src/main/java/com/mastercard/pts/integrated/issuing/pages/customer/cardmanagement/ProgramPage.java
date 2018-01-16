@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -28,6 +30,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP, CardManagementNav.L2_PROGRAM })
 public class ProgramPage extends AbstractBasePage {
+    private TestContext context;
 	final Logger logger = LoggerFactory.getLogger(ProgramPage.class);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=programCode]")
@@ -615,7 +618,8 @@ public class ProgramPage extends AbstractBasePage {
 		if (MapUtils.fnGetInputDataFromMap("WalletPlan") != null) {
 			selectByVisibleText(WalletPlan1DDwn, MapUtils.fnGetInputDataFromMap("WalletPlan"));
 		} else {
-			selectByVisibleText(WalletPlan1DDwn, program.getWalletPlan1());
+			Program programContext=context.get(ContextConstants.PROGRAM);
+			selectByVisibleText(WalletPlan1DDwn, /*program.getWalletPlan1()*/programContext.getWalletPlan1());
 		}
 	}
 
