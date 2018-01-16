@@ -116,9 +116,9 @@ public class JsonUtil extends AbstractBaseSteps {
 
 		response = given().header(DN_KEY, STAGE_CARDACTIVATION_DN_VALUE)
 				.body(reqObject).when().contentType(ContentType.JSON).put("");
-		logger.info("**********Request String:" + reqObject.toString());
-		logger.info("**********Response String:"
-				+ response.asString().toString());
+		logger.info("**********Request String:{}" , reqObject.toString());
+		logger.info("**********Response String:{}"
+				, response.asString().toString());
 		return response;
 
 	}
@@ -264,41 +264,41 @@ public class JsonUtil extends AbstractBaseSteps {
 			break;
 		case "ActivatedCRD":
 			deviceDetails
-					.getCardStatusFromDB(DeviceDetails.GETACTIVATEDCARDQUERY);
+					.getCardStatusFromDB(DeviceDetails.GET_ACTIVATEDCARD_QUERY);
 			valueToUpdate = deviceDetails.getDeviceNumber();
 			break;
 		case "Cancelled":
 			deviceDetails
-					.getCardStatusFromDB(DeviceDetails.GETCANCELLEDCARDQUERY);
+					.getCardStatusFromDB(DeviceDetails.GET_CANCELLEDCARD_QUERY);
 			valueToUpdate = deviceDetails.getDeviceNumber();
 			break;
 		case "Expired":
 			deviceDetails
-					.getCardStatusFromDB(DeviceDetails.GETEXPIREDCARDQUERY);
+					.getCardStatusFromDB(DeviceDetails.GET_EXPIREDCARD_QUERY);
 			valueToUpdate = deviceDetails.getDeviceNumber();
 			break;
 		case "Stoplisted":
 			deviceDetails
-					.getCardStatusFromDB(DeviceDetails.GETSTOPLISTEDCARDQUERY);
+					.getCardStatusFromDB(DeviceDetails.GET_STOPLISTEDCARD_QUERY);
 			valueToUpdate = deviceDetails.getDeviceNumber();
 			break;
 		case "GetDevice":
 			valueToUpdate = deviceDetails.getDataFromDB(
-					DeviceDetails.GETDEVICE, DeviceDetails.DEVICENUMBERCOLUMN);
+					DeviceDetails.GET_DEVICE, DeviceDetails.DEVICE_NUMBER_COLUMN);
 			deviceDetails.setDeviceNumber(valueToUpdate);
 			break;
 		case "GenrateDefaultWalletNum":
 			valueToUpdate = CustomUtils.randomNumbers(Integer
 					.parseInt(deviceDetails.getDataFromDB(
-							DeviceDetails.GETCLIENTLENGTH,
-							DeviceDetails.CLIENTLENGTHCOLUMN)));
+							DeviceDetails.GET_CLIENT_LENGTH,
+							DeviceDetails.CLIENT_LENGTH_COLUMN)));
 			deviceDetails.setDefaultWallet(valueToUpdate);
 			break;
 		case "GenrateCustomWalletNum":
 			valueToUpdate = CustomUtils.randomNumbers(Integer
 					.parseInt(deviceDetails.getDataFromDB(
-							DeviceDetails.GETCLIENTLENGTH,
-							DeviceDetails.CLIENTLENGTHCOLUMN)));
+							DeviceDetails.GET_CLIENT_LENGTH,
+							DeviceDetails.CLIENT_LENGTH_COLUMN)));
 			deviceDetails.setCustomWallet(valueToUpdate);
 			break;
 		case "GetDeviceDOM":
