@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -60,7 +61,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=cardNumber]")
 	private MCWebElement cardNumberTxt;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr/td/span[contains(text(),'DR')]/../../td[1]/span/a/span")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[1]/td/span[contains(text(),'DR')]/../../td[1]/span/a/span")
 	private MCWebElement retrieveARNLabel;
 
 	private String authorizationStatus;
@@ -73,9 +74,9 @@ public class TransactionSearchPage extends AbstractBasePage {
 		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
 		clickSearchButton();
 		waitforElemenet(retrieveARNLabel);
-		String retrievedARN = retrieveARNLabel.getText();
-		logger.info("retrievedARN {} ", retrievedARN);
-		return retrievedARN;
+		String retrieveARN = retrieveARNLabel.getText();
+		logger.info("retrievedARN {} ", retrieveARN);
+		return retrieveARN;
 	}
 
 	public String searchTransactionWithARN(String arnNumber, TransactionSearch ts) {
