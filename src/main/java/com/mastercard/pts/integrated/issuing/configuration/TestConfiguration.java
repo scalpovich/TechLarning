@@ -18,6 +18,7 @@ import org.springframework.core.env.Environment;
 
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.Utils;
 import com.mastercard.testing.mtaf.ui.configuration.MTAFWebToolsConfiguration;
 import com.mastercard.testing.utils.encryption.EncryptUtils;
 
@@ -32,10 +33,6 @@ public class TestConfiguration {
 
 	private static final Logger logger = LoggerFactory.getLogger(TestConfiguration.class);
 
-	private static final String CHROME = "chrome";
-
-	private static final String PLATFORM = "platform";
-
 	@Autowired
 	private Environment environment;
 
@@ -44,14 +41,11 @@ public class TestConfiguration {
 		Path temp = null;
 		try {
 			temp = Files.createTempDirectory(new DateUtils().getDateyyyyMMdd() + "_IssuingTests_");
-			if (System.getProperty(PLATFORM).equalsIgnoreCase(CHROME)) {
-				Runtime.getRuntime().exec("cmd /c src\\main\\resources\\config\\killChromeDriver.bat");
-				logger.info("Killed all chromedriver.exe instances");
-			}
 		} catch (Exception e) {
-			logger.error("Exception has been caugh while creating a temp folder or while killing chrome driver instances.\nMessage :: {}\nTrace :: {}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception has been caugh while creating a temp folder.\nMessage :: {}\nTrace :: {}", e.getMessage(), e.getStackTrace());
 			MiscUtils.propagate(e);
 		}
+		Utils.killChromeDriver();
 		logger.info("Temp directory path: {}", temp);
 		return temp;
 	}
