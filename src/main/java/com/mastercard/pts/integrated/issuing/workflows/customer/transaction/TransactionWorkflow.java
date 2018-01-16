@@ -1662,4 +1662,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		logger.info(message1, message2 );
 		MiscUtils.reportToConsole(message1 + message2 );
 	}
+	
+	public String getARN(String deviceNumber, TransactionSearch ts){
+		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
+		return page.searchTransactionWithDevice(deviceNumber, ts);
+	}
 }

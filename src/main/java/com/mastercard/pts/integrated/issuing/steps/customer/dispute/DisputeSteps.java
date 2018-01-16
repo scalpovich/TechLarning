@@ -34,6 +34,7 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.dispute.ArbitrationWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.dispute.DisputeWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpdeskWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
@@ -70,7 +71,10 @@ public class DisputeSteps{
 
 	@Autowired
 	private LinuxBox linuxBox;
-
+	
+	@Autowired
+	private ArbitrationWorkflow arbitrationworkflow;
+	
 	private String arnNumber;
 
 	private static final Logger logger = LoggerFactory.getLogger(DisputeSteps.class);
@@ -125,15 +129,25 @@ public class DisputeSteps{
 	@When("a retrival request is created using ARN Number")
 	public void whenARetrivalRequestIsCreatedUsingARNNumber(){
 		RetrievalRequest rr = RetrievalRequest.createWithProvider(keyProvider);
+		rr.setArn(context.get(ConstantData.ARN_NUMBER));
+		disputeWorkflow.createRetrievalRequest(rr);
+	}
+	
+	@When("a retrival request is created using ARN Number without fees")
+	public void whenARetrivalRequestIsCreatedUsingARNNumberWithoutFees(){
+		RetrievalRequest rr = RetrievalRequest.createWithProvider(keyProvider);
+		rr.setApplyFee(false);
 		//rr.setArn(context.get(ConstantData.ARN_NUMBER));
-		rr.setArn("02223527305449659127942");		
+		rr.setArn("02223607295154135271770");		
 	 	disputeWorkflow.createRetrievalRequest(rr);
 	}
 	
 	@When("Charge back is created for a transaction")
 	public void whenChargeBackIsCreatedForATransaction(){
 		ChargeBack cb=ChargeBack.getChargeBack(keyProvider);
-		cb.setArn(context.get(ConstantData.ARN_NUMBER));
+		//cb.setArn(context.get(ConstantData.ARN_NUMBER));
+		cb.setFees(false);
+		cb.setArn("02223607295154135271770");	
 		disputeWorkflow.createChargeBackRequest(cb);
 	}
 	
@@ -188,6 +202,18 @@ public class DisputeSteps{
 	batch.setBatchType("UPLOAD[U]");
 	disputeWorkflow.uploadBatch(batch);
 	 
+	}
+	
+	@When("create arbitration for retrival requst")
+	public void createArbitrationOfDispte(){
+		RetrievalRequest rr = RetrievalRequest.createWithProvider(keyProvider);
+		arbitrationworkflow.createArbitration(rr);
+	}
+	
+	@When("cancel $first chargeback request")
+	public void cancelChargeBack(String cancelOption){
+		RetrievalRequest rr = RetrievalRequest.createWithProvider(keyProvider);
+		disputeWorkflow.cancelChargeBackRequst(rr);
 	}
 	
 }

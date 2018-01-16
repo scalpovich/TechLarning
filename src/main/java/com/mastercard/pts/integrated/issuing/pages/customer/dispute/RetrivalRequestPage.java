@@ -33,8 +33,8 @@ public class RetrivalRequestPage extends AbstractDisputePage {
 			WebElementUtils.waitForWicket(driver());
 			WebElementUtils.selectDropDownByVisibleText(readOnlyRequestReasonCode, rr.getRequestResonCode());
 			WebElementUtils.selectDropDownByVisibleText(readOnlyRequestCode, rr.getReasonCode());
-			//WebElementUtils.checkCheckbox(readOnlyApplyFee, rr.isApplyFee());
-			clickSaveButton();
+			WebElementUtils.checkCheckbox(readOnlyApplyFee, rr.isApplyFee());
+			//clickSaveButton();
 			return true;
 	}
 
