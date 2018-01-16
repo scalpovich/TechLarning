@@ -63,7 +63,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 	private String transactionAmount = null;
 	
 	public String searchTransactionWithARN(String arnNumber, TransactionSearch ts) {
-		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, ts.getProductType());
 		WebElementUtils.enterText(searchARNTxt, arnNumber);
 		WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
 		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
@@ -71,7 +71,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 		clickSearchButton();
 		viewFirstRecord();
 		runWithinPopup("View Transactions", () -> {
-			logger.info("Retrieving authorization status");
+			logger.info("Retrieving authorization status : "+authorizationStatusTxt.getText());
 			authorizationStatus = authorizationStatusTxt.getText();
 			clickCloseButton();
 		});

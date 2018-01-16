@@ -135,6 +135,8 @@ public class TransactionSteps {
 	@Given("user performs an optimized $transaction MAS transaction")
 	public void givenOptimizedTransactionIsExecuted(String transaction) {
 		transactionWorkflow.browserMinimize(); //minimizing browser for smooth operation of MAS/MDFS
+		//Storing transaction name in context to use it at runtime
+		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		Transaction transactionData = generateMasTestDataForTransaction(transaction);
 
 		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
@@ -144,6 +146,8 @@ public class TransactionSteps {
 	@When("user performs generate TestData for an optimized $transaction MAS transaction")
 	@Given("user performs generate TestData for an optimized $transaction MAS transaction")
 	public void givenGenerateTestDataForOptimizedTransactionIsExecuted(String transaction) {
+		//Storing transaction name in context to use it at runtime
+		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		generateMasTestDataForTransaction(transaction);
 	}
 
@@ -212,7 +216,8 @@ public class TransactionSteps {
 		if(transactionWorkflow.isContains(transaction, "BALANCE_INQUIRY")) {
 			//this value is expected to be 0's for Balance Enquiry
 			transactionData.setDeKeyValuePairDynamic("004", "000000000000"); 
-		}
+		}		
+		
 
 		//changed ECOMMERCE to ECOM 
 		if(transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE")) {
@@ -418,6 +423,8 @@ public class TransactionSteps {
 	@When("perform an $transaction VISA transaction")
 	@Given("perform an $transaction VISA transaction")
 	public void givenVisaTransactionIsExecuted(String transaction){
+		//Storing transaction name in context to use it at runtime
+				context.put(ConstantData.TRANSACTION_NAME, transaction);
 		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED) );
 
 		performOperationOnSamecard(false);

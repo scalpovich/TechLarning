@@ -69,7 +69,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:billingCycleCode:input:dropdowncomponent")
 	private MCWebElement billingCyleCodeDDwn;
 
-	private int reservedAmount = MiscUtils.randomNumber(5);
+	private int reservedAmount = 0; //MiscUtils.randomNumber(5);
 
 	public void inputWalletPlanCode(String walletPlanCodeString) {
 		WebElementUtils.enterText(walletPlanCodeTxt, walletPlanCodeString);
