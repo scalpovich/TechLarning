@@ -41,7 +41,7 @@ public class RestAssuredConfiguration extends AbstractBaseSteps {
 
 	public RestAssuredConfig getRestAssuredConfig() {
 
-		if (System.getProperty("environment").equalsIgnoreCase(STAGEENVIROMENT)) {
+		if (System.getProperty("env").equalsIgnoreCase(STAGEENVIROMENT)) {
 			try {
 				KeyStore keyStore = null;
 				SSLConfig config = null;
