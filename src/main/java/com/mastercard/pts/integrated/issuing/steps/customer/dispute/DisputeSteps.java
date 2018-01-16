@@ -76,6 +76,8 @@ public class DisputeSteps{
 	private ArbitrationWorkflow arbitrationworkflow;
 	
 	private String arnNumber;
+	private String feesOption;
+	
 
 	private static final Logger logger = LoggerFactory.getLogger(DisputeSteps.class);
 
@@ -145,8 +147,16 @@ public class DisputeSteps{
 	@When("Charge back is created for a transaction")
 	public void whenChargeBackIsCreatedForATransaction(){
 		ChargeBack cb=ChargeBack.getChargeBack(keyProvider);
+		cb.setArn(context.get(ConstantData.ARN_NUMBER));
+		disputeWorkflow.createChargeBackRequest(cb);
+	}
+	
+	@When("Charge back is created for a transaction $feesOptions fees")
+	public void whenChargeBackIsCreatedForATransactionWihtoutFees(String feesOptions){
+		ChargeBack cb = ChargeBack.getChargeBack(keyProvider);
+		if(feesOption.equalsIgnoreCase((feesOption = feesOptions)))
+			cb.setFees(false);
 		//cb.setArn(context.get(ConstantData.ARN_NUMBER));
-		cb.setFees(false);
 		cb.setArn("02223607295154135271770");	
 		disputeWorkflow.createChargeBackRequest(cb);
 	}
