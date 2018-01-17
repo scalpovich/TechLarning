@@ -64,16 +64,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[1]/td/span[contains(text(),'DR')]/../../td[1]/span/a/span")
 	private MCWebElement retrieveARNLabel;
 
-	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=cardNumber]")
-	private MCWebElement cardNumberTxt;
-
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[1]/td/span[contains(text(),'DR')]/../../td[1]/span/a/span")
-	private MCWebElement retrieveARNLabel;
-
-	private String authorizationStatus;
-<<<<<<< HEAD
-	
-	private String transactionAmount = null;
+	private String authorizationStatus;	
 	
 	public String searchTransactionWithDevice(String deviceNumber, TransactionSearch ts) {
 		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
@@ -87,23 +78,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 		logger.info("retrievedARN {} ", retrieveARN);
 		return retrieveARN;
 	}
-	
-=======
 
-	public String searchTransactionWithDevice(String deviceNumber, TransactionSearch ts) {
-		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
-		WebElementUtils.enterText(cardNumberTxt, deviceNumber);
-		WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
-		WebElementUtils.pickDate(fromDateTxt, LocalDate.now().minusDays(FROM_DATE));
-		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
-		clickSearchButton();
-		waitforElemenet(retrieveARNLabel);
-		String retrieveARN = retrieveARNLabel.getText();
-		logger.info("retrievedARN {} ", retrieveARN);
-		return retrieveARN;
-	}
-
->>>>>>> branch 'release/Iteration14' of https://fusion.mastercard.int/stash/scm/mipts/mi-iss-automation.git
 	public String searchTransactionWithARN(String arnNumber, TransactionSearch ts) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, ts.getProductType());
 		WebElementUtils.enterText(searchARNTxt, arnNumber);
