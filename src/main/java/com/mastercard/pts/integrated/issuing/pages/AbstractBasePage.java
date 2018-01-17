@@ -36,7 +36,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import com.google.common.base.CharMatcher;
+
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -48,7 +48,6 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.AbstractPage;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
-import com.thoughtworks.selenium.webdriven.commands.GetText;
 
 public abstract class AbstractBasePage extends AbstractPage {
 	final static int ELEMENT_WAIT_MAX = 6000;
@@ -374,7 +373,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		try {
 			WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 			logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
-			return successMessageLbl.toString();
+			return successMessageLbl.getText();
 		} catch (NoSuchElementException e) {
 			logger.info("No Status is updated");
 			logger.debug("Error", e);

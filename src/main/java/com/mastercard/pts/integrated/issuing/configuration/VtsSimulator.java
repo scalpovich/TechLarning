@@ -12,22 +12,41 @@ public class VtsSimulator {
 	private static final Logger logger = LoggerFactory.getLogger(VtsSimulator.class);
 
 	//ConnectionStringForVTS
-	@Value("${simulator.vts.port}")
-	private String port; 
+	@Value("${simulator.vts.host.port}")
+	private String hostPort; 
 
-	@Value("${simulator.vts.ipaddress}")
-	private String ipAddress; 
+	@Value("${simulator.vts.host.ipaddress}")
+	private String hostIpAddress; 
+	
+	@Value("${simulator.vts.vts.ipaddress}")
+	private String vtsIpAddress; 
 
-	public String getPort() {
-		return port;
+	public String getHostPort() {
+		return hostPort;
 	}
 
-	public String getIpAddress() {
-		return ipAddress;
+	public void setHostPort(String hostPort) {
+		this.hostPort = hostPort;
+	}
+
+	public String getHostIpAddress() {
+		return hostIpAddress;
+	}
+
+	public void setHostIpAddress(String hostIpAddress) {
+		this.hostIpAddress = hostIpAddress;
+	}
+
+	public String getVtsIpAddress() {
+		return vtsIpAddress;
+	}
+
+	public void setVtsIpAddress(String vtsIpAddress) {
+		this.vtsIpAddress = vtsIpAddress;
 	}
 
 	@Override
 	public String toString() {
-		return "VtsSimulatorConfiguration [port=" + port + ", ipAddress=" + ipAddress + "]";
+		return "VtsSimulatorConfiguration [hostPort=" + hostPort + ", hostIpAddress=" + hostIpAddress + " vtsIpAddress=" + vtsIpAddress + "]";
 	}
 }

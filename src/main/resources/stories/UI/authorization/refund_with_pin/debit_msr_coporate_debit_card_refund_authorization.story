@@ -28,8 +28,6 @@ When processes pin generation batch for debit
 
 Then device has "normal" status
 When user has wallet number information for debit device
-Then user sign out from customer portal
-Then user is logged in institution
 When user performs adjustment transaction
 When user has current wallet balance amount information for debit device
 Then device has "normal" status

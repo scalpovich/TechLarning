@@ -1,4 +1,4 @@
-prepaid emv retail travel card authorization
+regression prepaid emv corporate travel card authorization
 
 Narrative:
 In order to check transactions on prepaid emv retail general purpose card
@@ -63,12 +63,12 @@ Given connection to MAS is established
 When perform an EMV_PREAUTH MAS transaction
 Then MAS test results are verified
 And user is logged in institution
-And search Pre-Auth authorization and verify Success status
+And search Pre-Auth authorization and verify 000-Successful status
 Then user sign out from customer portal
 When perform an EMV_COMPLETION MAS transaction on the same card
 Then MAS test results are verified
 And user is logged in institution
-And search Pre-Auth Completion authorization and verify Success status
+And search Pre-Auth Completion authorization and verify 000-Successful status
 Then user sign out from customer portal
 
 Scenario: Perform EMV_PURCHASE_WITH_CASHBACK Authorization transaction
@@ -77,7 +77,7 @@ Meta:
 When perform an EMV_PURCHASE_WITH_CASHBACK MAS transaction on the same card
 Then MAS test results are verified
 And user is logged in institution
-And search Purchase authorization and verify success status
+And search Purchase authorization and verify s000-Successful status
 And user sign out from customer portal
 
 
@@ -115,7 +115,7 @@ Meta:
 When perform an EMV_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
 And user is logged in institution
-And search Purchase authorization and verify success status
+And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: Generate Auth File for Clearing

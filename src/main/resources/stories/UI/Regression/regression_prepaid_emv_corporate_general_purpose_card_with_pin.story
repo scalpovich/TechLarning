@@ -1,4 +1,4 @@
-prepaid emv corporate general purpose card authorization PINLESS
+regression prepaid emv corporate general purpose card authorization
 
 Narrative:
 In order to provide a corporate client various transactions

@@ -23,22 +23,17 @@ When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
 And user sign out from customer portal
-Given connection to FINSim is established
-When Pin Offset file batch was generated successfully
-When embossing file batch was generated in correct format
-When PIN is retrieved successfully with data from Pin Offset File
-Then FINSim simulator is closed
 When connection to MAS is established
 When perform an MSR_PURCHASE MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify Successful status
 And user sign out from customer portal
-When connection to MAS is established
 When perform an MSR_PURCHASE_WITH_CASHBACK MAS transaction
 Then MAS test results are verified
+And MAS simulator is closed
 And user is logged in institution
-And search Purchase authorization and verify Successful status
+And search Purchase with Cash back authorization and verify Successful status
 And user sign out from customer portal
 Given user is logged in institution
 When pre-clearing and Pre-EOD batches are run

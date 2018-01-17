@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.collect.LinkedListMultimap;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
@@ -100,15 +101,15 @@ public class AuthorizationTransactionFactory {
 	private Entry<String, String> generateDynamicElement(Entry<String, String> entry) {
 		String randNum = RandomStringUtils.randomNumeric(12);
 		if ("037".equals(entry.getKey())) {
-			//Prabhu - commenting this code temporarily as Lokesh is working on modifiying this randNum assignment to Setters and getters rather than Context for Pre-Auith and Auth-Completion
-			/*if(context.get(ConstantData.TRANSACTION_NAME).toString().contains("PREAUTH"))
+			//Lokesh - uncommenting this code as TRANSACTION NAME is set in context at all level of execution
+			if(context.get(ConstantData.TRANSACTION_NAME).toString().contains("PREAUTH"))
 			{
 				context.put("DATAELEMENT_037", randNum);
 			}
 			if(context.get(ConstantData.TRANSACTION_NAME).toString().contains("COMPLETION"))
 			{
 				randNum=context.get("DATAELEMENT_037");
-			}*/
+			}
 			entry.setValue(randNum);
 			MiscUtils.reportToConsole("RRN Number for transaction : " + randNum);
 		}
