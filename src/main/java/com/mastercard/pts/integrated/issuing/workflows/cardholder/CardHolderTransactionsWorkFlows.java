@@ -112,17 +112,6 @@ public class CardHolderTransactionsWorkFlows extends AbstractBasePage{
 		waitForLoaderToDisappear();
 	}
 	
-	public void interBankMoneyTransfer(){		
-		CardHolderTransactions cardhlTran = context.get(ContextConstants.CARDHOLDER);
-		fundTransfer.enterBeneficiaryWalletNumber(cardhlTran.getWalletNumFromAmountTransfer());
-		fundTransfer.enterBeneficiaryCardNumber(cardhlTran.getWalletNumFromAmountTransfer());
-		fundTransfer.enterAmountToTranfer(cardhlTran.getWalletNumFromAmountTransfer());
-		fundTransfer.selectCurrencyForIntraBankTranfer(cardhlTran.getWalletNumFromAmountTransfer());
-		fundTransfer.submitIntraBankMoneyTranferRequest();
-		waitForLoaderToDisappear();
-	}
-	
-
 	public boolean checkCashRemittanceAllowedOrNot(){
 		boolean isPresentElement = false;
 		if(cashRemittanceBookingPage.isCashRemittanceAllowedForAccount()){
