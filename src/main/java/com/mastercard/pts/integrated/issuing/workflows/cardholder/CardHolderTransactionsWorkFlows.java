@@ -106,8 +106,7 @@ public class CardHolderTransactionsWorkFlows extends AbstractBasePage{
 	public void interBankMoneyTransfer(CardHolderTransactions cardhlfTran){		
 		fundTransfer.enterBeneficiaryWalletNumber(cardhlfTran.getWalletToAmountTransfer());
 		fundTransfer.enterBeneficiaryCardNumber(cardhlfTran.getCardNumber());
-		fundTransfer.enterAmountToTranfer(cardhlfTran.getWalletFromAmountTransfer());
-		fundTransfer.selectCurrencyForIntraBankTranfer(cardhlfTran.getWalletFromAmountTransfer());
+		fundTransfer.enterAmountToTranfer(cardhlfTran.getWalletFromAmountTransfer());		
 		fundTransfer.submitIntraBankMoneyTranferRequest();
 		waitForLoaderToDisappear();
 	}
