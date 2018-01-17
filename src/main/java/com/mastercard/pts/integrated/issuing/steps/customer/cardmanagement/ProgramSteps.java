@@ -63,8 +63,8 @@ public class ProgramSteps {
 		devicecreation.setProduct(product);
 		program.setProgramType(programType);
 		program.setWalletType(walletType);
-		program.setWalletPlan1(walletplan.getOpenloopWalletPlan());
-		program.setWalletPlan2(walletplan.getClosedloopWalletPlan());
+		program.setWalletPlan1(context.get(ContextConstants.OPEN_WALLET));
+		program.setWalletPlan2(context.get(ContextConstants.CLOSED_WALLET));
 		program.setDevicePlanProgram("DevicePlan" + " " + "["+ deviceplan.getDevicePlan() + "]");
 		context.put(ContextConstants.PROGRAM, program);
 		String Program = "";

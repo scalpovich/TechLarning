@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
@@ -30,6 +31,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP, CardManagementNav.L2_PROGRAM })
 public class ProgramPage extends AbstractBasePage {
+	@Autowired
     private TestContext context;
 	final Logger logger = LoggerFactory.getLogger(ProgramPage.class);
 
@@ -756,8 +758,8 @@ public class ProgramPage extends AbstractBasePage {
 		CustomUtils.ThreadDotSleep(2000);
 		switchToEditProgramframe();
 		ClickCheckBox(sdnCheckBox, false);
-		clickWhenClickable(save);
-	}
+		clickSaveButton();
+		}
 
 	public void switchToEditProgramframe() {
 		switchToIframe(Constants.EDIT_PROGRAM_FRAME);
