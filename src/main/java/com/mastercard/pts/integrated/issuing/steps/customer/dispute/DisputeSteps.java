@@ -155,8 +155,7 @@ public class DisputeSteps{
 		ChargeBack cb = ChargeBack.getChargeBack(keyProvider);
 		if(feesOption.equalsIgnoreCase(feesOptions))
 			cb.setFees(false);
-		//cb.setArn(context.get(ConstantData.ARN_NUMBER));
-		cb.setArn("02223607295154135271770");	
+		cb.setArn(context.get(ConstantData.ARN_NUMBER));		
 		disputeWorkflow.createChargeBackRequest(cb);
 	}
 	
