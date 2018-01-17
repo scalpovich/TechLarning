@@ -429,8 +429,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation(TEST_CASES);
 		performDoubleClickOperation("RunTest");
 		wait(5000);
-        activateMas(transaction);
-        winiumClickOperation("OK");
+		activateMas(transaction);
+		winiumClickOperation("OK");
 	}
 
 	public String verifyResults()
@@ -760,7 +760,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		try
 		{
 			String licenseForSelection = null;
-			//changed from MAS 16.x to MAS so th+at this works for all versions of MAS
+			//changed from MAS 16.x to MAS so that this works for all versions of MAS
 			if(licenseFor.toUpperCase().contains("MAS"))
 				licenseForSelection = SimulatorConstantsData.MAS_LICENSE_TYPE;
 			//changed from MDFS 16.x to MDFS so that this works for all versions of MDFS
@@ -774,7 +774,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			}
 
 			executeAutoITExe("ActivateLicenseProfiles.exe");
-			webProvider.get().manage().window().setPosition(new Point(-2000, 0));
 			winiumLicenseSelectOperation(licenseTypeToSelect, licenseFor);
 			winiumClickOperation("Select");
 			wait(20000);
@@ -1235,7 +1234,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		activateMas(tool);
 		List<WebElement> lst = winiumDriver.findElements(By.name(locator));
 		MiscUtils.reportToConsole("winiumLicenseSelectOperation Count : " + lst);
-		lst.get(1).click();
+		lst.get(0).click();
 	}
 
 	private void winiumLicenseSelectOperation(String locator) {
@@ -1662,5 +1661,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private void logMessage(String message1, String message2) {
 		logger.info(message1, message2 );
 		MiscUtils.reportToConsole(message1 + message2 );
+	}
+	
+	public String getARN(String deviceNumber, TransactionSearch ts){
+		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
+		return page.searchTransactionWithDevice(deviceNumber, ts);
 	}
 }
