@@ -24,9 +24,9 @@ public class LoginWorkflow {
 	@Autowired
 	private WebDriverProvider webProvider;
 	
-	public void openLoginPageForPortal(Portal portal) {
-		webProvider.get().manage().window().maximize();
+	public void openLoginPageForPortal(Portal portal) {		
 		webProvider.get().get(portal.getUrl());
+		webProvider.get().manage().window().maximize();
 		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
 		loginPage.waitUntilIsLoaded();
 	}

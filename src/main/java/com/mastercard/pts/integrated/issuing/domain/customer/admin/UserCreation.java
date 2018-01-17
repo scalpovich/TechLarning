@@ -1,25 +1,33 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.admin;
 
-import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
-public class UserCreation extends AbstractBasePage {
+public class UserCreation{
 
-	public String userID;
-	public String userName;
-	public String Role;
-	public String languagePreference;
-	public String timeZone;
-	public String loginAllowedFrom;
-	public String loginallowedTill;
-	public String emailAdress;
-	public String countryCode;
-	public String mobileNumber;
-	public String userAccountExpiryDate;
-	public String concurrentLoginAllowed;
-	public String maxConcurrentUser;
+	private String userID;
+	private String userName;
+	private String role;
+	private String languagePreference;
+	private String timeZone;
+	private String loginAllowedFrom;
+	private String loginallowedTill;
+	private String emailAdress;
+	private String countryCode;
+	private String mobileNumber;
+	private String userAccountExpiryDate;
+	private String concurrentLoginAllowed;
+	private String maxConcurrentUser;
+	private String institutionName;
+	private String savedInstituteInXL;
 	
+	
+	public String getInstitutionName() {
+		return institutionName;
+	}
+	public void setInstitutionName(String institutionName) {
+		this.institutionName = institutionName;
+	}
 	public String getUserID() {
 		return userID;
 	}
@@ -33,10 +41,10 @@ public class UserCreation extends AbstractBasePage {
 		this.userName = userName;
 	}
 	public String getRole() {
-		return Role;
+		return role;
 	}
 	public void setRole(String role) {
-		Role = role;
+		this.role = role;
 	}
 	public String getLanguagePreference() {
 		return languagePreference;
@@ -97,6 +105,12 @@ public class UserCreation extends AbstractBasePage {
 	}
 	public void setMaxConcurrentUser(String maxConcurrentUser) {
 		this.maxConcurrentUser = maxConcurrentUser;
+	}	
+	public String getSavedInstituteInXL() {
+		return savedInstituteInXL;
+	}
+	public void setSavedInstituteInXL(String savedInstituteInXL) {
+		this.savedInstituteInXL = savedInstituteInXL;
 	}
 		
 	public static UserCreation getUserCreationData(){
@@ -114,6 +128,7 @@ public class UserCreation extends AbstractBasePage {
 	user.setUserAccountExpiryDate(MapUtils.fnGetInputDataFromMap("UserAccountExpiryDate"));
 	user.setConcurrentLoginAllowed(MapUtils.fnGetInputDataFromMap("ConcurrentLoginAllowed"));
 	user.setMaxConcurrentUser(MapUtils.fnGetInputDataFromMap("MaximumConcurrentUser"));
+	user.setSavedInstituteInXL(MapUtils.fnGetInputDataFromMap("CreatedInstitution"));
 	return user;	
 	}
 	

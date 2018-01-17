@@ -12,5 +12,7 @@ public class ContextConstants {
 	
 	public static final String DISPATCH = "DISPATCH";
 	
+	public static final String INSTITUTION ="INSTITUTION";
+	
 	private ContextConstants() {}
 }

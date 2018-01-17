@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
@@ -34,6 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -50,10 +52,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	final static int ELEMENT_WAIT_MAX = 6000;
 
 	private static final long TIMEOUT = 100;
-	public Set<String> errorFields = new HashSet<String>();
+	private Set<String> errorFields = new HashSet<String>();
 
-	public String pageValidationCheck = "//ol/li";
-	public String ERRORPANEL = "//li[@class='feedbackPanelERROR']";
+	private String pageValidationCheck = "//ol/li";
+	private String ERRORPANEL = "//li[@class='feedbackPanelERROR']";
 	private static final By INFO_MESSAGE_LOCATOR = By
 			.cssSelector(":not([style]) > .feedbackPanel span.feedbackPanelINFO");
 
@@ -700,6 +702,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 				chkBx.click();
 				isChecked = false;
 			}
+			
 		}
 		return isChecked;
 	}
@@ -749,10 +752,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 			WebDriverWait waitForAvgVisitsWidget = new WebDriverWait(getFinder().getWebDriver(), 20, ELEMENT_WAIT_MAX);
 			Scrolldown(mcW);
 			waitForAvgVisitsWidget.until(ExpectedConditions.visibilityOf(mcW.getFluent().getWebElement()));
-			logger.info("Element is visible");
 			return true;
 		} catch (Exception e) {
-			logger.error("Element is not visible :" + e.fillInStackTrace());
+			logger.error("Element is not visible :" + e);
 			return false;
 		}
 	}
@@ -763,11 +765,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 		try {
 			ele.isVisible();
 			ispresent = true;
-			logger.info("Element is visible");
-
+			
 		} catch (Exception e) {
 			ispresent = false;
-			logger.error("Element is not visible :" + e.fillInStackTrace());
+			logger.error("Element is not visible :" + e);
 		}
 		return ispresent;
 	}
@@ -785,13 +786,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public boolean isElementPresent(MCWebElements ele) {
 		boolean ispresent = false;
 		try {
-			if (ele.getElements().size() > 0) {
+			if (ele.getElements().isEmpty()) {
 				ispresent = true;
 			} else {
 				ispresent = false;
 			}
 		} catch (Exception e) {
-			ispresent = false;
+			logger.error("Element is not present :" + e);
 		}
 		return ispresent;
 	}
@@ -823,7 +824,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	public boolean waitForElementVisible(MCWebElements mcWs) {
-		boolean visible = false;
+		boolean visible;
 		for (int i = 0; i < mcWs.getElements().size(); i++) {
 			visible = waitForElementVisible(mcWs.getElements().get(i));
 			if (!visible)
@@ -836,10 +837,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 		try {
 			WebDriverWait waitForElement = new WebDriverWait(getFinder().getWebDriver(), 2000, ELEMENT_WAIT_MAX);
 			waitForElement.until(ExpectedConditions.visibilityOf(W));
-			logger.info("Element is visible");
 			return true;
 		} catch (Exception e) {
-			logger.error("Element is not visible");
+			logger.error("Element is not visible: " + e);
 			return false;
 		}
 	}
@@ -849,10 +849,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 			WebDriverWait waitForElement = new WebDriverWait(getFinder().getWebDriver(), 50, ELEMENT_WAIT_MAX);
 			waitForElement.until(ExpectedConditions
 					.not(ExpectedConditions.visibilityOf(Element("//img[contains(@src,'loading')]"))));
-			logger.info("Loader is present");
 			return true;
 		} catch (Exception e) {
-			logger.error("Loader is not present");
+			logger.error("Loader is not present" + e);
 			return false;
 		}
 	}
@@ -1318,10 +1317,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	public void enterText(WebElement field, String fieldValue) {
-		System.out.println("Entering text for field: " + fieldValue);
 		waitForElementVisible(field);
 		field.clear();
 		field.sendKeys(fieldValue);
+	}
+	
+	public String buildDescriptionAndCode(String Name, String code) {
+		return String.format("%s [%s]", Name, code);
 	}
 
 	@Override

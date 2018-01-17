@@ -1,6 +1,5 @@
 package com.mastercard.pts.integrated.issuing.steps;
 
-import org.jbehave.core.annotations.BeforeScenario;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
@@ -20,7 +19,6 @@ import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.ReadTestDataFromExcel;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.pts.integrated.issuing.workflows.LoginFlows;
-import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.LogoutFlows;
 import com.mastercard.pts.integrated.issuing.workflows.QMRReportFlows;
 
@@ -128,7 +126,6 @@ public class LoginSteps extends AbstractBaseFlows {
 	@Given("login to bank as a $user")
 	public void Login(@Named("TCName") String strStoryName, @Named("sheetName") String strSheetName,
 			@Named("testDataFileName") String testDataFileName, @Named("user") String userType) {
-		Portal userPortal = appEnvironment.getPortalByType(Portal.TYPE_CUSTOMER);
 		logger.info("Reading entire test data");
 		if (testDataFileName != "") {
 			excelTestData.fnReadEntireTestData(testDataFileName, strSheetName, "TCName");
@@ -178,6 +175,7 @@ public class LoginSteps extends AbstractBaseFlows {
 		customerPortalHomePage.verifyInstitution(Constants.variable.get("customerPortalInstitute"));
 	}
 
+	@When("user logouts from customer portal")
 	@Then("user logouts from customer portal")
 	public void logout() {
 		logoutFlows.logoutCorporateUser();

@@ -22,11 +22,12 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 	LoginPage lgnPage;
 
 	public void institutionCreation(InstitutionCreation institutionCreation) {
+
 		institute = navigator.navigateToPage(InstitutionCreationPageNew.class);
 		institute.clickAddBtn();
 		institute.provideInstitutionDetails(institutionCreation);
 		institute.provideInstitutionType(institutionCreation);
-		institute.provideGeneralDetails(institutionCreation);
+		institute.provideGeneralDetails(institutionCreation);		
 		institute.provideAdaptiveAuthentication();
 		institute.provideCustomCareDetails(institutionCreation);
 		institute.navigateToTab("Address");

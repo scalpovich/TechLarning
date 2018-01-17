@@ -26,7 +26,6 @@ Scenario: User Journey: New Application
 Meta:
 @MIDeviceCreationdebitHelpdesk
 Given login to portal as existing bank as a Customeruser
-
 When user creates institution setup for prepaid type mastercard
 When user creates CER mapping for System and Bank through screen
 When user creates currency exchange rates for Mastercard through screen
@@ -45,16 +44,16 @@ When user creates Application Upload Prepaid batch file and uploads it on server
 
 Scenario: Institution Creation and Setup
 Meta:
-@InstitutionAndUserCreation
-@TCName TC_UserJourney1
+@InstitutionSetup
+@InstitutionUserSetupAndAssignPrivlidges
+@TCName TCInstituteCreationPR
 @testDataFileName testdata
-@sheetName UserJourney1
+@sheetName Institute
 Given login to bank as a Bankadmin
 When user creates Prepaid institution and a user
-And admin selects the newly created institution
 And admin provides the screen level privileges for the the newly created user
 And admin provides the report level privileges for the the newly created user
-!-- And admin provides batch level privileges for the the newly created user
+And admin provides batch level privileges for the the newly created user
 And admin provides the helpdesk level privileges - User Groups for the the newly created user
 And admin provides the helpdesk level privileges - Assign Product for the the newly created user
 And admin provides the helpdesk level privileges - Assign Service Code for the the newly created user
@@ -63,16 +62,16 @@ And user creates institution setup for prepaid type mastercard
 
 Scenario: Institution Creation and Setup
 Meta:
-@InstitutionAndUserCreation
-@TCName TC_UserJourney1
+@InstitutionSetup
+@InstitutionUserSetupAndAssignPrivlidges
+@TCName TCInstituteCreationDC
 @testDataFileName testdata
-@sheetName UserJourney1
+@sheetName Institute
 Given login to bank as a Bankadmin
 When user creates Debit institution and a user
-And admin selects the newly created institution
 And admin provides the screen level privileges for the the newly created user
 And admin provides the report level privileges for the the newly created user
-!-- And admin provides batch level privileges for the the newly created user
+And admin provides batch level privileges for the the newly created user
 And admin provides the helpdesk level privileges - User Groups for the the newly created user
 And admin provides the helpdesk level privileges - Assign Product for the the newly created user
 And admin provides the helpdesk level privileges - Assign Service Code for the the newly created user

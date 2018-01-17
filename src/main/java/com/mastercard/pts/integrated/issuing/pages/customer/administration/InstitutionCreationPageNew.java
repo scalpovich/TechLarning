@@ -1,11 +1,18 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.administration;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
+
 import junit.framework.Assert;
 
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.ProcessingCenterNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -32,8 +39,8 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	// [CESM01]
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[.='General']")
-	private MCWebElement generalTab; 
-	
+	private MCWebElement generalTab;
+
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addInstitution;
 
@@ -93,6 +100,18 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "clientLen:input:inputTextField")
 	private MCWebElement clientNoLengthTxtBx;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "pdispApplicantPhoto")
+	private MCWebElement institutionLogo;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "pdispApplicantPhotoAgent")
+	private MCWebElement agentPortalLogoBtn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "uploadPhotoAgent")
+	private MCWebElement uploadPhotoAgentBtn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "uploadPhoto")
+	private MCWebElement uploadPhotoBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "ofacPlanCode:input:dropdowncomponent")
 	private MCWebElement sdnPlanDrpDwn;
@@ -175,6 +194,12 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 	private String tabWithError = "//ul[@class='tabs']//span[@class='tabError']/..";
 
+	private String institutionLogoImg = "\\src\\main\\resources\\InstitutionLogo\\BankLogo.png";
+
+	private String agentPortalLogoImg = "\\src\\main\\resources\\InstitutionLogo\\AgentPortalLogo.png";
+
+	private String collectPortalLogoImg = "\\src\\main\\resources\\InstitutionLogo\\CreditLogo.png";
+
 	// ------------- Processing Center > Setup > Master Parameters > Institution
 	// > Add Institution > Agent portal
 
@@ -185,7 +210,43 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	// > Add Institution > Collect portal
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[.='Collect Portal']")
-	private MCWebElements collectPortaltab;
+	private MCWebElement collectPortalTab;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "cpAdminID:input:inputTextField")
+	private MCWebElement collectPortalAdminID;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "cpAdminName:input:inputTextField")
+	private MCWebElement collectPortalAdminName;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "pdispCPAdminPhoto")
+	private MCWebElement creditInstitutionLogoBtn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "uploadCPAdminPhoto")
+	private MCWebElement uploadCPAdminPhotoBtn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "cpAdminAddressLine1:input:inputTextField")
+	private MCWebElement collectPortaladdressLine1;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "cpAdminAddressLine2:input:inputTextField")
+	private MCWebElement collectPortaladdressLine2;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "cpAdminCountryCode:input:dropdowncomponent")
+	private MCWebElement collectPortalCountryDD;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "cpAdminZipCode:input:inputTextField")
+	private MCWebElement collectPortalPostalCodeTxt;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "cpAdminPhone1:input:inputTextField")
+	private MCWebElement collectPortalPhoneTxt;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "cpAdminMobileCountryCode:input:dropdowncomponent")
+	private MCWebElement collectPortalAdminMobileCodeDD;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "cpAdminPhone2:input:inputTextField")
+	private MCWebElement collectPortalAdminMobileNumberTxt;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "cpAdminMailId:input:inputTextField")
+	private MCWebElement collectPortalEmailIDTxt;
 
 	// Adaptive Authentication - RSA
 	@PageElement(findBy = FindBy.NAME, valueToFind = "adaptiveEcommFlag:checkBoxComponent")
@@ -193,36 +254,39 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mpinEnabled:checkBoxComponent")
 	private MCWebElement mpinChkBx;
-	
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "issuerSmsProvider:checkBoxComponent")
+	private MCWebElement smsProvider;
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "agtID:input:inputTextField")
-	private MCWebElement poratlAdminID;
-	
+	private MCWebElement agentPortalAdminID;
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "agtName:input:inputTextField")
-	private MCWebElement portalAdminName;	
-	
+	private MCWebElement agentPortalAdminName;
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "agtAddress1:input:inputTextField")
 	private MCWebElement agentAddressline1;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "agtAddress2:input:inputTextField")
 	private MCWebElement agentAddressline2;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "agentCountryCode:input:dropdowncomponent")
 	private MCWebElement agentCountryCode;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "agtZipCode:input:inputTextField")
 	private MCWebElement agentZipCode;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "agtPhone1:input:inputTextField")
 	private MCWebElement agentPhone;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "agtMobileCntryCode:input:dropdowncomponent")
 	private MCWebElement agentMobileCountrycode;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "agtPhone2:input:inputTextField")
 	private MCWebElement agentMobileNumber;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "agtMailId:input:inputTextField")
-	private MCWebElement email;
+	private MCWebElement agentEmailTxt;
 
 	/**
 	 * Click add button and switch to frame
@@ -254,12 +318,12 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public void selectInstitutionCurrency(InstitutionCreation institute) {
-		selectValueFromDropDown(this.institutionCurrency,
+		selectValueFromDropDown(institutionCurrency,
 				institute.getInstitutionCurrency());
 	}
 
 	public void selectInstitutionReferenceCurrency(InstitutionCreation institute) {
-		selectValueFromDropDown(this.institutionReferenceCurrency,
+		selectValueFromDropDown(institutionReferenceCurrency,
 				institute.getInstitutionReferenceCurrency());
 	}
 
@@ -293,7 +357,6 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 		return selectCheckBox(rsaSuportChkBx, "RSA Support");
 	}
 
-	
 	public void enterAccountNumberLength(InstitutionCreation institute) {
 		if (checkAccountLenghtValidation()) {
 			enterValueinTextBox(accNoLengthTxtBx,
@@ -393,6 +456,106 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 		waitForLoaderToDisappear();
 	}
 
+	public void enterAgentPortalAdminID(InstitutionCreation institute) {
+		enterText(agentPortalAdminID, institute.getAgentPortalAdminID());
+	}
+
+	public void enterAgentPortalAdminName(InstitutionCreation institute) {
+		enterText(agentPortalAdminName, institute.getAgentPortalAdminName());
+	}
+
+	public void enterAgentPortalAddressLine1(InstitutionCreation institute) {
+		enterText(agentAddressline1, institute.getAddressLine1());
+	}
+
+	public void enterAgentPortalAddressLine2(InstitutionCreation institute) {
+		enterText(agentAddressline2, institute.getAddressLine2());
+	}
+
+	public void selectAgentPortalCountryCode(InstitutionCreation institute) {
+		selectValueFromDropDown(agentCountryCode, institute.getCountry());
+	}
+
+	public void clickAgentPortalLogo() {
+		clickWhenClickable(agentPortalLogoBtn);
+	}
+
+	public void clickUploadPhotoButtonAgentPortal() {
+		clickWhenClickable(uploadPhotoAgentBtn);
+	}
+
+	public void enterZipCodeAgentPortal(InstitutionCreation institute) {
+		enterText(agentZipCode, institute.getPostalCode());
+	}
+
+	public void enterPhoneNumberAgentPortal(InstitutionCreation institute) {
+		enterText(agentPhone, institute.getPhoneNumb());
+	}
+
+	public void selectAgentPortalMobileCountryCode(InstitutionCreation institute) {
+		selectValueFromDropDown(agentMobileCountrycode,
+				institute.getMobileCountryCode());
+	}
+
+	public void enterAgentPortalMobileNumber(InstitutionCreation institute) {
+		enterText(agentMobileNumber, institute.getMobilenumber());
+	}
+
+	public void enterAgentPortalEmail(InstitutionCreation institute) {
+		enterText(agentEmailTxt, institute.getEmailID());
+	}
+
+	public void enterCollectPortalAdminID(InstitutionCreation institute) {
+		enterText(collectPortalAdminID, institute.getCollectPortalAdminID());
+	}
+
+	public void enterCollectPortalAdminName(InstitutionCreation institute) {
+		enterText(collectPortalAdminName, institute.getCollectPortalAdminName());
+	}
+
+	public void clickCollectPortalLogo() {
+		clickWhenClickable(creditInstitutionLogoBtn);
+	}
+
+	public void clickCollectPortalUploadPhotoButton() {
+		clickWhenClickable(uploadCPAdminPhotoBtn);
+	}
+
+	public void enterCollectAddressLine1(InstitutionCreation institute) {
+		enterText(collectPortaladdressLine1, institute.getAddressLine1());
+	}
+
+	public void enterCollectAddressLine2(InstitutionCreation institute) {
+		enterText(collectPortaladdressLine2, institute.getAddressLine2());
+	}
+
+	public void selectCollectPortalCountry(InstitutionCreation institute) {
+		selectValueFromDropDown(collectPortalCountryDD, institute.getCountry());
+	}
+
+	public void enterCollectPostalCode(InstitutionCreation institute) {
+		enterText(collectPortalPostalCodeTxt, institute.getPostalCode());
+	}
+
+	public void enterCollectPortalPhoneNumber(InstitutionCreation institute) {
+		enterText(collectPortalPhoneTxt, institute.getPhoneNumb());
+	}
+
+	public void enterCollectPortalMobileNumber(InstitutionCreation institute) {
+		enterText(collectPortalAdminMobileNumberTxt,
+				institute.getMobilenumber());
+	}
+
+	public void selectCollectPortalMobileNumberCode(
+			InstitutionCreation institute) {
+		selectValueFromDropDown(collectPortalAdminMobileCodeDD,
+				institute.getMobileCountryCode());
+	}
+
+	public void enterCollectPortalEmailID(InstitutionCreation institute) {
+		enterText(collectPortalEmailIDTxt, institute.getEmailID());
+	}
+
 	/**
 	 * Fill institution details. Code ,Name and abbr
 	 * 
@@ -402,49 +565,50 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	public void provideInstitutionDetails(InstitutionCreation instutionCreation) {
 		enterInstitutionCode(instutionCreation);
 		enterInstitutionName(instutionCreation);
-		setInstitutionDetails(instutionCreation);
 		enterInstitutionAbbreviation(instutionCreation);
 	}
 
 	public void provideGeneralDetails(InstitutionCreation institution) {
+		String[] institutionType = new String[2];
 		try {
 			selectInstitutionCurrency(institution);
 			selectDefaultlanguage(institution);
-			if (institution.getInstitutionType().equalsIgnoreCase(
-					Constants.PREPAID)) {
-				selectInstitutionReferenceCurrency(institution);
-				checkAgentPortalSupport();
-				clickWhenClickable(agentPortalTab);
-				enterText(poratlAdminID,MiscUtils.generateRandomNumberAsString(6));
-				enterText(portalAdminName, MiscUtils.generate6CharAlphaNumeric());
-				enterText(agentAddressline1, institution.getAddressLine1());
-				enterText(agentAddressline2, institution.getAddressLine2());
-				selectValueFromDropDown(agentCountryCode, institution.getCountry());
-				enterText(agentZipCode, institution.getPostalCode());
-				waitForLoaderToDisappear();
-				enterValueinTextBox(agentPhone, institution.getPhoneNumb());
-				selectValueFromDropDown(agentMobileCountrycode,
-						institution.getMobileCountryCode());
-				enterValueinTextBox(agentMobileNumber, institution.getMobilenumber());
-				enterValueinTextBox(email, institution.getEmailID());
-				clickWhenClickable(generalTab);				
+			if (institution.getInstitutionType().contains("-")) {
+				institutionType = institution.getInstitutionType().split("-");
 			}
-			selectTimeZone(institution);
-			
-			if (institution.getInstitutionType().equalsIgnoreCase(
-					Constants.CREDIT)) {
-				checkCollectportalSupport();
+			else{
+				institutionType[0] = institution.getInstitutionType();
+				institutionType[1] = "Any";
 			}
-			if (institution.getInstitutionType().equalsIgnoreCase(
-					Constants.DEBIT)) {
+			if (institutionType[0].equalsIgnoreCase(Constants.PREPAID)
+					|| institutionType[1].equalsIgnoreCase(Constants.PREPAID)) {
+				createPrepaidInstitute(institution);
+				}
+
+			if (institutionType[0].equalsIgnoreCase(Constants.CREDIT)
+					|| institutionType[1].equalsIgnoreCase(Constants.CREDIT)) {
+				createCreditInstitute(institution);
+				}
+			if (institutionType[0].equalsIgnoreCase(Constants.DEBIT)
+					|| institutionType[1].equalsIgnoreCase(Constants.DEBIT)) {
 				enterAccountNumberLength(institution);
 			}
+			if (institutionType[0].equalsIgnoreCase(Constants.ALL)
+					|| institutionType[1].equalsIgnoreCase(Constants.ALL)) {
+				createPrepaidInstitute(institution);
+				createCreditInstitute(institution);
+				enterAccountNumberLength(institution);
+			}
+			selectTimeZone(institution);
 			enterClientNumberLength(institution);
+			clickWhenClickable(institutionLogo);
+			uploadInstitutionLogo(institutionLogoImg);
+			clickWhenClickable(uploadPhotoBtn);
 			checkRSASupport();
 			selectFinancialYearStartMonth(institution);
 			selectSDNPlan(institution);
 		} catch (Exception e) {
-			logg.error("Error in providing general details" + e);
+			logg.error("Error in providing general details :: " + e);
 		}
 	}
 
@@ -468,6 +632,25 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 		} catch (Exception e) {
 			logg.error("Error in providing personal details" + e);
 		}
+	}
+
+	public void uploadInstitutionLogo(String logoImagePath) throws AWTException {
+		String folderpath = System.getProperty("user.dir");
+		StringSelection ss = new StringSelection(folderpath + logoImagePath);
+		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+
+		// imitate mouse events like ENTER, CTRL+C, CTRL+V
+		Robot robot = new Robot();
+		robot.delay(2500);
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);
+		robot.keyPress(KeyEvent.VK_CONTROL);
+		robot.keyPress(KeyEvent.VK_V);
+		robot.keyRelease(KeyEvent.VK_V);
+		robot.keyRelease(KeyEvent.VK_CONTROL);
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.delay(1000);
+		robot.keyRelease(KeyEvent.VK_ENTER);
 	}
 
 	public void provideAddressDetails(InstitutionCreation instution) {
@@ -501,23 +684,27 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 			SwitchToDefaultFrame();
 			enterNewInstitutionName(instution);
 			searchNewInstitution();
-			SimulatorUtilities.wait(10000);
+			for (int l = 0; l < 21; l++) {
+				if (!waitForRow())
+					clickSearchButton();
+				else {
+					break;
+				}
+			}
 			for (MCWebElement element : resultTableRow.getElements()) {
-			Assert.assertTrue(element.getText().contains(
+				Assert.assertTrue(element.getText().contains(
 						instution.getInstitutionName()));
 				Assert.assertTrue(element.getText().contains(
 						instution.getInstitutionCode()));
 			}
+			MapUtils.fnSetInputDataToInputMap("CreatedInstitution",
+					instution.getInstitutionName());
+			logg.info("Institution has been created successfully : {} "
+					+ buildDescriptionAndCode(instution.getInstitutionName(),
+							instution.getInstitutionCode()));
+		} else {
+			logg.error("Error in new intitution creation");
 		}
-	}
-
-	public void setInstitutionDetails(InstitutionCreation instutionCreation) {
-		MapUtils.fnSetInputDataToInputMap("InstitutionName",
-				MapUtils.fnGetInputDataFromMap("InstitutionName") + " ["
-						+ instutionCreation.getInstitutionCode() + "]");
-		
-			MapUtils.fnSetInputDataToInputMap("InstitutionCode",
-				instutionCreation.getInstitutionCode());
 	}
 
 	public void enterInstitutionName(InstitutionCreation institute) {
@@ -525,34 +712,93 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public void save() {
-		clickWhenClickable(saveBtn);
-		waitForLoaderToDisappear();
+		clickWhenClickable(saveBtn);		
 	}
-	
+
 	public void provideInstitutionType(InstitutionCreation institution) {
+		String[] institutionType = new String[2];
 		try {
-			if (institution.getInstitutionType().equalsIgnoreCase(
-					Constants.DEBIT)) {
-				checkDebit();
+			if (institution.getInstitutionType().contains("-")) {
+				institutionType = institution.getInstitutionType().split("-");
 			}
-			if (institution.getInstitutionType().equalsIgnoreCase(
-					Constants.PREPAID)) {
-				checkPrepaid();
+			else{
+				institutionType[0] = institution.getInstitutionType();
+				institutionType[1] = "Any";
 			}
 
-			if (institution.getInstitutionType().equalsIgnoreCase(
-					Constants.CREDIT)) {
+			if (institutionType[0].equalsIgnoreCase(Constants.DEBIT)
+					|| institutionType[1].equalsIgnoreCase(Constants.DEBIT)) {
+				checkDebit();
+			}
+			if (institutionType[0].equalsIgnoreCase(Constants.PREPAID)
+					|| institutionType[1].equalsIgnoreCase(Constants.PREPAID)) {
+				checkPrepaid();
+			}
+			if (institutionType[0].equalsIgnoreCase(Constants.CREDIT)
+					|| institutionType[1].equalsIgnoreCase(Constants.CREDIT)) {
 				checkCredit();
 			}
+			if (institutionType[0]
+					.equalsIgnoreCase(Constants.ALL)) {
+				checkDebit();
+				checkPrepaid();
+				checkCredit();
+			}
+
 		} catch (Exception e) {
 			logg.error("Error in selecting intitutionType "
 					+ institution.getInstitutionType() + ":::" + e);
 		}
 	}
 
+	public void createPrepaidInstitute(InstitutionCreation institution)
+			throws AWTException {
+		selectInstitutionReferenceCurrency(institution);
+		if (checkAgentPortalSupport()) {
+			clickWhenClickable(agentPortalTab);
+			enterAgentPortalAdminID(institution);
+			enterAgentPortalAdminName(institution);
+			enterAgentPortalAddressLine1(institution);
+			enterAgentPortalAddressLine2(institution);
+			selectAgentPortalCountryCode(institution);
+			clickAgentPortalLogo();
+			uploadInstitutionLogo(agentPortalLogoImg);
+			clickUploadPhotoButtonAgentPortal();
+			enterZipCodeAgentPortal(institution);
+			waitForLoaderToDisappear();
+			enterPhoneNumberAgentPortal(institution);
+			selectAgentPortalMobileCountryCode(institution);
+			enterAgentPortalMobileNumber(institution);
+			enterAgentPortalEmail(institution);
+			clickWhenClickable(generalTab);
+		}
+	}
+
+	public void createCreditInstitute(InstitutionCreation institution)
+			throws AWTException {
+		if (checkCollectportalSupport()) {
+			clickWhenClickable(collectPortalTab);
+			enterCollectPortalAdminID(institution);
+			enterCollectPortalAdminName(institution);
+			enterCollectAddressLine1(institution);
+			enterCollectAddressLine2(institution);
+			selectCollectPortalCountry(institution);
+			clickCollectPortalLogo();
+			uploadInstitutionLogo(collectPortalLogoImg);
+			clickCollectPortalUploadPhotoButton();
+			enterCollectPostalCode(institution);
+			enterCollectPortalPhoneNumber(institution);
+			selectCollectPortalMobileNumberCode(institution);
+			enterCollectPortalMobileNumber(institution);
+			enterCollectPortalEmailID(institution);
+			clickWhenClickable(generalTab);
+		}
+	}
+
 	public void provideAdaptiveAuthentication() {
-		selectCheckBox(adaptiveEcommChkBx, "adaptiveEcomm");
-		selectCheckBox(mpinChkBx, "mpin");
+		selectCheckBox(adaptiveEcommChkBx, "AdaptiveEcomm");
+		selectCheckBox(mpinChkBx, "MPIN Enabled");
+		selectCheckBox(smsProvider, "SMS Service Provider");
 	}
 
 }
