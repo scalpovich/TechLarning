@@ -38,7 +38,7 @@ public class ArbitrationPage extends AbstractDisputePage {
 	public void createArbitration(RetrievalRequest rr){
 		searchByArn(rr.getArn(),"View Search Result");
 		selectByVisibleTexts(resoneDropDown, rr.getReasonCode());
-		selectByVisibleTexts(documentationOption, rr.getReasonCode());
+		selectByVisibleTexts(documentationOption, rr.getDocumentationCode());
 		WebElementUtils.enterText(textText, DISPUTE_NOTE);		
 	}
 	
