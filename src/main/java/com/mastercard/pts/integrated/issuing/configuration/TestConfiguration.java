@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.configuration;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +15,18 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
+
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.Utils;
 import com.mastercard.testing.mtaf.ui.configuration.MTAFWebToolsConfiguration;
 import com.mastercard.testing.utils.encryption.EncryptUtils;
 
 @Configuration
 @ComponentScan(basePackages = { "com.mastercard.pts.integrated.issuing" })
 @PropertySources({ @PropertySource(value = "/config/${env}/environment.properties", ignoreResourceNotFound = false),
-		@PropertySource(value = "/config/${env}/user.properties", ignoreResourceNotFound = false),
-		@PropertySource(value = "/config/${env}/test.properties", ignoreResourceNotFound = false),
-		@PropertySource(value = "/config/${env}/apitest.properties", ignoreResourceNotFound = false),
-		@PropertySource(value = "/config/${env}/validation.properties", ignoreResourceNotFound = false), })
+		@PropertySource(value = "/config/${env}/user.properties", ignoreResourceNotFound = false), @PropertySource(value = "/config/${env}/test.properties", ignoreResourceNotFound = false),
+		@PropertySource(value = "/config/${env}/apitest.properties", ignoreResourceNotFound = false), @PropertySource(value = "/config/${env}/validation.properties", ignoreResourceNotFound = false), })
 @Import({ MTAFWebToolsConfiguration.class, Portal.class })
 @EnableAspectJAutoProxy
 public class TestConfiguration {
@@ -41,8 +42,10 @@ public class TestConfiguration {
 		try {
 			temp = Files.createTempDirectory(new DateUtils().getDateyyyyMMdd() + "_IssuingTests_");
 		} catch (Exception e) {
+			logger.error("Exception has been caugh while creating a temp folder.\nMessage :: {}\nTrace :: {}", e.getMessage(), e.getStackTrace());
 			MiscUtils.propagate(e);
 		}
+		Utils.killChromeDriver();
 		logger.info("Temp directory path: {}", temp);
 		return temp;
 	}
