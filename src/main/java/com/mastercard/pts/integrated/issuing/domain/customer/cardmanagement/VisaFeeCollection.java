@@ -51,9 +51,9 @@ public class VisaFeeCollection {
 	public static VisaFeeCollection createWithProvider(KeyValueProvider provider) {
 		VisaFeeCollection feecollection = new VisaFeeCollection();
 		feecollection.setCountry(provider.getString(COUNTRY));
-		feecollection.setCountry(provider.getString(SOURCE_CURRENCY));
-		feecollection.setCountry(provider.getString(REASON_CODE));
-		feecollection.setCountry(provider.getString(SOURCE_AMOUNT));
+		feecollection.setSourceCurrency(provider.getString(SOURCE_CURRENCY));
+		feecollection.setReasonCode(provider.getString(REASON_CODE));
+		feecollection.setSourceAmount(provider.getString(SOURCE_AMOUNT));
 		return feecollection;
 	}
 

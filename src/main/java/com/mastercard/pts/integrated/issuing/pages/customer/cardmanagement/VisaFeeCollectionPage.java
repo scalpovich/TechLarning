@@ -47,35 +47,38 @@ public class VisaFeeCollectionPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=cardNumber]")
 	private MCWebElement cardNumber;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "transactionCode:input:dropdowncomponent")
+	private MCWebElement addFeesTransactionCodeDD;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "sourceBin:input:dropdowncomponent")
+	private MCWebElement addFeesSourceBinDD;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "countryCode:input:dropdowncomponent")
-	private MCWebElement country;
+	private MCWebElement countryDD;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "destinationBin:input:inputTextField")
-	private MCWebElement destinationBin;
+	private MCWebElement destinationBinTxt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "sourceCurrencyCode:input:dropdowncomponent")
-	private MCWebElement sourceCurrency;
+	private MCWebElement sourceCurrencyDD;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "reasonCode:input:inputTextField")
-	private MCWebElement reasonCode;
+	private MCWebElement reasonCodeTxt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "eventDate:input:inputTextField")
-	private MCWebElement eventDate;
+	private MCWebElement eventDateTxt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cardNumber:input:inputTextField")
-	private MCWebElement deviceNumber;
+	private MCWebElement deviceNumberTxt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "transactionIdentifier:input:inputTextField")
 	private MCWebElement transactionIdentifier;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "sourceAmount:input:inputAmountField")
-	private MCWebElement sourceAmount;
+	private MCWebElement sourceAmountTxt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "messageText:input:inputTextField")
-	private MCWebElement messageText;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElement saveButton;
+	private MCWebElement messageTextTxt;
 	
 	public void verifyUiOperationStatus() {
 		logger.info("VISA Fee Collection");
@@ -94,17 +97,17 @@ public class VisaFeeCollectionPage extends AbstractBasePage {
 	{
 		Device device=context.get(ContextConstants.DEVICE);
 		clickAddNewButton();
-		elementToBeClickable(transactionCode);
-		selectByVisibleText(transactionCode, option);
-		selectByVisibleText(sourceBin, device.getDeviceNumber().substring(0, 4));
-		selectByVisibleText(country, visafeecollection.getCountry());
-		WebElementUtils.enterText(destinationBin, device.getDeviceNumber().substring(0, 4));
-		selectByVisibleText(sourceCurrency, visafeecollection.getSourceCurrency());
-		WebElementUtils.enterText(reasonCode, visafeecollection.getReasonCode());
-		WebElementUtils.enterText(eventDate, date.getDateMMDDFormat());
-		WebElementUtils.enterText(deviceNumber, device.getDeviceNumber());
-		WebElementUtils.enterText(sourceAmount, visafeecollection.getSourceAmount());
-		WebElementUtils.enterText(messageText, RandomStringUtils.randomAlphanumeric(10));	
-		clickSaveButton();
+		runWithinPopup("Add Visa Fees",() -> {selectByVisibleText(addFeesTransactionCodeDD, option);
+		selectByVisibleText(addFeesSourceBinDD, device.getDeviceNumber().substring(0, 5));
+		selectByVisibleText(countryDD, visafeecollection.getCountry());
+		WebElementUtils.enterText(destinationBinTxt, device.getDeviceNumber().substring(0, 5));
+		selectByVisibleText(sourceCurrencyDD, visafeecollection.getSourceCurrency());
+		WebElementUtils.enterText(reasonCodeTxt, visafeecollection.getReasonCode());
+		WebElementUtils.enterText(eventDateTxt, date.getDateMMDDFormat());
+		WebElementUtils.enterText(deviceNumberTxt, device.getDeviceNumber());
+		WebElementUtils.enterText(sourceAmountTxt, visafeecollection.getSourceAmount());
+		WebElementUtils.enterText(messageTextTxt, RandomStringUtils.randomAlphanumeric(10));	
+		clickSaveButton();});
+
 	}
 }

@@ -13,7 +13,7 @@ Scenario: prepaid swsc emv corporate general purpose pinless card device product
 Meta:
 @TestId 
 Given user is logged in institution
-When perform add visa fee Collection "Fee collection Transaction [10]" transaction
+When perform add visa fee Collection Fee collection Transaction [10] transaction
 
 
 

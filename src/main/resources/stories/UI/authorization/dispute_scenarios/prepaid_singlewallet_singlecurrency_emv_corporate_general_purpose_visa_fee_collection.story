@@ -26,3 +26,7 @@ When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 Then device has "normal" status
 
+Scenario: perform visa fee collection transaction
+Given user is logged in institution
+When perform add visa fee Collection Fee collection Transaction [10] transaction
+
