@@ -139,8 +139,7 @@ public class DisputeSteps{
 	public void whenARetrivalRequestIsCreatedUsingARNNumberWithoutFees(){
 		RetrievalRequest rr = RetrievalRequest.createWithProvider(keyProvider);
 		rr.setApplyFee(false);
-		//rr.setArn(context.get(ConstantData.ARN_NUMBER));
-		rr.setArn("02223607295154135271770");		
+		rr.setArn(context.get(ConstantData.ARN_NUMBER));				
 	 	disputeWorkflow.createRetrievalRequest(rr);
 	}
 	

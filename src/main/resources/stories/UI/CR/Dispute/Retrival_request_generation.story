@@ -11,7 +11,6 @@ Meta:
 
 Scenario: To create chargeback request for transaction on device and verify in dispute history
 Given user is logged in institution
-When Charge back is created for a transaction
 When Charge back is created for a transaction without fees
 Then verify for the status in dispute history
 

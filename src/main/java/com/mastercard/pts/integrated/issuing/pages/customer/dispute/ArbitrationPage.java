@@ -27,7 +27,9 @@ public class ArbitrationPage extends AbstractDisputePage {
 	private MCWebElement documentationOption;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="chargebackContainer:messageText:input:textAreaComponent")
-	private MCWebElement textInpt;
+	private MCWebElement textText;
+	
+	public static final  String DISPUTE_NOTE = "Create Arbitration for dispute";
 	
 	public void verifyUiOperationStatus() {
 		verifyOperationStatus("Arbitration");
@@ -37,7 +39,7 @@ public class ArbitrationPage extends AbstractDisputePage {
 		searchByArn(rr.getArn(),"View Search Result");
 		selectByVisibleTexts(resoneDropDown, rr.getReasonCode());
 		selectByVisibleTexts(documentationOption, rr.getReasonCode());
-		WebElementUtils.enterText(textInpt, "Create Arbitration for dispute");		
+		WebElementUtils.enterText(textText, DISPUTE_NOTE);		
 	}
 	
 	public void selectArbitrationType(String ArbitrationType){

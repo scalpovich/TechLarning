@@ -34,7 +34,7 @@ public class RetrivalRequestPage extends AbstractDisputePage {
 			WebElementUtils.selectDropDownByVisibleText(readOnlyRequestReasonCode, rr.getRequestResonCode());
 			WebElementUtils.selectDropDownByVisibleText(readOnlyRequestCode, rr.getReasonCode());
 			WebElementUtils.checkCheckbox(readOnlyApplyFee, rr.isApplyFee());
-			//clickSaveButton();
+			clickSaveButton();
 			return true;
 	}
 
