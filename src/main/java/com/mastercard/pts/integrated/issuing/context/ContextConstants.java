@@ -24,7 +24,7 @@ public class ContextConstants {
 
 	public static final String CLOSED_WALLET = "CLOSED WALLET";
 	
-	public static final String INSTITUTION ="INSTITUTION";
+	public static final String INSTITUTION ="INSTITUTION"; 
 	
 	private ContextConstants() {}
 }
