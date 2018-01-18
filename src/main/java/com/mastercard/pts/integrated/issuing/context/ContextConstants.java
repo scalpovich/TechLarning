@@ -13,12 +13,14 @@ public class ContextConstants {
 	public static final String ORDER = "ORDER";
 	
 	public static final String DISPATCH = "DISPATCH";
-	
+
 	public static final String CARDHOLDER = "CARDHOLDER";
 	
 	public static final String WALLET = "WALLET";
 	
 	public static final String MCG = "MCG";
+
+	public static final String INSTITUTION ="INSTITUTION";
 	
 	private ContextConstants() {}
 }
