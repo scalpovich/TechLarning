@@ -1,4 +1,4 @@
-Prepaid msr retail travel card multi currency refund without pin authorization
+Prepaid msr retail travel card multi currency without pin authorization
 
 Narrative:
 In order to check transactions on prepaid msr retail travel mwmc card 
@@ -41,6 +41,7 @@ When Auth file is generated after transaction
 When MAS simulator is closed
 Then user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
+Then verify transaction currency as INR and billing currency as USD on auth search
 Then user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
@@ -68,4 +69,3 @@ When transaction status is "Matching Pending"
 When "Matching" batch for prepaid is successful
 Then transaction status is "Presentment Matched with authorization"
 Then user sign out from customer portal
-

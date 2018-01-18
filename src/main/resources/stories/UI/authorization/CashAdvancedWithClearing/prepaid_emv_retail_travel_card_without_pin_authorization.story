@@ -1,4 +1,4 @@
-prepaid emv retail travel card authorization
+Prepaid emv retail travel card multi currency with pin authorization
 
 Narrative:
 In order to check transactions on prepaid emv retail general purpose card
