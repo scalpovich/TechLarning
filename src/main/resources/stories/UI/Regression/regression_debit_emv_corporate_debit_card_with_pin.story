@@ -67,9 +67,11 @@ Given connection to MAS is established
 When perform an EMV_CASH_WITHDRAWAL_PIN MAS transaction
 Then MAS test results are verified
 
-Scenario: Perform ECOMM_PURCHASE Authorization transaction
 When perform an ECOMM_PURCHASE MAS transaction
 Then MAS test results are verified
+Then user is logged in institution
+Then search E-Commerce Transaction authorization and verify 000-Successful status
+And user sign out from customer portal 
 
 Scenario: Transaction - EMV_PREAUTH  and EMV_COMPLETION Authorization transaction - prepaid emv corporate general purpose card
 When perform an EMV_PREAUTH MAS transaction

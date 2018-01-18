@@ -60,9 +60,11 @@ Scenario: Perform MSR_REFUND Authorization transaction
 When perform an MSR_REFUND MAS transaction
 Then MAS test results are verified
 
-Scenario: Perform ECOMM_PURCHASE Authorization transaction
 When perform an ECOMM_PURCHASE MAS transaction
 Then MAS test results are verified
+Then user is logged in institution
+Then search E-Commerce Transaction authorization and verify 000-Successful status
+And user sign out from customer portal
 
 Scenario: Generate Auth File for Clearing
 Meta:

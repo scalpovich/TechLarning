@@ -33,8 +33,9 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
-Then user sign out from customer portal
 Then embossing file batch was generated in correct format
+Then user sign out from customer portal
+
 
 
 Scenario: Transaction - EMV_PREAUTH and EMV_COMPLETION Authorization transaction
@@ -73,11 +74,11 @@ Meta:
 When perform an EMV_POS_BALANCE_INQUIRY MAS transaction on the same card
 Then MAS test results are verified
 
-Scenario: Perform ECOMM_PURCHASE Authorization transaction
-Meta:
-@TestId 
 When perform an ECOMM_PURCHASE MAS transaction
 Then MAS test results are verified
+Then user is logged in institution
+Then search E-Commerce Transaction authorization and verify 000-Successful status
+And user sign out from customer portal
 
 Scenario: Perform EMV_PURCHASE Authorization transaction
 Meta:

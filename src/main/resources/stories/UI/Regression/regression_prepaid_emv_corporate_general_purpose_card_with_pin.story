@@ -95,11 +95,11 @@ Meta:
 When perform an EMV_REFUND MAS transaction on the same card
 Then MAS test results are verified
 
-Scenario: Perform ECOMM_PURCHASE Authorization transaction
-Meta:
-@TestId 
-When perform an ECOMM_PURCHASE MAS transaction on the same card
+When perform an ECOMM_PURCHASE MAS transaction
 Then MAS test results are verified
+Then user is logged in institution
+Then search E-Commerce Transaction authorization and verify 000-Successful status
+And user sign out from customer portal
 
 
 Scenario: Generate Auth File for Clearing

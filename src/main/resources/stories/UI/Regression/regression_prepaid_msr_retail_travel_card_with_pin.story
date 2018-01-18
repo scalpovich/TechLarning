@@ -83,11 +83,11 @@ Meta:
 When perform an MSR_CASH_WITHDRAWAL MAS transaction
 Then MAS test results are verified
 
-Scenario: Perform ECOMM_PURCHASE Authorization transaction
-Meta:
-@TestId 
 When perform an ECOMM_PURCHASE MAS transaction
 Then MAS test results are verified
+Then user is logged in institution
+Then search E-Commerce Transaction authorization and verify 000-Successful status
+And user sign out from customer portal
 
 Scenario: Perform MSR_PURCHASE Authorization transaction
 Meta:
