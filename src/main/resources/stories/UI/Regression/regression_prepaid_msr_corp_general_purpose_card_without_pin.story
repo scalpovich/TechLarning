@@ -53,6 +53,6 @@ Then user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform MSR_PURCHASE_WITH_REFUND Authorization transaction
-When perform an MSR_PURCHASE_WITH_REFUND MAS transaction
+Scenario: Perform MSR_REFUND Authorization transaction
+When perform an MSR_REFUND MAS transaction
 Then MAS test results are verified

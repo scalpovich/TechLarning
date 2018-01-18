@@ -66,8 +66,8 @@ And user is logged in institution
 And search Pre-Auth Completion authorization and verify Success status
 
 
-Scenario: Perform EMV_ECOMMERCE Authorization transaction
+Scenario: Perform ECOMM_PURCHASE Authorization transaction
 Meta:
 @TestId 
-When perform an EMV_ECOMMERCE MAS transaction
+When perform an ECOMM_PURCHASE MAS transaction
 Then MAS test results are verified

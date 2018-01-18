@@ -81,12 +81,6 @@ Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth Completion authorization and verify 000-Successful status
 
-Scenario: Perform EMV_ECOMMERCE Authorization transaction
-Meta:
-@TestId 
-When perform an EMV_ECOMMERCE MAS transaction
-Then MAS test results are verified
-
 Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
 Meta:
 @TestId

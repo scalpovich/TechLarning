@@ -47,9 +47,9 @@ Given connection to MAS is established
 When perform an EMV_POS_BALANCE_INQUIRY MAS transaction
 Then MAS test results are verified
 
-Scenario: Perform MSR_PURCHASE_WITH_REFUND Authorization transaction
+Scenario: Perform MSR_REFUND Authorization transaction
 Given connection to MAS is established
-When perform an MSR_PURCHASE_WITH_REFUND MAS transaction
+When perform an MSR_REFUND MAS transaction
 Then MAS test results are verified
 
 Scenario: Perform ECOMM_PURCHASE Authorization transaction
@@ -65,12 +65,6 @@ When perform an EMV_COMPLETION MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth Completion authorization and verify 000-Successful status
-
-Scenario: Perform EMV_ECOMMERCE Authorization transaction
-Meta:
-@TestId 
-When perform an EMV_ECOMMERCE MAS transaction
-Then MAS test results are verified
 
 Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
 Meta:

@@ -81,10 +81,10 @@ And search Purchase authorization and verify s000-Successful status
 And user sign out from customer portal
 
 
-Scenario: Perform EMV_PURCHASE_WITH_REFUND Authorization transaction
+Scenario: Perform EMV_REFUND Authorization transaction
 Meta:
 @TestId 
-When perform an EMV_PURCHASE_WITH_REFUND MAS transaction on the same card
+When perform an EMV_REFUND MAS transaction on the same card
 Then MAS test results are verified
 
 
