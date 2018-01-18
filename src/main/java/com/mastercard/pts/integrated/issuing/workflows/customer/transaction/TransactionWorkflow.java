@@ -1649,13 +1649,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			sm.setCellData(vtsTestGroupInputFilePath, sheetName, "F014 - EXPDATE", device.getExpirationDate());
 			sm.setCellData(vtsTestGroupInputFilePath, sheetName,"F023 - CARD SEQ NUM", device.getSequenceNumber());
 			sm.setCellData(vtsTestGroupInputFilePath, sheetName,"F035.04 - SVCCODE",  device.getServiceCode());
-		} else {
-			//else block implemented for Testing purpose.. keys in static data in the excel "VisaUploadTemplate.xls" @ ..\\src\main\resources\Simulator\VisaInputFile
-			sm.setCellData(vtsTestGroupInputFilePath, sheetName, "F002 - PAN", "4761340000000019");
-			sm.setCellData(vtsTestGroupInputFilePath, sheetName, "F014 - EXPDATE", "2210" );
-			sm.setCellData(vtsTestGroupInputFilePath, sheetName,"F023 - CARD SEQ NUM", "111");
-			sm.setCellData(vtsTestGroupInputFilePath, sheetName,"F035.04 - SVCCODE",  "101");
-		}
+			String track1Data = device.getDeviceNumber()+"^CARD 1/VISA TEST^22121011499100129000000";
+			sm.setCellData(vtsTestGroupInputFilePath, sheetName,"F045 - TRACK1 DATA",  track1Data);
+
+		} 
 	}
 
 	private void logMessage(String message1, String message2) {
