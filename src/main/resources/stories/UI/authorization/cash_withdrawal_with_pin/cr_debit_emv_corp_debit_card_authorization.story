@@ -1,31 +1,30 @@
-Prepaid emv retail travel card multi currency with pin authorization
+debit emv corporate card authorisation PIN
 
 Narrative:
-In order to check transactions on prepaid msr retail travel mwmc card 
+In order to provide to client easy-to-use payment method for e-commerce retail
 As an issuer
-I want to authorize transactions for prepaid msr retail travel mwmc card 
+I want to create a EMV Corporate debit card for client
 
 Meta:
-@StoryName p_emv_retail_travel_mwmc
+@StoryName d_emv_corp
+@CRCardsWithAuthorizationCashWithdrawalWithClearing
 
-Scenario: Setup multi-currency prepaid emv retail travel card and perfomr cash advanced  without pin authorization
+Scenario: Setup debit emv corp debit card 
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card
-When user creates new device of prepaid type for new client
+And device range for program with device plan for "debit" "emv" card
+When user creates new device of debit type for new client
+Then device has "normal" status
 And user sign out from customer portal
 Given user is logged in institution
 And a new device was created
-When processes pre-production batch for prepaid
-When processes device production batch for prepaid
+When processes pre-production batch for debit
+When processes device production batch for debit
 When processes pin generation batch for prepaid
-When user has wallet number information for prepaid device
-When user has current wallet balance amount information for prepaid device
+When user has wallet number information for debit device
+When user performs adjustment transaction
+When user has current wallet balance amount information for debit device
 Then device has "normal" status
 When user activates device through helpdesk
-And user setup device currency through helpdesk
-Then currency setup for prepaid device is done correctly and updated in wallet details tab
-When user performs adjustment transaction
-And user performs adjustment transaction for second wallet
 And user sign out from customer portal
 
 Scenario: Pin Generation 
@@ -35,7 +34,7 @@ Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
-Then FINSim simulator is closed
+When FINSim simulator is closed
 
 Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
 Meta:
@@ -50,8 +49,7 @@ Meta:
 When Auth file is generated after transaction
 When MAS simulator is closed
 Then user is logged in institution
-Then search Cash Advance authorization and verify 000-Successful status
-Then verify transaction currency as INR [356] and billing currency as USD [840] on auth search
+Then search CWD authorization and verify 000-Successful status
 Then user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension

@@ -1,4 +1,4 @@
-Prepaid emv retail travel card multi currency without pin authorization
+Prepaid msr retail travel card multi currency refund with pin authorization
 
 Narrative:
 In order to check transactions on prepaid msr retail travel mwmc card 
@@ -6,17 +6,18 @@ As an issuer
 I want to authorize transactions for prepaid msr retail travel mwmc card 
 
 Meta:
-@StoryName p_emv_retail_travel_mwmc
+@StoryName p_msr_retail_travel_mwmc
 
-Scenario: Setup multi-currency prepaid emv retail travel card and perfomr cash advanced  without pin authorization
+Scenario: Setup multi-currency prepaid msr retail travel card and perfomr refund without pin authorization
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card without pin
+And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
 And user sign out from customer portal
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
+When processes pin generation batch for prepaid
 When user has wallet number information for prepaid device
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
@@ -27,12 +28,20 @@ When user performs adjustment transaction
 And user performs adjustment transaction for second wallet
 And user sign out from customer portal
 
+Scenario: Pin Generation 
+Meta:
+@TestId 
+Given connection to FINSim is established
+When Pin Offset file batch was generated successfully
+When embossing file batch was generated in correct format
+When PIN is retrieved successfully with data from Pin Offset File
+Then FINSim simulator is closed
 
-Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
+Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
 Meta:
 @TestId 
 Given connection to MAS is established
-When perform an EMV_CASH_WITHDRAWAL MAS transaction
+When perform an MSR_CASH_WITHDRAWAL MAS transaction
 Then MAS test results are verified
 
 Scenario: Generate Auth File for Clearing
@@ -70,4 +79,3 @@ When transaction status is "Matching Pending"
 When "Matching" batch for prepaid is successful
 Then transaction status is "Presentment Matched with authorization"
 Then user sign out from customer portal
-

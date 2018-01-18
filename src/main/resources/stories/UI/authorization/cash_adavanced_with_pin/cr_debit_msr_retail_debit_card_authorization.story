@@ -1,31 +1,31 @@
-debit emv corporate card authorisation PIN
+debit msr retail debit card authorization PINLESS
 
 Narrative:
-In order to provide to client easy-to-use payment method for e-commerce retail
+In order to check transactions on debit msr retail debit card pinless
 As an issuer
-I want to create a EMV Corporate debit card for client
+I want to authorize transactions for debit msr retail debit card pinless
 
 Meta:
-@StoryName d_emv_corp
-@CRCardsWithAuthorizationCashWithdrawalWithClearing
+@StoryName d_msr_retail
+@CRCardsWithAuthorizationCashAdvancedWithClearing
 
-Scenario: Setup debit emv corp debit card 
+Scenario: Setup - debit msr retail debit card
 Given user is logged in institution
-And device range for program with device plan for "debit" "emv" card
+And device range for program with device plan for "debit" "msr" card
 When user creates new device of debit type for new client
-Then device has "normal" status
-And user sign out from customer portal
+
+Scenario: Device production - debit msr retail debit card
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for debit
 When processes device production batch for debit
-When processes pin generation batch for prepaid
+When processes pin generation batch for debit
 When user has wallet number information for debit device
 When user performs adjustment transaction
 When user has current wallet balance amount information for debit device
 Then device has "normal" status
 When user activates device through helpdesk
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario: Pin Generation 
 Meta:
@@ -36,12 +36,13 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 When FINSim simulator is closed
 
-Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
+Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
 Meta:
 @TestId 
 Given connection to MAS is established
-When perform an EMV_CASH_WITHDRAWAL MAS transaction
+When perform an MSR_CASH_ADVANCE MAS transaction
 Then MAS test results are verified
+
 
 Scenario: Generate Auth File for Clearing
 Meta:
