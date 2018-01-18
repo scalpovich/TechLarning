@@ -1,7 +1,7 @@
-Prepaid authorisation: Load and activate through vts and perform fee collection transaction
+Prepaid authorisation: Load and activate through vts and perform fee fund disbursement
 
 Narrative:
-In order to perform fee collection transaction
+In order to perform fee fund disbursement
 As an issuer
 I want to load and activate the visa card through vts
 
@@ -26,7 +26,7 @@ When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 Then device has "normal" status
 
-Scenario: perform visa fee collection transaction
+Scenario: perform visa fund disbursement transaction
 Given user is logged in institution
-When perform add visa fee Collection Fee collection Transaction [10] transaction
+When perform add visa fee Collection Fund Disbursement Transaction [20] transaction
 
