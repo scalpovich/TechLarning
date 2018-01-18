@@ -79,7 +79,7 @@ public class CardHolderTransactionsWorkFlows extends AbstractBasePage{
 	}
 	
 	public void walletToWalletTransfer(CardHolderTransactions cardhlfTran){
-		fundTransfer.selectWalletNumber(cardhlfTran.getWalletNumFromAmountTransfer());
+		fundTransfer.selectWalletNumber(cardhlfTran.getWalletFromAmountTransfer());
 		fundTransfer.amountToTransfer(cardhlfTran.getWalletTransferAmount());
 		//fundTransfer.selectTransferCurrency(cardhlfTran.getWalletTransferCurrency());
 		fundTransfer.submitWalletTransferRequest();
@@ -104,25 +104,13 @@ public class CardHolderTransactionsWorkFlows extends AbstractBasePage{
 	}
 	
 	public void interBankMoneyTransfer(CardHolderTransactions cardhlfTran){		
-		fundTransfer.enterBeneficiaryWalletNumber(cardhlfTran.getWalletNumFromAmountTransfer());
-		fundTransfer.enterBeneficiaryCardNumber(cardhlfTran.getWalletNumFromAmountTransfer());
-		fundTransfer.enterAmountToTranfer(cardhlfTran.getWalletNumFromAmountTransfer());
-		fundTransfer.selectCurrencyForIntraBankTranfer(cardhlfTran.getWalletNumFromAmountTransfer());
+		fundTransfer.enterBeneficiaryWalletNumber(cardhlfTran.getWalletToAmountTransfer());
+		fundTransfer.enterBeneficiaryCardNumber(cardhlfTran.getCardNumber());
+		fundTransfer.enterAmountToTranfer(cardhlfTran.getWalletFromAmountTransfer());		
 		fundTransfer.submitIntraBankMoneyTranferRequest();
 		waitForLoaderToDisappear();
 	}
 	
-	public void interBankMoneyTransfer(){		
-		CardHolderTransactions cardhlTran = context.get(ContextConstants.CARDHOLDER);
-		fundTransfer.enterBeneficiaryWalletNumber(cardhlTran.getWalletNumFromAmountTransfer());
-		fundTransfer.enterBeneficiaryCardNumber(cardhlTran.getWalletNumFromAmountTransfer());
-		fundTransfer.enterAmountToTranfer(cardhlTran.getWalletNumFromAmountTransfer());
-		fundTransfer.selectCurrencyForIntraBankTranfer(cardhlTran.getWalletNumFromAmountTransfer());
-		fundTransfer.submitIntraBankMoneyTranferRequest();
-		waitForLoaderToDisappear();
-	}
-	
-
 	public boolean checkCashRemittanceAllowedOrNot(){
 		boolean isPresentElement = false;
 		if(cashRemittanceBookingPage.isCashRemittanceAllowedForAccount()){

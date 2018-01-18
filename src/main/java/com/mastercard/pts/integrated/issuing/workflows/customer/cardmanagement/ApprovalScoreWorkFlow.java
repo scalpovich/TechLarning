@@ -10,8 +10,8 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 public class ApprovalScoreWorkFlow {
 	@Autowired
 	private Navigator navigator;
-	@Autowired
-    ApprovalScorePage approvalScorePage;
+	
+    private ApprovalScorePage approvalScorePage;
 	public boolean userAddsNewApprovalScore()
 	{
 		approvalScorePage = navigator.navigateToPage(ApprovalScorePage.class);
