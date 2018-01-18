@@ -26,7 +26,7 @@ Then currency setup for prepaid device is done correctly and updated in wallet d
 When user performs adjustment transaction
 And user performs adjustment transaction for second wallet
 And user sign out from customer portal
-When User fills Wallet Plan for prepaid product
+
 
 Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
 Meta:
@@ -42,7 +42,7 @@ When Auth file is generated after transaction
 When MAS simulator is closed
 Then user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
-Then verify transaction currency as INR[356] and billing currency as USD[840]
+Then verify transaction currency as INR and billing currency as USD on auth search
 Then user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension

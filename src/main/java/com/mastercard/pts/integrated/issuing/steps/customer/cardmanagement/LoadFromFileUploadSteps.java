@@ -134,7 +134,9 @@ public class LoadFromFileUploadSteps {
 	
 	@When("User uploads the NOT file")
 	public void thenUserUploadsTheNOTFile(){
+		ProcessBatches batch =  ProcessBatches.getBatchData();
 		loadFromFileUploadWorkflow.loadIncomingIPM(notFileName);
+		batch.setBatchFileName(notFileName.getName());						
 	}
 	
 	@When("user processes upload batch for $type")
