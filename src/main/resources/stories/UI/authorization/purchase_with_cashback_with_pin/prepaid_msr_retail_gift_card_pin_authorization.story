@@ -1,16 +1,16 @@
-prepaid emv retail gift card authorization PINLESS
+prepaid msr retail gift card authorization PINLESS
 
 Narrative:
-In order to check transactions on prepaid emv retail gift card 
+In order to check transactions on prepaid msr retail gift card 
 As an issuer
-I want to authorize transactions for prepaid emv retail gift card 
+I want to authorize transactions for prepaid msr retail gift card 
 
 Meta:
-@StoryName p_emv_retail_gift
+@StoryName p_msr_retail_gift
 
-Scenario: Transaction - prepaid emv retail gift card - EMV_PURCHASE Authorization transaction
+Scenario: Transaction - prepaid msr retail gift card - MSR_PURCHASE_WITH_CASHBACK Authorization transaction
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card
+And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
 And user sign out from customer portal
 Given user is logged in institution
@@ -30,7 +30,7 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 Given connection to MAS is established
-When perform an EMV_PURCHASE MAS transaction
+When perform an MSR_PURCHASE_WITH_CASHBACK MAS transaction
 Then MAS test results are verified
 
 Scenario: Generate Auth File for Clearing
