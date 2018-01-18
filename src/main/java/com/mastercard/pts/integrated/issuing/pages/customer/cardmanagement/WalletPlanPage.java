@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -33,13 +34,13 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:walletPlanCode:input:inputTextField")
 	private MCWebElement walletPlancodeTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='walletPlanCode']")
 	private MCWebElement walletPlancodeSearchTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:description:input:inputTextField")
 	private MCWebElement descriptionTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
 	private MCWebElement searchTable;
 
@@ -122,7 +123,7 @@ public class WalletPlanPage extends AbstractBasePage {
 		clickWhenClickable(addWalletPlanBtn);
 		switchToAddWalletPlanFrame();
 	}
-	
+
 	public void selectProduct(DeviceCreation deviceCreation) {
 		selectByVisibleText(productTypeDDwn, deviceCreation.getProduct());
 	}
@@ -132,20 +133,20 @@ public class WalletPlanPage extends AbstractBasePage {
 	}
 
 	public String enterWalletPlanCode() {
-		if (MapUtils.fnGetInputDataFromMap("WalletPlancode") != null) {
+		if (MapUtils.fnGetInputDataFromMap("WalletPlancode").length() != 0) {
 			enterValueinTextBox(walletPlancodeTxt, MapUtils.fnGetInputDataFromMap("WalletPlancode"));
 		} else {
 			enterValueinTextBox(walletPlancodeTxt, CustomUtils.randomNumbers(5));
 		}
 		return walletPlancodeTxt.getAttribute("value");
 	}
-	
+
 	public void enterWalletPlanCode(WalletPlan plan) {
 		enterValueinTextBox(walletPlancodeTxt, plan.getWalletPlanCode());
 	}
 
 	public String enterWalletPlanDescription() {
-		if (MapUtils.fnGetInputDataFromMap("WalletPlanDescription") != null) {
+		if (MapUtils.fnGetInputDataFromMap("WalletPlanDescription").length() != 0) {
 			enterValueinTextBox(descriptionTxt, MapUtils.fnGetInputDataFromMap("WalletPlanDescription"));
 		} else {
 			enterValueinTextBox(descriptionTxt, "wallet plan");
@@ -199,7 +200,7 @@ public class WalletPlanPage extends AbstractBasePage {
 			SelectDropDownByIndex(surchargeWaiverPlanDDwn, FIRST_OPTION);
 		}
 	}
-	
+
 	public String addWalletPlanGeneral(DeviceCreation devicecreation, WalletPlan walletplan) {
 		String walletPlancode;
 		String WalletPlanDesc;
@@ -217,12 +218,13 @@ public class WalletPlanPage extends AbstractBasePage {
 		enterReservedAmount();
 		return WalletPlanDesc + " " + "[" + walletPlancode + "]";
 	}
+
 	public void selectWalletFeePlan() {
 		if (walletFeePlanDDwn.isEnabled()) {
 			SelectDropDownByIndex(walletFeePlanDDwn, FIRST_OPTION);
 		}
 	}
-	
+
 	public void selectProgramType(WalletPlan walletplan) {
 		selectByVisibleText(programeTypeDDwn, walletplan.getProgramType());
 	}
@@ -253,7 +255,8 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	public void enterReservedAmount() {
 		if (reservedAmountTxt.isEnabled()) {
-			//enterValueinTextBox(reservedAmountTxt, "1" + CustomUtils.randomNumbers(5));
+			// enterValueinTextBox(reservedAmountTxt, "1" +
+			// CustomUtils.randomNumbers(5));
 			enterValueinTextBox(reservedAmountTxt, "0");
 		}
 	}
@@ -296,11 +299,11 @@ public class WalletPlanPage extends AbstractBasePage {
 	public String getFeedbackInfo() {
 		return panelInfo.getText();
 	}
-	
+
 	public void searchByWalletPlanCode(WalletPlan plan) {
 		enterValueinTextBox(walletPlancodeSearchTxt, plan.getWalletPlanCode());
 	}
-	
+
 	public boolean isTextPresentInTable(String text) {
 		return WebElementUtils.isTextAvailableinTable(searchTable, text);
 	}

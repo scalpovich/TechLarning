@@ -2,7 +2,6 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
-import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,21 +51,6 @@ public class DevicePlanSteps {
 		deviceplanflows.validateErrormsg(deviceplan);
 	}
 
-	@When("user save device plan")
-	public void whenUserSaveDevicePlan() {
-
-	}
-
-	@Given("fills enter Event base fee plans,Joining Membership plan and transaction plan")
-	public void givenFillsEnterEventBaseFeePlansJoiningMembershipPlanAndTransactionPlan() {
-
-	}
-
-	@Then("user should be able to create device plan suucessfully")
-	public void thenUserShouldBeAbleToCreateDevicePlanSuucessfully() {
-
-	}
-
 	@Given("User fills general details for $interchange for $cardType $productType card,choose activation $activationMode and delivery mode $deliveryMode")
 	public void givenUserFillsGeneralDetails(@Named("interchange") String association,
 			@Named("cardType") String cardType, @Named("productType") String productType,
@@ -80,6 +64,24 @@ public class DevicePlanSteps {
 		deviceplan.setEmbossiongVendor(vendor.getNewVendor());
 		String devicePlan = "";
 		devicePlan = deviceplanflows.createDevicePlan(deviceplan);
+		Assert.assertNotNull(devicePlan);
+		deviceplan.setDevicePlan(devicePlan);
+
+	}
+
+	@When("user issues paired devices for $interchange for $cardType and $productType card,choose activation $activationMode and delivery mode $deliveryMode")
+	public void whenUserIssuesPairedDevicesForMastercardForProductPrepaidForDeviceTypeAsMagneticStripe(
+			@Named("interchange") String association, @Named("cardType") String cardType,
+			@Named("productType") String productType, @Named("activationMode") String activationMode,
+			@Named("deliveryMode") String deliveryMode) {
+		deviceplan.devicePlanDataprovider();
+		deviceplan.setAssociation(association);
+		deviceplan.setProductType(productType);
+		deviceplan.setDeviceType(cardType);
+		deviceplan.setEmbossiongVendor(vendor.getNewVendor());
+		deviceplan.setActivationMode(activationMode);
+		String devicePlan = "";
+		devicePlan = deviceplanflows.createDevicePlanforPairedDevices(deviceplan);
 		Assert.assertNotNull(devicePlan);
 		deviceplan.setDevicePlan(devicePlan);
 

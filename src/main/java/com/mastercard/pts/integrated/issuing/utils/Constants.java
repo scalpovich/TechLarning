@@ -14,7 +14,7 @@ public class Constants {
 	public static final String Record_SAVED_Successfully = "Records saved successfully.";
 
 	public static final String Record_Cannot_Be_deleted = "Plan is attached to Device Range. Cannot delete record";
-    public static final String ADD_USER = "Add User";
+	public static final String ADD_USER = "Add User";
 	public static final String ADD_LOYALTY_PROMOTION_MAPPING = "Add Loyalty Plan & Promotion Mapping";
 	public static final String EDIT_PROGRAM_FRAME = "Edit Program";
 	public static String BATCH_NAME = "Device Production";
@@ -382,7 +382,7 @@ public class Constants {
 	public static String ToDevice = "9999";
 
 	public static final String ADD_CURRENCY_EXCHANGE_RATE_FRAME = "Add Currency Exchange Rate";
-	public static final String ADD_SURCHARGE_WAIVER_FEE_PLAN="Add Surcharge Waiver Plan ";
+	public static final String ADD_SURCHARGE_WAIVER_FEE_PLAN = "Add Surcharge Waiver Plan ";
 
 	public static final String ADD_CURRENCY_EXCHANGE_RATE_MAPPING_FRAME = "Add Currency Exchange Rates Mapping";
 
@@ -415,9 +415,9 @@ public class Constants {
 	public static final String ACCOUNTTYPE_SAVINGS = "Saving Account";
 
 	public static final String STATEMENT_PLAN = "Statement Plan";
-    public static final String ADD_SURCHARGE_WAIVER_PLAN_DETAIL="Add Surcharge Waiver Plan Detail";
+	public static final String ADD_SURCHARGE_WAIVER_PLAN_DETAIL = "Add Surcharge Waiver Plan Detail";
 	public static final String MARKETING_PLAN = "Marketing Message Plan";
-	public static final String WAIVERPLAN_CODE_ERRMSG="[A-Z 0-9] and underscore are allowed and must start and end with an alphanumeric character.";
-	public static final String WAIVERPLAN_DESC_ERRMSG="[a-z A-Z 0-9], SPACES and special characters [.,&#:*()-] are allowed and must start with an alphanumeric.";
-	
+	public static final String WAIVERPLAN_CODE_ERRMSG = "[A-Z 0-9] and underscore are allowed and must start and end with an alphanumeric character.";
+	public static final String WAIVERPLAN_DESC_ERRMSG = "[a-z A-Z 0-9], SPACES and special characters [.,&#:*()-] are allowed and must start with an alphanumeric.";
+
 }

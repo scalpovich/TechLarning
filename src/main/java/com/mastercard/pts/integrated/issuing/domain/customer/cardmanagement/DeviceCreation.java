@@ -19,6 +19,34 @@ public class DeviceCreation {
 
 	public String TemplateType;
 
+	public String PreGeneratedCardFlag;
+
+	public String getPreGeneratedCardFlag() {
+		return PreGeneratedCardFlag;
+	}
+
+	public void setPreGeneratedCardFlag(String preGeneratedCardFlag) {
+		PreGeneratedCardFlag = preGeneratedCardFlag;
+	}
+
+	public String getInterchange() {
+		return Interchange;
+	}
+
+	public void setInterchange(String interchange) {
+		Interchange = interchange;
+	}
+
+	public String getDeviceNumberFromQuery() {
+		return DeviceNumberFromQuery;
+	}
+
+	public void setDeviceNumberFromQuery(String deviceNumberFromQuery) {
+		DeviceNumberFromQuery = deviceNumberFromQuery;
+	}
+
+	public String DeviceNumberFromQuery;
+
 	public String getTemplateType() {
 		return TemplateType;
 	}

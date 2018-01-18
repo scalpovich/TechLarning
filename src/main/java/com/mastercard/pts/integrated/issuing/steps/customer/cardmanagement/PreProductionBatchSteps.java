@@ -7,13 +7,10 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BulkDeviceGenerationFlows;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.PreProductionFlows;
 
 @Component
-public class BulkDeviceGenerationSteps {
-
-	@Autowired
-	BulkDeviceGenerationFlows bulkdevicegenerationflows;
+public class PreProductionBatchSteps {
 
 	@Autowired
 	BulkDeviceRequestbatch bulkdevicerequestbatch;
@@ -21,14 +18,17 @@ public class BulkDeviceGenerationSteps {
 	@Autowired
 	DeviceCreation devicecreation;
 
-	@When("user runs the bulk device generation batch for product $product")
+	@Autowired
+	PreProductionFlows preproductionflows;
+
+	@When("user runs the pre production batch for product $product")
 	public void runBulkDeviceGenerationBatch(String product) {
 		String JobId = "";
+		bulkdevicerequestbatch.BulkDeviceRequestDataProvider();
 		devicecreation.setProduct(ProductType.fromShortName(product));
-		bulkdevicerequestbatch.setBatchNumberForDeviceGeneration(bulkdevicerequestbatch.getBatchNumber());
-		// bulkdevicerequestbatch.setBatchNumberForDeviceGeneration("29465248");
-		JobId = bulkdevicegenerationflows.createBulkdeviceGeneration(devicecreation, bulkdevicerequestbatch);
-		bulkdevicerequestbatch.setJobId(JobId);
+		bulkdevicerequestbatch.setPreProductionSourceJobid(bulkdevicerequestbatch.getJobId());
+		JobId = preproductionflows.createPreProductionBatch(devicecreation, bulkdevicerequestbatch);
+		bulkdevicerequestbatch.setPreProductionSourceJobid(JobId);
 	}
 
 }
