@@ -207,7 +207,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		device.setWalletNumber(getCodeFromInfoMessage("wallet"));
 		device.setDeviceNumber(getCodeFromInfoMessage("device(s)"));
 	}
-	public void createDevice_NewApplication(Device device) {
+	public void createDeviceNewApplication(Device device) {
 		logger.info("Add Device for program: {}", device.getProgramCode());
 		clickAddNewButton();
 

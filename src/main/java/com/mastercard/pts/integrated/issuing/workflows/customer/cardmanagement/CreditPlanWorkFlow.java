@@ -19,24 +19,24 @@ public class CreditPlanWorkFlow {
 	public boolean userCreatesAValidCreditPlan(CreditCardCreditPlan creditCardCreditPlan )
 	{
 	 creditPlanPage = navigator.navigateToPage(CreditPlanPage.class);
-	 creditPlanPage.addcreditplan();
+	 creditPlanPage.addCreditPlan();
 	 creditPlanPage.addMandatoryLabelsAndFields();
 	 creditPlanPage.enterCreditPlanCode(creditCardCreditPlan);
 	 creditPlanPage.enterCreditPlanDescription(creditCardCreditPlan);
 	 creditPlanPage.enterCreditPlanAbbreviation(creditCardCreditPlan);
-	 creditPlanPage.selectPaymentDate();
+	 creditPlanPage.selectPaymentDate(1);
 	 creditPlanPage.enterPaymentDateDays(creditCardCreditPlan);
-	 creditPlanPage.selectUnpaidDate();
+	 creditPlanPage.selectUnpaidDate(1);
 	 creditPlanPage.enterUnpaidDateDays(creditCardCreditPlan);
-	 creditPlanPage.selectTransactionRulePlan();
-	 creditPlanPage.selectCurrency();
+	 creditPlanPage.selectTransactionRulePlan(1);
+	 creditPlanPage.selectCurrency(1);
 	 creditPlanPage.enterMinimumDue(creditCardCreditPlan);
 	 creditPlanPage.enterTotalDue(creditCardCreditPlan);
-	 creditPlanPage.selectPaymentPriorityPlan();
+	 creditPlanPage.selectPaymentPriorityPlan(1);
 	 creditPlanPage.enterAllowedPercentage(creditCardCreditPlan);
 	 creditPlanPage.settingMandatoryValuesWithLabels();
 	 creditPlanPage.saveButtonClick();
-	 return creditPlanPage.successMessageDiplay();
+	 return creditPlanPage.successMessageDisplay();
 	}
 	 
     public void verifyRecordsInTableBasedOnFilter()

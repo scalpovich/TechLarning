@@ -51,14 +51,9 @@ public class ApprovalScorePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Record Added Successfully.']")
 	private MCWebElement validateSuccessMsgDisplay;
 	
-	public boolean successMessageDiplay()
+	public boolean successMessageDisplay()
 	{
-		if(validateSuccessMsgDisplay.isVisible())
-		{
-			logger.info("successMsg is displayed");
-			return true;
-		}
-		return false;
+		return validateSuccessMsgDisplay.isVisible();
 	}
 	
 	   public void addApproverScorePlan() {
@@ -78,19 +73,19 @@ public class ApprovalScorePage extends AbstractBasePage {
 	    	WebElementUtils.selectDropDownByVisibleText(programDDwn,program.buildDescriptionAndCode());
 	    }
 	    
-	    public void selectAction()
+	    public void selectAction(int index)
 	    {
-	    	WebElementUtils.selectDropDownByIndex(actionDDwn,1);
+	    	WebElementUtils.selectDropDownByIndex(actionDDwn,index);
 	    }
 	    
-	    public void enterStartRangeValue()
+	    public void enterStartRangeValue(int index)
 	    {
-	    	WebElementUtils.enterText(startRangeValueTxt,CustomUtils.RandomNumbers(5));
+	    	WebElementUtils.enterText(startRangeValueTxt,CustomUtils.RandomNumbers(index));
 	    }
 	    
-	    public void enterEndRangeValue()
+	    public void enterEndRangeValue(int index)
 	    {
-	    	WebElementUtils.enterText(endRangeValueTxt,CustomUtils.RandomNumbers(6));
+	    	WebElementUtils.enterText(endRangeValueTxt,CustomUtils.RandomNumbers(index));
 	    }
 	    
 	    public void settingMandatoryValuesWithLabels()

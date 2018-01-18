@@ -21,10 +21,10 @@ public class RiskAnalysisRuleWorkFlow {
 	 page = navigator.navigateToPage(RiskAnalysisRulePage.class);
 	 page.addButtonToEnterRiskAnalysisRulePlanFrame();
 	 page.addMandatoryLabelsAndFields();
-	 page.selectProgram();
-	 page.selectField();
-	 page.selectOperator();
-	 page.selectFieldName2();
+	 page.selectProgram(1);
+	 page.selectField(1);
+	 page.selectOperator(1);
+	 page.selectFieldName2(1);
 	 page.appendButtonClick();
 	 page.settingMandatoryValuesWithLabels();
 	 page.saveButtonClick();

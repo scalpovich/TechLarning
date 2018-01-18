@@ -50,61 +50,57 @@ public class CreditPlanPage extends AbstractBasePage {
 	private MCWebElement addCreditPlan;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "profileCode:input:inputTextField")
-	private MCWebElement creditPlanCode;
+	private MCWebElement creditPlanCodeTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "profileWording:input:inputTextField")
-	private MCWebElement description;
+	private MCWebElement descriptionTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "profileWordAbrv:input:inputTextField")
-	private MCWebElement abbreviation;
+	private MCWebElement abbreviationTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "basePaymentDate:input:dropdowncomponent")
-	private MCWebElement paymentDate;
+	private MCWebElement paymentDateDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "nbdayPaymentDate:input:inputTextField")
-	private MCWebElement paymentDateDays;
+	private MCWebElement paymentDateDaysTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "unpaidDate:input:dropdowncomponent")
-	private MCWebElement unpaidDate;
+	private MCWebElement unpaidDateDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "nbdayUnpaidDate:input:inputTextField")
-	private MCWebElement unpaidDateDays;
+	private MCWebElement unpaidDateDaysTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "transactionFeePlan:input:dropdowncomponent")
-	private MCWebElement transactionRulePlan;
+	private MCWebElement transactionRulePlanDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "unpaidPerm:input:inputAmountField")
-	private MCWebElement minimumDue;
+	private MCWebElement minimumDueTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "totalUnpaidPerm:input:inputAmountField")
-	private MCWebElement totalDue;
+	private MCWebElement totalDueTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "paymentPriorityPlan:input:dropdowncomponent")
-	private MCWebElement paymentPriorityPlan;
+	private MCWebElement paymentPriorityPlanDDwn;
     @PageElement(findBy = FindBy.NAME, valueToFind = "overdrawnPerm:input:inputTextField")
-	private MCWebElement allowedPercentage;
+	private MCWebElement allowedPercentageTxt;
 	@PageElement(findBy = FindBy.NAME, valueToFind = "currencyCode:input:dropdowncomponent")
-	private MCWebElement currencyddwn;
+	private MCWebElement currencyDDwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElement save;
+	private MCWebElement saveBtn;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='feedbackPanelERROR']")
-	private MCWebElement errorCodeAlreadyExists;
+	private MCWebElement errorCodeAlreadyExistsTxt;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Record Added Successfully.']")
-	private MCWebElement validateSuccessMsgDisplay;
+	private MCWebElement validateSuccessMsgDisplayTxt;
 	
-	public boolean successMessageDiplay()
+	public boolean successMessageDisplay()
 	{
-		if(validateSuccessMsgDisplay.isVisible())
-		{
-			logger.info("successMsg is displayed");
-			return true;
-		}
-		return false;
+		return validateSuccessMsgDisplayTxt.isVisible();
+		
 	}
-    public void addcreditplan() {
+    public void addCreditPlan() {
     	clickWhenClickable(addCreditPlan);
 		switchToIframe(CREDITPLAN_FRAME);
 		}
@@ -128,62 +124,62 @@ public class CreditPlanPage extends AbstractBasePage {
     
     public boolean creditPlanAlreadyExists()
     {
-		return errorCodeAlreadyExists.isVisible();
+		return errorCodeAlreadyExistsTxt.isVisible();
     	
     }
     public void enterCreditPlanCode(CreditCardCreditPlan creditCardCreditPlan)
     {
-       WebElementUtils.enterText(creditPlanCode, creditCardCreditPlan.getCreditPlanCode());	
+       WebElementUtils.enterText(creditPlanCodeTxt, creditCardCreditPlan.getCreditPlanCode());	
     }
     public void enterCreditPlanDescription(CreditCardCreditPlan creditCardCreditPlan)
     {
-       WebElementUtils.enterText(description, creditCardCreditPlan.getDescription());	
+       WebElementUtils.enterText(descriptionTxt, creditCardCreditPlan.getDescription());	
     }
     public void enterCreditPlanAbbreviation(CreditCardCreditPlan creditCardCreditPlan)
     {
-       WebElementUtils.enterText(abbreviation, creditCardCreditPlan.getAbbreviation());	
+       WebElementUtils.enterText(abbreviationTxt, creditCardCreditPlan.getAbbreviation());	
     }
-    public void selectPaymentDate()
+    public void selectPaymentDate(int index)
     {
-    	WebElementUtils.selectDropDownByIndex(paymentDate,1);
-    	waitForElementEnabled(paymentDateDays);
+    	WebElementUtils.selectDropDownByIndex(paymentDateDDwn,index);
+    	waitForElementEnabled(paymentDateDaysTxt);
     }
     public void enterPaymentDateDays(CreditCardCreditPlan creditCardCreditPlan)
     {
-    	WebElementUtils.enterText(paymentDateDays,creditCardCreditPlan.getPaymentDueDateDays());
+    	WebElementUtils.enterText(paymentDateDaysTxt,creditCardCreditPlan.getPaymentDueDateDays());
     }
-    public void selectUnpaidDate()
+    public void selectUnpaidDate(int index)
     {
-    	WebElementUtils.selectDropDownByIndex(unpaidDate,1);
-		waitForElementEnabled(unpaidDateDays);
+    	WebElementUtils.selectDropDownByIndex(unpaidDateDDwn,index);
+		waitForElementEnabled(unpaidDateDaysTxt);
     } 
     public void enterUnpaidDateDays(CreditCardCreditPlan creditCardCreditPlan)
     {
-    	WebElementUtils.enterText(unpaidDateDays,creditCardCreditPlan.getUnpaidDateDays());
+    	WebElementUtils.enterText(unpaidDateDaysTxt,creditCardCreditPlan.getUnpaidDateDays());
     }
-    public void selectTransactionRulePlan()
+    public void selectTransactionRulePlan(int index)
     {
-    	WebElementUtils.selectDropDownByIndex(transactionRulePlan, 1);
+    	WebElementUtils.selectDropDownByIndex(transactionRulePlanDDwn, index);
     } 
-    public void selectCurrency()
+    public void selectCurrency(int index)
     {
-    	WebElementUtils.selectDropDownByIndex(currencyddwn, 1);
+    	WebElementUtils.selectDropDownByIndex(currencyDDwn, index);
     } 
     public void enterMinimumDue(CreditCardCreditPlan creditCardCreditPlan)
     {
-    	WebElementUtils.enterText(minimumDue, creditCardCreditPlan.getMinimumDue());
+    	WebElementUtils.enterText(minimumDueTxt, creditCardCreditPlan.getMinimumDue());
     }
     public void enterTotalDue(CreditCardCreditPlan creditCardCreditPlan)
     {
-    	WebElementUtils.enterText(totalDue, creditCardCreditPlan.getTotalDue());
+    	WebElementUtils.enterText(totalDueTxt, creditCardCreditPlan.getTotalDue());
     }
-    public void selectPaymentPriorityPlan()
+    public void selectPaymentPriorityPlan(int index)
     {
-        WebElementUtils.selectDropDownByIndex(paymentPriorityPlan, 1);
+        WebElementUtils.selectDropDownByIndex(paymentPriorityPlanDDwn, index);
     }
     public void enterAllowedPercentage(CreditCardCreditPlan creditCardCreditPlan)
     {
-    	WebElementUtils.enterText(allowedPercentage, creditCardCreditPlan.getAllowedPercentage());
+    	WebElementUtils.enterText(allowedPercentageTxt, creditCardCreditPlan.getAllowedPercentage());
     }
 	
 	public void verifyUiOperationStatus() {

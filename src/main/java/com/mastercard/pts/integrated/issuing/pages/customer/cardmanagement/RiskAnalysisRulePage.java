@@ -70,21 +70,21 @@ public class RiskAnalysisRulePage extends AbstractBasePage{
 		mandatoryLabels();
 		mandatoryFields();
     }
-	public void selectProgram()
+	public void selectProgram(int index)
 	{
-		WebElementUtils.selectDropDownByIndex(programDDwn, 1);
+		WebElementUtils.selectDropDownByIndex(programDDwn,index);
 	}
-	public void selectField()
+	public void selectField(int index)
 	{
-		WebElementUtils.selectDropDownByIndex(fieldNameDDwn,1);
+		WebElementUtils.selectDropDownByIndex(fieldNameDDwn,index);
 	}
-	public void selectOperator()
+	public void selectOperator(int index)
 	{
-		WebElementUtils.selectDropDownByIndex(operatorDDwn,1);
+		WebElementUtils.selectDropDownByIndex(operatorDDwn,index);
 	}
-	public void selectFieldName2()
+	public void selectFieldName2(int index)
 	{
-		WebElementUtils.selectDropDownByIndex(fieldName2DDwn,1);
+		WebElementUtils.selectDropDownByIndex(fieldName2DDwn,index);
 	}
 	public void appendButtonClick()
 	{

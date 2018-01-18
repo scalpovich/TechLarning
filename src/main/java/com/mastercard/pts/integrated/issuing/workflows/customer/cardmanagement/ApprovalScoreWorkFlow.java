@@ -18,12 +18,12 @@ public class ApprovalScoreWorkFlow {
 		approvalScorePage.addApproverScorePlan();
 		approvalScorePage.addMandatoryLabelsAndFields();
 		approvalScorePage.selectProgram();
-		approvalScorePage.selectAction();
-		approvalScorePage.enterStartRangeValue();
-		approvalScorePage.enterEndRangeValue();
+		approvalScorePage.selectAction(1);
+		approvalScorePage.enterStartRangeValue(5);
+		approvalScorePage.enterEndRangeValue(6);
 		approvalScorePage.settingMandatoryValuesWithLabels();
 		approvalScorePage.saveButtonClick();
-		return approvalScorePage.successMessageDiplay();
+		return approvalScorePage.successMessageDisplay();
 	}
 	public void userVerifiesAndEditsNewApprovalScore()
 	{

@@ -1,10 +1,5 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +45,7 @@ public class CreditLimitRulePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "appendSectionContainer:appendButton")
 	private MCWebElement appendBtn;
     @PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=ruleId]")
-	private MCWebElement ruleId;
+	private MCWebElement ruleIdTxt;
     @PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
    	private MCWebElement addRBtn;
     
@@ -63,39 +58,39 @@ public class CreditLimitRulePage extends AbstractBasePage {
     	Program program=context.get(ContextConstants.PROGRAM);
     	WebElementUtils.selectDropDownByVisibleText(programCodeDDwn,program.buildDescriptionAndCode());
     }
-    public void selectFieldName()
+    public void selectFieldName(int index)
     {
-    	WebElementUtils.selectDropDownByIndex(fieldNameDDwn,1);	
+    	WebElementUtils.selectDropDownByIndex(fieldNameDDwn,index);	
     }
-    public void selectOperator()
+    public void selectOperator(int index)
     {
-    	WebElementUtils.selectDropDownByIndex(operatorDDwn,1);	
+    	WebElementUtils.selectDropDownByIndex(operatorDDwn,index);	
     }
-    public void selectValue()
+    public void selectValue(int index)
     {
-    	WebElementUtils.selectDropDownByIndex(valueDDwn	,1);	
+    	WebElementUtils.selectDropDownByIndex(valueDDwn	,index);	
     }
-    public void selectInsert()
+    public void selectInsert(int index)
     {
-    	WebElementUtils.selectDropDownByIndex(insertDDwn,1);	
+    	WebElementUtils.selectDropDownByIndex(insertDDwn,index);	
     }
     public void appendButtonClick()
     {
         waitForPageToLoad(driver());
         clickWhenClickable(appendBtn);	
     }
-    public void selectLimitType()
+    public void selectLimitType(int index)
     {
-        WebElementUtils.selectDropDownByIndex(limitTypeDDwn,1);	
+        WebElementUtils.selectDropDownByIndex(limitTypeDDwn,index);	
     }
-    public String enterCreditLimit()
+    public String enterCreditLimit(int index)
     {
-    	WebElementUtils.enterText(creditLimitTxt,CustomUtils.randomNumbers(3));	
+    	WebElementUtils.enterText(creditLimitTxt,CustomUtils.randomNumbers(index));	
     	return creditLimitTxt.getAttribute("value");
     }
-    public void enterMaxCreditLimit()
+    public void enterMaxCreditLimit(int index)
     {
-    	WebElementUtils.enterText(maxCreditLimitTxt,CustomUtils.randomNumbers(5));	
+    	WebElementUtils.enterText(maxCreditLimitTxt,CustomUtils.randomNumbers(index));	
     	
     }
     public void save()
