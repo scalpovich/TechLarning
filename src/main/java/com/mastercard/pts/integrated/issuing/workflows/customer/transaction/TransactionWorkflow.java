@@ -1395,6 +1395,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public void connectAndStartVtsCommunication() { 
+		wait(5000);
 		activateVts();
 
 		WebElement visaTestSystemFrame = winiumDriver.findElement(By.xpath("*[starts-with(@Name, 'Visa Test System')]"));
@@ -1510,8 +1511,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		String tempValue;
 		MiscUtils.reportToConsole(" ******* getFeildDescriptionFromLogViewer ******" );     
 
-		executeAutoITExe("VtsManageLogViewer.exe");
-		WebElement logViewerFrame = winiumDriver.findElement(By.name("Incoming Message"));
+        executeAutoITExe("VtsManageLogViewer.exe");
+        // WebElement logViewerFrame = winiumDriver.findElement(By.name("Incoming Message")); // screen title for version 39
+        // screen title on version 43 is - Outgoing Message - 2018 01/18 17:27:55  Case 1.1 - Authorization Load - Credit POS Retail Auth 0110 In Rsp"
+        WebElement logViewerFrame = winiumDriver.findElement(By.xpath("./*[contains(@Name, 'ing Message')]"));
+
 		if(!logViewerFrame.isDisplayed()) {
 			logMessage(VISA_FAILURE_MESSAGE, "");
 			return VISA_FAILURE_MESSAGE;
