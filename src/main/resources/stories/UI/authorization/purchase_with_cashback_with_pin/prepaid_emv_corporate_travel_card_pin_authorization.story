@@ -1,14 +1,14 @@
-prepaid emv retail gift card authorization PINLESS
+prepaid emv corporate travel card authorization PINLESS
 
 Narrative:
-In order to check transactions on prepaid emv retail gift card 
+In order to provide a corporate client various transactions
 As an issuer
-I want to authorize transactions for prepaid emv retail gift card 
+I want to create a prepaid emv corporate travel card and test various transactions
 
 Meta:
-@StoryName p_emv_retail_gift
+@StoryName p_emv_corp_travel
 
-Scenario: Transaction - prepaid emv retail gift card - EMV_PURCHASE Authorization transaction
+Scenario: Transaction - prepaid emv corporate travel card - EMV_PURCHASE_WITH_CASHBACK Authorization transaction
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
@@ -30,7 +30,7 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 Given connection to MAS is established
-When perform an EMV_PURCHASE MAS transaction
+When perform an EMV_PURCHASE_WITH_CASHBACK MAS transaction
 Then MAS test results are verified
 
 Scenario: Generate Auth File for Clearing

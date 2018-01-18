@@ -57,15 +57,15 @@ public class TransactionSearchPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement productTypeSelect;
-
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=cardNumber]")
 	private MCWebElement cardNumberTxt;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[1]/td/span[contains(text(),'DR')]/../../td[1]/span/a/span")
 	private MCWebElement retrieveARNLabel;
 
-	private String authorizationStatus;
-
+	private String authorizationStatus;	
+	
 	public String searchTransactionWithDevice(String deviceNumber, TransactionSearch ts) {
 		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
 		WebElementUtils.enterText(cardNumberTxt, deviceNumber);
