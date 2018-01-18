@@ -16,7 +16,12 @@ import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 		DisputeNav.L3_CHARGEBACK_CANCELLATION })
 
 public class ChargeBackCancellationPage extends AbstractDisputePage {
-
+	
+	public void searchByArn(String arn)
+	{
+		searchByArn(arn, "View Search Result");
+	}
+	
 	public void verifyUiOperationStatus() {
 		verifyOperationStatus();
 	}
