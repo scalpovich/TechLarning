@@ -18,7 +18,8 @@ public class VisaFeeCollectionSteps {
 	@When("perform add visa fee Collection $transactionCode transaction")
 	public void performAddVisaFeeTransactionForDispute(String transactionCode) {
 		VisaFeeCollection visafeecollection=VisaFeeCollection.createWithProvider(keyProvider);
-		visaFeeCollectionWorkflow.addVisaFeeCollectionRecord(visafeecollection,transactionCode);
+		visafeecollection.setTransactionCode(transactionCode);
+		visaFeeCollectionWorkflow.addVisaFeeCollectionRecord(visafeecollection);
 		
 	}
 }

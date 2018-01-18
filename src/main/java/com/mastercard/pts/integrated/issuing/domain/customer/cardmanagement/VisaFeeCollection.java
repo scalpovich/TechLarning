@@ -14,6 +14,15 @@ public class VisaFeeCollection {
 	private String country;
 	private String sourceCurrency;
 	private String reasonCode;
+	private String transactionCode;
+	public String getTransactionCode() {
+		return transactionCode;
+	}
+
+	public void setTransactionCode(String transactionCode) {
+		this.transactionCode = transactionCode;
+	}
+
 	public String getReasonCode() {
 		return reasonCode;
 	}

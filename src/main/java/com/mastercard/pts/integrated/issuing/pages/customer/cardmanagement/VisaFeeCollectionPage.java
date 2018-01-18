@@ -30,10 +30,9 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class VisaFeeCollectionPage extends AbstractBasePage {
 	
 	@Autowired
-	private TestContext context;
-	
-	@Autowired
 	protected DateUtils date;
+	@Autowired
+	private TestContext context;
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(VisaFeeCollectionPage.class);
@@ -93,21 +92,72 @@ public class VisaFeeCollectionPage extends AbstractBasePage {
 				WebElementUtils.elementToBeClickable(cardNumber)
 				);
 	}
-	public void addVisaFeeCollection(VisaFeeCollection visafeecollection,String option)
+	public void addVisaFeeCollection(VisaFeeCollection visafeecollection)
 	{
 		Device device=context.get(ContextConstants.DEVICE);
-		clickAddNewButton();
-		runWithinPopup("Add Visa Fees",() -> {selectByVisibleText(addFeesTransactionCodeDD, option);
-		selectByVisibleText(addFeesSourceBinDD, device.getDeviceNumber().substring(0, 5));
-		selectByVisibleText(countryDD, visafeecollection.getCountry());
-		WebElementUtils.enterText(destinationBinTxt, device.getDeviceNumber().substring(0, 5));
-		selectByVisibleText(sourceCurrencyDD, visafeecollection.getSourceCurrency());
-		WebElementUtils.enterText(reasonCodeTxt, visafeecollection.getReasonCode());
-		WebElementUtils.enterText(eventDateTxt, date.getDateMMDDFormat());
-		WebElementUtils.enterText(deviceNumberTxt, device.getDeviceNumber());
-		WebElementUtils.enterText(sourceAmountTxt, visafeecollection.getSourceAmount());
-		WebElementUtils.enterText(messageTextTxt, RandomStringUtils.randomAlphanumeric(10));	
-		clickSaveButton();});
+		clickAddRecordButton();
+		runWithinPopup("Add Visa Fees",() -> {selectTransactionCode(visafeecollection.getTransactionCode());
+		selectSourceBin(device.getDeviceNumber());
+		selectCountry(visafeecollection.getCountry());
+		enterDestinationBin(device.getDeviceNumber());
+		selectSourceCurrency(visafeecollection.getSourceCurrency());
+		enterReasonCode(visafeecollection.getReasonCode());
+		enterEventDate(date.getDateMMDDFormat());
+		enterDeviceNumber(device.getDeviceNumber());
+		enterSourceAmount(visafeecollection.getSourceAmount());
+		enterMessagetextAndClickOnSaveButton();});
+		verifyOperationStatus();
 
 	}
+    public void clickAddRecordButton()
+    {
+    	clickAddNewButton();
+    }
+	public void selectTransactionCode(String option)
+	{
+		WebElementUtils.selectDropDownByVisibleText(addFeesTransactionCodeDD, option);		
+	}
+	public void selectSourceBin(String option)
+	{
+		WebElementUtils.selectDropDownByVisibleText(addFeesSourceBinDD, option.substring(0, 6)+" ["+option.substring(0, 6)+"]");		
+	}
+	
+	public void selectCountry(String option)
+	{
+		WebElementUtils.selectDropDownByVisibleText(countryDD, option);	
+	}
+	
+	public void enterDestinationBin(String option)
+	{
+		WebElementUtils.enterText(destinationBinTxt, option.substring(0, 6));
+	}
+	
+	public void selectSourceCurrency(String option)
+	{
+		WebElementUtils.selectDropDownByVisibleText(sourceCurrencyDD,option);
+	}
+	
+	public void enterReasonCode(String option)
+	{
+		WebElementUtils.enterText(reasonCodeTxt,option);
+	}
+	public void enterEventDate(String option)
+	{
+		WebElementUtils.enterText(eventDateTxt,option);
+	}
+	public void enterDeviceNumber(String option)
+	{
+		WebElementUtils.enterText(deviceNumberTxt, option);
+	}
+	
+	public void enterSourceAmount(String option)
+	{
+		WebElementUtils.enterText(sourceAmountTxt, option);
+	}
+	public void enterMessagetextAndClickOnSaveButton()
+	{
+		WebElementUtils.enterText(messageTextTxt, RandomStringUtils.randomAlphanumeric(10));	
+		clickSaveButton();
+	}
+	
 }

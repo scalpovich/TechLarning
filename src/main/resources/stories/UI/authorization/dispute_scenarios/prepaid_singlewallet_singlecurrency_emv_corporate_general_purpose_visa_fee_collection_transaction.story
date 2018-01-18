@@ -1,9 +1,9 @@
-Prepaid authorisation: Load and activate through vts
+Prepaid authorisation: Load and activate through vts and perform fee collection transaction
 
 Narrative:
-In order to provide to client easy-to-use payment method
+In order to perform fee collection transaction
 As an issuer
-I want to load and activate the card through vts
+I want to load and activate the visa card through vts
 
 Meta:
 @StoryName SWSC_EMV_CGP_LOAD_ACTV_VTS_NPIN
