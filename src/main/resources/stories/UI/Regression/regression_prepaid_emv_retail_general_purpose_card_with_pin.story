@@ -75,6 +75,7 @@ And user sign out from customer portal
 
 Scenario: Perform ECOMM_PURCHASE Authorization transaction
 When perform an ECOMM_PURCHASE MAS transaction
+When embossing file batch was generated in correct format
 Then MAS test results are verified
 Then user is logged in institution
 Then search E-Commerce Transaction authorization and verify 000-Successful status
