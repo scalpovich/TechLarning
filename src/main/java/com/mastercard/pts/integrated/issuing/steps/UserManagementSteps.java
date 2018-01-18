@@ -59,6 +59,8 @@ public class UserManagementSteps {
 	private static final String NON_FUNDED_BRANCH = "nonfundedbranch";
 
 	private static final String NON_FUNDED_AGENT = "nonfundedagent";
+	
+	private static final String USER_INSTITUTION_NON_DEFAULT = "USER_INSTITUTION_NON_DEFAULT";
 
 	@Autowired
 	private AppEnvironment environment;
@@ -112,6 +114,13 @@ public class UserManagementSteps {
 	public void givenUserIsLoggedInInstitution() {
 		Portal loginPortal = environment.getPortalByType(Portal.TYPE_CUSTOMER);
 		userDefaultInstitution = Institution.createWithProvider(provider).buildAbbreviationAndCode();
+		loginWorkflow.logInInstitution(loginPortal, userDefaultInstitution);
+	}
+
+	@Given("user is logged in non-default institution")
+	public void givenUserIsLoggedInNonDefaultInstitution() {
+		Portal loginPortal = environment.getPortalByType(Portal.TYPE_CUSTOMER);
+		userDefaultInstitution = keyValueProvider.getString(USER_INSTITUTION_NON_DEFAULT);
 		loginWorkflow.logInInstitution(loginPortal, userDefaultInstitution);
 	}
 

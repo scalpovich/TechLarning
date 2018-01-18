@@ -7,7 +7,9 @@ public class ContextConstants {
 	public static final String PROGRAM = "PROGRAM";
 
 	public static final String DEVICE = "DEVICE";
-	
+
+	public static final String DEVICE2 = "DEVICE2";
+
 	public static final String CLIENT_ID = "CLIENT_ID";
 		
 	public static final String ORDER = "ORDER";

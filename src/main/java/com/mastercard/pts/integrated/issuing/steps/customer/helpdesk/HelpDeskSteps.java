@@ -508,6 +508,14 @@ public class HelpDeskSteps {
 		assertThat(STATUS_INCORRECT_INFO_MSG, actualStatus, equalTo(expectedStatus));
 	}
 
+	@Then("device has \"$deviceStatus\" status for non-default institution")
+	public void thenDeviceHasNormalStatus(String deviceStatus) {
+		String expectedStatus = DeviceStatus.fromShortName(deviceStatus);
+		Device device = context.get(ContextConstants.DEVICE2);
+		String actualStatus = helpdeskWorkflow.getDeviceStatus(device);
+		assertThat(STATUS_INCORRECT_INFO_MSG, actualStatus, equalTo(expectedStatus));
+	}
+
 	/*
 	 * This method gets the device status on the page without search product
 	 * type and device number
