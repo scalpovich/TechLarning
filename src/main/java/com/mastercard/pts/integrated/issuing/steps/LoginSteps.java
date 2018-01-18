@@ -63,6 +63,7 @@ public class LoginSteps extends AbstractBaseFlows {
 	@Autowired
 	private KeyValueProvider provider;
 
+	@Autowired
 	public UserManagementSteps user;
 	
 	public LoginCardholder loginCardHolderProvider;
