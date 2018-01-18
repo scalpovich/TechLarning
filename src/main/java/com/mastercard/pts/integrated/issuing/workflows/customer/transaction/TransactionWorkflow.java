@@ -1512,17 +1512,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		MiscUtils.reportToConsole(" ******* getFeildDescriptionFromLogViewer ******" );     
 
 		executeAutoITExe("VtsManageLogViewer.exe");
-		// WebElement logViewerFrame = winiumDriver.findElement(By.name("Incoming Message")); // screen title for version 39
-		// screen title on version 43 is - Outgoing Message - 2018 01/18 17:27:55  Case 1.1 - Authorization Load - Credit POS Retail Auth 0110 In Rsp"
-		/*  WebElement logViewerFrame = winiumDriver.findElement(By.xpath("./*[contains(@Name, 'ing Message')]"));
 
-		if(!logViewerFrame.isDisplayed()) {
-			logMessage(VISA_FAILURE_MESSAGE, "");
-			return VISA_FAILURE_MESSAGE;
-		}
-		logViewerFrame.click();
-		winiumClickOperation("F2"); //selecting this to be able to scroll on the page and F2 is always visible even when we are at the botton of the frame
-		pressPageUp(); //scrolling to top of frame*/	
 		if(winiumDriver.findElement(By.name(propertyByName)).isDisplayed()) {
 			winiumClickOperation(propertyByName);
 		} else {
@@ -1539,7 +1529,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		//getting value from last section from F39 list item
 		tempValue = result.get(result.size()-1).getAttribute("Name");
 		logMessage("F39 response is : ", tempValue);		
-		if(tempValue.toString() != "00") 
+		if("00".equalsIgnoreCase(tempValue.toString().trim()))
+			resultResponse =  "validations is ok. And value shown in the F39 response is : " + tempValue;
+		else	
 			resultResponse =  "validations not ok. And value shown in the F39 response is : " + tempValue;
 
 		logMessage("Visa Output Response Set to : ", resultResponse);	

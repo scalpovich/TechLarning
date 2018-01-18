@@ -445,7 +445,7 @@ public class TransactionSteps {
 		
 		transactionWorkflow.disconnectAndCloseVts(); // closing VTS
 		
-		if(transactionWorkflow.isContains(testResults, "validations ok")) {
+		if(transactionWorkflow.isContains(testResults, "validations is ok")) {
 			logMessage(PASS_MESSAGE, testResults);
 			assertTrue(PASS_MESSAGE + testResults, true );
 		} else if(transactionWorkflow.isContains(testResults, "validations not ok"))	{
