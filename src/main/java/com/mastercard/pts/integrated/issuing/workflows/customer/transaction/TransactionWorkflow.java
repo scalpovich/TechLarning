@@ -1514,7 +1514,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
         executeAutoITExe("VtsManageLogViewer.exe");
         // WebElement logViewerFrame = winiumDriver.findElement(By.name("Incoming Message")); // screen title for version 39
         // screen title on version 43 is - Outgoing Message - 2018 01/18 17:27:55  Case 1.1 - Authorization Load - Credit POS Retail Auth 0110 In Rsp"
-        WebElement logViewerFrame = winiumDriver.findElement(By.xpath("./*[contains(@Name, 'ing Message')]"));
+      /*  WebElement logViewerFrame = winiumDriver.findElement(By.xpath("./*[contains(@Name, 'ing Message')]"));
 
 		if(!logViewerFrame.isDisplayed()) {
 			logMessage(VISA_FAILURE_MESSAGE, "");
@@ -1523,11 +1523,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		logViewerFrame.click();
 		winiumClickOperation("F2"); //selecting this to be able to scroll on the page and F2 is always visible even when we are at the botton of the frame
 		pressPageUp(); //scrolling to top of frame
-		if(winiumDriver.findElement(By.name(propertyByName)).isDisplayed()) {
+*/		if(winiumDriver.findElement(By.name(propertyByName)).isDisplayed()) {
 			winiumClickOperation(propertyByName);
 		} else {
-			logViewerFrame.click();
-			pressPageDown(2); // scrolling down to the end of the page
+//			logViewerFrame.click();
+//			pressPageDown(2); // scrolling down to the end of the page
 			winiumClickOperation(propertyByName);
 		}
 		List<WebElement> result= winiumDriver.findElement(By.name(propertyByName)).findElements(By.xpath("./*[contains(@LocalizedControlType, 'text')]"));
