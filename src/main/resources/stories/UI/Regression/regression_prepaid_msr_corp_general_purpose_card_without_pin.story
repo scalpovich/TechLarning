@@ -26,8 +26,9 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
-And user sign out from customer portal
 Then embossing file batch was generated in correct format
+And user sign out from customer portal
+
 
 Scenario: Perform MSR_PREAUTH and MSR_COMPLETION Authorization transaction
 When connection to MAS is established
@@ -42,9 +43,11 @@ And user is logged in institution
 And search Pre-Auth Completion authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform ECOMM_PURCHASE Authorization transaction
 When perform an ECOMM_PURCHASE MAS transaction
 Then MAS test results are verified
+Then user is logged in institution
+Then search E-Commerce Transaction authorization and verify 000-Successful status
+And user sign out from customer portal
 
 Scenario: Perform MSR_PURCHASE Authorization transaction
 When perform an MSR_PURCHASE MAS transaction
@@ -53,6 +56,6 @@ Then user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform MSR_PURCHASE_WITH_REFUND Authorization transaction
-When perform an MSR_PURCHASE_WITH_REFUND MAS transaction
+Scenario: Perform MSR_REFUND Authorization transaction
+When perform an MSR_REFUND MAS transaction
 Then MAS test results are verified
