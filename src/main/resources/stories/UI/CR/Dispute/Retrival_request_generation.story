@@ -18,7 +18,7 @@ Given user is logged in institution
 Scenario:To Verify that a potential charge back report and validate second charge back creation Process for mastercard device
 Given user is logged in institution
 
-Scenario:To Verify that the dispute officer is able to raise a first chareg back
+Scenario:To Verify that the dispute officer is able to raise a first charegback
 Given user is logged in institution
 
 Scenario:To Verify that the Dispute officer is able to raise 2nd charge back reversal
