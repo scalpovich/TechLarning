@@ -24,7 +24,7 @@ public class CardHolderTransactions {
 	private static final String WALLET_TRANSFER_CURRENCY  = "WALEET_TRANSFER_CURRANCY";
 	private static final String WALLET_NUM_FROM_AMOUNT_TRANSFER = "WALLET_NUM_FROM_AMOUNT_TRANSFER";
 	private static final String TRANSACTION_STATUS_FAIL_MESSAGE = "TRANSACTION_STATUS_FAIL_MESSAGE";
-	private static final String WALLET_TO_WALLET_TRANS_CUCCESS_MSG = "WALLET_TO_WALLET_TRANS_CUCESSMSG";
+	private static final String WALLET_TO_WALLET_TRANS_SUCCESS_MSG = "WALLET_TO_WALLET_TRANS_SUCCESS_MSG";
 	
 	//Cash Remittance booking
 	private static final String BENEFICIARY_ID = "BENEFICIARY_ID";
@@ -305,7 +305,7 @@ public class CardHolderTransactions {
 		cardTranHol.setWalletTransferAmount(provider.getString(WALLET_TRANSFER_AMOUNT));
 		cardTranHol.setWalletTransferCurrency(provider.getString(WALLET_TRANSFER_CURRENCY));
 		cardTranHol.setWalletFromAmountTransfer(provider.getString(WALLET_NUM_FROM_AMOUNT_TRANSFER));
-		cardTranHol.setWalletToWalletTransSucessMsg(provider.getString(WALLET_TO_WALLET_TRANS_CUCCESS_MSG));
+		cardTranHol.setWalletToWalletTransSucessMsg(provider.getString(WALLET_TO_WALLET_TRANS_SUCCESS_MSG));
 		return cardTranHol;
 	}
 	

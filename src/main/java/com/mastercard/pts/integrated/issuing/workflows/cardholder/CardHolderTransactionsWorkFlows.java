@@ -106,9 +106,14 @@ public class CardHolderTransactionsWorkFlows extends AbstractBasePage{
 	public void interBankMoneyTransfer(CardHolderTransactions cardhlfTran){		
 		fundTransfer.enterBeneficiaryWalletNumber(cardhlfTran.getWalletToAmountTransfer());
 		fundTransfer.enterBeneficiaryCardNumber(cardhlfTran.getCardNumber());
-		fundTransfer.enterAmountToTranfer(cardhlfTran.getWalletFromAmountTransfer());		
+		fundTransfer.enterAmountToTranfer(cardhlfTran.getTransferAmount());		
 		fundTransfer.submitIntraBankMoneyTranferRequest();
 		waitForLoaderToDisappear();
+		fundTransfer.enterTransactionPassword(cardhlfTran.getTransctionPassword());
+		fundTransfer.enterTransactionRemark(cardhlfTran.getTransactionRemark());
+		fundTransfer.confirmTransaction();
+		waitForLoaderToDisappear();
+		Assert.assertTrue(fundTransfer.checkWalletToWalletTransferStatusMessage().contains(cardhlfTran.getWalletToWalletTransSucessMsg()));		
 	}
 	
 	public boolean checkCashRemittanceAllowedOrNot(){
