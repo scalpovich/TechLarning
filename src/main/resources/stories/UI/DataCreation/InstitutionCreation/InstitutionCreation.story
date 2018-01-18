@@ -23,7 +23,6 @@ Given login to bank as a Bankadmin
 When user enter details to create new Prepaid Institution
 Then user should be able to create new institute
 
-
 Scenario:2 New user creation prepaid
 Meta:
 @TCName TCInstituteCreationPR
@@ -34,6 +33,7 @@ Meta:
 Given login to bank as a Bankadmin
 When user enter details to create new user
 Then user should be able to create new user
+And user sign out from customer portal
 
 
 Scenario:3 New Institution creation Debit
@@ -58,6 +58,7 @@ Meta:
 Given login to bank as a Bankadmin
 When user enter details to create new user
 Then user should be able to create new user
+And user sign out from customer portal
 
 Scenario:5 New Institution creation Credit
 
@@ -81,6 +82,7 @@ Meta:
 Given login to bank as a Bankadmin
 When user enter details to create new user
 Then user should be able to create new user
+And user sign out from customer portal
 
 Scenario:7 New Institution creation Debit Prepaid
 
@@ -104,6 +106,7 @@ Meta:
 Given login to bank as a Bankadmin
 When user enter details to create new user
 Then user should be able to create new user
+And user sign out from customer portal
 
 Scenario:9 New Institution creation Credit Prepaid
 
@@ -127,6 +130,7 @@ Meta:
 Given login to bank as a Bankadmin
 When user enter details to create new user
 Then user should be able to create new user
+And user sign out from customer portal
 
 Scenario:11 New Institution creation Credit Debit
 
@@ -150,6 +154,7 @@ Meta:
 Given login to bank as a Bankadmin
 When user enter details to create new user
 Then user should be able to create new user
+And user sign out from customer portal
 
 Scenario:13 New Institution creation All Prepaid Credit Debit
 
@@ -163,6 +168,7 @@ Given login to bank as a Bankadmin
 When user enter details to create new ALL Institution
 Then user should be able to create new institute
 
+
 Scenario:14 New user creation Prepaid Debit Credit
 Meta:
 @TCName TCInstituteCreationAll
@@ -173,6 +179,7 @@ Meta:
 Given login to bank as a Bankadmin
 When user enter details to create new user
 Then user should be able to create new user
+And user sign out from customer portal
 
 
 

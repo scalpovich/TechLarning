@@ -18,6 +18,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -226,18 +227,19 @@ public class UserPage extends AbstractBasePage{
 	}
 
 	public void searchNewUser() {
-		clickWhenClickable(searchUserBtn);		
+		clickWhenClickable(searchUserBtn);			
 	}
 
 	public void save() {
-		clickWhenClickable(save);		
+		clickWhenClickable(save);
+		SimulatorUtilities.wait(2000);
 	}
 	
 	public void verifyNewUserCreationSuccess(UserCreation userCreation) {
 		if (!publishErrorOnPage()) {
 			SwitchToDefaultFrame();
 			enterNewCreatedUser(userCreation);
-			searchNewUser();
+			searchNewUser();			
 			for (int l = 0; l < 21; l++) {
 				if (!waitForRow())
 					clickSearchButton();
