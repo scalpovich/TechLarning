@@ -1,26 +1,26 @@
-prepaid emv retail gift card authorization PINLESS
+debit emv corporate card authorisation PIN
 
 Narrative:
-In order to check transactions on prepaid emv retail gift card 
+In order to provide to client easy-to-use payment method for e-commerce retail
 As an issuer
-I want to authorize transactions for prepaid emv retail gift card 
+I want to create a EMV Corporate debit card for client
 
 Meta:
-@StoryName p_emv_retail_gift
+@StoryName d_emv_corp
 
-Scenario: Transaction - prepaid emv retail gift card - EMV_PURCHASE Authorization transaction
+Scenario: Transaction - debit emv corp debit card - EMV_PURCHASE_WITH_CASHBACK Authorization transaction
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card
-When user creates new device of prepaid type for new client
+And device range for program with device plan for "debit" "emv" card
+When user creates new device of debit type for new client
 And user sign out from customer portal
 Given user is logged in institution
 And a new device was created
-When processes pre-production batch for prepaid
-When processes device production batch for prepaid
-When processes pin generation batch for prepaid
-When user has wallet number information for prepaid device
+When processes pre-production batch for debit
+When processes device production batch for debit
+When processes pin generation batch for debit
+When user has wallet number information for debit device
 When user performs adjustment transaction
-When user has current wallet balance amount information for prepaid device
+When user has current wallet balance amount information for debit device
 Then device has "normal" status
 When user activates device through helpdesk
 And user sign out from customer portal
@@ -30,7 +30,7 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 Given connection to MAS is established
-When perform an EMV_PURCHASE MAS transaction
+When perform an EMV_PURCHASE_WITH_CASHBACK MAS transaction
 Then MAS test results are verified
 
 Scenario: Generate Auth File for Clearing
