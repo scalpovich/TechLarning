@@ -25,6 +25,6 @@ public class DeviceWorkflow {
 	}
 	public void createDeviceUsingApplication(Device device) {
 		DeviceCreateApplicationPage page = navigator.navigateToPage(DeviceCreateApplicationPage.class);
-		page.createDevice_NewApplication(device);
+		page.createDeviceNewApplication(device);
 	}
 }
