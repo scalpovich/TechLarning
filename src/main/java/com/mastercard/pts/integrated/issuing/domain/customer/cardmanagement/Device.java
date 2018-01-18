@@ -55,6 +55,7 @@ public class Device {
 	private String clientCode;
 	private String walletNumber;
 	private String walletNumber2;
+	private String newWalletNumber;
 	private String deviceNumber;
 	private String existingDeviceNumber;
 	private String photoIndicator;
@@ -331,7 +332,15 @@ public class Device {
 	public String getWalletNumber() {
 		return walletNumber;
 	}
+	
+	public String getNewWalletNumber() {
+		return newWalletNumber;
+	}
 
+	public void setNewWalletNumber(String newWalletNumber) {
+		this.newWalletNumber = newWalletNumber;
+	}
+	
 	public void setWalletNumber(String walletNumber) {
 		this.walletNumber = walletNumber;
 	}

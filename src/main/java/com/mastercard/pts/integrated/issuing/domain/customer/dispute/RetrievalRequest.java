@@ -7,11 +7,19 @@ public class RetrievalRequest {
 	private static final String REQUEST_RESPONSE_CODE = "REQUEST_RESPONSE_CODE";
 	private static final String REASON_CODE = "REASON_CODE";
 	private static final String APPLY_FEE = "APPLY_FEE";
-	
+	private static final String DOCUMENTAION_CODE = "DOCUMENTAION_CODE";
 	private String requestResonCode;
 	private String reasonCode;
 	private boolean applyFee;
 	private String arn;
+	private String documentationCode;
+	
+	public String getDocumentationCode() {
+		return documentationCode;
+	}
+	public void setDocumentationCode(String documentationCode) {
+		this.documentationCode = documentationCode;
+	}
 	
 	public String getRequestResonCode() {
 		return requestResonCode;
@@ -42,6 +50,7 @@ public class RetrievalRequest {
 		RetrievalRequest request = new RetrievalRequest();
 		request.setRequestResonCode(provider.getString(REQUEST_RESPONSE_CODE));
 		request.setReasonCode(provider.getString(REASON_CODE));
+		
 		request.setApplyFee(true);
 		return request;
 	}
