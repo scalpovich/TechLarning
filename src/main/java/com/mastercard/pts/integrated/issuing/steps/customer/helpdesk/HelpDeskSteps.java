@@ -63,8 +63,8 @@ public class HelpDeskSteps {
 	EventAndAlerts eventAndAlerts = new EventAndAlerts();
 
 	ChangeAddressRequest changeAddressRequest;
-
-	HelpDeskGeneral helpdeskgettersetter = new HelpDeskGeneral();
+	@Autowired
+	HelpDeskGeneral helpdeskgettersetter;
 
 	DeviceCreation deviceCreation;
 

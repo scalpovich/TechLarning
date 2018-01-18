@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
@@ -44,6 +45,8 @@ public class ApplicationUploadSteps {
 	private BatchProcessFlows batchProcessFlows;
 	@Autowired
 	Program program;
+	@Autowired
+	private Device device;
 	
 	@When("user creates $application_upload_file batch file and uploads it on server for $customerType")
 	public void createFileForApplicationUpload(@Named("application_upload_file") String batchName,@Named("customerType") String customerType){	
@@ -59,15 +62,23 @@ public class ApplicationUploadSteps {
 		search.verifyApplicationUploadSuccess(searchDomain);
 	}
 
-	@Alias("processes pre-production batch $type")
+
+	@When("processes $type pre-production batch")
 	public void whenProcessesPreproductionBatchForPrepaid(String type) {
 
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
 		preProductionBatch.setJobID(processBatch.getJoBID());
 		batchProcessFlows.processPreProductionBatch(preProductionBatch);
 	}
+	@When("$type processes pre-production batch using new Application")
+	public void whenProcessesPreproductionBatchForDevice(String type) {
 
-	@Alias("processes device production batch $type")
+		preProductionBatch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processPreProductionBatchNewApplication(preProductionBatch);
+	}
+
+
+	@When("processes $type device production batch")
 	public void whenProcessesDeviceProductionBatch(String type) {
 		DeviceProductionBatch batch = new DeviceProductionBatch();
 		batch.setProductType(ProductType.fromShortName(type));
