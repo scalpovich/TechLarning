@@ -1535,7 +1535,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		tempValue = result.get(result.size()-1).getAttribute("Name");
 		logMessage("F39 response is : ", tempValue);		
 		if(tempValue.toString() != "00") 
-			resultResponse =  "validations not ok";
+			resultResponse =  "validations not ok. And value shown in the F39 response is : " + tempValue;
 		
 		logMessage("Visa Output Response Set to : ", resultResponse);	
 		return resultResponse;
