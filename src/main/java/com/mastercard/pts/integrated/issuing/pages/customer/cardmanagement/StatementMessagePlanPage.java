@@ -128,7 +128,7 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 	public void createStatementMessagePlan(StatementMessagePlan plan) {
 		logger.info("Create Statement Message Plan: {}",
 				plan.getStatementMessagePlanCode());
-		clickAddNewButton();
+		 	clickAddNewButton();
 
 		runWithinPopup(
 				"Add Statement Message Plan",
@@ -136,6 +136,7 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 					WebElementUtils.enterText(planCodeTxt, plan.getStatementMessagePlanCode());
 					WebElementUtils.enterText(descriptionTxt, plan.getDescription());
 					WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, plan.getProductType());
+				
 					clickAddDetailsButton();
 
 					plan.getStatementMessageDetails().forEach(details -> addDetails(details, plan.getProductType()));
