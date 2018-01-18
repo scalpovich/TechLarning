@@ -37,7 +37,7 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 	
 	@When("cardholder book the cash remittance")
 	public void cardholderBookCashRemittance(){		
-		cardhlTran = CardHolderTransactions.cardHolderTranscationDataProvider();
+		cardhlTran = CardHolderTransactions.cardholderCashRemit(provider);
 		transactionFlow.openCashRemittanceTransactionPage();		
 		if(!transactionFlow.checkCashRemittanceAllowedOrNot()){
 			transactionFlow.cashRemittanceBooking(cardhlTran);			
