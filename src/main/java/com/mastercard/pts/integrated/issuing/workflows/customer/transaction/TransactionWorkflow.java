@@ -1242,7 +1242,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		MiscUtils.reportToConsole("winiumLicenseSelectOperation Count : " + lst);
 		lst.get(0).click();
 	}
-	
+
 	private void winiumClickOperation(String locator) {
 		logger.info(WINIUM_LOG_COMMENT + locator);
 		winiumDriver.findElementByName(locator).click();
@@ -1466,7 +1466,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		browserMinimize();
 		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseToSelect(transaction);
 		logMessage("VISA Transaction Test Case Name : ",  transactionName );
-		
+
 		loadVisaInputFile(transaction);
 		//method to change values in Excel based on Device Context values so that this file can be uploaded into the system
 		setValuesInExcelTemplateBasedOnDeviceContext();
@@ -1511,10 +1511,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		String tempValue;
 		MiscUtils.reportToConsole(" ******* getFeildDescriptionFromLogViewer ******" );     
 
-        executeAutoITExe("VtsManageLogViewer.exe");
-        // WebElement logViewerFrame = winiumDriver.findElement(By.name("Incoming Message")); // screen title for version 39
-        // screen title on version 43 is - Outgoing Message - 2018 01/18 17:27:55  Case 1.1 - Authorization Load - Credit POS Retail Auth 0110 In Rsp"
-      /*  WebElement logViewerFrame = winiumDriver.findElement(By.xpath("./*[contains(@Name, 'ing Message')]"));
+		executeAutoITExe("VtsManageLogViewer.exe");
+		// WebElement logViewerFrame = winiumDriver.findElement(By.name("Incoming Message")); // screen title for version 39
+		// screen title on version 43 is - Outgoing Message - 2018 01/18 17:27:55  Case 1.1 - Authorization Load - Credit POS Retail Auth 0110 In Rsp"
+		/*  WebElement logViewerFrame = winiumDriver.findElement(By.xpath("./*[contains(@Name, 'ing Message')]"));
 
 		if(!logViewerFrame.isDisplayed()) {
 			logMessage(VISA_FAILURE_MESSAGE, "");
@@ -1522,25 +1522,26 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		}
 		logViewerFrame.click();
 		winiumClickOperation("F2"); //selecting this to be able to scroll on the page and F2 is always visible even when we are at the botton of the frame
-		pressPageUp(); //scrolling to top of frame
-*/		if(winiumDriver.findElement(By.name(propertyByName)).isDisplayed()) {
+		pressPageUp(); //scrolling to top of frame*/	
+		if(winiumDriver.findElement(By.name(propertyByName)).isDisplayed()) {
 			winiumClickOperation(propertyByName);
 		} else {
-//			logViewerFrame.click();
-//			pressPageDown(2); // scrolling down to the end of the page
+			//			logViewerFrame.click();
+			winiumClickOperation("F2");
+			pressPageDown(2); // scrolling down to the end of the page
 			winiumClickOperation(propertyByName);
 		}
 		List<WebElement> result= winiumDriver.findElement(By.name(propertyByName)).findElements(By.xpath("./*[contains(@LocalizedControlType, 'text')]"));
 		//printing values .. not needed but left it so that values can be seen in console
 		for(WebElement e : result) {
 			MiscUtils.reportToConsole(e.getAttribute("Name"));
-			}
+		}
 		//getting value from last section from F39 list item
 		tempValue = result.get(result.size()-1).getAttribute("Name");
 		logMessage("F39 response is : ", tempValue);		
 		if(tempValue.toString() != "00") 
 			resultResponse =  "validations not ok. And value shown in the F39 response is : " + tempValue;
-		
+
 		logMessage("Visa Output Response Set to : ", resultResponse);	
 		return resultResponse;
 	}
@@ -1663,7 +1664,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		logger.info(message1, message2 );
 		MiscUtils.reportToConsole(message1 + message2 );
 	}
-	
+
 	public String getARN(String deviceNumber, TransactionSearch ts){
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
 		return page.searchTransactionWithDevice(deviceNumber, ts);
