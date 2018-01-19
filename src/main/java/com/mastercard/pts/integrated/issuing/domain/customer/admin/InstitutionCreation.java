@@ -5,36 +5,85 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 @Component
 public class InstitutionCreation extends AbstractBasePage {
 
-	String institutionCode;
-	String institutionName;
-	String institutionAbbrevation;
-	String institutionCurrency;
-	String institutionReferenceCurrency;
-	String finanacialStartMonth;
-	String defaultLanguage;
-	String timeZone;
-	String accountNumberLength;
-	String clientNumberLength;
-	String financialYearStartMonth;
-	String SDNPlan;
-	String emailID;
-	String contactName;
-	String phoneNumb;
-	String mobileCountryCode;
-	String mobilenumber;
-	String addressLine1;
-	String addressLine2;
-	String addressLine3;
-	String addressLine4;
-	String country;
-	String postalCode;
-	String institutionType;
-	String customerCareContactNumber;
-	String customerCareFax;
+	private String institutionCode;
+	private String institutionName;
+	private String institutionAbbrevation;
+	private String institutionCurrency;
+	private String institutionReferenceCurrency;
+	private String finanacialStartMonth;
+	private String defaultLanguage;
+	private String timeZone;
+	private String accountNumberLength;
+	private String clientNumberLength;
+	private String financialYearStartMonth;
+	private String sdnPlan;
+	private String adaptiveAuthentication;
+	private String mPinEnabled;
+	private String smsServiceProvider;
+	private String emailID;
+	private String contactName;
+	private String mobileCountryCode;
+	private String mobilenumber;
+	private String addressLine1;
+	private String addressLine2;
+	private String addressLine3;
+	private String addressLine4;
+	private String country;
+	private String postalCode;
+	private String phoneNumb;
+	private String institutionType;
+	private String customerCareContactNumber;
+	private String customerCareFax;
+	private String collectPortalAdminID;
+	private String collectPortalAdminName;
+	private String agentPortalAdminID;
+	private String agentPortalAdminName;
+	private String createdInstitution;
+	
+	public String getCreatedInstitution() {
+		return createdInstitution;
+	}
+
+	public void setCreatedInstitution(String createdInstitution) {
+		this.createdInstitution = createdInstitution;
+	}
+
+	public String getAgentPortalAdminID() {
+		return agentPortalAdminID;
+	}
+
+	public void setAgentPortalAdminID(String agentPortalAdminID) {
+		this.agentPortalAdminID = agentPortalAdminID;
+	}
+
+	public String getAgentPortalAdminName() {
+		return agentPortalAdminName;
+	}
+
+	public void setAgentPortalAdminName(String agentPortalAdminName) {
+		this.agentPortalAdminName = agentPortalAdminName;
+	}	
+	
+	public String getCollectPortalAdminID() {
+		return collectPortalAdminID;
+	}
+
+	public void setCollectPortalAdminID(String collectPortalAdminID) {
+		this.collectPortalAdminID = collectPortalAdminID;
+	}
+
+	public String getCollectPortalAdminName() {
+		return collectPortalAdminName;
+	}
+
+	public void setCollectPortalAdminName(String collectPortalAdminName) {
+		this.collectPortalAdminName = collectPortalAdminName;
+	}
 
 	public String getCustomerCareContactNumber() {
 		return customerCareContactNumber;
@@ -238,11 +287,35 @@ public class InstitutionCreation extends AbstractBasePage {
 	}
 
 	public String getSDNPlan() {
-		return SDNPlan;
+		return sdnPlan;
 	}
 
 	public void setSDNPlan(String sDNPlan) {
-		SDNPlan = sDNPlan;
+		this.sdnPlan = sDNPlan;
+	}
+	
+	public String getAdaptiveAuthentication() {
+		return adaptiveAuthentication;
+	}
+
+	public void setAdaptiveAuthentication(String adaptiveAuthentication) {
+		this.adaptiveAuthentication = adaptiveAuthentication;
+	}
+
+	public String getmPinEnabled() {
+		return mPinEnabled;
+	}
+
+	public void setmPinEnabled(String mPinEnabled) {
+		this.mPinEnabled = mPinEnabled;
+	}
+
+	public String getSmsServiceProvider() {
+		return smsServiceProvider;
+	}
+
+	public void setSmsServiceProvider(String smsServiceProvider) {
+		this.smsServiceProvider = smsServiceProvider;
 	}
 
 	public static InstitutionCreation getInstitutionData() {
@@ -251,8 +324,7 @@ public class InstitutionCreation extends AbstractBasePage {
 		institute.setInstitutionName(MapUtils
 				.fnGetInputDataFromMap("InstitutionName")
 				+ CustomUtils.randomString(2).toUpperCase());
-		institute.setInstitutionAbbrevation(MapUtils
-				.fnGetInputDataFromMap("InstitutionName"));
+		institute.setInstitutionAbbrevation(institute.getInstitutionName());
 		institute.setInstitutionCurrency(MapUtils
 				.fnGetInputDataFromMap("Institution Currency"));
 		institute.setInstitutionReferenceCurrency(MapUtils
@@ -267,6 +339,12 @@ public class InstitutionCreation extends AbstractBasePage {
 		institute.setFinanacialStartMonth(MapUtils
 				.fnGetInputDataFromMap("Financial Start Month"));
 		institute.setSDNPlan(MapUtils.fnGetInputDataFromMap("SDN Plan"));
+		institute.setAdaptiveAuthentication(MapUtils
+				.fnGetInputDataFromMap("Adaptive Authentication"));
+		institute.setmPinEnabled(MapUtils
+				.fnGetInputDataFromMap("MPIN Enabled"));
+		institute.setSmsServiceProvider(MapUtils
+				.fnGetInputDataFromMap("SMS Service Provider"));
 		institute
 				.setContactName(MapUtils.fnGetInputDataFromMap("Contact Name"));
 		institute.setEmailID(MapUtils.fnGetInputDataFromMap("Email Id"));
@@ -288,7 +366,14 @@ public class InstitutionCreation extends AbstractBasePage {
 				.fnGetInputDataFromMap("Address Line4"));
 		institute.setCountry(MapUtils.fnGetInputDataFromMap("Country"));
 		institute.setPostalCode(MapUtils.fnGetInputDataFromMap("Postal Code"));
+		institute.setCreatedInstitution(MapUtils.fnGetInputDataFromMap("CreatedInstitution"));
+		institute.setCollectPortalAdminID(MiscUtils.generateRandomNumberAsString(6));
+		institute.setCollectPortalAdminName(MapUtils.fnGetInputDataFromMap("CollectPortalAdminName")+MiscUtils.generateRandomNumberAsString(5));
+		institute.setAgentPortalAdminID(MiscUtils.generateRandomNumberAsString(6));
+		institute.setAgentPortalAdminName(MapUtils.fnGetInputDataFromMap("AgentPortalAdminName")+MiscUtils.generateRandomNumberAsString(5));					
 		return institute;
 	}
+	
+	
 
 }

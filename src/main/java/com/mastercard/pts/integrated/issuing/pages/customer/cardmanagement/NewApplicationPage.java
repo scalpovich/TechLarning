@@ -32,7 +32,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_ACTIVITY, CardManagementNav.L2ACTIVITY_APPLICATION, 	CardManagementNav.L3_NEW_APPLCIATION
+		CardManagementNav.L1_ACTIVITY, CardManagementNav.L2ACTIVITY_APPLICATION, CardManagementNav.L3_NEW_APPLCIATION
 		})
 public class NewApplicationPage extends AbstractCardManagementPage {
 
@@ -772,6 +772,8 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 		boolean strRequestNumber = strOutputMessage.contains("Application Processed Successfully.");
 		Assert.assertNotNull("VIP Status needs to be provided", strRequestNumber);
 	}
+	
+	
 	@Override
 	public void verifyUiOperationStatus() {
 		logger.info("Application");

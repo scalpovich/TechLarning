@@ -63,8 +63,8 @@ public class HelpDeskSteps {
 	EventAndAlerts eventAndAlerts = new EventAndAlerts();
 
 	ChangeAddressRequest changeAddressRequest;
-
-	HelpDeskGeneral helpdeskgettersetter = new HelpDeskGeneral();
+	@Autowired
+	HelpDeskGeneral helpdeskgettersetter;
 
 	DeviceCreation deviceCreation;
 
@@ -505,6 +505,14 @@ public class HelpDeskSteps {
 	public void thenDeviceHasStatus(String deviceStatus) {
 		String expectedStatus = DeviceStatus.fromShortName(deviceStatus);
 		Device device = context.get(ContextConstants.DEVICE);
+		String actualStatus = helpdeskWorkflow.getDeviceStatus(device);
+		assertThat(STATUS_INCORRECT_INFO_MSG, actualStatus, equalTo(expectedStatus));
+	}
+
+	@Then("device has \"$deviceStatus\" status for non-default institution")
+	public void thenDeviceHasNormalStatus(String deviceStatus) {
+		String expectedStatus = DeviceStatus.fromShortName(deviceStatus);
+		Device device = context.get(ContextConstants.DEVICE2);
 		String actualStatus = helpdeskWorkflow.getDeviceStatus(device);
 		assertThat(STATUS_INCORRECT_INFO_MSG, actualStatus, equalTo(expectedStatus));
 	}
