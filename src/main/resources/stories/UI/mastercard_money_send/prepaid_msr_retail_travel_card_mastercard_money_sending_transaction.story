@@ -1,9 +1,9 @@
-prepaid msr retail general purpose card setup
+prepaid msr retail travel card mastercard money send
 
 Narrative:
 In order to provide to client easy-to-use multi-purpose prepaid card
 As an issuer
-I want to create an magnetic stripe prepaid card and perform various transaction
+I want to create an magnetic stripe prepaid card and perform mastercard money send request
 
 Meta:
 @StoryName p_msr_retail_travel_mms
