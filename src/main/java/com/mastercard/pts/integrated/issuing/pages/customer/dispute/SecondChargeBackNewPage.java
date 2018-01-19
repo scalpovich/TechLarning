@@ -25,7 +25,7 @@ public class SecondChargeBackNewPage extends AbstractDisputePage {
 	private MCWebElement chargeBackAmountTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='reasonCode']/span/select")
-	private MCWebElement reasonCodeDDwn;
+	private MCWebElement reasonCodeDrpDwn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='documentationIndicator']/span/select")
 	private MCWebElement documentationDDwn;
@@ -69,7 +69,7 @@ public class SecondChargeBackNewPage extends AbstractDisputePage {
 
 	public void triggerSecondChargeBack(SecondChargeBack sb) {
 		WebElementUtils.enterText(chargeBackAmountTxt, getChargeBackAmount());
-		WebElementUtils.selectDropDownByVisibleText(reasonCodeDDwn,
+		WebElementUtils.selectDropDownByVisibleText(reasonCodeDrpDwn,
 				sb.getSecondChargeBackReasonCode());
 		WebElementUtils.selectDropDownByVisibleText(documentationDDwn,
 				sb.getDocumentation());

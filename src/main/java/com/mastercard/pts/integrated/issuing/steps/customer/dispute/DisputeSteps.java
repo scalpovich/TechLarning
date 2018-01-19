@@ -76,7 +76,6 @@ public class DisputeSteps{
 	@Autowired
 	private ArbitrationWorkflow arbitrationworkflow;
 	
-	private String arnNumber;
 	private String feesOption = "without";
 	
 
@@ -92,8 +91,8 @@ public class DisputeSteps{
 		transactionWorkflow.launchWiniumAndSimulator("MCPS");
 		transactionWorkflow.loadIpmFile(System.getProperty("user.dir")+"\\src\\main\\resources\\"+"DISPUTES_STORY_NOT_FILE.IPM");
 		transactionWorkflow.assignUniqueFileId();
-		arnNumber = transactionWorkflow.assignUniqueARN();
-		logger.info("ARN number is: "+ arnNumber);
+		String arnNumber = transactionWorkflow.assignUniqueARN();
+		logger.info("ARN number is : {} ", arnNumber);
 		context.put(ConstantData.ARN_NUMBER, arnNumber);
 	}
 	

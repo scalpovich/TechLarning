@@ -16,24 +16,24 @@ public class SecondChargeBackNew {
 		return secondChargeBackAmount;
 	}
 
-	public void setSecondChargeBackAmount(String SecondchargeBackAmount) {
-		this.secondChargeBackAmount = SecondchargeBackAmount;
+	public void setSecondChargeBackAmount(String secondChargeBackAmount) {
+		this.secondChargeBackAmount = secondChargeBackAmount;
 	}
 
 	public String getSecondChargeBackReasonCode() {
 		return secondChargeBackreasonCode;
 	}
 
-	public void setSecondChargeBackReasonCode(String SecondchargeBackreasonCode) {
-		this.secondChargeBackreasonCode = SecondchargeBackreasonCode;
+	public void setSecondChargeBackReasonCode(String secondChargeBackReasonCode) {
+		this.secondChargeBackreasonCode = secondChargeBackReasonCode;
 	}
 
 	public String getDocumentation() {
 		return secondChargeBackDocumentation;
 	}
 
-	public void setDocumentation(String SecondChargeBackdocumentation) {
-		this.secondChargeBackDocumentation = SecondChargeBackdocumentation;
+	public void setDocumentation(String secondChargeBackDocumentation) {
+		this.secondChargeBackDocumentation = secondChargeBackDocumentation;
 	}
 
 	public boolean getFees() {
