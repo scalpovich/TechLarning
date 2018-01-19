@@ -12,9 +12,15 @@
    #include <WinAPIFiles.au3>
    #include <Constants.au3>
 
-   WinActive("Variables Manager")
-   ControlClick("Variables Manager","","[CLASS:Button; INSTANCE:1]")
+   WinWaitActive("Variables Manager")
+   Sleep(10000)
+
+If ControlCommand ("Variables Manager", "", "[CLASS:Button; INSTANCE:1]", "IsVisible") Then
+   ControlClick("Variables Manager","","[CLASS:Button; INSTANCE:1]") ; to handle OK dialog that may sometimes come up
    Sleep(1000)
-   ControlClick("Variables Manager","","[CLASS:Button; INSTANCE:1]")
+EndIf
+If ControlCommand ("Variables Manager", "", "[CLASS:Button; INSTANCE:1]", "IsVisible") Then
+   ControlClick("Variables Manager","","[CLASS:Button; INSTANCE:1]") ; to handle OK dialog that may sometimes come up
    sleep(3000)
+ EndIf
    WinWaitClose("Variables Manager")
