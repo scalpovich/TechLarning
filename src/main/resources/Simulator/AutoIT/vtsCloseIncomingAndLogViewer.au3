@@ -30,21 +30,6 @@
 	  Sleep(5000)
    EndIf
 
-    If(WinExists("Visa Test System")) Then
-	   WinActivate("Visa Test System")
-	   WinMenuSelectItem("Visa Test System", "", "&File", "E&xit")
-	  Sleep(5000)
-   EndIf
-
-
-    If(WinExists("VTS")) Then
-	    WinActivate("VTS")
-	  If ControlCommand ("VTS", "", "[CLASS:Button; INSTANCE:2]", "IsVisible") Then
-		 ControlClick("VTS","","[CLASS:Button; INSTANCE:2]") ; to handle OK dialog that may sometimes come up
-		 Sleep(5000)
-	  EndIf
-   EndIf
-
    If(WinExists("LogViewer")) Then
 	  WinActivate("LogViewer")
 	  WinMenuSelectItem("LogViewer", "", "&File", "E&xit")
