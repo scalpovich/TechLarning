@@ -8,15 +8,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.dispute.ChargeBack;
 import com.mastercard.pts.integrated.issuing.domain.customer.dispute.SecondChargeBack;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
-
-//import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 
 @Component
 @Navigation(tabTitle = DisputeNav.TAB_DISPUTE, treeMenuItems = {
@@ -28,10 +25,10 @@ public class SecondChargeBackNewPage extends AbstractDisputePage {
 	private MCWebElement chargeBackAmountTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='reasonCode']/span/select")
-	private MCWebElement reasonCodeDwn;
+	private MCWebElement reasonCodeDDwn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='documentationIndicator']/span/select")
-	private MCWebElement documentationDwn;
+	private MCWebElement documentationDDwn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='messageText']/span/textarea")
 	private MCWebElement textTxt;
@@ -72,15 +69,15 @@ public class SecondChargeBackNewPage extends AbstractDisputePage {
 
 	public void triggerSecondChargeBack(SecondChargeBack sb) {
 		WebElementUtils.enterText(chargeBackAmountTxt, getChargeBackAmount());
-		WebElementUtils.selectDropDownByVisibleText(reasonCodeDwn,
+		WebElementUtils.selectDropDownByVisibleText(reasonCodeDDwn,
 				sb.getSecondChargeBackReasonCode());
-		WebElementUtils.selectDropDownByVisibleText(documentationDwn,
+		WebElementUtils.selectDropDownByVisibleText(documentationDDwn,
 				sb.getDocumentation());
-		WebElementUtils.checkCheckbox(feeCbx, sb.isFees());
+		WebElementUtils.checkCheckbox(feeCbx, sb.getFees());
 		WebElementUtils.enterText(textTxt, sb.getText());
 		pageScrollDown();
 		WebElementUtils.checkCheckbox(chargebackDateCheckCbx,
-				sb.isChargeBackDateGrater());
+				sb.isChargeBackDateGreater());
 		WebElementUtils.checkCheckbox(copyRequestCheckCbx,
 				sb.isCopyRequestRequired());
 		WebElementUtils
@@ -89,7 +86,7 @@ public class SecondChargeBackNewPage extends AbstractDisputePage {
 	}
 
 	public void verifyUiOperationStatus() {
-		verifyOperationStatus("Chargeback New");
+		verifyOperationStatus("Second Chargeback New");
 	}
 
 	@Override

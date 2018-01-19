@@ -2,46 +2,46 @@ package com.mastercard.pts.integrated.issuing.domain.customer.dispute;
 
 public class SecondChargeBackNew {
 
-	private String SecondchargeBackAmount;
-	private String SecondchargeBackreasonCode;
-	private String SecondChargeBackdocumentation;
-	private boolean SecondChargeBackfees;
+	private String secondChargeBackAmount;
+	private String secondChargeBackreasonCode;
+	private String secondChargeBackDocumentation;
+	private boolean secondChargeBackFees;
 	private String text;
-	private boolean isChargeBackDateGrater;
+	private boolean isChargeBackDateGreater;
 	private boolean isCopyRequestRequired;
 	private boolean isDocumentRequired;
 	private String arn;
 
 	public String getSecondChargeBackAmount() {
-		return SecondchargeBackAmount;
+		return secondChargeBackAmount;
 	}
 
 	public void setSecondChargeBackAmount(String SecondchargeBackAmount) {
-		this.SecondchargeBackAmount = SecondchargeBackAmount;
+		this.secondChargeBackAmount = SecondchargeBackAmount;
 	}
 
 	public String getSecondChargeBackReasonCode() {
-		return SecondchargeBackreasonCode;
+		return secondChargeBackreasonCode;
 	}
 
 	public void setSecondChargeBackReasonCode(String SecondchargeBackreasonCode) {
-		this.SecondchargeBackreasonCode = SecondchargeBackreasonCode;
+		this.secondChargeBackreasonCode = SecondchargeBackreasonCode;
 	}
 
 	public String getDocumentation() {
-		return SecondChargeBackdocumentation;
+		return secondChargeBackDocumentation;
 	}
 
 	public void setDocumentation(String SecondChargeBackdocumentation) {
-		this.SecondChargeBackdocumentation = SecondChargeBackdocumentation;
+		this.secondChargeBackDocumentation = SecondChargeBackdocumentation;
 	}
 
-	public boolean isFees() {
-		return SecondChargeBackfees;
+	public boolean getFees() {
+		return secondChargeBackFees;
 	}
 
-	public void setFees(boolean SecondChargeBackfees) {
-		this.SecondChargeBackfees = SecondChargeBackfees;
+	public void setFees(boolean secondChargeBackFees) {
+		this.secondChargeBackFees = secondChargeBackFees;
 	}
 
 	public String getText() {
@@ -52,12 +52,12 @@ public class SecondChargeBackNew {
 		this.text = text;
 	}
 
-	public boolean isChargeBackDateGrater() {
-		return isChargeBackDateGrater;
+	public boolean isChargeBackDateGreater() {
+		return isChargeBackDateGreater;
 	}
 
-	public void setChargeBackDateGrater(boolean isChargeBackDateGrater) {
-		this.isChargeBackDateGrater = isChargeBackDateGrater;
+	public void setChargeBackDateGrater(boolean isChargeBackDateGreater) {
+		this.isChargeBackDateGreater = isChargeBackDateGreater;
 	}
 
 	public boolean isCopyRequestRequired() {
