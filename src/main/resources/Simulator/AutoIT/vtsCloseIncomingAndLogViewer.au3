@@ -26,13 +26,13 @@
 
     If(WinExists("Variables Manager")) Then
 	  WinActivate("Variables Manager")
-	  WinClose("Variables Manager")
+	  WinMenuSelectItem("Variables Manager", "", "&File", "E&xit")
 	  Sleep(5000)
    EndIf
 
     If(WinExists("Visa Test System")) Then
 	   WinActivate("Visa Test System")
-	  WinClose("Visa Test System")
+	   WinMenuSelectItem("Visa Test System", "", "&File", "E&xit")
 	  Sleep(5000)
    EndIf
 
