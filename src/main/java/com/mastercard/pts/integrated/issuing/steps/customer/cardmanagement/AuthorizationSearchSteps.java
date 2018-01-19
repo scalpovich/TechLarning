@@ -23,4 +23,11 @@ public class AuthorizationSearchSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		authorizationSearchWorkflow.verifyAuthTransactionSearch(type, state, device.getDeviceNumber());
 	}
+	
+	@Then("verify transaction currency as $tcurrency and billing currency as $bcurrency on auth search")
+	public void verifyBillingCurrency(String tcurrency, String bcurrency) {
+		Device device = context.get(ContextConstants.DEVICE);
+		authorizationSearchWorkflow.verifyTransactionAndBillingCurrency(tcurrency, bcurrency, device.getDeviceNumber());
+	}	
+	
 }

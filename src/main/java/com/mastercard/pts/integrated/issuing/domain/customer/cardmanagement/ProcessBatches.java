@@ -16,13 +16,15 @@ public class ProcessBatches {
 	private String generatedFilename;
 	private String interchangeType;
 	private String extractType;
+
 	
 	
+
 	private static final String BATCH_TYPE = "UPLOAD [U]";
 	
 //	private static final String BATCH_NAME = "Transaction Upload [TRANSACTION_UPLOAD]";
 	private static final String BATCH_NAME = "Load IPM Incoming File [IPM_INCOMING]";
-	
+	private static String fileName;
 
 
 	public static ProcessBatches createWithProvider(KeyValueProvider provider){
@@ -38,6 +40,15 @@ public class ProcessBatches {
 		batch.setBatchType(BATCH_TYPE);
 		return batch;
 	}
+	
+	public static void setBatchFileName(String sFileName){
+		fileName = sFileName;
+	}
+	
+	public static String getFileName() {
+		return fileName;
+	}
+
 	
 	public String getInterchangeType() {
 		return interchangeType;
