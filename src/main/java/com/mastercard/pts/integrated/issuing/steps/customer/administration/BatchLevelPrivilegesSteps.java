@@ -27,6 +27,7 @@ public class BatchLevelPrivilegesSteps {
 	@Autowired
 	private BatchLevelPrivilegesWorkflow batchlevelprevFlow;
 
+	@Given("$adminUser provides privilege to $applicationuser to process batches")
 	public void setBatchProcessPrelivedge(String adminUser,
 			String applicationUser) {
 		Portal userPortal = appEnvironment
