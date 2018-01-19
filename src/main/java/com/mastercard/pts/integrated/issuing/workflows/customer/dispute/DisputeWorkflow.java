@@ -10,6 +10,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.dispute.ChargeBack;
 import com.mastercard.pts.integrated.issuing.domain.customer.dispute.ChargeBackReversal;
 import com.mastercard.pts.integrated.issuing.domain.customer.dispute.DisputeHistory;
 import com.mastercard.pts.integrated.issuing.domain.customer.dispute.RetrievalRequest;
+import com.mastercard.pts.integrated.issuing.domain.customer.dispute.SecondChargeBack;
 import com.mastercard.pts.integrated.issuing.pages.PageObjectFactory;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.dispute.ChargeBackCancellationPage;
@@ -18,6 +19,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.dispute.ChargeBackRe
 import com.mastercard.pts.integrated.issuing.pages.customer.dispute.DisputeHistoryPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.dispute.RetrivalRequestPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.dispute.RetrivalResponsePage;
+import com.mastercard.pts.integrated.issuing.pages.customer.dispute.SecondChargeBackNewPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.DBUtility;
 import com.mastercard.pts.integrated.issuing.utils.SQLQueriesConstants;
@@ -61,6 +63,13 @@ public class DisputeWorkflow extends SimulatorUtilities {
 		ChargeBackNewPage page = navigator.navigateToPage(ChargeBackNewPage.class);		
 		page.searchByArn(cb.getArn());
 		page.triggerChargeBack(cb);
+	}
+	
+	public void createSecondChargeBack(SecondChargeBack sb)
+	{
+	   SecondChargeBackNewPage page = navigator.navigateToPage(SecondChargeBackNewPage.class);
+	   page.searchByArn(sb.getArn());
+	   page.triggerSecondChargeBack(sb);
 	}
 
 	public void createChargeBackReversal(ChargeBackReversal cb) {

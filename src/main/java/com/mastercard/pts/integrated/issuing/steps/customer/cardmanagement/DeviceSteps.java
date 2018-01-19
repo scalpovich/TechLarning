@@ -25,7 +25,9 @@ public class DeviceSteps {
 
 	@Autowired
 	private DeviceWorkflow deviceWorkflow;
-	
+
+	private static final String CORPORATE_CLIENT_CODE_DEVICE2 = "CORPORATE_CLIENT_CODE_DEVICE2";
+
 	@When("user creates new device of $type type for new client")
 	public void whenUserCreatesNewDeviceForNewClient(String type) {
 		Device device = Device.createWithProvider(provider);
@@ -54,7 +56,7 @@ public class DeviceSteps {
 		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 		device.setDeviceType1(devicePlan.getDeviceType());
-		
+		device.setCorporateClientCode(provider.getString(CORPORATE_CLIENT_CODE_DEVICE2));
 		deviceWorkflow.createDevice(device);
 		context.put(ContextConstants.DEVICE2, device);		
 	}

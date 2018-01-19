@@ -18,9 +18,11 @@
 	ControlClick("VTS Communications Handler (1)", "", "[CLASS:Button; INSTANCE:4]"); pressing on checkbox "raw message and then perform a shift tab
 	Send("+{TAB}") ; Presses Shift + Tab
 	Send("{RIGHT}")
-	WinActivate("VTS)")
+	if(WinExists("VTS")) Then
+	WinActivate("VTS")
     ControlClick("VTS", "", "[CLASS:Button; INSTANCE:1]") ; handling dialog to click Ok if it comes up
 	Send("{ENTER}")
+	EndIf
 
     WinActivate("Communications Handler Settings")
 	ControlClick("Communications Handler Settings", "", "[CLASS:Button; INSTANCE:2]")  ; clickin on client radio button

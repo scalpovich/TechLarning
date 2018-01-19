@@ -326,6 +326,17 @@ public class ProgramSetupSteps {
 		// composite step
 	}
 
+	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin for non-default institution")
+	@Composite(steps = { "When User fills Statement Message Plan for debit product", "When User fills Marketing Message Plan for debit product", "When User fills debit Statement Plan",
+			"When User fills MCC Rules for debit product", "When User fills Dedupe Plan", "When User fills Transaction Plan for debit product",
+			"When User fills Transaction Limit Plan for debit product", "When User fills Document Checklist Screen for debit product",
+			"When User fills Device Joining and Membership Fee Plan for debit product", "When User fills Device Event Based Fee Plan for debit product",
+			"When User fills Device Plan for \"debit\" \"<deviceType>\" card with no pin for non-default institution", "When User fills Wallet Plan for debit product", "When User fills Program section for debit product",
+			"When User fills Business Mandatory Fields Screen for debit product", "When User fills Device Range section for debit product for non-default institution" })
+	public void givenDeviceRangeForProgramWithDevicePlanforDebitWithoutPinForNonDefaultInstitution(String deviceType) {
+		// composite step
+	}
+
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin for an interface")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
 			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",

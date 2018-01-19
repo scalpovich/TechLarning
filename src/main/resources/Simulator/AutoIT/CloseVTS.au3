@@ -12,23 +12,15 @@
    #include <WinAPIFiles.au3>
    #include <Constants.au3>
 
-    if(WinExists("Outgoing Message")) Then
-     WinActivate("Outgoing Message")
-	 ControlClick("Outgoing Message", "", "[CLASS:Button; INSTANCE:1]")
-  EndIf
-
-   if(WinExists("LogViewer (1)")) Then
-     WinActivate("LogViewer (1)")
-	 WinMenuSelectItem("LogViewer (1)", "", "&File", "E&xit")
+ If(WinExists("VTS")) Then
+	    WinActivate("VTS")
+	  If ControlCommand ("VTS", "", "[CLASS:Button; INSTANCE:2]", "IsVisible") Then
+		 ControlClick("VTS","","[CLASS:Button; INSTANCE:2]") ; to handle OK dialog that may sometimes come up
+		 Sleep(5000)
+	  EndIf
    EndIf
 
-   if(WinExists("Variables Manager")) Then
-     WinActivate("Variables Manager")
-	 WinMenuSelectItem("Variables Manager", "", "&File", "E&xit")
-     ControlClick("Variables Manager", "", "[CLASS:Button; INSTANCE:2]")
-  EndIf
-
-   if(WinExists("Visa Test System")) Then
+if(WinExists("Visa Test System")) Then
    WinActivate("Visa Test System")
    WinMenuSelectItem("Visa Test System", "", "&Tools", "&Start Communications...")
    WinActivate("VTS Communications Handler")
@@ -37,15 +29,32 @@
 	  WinMenuSelectItem("VTS Communications Handler", "", "&Line", "Stop &Line")
    EndIf
 
-   WinMenuSelectItem("VTS Communications Handler", "", "&File", "E&xit")
-   WinMenuSelectItem("Visa Test System", "", "&File", "E&xit")
-   Sleep(2000)
-    if(WinExists("Visa Test System")) Then
-	  WinActivate("VTS")
-	  ControlClick("VTS", "", "[CLASS:Button; INSTANCE:2]")
-   EndIf
+   Sleep(5000)
 EndIf
 
+ If(WinExists("Visa Test System")) Then
+	  WinActivate("Visa Test System")
+	  WinMenuSelectItem("Visa Test System", "", "&File", "E&xit")
+	  Sleep(5000)
+   EndIf
+
+if(WinExists("Microsoft Visual C++ Debug Library")) Then
+    WinActivate("Microsoft Visual C++ Debug Library")
+	 ControlClick("Microsoft Visual C++ Debug Library","","[CLASS:Button; INSTANCE:1]")
+EndIf
+
+    If(WinExists("VTS")) Then
+	    WinActivate("VTS")
+	  If ControlCommand ("VTS", "", "[CLASS:Button; INSTANCE:2]", "IsVisible") Then
+		 ControlClick("VTS","","[CLASS:Button; INSTANCE:2]") ; to handle OK dialog that may sometimes come up
+		 Sleep(5000)
+	  EndIf
+   EndIf
+
+if(WinExists("Microsoft Visual C++ Debug Library")) Then
+    WinActivate("Microsoft Visual C++ Debug Library")
+	 ControlClick("Microsoft Visual C++ Debug Library","","[CLASS:Button; INSTANCE:1]")
+EndIf
 
 
 

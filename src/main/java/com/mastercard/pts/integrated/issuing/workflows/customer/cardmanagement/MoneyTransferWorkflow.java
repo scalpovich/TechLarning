@@ -19,4 +19,11 @@ public class MoneyTransferWorkflow {
 		page.searchDeviceAndSelectWallet(sourceDevice);
 		page.submitMoneySendRequest(moneySend);
 	}
+	
+	public void processMaterCardMoneySendRequestFromSecondWallet(MoneySend moneySend, Device sourceDevice){
+		MoneySendPage page = navigator.navigateToPage(MoneySendPage.class);
+		page.searchDeviceAndSelectWallet(sourceDevice);
+		page.submitMoneySendRequest(moneySend);
+	}
+
 }

@@ -7,7 +7,7 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 
 public class MoneySend {
 	
-	private static final String	MONEY_SEND_CURRENCY	 		 = 	"CURRENCY";
+	private static final String	MONEY_SEND_CURRENCY	 = 	"CURRENCY";
 	private static final String	MONEY_SEND_AMOUNT	 = 	"MONEY_SEND_AMOUNT";
 
 	private String beneficiaryDeviceNumber;
