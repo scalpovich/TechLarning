@@ -11,7 +11,7 @@ Meta:
 
 Scenario: Setup - debit msr retail debit card
 Given user is logged in institution
-And device range for program with device plan for "debit" "msr" card
+And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of debit type for new client
 
 Scenario: Device production - debit msr retail debit card
