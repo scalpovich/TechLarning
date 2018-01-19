@@ -33,9 +33,9 @@ Meta:
 @TestId 
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
-When embossing file batch was generated in correct format
+Then embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
-When FINSim simulator is closed
+Then FINSim simulator is closed
 
 Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
 Meta:
