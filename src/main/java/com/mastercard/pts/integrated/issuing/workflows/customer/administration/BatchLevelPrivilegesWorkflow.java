@@ -43,7 +43,6 @@ public class BatchLevelPrivilegesWorkflow extends AbstractBaseFlows {
 	public void setUploadBatchAccessForUser(String userName) {
 		selectEntityTypeAsUser(userName);
 		batch.supplyAccessToUploadBatches();
-		;
 	}
 
 	public void setDownloadBatchAccessForUser(String userName) {

@@ -1056,15 +1056,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return null;
 	}
 	
-	public List<String> getListOfElements(String ele){
-		List<WebElement> list = driver().findElements(By.xpath(ele));
-		List<String> elementTextData = new ArrayList<String>();
-		
-		for(WebElement e: list){
-			elementTextData.add(e.getText()); 
-		}
-		return elementTextData;
-	}
+	
 
 	public void selectByVisibleText(MCWebElement ele, String optionName) {
 		String optionVisbleText = "";
@@ -1380,6 +1372,20 @@ public abstract class AbstractBasePage extends AbstractPage {
 		waitForElementVisible(field);
 		field.clear();
 		field.sendKeys(fieldValue);
+	}
+	
+	public String buildDescriptionAndCode(String Name, String code) {
+		return String.format("%s [%s]", Name, code);
+	}
+	
+	public List<String> getListOfElements(String ele){
+		List<WebElement> list = driver().findElements(By.xpath(ele));
+		List<String> elementTextData = new ArrayList<String>();
+		
+		for(WebElement e: list){
+			elementTextData.add(e.getText()); 
+		}
+		return elementTextData;
 	}
 
 	public void waitForElementEnabled(MCWebElement element) {
