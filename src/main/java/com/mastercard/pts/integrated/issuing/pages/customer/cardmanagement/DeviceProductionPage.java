@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Collection;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
@@ -46,7 +48,10 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "processSelected")
 	private MCWebElement ProcessSelectedBtn;
-
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr")
+	private MCWebElements rowSize;
+	
 	public void deviceproduction(String prodType, String batchNum, String DeviceNumber) {
 		menuSubMenuPage.getDeviceProduction().click();
 		SelectDropDownByText(ProductTypeDDwn, prodType);
@@ -70,13 +75,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	}
 	public void processDeviceProductionBatch(DeviceProductionBatch batch) {
 		WebElementUtils.enterText(BatchNumberTxt, batch.getBatchNumber());
-		ClickButton(SearchBtn);
-		if (DeviceProductionBatchRecordChkBx.isVisible()) {
-			ClickCheckBox(DeviceProductionBatchRecordChkBx, true);
-		} else {
-			ClickButton(SearchBtn);
-			}
-		ClickButton(ProcessSelectedBtn);
+		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 
 	}

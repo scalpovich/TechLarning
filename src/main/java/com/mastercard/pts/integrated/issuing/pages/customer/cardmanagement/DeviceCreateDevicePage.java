@@ -306,7 +306,8 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	private void fillProfile(Device device) {
 		if (corporateClientCodeDDwn.isEnabled())
-			WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
+			//WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
+		WebElementUtils.selectDropDownByIndex(corporateClientCodeDDwn, 1);
 
 		WebElementUtils.selectDropDownByVisibleText(branchCodeDDwn, device.getBranchCode());
 		ClientDetails client = device.getClientDetails();

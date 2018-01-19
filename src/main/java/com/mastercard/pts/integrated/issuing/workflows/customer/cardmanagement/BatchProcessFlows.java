@@ -118,6 +118,10 @@ public class BatchProcessFlows extends MenuFlows{
 		PreProductionBatchPage page = navigator.navigateToPage(PreProductionBatchPage.class);
 		page.processPreProductionBatch1(batch);
 	}
+	public void processPreProductionBatchNewApplication(PreProductionBatch batch) {
+		PreProductionBatchPage page = navigator.navigateToPage(PreProductionBatchPage.class);
+		page.processPreProductionBatchNewApplication(batch);
+	}
 	public void processDeviceProductionBatch(DeviceProductionBatch batch) {
 		deviceProductionPage = navigator.navigateToPage(DeviceProductionPage.class);
 		deviceProductionPage.processDeviceProductionBatch(batch);

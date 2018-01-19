@@ -7,6 +7,8 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.ProgramType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
@@ -48,6 +50,9 @@ public class ProgramSteps {
 	
 	@Autowired
 	NewLoyaltyPlan newLoyaltyPlan;
+	
+	@Autowired
+	private TestContext context;
 
 	@When("user creates a $wallettype wallet Program for $interchange for product $product for program $programType")
 	public void whenUserCreatesAProgramForMastercardForProductPrepaidMultiWallet(@Named("wallettype") String walletType,
@@ -58,9 +63,10 @@ public class ProgramSteps {
 		devicecreation.setProduct(product);
 		program.setProgramType(programType);
 		program.setWalletType(walletType);
-		program.setWalletPlan1(walletplan.getOpenloopWalletPlan());
-		program.setWalletPlan2(walletplan.getClosedloopWalletPlan());
+		program.setWalletPlan1(context.get(ContextConstants.OPEN_WALLET));
+		program.setWalletPlan2(context.get(ContextConstants.CLOSED_WALLET));
 		program.setDevicePlanProgram("DevicePlan" + " " + "["+ deviceplan.getDevicePlan() + "]");
+		context.put(ContextConstants.PROGRAM, program);
 		String Program = "";
 		if (product.contains(ProductType.Prepaid) && programType.contains(ProgramType.CORPORATE_GIFT_CARD)
 				|| programType.contains(ProgramType.RETAIL_GENERAL_PURPOSE_CARD)
