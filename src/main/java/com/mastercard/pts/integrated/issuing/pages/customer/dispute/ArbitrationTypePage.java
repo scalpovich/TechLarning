@@ -16,8 +16,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle = DisputeNav.TAB_DISPUTE, treeMenuItems = {
 		DisputeNav.L1_SETUP, DisputeNav.L2_DISPUTE_REASON_CODE,
-		DisputeNav.L3_ARBITRATION_TYPE}
-)
+		DisputeNav.L3_ARBITRATION_TYPE})
 public class ArbitrationTypePage extends AbstractDisputePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent")

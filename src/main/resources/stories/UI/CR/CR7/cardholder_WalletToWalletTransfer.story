@@ -38,3 +38,4 @@ When wallet to wallet fund transfer
 Then verify wallet to wallet transfer fund transfer stauts
 Given user is logged in institution
 Then search with device in transaction screen and status for wallet to wallet transfer transaction
+!-- Then verify wallet to wallet transfer transaction amount

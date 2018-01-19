@@ -12,15 +12,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.AdministrationNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
-import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -32,7 +31,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		AdministrationNav.L1_SETUP,
 		AdministrationNav.L2_USER
 		})
-public class UserPage extends UserCreation{
+public class UserPage extends AbstractBasePage{
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(UserPage.class);
@@ -43,7 +42,8 @@ public class UserPage extends UserCreation{
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
 	private MCWebElement srchUserIdTxt;
-@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
+	
+	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addUser;
 
 	// Objects of Add User frame
@@ -93,7 +93,7 @@ public class UserPage extends UserCreation{
 	private MCWebElement administrationClickDefaultInstitution;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElement Save;
+	private MCWebElement save;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
 	private MCWebElement administrationBtnCancel;
@@ -122,13 +122,12 @@ public class UserPage extends UserCreation{
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[name='cancel']")
 	private MCWebElement closeButton;
 
-	private String institutionAssignedToUser = "//span[contains(.,'%s')]/following::input[1]";
+	private String institutionAssignedToUser = "//span[contains(.,'%s')]/following::input[1][@type='checkbox']";
 
-	private String defaultinstitution = "//span[contains(.,'%s')]/following::input[2]";
+	private String defaultinstitution = "//span[contains(.,'%s')]/following::input[2][@type='checkbox']";
 
 	public void enterUserID(UserCreation userCreation) {
 		enterValueinTextBox(userIdTxt, userCreation.getUserID());
-
 	}
 
 	public void enterUserName(UserCreation userCreation) {
@@ -139,9 +138,7 @@ public class UserPage extends UserCreation{
 		MapUtils.fnSetInputDataToInputMap("User", userCreation.getUserID());
 		MapUtils.fnSetInputDataToInputMap("UserName",
 				userCreation.getUserName());
-		logger.info("********************UserNameSaved************************"
-				+ MapUtils.fnGetInputDataFromMap("UserIDCreated"));
-	}
+	}	
 
 	public void selectUserRole(UserCreation userCreation) {
 		selectValueFromDropDown(userRole, userCreation.getRole());
@@ -173,6 +170,7 @@ public class UserPage extends UserCreation{
 
 	public void enterUserAccountExpiryDate(UserCreation userCreation) {
 		date.setDate(userCreation.getUserAccountExpiryDate());
+		waitForLoaderToDisappear();
 	}
 
 	public void selectMobileCountryCode(UserCreation userCreation) {
@@ -184,9 +182,13 @@ public class UserPage extends UserCreation{
 		enterValueinTextBox(mobileNo, userCreation.getMobileNumber());
 	}
 
-	public void selectConcurentLoginAllowed(UserCreation userCreation) {
+	public void selectConcurentLoginAllowed(UserCreation userCreation) {		
 		selectValueFromDropDown(concurrentLoginAllowed,
 				userCreation.getConcurrentLoginAllowed());
+		if(userCreation.getConcurrentLoginAllowed().contains("Yes")){
+			Assert.assertTrue("Max Concurrent user textbox is enabled ",maxConcurrentUser.isEnabled());
+			enterMaximumConcurrentUser(userCreation);
+		}
 	}
 
 	public void enterMaximumConcurrentUser(UserCreation userCreation) {
@@ -194,46 +196,65 @@ public class UserPage extends UserCreation{
 				userCreation.getMaxConcurrentUser());
 	}
 
-	public void assignInstituteToUser(InstitutionCreation instituteCreation) {
+	public void assignInstituteToUser(UserCreation user) {
+		if(user.getSavedInstituteInXL().isEmpty()){
 		Scrolldown(Element(institutionAssignedToUser.replace("%s",
-				instituteCreation.getInstitutionName())));
+				user.getInstitutionName())));
 		clickWhenClickable(Element(institutionAssignedToUser.replace("%s",
-				instituteCreation.getInstitutionName())));
+				user.getInstitutionName())));
+		}
+		else{
+			Scrolldown(Element(institutionAssignedToUser.replace("%s",
+					user.getSavedInstituteInXL())));
+			clickWhenClickable(Element(institutionAssignedToUser.replace("%s",
+					user.getSavedInstituteInXL())));
+		}
 	}
 
-	public void assignDefaultInstituteToUser(InstitutionCreation instituteCreation) {
-		Scrolldown(Element(defaultinstitution.replace("%s",
-				instituteCreation.getInstitutionName())));
+	public void assignDefaultInstituteToUser(UserCreation user) {
+		if(user.getSavedInstituteInXL().isEmpty()){
 		clickWhenClickable(Element(defaultinstitution.replace("%s",
-				instituteCreation.getInstitutionName())));
+				user.getInstitutionName())));
 	}
+		else{
+			clickWhenClickable(Element(defaultinstitution.replace("%s",
+					user.getSavedInstituteInXL())));
+			}
+		}
 
 	public void enterNewCreatedUser(UserCreation userCreation) {
 		enterValueinTextBox(searchUserNameTxt, userCreation.getUserName());
 	}
 
 	public void searchNewUser() {
-		clickWhenClickable(searchUserBtn);
+		clickWhenClickable(searchUserBtn);			
 	}
 
-	public void Save() {
-		clickWhenClickable(Save);
-		waitForLoaderToDisappear();
+	public void save() {
+		clickWhenClickable(save);
+		SimulatorUtilities.wait(2000);
 	}
-
-	@SuppressWarnings("deprecation")
+	
 	public void verifyNewUserCreationSuccess(UserCreation userCreation) {
-
 		if (!publishErrorOnPage()) {
 			SwitchToDefaultFrame();
 			enterNewCreatedUser(userCreation);
-			searchNewUser();
+			searchNewUser();			
+			for (int l = 0; l < 21; l++) {
+				if (!waitForRow())
+					clickSearchButton();
+				else {
+					break;
+				}
+			}
 			for (MCWebElement element : searchUserInTable.getElements()) {
 				Assert.assertTrue(element.getText().contains(
 						userCreation.getUserName()));
 				Assert.assertTrue(element.getText().contains(
-						userCreation.getEmailAdress().toUpperCase()));
+						userCreation.getEmailAdress().toUpperCase()));							
 			}
+			logger.info("User has been created successfully : {}"
+					+ userCreation.getUserName());	
 		} else {
 			logger.error("Error in new user creation");
 		}
@@ -260,18 +281,18 @@ public class UserPage extends UserCreation{
 			enterEmailAddress(userCreation);
 			selectMobileCountryCode(userCreation);
 			enterMobileNumber(userCreation);
-			enterUserAccountExpiryDate(userCreation);
-			//selectConcurentLoginAllowed(userCreation);
-			//enterMaximumConcurrentUser(userCreation);
+			enterUserAccountExpiryDate(userCreation);		
+			selectConcurentLoginAllowed(userCreation);
+			
 		} catch (Exception e) {
 			logger.error("Error in providing details for user creation" + e);
 		}
 	}
 
-	public void mapInstituteToUser(InstitutionCreation instituteCreation) {
+	public void mapInstituteToUser(UserCreation user) {
 		try {
-			assignInstituteToUser(instituteCreation);
-			assignDefaultInstituteToUser(instituteCreation);
+			assignInstituteToUser(user);
+			assignDefaultInstituteToUser(user);
 		} catch (Exception e) {
 			logger.error("Error in assigning institution to user" + e);
 		}

@@ -28,6 +28,7 @@ public class CardManagementNav {
 	public static final String L3_WALLET_PLAN = "WALLP001";
 
 	public static final String L2_APPLICATION = "ISSC00";
+	public static final String L2_APPLICATION_DEVICE = "ISAP00";
 	public static final String L3_DOCUMENT_CHECKLIST = "ISSADC";
 	public static final String L3_BUSINESS_MANDATORY_FIELDS = "ISSBMF";
 
