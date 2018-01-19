@@ -3,7 +3,8 @@ Prepiad: create retrival request for transactions for prepaid card holder transa
 Narrative:
 In order to hadle dispute
 As an Dispute officer
-I want to handle the dispute for the transactions made my cardholder and process first chargeback
+I want to handle the dispute for the transactions made my cardholder and process second chargeback
+
 
 Meta:
 @StoryName PREPAID_RETRIVAL_REQUEST
