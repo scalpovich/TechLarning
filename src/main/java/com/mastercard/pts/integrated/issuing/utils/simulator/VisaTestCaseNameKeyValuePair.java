@@ -13,10 +13,12 @@ public class VisaTestCaseNameKeyValuePair {
 
 	private void setVisaTestData() {
 		visaTestCaseDetailsKeyValuePair.put("LoadAndActivate", "Case 1.1 - Authorization Load");
+		visaTestCaseDetailsKeyValuePair.put("LoadAndActivate_with_pin", "Case 1.1 - Authorization Load");
 	}
 
 	private void setFileNameToUpload() {
-		visaTestDataFileToSelectKeyValuePair.put("LoadAndActivate", "POS_Load_And_Activate");
+		visaTestDataFileToSelectKeyValuePair.put("LoadAndActivate", "POS_Load_And_Activate_without_Pin");
+		visaTestDataFileToSelectKeyValuePair.put("LoadAndActivate_with_pin", "POS_Load_And_Activate_with_Pin");
 	}
 
 	public String getVisaTestCaseToSelect(String key) {
