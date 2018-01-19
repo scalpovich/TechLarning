@@ -1,4 +1,4 @@
-prepaid msr retail travel card mastercard money send
+prepaid msr corporate travel card mastercard money send
 
 Narrative:
 In order to provide to client easy-to-use multi-purpose prepaid card
@@ -6,9 +6,9 @@ As an issuer
 I want to create an magnetic stripe prepaid card and perform mastercard money send request
 
 Meta:
-@StoryName p_retail_travel_mms
+@StoryName p_corp_travel_mms
 
-Scenario: Set up prepaid msr retail travel card from another institute
+Scenario: Set up prepaid msr corporate travel card from another institute
 Meta:
 @TestId TC398484
 Given user is logged in non-default institution

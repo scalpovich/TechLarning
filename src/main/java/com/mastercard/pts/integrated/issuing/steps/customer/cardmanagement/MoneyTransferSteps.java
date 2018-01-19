@@ -38,4 +38,15 @@ public class MoneyTransferSteps {
 	    moneySend.setName(beneficiaryDevice.getEncodedName());
 	    moneyTransferWorkflow.processMaterCardMoneySendRequest(moneySend, sourceDevice); 		
 	}
+
+	@When("user raises a money send request from second wallet")
+	public void whenUserRaisesAMoneySendRequestFromSecondWallet(){		
+		Device sourceDevice = context.get(ContextConstants.DEVICE);
+		Device beneficiaryDevice = context.get(ContextConstants.DEVICE2);
+		MoneySend moneySend = MoneySend.createWithProvider(provider);
+	    moneySend.setBeneficiaryDeviceNumber(beneficiaryDevice.getDeviceNumber());
+	    moneySend.setName(beneficiaryDevice.getEncodedName());
+	    moneyTransferWorkflow.processMaterCardMoneySendRequestFromSecondWallet(moneySend, sourceDevice); 		
+	}
+
 }

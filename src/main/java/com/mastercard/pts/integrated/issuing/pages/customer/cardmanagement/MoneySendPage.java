@@ -71,6 +71,20 @@ public class MoneySendPage extends AbstractBasePage {
 		});
 	}
 
+	public void searchDeviceAndSelectSecondWallet(Device device) {
+		logger.info("Source device number: " + device.getDeviceNumber());
+		WebElementUtils.enterText(deviceNumberTxt, device.getDeviceNumber());
+		clickSearchButton();
+		runWithinPopup("Search Result", () ->{
+			for (int i = 1; i < 4; i++) {
+				if ((device.getWalletNumber2()).equals(getCellTextByColumnName(i, "Wallet Number"))){
+					driver().findElement(By.cssSelector(String.format(".dataview tbody tr:nth-child(%s) td span a", i))).click();
+					break;
+				}
+			}
+		});
+	}
+
 	public void submitMoneySendRequest(MoneySend moneySend){
 		logger.info("Beneficiary device number: " + moneySend.getBeneficiaryDeviceNumber());
 		WebElementUtils.enterText(beneficiaryCardNumberTxt, moneySend.getBeneficiaryDeviceNumber());
