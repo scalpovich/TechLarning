@@ -3,60 +3,78 @@ Prepiad: create retrival request for transactions for prepaid card holder transa
 Narrative:
 In order to hadle dispute
 As an Dispute officer
-I want to handle the dispute for the transactions made my cardholder
+I want to handle the dispute for the transactions made my cardholder and process retrival request
 
 
 Meta:
 @StoryName PREPAID_RETRIVAL_REQUEST
 
-Scenario:To Verify that a potential charge back report is raised and validate charge back creation Process
+Scenario: Set up prepaid emv retail general purpose card
+Meta:
+@TestId TC398452
 Given user is logged in institution
+And device range for program with device plan for "prepaid" "emv" card without pin
+When user creates new device of prepaid type for new client
 
-Scenario:To Verify that system is able to process incoming clearing files and process second Presentment
+Scenario: prepaid emv retail general purpose card device production
+Meta:
+@TestId TC408068
 Given user is logged in institution
+And a new device was created
+When processes pre-production batch for prepaid
+When processes device production batch for prepaid
+Then user sign out from customer portal
+Then user is logged in institution
+Then device has "normal" status
+When user has wallet number information for debit device
+When user performs adjustment transaction
+When user has current wallet balance amount information for prepaid device
+Then device has "normal" status
+Then user activates device through helpdesk
+Then user sign out from customer portal
 
-Scenario:To Verify that a potential charge back report and validate second charge back creation Process for mastercard device
+Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
+Meta:
+@TestId 
+Given connection to MAS is established
+When perform an EMV_CASH_ADVANCE MAS transaction
+Then MAS test results are verified
+
+Scenario: Generate Auth File for Clearing
+Meta:
+@TestId 
+When Auth file is generated after transaction
+When MAS simulator is closed
+Then user is logged in institution
+Then search Cash Advance authorization and verify 000-Successful status
+Then user sign out from customer portal
+
+Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
+Meta:
+@TestId 
+Given connection to MCPS is established
+When Auth file is generated
+When Auth file is loaded into MCPS and processed
+Then NOT file is successfully generated
+Then MCPS simulator is closed
+
+Scenario: Upload ipm file from customer portal and process it
+Meta:
+@TestId 
 Given user is logged in institution
+When User uploads the NOT file
+When user processes batch for prepaid
+Then user sign out from customer portal
 
-Scenario:To Verify that the dispute officer is able to raise a first charegback
+Scenario: Matching & Posting to Cardholders account
+Meta:
+@TestId 
 Given user is logged in institution
+When transaction status is "Matching Pending"
+When "Matching" batch for prepaid is successful
+Then transaction status is "Presentment Matched with authorization"
 
-Scenario:To Verify that the Dispute officer is able to raise 2nd charge back reversal
+Scenario: Process first chargeback rerversal 
 Given user is logged in institution
-
-Scenario:To Verify that the System is able to process 2nd Presentment reversal
-Given user is logged in institution
-
-Scenario: To Verify that Dispute officer is able to raise arbitration case for transaction
-Given user is logged in institution
-When create arbitration for retrival requst
-
-Scenario: To create chargeback request for transaction on device and verify in dispute history
-Given user is logged in institution
-!-- When Charge back is created for a transaction without fees
-!-- Then verify for the status in dispute history
-
-Scenario:To Verify that Dispute officer is able to cancel the fist chargebacks request
-Given user is logged in institution
-When Charge back is created for a transaction
-When cancel first chargeback request
-
-Scenario:To Verify that Dispute officer is able to cancel the second chargebacks request
-Given user is logged in institution
-!-- Cancel second chargeback requst
-When cancel first chargeback request
-
-
-Scenario: To create retrival request for transaction on prepaird mastercard card
-Given user is logged in institution
-!-- When a retrival request is created using ARN Number without fees
-!-- When Charge back is created for a transaction
-!-- When Download the IPM file
-!-- When cancel first chargeback request
-
-
-Scenario: To Verify that the dispute officer is able to raise a chareg back reversal
-Given user is logged in institution
-!-- When Charge back is created for a transaction
-!-- When Charge back reversal is created for a transaction
-!-- Then verify for the status in dispute history
+When Charge back is created for a transaction without fees
+When a retrival request is created using ARN Number without fees

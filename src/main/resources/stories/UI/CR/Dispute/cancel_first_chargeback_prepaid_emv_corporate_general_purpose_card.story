@@ -74,6 +74,6 @@ When transaction status is "Matching Pending"
 When "Matching" batch for prepaid is successful
 Then transaction status is "Presentment Matched with authorization"
 
-Scenario:
-Given user is logged in institution
+Scenario:Cancel first chargeback request
 When Charge back is created for a transaction without fees
+When cancel first chargeback request
