@@ -1451,6 +1451,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void disconnectAndCloseVts() {
 		executeAutoITExe("vtsCloseIncomingAndLogViewer.exe"); // close VTS
+		wait(10000);
 		executeAutoITExe("CloseVTS.exe");
 	}
 
