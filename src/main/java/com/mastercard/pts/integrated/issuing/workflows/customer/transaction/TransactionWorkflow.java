@@ -1478,8 +1478,19 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private void navigateToVariableManagerAndLoadTestGroupTemplate() { 
-		executeAutoITExe("VTSNavigateToVariablesManager.exe"  + SEPERATOR + vtsTestGroupInputFilePath + "\"");
-		executeAutoITExe("VTSHandleVariablesManager.exe");
+		//only launching Variable Manager through AutoIt
+        //clickin on "Open Most Recent Database" through Winium as doing with AutoIT on version 43 is crashing Variable Manager as the DLL to handle this does not support nSelect as it is not initaqilized ("error" we saw
+        //executeAutoITExe("VTSNavigateToVariablesManager.exe"  + SEPERATOR + vtsTestGroupInputFilePath + "\""); // vts varaible manager crashes on version 43 if this line is used hence broke this AutoIt action to below steps
+        
+        executeAutoITExe("VtsVariableManagerLaunch.exe");
+        if(!winiumDriver.findElementByName("Close Database").isEnabled()) // if this is enabled then the application is set to required state
+                    winiumClickOperation("Open Most Recent Database");
+        wait(5000);
+        //now loading the Excel file into Variable Manager
+        executeAutoITExe("vtsVariableManagerLoadExcelTestDataFile.exe"  + SEPERATOR + vtsTestGroupInputFilePath + "\"");
+
+        executeAutoITExe("VTSHandleVariablesManager.exe");
+
 	}
 
 	private void loadVisaTestGroupTemplate() { 
