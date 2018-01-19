@@ -79,7 +79,8 @@ public class MoneySendPage extends AbstractBasePage {
 		WebElementUtils.enterText(beneficiaryContactNumberTxt, moneySend.getContactNumber());
 		WebElementUtils.enterText(beneficiaryNameTxt, moneySend.getName());
 		WebElementUtils.enterText(memoTxt, moneySend.getMemo());
-		calculateFeesBtn.click();	
+		calculateFeesBtn.click();
+		clickSaveButton();
 		verifyOperationStatus();
 	}
 	
