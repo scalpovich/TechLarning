@@ -30,3 +30,4 @@ When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 
 When user raises a money send request
+Then search Money Send authorization and verify 000-Successful status
