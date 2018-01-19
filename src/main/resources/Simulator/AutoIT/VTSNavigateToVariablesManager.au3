@@ -18,6 +18,8 @@
    WinWaitActive("Variables Manager","", "100")
 
    WinSetState("Variables Manager", "", @SW_MAXIMIZE)
+    WinMenuSelectItem("Variables Manager", "", "&File", "&Open", "&VIP Variables")
+	Sleep(5000)
 
    WinMenuSelectItem("Variables Manager", "", "&File", "&Import from Excel Document")
    sleep(4000)

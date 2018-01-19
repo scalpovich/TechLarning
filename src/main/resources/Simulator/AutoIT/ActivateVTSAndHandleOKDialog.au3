@@ -13,9 +13,16 @@
 #include <WinAPIFiles.au3>
 #include <Constants.au3>
 
+if(WinExists("Microsoft Visual C++ Debug Library")) Then
+    WinActivate("Microsoft Visual C++ Debug Library")
+	 ControlClick("Microsoft Visual C++ Debug Library","","[CLASS:Button; INSTANCE:1]")
+EndIf
+
+if(WinExists("VTS")) Then
    WinActivate("VTS", "OK")
    ControlClick("VTS","","[CLASS:Button; INSTANCE:1]")
+EndIf
 
-   WinActivate("Visa Test System (1)")
-
-   WinActivate("Visa Test System (1) - DMS_TEST_FILE")
+if(WinExists("Visa Test System")) Then
+   WinActivate("Visa Test System", "OK")
+EndIf
