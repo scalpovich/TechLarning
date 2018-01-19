@@ -1,5 +1,64 @@
-/target/
-/*.classpath
-/*.project
-/*.log
-/.settings
+# Mac Crap
+.DS_Store
+
+# Project Specific
+
+# General Logging
+*.log
+*.log.*
+
+# Maven
+target/
+
+# General Java Builds
+classes/
+build/
+
+# Eclipse
+*.pydevproject
+.project
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+
+# IntelliJ
+.idea
+*.iml
+
+# UltraEdit
+*.bak
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
+
+#############
+## Windows detritus
+#############
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+/src/main/resources/Simulator/VisaInputFile/*.ldb
