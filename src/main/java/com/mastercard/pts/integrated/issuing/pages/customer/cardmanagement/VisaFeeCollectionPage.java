@@ -6,6 +6,8 @@ import java.util.Collection;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,13 +99,14 @@ public class VisaFeeCollectionPage extends AbstractBasePage {
 		Device device=context.get(ContextConstants.DEVICE);
 		clickAddRecordButton();
 		runWithinPopup("Add Visa Fees",() -> {selectTransactionCode(visafeecollection.getTransactionCode());
-		selectSourceBin(device.getDeviceNumber());
+		//selectSourceBin(device.getDeviceNumber());
+		selectSourceBin("4887659566811413");
 		selectCountry(visafeecollection.getCountry());
-		enterDestinationBin(device.getDeviceNumber());
+		enterDestinationBin("4887657701969211");
 		selectSourceCurrency(visafeecollection.getSourceCurrency());
 		enterReasonCode(visafeecollection.getReasonCode());
 		enterEventDate(date.getDateMMDDFormat());
-		enterDeviceNumber(device.getDeviceNumber());
+		enterDeviceNumber("4887659566811413");
 		enterSourceAmount(visafeecollection.getSourceAmount());
 		enterMessagetextAndClickOnSaveButton();});
 		verifyOperationStatus();
@@ -158,6 +161,10 @@ public class VisaFeeCollectionPage extends AbstractBasePage {
 	{
 		WebElementUtils.enterText(messageTextTxt, RandomStringUtils.randomAlphanumeric(10));	
 		clickSaveButton();
+	}
+	@Override
+	public String getSuccessMessage() {
+		return super.getSuccessMessage();
 	}
 	
 }

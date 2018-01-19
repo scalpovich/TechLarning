@@ -1,14 +1,23 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
+import java.io.File;
+import java.util.Scanner;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceGenerationBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequest;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.VisaFeeCollection;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.BatchJobHistoryPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.BatchTraceHistoryPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.BulkDeviceGenerationBatchPage;
@@ -25,6 +34,15 @@ public class BatchProcessWorkflow extends MenuFlows{
 
 	@Autowired
 	private Navigator navigator;
+	
+	@Autowired
+	private LinuxBox linuxBox;
+	
+	@Autowired
+	private KeyValueProvider keyProvider;
+	
+	@Autowired
+	private TestContext context;
 
 	public String createBulkDeviceRequest(BulkDeviceRequest request){	
 		DeviceProductionBulkDeviceRequestPage page = navigator.navigateToPage(DeviceProductionBulkDeviceRequestPage.class);
@@ -88,4 +106,55 @@ public void processDownloadBatch(ProcessBatches batch){
 		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
 		return page.ipmDownloadBatch(batch);
 	}
+	public String processVisaOutgoingBatch(ProcessBatches batch){
+		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
+		return page.visaOutgoingDownloadBatch(batch);
+	}
+	public String validateVisaOutGoingFile(ProcessBatches batch,String file){
+		VisaFeeCollection visafeecollection=VisaFeeCollection.createWithProvider(keyProvider);
+		String tran_line="";
+		try{
+		File datFile = new File(file);
+		Scanner scnr = new Scanner(datFile);
+		while(scnr.hasNextLine()){
+		   String line = scnr.nextLine();
+		   if(line.startsWith("10"))
+		   {
+			   tran_line=line;
+			   System.out.println(line);
+		   }
+		}
+		scnr.close();
+		}catch(Exception e){}		
+		return tran_line;
+	}
+	
+	public String getTransactionFromFile(File file)
+	{
+		String tran_line="";
+		try{
+		File datFile = file;
+		Scanner scnr = new Scanner(datFile);
+		while(scnr.hasNextLine()){
+		   String line = scnr.nextLine();
+		   if(line.startsWith("10"))
+		   {
+			   tran_line=line;
+			   System.out.println(line);
+		   }
+		}
+		scnr.close();
+		}catch(Exception e){}		
+		return tran_line;
+	
+	}
+	
+	public boolean validateVisaOutGoingFile(File visaOutGoingFile)
+	{	VisaFeeCollection visafeecollection=VisaFeeCollection.createWithProvider(keyProvider);
+		Device device=context.get(ContextConstants.DEVICE);
+		String tranLine=getTransactionFromFile(visaOutGoingFile);
+		return  tranLine.substring(61, 73).contains(visafeecollection.getSourceAmount()) && tranLine.substring(27, 43).equals(device.getDeviceNumber()) ;
+	}
+	
+	
 }

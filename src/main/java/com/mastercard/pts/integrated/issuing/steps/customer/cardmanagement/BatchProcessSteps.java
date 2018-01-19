@@ -9,6 +9,7 @@ import java.io.File;
 import java.nio.file.Path;
 
 import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,5 +177,34 @@ public class BatchProcessSteps {
 		batch.setBatchName("Statement Download [STATEMENT_DOWNLOAD]");
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessWorkflow.processDownloadBatch(batch);
+	}
+	
+	/**
+	 * Step Definition for Processing batches
+	 * <p>
+	 * StoryFile usage : When user runs Process Batches for $batchType for
+	 * $batchName file
+	 * <p>
+	 */
+	@When("user process batches $batchType for $batchname file")
+	public void runProcessBatches(@Named("batchType") String batchType,
+			@Named("batchname") String batchName) {
+		ProcessBatches batch=new ProcessBatches();
+		batch.setBatchName(batchName);
+		batch.setBatchType(batchType);
+		batchProcessWorkflow.processVisaOutgoingBatch(batch);
+	}
+	/**
+	 * Step Definition for Processing batches
+	 * <p>
+	 * StoryFile usage : When user runs Process Batches for $batchType for
+	 * $batchName file
+	 * <p>
+	 */
+	@When("user validate downloaded DAT file")
+	public void validateDownloadedFile() {
+		String partialFileName = context.get("filename");
+		File batchFile = linuxBox.downloadByLookUpForPartialFileName(partialFileName, tempDirectory.toString(), "VISA");
+		batchProcessWorkflow.validateVisaOutGoingFile(batchFile);
 	}
 }
