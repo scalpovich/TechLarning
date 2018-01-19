@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.CardHolderTransactions;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.workflows.cardholder.CardHolderTransactionsWorkFlows;
@@ -87,6 +88,9 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 	public void walletToWalletTransfer(){		
 		cardhlTran = CardHolderTransactions.cardHolderTransDataProvider(provider);
 		context.put(ContextConstants.CARDHOLDER, cardhlTran);
+		Device device = context.get(ContextConstants.DEVICE);
+		cardhlTran.setWalletToAmountTransfer(device.getNewWalletNumber());
+		cardhlTran.setCardNumber(device.getDeviceNumber());
 		transactionFlow.openTransactionPage();
 		transactionFlow.selectWalletToWalletOption();
 		CardHolderTransactions cardhlTran = context.get(ContextConstants.CARDHOLDER);

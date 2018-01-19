@@ -38,8 +38,3 @@ And MAS simulator is closed
 And user is logged in institution
 And search Pre-Auth Completion authorization and verify Success status
 And user sign out from customer portal
-
-Given user is logged in institution
-When pre-clearing and Pre-EOD batches are run
-Then verify report for transactions with Program Balance Summary is downloaded
-And user sign out from customer portal

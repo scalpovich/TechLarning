@@ -2,9 +2,10 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
-
+@Component
 public class Device {
 
 	private static final String BRANCH = "BRANCH";
@@ -55,6 +56,7 @@ public class Device {
 	private String clientCode;
 	private String walletNumber;
 	private String walletNumber2;
+	private String newWalletNumber;
 	private String deviceNumber;
 	private String existingDeviceNumber;
 	private String photoIndicator;
@@ -331,7 +333,15 @@ public class Device {
 	public String getWalletNumber() {
 		return walletNumber;
 	}
+	
+	public String getNewWalletNumber() {
+		return newWalletNumber;
+	}
 
+	public void setNewWalletNumber(String newWalletNumber) {
+		this.newWalletNumber = newWalletNumber;
+	}
+	
 	public void setWalletNumber(String walletNumber) {
 		this.walletNumber = walletNumber;
 	}

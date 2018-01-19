@@ -12,6 +12,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.dispute.DisputeHist
 import com.mastercard.pts.integrated.issuing.domain.customer.dispute.RetrievalRequest;
 import com.mastercard.pts.integrated.issuing.pages.PageObjectFactory;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.dispute.ChargeBackCancellationPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.dispute.ChargeBackNewPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.dispute.ChargeBackReversalPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.dispute.DisputeHistoryPage;
@@ -57,7 +58,7 @@ public class DisputeWorkflow extends SimulatorUtilities {
 	}
 
 	public void createChargeBackRequest(ChargeBack cb) {
-		ChargeBackNewPage page = navigator.navigateToPage(ChargeBackNewPage.class);
+		ChargeBackNewPage page = navigator.navigateToPage(ChargeBackNewPage.class);		
 		page.searchByArn(cb.getArn());
 		page.triggerChargeBack(cb);
 	}
@@ -103,5 +104,9 @@ public class DisputeWorkflow extends SimulatorUtilities {
 		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
 		page.processUploadBatch(batch);
 	}
-
+	
+	public void cancelChargeBackRequst(RetrievalRequest cb) {
+		ChargeBackCancellationPage page = navigator.navigateToPage(ChargeBackCancellationPage.class);
+		page.searchByArn(cb.getArn());
+	}
 }

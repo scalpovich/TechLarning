@@ -413,11 +413,7 @@ public class Constants {
 	public static final String MEMBERSHIP_FEE = "Membership";
 
 	public static final String ACCOUNTTYPE_SAVINGS = "Saving Account";
-
 	public static final String STATEMENT_PLAN = "Statement Plan";
-    public static final String ADD_SURCHARGE_WAIVER_PLAN_DETAIL="Add Surcharge Waiver Plan Detail";
-	public static final String MARKETING_PLAN = "Marketing Message Plan";
-	public static final String WAIVERPLAN_CODE_ERRMSG="[A-Z 0-9] and underscore are allowed and must start and end with an alphanumeric character.";
-	public static final String WAIVERPLAN_DESC_ERRMSG="[a-z A-Z 0-9], SPACES and special characters [.,&#:*()-] are allowed and must start with an alphanumeric.";
-	
+    public static final String MARKETING_PLAN = "Marketing Message Plan";
+
 }
