@@ -1,39 +1,47 @@
-debit msr corporate card setup
+prepaid msr retail general purpose card authorization
 
 Narrative:
-In order to provide to client easy-to-use payment method for e-commerce retail
+In order to check transactions on prepaid msr retail general purpose card 
 As an issuer
-I want to create a msr Corporate debit card for client
+I want to authorize transactions for prepaid msr retail general purpose card 
 
 Meta:
-@StoryName d_msr_corp
-@CRCardsWithAuthorizationCashWithdrawalWithClearing
+@StoryName p_msr_retail_gen_purpose
+@oldReferenceSheet_prepaid_msr
+@CRCardsWithAuthorizationCashAdvancedWithClearing
 
-Scenario: Setup - debit msr corp debit card
+Scenario: Set up prepaid msr retail general purpose card
+Meta:
+@TestId TC398484
 Given user is logged in institution
-And device range for program with device plan for "debit" "msr" card without pin
-When user creates new device of debit type for new client
-Then device has "normal" status
+And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
+When user creates new device of prepaid type for new client
 
-Scenario: Device production - debit msr corp debit card
+
+Scenario: prepaid msr retail general purpose card device production
+Meta:
+@TestId TC398484
 Given user is logged in institution
 And a new device was created
-When processes pre-production batch for debit
-When processes device production batch for debit
-When user has wallet number information for debit device
-When user performs adjustment transaction
-When user has current wallet balance amount information for debit device
+When processes pre-production batch for prepaid
+When processes device production batch for prepaid
 Then device has "normal" status
-When user activates device through helpdesk
+When user has wallet number information for debit device
+Then user sign out from customer portal
+Then user is logged in institution
+When user performs adjustment transaction
+When user has current wallet balance amount information for prepaid device
+Then device has "normal" status
+Then user activates device through helpdesk
 Then user sign out from customer portal
 
-Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
+
+Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
 Meta:
 @TestId 
 Given connection to MAS is established
-When perform an MSR_CASH_WITHDRAWAL MAS transaction
+When perform an MSR_CASH_ADVANCE MAS transaction
 Then MAS test results are verified
-
 
 Scenario: Generate Auth File for Clearing
 Meta:

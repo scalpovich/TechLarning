@@ -1,39 +1,38 @@
-debit msr corporate card setup
+Prepaid msr retail travel card multi currency without pin authorization
 
 Narrative:
-In order to provide to client easy-to-use payment method for e-commerce retail
+In order to check transactions on prepaid msr retail travel mwmc card 
 As an issuer
-I want to create a msr Corporate debit card for client
+I want to authorize transactions for prepaid msr retail travel mwmc card 
 
 Meta:
-@StoryName d_msr_corp
-@CRCardsWithAuthorizationCashWithdrawalWithClearing
+@StoryName p_msr_retail_travel_mwmc
 
-Scenario: Setup - debit msr corp debit card
+Scenario: Setup multi-currency prepaid msr retail travel card and perfomr refund without pin authorization
 Given user is logged in institution
-And device range for program with device plan for "debit" "msr" card without pin
-When user creates new device of debit type for new client
-Then device has "normal" status
-
-Scenario: Device production - debit msr corp debit card
+And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
+When user creates new device of prepaid type for new client
+And user sign out from customer portal
 Given user is logged in institution
 And a new device was created
-When processes pre-production batch for debit
-When processes device production batch for debit
-When user has wallet number information for debit device
-When user performs adjustment transaction
-When user has current wallet balance amount information for debit device
+When processes pre-production batch for prepaid
+When processes device production batch for prepaid
+When user has wallet number information for prepaid device
+When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
-Then user sign out from customer portal
+And user setup device currency through helpdesk
+Then currency setup for prepaid device is done correctly and updated in wallet details tab
+When user performs adjustment transaction
+And user performs adjustment transaction for second wallet
+And user sign out from customer portal
 
-Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
+Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
 Meta:
 @TestId 
 Given connection to MAS is established
-When perform an MSR_CASH_WITHDRAWAL MAS transaction
+When perform an MSR_CASH_ADVANCE MAS transaction
 Then MAS test results are verified
-
 
 Scenario: Generate Auth File for Clearing
 Meta:
@@ -42,6 +41,7 @@ When Auth file is generated after transaction
 When MAS simulator is closed
 Then user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
+Then verify transaction currency as INR and billing currency as USD on auth search
 Then user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
@@ -69,4 +69,3 @@ When transaction status is "Matching Pending"
 When "Matching" batch for prepaid is successful
 Then transaction status is "Presentment Matched with authorization"
 Then user sign out from customer portal
-
