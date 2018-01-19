@@ -56,7 +56,7 @@ Given connection to MCPS is established
 When Auth file is generated
 When Auth file is loaded into MCPS and processed
 Then NOT file is successfully generated
-When MCPS simulator is closed
+Then MCPS simulator is closed
 
 Scenario: Upload ipm file from customer portal and process it
 Meta:
