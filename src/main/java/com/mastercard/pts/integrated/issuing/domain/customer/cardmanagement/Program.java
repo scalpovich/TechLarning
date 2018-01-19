@@ -134,8 +134,8 @@ public class Program implements HasCodeAndDescription {
 		programObject.setProgramCode(MiscUtils.generate6CharAlphaNumeric());
 		programObject.setDescription(ConstantData.GENERIC_DESCRIPTION);
 		programObject.setProgramType(provider.getString(PROGRAM_TYPE));
-		programObject.setMaximumBalanceWithoutKyc(RandomStringUtils.randomNumeric(4));
-		programObject.setNumberOfLoadsAllowedWithoutKyc(String.valueOf(RandomUtils.nextInt(1,99)));
+		programObject.setMaximumBalanceWithoutKyc("100000");
+		programObject.setNumberOfLoadsAllowedWithoutKyc("100");
 		programObject.setCreditLimit(RandomStringUtils.randomNumeric(5));
 		programObject.setMaximumCreditLimit(RandomStringUtils.randomNumeric(6));
 		programObject.setCashLimitAmount(RandomStringUtils.randomNumeric(5));
