@@ -1,39 +1,31 @@
-prepaid emv retail travel card authorization
+Prepaid msr retail travel card multi currency refund without pin authorization
 
 Narrative:
-In order to check transactions on prepaid emv retail general purpose card
+In order to check transactions on prepaid msr retail travel mwmc card 
 As an issuer
-I want to authorize transactions for prepaid emv retail general purpose card
+I want to authorize transactions for prepaid msr retail travel mwmc card 
 
 Meta:
-@StoryName p_emv_retail_travel
-@oldReferenceSheet_S203707
-@CRCardsWithAuthorizationCashAdvancedWithClearing
+@StoryName p_emv_retail_travel_mwmc
 
-Scenario: Set up prepaid emv retail travel card
-Meta:
-@TestId TC398452
+Scenario: Setup multi-currency prepaid emv retail travel card and perfomr cash advanced  without pin authorization
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client
-
-
-Scenario: prepaid emv retail travel card device production
-Meta:
-@TestId TC408068
+And user sign out from customer portal
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
-Then device has "normal" status
-When user has wallet number information for debit device
-Then user sign out from customer portal
-Then user is logged in institution
-When user performs adjustment transaction
+When user has wallet number information for prepaid device
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
-Then user activates device through helpdesk
-Then user sign out from customer portal
+When user activates device through helpdesk
+And user setup device currency through helpdesk
+Then currency setup for prepaid device is done correctly and updated in wallet details tab
+When user performs adjustment transaction
+And user performs adjustment transaction for second wallet
+And user sign out from customer portal
 
 
 Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
@@ -48,7 +40,10 @@ Meta:
 @TestId 
 When Auth file is generated after transaction
 When MAS simulator is closed
-
+Then user is logged in institution
+Then search Cash Advance authorization and verify 000-Successful status
+Then verify transaction currency as INR and billing currency as USD on auth search
+Then user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
 Meta:
@@ -75,3 +70,4 @@ When transaction status is "Matching Pending"
 When "Matching" batch for prepaid is successful
 Then transaction status is "Presentment Matched with authorization"
 Then user sign out from customer portal
+

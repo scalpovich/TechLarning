@@ -70,4 +70,4 @@ When perform an ECOMM_PURCHASE MAS transaction
 Then MAS test results are verified
 Then user is logged in institution
 Then search E-Commerce Transaction authorization and verify 000-Successful status
-And user sign out from customer portal 
+And user sign out from customer portal

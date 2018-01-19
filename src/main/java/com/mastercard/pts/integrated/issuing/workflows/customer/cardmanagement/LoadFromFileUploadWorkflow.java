@@ -78,7 +78,7 @@ public class LoadFromFileUploadWorkflow {
 	}
 	
 	public void loadIncomingIPM(File fileName){
-		uploadFile.uploadIpmFile(fileName);
+		uploadFile.uploadIpmFile(fileName);		
 	}
 	
 }

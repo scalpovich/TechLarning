@@ -16,12 +16,12 @@ public class UserCreationFlows {
 
 	UserPage userPage;
 
-	public void createUser(UserCreation user, InstitutionCreation instituteData) {
+	public void createUser(UserCreation user) {
 		userPage = navigator.navigateToPage(UserPage.class);
 		userPage.addNewuser();
 		userPage.provideUserDetails(user);
-		userPage.mapInstituteToUser(instituteData);
-		userPage.Save();
+		userPage.mapInstituteToUser(user);
+		userPage.save();
 	}
 
 	public void userCreationSuccess(UserCreation user) {

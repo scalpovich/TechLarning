@@ -20,6 +20,7 @@ Given user is logged in institution
 And a new device was created
 When processes pre-production batch for debit
 When processes device production batch for debit
+When processes pin generation batch for debit
 When user has wallet number information for debit device
 When user performs adjustment transaction
 When user has current wallet balance amount information for debit device
@@ -27,11 +28,20 @@ Then device has "normal" status
 When user activates device through helpdesk
 Then user sign out from customer portal
 
-Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
+Scenario: Pin Generation 
+Meta:
+@TestId 
+Given connection to FINSim is established
+When Pin Offset file batch was generated successfully
+Then embossing file batch was generated in correct format
+When PIN is retrieved successfully with data from Pin Offset File
+Then FINSim simulator is closed
+
+Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
 Meta:
 @TestId 
 Given connection to MAS is established
-When perform an MSR_CASH_ADVANCE MAS transaction
+When perform an MSR_CASH_WITHDRAWAL MAS transaction
 Then MAS test results are verified
 
 
@@ -41,7 +51,7 @@ Meta:
 When Auth file is generated after transaction
 When MAS simulator is closed
 Then user is logged in institution
-Then search Cash Advance authorization and verify 000-Successful status
+Then search CWD authorization and verify 000-Successful status
 Then user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension

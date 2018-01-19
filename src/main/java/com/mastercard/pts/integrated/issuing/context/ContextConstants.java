@@ -8,6 +8,8 @@ public class ContextConstants {
 
 	public static final String DEVICE = "DEVICE";
 	
+	public static final String DEVICE2 = "DEVICE2";
+
 	public static final String CLIENT_ID = "CLIENT_ID";
 		
 	public static final String ORDER = "ORDER";
@@ -23,6 +25,8 @@ public class ContextConstants {
 	public static final String OPEN_WALLET = "OPEN WALLET";
 
 	public static final String CLOSED_WALLET = "CLOSED WALLET";
+	
+	public static final String INSTITUTION ="INSTITUTION"; 
 	
 	private ContextConstants() {}
 }

@@ -1,39 +1,41 @@
-prepaid emv retail general purpose card authorization
+debit emv corporate card authorisation PIN
 
 Narrative:
-In order to check transactions on prepaid emv retail general purpose card
+In order to provide to client easy-to-use payment method for e-commerce retail
 As an issuer
-I want to authorize transactions for prepaid emv retail general purpose card
+I want to create a EMV Corporate debit card for client
 
 Meta:
-@StoryName p_emv_corp_general_purpose
-@oldReferenceSheet_S203707
+@StoryName d_emv_corp
 @CRCardsWithAuthorizationCashAdvancedWithClearing
 
-Scenario: Set up prepaid emv retail general purpose card
-Meta:
-@TestId TC398452
+Scenario: Setup debit emv corp debit card 
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card without pin
-When user creates new device of prepaid type for new client
-
-Scenario: prepaid emv retail general purpose card device production
-Meta:
-@TestId TC408068
+And device range for program with device plan for "debit" "emv" card
+When user creates new device of debit type for new client
+Then device has "normal" status
+And user sign out from customer portal
 Given user is logged in institution
 And a new device was created
-When processes pre-production batch for prepaid
-When processes device production batch for prepaid
-Then user sign out from customer portal
-Then user is logged in institution
-Then device has "normal" status
+When processes pre-production batch for debit
+When processes device production batch for debit
+When processes pin generation batch for debit
 When user has wallet number information for debit device
 When user performs adjustment transaction
-When user has current wallet balance amount information for prepaid device
+When user has current wallet balance amount information for debit device
 Then device has "normal" status
-Then user activates device through helpdesk
-Then user sign out from customer portal
+When user activates device through helpdesk
+And user sign out from customer portal
 
+
+Scenario: Pin Generation 
+Meta:
+@TestId 
+Given connection to FINSim is established
+When Pin Offset file batch was generated successfully
+Then embossing file batch was generated in correct format
+When PIN is retrieved successfully with data from Pin Offset File
+Then FINSim simulator is closed
 
 Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
 Meta:

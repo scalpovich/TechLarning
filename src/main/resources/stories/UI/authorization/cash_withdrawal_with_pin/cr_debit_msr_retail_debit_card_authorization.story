@@ -1,58 +1,48 @@
-prepaid emv retail travel card authorization
+debit msr retail debit card authorization PINLESS
 
 Narrative:
-In order to check transactions on prepaid emv retail general purpose card
+In order to check transactions on debit msr retail debit card pinless
 As an issuer
-I want to authorize transactions for prepaid emv retail general purpose card
+I want to authorize transactions for debit msr retail debit card pinless
 
 Meta:
-@StoryName p_emv_corp_travel
-@oldReferenceSheet_S203707
+@StoryName d_msr_retail
 @CRCardsWithAuthorizationCashAdvancedWithClearing
 
-
-Scenario: Set up prepaid msr corporate travel card
-Meta:
-@TestId TC398452
+Scenario: Setup - debit msr retail debit card
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "magnetic stripe" card
-When user creates new device of prepaid type for new client
+And device range for program with device plan for "debit" "msr" card
+When user creates new device of debit type for new client
 
-Scenario: prepaid msr corporate travel card device production
-Meta:
-@TestId TC408068
+Scenario: Device production - debit msr retail debit card
 Given user is logged in institution
 And a new device was created
-When processes pre-production batch for prepaid
-When processes device production batch for prepaid
-When processes pin generation batch for prepaid
-
-Then device has "normal" status
+When processes pre-production batch for debit
+When processes device production batch for debit
+When processes pin generation batch for debit
 When user has wallet number information for debit device
-Then user sign out from customer portal
-Then user is logged in institution
 When user performs adjustment transaction
-When user has current wallet balance amount information for prepaid device
+When user has current wallet balance amount information for debit device
 Then device has "normal" status
-Then user activates device through helpdesk
+When user activates device through helpdesk
 Then user sign out from customer portal
-
 
 Scenario: Pin Generation 
 Meta:
 @TestId 
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
-When embossing file batch was generated in correct format
+Then embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
+Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
 Meta:
 @TestId 
 Given connection to MAS is established
-When perform an MSR_CASH_ADVANCE MAS transaction
+When perform an MSR_CASH_WITHDRAWAL MAS transaction
 Then MAS test results are verified
+
 
 Scenario: Generate Auth File for Clearing
 Meta:
@@ -60,7 +50,7 @@ Meta:
 When Auth file is generated after transaction
 When MAS simulator is closed
 Then user is logged in institution
-Then search Cash Advance authorization and verify 000-Successful status
+Then search CWD authorization and verify 000-Successful status
 Then user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
