@@ -1,20 +1,22 @@
-prepaid emv corporate general purpose card authorization PINLESS
+prepaid MSR corporate gift card without PIN
 
 Narrative:
-In order to provide a corporate client various transactions
+In order to provide a corporate client various scenarios
 As an issuer
-I want to create a prepaid emv corporate general purpose card and test various transactions
+I want to create a prepaid MSR corporate gift card and test various scenarios
 
 Meta:
-@StoryName p_emv_corp_general_purpose
+@StoryName p_msr_corp_gift
 @AuthorizationRegression
 @AuthorizationRegressionGroup2
-Scenario: Setup - prepaid emv corporate general purpose card
-Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card without pin
-When user creates new device of prepaid type for new client
 
-Scenario: Device production - prepaid emv corporate general purpose card
+Scenario: Setup - prepaid MSR corporate gift card without PIN
+Given user is logged in institution
+And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
+When user creates new device of prepaid type for new client
+And user sign out from customer portal
+
+Scenario: Device production - prepaid MSR corporate gift card without PIN
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
@@ -24,41 +26,48 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
-Then user sign out from customer portal
+And user sign out from customer portal
 Then embossing file batch was generated in correct format
 
-Scenario: Transaction - EMV_PREAUTH and EMV_COMPLETION Authorization transaction
+Scenario: Transaction - MSR_PREAUTH  and MSR_COMPLETION Authorization transaction
 Given connection to MAS is established
-When perform an EMV_PREAUTH MAS transaction
+When perform an MSR_PREAUTH MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth authorization and verify 000-Successful status
 And user sign out from customer portal
-When perform an EMV_COMPLETION MAS transaction
+When perform an MSR_COMPLETION MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth Completion authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform EMV_PURCHASE Authorization transaction
-When perform an EMV_PURCHASE MAS transaction
+Scenario: Perform MSR_PURCHASE Authorization transaction
+When perform an MSR_PURCHASE MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform EMV_PURCHASE_WITH_CASHBACK Authorization transaction
-When perform an EMV_PURCHASE_WITH_CASHBACK MAS transaction
+Scenario: Perform MSR_PURCHASE_WITH_CASHBACK Authorization transaction
+When perform an MSR_PURCHASE_WITH_CASHBACK MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase with Cash back authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
-When perform an EMV_CASH_ADVANCE MAS transaction
+Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
+When perform an MSR_CASH_ADVANCE MAS transaction
 Then MAS test results are verified
 Then user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
+And user sign out from customer portal
+
+Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
+When perform an MSR_CASH_WITHDRAWAL MAS transaction
+Then MAS test results are verified
+Then user is logged in institution
+Then search CWD authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: Perform ECOMM_PURCHASE Authorization transaction
@@ -68,8 +77,8 @@ Then user is logged in institution
 Then search E-Commerce Transaction authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform EMV_POS_BALANCE_INQUIRY Authorization transaction
-When perform an EMV_POS_BALANCE_INQUIRY MAS transaction on the same card
+Scenario: Perform MSR_POS_BALANCE_INQUIRY Authorization transaction
+When perform an MSR_POS_BALANCE_INQUIRY MAS transaction on the same card
 Then MAS test results are verified
 Then user is logged in institution
 Then search Balance Inquiry authorization and verify 000-Successful status
