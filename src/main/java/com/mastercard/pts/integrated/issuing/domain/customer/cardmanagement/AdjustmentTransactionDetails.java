@@ -23,7 +23,7 @@ public class AdjustmentTransactionDetails{
 	public static AdjustmentTransactionDetails createTransactionWithDetails(){
 		AdjustmentTransactionDetails transactionDetails = new AdjustmentTransactionDetails();
 		transactionDetails.setMemo(ConstantData.GENERIC_DESCRIPTION);
-		transactionDetails.setTransactionDate(LocalDate.now().plusDays(1));
+		transactionDetails.setTransactionDate(LocalDate.now().minusDays(1));
 		transactionDetails.setTransactionDateHours("00");
 		transactionDetails.setTransactionDateMinutes("00");
 		transactionDetails.setAdjustmentAmount("500");
