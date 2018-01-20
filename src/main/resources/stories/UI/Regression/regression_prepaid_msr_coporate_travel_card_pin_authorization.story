@@ -11,11 +11,13 @@ Meta:
 @CRCardsWithAuthorizationRegression
 @AuthorizationRegression
 @AuthorizationRegressionGroup3
+@MSRWithPin
 
 Scenario: Set up prepaid msr corporate travel card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
+Then user sign out from customer portal
 
 Scenario: prepaid msr corporate travel card device production
 Given user is logged in institution
@@ -79,6 +81,16 @@ When perform an MSR_POS_BALANCE_INQUIRY MAS transaction on the same card
 Then MAS test results are verified
 Then user is logged in institution
 Then search Balance Inquiry authorization and verify 000-Successful status
+And user sign out from customer portal
+
+Scenario: Perform MSR_REFUND Authorization transaction
+Meta:
+@TestId 
+Given connection to MAS is established
+When perform an MSR_REFUND MAS transaction
+Then MAS test results are verified
+Then user is logged in institution
+Then search Refund authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction

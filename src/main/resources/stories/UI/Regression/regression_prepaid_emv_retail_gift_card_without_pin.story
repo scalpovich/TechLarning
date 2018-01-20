@@ -10,12 +10,14 @@ Meta:
 @oldReferenceSheet_S203707
 @AuthorizationRegression
 @AuthorizationRegressionGroup3
+@EMVWithoutPin
 
 Scenario: Set up prepaid emv retail giftcard card pinless
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client
 Then device has "normal" status
+Then user sign out from customer portal
 
 Scenario: prepaid emv retail giftcard device production
 Given user is logged in institution
@@ -28,6 +30,7 @@ When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
 Then embossing file batch was generated in correct format
+Then user sign out from customer portal
 
 Scenario: Transaction - EMV_PREAUTH and EMV_COMPLETION Authorization transaction
 Given connection to MAS is established

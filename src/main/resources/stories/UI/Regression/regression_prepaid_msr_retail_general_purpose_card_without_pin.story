@@ -9,6 +9,7 @@ Meta:
 @StoryName p_msr_retail_gen_purpose
 @oldReferenceSheet_S203707
 @CRCardsPinlessWithAuthorization
+@MSRWithoutPin
 
 Scenario: Set up prepaid msr retail general purpose card
 Given user is logged in institution
@@ -28,8 +29,8 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
-Then user sign out from customer portal
 Then embossing file batch was generated in correct format
+Then user sign out from customer portal
 
 Scenario: Transaction - MSR_PREAUTH  and MSR_COMPLETION Authorization transaction
 Given connection to MAS is established
@@ -65,13 +66,6 @@ Then user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
-When perform an MSR_CASH_WITHDRAWAL MAS transaction
-Then MAS test results are verified
-Then user is logged in institution
-Then search CWD authorization and verify 000-Successful status
-And user sign out from customer portal
-
 Scenario: Perform ECOMM_PURCHASE Authorization transaction
 When perform an ECOMM_PURCHASE MAS transaction
 Then MAS test results are verified
@@ -86,6 +80,15 @@ Then user is logged in institution
 Then search Balance Inquiry authorization and verify 000-Successful status
 And user sign out from customer portal
 
+Scenario: Perform MSR_REFUND Authorization transaction
+Meta:
+@TestId 
+Given connection to MAS is established
+When perform an MSR_REFUND MAS transaction
+Then MAS test results are verified
+Then user is logged in institution
+Then search Refund authorization and verify 000-Successful status
+And user sign out from customer portal
 
 Scenario: MAS is closed
 When MAS simulator is closed

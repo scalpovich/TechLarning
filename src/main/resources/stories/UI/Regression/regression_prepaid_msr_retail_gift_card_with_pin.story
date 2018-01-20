@@ -10,11 +10,13 @@ Meta:
 @oldReferenceSheet_prepaid_msr
 @AuthorizationRegression
 @AuthorizationRegressionGroup3
+@MSRWithPin
 
 Scenario: Set up prepaid msr retail gift card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
+Then user sign out from customer portal
 
 Scenario: prepaid msr retail gift card device production
 Given user is logged in institution
@@ -80,15 +82,19 @@ Then user is logged in institution
 Then search Balance Inquiry authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
-When perform an MSR_CASH_WITHDRAWAL MAS transaction
+Scenario: Perform MSR_REFUND Authorization transaction
+Meta:
+@TestId 
+Given connection to MAS is established
+When perform an MSR_REFUND MAS transaction
 Then MAS test results are verified
+
 
 Scenario: Generate Auth File for Clearing
 When Auth file is generated after transaction
 When MAS simulator is closed
 Then user is logged in institution
-Then search CWD authorization and verify 000-Successful status
+Then search Refund authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension

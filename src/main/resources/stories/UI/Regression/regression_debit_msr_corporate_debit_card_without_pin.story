@@ -8,6 +8,7 @@ I want to authorize transactions for debit emv retail debit card
 Meta:
 @StoryName d_msr_corp
 @SanityCardsWithAuthorization
+@MSRWithoutPin
 
 Scenario: Set up program for debit emv retail debit card
 Given user is logged in institution
@@ -17,6 +18,7 @@ Then device has "normal" status
 When user has wallet number information for debit device
 When user performs adjustment transaction
 When user has current wallet balance amount information for debit device
+And user sign out from customer portal
 
 Scenario: debit emv retail debit card device production
 Given user is logged in institution
@@ -26,6 +28,7 @@ When processes device production batch for debit
 Then device has "normal" status
 Then user activates device through helpdesk
 Then embossing file batch was generated in correct format
+And user sign out from customer portal
 
 Scenario: Transaction - MSR_PREAUTH  and MSR_COMPLETION Authorization transaction
 Given connection to MAS is established
@@ -61,13 +64,6 @@ Then user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
-When perform an MSR_CASH_WITHDRAWAL MAS transaction
-Then MAS test results are verified
-Then user is logged in institution
-Then search CWD authorization and verify 000-Successful status
-And user sign out from customer portal
-
 Scenario: Perform ECOMM_PURCHASE Authorization transaction
 When perform an ECOMM_PURCHASE MAS transaction
 Then MAS test results are verified
@@ -82,6 +78,15 @@ Then user is logged in institution
 Then search Balance Inquiry authorization and verify 000-Successful status
 And user sign out from customer portal
 
+Scenario: Perform MSR_REFUND Authorization transaction
+Meta:
+@TestId 
+Given connection to MAS is established
+When perform an MSR_REFUND MAS transaction
+Then MAS test results are verified
+Then user is logged in institution
+Then search Refund authorization and verify 000-Successful status
+And user sign out from customer portal
 
 Scenario: MAS is closed
 When MAS simulator is closed

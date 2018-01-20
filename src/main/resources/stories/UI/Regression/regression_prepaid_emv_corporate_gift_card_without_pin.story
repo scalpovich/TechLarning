@@ -9,6 +9,7 @@ Meta:
 @StoryName p_emv_corp_gift
 @AuthorizationRegression
 @AuthorizationRegressionGroup2
+@EMVWithoutPin
 
 Scenario: Setup - prepaid emv corporate gift card without PIN
 Given user is logged in institution
@@ -26,8 +27,8 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
-And user sign out from customer portal
 Then embossing file batch was generated in correct format
+Then user sign out from customer portal
 
 Scenario: Transaction - EMV_PREAUTH and EMV_COMPLETION Authorization transaction
 Given connection to MAS is established

@@ -9,11 +9,13 @@ Meta:
 @StoryName p_emv_retail_travel
 @AuthorizationRegression
 @AuthorizationRegressionGroup1
+@EMVWithoutPin
 
 Scenario: Set up prepaid emv retail travel card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client
+Then user sign out from customer portal
 
 Scenario: prepaid emv retail travel card device production
 Given user is logged in institution

@@ -9,7 +9,7 @@ Meta:
 @StoryName S203707
 @AuthorizationRegression
 @AuthorizationRegressionGroup3
-
+@EMVWithPin
 
 Scenario: Set up prepaid emv retail giftcard card
 Given user is logged in institution
@@ -74,16 +74,9 @@ Then user is logged in institution
 Then search Balance Inquiry authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
-When perform an EMV_CASH_WITHDRAWAL MAS transaction
-Then MAS test results are verified
-
 Scenario: Generate Auth File for Clearing
 When Auth file is generated after transaction
 When MAS simulator is closed
-Then user is logged in institution
-Then search CWD authorization and verify 000-Successful status
-And user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
 Given connection to MCPS is established

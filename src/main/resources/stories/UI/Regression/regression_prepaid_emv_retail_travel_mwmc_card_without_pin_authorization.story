@@ -7,6 +7,7 @@ I want to authorize transactions for prepaid msr retail travel mwmc card
 
 Meta:
 @StoryName p_emv_retail_travel_mwmc
+@EMVWithoutPin
 
 Scenario: Setup multi-currency prepaid emv retail travel card and perfomr cash advanced  without pin authorization
 Given user is logged in institution
@@ -25,8 +26,8 @@ And user setup device currency through helpdesk
 Then currency setup for prepaid device is done correctly and updated in wallet details tab
 When user performs adjustment transaction
 And user performs adjustment transaction for second wallet
-And user sign out from customer portal
 Then embossing file batch was generated in correct format
+Then user sign out from customer portal
 
 Scenario: Transaction - EMV_PREAUTH and EMV_COMPLETION Authorization transaction
 Given connection to MAS is established

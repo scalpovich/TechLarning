@@ -10,12 +10,14 @@ Meta:
 @oldReferenceSheet_prepaid_msr
 @AuthorizationRegression
 @AuthorizationRegressionGroup3
+@MSRWithoutPin
 
 Scenario: Set up prepaid msr retail gift card authorization pinless
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client
 Then device has "normal" status
+Then user sign out from customer portal
 
 Scenario: prepaid msr retail gift card authorization pinless device production
 Given user is logged in institution
@@ -28,8 +30,8 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
-And user sign out from customer portal
 Then embossing file batch was generated in correct format
+Then user sign out from customer portal
 
 Scenario: Transaction - MSR_PREAUTH  and MSR_COMPLETION Authorization transaction
 Given connection to MAS is established
@@ -65,13 +67,6 @@ Then user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
-When perform an MSR_CASH_WITHDRAWAL MAS transaction
-Then MAS test results are verified
-Then user is logged in institution
-Then search CWD authorization and verify 000-Successful status
-And user sign out from customer portal
-
 Scenario: Perform ECOMM_PURCHASE Authorization transaction
 When perform an ECOMM_PURCHASE MAS transaction
 Then MAS test results are verified
@@ -86,6 +81,15 @@ Then user is logged in institution
 Then search Balance Inquiry authorization and verify 000-Successful status
 And user sign out from customer portal
 
+Scenario: Perform MSR_REFUND Authorization transaction
+Meta:
+@TestId 
+Given connection to MAS is established
+When perform an MSR_REFUND MAS transaction
+Then MAS test results are verified
+Then user is logged in institution
+Then search Refund authorization and verify 000-Successful status
+And user sign out from customer portal
 
 Scenario: MAS is closed
 When MAS simulator is closed

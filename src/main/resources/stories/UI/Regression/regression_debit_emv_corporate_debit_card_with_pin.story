@@ -8,6 +8,7 @@ I want to authorize transactions for debit emv retail debit card
 Meta:
 @StoryName d_emv_corp
 @SanityCardsWithAuthorization
+@EMVWithPin
 
 Scenario: Set up program for debit emv retail debit card
 Given user is logged in institution

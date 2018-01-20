@@ -7,6 +7,7 @@ I want to authorize transactions for prepaid msr retail travel mwmc card
 
 Meta:
 @StoryName p_msr_retail_travel_mwmc
+@MSRWithoutPin
 
 Scenario: Setup multi-currency prepaid msr retail travel card and perfomr refund without pin authorization
 Given user is logged in institution
@@ -25,8 +26,8 @@ And user setup device currency through helpdesk
 Then currency setup for prepaid device is done correctly and updated in wallet details tab
 When user performs adjustment transaction
 And user performs adjustment transaction for second wallet
-And user sign out from customer portal
 Then embossing file batch was generated in correct format
+Then user sign out from customer portal
 
 Scenario: Transaction - MSR_PREAUTH  and MSR_COMPLETION Authorization transaction
 Given connection to MAS is established
@@ -62,13 +63,6 @@ Then user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
-When perform an MSR_CASH_WITHDRAWAL MAS transaction
-Then MAS test results are verified
-Then user is logged in institution
-Then search CWD authorization and verify 000-Successful status
-And user sign out from customer portal
-
 Scenario: Perform ECOMM_PURCHASE Authorization transaction
 When perform an ECOMM_PURCHASE MAS transaction
 Then MAS test results are verified
@@ -81,6 +75,16 @@ When perform an MSR_POS_BALANCE_INQUIRY MAS transaction on the same card
 Then MAS test results are verified
 Then user is logged in institution
 Then search Balance Inquiry authorization and verify 000-Successful status
+And user sign out from customer portal
+
+Scenario: Perform MSR_REFUND Authorization transaction
+Meta:
+@TestId 
+Given connection to MAS is established
+When perform an MSR_REFUND MAS transaction
+Then MAS test results are verified
+Then user is logged in institution
+Then search Refund authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: MAS is closed

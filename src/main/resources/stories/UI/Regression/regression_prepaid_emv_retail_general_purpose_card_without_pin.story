@@ -8,11 +8,13 @@ I want to authorize transactions for prepaid emv retail general purpose card
 Meta:
 @StoryName p_emv_retail_general
 @CRCardsPinlessWithAuthorization
+@EMVWithoutPin
 
 Scenario: Set up prepaid emv retail general purpose card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client
+Then user sign out from customer portal
 
 Scenario: prepaid emv retail general purpose card device production
 Given user is logged in institution
@@ -27,6 +29,7 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
+Then embossing file batch was generated in correct format
 Then user sign out from customer portal
 
 Scenario: Transaction - EMV_PREAUTH and EMV_COMPLETION Authorization transaction
