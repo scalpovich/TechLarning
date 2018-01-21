@@ -79,9 +79,6 @@ Then search Balance Inquiry authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: Perform MSR_REFUND Authorization transaction
-Meta:
-@TestId 
-Given connection to MAS is established
 When perform an MSR_REFUND MAS transaction
 Then MAS test results are verified
 Then user is logged in institution
