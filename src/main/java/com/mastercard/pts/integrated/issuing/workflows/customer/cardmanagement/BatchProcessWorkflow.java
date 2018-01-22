@@ -124,9 +124,10 @@ public void processDownloadBatch(ProcessBatches batch){
 		 scnr = new Scanner(file);
 		while(scnr.hasNextLine()){
 		   String line = scnr.nextLine();
-		   if(line.startsWith(ConstantData.VISA_FEE_COLLECTION_TRANSACTIONCODE))
+		   if(line.startsWith(ConstantData.VISA_FEE_COLLECTION_TRANSACTIONCODE) || line.startsWith(ConstantData.VISA_FUND_DISBURSEMENT_TRANSACTIONCODE))
 		   {
 			   tranLine=line;
+			   break;
 		   }
 		}
 		}catch(Exception e){
@@ -134,6 +135,10 @@ public void processDownloadBatch(ProcessBatches batch){
 		}	
 		finally
 		{
+			if(tranLine.isEmpty())
+			{
+				 logger.error("Transaction code does not exist");
+			}
 			if(scnr !=null)
 			scnr.close();
 		}
