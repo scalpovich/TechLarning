@@ -66,11 +66,6 @@ And user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
 Then user sign out from customer portal
 
-Scenario: Perform EMV_REFUND Authorization transaction
-Meta:
-@TestId 
-When perform an EMV_REFUND MAS transaction on the same card
-Then MAS test results are verified
 
 Scenario: Perform EMV_POS_BALANCE_INQUIRY Authorization transaction
 Meta:
