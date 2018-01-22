@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.TransactionsNav;
+import com.mastercard.pts.integrated.issuing.domain.cardholder.CardHolderTransactions;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -174,6 +175,27 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 		ClickButton(cashRemittanceSubmitBtn);
 	}
 	
-
+	
+	public void bookCashRemittance(CardHolderTransactions cardhlTran){
+		enterBeneficiaryId(cardhlTran.getBeneficiaryID());
+		enterBeneficiaryFirstName(cardhlTran.getBeneficiaryFirstName());
+		enterBeneficiaryMiddleName(cardhlTran.getBeneficiaryMiddleName());
+		enterBeneficiaryLastName(cardhlTran.getBeneficiaryLastName());
+		enterBeneficiaryAddress1(cardhlTran.getBeneficiaryAddressLine1());
+		enterBeneficiaryAddress2(cardhlTran.getBeneficiaryAddressLine2());
+		enterBeneficiaryAddress3(cardhlTran.getBeneficiaryAddressLine3());
+		enterBeneficiaryStateName(cardhlTran.getBeneficiaryStateName());
+		enterBeneficiaryCityName(cardhlTran.getBeneficiaryCityName());
+		enterBeneficiaryZipCode(cardhlTran.getBeneficiaryZIPCode());
+		enterBeneficiaryEmailAddress(cardhlTran.getBeneficiaryEmailAddress());
+		enterBeneficiaryMobileNumber(cardhlTran.getBeneficiaryMobileNumber());
+		enterRemittanceAmount(cardhlTran.getBeneficiaryRemittanceAmount());
+		enterRemittanceCurrency(cardhlTran.getBeneficiaryRemittanceCurrency());
+		submitRemittanceRequst();
+	}
+	
+	public void cancelRemittanceRequst(CardHolderTransactions cardhlTran){
+		
+	}
 
 }

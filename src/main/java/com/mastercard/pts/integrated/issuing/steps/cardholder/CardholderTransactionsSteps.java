@@ -38,17 +38,15 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 	@When("cardholder book the cash remittance")
 	public void cardholderBookCashRemittance(){		
 		cardhlTran = CardHolderTransactions.cardholderCashRemit(provider);
-		transactionFlow.openCashRemittanceTransactionPage();		
-		if(!transactionFlow.checkCashRemittanceAllowedOrNot()){
-			transactionFlow.cashRemittanceBooking(cardhlTran);			
-		}else{			
-			logger.info("Selected card do not cash remittance service");
-		}
+		transactionFlow.openCashRemittanceTransactionPage();	
+		transactionFlow.cashRemittanceBooking(cardhlTran);
 	}
 	
 	@When ("cardholder cancel the cash remittance")
 	public void cancelCashRemittanceRequest(){
+		cardhlTran = CardHolderTransactions.cardholderCashRemit(provider);
 		transactionFlow.openCancelRemittanceTransactionPage();
+		transactionFlow.cancelCashRemittanceBooking(cardhlTran);
 	}
 	
 	@When ("fund transfer through MasterCard Money Send")

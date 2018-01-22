@@ -126,33 +126,14 @@ public class CardHolderTransactionsWorkFlows extends AbstractBasePage{
 		}
 	}
 	
-	public void cancelCashRemittanceBooking(){
-		
+	public void cancelCashRemittanceBooking(CardHolderTransactions cardhlTran){
+		cashRemittanceBookingPage.cancelRemittanceRequst(cardhlTran);
 	}
 	
 	public void cashRemittanceBooking(CardHolderTransactions cardhlTran){
-		cashRemittanceBookingPage.enterBeneficiaryId(cardhlTran.getBeneficiaryID());
-		cashRemittanceBookingPage.enterBeneficiaryFirstName(cardhlTran.getBeneficiaryFirstName());
-		cashRemittanceBookingPage.enterBeneficiaryMiddleName(cardhlTran.getBeneficiaryMiddleName());
-		cashRemittanceBookingPage.enterBeneficiaryLastName(cardhlTran.getBeneficiaryLastName());
-		cashRemittanceBookingPage.enterBeneficiaryAddress1(cardhlTran.getBeneficiaryAddressLine1());
-		cashRemittanceBookingPage.enterBeneficiaryAddress2(cardhlTran.getBeneficiaryAddressLine2());
-		cashRemittanceBookingPage.enterBeneficiaryAddress3(cardhlTran.getBeneficiaryAddressLine3());
-		cashRemittanceBookingPage.enterBeneficiaryStateName(cardhlTran.getBeneficiaryStateName());
-		cashRemittanceBookingPage.enterBeneficiaryCityName(cardhlTran.getBeneficiaryCityName());
-		cashRemittanceBookingPage.enterBeneficiaryZipCode(cardhlTran.getBeneficiaryZIPCode());
-		cashRemittanceBookingPage.enterBeneficiaryEmailAddress(cardhlTran.getBeneficiaryEmailAddress());
-		cashRemittanceBookingPage.enterBeneficiaryMobileNumber(cardhlTran.getBeneficiaryMobileNumber());
-		cashRemittanceBookingPage.enterRemittanceAmount(cardhlTran.getBeneficiaryRemittanceAmount());
-		cashRemittanceBookingPage.enterRemittanceCurrency(cardhlTran.getBeneficiaryRemittanceCurrency());
-		submitCashRemittanceBookingRequest();
+		cashRemittanceBookingPage.bookCashRemittance(cardhlTran);
 	}
 	
-	public void submitCashRemittanceBookingRequest(){
-		cashRemittanceBookingPage.submitRemittanceRequst();
-	}
-	
-
 	public boolean verifyAvailBalanceIntoWallet(){
 		if(fundTransfer.availBalaceIntoWallet()!= null){
 			return true;
