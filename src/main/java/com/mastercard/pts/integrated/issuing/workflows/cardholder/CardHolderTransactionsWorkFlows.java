@@ -130,8 +130,8 @@ public class CardHolderTransactionsWorkFlows extends AbstractBasePage{
 		cashRemittanceBookingPage.cancelRemittanceRequst(cardhlTran);
 	}
 	
-	public void cashRemittanceBooking(CardHolderTransactions cardhlTran){
-		cashRemittanceBookingPage.bookCashRemittance(cardhlTran);
+	public String cashRemittanceBooking(CardHolderTransactions cardhlTran){
+		return cashRemittanceBookingPage.bookCashRemittance(cardhlTran);
 	}
 	
 	public boolean verifyAvailBalanceIntoWallet(){

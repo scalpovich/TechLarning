@@ -77,6 +77,9 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.ID, valueToFind="mpts_cardHolderPortal_button_submit")
 	private MCWebElement cashRemittanceSubmitBtn;
 	
+	@PageElement(findBy = FindBy.ID, valueToFind="mpts.cardHolderPortal.button.confirm")
+	private MCWebElement submitTransaction;
+		
 	@PageElement(findBy = FindBy.ID, valueToFind="firstName")
 	private MCWebElement beneficiaryFirstName;
 	
@@ -88,6 +91,25 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[@class='sectionHead']/span")
 	private MCWebElement isCashRemittanceAllowed;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="txnPassword")
+	private MCWebElement transactionPasswordInpt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="remarks")
+	private MCWebElement transactionRemarkInpt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//form[@name='WireTransferResponse']//.//table//.//td[@class='ResponseTxt']")
+	private MCWebElement transactionConfirmMsg;
+	
+	
+	
+	public void enterTransactionRemarks(String transactionRemarks ){
+		enterText(transactionRemarkInpt, transactionRemarks);
+	}
+	
+	public void enterTransactionPassword(String transactionPass ){
+		enterText(transactionPasswordInpt, transactionPass);
+	}
 	
 	public boolean isCashRemittanceAllowedForAccount(){
 	
@@ -168,15 +190,24 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 	}
 	
 	public void enterRemittanceCurrency(String remittanceCurrency){
-		enterText(selectedTxnCurrencyDDwn, remittanceCurrency);
+		SelectDropDownByText(selectedTxnCurrencyDDwn, remittanceCurrency);
 	}
 	
-	public void submitRemittanceRequst(){
+	public String submitRemittanceRequst(CardHolderTransactions cardhlTran){
 		ClickButton(cashRemittanceSubmitBtn);
+		waitForWicket();
+		logger.info("Transaction password for remittance request is {}",cardhlTran.getTransctionPassword());
+		enterTransactionPassword(cardhlTran.getTransctionPassword());
+		enterTransactionRemarks(cardhlTran.getTransactionRemark());
+		waitForLoaderToDisappear();
+		ClickButton(submitTransaction);
+		waitForLoaderToDisappear();
+		waitForWicket();
+		return getTextFromPage(transactionConfirmMsg);
 	}
 	
 	
-	public void bookCashRemittance(CardHolderTransactions cardhlTran){
+	public String bookCashRemittance(CardHolderTransactions cardhlTran){
 		enterBeneficiaryId(cardhlTran.getBeneficiaryID());
 		enterBeneficiaryFirstName(cardhlTran.getBeneficiaryFirstName());
 		enterBeneficiaryMiddleName(cardhlTran.getBeneficiaryMiddleName());
@@ -191,7 +222,7 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 		enterBeneficiaryMobileNumber(cardhlTran.getBeneficiaryMobileNumber());
 		enterRemittanceAmount(cardhlTran.getBeneficiaryRemittanceAmount());
 		enterRemittanceCurrency(cardhlTran.getBeneficiaryRemittanceCurrency());
-		submitRemittanceRequst();
+		return submitRemittanceRequst(cardhlTran);
 	}
 	
 	public void cancelRemittanceRequst(CardHolderTransactions cardhlTran){
