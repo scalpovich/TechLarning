@@ -1,9 +1,9 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,8 @@ public class AuthorizationSearchWorkflow {
 		page.inputDeviceNumber(deviceNumber);
 		page.inputFromDate(LocalDate.now());
 		page.inputToDate(LocalDate.now());
-		page.clickSearchButton();
+		//using waitAndSearchForRecordToAppear instead of page.clickSearchButton(); it iterates for sometime before failing
+		page.waitAndSearchForRecordToAppear();
 
 		int rowCount = page.getRowCountFromTable();
 		logger.info("Row Count on Authorization Search Page : {} ", rowCount);

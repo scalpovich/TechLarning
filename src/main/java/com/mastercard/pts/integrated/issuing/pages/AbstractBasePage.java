@@ -38,6 +38,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
@@ -577,10 +578,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected void waitForWicket() {
 		WebElementUtils.waitForWicket(driver());
 	}
-
-	protected void waitAndSearchForRecordToExist() {
+	
+	//created a re-usable method that could be used in waitAndSearchForRecordToExist() below
+	//the same code can be used in Authorization Search Page
+	public void waitAndSearchForRecordToAppear() {
 		clickSearchButton();
-		// Pre-production batch and device production batch take little long to
+		// Pre-production batch and device production batch & Authorization Search page take little long to
 		// be completed, and do not appear in search result, hence a for loop
 		for (int l = 0; l < 21; l++) {
 			if (!waitForRow())
@@ -589,6 +592,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 				break;
 			}
 		}
+	}
+
+	protected void waitAndSearchForRecordToExist() {
+		waitAndSearchForRecordToAppear();
 
 		selectFirstRecord();
 		clickProcessSelectedButton();
