@@ -217,7 +217,7 @@ public class TransactionSteps {
 			//this value is expected to be 0's for Balance Enquiry
 			transactionData.setDeKeyValuePairDynamic("004", "000000000000"); 
 		}		
-		
+
 
 		//changed ECOMMERCE to ECOM 
 		if(transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE")) {
@@ -424,13 +424,13 @@ public class TransactionSteps {
 	@Given("perform an $transaction VISA transaction")
 	public void givenVisaTransactionIsExecuted(String transaction){
 		//Storing transaction name in context to use it at runtime
-				context.put(ConstantData.TRANSACTION_NAME, transaction);
+		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED) );
 
 		performOperationOnSamecard(false);
-		
+
 		logMessage("VISA Transaction being performed : ", transaction);
- 		transactionWorkflow.performVisaTransaction(transaction);
+		transactionWorkflow.performVisaTransaction(transaction);
 	}
 
 	@When("$tool test results are verified for $transaction")
@@ -442,9 +442,9 @@ public class TransactionSteps {
 
 		testResults = transactionWorkflow.verifyVisaOutput(transactionName);
 		transactionWorkflow.browserMaximize(); // maximing browser
-		
+
 		transactionWorkflow.disconnectAndCloseVts(); // closing VTS
-		
+
 		if(transactionWorkflow.isContains(testResults, "validations is ok")) {
 			logMessage(PASS_MESSAGE, testResults);
 			assertTrue(PASS_MESSAGE + testResults, true );
@@ -458,18 +458,18 @@ public class TransactionSteps {
 			throw new ValidationException(FAILED);
 		}
 	}
-	
+
 	private void logMessage(String message1, String message2) {
-	logger.info(message1, message2 );
-	MiscUtils.reportToConsole(message1 + message2 );
+		logger.info(message1, message2 );
+		MiscUtils.reportToConsole(message1 + message2 );
 	}
-	
+
 	@Then("ARN is retrieved from transaction search page")
 	public void arnIsRetrievedFromTransactionSearchPage() {
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		String deviceNumber=device.getDeviceNumber();
-//		String deviceNumber="5877654779528317";
+		//		String deviceNumber="5877654779528317";
 		String arn = transactionWorkflow.getARN(deviceNumber, ts);
 		logger.info("ARN = {} ", arn);
 	}

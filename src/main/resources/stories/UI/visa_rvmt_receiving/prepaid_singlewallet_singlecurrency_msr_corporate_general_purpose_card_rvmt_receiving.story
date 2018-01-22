@@ -1,0 +1,33 @@
+Prepaid authorisation: Visa RVMT Receiving
+
+Narrative:
+In order to provide to client easy-to-use payment method
+As an issuer
+I want to perform RVMT Receiving through vts
+
+Meta:
+@StoryName SWSC_MSR_CGP_LOAD_ACTV_VTS_NPIN
+
+Scenario: Set up prepaid msr corporate gneral purpose pinless card
+Meta:
+@TestId 
+Given user is logged in institution
+And device range for program with device plan for "prepaid" "magnetic stripe" "Manual" activation code for card without pin for an interface
+When user creates new device of prepaid type for new client
+Then device has "normal" status
+
+Scenario: prepaid msr corporate gneral purpose pinless card device production
+Meta:
+@TestId 
+When a new device was created
+When processes pre-production batch for prepaid
+When processes device production batch for prepaid
+Then device has "normal" status
+Then user activates device through helpdesk
+
+Scenario: VISA RVMT Receiving transaction
+Given connection to VISA is established
+When perform an Rvmt_Receiving VISA transaction
+Then VISA test results are verified for Rvmt_Receiving
+And search Rvmt_Receiving authorization and verify Successful status
+And user sign out from customer portal
