@@ -77,7 +77,7 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.ID, valueToFind="mpts_cardHolderPortal_button_submit")
 	private MCWebElement cashRemittanceSubmitBtn;
 	
-	@PageElement(findBy = FindBy.ID, valueToFind="mpts.cardHolderPortal.button.confirm")
+	@PageElement(findBy = FindBy.NAME, valueToFind="mpts.cardHolderPortal.button.confirm")
 	private MCWebElement submitTransaction;
 		
 	@PageElement(findBy = FindBy.ID, valueToFind="firstName")
@@ -199,10 +199,9 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 		logger.info("Transaction password for remittance request is {}",cardhlTran.getTransctionPassword());
 		enterTransactionPassword(cardhlTran.getTransctionPassword());
 		enterTransactionRemarks(cardhlTran.getTransactionRemark());
+		clickWhenClickable(submitTransaction);
 		waitForLoaderToDisappear();
-		ClickButton(submitTransaction);
-		waitForLoaderToDisappear();
-		waitForWicket();
+		//waitForWicket();
 		return getTextFromPage(transactionConfirmMsg);
 	}
 	
