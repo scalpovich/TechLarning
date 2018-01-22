@@ -195,11 +195,17 @@ public class LoginPage extends AbstractBasePage  {
 		enterText(currentPassword,currentPass);
 		enterText(chpSignUpTranPass,newTrnPass);
 		enterText(chpSignUpTranPassConfirm,newTrnPass);
-		confirmSignUpCardHolder();			
+		confirmSignUpCardHolder();	
+		acceptSuccessfullCardholderSignUp();
 	}
+	public void acceptSuccessfullCardholderSignUp(){
+		driver().switchTo().alert().accept();
+	}
+	
 	public void confirmSignUpCardHolder(){
 		ClickButton(signUpConfirmBtn);
 	}
+	
 	public LoginPage enterUserID(String uName) {
 		if (!isLoggedIn(getFinder().getWebDriver())) {
 			username.sendKeys(uName);

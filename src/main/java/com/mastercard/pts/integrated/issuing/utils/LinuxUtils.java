@@ -100,7 +100,7 @@ public abstract class LinuxUtils {
 					break; 
 				}
 				result = new String(tmp, 0, i).trim();
-				logger.info("Result of search for file with text : "+ lookUpFor + " : " + channel.getExitStatus());
+				//logger.info("Result of search for file with text : "+ lookUpFor + " : " + channel.getExitStatus());
 			}
 			if(channel.isClosed()){
 				if(in.available()>0) continue; 
@@ -159,7 +159,7 @@ public abstract class LinuxUtils {
 
 		String finalDestination = localDestination + "\\" + fileName;
 		try (FileOutputStream fileOutputStream = new FileOutputStream(finalDestination)) {
-			logger.info("File downloaded to @: {}", finalDestination);
+			//logger.info("File downloaded to @: {}", finalDestination);
 
 			int i;
 			while (fileSize != 0L) {

@@ -11,7 +11,7 @@ Meta:
 
 Scenario: Setup - debit msr corp debit card
 Given user is logged in institution
-And device range for program with device plan for "debit" "msr" card
+And device range for program with device plan for "debit" "magnetic stripe" card
 When user creates new device of debit type for new client
 Then device has "normal" status
 
@@ -79,4 +79,3 @@ When transaction status is "Matching Pending"
 When "Matching" batch for prepaid is successful
 Then transaction status is "Presentment Matched with authorization"
 Then user sign out from customer portal
-
