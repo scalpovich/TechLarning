@@ -16,6 +16,7 @@ public class ProcessBatches {
 	private String generatedFilename;
 	private String interchangeType;
 	private String extractType;
+	private String methodToGenerateFile;
 	
 	
 	private static final String BATCH_TYPE = "UPLOAD [U]";
@@ -106,6 +107,14 @@ public class ProcessBatches {
 
 	public static String getProgramDataValuefromExcel() {
 		return MapUtils.fnGetInputDataFromMap("Program");
+	}
+
+	public String getMethodToGenerateFile() {
+		return methodToGenerateFile;
+	}
+
+	public void setMethodToGenerateFile(String methodToGenerateFile) {
+		this.methodToGenerateFile = methodToGenerateFile;
 	}
 
 }

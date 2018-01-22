@@ -29,6 +29,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreP
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessWorkflow;
@@ -186,12 +187,13 @@ public class BatchProcessSteps {
 	 * $batchName file
 	 * <p>
 	 */
-	@When("user process batches $batchType for $batchname file")
-	public void runProcessBatches(@Named("batchType") String batchType,
+	@When("user process $batchType for $methodToGenerateFile for $batchname file")
+	public void runProcessBatches(@Named("batchType") String batchType,@Named("methodToGenerateFile") String methodToGenerateFile,
 			@Named("batchname") String batchName) {
 		ProcessBatches batch=new ProcessBatches();
 		batch.setBatchName(batchName);
 		batch.setBatchType(batchType);
+		batch.setMethodToGenerateFile(methodToGenerateFile);
 		batchProcessWorkflow.processVisaOutgoingBatch(batch);
 	}
 	/**
@@ -201,10 +203,10 @@ public class BatchProcessSteps {
 	 * $batchName file
 	 * <p>
 	 */
-	@When("user validate downloaded DAT file")
+	@Then("user validate downloaded DAT file")
 	public void validateDownloadedFile() {
-		String partialFileName = context.get("filename");
-		File batchFile = linuxBox.downloadByLookUpForPartialFileName(partialFileName, tempDirectory.toString(), "VISA");
+		String partialFileName = context.get(ConstantData.VISA_OUT_GOING_FILE_NAME);
+		File batchFile = linuxBox.downloadByLookUpForPartialFileName(partialFileName, tempDirectory.toString(), ConstantData.VISA_BASEII_LINUX_DIRECTORY);
 		batchProcessWorkflow.validateVisaOutGoingFile(batchFile);
 	}
 }

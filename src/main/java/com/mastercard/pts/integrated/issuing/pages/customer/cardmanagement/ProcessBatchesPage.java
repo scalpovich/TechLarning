@@ -546,12 +546,22 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 	public String visaOutgoingDownloadBatch(ProcessBatches batch) {
 		Device device=context.get(ContextConstants.DEVICE);
-		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, batch.getBatchType());
-		WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, batch.getBatchName());
-		WebElementUtils.selectDropDownByVisibleText(methodToGenerateFileDD, "Member Wise [D]");
-		WebElementUtils.selectDropDownByVisibleText(binDD, "488765");//device.getDeviceNumber().substring(0, 6)
+		selectBatchType(batch.getBatchType());
+		selectBatchName(batch.getBatchName());
+		selectMethodToGenerateFile(batch.getMethodToGenerateFile());
+	    selectBin(device.getDeviceNumber().substring(0, 6));
 		submitAndVerifyBatch();
 		getVisaOutGoingFileName();
 		return batchStatus;
 	}
+	public void selectMethodToGenerateFile(String option)
+	{
+		WebElementUtils.selectDropDownByVisibleText(methodToGenerateFileDD, option);
+	}
+	public void selectBin(String option)
+	{
+		WebElementUtils.selectDropDownByVisibleText(binDD, option);
+	}
+	
+	
 }

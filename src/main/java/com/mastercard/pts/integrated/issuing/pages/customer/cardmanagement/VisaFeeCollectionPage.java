@@ -99,14 +99,13 @@ public class VisaFeeCollectionPage extends AbstractBasePage {
 		Device device=context.get(ContextConstants.DEVICE);
 		clickAddRecordButton();
 		runWithinPopup("Add Visa Fees",() -> {selectTransactionCode(visafeecollection.getTransactionCode());
-		//selectSourceBin(device.getDeviceNumber());
-		selectSourceBin("4887659566811413");
+		selectSourceBin(device.getDeviceNumber());
 		selectCountry(visafeecollection.getCountry());
-		enterDestinationBin("4887657701969211");
+		enterDestinationBin(device.getDeviceNumber());
 		selectSourceCurrency(visafeecollection.getSourceCurrency());
 		enterReasonCode(visafeecollection.getReasonCode());
 		enterEventDate(date.getDateMMDDFormat());
-		enterDeviceNumber("4887659566811413");
+		enterDeviceNumber(device.getDeviceNumber());
 		enterSourceAmount(visafeecollection.getSourceAmount());
 		enterMessagetextAndClickOnSaveButton();});
 		verifyOperationStatus();

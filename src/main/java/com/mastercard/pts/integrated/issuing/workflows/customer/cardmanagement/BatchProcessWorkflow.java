@@ -3,6 +3,8 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 import java.io.File;
 import java.util.Scanner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
@@ -27,6 +29,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PinGe
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PreProductionBatchPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.MenuFlows;
 
 @Workflow
@@ -43,6 +46,8 @@ public class BatchProcessWorkflow extends MenuFlows{
 	
 	@Autowired
 	private TestContext context;
+	
+	protected  static final Logger logger = LoggerFactory.getLogger(BatchProcessWorkflow.class); 
 
 	public String createBulkDeviceRequest(BulkDeviceRequest request){	
 		DeviceProductionBulkDeviceRequestPage page = navigator.navigateToPage(DeviceProductionBulkDeviceRequestPage.class);
@@ -110,42 +115,29 @@ public void processDownloadBatch(ProcessBatches batch){
 		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
 		return page.visaOutgoingDownloadBatch(batch);
 	}
-	public String validateVisaOutGoingFile(ProcessBatches batch,String file){
-		VisaFeeCollection visafeecollection=VisaFeeCollection.createWithProvider(keyProvider);
-		String tran_line="";
-		try{
-		File datFile = new File(file);
-		Scanner scnr = new Scanner(datFile);
-		while(scnr.hasNextLine()){
-		   String line = scnr.nextLine();
-		   if(line.startsWith("10"))
-		   {
-			   tran_line=line;
-			   System.out.println(line);
-		   }
-		}
-		scnr.close();
-		}catch(Exception e){}		
-		return tran_line;
-	}
 	
 	public String getTransactionFromFile(File file)
 	{
-		String tran_line="";
+		String tranLine="";
+		Scanner scnr = null;
 		try{
-		File datFile = file;
-		Scanner scnr = new Scanner(datFile);
+		 scnr = new Scanner(file);
 		while(scnr.hasNextLine()){
 		   String line = scnr.nextLine();
-		   if(line.startsWith("10"))
+		   if(line.startsWith(ConstantData.VISA_FEE_COLLECTION_TRANSACTIONCODE))
 		   {
-			   tran_line=line;
-			   System.out.println(line);
+			   tranLine=line;
 		   }
 		}
-		scnr.close();
-		}catch(Exception e){}		
-		return tran_line;
+		}catch(Exception e){
+			 logger.error("Error in Getting Transaction Line from file",  e);
+		}	
+		finally
+		{
+			if(scnr !=null)
+			scnr.close();
+		}
+		return tranLine;
 	
 	}
 	
