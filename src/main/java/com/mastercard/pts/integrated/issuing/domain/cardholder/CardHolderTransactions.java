@@ -347,7 +347,7 @@ public class CardHolderTransactions {
 		cardTranHol.setBeneficiaryRemittanceAmount(provider.getString(BENEFICIARY_REMITTANCE_AMOUNT));
 		cardTranHol.setBeneficiaryMobileNumber(provider.getString(BENEFICIARY_MOBILE_NUMBER));
 		cardTranHol.setBeneficiaryRemittanceCurrency(provider.getString(BENEFICIARY_REMITTANCE_CURRENCY));		
-		
+		cardTranHol.setTransactionRemark(provider.getString(TRANSACTION_REMARK));
 		return cardTranHol;
 	}
 }
