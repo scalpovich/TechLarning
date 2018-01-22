@@ -8,7 +8,7 @@ I want to authorize transactions for prepaid msr retail travel mwmc card
 Meta:
 @StoryName p_msr_retail_travel_mwmc
 
-Scenario: Transaction - prepaid msr retail travel card multi wallet multi currency - MSR_PURCHASE and MSR_PURCHASE_WITH_CASHBACK Authorization transaction
+Scenario: Transaction - prepaid msr retail travel card multi wallet multi currency - MSR_PURCHASE Authorization transaction
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
@@ -31,11 +31,6 @@ When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 When connection to MAS is established
 When perform an MSR_PURCHASE MAS transaction
-Then MAS test results are verified
-And user is logged in institution
-And search Purchase authorization and verify Successful status
-And user sign out from customer portal
-When perform an MSR_PURCHASE_WITH_CASHBACK MAS transaction
 Then MAS test results are verified
 
 Scenario: Generate Auth File for Clearing

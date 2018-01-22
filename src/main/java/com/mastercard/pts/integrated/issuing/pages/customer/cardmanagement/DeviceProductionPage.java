@@ -21,6 +21,7 @@ import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
@@ -50,6 +51,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	private MCWebElement deviceProductionBatchRecordChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "processSelected")
+
 	private MCWebElement processSelectedBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "processAll")
@@ -60,6 +62,11 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class = 'feedbackPanelINFO']")
 	private MCWebElement confirmationMsgTxt;
+
+	private MCWebElement ProcessSelectedBtn;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr")
+	private MCWebElements rowSize;
 
 	public void deviceproduction(String prodType, String batchNum, String DeviceNumber) {
 		menuSubMenuPage.getDeviceProduction().click();
@@ -92,6 +99,9 @@ public class DeviceProductionPage extends AbstractBasePage {
 			ClickButton(searchBtn);
 		}
 		ClickButton(processSelectedBtn);
+
+		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
+		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 
 	}

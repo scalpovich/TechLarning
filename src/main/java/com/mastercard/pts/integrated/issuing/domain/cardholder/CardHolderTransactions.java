@@ -54,7 +54,8 @@ public class CardHolderTransactions {
 	private String transactionRemark;
 	private String walletTransferAmount;
 	private String walletTransferCurrency;
-	private String walletNumFromAmountTransfer;
+	private String walletFromAmountTransfer;
+	private String walletToAmountTransfer;
 	private String transactionStatusFailMessage;
 	private String walletToWalletTransSucessMsg;
 	
@@ -187,12 +188,22 @@ public class CardHolderTransactions {
 	}
 	public void settransactionStatusFailMessage(String transactionStatusMessage) {
 		this.transactionStatusFailMessage = transactionStatusMessage;
+	}	
+	
+	public String getWalletToAmountTransfer() {
+		return walletToAmountTransfer;
 	}
-	public String getWalletNumFromAmountTransfer() {
-		return walletNumFromAmountTransfer;
+	
+	public void setWalletToAmountTransfer(String walletToAmountTransfer) {
+		this.walletToAmountTransfer = walletToAmountTransfer;
 	}
-	public void setWalletNumFromAmountTransfer(String walletNumFromAmountTransfer) {
-		this.walletNumFromAmountTransfer = walletNumFromAmountTransfer;
+	
+	public String getWalletFromAmountTransfer() {
+		return walletFromAmountTransfer;
+	}
+	
+	public void setWalletFromAmountTransfer(String walletFromAmountTransfer) {
+		this.walletFromAmountTransfer = walletFromAmountTransfer;
 	}	
 	public String getWalletTransferAmount() {
 		return walletTransferAmount;
@@ -276,7 +287,7 @@ public class CardHolderTransactions {
 		cardTranHol.setTransactionRemark(MapUtils.fnGetInputDataFromMap("TransactionRemarks"));
 		cardTranHol.setWalletTransferAmount(MapUtils.fnGetInputDataFromMap("AmountToTransferWalletToWallet"));
 		cardTranHol.setWalletTransferCurrency(MapUtils.fnGetInputDataFromMap("WalletTransferCurrecny"));
-		cardTranHol.setWalletNumFromAmountTransfer(MapUtils.fnGetInputDataFromMap("WalletNumberFromTransferMoney"));
+		cardTranHol.setWalletFromAmountTransfer(MapUtils.fnGetInputDataFromMap("WalletNumberFromTransferMoney"));
 		cardTranHol.setWalletToWalletTransSucessMsg(MapUtils.fnGetInputDataFromMap("WalletToWalletTransferSucessMsg"));
 		return cardTranHol;
 	}
@@ -293,7 +304,7 @@ public class CardHolderTransactions {
 		cardTranHol.setTransactionRemark(provider.getString(TRANSACTION_REMARK));
 		cardTranHol.setWalletTransferAmount(provider.getString(WALLET_TRANSFER_AMOUNT));
 		cardTranHol.setWalletTransferCurrency(provider.getString(WALLET_TRANSFER_CURRENCY));
-		cardTranHol.setWalletNumFromAmountTransfer(provider.getString(WALLET_NUM_FROM_AMOUNT_TRANSFER));
+		cardTranHol.setWalletFromAmountTransfer(provider.getString(WALLET_NUM_FROM_AMOUNT_TRANSFER));
 		cardTranHol.setWalletToWalletTransSucessMsg(provider.getString(WALLET_TO_WALLET_TRANS_CUCCESS_MSG));
 		return cardTranHol;
 	}

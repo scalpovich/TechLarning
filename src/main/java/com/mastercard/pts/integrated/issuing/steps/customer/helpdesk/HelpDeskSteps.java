@@ -22,6 +22,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
 import com.mastercard.pts.integrated.issuing.domain.customer.distribution.Dispatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
@@ -57,15 +58,20 @@ public class HelpDeskSteps {
 
 	@Autowired
 	private KeyValueProvider provider;
+
 	@Autowired
 	HelpDeskFlows helpdeskFlows;
+
+	@Autowired
+	NewDevice newDevice;
 
 	EventAndAlerts eventAndAlerts = new EventAndAlerts();
 
 	ChangeAddressRequest changeAddressRequest;
+	@Autowired
+	HelpDeskGeneral helpdeskgettersetter;
 
-	HelpDeskGeneral helpdeskgettersetter = new HelpDeskGeneral();
-
+	@Autowired
 	DeviceCreation deviceCreation;
 
 	@When("user navigates to General in Helpdesk")
@@ -78,7 +84,13 @@ public class HelpDeskSteps {
 	public void thenUserSearchForDeviceOnSearchScreen(String productType) {
 		helpdeskgettersetter.setProductType(ProductType.fromShortName(productType));
 		helpdeskgettersetter.setDeviceNumber(MapUtils.fnGetInputDataFromMap("Device Number"));
+		if (deviceCreation.getDeviceNumberFromQuery() != null) {
+			helpdeskgettersetter.setDeviceNumber(deviceCreation.getDeviceNumberFromQuery());
+		} else {
+			helpdeskgettersetter.setDeviceNumber(newDevice.getDeviceNumber());
+		}
 		helpdeskFlows.searchForDevice(helpdeskgettersetter);
+
 	}
 
 	@When("user select the service code as $serviceCode")
@@ -474,6 +486,14 @@ public class HelpDeskSteps {
 		assertThat(STATUS_INCORRECT_INFO_MSG, actualStatus, equalTo(expectedStatus));
 	}
 
+	@Then("device has \"$deviceStatus\" status for non-default institution")
+	public void thenDeviceHasNormalStatus(String deviceStatus) {
+		String expectedStatus = DeviceStatus.fromShortName(deviceStatus);
+		Device device = context.get(ContextConstants.DEVICE2);
+		String actualStatus = helpdeskWorkflow.getDeviceStatus(device);
+		assertThat(STATUS_INCORRECT_INFO_MSG, actualStatus, equalTo(expectedStatus));
+	}
+
 	/*
 	 * This method gets the device status on the page without search product
 	 * type and device number
@@ -552,5 +572,36 @@ public class HelpDeskSteps {
 	@Then("pair devices should be generated for each of the processed Device and the paired device should be inactive state")
 	public void checkPaireddevice() {
 		helpdeskFlows.VerifyPairedDeviceStatus();
+	}
+
+	@Then("currency setup for device")
+	public void searchDevice() {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		thenUserNavigatesToGeneralInHelpdesk();
+		helpdeskWorkflow.searchByDeviceNumber(device);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.setupDeviceCurrency(helpdeskGeneral);
+		device.setNewWalletNumber(helpdeskGeneral.getNewWalletNumber());
+	}
+
+	@When("wallet to wallet transfer selected account")
+	public void walletToWalletTransfer() {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		thenUserNavigatesToGeneralInHelpdesk();
+		helpdeskWorkflow.searchByDeviceNumber(device);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.walletToWalletTransfer(device);
+	}
+
+	@When("wallet to wallet transfer for general purpose account")
+	public void walletToWalletFundTransfer() {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		thenUserNavigatesToGeneralInHelpdesk();
+		helpdeskWorkflow.searchByDeviceNumber(device);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.walletToWalletTransfer(device);
 	}
 }

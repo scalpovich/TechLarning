@@ -74,7 +74,7 @@ public class WalletPlanSteps {
 		plan.setWalletPlan(walletPlan);
 		Assert.assertNotNull(walletPlan);
 		plan.setClosedloopWalletPlan(walletPlan);
-		context.put(ContextConstants.OPEN_WALLET, walletPlan);
+		context.put(ContextConstants.CLOSED_WALLET, walletPlan);
 	}
 
 	@When("user creates Wallet Plan for $ProgramType")

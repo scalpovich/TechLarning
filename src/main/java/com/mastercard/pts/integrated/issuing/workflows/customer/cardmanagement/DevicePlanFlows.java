@@ -62,7 +62,7 @@ public class DevicePlanFlows extends MenuFlows {
 		deviceplanpage.AddDevicePlan();
 		deviceplanpage.clickNextButton();
 		errorValidator.doManDatoryErrorValidation(pageErrorValidator(errorPanelXpath), MandatoryFeildValdiation.class);
-		errorValidator.doFieldValidation(MandatoryFeildValdiation.class, deviceplanpage.NextBtn);
+		errorValidator.doFieldValidation(MandatoryFeildValdiation.class, deviceplanpage.nextBtn);
 	}
 
 	/*

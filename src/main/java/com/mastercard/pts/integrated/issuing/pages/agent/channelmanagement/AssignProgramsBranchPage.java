@@ -21,8 +21,8 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = ChannelManagementNav.TAB_CHANNEL_MANAGEMENT, treeMenuItems = { ChannelManagementNav.L1_BRANCH, ChannelManagementNav.L2_BRANCH_ENTITY,
-		ChannelManagementNav.L3_BRANCH_ASSIGN_PROGRAMS })
+@Navigation(tabTitle = ChannelManagementNav.TAB_CHANNEL_MANAGEMENT, treeMenuItems = { ChannelManagementNav.L1_BRANCH,
+		ChannelManagementNav.L2_BRANCH_ENTITY, ChannelManagementNav.L3_BRANCH_ASSIGN_PROGRAMS })
 public class AssignProgramsBranchPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(AssignProgramsBranchPage.class);
 
@@ -31,7 +31,7 @@ public class AssignProgramsBranchPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Search']")
 	private MCWebElement searchBtn;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "div .Title")
 	private MCWebElement masterDetailContentTitle;
 
@@ -52,7 +52,7 @@ public class AssignProgramsBranchPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".SuccessMessageTxt")
 	private MCWebElement programAssignedMessage;
-	
+
 	public void verifyUiOperationStatus() {
 		logger.info("Branch Information");
 		verifyButton("Search");
@@ -60,18 +60,18 @@ public class AssignProgramsBranchPage extends AbstractBasePage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.visibilityOf(branchIdDdwn),WebElementUtils.visibilityOf(agencyIdDdwn));
+		return Arrays.asList(WebElementUtils.visibilityOf(branchIdDdwn), WebElementUtils.visibilityOf(agencyIdDdwn));
 	}
 
 	@Override
 	public void clickSearchButton() {
-		new WebDriverWait(driver(), timeoutInSec).until(
-				WebElementUtils.elementToBeClickable(searchBtn)).click();
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(searchBtn)).click();
 	}
-	
+
 	public String getMasterDetailContentTitleText() {
 		logger.info("Corporate User View Edit Master Detail Tilte Text: {}");
-		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle)).getText();
+		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle))
+				.getText();
 	}
 
 	public void selectBranchId(String branchId) {
@@ -95,7 +95,8 @@ public class AssignProgramsBranchPage extends AbstractBasePage {
 	}
 
 	public String getBranchProgramAssignedMessage() {
-		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(programAssignedMessage)).getText();
+		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(programAssignedMessage))
+				.getText();
 	}
 
 	public void assignProgramBranch(AssignPrograms details) {
@@ -104,9 +105,12 @@ public class AssignProgramsBranchPage extends AbstractBasePage {
 		selectAgency(details.getAgency());
 		selectBranchId(details.getBranchId());
 		clickSearchButton();
-		SimulatorUtilities.wait(30000);//this to wait till the table gets loaded
+		SimulatorUtilities.wait(30000);// this to wait till the table gets
+										// loaded
 		WebElementUtils.scrollDown(driver(), 0, 999);
-		selectProgramCode(details.getProgramCode());
+
+		selectProgramCode("EmvProgram [5274]");
+		// selectProgramCode(details.getProgramCode());
 		selectDeviceType(details.getDeviceType());
 		clickAddButton();
 		driver().switchTo().alert().accept();

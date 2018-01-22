@@ -19,6 +19,7 @@ Given login to portal as existing bank as a Customeruser
 When user configures the device range for Corporate General Purpose, Visa, Static Virtual
 When user creates a bulk device request for product Prepaid
 When user runs the bulk device generation batch for product Prepaid
+When user check for the success status for SYSTEM INTERNAL PROCESSING batch
 When user runs the pre production batch for product Prepaid
 When user check for the success status for SYSTEM INTERNAL PROCESSING batch
 Then user processes all the devices and runs the device production batch for product Prepaid
@@ -65,6 +66,7 @@ Given login to portal as existing bank as a Customeruser
 When user configures the device range for Retail General Purpose, Visa, Static Virtual
 When user creates a bulk device request for product Prepaid
 When user runs the bulk device generation batch for product Prepaid
+When user check for the success status for SYSTEM INTERNAL PROCESSING batch
 When user runs the pre production batch for product Prepaid
 When user check for the success status for SYSTEM INTERNAL PROCESSING batch
 Then user processes all the devices and runs the device production batch for product Prepaid

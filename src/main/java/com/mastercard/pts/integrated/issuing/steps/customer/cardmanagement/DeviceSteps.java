@@ -25,7 +25,9 @@ public class DeviceSteps {
 
 	@Autowired
 	private DeviceWorkflow deviceWorkflow;
-	
+
+	private static final String CORPORATE_CLIENT_CODE_DEVICE2 = "CORPORATE_CLIENT_CODE_DEVICE2";
+
 	@When("user creates new device of $type type for new client")
 	public void whenUserCreatesNewDeviceForNewClient(String type) {
 		Device device = Device.createWithProvider(provider);
@@ -40,7 +42,23 @@ public class DeviceSteps {
 		
 		deviceWorkflow.createDevice(device);
 		context.put(ContextConstants.DEVICE, device);
+		
+	}
 	
+	@When("user creates new device of $type type for non-default institution")
+	public void whenUserCreatesNewDeviceForNewBank(String type) {
+		Device device = Device.createWithProvider(provider);
+		
+		Program program = context.get(ContextConstants.PROGRAM);
+		device.setAppliedForProduct(program.getProduct());
+		device.setProgramCode(program.buildDescriptionAndCode());
+		
+		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+		device.setDeviceType1(devicePlan.getDeviceType());
+		device.setCorporateClientCode(provider.getString(CORPORATE_CLIENT_CODE_DEVICE2));
+		deviceWorkflow.createDevice(device);
+		context.put(ContextConstants.DEVICE2, device);		
 	}
 	
 	@When("user creates new device of $type type for new client of $customerType customer")
@@ -84,5 +102,30 @@ public class DeviceSteps {
 		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 		
 		deviceWorkflow.verifyProgramAndDevicePlan(device);
+	}
+	
+		@Then("$type device is created")
+	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceCreation(String type){
+		Device device = Device.createWithProvider(provider);
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+		
+		Device deviceTemp = Device.createWithProviderForOtherDetails(provider); 
+		device.setOtherInfoDeliveryMode(deviceTemp.getOtherInfoDeliveryMode());
+		device.setOtherInfoEmailAlertRequired(deviceTemp.getOtherInfoEmailAlertRequired());
+		device.setOtherInfoFaxNo(deviceTemp.getOtherInfoFaxNo());
+		device.setOtherInfoPreferredLanguage(deviceTemp.getOtherInfoPreferredLanguage());
+		device.setOtherInfoRegisteredEmailAddress(deviceTemp.getOtherInfoRegisteredEmailAddress());
+		device.setOtherInfoRegisteredMobileNumber(deviceTemp.getOtherInfoRegisteredMobileNumber());
+		device.setOtherInfoRegisterForDncr(deviceTemp.getOtherInfoRegisterForDncr());
+		device.setOtherInfoSmsAlertRequired(deviceTemp.getOtherInfoSmsAlertRequired());
+		device.setOtherInfoStatementPreference(deviceTemp.getOtherInfoStatementPreference());
+		
+		Program program = context.get(ContextConstants.PROGRAM);
+		device.setProgramCode(program.buildDescriptionAndCode());
+		
+		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+		
+		deviceWorkflow.createDeviceUsingApplication(device);
 	}
 }

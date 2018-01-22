@@ -52,7 +52,7 @@ public class ProgramSteps {
 	NewLoyaltyPlan newLoyaltyPlan;
 
 	@Autowired
-	TestContext context;
+	private TestContext context;
 
 	@When("user creates a $wallettype wallet Program for $interchange for product $product for program $programType")
 	public void whenUserCreatesAProgramForMastercardForProductPrepaidMultiWallet(@Named("wallettype") String walletType,
@@ -67,8 +67,10 @@ public class ProgramSteps {
 		program.setWalletPlan2(walletplan.getClosedloopWalletPlan());
 		program.setWalletPlan1(context.get(ContextConstants.OPEN_WALLET));
 		program.setWalletPlan2(context.get(ContextConstants.CLOSED_WALLET));
-		program.setDevicePlanProgram(deviceplan.getDescription() + " " + "[" + deviceplan.getDevicePlan() + "]");
+		program.setDevicePlanProgram(deviceplan.getDevicePlan());
 		context.put(ContextConstants.PROGRAM, program);
+		// program.setDevicePlanProgram(deviceplan.getDescription() + " " + "["
+		// + deviceplan.getDevicePlan() + "]");
 		String Program = "";
 		if (product.contains(ProductType.Prepaid) && programType.contains(ProgramType.CORPORATE_GIFT_CARD)
 				|| programType.contains(ProgramType.RETAIL_GENERAL_PURPOSE_CARD)
@@ -97,6 +99,7 @@ public class ProgramSteps {
 		}
 		Assert.assertNotNull(Program);
 		program.setProgram(Program);
+		context.put(ContextConstants.PROGRAM, program);
 
 	}
 
@@ -111,8 +114,9 @@ public class ProgramSteps {
 		program.setProgramType(programType);
 		program.setWalletPlan1(context.get(ContextConstants.OPEN_WALLET));
 		program.setWalletPlan2(context.get(ContextConstants.CLOSED_WALLET));
-		program.setDevicePlanProgram(deviceplan.getDescription() + " " + "[" + deviceplan.getDevicePlan() + "]");
-		context.put(ContextConstants.PROGRAM, program);
+		program.setDevicePlanProgram(deviceplan.getDevicePlan());
+		// program.setDevicePlanProgram(deviceplan.getDescription() + " " + "["
+		// + deviceplan.getDevicePlan() + "]");
 		if (product.contains("Prepaid") && programType.contains("Corporate Travel card - Single currency")
 				|| programType.contains("Retail Travel card - Single currency")
 				|| programType.contains("Corporate General Purpose")) {
@@ -138,6 +142,7 @@ public class ProgramSteps {
 			Program = programflows.createProgramPrepaidMultiCurrency(devicecreation, program);
 		}
 		program.setProgramCode(Program);
+		context.put(ContextConstants.PROGRAM, program);
 	}
 
 	public void sDNUncheckProgram(String value) {

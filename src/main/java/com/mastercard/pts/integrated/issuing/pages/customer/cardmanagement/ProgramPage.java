@@ -8,8 +8,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -28,7 +31,10 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP,
 		CardManagementNav.L2_PROGRAM })
+
 public class ProgramPage extends AbstractBasePage {
+	@Autowired
+	private TestContext context;
 	final Logger logger = LoggerFactory.getLogger(ProgramPage.class);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=programCode]")
@@ -514,6 +520,7 @@ public class ProgramPage extends AbstractBasePage {
 		WebElementUtils.enterText(cashLimitAmountTxt, program.getCashLimitAmount());
 		WebElementUtils.selectDropDownByVisibleText(cashLimitResetDDwn, program.getCashLimitReset());
 		WebElementUtils.selectDropDownByVisibleText(addOnLimitResetDDwn, program.getAddOnLimitReset());
+		CustomUtils.ThreadDotSleep(10000);
 	}
 
 	public void verifyUiOperationStatus() {
@@ -530,23 +537,24 @@ public class ProgramPage extends AbstractBasePage {
 		switchToIframe(Constants.ADD_PROGRAM_FRAME);
 	}
 
-	public String enterProgramCode() {
+	public String enterProgramCode(Program program) {
 		waitForElementVisible(programTxt);
-		if (MapUtils.fnGetInputDataFromMap("ProgramCode").length() != 0) {
-			enterValueinTextBox(programTxt, MapUtils.fnGetInputDataFromMap("ProgramCode"));
+		if (program.getCode().length() != 0) {
+			enterValueinTextBox(programTxt, program.getCode());
 		} else {
 			enterValueinTextBox(programTxt, CustomUtils.randomNumbers(4));
 		}
-
+		program.setProgramCode(programTxt.getAttribute("value"));
 		return programTxt.getAttribute("value");
 	}
 
-	public String enterProgramDescription() {
-		if (MapUtils.fnGetInputDataFromMap("ProgramDesc").length() != 0) {
-			enterValueinTextBox(descriptionTxt, MapUtils.fnGetInputDataFromMap("ProgramDesc"));
+	public String enterProgramDescription(Program program) {
+		if (program.getDescription().length() != 0) {
+			enterValueinTextBox(descriptionTxt, program.getDescription());
 		} else {
 			enterValueinTextBox(descriptionTxt, "programDescription" + CustomUtils.randomNumbers(5));
 		}
+		program.setDescription(descriptionTxt.getAttribute("value"));
 		return descriptionTxt.getAttribute("value");
 	}
 
@@ -621,7 +629,8 @@ public class ProgramPage extends AbstractBasePage {
 		if (MapUtils.fnGetInputDataFromMap("WalletPlan") != null) {
 			selectByVisibleText(WalletPlan1DDwn, MapUtils.fnGetInputDataFromMap("WalletPlan"));
 		} else {
-			selectByVisibleText(WalletPlan1DDwn, program.getWalletPlan1());
+			Program programContext = context.get(ContextConstants.PROGRAM);
+			selectByVisibleText(WalletPlan1DDwn, /* program.getWalletPlan1() */programContext.getWalletPlan1());
 		}
 	}
 
@@ -649,8 +658,8 @@ public class ProgramPage extends AbstractBasePage {
 
 	public void selectDevicePlan1(Program program) {
 		waitForElementVisible(DevicePlan1DDwn);
-		if (MapUtils.fnGetInputDataFromMap("DevicePlanForProgram") == "") {
-			selectByVisibleText(DevicePlan1DDwn, MapUtils.fnGetInputDataFromMap("DevicePlanForProgram"));
+		if (program.getDevicePlanProgram().length() != 0) {
+			selectByVisibleText(DevicePlan1DDwn, program.getDevicePlanProgram());
 		} else {
 			logger.info("DevicePlanProgram:" + program.getDevicePlanProgram());
 			selectByVisibleText(DevicePlan1DDwn, program.getDevicePlanProgram());
@@ -692,22 +701,22 @@ public class ProgramPage extends AbstractBasePage {
 	public String addProgramGeneral(DeviceCreation devicecreation, Program program) {
 		String programCode;
 		String ProgramDescription;
-		programCode = enterProgramCode();
-		ProgramDescription = enterProgramDescription();
+		programCode = enterProgramCode(program);
+		ProgramDescription = enterProgramDescription(program);
 		selectInterchange(program);
 		selectProduct(devicecreation);
 		selectProgramType(program);
 		selectBaseCurrency(program);
 		selectCurrencyConversionBy(program);
 		selectCalendarStartMonth();
-		return ProgramDescription + " " + "[" + programCode + "]";
+		return buildDescriptionAndCode(ProgramDescription, programCode);
 	}
 
 	public String addProgramGeneralMultiCurrency(DeviceCreation devicecreation, Program program) {
 		String programCode;
 		String ProgramDescription;
-		programCode = enterProgramCode();
-		ProgramDescription = enterProgramDescription();
+		programCode = enterProgramCode(program);
+		ProgramDescription = enterProgramDescription(program);
 		selectInterchange(program);
 		selectProduct(devicecreation);
 		selectProgramType(program);
@@ -717,7 +726,7 @@ public class ProgramPage extends AbstractBasePage {
 		selectCalendarStartMonth();
 		selectWalletToWalletTransfer();
 		selectReferenceCurrency(program);
-		return ProgramDescription + " " + "[" + programCode + "]";
+		return buildDescriptionAndCode(ProgramDescription, programCode);
 	}
 
 	public void addKYCLimits(Program program) {
@@ -762,7 +771,7 @@ public class ProgramPage extends AbstractBasePage {
 		CustomUtils.ThreadDotSleep(2000);
 		switchToEditProgramframe();
 		ClickCheckBox(sdnCheckBox, false);
-		clickWhenClickable(save);
+		clickSaveButton();
 	}
 
 	public void switchToEditProgramframe() {

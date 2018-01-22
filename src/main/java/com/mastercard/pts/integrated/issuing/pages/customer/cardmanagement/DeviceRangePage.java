@@ -31,12 +31,11 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1PROGRAM_SETUP, CardManagementNav.L2_DEVICE_RANGE })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP,
+		CardManagementNav.L2_DEVICE_RANGE })
 public class DeviceRangePage extends AbstractBasePage {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(DeviceRangePage.class);
+	private static final Logger logger = LoggerFactory.getLogger(DeviceRangePage.class);
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement productTypeSearchDDwn;
@@ -168,10 +167,11 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	public void selectDevicePlan() {
 		waitForElementVisible(DevicePlanCodeDDwn);
-		if (!MapUtils.fnGetInputDataFromMap("DevicePlan").isEmpty() ) {
+		if (!MapUtils.fnGetInputDataFromMap("DevicePlan").isEmpty()) {
 			selectByVisibleText(DevicePlanCodeDDwn, MapUtils.fnGetInputDataFromMap("DevicePlan"));
 		} else {
-			selectByVisibleText(DevicePlanCodeDDwn, /*deviceplan.getDevicePlan()*/program.getDevicePlanProgram());
+			selectByVisibleText(DevicePlanCodeDDwn,
+					/* deviceplan.getDevicePlan() */program.getDevicePlanProgram());
 		}
 	}
 
@@ -181,8 +181,10 @@ public class DeviceRangePage extends AbstractBasePage {
 			selectByVisibleText(IssuerBINDDwn, MapUtils.fnGetInputDataFromMap("DMSIssuerBIN"));
 		} else if (!MapUtils.fnGetInputDataFromMap("SMSIssuerBIN").isEmpty()) {
 			selectByVisibleText(IssuerBINDDwn, MapUtils.fnGetInputDataFromMap("SMSIssuerBIN"));
+		} else {
+			IssuerBINDDwn.getSelect().selectByIndex(1);
 		}
-		IssuerBINDDwn.getSelect().selectByIndex(1);
+
 	}
 
 	public void selectBranch() {
@@ -264,7 +266,7 @@ public class DeviceRangePage extends AbstractBasePage {
 		selectProgram();
 		selectDevicePlan();
 		selectIssuerBIN();
-	    selectBranch();
+		selectBranch();
 		clickAddButton();
 	}
 
@@ -335,9 +337,9 @@ public class DeviceRangePage extends AbstractBasePage {
 		}
 
 	}
+
 	public void selectProductType(String productType) {
-		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn,
-				productType);
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, productType);
 	}
 
 	public void selectProgram(String program) {
@@ -345,8 +347,7 @@ public class DeviceRangePage extends AbstractBasePage {
 	}
 
 	public void selectDevicePlanCode(String devicePlanCode) {
-		WebElementUtils.selectDropDownByVisibleText(devicePlanCodeDDwn,
-				devicePlanCode);
+		WebElementUtils.selectDropDownByVisibleText(devicePlanCodeDDwn, devicePlanCode);
 	}
 
 	public void selectIssuerBin(String issuerBin) {
@@ -369,25 +370,23 @@ public class DeviceRangePage extends AbstractBasePage {
 	public void addDeviceRangeData(DeviceRange deviceRange) {
 		logger.info("Device Range: {}", deviceRange.getDevicePlanCode());
 		clickAddNewButton();
-		runWithinPopup(
-				"Add Device Range",
-				() -> {
-					fillAddDevicePage(deviceRange);
+		runWithinPopup("Add Device Range", () -> {
+			fillAddDevicePage(deviceRange);
 
-					addFromDeviceNumber(deviceRange.getFromDeviceNumber());
-					log.info("From addFromDeviceNumber = " + deviceRange.getFromDeviceNumber());
-					addToDeviceNumber(deviceRange.getToDeviceNumber());
-					log.info("To addFromDeviceNumber = " + deviceRange.getToDeviceNumber());
+			addFromDeviceNumber(deviceRange.getFromDeviceNumber());
+			log.info("From addFromDeviceNumber = " + deviceRange.getFromDeviceNumber());
+			addToDeviceNumber(deviceRange.getToDeviceNumber());
+			log.info("To addFromDeviceNumber = " + deviceRange.getToDeviceNumber());
 
-					forDebitCard(deviceRange);
+			forDebitCard(deviceRange);
 
-					WebElementUtils.selectDropDownByVisibleText(statusDDwn, deviceRange.getStatus());
+			WebElementUtils.selectDropDownByVisibleText(statusDDwn, deviceRange.getStatus());
 
-					WebElementUtils.scrollDown(driver(), 100, 250);
-					clickSaveButton();
+			WebElementUtils.scrollDown(driver(), 100, 250);
+			clickSaveButton();
 
-					verifyNoErrors();
-				});
+			verifyNoErrors();
+		});
 
 		verifyOperationStatus();
 	}
@@ -417,8 +416,7 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils
-				.visibilityOf(productTypeSearchDDwn));
+		return Arrays.asList(WebElementUtils.visibilityOf(productTypeSearchDDwn));
 	}
 
 }

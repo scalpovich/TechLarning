@@ -373,6 +373,8 @@ public class Constants {
 
 	public static final String DEBIT = "debit";
 
+	public static final String ALL = "All";
+
 	public static String ADD_APPLICATION_SCREEN = "Add Application";
 
 	public static String CURRENCY_SETUP_FRAME = "312 - Currency Setup";
@@ -413,7 +415,6 @@ public class Constants {
 	public static final String MEMBERSHIP_FEE = "Membership";
 
 	public static final String ACCOUNTTYPE_SAVINGS = "Saving Account";
-
 	public static final String STATEMENT_PLAN = "Statement Plan";
 	public static final String ADD_SURCHARGE_WAIVER_PLAN_DETAIL = "Add Surcharge Waiver Plan Detail";
 	public static final String MARKETING_PLAN = "Marketing Message Plan";

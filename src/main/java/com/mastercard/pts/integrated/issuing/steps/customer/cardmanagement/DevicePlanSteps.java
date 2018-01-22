@@ -7,6 +7,8 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 //import com.mastercard.pts.integrated.issuing.domain.CardType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
@@ -28,6 +30,9 @@ public class DevicePlanSteps {
 	@Autowired
 	DevicePlan deviceplan;
 
+	@Autowired
+	private TestContext context;
+
 	@When("user creates a Device Plan for $interchange for $cardType and $productType card,choose activation $activationMode and delivery mode $deliveryMode")
 	public void whenUserCreatesADevicePlanForMastercardForProductPrepaidForDeviceTypeAsMagneticStripe(
 			@Named("interchange") String association, @Named("cardType") String cardType,
@@ -43,6 +48,7 @@ public class DevicePlanSteps {
 		devicePlan = deviceplanflows.createDevicePlan(deviceplan);
 		Assert.assertNotNull(devicePlan);
 		deviceplan.setDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, deviceplan);
 
 	}
 
@@ -66,6 +72,7 @@ public class DevicePlanSteps {
 		devicePlan = deviceplanflows.createDevicePlan(deviceplan);
 		Assert.assertNotNull(devicePlan);
 		deviceplan.setDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, deviceplan);
 
 	}
 
@@ -84,6 +91,7 @@ public class DevicePlanSteps {
 		devicePlan = deviceplanflows.createDevicePlanforPairedDevices(deviceplan);
 		Assert.assertNotNull(devicePlan);
 		deviceplan.setDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, deviceplan);
 
 	}
 

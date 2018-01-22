@@ -6,13 +6,18 @@ public class TransactionSearch {
 	private static final String PRODUCT_TYPE = "PRODUCT_TYPE";
 	private static final String PREPAID_PRODUCT_TYPE = "PREPAID_PRODUCT_TYPE";
 	private static final String DATE_TYPE = "DATE_TYPE";
-	private String dateType;
 
-	public String getDateType() {
-		return dateType;
+	private String dateType;
+	private String productType;
+	private String prepaidProductType;
+
+	public String getPrepaidProductType() {
+		return prepaidProductType;
 	}
 
-	private String productType;
+	public void setPrepaidProductType(String prepaidProductType) {
+		this.prepaidProductType = prepaidProductType;
+	}
 
 	public String getProductType() {
 		return productType;
@@ -22,6 +27,10 @@ public class TransactionSearch {
 		this.productType = productType;
 	}
 
+	public String getDateType() {
+		return dateType;
+	}
+
 	public void setDateType(String dateType) {
 		this.dateType = dateType;
 	}
@@ -29,7 +38,7 @@ public class TransactionSearch {
 	public static TransactionSearch getProviderData(KeyValueProvider provider) {
 		TransactionSearch ts = new TransactionSearch();
 		ts.setDateType(provider.getString(DATE_TYPE));
-		ts.setProductType(provider.getString(PREPAID_PRODUCT_TYPE));
+		ts.setPrepaidProductType(provider.getString(PREPAID_PRODUCT_TYPE));
 		ts.setProductType(provider.getString(PRODUCT_TYPE));
 		return ts;
 	}

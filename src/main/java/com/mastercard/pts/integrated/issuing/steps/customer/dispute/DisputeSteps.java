@@ -27,6 +27,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.dispute.ChargeBack;
 import com.mastercard.pts.integrated.issuing.domain.customer.dispute.ChargeBackReversal;
 import com.mastercard.pts.integrated.issuing.domain.customer.dispute.DisputeHistory;
 import com.mastercard.pts.integrated.issuing.domain.customer.dispute.RetrievalRequest;
+import com.mastercard.pts.integrated.issuing.domain.customer.dispute.SecondChargeBack;
 import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
@@ -34,6 +35,7 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.dispute.ArbitrationWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.dispute.DisputeWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpdeskWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
@@ -70,8 +72,12 @@ public class DisputeSteps{
 
 	@Autowired
 	private LinuxBox linuxBox;
-
-	private String arnNumber;
+	
+	@Autowired
+	private ArbitrationWorkflow arbitrationworkflow;
+	
+	private String feesOption = "without";
+	
 
 	private static final Logger logger = LoggerFactory.getLogger(DisputeSteps.class);
 
@@ -85,8 +91,8 @@ public class DisputeSteps{
 		transactionWorkflow.launchWiniumAndSimulator("MCPS");
 		transactionWorkflow.loadIpmFile(System.getProperty("user.dir")+"\\src\\main\\resources\\"+"DISPUTES_STORY_NOT_FILE.IPM");
 		transactionWorkflow.assignUniqueFileId();
-		arnNumber = transactionWorkflow.assignUniqueARN();
-		logger.info("ARN number is: "+ arnNumber);
+		String arnNumber = transactionWorkflow.assignUniqueARN();
+		logger.info("ARN number is : {} ", arnNumber);
 		context.put(ConstantData.ARN_NUMBER, arnNumber);
 	}
 	
@@ -126,6 +132,14 @@ public class DisputeSteps{
 	public void whenARetrivalRequestIsCreatedUsingARNNumber(){
 		RetrievalRequest rr = RetrievalRequest.createWithProvider(keyProvider);
 		rr.setArn(context.get(ConstantData.ARN_NUMBER));
+		disputeWorkflow.createRetrievalRequest(rr);
+	}
+	
+	@When("a retrival request is created using ARN Number without fees")
+	public void whenARetrivalRequestIsCreatedUsingARNNumberWithoutFees(){
+		RetrievalRequest rr = RetrievalRequest.createWithProvider(keyProvider);
+		rr.setApplyFee(false);
+		rr.setArn(context.get(ConstantData.ARN_NUMBER));				
 	 	disputeWorkflow.createRetrievalRequest(rr);
 	}
 	
@@ -133,6 +147,22 @@ public class DisputeSteps{
 	public void whenChargeBackIsCreatedForATransaction(){
 		ChargeBack cb=ChargeBack.getChargeBack(keyProvider);
 		cb.setArn(context.get(ConstantData.ARN_NUMBER));
+		disputeWorkflow.createChargeBackRequest(cb);
+	}
+	
+	@When("SecondCharge back is created for a transaction")
+	 public void whenSecondChargeBackIsCreatedForATransaction(){
+		SecondChargeBack sb = SecondChargeBack.getSecondChargeBack(keyProvider);
+		sb.setArn(context.get(ConstantData.ARN_NUMBER));
+		disputeWorkflow.createSecondChargeBack(sb);
+	}
+	
+	@When("Charge back is created for a transaction $feesOptions fees")
+	public void whenChargeBackIsCreatedForATransactionWihtoutFees(String feesOptions){
+		ChargeBack cb = ChargeBack.getChargeBack(keyProvider);
+		if(feesOption.equalsIgnoreCase(feesOptions))
+			cb.setFees(false);
+		cb.setArn(context.get(ConstantData.ARN_NUMBER));		
 		disputeWorkflow.createChargeBackRequest(cb);
 	}
 	
@@ -169,6 +199,15 @@ public class DisputeSteps{
 		Assert.assertTrue(helpDeskWorkflow.getWalletBalance(device).subtract(context.get("walletBalanceBeforeChargeback"))== new BigDecimal(cb.getChargeBackAmount()));
 	}
 	
+	@When("validate the SecondCharge back amount credited to the card holder in help desk screen")
+	  public void whenvalidattheSecondChargebackamountcreditedtothecardholderinhelpdeskscreen(){
+		
+		Device device = new Device();
+		device.setDeviceNumber(keyProvider.getString("DEVICE_NUMBER"));
+		device.setAppliedForProduct(ProductType.fromShortName("PREPAID"));
+		SecondChargeBack sb=SecondChargeBack.createWithProvider(provider);
+		Assert.assertTrue(helpDeskWorkflow.getWalletBalance(device).subtract(context.get("walletBalanceBeforeChargeback"))== new BigDecimal(sb.getSecondChargeBackAmount()));
+	}
 
 	@When("Generate outgoing IPM file and check for Message Reversal Indicator,Card Issuer Reference Data")
 	public void whenGenerateOutgoingIPMFileAndCheckForMessageReversalIndicatorCardIssuerReferenceData(){
@@ -187,6 +226,18 @@ public class DisputeSteps{
 	batch.setBatchType("UPLOAD[U]");
 	disputeWorkflow.uploadBatch(batch);
 	 
+	}
+	
+	@When("create arbitration for retrival requst")
+	public void createArbitrationOfDispte(){
+		RetrievalRequest rr = RetrievalRequest.createWithProvider(keyProvider);
+		arbitrationworkflow.createArbitration(rr);
+	}
+	
+	@When("cancel $first chargeback request")
+	public void cancelChargeBack(String cancelOption){
+		RetrievalRequest rr = RetrievalRequest.createWithProvider(keyProvider);
+		disputeWorkflow.cancelChargeBackRequst(rr);
 	}
 	
 }

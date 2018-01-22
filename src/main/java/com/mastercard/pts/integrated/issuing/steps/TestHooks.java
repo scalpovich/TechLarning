@@ -3,9 +3,9 @@ package com.mastercard.pts.integrated.issuing.steps;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+
 import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.AfterStory;
-import org.jbehave.core.annotations.BeforeScenario;
 import org.jbehave.core.annotations.BeforeStory;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.web.selenium.WebDriverProvider;
@@ -21,9 +21,9 @@ import com.mastercard.pts.integrated.issuing.domain.provider.DataLoader;
 
 @Component
 public class TestHooks {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(TestHooks.class);
-	
+
 	@Autowired
 	private TestContext testContext;
 
@@ -53,7 +53,7 @@ public class TestHooks {
 		}
 	}
 
-	@BeforeScenario
+	// @BeforeScenario
 	public void initTimeouts() {
 		Timeouts timeouts = driverProvider.get().manage().timeouts();
 		timeouts.implicitlyWait(imlicitWaitTimeout, TimeUnit.MILLISECONDS);

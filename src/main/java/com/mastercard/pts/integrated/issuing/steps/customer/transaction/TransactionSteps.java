@@ -443,7 +443,9 @@ public class TransactionSteps {
 		testResults = transactionWorkflow.verifyVisaOutput(transactionName);
 		transactionWorkflow.browserMaximize(); // maximing browser
 		
-		if(transactionWorkflow.isContains(testResults, "validations ok")) {
+		transactionWorkflow.disconnectAndCloseVts(); // closing VTS
+		
+		if(transactionWorkflow.isContains(testResults, "validations is ok")) {
 			logMessage(PASS_MESSAGE, testResults);
 			assertTrue(PASS_MESSAGE + testResults, true );
 		} else if(transactionWorkflow.isContains(testResults, "validations not ok"))	{

@@ -11,7 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -30,6 +33,9 @@ public class PreProductionBatchPage extends AbstractBasePage {
 
 	@Autowired
 	MenuSubMenuPage menuSubMenuPage;
+
+	@Autowired
+	private TestContext context;
 
 	private static final Logger logger = LoggerFactory.getLogger(PreProductionBatchPage.class);
 
@@ -93,6 +99,21 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		String batchNumber = getFinder().getWebDriver().findElement(By.xpath(batchNumberWebElement)).getText().trim();
 		logger.info("BatchNumber - {} ", batchNumber);
 		batch.setBatchNumber(batchNumber);
+		ClickButton(searchBtn);
+		ClickCheckBox(preProductionBatchRecordChkBx, true);
+		ClickButton(processSelectedBtn);
+		verifyOperationStatus();
+		SwitchToDefaultFrame();
+
+	}
+
+	public void processPreProductionBatchNewApplication(PreProductionBatch batch) {
+
+		waitForLoaderToDisappear();
+		SelectDropDownByText(productTypeDDwn, batch.getProductType());
+		CustomUtils.ThreadDotSleep(8000);
+		Device device = context.get(ContextConstants.DEVICE);
+		enterText(batchNumberTxt, device.getBatchNumber());
 		ClickButton(searchBtn);
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		ClickButton(processSelectedBtn);
@@ -167,7 +188,6 @@ public class PreProductionBatchPage extends AbstractBasePage {
 
 	public String checkPreProductionJobID() {
 		String strOutputMessage = confirmationMsgTxt.getText().split("\\n")[0];
-		System.out.println(strOutputMessage);
 		return strOutputMessage.replaceAll("[^\\d]", "").trim();
 
 	}

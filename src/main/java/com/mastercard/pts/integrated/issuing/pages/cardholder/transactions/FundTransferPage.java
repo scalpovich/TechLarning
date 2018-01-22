@@ -1,16 +1,11 @@
 package com.mastercard.pts.integrated.issuing.pages.cardholder.transactions;
 
-import java.util.Arrays;
-import java.util.Collection;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.TransactionsNav;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -86,10 +81,10 @@ public class FundTransferPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@value='InterBankFundTransferPopulateDetails']")
 	private MCWebElement interBankTransfer;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@id='toWalletNumber']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//select[@id='toWalletNumber']")
 	private MCWebElement beneficiaryWalletNum;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@id='toDeviceNumber']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//select[@id='toDeviceNumber']")
 	private MCWebElement benificiaryCardNum;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@id='transactionAmount']")
@@ -222,11 +217,12 @@ public class FundTransferPage extends AbstractBasePage {
 	}
 	
 	public void enterBeneficiaryWalletNumber(String walletNumber){
-		beneficiaryWalletNum.sendKeys(walletNumber);
+		SelectDropDownByValue(beneficiaryWalletNum, walletNumber);
+
 	}
 	
 	public void enterBeneficiaryCardNumber(String cardNumber){
-		benificiaryCardNum.sendKeys(cardNumber);
+		SelectDropDownByValue(benificiaryCardNum, cardNumber);
 	}
 	
 	public void enterAmountToTranfer(String amountToTransfer){
@@ -234,17 +230,17 @@ public class FundTransferPage extends AbstractBasePage {
 	}
 	
 	public void selectCurrencyForIntraBankTranfer(String transferCurrancy){
-		selectByVisibleTexts(curranyOfIntraBankTransfer, transferCurrancy);
+		selectByVisibleTexts(transferCurrencyOption, transferCurrancy);
 	}
 			
 	public void submitIntraBankMoneyTranferRequest(){
 			walletTranferSubmitButton.click();
 	}
 
-	@Override
+	/*@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(masterDetailContentTitle), WebElementUtils.visibilityOf(visaMoneyTransferRbtn),
 				WebElementUtils.visibilityOf(cardtoCardRbtn), WebElementUtils.visibilityOf(interBankFundTransferPopulateDetailsRbtn),
 				WebElementUtils.visibilityOf(masterCardMoneySendRbtn));
-	}
+	}*/
 }

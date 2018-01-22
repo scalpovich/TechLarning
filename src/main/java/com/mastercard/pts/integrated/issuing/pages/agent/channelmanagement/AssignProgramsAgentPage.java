@@ -21,8 +21,8 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = ChannelManagementNav.TAB_CHANNEL_MANAGEMENT, treeMenuItems = { ChannelManagementNav.L1_AGENT, ChannelManagementNav.L2_AGENT_ENTITY,
-		ChannelManagementNav.L3_AGENT_ASSIGN_PROGRAMS })
+@Navigation(tabTitle = ChannelManagementNav.TAB_CHANNEL_MANAGEMENT, treeMenuItems = { ChannelManagementNav.L1_AGENT,
+		ChannelManagementNav.L2_AGENT_ENTITY, ChannelManagementNav.L3_AGENT_ASSIGN_PROGRAMS })
 public class AssignProgramsAgentPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(AssignProgramsAgentPage.class);
 
@@ -31,7 +31,7 @@ public class AssignProgramsAgentPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Search']")
 	private MCWebElement searchBtn;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "div .Title")
 	private MCWebElement masterDetailContentTitle;
 
@@ -55,7 +55,7 @@ public class AssignProgramsAgentPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Add']")
 	private MCWebElement addBtn;
-	
+
 	public void verifyUiOperationStatus() {
 		logger.info("Agent Information");
 		verifyButton("Search");
@@ -63,13 +63,13 @@ public class AssignProgramsAgentPage extends AbstractBasePage {
 
 	@Override
 	public void clickSearchButton() {
-		new WebDriverWait(driver(), timeoutInSec).until(
-				WebElementUtils.elementToBeClickable(searchBtn)).click();
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(searchBtn)).click();
 	}
-	
+
 	public String getMasterDetailContentTitleText() {
 		logger.info("Corporate User View Edit Master Detail Tilte Text: {}");
-		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle)).getText();
+		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle))
+				.getText();
 	}
 
 	public void selectAgency(String agency) {
@@ -97,7 +97,8 @@ public class AssignProgramsAgentPage extends AbstractBasePage {
 	}
 
 	public String getAgentProgramAssignedMessage() {
-		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(programAssignedMessage)).getText();
+		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(programAssignedMessage))
+				.getText();
 	}
 
 	public void assignProgramAgent(AssignPrograms details) {
@@ -107,13 +108,18 @@ public class AssignProgramsAgentPage extends AbstractBasePage {
 		selectBranchId(details.getBranchId());
 		selectAgentId(details.getAgentId());
 		clickSearchButton();
-		SimulatorUtilities.wait(5000);//this to wait for dropDown to load values
-		//work around for the defect assigning program - repeating as AgentId dropDown value is not retained after search
+		SimulatorUtilities.wait(5000);// this to wait for dropDown to load
+										// values
+		// work around for the defect assigning program - repeating as AgentId
+		// dropDown value is not retained after search
 		selectAgentId(details.getAgentId());
 		clickSearchButton();
-		SimulatorUtilities.wait(30000);//this to wait till the table gets loaded
+		SimulatorUtilities.wait(30000);// this to wait till the table gets
+										// loaded
 		WebElementUtils.scrollDown(driver(), 0, 999);
-		selectProgramCode(details.getProgramCode());
+
+		selectProgramCode("EmvProgram [5274]");
+		// selectProgramCode(details.getProgramCode());
 		selectDeviceType(details.getDeviceType());
 		clickAddButton();
 		driver().switchTo().alert().accept();
@@ -121,6 +127,7 @@ public class AssignProgramsAgentPage extends AbstractBasePage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.visibilityOf(branchIdDdwn), WebElementUtils.visibilityOf(agentIdDdwn), WebElementUtils.visibilityOf(agencyIdDdwn));
+		return Arrays.asList(WebElementUtils.visibilityOf(branchIdDdwn), WebElementUtils.visibilityOf(agentIdDdwn),
+				WebElementUtils.visibilityOf(agencyIdDdwn));
 	}
 }

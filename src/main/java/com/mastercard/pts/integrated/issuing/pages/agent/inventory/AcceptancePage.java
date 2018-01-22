@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -160,6 +161,9 @@ public class AcceptancePage extends AbstractBasePage {
 		driver().manage().window().maximize();
 		enterQuantityRecieved(details.getQuantityOrdered());
 		enterCurrentDateddMMyyyy(DateUtils.currentDateddMMyyyy());
+		SimulatorUtilities.wait(3000);
+		WebElementUtils.asWebElement(effectiveDateTxt).sendKeys(Keys.ESCAPE);
+		SimulatorUtilities.wait(3000);//Waiting for Datepicker popup close
 		enterMemo(details.getMemo());
 		clickDownloadinXLSButton();
 		clickSubmitButton();

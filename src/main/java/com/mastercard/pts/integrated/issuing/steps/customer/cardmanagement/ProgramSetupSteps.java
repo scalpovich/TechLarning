@@ -107,7 +107,13 @@ public class ProgramSetupSteps {
 	private MCCRulePlan mccRulePlan;
 
 	private PrepaidStatementPlan prepaidStatementPlan;
-
+	
+	private static final String CARD_PACKID_GENERATION_TEMPLATE_FOR_DEVICE2 = "CARD_PACKID_GENERATION_TEMPLATE_FOR_DEVICE2";
+	
+	private static final String DEVICE_ID_GENERATION_TEMPLATE_FOR_DEVICE2 = "DEVICE_ID_GENERATION_TEMPLATE_FOR_DEVICE2";
+	
+	private static final String ISSUER_BIN_FOR_DEVICE2 = "ISSUER_BIN_FOR_DEVICE2";
+	
 	@When("prepaid $deviceType device is available with balance amount")
 	@Given("prepaid $deviceType device is available with balance amount")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
@@ -308,7 +314,29 @@ public class ProgramSetupSteps {
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPin(String deviceType) {
 		// composite step
 	}
-	
+
+	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin for non-default institution")
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin for non-default institution", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product for non-default institution" })
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinForNonDefaultInstitution(String deviceType) {
+		// composite step
+	}
+
+	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin for non-default institution")
+	@Composite(steps = { "When User fills Statement Message Plan for debit product", "When User fills Marketing Message Plan for debit product", "When User fills debit Statement Plan",
+			"When User fills MCC Rules for debit product", "When User fills Dedupe Plan", "When User fills Transaction Plan for debit product",
+			"When User fills Transaction Limit Plan for debit product", "When User fills Document Checklist Screen for debit product",
+			"When User fills Device Joining and Membership Fee Plan for debit product", "When User fills Device Event Based Fee Plan for debit product",
+			"When User fills Device Plan for \"debit\" \"<deviceType>\" card with no pin for non-default institution", "When User fills Wallet Plan for debit product", "When User fills Program section for debit product",
+			"When User fills Business Mandatory Fields Screen for debit product", "When User fills Device Range section for debit product for non-default institution" })
+	public void givenDeviceRangeForProgramWithDevicePlanforDebitWithoutPinForNonDefaultInstitution(String deviceType) {
+		// composite step
+	}
+
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin for an interface")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
 			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
@@ -397,6 +425,28 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 
+	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card with no pin for non-default institution")
+	public void whenUserFillsDevicePlanWithNoPinforNonDefaultInstitution(String productType, String deviceType) {
+		setPinRequiredToFalse();
+		whenUserFillsDevicePlanforNonDefaultInstitution(productType, deviceType, provider);
+	}
+
+	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card for non-default institution")
+	public void whenUserFillsDevicePlanforNonDefaultInstitution(String productType, String deviceType, KeyValueProvider provider) {
+		devicePlan = DevicePlan.createWithProvider(provider);
+		devicePlan.setProductType(ProductType.fromShortName(productType));
+		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
+		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+		devicePlan.setCardPackIdGenerationTemplate(provider.getString(CARD_PACKID_GENERATION_TEMPLATE_FOR_DEVICE2));
+		devicePlan.setDeviceIdGenerationTemplate(provider.getString(DEVICE_ID_GENERATION_TEMPLATE_FOR_DEVICE2));
+		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		programSetupWorkflow.createDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+	
 	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card with no pin")
 	public void whenUserFillsDevicePlanForCrddWithNoPin(String productType, String deviceType) {
 		setPinRequiredToFalse();
@@ -785,7 +835,18 @@ public class ProgramSetupSteps {
 
 		programSetupWorkflow.createDeviceRange(deviceRange);
 	}
-	
+
+	@When("User fills Device Range section for $type product for non-default institution")
+	public void whenUserFillsDeviceRangeSectionForNonDefaultInstitution(String type) {
+		DeviceRange deviceRange = DeviceRange.createWithProvider(dataProvider, type);
+		deviceRange.setProductType(ProductType.fromShortName(type));
+		deviceRange.setIssuerBin(provider.getString(ISSUER_BIN_FOR_DEVICE2));
+		deviceRange.setProgram(program.buildDescriptionAndCode());
+		deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
+
+		programSetupWorkflow.createDeviceRange(deviceRange);
+	}
+
 	@When("User fills Device Range section for $type product for an interface")
 	public void whenUserFillsDeviceRangeSectionVisaInterface(String type) {
 		DeviceRange deviceRange = DeviceRange.createWithProvider(dataProvider, provider, type);
