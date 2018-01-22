@@ -5,7 +5,6 @@ I want to have access to portal
 
 Meta:
 @StoryName S182414
-@NonUIBVTest
 @SanityUserManagement
 @FullSanity
 
