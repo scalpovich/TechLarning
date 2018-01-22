@@ -82,7 +82,7 @@ Then search Balance Inquiry authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: Perform ECOMM_PURCHASE Authorization transaction
-When perform an ECOMM_PURCHASE MAS transaction
+When perform an ECOMM_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
 Then user is logged in institution
 Then search E-Commerce Transaction authorization and verify 000-Successful status

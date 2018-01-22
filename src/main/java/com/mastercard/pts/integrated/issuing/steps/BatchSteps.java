@@ -56,7 +56,6 @@ public class BatchSteps {
 			MiscUtils.reportToConsole("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3] + " - "  + " setIcvvData " + " : " +  fileData[4] + "  ***** ");
 			
 			Device device = context.get(ContextConstants.DEVICE);
-			logger.info("++++++++++++ File data : "+fileData.toString());
 			device.setDeviceNumber(fileData[0]);
 			device.setCvv2Data(fileData[2]);
 //			device.setPvvData(fileData[3]);
