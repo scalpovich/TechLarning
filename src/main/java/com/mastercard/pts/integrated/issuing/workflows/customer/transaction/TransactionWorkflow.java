@@ -197,8 +197,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 		addBinRangeAndCurrencyDetailsBasedOnCardNumber(transactionData, transaction, sameCard);
 
-		importAndLoadCardProfile(transactionData.getCardProfile(), transaction);
-
+		if(!sameCard) {
+			importAndLoadCardProfile(transactionData.getCardProfile(), transaction);
+		}
 		//filling Chip details for EMV cards
 		if(isContains(transaction, "emv")) {
 			activateMas(transaction);
