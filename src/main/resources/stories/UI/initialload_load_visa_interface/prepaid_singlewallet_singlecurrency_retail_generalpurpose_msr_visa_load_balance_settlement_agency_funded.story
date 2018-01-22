@@ -6,7 +6,7 @@ As an Agency User
 I want to do Initial Load - Load - Reload through agent portal visa interface
 
 Meta:
-@StoryName SWSC_EMV_V_RTLGP_AGNC_FUND
+@StoryName SWSC_MSR_V_RTLGP_AGNC_FUND
 @CR1
 @CardCreation
 
