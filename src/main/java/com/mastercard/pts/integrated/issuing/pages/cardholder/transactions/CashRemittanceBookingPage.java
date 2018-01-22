@@ -200,8 +200,6 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 		enterTransactionPassword(cardhlTran.getTransctionPassword());
 		enterTransactionRemarks(cardhlTran.getTransactionRemark());
 		clickWhenClickable(submitTransaction);
-		waitForLoaderToDisappear();
-		//waitForWicket();
 		return getTextFromPage(transactionConfirmMsg);
 	}
 	
