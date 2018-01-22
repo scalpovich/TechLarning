@@ -37,7 +37,7 @@ Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth authorization and verify 000-Successful status
 And user sign out from customer portal
-When perform an EMV_COMPLETION MAS transaction on the same card
+When perform an EMV_COMPLETION MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth Completion authorization and verify 000-Successful status
