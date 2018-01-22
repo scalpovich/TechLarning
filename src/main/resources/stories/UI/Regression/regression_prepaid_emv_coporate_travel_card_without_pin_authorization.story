@@ -11,18 +11,15 @@ Meta:
 @CRCardsWithAuthorizationRegression
 @AuthorizationRegression
 @AuthorizationRegressionGroup3
+@EMVWithoutPin
 
 Scenario: Set up prepaid emv corporate travel card
-Meta:
-@TestId TC398452
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client
-
+Then user sign out from customer portal
 
 Scenario: prepaidemv corporate travel card device production
-Meta:
-@TestId TC408068
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
@@ -35,9 +32,8 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
-Then user sign out from customer portal
 Then embossing file batch was generated in correct format
-
+Then user sign out from customer portal
 
 Scenario: Transaction - EMV_PREAUTH and EMV_COMPLETION Authorization transaction
 Given connection to MAS is established
@@ -46,7 +42,7 @@ Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth authorization and verify 000-Successful status
 Then user sign out from customer portal
-When perform an EMV_COMPLETION MAS transaction on the same card
+When perform an EMV_COMPLETION MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth Completion authorization and verify 000-Successful status
@@ -70,19 +66,18 @@ And user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
 Then user sign out from customer portal
 
-Scenario: Perform EMV_REFUND Authorization transaction
-Meta:
-@TestId 
-When perform an EMV_REFUND MAS transaction on the same card
-Then MAS test results are verified
 
 Scenario: Perform EMV_POS_BALANCE_INQUIRY Authorization transaction
 Meta:
 @TestId
 When perform an EMV_POS_BALANCE_INQUIRY MAS transaction on the same card
 Then MAS test results are verified
+Then user is logged in institution
+Then search Balance Inquiry authorization and verify 000-Successful status
+And user sign out from customer portal
 
-When perform an ECOMM_PURCHASE MAS transaction
+Scenario: Perform ECOMM_PURCHASE Authorization transaction
+When perform an ECOMM_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
 Then user is logged in institution
 Then search E-Commerce Transaction authorization and verify 000-Successful status
@@ -96,45 +91,3 @@ Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
-
-Scenario: Generate Auth File for Clearing
-Meta:
-@TestId 
-When Auth file is generated after transaction
-When MAS simulator is closed
-
-
-Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
-Meta:
-@TestId 
-Given connection to MCPS is established
-When Auth file is generated
-When Auth file is loaded into MCPS and processed
-Then NOT file is successfully generated
-When MCPS simulator is closed
-
-Scenario: Upload ipm file from customer portal and process it
-Meta:
-@TestId 
-Given user is logged in institution
-When User uploads the NOT file
-When user processes batch for prepaid
-Then in batch trace history transaction is successful
-
-Scenario: Matching & Posting to Cardholders account
-Meta:
-@TestId 
-When in batch trace history transaction is successful
-When transaction status is "Matching Pending"
-When "Matching" batch for prepaid is successful
-Then transaction status is "Presentment Matched with authorization"
-
-Scenario: Program Balance Summary, Auth and Clearing reports download
-Meta:
-@TestId 
-When pre-clearing and Pre-EOD batches are run
-Then verify report for transactions with Program Balance Summary is downloaded
-And Verify Program Balance Summary is downloaded
-And verify report for Auth is downloaded
-And verify report for Clearing is downloaded
-When user sign out from customer portal

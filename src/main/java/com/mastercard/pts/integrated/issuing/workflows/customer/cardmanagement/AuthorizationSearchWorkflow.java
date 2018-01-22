@@ -24,7 +24,7 @@ public class AuthorizationSearchWorkflow {
 	public void verifyAuthTransactionSearch(String type, String state, String deviceNumber) {
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		page.inputDeviceNumber(deviceNumber);
-		page.inputFromDate(LocalDate.now());
+		page.inputFromDate(LocalDate.now().minusDays(1));
 		page.inputToDate(LocalDate.now());
 		page.clickSearchButton();
 
@@ -47,7 +47,7 @@ public class AuthorizationSearchWorkflow {
 	public void verifyTransactionAndBillingCurrency(String transactionCurrency, String billingCurrency, String deviceNumber) {
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		page.inputDeviceNumber(deviceNumber);
-		page.inputFromDate(LocalDate.now());
+		page.inputFromDate(LocalDate.now().minusDays(1));
 		page.inputToDate(LocalDate.now());
 		page.clickSearchButton();
 		int rowCount = page.getRowCountFromTable();
