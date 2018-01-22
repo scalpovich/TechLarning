@@ -29,8 +29,8 @@ Then device has "normal" status
 Scenario: perform visa fee collection transaction
 Given user is logged in institution
 When perform add visa fee Collection Fee collection Transaction [10] transaction
-When user process batches DOWNLOAD [D] for Generate Base II Outgoing File [VISA_OUTGOING] file
-When user validate downloaded DAT file
+When user process DOWNLOAD [D] for Member Wise [D] for Generate Base II Outgoing File [VISA_OUTGOING] file
+Then user validate downloaded DAT file
 
 
 

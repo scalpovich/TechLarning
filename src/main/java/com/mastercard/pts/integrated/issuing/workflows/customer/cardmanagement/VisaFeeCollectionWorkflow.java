@@ -22,7 +22,7 @@ public class VisaFeeCollectionWorkflow {
 	public void addVisaFeeCollectionRecord(VisaFeeCollection visafeecollection) {
 		VisaFeeCollectionPage page = navigator.navigateToPage(VisaFeeCollectionPage.class);
 		page.addVisaFeeCollection(visafeecollection);
-	/*	String message=page.getSuccessMessage();
-		Assert.assertEquals(message, Constants.Record_SAVED_Successfully);*/
+		String message=page.getSuccessMessage();
+		Assert.assertEquals(message, Constants.Record_Added_Successfully);
 	}
 }

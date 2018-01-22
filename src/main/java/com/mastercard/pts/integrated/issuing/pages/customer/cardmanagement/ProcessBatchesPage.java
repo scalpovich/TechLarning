@@ -28,6 +28,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Proc
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
@@ -161,10 +162,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private MCWebElement methodToGenerateFileDD;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
-	private MCWebElement binDD;	
-	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[@id='outputFileName']//span[@class='labeltextf']")
-	private MCWebElement fileNameLbl;	
+	private MCWebElement binDD;
 
 	public void selectBatchType(String option) {
 		selectByVisibleText(batchTypeDDwn, option);
@@ -455,7 +453,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 	
 	public void getVisaOutGoingFileName() {	
-		context.put("filename", fileNameLbl.getText());
+		WebElement fileNameLbl = getFinder().getWebDriver().findElement(By.xpath("//*[@id='outputFileName']//span[@class='labeltextf'] "));
+		context.put(ConstantData.VISA_OUT_GOING_FILE_NAME, fileNameLbl.getText());
 	}
 
 	public void statementDownloadBatch(ProcessBatches batch) {

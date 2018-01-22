@@ -6,12 +6,14 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.nio.file.Path;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -207,6 +209,7 @@ public class BatchProcessSteps {
 	public void validateDownloadedFile() {
 		String partialFileName = context.get(ConstantData.VISA_OUT_GOING_FILE_NAME);
 		File batchFile = linuxBox.downloadByLookUpForPartialFileName(partialFileName, tempDirectory.toString(), ConstantData.VISA_BASEII_LINUX_DIRECTORY);
-		batchProcessWorkflow.validateVisaOutGoingFile(batchFile);
+			Assert.assertTrue("Transaction Data Does not match ",batchProcessWorkflow.validateVisaOutGoingFile(batchFile));
+
 	}
 }
