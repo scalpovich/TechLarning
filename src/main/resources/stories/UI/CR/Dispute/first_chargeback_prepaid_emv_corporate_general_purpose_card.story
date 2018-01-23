@@ -74,5 +74,9 @@ When "Matching" batch for prepaid is successful
 Then transaction status is "Presentment Matched with authorization"
 
 Scenario:Create first chargeback
-When Get ARN number from database
+Meta:
+@TestId TCREMIT
+@TRRR
+Given user is logged in institution
 When Charge back is created for a transaction without fees
+Then user sign out from customer portal

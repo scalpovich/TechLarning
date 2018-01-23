@@ -162,7 +162,8 @@ public class DisputeSteps{
 		ChargeBack cb = ChargeBack.getChargeBack(keyProvider);
 		if(feesOption.equalsIgnoreCase(feesOptions))
 			cb.setFees(false);
-		cb.setArn(context.get(ConstantData.ARN_NUMBER));		
+		//cb.setArn(context.get(ConstantData.ARN_NUMBER));
+		cb.setArn("02223607295154135271770");
 		disputeWorkflow.createChargeBackRequest(cb);
 	}
 	
@@ -176,7 +177,8 @@ public class DisputeSteps{
 	@When("$chargeBackOrder charge back reversal is created for a transaction")
 	public void chargeBackReversalIsCreatedForATransaction(String chargeBackOrder){
 		ChargeBackReversal cb=ChargeBackReversal.createWithProvider(provider);
-		cb.setArn(context.get(ConstantData.ARN_NUMBER));
+		//cb.setArn(context.get(ConstantData.ARN_NUMBER));
+		cb.setArn("02223607295102300000020");		
 		disputeWorkflow.createChargeBackReversal(cb);
 	}
 	

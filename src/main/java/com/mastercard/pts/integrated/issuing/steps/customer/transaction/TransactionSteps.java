@@ -464,13 +464,15 @@ public class TransactionSteps {
 	MiscUtils.reportToConsole(message1 + message2 );
 	}
 	
+	@Given("ARN is retrieved from transaction search page")
 	@Then("ARN is retrieved from transaction search page")
 	public void arnIsRetrievedFromTransactionSearchPage() {
-		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);		
 		Device device = context.get(ContextConstants.DEVICE);
-		String deviceNumber=device.getDeviceNumber();
-//		String deviceNumber="5877654779528317";
+		//String deviceNumber = device.getDeviceNumber();
+		String deviceNumber = "5877656209771912";
 		String arn = transactionWorkflow.getARN(deviceNumber, ts);
-		logger.info("ARN = {} ", arn);
+		context.put(ConstantData.ARN_NUMBER, arn);
+		logger.info("ARN for device transactions = {} ", arn);
 	}
 }
