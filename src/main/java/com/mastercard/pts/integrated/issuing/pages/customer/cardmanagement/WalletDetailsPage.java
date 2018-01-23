@@ -52,6 +52,7 @@ public class WalletDetailsPage extends AbstractBasePage {
 		WebElementUtils.enterText(deviceNumberTxt, device.getDeviceNumber());
 		WebElementUtils.elementToBeClickable(searchBtn);
 		clickWhenClickable(searchBtn);
+		waitForLoaderToDisappear();
 		return getListOfElements(xPath);
 	}
 	
