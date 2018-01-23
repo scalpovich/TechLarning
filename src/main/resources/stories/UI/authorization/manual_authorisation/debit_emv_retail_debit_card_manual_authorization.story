@@ -7,7 +7,6 @@ I want to create an emv debit card for client and perform manual authorization f
 
 Meta:
 @StoryName S198222
-@NonUIBVTest
 @SanityCardsWithAuthorization
 
 Scenario: Set up emv retail debit card

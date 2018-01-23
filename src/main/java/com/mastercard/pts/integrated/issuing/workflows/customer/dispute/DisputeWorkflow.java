@@ -62,7 +62,7 @@ public class DisputeWorkflow extends SimulatorUtilities {
 	public void createChargeBackRequest(ChargeBack cb) {
 		ChargeBackNewPage page = navigator.navigateToPage(ChargeBackNewPage.class);		
 		page.searchByArn(cb.getArn());
-		page.triggerChargeBack(cb);
+		page.requestChargeBack(cb);
 	}
 	
 	public void createSecondChargeBack(SecondChargeBack sb)

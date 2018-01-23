@@ -42,6 +42,11 @@ public class ConstantData {
 	
 	public static final String  TRANSACTION_NAME = "transaction";
 	public static final String  DATAELEMENT_037 = "data037";
+	
+	public static final String  VISA_OUT_GOING_FILE_NAME = "filename";
+	public static final String  VISA_FEE_COLLECTION_TRANSACTIONCODE = "10";
+	public static final String  VISA_FUND_DISBURSEMENT_TRANSACTIONCODE = "20";
+	public static final String  VISA_BASEII_LINUX_DIRECTORY= "VISA";
 
 	private ConstantData() {}
 }

@@ -3,14 +3,19 @@
  */
 package com.mastercard.pts.integrated.issuing.steps.cardholder;
 
+
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.contains;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.CardHolderTransactions;
@@ -18,6 +23,8 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.workflows.cardholder.CardHolderTransactionsWorkFlows;
+
+import junit.framework.Assert;
 
 @Component
 public class CardholderTransactionsSteps extends AbstractBasePage {
@@ -34,21 +41,30 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 	private TestContext context;
 	
 	private CardHolderTransactions cardhlTran;
+	private static final String REMITTANCE_ERROR_MSG ="Error while processing your request. Please retry. OK";
+	private static final String REMITTANCE_SUCCESS_MSG ="Remittance request created";	
 	
 	@When("cardholder book the cash remittance")
 	public void cardholderBookCashRemittance(){		
-		cardhlTran = CardHolderTransactions.cardHolderTranscationDataProvider();
-		transactionFlow.openCashRemittanceTransactionPage();		
-		if(!transactionFlow.checkCashRemittanceAllowedOrNot()){
-			transactionFlow.cashRemittanceBooking(cardhlTran);			
-		}else{			
-			logger.info("Selected card do not cash remittance service");
-		}
+		Device device = context.get(ContextConstants.DEVICE);		
+		cardhlTran = CardHolderTransactions.cardholderCashRemit(provider);
+		cardhlTran.setTransctionPassword(device.getNewTransPassword());		
+		transactionFlow.openCashRemittanceTransactionPage();	
+		String actualStatus = transactionFlow.cashRemittanceBooking(cardhlTran);
+		Assert.assertTrue(REMITTANCE_ERROR_MSG,actualStatus.contains(REMITTANCE_SUCCESS_MSG));
+	}
+	
+	@Then("verify cash remittance request")
+	@When("verify cash remittance request")
+	public void verifyRemittanceRequestEntry(){
+		transactionFlow.openCashRemittanceTransactionPage();
 	}
 	
 	@When ("cardholder cancel the cash remittance")
 	public void cancelCashRemittanceRequest(){
+		cardhlTran = CardHolderTransactions.cardholderCashRemit(provider);
 		transactionFlow.openCancelRemittanceTransactionPage();
+		transactionFlow.cancelCashRemittanceBooking(cardhlTran);		
 	}
 	
 	@When ("fund transfer through MasterCard Money Send")

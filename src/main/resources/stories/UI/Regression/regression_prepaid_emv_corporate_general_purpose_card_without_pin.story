@@ -29,7 +29,6 @@ Then device has "normal" status
 When user activates device through helpdesk
 Then user sign out from customer portal
 Then embossing file batch was generated in correct format
-Then user sign out from customer portal
 
 Scenario: Transaction - EMV_PREAUTH and EMV_COMPLETION Authorization transaction
 Given connection to MAS is established
