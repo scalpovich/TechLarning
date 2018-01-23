@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.CardType;
 import com.mastercard.pts.integrated.issuing.domain.agent.channelmanagement.AssignPrograms;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -86,7 +87,7 @@ public class AssignProgramsSteps {
 		Program program = context.get(ContextConstants.PROGRAM);
 		AssignPrograms details = AssignPrograms.createWithProvider(provider);
 		details.setProgramCode(program.buildDescriptionAndCode());
-		details.setDeviceType(devicePlan.getDeviceType());
+		details.setDeviceType(CardType.fromShortName(devicePlan.getDeviceType()));
 		// details.setProgramCode("EmvProgram [5274]");
 		assignProgramsWorkflow.assignProgramAgency(details);
 	}
@@ -103,7 +104,7 @@ public class AssignProgramsSteps {
 		Program program = context.get(ContextConstants.PROGRAM);
 		AssignPrograms details = AssignPrograms.createWithProvider(provider);
 		details.setProgramCode(program.buildDescriptionAndCode());
-		details.setDeviceType(devicePlan.getDeviceType());
+		details.setDeviceType(CardType.fromShortName(devicePlan.getDeviceType()));
 		assignProgramsWorkflow.assignProgramBranch(details);
 	}
 
@@ -120,7 +121,7 @@ public class AssignProgramsSteps {
 		AssignPrograms details = AssignPrograms.createWithProvider(provider);
 		// details.setProgramCode("EmvProgram [5274]");
 		details.setProgramCode(program.buildDescriptionAndCode());
-		details.setDeviceType(devicePlan.getDeviceType());
+		details.setDeviceType(CardType.fromShortName(devicePlan.getDeviceType()));
 		assignProgramsWorkflow.assignProgramAgent(details);
 	}
 

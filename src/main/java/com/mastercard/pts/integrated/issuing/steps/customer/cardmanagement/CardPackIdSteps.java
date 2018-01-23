@@ -33,8 +33,8 @@ public class CardPackIdSteps {
 		devicecreation.setDeviceNumberFromQuery(cardpackidflows.DeviceNumber(devicecreation));
 	}
 
-	@When("user verifies the Pre generated flag at device level should be set to $flag once the device is created")
-	@Then("user verifies the Pre generated flag at device level should be set to $flag once the device is created")
+	@When("user verifies the Pre generated flag at device level should be set to $flag once the device created")
+	@Then("user verifies the Pre generated flag at device level should be set to $flag once the device created")
 	public void checkPreGeneratedFlag(@Named("flag") String flag) {
 		devicecreation.setPreGeneratedCardFlag(flag);
 		cardpackidflows.verifyPreGeneratedFlag(devicecreation);
