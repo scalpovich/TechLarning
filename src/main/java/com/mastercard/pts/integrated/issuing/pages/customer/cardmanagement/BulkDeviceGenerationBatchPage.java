@@ -3,7 +3,6 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -100,11 +99,13 @@ public class BulkDeviceGenerationBatchPage extends AbstractBasePage {
 	}
 
 	public void clickbulkGenerationChkBox(BulkDeviceRequestbatch bulkdeviceGenBatch) {
-		WebElement SelectProcessChkBx = getFinder().getWebDriver().findElement(By.xpath("//td[contains(.,'"
-				+ bulkdeviceGenBatch.getBatchNumber()
-				+ "')]/following::span/input[@name='productionPanel:BasicDataTable:datatable:body:rows:1:cells:9:cell:columnCheckBox']"));
+		// WebElement SelectProcessChkBx =
+		// getFinder().getWebDriver().findElement(By.xpath("//td[contains(.,'"
+		// + bulkdeviceGenBatch.getBatchNumber()
+		// +
+		// "')]/following::span/input[@name='productionPanel:BasicDataTable:datatable:body:rows:1:cells:9:cell:columnCheckBox']"));
 
-		clickWhenClickable(SelectProcessChkBx);
+		clickWhenClickable(selectProcessChkBx);
 	}
 
 	public void clickProcessSelectedBtn() {
