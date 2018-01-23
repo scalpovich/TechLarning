@@ -501,7 +501,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		performClickOperation("Down Arrow");
 		performClickOperation("Import Auth file");
 		executeAutoITExe("LoadAuthFile.exe " + fileName );
-		winiumClickOperation(OPEN);
+		//winiumClickOperation(OPEN);
 		loadFile(fileName);
 	}
 
