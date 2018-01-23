@@ -4,8 +4,8 @@ As a(n)  Customer portal user
 I want to  create/define a Prepaid Program
 So that program can be created with different data conditions
 
-@Meta:
-PrepaidProgramCR6
+Meta:
+@PrepaidProgramCR6
 
 Scenario: Scenario1 - Verify that the Issuer is able to create/define a Prepaid Program: Corporate General Purpose Card for Multi Wallet Single Currency Type 
 Meta:

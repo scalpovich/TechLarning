@@ -4,8 +4,8 @@ As a(n)  Customer portal user
 I want to  create/define a Debit Program
 So that program can be created with different data conditions
 
-@Meta:
-DebitProgramCR4
+Meta:
+@DebitProgramCR4
 
 Scenario: Scenario1 - Verify that the Issuer is able to create/define a Debit Program:  Retail Debit Card for Single Wallet Single Currency Type. - Using data condition: SMS, Device Technology (mastercard Interface), Static Virtual Card 
 Meta:
