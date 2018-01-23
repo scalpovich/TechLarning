@@ -20,3 +20,4 @@
 	sleep(2000)
     ControlSetText("Import Auth File","","Edit1", $CmdLine[1])
 	sleep(1000)
+    ControlClick("Import Auth File","","[CLASS:Button; INSTANCE:1]")
