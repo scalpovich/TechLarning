@@ -196,8 +196,8 @@ public class LoginPage extends AbstractBasePage  {
 		enterText(chpSignUpTranPass,newTrnPass);
 		enterText(chpSignUpTranPassConfirm,newTrnPass);
 		confirmSignUpCardHolder();	
-		acceptSuccessfullCardholderSignUp();
 	}
+	
 	public void acceptSuccessfullCardholderSignUp(){
 		driver().switchTo().alert().accept();
 	}
