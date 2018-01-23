@@ -1,35 +1,41 @@
-prepaid emv corporate general purpose card authorization PINLESS
+prepaid emv corporate gift card with PIN
 
 Narrative:
-In order to provide a corporate client various transactions
+In order to provide a corporate client various scenarios
 As an issuer
-I want to create a prepaid emv corporate general purpose card and test various transactions
+I want to create a prepaid emv corporate gift card and test various transactions
 
 Meta:
-@StoryName p_emv_corp_general_purpose
+@StoryName p_emv_corp_gift
 @AuthorizationRegression
 @AuthorizationRegressionGroup2
-@EMVWithoutPin
+@EMVWithPin
 
-Scenario: Setup - prepaid emv corporate general purpose card
+Scenario: Setup - prepaid emv corporate gift card with PIN
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card without pin
+And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
-Then user sign out from customer portal
+And user sign out from customer portal
 
-Scenario: Device production - prepaid emv corporate general purpose card
+Scenario: Device production - prepaid emv corporate gift card with PIN
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
+When processes pin generation batch for prepaid
 When user has wallet number information for prepaid device
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
-Then user sign out from customer portal
-Then embossing file batch was generated in correct format
-Then user sign out from customer portal
+And user sign out from customer portal
+
+Scenario: Pin Generation
+Given connection to FINSim is established
+When Pin Offset file batch was generated successfully
+When embossing file batch was generated in correct format
+When PIN is retrieved successfully with data from Pin Offset File
+Then FINSim simulator is closed
 
 Scenario: Transaction - EMV_PREAUTH and EMV_COMPLETION Authorization transaction
 Given connection to MAS is established
@@ -65,19 +71,10 @@ Then user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform ECOMM_PURCHASE Authorization transaction
-When perform an ECOMM_PURCHASE MAS transaction on the same card
-Then MAS test results are verified
-Then user is logged in institution
-Then search E-Commerce Transaction authorization and verify 000-Successful status
-And user sign out from customer portal
-
 Scenario: Perform EMV_POS_BALANCE_INQUIRY Authorization transaction
 When perform an EMV_POS_BALANCE_INQUIRY MAS transaction on the same card
 Then MAS test results are verified
+When MAS simulator is closed
 Then user is logged in institution
 Then search Balance Inquiry authorization and verify 000-Successful status
 And user sign out from customer portal
-
-Scenario: MAS is closed
-When MAS simulator is closed

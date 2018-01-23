@@ -39,7 +39,7 @@ public class AuthorizationSearchWorkflow {
 
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		page.inputDeviceNumber(deviceNumber);
-		page.inputFromDate(LocalDate.now());
+		page.inputFromDate(LocalDate.now().minusDays(1));
 		page.inputToDate(LocalDate.now());
 		//using waitAndSearchForRecordToAppear instead of page.clickSearchButton(); it iterates for sometime before failing
 		page.waitAndSearchForRecordToAppear();

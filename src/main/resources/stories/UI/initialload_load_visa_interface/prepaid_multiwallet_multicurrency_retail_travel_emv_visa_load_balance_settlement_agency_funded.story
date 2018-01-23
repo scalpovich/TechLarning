@@ -94,12 +94,13 @@ And initial load balance in helpdesk updated correctly for prepaid device
 And user sign out from customer portal
 
 Scenario: Prepaid - Setup Multi Currency Through Agent Portal
+
 Given user is logged in agent portal as agent user
 When user setup multiple currency for device through agent portal
 Then currency setup for the device is successful
 And user sign out from agent portal
 And user is logged in institution
-And currency setup for prepaid device is done correclty and updated in wallet details tab
+And currency setup for prepaid device is done correctly and updated in wallet details tab
 And user sign out from customer portal
 
 Scenario: Prepaid - Load Balance Request - Funded Agent
