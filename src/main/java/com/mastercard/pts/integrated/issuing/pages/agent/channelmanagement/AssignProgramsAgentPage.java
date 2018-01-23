@@ -118,8 +118,8 @@ public class AssignProgramsAgentPage extends AbstractBasePage {
 										// loaded
 		WebElementUtils.scrollDown(driver(), 0, 999);
 
-		selectProgramCode("EmvProgram [5274]");
-		// selectProgramCode(details.getProgramCode());
+		// selectProgramCode("EmvProgram [5274]");
+		selectProgramCode(details.getProgramCode());
 		selectDeviceType(details.getDeviceType());
 		clickAddButton();
 		driver().switchTo().alert().accept();
