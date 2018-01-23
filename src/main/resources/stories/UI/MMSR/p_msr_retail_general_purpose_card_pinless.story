@@ -10,6 +10,7 @@ Meta:
 @oldReferenceSheet_S203707
 @CRCardsPinlessWithAuthorization
 @MSRWithoutPin
+@MMSR
 
 Scenario: Set up prepaid msr retail general purpose card
 Given user is logged in institution

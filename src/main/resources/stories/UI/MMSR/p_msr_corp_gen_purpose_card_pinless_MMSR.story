@@ -7,6 +7,7 @@ I want to create a prepaid emv corporate general purpose card and test various t
 
 Meta:
 @StoryName p_msr_corp_general_purpose
+@MSSR
 
 Scenario: Transaction - prepaid msr corporate general purpose card - MMSR Authorization transaction
 Given user is logged in institution

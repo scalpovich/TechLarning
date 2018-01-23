@@ -10,6 +10,7 @@ Meta:
 @AuthorizationRegression
 @AuthorizationRegressionGroup1
 @MSRWithoutPin
+@MMSR
 
 Scenario: Set up prepaid msr retail travel card
 Given user is logged in institution

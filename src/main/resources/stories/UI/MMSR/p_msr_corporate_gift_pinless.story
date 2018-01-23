@@ -10,7 +10,7 @@ Meta:
 @AuthorizationRegression
 @AuthorizationRegressionGroup2
 @MSRWithoutPin
-
+@MMSR
 Scenario: Setup - prepaid MSR corporate gift card without PIN
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin

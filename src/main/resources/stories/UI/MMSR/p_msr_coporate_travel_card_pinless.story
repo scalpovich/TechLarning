@@ -12,7 +12,7 @@ Meta:
 @AuthorizationRegression
 @AuthorizationRegressionGroup3
 @MSRWithoutPin
-
+@MMSR
 Scenario: Set up prepaid msr corporate travel card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
