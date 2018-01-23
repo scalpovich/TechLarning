@@ -7,10 +7,6 @@ I want to create an magnetic stripe prepaid card pinless and perform various tra
 
 Meta:
 @StoryName prepaid_msr_retail_gift
-@oldReferenceSheet_prepaid_msr
-@AuthorizationRegression
-@AuthorizationRegressionGroup3
-@MSRWithoutPin
 @MMSR
 Scenario: Set up prepaid msr retail gift card authorization pinless
 Given user is logged in institution
@@ -24,13 +20,7 @@ Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
-Then device has "normal" status
-When user has wallet number information for prepaid device
-When user performs adjustment transaction
-When user has current wallet balance amount information for prepaid device
-Then device has "normal" status
 Then user activates device through helpdesk
-Then embossing file batch was generated in correct format
 Then user sign out from customer portal
 
 Scenario: Perform MMSR-RetailGiftCard Authorization transaction
