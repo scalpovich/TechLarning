@@ -21,49 +21,22 @@ public class AuthorizationSearchWorkflow {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
-	private String assertStatement = "Latest (Row) Description and Code Action does not match on Authorization Search Screen";
-	private String codeActionStatement = "CodeAction on Authorization Search Page : {} ";
-	private String descriptionStatement = "Description on Authorization Search Page : {} ";
-	private String typeStatement ="type on Authorization Search Page : {} ";
-	private String stateStatement ="state on Authorization Search Page : {} ";
-
 	public void verifyAuthTransactionSearch(String type, String state, String deviceNumber) {
-		String varState = state;
+		String varType = type;
 		// state value sent from stroy file is different from what appears on the screen hence setting to the correct value if it is "Rvmt_Receiving"
-		if("Rvmt_Receiving".equalsIgnoreCase(varState))
-			varState = "RVMT - Receiving";
+		if("Rvmt_Receiving".equalsIgnoreCase(varType))
+			varType= "RVMT - Receiving";
 
-		AuthorizationSearchPage page = authSearchAndVerify(deviceNumber);
-
-		String actualCodeAction = page.getCellTextByColumnName(1, "Code Action");
-		String actualDescription = page.getCellTextByColumnName(1, "Description");
-		logger.info(codeActionStatement, actualCodeAction);
-		logger.info(descriptionStatement, actualDescription);
-
-		logger.info(typeStatement, type);
-		logger.info(stateStatement, varState);
-
-		boolean condition = actualCodeAction.contains(varState) && actualDescription.contains(type);
-		assertTrue(assertStatement, condition);
+		authSearchAndVerification(deviceNumber, varType, state, "Code Action", "Description");
 	}
 
 	public void verifyTransactionAndBillingCurrency(String transactionCurrency, String billingCurrency, String deviceNumber) {
-		
-		AuthorizationSearchPage page = authSearchAndVerify(deviceNumber);
+		authSearchAndVerification(deviceNumber, transactionCurrency, billingCurrency, "Transaction Currency", "Billing Currency");
+	}	
 
-		String actualTransactionCurrency = page.getCellTextByColumnName(1, "Transaction Currency");
-		String actualBillingCurrency = page.getCellTextByColumnName(1, "Billing Currency");
-		logger.info(codeActionStatement, actualTransactionCurrency);
-		logger.info(descriptionStatement, actualBillingCurrency);
+	private void authSearchAndVerification(String deviceNumber, String type, String state, String codeColumnName, String descriptionColumnName ) {
+		boolean condition;
 
-		logger.info(typeStatement, transactionCurrency);
-		logger.info(stateStatement, billingCurrency);
-
-		boolean condition = actualTransactionCurrency.contains(transactionCurrency) && actualBillingCurrency.contains(billingCurrency);
-		assertTrue(assertStatement, condition);
-	}
-	
-	private AuthorizationSearchPage authSearchAndVerify(String deviceNumber) {
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		page.inputDeviceNumber(deviceNumber);
 		page.inputFromDate(LocalDate.now());
@@ -74,6 +47,21 @@ public class AuthorizationSearchWorkflow {
 		int rowCount = page.getRowCountFromTable();
 		logger.info("Row Count on Authorization Search Page : {} ", rowCount);
 		assertTrue("No Rows Found on Authorization Search Page", rowCount > 0);
-		return page;
+		String actualCodeAction = page.getCellTextByColumnName(1, codeColumnName);
+		String actualDescription = page.getCellTextByColumnName(1, descriptionColumnName);
+		logger.info("CodeAction on Authorization Search Page : {} ", actualCodeAction);
+		logger.info("Description on Authorization Search Page : {} ", actualDescription);
+
+		logger.info("type on Authorization Search Page : {} ", type);
+		logger.info("state on Authorization Search Page : {} ", state);
+
+		if("Code Action".equalsIgnoreCase(codeColumnName))
+			// to handle "Code Action", "Description"
+			condition = actualCodeAction.contains(state) && actualDescription.contains(type);
+		else
+			// to handle "Transaction Currency", "Billing Currency"
+			condition =actualCodeAction.contains(type) && actualDescription.contains(state);
+
+		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
 	}
 }
