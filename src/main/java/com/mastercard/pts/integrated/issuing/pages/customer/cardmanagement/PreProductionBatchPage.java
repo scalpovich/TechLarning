@@ -150,11 +150,13 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	public void clickPreProductionChkBox(BulkDeviceRequestbatch bulkdeviceGenBatch) {
 		CustomUtils.ThreadDotSleep(5000);
 		search();
-		WebElement SelectProcessChkBx = getFinder().getWebDriver().findElement(By.xpath("//td[contains(.,'"
-				+ bulkdeviceGenBatch.getJobId()
-				+ "')]/following::span/input[@name='productionPanel:BasicDataTable:datatable:body:rows:1:cells:8:cell:columnCheckBox']"));
+		// WebElement SelectProcessChkBx =
+		// getFinder().getWebDriver().findElement(By.xpath("//td[contains(.,'"
+		// + bulkdeviceGenBatch.getJobId()
+		// +
+		// "')]/following::span/input[@name='productionPanel:BasicDataTable:datatable:body:rows:1:cells:8:cell:columnCheckBox']"));
 
-		clickWhenClickable(SelectProcessChkBx);
+		clickWhenClickable(preProductionBatchRecordChkBx);
 	}
 
 	public void clickProcessSelectedBtn() {
