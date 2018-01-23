@@ -159,5 +159,9 @@ public class VisaFeeCollectionPage extends AbstractBasePage {
 		WebElementUtils.enterText(messageTextTxt, RandomStringUtils.randomAlphanumeric(10));	
 		clickSaveButton();
 	}
-	
+
+	@Override
+	public String getSuccessMessage() {
+		return super.getSuccessMessage();
+	}
 }
