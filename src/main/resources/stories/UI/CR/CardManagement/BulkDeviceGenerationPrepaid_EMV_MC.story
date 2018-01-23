@@ -63,7 +63,7 @@ Meta:
 @TCName TC264315_Embossing File Generation
 @sheetName S205014
 Given login to portal as existing bank as a Customeruser
-When user configures the device range for Retail General Purpose, Visa, EMV
+When user configures the device range for Retail General Purpose, Mastercard, EMV
 When user creates a bulk device request for product Prepaid
 When user runs the bulk device generation batch for product Prepaid
 When user runs the pre production batch for product Prepaid
@@ -73,7 +73,7 @@ And Pack Id should be generated as per the template configured
 When user navigates to General in Helpdesk
 And user search for device on search screen for product type Prepaid
 Then Expiry date should be calculated as per the flag configured at device plan
-When user creates a paired device plan and configures the device range for Retail General Purpose, Visa, EMV
+When user creates a paired device plan and configures the device range for Retail General Purpose, Mastercard, EMV
 When user creates a bulk device request for product Prepaid
 When user runs the bulk device generation batch for product Prepaid
 When user runs the pre production batch for product Prepaid
@@ -92,7 +92,7 @@ Lifecycle:
 After:
 Outcome: SUCCESS
 @BulkDeviceGenerationPrepaidRetailMCEMV
-@TCName TC264315_Embossing File Generation
+@TCName TC264315_Embossing File Generation_VISA
 @sheetName S205014
 Given login to portal as existing bank as a user
 When user navigates to General in Helpdesk
