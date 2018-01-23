@@ -6,11 +6,14 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.nio.file.Path;
 
 import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +31,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreP
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessWorkflow;
@@ -176,5 +180,36 @@ public class BatchProcessSteps {
 		batch.setBatchName("Statement Download [STATEMENT_DOWNLOAD]");
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessWorkflow.processDownloadBatch(batch);
+	}
+	
+	/**
+	 * Step Definition for Processing batches
+	 * <p>
+	 * StoryFile usage : When user runs Process Batches for $batchType for
+	 * $batchName file
+	 * <p>
+	 */
+	@When("user process $batchType for $methodToGenerateFile for $batchname file")
+	public void runProcessBatches(@Named("batchType") String batchType,@Named("methodToGenerateFile") String methodToGenerateFile,
+			@Named("batchname") String batchName) {
+		ProcessBatches batch=new ProcessBatches();
+		batch.setBatchName(batchName);
+		batch.setBatchType(batchType);
+		batch.setMethodToGenerateFile(methodToGenerateFile);
+		batchProcessWorkflow.processVisaOutgoingBatch(batch);
+	}
+	/**
+	 * Step Definition for Processing batches
+	 * <p>
+	 * StoryFile usage : When user runs Process Batches for $batchType for
+	 * $batchName file
+	 * <p>
+	 */
+	@Then("user validate downloaded DAT file")
+	public void validateDownloadedFile() {
+		String partialFileName = context.get(ConstantData.VISA_OUT_GOING_FILE_NAME);
+		File batchFile = linuxBox.downloadByLookUpForPartialFileName(partialFileName, tempDirectory.toString(), ConstantData.VISA_BASEII_LINUX_DIRECTORY);
+			Assert.assertTrue("Transaction Data Does not match ",batchProcessWorkflow.validateVisaOutGoingFile(batchFile));
+
 	}
 }
