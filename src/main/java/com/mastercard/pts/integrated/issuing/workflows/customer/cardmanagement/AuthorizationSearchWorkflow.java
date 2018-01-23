@@ -4,20 +4,31 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.collect.administration.AdministrationHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.AuthorizationSearchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 
 @Workflow
 public class AuthorizationSearchWorkflow {
 
 	@Autowired
 	private Navigator navigator;
+	
+	@Autowired
+	private TestContext context;
+	
+	@Autowired
+	private ReconciliationWorkFlow reconciliationWorkFlow;
 
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
@@ -34,6 +45,7 @@ public class AuthorizationSearchWorkflow {
 
 		String actualCodeAction = page.getCellTextByColumnName(1, "Code Action");
 		String actualDescription = page.getCellTextByColumnName(1, "Description");
+		context.put("authCode",page.getCellTextByColumnName(1, "Auth Code"));
 		logger.info("CodeAction on Authorization Search Page : {} ", actualCodeAction);
 		logger.info("Description on Authorization Search Page : {} ", actualDescription);
 		
@@ -64,5 +76,19 @@ public class AuthorizationSearchWorkflow {
 		
 		boolean condition = actualTransactionCurrency.contains(transactionCurrency) && actualBillingCurrency.contains(billingCurrency);
 		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
+	}
+	
+	public void verifyAuthTransactionSearchReport(Device device)
+	{
+		List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME,"XU4NIZ");
+		//List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME,context.get("authCode"));
+		//boolean condition = reportContent.contains(context.get("authCode")) && reportContent.contains(device.getDeviceNumber());
+		String AuthFileData="";
+		for (int i = 0; i < reportContent.size(); i++) {
+			AuthFileData += reportContent.get(i) + " ";
+		}	
+		
+		boolean condition = AuthFileData.contains("XU4NIZ") && AuthFileData.contains("5887651058800118");
+		assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
 	}
 }

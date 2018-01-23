@@ -47,6 +47,9 @@ public class ConstantData {
 	public static final String  VISA_FEE_COLLECTION_TRANSACTIONCODE = "10";
 	public static final String  VISA_FUND_DISBURSEMENT_TRANSACTIONCODE = "20";
 	public static final String  VISA_BASEII_LINUX_DIRECTORY= "VISA";
+	
+	public static final String  AUTHORIZATION_REPORT_FILE_NAME = "Authorization.pdf";
+	public static final String  AUTHORIZATION_REPORT_NAME = "Authorization";
 
 	private ConstantData() {}
 }
