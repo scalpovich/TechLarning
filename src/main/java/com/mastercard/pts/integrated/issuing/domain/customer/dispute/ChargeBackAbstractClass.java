@@ -1,8 +1,9 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.dispute;
 
 public class ChargeBackAbstractClass {
-	
+
 	private String chargeBackAmount;
+	private String secondchargeBackAmount;
 	private String reasonCode;
 	private String documentation;
 	private boolean fees;
@@ -18,6 +19,14 @@ public class ChargeBackAbstractClass {
 
 	public void setChargeBackAmount(String chargeBackAmount) {
 		this.chargeBackAmount = chargeBackAmount;
+	}
+
+	public String getSecondChargeBackAmount() {
+		return secondchargeBackAmount;
+	}
+
+	public void setSecondChargeBackAmount(String SecondchargeBackAmount) {
+		this.secondchargeBackAmount = SecondchargeBackAmount;
 	}
 
 	public String getReasonCode() {

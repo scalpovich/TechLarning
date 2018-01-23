@@ -372,6 +372,8 @@ public class Constants {
 	public static final String PREPAID = "prepaid";
 
 	public static final String DEBIT = "debit";
+	
+	public static final String ALL = "All";
 
 	public static String ADD_APPLICATION_SCREEN = "Add Application";
 

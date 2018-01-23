@@ -127,6 +127,7 @@ public void processDownloadBatch(ProcessBatches batch){
 		   if(line.startsWith(ConstantData.VISA_FEE_COLLECTION_TRANSACTIONCODE) || line.startsWith(ConstantData.VISA_FUND_DISBURSEMENT_TRANSACTIONCODE))
 		   {
 			   tranLine=line;
+			   logger.info("Transaction data in DAT File : {}",tranLine);
 			   break;
 		   }
 		}

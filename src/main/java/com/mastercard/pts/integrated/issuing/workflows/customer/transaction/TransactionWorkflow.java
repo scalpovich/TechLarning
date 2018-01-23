@@ -197,8 +197,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 		addBinRangeAndCurrencyDetailsBasedOnCardNumber(transactionData, transaction, sameCard);
 
-		importAndLoadCardProfile(transactionData.getCardProfile(), transaction);
-
+		if(!sameCard) {
+			importAndLoadCardProfile(transactionData.getCardProfile(), transaction);
+		
 		//filling Chip details for EMV cards
 		if(isContains(transaction, "emv")) {
 			activateMas(transaction);
@@ -209,6 +210,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(4000);
 
 			fillEmvChipKeySetDetails();
+		}
 		}
 		/*		
 		//filling CVV data for PREAUTH and COMPLETION
@@ -1242,7 +1244,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		MiscUtils.reportToConsole("winiumLicenseSelectOperation Count : " + lst);
 		lst.get(0).click();
 	}
-	
+
 	private void winiumClickOperation(String locator) {
 		logger.info(WINIUM_LOG_COMMENT + locator);
 		winiumDriver.findElementByName(locator).click();
@@ -1395,6 +1397,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public void connectAndStartVtsCommunication() { 
+		wait(5000);
 		activateVts();
 
 		WebElement visaTestSystemFrame = winiumDriver.findElement(By.xpath("*[starts-with(@Name, 'Visa Test System')]"));
@@ -1450,6 +1453,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void disconnectAndCloseVts() {
 		executeAutoITExe("vtsCloseIncomingAndLogViewer.exe"); // close VTS
+		wait(10000);
 		executeAutoITExe("CloseVTS.exe");
 	}
 
@@ -1465,7 +1469,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		browserMinimize();
 		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseToSelect(transaction);
 		logMessage("VISA Transaction Test Case Name : ",  transactionName );
-		
+
 		loadVisaInputFile(transaction);
 		//method to change values in Excel based on Device Context values so that this file can be uploaded into the system
 		setValuesInExcelTemplateBasedOnDeviceContext();
@@ -1477,8 +1481,19 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private void navigateToVariableManagerAndLoadTestGroupTemplate() { 
-		executeAutoITExe("VTSNavigateToVariablesManager.exe"  + SEPERATOR + vtsTestGroupInputFilePath + "\"");
-		executeAutoITExe("VTSHandleVariablesManager.exe");
+		//only launching Variable Manager through AutoIt
+        //clickin on "Open Most Recent Database" through Winium as doing with AutoIT on version 43 is crashing Variable Manager as the DLL to handle this does not support nSelect as it is not initaqilized ("error" we saw
+        //executeAutoITExe("VTSNavigateToVariablesManager.exe"  + SEPERATOR + vtsTestGroupInputFilePath + "\""); // vts varaible manager crashes on version 43 if this line is used hence broke this AutoIt action to below steps
+        
+        executeAutoITExe("VtsVariableManagerLaunch.exe");
+        if(!winiumDriver.findElementByName("Close Database").isEnabled()) // if this is enabled then the application is set to required state
+                    winiumClickOperation("Open Most Recent Database");
+        wait(5000);
+        //now loading the Excel file into Variable Manager
+        executeAutoITExe("vtsVariableManagerLoadExcelTestDataFile.exe"  + SEPERATOR + vtsTestGroupInputFilePath + "\"");
+
+        executeAutoITExe("VTSHandleVariablesManager.exe");
+
 	}
 
 	private void loadVisaTestGroupTemplate() { 
@@ -1511,18 +1526,12 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		MiscUtils.reportToConsole(" ******* getFeildDescriptionFromLogViewer ******" );     
 
 		executeAutoITExe("VtsManageLogViewer.exe");
-		WebElement logViewerFrame = winiumDriver.findElement(By.name("Incoming Message"));
-		if(!logViewerFrame.isDisplayed()) {
-			logMessage(VISA_FAILURE_MESSAGE, "");
-			return VISA_FAILURE_MESSAGE;
-		}
-		logViewerFrame.click();
-		winiumClickOperation("F2"); //selecting this to be able to scroll on the page and F2 is always visible even when we are at the botton of the frame
-		pressPageUp(); //scrolling to top of frame
+
 		if(winiumDriver.findElement(By.name(propertyByName)).isDisplayed()) {
 			winiumClickOperation(propertyByName);
 		} else {
-			logViewerFrame.click();
+			//			logViewerFrame.click();
+			winiumClickOperation("F2");
 			pressPageDown(2); // scrolling down to the end of the page
 			winiumClickOperation(propertyByName);
 		}
@@ -1530,13 +1539,15 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		//printing values .. not needed but left it so that values can be seen in console
 		for(WebElement e : result) {
 			MiscUtils.reportToConsole(e.getAttribute("Name"));
-			}
+		}
 		//getting value from last section from F39 list item
 		tempValue = result.get(result.size()-1).getAttribute("Name");
 		logMessage("F39 response is : ", tempValue);		
-		if(tempValue.toString() != "00") 
-			resultResponse =  "validations not ok";
-		
+		if("00".equalsIgnoreCase(tempValue.toString().trim()))
+			resultResponse =  "validations is ok. And value shown in the F39 response is : " + tempValue;
+		else	
+			resultResponse =  "validations not ok. And value shown in the F39 response is : " + tempValue;
+
 		logMessage("Visa Output Response Set to : ", resultResponse);	
 		return resultResponse;
 	}
@@ -1649,20 +1660,17 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			sm.setCellData(vtsTestGroupInputFilePath, sheetName, "F014 - EXPDATE", device.getExpirationDate());
 			sm.setCellData(vtsTestGroupInputFilePath, sheetName,"F023 - CARD SEQ NUM", device.getSequenceNumber());
 			sm.setCellData(vtsTestGroupInputFilePath, sheetName,"F035.04 - SVCCODE",  device.getServiceCode());
-		} else {
-			//else block implemented for Testing purpose.. keys in static data in the excel "VisaUploadTemplate.xls" @ ..\\src\main\resources\Simulator\VisaInputFile
-			sm.setCellData(vtsTestGroupInputFilePath, sheetName, "F002 - PAN", "4761340000000019");
-			sm.setCellData(vtsTestGroupInputFilePath, sheetName, "F014 - EXPDATE", "2210" );
-			sm.setCellData(vtsTestGroupInputFilePath, sheetName,"F023 - CARD SEQ NUM", "111");
-			sm.setCellData(vtsTestGroupInputFilePath, sheetName,"F035.04 - SVCCODE",  "101");
-		}
+			String track1Data = device.getDeviceNumber()+"^CARD 1/VISA TEST^22121011499100129000000";
+			sm.setCellData(vtsTestGroupInputFilePath, sheetName,"F045 - TRACK1 DATA",  track1Data);
+
+		} 
 	}
 
 	private void logMessage(String message1, String message2) {
 		logger.info(message1, message2 );
 		MiscUtils.reportToConsole(message1 + message2 );
 	}
-	
+
 	public String getARN(String deviceNumber, TransactionSearch ts){
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
 		return page.searchTransactionWithDevice(deviceNumber, ts);

@@ -31,7 +31,3 @@ Given user is logged in institution
 When perform add visa fee Collection Fee collection Transaction [10] transaction
 When user process DOWNLOAD [D] for Member Wise [D] for Generate Base II Outgoing File [VISA_OUTGOING] file
 Then user validate downloaded DAT file
-
-
-
-

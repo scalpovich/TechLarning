@@ -303,7 +303,10 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		/*
 		 * WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, batch.getBatchType()); WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, batch.getBatchName());
 		 */
-		selectChkBx.click();
+		
+		WebElement selectChkIPM = driver().findElement(By.xpath("//td[.//*[text()='"+batch.getFileName()+"']]/following-sibling::td[1]/input"));
+		selectChkIPM.click();
+		//selectChkBx.click();
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		submitBtn.click();
 		WebElementUtils.waitForWicket(driver());
@@ -561,6 +564,4 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	{
 		WebElementUtils.selectDropDownByVisibleText(binDD, option);
 	}
-	
-	
 }
