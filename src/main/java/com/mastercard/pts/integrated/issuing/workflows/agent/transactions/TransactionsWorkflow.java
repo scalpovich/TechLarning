@@ -3,6 +3,8 @@ package com.mastercard.pts.integrated.issuing.workflows.agent.transactions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.BalanceEnquiryPage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.BalanceRefundApprovePage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.BalanceRefundRequestPage;
@@ -14,8 +16,8 @@ import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanc
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceRequestPage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceViewPendingRequestsPage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.TransactionHistoryPage;
-import com.mastercard.pts.integrated.issuing.pages.agent.transactions.TransferFundsPage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.TransactionsViewChargesPage;
+import com.mastercard.pts.integrated.issuing.pages.agent.transactions.TransferFundsPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
 @Workflow
@@ -37,6 +39,38 @@ public class TransactionsWorkflow {
 	
 	@Autowired
 	private Navigator navigator;
+	
+	public String performRemittanceCardToCashTransaction(Device device, CardToCash details) {
+		return cctpage.performRemittanceCardToCashTransaction(device, details);
+	}
+	
+	public String getRemittanceSuccessMessage() {
+		return cctpage.getRemittanceSuccessMessage();
+	}
+	
+	public void performRemittanceCardToCashLookup(Device device, CardToCash details) {
+		cclpage.performRemittanceCardToCashLookup(device, details);
+	}
+	
+	public boolean validateLookupTableTransferAmount(CardToCash details) {
+		return cclpage.validateLookupTableTransferAmount(details);
+	}
+		
+	public void performRemittanceCancelCardToCash(Device device, CardToCash details) {
+		cccpage.performRemittanceCancelCardToCash(device, details);
+	}
+	
+	public String getRemittanceCancellationSuccessMessage() {
+		return cccpage.getRemittanceCancellationSuccessMessage();
+	}
+	
+	public void performRemittancePayout(Device device, CardToCash details) {
+		crppage.performRemittancePayout(device, details);
+	}
+	
+	public String getRemittancePayoutSuccessMessage() {
+		return crppage.getRemittancePayoutSuccessMessage();
+	}
 	
 	public void navigateToBalanceEnquiryPage() {
 		bepage = navigator.navigateToPage(BalanceEnquiryPage.class);
