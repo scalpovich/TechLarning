@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-prepaid msr corp general purpose card authorization
-
 prepaid msr corp general purpose card authorization
 
 Narrative:
