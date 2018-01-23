@@ -67,6 +67,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private static final String EDIT_DE_VALUE = "Edit DE Value";
 	private static final String SET_VALUE = "Set Value";
 	private static final String CLOSE = "Close";
+	private static final String OPEN = "Open";
 	private static final String MESSAGE_TYPE_INDICATOR = "Message Type Indicator";
 	private static final String MIDDLE_PRESENTMENT = "Middle Presentment";
 	private static final String PATH_BUILDER =  "\" \"";
@@ -500,6 +501,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		performClickOperation("Down Arrow");
 		performClickOperation("Import Auth file");
 		executeAutoITExe("LoadAuthFile.exe " + fileName );
+		winiumClickOperation(OPEN);
 		loadFile(fileName);
 	}
 
