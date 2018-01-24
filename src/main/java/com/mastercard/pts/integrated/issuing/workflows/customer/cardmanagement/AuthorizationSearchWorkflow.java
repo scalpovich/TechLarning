@@ -45,7 +45,7 @@ public class AuthorizationSearchWorkflow {
 
 		String actualCodeAction = page.getCellTextByColumnName(1, "Code Action");
 		String actualDescription = page.getCellTextByColumnName(1, "Description");
-		context.put("authCode",page.getCellTextByColumnName(1, "Auth Code"));
+		context.put(ConstantData.AUTHORIZATION_CODE,page.getCellTextByColumnName(1, "Auth Code"));
 		logger.info("CodeAction on Authorization Search Page : {} ", actualCodeAction);
 		logger.info("Description on Authorization Search Page : {} ", actualDescription);
 		
@@ -80,15 +80,17 @@ public class AuthorizationSearchWorkflow {
 	
 	public void verifyAuthTransactionSearchReport(Device device)
 	{
-		List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME,"XU4NIZ");
-		//List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME,context.get("authCode"));
+		//List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME,"XU4NIZ");
+		List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME,context.get("authCode"));
 		//boolean condition = reportContent.contains(context.get("authCode")) && reportContent.contains(device.getDeviceNumber());
-		String AuthFileData="";
+		String authFileData="";
 		for (int i = 0; i < reportContent.size(); i++) {
-			AuthFileData += reportContent.get(i) + " ";
+			authFileData += reportContent.get(i) + " ";
 		}	
 		
-		boolean condition = AuthFileData.contains("XU4NIZ") && AuthFileData.contains("5887651058800118");
+		//boolean condition = authFileData.contains("XU4NIZ") && authFileData.contains("5887651058800118");
+		boolean condition = authFileData.contains(context.get(ConstantData.AUTHORIZATION_CODE)) && authFileData.contains(device.getDeviceNumber());
+
 		assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
 	}
 }

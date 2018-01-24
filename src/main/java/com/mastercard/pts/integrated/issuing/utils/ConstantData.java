@@ -50,6 +50,8 @@ public class ConstantData {
 	
 	public static final String  AUTHORIZATION_REPORT_FILE_NAME = "Authorization.pdf";
 	public static final String  AUTHORIZATION_REPORT_NAME = "Authorization";
+	public static final String  AUTHORIZATION_REPORT_FILE_KEY = "Auto";
+	public static final String  AUTHORIZATION_CODE = "authCode";
 
 	private ConstantData() {}
 }

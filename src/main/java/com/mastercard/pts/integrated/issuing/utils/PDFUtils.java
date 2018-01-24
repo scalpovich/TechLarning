@@ -13,6 +13,7 @@ import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Throwables;
@@ -23,7 +24,8 @@ import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 
 @Component
 public class PDFUtils {
-
+	@Autowired
+	protected DateUtils date;
 	private static final Logger logger = LoggerFactory.getLogger(PDFUtils.class);
 
 	private PDFUtils() {
@@ -71,13 +73,6 @@ public class PDFUtils {
 			PdfReader pdfReader = manipulatePdf(pdfPath);
 			if (pdfReader != null)
 				pages = pdfReader.getNumberOfPages();
-			/*for (int i = 1; i <= pages; i++) {
-				pageContent = PdfTextExtractor.getTextFromPage(pdfReader, i);
-				if (pageContent.contains(code)) {
-					fullRow = pageContent.split("\n");
-					break;
-				}
-			}*/
 			for (int i = 1; i <= pages; i++) {
 				pageContent = PdfTextExtractor.getTextFromPage(pdfReader, i);
 				if (pageContent.contains(code)) {
@@ -106,7 +101,7 @@ public class PDFUtils {
 		PdfReader.unethicalreading = true;
 		PdfReader reader = null;
 		try {
-			reader = new PdfReader(src, "Auto2301".getBytes());
+			reader = new PdfReader(src, (ConstantData.AUTHORIZATION_REPORT_FILE_KEY+2301).getBytes());
 			/*PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(src));
 			stamper.close();*/
 		} catch (IOException e) {
