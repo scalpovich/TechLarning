@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
@@ -58,6 +57,7 @@ public class TransactionsSteps {
 	
 	@When("user performs remittance card to cash lookup")
 	public void whenUserPerformsRemittanceCardToCashLookup(){
+		ctc = context.get(ContextConstants.REMITTANCE);
 		transactionsWorkflow.performRemittanceCardToCashLookup(device, ctc);
 	}
 	
@@ -68,6 +68,7 @@ public class TransactionsSteps {
 	
 	@When("user performs remittance card to cash cancellation")
 	public void whenUserPerformsRemittanceCardToCashCancellation(){
+		ctc = context.get(ContextConstants.REMITTANCE);
 		transactionsWorkflow.performRemittanceCancelCardToCash(device, ctc);
 	}
 	
@@ -78,6 +79,7 @@ public class TransactionsSteps {
 	
 	@When("user performs remittance card to cash payout")
 	public void whenUserPerformsRemittanceCardToCashPayout(){
+		ctc = context.get(ContextConstants.REMITTANCE);
 		transactionsWorkflow.performRemittancePayout(device, ctc);
 	}
 	

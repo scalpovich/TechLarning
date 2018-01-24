@@ -9,7 +9,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
@@ -71,7 +70,6 @@ public class CancelCardToCashPage extends AbstractBasePage {
 		logger.info("Cancel Card to Cash Master Detail Tilte Text: {}");
 		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle)).getText();
 	}
-	
 	
 	public void clickTableFirstRecord() {
 		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
