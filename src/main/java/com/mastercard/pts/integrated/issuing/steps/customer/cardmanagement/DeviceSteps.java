@@ -128,4 +128,29 @@ public class DeviceSteps {
 		
 		deviceWorkflow.createDeviceUsingApplication(device);
 	}
+		
+		@Then("$type device is created using new device")
+		public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceCreationUsingNewDevice(String type){
+			Device device = Device.createWithProvider(provider);
+			device.setAppliedForProduct(ProductType.fromShortName(type));
+			
+			Device deviceTemp = Device.createWithProviderForOtherDetails(provider); 
+			device.setOtherInfoDeliveryMode(deviceTemp.getOtherInfoDeliveryMode());
+			device.setOtherInfoEmailAlertRequired(deviceTemp.getOtherInfoEmailAlertRequired());
+			device.setOtherInfoFaxNo(deviceTemp.getOtherInfoFaxNo());
+			device.setOtherInfoPreferredLanguage(deviceTemp.getOtherInfoPreferredLanguage());
+			device.setOtherInfoRegisteredEmailAddress(deviceTemp.getOtherInfoRegisteredEmailAddress());
+			device.setOtherInfoRegisteredMobileNumber(deviceTemp.getOtherInfoRegisteredMobileNumber());
+			device.setOtherInfoRegisterForDncr(deviceTemp.getOtherInfoRegisterForDncr());
+			device.setOtherInfoSmsAlertRequired(deviceTemp.getOtherInfoSmsAlertRequired());
+			device.setOtherInfoStatementPreference(deviceTemp.getOtherInfoStatementPreference());
+			
+			Program program = context.get(ContextConstants.PROGRAM);
+			device.setProgramCode(program.buildDescriptionAndCode());
+			
+			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+			
+			deviceWorkflow.createDevice(device);
+		}
 }
