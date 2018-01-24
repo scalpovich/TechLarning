@@ -7,8 +7,9 @@ I want to create a prepaid emv corporate general purpose card and test various t
 
 Meta:
 @StoryName p_msr_corp_general_purpose
+@MSSR
 
-Scenario: Transaction - prepaid emv corporate general purpose card - MMSR Authorization transaction
+Scenario: Transaction - prepaid msr corporate general purpose card - MMSR Authorization transaction
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client
