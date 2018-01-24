@@ -244,6 +244,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		device.setWalletNumber(getCodeFromInfoMessage("wallet"));
 //		device.setWalletNumber(getWalletsId(getWalletsFromPage()));
 		device.setDeviceNumber(getCodeFromInfoMessage("device(s)"));
+		logger.info("clientCode: {}",device.getClientCode());
+		logger.info("WalletNumber: {}",device.getWalletNumber());
+		logger.info("DeviceNumber: {}",device.getDeviceNumber());
 	}
 	
 	public String getWalletsId(String wallets){		
