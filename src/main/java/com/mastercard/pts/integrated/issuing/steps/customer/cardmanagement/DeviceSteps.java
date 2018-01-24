@@ -129,7 +129,7 @@ public class DeviceSteps {
 		deviceWorkflow.createDeviceUsingApplication(device);
 	}
 		
-		@Then("$type device is created using new device")
+		@Then("$type device is created using new device screen")
 		public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceCreationUsingNewDevice(String type){
 			Device device = Device.createWithProvider(provider);
 			device.setAppliedForProduct(ProductType.fromShortName(type));

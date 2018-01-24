@@ -32,5 +32,5 @@ And User fills Program section for credit product
 And user navigates to Approval Score Page and add a approvalScore
 And User adds a Risk Analysis Rule Plan by entering valid values
 When User fills Device Range section for credit product
-Then credit device is created using new device
+Then credit device is created using new device screen
 
