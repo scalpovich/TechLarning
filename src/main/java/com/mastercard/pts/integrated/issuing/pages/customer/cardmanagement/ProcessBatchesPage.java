@@ -16,14 +16,19 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Throwables;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.BatchType;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
@@ -37,6 +42,9 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_OPERATION, CardManagementNav.L2_PROCESSING_BATCHES, CardManagementNav.L3PROCESS_BATCHES })
 public class ProcessBatchesPage extends AbstractBasePage {
+	
+	@Autowired
+	private TestContext context;
 
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
 
@@ -149,6 +157,12 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='recRejectCnt']/span/span")
 	private MCWebElements rejectedCountTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:2:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	private MCWebElement methodToGenerateFileDD;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
+	private MCWebElement binDD;
 
 	public void selectBatchType(String option) {
 		selectByVisibleText(batchTypeDDwn, option);
@@ -440,6 +454,11 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			clickCloseButton();
 		});
 	}
+	
+	public void getVisaOutGoingFileName() {	
+		WebElement fileNameLbl = getFinder().getWebDriver().findElement(By.xpath("//*[@id='outputFileName']//span[@class='labeltextf'] "));
+		context.put(ConstantData.VISA_OUT_GOING_FILE_NAME, fileNameLbl.getText());
+	}
 
 	public void statementDownloadBatch(ProcessBatches batch) {
 		selectDownloadBatch(batch);
@@ -526,5 +545,24 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		waitForPageToLoad(getFinder().getWebDriver());
 		getFinder().getWebDriver().switchTo().defaultContent();
 		return isProcessed;
+	}
+
+	public String visaOutgoingDownloadBatch(ProcessBatches batch) {
+		Device device=context.get(ContextConstants.DEVICE);
+		selectBatchType(batch.getBatchType());
+		selectBatchName(batch.getBatchName());
+		selectMethodToGenerateFile(batch.getMethodToGenerateFile());
+	    selectBin(device.getDeviceNumber().substring(0, 6));
+		submitAndVerifyBatch();
+		getVisaOutGoingFileName();
+		return batchStatus;
+	}
+	public void selectMethodToGenerateFile(String option)
+	{
+		WebElementUtils.selectDropDownByVisibleText(methodToGenerateFileDD, option);
+	}
+	public void selectBin(String option)
+	{
+		WebElementUtils.selectDropDownByVisibleText(binDD, option);
 	}
 }

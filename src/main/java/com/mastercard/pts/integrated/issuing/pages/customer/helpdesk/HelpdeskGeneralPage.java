@@ -40,6 +40,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String WALLET_NUMBER = "Wallet Number";
 	private static final String REGISTERED = "registered";
 	private static final String NOT_REGISTERED = "notregistered";
+	private static final String NOTE_WALLET_FUND_TRANSFER = "Notes for Wallet to Wallet transfer";
+	
 	private static final Logger logger = LoggerFactory.getLogger(HelpdeskGeneralPage.class);
 	private String activeDeviceNumber;
 	private String saleDate;
@@ -575,10 +577,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			selectWalleFromTransfer(device.getWalletNumber());
 			logger.info("Wallet from transfer the fund: {}", device.getWalletNumber());
 			selectDeviceToTransferFunds(device.getDeviceNumber());			
-			logger.info("Wallet to transfer the fund: {}", device.getWalletNumber2());
-			selectWalleToTransfer(device.getWalletNumber2());
+			logger.info("Wallet to transfer the fund: {}", device.getNewWalletNumber());
+			selectWalleToTransfer(device.getNewWalletNumber());
 			enterAmountToDebit(device.getTransactionAmount());
-			enterNoteForTransaction("Notes for Wallet to Wallet transfer");
+			enterNoteForTransaction(NOTE_WALLET_FUND_TRANSFER);
 			clickSaveButtonPopup();
 			clickOKButtonPopup();
 		});

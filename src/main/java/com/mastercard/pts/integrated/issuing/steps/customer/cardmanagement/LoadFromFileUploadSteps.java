@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
@@ -91,6 +92,14 @@ public class LoadFromFileUploadSteps {
 		details.setWalletNumber(device.getWalletNumber2());
 		transaction.getAdjustmentTransactionDetails().add(details);
 		loadFromFileUploadWorkflow.createAdjustmentTransaction(transaction);
+	}
+	
+	@Then("user get attached wallet details for device")
+	public void getWalletDetailsForDevice(){
+		Device device = context.get(ContextConstants.DEVICE);
+		List<String> wallets = loadFromFileUploadWorkflow.searchWalletDetailsPage(device);		
+		device.setWalletNumber(wallets.get(0));
+		device.setNewWalletNumber(wallets.get(1));		
 	}
 
 	@Given("in batch trace history transaction is successful")

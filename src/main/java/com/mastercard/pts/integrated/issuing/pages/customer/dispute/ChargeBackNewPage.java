@@ -80,7 +80,20 @@ public class ChargeBackNewPage extends AbstractDisputePage {
 		WebElementUtils.checkCheckbox(docReqCopyReqCbx, cb.isDocumentRequired());
 		clickSaveButton();
 	}
-
+	
+	public void requestChargeBack(ChargeBack cb) {
+		WebElementUtils.enterText(chargeBackAmountTxt, getTransactionAmount());
+		WebElementUtils.selectDropDownByVisibleText(reasonCodeDwn, cb.getReasonCode());
+		WebElementUtils.selectDropDownByVisibleText(documentationDwn, cb.getDocumentation());
+		WebElementUtils.checkCheckbox(feeCbx, cb.isFees());
+		WebElementUtils.enterText(textTxt, cb.getText());
+		pageScrollDown();
+		WebElementUtils.checkCheckbox(chargebackDateCheckCbx, cb.isChargeBackDateGrater());
+		WebElementUtils.checkCheckbox(copyRequestCheckCbx, cb.isCopyRequestRequired());
+		WebElementUtils.checkCheckbox(docReqCopyReqCbx, cb.isDocumentRequired());
+		clickSaveButton();
+	}
+	
 	public void verifyUiOperationStatus() {
 		verifyOperationStatus("Chargeback New");
 	}
