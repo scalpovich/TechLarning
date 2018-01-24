@@ -104,7 +104,7 @@ public class CardToCashTransactionPage extends TransactionsAbstractPage {
 	public String performRemittanceCardToCashTransaction(Device device, CardToCash details) {
 		WebElementUtils.enterText(deviceNumberTxt, device.getDeviceNumber());
 		WebElementUtils.asWebElement(deviceNumberTxt).sendKeys(Keys.TAB);
-		WebElementUtils.selectDropDownByVisibleText(walletNumnberDdwn, device.getWalletNumber());
+		WebElementUtils.selectDropDownByVisibleText(walletNumnberDdwn, device.getWalletNumber()+" ["+details.getRemittanceCurrency()+"]");
 		clickViewButton();
 		WebElementUtils.scrollDown(driver(), 0, 350);
 		WebElementUtils.enterText(beneficiaryNationalIdTxt, details.getBeneficiaryId());
@@ -113,9 +113,6 @@ public class CardToCashTransactionPage extends TransactionsAbstractPage {
 		WebElementUtils.enterText(address1Txt, details.getBeneficiaryAddress1());
 		WebElementUtils.enterText(selectedCityTxt, details.getCity());
 		WebElementUtils.enterText(mobileNumberTxt, details.getMobileNumber());
-		String[] txnDetails = details.getTransactionDetails().trim().split(":");
-		details.setRemittanceAmount(txnDetails[1].trim());
-		details.setRemittanceCurrency(txnDetails[2].trim());
 		WebElementUtils.enterText(txnAmountTxt, details.getRemittanceAmount());
 		WebElementUtils.selectDropDownByVisibleText(walletCurrencyCodeDdwn, details.getRemittanceCurrency());
 		clickSubmitButton();

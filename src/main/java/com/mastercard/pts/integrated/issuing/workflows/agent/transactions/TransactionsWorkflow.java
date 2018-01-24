@@ -41,6 +41,7 @@ public class TransactionsWorkflow {
 	private Navigator navigator;
 	
 	public String performRemittanceCardToCashTransaction(Device device, CardToCash details) {
+		navigateToCardToCashTransactionPage();
 		return cctpage.performRemittanceCardToCashTransaction(device, details);
 	}
 	
@@ -53,10 +54,12 @@ public class TransactionsWorkflow {
 	}
 	
 	public boolean validateLookupTableTransferAmount(CardToCash details) {
+		navigateToCardToCashLookupPage();
 		return cclpage.validateLookupTableTransferAmount(details);
 	}
 		
 	public void performRemittanceCancelCardToCash(Device device, CardToCash details) {
+		navigateToCancelCardToCashPage();
 		cccpage.performRemittanceCancelCardToCash(device, details);
 	}
 	
@@ -65,6 +68,7 @@ public class TransactionsWorkflow {
 	}
 	
 	public void performRemittancePayout(Device device, CardToCash details) {
+		navigateToCashRemittancePayoutPage();
 		crppage.performRemittancePayout(device, details);
 	}
 	

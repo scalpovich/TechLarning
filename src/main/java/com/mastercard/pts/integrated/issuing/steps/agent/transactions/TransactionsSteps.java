@@ -21,6 +21,8 @@ import com.mastercard.pts.integrated.issuing.workflows.agent.transactions.Transa
 public class TransactionsSteps {
 	private static final String FAILED_MESSAGE_INFO = "Page Load Failed";
 	private static final String REMITTANCE_TRANSACTION_MESSAGE = "Your transaction is successful. Your Remittance Reference Number is:";
+	private static final String REMITTANCE_CANCELLATION_MESSAGE = "Your transaction is successful.";
+	private static final String REMITTANCE_PAYOUT_MESSAGE = "Your transaction is successful.";
 	
 	private CardToCash ctc;
 	private Device device;
@@ -35,9 +37,12 @@ public class TransactionsSteps {
 	private KeyValueProvider provider;
 	
 	@When("user performs remittance card to cash transaction")
-	public void whenUserPerformsRemittanceCardToCashTransaction(String type){
+	public void whenUserPerformsRemittanceCardToCashTransaction(){
 		device = context.get(ContextConstants.DEVICE);
 		ctc = CardToCash.getProviderData(provider);
+		String[] txnDetails = ctc.getTransactionDetails().trim().split(":");
+		ctc.setRemittanceAmount(txnDetails[1].trim());
+		ctc.setRemittanceCurrency(txnDetails[2].trim());
 		ctc.setBeneficiaryId(MiscUtils.randomNumber(6));
 		ctc.setBeneficiaryFirstName("FN"+MiscUtils.randomAlphabet(6).toLowerCase());
 		ctc.setBeneficiaryLastName("LN"+MiscUtils.randomAlphabet(6).toLowerCase());
@@ -47,38 +52,38 @@ public class TransactionsSteps {
 	}
 	
 	@Then("remittance card to cash transaction is successful")
-	public void thenRemittanceCardToCashTransactionIsSuccessful(String expectedTitleText){
+	public void thenRemittanceCardToCashTransactionIsSuccessful(){
 		assertThat("Remittance Card to Cash Transaction Failed", transactionsWorkflow.getRemittanceSuccessMessage(), containsString(REMITTANCE_TRANSACTION_MESSAGE));
 	}
 	
 	@When("user performs remittance card to cash lookup")
-	public void whenUserPerformsRemittanceCardToCashLookup(String type){
+	public void whenUserPerformsRemittanceCardToCashLookup(){
 		transactionsWorkflow.performRemittanceCardToCashLookup(device, ctc);
 	}
 	
 	@Then("remittance card to cash lookup has transfer amount details")
-	public void thenRemittanceCardToCashLookupHasDetails(CardToCash details){
-		assertTrue(transactionsWorkflow.validateLookupTableTransferAmount(details));
+	public void thenRemittanceCardToCashLookupHasDetails(){
+		assertTrue(transactionsWorkflow.validateLookupTableTransferAmount(ctc));
 	}
 	
 	@When("user performs remittance card to cash cancellation")
-	public void whenUserPerformsRemittanceCardToCashCancellation(String type){
+	public void whenUserPerformsRemittanceCardToCashCancellation(){
 		transactionsWorkflow.performRemittanceCancelCardToCash(device, ctc);
 	}
 	
 	@Then("remittance card to cash cancellation is successful")
-	public void thenRemittanceCardToCashCancellationIsSuccessful(String expectedTitleText){
-		assertThat("Remittance Card to Cash Cancellation Failed",  transactionsWorkflow.getRemittanceCancellationSuccessMessage(), containsString(expectedTitleText));
+	public void thenRemittanceCardToCashCancellationIsSuccessful(){
+		assertThat("Remittance Card to Cash Cancellation Failed",  transactionsWorkflow.getRemittanceCancellationSuccessMessage(), containsString(REMITTANCE_CANCELLATION_MESSAGE));
 	}
 	
 	@When("user performs remittance card to cash payout")
-	public void whenUserPerformsRemittanceCardToCashPayout(String type){
+	public void whenUserPerformsRemittanceCardToCashPayout(){
 		transactionsWorkflow.performRemittancePayout(device, ctc);
 	}
 	
 	@Then("remittance card to cash payout is successful")
-	public void thenRemittanceCardToCashPayoutIsSuccessful(String expectedTitleText){
-		assertThat("Remittance Card to Cash Payout Failed", transactionsWorkflow.getRemittancePayoutSuccessMessage(), containsString(expectedTitleText));
+	public void thenRemittanceCardToCashPayoutIsSuccessful(){
+		assertThat("Remittance Card to Cash Payout Failed", transactionsWorkflow.getRemittancePayoutSuccessMessage(), containsString(REMITTANCE_PAYOUT_MESSAGE));
 	}
 	
 	@When("user navigates to balance enquiry page")

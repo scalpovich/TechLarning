@@ -87,25 +87,31 @@ And device activated and activation date is updated in general details
 And user sign out from customer portal
 
 Scenario: Agent - Remittance Transaction - Funded Agent
-Given user is logged in agent portal as agent user
+Given user is logged in institution
 When user has wallet number information for prepaid device
+And user sign out from customer portal
+And user is logged in agent portal as agent user
 And user performs remittance card to cash transaction
 Then remittance card to cash transaction is successful
+And user sign out from agent portal
 
 Scenario: Agent - Remittance Lookup - Funded Agent
 Given user is logged in agent portal as agent user
 When user performs remittance card to cash lookup
 Then remittance card to cash lookup has transfer amount details
+And user sign out from agent portal
 
 Scenario: Agent - Remittance Cancellation - Funded Agent
 Given user is logged in agent portal as agent user
 When user performs remittance card to cash cancellation
 Then remittance card to cash cancellation is successful
+And user sign out from agent portal
 
 Scenario: Agent - Remittance Payout Funded Agent
 Given user is logged in agent portal as agent user
 When user performs remittance card to cash payout
 Then remittance card to cash payout is successful
+And user sign out from agent portal
 
 Scenario: Agency Settlement - Funded Agent
 Given user is logged in agent portal as agency user

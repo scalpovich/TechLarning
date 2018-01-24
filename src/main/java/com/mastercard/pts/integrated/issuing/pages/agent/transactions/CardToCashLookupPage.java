@@ -64,7 +64,7 @@ public class CardToCashLookupPage extends TransactionsAbstractPage {
 	public void performRemittanceCardToCashLookup(Device device, CardToCash details) {
 		WebElementUtils.enterText(deviceNumberTxt, device.getDeviceNumber());
 		WebElementUtils.asWebElement(deviceNumberTxt).sendKeys(Keys.TAB);
-		WebElementUtils.selectDropDownByVisibleText(walletNumnberDdwn, device.getWalletNumber());
+		WebElementUtils.selectDropDownByVisibleText(walletNumnberDdwn, device.getWalletNumber()+" ["+details.getRemittanceCurrency()+"]");
 		clickViewButton();
 		SimulatorUtilities.wait(10000);//the delay is to wait for page rendering
 		clickRemittanceRadioButton();
