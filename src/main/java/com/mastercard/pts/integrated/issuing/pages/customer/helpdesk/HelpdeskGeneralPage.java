@@ -481,7 +481,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public boolean verifyBalanceUpdatedCorreclty(String beforeLoadBalanceInformation, String transactionDetailsFromExcel, String afterLoadBalanceInformation){
-		logger.info("Verify Wallet Balance Information for Device id added correctly");
+		logger.info("Verify Wallet Balance Information for Device is added correctly");
 
 		String[] beforeLoadBalanceData = beforeLoadBalanceInformation.trim().split(",");
 		String[] transactionData = transactionDetailsFromExcel.trim().split(",");
