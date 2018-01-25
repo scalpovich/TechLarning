@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.agent.transactions;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Component;
@@ -56,9 +57,13 @@ public class CardToCashLookupPage extends TransactionsAbstractPage {
 				WebElementUtils.elementToBeClickable(submitBtn)).click();
 	}
 	
+	public String getTableTransferAmount() {
+		return driver().findElement(By.xpath("//*[@class='dataview']/tbody/tr/td[2]")).getText().trim();
+	}
+	
 	public boolean validateLookupTableTransferAmount(CardToCash details) {
 		String msgBuilder = details.getRemittanceCurrency()+" "+details.getRemittanceAmount();
-		return msgBuilder.equalsIgnoreCase(getFirstRecordCellTextByColumnName("Transfer Amount")) ? true : false;
+		return msgBuilder.equalsIgnoreCase(getTableTransferAmount()) ? true : false;
 	}
 	
 	public String getMaskedWalletNumberWithCurrencyCode(Device device, CardToCash details) {

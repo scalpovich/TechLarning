@@ -261,7 +261,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public void clickOKButtonPopup(){
-		SimulatorUtilities.wait(3000);
+		SimulatorUtilities.wait(5000);
 		new WebDriverWait(driver(), timeoutInSec)
 		.until(WebElementUtils.elementToBeClickable(okBtn))
 		.click();
@@ -278,7 +278,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, helpdeskGeneral.getProductType());
 		WebElementUtils.enterText(cardPackIdTxt, helpdeskGeneral.getCardPackId());
 		clickSearchButton();
-		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
+		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
 		if(REGISTERED.equalsIgnoreCase(registeredType))
 			status = DeviceStatus.NORMAL;
 		else if(NOT_REGISTERED.equalsIgnoreCase(registeredType))
@@ -300,7 +300,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
-		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
+		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
 		return getFirstRecordCellTextByColumnName(COLUMN_STATUS);
 	}
 	
@@ -308,7 +308,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
-		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
+		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
 		editDeviceLink.click();
 			pageScrollDown();
 			transactionsBtn.click();
@@ -382,10 +382,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
-		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
+		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
 		editDeviceLink.click();
 		clickWalletDetailsTab();
-		
+		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
 		int rowCount = driver().findElements(By.xpath("//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr")).size();
 		values = helpdeskGeneral.getCurrencyWithPriority().trim().split(",");
 			for (int i = 0; i < values.length ; i++)
@@ -438,9 +438,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
-		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
+		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
 		editDeviceLink.click();
 		clickWalletDetailsTab();
+		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
 		BigDecimal balanceAmount = new BigDecimal(getFirstRecordCellTextByColumnNameInEmbeddedTab(CURRENT_AVAILABLE_BALANCE));
 		clickEndCall();
 		return balanceAmount;
@@ -451,7 +452,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
-		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
+		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
 		editDeviceLink.click();
 		clickWalletDetailsTab();
 		String walletNumber = getFirstRecordCellTextByColumnNameInEmbeddedTab(WALLET_NUMBER);
@@ -464,10 +465,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
-		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
+		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
 		editDeviceLink.click();
 		clickWalletDetailsTab();
-
+		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
 		int rowCount = driver().findElements(By.xpath("//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr")).size();
 		for (int j = 1; j <= rowCount; j++)
 				{
