@@ -1,31 +1,31 @@
-prepaid msr retail general purpose card authorization PINLESS
+prepaid emv corporate general purpose card authorization PINLESS
 
 Narrative:
-In order to check transactions on prepaid msr retail general purpose card
+In order to provide a corporate client various transactions
 As an issuer
-I want to authorize transactions for prepaid msr retail general purpose card
+I want to create a prepaid emv corporate general purpose card and test various transactions
 
 Meta:
-@StoryName p_msr_retail_gen_purpose
-@MMSR
+@StoryName p_msr_corp_general_purpose
+@ASI
 
-Scenario: Set up prepaid msr retail general purpose card
+Scenario: Transaction - prepaid msr corporate general purpose card - MMSR Authorization transaction
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client
-
-Scenario: prepaid msr retail general purpose card device production
+And user sign out from customer portal
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
+When user has wallet number information for prepaid device
+When user performs adjustment transaction
+When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
-Then user activates device through helpdesk
+When user activates device through helpdesk
 Then user sign out from customer portal
-
-Scenario: Perform MMSR-RetailGeneralPurposeCard Authorization transaction
 Given connection to MAS is established
-When perform an MMSR MAS transaction
+When perform an ASI MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
