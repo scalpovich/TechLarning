@@ -25,7 +25,6 @@ import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 @Component
 public class PDFUtils {
 	@Autowired
-	protected DateUtils date;
 	private static final Logger logger = LoggerFactory.getLogger(PDFUtils.class);
 
 	private PDFUtils() {
@@ -101,9 +100,7 @@ public class PDFUtils {
 		PdfReader.unethicalreading = true;
 		PdfReader reader = null;
 		try {
-			reader = new PdfReader(src, (ConstantData.AUTHORIZATION_REPORT_FILE_KEY+2301).getBytes());
-			/*PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(src));
-			stamper.close();*/
+			reader = new PdfReader(src, (ConstantData.AUTHORIZATION_REPORT_FILE_KEY+DateUtils.getDateDDMMFormat()).getBytes());
 		} catch (IOException e) {
 			logger.info("IO Exception {}", e);
 		} catch (Exception e) {

@@ -45,12 +45,17 @@ public class AuthorizationSearchWorkflow {
 
 		String actualCodeAction = page.getCellTextByColumnName(1, "Code Action");
 		String actualDescription = page.getCellTextByColumnName(1, "Description");
-		context.put(ConstantData.AUTHORIZATION_CODE,page.getCellTextByColumnName(1, "Auth Code"));
+		String authCodeValue =page.getCellTextByColumnName(1, "Auth Code");
+		String transactionAmountValue = page.getCellTextByColumnName(1, "Transaction Amount");
+		context.put(ConstantData.AUTHORIZATION_CODE,authCodeValue);
+		context.put(ConstantData.TRANSACTION_AMOUNT,transactionAmountValue);
 		logger.info("CodeAction on Authorization Search Page : {} ", actualCodeAction);
 		logger.info("Description on Authorization Search Page : {} ", actualDescription);
 		
 		logger.info("type on Authorization Search Page : {} ", type);
 		logger.info("state on Authorization Search Page : {} ", state);
+		logger.info("auth code on Authorization Search Page : {} ", authCodeValue);
+		logger.info("Transaction amount on Authorization Search Page : {} ", transactionAmountValue);
 		
 		boolean condition = actualCodeAction.contains(state) && actualDescription.contains(type);
 		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
@@ -81,7 +86,7 @@ public class AuthorizationSearchWorkflow {
 	public void verifyAuthTransactionSearchReport(Device device)
 	{
 		//List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME,"XU4NIZ");
-		List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME,context.get("authCode"));
+		List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME,context.get(ConstantData.AUTHORIZATION_CODE));
 		//boolean condition = reportContent.contains(context.get("authCode")) && reportContent.contains(device.getDeviceNumber());
 		String authFileData="";
 		for (int i = 0; i < reportContent.size(); i++) {
@@ -89,7 +94,7 @@ public class AuthorizationSearchWorkflow {
 		}	
 		
 		//boolean condition = authFileData.contains("XU4NIZ") && authFileData.contains("5887651058800118");
-		boolean condition = authFileData.contains(context.get(ConstantData.AUTHORIZATION_CODE)) && authFileData.contains(device.getDeviceNumber());
+		boolean condition = authFileData.contains(context.get(ConstantData.AUTHORIZATION_CODE)) && authFileData.contains(device.getDeviceNumber()) && authFileData.contains(context.get(ConstantData.TRANSACTION_AMOUNT));
 
 		assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
 	}

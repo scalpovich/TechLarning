@@ -174,6 +174,14 @@ public class DateUtils {
 		return dateFormat.format(new Date()).replaceAll("[/,:,\\s+]", "");
 
 	}
+	
+	public static String getDateDDMMFormat() {
+
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM HH:mm:ss");
+
+		return dateFormat.format(new Date()).replaceAll("[/,:,\\s+]", "");
+
+	}
 
 	public void datePicker(JFrame parent)// create constructor
 	{

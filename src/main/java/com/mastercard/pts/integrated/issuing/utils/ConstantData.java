@@ -52,6 +52,7 @@ public class ConstantData {
 	public static final String  AUTHORIZATION_REPORT_NAME = "Authorization";
 	public static final String  AUTHORIZATION_REPORT_FILE_KEY = "Auto";
 	public static final String  AUTHORIZATION_CODE = "authCode";
+	public static final String  TRANSACTION_AMOUNT = "transactionAmount";
 
 	private ConstantData() {}
 }
