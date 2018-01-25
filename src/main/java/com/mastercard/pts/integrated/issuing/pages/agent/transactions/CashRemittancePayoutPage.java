@@ -82,7 +82,7 @@ public class CashRemittancePayoutPage extends AbstractBasePage {
 	}
 	
 	public void performRemittancePayout(Device device, CardToCash details) {
-		WebElementUtils.enterText(rrnTxt, device.getDeviceNumber());
+		WebElementUtils.enterText(rrnTxt, details.getRemittanceNumber());
 		clickSubmitButton();
 		WebElementUtils.enterText(beneficiaryNationalIdTxt, details.getBeneficiaryId());
 		WebElementUtils.enterText(txnPasswordTxt, details.getTxnPassword());

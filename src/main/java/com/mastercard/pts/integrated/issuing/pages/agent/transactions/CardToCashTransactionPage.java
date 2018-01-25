@@ -97,14 +97,18 @@ public class CardToCashTransactionPage extends TransactionsAbstractPage {
 	
 	public String getRemittanceReferenceNumber() {
 		String message = getRemittanceSuccessMessage();
-		String[] remittanceNumber = message.substring(message.lastIndexOf(' ') + 1).split(".");
-		return remittanceNumber[0];
+		String remittanceNumber = message.substring(message.lastIndexOf(' ') + 1);
+		return remittanceNumber.substring(0, remittanceNumber.length() - 1);
+	}
+	
+	public String getMaskedWalletNumberWithCurrencyCode(Device device, CardToCash details) {
+		return device.getWalletNumber().substring(0, 4) + "XXXXXXXXXXX" + device.getWalletNumber().substring(15)+" ["+details.getRemittanceCurrency()+"] ";
 	}
 	
 	public String performRemittanceCardToCashTransaction(Device device, CardToCash details) {
 		WebElementUtils.enterText(deviceNumberTxt, device.getDeviceNumber());
 		WebElementUtils.asWebElement(deviceNumberTxt).sendKeys(Keys.TAB);
-		WebElementUtils.selectDropDownByVisibleText(walletNumnberDdwn, device.getWalletNumber()+" ["+details.getRemittanceCurrency()+"]");
+		WebElementUtils.selectDropDownByVisibleText(walletNumnberDdwn, getMaskedWalletNumberWithCurrencyCode(device, details));
 		clickViewButton();
 		WebElementUtils.scrollDown(driver(), 0, 350);
 		WebElementUtils.enterText(beneficiaryNationalIdTxt, details.getBeneficiaryId());
@@ -112,6 +116,7 @@ public class CardToCashTransactionPage extends TransactionsAbstractPage {
 		WebElementUtils.enterText(beneficiaryLastNameTxt, details.getBeneficiaryLastName());
 		WebElementUtils.enterText(address1Txt, details.getBeneficiaryAddress1());
 		WebElementUtils.enterText(selectedCityTxt, details.getCity());
+		WebElementUtils.enterText(zipCodeTxt, details.getZipCode());
 		WebElementUtils.enterText(mobileNumberTxt, details.getMobileNumber());
 		WebElementUtils.enterText(txnAmountTxt, details.getRemittanceAmount());
 		WebElementUtils.selectDropDownByVisibleText(walletCurrencyCodeDdwn, details.getRemittanceCurrency());

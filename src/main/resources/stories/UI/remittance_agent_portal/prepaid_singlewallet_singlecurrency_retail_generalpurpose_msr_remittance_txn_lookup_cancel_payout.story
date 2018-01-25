@@ -15,7 +15,7 @@ Meta:
 Scenario: Prepaid - Admin User - Assign Program to Agency
 
 Given user is logged in institution
-And bulk card generation for prepaid emv is completed
+And bulk card generation for prepaid magnetic stripe is completed
 And user sign out from customer portal
 And user is logged in agent portal as admin user
 When user fills information to assign program to agency and submits form
@@ -86,32 +86,38 @@ Then status should be normal
 And device activated and activation date is updated in general details
 And user sign out from customer portal
 
-Scenario: Agent - Remittance Transaction - Funded Agent
+Scenario: Agent - Remittance Transaction - Lookup - Cancellation - Funded Agent
 Given user is logged in institution
 When user has wallet number information for prepaid device
+When user has wallet balance information for prepaid device
 And user sign out from customer portal
 And user is logged in agent portal as agent user
 And user performs remittance card to cash transaction
-Then remittance card to cash transaction is successful
+And remittance card to cash transaction is successful
+And user performs remittance card to cash lookup
+And remittance card to cash lookup has transfer amount details
+And user performs remittance card to cash cancellation
+And remittance card to cash cancellation is successful
 And user sign out from agent portal
+And user is logged in institution
+Then balance in helpdesk not changed for prepaid device
+And user sign out from customer portal
 
-Scenario: Agent - Remittance Lookup - Funded Agent
-Given user is logged in agent portal as agent user
-When user performs remittance card to cash lookup
-Then remittance card to cash lookup has transfer amount details
+Scenario: Agent - Remittance Transaction - Lookup - Payout - Funded Agent
+Given user is logged in institution
+When user has wallet balance information for prepaid device
+And user sign out from customer portal
+And user is logged in agent portal as agent user
+And user performs remittance card to cash transaction
+And remittance card to cash transaction is successful
+And user performs remittance card to cash lookup
+And remittance card to cash lookup has transfer amount details
+And user performs remittance card to cash payout
+And remittance card to cash payout is successful
 And user sign out from agent portal
-
-Scenario: Agent - Remittance Cancellation - Funded Agent
-Given user is logged in agent portal as agent user
-When user performs remittance card to cash cancellation
-Then remittance card to cash cancellation is successful
-And user sign out from agent portal
-
-Scenario: Agent - Remittance Payout Funded Agent
-Given user is logged in agent portal as agent user
-When user performs remittance card to cash payout
-Then remittance card to cash payout is successful
-And user sign out from agent portal
+And user is logged in institution
+Then balance in helpdesk deducted correctly for prepaid device
+And user sign out from customer portal
 
 Scenario: Agency Settlement - Funded Agent
 Given user is logged in agent portal as agency user

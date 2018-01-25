@@ -90,7 +90,7 @@ public class CancelCardToCashPage extends AbstractBasePage {
 	}
 	
 	public void performRemittanceCancelCardToCash(Device device, CardToCash details) {
-		WebElementUtils.enterText(rrnTxt, device.getDeviceNumber());
+		WebElementUtils.enterText(rrnTxt, details.getRemittanceNumber());
 		WebElementUtils.enterText(deviceNumberTxt, device.getDeviceNumber());
 		clickSubmitButton();
 		clickTableFirstRecord();

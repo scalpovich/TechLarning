@@ -24,7 +24,7 @@ public class CardToCashLookupPage extends TransactionsAbstractPage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='View']")
 	private MCWebElement viewBtn;
 	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "#fetchFlag")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[4]//input[@id='fetchFlag']")
 	private MCWebElement remittanceRBtn;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#RRN")
@@ -58,15 +58,21 @@ public class CardToCashLookupPage extends TransactionsAbstractPage {
 	
 	public boolean validateLookupTableTransferAmount(CardToCash details) {
 		String msgBuilder = details.getRemittanceCurrency()+" "+details.getRemittanceAmount();
+		System.out.println("msgBuilder:"+msgBuilder+"xxxx");
+		System.out.println("fromTable:"+getFirstRecordCellTextByColumnName("Transfer Amount")+"xxxx");
 		return msgBuilder.equalsIgnoreCase(getFirstRecordCellTextByColumnName("Transfer Amount")) ? true : false;
 	}
-
+	
+	public String getMaskedWalletNumberWithCurrencyCode(Device device, CardToCash details) {
+		return device.getWalletNumber().substring(0, 4) + "XXXXXXXXXXX" + device.getWalletNumber().substring(15)+" ["+details.getRemittanceCurrency()+"] ";
+	}
+	
 	public void performRemittanceCardToCashLookup(Device device, CardToCash details) {
 		WebElementUtils.enterText(deviceNumberTxt, device.getDeviceNumber());
 		WebElementUtils.asWebElement(deviceNumberTxt).sendKeys(Keys.TAB);
-		WebElementUtils.selectDropDownByVisibleText(walletNumnberDdwn, device.getWalletNumber()+" ["+details.getRemittanceCurrency()+"]");
+		WebElementUtils.selectDropDownByVisibleText(walletNumnberDdwn, getMaskedWalletNumberWithCurrencyCode(device, details));
 		clickViewButton();
-		SimulatorUtilities.wait(10000);//the delay is to wait for page rendering
+		SimulatorUtilities.wait(5000);//the delay is to wait for page rendering
 		clickRemittanceRadioButton();
 		WebElementUtils.enterText(rrnTxt, details.getRemittanceNumber());
 		clickSubmitButton();

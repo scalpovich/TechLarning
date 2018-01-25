@@ -300,6 +300,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
+		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
 		return getFirstRecordCellTextByColumnName(COLUMN_STATUS);
 	}
 	
@@ -307,6 +308,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
+		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
 		editDeviceLink.click();
 			pageScrollDown();
 			transactionsBtn.click();
@@ -380,6 +382,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
+		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
 		editDeviceLink.click();
 		clickWalletDetailsTab();
 		
@@ -435,6 +438,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
+		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
 		editDeviceLink.click();
 		clickWalletDetailsTab();
 		BigDecimal balanceAmount = new BigDecimal(getFirstRecordCellTextByColumnNameInEmbeddedTab(CURRENT_AVAILABLE_BALANCE));
@@ -447,6 +451,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
+		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
 		editDeviceLink.click();
 		clickWalletDetailsTab();
 		String walletNumber = getFirstRecordCellTextByColumnNameInEmbeddedTab(WALLET_NUMBER);
@@ -459,6 +464,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
+		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
 		editDeviceLink.click();
 		clickWalletDetailsTab();
 
@@ -475,7 +481,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public boolean verifyBalanceUpdatedCorreclty(String beforeLoadBalanceInformation, String transactionDetailsFromExcel, String afterLoadBalanceInformation){
-		logger.info("Verify Wallet Balance Information for Device");
+		logger.info("Verify Wallet Balance Information for Device id added correctly");
 
 		String[] beforeLoadBalanceData = beforeLoadBalanceInformation.trim().split(",");
 		String[] transactionData = transactionDetailsFromExcel.trim().split(",");
@@ -502,6 +508,64 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			}
 		}
 		return (count == transactionData.length) ? true : false;
+	}
+	
+	public boolean verifyBalanceDeductedCorreclty(String beforeLoadBalanceInformation, String transactionDetailsFromExcel, String afterLoadBalanceInformation){
+		logger.info("Verify Wallet Balance Information for Device after Transaction Deduction");
+
+		String[] beforeLoadBalanceData = beforeLoadBalanceInformation.trim().split(",");
+		String[] transactionData = transactionDetailsFromExcel.trim().split(",");
+		String[] afterLoadBalanceData = afterLoadBalanceInformation.trim().split(",");
+		
+		int count = 0;
+		for (int i = 0; i < transactionData.length; i++)
+		{
+			String[] transactionDataValues = transactionData[i].trim().split(":");
+			String currencyName = transactionDataValues[0];
+			for (int j = 0 ; j < afterLoadBalanceData.length; j++)
+			{
+				String[] beforeLoadBalanceDataValues = beforeLoadBalanceData[j].trim().split(":");
+				String[] afterLoadBalanceDataValues = afterLoadBalanceData[j].trim().split(":");
+					if (currencyName.equalsIgnoreCase(beforeLoadBalanceDataValues[0]))
+					{
+						BigDecimal calculatedBalance = new BigDecimal(beforeLoadBalanceDataValues[1]).subtract(new BigDecimal(transactionDataValues[1]));
+						if (calculatedBalance.equals(new BigDecimal(afterLoadBalanceDataValues[1])))
+						{
+							count++;
+							break;
+						}
+					}
+			}
+		}
+		return (count == transactionData.length) ? true : false;
+	}
+	
+	public boolean verifyBalanceNotChanged(String beforeLoadBalanceInformation, String afterLoadBalanceInformation){
+		logger.info("Verify Wallet Balance Information for Device Not Changed");
+
+		String[] beforeLoadBalanceData = beforeLoadBalanceInformation.trim().split(",");
+		String[] afterLoadBalanceData = afterLoadBalanceInformation.trim().split(",");
+		
+		int count = 0;
+		for (int i = 0; i < beforeLoadBalanceData.length; i++)
+		{
+			String[] beforeLoadDataValues = beforeLoadBalanceData[i].trim().split(":");
+			String currencyName = beforeLoadDataValues[0];
+			for (int j = 0 ; j < afterLoadBalanceData.length; j++)
+			{
+				String[] beforeLoadBalanceDataValues = beforeLoadBalanceData[j].trim().split(":");
+				String[] afterLoadBalanceDataValues = afterLoadBalanceData[j].trim().split(":");
+					if (currencyName.equalsIgnoreCase(beforeLoadBalanceDataValues[0]))
+					{
+						if ( new BigDecimal(beforeLoadBalanceDataValues[1]).equals(new BigDecimal(afterLoadBalanceDataValues[1])))
+						{
+							count++;
+							break;
+						}
+					}
+			}
+		}
+		return (count == beforeLoadBalanceData.length) ? true : false;
 	}
 	
 	public boolean verifyInitialLoadBalanceUpdatedCorreclty(String transactionDetailsFromExcel, String afterLoadBalanceInformation){

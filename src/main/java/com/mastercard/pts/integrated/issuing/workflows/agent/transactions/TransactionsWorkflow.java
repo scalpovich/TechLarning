@@ -50,11 +50,11 @@ public class TransactionsWorkflow {
 	}
 	
 	public void performRemittanceCardToCashLookup(Device device, CardToCash details) {
+		navigateToCardToCashLookupPage();
 		cclpage.performRemittanceCardToCashLookup(device, details);
 	}
 	
 	public boolean validateLookupTableTransferAmount(CardToCash details) {
-		navigateToCardToCashLookupPage();
 		return cclpage.validateLookupTableTransferAmount(details);
 	}
 		

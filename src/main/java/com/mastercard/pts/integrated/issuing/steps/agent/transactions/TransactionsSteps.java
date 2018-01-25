@@ -51,6 +51,7 @@ public class TransactionsSteps {
 		context.put(ContextConstants.REMITTANCE, ctc);
 	}
 	
+	@When("remittance card to cash transaction is successful")
 	@Then("remittance card to cash transaction is successful")
 	public void thenRemittanceCardToCashTransactionIsSuccessful(){
 		assertThat("Remittance Card to Cash Transaction Failed", transactionsWorkflow.getRemittanceSuccessMessage(), containsString(REMITTANCE_TRANSACTION_MESSAGE));
@@ -62,6 +63,7 @@ public class TransactionsSteps {
 		transactionsWorkflow.performRemittanceCardToCashLookup(device, ctc);
 	}
 	
+	@When("remittance card to cash lookup has transfer amount details")
 	@Then("remittance card to cash lookup has transfer amount details")
 	public void thenRemittanceCardToCashLookupHasDetails(){
 		assertTrue(transactionsWorkflow.validateLookupTableTransferAmount(ctc));
@@ -73,6 +75,7 @@ public class TransactionsSteps {
 		transactionsWorkflow.performRemittanceCancelCardToCash(device, ctc);
 	}
 	
+	@When("remittance card to cash cancellation is successful")
 	@Then("remittance card to cash cancellation is successful")
 	public void thenRemittanceCardToCashCancellationIsSuccessful(){
 		assertThat("Remittance Card to Cash Cancellation Failed",  transactionsWorkflow.getRemittanceCancellationSuccessMessage(), containsString(REMITTANCE_CANCELLATION_MESSAGE));
@@ -84,6 +87,7 @@ public class TransactionsSteps {
 		transactionsWorkflow.performRemittancePayout(device, ctc);
 	}
 	
+	@When("remittance card to cash payout is successful")
 	@Then("remittance card to cash payout is successful")
 	public void thenRemittanceCardToCashPayoutIsSuccessful(){
 		assertThat("Remittance Card to Cash Payout Failed", transactionsWorkflow.getRemittancePayoutSuccessMessage(), containsString(REMITTANCE_PAYOUT_MESSAGE));
