@@ -58,8 +58,6 @@ public class CardToCashLookupPage extends TransactionsAbstractPage {
 	
 	public boolean validateLookupTableTransferAmount(CardToCash details) {
 		String msgBuilder = details.getRemittanceCurrency()+" "+details.getRemittanceAmount();
-		System.out.println("msgBuilder:"+msgBuilder+"xxxx");
-		System.out.println("fromTable:"+getFirstRecordCellTextByColumnName("Transfer Amount")+"xxxx");
 		return msgBuilder.equalsIgnoreCase(getFirstRecordCellTextByColumnName("Transfer Amount")) ? true : false;
 	}
 	
