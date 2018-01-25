@@ -18,7 +18,7 @@ import com.mastercard.pts.integrated.issuing.utils.ExcelUtils;
 @Component
 public class TransactionProvider {
 
-	private static final String TRANSACTION_TEMPLATE = "Transaction template";
+	private static final String 	 = "Transaction template";
 	private static final String SHEET_DATA_DRIVEN = "Data Driven";
 	private static final String SHEET_TRANSACTION_TEMPLATES = "Transaction Templates";
 	private static final String TRANSACTION_PROFILE = "Transaction profile";
