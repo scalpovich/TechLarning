@@ -30,5 +30,5 @@ When perform an ASI MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
-And search MasterCard MoneySend authorization and verify 000-Successful status
+And search Account Status authorization and verify 085-Successful status
 And user sign out from customer portal
