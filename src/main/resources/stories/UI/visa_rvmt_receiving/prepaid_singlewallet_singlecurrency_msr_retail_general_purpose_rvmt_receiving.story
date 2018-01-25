@@ -10,6 +10,8 @@ Meta:
 @visa_rvmt_receiving
 
 Scenario: Set up prepaid msr retail general purpose pinless card and perform Visa RVMT Receiving
+Meta:
+@TestId
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" "Manual" activation code for card without pin for an interface
 When user creates new device of prepaid type for new client
