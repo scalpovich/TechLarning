@@ -1,7 +1,9 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk;
 
 import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
@@ -103,6 +105,16 @@ public class HelpdeskWorkflow {
 	public boolean verifyBalanceUpdatedCorreclty(String beforeLoadBalanceInformation, String transactionDetailsFromExcel, String afterLoadBalanceInformation) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		return helpDeskPage.verifyBalanceUpdatedCorreclty(beforeLoadBalanceInformation, transactionDetailsFromExcel, afterLoadBalanceInformation);
+	}
+	
+	public boolean verifyBalanceNotChanged(String beforeLoadBalanceInformation, String afterLoadBalanceInformation) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		return helpDeskPage.verifyBalanceNotChanged(beforeLoadBalanceInformation, afterLoadBalanceInformation);
+	}
+	
+	public boolean verifyBalanceDeductedCorreclty(String beforeLoadBalanceInformation, String transactionDetailsFromExcel, String afterLoadBalanceInformation) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		return helpDeskPage.verifyBalanceDeductedCorreclty(beforeLoadBalanceInformation, transactionDetailsFromExcel, afterLoadBalanceInformation);
 	}
 	
 	public boolean verifyInitialLoadBalanceUpdatedCorreclty(String transactionDetailsFromExcel, String afterLoadBalanceInformation) {
