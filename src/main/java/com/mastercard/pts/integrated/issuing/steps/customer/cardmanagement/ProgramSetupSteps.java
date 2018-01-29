@@ -283,7 +283,7 @@ public class ProgramSetupSteps {
 	}
 
 	@When("device range for program with device plan for \"debit\" \"$deviceType\" card without pin for an interface")
-	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin")
+	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin for an interface")
 	@Composite(steps = { "When User fills Dedupe Plan", "When User fills MCC Rules for debit product", "When User fills Transaction Plan for debit product",
 			"When User fills Transaction Limit Plan for debit product", "When User fills Document Checklist Screen for debit product",
 			"When User fills Device Joining and Membership Fee Plan for debit product", "When User fills Device Event Based Fee Plan for debit product",
