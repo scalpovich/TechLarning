@@ -40,6 +40,12 @@ Meta:
 @TestId 
 When Auth file is generated after transaction
 When MAS simulator is closed
+And user is logged in institution
+And search Purchase authorization and verify Successful status
+And user sign out from customer portal
+And user is logged in institution
+And search Purchase with Cash back authorization and verify Successful status
+And user sign out from customer portal
 Then user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal

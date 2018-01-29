@@ -41,7 +41,7 @@ Scenario: Generate Auth File for Clearing
 When Auth file is generated after transaction
 When MAS simulator is closed
 And user is logged in institution
-And search Purchase with Cash back authorization and verify Successful status
+And search Purchase authorization and verify Successful status
 And user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
