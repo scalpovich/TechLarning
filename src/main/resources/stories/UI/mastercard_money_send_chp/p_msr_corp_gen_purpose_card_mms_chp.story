@@ -1,9 +1,9 @@
-prepaid msr corporate general purpose card mastercard money send chp
+prepaid msr corporate general purpose card mastercard money send transaction from Card Holder Portal
 
 Narrative:
-In order to provide to client easy-to-use multi-purpose prepaid card
+In order to test mms transaction from CHP
 As an issuer
-I want to create an magnetic stripe prepaid card and perform mastercard money send request
+I want to create devices and perform transaction from CHP
 
 Meta:
 @StoryName p_msr_retail_travel_mms
