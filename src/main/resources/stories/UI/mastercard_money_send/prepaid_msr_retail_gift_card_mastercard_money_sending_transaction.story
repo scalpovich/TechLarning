@@ -29,6 +29,7 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
+Then user activates device through helpdesk
 
 When user raises a money send request
 Then search MasterCard MoneySend authorization and verify 000-Successful status
