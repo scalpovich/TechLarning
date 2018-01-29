@@ -282,6 +282,27 @@ public class ProgramSetupSteps {
 		// composite step
 	}
 
+	@When("device range for program with device plan for \"debit\" \"$deviceType\" card without pin for an interface")
+	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin")
+	@Composite(steps = { "When User fills Dedupe Plan", "When User fills MCC Rules for debit product", "When User fills Transaction Plan for debit product",
+			"When User fills Transaction Limit Plan for debit product", "When User fills Document Checklist Screen for debit product",
+			"When User fills Device Joining and Membership Fee Plan for debit product", "When User fills Device Event Based Fee Plan for debit product",
+			"When User fills Device Plan for \"debit\" \"<deviceType>\" card with no pin", "When User fills Wallet Plan for debit product", "When User fills Program section for debit product",
+			"When User fills Business Mandatory Fields Screen for debit product", "When User fills Device Range section for debit product" })
+	public void givenDeviceRangeForDebitProgramWithDevicePlanWithOutPinForAnInterface(String deviceType) {
+		// composite step
+	}
+
+	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin for non-default institution")
+	@Composite(steps = { "When User fills Dedupe Plan", "When User fills MCC Rules for debit product", "When User fills Transaction Plan for debit product",
+			"When User fills Transaction Limit Plan for debit product", "When User fills Document Checklist Screen for debit product",
+			"When User fills Device Joining and Membership Fee Plan for debit product", "When User fills Device Event Based Fee Plan for debit product",
+			"When User fills Device Plan for \"debit\" \"<deviceType>\" card with no pin for non-default institution", "When User fills Wallet Plan for debit product", "When User fills Program section for debit product",
+			"When User fills Business Mandatory Fields Screen for debit product", "When User fills Device Range section for debit product for non-default institution" })
+	public void givenDeviceRangeForProgramWithDevicePlanforDebitWithoutPinForNonDefaultInstitution(String deviceType) {
+		// composite step
+	}
+
 	@Given("$deviceType card has gone through pre-production, production and pin generation")
 	@Composite(steps = { "When user creates new device of $deviceType type for new client", "When processes pre-production batch for $deviceType",
 			"When processes device production batch for $deviceType", "When processes pin generation batch for $deviceType" })
@@ -326,17 +347,6 @@ public class ProgramSetupSteps {
 		// composite step
 	}
 
-	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin for non-default institution")
-	@Composite(steps = { "When User fills Statement Message Plan for debit product", "When User fills Marketing Message Plan for debit product", "When User fills debit Statement Plan",
-			"When User fills MCC Rules for debit product", "When User fills Dedupe Plan", "When User fills Transaction Plan for debit product",
-			"When User fills Transaction Limit Plan for debit product", "When User fills Document Checklist Screen for debit product",
-			"When User fills Device Joining and Membership Fee Plan for debit product", "When User fills Device Event Based Fee Plan for debit product",
-			"When User fills Device Plan for \"debit\" \"<deviceType>\" card with no pin for non-default institution", "When User fills Wallet Plan for debit product", "When User fills Program section for debit product",
-			"When User fills Business Mandatory Fields Screen for debit product", "When User fills Device Range section for debit product for non-default institution" })
-	public void givenDeviceRangeForProgramWithDevicePlanforDebitWithoutPinForNonDefaultInstitution(String deviceType) {
-		// composite step
-	}
-
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin for an interface")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
 			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
@@ -347,7 +357,18 @@ public class ProgramSetupSteps {
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinForAnInterface(String deviceType) {
 		// composite step
 	}
-	
+
+	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin for an interface for Non-default institution")
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product for an interface",
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product for an interface" })
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinForAnInterfaceForNonDefaultInstitution(String deviceType) {
+		// composite step
+	}
+
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card for an interface")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
 			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",

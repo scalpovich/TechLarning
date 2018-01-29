@@ -18,7 +18,7 @@ Then device has "normal" status for non-default institution
 Then user sign out from customer portal
 
 Given user is logged in institution
-And device range for program with device plan for "debit" "magnetic stripe" card without pin
+And device range for program with device plan for "debit" "magnetic stripe" card without pin for an interface
 When user creates new device of debit type for new client
 And a new device was created
 When processes pre-production batch for debit
