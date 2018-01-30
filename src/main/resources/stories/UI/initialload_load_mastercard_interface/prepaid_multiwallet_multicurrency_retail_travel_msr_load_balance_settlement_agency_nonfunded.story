@@ -101,7 +101,7 @@ When user setup multiple currency for device through agent portal
 Then currency setup for the device is successful
 And user sign out from nonfundedagent portal
 And user is logged in institution
-And currency setup for prepaid device is done correclty and updated in wallet details tab
+And currency setup for prepaid device is done correctly and updated in wallet details tab
 And user sign out from customer portal
 
 Scenario: Prepaid - Load Balance Request - Non Funded Agent

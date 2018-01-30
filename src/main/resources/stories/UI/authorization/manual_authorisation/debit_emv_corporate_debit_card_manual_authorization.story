@@ -7,7 +7,6 @@ I want to create an emv debit card for client and perform manual authorization f
 
 Meta:
 @StoryName debit_cdc_manual_auth
-@NonUIBVTest
 @CRCardsWithAuthorization
 
 Scenario: Set up emv corporate debit card
@@ -23,8 +22,8 @@ Meta:
 @TestId 
 Given user is logged in institution
 And a new device was created
-When processes pre-production batch for prepaid
-When processes device production batch for prepaid
+When processes pre-production batch for debit
+When processes device production batch for debit
 When user has wallet number information for debit device
 When user performs adjustment transaction
 When user has current wallet balance amount information for debit device

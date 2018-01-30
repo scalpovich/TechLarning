@@ -41,7 +41,7 @@ public class LinuxBox implements RemoteConnectionDetails {
 	}
 
 	public File downloadByLookUpForPartialFileName(String lokupForFile, String localDestination, String whatAreWeLookingFile) {
-		logger.info("Download {} -> {} at folder", lokupForFile, localDestination);
+		//logger.info("Download {} -> {} at folder", lokupForFile, localDestination);
 		String fileName = null;
 		String[] temp = null;
 		try {

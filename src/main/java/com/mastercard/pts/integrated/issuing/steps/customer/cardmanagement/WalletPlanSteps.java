@@ -47,7 +47,6 @@ public class WalletPlanSteps {
 		if (walletType.contains(WalletType.WHITELISTEDMERCHANT_WALLET)) {
 			walletPlan = walletplanflows.createWhitelistedMerchantWalletPlan(plan);
 		}
-
 		plan.setWalletPlan(walletPlan);
 		Assert.assertNotNull(walletPlan);
 		plan.setOpenloopWalletPlan(walletPlan);

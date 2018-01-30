@@ -33,20 +33,16 @@ public class LoginFlows extends AbstractBaseFlows {
 	
 	public void signUpCardHolderUser(String loginPass,String trnPass,String firstSequrityQst,String firstSequerAnswer,String secondSequrityQst,String secondSequerAnswer){
 		loginPage.signUpCardHolderUser(loginPass,trnPass,firstSequrityQst,firstSequerAnswer,secondSequrityQst,secondSequerAnswer);	
-		acceptSuccessfullCardholderSignUp();
 	}
 	
 	public void signUpCardHolderPortal(String currentTranPass, String newTranPass){
 		loginPage.createTransPassword(currentTranPass,newTranPass);
 	}
 	
-	public void acceptSuccessfullCardholderSignUp(){
-		driver().switchTo().alert().accept();
-	}
-	
 	public void openCardHolderApplication(){
 		loginPage.loadAppURL();
 	}
+	
 	public void Login(Portal portal, String userType) {
 		getFinder().getWebDriver().get(portal.getUrl());
 /*		if (userType.equalsIgnoreCase("CustomerUser")) {
