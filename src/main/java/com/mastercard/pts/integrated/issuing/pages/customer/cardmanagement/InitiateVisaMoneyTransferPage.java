@@ -54,6 +54,13 @@ public class InitiateVisaMoneyTransferPage extends AbstractBasePage {
 		verifySearchButton("Search");
 	}
 
+	private void selectVMT(String vmt){
+		if(vmt.contains("VMT"))
+			WebElementUtils.selectDropDownByVisibleText(vmtFastFundDDwn, "VISA Money Transfer (Offline) [44]");
+		else if(vmt.contains("RVMT"))
+			WebElementUtils.selectDropDownByVisibleText(vmtFastFundDDwn, "VISA Fast Fund(Real Time) [45]");
+	}
+	
 	public void searchDeviceAndSelectWallet(Device device) {
 		logger.info("Source device number: " + device.getDeviceNumber());
 		WebElementUtils.enterText(originatorCardNumberTxt, device.getDeviceNumber());
@@ -84,7 +91,7 @@ public class InitiateVisaMoneyTransferPage extends AbstractBasePage {
 
 	public void submitVisaMoneyTransferRequest(VisaMoneyTransfer visaMoneyTransfer){
 		logger.info("Beneficiary device number: " + visaMoneyTransfer.getBeneficiaryDeviceNumber());
-		WebElementUtils.selectDropDownByVisibleText(vmtFastFundDDwn, visaMoneyTransfer.getVmt());
+		selectVMT(visaMoneyTransfer.getVmt());
 		WebElementUtils.enterText(beneficiaryCardNumberTxt, visaMoneyTransfer.getBeneficiaryDeviceNumber());
 		WebElementUtils.selectDropDownByVisibleText(currencyDDwn, visaMoneyTransfer.getCurrency());
 		WebElementUtils.enterText(amountTxt, visaMoneyTransfer.getAmount());

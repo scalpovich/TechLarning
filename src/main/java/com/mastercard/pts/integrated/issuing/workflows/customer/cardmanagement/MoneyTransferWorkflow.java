@@ -39,5 +39,4 @@ public class MoneyTransferWorkflow {
 		page.searchDeviceAndSelectWallet(sourceDevice);
 		page.submitVisaMoneyTransferRequest(visaMoneyTransfer);
 	}
-
 }

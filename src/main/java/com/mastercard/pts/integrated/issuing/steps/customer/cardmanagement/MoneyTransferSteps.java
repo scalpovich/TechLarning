@@ -50,22 +50,23 @@ public class MoneyTransferSteps {
 	    moneyTransferWorkflow.processMaterCardMoneySendRequestFromSecondWallet(moneySend, sourceDevice); 		
 	}
 
-	@When("user raises a visa money transfer request")
-	public void whenUserRaisesVisaMoneyTransferRequest(){		
+	@When("user raises a \"$type\" request")
+	public void whenUserRaisesVisaMoneyTransferRequest(String type){		
 		Device sourceDevice = context.get(ContextConstants.DEVICE);
 		Device beneficiaryDevice = context.get(ContextConstants.DEVICE2);
 		VisaMoneyTransfer visaMoneyTransfer = VisaMoneyTransfer.createWithProvider(provider);
 		visaMoneyTransfer.setBeneficiaryDeviceNumber(beneficiaryDevice.getDeviceNumber());
+		visaMoneyTransfer.setVmt(type);
 	    moneyTransferWorkflow.processVisaMoneyTransferRequest(visaMoneyTransfer, sourceDevice); 		
 	}
 
-	@When("user raises a visa money transfer request from second wallet")
-	public void whenUserRaisesVisaMoneyTransferRequestFromSecondWallet(){		
+	@When("user raises a \"$type\" request from second wallet")
+	public void whenUserRaisesVisaMoneyTransferRequestFromSecondWallet(String type){		
 		Device sourceDevice = context.get(ContextConstants.DEVICE);
 		Device beneficiaryDevice = context.get(ContextConstants.DEVICE2);
 		VisaMoneyTransfer visaMoneyTransfer = VisaMoneyTransfer.createWithProvider(provider);
 		visaMoneyTransfer.setBeneficiaryDeviceNumber(beneficiaryDevice.getDeviceNumber());
+		visaMoneyTransfer.setVmt(type);
 	    moneyTransferWorkflow.processVisaMoneyTransferRequestFromSecondWallet(visaMoneyTransfer, sourceDevice); 		
 	}
-
 }

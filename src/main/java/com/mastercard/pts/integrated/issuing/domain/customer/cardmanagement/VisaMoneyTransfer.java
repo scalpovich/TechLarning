@@ -7,7 +7,6 @@ public class VisaMoneyTransfer {
 
 	private static final String	VISA_TRANSFER_CURRENCY	 = 	"CURRENCY";
 	private static final String	VISA_TRANSFER_AMOUNT	 = 	"VISA_TRANSFER_AMOUNT";
-	private static final String	VISA_FAST_FUND	 		 = 	"VISA_FAST_FUND";
 	
 	private String beneficiaryDeviceNumber;
 	private String currency;
@@ -20,7 +19,6 @@ public class VisaMoneyTransfer {
 		transfer.setCurrency(provider.getString(VISA_TRANSFER_CURRENCY));
 		transfer.setAmount(provider.getString(VISA_TRANSFER_AMOUNT));
 		transfer.setMemo(ConstantData.GENERIC_DESCRIPTION);
-		transfer.setVmt(provider.getString(VISA_FAST_FUND));
 		return transfer;
 	}
 
@@ -56,5 +54,4 @@ public class VisaMoneyTransfer {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
-
 }

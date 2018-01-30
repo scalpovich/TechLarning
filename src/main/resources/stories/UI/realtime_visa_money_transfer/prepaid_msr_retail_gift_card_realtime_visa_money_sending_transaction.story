@@ -1,4 +1,4 @@
-prepaid msr corporate general purpose card visa money transfer
+prepaid msr retail gift card visa money transfer
 
 Narrative:
 In order to provide to client easy-to-use multi-purpose prepaid card
@@ -6,9 +6,9 @@ As an issuer
 I want to create an magnetic stripe prepaid card and perform visa money transfer request
 
 Meta:
-@StoryName p_visa_msr_corp_general_purpose
+@StoryName p_visa_msr_retail_gift
 
-Scenario: Set up prepaid msr corporate general purpose card from another institute
+Scenario: Set up prepaid msr retail gift card from another institute
 Meta:
 @TestId TC398484
 Given user is logged in non-default institution
@@ -30,5 +30,5 @@ When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
 
-When user raises a "VMT" request
+When user raises a "RVMT" request
 Then search Visa Money Transfer authorization and verify 000-Successful status

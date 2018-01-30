@@ -30,5 +30,5 @@ When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
 
-When user raises a "VMT" request
+When user raises a "RVMT" request
 Then search Visa Money Transfer authorization and verify 000-Successful status
