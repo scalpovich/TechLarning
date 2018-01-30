@@ -882,16 +882,15 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			if(!isContains(transaction, "mdfs")) {
 				configureBinRangeForMas(transactionData);
 			} else {
-				configureBinRangeForMdfs(transactionData);
+				configureBinRangeForMdfs(transactionData, transaction);
 			}
 		}
 	}
 
 
-	private void configureBinRangeForMdfs(Transaction transactionData)
+	private void configureBinRangeForMdfs(Transaction transactionData, String transactionName)
 	{
 		String bin = transactionData.getCardNumber();
-		String issuerCountryCode = transactionData.getIssuerCountryCode() ; //"356"; // transactionData.getCurrency(); //356
 		String issuerCurrencyCode =  transactionData.getIssuerCurrencyCode();  //value from DE Element 49
 		String cardHolderBillingCurrency = transactionData.getCardHolderBillingCurrency(); //value from DE Element 61_13
 
@@ -921,18 +920,26 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(1000);
 			pressTab();
 			wait(1000);
-			setText("00"); // fianancial Network Code
 			pressTab();
-			setText(issuerCountryCode);
-			pressEnter();
-			//			pressTab();
+			wait(1000);
 			pressTab();
 			setText(issuerCurrencyCode);
 			pressTab();
 			setText(cardHolderBillingCurrency);
-
+			
 			// In MDFS 17.x, the OK button does not show up until we scroll down hence tabbing so that the focus goes to OK button
 			executeAutoITExe(ADD_BIN_RANGE_MAKE_OK_VISIBLE);
+			
+			if("MDFS_MSR_PIN_CHANGE".equalsIgnoreCase(transactionName)) {
+				pressTab(); // pressing tab so that General tab is visible
+				winiumClickOperation("M/Chip and PIN");
+				wait(2000);
+				winiumClickOperation("Yes"); //selecting "Yes" on radio button for "Issuer supports ATM Pin Change for Magstripe
+				//tab operation below are to make OK button appear on version 17.x
+				pressTab();
+				wait(1000);
+				pressTab();
+			}
 
 			winiumClickOperation("OK");
 			wait(2000);

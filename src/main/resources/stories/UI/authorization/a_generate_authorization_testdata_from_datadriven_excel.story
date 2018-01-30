@@ -14,4 +14,4 @@ When user performs generate TestData for an optimized <transaction> MAS transact
 
 Examples:
 |transaction|
-|EMV_PURCHASE|
+|MDFS_MSR_PIN_CHANGE|
