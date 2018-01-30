@@ -13,6 +13,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramFlows;
 
 @Component
 public class DeviceSteps {
@@ -25,6 +26,12 @@ public class DeviceSteps {
 
 	@Autowired
 	private DeviceWorkflow deviceWorkflow;
+	
+	@Autowired
+	ProgramFlows programFlows;
+	
+	@Autowired
+	Program program;
 
 	private static final String CORPORATE_CLIENT_CODE_DEVICE2 = "CORPORATE_CLIENT_CODE_DEVICE2";
 
@@ -122,11 +129,12 @@ public class DeviceSteps {
 		
 		Program program = context.get(ContextConstants.PROGRAM);
 		device.setProgramCode(program.buildDescriptionAndCode());
-		
+		sdnUncheckProgram(program.getProgramCode());
 		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 		
 		deviceWorkflow.createDeviceUsingApplication(device);
+		context.put(ContextConstants.APPLICATION, device);
 	}
 		
 		@Then("$type device is created using new device screen")
@@ -147,10 +155,15 @@ public class DeviceSteps {
 			
 			Program program = context.get(ContextConstants.PROGRAM);
 			device.setProgramCode(program.buildDescriptionAndCode());
-			
 			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 			
 			deviceWorkflow.createDevice(device);
+			context.put(ContextConstants.DEVICE, device);
+		}
+	
+		public void sdnUncheckProgram(String value) {
+			programFlows.programEdit(value);
+			program.setProgramCode(value);
 		}
 }

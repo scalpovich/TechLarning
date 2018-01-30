@@ -141,6 +141,17 @@ public class BatchProcessSteps {
 		MiscUtils.reportToConsole("pin generation Job Id: {}", jobId);
 	}
 	
+	@When("new Application processes pin generation batch for $type")
+	public void whenProcessesPinGenerationBatchUsingNewApplication(String type){
+		PinGenerationBatch batch = new PinGenerationBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		String batchNumber=context.get(ContextConstants.NEW_APPLICATION_BATCH);
+		batch.setBatchNumber(batchNumber);
+		MiscUtils.reportToConsole("pin generation Batch: {}", batchNumber);
+		jobId = batchProcessWorkflow.processPinGenerationBatch(batch);
+		MiscUtils.reportToConsole("pin generation Job Id: {}", jobId);
+	}
+	
 	@When("user processes pin generation batch for $type")	
 	public void whenUserProcessesPinGenerationBatch(String type){
 		whenProcessesPinGenerationBatch(type);

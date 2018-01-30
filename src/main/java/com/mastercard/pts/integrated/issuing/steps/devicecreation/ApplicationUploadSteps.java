@@ -70,14 +70,39 @@ public class ApplicationUploadSteps {
 		preProductionBatch.setJobID(processBatch.getJoBID());
 		batchProcessFlows.processPreProductionBatch(preProductionBatch);
 	}
-	@When("$type processes pre-production batch using new Application")
+	@Then("$type processes pre-production batch using new Device")
+	@When("$type processes pre-production batch using new Device")
 	public void whenProcessesPreproductionBatchForDevice(String type) {
+
+		preProductionBatch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processPreProductionBatchNewDevice(preProductionBatch);
+	}
+	
+	@Then("$type processes pre-production batch using new Application")
+	@When("$type processes pre-production batch using new Application")
+	public void whenProcessesPreproductionBatchForDeviceUsingApplication(String type) {
 
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPreProductionBatchNewApplication(preProductionBatch);
 	}
+	
+	@Then("$type processes deviceproduction batch using new Device")
+	@When("$type processes deviceproduction batch using new Device")
+	public void whenProcessesDeviceproductionBatchForDevice(String type) {
+		DeviceProductionBatch batch = new DeviceProductionBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processDeviceProductionBatchNewDevice(batch);
+	}
+	
+	@Then("$type processes deviceproduction batch using new Application")
+	@When("$type processes deviceproduction batch using new Application")
+	public void whenProcessesDeviceproductionBatchForNewApplication(String type) {
+		DeviceProductionBatch batch = new DeviceProductionBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processDeviceProductionBatchNewApplication(batch);
+	}
 
-
+	@Then("processes $type device production batch")
 	@When("processes $type device production batch")
 	public void whenProcessesDeviceProductionBatch(String type) {
 		DeviceProductionBatch batch = new DeviceProductionBatch();

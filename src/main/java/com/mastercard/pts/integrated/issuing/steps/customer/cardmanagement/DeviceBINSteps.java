@@ -23,6 +23,7 @@ public class DeviceBINSteps {
 	@When("user creates Device BIN for $network for product $productType for BinType as $BinType")
 	public void whenUserCreatesDeviceBINForMastercard(@Named("network") String network,
 			@Named("productType") String productType, @Named("BinType") String BinType) {
+		
 		devicebin.devicebinDataProvider();
 		devicebin.setInterchange(network);
 		devicecreation.setProduct(productType);

@@ -55,14 +55,14 @@ public class CreditCardBillingCyclePage extends AbstractBasePage {
 		verifySearchButton("Search");
 	}
 
-	@Override
+    @Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
 				WebElementUtils.visibilityOf(billingPlanCodeOnMainScreenTxt),
 				WebElementUtils.visibilityOf(descriptionOnMainScreenTxt));
 	}
 
-	public void addBillingCycle(CreditCardBillingCycle creditCardBillingCycle) {
+	public boolean addBillingCycle(CreditCardBillingCycle creditCardBillingCycle) {
 		logger.info("Add Credit Card Billing: {}", creditCardBillingCycle);
 
 		performSearchOperationOnMainScreen(creditCardBillingCycle);
@@ -87,7 +87,7 @@ public class CreditCardBillingCyclePage extends AbstractBasePage {
 			WebElementUtils.enterText(recordsPerBatchForProcessingTxt,
 					creditCardBillingCycle.getRecordsPerBatchForProcessing());
 			clickSaveButton();
-
+			errorMessagePresence();
 			canceled.set(verifyAlreadyExistsAndClickCancel());
 		});
 		// dont vereify status of Operation when duplicate exists
@@ -99,6 +99,7 @@ public class CreditCardBillingCyclePage extends AbstractBasePage {
 			creditCardBillingCycle
 					.setBillingPlanCode(getFirstColumnValueFromTable());
 		}
+		return errorMessagePresence();
 	}
 
 	private void performSearchOperationOnMainScreen(

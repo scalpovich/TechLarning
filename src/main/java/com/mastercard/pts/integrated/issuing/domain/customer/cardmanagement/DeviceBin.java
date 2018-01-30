@@ -1,8 +1,10 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
@@ -60,7 +62,7 @@ public class DeviceBin {
 		this.remarks = remarks;
 	}
 	public void devicebinDataProvider() {
-		setRemarks(MapUtils.fnGetInputDataFromMap("Remark"));
+		setRemarks(/*MapUtils.fnGetInputDataFromMap("Remark")*/CustomUtils.randomAlphaNumeric(5));
 
 	}
 

@@ -98,7 +98,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 			SwitchToDefaultFrame();
 
 		}
-	  public void processPreProductionBatchNewApplication(PreProductionBatch batch) {
+	  public void processPreProductionBatchNewDevice(PreProductionBatch batch) {
 
 			waitForLoaderToDisappear();
           SelectDropDownByText(productTypeDDwn, batch.getProductType());
@@ -112,6 +112,23 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 			SwitchToDefaultFrame();
 
 		}
+	  
+	public void processPreProductionBatchNewApplication(PreProductionBatch batch) {
+
+		waitForLoaderToDisappear();
+		SelectDropDownByText(productTypeDDwn, batch.getProductType());
+		CustomUtils.ThreadDotSleep(8000);
+		String batchNumber = context
+				.get(ContextConstants.NEW_APPLICATION_BATCH);
+		enterText(batchNumberTxt, batchNumber);
+		ClickButton(searchBtn);
+		ClickCheckBox(preProductionBatchRecordChkBx, true);
+		ClickButton(processSelectedBtn);
+		verifyOperationStatus();
+		SwitchToDefaultFrame();
+
+	}
+	  
 	public void verifyUiOperationStatus() {
 		logger.info("Pre-Prodcution Batch");
 		verifySearchButton("Search");

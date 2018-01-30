@@ -46,7 +46,7 @@ public class CreditCardTransactionRulePlanPage extends AbstractBasePage {
 				WebElementUtils.visibilityOf(descriptionTxt));
 	}
 
-	public void addTransactionRulePlan(
+	public boolean addTransactionRulePlan(
 			CreditCardTransactionRulePlan creditCardTransactionRulePlan) {
 		logger.info("Add Transaction Rule Plan {}",
 				creditCardTransactionRulePlan);
@@ -81,6 +81,7 @@ public class CreditCardTransactionRulePlanPage extends AbstractBasePage {
 		if (!canceled.get()) {
 			verifyOperationStatus();
 		}
+		return verifyAlreadyExistsAndClickCancel();
 	}
 
 	private void performSearchOperationOnMainScreen(

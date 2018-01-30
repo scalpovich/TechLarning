@@ -4,6 +4,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ChangeAddressRequest;
@@ -33,6 +36,9 @@ public class HelpDeskFlows extends AbstractBasePage {
 	SearchPanelHelpdeskPage searchpanelhelpdesk;
 
 	NewDevice newDevice;
+	
+	@Autowired
+	TestContext context;
 
 	/**
 	 * Navigate to general option.
@@ -150,6 +156,20 @@ public class HelpDeskFlows extends AbstractBasePage {
         String status=searchpanelhelpdesk.searchDeviceUsingName(helpdeskgettersetter.getProductType(),helpdeskgettersetter.getFirstName());
 		searchpanelhelpdesk.clickSearchBtn();
 		return status;
-		/* searchpanelhelpdesk.clickEditBtn(); */
+	}
+	public String searchForNewDevice(HelpDeskGeneral helpdeskgettersetter) {
+		generalPage = navigator.navigateToPage(GeneralPage.class);
+		Device device=context.get(ContextConstants.DEVICE);
+        String status=searchpanelhelpdesk.searchNewDevice(helpdeskgettersetter.getProductType(),device.getDeviceNumber());
+		searchpanelhelpdesk.clickSearchBtn();
+		return status;
+	}
+	
+	public String searchForNewApplication(HelpDeskGeneral helpdeskgettersetter) {
+		generalPage = navigator.navigateToPage(GeneralPage.class);
+		Device device=context.get(ContextConstants.APPLICATION);
+        String status=searchpanelhelpdesk.searchNewDevice(helpdeskgettersetter.getProductType(),device.getDeviceNumber());
+		searchpanelhelpdesk.clickSearchBtn();
+		return status;
 	}
 }

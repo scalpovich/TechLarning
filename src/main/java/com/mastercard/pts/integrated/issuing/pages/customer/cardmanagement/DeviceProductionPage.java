@@ -9,6 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
@@ -28,6 +31,8 @@ public class DeviceProductionPage extends AbstractBasePage {
 	@Autowired
 	MenuSubMenuPage menuSubMenuPage;
 
+	@Autowired
+	TestContext context;
 	// ------------- Card Management > Institution Parameter Setup > Institution
 	// Currency [ISSS05]
 
@@ -75,6 +80,22 @@ public class DeviceProductionPage extends AbstractBasePage {
 	}
 	public void processDeviceProductionBatch(DeviceProductionBatch batch) {
 		WebElementUtils.enterText(BatchNumberTxt, batch.getBatchNumber());
+		waitAndSearchForRecordToExist();
+		verifyOperationStatus();
+
+	}
+	
+	public void processDeviceProductionBatchNewDevice(DeviceProductionBatch batch) {
+		Device device=context.get(ContextConstants.DEVICE);
+		WebElementUtils.enterText(BatchNumberTxt, device.getBatchNumber());
+		waitAndSearchForRecordToExist();
+		verifyOperationStatus();
+
+	}
+	
+	public void processDeviceProductionBatchNewApplication(DeviceProductionBatch batch) {
+		String batchNumber=context.get(ContextConstants.NEW_APPLICATION_BATCH);
+		WebElementUtils.enterText(BatchNumberTxt, batchNumber);
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 

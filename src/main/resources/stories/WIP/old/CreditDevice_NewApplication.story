@@ -22,17 +22,19 @@ And User fills Device Event Based Fee Plan for credit product
 And User fills Device Plan for credit product
 And User fills Billing Cycle
 And User fills Payment Priority
-And User fills Payment Bounce Reason
+!-- And User fills Payment Bounce Reason
 And User fills Transaction Rule Plan
 And User fills Credit Plan
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product
 And User fills MCC Rules for credit product
 And User fills Program section for credit product
-And user navigates to Approval Score Page and add a approvalScore
-And User adds a Risk Analysis Rule Plan by entering valid values
+!-- And user navigates to Approval Score Page and add a approvalScore
+!-- And User adds a Risk Analysis Rule Plan by entering valid values
 When User fills Device Range section for credit product
 Then credit device is created
+When user verify the credit device
 When credit processes pre-production batch using new Application
-When processes credit device production batch
-
+When credit processes deviceproduction batch using new Application
+When new Application processes pin generation batch for credit
+Then User search for new application on search screen for credit and validates the status as NORMAL

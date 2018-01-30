@@ -28,5 +28,15 @@ public class ContextConstants {
 	
 	public static final String INSTITUTION ="INSTITUTION"; 
 	
+	public static final String CREDIT_PLAN_CODE_ERROR_STATUS="CREDIT_PLAN_CODE_ERROR_STATUS";
+	
+	public static final String BILLING_CYCLE_CODE_ERROR_STATUS="BILLING_CYCLE_CODE_ERROR_STATUS";
+	
+	public static final String TRANSACTION_PLAN_ERROR_STATUS="TRANSACTION_PLAN_ERROR_STATUS";
+	
+	public static final String APPLICATION = "APPLICATION";
+	
+	public static final String NEW_APPLICATION_BATCH="NEW_APPLICATION_BATCH";
+	
 	private ContextConstants() {}
 }

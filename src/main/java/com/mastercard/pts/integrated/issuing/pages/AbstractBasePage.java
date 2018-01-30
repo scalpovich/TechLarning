@@ -38,6 +38,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
@@ -283,6 +284,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public void clickSaveButton() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		clickWhenClickable(saveBtn);
+	}
+	
+	public void clickSaveButtonWithOutWicket() {
+		WebElementUtils.scrollDown(driver(), 0, 250);
+		clickWhenClickableDoNotWaitForWicket(saveBtn);
 	}
 
 	protected void clickCancelButton() {
@@ -1577,6 +1583,19 @@ public abstract class AbstractBasePage extends AbstractPage {
 				return frameSwitch.getElements().size();
 				 }
 
+	public boolean errorMessagePresence() {
+		try {
+			if (getFinder().getWebDriver()
+					.findElement(By.xpath("//*[@class='feedbackPanelERROR']"))
+					.isDisplayed()) {
+
+			}
+
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		logger.info("Not validaiting any elements, as this is an Abstraction layer to Pages");

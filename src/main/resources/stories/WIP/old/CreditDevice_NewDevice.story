@@ -7,10 +7,11 @@ I want to assert pages
 Meta:
 CreditRegression
 @StoryName S190639					 
-Scenario:1 UI verification - Customer Portal - User is able to add Approval Score,Risk analysis for Credit Device SetUp and creates a Credit Device Using New Application
+Scenario:1 UI verification - user creates a Credit Device Using New Device Screen
 Meta:
-@UserAddsApprovalScore
+@UserCreatesNewCreditDevice
 Given user is logged in institution
+When user creates Device BIN for Mastercard for product credit for BinType as Dual Message Type
 When User fills Dedupe Plan
 And User fills Statement Message Plan for credit product
 And User fills Marketing Message Plan for credit product
@@ -29,8 +30,9 @@ And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product
 And User fills MCC Rules for credit product
 And User fills Program section for credit product
-And user navigates to Approval Score Page and add a approvalScore
-And User adds a Risk Analysis Rule Plan by entering valid values
 When User fills Device Range section for credit product
 Then credit device is created using new device screen
+Then credit processes pre-production batch using new Device
+Then credit processes deviceproduction batch using new Device
+Then User search for new device on search screen for credit and validates the status as NORMAL
 

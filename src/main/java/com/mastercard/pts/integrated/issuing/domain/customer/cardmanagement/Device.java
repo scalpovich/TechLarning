@@ -88,6 +88,7 @@ public class Device {
 	private String serviceCode;
 	private String productType;
 	private String transactionDateType;
+	private String applicationNumber;
 	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -559,5 +560,13 @@ public class Device {
 
 	public void setTransactionDateType(String transactionDateType) {
 		this.transactionDateType = transactionDateType;
+	}
+	
+    public String getApplicationNumber() {
+		return applicationNumber;
+	}
+
+	public void setApplicationNumber(String applicationNumber) {
+		this.applicationNumber = applicationNumber;
 	}
 }

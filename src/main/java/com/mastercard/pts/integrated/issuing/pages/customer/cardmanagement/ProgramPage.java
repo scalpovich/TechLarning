@@ -691,6 +691,7 @@ public class ProgramPage extends AbstractBasePage {
 		String programCode;
 		String ProgramDescription;
 		programCode = enterProgramCode();
+		program.setProgramCode(programCode);
 		ProgramDescription = enterProgramDescription();
 		selectInterchange(program);
 		selectProduct(devicecreation);
@@ -705,6 +706,7 @@ public class ProgramPage extends AbstractBasePage {
 		String programCode;
 		String ProgramDescription;
 		programCode = enterProgramCode();
+		program.setProgramCode(programCode);
 		ProgramDescription = enterProgramDescription();
 		selectInterchange(program);
 		selectProduct(devicecreation);
@@ -752,13 +754,14 @@ public class ProgramPage extends AbstractBasePage {
 	public void enterProgramValue(String a) {
 		enterValueinTextBox(enterProgram, a);
 		clickWhenClickable(search);
+		waitForPageToLoad(getFinder().getWebDriver());
 		waitForElementVisible(editProgram);
 		Scrolldown(editProgram);
 		clickWhenClickableDoNotWaitForWicket(editProgram);
 		CustomUtils.ThreadDotSleep(2000);
 		switchToEditProgramframe();
 		ClickCheckBox(sdnCheckBox, false);
-		clickSaveButton();
+		clickSaveButtonWithOutWicket();
 		}
 
 	public void switchToEditProgramframe() {

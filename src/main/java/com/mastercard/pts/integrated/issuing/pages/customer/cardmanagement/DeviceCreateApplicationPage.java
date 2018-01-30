@@ -227,6 +227,21 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			});
 
 		verifyOperationStatus();
+		if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)) {
+			device.setApplicationNumber(getCodeFromInfoMessage("Application Number"));
+			logger.info("Application: {}",device.getApplicationNumber());
+		}
+		else
+		{
+		device.setClientCode(getCodeFromInfoMessage("client"));
+		device.setWalletNumber(getCodeFromInfoMessage("wallet"));
+		device.setDeviceNumber(getCodeFromInfoMessage("device(s)"));
+		device.setApplicationNumber(getCodeFromInfoMessage("Application Number"));
+		logger.info("clientCode: {}",device.getClientCode());
+		logger.info("WalletNumber: {}",device.getWalletNumber());
+		logger.info("DeviceNumber: {}",device.getDeviceNumber());
+		logger.info("Application: {}",device.getApplicationNumber());
+		}
 
 		//scolling "PageUp" is needed here as the Menu item is not visible
 		
@@ -264,7 +279,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 
 		fillProfile(device);
 		fillAddress(device);
-		if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)) {
+		
 			// skip employment details
 			clickNextButton();
 			// Bank Details applicable only for Credit type product
@@ -276,20 +291,6 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			// skip device extra fields
 			clickNextButton();
 			clickNextButton();
-		}
-		else
-		{
-		// skip employment details
-		clickNextButton();
-		// Bank Details applicable only for Credit type product
-		clickNextButton();
-		// Nomination Details applicable only for Credit type product
-		clickNextButton();
-		// skip client extra fields
-		clickNextButton();
-		// skip device extra fields
-		clickNextButton();
-		}
 	}
 
 	private void fillAddress(Device device) {

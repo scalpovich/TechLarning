@@ -2,11 +2,16 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.Collection;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -23,7 +28,8 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L2_WALLET_CONFIGURATION,
 		CardManagementNav.L3_WALLET_PLAN })
 public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
-
+@Autowired
+private TestContext context;
 	private static final Logger logger = LoggerFactory
 			.getLogger(WalletConfigurationWalletPlanPage.class);
 
@@ -98,12 +104,26 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectCreditPlan(String creditPlan) {
+		if(context.get(ContextConstants.CREDIT_PLAN_CODE_ERROR_STATUS).equals(true))
+		{
+			WebElementUtils.selectDropDownByIndex(creditPlanDDwn, 1);
+		}
+		else
+		{
 		WebElementUtils.selectDropDownByVisibleText(creditPlanDDwn, creditPlan);
+		}
 	}
 
 	public void selectBillingCyleCode(String billingCyleCode) {
+		if(context.get(ContextConstants.BILLING_CYCLE_CODE_ERROR_STATUS).equals(true))
+		{
+			WebElementUtils.selectDropDownByIndex(billingCyleCodeDDwn, 1);
+		}
+		else
+		{
 		WebElementUtils.selectDropDownByVisibleText(billingCyleCodeDDwn,
 				billingCyleCode);
+		}
 	}
 
 	public void inputReservedAmount() {
