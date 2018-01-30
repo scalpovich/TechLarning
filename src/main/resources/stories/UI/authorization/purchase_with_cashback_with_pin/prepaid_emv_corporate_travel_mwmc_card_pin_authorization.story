@@ -1,4 +1,4 @@
-prepaid emv corporate travel multi wallet multi currency card authorization PINLESS
+prepaid emv corporate travel multi wallet multi currency card authorization PIN
 
 Narrative:
 In order to provide a corporate client various transactions
