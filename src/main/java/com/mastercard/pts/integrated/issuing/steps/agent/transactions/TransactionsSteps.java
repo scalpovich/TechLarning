@@ -2,25 +2,96 @@ package com.mastercard.pts.integrated.issuing.steps.agent.transactions;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.agent.transactions.TransactionsWorkflow;
-
 
 @Component
 public class TransactionsSteps {
 	private static final String FAILED_MESSAGE_INFO = "Page Load Failed";
+	private static final String REMITTANCE_TRANSACTION_MESSAGE = "Your transaction is successful. Your Remittance Reference Number is:";
+	private static final String REMITTANCE_CANCELLATION_MESSAGE = "Your transaction is successful.";
+	private static final String REMITTANCE_PAYOUT_MESSAGE = "Your transaction is successful.";
+	
+	private CardToCash ctc;
+	private Device device;
+	
+	@Autowired
+	private TestContext context;
 	
 	@Autowired
 	private TransactionsWorkflow transactionsWorkflow;
 
 	@Autowired
 	private KeyValueProvider provider;
+	
+	@When("user performs remittance card to cash transaction")
+	public void whenUserPerformsRemittanceCardToCashTransaction(){
+		device = context.get(ContextConstants.DEVICE);
+		ctc = CardToCash.getProviderData(provider);
+		String[] txnDetails = ctc.getTransactionDetails().trim().split(":");
+		ctc.setRemittanceAmount(txnDetails[1].trim());
+		ctc.setRemittanceCurrency(txnDetails[2].trim());
+		ctc.setBeneficiaryId(MiscUtils.randomNumber(6));
+		ctc.setBeneficiaryFirstName("FN"+MiscUtils.randomAlphabet(6).toLowerCase());
+		ctc.setBeneficiaryLastName("LN"+MiscUtils.randomAlphabet(6).toLowerCase());
+		String remittanceNumber = transactionsWorkflow.performRemittanceCardToCashTransaction(device, ctc);
+		ctc.setRemittanceNumber(remittanceNumber);
+		context.put(ContextConstants.REMITTANCE, ctc);
+	}
+	
+	@When("remittance card to cash transaction is successful")
+	@Then("remittance card to cash transaction is successful")
+	public void thenRemittanceCardToCashTransactionIsSuccessful(){
+		assertThat("Remittance Card to Cash Transaction Failed", transactionsWorkflow.getRemittanceSuccessMessage(), containsString(REMITTANCE_TRANSACTION_MESSAGE));
+	}
+	
+	@When("user performs remittance card to cash lookup")
+	public void whenUserPerformsRemittanceCardToCashLookup(){
+		ctc = context.get(ContextConstants.REMITTANCE);
+		transactionsWorkflow.performRemittanceCardToCashLookup(device, ctc);
+	}
+	
+	@When("remittance card to cash lookup has transfer amount details")
+	@Then("remittance card to cash lookup has transfer amount details")
+	public void thenRemittanceCardToCashLookupHasDetails(){
+		assertTrue(transactionsWorkflow.validateLookupTableTransferAmount(ctc));
+	}
+	
+	@When("user performs remittance card to cash cancellation")
+	public void whenUserPerformsRemittanceCardToCashCancellation(){
+		ctc = context.get(ContextConstants.REMITTANCE);
+		transactionsWorkflow.performRemittanceCancelCardToCash(device, ctc);
+	}
+	
+	@When("remittance card to cash cancellation is successful")
+	@Then("remittance card to cash cancellation is successful")
+	public void thenRemittanceCardToCashCancellationIsSuccessful(){
+		assertThat("Remittance Card to Cash Cancellation Failed",  transactionsWorkflow.getRemittanceCancellationSuccessMessage(), containsString(REMITTANCE_CANCELLATION_MESSAGE));
+	}
+	
+	@When("user performs remittance card to cash payout")
+	public void whenUserPerformsRemittanceCardToCashPayout(){
+		ctc = context.get(ContextConstants.REMITTANCE);
+		transactionsWorkflow.performRemittancePayout(device, ctc);
+	}
+	
+	@When("remittance card to cash payout is successful")
+	@Then("remittance card to cash payout is successful")
+	public void thenRemittanceCardToCashPayoutIsSuccessful(){
+		assertThat("Remittance Card to Cash Payout Failed", transactionsWorkflow.getRemittancePayoutSuccessMessage(), containsString(REMITTANCE_PAYOUT_MESSAGE));
+	}
 	
 	@When("user navigates to balance enquiry page")
 	public void whenUserNavigatesToBalanceEnquiryPage(){

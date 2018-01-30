@@ -427,6 +427,26 @@ public class HelpDeskSteps {
 		assertTrue(helpdeskWorkflow.verifyBalanceUpdatedCorreclty(beforeLoadBalanceInformation, helpdeskGeneral.getTransactionDetails(), helpdeskWorkflow.getWalletBalanceInformation(device)));
 	}
 	
+	@When("balance in helpdesk deducted correctly for $type device")
+	@Then("balance in helpdesk deducted correctly for $type device")
+	public void thenBalanceInHelpDeskDeductedCorrectly(String type) {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+		assertTrue(helpdeskWorkflow.verifyBalanceDeductedCorreclty(beforeLoadBalanceInformation, helpdeskGeneral.getTransactionDetails(), helpdeskWorkflow.getWalletBalanceInformation(device)));
+	}
+	
+	@When("balance in helpdesk not changed for $type device")
+	@Then("balance in helpdesk not changed for $type device")
+	public void thenBalanceInHelpDeskNotChanged(String type) {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+		assertTrue(helpdeskWorkflow.verifyBalanceNotChanged(beforeLoadBalanceInformation, helpdeskWorkflow.getWalletBalanceInformation(device)));
+	}
+	
 	@When("initial load balance in helpdesk updated correctly for $type device")
 	@Then("initial load balance in helpdesk updated correctly for $type device")
 	public void thenInitialLoadBalanceInHelpDeskUpdatedCorrectly(String type) {
