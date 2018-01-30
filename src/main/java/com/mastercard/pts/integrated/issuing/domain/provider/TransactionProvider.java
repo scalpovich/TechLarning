@@ -61,7 +61,7 @@ public class TransactionProvider {
 
 		transaction.setDeKeyValuePair(parseDataElements(templateData.get(DE),
 				transaction));
-		if (!transactionName.equalsIgnoreCase("asi"))
+		if (!transactionName.contains("asi"))
 			transaction.setExpectedDataElements(parseDataElements(
 					templateData.get(EXPECTED_DE), transaction));
 
