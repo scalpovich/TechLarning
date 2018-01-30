@@ -152,6 +152,7 @@ public class DeviceRangePage extends AbstractBasePage {
 	}
 
 	public void selectProduct(DeviceCreation deviceCreation) {
+		waitForElementVisible(ProductTypeDDwn);
 		selectByVisibleText(ProductTypeDDwn, deviceCreation.getProduct());
 	}
 
@@ -170,8 +171,7 @@ public class DeviceRangePage extends AbstractBasePage {
 		if (!MapUtils.fnGetInputDataFromMap("DevicePlan").isEmpty()) {
 			selectByVisibleText(DevicePlanCodeDDwn, MapUtils.fnGetInputDataFromMap("DevicePlan"));
 		} else {
-			selectByVisibleText(DevicePlanCodeDDwn,
-					/* deviceplan.getDevicePlan() */program.getDevicePlanProgram());
+			selectByVisibleText(DevicePlanCodeDDwn, program.getDevicePlanProgram());
 		}
 	}
 

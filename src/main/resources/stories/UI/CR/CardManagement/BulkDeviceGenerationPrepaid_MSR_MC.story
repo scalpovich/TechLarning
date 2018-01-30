@@ -49,7 +49,7 @@ Outcome: SUCCESS
 @BulkDeviceGenerationPrepaidRetailMCMSR
 @TCName TC264306_Embossing File Generation
 @sheetName S205014
-Given login to portal as existing bank as a user
+Given user is logged in institution
 When user navigates to General in Helpdesk
 And user search for device on search screen for product type prepaid
 And user select the service code as Activate Device
@@ -96,7 +96,7 @@ Outcome: SUCCESS
 @BulkDeviceGenerationPrepaidCorporateMCMSR
 @TCName TC264306_Embossing File Generation
 @sheetName S205014
-Given login to portal as existing bank as a user
+Given user is logged in institution
 When user navigates to General in Helpdesk
 And user search for device on search screen for product type prepaid
 And user select the service code as Activate Device

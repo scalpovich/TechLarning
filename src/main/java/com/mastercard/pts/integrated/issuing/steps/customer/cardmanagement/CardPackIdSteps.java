@@ -31,6 +31,7 @@ public class CardPackIdSteps {
 	@When("user retrieves the device number from the query")
 	public void deviceNumberFromQuery() {
 		devicecreation.setDeviceNumberFromQuery(cardpackidflows.DeviceNumber(devicecreation));
+
 	}
 
 	@When("user verifies the Pre generated flag at device level should be set to $flag once the device created")

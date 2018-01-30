@@ -560,11 +560,11 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectJoiningMembershipFeePlan() {
-		SelectDropDownByIndex(membershipFeePlanDDwn, 3);
+		SelectDropDownByIndex(membershipFeePlanDDwn, 1);
 	}
 
 	public void selectTransactionLimitPlan() {
-		SelectDropDownByIndex(transactionLimitPlanDDwn, 3);
+		SelectDropDownByIndex(transactionLimitPlanDDwn, 1);
 	}
 
 	public void next() {

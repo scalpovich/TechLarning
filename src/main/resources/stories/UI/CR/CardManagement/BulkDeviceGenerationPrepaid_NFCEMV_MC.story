@@ -38,7 +38,7 @@ When user retrieves the device number from the query
 When user navigates to General in Helpdesk
 And user search for device on search screen for product type Prepaid
 Then pair devices should be generated for each of the processed Device and the paired device should be inactive state
-And user verifies the Pre generated flag at device level should be set to Y once the device is created
+And user verifies the Pre generated flag at device level should be set to Y once the device created
 Then user onboard the Device through Agent Portal and Activate through HelpDesk
 
 Scenario: Scenario2 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Corporate NFC EMV
@@ -47,9 +47,9 @@ Lifecycle:
 After:
 Outcome: SUCCESS
 @BulkDeviceGenerationPrepaidMCCorporateNFCEMV
-@TCName TC264306_Embossing File Generation
+@TCName TC264319_Embossing File Generation
 @sheetName S205014
-Given login to portal as existing bank as a user
+Given user is logged in institution
 When user navigates to General in Helpdesk
 And user search for device on search screen for product type prepaid
 And user select the service code as Activate Device
@@ -85,7 +85,7 @@ When user retrieves the device number from the query
 When user navigates to General in Helpdesk
 And user search for device on search screen for product type Prepaid
 Then pair devices should be generated for each of the processed Device and the paired device should be inactive state
-And user verifies the Pre generated flag at device level should be set to Y once the device is created
+And user verifies the Pre generated flag at device level should be set to Y once the device created
 Then user onboard the Device through Agent Portal and Activate through HelpDesk
 
 Scenario: Scenario4 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Corporate NFC EMV
@@ -94,9 +94,9 @@ Lifecycle:
 After:
 Outcome: SUCCESS
 @BulkDeviceGenerationPrepaidMCRetailNFCEMV
-@TCName TC264306_Embossing File Generation
+@TCName TC264319_Embossing File Generation
 @sheetName S205014
-Given login to portal as existing bank as a user
+Given user is logged in institution
 When user navigates to General in Helpdesk
 And user search for device on search screen for product type prepaid
 And user select the service code as Activate Device

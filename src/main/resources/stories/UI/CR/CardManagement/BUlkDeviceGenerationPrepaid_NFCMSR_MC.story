@@ -38,7 +38,7 @@ When user retrieves the device number from the query
 When user navigates to General in Helpdesk
 And user search for device on search screen for product type Prepaid
 Then pair devices should be generated for each of the processed Device and the paired device should be inactive state
-And user verifies the Pre generated flag at device level should be set to Y once the device is created
+And user verifies the Pre generated flag at device level should be set to Y once the device created
 !-- Then user logout from customer portal
 Then user onboard the Device through Agent Portal and Activate through HelpDesk
 
@@ -50,7 +50,7 @@ Outcome: SUCCESS
 @BulkDeviceGenerationPrepaidMCRetailNFCMAGSTRIPE
 @TCName TC264318_Embossing File Generation_MCSMS
 @sheetName S205014
-Given login to portal as existing bank as a user
+Given user is logged in institution
 When user navigates to General in Helpdesk
 And user search for device on search screen for product type prepaid
 And user select the service code as Activate Device
@@ -86,7 +86,7 @@ When user retrieves the device number from the query
 When user navigates to General in Helpdesk
 And user search for device on search screen for product type Prepaid
 Then pair devices should be generated for each of the processed Device and the paired device should be inactive state
-And user verifies the Pre generated flag at device level should be set to Y once the device is created
+And user verifies the Pre generated flag at device level should be set to Y once the device created
 !-- Then user logout from customer portal
 Then user onboard the Device through Agent Portal and Activate through HelpDesk
 
@@ -98,7 +98,7 @@ Outcome: SUCCESS
 @BulkDeviceGenerationPrepaidMCRetailNFCMAGSTRIPE
 @TCName TC264318_Embossing File Generation_MCSMS
 @sheetName S205014
-Given login to portal as existing bank as a user
+Given user is logged in institution
 When user navigates to General in Helpdesk
 And user search for device on search screen for product type prepaid
 And user select the service code as Activate Device
