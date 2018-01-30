@@ -1,1 +1,1 @@
-wmic process where name='chrome.exe' delete
+taskkill /IM chromedriver* /F
