@@ -95,7 +95,7 @@ Outcome: SUCCESS
 @BulkDeviceGenerationPrepaidMCRetailNFCMAGSTRIPE
 @TCName TC264318_Embossing File Generation
 @sheetName S205014
-Given Given user is logged in institution
+Given user is logged in institution
 When user navigates to General in Helpdesk
 And user search for device on search screen for product type prepaid
 And user select the service code as Activate Device
