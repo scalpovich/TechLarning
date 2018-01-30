@@ -29,5 +29,5 @@ When perform an MMSR MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
-And search MasterCard MoneySend authorization and verify 000-Successful status
+And search MoneySend authorization and verify 000-Successful status
 And user sign out from customer portal
