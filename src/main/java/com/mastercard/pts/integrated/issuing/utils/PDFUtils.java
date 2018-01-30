@@ -27,9 +27,11 @@ public class PDFUtils {
 	@Autowired
 	private static final Logger logger = LoggerFactory.getLogger(PDFUtils.class);
 
-	private PDFUtils() {
+	public PDFUtils() {
 
 	}
+	@Autowired
+	DateUtils dateutil;
 
 	public static String getContent(String pdfPath, String key) {
 		String value = "";
@@ -61,7 +63,7 @@ public class PDFUtils {
 		return value;
 	}
 
-	public static List<String> getContentRow(String pdfPath, String code) {
+	public List<String> getContentRow(String pdfPath, String code) {
 		String pageContent = "";
 		List<String> programWiseContent = new ArrayList<String>();
 		String[] fullRow = { "" };
@@ -96,14 +98,12 @@ public class PDFUtils {
 		return programWiseContent;
 	}
 
-	public static PdfReader manipulatePdf(String src) {
+	public PdfReader manipulatePdf(String src) {
 		PdfReader.unethicalreading = true;
 		PdfReader reader = null;
 		try {
-			reader = new PdfReader(src, (ConstantData.AUTHORIZATION_REPORT_FILE_KEY+DateUtils.getDateDDMMFormat()).getBytes());
-		} catch (IOException e) {
-			logger.info("IO Exception {}", e);
-		} catch (Exception e) {
+			reader = new PdfReader(src, (ConstantData.AUTHORIZATION_REPORT_FILE_KEY+dateutil.getDateDDMMFormat()).getBytes());
+		}  catch (Exception e) {
 			logger.info("Document Exception {}", e);
 		}
 		return reader;

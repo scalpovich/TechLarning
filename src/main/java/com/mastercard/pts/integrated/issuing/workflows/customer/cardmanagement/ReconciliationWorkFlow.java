@@ -110,7 +110,8 @@ public class ReconciliationWorkFlow {
 	}
 	
 	public List<String> getReportContent(String fileName,String key) {
-		List<String> records = PDFUtils.getContentRow(PDFUtils.getuserDownloadPath() + "\\"+fileName, key);
+		PDFUtils pdfutils=new PDFUtils();
+		List<String> records = pdfutils.getContentRow(PDFUtils.getuserDownloadPath() + "\\"+fileName, key);
 		for(int i=0;i<records.size();i++)
 		{
 		if (records != null)
