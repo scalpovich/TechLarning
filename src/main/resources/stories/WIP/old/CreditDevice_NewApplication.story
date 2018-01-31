@@ -34,6 +34,7 @@ And User fills Program section for credit product
 When User fills Device Range section for credit product
 Then credit device is created
 When user verify the credit device
+When user process close batch for new Application
 When credit processes pre-production batch using new Application
 When credit processes deviceproduction batch using new Application
 When new Application processes pin generation batch for credit

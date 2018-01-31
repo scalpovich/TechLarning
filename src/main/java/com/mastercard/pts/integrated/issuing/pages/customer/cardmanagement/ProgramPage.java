@@ -761,7 +761,7 @@ public class ProgramPage extends AbstractBasePage {
 		CustomUtils.ThreadDotSleep(2000);
 		switchToEditProgramframe();
 		ClickCheckBox(sdnCheckBox, false);
-		clickSaveButtonWithOutWicket();
+		clickSaveButton();
 		}
 
 	public void switchToEditProgramframe() {
