@@ -1,20 +1,18 @@
-prepaid emv corporate travel multi wallet multi currency card authorization PIN
+MDFS Pin Change on prepaid emv corporate travel multi wallet multi currency card 
 
 Narrative:
 In order to provide a corporate client various transactions
 As an issuer
-I want to create a prepaid emv corporate travel multi wallet multi currency card and test various transactions
+I want to create a prepaid emv corporate travel multi wallet multi currency card and perform Pin Change 
 
 Meta:
 @StoryName p_emv_corp_travel_mwmc
 @emvpinchange
 
-Scenario: Transaction - prepaid emv corporate travel multi wallet multi currency card - PIN CHANGE transaction
+Scenario: Transaction - prepaid emv corporate travel multi wallet multi currency card and perform Pin Change operation
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
-And user sign out from customer portal
-Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
@@ -30,9 +28,7 @@ When Pin Offset file batch was generated successfully
 When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
-
-Scenario: Perform PIN CHANGE Operation via MDFS
-Given connection to MDFS is established
+Then connection to MDFS is established
 When user performs an optimized MDFS_EMV_PIN_CHANGE MAS transaction
 Then MDFS test results are verified
 When MDFS simulator is closed

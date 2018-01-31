@@ -1,21 +1,18 @@
-regression prepaid emv corporate general purpose card authorization
+MDFS Pin Change on  prepaid emv corporate general purpose card authorization
 
 Narrative:
 In order to provide a corporate client various transactions
 As an issuer
-I want to create a prepaid emv corporate general purpose card and test various transactions
+I want to create a prepaid emv corporate general purpose card and perform Pin Change
 
 Meta:
 @StoryName p_emv_corp_general_purpose
 @emvpinchange
 
-Scenario: Setup - prepaid emv corporate general purpose card
+Scenario: Setup - prepaid emv corporate general purpose card and perform Pin Change operation
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
-
-Scenario: Device production - prepaid emv corporate general purpose card
-Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
@@ -26,16 +23,12 @@ When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
 And user sign out from customer portal
-
-Scenario: Pin Generation
-Given connection to FINSim is established
+Then connection to FINSim is established
 When Pin Offset file batch was generated successfully
 When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
-
-Scenario: Perform PIN CHANGE Operation via MDFS
-Given connection to MDFS is established
+Then connection to MDFS is established
 When user performs an optimized MDFS_EMV_PIN_CHANGE MAS transaction
 Then MDFS test results are verified
 When MDFS simulator is closed

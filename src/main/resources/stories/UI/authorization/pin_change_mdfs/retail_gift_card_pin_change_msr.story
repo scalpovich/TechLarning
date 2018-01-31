@@ -1,22 +1,18 @@
-prepaid msr retail general purpose card authorization
+MDFS Pin Change on prepaid msr retail general purpose card
 
 Narrative:
 In order to provide to client easy-to-use multi-purpose prepaid card
 As an issuer
-I want to create an magnetic stripe prepaid card and perform various transaction
+I want to create perform Pin Change an magnetic stripe prepaid card
 
 Meta:
 @StoryName prepaid_msr_retail_gift
 @msrpinchange
 
-Scenario: Set up prepaid msr retail gift card
+Scenario: Set up prepaid msr retail gift card and perform Pin Change operation
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
-Then user sign out from customer portal
-
-Scenario: prepaid msr retail gift card device production
-Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
@@ -30,16 +26,12 @@ When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
 Then user sign out from customer portal
-
-Scenario: Pin Generation
-Given connection to FINSim is established
+Then connection to FINSim is established
 When Pin Offset file batch was generated successfully
 When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
-
-Scenario: Perform PIN CHANGE Operation via MDFS
-Given connection to MDFS is established
+Then connection to MDFS is established
 When user performs an optimized MDFS_MSR_PIN_CHANGE MAS transaction
 Then MDFS test results are verified
 When MDFS simulator is closed

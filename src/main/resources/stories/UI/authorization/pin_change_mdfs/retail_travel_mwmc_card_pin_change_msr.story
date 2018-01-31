@@ -1,15 +1,15 @@
-Prepaid msr retail travel card multi currency with pin authorization
+MDFS Pin Change on Prepaid msr retail travel card multi currency
 
 Narrative:
 In order to check transactions on prepaid msr retail travel mwmc card 
 As an issuer
-I want to authorize transactions for prepaid msr retail travel mwmc card 
+I want to authorize Pin Change transactions for prepaid msr retail travel mwmc card 
 
 Meta:
 @StoryName p_msr_retail_travel_mwmc
 @msrpinchange
 
-Scenario: Setup multi-currency prepaid msr retail travel card and perfomr refund pin authorization
+Scenario: Setup multi-currency prepaid msr retail travel card and perform Pin Change operation
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
@@ -28,16 +28,12 @@ Then currency setup for prepaid device is done correctly and updated in wallet d
 When user performs adjustment transaction
 And user performs adjustment transaction for second wallet
 And user sign out from customer portal
-
-Scenario: Pin Generation
-Given connection to FINSim is established
+Then connection to FINSim is established
 When Pin Offset file batch was generated successfully
 When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
-
-Scenario: Perform PIN CHANGE Operation via MDFS
-Given connection to MDFS is established
+Then connection to MDFS is established
 When user performs an optimized MDFS_MSR_PIN_CHANGE MAS transaction
 Then MDFS test results are verified
 When MDFS simulator is closed
