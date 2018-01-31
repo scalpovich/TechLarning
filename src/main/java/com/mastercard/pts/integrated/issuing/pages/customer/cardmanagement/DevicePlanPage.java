@@ -434,12 +434,12 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectActivationMode(DevicePlan deviceplan) {
-		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) || !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) || !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+		if (/*!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) &&*/ !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) /*&& !CardType.MOBILE.contains(deviceplan.getDeviceType())*/) {
 			Assert.assertTrue("Card activation Mode dropdown is enabled", ActivationMode.isEnabled());
 			selectByText(ActivationMode, deviceplan.getActivationMode());
 		} else {
 			Assert.assertTrue("Card activation Mode dropdown is disabled", !ActivationMode.isEnabled());
-		}
+		}	
 	}
 
 	public void selectExpiryFlag(DevicePlan deviceplan) {
@@ -452,7 +452,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectDeliveryMode(DevicePlan deviceplan) {
-		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) || !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) || !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) && !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) && !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
 			Assert.assertTrue("delivery Mode dropdown is enabled", DeliveryModeDDwn.isEnabled());
 			selectByVisibleText(DeliveryModeDDwn, deviceplan.getDeliveryMode());
 		} else {
@@ -469,7 +469,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectEmbossingVendor(DevicePlan deviceplan) {
-		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) || !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) || !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) && !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) && !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
 			ClickCheckBox(CardProductionChkBx, true);
 			Assert.assertTrue("card production checkbox is enabled", CardProductionChkBx.isEnabled());
 			waitForLoaderToDisappear();
@@ -484,9 +484,17 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void checkCourierTracking(DevicePlan deviceplan) {
-		if (!(CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) || CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) || CardType.MOBILE.contains(deviceplan.getDeviceType()) || CardType.ATM_ADMIN
-				.contains(deviceplan.getDeviceType()))) {
+		if(deviceplan.getProductType().equalsIgnoreCase("debit"))
+		{
+		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) && !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) && !CardType.MOBILE.contains(deviceplan.getDeviceType()) && !CardType.ATM_ADMIN.contains(deviceplan.getDeviceType())) {
 			Assert.assertTrue("courier tracking checkbox is enabled", courierTrackingChkBx.isEnabled());
+		}
+		}
+		else if(deviceplan.getProductType().equalsIgnoreCase("prepaid")||deviceplan.getProductType().equalsIgnoreCase("credit"))
+		{
+			if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) && !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) && !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+				Assert.assertTrue("courier tracking checkbox is enabled", courierTrackingChkBx.isEnabled());
+		}
 			ClickCheckBox(courierTrackingChkBx, true);
 		} else {
 			Assert.assertTrue("courier tracking checkbox is disabled for " + deviceplan.getDeviceType(), !(courierTrackingChkBx.isEnabled()));
@@ -494,27 +502,36 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void checkManufacturingTracking(DevicePlan deviceplan) {
-		if (!(CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) || CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) || CardType.MOBILE.contains(deviceplan.getDeviceType()) || CardType.ATM_ADMIN
-				.contains(deviceplan.getDeviceType()))) {
+		if(deviceplan.getProductType().equalsIgnoreCase("debit"))
+		{
+		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) && !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) && !CardType.MOBILE.contains(deviceplan.getDeviceType()) && !CardType.ATM_ADMIN.contains(deviceplan.getDeviceType())) {
 			Assert.assertTrue("Manufactoring tracking checkbox dropdown is enabled", ManuFactoringTrackingChkBx.isEnabled());
-		} else {
+		}
+		}
+		else if(deviceplan.getProductType().equalsIgnoreCase("prepaid")||deviceplan.getProductType().equalsIgnoreCase("credit"))
+		{
+		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) && !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) && !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+			Assert.assertTrue("Manufactoring tracking checkbox dropdown is enabled", ManuFactoringTrackingChkBx.isEnabled());
+		}
+		}
+		else {
 			Assert.assertTrue("Manufactoring tracking checkbox disabled for " + deviceplan.getDeviceType(), !(ManuFactoringTrackingChkBx.isEnabled()));
 		}
 	}
 
 	public void checkGenerateCVV(DevicePlan deviceplan) {
-		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) || !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) || !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) && !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) && !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
 			Assert.assertTrue("Generate CVV/CVC checkbox is enabled", GenerateCvvChkBx.isEnabled());
 		} else {
-			Assert.assertTrue("Generate CVV/CVC checkbox is disabled for " + deviceplan.getDeviceType(), GenerateCvvChkBx.isEnabled());
+			Assert.assertTrue("Generate CVV/CVC checkbox is disabled for " + deviceplan.getDeviceType(), !GenerateCvvChkBx.isEnabled());
 		}
 	}
 
 	public void checkGenerateCVV2(DevicePlan deviceplan) {
-		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) || !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) || !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) && !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) && !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
 			Assert.assertTrue("Generate CVV2/CVC2 checkbox is enabled", GenerateCvv2ChkBx.isEnabled());
 		} else {
-			Assert.assertTrue("Generate CVV2/CVC2 checkbox is disabled for " + deviceplan.getDeviceType(), GenerateCvv2ChkBx.isEnabled());
+			Assert.assertTrue("Generate CVV2/CVC2 checkbox is disabled for " + deviceplan.getDeviceType(), !GenerateCvv2ChkBx.isEnabled());
 		}
 	}
 
@@ -534,11 +551,11 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectJoiningMembershipFeePlan() {
-		SelectDropDownByIndex(MembershipFeePlanDDwn, 3);
+		SelectDropDownByIndex(MembershipFeePlanDDwn, 1);
 	}
 
 	public void selectTransactionLimitPlan() {
-		SelectDropDownByIndex(TransactionLimitPlanDDwn, 3);
+		SelectDropDownByIndex(TransactionLimitPlanDDwn, 1);
 	}
 
 	public void next() {
