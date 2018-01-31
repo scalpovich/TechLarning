@@ -178,17 +178,16 @@ public class DeviceRangePage extends AbstractBasePage {
 	public void selectIssuerBIN() {
 		waitForElementVisible(IssuerBINDDwn);
 		if (!MapUtils.fnGetInputDataFromMap("DMSIssuerBIN").isEmpty()) {
-			selectByVisibleText(IssuerBINDDwn, MapUtils.fnGetInputDataFromMap("DMSIssuerBIN"));
+			selectByVisibleText(IssuerBINDDwn,
+					MapUtils.fnGetInputDataFromMap("DMSIssuerBIN"));
 		} else if (!MapUtils.fnGetInputDataFromMap("SMSIssuerBIN").isEmpty()) {
-			selectByVisibleText(IssuerBINDDwn, MapUtils.fnGetInputDataFromMap("SMSIssuerBIN"));
+			selectByVisibleText(IssuerBINDDwn,
+					MapUtils.fnGetInputDataFromMap("SMSIssuerBIN"));
 		}
-		if(issuerbin.getBinType().contains("Dual"))
-		{
-		selectByVisibleText(IssuerBINDDwn,issuerbin.getIssuerBin());
-		}
-		else
-		{
-		 IssuerBINDDwn.getSelect().selectByIndex(1);
+		if (issuerbin.getBinType().contains("Dual")) {
+			selectByVisibleText(IssuerBINDDwn, issuerbin.getIssuerBin());
+		} else {
+			IssuerBINDDwn.getSelect().selectByIndex(1);
 		}
 	}
 
@@ -269,8 +268,11 @@ public class DeviceRangePage extends AbstractBasePage {
 		selectProduct(devicecreation);
 		waitForWicket(getFinder().getWebDriver());
 		selectProgram();
+		waitForWicket(getFinder().getWebDriver());
 		selectDevicePlan();
+		waitForWicket(getFinder().getWebDriver());
 		selectIssuerBIN();
+		waitForWicket(getFinder().getWebDriver());
 	    selectBranch();
 		clickAddButton();
 	}
