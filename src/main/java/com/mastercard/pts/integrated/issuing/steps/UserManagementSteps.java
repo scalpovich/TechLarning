@@ -1,4 +1,5 @@
 package com.mastercard.pts.integrated.issuing.steps;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +25,9 @@ import com.mastercard.pts.integrated.issuing.pages.cardholder.CardholderHomePage
 import com.mastercard.pts.integrated.issuing.pages.collect.CollectHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.InstitutionHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.InstitutionSelectionPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.administration.LoginPage;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
 
 import org.apache.commons.lang.RandomStringUtils;
@@ -53,13 +54,13 @@ public class UserManagementSteps {
 	private static final String BRANCH = "branch";
 
 	private static final String AGENT = "agent";
-	
+
 	private static final String NON_FUNDED_AGENCY = "nonfundedagency";
 
 	private static final String NON_FUNDED_BRANCH = "nonfundedbranch";
 
 	private static final String NON_FUNDED_AGENT = "nonfundedagent";
-	
+
 	private static final String USER_INSTITUTION_NON_DEFAULT = "USER_INSTITUTION_NON_DEFAULT";
 
 	@Autowired
@@ -73,10 +74,10 @@ public class UserManagementSteps {
 
 	@Autowired
 	private KeyValueProvider keyValueProvider;
-	
+
 	@Autowired
 	private TestContext context;
-	
+
 	@Autowired
 	private DataProvider provider;
 
@@ -86,18 +87,18 @@ public class UserManagementSteps {
 
 	@When("user sign out from $type portal")
 	@Given("user sign out from $type portal")
-	public void givenUserSignOutFromPortal(String type){
-		if(CUSTOMER.equalsIgnoreCase(type))
+	public void givenUserSignOutFromPortal(String type) {
+		if (CUSTOMER.equalsIgnoreCase(type))
 			loginWorkflow.signOutCustomer();
-		if(AGENT.equalsIgnoreCase(type))
+		if (AGENT.equalsIgnoreCase(type))
 			loginWorkflow.signOutAgent();
 	}
 
 	@Then("user sign out from $type portal")
-	public void thenUserSignOutFromPortal(String type){
-		if(CUSTOMER.equalsIgnoreCase(type))
+	public void thenUserSignOutFromPortal(String type) {
+		if (CUSTOMER.equalsIgnoreCase(type))
 			loginWorkflow.signOutCustomer();
-		if(AGENT.equalsIgnoreCase(type))
+		if (AGENT.equalsIgnoreCase(type))
 			loginWorkflow.signOutAgent();
 	}
 
@@ -121,6 +122,7 @@ public class UserManagementSteps {
 	public void givenUserIsLoggedInNonDefaultInstitution() {
 		Portal loginPortal = environment.getPortalByType(Portal.TYPE_CUSTOMER);
 		userDefaultInstitution = keyValueProvider.getString(USER_INSTITUTION_NON_DEFAULT);
+		MiscUtils.reportToConsole("Another Institution = " + userDefaultInstitution);
 		loginWorkflow.logInInstitution(loginPortal, userDefaultInstitution);
 	}
 
@@ -130,10 +132,8 @@ public class UserManagementSteps {
 		Portal agentPortal = environment.getPortalByType(Portal.TYPE_AGENT);
 		loginWorkflow.openLoginPageForPortal(agentPortal);
 		roleBasedLogin(userType, agentPortal);
-		pageFactory.getPage(AgentHomePage.class)
-		.switchToWindow().waitUntilIsLoaded();
+		pageFactory.getPage(AgentHomePage.class).switchToWindow().waitUntilIsLoaded();
 	}
-
 
 	@Given("user is logged in customer portal as admin user in processing institution")
 	@When("user is logged in customer portal as admin user in processing institution")
@@ -143,18 +143,17 @@ public class UserManagementSteps {
 		loginWorkflow.logInInstitutionAsAdmin(csrPortal, userDefaultInstitution);
 	}
 
-	@Given("user logs in with valid credentials")
 	@When("user logs in with valid credentials")
 	public void whenUserLogsInWithValidCredentials() {
 		loginWorkflow.login(portal.getUserName(), portal.getPassword());
 	}
-	
+
 	@Given("user logs in with valid login details")
-	public void loginWithValidLoginDetails(){
+	public void loginWithValidLoginDetails() {
 		Device device = context.get(ContextConstants.DEVICE);
 		loginWorkflow.login(device.getClientCode(), device.getClientCode());
 	}
-	
+
 	@When("user logs in with valid credentials as $userType user")
 	public void whenUserLogsInWithValidCredentialsAsUsertTypeUser(String userType) {
 		Portal agentPortal = environment.getPortalByType(Portal.TYPE_AGENT);
@@ -165,23 +164,23 @@ public class UserManagementSteps {
 	private void roleBasedLogin(String userType, Portal agentPortal) {
 		if (ADMIN.equalsIgnoreCase(userType))
 			loginWorkflow.login(agentPortal.getAdminUserName(), agentPortal.getAdminPassword());
-		else if(AGENCY.equalsIgnoreCase(userType))
+		else if (AGENCY.equalsIgnoreCase(userType))
 			loginWorkflow.login(agentPortal.getAgencyUserName(), agentPortal.getPassword());
-		else if(BRANCH.equalsIgnoreCase(userType))
+		else if (BRANCH.equalsIgnoreCase(userType))
 			loginWorkflow.login(agentPortal.getBranchUserName(), agentPortal.getPassword());
-		else if(AGENT.equalsIgnoreCase(userType))
+		else if (AGENT.equalsIgnoreCase(userType))
 			loginWorkflow.login(agentPortal.getAgentUserName(), agentPortal.getPassword());
-		else if(NON_FUNDED_AGENCY.equalsIgnoreCase(userType))
+		else if (NON_FUNDED_AGENCY.equalsIgnoreCase(userType))
 			loginWorkflow.login(agentPortal.getNonfundedAgencyUserName(), agentPortal.getPassword());
-		else if(NON_FUNDED_BRANCH.equalsIgnoreCase(userType))
+		else if (NON_FUNDED_BRANCH.equalsIgnoreCase(userType))
 			loginWorkflow.login(agentPortal.getNonfundedBranchUserName(), agentPortal.getPassword());
-		else if(NON_FUNDED_AGENT.equalsIgnoreCase(userType))
+		else if (NON_FUNDED_AGENT.equalsIgnoreCase(userType))
 			loginWorkflow.login(agentPortal.getNonfundedAgentUserName(), agentPortal.getPassword());
 	}
 
 	@When("user logs in with incorrect password")
 	public void whenUserLogsInWithIncorrectPassword() {
-		loginWorkflow.login(portal.getUserName()+ RandomStringUtils.randomAlphabetic(2), INCORRECT_PASSCODE);
+		loginWorkflow.login(portal.getUserName() + RandomStringUtils.randomAlphabetic(2), INCORRECT_PASSCODE);
 	}
 
 	@When("user logs in with incorrect password as $userType user")
@@ -189,13 +188,13 @@ public class UserManagementSteps {
 		Portal agentPortal = environment.getPortalByType(Portal.TYPE_AGENT);
 		loginWorkflow.openLoginPageForPortal(agentPortal);
 		if (ADMIN.equalsIgnoreCase(userType))
-			loginWorkflow.login(agentPortal.getAdminUserName()+ CustomUtils.randomString(2), INCORRECT_PASSCODE);
-		else if(AGENCY.equalsIgnoreCase(userType))
-			loginWorkflow.login(agentPortal.getAgencyUserName()+ CustomUtils.randomString(2), INCORRECT_PASSCODE);
-		else if(BRANCH.equalsIgnoreCase(userType))
-			loginWorkflow.login(agentPortal.getBranchUserName()+ CustomUtils.randomString(2), INCORRECT_PASSCODE);
-		else if(AGENT.equalsIgnoreCase(userType))
-			loginWorkflow.login(agentPortal.getAgentUserName()+ CustomUtils.randomString(2), INCORRECT_PASSCODE);
+			loginWorkflow.login(agentPortal.getAdminUserName() + CustomUtils.randomString(2), INCORRECT_PASSCODE);
+		else if (AGENCY.equalsIgnoreCase(userType))
+			loginWorkflow.login(agentPortal.getAgencyUserName() + CustomUtils.randomString(2), INCORRECT_PASSCODE);
+		else if (BRANCH.equalsIgnoreCase(userType))
+			loginWorkflow.login(agentPortal.getBranchUserName() + CustomUtils.randomString(2), INCORRECT_PASSCODE);
+		else if (AGENT.equalsIgnoreCase(userType))
+			loginWorkflow.login(agentPortal.getAgentUserName() + CustomUtils.randomString(2), INCORRECT_PASSCODE);
 	}
 
 	@When("user confirms selection of institution")
@@ -205,7 +204,7 @@ public class UserManagementSteps {
 	}
 
 	@When("user is at the home tab")
-	public void userIsAtTheHomeTab(){
+	public void userIsAtTheHomeTab() {
 		pageFactory.getPage(InstitutionHomePage.class).waitUntilIsLoaded();
 	}
 
@@ -217,14 +216,12 @@ public class UserManagementSteps {
 	@When("user is logged into cardholder portal successfully")
 	@Then("user is logged into cardholder portal successfully")
 	public void thenUserIsLoggedIntoCardholderPortalSuccessfully() {
-		pageFactory.getPage(CardholderHomePage.class)
-		.switchToWindow().waitUntilIsLoaded();
+		pageFactory.getPage(CardholderHomePage.class).switchToWindow().waitUntilIsLoaded();
 	}
 
 	@Then("user is logged into agent portal successfully")
 	public void thenUserIsLoggedIntoAgentPortalSuccessfully() {
-		pageFactory.getPage(AgentHomePage.class)
-		.switchToWindow().waitUntilIsLoaded();
+		pageFactory.getPage(AgentHomePage.class).switchToWindow().waitUntilIsLoaded();
 	}
 
 	@Then("user sees message that user name or password is incorrect on agent portal")
@@ -232,7 +229,13 @@ public class UserManagementSteps {
 		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
 		String loginErrorMessage = loginPage.getErrorMessage();
 		Assert.assertTrue("Incorrect login error message or Login is Successful", !loginErrorMessage.isEmpty());
-		Assert.assertEquals("Incorrect login error message",LoginPage.AUTHENTIFICATION_FAILED, loginErrorMessage); //NOSONAR: isPresent() is checked in assertTrue statement
+		Assert.assertEquals("Incorrect login error message", LoginPage.AUTHENTIFICATION_FAILED, loginErrorMessage); // NOSONAR:
+																													// isPresent()
+																													// is
+																													// checked
+																													// in
+																													// assertTrue
+																													// statement
 	}
 
 	@When("user is logged into collect portal successfully")
@@ -246,7 +249,13 @@ public class UserManagementSteps {
 		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
 		String loginErrorMessage = loginPage.getErrorMessage();
 		Assert.assertTrue("Incorrect login error message or Login is Successful", !loginErrorMessage.isEmpty());
-		Assert.assertEquals("Incorrect login error message", LoginPage.AUTHENTIFICATION_FAILED, loginErrorMessage); //NOSONAR: isPresent() is checked in assertTrue statement
+		Assert.assertEquals("Incorrect login error message", LoginPage.AUTHENTIFICATION_FAILED, loginErrorMessage); // NOSONAR:
+																													// isPresent()
+																													// is
+																													// checked
+																													// in
+																													// assertTrue
+																													// statement
 	}
 
 	@Then("user sees message that user name or password is incorrect for collect portal")
@@ -254,15 +263,23 @@ public class UserManagementSteps {
 		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
 		String loginErrorMessage = loginPage.getErrorMessage();
 		Assert.assertTrue("Incorrect login error message or Login is Successful", !loginErrorMessage.isEmpty());
-		Assert.assertEquals("Incorrect login error message", LoginPage.AUTHENTIFICATION_FAILED_COLLECT, loginErrorMessage); //NOSONAR: isPresent() is checked in assertTrue statement 
+		Assert.assertEquals("Incorrect login error message", LoginPage.AUTHENTIFICATION_FAILED_COLLECT, loginErrorMessage); // NOSONAR:
+																															// isPresent()
+																															// is
+																															// checked
+																															// in
+																															// assertTrue
+																															// statement
 	}
+
 	@Then("user sees message that user name or password is incorrect for cardholder portal")
 	public void thenUserSeesMessageThatUserNameOrPasswordIsIncorrectForCardholderPortal() {
 		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
 		String loginErrorMessage = loginPage.getErrorMessageCollect();
-		Assert.assertTrue("login error message found",!loginErrorMessage.isEmpty());
-		Assert.assertEquals("Incorrect login error message",LoginPage.AUTHENTIFICATION_FAILED_CARDHOLDER, loginErrorMessage);
+		Assert.assertTrue("login error message found", !loginErrorMessage.isEmpty());
+		Assert.assertEquals("Incorrect login error message", LoginPage.AUTHENTIFICATION_FAILED_CARDHOLDER, loginErrorMessage);
 	}
+
 	@Then("list of available institutions is displayed")
 	public void thenListOfAvailableInstitutionsIsDisplayed() {
 		InstitutionSelectionPage page = pageFactory.getPage(InstitutionSelectionPage.class);

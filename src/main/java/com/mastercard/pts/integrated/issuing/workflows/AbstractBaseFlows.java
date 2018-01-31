@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.ApproveorRejectPage;
+import com.mastercard.pts.integrated.issuing.pages.cardholder.transactions.MastercardMoneySendPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.BillingCyclePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CloseBatchPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.InstitutionSelectionPage;
@@ -268,6 +269,10 @@ public class AbstractBaseFlows extends AbstractBasePage {
 	
 	@Autowired
 	public CardHolderPortalMenuConfigWorkFlow chpMenuConfig;
+	
+	@Autowired
+	public MastercardMoneySendPage mastercardMoneySendPage;
+	
 	
 	
 	public void selectInstitute() {
