@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for prepaid emv retail general purpose card
 
 Meta:
-@StoryName p_emv_retail_general
+@StoryName p_emv_retail_general_ASI
 @ASI_EMV
 
 Scenario: Set up prepaid emv retail general purpose card
