@@ -177,7 +177,8 @@ public class DateUtils {
 	}
 	
 	public String getDateDDMMFormat() {
-		return getDateMMDDFormat().substring(0, 2)+getDateMMDDFormat().substring(2, 3);
+		
+		return getDateMMDDFormat().substring(2, 4)+getDateMMDDFormat().substring(0, 2);
 	}
 
 	public void datePicker(JFrame parent)// create constructor

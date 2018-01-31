@@ -2,8 +2,6 @@ package com.mastercard.pts.integrated.issuing.utils;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,22 +15,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Throwables;
-import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 
 @Component
 public class PDFUtils {
-	@Autowired
 	private static final Logger logger = LoggerFactory.getLogger(PDFUtils.class);
 
+	DateUtils dateutils;
 	public PDFUtils() {
 
 	}
-	@Autowired
-	DateUtils dateutil;
-
 	public static String getContent(String pdfPath, String key) {
 		String value = "";
 		String pageContent = "";
@@ -99,10 +92,11 @@ public class PDFUtils {
 	}
 
 	public PdfReader manipulatePdf(String src) {
+		dateutils=new DateUtils();
 		PdfReader.unethicalreading = true;
 		PdfReader reader = null;
 		try {
-			reader = new PdfReader(src, (ConstantData.AUTHORIZATION_REPORT_FILE_KEY+dateutil.getDateDDMMFormat()).getBytes());
+			reader = new PdfReader(src, (ConstantData.AUTHORIZATION_REPORT_FILE_KEY+dateutils.getDateDDMMFormat()).getBytes());
 		}  catch (Exception e) {
 			logger.info("Document Exception {}", e);
 		}
