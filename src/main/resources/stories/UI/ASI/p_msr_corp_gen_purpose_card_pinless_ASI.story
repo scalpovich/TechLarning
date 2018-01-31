@@ -6,11 +6,12 @@ As an issuer
 I want to create a prepaid emv corporate general purpose card and test various transactions
 
 Meta:
-@StoryName p_emv_corp_general_purpose
+@StoryName p_msr_corp_general_purpose
+@ASI
 
-Scenario: Transaction - prepaid emv corporate general purpose card
+Scenario: Transaction - prepaid msr corporate general purpose card - MMSR Authorization transaction
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card without pin
+And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client
 And user sign out from customer portal
 Given user is logged in institution
@@ -22,10 +23,11 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
+Then user sign out from customer portal
+Given connection to MAS is established
+When perform an ASI MAS transaction
+Then MAS test results are verified
+And MAS simulator is closed
+And user is logged in institution
+And search Account Status authorization and verify 085-Successful status
 And user sign out from customer portal
-
-Scenario: MMS - CHP
-Given user is on login page of cardholder portal
-Then cardholder signup with valid details
-When fund transfer through MasterCard Money Send
-Then verify MasterCard Money send fund transfer status

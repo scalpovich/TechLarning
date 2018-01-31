@@ -28,5 +28,7 @@ public class ContextConstants {
 	
 	public static final String INSTITUTION ="INSTITUTION"; 
 	
+	public static final String REMITTANCE ="REMITTANCE"; 
+	
 	private ContextConstants() {}
 }
