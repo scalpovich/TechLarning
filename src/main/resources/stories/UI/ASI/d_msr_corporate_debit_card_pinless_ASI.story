@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for debit MSR retail debit card
 
 Meta:
-@StoryName d_msr_corp
+@StoryName d_msr_corp_ASI
 @MMSR
 
 Scenario: Set up program for debit emv retail debit card
