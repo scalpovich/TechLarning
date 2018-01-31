@@ -51,7 +51,6 @@ public class WalletPlanSteps {
 		Assert.assertNotNull(walletPlan);
 		plan.setOpenloopWalletPlan(walletPlan);
 		context.put(ContextConstants.OPEN_WALLET, walletPlan);
-
 	}
 
 	@When("user creates a Closed loop wallet plan of $walletType type for program $Programtype for $product")
@@ -71,6 +70,7 @@ public class WalletPlanSteps {
 		if (walletType.contains(WalletType.WHITELISTEDMERCHANT_WALLET)) {
 			walletPlan = walletplanflows.createWhitelistedMerchantWalletPlan(plan);
 		}
+		plan.setWalletPlan(walletPlan);
 		Assert.assertNotNull(walletPlan);
 		plan.setClosedloopWalletPlan(walletPlan);
 		context.put(ContextConstants.CLOSED_WALLET, walletPlan);
@@ -85,7 +85,7 @@ public class WalletPlanSteps {
 
 	@Then("wallet plan should get created successfully")
 	public void verifySurchargePlan() {
-		Assert.assertEquals(ConstantData.RECORD_ADDED_SUCCESSFULLY,walletplanflows.getFeedbackText());
+		Assert.assertEquals(ConstantData.RECORD_ADDED_SUCCESSFULLY, walletplanflows.getFeedbackText());
 		Assert.assertTrue(walletplanflows.isRecordFoundInTable(plan));
 	}
 
