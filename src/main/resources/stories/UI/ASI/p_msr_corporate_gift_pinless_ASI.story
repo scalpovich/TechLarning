@@ -1,33 +1,33 @@
-prepaid msr retail general purpose card authorization PINLESS
+prepaid MSR corporate gift card without PIN
 
 Narrative:
-In order to check transactions on prepaid msr retail general purpose card
+In order to provide a corporate client various scenarios
 As an issuer
-I want to authorize transactions for prepaid msr retail general purpose card
+I want to create a prepaid MSR corporate gift card and test various scenarios
 
 Meta:
-@StoryName p_msr_retail_gen_purpose
-@MMSR
-
-Scenario: Set up prepaid msr retail general purpose card
+@StoryName p_msr_corp_gift
+@ASI
+Scenario: Setup - prepaid MSR corporate gift card without PIN
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client
+And user sign out from customer portal
 
-Scenario: prepaid msr retail general purpose card device production
+Scenario: Device production - prepaid MSR corporate gift card without PIN
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 Then device has "normal" status
-Then user activates device through helpdesk
+When user activates device through helpdesk
 Then user sign out from customer portal
 
-Scenario: Perform MMSR-RetailGeneralPurposeCard Authorization transaction
+Scenario: Perform MMSR-CORPORATE_GiftCard Authorization transaction
 Given connection to MAS is established
-When perform an MMSR MAS transaction
+When perform an ASI MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
-And search MasterCard MoneySend authorization and verify 000-Successful status
+And search Account Status authorization and verify 085-Successful status
 And user sign out from customer portal
