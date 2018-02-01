@@ -114,6 +114,8 @@ public class ProgramSetupSteps {
 	
 	private static final String ISSUER_BIN_FOR_DEVICE2 = "ISSUER_BIN_FOR_DEVICE2";
 	
+	private static final String INTERCHANGE = "INTERCHANGE";
+	
 	@When("prepaid $deviceType device is available with balance amount")
 	@Given("prepaid $deviceType device is available with balance amount")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
@@ -282,6 +284,28 @@ public class ProgramSetupSteps {
 		// composite step
 	}
 
+
+	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin for specific interface")
+	@Composite(steps = { "When User fills Dedupe Plan", "When User fills MCC Rules for debit product", "When User fills Transaction Plan for debit product",
+			"When User fills Transaction Limit Plan for debit product", "When User fills Document Checklist Screen for debit product",
+			"When User fills Device Joining and Membership Fee Plan for debit product", "When User fills Device Event Based Fee Plan for debit product",
+			"When User fills Device Plan for \"debit\" \"<deviceType>\" card with no pin for an interface", "When User fills Wallet Plan for debit product", "When User fills Program section for debit product for an interface",
+			"When User fills Business Mandatory Fields Screen for debit product", "When User fills Device Range section for debit product for an interface" })
+	public void givenDeviceRangeForDebitProgramWithDevicePlanWithOutPinForSpecificInterface(String deviceType) {
+		// composite step
+	}
+
+	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin for non-default institution")
+	@Composite(steps = { "When User fills Dedupe Plan", "When User fills MCC Rules for debit product", "When User fills Transaction Plan for debit product",
+			"When User fills Transaction Limit Plan for debit product", "When User fills Document Checklist Screen for debit product",
+			"When User fills Device Joining and Membership Fee Plan for debit product", "When User fills Device Event Based Fee Plan for debit product",
+			"When User fills Device Plan for \"debit\" \"<deviceType>\" card with no pin for non-default institution", "When User fills Wallet Plan for debit product", "When User fills Program section for debit product",
+			"When User fills Business Mandatory Fields Screen for debit product", "When User fills Device Range section for debit product for non-default institution" })
+	public void givenDeviceRangeForProgramWithDevicePlanforDebitWithoutPinForNonDefaultInstitution(String deviceType) {
+		// composite step
+	}
+
+	
 	@Given("$deviceType card has gone through pre-production, production and pin generation")
 	@Composite(steps = { "When user creates new device of $deviceType type for new client", "When processes pre-production batch for $deviceType",
 			"When processes device production batch for $deviceType", "When processes pin generation batch for $deviceType" })
@@ -326,17 +350,6 @@ public class ProgramSetupSteps {
 		// composite step
 	}
 
-	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin for non-default institution")
-	@Composite(steps = { "When User fills Statement Message Plan for debit product", "When User fills Marketing Message Plan for debit product", "When User fills debit Statement Plan",
-			"When User fills MCC Rules for debit product", "When User fills Dedupe Plan", "When User fills Transaction Plan for debit product",
-			"When User fills Transaction Limit Plan for debit product", "When User fills Document Checklist Screen for debit product",
-			"When User fills Device Joining and Membership Fee Plan for debit product", "When User fills Device Event Based Fee Plan for debit product",
-			"When User fills Device Plan for \"debit\" \"<deviceType>\" card with no pin for non-default institution", "When User fills Wallet Plan for debit product", "When User fills Program section for debit product",
-			"When User fills Business Mandatory Fields Screen for debit product", "When User fills Device Range section for debit product for non-default institution" })
-	public void givenDeviceRangeForProgramWithDevicePlanforDebitWithoutPinForNonDefaultInstitution(String deviceType) {
-		// composite step
-	}
-
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin for an interface")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
 			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
@@ -365,6 +378,17 @@ public class ProgramSetupSteps {
 			"When User fills Business Mandatory Fields Screen for prepaid product", 
 			"When User fills Device Range section for prepaid product for an interface" })
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidAlongWithActivationCodeWithoutPinForAnInterface(String deviceType) {
+		// composite step
+	}
+
+	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin for specific interface")
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin for an interface", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product for an interface",
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product for an interface" })
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinForSpecificInterface(String deviceType) {
 		// composite step
 	}
 	
@@ -511,6 +535,35 @@ public class ProgramSetupSteps {
 		// setting a flag through setter to figure out if the card is pinless card or not. This is used in TransactionSteps to set ExpiryDate incase of PinLess Card
 		if ("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
 			devicePlan.setIsPinLess("YES");
+	}
+
+	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card with no pin for an interface")
+	public void whenUserFillsDevicePlanForCrddWithNoPinForAnInterface(String productType, String deviceType) {
+		setPinRequiredToFalse();
+		whenUserFillsDevicePlanForCardForanInterface(productType, deviceType);
+	}
+
+	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card for an interface")
+	public void whenUserFillsDevicePlanForCardForanInterface(String productType, String deviceType) {
+		if (deviceType.toLowerCase().contains("virtual")) {
+			setPinRequiredToFalse();
+		}
+		devicePlan = DevicePlan.createWithProvider(provider);
+		devicePlan.setProductType(ProductType.fromShortName(productType));
+		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
+		devicePlan.setAssociation(provider.getString(INTERCHANGE));
+		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+
+		// setting a flag through setter to figure out if the card is pinless card or not. This is used in TransactionSteps to set ExpiryDate incase of PinLess Card
+		if ("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
+			devicePlan.setIsPinLess("YES");
+
+		programSetupWorkflow.createDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 
 	@When("User fills Prepaid Statement Plan")
