@@ -46,8 +46,7 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.Tran
 
 @Component
 public class TransactionSteps {
-	private static final Logger logger = LoggerFactory
-			.getLogger(TransactionSteps.class);
+	private static final Logger logger = LoggerFactory.getLogger(TransactionSteps.class);
 
 	private static Boolean sameCard = false;
 
@@ -101,15 +100,12 @@ public class TransactionSteps {
 	public void givenTransactionIsExecuted(String transaction) {
 		String temp = transaction;
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
-		MiscUtils.reportToConsole("Pin Required value : "
-				+ context.get(ConstantData.IS_PIN_REQUIRED));
-		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED)
-				.toString())) {
-			/** ECOMM are pinless tranasactions */
+		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));
+		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
+			// ECOMM are pinless tranasactions
 			if (!transaction.toLowerCase().contains("ecom"))
 				temp = transaction + "_PIN";
 		}
-
 		performOperationOnSamecard(false);
 		givenOptimizedTransactionIsExecuted(temp);
 	}
@@ -119,12 +115,10 @@ public class TransactionSteps {
 	@Given("perform an $transaction MAS transaction on the same card")
 	public void givenTransactionIsExecutedOnTheSameCard(String transaction) {
 		String temp = transaction;
-		/** we need to use _PIN Profile from MAS test data template */
-		MiscUtils.reportToConsole("Pin Required value : "
-				+ context.get(ConstantData.IS_PIN_REQUIRED));
-		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED)
-				.toString())) {
-			/** ECOMM are pinless tranasactions */
+		//we need to use _PIN Profile from MAS test data template */
+		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));
+		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
+			//ECOMM are pinless tranasactions */
 			if (!transaction.toLowerCase().contains("ecom"))
 				temp = transaction + "_PIN";
 		}
@@ -136,25 +130,28 @@ public class TransactionSteps {
 		sameCard = val;
 	}
 
+	@When("user performs an optimized $transaction MDFS transaction")
+	@Given("user performs an optimized $transaction MDFS transaction")
+	public void givenOptimizedTransactionIsExecutedForMdfs(String transaction) {
+		givenOptimizedTransactionIsExecuted(transaction);
+	}
+
 	@When("user performs an optimized $transaction MAS transaction")
 	@Given("user performs an optimized $transaction MAS transaction")
 	public void givenOptimizedTransactionIsExecuted(String transaction) {
 		transactionWorkflow.browserMinimize(); // minimizing browser for smooth
-												// operation of MAS/MDFS
-		// Storing transaction name in context to use it at runtime
+		// operation of MAS/MDFS ... Storing transaction name in context to use it at runtime
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		Transaction transactionData = generateMasTestDataForTransaction(transaction);
 
-		transactionWorkflow.performOptimizedMasTransaction(transaction,
-				transactionData, sameCard);
+		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
 		transactionWorkflow.browserMaximize(); // restoring browser after
-												// operation of MAS/MDFS
+		// operation of MAS/MDFS
 	}
 
 	@When("user performs generate TestData for an optimized $transaction MAS transaction")
 	@Given("user performs generate TestData for an optimized $transaction MAS transaction")
-	public void givenGenerateTestDataForOptimizedTransactionIsExecuted(
-			String transaction) {
+	public void givenGenerateTestDataForOptimizedTransactionIsExecuted(String transaction) {
 		// Storing transaction name in context to use it at runtime
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		generateMasTestDataForTransaction(transaction);
@@ -162,106 +159,54 @@ public class TransactionSteps {
 
 	private Transaction generateMasTestDataForTransaction(String transaction) {
 		Device device = context.get(ContextConstants.DEVICE);
-		/**
-		 * this line of code reads data from the
-		 * "AuthorizationTransaction_DataDriven.xls" at
-		 * \\Isser-automation-epam\src\main\resources\config\Data folder as the
-		 * "Transaction Templates" sheet has the template information
-		 */
-		Transaction transactionData = transactionProvider
-				.loadTransaction(transaction);
+		// this line of code reads data from the "AuthorizationTransaction_DataDriven.xls" at \\Isser-automation-epam\src\main\resources\config\Data folder as the
+		 // "Transaction Templates" sheet has the template information
+		Transaction transactionData = transactionProvider.loadTransaction(transaction);
 
 		// when data is dynamically passed when scripts run from end-2-end
 		if (device != null) {
-			/**
-			 * _____________________FOR PINLESS CARD________________ device plan
-			 * context is used to get Expiry Date incase of PinLess card
-			 */
+			// _____________________FOR PINLESS CARD________________ device plan context is used to get Expiry Date incase of PinLess card
 			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 			device.setServiceCode(devicePlan.getServiceCode());
 			if ("YES".equalsIgnoreCase(devicePlan.getIsPinLess())) {
 				device.setExpirationDate(devicePlan.getExpiryDate());
 				device.setPinNumberForTransaction("PINLESS");
-
 			}
-			/**
-			 * _____________________FOR PINLESS CARD________________
-			 * __________________CURRENCY VAL FROM EXCEL _________ fetching
-			 * currency value from excel
-			 */
-			Transaction tempData = transactionProvider
-					.createWithProvider(provider);
-			/**
-			 * this line of code is temporary as this will only work for Single
-			 * wallet currency for multi wallet, we may have to set other setter
-			 * --> setIssuerCountryCode, setIssuerCurrencyCode,
-			 * setCardHolderBillingCurrency
-			 */
+			// ____________FOR PINLESS CARD__________CURRENCY VAL FROM EXCEL _________ fetching currency value from excel
+			Transaction tempData = transactionProvider.createWithProvider(provider);
+			// this line of code is temporary as this will only work for Single wallet currency for multi wallet, we may have to set other setter
+			// --> setIssuerCountryCode, setIssuerCurrencyCode, setCardHolderBillingCurrency
 			device.setCurrency(tempData.getCurrency());
 			if ("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
 				device.setExpirationDate(devicePlan.getExpiryDate());
 			}
-			/** __________________CURRENCY VAL FROM EXCEL _________ */
-
-			/** This is a Single Wallet, Single Currency INDIA card */
+			//__________________CURRENCY VAL FROM EXCEL _________ This is a Single Wallet, Single Currency INDIA card */
 			settingValuesDynamicallyFromDeviceContext(device, transactionData);
-			/**
-			 * setting values of Card Data Element (Card Profile) which are
-			 * placed in the "Transaction Templates" sheet
-			 */
+			//setting values of Card Data Element (Card Profile) which are placed in the "Transaction Templates" sheet
 			setCardDataDynamically(device, transactionData);
-			/**
-			 * setting values of Data Element which are placed in the
-			 * "Transaction Templates" sheet
-			 */
+			//setting values of Data Element which are placed in the "Transaction Templates" sheet
 			setDeElementsDynamically(device, transactionData, transaction);
 
 		}
-		/**
-		 * else block for when scripts are running from excel -
-		 * AuthorizationTransaction_DataDriven alone
-		 */
+		//else block for when scripts are running from excel - AuthorizationTransaction_DataDriven alone
 		else {
-			transactionData.setIssuerCountryCode(transactionWorkflow
-					.getCurrencyToBeUsed(transactionData.getDeKeyValuePair()
-							.get("049")));
-
-			transactionData.setIssuerCurrencyCode(transactionWorkflow
-					.getCurrencyToBeUsed(transactionData.getDeKeyValuePair()
-							.get("049")));
-			transactionData.setCardHolderBillingCurrency(transactionWorkflow
-					.getCurrencyToBeUsed(transactionData.getDeKeyValuePair()
-							.get("061.13")));
+			transactionData.setIssuerCountryCode(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair().get("049")));
+			transactionData.setIssuerCurrencyCode(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair()	.get("049")));
+			transactionData.setCardHolderBillingCurrency(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair().get("061.13")));
 		}
-		/**
-		 * creating & import card profile to temp location ex:
-		 * C:\Users\e071200\AppData
-		 * \Local\Temp\20171013_IssuingTests_7323176887769829413
-		 */
-		transactionData.setCardProfile(transactionFactory
-				.createCsvCardProfile(transactionData));
-		/**
-		 * creating & import testcase/transaction file to temp location ex:
-		 * C:\Users
-		 * \e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413
-		 */
-		transactionData.setTestCase(transactionFactory
-				.createCsvTesCase(transactionData));
+		//creating & import card profile to temp location ex:C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413
+		transactionData.setCardProfile(transactionFactory.createCsvCardProfile(transactionData));
+		 // creating & import testcase/transaction file to temp location ex: * C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413	
+		transactionData.setTestCase(transactionFactory.createCsvTesCase(transactionData));
 		return transactionData;
 	}
 
-	private void setDeElementsDynamically(Device device,
-			Transaction transactionData, String transaction) {
+	private void setDeElementsDynamically(Device device, Transaction transactionData, String transaction) {
 
-		if (!"pinless".equalsIgnoreCase(device.getPinNumberForTransaction())
-				&& !transactionWorkflow.isContains(transaction,
-						"ECOMM_PURCHASE")) // ecomm transactions cannot have a
-											// PIN
-			transactionData.setDeKeyValuePairDynamic("052",
-					device.getPinNumberForTransaction());
+		if (!"pinless".equalsIgnoreCase(device.getPinNumberForTransaction()) && !transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE")) // ecomm transactions cannot have a PIN
+			transactionData.setDeKeyValuePairDynamic("052", device.getPinNumberForTransaction());
 		// data format is 12 digits hence leftpad with 0
-		transactionData.setDeKeyValuePairDynamic("004",
-				StringUtils.leftPad(device.getTransactionAmount(), 12, "0"));
+		transactionData.setDeKeyValuePairDynamic("004", StringUtils.leftPad(device.getTransactionAmount(), 12, "0"));
 		if (transactionWorkflow.isContains(transaction, "BALANCE_INQUIRY")) {
 			// this value is expected to be 0's for Balance Enquiry
 			transactionData.setDeKeyValuePairDynamic("004", "000000000000");
@@ -269,59 +214,37 @@ public class TransactionSteps {
 
 		// changed ECOMMERCE to ECOM
 		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE")) {
-			// for pinless card, we are not performing CVV validation as we do
-			// not know the CVV as this is fetched from embosing file on LInux
-			// box
-			transactionData.setDeKeyValuePairDynamic("048.TLV.92",
-					device.getCvv2Data()); // Transaction currency code
+			// for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInuxbox
+			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); // Transaction currency code
 		}
 		// This is a Single Wallet, Single Currency INDIA card
-		transactionData.setDeKeyValuePairDynamic("049", device.getCurrency()); // Transaction
-																				// currency
-																				// code
-		transactionData.setDeKeyValuePairDynamic("050", device.getCurrency()); // Settlement
-																				// currency
-																				// code
-		transactionData.setDeKeyValuePairDynamic("051", device.getCurrency()); // CardHolder
-																				// billing
-																				// currency
-																				// code
-		transactionData
-				.setDeKeyValuePairDynamic("061.13", device.getCurrency()); // POS
-																			// country
-																			// code
+		transactionData.setDeKeyValuePairDynamic("049", device.getCurrency()); // Transaction currency  code
+		transactionData.setDeKeyValuePairDynamic("050", device.getCurrency()); // Settlement currency  code 
+		transactionData.setDeKeyValuePairDynamic("051", device.getCurrency()); // CardHolder billing currency  code
+		transactionData.setDeKeyValuePairDynamic("061.13", device.getCurrency()); // POS country code
 	}
 
-	private void settingValuesDynamicallyFromDeviceContext(Device device,
-			Transaction transactionData) {
+	private void settingValuesDynamicallyFromDeviceContext(Device device, Transaction transactionData) {
 		transactionData.setCardNumber(device.getDeviceNumber());
 		transactionData.setExpirationYear(device.getExpirationDate());
 		transactionData.setCardSequenceNumber(device.getSequenceNumber());
-		transactionData.setPinForTransaction(device
-				.getPinNumberForTransaction());
+		transactionData.setPinForTransaction(device.getPinNumberForTransaction());
 		transactionData.setIssuerCountryCode(device.getCurrency());
 		transactionData.setIssuerCurrencyCode(device.getCurrency());
 		transactionData.setCardHolderBillingCurrency(device.getCurrency());
 	}
 
-	private void setCardDataDynamically(Device device,
-			Transaction transactionData) {
-		transactionData.setCardDataElementsDynamic("035.01",
-				device.getDeviceNumber());
-		transactionData.setCardDataElementsDynamic("035.03",
-				device.getExpirationDate());
-		transactionData.setCardDataElementsDynamic("045.02",
-				device.getDeviceNumber());
-		transactionData.setCardDataElementsDynamic("045.06",
-				device.getExpirationDate());
-		transactionData.setCardDataElementsDynamic("035.04",
-				device.getServiceCode());
+	private void setCardDataDynamically(Device device, Transaction transactionData) {
+		transactionData.setCardDataElementsDynamic("035.01", device.getDeviceNumber());
+		transactionData.setCardDataElementsDynamic("035.03", device.getExpirationDate());
+		transactionData.setCardDataElementsDynamic("045.02", device.getDeviceNumber());
+		transactionData.setCardDataElementsDynamic("045.06", device.getExpirationDate());
+		transactionData.setCardDataElementsDynamic("035.04", device.getServiceCode());
 	}
 
 	@Given("Auth file is provided for $iteration")
 	public void givenAuthFileIsProvided(String iteration) {
-		ClearingTestCase testCase = clearingTestCaseProvider
-				.loadTestCase(iteration);
+		ClearingTestCase testCase = clearingTestCaseProvider.loadTestCase(iteration);
 		authFilePath = testCase.getAuthFilePath();
 		transactionAmount = testCase.getTransactionFeeAmount();
 	}
@@ -342,10 +265,7 @@ public class TransactionSteps {
 		String[] tempName = authFileName.split(".ath");
 		authFileName = tempName[tempName.length - 1] + ".ath";
 		assertNotNull("Auth fileName is not null", authFileName);
-		authFilePath = transactionWorkflow
-				.getTempDirectoryLocationForSimulatorResults()
-				+ "\\"
-				+ authFileName;
+		authFilePath = transactionWorkflow.getTempDirectoryLocationForSimulatorResults()+ "\\"+ authFileName;
 		logger.info("authFilePath Path is ", authFilePath);
 	}
 
@@ -380,16 +300,12 @@ public class TransactionSteps {
 
 		if (testResults.contains("Validations OK")) {
 			logger.info("Expected Result :- ", testResults);
-			assertTrue("Transaction is succcessful!  - Expected Result : "
-					+ testResults, true);
+			assertTrue("Transaction is succcessful!  - Expected Result : "+ testResults, true);
 		} else if (testResults.contains("Validations Not OK")) {
-			assertFalse("Transaction failed!  -  Result : " + testResults,
-					false);
-			throw new ValidationException("Transaction failed! -  Result : "
-					+ testResults);
+			assertFalse("Transaction failed!  -  Result : " + testResults, false);
+			throw new ValidationException("Transaction failed! -  Result : "+ testResults);
 		} else {
-			logger.error("Test Results retrieved from Simulator :- ",
-					testResults);
+			logger.error("Test Results retrieved from Simulator :- ", testResults);
 			assertFalse("Transaction failed! ", false);
 			throw new ValidationException("Transaction failed!");
 		}
@@ -406,8 +322,7 @@ public class TransactionSteps {
 	@Then("PIN is retrieved successfully with data from Pin Offset File")
 	public void thenPINIsRetrievedSuccessfully() {
 		Device device = context.get(ContextConstants.DEVICE);
-		Transaction transactionData = Transaction.generateFinSimPinTestData(
-				device, finSimConfig, provider);
+		Transaction transactionData = Transaction.generateFinSimPinTestData(device, finSimConfig, provider);
 
 		String pinNumber = transactionWorkflow.getPinNumber(transactionData);
 		MiscUtils.reportToConsole("FINSim PIN Number generated : " + pinNumber);
@@ -425,15 +340,13 @@ public class TransactionSteps {
 	@Then("transaction status is \"$type\"")
 	public void thenTransactionStatusIsPresentmentMatched(String type) {
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
-		assertEquals(type,
-				transactionWorkflow.getAuthorizationStatus(arnNumber, ts));
+		assertEquals(type, transactionWorkflow.getAuthorizationStatus(arnNumber, ts));
 	}
 
 	@Then("transaction fee is correctly posted")
 	public void thenTransactionFeeIsCorrecltyPosted() {
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
-		assertEquals(transactionAmount,
-				transactionWorkflow.getFeePostingStatus(arnNumber, ts));
+		assertEquals(transactionAmount, transactionWorkflow.getFeePostingStatus(arnNumber, ts));
 	}
 
 	@Then("search with ARN in transaction screen and balance should be credited")
@@ -442,9 +355,7 @@ public class TransactionSteps {
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		rt.setArn(context.get(ConstantData.ARN_NUMBER));
 		BigDecimal actualTransactionAmount = new BigDecimal(rt.getAmount());
-		assertEquals(
-				new BigDecimal(transactionWorkflow.getFeePostingStatus(
-						rt.getArn(), ts)), actualTransactionAmount);
+		assertEquals(new BigDecimal(transactionWorkflow.getFeePostingStatus(rt.getArn(), ts)), actualTransactionAmount);
 	}
 
 	@Then("search with ARN in transaction screen and status should be Reversal [R]")
@@ -452,9 +363,7 @@ public class TransactionSteps {
 		ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		rt.setArn(context.get(ConstantData.ARN_NUMBER));
-		assertEquals(
-				transactionWorkflow.searchTransactionWithArnAndGetStatus(
-						rt.getArn(), ts), "Reversal [R]");
+		assertEquals(transactionWorkflow.searchTransactionWithArnAndGetStatus(rt.getArn(), ts), "Reversal [R]");
 	}
 
 	@Then("search with device in transaction screen and status for wallet to wallet transfer transaction")
@@ -462,30 +371,22 @@ public class TransactionSteps {
 		ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		Device device = context.get(ContextConstants.DEVICE);
-		Assert.assertTrue(
-				"successfully completed the wallet to wallet fund transfer",
-				transactionWorkflow.searchTransactionWithDeviceAndGetStatus(
-						device, ts).contains(
-						" Wallet to Wallet Transfer(Credit)"));
+		Assert.assertTrue("successfully completed the wallet to wallet fund transfer",
+				transactionWorkflow.searchTransactionWithDeviceAndGetStatus(device, ts).contains(" Wallet to Wallet Transfer(Credit)"));
 	}
 
 	@When("user performs load balance request")
 	public void whenUserPerformsLoadBalanceRequest() {
 		Device device = context.get(ContextConstants.DEVICE);
 		LoadBalanceRequest lbr = LoadBalanceRequest.getProviderData(provider);
-		String loadRequestReferenceNumber = transactionWorkflow
-				.performLoadBalanceRequestAndGetRequestReferenceNumber(device,
-						lbr);
+		String loadRequestReferenceNumber = transactionWorkflow.performLoadBalanceRequestAndGetRequestReferenceNumber(device, lbr);
 		lbr.setLoadRequestReferenceNumber(loadRequestReferenceNumber);
 		context.put("LOADBALANCEREQUEST", lbr);
 	}
 
 	@Then("load balance request is successful")
 	public void thenLoadBalanceRequestIsSuccessful() {
-		assertThat(
-				"Load Balance Request Failed",
-				transactionWorkflow.getLoadBalanceRequestSuccessMessage(),
-				containsString("Load balance request forwarded for approval with request number :"));
+		assertThat( "Load Balance Request Failed", transactionWorkflow.getLoadBalanceRequestSuccessMessage(), containsString("Load balance request forwarded for approval with request number :"));
 	}
 
 	@When("user performs load balance approve")
@@ -497,9 +398,7 @@ public class TransactionSteps {
 
 	@Then("load balance approve is successful")
 	public void thenLoadBalanceApproveIsSuccessful() {
-		assertThat("Load Balance Approve Failed",
-				transactionWorkflow.getLoadBalanceApproveSuccessMessage(),
-				containsString("approved successfully."));
+		assertThat("Load Balance Approve Failed", transactionWorkflow.getLoadBalanceApproveSuccessMessage(), containsString("approved successfully."));
 	}
 
 	@When("user initiates settlement for agency")
@@ -507,16 +406,12 @@ public class TransactionSteps {
 		Program program = context.get(ContextConstants.PROGRAM);
 		AssignPrograms details = AssignPrograms.createWithProvider(provider);
 		details.setProgramCode(program.buildDescriptionAndCode());
-		transactionWorkflow.initiateSettlementForAgency(details.getBranchId(),
-				details.getProgramCode());
+		transactionWorkflow.initiateSettlementForAgency(details.getBranchId(), details.getProgramCode());
 	}
 
 	@Then("settlement is initiated successfully")
 	public void thenSettlementIsInitiatedSuccesfully() {
-		assertThat(
-				"Settlement Initiative Failed",
-				transactionWorkflow.getSettlementInitiativeSuccessMessage(),
-				containsString("Settlement initiated successfully and Settlement Referance No :"));
+		assertThat( "Settlement Initiative Failed", transactionWorkflow.getSettlementInitiativeSuccessMessage(), containsString("Settlement initiated successfully and Settlement Referance No :"));
 	}
 
 	@When("perform an $transaction VISA transaction")
@@ -524,11 +419,8 @@ public class TransactionSteps {
 	public void givenVisaTransactionIsExecuted(String transaction) {
 		// Storing transaction name in context to use it at runtime
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
-		MiscUtils.reportToConsole("Pin Required value : "
-				+ context.get(ConstantData.IS_PIN_REQUIRED));
-
+		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));
 		performOperationOnSamecard(false);
-
 		logMessage("VISA Transaction being performed : ", transaction);
 		transactionWorkflow.performVisaTransaction(transaction);
 	}
@@ -537,8 +429,7 @@ public class TransactionSteps {
 	@Then("$tool test results are verified for $transaction")
 	public void thenVisaTestResultsAreReported(String tool, String transaction) {
 		String testResults = null;
-		String transactionName = visaTestCaseNameKeyValuePair
-				.getVisaTestCaseToSelect(transaction);
+		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseToSelect(transaction);
 		logMessage("VISA Transaction Test Case Name : ", transactionName);
 
 		testResults = transactionWorkflow.verifyVisaOutput(transactionName);
@@ -549,8 +440,7 @@ public class TransactionSteps {
 		if (transactionWorkflow.isContains(testResults, "validations is ok")) {
 			logMessage(PASS_MESSAGE, testResults);
 			assertTrue(PASS_MESSAGE + testResults, true);
-		} else if (transactionWorkflow.isContains(testResults,
-				"validations not ok")) {
+		} else if (transactionWorkflow.isContains(testResults, "validations not ok")) {
 			logger.error(FAIL_MESSAGE, testResults);
 			assertFalse(FAIL_MESSAGE + testResults, false);
 			throw new ValidationException(FAIL_MESSAGE + testResults);
@@ -570,7 +460,7 @@ public class TransactionSteps {
 	@Then("ARN is retrieved from transaction search page")
 	public void arnIsRetrievedFromTransactionSearchPage() {
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
-		Device device = context.get(ContextConstants.DEVICE);
+	  // Device device = context.get(ContextConstants.DEVICE); // comenting hte line as Device context is not used
 		// String deviceNumber = device.getDeviceNumber();
 		String deviceNumber = "5877656209771912";
 		String arn = transactionWorkflow.getARN(deviceNumber, ts);

@@ -32,7 +32,7 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 Then connection to MDFS is established
-When user performs an optimized MDFS_MSR_PIN_CHANGE MAS transaction
+When user performs an optimized MDFS_MSR_PIN_CHANGE MDFS transaction
 Then MDFS test results are verified
 When MDFS simulator is closed
 !-- Then user is logged in institution

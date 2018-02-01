@@ -12,7 +12,7 @@ Meta:
 Scenario: SMS transactions
 
 !-- Given connection to MDFS is established
-When user performs an optimized <transaction> MAS transaction
+When user performs an optimized <transaction> MDFS transaction
 Then MDFS test results are verified
 
 Examples:
