@@ -9,6 +9,7 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MoneySend;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.VisaMoneyTransfer;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.MoneyTransferWorkflow;
 
@@ -49,4 +50,23 @@ public class MoneyTransferSteps {
 	    moneyTransferWorkflow.processMaterCardMoneySendRequestFromSecondWallet(moneySend, sourceDevice); 		
 	}
 
+	@When("user raises a \"$type\" request")
+	public void whenUserRaisesVisaMoneyTransferRequest(String type){		
+		Device sourceDevice = context.get(ContextConstants.DEVICE);
+		Device beneficiaryDevice = context.get(ContextConstants.DEVICE2);
+		VisaMoneyTransfer visaMoneyTransfer = VisaMoneyTransfer.createWithProvider(provider);
+		visaMoneyTransfer.setBeneficiaryDeviceNumber(beneficiaryDevice.getDeviceNumber());
+		visaMoneyTransfer.setVmt(type);
+	    moneyTransferWorkflow.processVisaMoneyTransferRequest(visaMoneyTransfer, sourceDevice); 		
+	}
+
+	@When("user raises a \"$type\" request from second wallet")
+	public void whenUserRaisesVisaMoneyTransferRequestFromSecondWallet(String type){		
+		Device sourceDevice = context.get(ContextConstants.DEVICE);
+		Device beneficiaryDevice = context.get(ContextConstants.DEVICE2);
+		VisaMoneyTransfer visaMoneyTransfer = VisaMoneyTransfer.createWithProvider(provider);
+		visaMoneyTransfer.setBeneficiaryDeviceNumber(beneficiaryDevice.getDeviceNumber());
+		visaMoneyTransfer.setVmt(type);
+	    moneyTransferWorkflow.processVisaMoneyTransferRequestFromSecondWallet(visaMoneyTransfer, sourceDevice); 		
+	}
 }

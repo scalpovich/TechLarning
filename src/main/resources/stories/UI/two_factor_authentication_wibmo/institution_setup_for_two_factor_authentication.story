@@ -15,4 +15,5 @@ Meta:
 
 Given user is logged in customer portal as admin user in processing institution
 When user edit 121212 institution configuration and select WIBMO [002] ACS Vendor
+Given user is logged in customer portal as admin user in processing institution
 Then two factor authentication fields are enabled

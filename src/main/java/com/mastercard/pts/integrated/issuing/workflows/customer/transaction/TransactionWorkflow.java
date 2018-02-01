@@ -1038,8 +1038,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		if(SimulatorConstantsData.MDFS_LICENSE_TYPE.contains("17"))
 			name = "MDFS17";
 
-		if(name.equalsIgnoreCase("visa")) 
+		if("visa".equalsIgnoreCase(name)) {
 			disconnectAndCloseVts();
+			MiscUtils.killProcessFromTaskManager("SappLogServer.exe"); // some logger comes up.. to kill that instance.. this extra kill is used
+		}
 
 		MiscUtils.killProcessFromTaskManager("WINIUM");
 		MiscUtils.killProcessFromTaskManager(name);
@@ -1415,7 +1417,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			assertFalse("VTS connection is NOT succcessful!", false);
 			throw new ValidationException("VTS connection is NOT succcessful!");
 		}
-		winiumClickOperation("Minimize");
+		winiumClickOperation("Minimize"); // to minimize Comminication handler
+		wait(2000);
+		winiumClickOperation("Maximize"); // to Maximize Visa Test System
 	}
 
 	private void loadVisaInputFile(String transaction) {

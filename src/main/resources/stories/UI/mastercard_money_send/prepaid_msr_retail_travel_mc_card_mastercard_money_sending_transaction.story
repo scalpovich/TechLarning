@@ -6,7 +6,7 @@ As an issuer
 I want to create an magnetic stripe prepaid card and perform mastercard money send request
 
 Meta:
-@StoryName p_retail_travel_mc_mms
+@StoryName p_msr_retail_travel_mwmc
 
 Scenario: Set up prepaid msr retail travel multi currency card from another institute
 Meta:

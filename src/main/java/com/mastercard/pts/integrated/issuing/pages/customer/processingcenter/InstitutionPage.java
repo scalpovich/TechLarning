@@ -334,7 +334,12 @@ public class InstitutionPage extends AbstractBasePage{
 	}
 	public boolean isSMSServiceProviderAndMPINAreEnabled()
 	{
-		return issuerSmsProviderCbx.isEnabled() && mpinEnabledCbx.isEnabled();
+		runWithinPopup(
+				"Edit Institution",
+				() -> {
+					ascFlag=issuerSmsProviderCbx.isEnabled() && mpinEnabledCbx.isEnabled();
+				});	
+		return ascFlag;
 	}
 
 }
