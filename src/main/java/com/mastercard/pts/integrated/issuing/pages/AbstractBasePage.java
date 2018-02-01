@@ -598,8 +598,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 				break;
 			}
 		}
-		selectFirstRecord();
-		clickProcessSelectedButton();
 	}
 	
 	protected void waitAndSearchForRecordToExist() {
