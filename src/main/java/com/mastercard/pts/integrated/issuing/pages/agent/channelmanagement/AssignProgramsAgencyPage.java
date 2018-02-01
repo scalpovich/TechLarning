@@ -21,8 +21,8 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = ChannelManagementNav.TAB_CHANNEL_MANAGEMENT, treeMenuItems = { ChannelManagementNav.L1_AGENCY, ChannelManagementNav.L2_AGENCY_ENTITY,
-		ChannelManagementNav.L3_AGENCY_ASSIGN_PROGRAMS })
+@Navigation(tabTitle = ChannelManagementNav.TAB_CHANNEL_MANAGEMENT, treeMenuItems = { ChannelManagementNav.L1_AGENCY,
+		ChannelManagementNav.L2_AGENCY_ENTITY, ChannelManagementNav.L3_AGENCY_ASSIGN_PROGRAMS })
 public class AssignProgramsAgencyPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(AssignProgramsAgencyPage.class);
 
@@ -31,7 +31,7 @@ public class AssignProgramsAgencyPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Search']")
 	private MCWebElement searchBtn;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "div .Title")
 	private MCWebElement masterDetailContentTitle;
 
@@ -62,17 +62,17 @@ public class AssignProgramsAgencyPage extends AbstractBasePage {
 
 	@Override
 	public void clickSearchButton() {
-		new WebDriverWait(driver(), timeoutInSec).until(
-				WebElementUtils.elementToBeClickable(searchBtn)).click();
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(searchBtn)).click();
 	}
-	
+
 	public String getMasterDetailContentTitleText() {
 		logger.info("Corporate User View Edit Master Detail Tilte Text: {}");
-		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle)).getText();
+		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle))
+				.getText();
 	}
 
 	public void selectAgency(String agency) {
-		WebElementUtils.selectDropDownByVisibleText(agencyIdDdwn, agency);
+		WebElementUtils.selectDDByVisibleText(agencyIdDdwn, agency);
 	}
 
 	public void selectProgramCode(String programCode) {
@@ -88,7 +88,8 @@ public class AssignProgramsAgencyPage extends AbstractBasePage {
 	}
 
 	public String getAgencyProgramAssignedMessage() {
-		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(programAssignedMessage)).getText();
+		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(programAssignedMessage))
+				.getText();
 	}
 
 	public void assignProgramAgency(AssignPrograms details) {
@@ -96,7 +97,8 @@ public class AssignProgramsAgencyPage extends AbstractBasePage {
 
 		selectAgency(details.getAgency());
 		clickSearchButton();
-		SimulatorUtilities.wait(30000);//this to wait till the table gets loaded
+		SimulatorUtilities.wait(30000);// this to wait till the table gets
+										// loaded
 		WebElementUtils.scrollDown(driver(), 0, 999);
 		selectProgramCode(details.getProgramCode());
 		selectDeviceType(details.getDeviceType());

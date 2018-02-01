@@ -1,1 +1,1 @@
-taskkill /IM chromedriver* /F
+wmic process where "CommandLine Like '%%chromedriver%%'" Call Terminate

@@ -147,6 +147,7 @@ public class LoginSteps extends AbstractBaseFlows {
 
 	}
 	
+	@Given("cardholder signup with valid details")
 	@Then("cardholder signup with valid details")
 	public void cardHolderSignUp(){
 		Device device = context.get(ContextConstants.DEVICE);
