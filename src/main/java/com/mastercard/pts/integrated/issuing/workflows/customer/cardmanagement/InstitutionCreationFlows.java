@@ -52,5 +52,12 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 		InstitutionPage page = navigator.navigateToPage(InstitutionPage.class);
 		return page.checkASCVendorEnabledAndSelectASCVendor();
 	}	
+	public boolean twoFactorAuthenticationEnabled()
+	{
+		InstitutionPage page = navigator.navigateToPage(InstitutionPage.class);
+		 page.checkASCVendorEnabledAndSelectASCVendor();
+		 return page.isSMSServiceProviderAndMPINAreEnabled();
+		 
+	}	
 
 }

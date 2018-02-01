@@ -102,5 +102,15 @@ public class InstitutionCreationSteps {
 		boolean acsEnable=instituteCreationflows.isAdaptiveAuthenticationEnabledAndUserAbleToSelectACSVendor();
 		Assert.assertTrue("Adaptive authentication is not enabled",acsEnable);
 	}
+	
+	@Then("two factor authentication fields are enabled")
+	public void twoFactorAuthenticationFieldsAreEnable(String institute,String vendor ){
+		InstitutionCreation institutioncreation=new InstitutionCreation();
+		institutioncreation.setInstitutionCode(institute);
+		institutioncreation.setAscVendor(vendor);
+		context.put("institutionData", institutioncreation);
+		boolean acsEnable=instituteCreationflows.twoFactorAuthenticationEnabled();
+		Assert.assertTrue("two factor authentication fields are not enabled",acsEnable);
+	}
 
 }

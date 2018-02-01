@@ -190,6 +190,11 @@ public class InstitutionPage extends AbstractBasePage{
 	@PageElement(findBy = FindBy.NAME , valueToFind = "adaptiveEcommFlag:input:dropdowncomponent")
 	private MCWebElement adaptiveEcommFlagDwn;
 	
+	@PageElement(findBy = FindBy.NAME , valueToFind = "issuerSmsProvider:checkBoxComponent")
+	private MCWebElement issuerSmsProviderCbx;
+	@PageElement(findBy = FindBy.NAME , valueToFind = "mpinEnabled:checkBoxComponent")
+	private MCWebElement mpinEnabledCbx;
+	
 	
 
 	public void verifyUiOperationStatus() {
@@ -327,4 +332,9 @@ public class InstitutionPage extends AbstractBasePage{
 		editInstitute();
 		return userAbleToselectACSVendor();
 	}
+	public boolean isSMSServiceProviderAndMPINAreEnabled()
+	{
+		return issuerSmsProviderCbx.isEnabled() && mpinEnabledCbx.isEnabled();
+	}
+
 }
