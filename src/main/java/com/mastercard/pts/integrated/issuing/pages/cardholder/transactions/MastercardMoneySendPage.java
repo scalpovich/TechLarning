@@ -60,7 +60,7 @@ public class MastercardMoneySendPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[name=remarks]")
 	private MCWebElement remarksTxt;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@class='ResponseTxt']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@class='SuccessMessageTxt']")
 	private MCWebElement responseLbl;
 
 	public void verifyUiOperationStatus() {
