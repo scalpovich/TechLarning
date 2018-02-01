@@ -1,15 +1,15 @@
-Institution Creation
+two factor authentication at processing center
 
 Narrative:
-In order to create institution
+In order to validate two factor authentication
 As a user
-I want to create prerequisites in customer portal and agent portal
+I want to validate two factor authentication at processing center
 
 Meta:
 @StoryName S190640
 @institutionSetup
 
-Scenario: creating new institution in customer portal as admin user
+Scenario: validate two factor authentication at processing center
 Meta:
 @TestId TC398332
 
