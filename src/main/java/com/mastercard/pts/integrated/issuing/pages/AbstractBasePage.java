@@ -493,6 +493,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void verifyNoErrors() {
+		driver().switchTo().defaultContent();
 		List<WebElement> messages = driver().findElements(By.cssSelector(".feedbackPanelWARNING, .feedbackPanelERROR, .ketchup-error-container-alt[style*=block]"));
 		if (!messages.isEmpty()) {
 			String errors = messages.stream().map(WebElement::getText).collect(Collectors.joining("\n"));
