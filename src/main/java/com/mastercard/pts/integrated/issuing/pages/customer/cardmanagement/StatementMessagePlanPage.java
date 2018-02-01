@@ -166,7 +166,7 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 			}
 			clickSaveButton();
 
-			verifyNoErrors();
+//			verifyNoErrors();
 		});
 
 		verifyOperationStatus();
