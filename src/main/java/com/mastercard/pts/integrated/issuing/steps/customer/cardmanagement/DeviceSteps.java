@@ -5,6 +5,7 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.jcabi.log.Logger;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
@@ -59,6 +60,7 @@ public class DeviceSteps {
 		device.setCorporateClientCode(provider.getString(CORPORATE_CLIENT_CODE_DEVICE2));
 		deviceWorkflow.createDevice(device);
 		context.put(ContextConstants.DEVICE2, device);		
+		Logger.info("Device Number from context {}", device.getDeviceNumber());
 	}
 	
 	@When("user creates new device of $type type for new client of $customerType customer")
