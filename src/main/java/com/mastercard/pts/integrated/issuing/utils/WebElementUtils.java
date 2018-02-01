@@ -30,6 +30,7 @@ import org.seleniumhq.selenium.fluent.FluentWebElement;
 
 import com.google.common.collect.Iterators;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementFinder.ByNativeXPath;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 
@@ -192,6 +193,7 @@ public class WebElementUtils {
 	@SuppressWarnings("unchecked")
 	public static <T> T executeJavascript(WebDriver driver, String javascript, Object... args) {
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
+		SimulatorUtilities.wait(500);
 		return (T) executor.executeScript(javascript, args);
 	}
 
