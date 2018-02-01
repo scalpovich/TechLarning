@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for debit MSR retail debit card
 
 Meta:
-@StoryName d_msr_corp
+@StoryName d_msr_corp_ASI
 @MMSR
 
 Scenario: Set up program for debit emv retail debit card
@@ -21,15 +21,16 @@ Given user is logged in institution
 And a new device was created
 When processes pre-production batch for debit
 When processes device production batch for debit
+Then device has "normal" status
 Then user activates device through helpdesk
 And user sign out from customer portal
 
 
 Scenario: Perform MMSR-CORPORATE_DEBITCARD Authorization transaction
 Given connection to MAS is established
-When perform an ASI MAS transaction
+When perform an ASI_MSR_DEBIT MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
-And search Account Status authorization and verify 085-Successful status
+And search Account Status authorization and verify 000-Successful status
 And user sign out from customer portal

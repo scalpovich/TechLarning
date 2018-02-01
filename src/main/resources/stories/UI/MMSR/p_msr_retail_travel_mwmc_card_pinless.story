@@ -1,4 +1,4 @@
-Prepaid msr retail travel card multi currency with pin authorization
+Prepaid msr retail travel card multi currency without pin authorization
 
 Narrative:
 In order to check transactions on prepaid msr retail travel mwmc card 

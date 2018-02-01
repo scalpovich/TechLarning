@@ -1,7 +1,7 @@
 prepaid msr retail gift card pinless authorization
 
 Narrative:
-In order to provide to client easy-to-use multi-purpose prepaid card pinless
+In order to provide to client easy-to-use msr retail gift card pinless
 As an issuer
 I want to create an magnetic stripe prepaid card pinless and perform various transaction
 
@@ -20,6 +20,7 @@ Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
+Then device has "normal" status
 Then user activates device through helpdesk
 Then user sign out from customer portal
 

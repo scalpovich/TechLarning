@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for prepaid msr retail general purpose card
 
 Meta:
-@StoryName p_msr_retail_gen_purpose
+@StoryName p_msr_retail_gen_purpose_ASI
 @ASI
 
 Scenario: Set up prepaid msr retail general purpose card
@@ -25,7 +25,7 @@ Then user sign out from customer portal
 
 Scenario: Perform MMSR-RetailGeneralPurposeCard Authorization transaction
 Given connection to MAS is established
-When perform an ASI MAS transaction
+When perform an ASI_MSR MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
