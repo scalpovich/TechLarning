@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for prepaid MSR retail general purpose card
 
 Meta:
-@StoryName p_emv_corp_travel_ASI
+@StoryName p_msr_corp_travel_ASI
 @MMSR
 Scenario: Set up prepaid msr corporate travel card
 Given user is logged in institution
