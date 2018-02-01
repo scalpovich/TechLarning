@@ -292,23 +292,16 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(currentCountryCodeDDwn, currentAddress.getCountry());
 		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());
 
-		try {
-			Thread.sleep(5000); // added some sleep as the page does not repond
-								// after adding zip code
-		} catch (InterruptedException e) {
-			logger.error("Error" + e);
-			Thread.currentThread().interrupt();
-		}
+		SimulatorUtilities.wait(5000);
 		pageScrollDown();
 		clickNextButton();
 	}
 
 	private void fillProfile(Device device) {
 		if (corporateClientCodeDDwn.isEnabled())
-			// WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn,
-			// device.getCorporateClientCode());
 			WebElementUtils.selectDropDownByIndex(corporateClientCodeDDwn, 1);
-
+			// WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
+			
 		WebElementUtils.selectDropDownByVisibleText(branchCodeDDwn, device.getBranchCode());
 		ClientDetails client = device.getClientDetails();
 		WebElementUtils.selectDropDownByVisibleText(titleDDwn, client.getTitle());
