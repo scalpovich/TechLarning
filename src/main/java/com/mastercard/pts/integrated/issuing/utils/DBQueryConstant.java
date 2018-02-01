@@ -24,4 +24,18 @@ public class DBQueryConstant {
 
 	public static String FOURTHQUATERENDDATE = "31-Dec-2017";
 
+	public static String DEVICENUMBER_COLUMN = "DEVICE_NUMBER";
+
+	public static String CARDPACKID_COLUMN = "CARD_PACK_ID";
+
+	public static String PREGENERATEDFLAG_COLUMN = "PRE_GENERATED_CARD";
+
+	public static String DEVICENUMBER_QUERY = "select * from device  where DEVICE_NUMBER like";
+
+	public static String DEVICE_QUERY = "select * from device where DEVICE_NUMBER =";
+
+	public static String CARDPACKID_QUERY = "Select CARD_PACK_ID from DEVICE where DEVICE_NUMBER =";
+
+	public static String PREGENERATEDFLAG_QUERY = "select PRE_GENERATED_CARD from DEVICE where DEVICE_NUMBER =";
+
 }

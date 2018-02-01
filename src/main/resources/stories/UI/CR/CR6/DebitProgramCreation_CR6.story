@@ -4,8 +4,8 @@ As a(n)  Customer portal user
 I want to  create/define a Debit Program
 So that program can be created with different data conditions
 
-@Meta:
-DebitProgramCR6
+Meta:
+@DebitProgramCR6
 
 Scenario: Scenario1 - Verify that the Issuer is able to create/define a Debit Program:  ATM Admin Card Type 
 Meta:

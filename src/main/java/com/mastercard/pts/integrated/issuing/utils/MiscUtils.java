@@ -74,7 +74,7 @@ public class MiscUtils {
 				temptaskName = SimulatorConstantsData.KILL_FINSIM_PROCESS;
 			} else if ("WINIUM".equalsIgnoreCase(taskName)) {
 				temptaskName = SimulatorConstantsData.KILL_WINIUM_PROCESS;
-			} else if ("VTS".equalsIgnoreCase(taskName)) {
+			} else if ("VTS".equalsIgnoreCase(taskName) || ("VISA".equalsIgnoreCase(taskName))) {
 				temptaskName = SimulatorConstantsData.KILL_VTS_PROCESS;
 			} else if ("MCPS".equalsIgnoreCase(taskName)) {
 				temptaskName = SimulatorConstantsData.KILL_MCPS_PROCESS;
