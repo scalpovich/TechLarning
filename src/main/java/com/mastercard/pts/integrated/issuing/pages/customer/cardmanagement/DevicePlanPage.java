@@ -844,6 +844,7 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	public void clickIframeNextButton() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
+		driver().switchTo().defaultContent();
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
 				.until(WebElementUtils.elementToBeClickable(iframeNextBtn)).click();
 	}
