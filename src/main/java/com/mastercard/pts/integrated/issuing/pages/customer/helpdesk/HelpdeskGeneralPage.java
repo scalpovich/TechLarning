@@ -166,6 +166,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public void clickFirstRowEditLink() {
+		SimulatorUtilities.wait(3000);
+		logger.info("Clicking on edit link");
 		new WebDriverWait(driver(), timeoutInSec)
 		.until(WebElementUtils.elementToBeClickable(firstRowEditLink))
 		.click();
