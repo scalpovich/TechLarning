@@ -31,6 +31,7 @@ And user setup device currency through helpdesk
 Then currency setup for prepaid device is done correctly and updated in wallet details tab
 When user performs adjustment transaction
 And user performs adjustment transaction for second wallet
+When add menus to access card holder portal
 Then device has "normal" status
 
 Scenario: MMS - CHP - msr retail travel multi currency card
