@@ -40,5 +40,7 @@ public class ContextConstants {
 	
 	public static final String WALLET_TYPE="WALLET_TYPE";
 	
+	public static final String USAGE_TYPE="USAGE_TYPE";
+	
 	private ContextConstants() {}
 }

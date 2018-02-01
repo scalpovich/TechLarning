@@ -58,7 +58,8 @@ public class CreditCardTransactionRulePlanPage extends AbstractBasePage {
 			creditCardTransactionRulePlan.setTransactionRulePlanCode(MiscUtils
 					.generateRandomNumberBetween2Number(100, 999));
 		}
-
+		else
+		{
 		clickAddNewButton();
 
 		AtomicBoolean canceled = new AtomicBoolean(false);
@@ -77,9 +78,10 @@ public class CreditCardTransactionRulePlanPage extends AbstractBasePage {
 						canceled.set(true);
 					}
 				});
-
+		
 		if (!canceled.get()) {
 			verifyOperationStatus();
+		}
 		}
 		return verifyAlreadyExistsAndClickCancel();
 	}

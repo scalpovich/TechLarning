@@ -37,6 +37,7 @@ public class WalletPlanSteps {
 		plan.setWalletType(walletType);
 		plan.setProgramType(programType);
 		plan.setProductType(product);
+		context.put(ContextConstants.USAGE_TYPE, "Open Loop");
 		String walletPlan = "";
 		if (walletType.contains(WalletType.DEFAULT_WALLET)) {
 			walletPlan = walletplanflows.createOpenWalletPlan(plan);
@@ -61,6 +62,7 @@ public class WalletPlanSteps {
 		plan.setWalletType(walletType);
 		plan.setProgramType(programType);
 		plan.setProductType(product);
+		context.put(ContextConstants.USAGE_TYPE, "Closed Loop");
 		String walletPlan = "";
 		if (walletType.contains(WalletType.DEFAULT_WALLET)) {
 			walletPlan = walletplanflows.createClosedWalletPlan(plan);

@@ -35,7 +35,7 @@ TestContext context;
 	private MCWebElement addEmbossingPriorityPass;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "planDesc:input:inputTextField")
-	private MCWebElement Description;
+	private MCWebElement descriptionTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement save;
@@ -52,7 +52,7 @@ TestContext context;
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[8]/span//img")
 	private MCWebElement editImg;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "verify")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[@name='verify']")
 	private MCWebElement verifyBtn;
 	
 	//table[@class='dataview']//tbody/tr[1]/td[8]/span//img
