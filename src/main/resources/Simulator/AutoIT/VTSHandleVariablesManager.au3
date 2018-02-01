@@ -15,12 +15,12 @@
    WinWaitActive("Variables Manager")
    Sleep(10000)
 
-If ControlCommand ("Variables Manager", "", "[CLASS:Button; INSTANCE:1]", "IsVisible") Then
-   ControlClick("Variables Manager","","[CLASS:Button; INSTANCE:1]") ; to handle OK dialog that may sometimes come up
-   Sleep(1000)
-EndIf
-If ControlCommand ("Variables Manager", "", "[CLASS:Button; INSTANCE:1]", "IsVisible") Then
-   ControlClick("Variables Manager","","[CLASS:Button; INSTANCE:1]") ; to handle OK dialog that may sometimes come up
-   sleep(3000)
- EndIf
-   WinWaitClose("Variables Manager")
+   If ControlCommand ("Variables Manager", "", "[CLASS:Button; INSTANCE:1]", "IsVisible") Then
+	  ControlClick("Variables Manager","","[CLASS:Button; INSTANCE:1]") ; to handle OK dialog that may sometimes come up
+	  Sleep(1000)
+   EndIf
+   If ControlCommand ("Variables Manager", "", "[CLASS:Button; INSTANCE:1]", "IsVisible") Then
+	  ControlClick("Variables Manager","","[CLASS:Button; INSTANCE:1]") ; to handle OK dialog that may sometimes come up
+	  sleep(3000)
+	EndIf
+   WinMenuSelectItem("Variables Manager", "", "&File", "E&xit")
