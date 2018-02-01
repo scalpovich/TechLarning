@@ -8,7 +8,7 @@ I want to create devices and perform transaction from CHP
 Meta:
 @StoryName p_msr_retail_travel_mms
 
-Scenario: Set up prepaid msr corporate general purpose card from another institute
+Scenario: Set up prepaid msr retail general purpose card from another institute
 Given user is logged in non-default institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin for non-default institution
 When user creates new device of prepaid type for non-default institution
@@ -17,7 +17,7 @@ When processes device production batch for prepaid
 !-- Then device has "normal" status for non-default institution
 Then user sign out from customer portal
 
-Scenario: Set up prepaid msr corporate general purpose card
+Scenario: Set up prepaid msr retail general purpose card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client
