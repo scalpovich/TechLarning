@@ -118,7 +118,8 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 
 	public String enterEmbossingFileCode() {
 		if (MapUtils.fnGetInputDataFromMap("Embosscode") != null) {
-			enterValueinTextBox(EmbossingFileTemplateCodeTxt, MapUtils.fnGetInputDataFromMap("Embosscode")+CustomUtils.randomAlphaNumeric(3).toUpperCase());
+			enterValueinTextBox(EmbossingFileTemplateCodeTxt,
+					MapUtils.fnGetInputDataFromMap("Embosscode") + CustomUtils.randomAlphaNumeric(3).toUpperCase());
 		} else {
 			enterValueinTextBox(EmbossingFileTemplateCodeTxt, CustomUtils.randomNumbers(3));
 		}
@@ -138,6 +139,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 		selectByVisibleText(FileTypeDDwn, embossing.getTemplateType());
 	}
 
+	@Override
 	public void clickSaveButton() {
 		clickWhenClickable(SaveBtn);
 	}
@@ -184,7 +186,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 	}
 
 	public void selectField() {
-		//addWicketAjaxListeners(getFinder().getWebDriver());
+		// addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(FieldDDwn);
 		selectByVisibleText(FieldDDwn, "CARD NUMBER [DEVICE_NUMBER]");
 	}
@@ -211,7 +213,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 		selectFileType(embossing);
 		clickSaveButton();
 		waitForPageToLoad(getFinder().getWebDriver());
-		return EmbossingDesc + " " + "[" + templateCode + "]";
+		return buildDescriptionAndCode(EmbossingDesc, templateCode);
 
 	}
 

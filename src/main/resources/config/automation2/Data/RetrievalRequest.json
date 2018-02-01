@@ -1,0 +1,5 @@
+{  
+  "requestResonCode":"Cardholder does not recognize transaction [6321]",
+  "reasonCode":"Original [1]",
+  "applyFee":true
+}

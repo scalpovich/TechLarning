@@ -27,11 +27,10 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = ServicesNav.TAB_SERVICES, treeMenuItems = {
-		ServicesNav.L1_DEVICE_SALE_ISSUANCE, ServicesNav.L2_DEVICE_SALE })
+@Navigation(tabTitle = ServicesNav.TAB_SERVICES, treeMenuItems = { ServicesNav.L1_DEVICE_SALE_ISSUANCE,
+		ServicesNav.L2_DEVICE_SALE })
 public class DeviceSalePage extends AbstractBasePage {
-	private static final Logger logger = LoggerFactory
-			.getLogger(DeviceSalePage.class);
+	private static final Logger logger = LoggerFactory.getLogger(DeviceSalePage.class);
 	private static final String QUERY_STRING_DEVICE_NUMBER_PREPAID_EMV = "SELECT * FROM Device d WHERE d.BANK_CODE  = '121212' AND d.PRODUCT_TYPE = 'P' AND d.STATUS_CODE  = '0' AND d.device_plan_code in (select dp.device_plan_code from device_plan dp where device_type = '2' and dp.bank_code = d.bank_code) order by d.ACTIVATION_DATE desc";
 	private static final String QUERY_STRING_DEVICE_NUMBER_PREPAID_MAGSTRIPE = "SELECT * FROM Device d WHERE d.BANK_CODE  = '121212' AND d.PRODUCT_TYPE = 'P' AND d.STATUS_CODE  = '0' AND d.device_plan_code in (select dp.device_plan_code from device_plan dp where device_type = '1' and dp.bank_code = d.bank_code) order by d.ACTIVATION_DATE desc";
 	private static final String PREPAID = "prepaid";
@@ -161,7 +160,7 @@ public class DeviceSalePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#sourceCurrency_1")
 	private MCWebElement initialCurrencyDdwn;
-	
+
 	public void verifyUiOperationStatus() {
 		logger.info("Sale");
 		verifyButton("Process");
@@ -170,72 +169,51 @@ public class DeviceSalePage extends AbstractBasePage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays
-				.asList(WebElementUtils.visibilityOf(masterDetailContentTitle),
-						WebElementUtils
-								.visibilityOf(newCustomerWithRegistrationRbtn),
-						WebElementUtils
-								.visibilityOf(newCustomerWithOutRegistrationRbtn),
-						WebElementUtils
-								.visibilityOf(existingCustomerNewProgramRbtn),
-						WebElementUtils
-								.visibilityOf(existingCustomerAdditionalDeviceSelfRbtn),
-						WebElementUtils
-								.visibilityOf(existingCustomerAdditionalDeviceOthersRbtn),
-						WebElementUtils
-								.visibilityOf(existingCustomerRegistrationRbtn),
-						WebElementUtils.visibilityOf(programCodeDdwn),
-						WebElementUtils.visibilityOf(deviceTypeDdwn));
+		return Arrays.asList(WebElementUtils.visibilityOf(masterDetailContentTitle),
+				WebElementUtils.visibilityOf(newCustomerWithRegistrationRbtn),
+				WebElementUtils.visibilityOf(newCustomerWithOutRegistrationRbtn),
+				WebElementUtils.visibilityOf(existingCustomerNewProgramRbtn),
+				WebElementUtils.visibilityOf(existingCustomerAdditionalDeviceSelfRbtn),
+				WebElementUtils.visibilityOf(existingCustomerAdditionalDeviceOthersRbtn),
+				WebElementUtils.visibilityOf(existingCustomerRegistrationRbtn),
+				WebElementUtils.visibilityOf(programCodeDdwn), WebElementUtils.visibilityOf(deviceTypeDdwn));
 	}
 
 	// methods
 	public String getMasterDetailContentTitleText() {
 		logger.info("Corporate User View Edit Master Detail Tilte Text: {}");
-		return new WebDriverWait(driver(), timeoutInSec).until(
-				WebElementUtils.visibilityOf(masterDetailContentTitle))
+		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle))
 				.getText();
 	}
 
 	public void clickNewCustomerWithRegistrationRadioButton() {
-		new WebDriverWait(driver(), timeoutInSec).until(
-				WebElementUtils
-						.elementToBeClickable(newCustomerWithRegistrationRbtn))
-				.click();
+		new WebDriverWait(driver(), timeoutInSec)
+				.until(WebElementUtils.elementToBeClickable(newCustomerWithRegistrationRbtn)).click();
 	}
 
 	public void clickNewCustomerWithOutRegistrationRadioButton() {
 		new WebDriverWait(driver(), timeoutInSec)
-				.until(WebElementUtils
-						.elementToBeClickable(newCustomerWithOutRegistrationRbtn))
-				.click();
+				.until(WebElementUtils.elementToBeClickable(newCustomerWithOutRegistrationRbtn)).click();
 	}
 
 	public void clickExistingCustomerNewProgamRadioButton() {
-		new WebDriverWait(driver(), timeoutInSec).until(
-				WebElementUtils
-						.elementToBeClickable(existingCustomerNewProgramRbtn))
-				.click();
+		new WebDriverWait(driver(), timeoutInSec)
+				.until(WebElementUtils.elementToBeClickable(existingCustomerNewProgramRbtn)).click();
 	}
 
 	public void clickExistingCustomerAdditionalDeviceSelfRadioButton() {
 		new WebDriverWait(driver(), timeoutInSec)
-				.until(WebElementUtils
-						.elementToBeClickable(existingCustomerAdditionalDeviceSelfRbtn))
-				.click();
+				.until(WebElementUtils.elementToBeClickable(existingCustomerAdditionalDeviceSelfRbtn)).click();
 	}
 
 	public void clickExistingCustomerAdditionalDeviceOthersRadioButton() {
 		new WebDriverWait(driver(), timeoutInSec)
-				.until(WebElementUtils
-						.elementToBeClickable(existingCustomerAdditionalDeviceOthersRbtn))
-				.click();
+				.until(WebElementUtils.elementToBeClickable(existingCustomerAdditionalDeviceOthersRbtn)).click();
 	}
 
 	public void clickExistingCustomerRegistrationRadioButton() {
 		new WebDriverWait(driver(), timeoutInSec)
-				.until(WebElementUtils
-						.elementToBeClickable(existingCustomerRegistrationRbtn))
-				.click();
+				.until(WebElementUtils.elementToBeClickable(existingCustomerRegistrationRbtn)).click();
 	}
 
 	public void enterPrimaryDeviceNumber(String primaryDeviceNumber) {
@@ -243,8 +221,7 @@ public class DeviceSalePage extends AbstractBasePage {
 	}
 
 	public void selectProgramCode(String programCode) {
-		WebElementUtils.selectDropDownByVisibleText(programCodeDdwn,
-				programCode);
+		WebElementUtils.selectDropDownByVisibleText(programCodeDdwn, programCode);
 	}
 
 	public void selectDeviceType(String deviceType) {
@@ -260,8 +237,7 @@ public class DeviceSalePage extends AbstractBasePage {
 	}
 
 	public void clickProcessButton() {
-		new WebDriverWait(driver(), timeoutInSec).until(
-				WebElementUtils.visibilityOf(processBtn)).click();
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(processBtn)).click();
 	}
 
 	public void selectTitle(String title) {
@@ -277,8 +253,7 @@ public class DeviceSalePage extends AbstractBasePage {
 	}
 
 	public void selectMaritalStatus(String maritalStatus) {
-		WebElementUtils.selectDropDownByVisibleText(maritalStatusDdwn,
-				maritalStatus);
+		WebElementUtils.selectDropDownByVisibleText(maritalStatusDdwn, maritalStatus);
 	}
 
 	public void selectGender(String gender) {
@@ -286,25 +261,21 @@ public class DeviceSalePage extends AbstractBasePage {
 	}
 
 	public void selectNationality(String nationality) {
-		WebElementUtils.selectDropDownByVisibleText(nationalityDdwn,
-				nationality);
+		WebElementUtils.selectDropDownByVisibleText(nationalityDdwn, nationality);
 	}
 
 	public void selectLanguagePreference(String languagePreference) {
-		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDdwn,
-				languagePreference);
+		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDdwn, languagePreference);
 	}
 
 	@Override
 	public void clickNextButton() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
-		new WebDriverWait(driver(), timeoutInSec).until(
-				WebElementUtils.elementToBeClickable(nextBtn)).click();
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(nextBtn)).click();
 	}
 
 	public void selectPreferredMailingAddress(String preferredMailingAddress) {
-		WebElementUtils.selectDropDownByVisibleText(
-				preferredMailingAddressDdwn, preferredMailingAddress);
+		WebElementUtils.selectDropDownByVisibleText(preferredMailingAddressDdwn, preferredMailingAddress);
 	}
 
 	public void enterCurrentAddressLine1(String currentAddressLine1) {
@@ -312,8 +283,7 @@ public class DeviceSalePage extends AbstractBasePage {
 	}
 
 	public void enterPermanentAddressLine1(String permanentAddressLine1) {
-		WebElementUtils.enterText(permanentAddressLine1Txt,
-				permanentAddressLine1);
+		WebElementUtils.enterText(permanentAddressLine1Txt, permanentAddressLine1);
 	}
 
 	public void selectCountry(String country) {
@@ -326,8 +296,7 @@ public class DeviceSalePage extends AbstractBasePage {
 	}
 
 	public void selectApplicantProfession(String applicantProfession) {
-		WebElementUtils.selectDropDownByVisibleText(applicantProfessionDdwn,
-				applicantProfession);
+		WebElementUtils.selectDropDownByVisibleText(applicantProfessionDdwn, applicantProfession);
 	}
 
 	public void clickKYCStatusCheckBox() {
@@ -339,8 +308,7 @@ public class DeviceSalePage extends AbstractBasePage {
 	}
 
 	public void selectDocument1Type(String passportType) {
-		WebElementUtils.selectDropDownByVisibleText(document1TypeDdwn,
-				passportType);
+		WebElementUtils.selectDropDownByVisibleText(document1TypeDdwn, passportType);
 	}
 
 	public void enterLegalId1(String legalId1) {
@@ -349,13 +317,11 @@ public class DeviceSalePage extends AbstractBasePage {
 
 	public void clickSubmitButton() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
-		new WebDriverWait(driver(), timeoutInSec).until(
-				WebElementUtils.elementToBeClickable(submitBtn)).click();
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(submitBtn)).click();
 	}
 
 	public void clickOKButton() {
-		new WebDriverWait(driver(), timeoutInSec).until(
-				WebElementUtils.elementToBeClickable(okBtn)).click();
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(okBtn)).click();
 	}
 
 	public void enterCurrentDateddMMyyyy(String date) {
@@ -363,14 +329,12 @@ public class DeviceSalePage extends AbstractBasePage {
 	}
 
 	public String getApplicationCreatedMessage() {
-		return new WebDriverWait(driver(), timeoutInSec).until(
-				WebElementUtils.visibilityOf(applicationSuccessMessage))
+		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(applicationSuccessMessage))
 				.getText();
 	}
 
 	public void verifyApplicationSuccessMessage() {
-		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils
-				.visibilityOf(applicationSuccessMessage));
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(applicationSuccessMessage));
 	}
 
 	public void processApplication(DeviceSale details) {
@@ -412,30 +376,30 @@ public class DeviceSalePage extends AbstractBasePage {
 		SimulatorUtilities.wait(3000);
 		clickSubmitButton();
 	}
-	
+
 	public void enterTransactionDetails(String transactionDetails) {
-		int rowCount = driver().findElements(By.xpath("//*[@class='dataview']/tbody[1]/tr[@class='even' or @class = 'odd']")).size();
+		int rowCount = driver()
+				.findElements(By.xpath("//*[@class='dataview']/tbody[1]/tr[@class='even' or @class = 'odd']")).size();
 		String[] values = transactionDetails.trim().split(",");
-			for (int i = 0; i < values.length ; i++)
-			{
-				for (int j = 1; j <= rowCount; j++)
-				{
-					String[] data = values[i].trim().split(":");
-					String currencyName = data[0].trim();
-					String xpathBuild = "//*[@class='dataview']/tbody[1]/tr[@class='even' or @class='odd']["+j+"]";
-					if (driver().findElement(By.xpath(xpathBuild+"/td[2]")).getText().trim().equalsIgnoreCase(currencyName))
-					{
-						String transactionAmountCSS = "#sourceAmount_"+j;
-						driver().findElement(By.cssSelector(transactionAmountCSS)).sendKeys(data[1].trim());
-						String transactionCurrencyCSS = "#sourceCurrency_"+j;
-						WebElementUtils.retryUntilNoErrors(() -> new Select(driver().findElement(By.cssSelector(transactionCurrencyCSS))).selectByVisibleText(data[2].trim()));
-						break;
-					}
+		for (int i = 0; i < values.length; i++) {
+			for (int j = 1; j <= rowCount; j++) {
+				String[] data = values[i].trim().split(":");
+				String currencyName = data[0].trim();
+				String xpathBuild = "//*[@class='dataview']/tbody[1]/tr[@class='even' or @class='odd'][" + j + "]";
+				if (driver().findElement(By.xpath(xpathBuild + "/td[2]")).getText().trim()
+						.equalsIgnoreCase(currencyName)) {
+					String transactionAmountCSS = "#sourceAmount_" + j;
+					driver().findElement(By.cssSelector(transactionAmountCSS)).sendKeys(data[1].trim());
+					String transactionCurrencyCSS = "#sourceCurrency_" + j;
+					WebElementUtils.retryUntilNoErrors(
+							() -> new Select(driver().findElement(By.cssSelector(transactionCurrencyCSS)))
+									.selectByVisibleText(data[2].trim()));
+					break;
 				}
 			}
+		}
 	}
 
-	
 	public void deviceSaleWithRegistration(DeviceSale details) {
 		logger.info("Device Sale with Registration: {}", details.getProgram());
 
@@ -447,8 +411,7 @@ public class DeviceSalePage extends AbstractBasePage {
 	}
 
 	public void deviceSaleWithoutRegistration(DeviceSale details) {
-		logger.info("Device Sale without Registration: {}",
-				details.getProgram());
+		logger.info("Device Sale without Registration: {}", details.getProgram());
 
 		clickNewCustomerWithOutRegistrationRadioButton();
 		processApplication(details);
@@ -462,9 +425,7 @@ public class DeviceSalePage extends AbstractBasePage {
 	}
 
 	public void deviceSaleThroughCustomerRegistration(DeviceSale details) {
-		logger.info(
-				"Device Sale without Registration and through Customer Registration: {}",
-				details.getProgram());
+		logger.info("Device Sale without Registration and through Customer Registration: {}", details.getProgram());
 
 		processApplicationForExistingCustomer(details);
 		fillApplicationDetails1(details);
@@ -474,8 +435,7 @@ public class DeviceSalePage extends AbstractBasePage {
 	}
 
 	public void deviceSaleThroughNewProgram(DeviceSale details) {
-		logger.info("Device Sale through Customer New Program: {}",
-				details.getProgram());
+		logger.info("Device Sale through Customer New Program: {}", details.getProgram());
 		clickExistingCustomerNewProgamRadioButton();
 		enterPrimaryDeviceNumber(details.getPrimaryDeviceNumber());
 		WebElementUtils.asWebElement(primaryDeviceNumberTxt).sendKeys(Keys.TAB);
@@ -483,7 +443,7 @@ public class DeviceSalePage extends AbstractBasePage {
 		clickNextButton();
 		clickNextButton();
 		clickNextButton();
-		//if to enter mandatory field
+		// if to enter mandatory field
 		if (driver().findElements(By.cssSelector(".feedbackPanelERROR")).size() > 0) {
 			selectApplicantProfession(details.getApplicantProfession());
 			clickNextButton();
@@ -494,20 +454,15 @@ public class DeviceSalePage extends AbstractBasePage {
 		clickSubmitButton();
 	}
 
-	public String getActiveDeviceNumberFromDb(String productType,
-			String deviceType) {
+	public String getActiveDeviceNumberFromDb(String productType, String deviceType) {
 
-		if (PREPAID.equalsIgnoreCase(productType)
-				&& EMV.equalsIgnoreCase(deviceType)) {
-			activeDeviceNumber = dbUtility.getSingleRecordColumnValueFromDB(
-					QUERY_STRING_DEVICE_NUMBER_PREPAID_EMV,
+		if (PREPAID.equalsIgnoreCase(productType) && EMV.equalsIgnoreCase(deviceType)) {
+			activeDeviceNumber = dbUtility.getSingleRecordColumnValueFromDB(QUERY_STRING_DEVICE_NUMBER_PREPAID_EMV,
 					DEVICE_NUMBER_COLUMN_NAME);
 		}
-		if (PREPAID.equalsIgnoreCase(productType)
-				&& MAGSTRIPE.equalsIgnoreCase(deviceType)) {
+		if (PREPAID.equalsIgnoreCase(productType) && MAGSTRIPE.equalsIgnoreCase(deviceType)) {
 			activeDeviceNumber = dbUtility.getSingleRecordColumnValueFromDB(
-					QUERY_STRING_DEVICE_NUMBER_PREPAID_MAGSTRIPE,
-					DEVICE_NUMBER_COLUMN_NAME);
+					QUERY_STRING_DEVICE_NUMBER_PREPAID_MAGSTRIPE, DEVICE_NUMBER_COLUMN_NAME);
 		}
 		return activeDeviceNumber;
 	}
