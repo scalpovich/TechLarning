@@ -1,1 +1,1 @@
-wmic process where name='chrome.exe' delete
+wmic process where "CommandLine Like '%%chromedriver%%'" Call Terminate

@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -14,7 +15,6 @@ import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManag
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
-import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -33,13 +33,13 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:walletPlanCode:input:inputTextField")
 	private MCWebElement walletPlancodeTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='walletPlanCode']")
 	private MCWebElement walletPlancodeSearchTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:description:input:inputTextField")
 	private MCWebElement descriptionTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
 	private MCWebElement searchTable;
 
@@ -122,7 +122,7 @@ public class WalletPlanPage extends AbstractBasePage {
 		clickWhenClickable(addWalletPlanBtn);
 		switchToAddWalletPlanFrame();
 	}
-	
+
 	public void selectProduct(DeviceCreation deviceCreation) {
 		selectByVisibleText(productTypeDDwn, deviceCreation.getProduct());
 	}
@@ -131,22 +131,22 @@ public class WalletPlanPage extends AbstractBasePage {
 		switchToIframe(Constants.ADD_WALLET_PLAN_FRAME);
 	}
 
-	public String enterWalletPlanCode() {
-		if (MapUtils.fnGetInputDataFromMap("WalletPlancode") != null) {
-			enterValueinTextBox(walletPlancodeTxt, MapUtils.fnGetInputDataFromMap("WalletPlancode"));
+	public String enterWalletPlanCode(WalletPlan walletPlan) {
+		if (walletPlan.getWalletPlanCode().length() != 0) {
+			enterValueinTextBox(walletPlancodeTxt, walletPlan.getWalletPlanCode());
 		} else {
-			enterValueinTextBox(walletPlancodeTxt, CustomUtils.randomNumbers(5));
+			enterValueinTextBox(walletPlancodeTxt, "WP" + CustomUtils.randomNumbers(4));
 		}
 		return walletPlancodeTxt.getAttribute("value");
 	}
-	
-	public void enterWalletPlanCode(WalletPlan plan) {
-		enterValueinTextBox(walletPlancodeTxt, plan.getWalletPlanCode());
-	}
 
-	public String enterWalletPlanDescription() {
-		if (MapUtils.fnGetInputDataFromMap("WalletPlanDescription") != null) {
-			enterValueinTextBox(descriptionTxt, MapUtils.fnGetInputDataFromMap("WalletPlanDescription"));
+	// public void enterWalletPlanCode(WalletPlan plan) {
+	// enterValueinTextBox(walletPlancodeTxt, plan.getWalletPlanCode());
+	// }
+
+	public String enterWalletPlanDescription(WalletPlan walletPlan) {
+		if (walletPlan.getDescription().length() != 0) {
+			enterValueinTextBox(descriptionTxt, walletPlan.getDescription());
 		} else {
 			enterValueinTextBox(descriptionTxt, "wallet plan");
 		}
@@ -199,12 +199,12 @@ public class WalletPlanPage extends AbstractBasePage {
 			SelectDropDownByIndex(surchargeWaiverPlanDDwn, FIRST_OPTION);
 		}
 	}
-	
+
 	public String addWalletPlanGeneral(DeviceCreation devicecreation, WalletPlan walletplan) {
 		String walletPlancode;
 		String WalletPlanDesc;
-		walletPlancode = enterWalletPlanCode();
-		WalletPlanDesc = enterWalletPlanDescription();
+		walletPlancode = enterWalletPlanCode(walletplan);
+		WalletPlanDesc = enterWalletPlanDescription(walletplan);
 		selectCurrency(walletplan);
 		waitForPageToLoad(getFinder().getWebDriver());
 		selectProduct(devicecreation);
@@ -215,14 +215,15 @@ public class WalletPlanPage extends AbstractBasePage {
 		selectWalletUsage(walletplan);
 		enterDummyAccountNumber();
 		enterReservedAmount();
-		return WalletPlanDesc + " " + "[" + walletPlancode + "]";
+		return buildDescriptionAndCode(WalletPlanDesc, walletPlancode);
 	}
+
 	public void selectWalletFeePlan() {
 		if (walletFeePlanDDwn.isEnabled()) {
 			SelectDropDownByIndex(walletFeePlanDDwn, FIRST_OPTION);
 		}
 	}
-	
+
 	public void selectProgramType(WalletPlan walletplan) {
 		selectByVisibleText(programeTypeDDwn, walletplan.getProgramType());
 	}
@@ -253,7 +254,8 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	public void enterReservedAmount() {
 		if (reservedAmountTxt.isEnabled()) {
-			//enterValueinTextBox(reservedAmountTxt, "1" + CustomUtils.randomNumbers(5));
+			// enterValueinTextBox(reservedAmountTxt, "1" +
+			// CustomUtils.randomNumbers(5));
 			enterValueinTextBox(reservedAmountTxt, "0");
 		}
 	}
@@ -296,11 +298,11 @@ public class WalletPlanPage extends AbstractBasePage {
 	public String getFeedbackInfo() {
 		return panelInfo.getText();
 	}
-	
+
 	public void searchByWalletPlanCode(WalletPlan plan) {
 		enterValueinTextBox(walletPlancodeSearchTxt, plan.getWalletPlanCode());
 	}
-	
+
 	public boolean isTextPresentInTable(String text) {
 		return WebElementUtils.isTextAvailableinTable(searchTable, text);
 	}
@@ -319,8 +321,8 @@ public class WalletPlanPage extends AbstractBasePage {
 	public String addWalletPlanGeneral(WalletPlan walletplan) {
 		String walletPlancode;
 		String walletPlanDesc;
-		walletPlancode = enterWalletPlanCode();
-		walletPlanDesc = enterWalletPlanDescription();
+		walletPlancode = enterWalletPlanCode(walletplan);
+		walletPlanDesc = enterWalletPlanDescription(walletplan);
 		selectCurrency(walletplan);
 		waitForPageToLoad(getFinder().getWebDriver());
 		selectProduct(walletplan);
@@ -331,12 +333,12 @@ public class WalletPlanPage extends AbstractBasePage {
 		selectWalletUsage(walletplan);
 		enterDummyAccountNumber();
 		enterReservedAmount();
-		return walletPlanDesc + " " + "[" + walletPlancode + "]";
+		return buildDescriptionAndCode(walletPlanDesc, walletPlancode);
 	}
 
 	public void enterGeneralDetails(WalletPlan plan) {
 		enterWalletPlanCode(plan);
-		enterWalletPlanDescription();
+		enterWalletPlanDescription(plan);
 		selectCurrency(plan);
 		waitForPageToLoad(getFinder().getWebDriver());
 		selectProductType(plan);

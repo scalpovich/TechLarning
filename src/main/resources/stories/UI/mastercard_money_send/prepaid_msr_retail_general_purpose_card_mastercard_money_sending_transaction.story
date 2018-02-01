@@ -6,7 +6,7 @@ As an issuer
 I want to create an magnetic stripe prepaid card and perform mastercard money send request
 
 Meta:
-@StoryName p_retail_general_purpose_mms
+@StoryName p_msr_retail_gen_purpose
 
 Scenario: Set up prepaid msr retail general purpose card from another institute
 Meta:
@@ -28,6 +28,7 @@ When user has wallet number information for debit device
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
+Then user activates device through helpdesk
 
 When user raises a money send request
 Then search MasterCard MoneySend authorization and verify 000-Successful status
