@@ -220,7 +220,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			fillProfileAndAddressDetailsAndClickNext(device);
 
 			// skip wallet extra fields
-				SimulatorUtilities.wait(500);
 				clickFinishButton();
 
 				verifyNoErrors();
