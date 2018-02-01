@@ -25,8 +25,7 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_ACTIVITY, CardManagementNav.L2_DEVICE,
-		CardManagementNav.L3_NEW_DEVICE })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_ACTIVITY, CardManagementNav.L2_DEVICE, CardManagementNav.L3_NEW_DEVICE })
 public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(DeviceCreateDevicePage.class);
@@ -120,23 +119,23 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:vipFlag:input:dropdowncomponent")
 	private MCWebElement vipDDwn;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#middleName2 input")
 	private MCWebElement middleName2Txt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=encodedName]")
 	private MCWebElement encodedNameTxt;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=faxNumber]")
 	private MCWebElement faxNumberTxt;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:stmtHardCopyReq:input:dropdowncomponent")
 	private MCWebElement statementPreferenceDDwn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//ul[@class='feedbackPanel']//.//li[4]/span")
 	private MCWebElement createdWalletList;
-	
-	public String getWalletsFromPage(){
+
+	public String getWalletsFromPage() {
 		return getTextFromPage(createdWalletList);
 	}
 
@@ -198,29 +197,29 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 		verifyOperationStatus();
 
-		//scolling "PageUp" is needed here as the Menu item is not visible
+		// scolling "PageUp" is needed here as the Menu item is not visible
 		SimulatorUtilities sm = new SimulatorUtilities();
 		sm.pressPageUp();
-		
+
 		device.setClientCode(getCodeFromInfoMessage("client"));
 		device.setWalletNumber(getCodeFromInfoMessage("wallet"));
 		device.setDeviceNumber(getCodeFromInfoMessage("device(s)"));
 	}
-	
+
 	public void createNewDevice(Device device) {
 		logger.info("Add Device for program: {}", device.getProgramCode());
 		clickAddNewButton();
 
 		runWithinPopup("Add Device", () -> {
-				fillDeviceInformation(device);
-				fillBatchDetails(device);
-				fillCustomerTypeProgramCodeAndDeviceDetails(device);
+			fillDeviceInformation(device);
+			fillBatchDetails(device);
+			fillCustomerTypeProgramCodeAndDeviceDetails(device);
 
-				clickNextButton();
-				
-				fillProfileAndAddressDetailsAndClickNext(device);
+			clickNextButton();
 
-				// skip wallet extra fields
+			fillProfileAndAddressDetailsAndClickNext(device);
+
+			// skip wallet extra fields
 				clickFinishButton();
 
 				verifyNoErrors();
@@ -228,23 +227,23 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 		verifyOperationStatus();
 
-		//scolling "PageUp" is needed here as the Menu item is not visible
+		// scolling "PageUp" is needed here as the Menu item is not visible
 		SimulatorUtilities sm = new SimulatorUtilities();
 		sm.pressPageUp();
-		
+
 		device.setClientCode(getCodeFromInfoMessage("client"));
 		device.setWalletNumber(getCodeFromInfoMessage("wallet"));
-//		device.setWalletNumber(getWalletsId(getWalletsFromPage()));
+		// device.setWalletNumber(getWalletsId(getWalletsFromPage()));
 		device.setDeviceNumber(getCodeFromInfoMessage("device(s)"));
 	}
-	
-	public String getWalletsId(String wallets){		
+
+	public String getWalletsId(String wallets) {
 		String walletList[] = wallets.split(" : ");
 		String walletLists[] = walletList[1].split(", ");
-		logger.info("Wallet aaded :[%s]",walletLists[0]);
+		logger.info("Wallet aaded :[%s]", walletLists[0]);
 		return walletLists[0];
 	}
-	
+
 	private void fillBatchDetails(Device device) {
 		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
 		generateDeviceBatchBtn.click();
@@ -273,18 +272,21 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	}
 
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
-
 		fillProfile(device);
 		fillAddress(device);
 		// skip employment details
 		clickNextButton();
 		// Bank Details applicable only for Credit type product
+		SimulatorUtilities.wait(500);
 		clickNextButton();
 		// Nomination Details applicable only for Credit type product
+		SimulatorUtilities.wait(500);
 		clickNextButton();
 		// skip client extra fields
+		SimulatorUtilities.wait(500);
 		clickNextButton();
 		// skip device extra fields
+		SimulatorUtilities.wait(500);
 		clickNextButton();
 	}
 
@@ -295,7 +297,8 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());
 
 		try {
-			Thread.sleep(5000); // added some sleep as the page does not repond after adding zip code
+			Thread.sleep(5000); // added some sleep as the page does not repond
+								// after adding zip code
 		} catch (InterruptedException e) {
 			logger.error("Error" + e);
 			Thread.currentThread().interrupt();
@@ -306,8 +309,8 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	private void fillProfile(Device device) {
 		if (corporateClientCodeDDwn.isEnabled())
-			//WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
-		WebElementUtils.selectDropDownByIndex(corporateClientCodeDDwn, 1);
+			// WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
+			WebElementUtils.selectDropDownByIndex(corporateClientCodeDDwn, 1);
 
 		WebElementUtils.selectDropDownByVisibleText(branchCodeDDwn, device.getBranchCode());
 		ClientDetails client = device.getClientDetails();
@@ -332,7 +335,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(vipDDwn, device.getVip());
 		WebElementUtils.selectDropDownByVisibleText(statementPreferenceDDwn, device.getOtherInfoStatementPreference());
 		WebElementUtils.enterText(faxNumberTxt, device.getOtherInfoFaxNo());
-		
+
 		clickNextButton();
 	}
 }
