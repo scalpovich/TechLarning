@@ -12,6 +12,7 @@ Meta:
 @FileUpload
 
 Given login to portal as existing bank as a Customeruser
+When user creates Device BIN for Mastercard for product prepaid for BinType as Single Message Type
 When user creates a Open loop wallet plan of default type for program Corporate Travel card - Multi currency for Prepaid
 When user creates an Embossing File Template
 When user creates a Vendor of Category Personalization with Embossing template attached
