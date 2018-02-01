@@ -155,7 +155,7 @@ public class WebElementUtils {
 		try {
 			switchToDefaultContent(driver);
 			new WebDriverWait(driver, timeoutInSec).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator));
-			addWicketAjaxListeners(driver);
+//			addWicketAjaxListeners(driver);
 			action.run();
 		} finally {
 			if (currentFrame == null) {
