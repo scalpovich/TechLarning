@@ -122,7 +122,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private MCWebElement firstRowViewLink;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody img[alt='Edit Record']")
-	private MCWebElement firstRowEditLink;
+	protected MCWebElement firstRowEditLink;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody img[alt='Delete Record']")
 	private MCWebElement firstRowDeleteLink;

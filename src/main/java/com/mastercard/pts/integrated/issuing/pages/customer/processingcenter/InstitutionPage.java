@@ -7,11 +7,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -24,6 +28,11 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		ProcessingCenterNav.L3_INSTITUTION,
 })
 public class InstitutionPage extends AbstractBasePage{
+	
+	@Autowired
+	private TestContext context;
+	
+	boolean ascFlag;
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(InstitutionPage.class);
@@ -177,6 +186,11 @@ public class InstitutionPage extends AbstractBasePage{
 	
 	@PageElement(findBy = FindBy.NAME , valueToFind = "refCurrencyCode:input:dropdowncomponent")
 	private MCWebElement refCurrencyDwn;
+	
+	@PageElement(findBy = FindBy.NAME , valueToFind = "adaptiveEcommFlag:input:dropdowncomponent")
+	private MCWebElement adaptiveEcommFlagDwn;
+	
+	
 
 	public void verifyUiOperationStatus() {
 		logger.info("Processing Center UI Status");
@@ -274,5 +288,43 @@ public class InstitutionPage extends AbstractBasePage{
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(instituteCode));
+	}
+	
+
+	public void editInstitute()
+	{
+		InstitutionCreation institutioncreation=context.get("institutionData");
+		WebElementUtils.enterText(instituteCode, institutioncreation.getInstitutionCode());
+		clickSearchButton();
+		waitForElementVisible(firstRowEditLink);
+		editFirstRecord();	
+	}
+	
+	public boolean isAdaptiveAuthenticationEnabled()
+	{
+		return adaptiveEcommFlagDwn.isEnabled();
+	}
+	
+	public boolean userAbleToselectACSVendor()
+	{
+		runWithinPopup(
+				"Edit Institution",
+				() -> {
+					ascFlag=isAdaptiveAuthenticationEnabled();
+					selectACSVendor();
+				});	
+		return ascFlag;
+	}
+	
+	public void selectACSVendor()
+	{
+		InstitutionCreation institutioncreation=context.get("institutionData");
+		WebElementUtils.selectDropDownByVisibleText(adaptiveEcommFlagDwn, institutioncreation.getAscVendor());
+	}
+	
+	public boolean checkASCVendorEnabledAndSelectASCVendor()
+	{
+		editInstitute();
+		return userAbleToselectACSVendor();
 	}
 }

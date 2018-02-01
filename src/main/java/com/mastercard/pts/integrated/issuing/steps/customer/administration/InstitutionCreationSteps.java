@@ -5,6 +5,7 @@ import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +92,15 @@ public class InstitutionCreationSteps {
 	@When("admin selects the newly created institution")
 	public void selectInstitution() {
 		instituteCreationflows.selectNewlyCreatedInstitutionFlows();
+	}
+	@When("user edit $institute institution configuration and select $vendor ACS Vendor")
+	public void userEditInstitutionConfiguration(String institute,String vendor ){
+		InstitutionCreation institutioncreation=new InstitutionCreation();
+		institutioncreation.setInstitutionCode(institute);
+		institutioncreation.setAscVendor(vendor);
+		context.put("institutionData", institutioncreation);
+		boolean acsEnable=instituteCreationflows.isAdaptiveAuthenticationEnabledAndUserAbleToSelectACSVendor();
+		Assert.assertTrue("Adaptive authentication is not enabled",acsEnable);
 	}
 
 }

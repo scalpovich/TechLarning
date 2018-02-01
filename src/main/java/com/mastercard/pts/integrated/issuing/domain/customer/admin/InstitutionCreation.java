@@ -44,6 +44,7 @@ public class InstitutionCreation extends AbstractBasePage {
 	private String agentPortalAdminID;
 	private String agentPortalAdminName;
 	private String createdInstitution;
+	private String ascVendor;
 	
 	public String getCreatedInstitution() {
 		return createdInstitution;
@@ -372,6 +373,14 @@ public class InstitutionCreation extends AbstractBasePage {
 		institute.setAgentPortalAdminID(MiscUtils.generateRandomNumberAsString(6));
 		institute.setAgentPortalAdminName(MapUtils.fnGetInputDataFromMap("AgentPortalAdminName")+MiscUtils.generateRandomNumberAsString(5));					
 		return institute;
+	}
+
+	public String getAscVendor() {
+		return ascVendor;
+	}
+
+	public void setAscVendor(String ascVendor) {
+		this.ascVendor = ascVendor;
 	}
 	
 	
