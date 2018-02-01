@@ -220,6 +220,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			fillProfileAndAddressDetailsAndClickNext(device);
 
 			// skip wallet extra fields
+				SimulatorUtilities.wait(500);
 				clickFinishButton();
 
 				verifyNoErrors();
@@ -277,16 +278,12 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		// skip employment details
 		clickNextButton();
 		// Bank Details applicable only for Credit type product
-		SimulatorUtilities.wait(500);
 		clickNextButton();
 		// Nomination Details applicable only for Credit type product
-		SimulatorUtilities.wait(500);
 		clickNextButton();
 		// skip client extra fields
-		SimulatorUtilities.wait(500);
 		clickNextButton();
 		// skip device extra fields
-		SimulatorUtilities.wait(500);
 		clickNextButton();
 	}
 
@@ -309,7 +306,8 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	private void fillProfile(Device device) {
 		if (corporateClientCodeDDwn.isEnabled())
-			// WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
+			// WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn,
+			// device.getCorporateClientCode());
 			WebElementUtils.selectDropDownByIndex(corporateClientCodeDDwn, 1);
 
 		WebElementUtils.selectDropDownByVisibleText(branchCodeDDwn, device.getBranchCode());
