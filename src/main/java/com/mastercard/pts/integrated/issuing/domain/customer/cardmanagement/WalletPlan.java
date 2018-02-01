@@ -40,6 +40,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String description;
 	private String walletPlanCode;
 	private String currency;
+	private String currency1;
 	private String productType;
 	private String programType;
 	private String product;
@@ -436,10 +437,19 @@ public class WalletPlan implements HasCodeAndDescription {
 		this.WalletPlanUsage = walletPlanUsage;
 	}
 
+	public String getCurrency1() {
+		return currency1;
+	}
+
+	public void setCurrency1(String currency1) {
+		this.currency1 = currency1;
+	}
+
 	public static WalletPlan walletplanDataprovider() {
 		WalletPlan walletplan = new WalletPlan();
 		walletplan.setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
 		walletplan.setWalletPlanUsage(MapUtils.fnGetInputDataFromMap("WalletplanUsage"));
+		walletplan.setCurrency1(MapUtils.fnGetInputDataFromMap("Currency1"));
 		return walletplan;
 	}
 

@@ -38,5 +38,7 @@ public class ContextConstants {
 	
 	public static final String NEW_APPLICATION_BATCH="NEW_APPLICATION_BATCH";
 	
+	public static final String WALLET_TYPE="WALLET_TYPE";
+	
 	private ContextConstants() {}
 }
