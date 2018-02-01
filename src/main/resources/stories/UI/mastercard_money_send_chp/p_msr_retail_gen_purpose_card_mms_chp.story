@@ -14,7 +14,7 @@ And device range for program with device plan for "prepaid" "magnetic stripe" ca
 When user creates new device of prepaid type for non-default institution
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
-!-- Then device has "normal" status for non-default institution
+Then device has "normal" status for non-default institution
 Then user sign out from customer portal
 
 Scenario: Set up prepaid msr retail general purpose card
@@ -24,7 +24,7 @@ When user creates new device of prepaid type for new client
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
-!-- Then device has "normal" status
+Then device has "normal" status
 When user has wallet number information for prepaid device
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
