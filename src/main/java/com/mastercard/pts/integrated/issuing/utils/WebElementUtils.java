@@ -277,10 +277,6 @@ public class WebElementUtils {
 		return ExpectedConditions.elementToBeClickable(asWebElement(element));
 	}
 
-	public static ExpectedCondition<WebElement> elementToBeVisible(MCWebElement element) {
-		return ExpectedConditions.visibilityOf(asWebElement(element));
-	}
-	
 	public static ExpectedCondition<WebElement> visibilityOf(MCWebElement element) {
 		return ExpectedConditions.visibilityOf(asWebElement(element));
 	}
