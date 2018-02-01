@@ -11,9 +11,11 @@ import java.util.function.Function;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Strings;
+import com.jcraft.jsch.Logger;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.Transaction;
 import com.mastercard.pts.integrated.issuing.utils.ExcelUtils;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 @Component
 public class TransactionProvider {
@@ -61,13 +63,16 @@ public class TransactionProvider {
 
 		transaction.setDeKeyValuePair(parseDataElements(templateData.get(DE),
 				transaction));
-		if (!transactionName.contains("ASI"))
+		if (!transactionName.equals("ASI_MSR"))
+		{
+		   MiscUtils.reportToConsole(transactionName);
 			transaction.setExpectedDataElements(parseDataElements(
 					templateData.get(EXPECTED_DE), transaction));
-
+		}
 		transaction.setCardDataElements(parseDataElements(
 				templateData.get(CARD_DE), transaction));
 		return transaction;
+
 	}
 
 	public Transaction loadTransaction(String testCaseName) {

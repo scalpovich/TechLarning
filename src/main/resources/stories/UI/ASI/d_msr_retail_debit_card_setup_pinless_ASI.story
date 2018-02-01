@@ -26,7 +26,7 @@ And user sign out from customer portal
 
 Scenario: Perform MMSR-RetailDebit Card Authorization transaction
 Given connection to MAS is established
-When perform an ASI MAS transaction
+When perform an ASI_MSR_DEBIT MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution

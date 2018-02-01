@@ -10,7 +10,7 @@ Meta:
 @ASI
 Scenario: Set up prepaid msr retail gift card authorization pinless
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
+And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client
 Then device has "normal" status
 Then user sign out from customer portal
@@ -20,14 +20,15 @@ Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
+Then device has "normal" status
 Then user activates device through helpdesk
 Then user sign out from customer portal
 
 Scenario: Perform MMSR-RetailGiftCard Authorization transaction
 Given connection to MAS is established
-When perform an ASI MAS transaction
+When perform an ASI_EMV MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
-Then search Account Status authorization and verify 085-Successful status
+Then search Account Status authorization and verify 000-Successful status
 And user sign out from customer portal

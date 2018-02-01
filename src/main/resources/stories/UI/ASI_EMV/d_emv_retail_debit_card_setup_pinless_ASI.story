@@ -11,7 +11,7 @@ Meta:
 
 Scenario: Set up debit msr retail debit card pinless
 Given user is logged in institution
-And device range for program with device plan for "debit" "magnetic stripe" card without pin
+And device range for program with device plan for "debit" "emv" card without pin
 When user creates new device of debit type for new client
 And user sign out from customer portal
 
@@ -26,7 +26,7 @@ And user sign out from customer portal
 
 Scenario: Perform MMSR-RetailDebit Card Authorization transaction
 Given connection to MAS is established
-When perform an ASI MAS transaction
+When perform an ASI_EMV MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
