@@ -813,6 +813,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void clickIframeFinishButton() {
+		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec).until(WebElementUtils.elementToBeVisible(iframeFinishBtn));
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(iframeFinishBtn)).click();
 	}
 
@@ -923,7 +924,7 @@ public class DevicePlanPage extends AbstractBasePage {
 			// making necessary changes so that this value can be set in the
 			// required format so that it can be used when a pinless card is
 			// used
-			logger.info("Validity On Initial Months = ", devicePlan.getValidityOnInitialMonths());
+			logger.info("Validity On Initial Months = {} ", devicePlan.getValidityOnInitialMonths());
 			String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
 			devicePlan.setExpiryDate(dateInYYMM);
 		} else {
