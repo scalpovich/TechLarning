@@ -414,7 +414,8 @@ public class DeviceRangePage extends AbstractBasePage {
 		logger.info("ProductType : {}",devicePlan.getProductType());
 		if(devicePlan.getProductType().equalsIgnoreCase("Credit [C]"))
 		{
-		WebElementUtils.selectDropDownByIndex(issuerBinDDwn, 1);
+		WebElementUtils.selectDropDownByVisibleText(issuerBinDDwn, "mastercard BIn credit [520000]");
+		//WebElementUtils.selectDropDownByIndex(issuerBinDDwn, 1);
 		WebElementUtils.selectDropDownByIndex(branchDDwn, 1);
 		}
 		else

@@ -104,7 +104,6 @@ public class DeviceSteps {
 		
 		Program program = context.get(ContextConstants.PROGRAM);
 		device.setProgramCode(program.buildDescriptionAndCode());
-		
 		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 		
@@ -155,6 +154,7 @@ public class DeviceSteps {
 			
 			Program program = context.get(ContextConstants.PROGRAM);
 			device.setProgramCode(program.buildDescriptionAndCode());
+			sdnUncheckProgram(program.getProgramCode());
 			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 			

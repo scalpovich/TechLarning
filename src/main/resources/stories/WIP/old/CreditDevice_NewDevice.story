@@ -11,7 +11,6 @@ Scenario:1 UI verification - user creates a Credit Device Using New Device Scree
 Meta:
 @UserCreatesNewCreditDevice
 Given user is logged in institution
-When user creates Device BIN for Mastercard for product credit for BinType as Dual Message Type
 When User fills Dedupe Plan
 And User fills Statement Message Plan for credit product
 And User fills Marketing Message Plan for credit product
