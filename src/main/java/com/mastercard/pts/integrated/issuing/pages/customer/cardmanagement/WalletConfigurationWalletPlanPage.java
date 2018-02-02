@@ -2,30 +2,28 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.Collection;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_PROGRAM_SETUP,
-		CardManagementNav.L2_WALLET_CONFIGURATION,
-		CardManagementNav.L3_WALLET_PLAN })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_WALLET_CONFIGURATION, CardManagementNav.L3_WALLET_PLAN })
 public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(WalletConfigurationWalletPlanPage.class);
+	private static final Logger logger = LoggerFactory.getLogger(WalletConfigurationWalletPlanPage.class);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=walletPlanCode]")
 	private MCWebElement walletPlanCodeSearchTxt;
@@ -53,7 +51,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=minBalanceForTxn]")
 	private MCWebElement reservedAmountTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[@name='view:whiteListedMcgCode:input:dropdowncomponent']")
 	private MCWebElement whiteListedMsg;
 
@@ -69,7 +67,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:billingCycleCode:input:dropdowncomponent")
 	private MCWebElement billingCyleCodeDDwn;
 
-	private int reservedAmount = 0; //MiscUtils.randomNumber(5);
+	private int reservedAmount = 0; // MiscUtils.randomNumber(5);
 
 	public void inputWalletPlanCode(String walletPlanCodeString) {
 		WebElementUtils.enterText(walletPlanCodeTxt, walletPlanCodeString);
@@ -84,13 +82,11 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectProductType(String productType) {
-		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn,
-				productType);
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, productType);
 	}
 
 	public void selectProgramType(String programType) {
-		WebElementUtils.selectDropDownByVisibleText(programTypeDDwn,
-				programType);
+		WebElementUtils.selectDropDownByVisibleText(programTypeDDwn, programType);
 	}
 
 	public void selectUsage(String usage) {
@@ -102,31 +98,30 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectBillingCyleCode(String billingCyleCode) {
-		WebElementUtils.selectDropDownByVisibleText(billingCyleCodeDDwn,
-				billingCyleCode);
+		WebElementUtils.selectDropDownByVisibleText(billingCyleCodeDDwn, billingCyleCode);
 	}
 
 	public void inputReservedAmount() {
-		WebElementUtils.enterText(reservedAmountTxt,
-				String.valueOf(reservedAmount));
+		WebElementUtils.enterText(reservedAmountTxt, String.valueOf(reservedAmount));
 	}
-	
-	public void enterReservedAmount(String reserverAmount){
-		WebElementUtils.enterText(reservedAmountTxt,
-				reserverAmount);
+
+	public void enterReservedAmount(String reserverAmount) {
+		WebElementUtils.enterText(reservedAmountTxt, reserverAmount);
 	}
-	
-	public void selectWhiteListMSG(String msgCode){
-		WebElementUtils.selectDropDownByVisibleText(whiteListedMsg,msgCode);
+
+	public void selectWhiteListMSG(String msgCode) {
+		WebElementUtils.selectDropDownByVisibleText(whiteListedMsg, msgCode);
 	}
-	
+
 	@Override
 	public void clickNextButton() {
+		SimulatorUtilities.wait(400);
 		nextBtn.click();
 	}
 
 	@Override
 	public void clickFinishButton() {
+		SimulatorUtilities.wait(400);
 		finishBtn.click();
 	}
 
@@ -151,7 +146,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			});
 		verifyOperationStatus();
 	}
-	
+
 	// Method to fill data in Add Wallet Plan Data
 	public void addNewWalletPlanData(WalletPlan walletPlan) {
 		logger.info("Create Wallet Plan: {}", walletPlan.getWalletPlanCode());
@@ -159,48 +154,44 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 
 		runWithinPopup("Add Wallet Plan", () -> {
 			String productType = walletPlan.getProductType();
-			
+
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
-			inputDescription(walletPlan.getDescription());		
+			inputDescription(walletPlan.getDescription());
 			selectCurrency(walletPlan.getCurrency());
 			selectProductType(productType);
 			selectProgramType(walletPlan.getProgramType());
 			selectUsage(walletPlan.getUsage());
 			fillDetailsBasedOnCarddType(walletPlan, productType);
 			clickNextButton(); // Click on next button
-			clickFinishButton(); // click on finish button
+				clickFinishButton(); // click on finish button
 			});
 		verifyOperationStatus();
 	}
 
-	private void fillDetailsBasedOnCardType(WalletPlan walletPlan,
-			String productType) {
+	private void fillDetailsBasedOnCardType(WalletPlan walletPlan, String productType) {
 		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 			selectCreditPlan(walletPlan.getCreditPlan());
 			selectBillingCyleCode(walletPlan.getBillingCyleCode());
 		}
 		if (productType.equalsIgnoreCase(ProductType.DEBIT)) {
-			WebElementUtils.enterText(dummyAccountNumberTxt,
-					walletPlan.getDummyAccountNumber());
+			WebElementUtils.enterText(dummyAccountNumberTxt, walletPlan.getDummyAccountNumber());
 		}
 		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
 			inputReservedAmount();
 		}
 	}
-	
-	private void fillDetailsBasedOnCarddType(WalletPlan walletPlan,
-			String productType) {
+
+	private void fillDetailsBasedOnCarddType(WalletPlan walletPlan, String productType) {
 		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 			selectCreditPlan(walletPlan.getCreditPlan());
 			selectBillingCyleCode(walletPlan.getBillingCyleCode());
 		}
 		if (productType.equalsIgnoreCase(ProductType.DEBIT)) {
-			WebElementUtils.enterText(dummyAccountNumberTxt,
-					walletPlan.getDummyAccountNumber());
+			WebElementUtils.enterText(dummyAccountNumberTxt, walletPlan.getDummyAccountNumber());
 		}
 		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
 			enterReservedAmount(walletPlan.getReservedAmount());
-			if(walletPlan.getWhiteMcgCode() != null){
+			if (walletPlan.getWhiteMcgCode() != null) {
 				logger.info("White listed MCG {}", walletPlan.getWhiteMcgCode());
 				selectWhiteListMSG(walletPlan.getWhiteMcgCode());
 			}
@@ -214,8 +205,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils
-				.elementToBeClickable(walletPlanCodeSearchTxt));
+		return Arrays.asList(WebElementUtils.elementToBeClickable(walletPlanCodeSearchTxt));
 	}
 
 }
