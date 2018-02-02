@@ -42,5 +42,9 @@ public class ContextConstants {
 	
 	public static final String USAGE_TYPE="USAGE_TYPE";
 	
+	public static final String CREDIT_BRANCH="CREDIT_BRANCH";
+	
+	public static final String DEVICE_BIN="DEVICE_BIN";
+	
 	private ContextConstants() {}
 }

@@ -5,7 +5,7 @@ As a user
 I want to assert pages
 
 Meta:
-CreditRegression
+@CreditRegression
 @StoryName S190639					 
 Scenario:1 UI verification - user creates a Credit Device Using New Device Screen
 Meta:

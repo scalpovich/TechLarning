@@ -123,7 +123,7 @@ public class CreditCardCreditPlanPage extends AbstractBasePage {
 			clickCancelButton();
 			waitForPageToLoad(getFinder().getWebDriver());
 			}
-		    waitForPageToLoad(getFinder().getWebDriver());
+		    //waitForPageToLoad(getFinder().getWebDriver());
 		});
 		verifyOperationStatus();
 		return errorMessagePresence();

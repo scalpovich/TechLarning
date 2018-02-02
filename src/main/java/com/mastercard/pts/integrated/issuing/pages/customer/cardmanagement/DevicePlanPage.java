@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CardType;
 import com.mastercard.pts.integrated.issuing.domain.DeviceType;
@@ -24,6 +25,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManag
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -864,10 +866,21 @@ public class DevicePlanPage extends AbstractBasePage {
 			selectIframeDeviceType(devicePlanDataObject.getDeviceType());
 			enterIframeServiceCode(devicePlanDataObject.getServiceCode());
 			selectIframeDeliveryMode(devicePlanDataObject.getDeliveryMode());
+			if(devicePlanDataObject.getProductType().equalsIgnoreCase("Credit [C]"))
+			{
+				WebElementUtils.selectDropDownByIndex(iframeDeviceIDGenerationTemplateDdwn, 1);
+				WebElementUtils.selectDropDownByIndex(iframeCardPackIDGenerationTemplateDdwn,1);
+				//WebElementUtils.enterText(iframeCustomCodeTxt, CustomUtils.randomNumbers(2));
+				WebElementUtils.selectDropDownByIndex(iframePlasticIdDdwn,1);
+				WebElementUtils.selectDropDownByIndex(iframePictureCodeDdwn,1);
+			}
+			else
+			{
 			selectIframeDeviceIDGenerationTemplate(devicePlanDataObject.getDeviceIdGenerationTemplate());
 			selectIframeCardPackIDGenerationTemplate(devicePlanDataObject.getCardPackIdGenerationTemplate());
 			selectIframePlasticIdDdwn(devicePlanDataObject.getPlasticId());
 			selectIframePictureCodeDdwn(devicePlanDataObject.getPictureCode());
+			}
 			selectIframeActivationModeLst(devicePlanDataObject.getActivationMode());
 			selectIframeExpiryFlagDdwn(devicePlanDataObject.getExpiryFlag());
 			// next steps have been pushed to below method due to SONAR
@@ -931,7 +944,14 @@ public class DevicePlanPage extends AbstractBasePage {
 		enableIframeCardProductionChkbx();
 
 		if (iframeEmbossingVendorDdwn.isEnabled())
+			if(devicePlan.getProductType().equalsIgnoreCase("Credit [C]"))
+			{
+			WebElementUtils.selectDropDownByIndex(iframeEmbossingVendorDdwn, 1);
+			}
+			else
+			{
 			selectIframeEmbossingVendorDdwn(devicePlan.getEmbossingVendor());
+			}
 		if (devicePlan.getFillRenewalSection().equalsIgnoreCase(STATUS_YES))
 			fillRenewalSection(devicePlan);
 		if (devicePlan.getFillReplacementSection().equalsIgnoreCase(STATUS_YES))
@@ -968,8 +988,16 @@ public class DevicePlanPage extends AbstractBasePage {
 			pinRequiredChk.click();
 			WebElementUtils.selectDropDownByVisibleText(pinDataTransmissionDDwn, devicePlan.getPinDataTransmission());
 			WebElementUtils.enterText(pinLengthTxt, devicePlan.getPinLength());
+			if(devicePlan.getProductType().equalsIgnoreCase("Credit [C]"))
+			{
+				WebElementUtils.selectDropDownByIndex(pinProductionVendorDDwn,1);
+				WebElementUtils.selectDropDownByIndex(pinGenerationOptionDDwn,1);
+			}
+			else
+			{
 			WebElementUtils.selectDropDownByVisibleText(pinProductionVendorDDwn, devicePlan.getEmbossingVendor());
 			WebElementUtils.selectDropDownByVisibleText(pinGenerationOptionDDwn, devicePlan.getPinGenerationOption());
+			}
 		}
 	}
 

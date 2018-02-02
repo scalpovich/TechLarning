@@ -262,10 +262,22 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 		clickAddNewButton();
 
 		runWithinPopup("Add Transaction Limit Plan Detail",() -> {
+			      if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
+			       WebElementUtils.selectDropDownByIndex(iframeTransactionTypeDDwn, 1);
+			       waitForWicket();
+			       selectByVisibleText(iframeTransactionSourceDDwn,ProductType.INTERCHANGE);
+			       waitForWicket();
+			       WebElementUtils.selectDropDownByIndex(iframeTransactionChannelDDwn,1);
+			       waitForWicket();
+			       WebElementUtils.selectDropDownByIndex(iframeTransactionOriginDDwn,1);
+			      }
+			      else
+			      {
 					selectIframeTransactionType(details.getIframeTransactionType());
 					selectIframeTransactionSource(details.getIframeTransactionSource());
 					selectIframeTransactionChannel(details.getIframeTransactionChannel());
 					selectIframeTransactionOrigin(details.getIframeTransactionOrigin());
+			      }
 					enterIframeFloorAmount(details.getIframeFloorAmount());
 					selectIframeFloorResponse(details.getIframeFloorResponse());
 					enterIframeCeilingAmount(details.getIframeCeilingAmount());
