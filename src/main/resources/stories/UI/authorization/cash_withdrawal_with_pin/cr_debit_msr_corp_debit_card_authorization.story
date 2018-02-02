@@ -14,6 +14,7 @@ Given user is logged in institution
 And device range for program with device plan for "debit" "magnetic stripe" card
 When user creates new device of debit type for new client
 Then device has "normal" status
+And user sign out from customer portal
 
 Scenario: Device production - debit msr corp debit card
 Given user is logged in institution
