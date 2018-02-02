@@ -20,6 +20,7 @@ Then device has "normal" status
 When user has wallet number information for prepaid device
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
+And user sign out from customer portal
 
 Scenario: prepaid emv retail general purpose card device production
 Meta:
