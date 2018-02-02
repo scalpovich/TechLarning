@@ -24,6 +24,8 @@ import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
+import junit.framework.Assert;
+
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_SEARCH,
 		CardManagementNav.L2_BATCH_JOB_HISTORY })
@@ -137,10 +139,11 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		switchToViewBatchDetailsFrame();
 		do {
 			statuslabelTxt = statusTxt.getText();
-		} while (!(statuslabelTxt.trim().contains(statusString.trim())) && i++ < 20);
+			CustomUtils.ThreadDotSleep(2000);
+		} while (!(statuslabelTxt.trim().contains(statusString.trim())) && i++ < 50);
 
-		CustomUtils.ThreadDotSleep(2000);
 		logger.info("Status  -", statuslabelTxt);
+		Assert.assertEquals(statusString, statuslabelTxt);
 		clickWhenClickable(closeBtn);
 		SwitchToDefaultFrame();
 

@@ -47,7 +47,8 @@ public class OrderPage extends InventoryAbstractPage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(brancIdDDwn), WebElementUtils.visibilityOf(programCodeDDwn),
-				WebElementUtils.visibilityOf(deviceTypeDDwn), WebElementUtils.visibilityOf(quantityOrderedTxt), WebElementUtils.visibilityOf(memoTxt));
+				WebElementUtils.visibilityOf(deviceTypeDDwn), WebElementUtils.visibilityOf(quantityOrderedTxt),
+				WebElementUtils.visibilityOf(memoTxt));
 	}
 
 	public void selectBranchId(String branchId) {
@@ -59,7 +60,7 @@ public class OrderPage extends InventoryAbstractPage {
 	}
 
 	public void selectDeviceType(String deviceType) {
-		WebElementUtils.selectDropDownByVisibleText(deviceTypeDDwn, deviceType);
+		WebElementUtils.selectDDByVisibleText(deviceTypeDDwn, deviceType);
 	}
 
 	public void enterQuantityOrdered(String quantityOrdered) {
