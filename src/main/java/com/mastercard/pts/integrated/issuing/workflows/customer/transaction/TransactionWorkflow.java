@@ -65,6 +65,11 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKey
 public class TransactionWorkflow extends SimulatorUtilities {
 	private static final Logger logger = LoggerFactory.getLogger(TransactionWorkflow.class);
 	private static final String EDIT_DE_VALUE = "Edit DE Value";
+		private static final String SELECT_DE_VALUE = "Drop Down Button";
+	private static final String BILLING_CURRENCY_VALUE = "356 - Indian Rupee";
+	private static final String BILLING_CURRENCY_CODE = "051 - Currency Code, Cardholder Billing";
+	private static final String BILLING_AMOUNT = "006 - Amount, Cardholder Billing";	
+	private static final String TRANSACTION_AMOUNT = "004 - Amount, Transaction";
 	private static final String SET_VALUE = "Set Value";
 	private static final String CLOSE = "Close";
 	private static final String MESSAGE_TYPE_INDICATOR = "Message Type Indicator";
@@ -544,12 +549,59 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			loadIpmFile(getIpmFileName());
 			Device device = context.get(ContextConstants.DEVICE);
 			updatePanNumber(device.getDeviceNumber());
+			updateAmountCardHolderBilling();
+			updateBillingCurrencyCode();
 			assignUniqueFileId();
 		} catch (Exception e) {
 			logger.debug("Exception occurred while editing fields", e);
 			MiscUtils.propagate(e);
 		}
 		return aRN;
+	}
+	
+	private void updateBillingCurrencyCode() throws AWTException{
+		Actions action = new Actions(winiumDriver);		
+		activateMcps();
+		clickMiddlePresentmentAndMessageTypeIndicator();
+		pressPageDown();
+		pressPageDown();
+		action.moveToElement(winiumDriver.findElementByName("051 - Currency Code, Cardholder Billing")).doubleClick().build().perform();  
+		activateEditField();
+		wait(2000);	
+		winiumDriver.findElementByName(SELECT_DE_VALUE).click();	
+		wait(2000);	
+		winiumDriver.findElementByName(BILLING_CURRENCY_VALUE).click();
+		winiumClickOperation("Set Value");
+		wait(2000);
+		winiumClickOperation(CLOSE);
+	}
+	
+	private void updateAmountCardHolderBilling() throws AWTException{
+		String amount = ""+getTransactionAmount();
+		Actions action = new Actions(winiumDriver);		
+		activateMcps();
+		clickMiddlePresentmentAndMessageTypeIndicator();		
+		action.moveToElement(winiumDriver.findElementByName("006 - Amount, Cardholder Billing")).doubleClick().build().perform();  
+		activateEditField();
+		winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
+		setText("");
+		setText(amount.toString());
+		wait(2000);
+		winiumClickOperation("Set Value");
+		wait(2000);
+		winiumClickOperation(CLOSE);
+	}
+	
+	private String getTransactionAmount() throws AWTException{
+		Actions action = new Actions(winiumDriver);		
+		String amount;
+		activateMcps();
+		clickMiddlePresentmentAndMessageTypeIndicator();		
+		action.moveToElement(winiumDriver.findElementByName("004 - Amount, Transaction")).doubleClick().build().perform();  
+		activateEditField();
+		amount = winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
+		winiumClickOperation(CLOSE);
+		return amount.toString();		
 	}
 
 	private void updatePanNumber(String cardNumber) throws AWTException{
@@ -1038,8 +1090,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		if(SimulatorConstantsData.MDFS_LICENSE_TYPE.contains("17"))
 			name = "MDFS17";
 
-		if(name.equalsIgnoreCase("visa")) 
+		if("visa".equalsIgnoreCase(name)) {
 			disconnectAndCloseVts();
+			MiscUtils.killProcessFromTaskManager("SappLogServer.exe"); // some logger comes up.. to kill that instance.. this extra kill is used
+		}
 
 		MiscUtils.killProcessFromTaskManager("WINIUM");
 		MiscUtils.killProcessFromTaskManager(name);
@@ -1415,7 +1469,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			assertFalse("VTS connection is NOT succcessful!", false);
 			throw new ValidationException("VTS connection is NOT succcessful!");
 		}
-		winiumClickOperation("Minimize");
+		winiumClickOperation("Minimize"); // to minimize Comminication handler
+		wait(2000);
+		winiumClickOperation("Maximize"); // to Maximize Visa Test System
 	}
 
 	private void loadVisaInputFile(String transaction) {

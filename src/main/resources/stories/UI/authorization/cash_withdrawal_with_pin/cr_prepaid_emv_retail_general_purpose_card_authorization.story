@@ -17,9 +17,10 @@ Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
 Then device has "normal" status
-When user has wallet number information for debit device
+When user has wallet number information for prepaid device
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
+And user sign out from customer portal
 
 Scenario: prepaid emv retail general purpose card device production
 Meta:

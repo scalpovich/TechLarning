@@ -88,6 +88,7 @@ public class VendorPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
 	private MCWebElement CancelBtn;
+
 	public void clickaddVenor() {
 		clickWhenClickable(AddVendorBtn);
 		switchToAddVenorFrame();
@@ -111,7 +112,8 @@ public class VendorPage extends AbstractBasePage {
 	public void selectVendorCategory(Vendor vendor) {
 		selectByVisibleText(CategoryDDwn, vendor.getVendorCategory());
 	}
-    public void selectBranchCode(Vendor vendor) {
+
+	public void selectBranchCode(Vendor vendor) {
 		BranchDDwn.getSelect().selectByIndex(1);
 	}
 
@@ -183,7 +185,7 @@ public class VendorPage extends AbstractBasePage {
 		vendorName = enterVendorName();
 		selectVendorCategory(vendor);
 		selectBranchCode(vendor);
-		return vendorName + " " + "[" + vendorcode + "]";
+		return buildDescriptionAndCode(vendorName, vendorcode);
 	}
 
 	public void vendorWithAllCapablity(Vendor vendor) {
@@ -212,11 +214,13 @@ public class VendorPage extends AbstractBasePage {
 		selectMobileNumber(vendor);
 		enterMobileNumber();
 		enterEmail(vendor);
-	    //enterPostalCode(vendor);
-		}
-    public boolean verifyErrorsOnVendorPage() {
+		// enterPostalCode(vendor);
+	}
+
+	public boolean verifyErrorsOnVendorPage() {
 		return publishErrorOnPage();
 	}
+
 	public void verifyNewVendorSuccess() {
 		if (!verifyErrorsOnVendorPage()) {
 			logger.info("Vendor Added Successfully");

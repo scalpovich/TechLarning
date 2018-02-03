@@ -37,7 +37,7 @@ Scenario: Generate Auth File for Clearing
 When Auth file is generated after transaction
 When MAS simulator is closed
 And user is logged in institution
-And search Purchase with Cash back authorization and verify Successful status
+Then search Purchase with Cash back authorization and verify Successful status
 And user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
@@ -50,12 +50,12 @@ When MCPS simulator is closed
 Scenario: Upload ipm file from customer portal and process it
 Given user is logged in institution
 When User uploads the NOT file
-When user processes batch for prepaid
+When user processes batch for debit
 Then user sign out from customer portal
 
 Scenario: Matching & Posting to Cardholders account
 Given user is logged in institution
 When transaction status is "Matching Pending"
-When "Matching" batch for prepaid is successful
+When "Matching" batch for debit is successful
 Then transaction status is "Presentment Matched with authorization"
 Then user sign out from customer portal

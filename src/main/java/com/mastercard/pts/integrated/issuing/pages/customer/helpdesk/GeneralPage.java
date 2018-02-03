@@ -1,7 +1,13 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.helpdesk;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -10,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.CardStatus;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ChangeAddressRequest;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.EventAndAlerts;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
@@ -31,8 +38,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
  * @author E070234, E074127 The Class GeneralPage.
  */
 @Component
-@Navigation(tabTitle = HelpdeskNav.TAB_HELPDESK, treeMenuItems = {
-		HelpdeskNav.L1_ACTIVITY, HelpdeskNav.L2_GENERAL })
+@Navigation(tabTitle = HelpdeskNav.TAB_HELPDESK, treeMenuItems = { HelpdeskNav.L1_ACTIVITY, HelpdeskNav.L2_GENERAL })
 public class GeneralPage extends AbstractBasePage {
 
 	// public GeneralPage(String title, String firstName, String familyName,
@@ -232,6 +238,18 @@ public class GeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//li[2]/span[@class='feedbackPanelINFO']")
 	private MCWebElement NoOfWalletsAddedTxt;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id ='nextRenewalDate']//span[@class = 'labeldatef']")
+	private MCWebElement nextRenewaldateTxt;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//h3[.='General']/following::table[2]//tbody/tr")
+	private MCWebElements cardsTable;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//h3[.='General']/following::table[2]//tbody/tr[1]/td[8]")
+	private MCWebElement card2Status;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//h3[.='General']/following::table[2]//tbody/tr[2]/td[8]")
+	private MCWebElement card1Status;
+
 	public static String fromShortName(String name, Class<?> cls) {
 		return MiscUtils.getConstantStringFromClassByPefixMatch(cls, name);
 	}
@@ -268,8 +286,7 @@ public class GeneralPage extends AbstractBasePage {
 
 	public void selectServiceCode(String servicecode) {
 		waitForElementVisible(this.serviceCodeDDwn);
-		List<String> aa = CustomUtils
-				.getAllOptionsOfDropDown(this.serviceCodeDDwn);
+		List<String> aa = CustomUtils.getAllOptionsOfDropDown(this.serviceCodeDDwn);
 		SelectDropDownByText(this.serviceCodeDDwn, servicecode);
 		CustomUtils.ThreadDotSleep(5000);
 		// waitForElementVisible(serviceCodeGoBtn);
@@ -290,13 +307,10 @@ public class GeneralPage extends AbstractBasePage {
 
 	public void changeAddressRequest(ChangeAddressRequest changeAddressRequest) {
 		switchToIframe(Constants.CHANGE_ADDRESS_REQUEST);
-		enterText(changeRequestAddressLine1,
-				changeAddressRequest.getAddressLine1());
-		enterText(changeRequestAddressLine2,
-				changeAddressRequest.getAddressLine2());
+		enterText(changeRequestAddressLine1, changeAddressRequest.getAddressLine1());
+		enterText(changeRequestAddressLine2, changeAddressRequest.getAddressLine2());
 		CustomUtils.ThreadDotSleep(500);
-		SelectDropDownByText(this.changeRequestCountryDdwn,
-				changeAddressRequest.getCountry());
+		SelectDropDownByText(this.changeRequestCountryDdwn, changeAddressRequest.getCountry());
 		CustomUtils.ThreadDotSleep(500);
 		enterText(changeRequestZipCode, changeAddressRequest.getZipCode());
 		CustomUtils.ThreadDotSleep(500);
@@ -336,13 +350,11 @@ public class GeneralPage extends AbstractBasePage {
 	public void selectEmailAddressIndicator(String emailIndicator) {
 		CustomUtils.ThreadDotSleep(5000);
 		String emailIndicatorXpath = "//input[@name = 'udf12:radioComponent']/following-sibling::label[contains(text(),'%s')]";
-		emailIndicatorXpath = emailIndicatorXpath.replaceAll("%s",
-				emailIndicator);
+		emailIndicatorXpath = emailIndicatorXpath.replaceAll("%s", emailIndicator);
 
 		System.out.println(emailIndicatorXpath);
 		System.out.println();
-		WebElement emailIndicatorRadiobtn = getFinder().getWebDriver()
-				.findElement(By.xpath(emailIndicatorXpath));
+		WebElement emailIndicatorRadiobtn = getFinder().getWebDriver().findElement(By.xpath(emailIndicatorXpath));
 
 		if (emailIndicatorRadiobtn.isSelected() != true) {
 			emailIndicatorRadiobtn.click();
@@ -427,10 +439,8 @@ public class GeneralPage extends AbstractBasePage {
 				ClickButton(dateOKBtn);
 				CustomUtils.ThreadDotSleep(500);
 				// birthDateEComm.click();
-				List<WebElement> calendar = getFinder()
-						.getWebDriver()
-						.findElements(
-								By.xpath("//*[contains(text(),'16')][@class='selector']"));
+				List<WebElement> calendar = getFinder().getWebDriver()
+						.findElements(By.xpath("//*[contains(text(),'16')][@class='selector']"));
 				// for (int i = 0; i <= calendar.size(); i++) {
 				calendar.get(2).click();
 				// break;
@@ -474,26 +484,45 @@ public class GeneralPage extends AbstractBasePage {
 	}
 
 	public void selectMultiWalletSingleCurrency(String Currency) {
-		WebElement wallet_currency = getFinder()
-				.getWebDriver()
-				.findElement(
-						By.xpath("//td[contains(.,'"
-								+ Currency
-								+ "')]/following::td[1]/span/select[@class = 'selectf']"));
+		WebElement wallet_currency = getFinder().getWebDriver().findElement(
+				By.xpath("//td[contains(.,'" + Currency + "')]/following::td[1]/span/select[@class = 'selectf']"));
 		String optionVisbleText = "";
 		Select sel = new Select(wallet_currency);
 		List<WebElement> selectedOptions = sel.getOptions();
 		for (WebElement element : selectedOptions) {
-			if (element
-					.getText()
-					.toUpperCase()
-					.contains(
-							helpdeskgettersetter.getNoOfWallets().toUpperCase())) {
+			if (element.getText().toUpperCase().contains(helpdeskgettersetter.getNoOfWallets().toUpperCase())) {
 				optionVisbleText = element.getText();
 				break;
 			}
 		}
 		sel.selectByVisibleText(optionVisbleText);
+	}
+
+	public void CalculateExpiryDate() {
+		String date = MapUtils.fnGetInputDataFromMap("ExpiryDate");
+		String DevicePlanExpiryDate = "31/" + date.replaceAll("-", "/");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		// Convert from String to Date
+		Date startDate = null;
+		try {
+			startDate = df.parse(DevicePlanExpiryDate);
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		final Calendar calendar = Calendar.getInstance();
+		calendar.setTime(startDate);
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		String nextDate = df.format(calendar.getTime());
+		Assert.assertEquals(nextRenewaldateTxt.getAttribute("innerHTML"), nextDate);
+
+	}
+
+	public void checkNoAndStatusOfCards() {
+		Assert.assertEquals(cardsTable.getElements().size(), 2);
+		Assert.assertEquals(CardStatus.NORMAL_CARD, card1Status.getText());
+		Assert.assertEquals(CardStatus.NOTACTIVATED_CARD, card2Status.getText());
 	}
 
 	public void switchToCurrencySetupFrame() {
@@ -502,9 +531,9 @@ public class GeneralPage extends AbstractBasePage {
 
 	public String CheckNoOfWalletsAdded() {
 		String strOutputMessage = NoOfWalletsAddedTxt.getText().split("\\n")[0];
-		String strRequestNumber = strOutputMessage.replaceAll("[^\\d]", "")
-				.trim();
+		String strRequestNumber = strOutputMessage.replaceAll("[^\\d]", "").trim();
 		return strRequestNumber;
 
 	}
+
 }

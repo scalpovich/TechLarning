@@ -47,10 +47,10 @@ public class ProgramSteps {
 
 	@Autowired
 	ProgramFlows programflows;
-	
+
 	@Autowired
 	NewLoyaltyPlan newLoyaltyPlan;
-	
+
 	@Autowired
 	private TestContext context;
 
@@ -63,24 +63,28 @@ public class ProgramSteps {
 		devicecreation.setProduct(product);
 		program.setProgramType(programType);
 		program.setWalletType(walletType);
+		program.setWalletPlan1(walletplan.getOpenloopWalletPlan());
+		program.setWalletPlan2(walletplan.getClosedloopWalletPlan());
 		program.setWalletPlan1(context.get(ContextConstants.OPEN_WALLET));
 		program.setWalletPlan2(context.get(ContextConstants.CLOSED_WALLET));
-		program.setDevicePlanProgram("DevicePlan" + " " + "["+ deviceplan.getDevicePlan() + "]");
+		program.setDevicePlanProgram(deviceplan.getDevicePlan());
 		context.put(ContextConstants.PROGRAM, program);
+		// program.setDevicePlanProgram(deviceplan.getDescription() + " " + "["
+		// + deviceplan.getDevicePlan() + "]");
 		String Program = "";
 		if (product.contains(ProductType.Prepaid) && programType.contains(ProgramType.CORPORATE_GIFT_CARD)
 				|| programType.contains(ProgramType.RETAIL_GENERAL_PURPOSE_CARD)
 				|| programType.contains(ProgramType.CORPORATE_GENERAL_PURPOSE_CARD)) {
-			Program = programflows.createprogramPrepaid(devicecreation, program,newLoyaltyPlan.getLoyaltyPlan());
-			sDNUncheckProgram(Program);
+			Program = programflows.createprogramPrepaid(devicecreation, program, newLoyaltyPlan.getLoyaltyPlan());
+			// sDNUncheckProgram(Program);
 		}
 
 		if (product.contains(ProductType.Prepaid)
 				&& programType.contains(ProgramType.CORPORATE_TRAVEL_SINGLECURRENCY_CARD)
 				|| programType.contains(ProgramType.RETAIL_TRAVEL_SINGLECURRENCY_CARD)
 				|| programType.contains(ProgramType.RETAIL_GIFT_CARD)) {
-			Program = programflows.createprogramPrepaid(devicecreation, program,newLoyaltyPlan.getLoyaltyPlan());
-			sDNUncheckProgram(Program);
+			Program = programflows.createprogramPrepaid(devicecreation, program, newLoyaltyPlan.getLoyaltyPlan());
+			// sDNUncheckProgram(Program);
 		}
 
 		if (product.contains(ProductType.Debit)) {
@@ -91,10 +95,11 @@ public class ProgramSteps {
 				&& programType.contains(ProgramType.CORPORATE_TRAVEL_MULTICURRENCY_CARD)
 				|| programType.contains(ProgramType.RETAIL_TRAVEL_MULTICURRENCY_CARD)) {
 			Program = programflows.createProgramPrepaidMultiCurrency(devicecreation, program);
-			sDNUncheckProgram(Program);
+			// sDNUncheckProgram(Program);
 		}
 		Assert.assertNotNull(Program);
 		program.setProgram(Program);
+		context.put(ContextConstants.PROGRAM, program);
 
 	}
 
@@ -107,16 +112,20 @@ public class ProgramSteps {
 		program.setInterchange(interchange);
 		devicecreation.setProduct(product);
 		program.setProgramType(programType);
+		program.setWalletPlan1(context.get(ContextConstants.OPEN_WALLET));
+		program.setWalletPlan2(context.get(ContextConstants.CLOSED_WALLET));
 		program.setDevicePlanProgram(deviceplan.getDevicePlan());
+		// program.setDevicePlanProgram(deviceplan.getDescription() + " " + "["
+		// + deviceplan.getDevicePlan() + "]");
 		if (product.contains("Prepaid") && programType.contains("Corporate Travel card - Single currency")
 				|| programType.contains("Retail Travel card - Single currency")
 				|| programType.contains("Corporate General Purpose")) {
-			Program = programflows.createprogramPrepaid(devicecreation, program,newLoyaltyPlan.getLoyaltyPlan());
+			Program = programflows.createprogramPrepaid(devicecreation, program, newLoyaltyPlan.getLoyaltyPlan());
 		}
 
 		if (product.contains("Prepaid") && programType.contains("Corporate Gift Card")
 				|| programType.contains("Retail General Purpose")) {
-			Program = programflows.createprogramPrepaid(devicecreation, program,newLoyaltyPlan.getLoyaltyPlan());
+			Program = programflows.createprogramPrepaid(devicecreation, program, newLoyaltyPlan.getLoyaltyPlan());
 		}
 
 		if (product.contains("Prepaid") && programType.contains("Corporate General Purpose - Multi Wallet")
@@ -133,8 +142,9 @@ public class ProgramSteps {
 			Program = programflows.createProgramPrepaidMultiCurrency(devicecreation, program);
 		}
 		program.setProgramCode(Program);
+		context.put(ContextConstants.PROGRAM, program);
 	}
-	
+
 	public void sDNUncheckProgram(String value) {
 		String[] a = value.split("\\[");
 		String[] b = a[1].split("\\]");
@@ -142,6 +152,7 @@ public class ProgramSteps {
 		programflows.programEdit(b[0]);
 		program.setProgramCode(b[0]);
 	}
+
 	@Then("Program should get created")
 	public void VerifyProgramSuccess() {
 		programflows.VerifyProgramSuccess();

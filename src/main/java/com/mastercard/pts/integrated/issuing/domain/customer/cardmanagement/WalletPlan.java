@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
@@ -13,29 +14,29 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 public class WalletPlan implements HasCodeAndDescription {
 	private static final String RETAIL_CREDIT_CARD_PART = "Retail Credit Card";
 	private static final String PROGRAM_TYPE = "PROGRAM_TYPE";
-	private static final String WP_CURRENCY	 = 	"WP_CURRENCY";
-	private static final String WP_PRODUCT_TYPE	 = 	"WP_PRODUCT_TYPE";
-	private static final String WP_PROGRAM_TYPE	 = 	"WP_PROGRAM_TYPE";
-	private static final String WP_USAGE	 = 	"WP_USAGE";
-	private static final String WP_CREDIT_PLAN	 = 	"WP_CREDIT_PLAN";
-	private static final String WP_BILLING_CYCLE_CODE	 = 	"WP_BILLING_CYCLE_CODE";
+	private static final String WP_CURRENCY = "WP_CURRENCY";
+	private static final String WP_PRODUCT_TYPE = "WP_PRODUCT_TYPE";
+	private static final String WP_PROGRAM_TYPE = "WP_PROGRAM_TYPE";
+	private static final String WP_USAGE = "WP_USAGE";
+	private static final String WP_CREDIT_PLAN = "WP_CREDIT_PLAN";
+	private static final String WP_BILLING_CYCLE_CODE = "WP_BILLING_CYCLE_CODE";
 	private static final String WP_TRANSACTION_LIMIT_PLAN = "WP_TRANSACTION_LIMIT_PLAN";
 	private static final String WP_RESERVED_AMOUNT = "WP_RESERVED_AMOUNT";
 	private static final String WP_SURCHARGE_PLAN = "WP_SURCHARGE_PLAN";
 	private static final String WP_SURCHARGE_WAIVER_PLAN = "WP_SURCHARGE_WAIVER_PLAN";
 	private static final String WP_WALLET_FEE_PLAN = "WP_WALLET_FEE_PLAN";
-	private static final String WP_CASHOUT_REMITTANCE_REQUEST_EXPIRY_DAYS	 = 	"WP_CASHOUT_REMITTANCE_REQUEST_EXPIRY_DAYS";
-	private static final String WP_CASHOUT_REVERSE_REMITTANCE_FEE_ON_CANCELLATION	 = 	"WP_CASHOUT_REVERSE_REMITTANCE_FEE_ON_CANCELLATION";
-	private static final String WP_REFUND_ALLOW_REFUND	 = 	"WP_REFUND_ALLOW_REFUND";
-	private static final String WP_REFUND_LOCKING_PERIOD_STARTS_FROM	 = 	"WP_REFUND_LOCKING_PERIOD_STARTS_FROM";
-	private static final String WP_REFUND_LOCKING_PERIOD_DAYS	 = 	"WP_REFUND_LOCKING_PERIOD_DAYS";
-	private static final String WP_REFUND_CLOSURE_AFTER_LOCKING_PERIOD_DAYS	 = 	"WP_REFUND_CLOSURE_AFTER_LOCKING_PERIOD_DAYS";
-	private static final String WP_WALLET_INACTVITY_RULES_MINIMUM_BAL_THRESHOLD	 = 	"WP_WALLET_INACTVITY_RULES_MINIMUM_BAL_THRESHOLD";
-	private static final String WP_WALLET_INACTVITY_RULES_INACTIVITY_OPERATION	 = 	"WP_WALLET_INACTVITY_RULES_INACTIVITY_OPERATION";
-	private static final String WP_WALLET_INACTVITY_RULES_INACTIVITY_AFTER_DAYS	 = 	"WP_WALLET_INACTVITY_RULES_INACTIVITY_AFTER_DAYS";
-	private static final String WP_WALLET_INACTVITY_RULES_CLOSURE_WALLET_AFTER_DAYS	 = 	"WP_WALLET_INACTVITY_RULES_CLOSURE_WALLET_AFTER_DAYS";
-	private static final String WP_WALLET_RESERVERD_AMOUNT= "WP_WALLET_RESERVERD_AMOUNT";
-	
+	private static final String WP_CASHOUT_REMITTANCE_REQUEST_EXPIRY_DAYS = "WP_CASHOUT_REMITTANCE_REQUEST_EXPIRY_DAYS";
+	private static final String WP_CASHOUT_REVERSE_REMITTANCE_FEE_ON_CANCELLATION = "WP_CASHOUT_REVERSE_REMITTANCE_FEE_ON_CANCELLATION";
+	private static final String WP_REFUND_ALLOW_REFUND = "WP_REFUND_ALLOW_REFUND";
+	private static final String WP_REFUND_LOCKING_PERIOD_STARTS_FROM = "WP_REFUND_LOCKING_PERIOD_STARTS_FROM";
+	private static final String WP_REFUND_LOCKING_PERIOD_DAYS = "WP_REFUND_LOCKING_PERIOD_DAYS";
+	private static final String WP_REFUND_CLOSURE_AFTER_LOCKING_PERIOD_DAYS = "WP_REFUND_CLOSURE_AFTER_LOCKING_PERIOD_DAYS";
+	private static final String WP_WALLET_INACTVITY_RULES_MINIMUM_BAL_THRESHOLD = "WP_WALLET_INACTVITY_RULES_MINIMUM_BAL_THRESHOLD";
+	private static final String WP_WALLET_INACTVITY_RULES_INACTIVITY_OPERATION = "WP_WALLET_INACTVITY_RULES_INACTIVITY_OPERATION";
+	private static final String WP_WALLET_INACTVITY_RULES_INACTIVITY_AFTER_DAYS = "WP_WALLET_INACTVITY_RULES_INACTIVITY_AFTER_DAYS";
+	private static final String WP_WALLET_INACTVITY_RULES_CLOSURE_WALLET_AFTER_DAYS = "WP_WALLET_INACTVITY_RULES_CLOSURE_WALLET_AFTER_DAYS";
+	private static final String WP_WALLET_RESERVERD_AMOUNT = "WP_WALLET_RESERVERD_AMOUNT";
+
 	private String walletReserveAmount;
 	private String description;
 	private String walletPlanCode;
@@ -47,7 +48,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String usage;
 	private String dummyAccountNumber;
 	private String billingCyleCode;
-	private String creditPlan;	
+	private String creditPlan;
 	private String currencyWalletPlan;
 	private String cashoutRemittanceRequestExpiryDays;
 	private String cashoutReverseRemittanceFeeOnCancellation;
@@ -65,7 +66,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String walletPlan;
 	private String openloopWalletPlan;
 	private String closedloopWalletPlan;
-	private String transactionLimitPlan; 
+	private String transactionLimitPlan;
 	private String reservedAmount;
 	private String surchargePlan;
 	private String surchargeWaiverPlan;
@@ -73,7 +74,6 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String firstWallet;
 	private String secondWallet;
 	private String whiteMcgCode;
-	
 
 	public String getWhiteMcgCode() {
 		return whiteMcgCode;
@@ -82,8 +82,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	public void setWhiteMcgCode(String whiteMcgCode) {
 		this.whiteMcgCode = whiteMcgCode;
 	}
-	
-	
+
 	public String getSecondWallet() {
 		return secondWallet;
 	}
@@ -99,7 +98,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	public void setFirstWallet(String firstWallet) {
 		this.firstWallet = firstWallet;
 	}
-	
+
 	public String getWalletReserveAmount() {
 		return walletReserveAmount;
 	}
@@ -107,7 +106,6 @@ public class WalletPlan implements HasCodeAndDescription {
 	public void setWalletReserveAmount(String walletReserveAmount) {
 		this.walletReserveAmount = walletReserveAmount;
 	}
-
 
 	public String getTransactionLimitPlan() {
 		return transactionLimitPlan;
@@ -148,17 +146,17 @@ public class WalletPlan implements HasCodeAndDescription {
 	public void setWalletFeePlan(String walletFeePlan) {
 		this.walletFeePlan = walletFeePlan;
 	}
-	
+
 	private static void setGenericData(WalletPlan plan) {
 		plan.setWalletPlanCode(MiscUtils.generate10CharAlphaNumeric());
 		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);
 	}
-	
+
 	private static void setCreditConfig(WalletPlan plan) {
 		plan.setCreditPlan(MapUtils.fnGetInputDataFromMap(WP_CREDIT_PLAN));
 		plan.setBillingCyleCode(MapUtils.fnGetInputDataFromMap(WP_BILLING_CYCLE_CODE));
 	}
-	
+
 	private static void setUsageLimitsFees(WalletPlan plan) {
 		plan.setTransactionLimitPlan(MapUtils.fnGetInputDataFromMap(WP_TRANSACTION_LIMIT_PLAN));
 		plan.setReservedAmount(MapUtils.fnGetInputDataFromMap(WP_RESERVED_AMOUNT));
@@ -166,7 +164,7 @@ public class WalletPlan implements HasCodeAndDescription {
 		plan.setSurchargeWaiverPlan(MapUtils.fnGetInputDataFromMap(WP_SURCHARGE_WAIVER_PLAN));
 		plan.setWalletFeePlan(MapUtils.fnGetInputDataFromMap(WP_WALLET_FEE_PLAN));
 	}
-	
+
 	public static WalletPlan getWalletPlanDataFromExcel() {
 		WalletPlan plan = new WalletPlan();
 		setGenericData(plan);
@@ -175,10 +173,10 @@ public class WalletPlan implements HasCodeAndDescription {
 		plan.setWalletPlanUsage(MapUtils.fnGetInputDataFromMap(WP_USAGE));
 		setCreditConfig(plan);
 		setUsageLimitsFees(plan);
-		
+
 		return plan;
 	}
-	
+
 	public static WalletPlan createWithProvider(DataProvider provider, KeyValueProvider keyValueProvider) {
 		WalletPlan plan = provider.getDataBySimpleClassName(WalletPlan.class);
 		setGenericData(plan);
@@ -187,7 +185,7 @@ public class WalletPlan implements HasCodeAndDescription {
 		plan.setDummyAccountNumber(RandomStringUtils.randomNumeric(6));
 		return plan;
 	}
-	
+
 	public static WalletPlan createWithProvider(KeyValueProvider provider) {
 		WalletPlan plan = new WalletPlan();
 		setGenericData(plan);
@@ -196,17 +194,23 @@ public class WalletPlan implements HasCodeAndDescription {
 		plan.setUsage(provider.getString(WP_USAGE));
 		plan.setDummyAccountNumber(RandomStringUtils.randomNumeric(6));
 		plan.setCashoutRemittanceRequestExpiryDays(provider.getString(WP_CASHOUT_REMITTANCE_REQUEST_EXPIRY_DAYS));
-		plan.setCashoutReverseRemittanceFeeOnCancellation(provider.getString(WP_CASHOUT_REVERSE_REMITTANCE_FEE_ON_CANCELLATION));
+		plan.setCashoutReverseRemittanceFeeOnCancellation(
+				provider.getString(WP_CASHOUT_REVERSE_REMITTANCE_FEE_ON_CANCELLATION));
 		plan.setRefundAllowRefund(provider.getString(WP_REFUND_ALLOW_REFUND));
 		plan.setRefundLockingPeriodStartsFrom(provider.getString(WP_REFUND_LOCKING_PERIOD_STARTS_FROM));
 		plan.setRefundLockingPeriodDays(provider.getString(WP_REFUND_LOCKING_PERIOD_DAYS));
 		plan.setRefundClosureAfterLockingPeriodDays(provider.getString(WP_REFUND_CLOSURE_AFTER_LOCKING_PERIOD_DAYS));
-		plan.setWalletInactvityRulesMinimumBalThreshold(provider.getString(WP_WALLET_INACTVITY_RULES_MINIMUM_BAL_THRESHOLD));
-		plan.setWalletInactvityRulesInactivityOperation(provider.getString(WP_WALLET_INACTVITY_RULES_INACTIVITY_OPERATION));
-		plan.setWalletInactvityRulesInactivityAfterDays(provider.getString(WP_WALLET_INACTVITY_RULES_INACTIVITY_AFTER_DAYS));
-		plan.setWalletInactvityRulesClosureWalletAfterDays(provider.getString(WP_WALLET_INACTVITY_RULES_CLOSURE_WALLET_AFTER_DAYS));
+		plan.setWalletInactvityRulesMinimumBalThreshold(
+				provider.getString(WP_WALLET_INACTVITY_RULES_MINIMUM_BAL_THRESHOLD));
+		plan.setWalletInactvityRulesInactivityOperation(
+				provider.getString(WP_WALLET_INACTVITY_RULES_INACTIVITY_OPERATION));
+		plan.setWalletInactvityRulesInactivityAfterDays(
+				provider.getString(WP_WALLET_INACTVITY_RULES_INACTIVITY_AFTER_DAYS));
+		plan.setWalletInactvityRulesClosureWalletAfterDays(
+				provider.getString(WP_WALLET_INACTVITY_RULES_CLOSURE_WALLET_AFTER_DAYS));
 		return plan;
 	}
+
 	public String getProduct() {
 		return product;
 	}
@@ -214,6 +218,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	public void setProduct(String product) {
 		this.product = product;
 	}
+
 	public String getCurrencyWalletPlan() {
 		return currencyWalletPlan;
 	}
@@ -221,12 +226,12 @@ public class WalletPlan implements HasCodeAndDescription {
 	public void setCurrencyWalletPlan(String currencyWalletPlan) {
 		this.currencyWalletPlan = currencyWalletPlan;
 	}
+
 	public String getCashoutRemittanceRequestExpiryDays() {
 		return cashoutRemittanceRequestExpiryDays;
 	}
 
-	public void setCashoutRemittanceRequestExpiryDays(
-			String cashoutRemittanceRequestExpiryDays) {
+	public void setCashoutRemittanceRequestExpiryDays(String cashoutRemittanceRequestExpiryDays) {
 		this.cashoutRemittanceRequestExpiryDays = cashoutRemittanceRequestExpiryDays;
 	}
 
@@ -234,8 +239,7 @@ public class WalletPlan implements HasCodeAndDescription {
 		return cashoutReverseRemittanceFeeOnCancellation;
 	}
 
-	public void setCashoutReverseRemittanceFeeOnCancellation(
-			String cashoutReverseRemittanceFeeOnCancellation) {
+	public void setCashoutReverseRemittanceFeeOnCancellation(String cashoutReverseRemittanceFeeOnCancellation) {
 		this.cashoutReverseRemittanceFeeOnCancellation = cashoutReverseRemittanceFeeOnCancellation;
 	}
 
@@ -251,8 +255,7 @@ public class WalletPlan implements HasCodeAndDescription {
 		return refundLockingPeriodStartsFrom;
 	}
 
-	public void setRefundLockingPeriodStartsFrom(
-			String refundLockingPeriodStartsFrom) {
+	public void setRefundLockingPeriodStartsFrom(String refundLockingPeriodStartsFrom) {
 		this.refundLockingPeriodStartsFrom = refundLockingPeriodStartsFrom;
 	}
 
@@ -268,8 +271,7 @@ public class WalletPlan implements HasCodeAndDescription {
 		return refundClosureAfterLockingPeriodDays;
 	}
 
-	public void setRefundClosureAfterLockingPeriodDays(
-			String refundClosureAfterLockingPeriodDays) {
+	public void setRefundClosureAfterLockingPeriodDays(String refundClosureAfterLockingPeriodDays) {
 		this.refundClosureAfterLockingPeriodDays = refundClosureAfterLockingPeriodDays;
 	}
 
@@ -277,8 +279,7 @@ public class WalletPlan implements HasCodeAndDescription {
 		return walletInactvityRulesMinimumBalThreshold;
 	}
 
-	public void setWalletInactvityRulesMinimumBalThreshold(
-			String walletInactvityRulesMinimumBalThreshold) {
+	public void setWalletInactvityRulesMinimumBalThreshold(String walletInactvityRulesMinimumBalThreshold) {
 		this.walletInactvityRulesMinimumBalThreshold = walletInactvityRulesMinimumBalThreshold;
 	}
 
@@ -286,8 +287,7 @@ public class WalletPlan implements HasCodeAndDescription {
 		return walletInactvityRulesInactivityOperation;
 	}
 
-	public void setWalletInactvityRulesInactivityOperation(
-			String walletInactvityRulesInactivityOperation) {
+	public void setWalletInactvityRulesInactivityOperation(String walletInactvityRulesInactivityOperation) {
 		this.walletInactvityRulesInactivityOperation = walletInactvityRulesInactivityOperation;
 	}
 
@@ -295,8 +295,7 @@ public class WalletPlan implements HasCodeAndDescription {
 		return walletInactvityRulesInactivityAfterDays;
 	}
 
-	public void setWalletInactvityRulesInactivityAfterDays(
-			String walletInactvityRulesInactivityAfterDays) {
+	public void setWalletInactvityRulesInactivityAfterDays(String walletInactvityRulesInactivityAfterDays) {
 		this.walletInactvityRulesInactivityAfterDays = walletInactvityRulesInactivityAfterDays;
 	}
 
@@ -304,8 +303,7 @@ public class WalletPlan implements HasCodeAndDescription {
 		return walletInactvityRulesClosureWalletAfterDays;
 	}
 
-	public void setWalletInactvityRulesClosureWalletAfterDays(
-			String walletInactvityRulesClosureWalletAfterDays) {
+	public void setWalletInactvityRulesClosureWalletAfterDays(String walletInactvityRulesClosureWalletAfterDays) {
 		this.walletInactvityRulesClosureWalletAfterDays = walletInactvityRulesClosureWalletAfterDays;
 	}
 
@@ -317,7 +315,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
-	
+
 	public String getProductType() {
 		return productType;
 	}
@@ -366,8 +364,6 @@ public class WalletPlan implements HasCodeAndDescription {
 		this.walletType = walletType;
 	}
 
-
-	
 	public String getProgramType() {
 		return programType;
 	}
@@ -375,7 +371,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	public void setProgramType(String programType) {
 		this.programType = programType;
 	}
-	
+
 	public String getUsage() {
 		return usage;
 	}
@@ -383,20 +379,20 @@ public class WalletPlan implements HasCodeAndDescription {
 	public void setUsage(String usage) {
 		this.usage = usage;
 	}
-	
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	public String getCurrency() {
 		return currency;
 	}
-	
+
 	@Override
 	public String getCode() {
 		return getWalletPlanCode();
 	}
-	
+
 	public String getWalletPlanCode() {
 		return walletPlanCode;
 	}
@@ -447,13 +443,14 @@ public class WalletPlan implements HasCodeAndDescription {
 
 	public static WalletPlan walletplanDataprovider() {
 		WalletPlan walletplan = new WalletPlan();
+		walletplan.setWalletPlanCode(MapUtils.fnGetInputDataFromMap("WalletPlancode"));
+		walletplan.setDescription(MapUtils.fnGetInputDataFromMap("WalletPlanDescription"));
 		walletplan.setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
 		walletplan.setWalletPlanUsage(MapUtils.fnGetInputDataFromMap("WalletplanUsage"));
 		walletplan.setCurrency1(MapUtils.fnGetInputDataFromMap("Currency1"));
 		return walletplan;
 	}
 
-	
 	@Override
 	public String toString() {
 		return MiscUtils.toString(this);

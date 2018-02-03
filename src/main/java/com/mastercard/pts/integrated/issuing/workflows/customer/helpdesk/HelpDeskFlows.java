@@ -1,4 +1,5 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +49,7 @@ public class HelpDeskFlows extends AbstractBasePage {
 	}
 
 	public void searchForDevice(HelpDeskGeneral helpdeskgettersetter) {
-		searchpanelhelpdesk.searchDevice(helpdeskgettersetter.getProductType(),
-				helpdeskgettersetter.getDeviceNumber());
+		searchpanelhelpdesk.searchDevice(helpdeskgettersetter.getProductType(), helpdeskgettersetter.getDeviceNumber());
 		searchpanelhelpdesk.clickEditBtn();
 	}
 
@@ -74,32 +74,25 @@ public class HelpDeskFlows extends AbstractBasePage {
 		generalPage.endCall();
 	}
 
-	public void selelctEmailAddressIndicatorFlow(
-			HelpDeskGeneral helpdeskgettersetter) {
-		generalPage.selectEmailAddressIndicator(helpdeskgettersetter
-				.getEmailIndicator());
+	public void selelctEmailAddressIndicatorFlow(HelpDeskGeneral helpdeskgettersetter) {
+		generalPage.selectEmailAddressIndicator(helpdeskgettersetter.getEmailIndicator());
 	}
 
 	public void addReasonForStopListing(HelpDeskGeneral helpdeskgettersetter) {
-		generalPage.selectReasonForStopListing(
-				helpdeskgettersetter.getEventsIFrameName(),
+		generalPage.selectReasonForStopListing(helpdeskgettersetter.getEventsIFrameName(),
 				helpdeskgettersetter.getStopListReason());
 	}
 
-	public void emailSMSAlertChangeFlows(String type, String status,
-			HelpDeskGeneral helpdeskgettersetter) {
-		generalPage.emailSMSAlertChange(type, status,
-				helpdeskgettersetter.getNoteText());
+	public void emailSMSAlertChangeFlows(String type, String status, HelpDeskGeneral helpdeskgettersetter) {
+		generalPage.emailSMSAlertChange(type, status, helpdeskgettersetter.getNoteText());
 	}
 
 	public void linkCardQueryHelpDeskFlows(HelpDeskGeneral helpdeskgettersetter) {
 		generalPage.linkCardQuery(helpdeskgettersetter.getNoteText());
 	}
 
-	public void addCardToDoNotCallRegisterFlows(
-			HelpDeskGeneral helpdeskgettersetter) {
-		generalPage.addCardToDoNotCallRegister(helpdeskgettersetter
-				.getNoteText());
+	public void addCardToDoNotCallRegisterFlows(HelpDeskGeneral helpdeskgettersetter) {
+		generalPage.addCardToDoNotCallRegister(helpdeskgettersetter.getNoteText());
 	}
 
 	public void addCallNotesFlows(HelpDeskGeneral helpdeskgettersetter) {
@@ -110,15 +103,12 @@ public class HelpDeskFlows extends AbstractBasePage {
 		generalPage.addOnCardRequest(eventAndAlerts);
 	}
 
-	public void changeAddressRequestFlows(
-			ChangeAddressRequest changeAddressRequest) {
+	public void changeAddressRequestFlows(ChangeAddressRequest changeAddressRequest) {
 		generalPage.changeAddressRequest(changeAddressRequest);
 	}
 
-	public void editServiceCodeForNoteWindow(
-			HelpDeskGeneral helpdeskgettersetter) {
-		switchToIframe(helpdeskgettersetter.getEventsIFrameName().replaceAll(
-				"^\"|\"$", ""));
+	public void editServiceCodeForNoteWindow(HelpDeskGeneral helpdeskgettersetter) {
+		switchToIframe(helpdeskgettersetter.getEventsIFrameName().replaceAll("^\"|\"$", ""));
 		generalPage.addNotes(helpdeskgettersetter.getNoteText());
 	}
 
@@ -130,30 +120,28 @@ public class HelpDeskFlows extends AbstractBasePage {
 		generalPage.deactivatingEComm(eventAndAlerts);
 	}
 
-	public void selectMultiWallet(HelpDeskGeneral helpdeskgettersetter,
-			DeviceCreation deviceCreation) {
+	public void selectMultiWallet(HelpDeskGeneral helpdeskgettersetter, DeviceCreation deviceCreation) {
 		navigateToGeneralTab();
-		searchpanelhelpdesk.searchDevice(helpdeskgettersetter.getProductType(),
-				newDevice.getDeviceNumber());
+		searchpanelhelpdesk.searchDevice(helpdeskgettersetter.getProductType(), newDevice.getDeviceNumber());
 		searchpanelhelpdesk.clickEditBtn();
 		selectServiceCode(helpdeskgettersetter);
 		generalPage.switchToCurrencySetupFrame();
-		generalPage.selectMultiWalletSingleCurrency(deviceCreation
-				.getCurrency());
+		generalPage.selectMultiWalletSingleCurrency(deviceCreation.getCurrency());
 		generalPage.addNotes(helpdeskgettersetter.getNoteText());
 
 	}
 
 	public void checkNoOfWallets(HelpDeskGeneral helpdeskgettersetter) {
-		if (((helpdeskgettersetter.getNoOfWallets()).equals(generalPage
-				.CheckNoOfWalletsAdded()))) {
+		if (((helpdeskgettersetter.getNoOfWallets()).equals(generalPage.CheckNoOfWalletsAdded()))) {
 			logger.info("Multiple wallets added succesfully");
 		}
 		generalPage.endCall();
 	}
+
 	public String searchForDevicePrepaid(HelpDeskGeneral helpdeskgettersetter) {
 		generalPage = navigator.navigateToPage(GeneralPage.class);
-        String status=searchpanelhelpdesk.searchDeviceUsingName(helpdeskgettersetter.getProductType(),helpdeskgettersetter.getFirstName());
+		String status = searchpanelhelpdesk.searchDeviceUsingName(helpdeskgettersetter.getProductType(),
+				helpdeskgettersetter.getFirstName());
 		searchpanelhelpdesk.clickSearchBtn();
 		return status;
 	}
@@ -172,4 +160,15 @@ public class HelpDeskFlows extends AbstractBasePage {
 		searchpanelhelpdesk.clickSearchBtn();
 		return status;
 	}
+
+	public void verifyExpiryDate() {
+		generalPage.CalculateExpiryDate();
+		generalPage.endCall();
+	}
+
+	public void VerifyPairedDeviceStatus() {
+		generalPage.checkNoAndStatusOfCards();
+		generalPage.endCall();
+	}
+
 }
