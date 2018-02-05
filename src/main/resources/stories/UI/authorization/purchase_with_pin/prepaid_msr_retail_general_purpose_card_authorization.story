@@ -24,12 +24,16 @@ When processes pin generation batch for prepaid
 Then device has "normal" status
 When user activates device through helpdesk
 And user sign out from customer portal
+
+Scenario: Pin Generation 
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
-When connection to MAS is established
+
+Scenario: Transaction
+Given connection to MAS is established
 When perform an MSR_PURCHASE_PIN MAS transaction
 Then MAS test results are verified
 
