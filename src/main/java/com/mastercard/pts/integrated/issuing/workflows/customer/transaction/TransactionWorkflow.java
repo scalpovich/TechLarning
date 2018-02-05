@@ -1225,13 +1225,14 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		MiscUtils.reportToConsole("******** getPinNumber Start ***** " );
 		try
 		{
+			wait(5000); // sometimes scripts are failing as files are not yet available
 			//			Ex: SelectValuesFromPinOffsetCalculator.exe "5877650150876119" "EE9A8BACEE127B4B2DC900D8EEA9221D" "1234567890123456" "4" "12" "F" "7782" "4"
 			//NO SONAR... 
 			String parameters =   "\"" + transactionData.getCardNumber() + PATH_BUILDER +  transactionData.getPinKey() + PATH_BUILDER  + transactionData.getDecimalisationTable() +  PATH_BUILDER + transactionData.getValidationDataStart()
 					+  PATH_BUILDER + transactionData.getCardLength() + PATH_BUILDER + transactionData.getPad() +  PATH_BUILDER + transactionData.getOffSetForCard() +  PATH_BUILDER + transactionData.getPinLength() + "\"";
 			MiscUtils.reportToConsole(" ******* Parameter for SelectValuesFromPinOffsetCalculator : ******"  + parameters );
 			executeAutoITExe("SelectValuesFromPinOffsetCalculator.exe " + parameters );
-			wait(7000);
+			wait(10000);
 
 			return getPinText();
 		}
