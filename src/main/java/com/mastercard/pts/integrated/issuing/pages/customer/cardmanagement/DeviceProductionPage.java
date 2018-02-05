@@ -96,7 +96,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	}
 
 	public void processDeviceProductionBatch(DeviceProductionBatch batch) {
-		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
+		/*WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
 		ClickButton(searchBtn);
 		if (deviceProductionBatchRecordChkBx.isVisible()) {
 			ClickCheckBox(deviceProductionBatchRecordChkBx, true);
@@ -105,6 +105,9 @@ public class DeviceProductionPage extends AbstractBasePage {
 		}
 		ClickButton(processSelectedBtn);
 
+		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
+		waitAndSearchForRecordToExist();
+		verifyOperationStatus();*/
 		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();

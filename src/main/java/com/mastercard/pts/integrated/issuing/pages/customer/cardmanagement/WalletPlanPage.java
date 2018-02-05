@@ -133,6 +133,7 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	public String enterWalletPlanCode(WalletPlan walletPlan) {
 		if (walletPlan.getWalletPlanCode().length() != 0) {
+			 logger.info(walletPlan.getWalletPlanCode());
 			enterValueinTextBox(walletPlancodeTxt, walletPlan.getWalletPlanCode());
 		} else {
 			enterValueinTextBox(walletPlancodeTxt, "WP" + CustomUtils.randomNumbers(4));
