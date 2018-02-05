@@ -21,6 +21,7 @@ Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
+Then device has "normal" status
 When user activates device through helpdesk
 Then user sign out from customer portal
 

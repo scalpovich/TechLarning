@@ -6,7 +6,7 @@ As an issuer
 I want to create a prepaid emv corporate general purpose card and test various transactions
 
 Meta:
-@StoryName p_msr_corp_general_purpose
+@StoryName p_msr_corp_general_purpose_ASI
 @ASI
 
 Scenario: Transaction - prepaid msr corporate general purpose card - MMSR Authorization transaction
@@ -25,7 +25,7 @@ Then device has "normal" status
 When user activates device through helpdesk
 Then user sign out from customer portal
 Given connection to MAS is established
-When perform an ASI MAS transaction
+When perform an ASI_MSR MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution

@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for prepaid msr retail travel mwmc card 
 
 Meta:
-@StoryName p_msr_retail_travel_mwmc
+@StoryName p_msr_retail_travel_mwmc_ASI
 @ASI
 
 Scenario: Setup multi-currency prepaid msr retail travel card and perfomr refund without pin authorization
@@ -31,7 +31,7 @@ Then user sign out from customer portal
 
 Scenario: Perform MMSR-RetailTravelCardMWMC Authorization transaction
 Given connection to MAS is established
-When perform an ASI MAS transaction
+When perform an ASI_MSR MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution

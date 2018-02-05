@@ -6,7 +6,7 @@ As an issuer
 I want to create an magnetic stripe debit card and perform mastercard money send request
 
 Meta:
-@StoryName d_retail_debit_mms
+@StoryName d_msr_retail
 
 Scenario: Set up debit msr retail gift card from another institute
 Meta:
@@ -28,6 +28,7 @@ When user has wallet number information for debit device
 When user performs adjustment transaction
 When user has current wallet balance amount information for debit device
 Then device has "normal" status
+Then user activates device through helpdesk
 
 When user raises a money send request
 Then search MasterCard MoneySend authorization and verify 000-Successful status

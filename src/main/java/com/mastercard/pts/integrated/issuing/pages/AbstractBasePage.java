@@ -38,12 +38,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementFinderProvider;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -64,16 +66,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public String pageValidationCheck = "//ol/li";
 	public String ERRORPANEL = "//li[@class='feedbackPanelERROR']";
 
-	private static final By INFO_MESSAGE_LOCATOR = By.cssSelector(":not([style]) > .feedbackPanel span.feedbackPanelINFO");	
-
+	private static final By INFO_MESSAGE_LOCATOR = By.cssSelector(":not([style]) > .feedbackPanel span.feedbackPanelINFO");
 
 	private static final String FIRST_ROW_SELECT = ".dataview tbody span";
 
 	private static final String SUCCESS_MESSAGE = "Success message: {}";
 
-	
 	private static final String WALLET_NUMBER = "Wallet number: {}";
-
 
 	public static final String ERROR_MESSAGE = "Error: {}";
 
@@ -89,9 +88,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public static final LocalDate futureEndDate = LocalDate.now().plusDays(150);
 
-
 	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
-
 
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -171,6 +168,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value=Submit]")
 	private MCWebElement submitButton;
 
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value=Confirm]")
+	private MCWebElement confirmButton;
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value=Cancel]")
 	private MCWebElement cancelButton;
 
@@ -190,36 +190,36 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private MCWebElement uniqueAddedCode;
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='dataview-div']/table//tbody/tr[1]/td/span[string-length( text()) > 2]")
 	private MCWebElements otherValuesInFirstRow;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(@class,'mandatoryFlag')]")
 	private MCWebElements mandatoryValues;
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(@class,'mandatoryFlag')]/parent::span/parent::td/preceding-sibling::td[@class='displayName']/span")
 	private MCWebElement mandatoryValuesHeaders;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[@class='headers']/th[@class='wicket_orderNone']/a/span")
 	private MCWebElements tableHeaders;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@class='displayName wrap-search']")
 	private MCWebElements filterHeaders;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='top']//div[@id='searchForm']//table/tbody/tr//td[@class='field']/child::input | //div[@class='top']//div[@id='searchForm']//table/tbody/tr//td[@class='field']/child::select")
 	private MCWebElements commonXpathForFilter;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@class='searchButton']//input")
 	private MCWebElement searchBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]//img[@alt='Edit Record']")
 	private MCWebElements editRecord;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr")
 	private MCWebElements firstRow;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr/td")
 	private MCWebElements firstRowColumnValues;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Description :']/parent::*/following-sibling::td//span/*")
 	private MCWebElements descriptionTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[@class='w_captionText']")
 	private MCWebElements frameSwitch;
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@class='displayName']/span[contains(text(),'Description')]/parent::*/following-sibling::*/span/input")
@@ -228,25 +228,23 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private MCWebElement descriptionFilterTxt;
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@class='displayName']/following-sibling::td//li[contains(text(),'required')]/../../../.././preceding::td[1]/span")
 	private MCWebElements allLabelsMandatoryField;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tbody/tr[@class!='headers']/td/span/a/img[@alt='Delete Record']")
 	private MCWebElement deleteRecord;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[@class='headers']/following-sibling::tr//span")
 	private MCWebElement noRecordsFound;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody")
 	private MCWebElement tableRows;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@type='submit' or @name='save']")
 	private MCWebElement saveOrDetailsOrSearchBtn;
 
-	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
 		MCAnnotationProcessor.initializeSuper(this, finderProvider);
 	}
-
 
 	protected void clickOkButton() {
 		clickWhenClickable(okButton);
@@ -283,6 +281,14 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public void clickSaveButton() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		clickWhenClickable(saveBtn);
+	}
+
+	public void clickSubmitButton() {
+		clickWhenClickable(submitButton);
+	}
+
+	public void clickConfirmButton() {
+		clickWhenClickable(confirmButton);
 	}
 
 	protected void clickCancelButton() {
@@ -386,7 +392,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public String getCellTextByColumnName(int rowNumber, String columnName) {
 		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]", rowNumber, columnName);
-		return driver().findElement(By.xpath(xpath)).getText().trim();
+		WebElement element = driver().findElement(By.xpath(xpath));
+		waitForElementVisible(element);
+		return element.getText().trim();
 	}
 
 	public int getRowCountFromTable() {
@@ -486,6 +494,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void verifyNoErrors() {
+		driver().switchTo().defaultContent();
 		List<WebElement> messages = driver().findElements(By.cssSelector(".feedbackPanelWARNING, .feedbackPanelERROR, .ketchup-error-container-alt[style*=block]"));
 		if (!messages.isEmpty()) {
 			String errors = messages.stream().map(WebElement::getText).collect(Collectors.joining("\n"));
@@ -531,6 +540,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void clickWhenClickable(MCWebElement element) {
+		SimulatorUtilities.wait(500);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
 		waitForWicket();
 	}
@@ -578,10 +588,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 		WebElementUtils.waitForWicket(driver());
 	}
 
-	protected void waitAndSearchForRecordToExist() {
+	//created a re-usable method that could be used in waitAndSearchForRecordToExist() below
+		//the same code can be used in Authorization Search Page
+	public void waitAndSearchForRecordToAppear() {
 		clickSearchButton();
-		// Pre-production batch and device production batch take little long to
-		// be completed, and do not appear in search result, hence a for loop
+		// Pre-production batch and device production batch & Authorization Search page take little long to
+				// be completed, and do not appear in search result, hence a for loop
 		for (int l = 0; l < 21; l++) {
 			if (!waitForRow())
 				clickSearchButton();
@@ -589,6 +601,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 				break;
 			}
 		}
+	}
+	
+	protected void waitAndSearchForRecordToExist() {
+		waitAndSearchForRecordToAppear();
 
 		selectFirstRecord();
 		clickProcessSelectedButton();
@@ -618,15 +634,14 @@ public abstract class AbstractBasePage extends AbstractPage {
 		logger.info(RESPONSE_MESSAGE, popupNameElement.getText());
 	}
 
-	
 	protected void acceptPopup() {
 		Alert alert = driver().switchTo().alert();
 		boolean isAlertPresent = alert != null;
-		if(isAlertPresent){
+		if (isAlertPresent) {
 			alert.accept();
 		}
 	}
-	
+
 	protected void verifyDeleteRecordAlert(String expectedAlertText) {
 		Alert alert = driver().switchTo().alert();
 		String actualAlertText = null;
@@ -1055,8 +1070,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 		return null;
 	}
-	
-	
 
 	public void selectByVisibleText(MCWebElement ele, String optionName) {
 		String optionVisbleText = "";
@@ -1101,8 +1114,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected void clickWhenClickableCHP(MCWebElement element) {
 		waitForElementVisible(element);
 
-		new WebDriverWait(driver(), TIMEOUT).until(
-				elementToBeClickable(element)).click();
+		new WebDriverWait(driver(), TIMEOUT).until(elementToBeClickable(element)).click();
 		// waitForWicket(driver());
 
 	}
@@ -1320,8 +1332,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 					getFinder().getWebDriver().switchTo().window(handle);
 			}
 
-			acceptPopup();			
-
+			acceptPopup();
 
 		} catch (Exception e) {
 			logger.error("Unable to Switch Window --> {} ", e);
@@ -1345,8 +1356,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return isAnyErrorPresent;
 	}
 
-	
-	public String getTextFromPage(MCWebElement element){
+	public String getTextFromPage(MCWebElement element) {
 
 		return element.getText();
 	}
@@ -1373,209 +1383,198 @@ public abstract class AbstractBasePage extends AbstractPage {
 		field.clear();
 		field.sendKeys(fieldValue);
 	}
-	
+
 	public String buildDescriptionAndCode(String Name, String code) {
 		return String.format("%s [%s]", Name, code);
 	}
-	
-	public List<String> getListOfElements(String ele){
+
+	public List<String> getListOfElements(String ele) {
 		List<WebElement> list = driver().findElements(By.xpath(ele));
 		List<String> elementTextData = new ArrayList<String>();
-		
-		for(WebElement e: list){
-			elementTextData.add(e.getText()); 
+
+		for (WebElement e : list) {
+			elementTextData.add(e.getText());
 		}
 		return elementTextData;
 	}
 
 	public void waitForElementEnabled(MCWebElement element) {
-	    try {
-	    	WebDriverWait wait = new WebDriverWait(getFinder().getWebDriver(), 20, ELEMENT_WAIT_MAX);
-	    	wait.until((ExpectedCondition<Boolean>)driver -> element.isEnabled());
-	    } catch (Exception e) {
-	    	logger.error( e + " : " + "Timed out waiting for element: " + element);
-	    }
-	   }
-	 public void saveOrDetailsOrSearchClick()
-		{
-			clickWhenClickable(saveOrDetailsOrSearchBtn);
+		try {
+			WebDriverWait wait = new WebDriverWait(getFinder().getWebDriver(), 20, ELEMENT_WAIT_MAX);
+			wait.until((ExpectedCondition<Boolean>) driver -> element.isEnabled());
+		} catch (Exception e) {
+			logger.error(e + " : " + "Timed out waiting for element: " + element);
 		}
-		public List<String> mandatoryLabels() {
-			
-			LinkedList<String>mandatoryFieldsLabels=new LinkedList<>();
-			 for(int i=0;i<allLabelsMandatoryField.getElements().size();i++)
-			 {
-	             mandatoryFieldsLabels.add(allLabelsMandatoryField.getElements().get(i).getText());
-				 
-			 }
-			return mandatoryFieldsLabels;
+	}
+
+	public void saveOrDetailsOrSearchClick() {
+		clickWhenClickable(saveOrDetailsOrSearchBtn);
+	}
+
+	public List<String> mandatoryLabels() {
+
+		LinkedList<String> mandatoryFieldsLabels = new LinkedList<>();
+		for (int i = 0; i < allLabelsMandatoryField.getElements().size(); i++) {
+			mandatoryFieldsLabels.add(allLabelsMandatoryField.getElements().get(i).getText());
+
 		}
-		public List<MCWebElement> mandatoryFields() {
-			
-	    	List<MCWebElement>mandatoryField=new LinkedList<>();
-			 for(int i=0;i<mandatoryValues.getElements().size();i++)
-			 {
-				 mandatoryField.add(mandatoryValues.getElements().get(i));
-				 
-			 }
-			return mandatoryField;
+		return mandatoryFieldsLabels;
+	}
+
+	public List<MCWebElement> mandatoryFields() {
+
+		List<MCWebElement> mandatoryField = new LinkedList<>();
+		for (int i = 0; i < mandatoryValues.getElements().size(); i++) {
+			mandatoryField.add(mandatoryValues.getElements().get(i));
+
 		}
-		public Map<String, String> mandatoryValuesWithLabels(List<MCWebElement>fields,List<String>labels) {
-			Map<String,String>mandatoryLabelsAndValues=new LinkedHashMap<>();
-			List<MCWebElement>mandateFields=fields;
-			List<String>mandatoryFieldsLabels=labels;
-			if(mandateFields.size()==mandatoryFieldsLabels.size())
-			{
-			 for(int i=0;i<mandatoryFieldsLabels.size();i++)
-			 {
-				 if(mandateFields.get(i).getTagName().equals("input"))
-				 {
-					 String[] field=mandatoryFieldsLabels.get(i).split(":");
-			     mandatoryLabelsAndValues.put(field[0].trim(), mandateFields.get(i).getAttribute("value"));
-						
-				 }
-				 else if(mandateFields.get(i).getTagName().equals("select"))
-				 {
-					 String[] field=mandatoryFieldsLabels.get(i).split(":");
-					 mandatoryLabelsAndValues.put(field[0].trim(), mandateFields.get(i).options().getElements().get(1).getText());
-				 }
-			 }
-			
-			}
-			return mandatoryLabelsAndValues;
-		}
-		  public void searchFunctionalityCheck()
-		   {
-			   LinkedList<MCWebElement>linkList=new LinkedList<>();
-			   LinkedList<MCWebElement>linkListHeaders=new LinkedList<>();
-			   for(int i=0;i<commonXpathForFilter.getElements().size();i++)
-			   {
-			   linkList.add(commonXpathForFilter.getElements().get(i));
-			   }
-			   for(int i=0;i<filterHeaders.getElements().size();i++)
-			   {
-				   linkListHeaders.add(filterHeaders.getElements().get(i));
-			   }
-			   for (Map.Entry<String, String> entry : creditCardPlans.getMandatoryValuesWithLabels().entrySet()) {
-				   for(int i=0;i<linkListHeaders.size();i++)
-				   {
-					   if(linkListHeaders.get(i).getText().equals(entry.getKey()))
-					   {
-						   if(linkList.get(i).getTagName().equals("input"))
-							   {
-								   WebElementUtils.enterText(linkList.get(i), entry.getValue());
-								   break;
-							   }
-							   else if(linkList.get(i).getTagName().equals("select"))
-							   {
-								   WebElementUtils.selectDropDownByVisibleText(linkList.get(i), entry.getValue());
-								   break;
-							   }
-						  }
-				   }
-				   
-			   }
-			   clickWhenClickable(searchBtn);
-			   logger.info("Row values after search: {}", tableRows.getText());
-			   Assert.assertEquals("Added Record is displayed based on filter Values",firstRow.getElements().size(), 1);
-			  
-		   }
-		  
-		  public void editFunctionalityCheck()
-		   {
-			   LinkedList<MCWebElement>linkListDescription=new LinkedList<>();
-			   switchToFirstFrame();
-			   allDescriptionFieldsInFrame(linkListDescription);
-			   if(!linkListDescription.get(0).getTagName().equals("span"))
-			   {
-			   String updatedValue = editDescriptionValueInFirstFrame(linkListDescription);
-			   searchEditedValueOfFirstFrame();
-			   verifyIfValueIsEditedOfFirstFrame(updatedValue);
-			 }
-			   else
-			   {
-				   
-				 String updatedValue = editingInnerFrameValue();
-				 verifyEditingOfInnerFrame(updatedValue);
-				 clickSaveButton();
-				 waitForPageToLoad(getFinder().getWebDriver());
-			   
-			   }
-			 
-		   }
-		public void verifyEditingOfInnerFrame(String updatedValue) {
-			for(int i=0;i<tableHeaders.getElements().size();i++)
-			   {
-				   if(tableHeaders.getElements().get(i).getText().contains("Description"))
-				   {
-					   logger.info("EditedDescription: {}", firstRowColumnValues.getElements().get(i).getText());
-					   logger.info("Added Record is displayed based on filters in innerframe"+firstRowColumnValues.getElements().get(i).getText(),updatedValue);
-					   Assert.assertEquals("Added Record is displayed based on filters in innerframe",firstRowColumnValues.getElements().get(i).getText(),updatedValue);
-				   }
-			   }
-		}
-		public String editingInnerFrameValue() {
-			  clickWhenClickable(editRecord.getElements().get(editSize()-1));
-			  SwitchToDefaultFrame();
-			  switchToIframe("Plan Detail");
-			  WebElementUtils.enterText(innerDescriptionTxt,"");
-			  WebElementUtils.enterText(innerDescriptionTxt,CustomUtils.randomNumbers(5));
-			  String updatedValue=innerDescriptionTxt.getAttribute("value");
-			  clickSaveButton();
-			  switchToIframe(frameSwitch.getElements().get(frames()-1).getText());
-			return updatedValue;
-		}
-		private void verifyIfValueIsEditedOfFirstFrame(String updatedValue) {
-			for(int i=0;i<tableHeaders.getElements().size();i++)
-			   {
-				   if(tableHeaders.getElements().get(i).getText().equals("Description"))
-				   {
-					   logger.info("EditedDescription: {}", firstRowColumnValues.getElements().get(i).getText());
-					   logger.info("Added Record is displayed based on filters"+firstRowColumnValues.getElements().get(i).getText(),updatedValue);
-					   Assert.assertEquals("Added Record is displayed based on filters",firstRowColumnValues.getElements().get(i).getText(),updatedValue);
-				   }
-			   }
-		}
-		public void searchEditedValueOfFirstFrame() {
-			WebElementUtils.enterText(descriptionFilterTxt,"");
-			   clickSearchButton();
-		}
-		public String editDescriptionValueInFirstFrame(LinkedList<MCWebElement> linkListDescription) {
-			   WebElementUtils.enterText(linkListDescription.get(0),"");	   
-			   WebElementUtils.enterText(linkListDescription.get(0),CustomUtils.randomAlphaNumeric(5));
-			   String updatedValue=linkListDescription.get(0).getAttribute("value");
-			   clickSaveButton();
-			return updatedValue;
-		}
-		public void allDescriptionFieldsInFrame(LinkedList<MCWebElement> linkListDescription) {
-			for(int i=0;i<descriptionTxt.getElements().size();i++)
-			   {
-				linkListDescription.add(descriptionTxt.getElements().get(i));
-			   }
-		}
-		public void switchToFirstFrame() {
-			   clickWhenClickable(editRecord.getElements().get(editSize()-1));
-			   switchToIframe(frameSwitch.getElements().get(frames()-1).getText());
-		}
-		public void deleteFunctionalityCheck() {
-			if (isDeleteColumnPresent()) {
-				waitForPageToLoad(getFinder().getWebDriver());
-					deleteFirstRecord();
-					Alert alert = driver().switchTo().alert();
-					alert.accept();
-					clickWhenClickable(searchBtn);
-					logger.info("Row size after deletion: {}", tableRows.getText());
-					Assert.assertEquals("Added Record is deleted",tableRows.getText(),"");
+		return mandatoryField;
+	}
+
+	public Map<String, String> mandatoryValuesWithLabels(List<MCWebElement> fields, List<String> labels) {
+		Map<String, String> mandatoryLabelsAndValues = new LinkedHashMap<>();
+		List<MCWebElement> mandateFields = fields;
+		List<String> mandatoryFieldsLabels = labels;
+		if (mandateFields.size() == mandatoryFieldsLabels.size()) {
+			for (int i = 0; i < mandatoryFieldsLabels.size(); i++) {
+				if (mandateFields.get(i).getTagName().equals("input")) {
+					String[] field = mandatoryFieldsLabels.get(i).split(":");
+					mandatoryLabelsAndValues.put(field[0].trim(), mandateFields.get(i).getAttribute("value"));
+
+				} else if (mandateFields.get(i).getTagName().equals("select")) {
+					String[] field = mandatoryFieldsLabels.get(i).split(":");
+					mandatoryLabelsAndValues.put(field[0].trim(), mandateFields.get(i).options().getElements().get(1).getText());
 				}
+			}
+
+		}
+		return mandatoryLabelsAndValues;
+	}
+
+	public void searchFunctionalityCheck() {
+		LinkedList<MCWebElement> linkList = new LinkedList<>();
+		LinkedList<MCWebElement> linkListHeaders = new LinkedList<>();
+		for (int i = 0; i < commonXpathForFilter.getElements().size(); i++) {
+			linkList.add(commonXpathForFilter.getElements().get(i));
+		}
+		for (int i = 0; i < filterHeaders.getElements().size(); i++) {
+			linkListHeaders.add(filterHeaders.getElements().get(i));
+		}
+		for (Map.Entry<String, String> entry : creditCardPlans.getMandatoryValuesWithLabels().entrySet()) {
+			for (int i = 0; i < linkListHeaders.size(); i++) {
+				if (linkListHeaders.get(i).getText().equals(entry.getKey())) {
+					if (linkList.get(i).getTagName().equals("input")) {
+						WebElementUtils.enterText(linkList.get(i), entry.getValue());
+						break;
+					} else if (linkList.get(i).getTagName().equals("select")) {
+						WebElementUtils.selectDropDownByVisibleText(linkList.get(i), entry.getValue());
+						break;
+					}
+				}
+			}
+
+		}
+		clickWhenClickable(searchBtn);
+		logger.info("Row values after search: {}", tableRows.getText());
+		Assert.assertEquals("Added Record is displayed based on filter Values", firstRow.getElements().size(), 1);
+
+	}
+
+	public void editFunctionalityCheck() {
+		LinkedList<MCWebElement> linkListDescription = new LinkedList<>();
+		switchToFirstFrame();
+		allDescriptionFieldsInFrame(linkListDescription);
+		if (!linkListDescription.get(0).getTagName().equals("span")) {
+			String updatedValue = editDescriptionValueInFirstFrame(linkListDescription);
+			searchEditedValueOfFirstFrame();
+			verifyIfValueIsEditedOfFirstFrame(updatedValue);
+		} else {
+
+			String updatedValue = editingInnerFrameValue();
+			verifyEditingOfInnerFrame(updatedValue);
+			clickSaveButton();
+			waitForPageToLoad(getFinder().getWebDriver());
+
 		}
 
-		  public int editSize() {
-			  return editRecord.getElements().size();
+	}
+
+	public void verifyEditingOfInnerFrame(String updatedValue) {
+		for (int i = 0; i < tableHeaders.getElements().size(); i++) {
+			if (tableHeaders.getElements().get(i).getText().contains("Description")) {
+				logger.info("EditedDescription: {}", firstRowColumnValues.getElements().get(i).getText());
+				logger.info("Added Record is displayed based on filters in innerframe" + firstRowColumnValues.getElements().get(i).getText(), updatedValue);
+				Assert.assertEquals("Added Record is displayed based on filters in innerframe", firstRowColumnValues.getElements().get(i).getText(), updatedValue);
 			}
-			   public int frames() {
-				frameSwitch.getElements();
-				return frameSwitch.getElements().size();
-				 }
+		}
+	}
+
+	public String editingInnerFrameValue() {
+		clickWhenClickable(editRecord.getElements().get(editSize() - 1));
+		SwitchToDefaultFrame();
+		switchToIframe("Plan Detail");
+		WebElementUtils.enterText(innerDescriptionTxt, "");
+		WebElementUtils.enterText(innerDescriptionTxt, CustomUtils.randomNumbers(5));
+		String updatedValue = innerDescriptionTxt.getAttribute("value");
+		clickSaveButton();
+		switchToIframe(frameSwitch.getElements().get(frames() - 1).getText());
+		return updatedValue;
+	}
+
+	private void verifyIfValueIsEditedOfFirstFrame(String updatedValue) {
+		for (int i = 0; i < tableHeaders.getElements().size(); i++) {
+			if (tableHeaders.getElements().get(i).getText().equals("Description")) {
+				logger.info("EditedDescription: {}", firstRowColumnValues.getElements().get(i).getText());
+				logger.info("Added Record is displayed based on filters" + firstRowColumnValues.getElements().get(i).getText(), updatedValue);
+				Assert.assertEquals("Added Record is displayed based on filters", firstRowColumnValues.getElements().get(i).getText(), updatedValue);
+			}
+		}
+	}
+
+	public void searchEditedValueOfFirstFrame() {
+		WebElementUtils.enterText(descriptionFilterTxt, "");
+		clickSearchButton();
+	}
+
+	public String editDescriptionValueInFirstFrame(LinkedList<MCWebElement> linkListDescription) {
+		WebElementUtils.enterText(linkListDescription.get(0), "");
+		WebElementUtils.enterText(linkListDescription.get(0), CustomUtils.randomAlphaNumeric(5));
+		String updatedValue = linkListDescription.get(0).getAttribute("value");
+		clickSaveButton();
+		return updatedValue;
+	}
+
+	public void allDescriptionFieldsInFrame(LinkedList<MCWebElement> linkListDescription) {
+		for (int i = 0; i < descriptionTxt.getElements().size(); i++) {
+			linkListDescription.add(descriptionTxt.getElements().get(i));
+		}
+	}
+
+	public void switchToFirstFrame() {
+		clickWhenClickable(editRecord.getElements().get(editSize() - 1));
+		switchToIframe(frameSwitch.getElements().get(frames() - 1).getText());
+	}
+
+	public void deleteFunctionalityCheck() {
+		if (isDeleteColumnPresent()) {
+			waitForPageToLoad(getFinder().getWebDriver());
+			deleteFirstRecord();
+			Alert alert = driver().switchTo().alert();
+			alert.accept();
+			clickWhenClickable(searchBtn);
+			logger.info("Row size after deletion: {}", tableRows.getText());
+			Assert.assertEquals("Added Record is deleted", tableRows.getText(), "");
+		}
+	}
+
+	public int editSize() {
+		return editRecord.getElements().size();
+	}
+
+	public int frames() {
+		frameSwitch.getElements();
+		return frameSwitch.getElements().size();
+	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
