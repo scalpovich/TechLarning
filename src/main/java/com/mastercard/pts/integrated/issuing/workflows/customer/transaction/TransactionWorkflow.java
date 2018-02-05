@@ -804,10 +804,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void selectMCPSLicense(){
 		wait(5000);
-//		executeAutoITExe("ActivateLicenseProfiles.exe");		
-//		winiumLicenseSelectOperation("License profiles");		
-//		performClickOperation("License profiles");
-//		performClickOperation("Select");		
 		executeAutoITExe("ActivateLicenseProfiles.exe");		
 		winiumLicenseSelectOperation("License profiles");		
 		winiumDriver.findElementByName("License profiles").click();
