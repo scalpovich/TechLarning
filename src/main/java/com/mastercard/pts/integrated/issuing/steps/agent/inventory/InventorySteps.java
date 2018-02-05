@@ -128,13 +128,24 @@ public class InventorySteps {
 				containsString(expectedTitleText));
 	}
 
+	@Given("user enters order details and submits the form")
+	@When("user enters order details and submits the form")
+	public void whenUserEntersOrderDetailsAndSubmitsTheForm() {
+		Program program = context.get(ContextConstants.PROGRAM);
+		order = Order.createWithProvider(provider);
+		order.setProgram(program.buildDescriptionAndCode());
+		order.setDeviceType(CardType.fromShortName(devicePlan.getDeviceType()));
+		String orderNumber = inventoryWorkflow.createOrder(order);
+		order.setOrderNumber(orderNumber);
+		context.put(ContextConstants.ORDER, order);
+	}
+
 	@Given("user fills order details and submits the form")
 	@When("user fills order details and submits the form")
 	public void whenUserFillsOrderDetailsAndSubmitsTheForm() {
 		Program program = context.get(ContextConstants.PROGRAM);
 		order = Order.createWithProvider(provider);
 		order.setProgram(program.buildDescriptionAndCode());
-		order.setDeviceType(CardType.fromShortName(devicePlan.getDeviceType()));
 		String orderNumber = inventoryWorkflow.createOrder(order);
 		order.setOrderNumber(orderNumber);
 		context.put(ContextConstants.ORDER, order);

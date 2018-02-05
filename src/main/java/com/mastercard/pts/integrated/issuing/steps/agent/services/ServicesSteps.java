@@ -159,6 +159,23 @@ public class ServicesSteps {
 				containsString(expectedTitleText));
 	}
 
+	@Given("user enters program details $type registration")
+	@When("user enters program details $type registration")
+	public void whenUserEntersProgramDetailsToRegister(String type) {
+		Program program = context.get(ContextConstants.PROGRAM);
+		dispatch = context.get(ContextConstants.DISPATCH);
+		deviceSale = DeviceSale.createWithProvider(provider);
+		deviceSale.setProgram(program.buildDescriptionAndCode());
+		deviceSale.setDeviceType(CardType.fromShortName(devicePlan.getDeviceType()));
+		deviceSale.setCardPackId(dispatch.getLastCardPackId());
+		deviceSale.setFirstName("FN" + MiscUtils.randomAlphabet(6).toLowerCase());
+		deviceSale.setLastName("LN" + MiscUtils.randomAlphabet(6).toLowerCase());
+		if (WITH.equalsIgnoreCase(type))
+			servicesWorkflow.deviceSaleWithRegistration(deviceSale);
+		else if (WITH_OUT.equalsIgnoreCase(type))
+			servicesWorkflow.deviceSaleWithoutRegistration(deviceSale);
+	}
+
 	@Given("user fills program details $type registration")
 	@When("user fills program details $type registration")
 	public void whenUserFillsProgramDetailsToRegister(String type) {
@@ -166,7 +183,6 @@ public class ServicesSteps {
 		dispatch = context.get(ContextConstants.DISPATCH);
 		deviceSale = DeviceSale.createWithProvider(provider);
 		deviceSale.setProgram(program.buildDescriptionAndCode());
-		deviceSale.setDeviceType(CardType.fromShortName(devicePlan.getDeviceType()));
 		deviceSale.setCardPackId(dispatch.getLastCardPackId());
 		deviceSale.setFirstName("FN" + MiscUtils.randomAlphabet(6).toLowerCase());
 		deviceSale.setLastName("LN" + MiscUtils.randomAlphabet(6).toLowerCase());
