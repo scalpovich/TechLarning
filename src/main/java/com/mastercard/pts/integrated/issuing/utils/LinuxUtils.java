@@ -76,14 +76,15 @@ public abstract class LinuxUtils {
 	private static String getFileFromLinuxBox (RemoteConnectionDetails connectiondetails, String lookUpFor) throws Exception
 	{
 		String result = null;
-		Session session = new JSch().getSession(connectiondetails.getUserName(), connectiondetails.getHostName(), connectiondetails.getPort());        
+		Session session = new JSch().getSession(connectiondetails.getUserName(), connectiondetails.getHostName(), connectiondetails.getPort());    
+		logger.info("getFileFromLinuxBox connection String {} --> ", connectiondetails.getUserName(), connectiondetails.getHostName(), connectiondetails.getPort());
 		session.setPassword(connectiondetails.getPassword());
 		java.util.Properties config = new java.util.Properties(); 
 		config.put("StrictHostKeyChecking", "no");
 		session.setConfig(config);
 		session.connect();
 		String cmd = "find /home/dc-user/integrated/elt_bo/data -name \"*" + lookUpFor + "*\"";
-
+		logger.info("command for getFileFromLinuxBox {} --> ", cmd);
 		Channel channel=session.openChannel("exec");
 		((ChannelExec)channel).setCommand(cmd);
 		channel.setInputStream(null);
@@ -99,7 +100,7 @@ public abstract class LinuxUtils {
 					break; 
 				}
 				result = new String(tmp, 0, i).trim();
-				//logger.info("Result of search for file with text : "+ lookUpFor + " : " + channel.getExitStatus());
+				logger.info("Result of search for file with text : "+ lookUpFor + " : " + channel.getExitStatus());
 			}
 			if(channel.isClosed()){
 				if(in.available()>0) continue; 
