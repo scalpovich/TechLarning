@@ -49,6 +49,7 @@ public class BatchSteps {
 	@When("embossing file batch was generated in correct format")
 	@Then("embossing file batch was generated in correct format")
 	public void  embossingFileWasGeneratedSuccessfully() {
+		MiscUtils.reportToConsole("******** Embossing File Start ***** " );
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		try {
 			File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "Device");
@@ -67,6 +68,7 @@ public class BatchSteps {
 			String tempDate = fileData[1].substring(fileData[1].length()-2) + fileData[1].substring(0, 2);
 			device.setExpirationDate(tempDate);
 			MiscUtils.reportToConsole("Expiration Data :  " + tempDate );
+			MiscUtils.reportToConsole("******** Embossing File Completed ***** " );
 
 		} catch (Exception e) {
 			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
@@ -94,6 +96,7 @@ public class BatchSteps {
 			scanner.close();
 			//			reanming file name as sometimes the embosing file name is also same
 			MiscUtils.renamePinFile(batchFile.toString());
+			MiscUtils.reportToConsole("******** Pin Offset Completed ***** " );
 		}
 		catch(NullPointerException | FileNotFoundException e)
 		{

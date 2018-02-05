@@ -1222,6 +1222,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public String getPinNumber(Transaction transactionData) {
+		MiscUtils.reportToConsole("******** getPinNumber Start ***** " );
 		try
 		{
 			//			Ex: SelectValuesFromPinOffsetCalculator.exe "5877650150876119" "EE9A8BACEE127B4B2DC900D8EEA9221D" "1234567890123456" "4" "12" "F" "7782" "4"
