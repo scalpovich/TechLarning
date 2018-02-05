@@ -9,7 +9,7 @@ Meta:
 @StoryName S193816
 
 
-Scenario: Scenario1 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Retail NFC MAGSTRIPE
+Scenario:1 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Retail NFC MAGSTRIPE
 Meta:
 @CR
 @all
@@ -42,11 +42,8 @@ And user verifies the Pre generated flag at device level should be set to Y once
 !-- Then user logout from customer portal
 Then user onboard the Device through Agent Portal and Activate through HelpDesk
 
-Scenario: Scenario2 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Retail NFC MAGSTRIPE
+Scenario:2 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Retail NFC MAGSTRIPE
 Meta:
-Lifecycle:
-After:
-Outcome: SUCCESS
 @BulkDeviceGenerationPrepaidMCRetailNFCMAGSTRIPE
 @TCName TC264318_Embossing File Generation_MCSMS
 @sheetName S205014
@@ -57,7 +54,7 @@ And user select the service code as Activate Device
 And user activates the device through HelpDesk
 Then activation of registered device prepaid is successful and activation date is updated
 
-Scenario: Scenario3 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Retail NFC MAGSTRIPE
+Scenario:3 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Retail NFC MAGSTRIPE
 Meta:
 @CR
 @all
@@ -90,11 +87,8 @@ And user verifies the Pre generated flag at device level should be set to Y once
 !-- Then user logout from customer portal
 Then user onboard the Device through Agent Portal and Activate through HelpDesk
 
-Scenario: Scenario4 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Retail NFC MAGSTRIPE
+Scenario:4 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Retail NFC MAGSTRIPE
 Meta:
-Lifecycle:
-After:
-Outcome: SUCCESS
 @BulkDeviceGenerationPrepaidMCRetailNFCMAGSTRIPE
 @TCName TC264318_Embossing File Generation_MCSMS
 @sheetName S205014

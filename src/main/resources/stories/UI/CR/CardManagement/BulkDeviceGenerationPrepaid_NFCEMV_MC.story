@@ -9,7 +9,7 @@ Meta:
 @StoryName S193816
 
 
-Scenario: Scenario1 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Corporate NFC EMV
+Scenario:1 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Corporate NFC EMV
 Meta:
 @CR
 @all
@@ -41,11 +41,8 @@ Then pair devices should be generated for each of the processed Device and the p
 And user verifies the Pre generated flag at device level should be set to Y once the device created
 Then user onboard the Device through Agent Portal and Activate through HelpDesk
 
-Scenario: Scenario2 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Corporate NFC EMV
+Scenario:2 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Corporate NFC EMV
 Meta:
-Lifecycle:
-After:
-Outcome: SUCCESS
 @BulkDeviceGenerationPrepaidMCCorporateNFCEMV
 @TCName TC264319_Embossing File Generation
 @sheetName S205014
@@ -56,7 +53,7 @@ And user select the service code as Activate Device
 And user activates the device through HelpDesk
 Then activation of registered device prepaid is successful and activation date is updated
 
-Scenario: Scenario3- Verify that the Users must be able to create bulk device production request from the system successfully for MC Retail NFC EMV
+Scenario:3- Verify that the Users must be able to create bulk device production request from the system successfully for MC Retail NFC EMV
 Meta:
 @CR
 @all
@@ -88,11 +85,8 @@ Then pair devices should be generated for each of the processed Device and the p
 And user verifies the Pre generated flag at device level should be set to Y once the device created
 Then user onboard the Device through Agent Portal and Activate through HelpDesk
 
-Scenario: Scenario4 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Corporate NFC EMV
+Scenario:4 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Corporate NFC EMV
 Meta:
-Lifecycle:
-After:
-Outcome: SUCCESS
 @BulkDeviceGenerationPrepaidMCRetailNFCEMV
 @TCName TC264319_Embossing File Generation
 @sheetName S205014

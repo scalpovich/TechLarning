@@ -8,7 +8,7 @@ Meta:
 @BulkDeviceGenerationPrepaidCR
 @StoryName S193816
 
-Scenario: Scenario1 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Corp StaticVirtual
+Scenario:1 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Corp StaticVirtual
 Meta:
 @CR
 @all
@@ -40,11 +40,8 @@ Then pair devices should be generated for each of the processed Device and the p
 And user verifies the Pre generated flag at device level should be set to Y once the device created
 Then user onboard the Device through Agent Portal and Activate through HelpDesk
 
-Scenario: Scenario2 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Corp EMV
+Scenario:2 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Corp EMV
 Meta:
-Lifecycle:
-After:
-Outcome: SUCCESS
 @BulkDeviceGenerationPrepaidCorpMCStaticVirtual
 @TCName TC264326_Embossing File Generation
 @sheetName S205014
@@ -55,7 +52,7 @@ And user select the service code as Activate Device
 And user activates the device through HelpDesk
 Then activation of registered device prepaid is successful and activation date is updated
 
-Scenario: Scenario3 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Retail StaticVirtual
+Scenario:3 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Retail StaticVirtual
 Meta:
 @CR
 @all
@@ -87,11 +84,8 @@ Then pair devices should be generated for each of the processed Device and the p
 And user verifies the Pre generated flag at device level should be set to Y once the device created
 Then user onboard the Device through Agent Portal and Activate through HelpDesk
 
-Scenario: Scenario4 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Retail StaticVirtual
+Scenario:4 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Retail StaticVirtual
 Meta:
-Lifecycle:
-After:
-Outcome: SUCCESS
 @BulkDeviceGenerationPrepaidRetailMCStaticVirtual
 @TCName TC264326_Embossing File Generation
 @sheetName S205014

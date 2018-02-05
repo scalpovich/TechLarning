@@ -8,7 +8,7 @@ Meta:
 @BulkDeviceGenerationPrepaidCR
 @StoryName S193816
 
-Scenario: Scenario1 - Verify that the Users must be able to create bulk device production request from the system successfully for Visa Retail NFC Device
+Scenario:1 - Verify that the Users must be able to create bulk device production request from the system successfully for Visa Retail NFC Device
 Meta:
 @CR
 @all
@@ -41,11 +41,8 @@ And user verifies the Pre generated flag at device level should be set to Y once
 !-- Then user logout from customer portal
 Then user onboard the Device through Agent Portal and Activate through HelpDesk
 
-Scenario: Scenario2 - Verify that the Users must be able to create bulk device production request from the system successfully for Visa Retail NFC Emv
+Scenario:2 - Verify that the Users must be able to create bulk device production request from the system successfully for Visa Retail NFC Emv
 Meta:
-Lifecycle:
-After:
-Outcome: SUCCESS
 @BulkDeviceGenerationPrepaidVisaRetailNFCDevice
 @TCName TC264321_Embossing File Generation_VISA
 @sheetName S205014
@@ -57,7 +54,7 @@ And user activates the device through HelpDesk
 Then activation of registered device prepaid is successful and activation date is updated
 
 
-Scenario: Scenario3 - Verify that the Users must be able to create bulk device production request from the system successfully for Visa Corporate NFC EMV
+Scenario:3 - Verify that the Users must be able to create bulk device production request from the system successfully for Visa Corporate NFC EMV
 Meta:
 @CR
 @all
@@ -90,11 +87,8 @@ And user verifies the Pre generated flag at device level should be set to Y once
 Then user onboard the Device through Agent Portal and Activate through HelpDesk
 
 
-Scenario: Scenario4 - Verify that the Users must be able to create bulk device production request from the system successfully for Visa Corporate NFC EMV
+Scenario:4 - Verify that the Users must be able to create bulk device production request from the system successfully for Visa Corporate NFC EMV
 Meta:
-Lifecycle:
-After:
-Outcome: SUCCESS
 @BulkDeviceGenerationPrepaidVisaCorporateNFCDevice
 @TCName TC264321_Embossing File Generation_VISA
 @sheetName S205014
