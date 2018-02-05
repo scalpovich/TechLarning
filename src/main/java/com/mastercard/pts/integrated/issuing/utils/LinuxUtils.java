@@ -32,8 +32,7 @@ public abstract class LinuxUtils {
 		int getPort();
 	}
 
-	public static void download(RemoteConnectionDetails connectiondetails, String remoteSource,
-			String localDestination ) throws JSchException  {
+	public static void download(RemoteConnectionDetails connectiondetails, String remoteSource, String localDestination ) throws JSchException  {
 		logger.info("Conection Details: {}", connectiondetails);
 
 		JSch jsch = new JSch();
@@ -54,7 +53,7 @@ public abstract class LinuxUtils {
 		
 		
 		String command = "scp -f " + remoteSource;
-
+		logger.info("Linux Command  {} -> {} ", command);
 		Channel channel = session.openChannel("exec");
 		((ChannelExec)channel).setCommand(command);
 
@@ -122,8 +121,7 @@ public abstract class LinuxUtils {
 		return result;
 	}
 
-	private static void transferFile(String remoteSource, String localDestination, Channel channel)
-			throws IOException {
+	private static void transferFile(String remoteSource, String localDestination, Channel channel) throws IOException {
 		// get I/O streams for remote scp
 		OutputStream out = channel.getOutputStream();
 		InputStream in = channel.getInputStream();
@@ -159,7 +157,7 @@ public abstract class LinuxUtils {
 
 		String finalDestination = localDestination + "\\" + fileName;
 		try (FileOutputStream fileOutputStream = new FileOutputStream(finalDestination)) {
-			//logger.info("File downloaded to @: {}", finalDestination);
+			logger.info("File downloaded to @: {}", finalDestination);
 
 			int i;
 			while (fileSize != 0L) {
