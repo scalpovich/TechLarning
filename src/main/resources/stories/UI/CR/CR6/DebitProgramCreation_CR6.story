@@ -5,6 +5,7 @@ I want to  create/define a Debit Program
 So that program can be created with different data conditions
 
 Meta:
+@CRProgram
 @DebitProgramCR6
 
 Scenario: Scenario1 - Verify that the Issuer is able to create/define a Debit Program:  ATM Admin Card Type 

@@ -5,6 +5,7 @@ I want to  create/define a Prepaid Program
 So that program can be created with different data conditions
 
 Meta:
+@CRProgram
 @PrepaidProgramCR2
 
 Scenario: Scenario1 - Verify that the Issuer is able to create/define a Prepaid Program: Retail General Purpose Card for Multi Wallet Single Currency Type  - Using data condition: DMS, Device Technology (VISA Interface), EMV 
