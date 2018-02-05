@@ -506,7 +506,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumDriver.findElementByName("TDG").click();
 		action.moveToElement(winiumDriver.findElementByName("toolStripSplitButton1")).moveByOffset(10, 0).click().build().perform();  
 		action.moveToElement(winiumDriver.findElementByName("toolStripSplitButton1")).moveByOffset(10, 16).click().build().perform(); 
-		//performClickOperation("Import Auth file");
 		executeAutoITExe("LoadAuthFile.exe " + fileName );
 		loadFile(fileName);
 	}
