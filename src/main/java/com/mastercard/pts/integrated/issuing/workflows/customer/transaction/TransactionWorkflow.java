@@ -280,8 +280,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		} catch (Exception e) {
 			throw MiscUtils.propagate(e);
 		}
-		//minimize browser
-		browserMinimize();
 		
 		if(simulator.toUpperCase().contains("FINSIM")) {
 			launchAndConnectToFinSim();
@@ -1244,6 +1242,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private Boolean performWiniumOperationIsObjectDisplayed(String clickOn)
 	{
 		wait(1000);
@@ -1455,6 +1454,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public void connectAndStartVtsCommunication() { 
+		//minimize browser
+		browserMinimize();
 		wait(5000);
 		activateVts();
 
