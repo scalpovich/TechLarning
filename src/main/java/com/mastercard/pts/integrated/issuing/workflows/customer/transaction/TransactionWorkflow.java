@@ -72,6 +72,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private static final String TRANSACTION_AMOUNT = "004 - Amount, Transaction";
 	private static final String SET_VALUE = "Set Value";
 	private static final String CLOSE = "Close";
+	private static final String OK = "OK";
 	private static final String MESSAGE_TYPE_INDICATOR = "Message Type Indicator";
 	private static final String MIDDLE_PRESENTMENT = "Middle Presentment";
 	private static final String PATH_BUILDER =  "\" \"";
@@ -501,9 +502,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void loadAuthFileIntoMCPS(String fileName)
 	{
-		clickTDG();
-		performClickOperation("Down Arrow");
-		performClickOperation("Import Auth file");
+		Actions action = new Actions(winiumDriver);				
+		winiumDriver.findElementByName("TDG").click();
+		action.moveToElement(winiumDriver.findElementByName("toolStripSplitButton1")).moveByOffset(10, 0).click().build().perform();  
+		action.moveToElement(winiumDriver.findElementByName("toolStripSplitButton1")).moveByOffset(10, 16).click().build().perform(); 
+		//performClickOperation("Import Auth file");
 		executeAutoITExe("LoadAuthFile.exe " + fileName );
 		loadFile(fileName);
 	}
@@ -659,7 +662,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		pressTab();
 		setText("");
 		setText(rRN);
-		winiumClickOperation("OK");
+		winiumClickOperation(OK);
 		wait(2000);
 		winiumClickOperation("Set Value");
 		String aRN = winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
@@ -686,7 +689,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(2000);
 		winiumClickOperation(CLOSE);
 		performClickOperation("Save");
-		performClickOperation("OK");
+		winiumClickOperation(OK);
 		wait(2000);
 		performClickOperation("Add file to CEE");
 		wait(2000);
@@ -802,10 +805,14 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void selectMCPSLicense(){
 		wait(5000);
+//		executeAutoITExe("ActivateLicenseProfiles.exe");		
+//		winiumLicenseSelectOperation("License profiles");		
+//		performClickOperation("License profiles");
+//		performClickOperation("Select");		
 		executeAutoITExe("ActivateLicenseProfiles.exe");		
 		winiumLicenseSelectOperation("License profiles");		
-		performClickOperation("License profiles");
-		performClickOperation("Select");		
+		winiumDriver.findElementByName("License profiles").click();
+		winiumDriver.findElementByName("Select").click();
 		wait(15000);
 	}
 
