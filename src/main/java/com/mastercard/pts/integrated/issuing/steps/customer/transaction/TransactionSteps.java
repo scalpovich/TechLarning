@@ -98,6 +98,7 @@ public class TransactionSteps {
 	@Alias("a sample simulator \"$transaction\" is executed")
 	@Given("perform an $transaction MAS transaction")
 	public void givenTransactionIsExecuted(String transaction) {
+		
 		String temp = transaction;
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));
@@ -139,14 +140,12 @@ public class TransactionSteps {
 	@When("user performs an optimized $transaction MAS transaction")
 	@Given("user performs an optimized $transaction MAS transaction")
 	public void givenOptimizedTransactionIsExecuted(String transaction) {
-		transactionWorkflow.browserMinimize(); // minimizing browser for smooth
+		transactionWorkflow.browserMinimize(); // minimize browser
 		// operation of MAS/MDFS ... Storing transaction name in context to use it at runtime
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		Transaction transactionData = generateMasTestDataForTransaction(transaction);
 
 		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
-		transactionWorkflow.browserMaximize(); // restoring browser after
-		// operation of MAS/MDFS
 	}
 
 	@When("user performs generate TestData for an optimized $transaction MAS transaction")
@@ -297,7 +296,8 @@ public class TransactionSteps {
 		} else {
 			testResults = transactionWorkflow.verifyTestResultsOnMdfs();
 		}
-
+		transactionWorkflow.browserMaximize(); // restoring browser after
+		
 		if (testResults.contains("Validations OK")) {
 			logger.info("Expected Result :- ", testResults);
 			assertTrue("Transaction is succcessful!  - Expected Result : "+ testResults, true);
@@ -333,6 +333,7 @@ public class TransactionSteps {
 	@Then("$simulatorName simulator is closed")
 	public void thenclosesimulator(String simulatorName) {
 		transactionWorkflow.closeSimulator(simulatorName);
+		transactionWorkflow.browserMaximize(); // restoring browser after
 	}
 
 	@Given("transaction status is \"$type\"")

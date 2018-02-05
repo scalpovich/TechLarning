@@ -280,7 +280,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		} catch (Exception e) {
 			throw MiscUtils.propagate(e);
 		}
-
+		//minimize browser
+		browserMinimize();
+		
 		if(simulator.toUpperCase().contains("FINSIM")) {
 			launchAndConnectToFinSim();
 
@@ -1200,14 +1202,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	{		
 		try
 		{
+			//exe to handle all license validation dialogs and then fianlly to activate Finsim on the Server Name control
 			executeAutoITExe("HandleFinSimLicenseValidationProblem.exe");
-			wait(2000);
-			if(performWiniumOperationIsObjectDisplayed("Password :"))
-			{
-				executeAutoITExe("ClickCancelOnFINSimPasswordScreen.exe");
-			}
-			executeAutoITExe("ActivateFINSimConnectScreen.exe");
-
+			wait(3000);	
 			pressTab();
 			setText(finSimSimulator.getIpAddress());
 			pressTab(2);
@@ -1492,10 +1489,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(2000);
 		executeAutoITExe("ImportVisaTestFile.exe " + vtsInputFilePath);
 		wait(3000);
-
-		//		collapseTreeMenuOnVts(transactionToSelect);
 	}
 
+	@SuppressWarnings("unused")
 	private void collapseTreeMenuOnVts(String selection) {
 		activateVts();
 		winiumClickOperation(selection);
@@ -1529,7 +1525,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public void performVisaTransaction(String transaction) {
-		browserMinimize();
 		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseToSelect(transaction);
 		logMessage("VISA Transaction Test Case Name : ",  transactionName );
 
