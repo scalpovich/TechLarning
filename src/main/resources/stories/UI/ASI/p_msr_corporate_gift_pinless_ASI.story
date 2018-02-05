@@ -6,7 +6,7 @@ As an issuer
 I want to create a prepaid MSR corporate gift card and test various scenarios
 
 Meta:
-@StoryName p_msr_corp_gift
+@StoryName p_msr_corp_gift_ASI
 @ASI
 Scenario: Setup - prepaid MSR corporate gift card without PIN
 Given user is logged in institution
@@ -25,7 +25,7 @@ Then user sign out from customer portal
 
 Scenario: Perform MMSR-CORPORATE_GiftCard Authorization transaction
 Given connection to MAS is established
-When perform an ASI MAS transaction
+When perform an ASI_MSR MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution

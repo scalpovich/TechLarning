@@ -26,13 +26,13 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP,
-		CardManagementNav.L2_DEVICE_CONFIGURATION, CardManagementNav.L3_DEVICE_PLAN })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP, CardManagementNav.L2_DEVICE_CONFIGURATION, CardManagementNav.L3_DEVICE_PLAN })
 public class DevicePlanPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(DevicePlanPage.class);
 	private static final String STATUS_YES = "Yes";
@@ -434,9 +434,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectActivationMode(DevicePlan deviceplan) {
-		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
-				|| !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
-				|| !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) || !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) || !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
 			Assert.assertTrue("Card activation Mode dropdown is enabled", activationMode.isEnabled());
 			selectByText(activationMode, deviceplan.getActivationMode());
 		} else {
@@ -454,14 +452,12 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectDeliveryMode(DevicePlan deviceplan) {
-		if (!CardType.STATIC_VIRTUAL.contains(DeviceType.fromShortName(deviceplan.getDeviceType()))
-				&& !CardType.LIMITED_VALIDITY.contains(DeviceType.fromShortName(deviceplan.getDeviceType()))
+		if (!CardType.STATIC_VIRTUAL.contains(DeviceType.fromShortName(deviceplan.getDeviceType())) && !CardType.LIMITED_VALIDITY.contains(DeviceType.fromShortName(deviceplan.getDeviceType()))
 				&& !CardType.MOBILE.contains(DeviceType.fromShortName(deviceplan.getDeviceType()))) {
 			Assert.assertTrue("delivery Mode dropdown is enabled", deliveryModeDDwn.isEnabled());
 			selectByVisibleText(deliveryModeDDwn, deviceplan.getDeliveryMode());
 		} else {
-			Assert.assertTrue("delivery Mode dropdown is disabled for " + deviceplan.getDeviceType(),
-					!deliveryModeDDwn.isEnabled());
+			Assert.assertTrue("delivery Mode dropdown is disabled for " + deviceplan.getDeviceType(), !deliveryModeDDwn.isEnabled());
 		}
 	}
 
@@ -478,67 +474,50 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectEmbossingVendor(DevicePlan deviceplan) {
-		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
-				&& !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
-				&& !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) && !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) && !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
 			ClickCheckBox(cardProductionChkBx, true);
 			Assert.assertTrue("card production checkbox is enabled", cardProductionChkBx.isEnabled());
 			waitForLoaderToDisappear();
 			Assert.assertTrue("Embossing vendor dropdown is enabled", embossingVendorDDwn.isEnabled());
 			selectByVisibleText(embossingVendorDDwn, deviceplan.getEmbossiongVendor());
 		} else {
-			Assert.assertTrue("card production is disabled for " + deviceplan.getDeviceType(),
-					!cardProductionChkBx.isEnabled());
-			Assert.assertTrue("Embossing vendor dropdown is disabled for " + deviceplan.getDeviceType(),
-					!embossingVendorDDwn.isEnabled());
+			Assert.assertTrue("card production is disabled for " + deviceplan.getDeviceType(), !cardProductionChkBx.isEnabled());
+			Assert.assertTrue("Embossing vendor dropdown is disabled for " + deviceplan.getDeviceType(), !embossingVendorDDwn.isEnabled());
 		}
 	}
 
 	public void checkCourierTracking(DevicePlan deviceplan) {
-		if (!(CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
-				&& CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
-				&& CardType.MOBILE.contains(deviceplan.getDeviceType())
-				&& CardType.ATM_ADMIN.contains(deviceplan.getDeviceType()))) {
+		if (!(CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) && CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) && CardType.MOBILE.contains(deviceplan.getDeviceType()) && CardType.ATM_ADMIN
+				.contains(deviceplan.getDeviceType()))) {
 			Assert.assertTrue("courier tracking checkbox is enabled", courierTrackingChkBx.isEnabled());
 			ClickCheckBox(courierTrackingChkBx, true);
 		} else {
-			Assert.assertTrue("courier tracking checkbox is disabled for " + deviceplan.getDeviceType(),
-					!(courierTrackingChkBx.isEnabled()));
+			Assert.assertTrue("courier tracking checkbox is disabled for " + deviceplan.getDeviceType(), !(courierTrackingChkBx.isEnabled()));
 		}
 	}
 
 	public void checkManufacturingTracking(DevicePlan deviceplan) {
-		if (!(CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
-				|| CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
-				|| CardType.MOBILE.contains(deviceplan.getDeviceType())
-				|| CardType.ATM_ADMIN.contains(deviceplan.getDeviceType()))) {
-			Assert.assertTrue("Manufactoring tracking checkbox dropdown is enabled",
-					manuFactoringTrackingChkBx.isEnabled());
+		if (!(CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) || CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) || CardType.MOBILE.contains(deviceplan.getDeviceType()) || CardType.ATM_ADMIN
+				.contains(deviceplan.getDeviceType()))) {
+			Assert.assertTrue("Manufactoring tracking checkbox dropdown is enabled", manuFactoringTrackingChkBx.isEnabled());
 		} else {
-			Assert.assertTrue("Manufactoring tracking checkbox disabled for " + deviceplan.getDeviceType(),
-					!(manuFactoringTrackingChkBx.isEnabled()));
+			Assert.assertTrue("Manufactoring tracking checkbox disabled for " + deviceplan.getDeviceType(), !(manuFactoringTrackingChkBx.isEnabled()));
 		}
 	}
 
 	public void checkGenerateCVV(DevicePlan deviceplan) {
-		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
-				|| !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
-				|| !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) || !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) || !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
 			Assert.assertTrue("Generate CVV/CVC checkbox is enabled", generateCvvChkBx.isEnabled());
 		} else {
-			Assert.assertTrue("Generate CVV/CVC checkbox is disabled for " + deviceplan.getDeviceType(),
-					generateCvvChkBx.isEnabled());
+			Assert.assertTrue("Generate CVV/CVC checkbox is disabled for " + deviceplan.getDeviceType(), generateCvvChkBx.isEnabled());
 		}
 	}
 
 	public void checkGenerateCVV2(DevicePlan deviceplan) {
-		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
-				|| !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
-				|| !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) || !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) || !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
 			Assert.assertTrue("Generate CVV2/CVC2 checkbox is enabled", generateCvv2ChkBx.isEnabled());
 		} else {
-			Assert.assertTrue("Generate CVV2/CVC2 checkbox is disabled for " + deviceplan.getDeviceType(),
-					generateCvv2ChkBx.isEnabled());
+			Assert.assertTrue("Generate CVV2/CVC2 checkbox is disabled for " + deviceplan.getDeviceType(), generateCvv2ChkBx.isEnabled());
 		}
 	}
 
@@ -676,9 +655,7 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	public void provideAuthorizationDetails(DevicePlan deviceplan) {
 		selectAfterKYC();
-		if (CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
-				|| CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
-				|| CardType.ATM_ADMIN.contains(deviceplan.getDeviceType())) {
+		if (CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) || CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) || CardType.ATM_ADMIN.contains(deviceplan.getDeviceType())) {
 			clickEcomCheckBox();
 		}
 	}
@@ -816,8 +793,7 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	public void selectIframeBaseDeviceJoiningMemberShipPlanDdwn(String deviceJoiningMemberShipPlan) {
 		if (iframeBaseDeviceJoiningMemberShipPlanDdwn.isEnabled())
-			WebElementUtils.selectDropDownByVisibleText(iframeBaseDeviceJoiningMemberShipPlanDdwn,
-					deviceJoiningMemberShipPlan);
+			WebElementUtils.selectDropDownByVisibleText(iframeBaseDeviceJoiningMemberShipPlanDdwn, deviceJoiningMemberShipPlan);
 	}
 
 	public void selectIframeTransactionLimitPlanDdwn(String transactionLimitPlan) {
@@ -838,14 +814,16 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void clickIframeFinishButton() {
-		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
-				.until(WebElementUtils.elementToBeClickable(iframeFinishBtn)).click();
+		SimulatorUtilities.wait(500);
+		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec).until(WebElementUtils.visibilityOf(iframeFinishBtn));
+		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(iframeFinishBtn)).click();
 	}
 
 	public void clickIframeNextButton() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
-		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
-				.until(WebElementUtils.elementToBeClickable(iframeNextBtn)).click();
+		SimulatorUtilities.wait(500);
+		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec).until(WebElementUtils.visibilityOf(iframeNextBtn));
+		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(iframeNextBtn)).click();
 	}
 
 	public void selectAllcavv() {
@@ -896,8 +874,8 @@ public class DevicePlanPage extends AbstractBasePage {
 			selectIframeExpiryFlagDdwn(devicePlanDataObject.getExpiryFlag());
 			// next steps have been pushed to below method due to SONAR
 			// limitation
-			createDevicePlanContinuation(devicePlanDataObject);
-		});
+				createDevicePlanContinuation(devicePlanDataObject);
+			});
 
 		verifyOperationStatus();
 	}
@@ -921,15 +899,13 @@ public class DevicePlanPage extends AbstractBasePage {
 		}
 		checkExpiryDate();
 		WebElementUtils.checkCheckbox(ecommAllowedChkBx, devicePlan.isEcommerceAllowed());
-		if (!devicePlan.getDeviceType().equals(DeviceType.STATIC_VIRTUAL_CARD)
-				&& "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
+		if (!devicePlan.getDeviceType().equals(DeviceType.STATIC_VIRTUAL_CARD) && "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 			WebElementUtils.enterText(pinRetryLimitTxt, devicePlan.getPinRetryLimit());
 		}
 		clickIframeNextButton();
 		clickIframeNextButton();
 
-		if (DeviceType.EMV_CARD.equals(devicePlan.getDeviceType())
-				|| DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS.equals(devicePlan.getDeviceType())) {
+		if (DeviceType.EMV_CARD.equals(devicePlan.getDeviceType()) || DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS.equals(devicePlan.getDeviceType())) {
 			forEmvOrNfc(devicePlan);
 		}
 		clickIframeFinishButton();
@@ -951,7 +927,7 @@ public class DevicePlanPage extends AbstractBasePage {
 			// making necessary changes so that this value can be set in the
 			// required format so that it can be used when a pinless card is
 			// used
-			logger.info("Validity On Initial Months = ", devicePlan.getValidityOnInitialMonths());
+			logger.info("Validity On Initial Months = {} ", devicePlan.getValidityOnInitialMonths());
 			String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
 			devicePlan.setExpiryDate(dateInYYMM);
 		} else {
@@ -1019,8 +995,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		WebElementUtils.enterText(validityOnReplacementMonthsTxt, devicePlan.getValidityOnReplacementMonths());
 		allowInstanceDeviceReplaceChkBx.click();
 		if (devicePlan.getReplacementDeviceTechnology() != "")
-			WebElementUtils.selectDropDownByVisibleText(replacementDeviceTechnologyDdwn,
-					devicePlan.getReplacementDeviceTechnology());
+			WebElementUtils.selectDropDownByVisibleText(replacementDeviceTechnologyDdwn, devicePlan.getReplacementDeviceTechnology());
 	}
 
 	public void fillVirtualDeviceDetails(DevicePlan devicePlan) {

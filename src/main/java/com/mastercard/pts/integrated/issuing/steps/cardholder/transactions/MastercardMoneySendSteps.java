@@ -13,6 +13,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.transactions.MastercardMoneySend;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.cardholder.transactions.MastercardMoneySendWorkflow;
 
 @Component
@@ -25,7 +26,7 @@ public class MastercardMoneySendSteps {
 
 	@Autowired
 	private KeyValueProvider provider;
-	
+
 	@Autowired
 	private TestContext context;
 
@@ -35,6 +36,7 @@ public class MastercardMoneySendSteps {
 	public void whenMmsChpTransactionIsPerformed() {
 		MastercardMoneySend mms = MastercardMoneySend.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE2);
+		MiscUtils.reportToConsole("Device Number in MMS-CHP Steps - " + device.getDeviceNumber());
 		actualResult = mastercardMoneySendWorkflow.doMmsTransaction(mms, device);
 
 	}
