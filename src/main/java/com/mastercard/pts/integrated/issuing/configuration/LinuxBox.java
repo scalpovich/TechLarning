@@ -45,13 +45,12 @@ public class LinuxBox implements RemoteConnectionDetails {
 		String fileName = null;
 		String[] temp = null;
 		try {
+			wait(7000); // sometimes scripts are failing as files are not yet available
 			fileName = LinuxUtils.getFileAbsolutePath(this, lokupForFile);
-			wait(5000); // sometimes scripts are failing as files are not yet available
 			temp = fileName.split("\n");
 			for (int i = 0; i < temp.length; i++) {
 				if (temp[i].contains(whatAreWeLookingFile)) {
 					LinuxUtils.download(this, temp[i], localDestination);
-					wait(5000); // sometimes scripts are failing as files are not yet available
 					logger.info("return path in downloadByLookUpForPartialFileName {} -->", Paths.get(localDestination).resolve(Paths.get(temp[i]).getFileName()).toFile());
 					return Paths.get(localDestination).resolve(Paths.get(temp[i]).getFileName()).toFile();
 				}
@@ -93,6 +92,7 @@ public class LinuxBox implements RemoteConnectionDetails {
 
 	@Override
 	public String getHostName() {
+		logger.info("Linux hostName {} -> {}", hostName);
 		return hostName;
 	}
 
@@ -102,6 +102,7 @@ public class LinuxBox implements RemoteConnectionDetails {
 
 	@Override
 	public int getPort() {
+		logger.info("Linux port {} -> {}", port);
 		return port;
 	}
 
@@ -111,6 +112,7 @@ public class LinuxBox implements RemoteConnectionDetails {
 
 	@Override
 	public String getUserName() {
+		logger.info("Linux userName {} -> {}", userName);
 		return userName;
 	}
 

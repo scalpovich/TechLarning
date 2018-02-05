@@ -70,6 +70,7 @@ public abstract class LinuxUtils {
 	
 	public static String getFileAbsolutePath(RemoteConnectionDetails connectiondetails, String lookUpFor) throws Exception
 	{
+		logger.info("getFileAbsolutePath connection String {} --> ", connectiondetails.getUserName(), connectiondetails.getHostName(), connectiondetails.getPort());
 		return getFileFromLinuxBox(connectiondetails, lookUpFor);
 	}
 
