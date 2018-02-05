@@ -1586,13 +1586,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 			if (getFinder().getWebDriver()
 					.findElement(By.xpath("//*[@class='feedbackPanelERROR']"))
 					.isDisplayed()) {
-
+				return true;
 			}
 
 		} catch (Exception e) {
-			return false;
+			e.getMessage();
 		}
-		return true;
+		return false;
 	}
 
 	@Override

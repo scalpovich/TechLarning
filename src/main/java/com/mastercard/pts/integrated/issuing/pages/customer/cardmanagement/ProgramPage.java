@@ -767,10 +767,8 @@ public class ProgramPage extends AbstractBasePage {
 	public void enterProgramValue(String a) {
 		enterValueinTextBox(enterProgram, a);
 		clickWhenClickable(search);
-		waitForPageToLoad(getFinder().getWebDriver());
-		waitForElementVisible(editProgram);
-		Scrolldown(editProgram);
-		clickWhenClickableDoNotWaitForWicket(editProgram);
+		waitForWicket(driver());
+		clickWhenClickable(editProgram);
 		CustomUtils.ThreadDotSleep(2000);
 		switchToEditProgramframe();
 		ClickCheckBox(sdnCheckBox, false);

@@ -139,13 +139,17 @@ public class ProgramSetupWorkflow {
 	public void fillCreditCardPaymentPriority(CreditCardPaymentPriority creditCardPaymentPriority)
 	{
 		CreditCardPaymentPriorityPage page = navigator.navigateToPage(CreditCardPaymentPriorityPage.class);
-		page.addPaymentPriority(creditCardPaymentPriority);
+		Boolean paymentPriorityStatus=page.addPaymentPriority(creditCardPaymentPriority);
+		logger.info("paymentPriorityStatus : {} ", paymentPriorityStatus);
+		context.put(ContextConstants.PAYMENT_PRIORITY_STATUS,paymentPriorityStatus);
 	}
 	
 	public void fillCreditCardPaymentBounceReason(CreditCardPaymentBounceReason creditCardPaymentBounceReason)
 	{
 		CreditCardPaymentBounceReasonPage page = navigator.navigateToPage(CreditCardPaymentBounceReasonPage.class);
-		page.addPaymentBounceReason(creditCardPaymentBounceReason);
+		Boolean paymentBounceStatus=page.addPaymentBounceReason(creditCardPaymentBounceReason);
+		logger.info("paymentBounceStatus : {} ", paymentBounceStatus);
+		context.put(ContextConstants.PAYMENT_BOUNCE_STATUS,paymentBounceStatus);
 	}
 
 	public void fillCreditCardTransactionRulePlancode(CreditCardTransactionRulePlan creditCardTransactionRulePlancode)

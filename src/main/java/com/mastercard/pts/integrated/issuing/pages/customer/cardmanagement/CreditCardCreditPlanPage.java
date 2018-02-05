@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -11,7 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardCreditPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -29,6 +32,9 @@ public class CreditCardCreditPlanPage extends AbstractBasePage {
     
 	@Autowired
 	private TestContext context;
+	
+	@Autowired
+	CreditCardPlan creditCardPlan;
 	private static final Logger logger = LoggerFactory
 			.getLogger(CreditCardCreditPlanPage.class);
 
@@ -100,12 +106,14 @@ public class CreditCardCreditPlanPage extends AbstractBasePage {
 		runWithinPopup("Add Credit Plan", () -> {
 			WebElementUtils.enterText(creditPlanCodeTxt, creditCardCreditPlan.getCreditPlanCode());
 			WebElementUtils.enterText(descriptionTxt, creditCardCreditPlan.getDescription());
+			logger.info("creditCardCreditPlanCodeAndDescription : {}",creditCardCreditPlan.buildAbbreviationAndCode());
+			context.put(ContextConstants.CREDIT_PLAN, creditCardCreditPlan.buildAbbreviationAndCode());
 			WebElementUtils.enterText(abbreviationTxt, creditCardCreditPlan.getAbbreviation());
 			WebElementUtils.selectDropDownByVisibleText(paymentDateDDwn, creditCardCreditPlan.getPaymentDate());
 			WebElementUtils.enterTextIfControlIsEnabled(paymentDueDateDaysTxt, creditCardCreditPlan.getPaymentDueDateDays());
 			WebElementUtils.selectDropDownByVisibleText(unpaidDateDDwn, creditCardCreditPlan.getUnpaidDate());
 			WebElementUtils.enterTextIfControlIsEnabled(unpaidDateDaysTxt, creditCardCreditPlan.getUnpaidDateDays());
-			if(context.get(ContextConstants.BILLING_CYCLE_CODE_ERROR_STATUS).equals(true))
+			if(context.get(ContextConstants.TRANSACTION_PLAN_ERROR_STATUS).equals(true))
 			{
 				WebElementUtils.selectDropDownByIndex(transactionRuleDateDDwn, 1);
 			}
@@ -116,9 +124,18 @@ public class CreditCardCreditPlanPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(currenyDDwn, creditCardCreditPlan.getCurreny());
 			WebElementUtils.enterText(minimumDueTxt, creditCardCreditPlan.getMinimumDue());
 			WebElementUtils.enterText(totalDueTxt, creditCardCreditPlan.getTotalDue());
+			if(context.get(ContextConstants.PAYMENT_PRIORITY_STATUS).equals(true))
+			{
+				WebElementUtils.selectDropDownByIndex(paymentPriorityPlanDDwn, 1);
+			}
+			else
+			{
 			WebElementUtils.selectDropDownByVisibleText(paymentPriorityPlanDDwn, creditCardCreditPlan.getPaymentPriorityPlan());
+			}
 			WebElementUtils.enterText(allowedPercentageTxt, creditCardCreditPlan.getAllowedPercentage());
 			clickSaveButtonWithOutWicket();
+			errorMessagePresence();
+			creditCardPlan.setErrorStatus(errorMessagePresence());
 			if(errorMessagePresence()){
 			clickCancelButton();
 			waitForPageToLoad(getFinder().getWebDriver());
@@ -126,7 +143,7 @@ public class CreditCardCreditPlanPage extends AbstractBasePage {
 		    //waitForPageToLoad(getFinder().getWebDriver());
 		});
 		verifyOperationStatus();
-		return errorMessagePresence();
+		return creditCardPlan.getErrorStatus();
 	}
 
 	private void checkDuplicacyOfCreditPlanCode(CreditCardCreditPlan creditCardCreditPlan) {

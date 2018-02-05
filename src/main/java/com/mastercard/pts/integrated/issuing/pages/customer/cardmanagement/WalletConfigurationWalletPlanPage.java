@@ -193,6 +193,7 @@ private TestContext context;
 		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 			selectCreditPlan(walletPlan.getCreditPlan());
 			selectBillingCyleCode(walletPlan.getBillingCyleCode());
+			
 		}
 		if (productType.equalsIgnoreCase(ProductType.DEBIT)) {
 			WebElementUtils.enterText(dummyAccountNumberTxt, walletPlan.getDummyAccountNumber());

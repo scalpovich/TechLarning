@@ -271,13 +271,13 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	public void addDeviceRange(DeviceCreation devicecreation) {
 		selectProduct(devicecreation);
-		waitForWicket(getFinder().getWebDriver());
+		//waitForWicket(getFinder().getWebDriver());
 		selectProgram();
-		waitForWicket(getFinder().getWebDriver());
+		//waitForWicket(getFinder().getWebDriver());
 		selectDevicePlan();
-		waitForWicket(getFinder().getWebDriver());
+		//waitForWicket(getFinder().getWebDriver());
 		selectIssuerBIN();
-		waitForWicket(getFinder().getWebDriver());
+		//waitForWicket(getFinder().getWebDriver());
 	    selectBranch();
 		clickAddButton();
 	}
@@ -409,17 +409,9 @@ public class DeviceRangePage extends AbstractBasePage {
 		selectDevicePlanCode(deviceRange.getDevicePlanCode());
 		DevicePlan devicePlan=context.get(ContextConstants.DEVICE_PLAN);
 		logger.info("ProductType : {}",devicePlan.getProductType());
-		if(devicePlan.getProductType().equalsIgnoreCase("Credit [C]"))
-		{
-		WebElementUtils.selectDropDownByVisibleText(issuerBinDDwn, "mastercard BIn credit [520000]");
-		//WebElementUtils.selectDropDownByIndex(issuerBinDDwn, 1);
-		WebElementUtils.selectDropDownByIndex(branchDDwn, 1);
-		}
-		else
-		{
+		logger.info("issuerBin :{}",deviceRange.getIssuerBin());
 		selectIssuerBin(deviceRange.getIssuerBin());
 		selectBranch(deviceRange.getBranch());
-		}
 		addBtn.click();
 		waitForWicket();
 	}

@@ -36,6 +36,18 @@ public class ContextConstants {
 	
 	public static final String TRANSACTION_PLAN_ERROR_STATUS="TRANSACTION_PLAN_ERROR_STATUS";
 	
+	public static final String PAYMENT_PRIORITY_STATUS="PAYMENT_PRIORITY_STATUS";
+	
+	public static final String CREDIT_PLAN="CREDIT_PLAN";
+	
+	public static final String BILLING_CYCLE="BILLING_CYCLE";
+	
+	public static final String PAYMENT_PRIORITY="PAYMENT_PRIORITY";
+	
+	public static final String TRANSACTION_RULE="TRANSACTION_RULE";
+	
+	public static final String PAYMENT_BOUNCE_STATUS="PAYMENT_BOUNCE_STATUS";
+	
 	public static final String APPLICATION = "APPLICATION";
 	
 	public static final String NEW_APPLICATION_BATCH="NEW_APPLICATION_BATCH";

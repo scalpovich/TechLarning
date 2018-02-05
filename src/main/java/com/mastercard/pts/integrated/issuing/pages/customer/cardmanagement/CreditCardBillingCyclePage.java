@@ -8,9 +8,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardBillingCycle;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -29,6 +33,12 @@ public class CreditCardBillingCyclePage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory
 			.getLogger(CreditCardBillingCyclePage.class);
 
+	@Autowired
+	TestContext context;
+	
+	@Autowired
+	CreditCardPlan creditCardPlans;
+	
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
@@ -62,17 +72,15 @@ public class CreditCardBillingCyclePage extends AbstractBasePage {
 				WebElementUtils.visibilityOf(descriptionOnMainScreenTxt));
 	}
 
-	public boolean addBillingCycle(CreditCardBillingCycle creditCardBillingCycle) {
+    public boolean addBillingCycle(CreditCardBillingCycle creditCardBillingCycle) {
 		logger.info("Add Credit Card Billing: {}", creditCardBillingCycle);
 
 		performSearchOperationOnMainScreen(creditCardBillingCycle);
 		// if records are found then we just have to change the Billing Plan
 		// Code to make it work hence setting
-		if (!isNoRecordsFoundInTable()) {
-			creditCardBillingCycle.setBillingPlanCode(MiscUtils
-					.generateRandomNumberBetween2Number(100, 999));
-		}
-
+		waitForPageToLoad(getFinder().getWebDriver());
+		checkDuplicacyOfBillingPlanCode(creditCardBillingCycle);
+	   
 		clickAddNewButton();
 
 		AtomicBoolean canceled = new AtomicBoolean(false);
@@ -82,32 +90,47 @@ public class CreditCardBillingCyclePage extends AbstractBasePage {
 					creditCardBillingCycle.getBillingPlanCode());
 			WebElementUtils.enterText(descriptionTxt,
 					creditCardBillingCycle.getDescription());
+			logger.info("creditCardBillingCycleCodeAndDescription : {}",creditCardBillingCycle.buildDescriptionAndCode());
+			context.put(ContextConstants.BILLING_CYCLE, creditCardBillingCycle.buildDescriptionAndCode());
 			WebElementUtils.enterText(billingCycleDayTxt,
 					creditCardBillingCycle.getBillingCycleDay());
 			WebElementUtils.enterText(recordsPerBatchForProcessingTxt,
 					creditCardBillingCycle.getRecordsPerBatchForProcessing());
 			clickSaveButton();
 			errorMessagePresence();
+			creditCardPlans.setErrorStatus(errorMessagePresence());
 			canceled.set(verifyAlreadyExistsAndClickCancel());
 		});
 		// dont vereify status of Operation when duplicate exists
 		if (!canceled.get()) {
 			verifyOperationStatus();
-		} else {
-			creditCardBillingCycle.setBillingPlanCode("");
-			performSearchOperationOnMainScreen(creditCardBillingCycle);
-			creditCardBillingCycle
-					.setBillingPlanCode(getFirstColumnValueFromTable());
 		}
-		return errorMessagePresence();
+		
+		return creditCardPlans.getErrorStatus();
 	}
 
-	private void performSearchOperationOnMainScreen(
+	/*private void performSearchOperationOnMainScreen(
 			CreditCardBillingCycle creditCardBillingCycle) {
 		WebElementUtils.enterText(billingPlanCodeOnMainScreenTxt,
 				creditCardBillingCycle.getBillingPlanCode());
 		WebElementUtils.enterText(descriptionOnMainScreenTxt,
 				creditCardBillingCycle.getDescription());
+		clickSearchButton();
+	}*/
+	
+		private void checkDuplicacyOfBillingPlanCode(CreditCardBillingCycle creditCardBillingCycle) {
+		if(!isNoRecordsFoundInTable())
+		{
+			 creditCardBillingCycle.setBillingPlanCode(MiscUtils.generateRandomNumberBetween2Number(100, 999));
+			 logger.info("billingPlanCode: {}",creditCardBillingCycle.getBillingPlanCode());
+			 performSearchOperationOnMainScreen(creditCardBillingCycle);
+			 waitForPageToLoad(getFinder().getWebDriver());
+			 checkDuplicacyOfBillingPlanCode(creditCardBillingCycle);
+		}
+	}
+
+	private void performSearchOperationOnMainScreen(CreditCardBillingCycle creditCardBillingCycle) {
+		WebElementUtils.enterText(billingPlanCodeOnMainScreenTxt,creditCardBillingCycle.getBillingPlanCode());
 		clickSearchButton();
 	}
 

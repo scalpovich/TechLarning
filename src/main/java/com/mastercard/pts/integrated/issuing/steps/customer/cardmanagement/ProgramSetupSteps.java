@@ -675,8 +675,8 @@ public class ProgramSetupSteps {
 		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
 		walletPlan.setProductType(ProductType.fromShortName(type));
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-			walletPlan.setCreditPlan(creditCardCreditPlan.buildAbbreviationAndCode());
-			walletPlan.setBillingCyleCode(creditCardBillingCycle.buildDescriptionAndCode());
+			walletPlan.setCreditPlan(/*creditCardCreditPlan.buildAbbreviationAndCode()*/context.get(ContextConstants.CREDIT_PLAN));
+			walletPlan.setBillingCyleCode(/*creditCardBillingCycle.buildDescriptionAndCode()*/context.get(ContextConstants.BILLING_CYCLE));
 		}
 		programSetupWorkflow.createWalletPlan(walletPlan);
 	}
@@ -688,8 +688,8 @@ public class ProgramSetupSteps {
 		walletPlan.setProgramType(programtype);
 		
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-			walletPlan.setCreditPlan(creditCardCreditPlan.buildAbbreviationAndCode());
-			walletPlan.setBillingCyleCode(creditCardBillingCycle.buildDescriptionAndCode());
+			walletPlan.setCreditPlan(/*creditCardCreditPlan.buildAbbreviationAndCode()*/context.get(ContextConstants.CREDIT_PLAN));
+			walletPlan.setBillingCyleCode(/*creditCardBillingCycle.buildDescriptionAndCode()*/context.get(ContextConstants.BILLING_CYCLE));
 		}
 		programSetupWorkflow.createWalletPlan(walletPlan);
 	}
@@ -920,16 +920,16 @@ public class ProgramSetupSteps {
 		 * TransactionRulePlan & PaymentPriorityPlan are expected to come from related methods hence fetching data from them and setting them again below into setTransactionRulePlan &
 		 * setPaymentPriorityPlan
 		 */
-		creditCardCreditPlan.setTransactionRulePlan(transactionRulePlanTestDataObject.buildDescriptionAndCode());
+		creditCardCreditPlan.setTransactionRulePlan(/*transactionRulePlanTestDataObject.buildDescriptionAndCode()*/context.get(ContextConstants.TRANSACTION_RULE));
 
-		creditCardCreditPlan.setPaymentPriorityPlan(paymentPrioritytestDataObject.buildDescriptionAndCode());
+		creditCardCreditPlan.setPaymentPriorityPlan(/*paymentPrioritytestDataObject.buildDescriptionAndCode()*/context.get(ContextConstants.PAYMENT_PRIORITY));
 
 		programSetupWorkflow.fillCreditCardCreditPlan(creditCardCreditPlan);
 	}
 
 	@When("User fills Device Range section for $type product")
 	public void whenUserFillsDeviceRangeSection(String type) {
-		DeviceRange deviceRange = DeviceRange.createWithProvider(dataProvider, type);
+		DeviceRange deviceRange = DeviceRange.createWithProvider(dataProvider,provider, type);
 		deviceRange.setProductType(ProductType.fromShortName(type));
 		deviceRange.setProgram(program.buildDescriptionAndCode());
 		deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());

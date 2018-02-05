@@ -6,7 +6,7 @@ I want to assert pages
 
 Meta:
 @CreditRegression
-@StoryName S190639					 
+@StoryName credit_corp_emv					 
 Scenario:1 UI verification - user creates a Credit Device Using New Device Screen
 Meta:
 @UserCreatesNewCreditDevice
@@ -22,13 +22,13 @@ And User fills Device Event Based Fee Plan for credit product
 And User fills Device Plan for credit product
 And User fills Billing Cycle
 And User fills Payment Priority
-And User fills Payment Bounce Reason
+!-- And User fills Payment Bounce Reason
 And User fills Transaction Rule Plan
 And User fills Credit Plan
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product
 And User fills MCC Rules for credit product
-And User fills Program section for credit product
+And User fills Program section for credit product and program Corporate Credit Card [10]
 When User fills Device Range section for credit product
 Then credit device is created using new device screen
 Then credit processes pre-production batch using new Device
