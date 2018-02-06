@@ -5,8 +5,9 @@ I want to  create/define a Bulk device generation request for prepaid devices
 So that multiple devices get created with different data conditions
 
 Meta:
-@BulkDeviceGenerationPrepaidCR
 @StoryName S193816
+@BulkDeviceGenerationPrepaidCR
+
 
 Scenario:1 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Corp EMV
 Meta:
