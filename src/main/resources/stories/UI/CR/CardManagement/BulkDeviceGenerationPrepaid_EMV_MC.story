@@ -8,7 +8,6 @@ Meta:
 @StoryName S193816
 @BulkDeviceGenerationPrepaidCR
 
-
 Scenario:1 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Corp EMV
 Meta:
 @CR
@@ -88,7 +87,7 @@ Then user onboard the Device through Agent Portal and Activate through HelpDesk
 
 Scenario:4 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Retail EMV
 Meta:
-@BulkDeviceGenerationPrepaidRetailMCEMV
+@BulkDeviceGenerationPrepaidRetailMCEMV123
 @TCName TC264315_Embossing File Generation
 @sheetName S205014
 Given user is logged in institution
