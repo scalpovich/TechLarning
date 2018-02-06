@@ -3,11 +3,13 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.InstitutionCreationPageNew;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.LoginPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.processingcenter.InstitutionPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 
@@ -21,6 +23,9 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 
 	@Autowired
 	LoginPage lgnPage;
+	
+	@Autowired
+	private TestContext context;
 
 	public void institutionCreation(InstitutionCreation institutionCreation) {
 
@@ -52,12 +57,6 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 		InstitutionPage page = navigator.navigateToPage(InstitutionPage.class);
 		return page.checkASCVendorEnabledAndSelectASCVendor();
 	}	
-	public boolean twoFactorAuthenticationEnabled()
-	{
-		InstitutionPage page = navigator.navigateToPage(InstitutionPage.class);
-		 page.checkASCVendorEnabledAndSelectASCVendor();
-		 return page.isSMSServiceProviderAndMPINAreEnabled();
-		 
-	}	
+
 
 }

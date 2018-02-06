@@ -2,6 +2,8 @@ package com.mastercard.pts.integrated.issuing.domain.customer.admin;
 
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.VisaFeeCollection;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -45,6 +47,7 @@ public class InstitutionCreation extends AbstractBasePage {
 	private String agentPortalAdminName;
 	private String createdInstitution;
 	private String ascVendor;
+	private String existingInstitutionCode;
 	
 	public String getCreatedInstitution() {
 		return createdInstitution;
@@ -372,6 +375,8 @@ public class InstitutionCreation extends AbstractBasePage {
 		institute.setCollectPortalAdminName(MapUtils.fnGetInputDataFromMap("CollectPortalAdminName")+MiscUtils.generateRandomNumberAsString(5));
 		institute.setAgentPortalAdminID(MiscUtils.generateRandomNumberAsString(6));
 		institute.setAgentPortalAdminName(MapUtils.fnGetInputDataFromMap("AgentPortalAdminName")+MiscUtils.generateRandomNumberAsString(5));					
+		institute.setAscVendor(MapUtils.fnGetInputDataFromMap("ASC_Vendor"));
+		institute.setExistingInstitutionCode(MapUtils.fnGetInputDataFromMap("ExistingInstitutionCode"));
 		return institute;
 	}
 
@@ -382,7 +387,20 @@ public class InstitutionCreation extends AbstractBasePage {
 	public void setAscVendor(String ascVendor) {
 		this.ascVendor = ascVendor;
 	}
-	
+
+	public String getExistingInstitutionCode() {
+		return existingInstitutionCode;
+	}
+
+	public void setExistingInstitutionCode(String existingInstitutionCode) {
+		this.existingInstitutionCode = existingInstitutionCode;
+	}
+	public static InstitutionCreation createWithProvider(KeyValueProvider provider) {
+		InstitutionCreation institute = new InstitutionCreation();
+		institute.setExistingInstitutionCode(provider.getString("ExistingInstitutionCode"));
+		institute.setAscVendor(provider.getString("ASC_Vendor"));
+		return institute;
+	}
 	
 
 }

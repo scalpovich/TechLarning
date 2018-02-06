@@ -16,6 +16,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.InstitutionCreationFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.UserCreationFlows;
@@ -31,6 +32,9 @@ public class InstitutionCreationSteps {
 
 	@Autowired
 	private UserCreationFlows userCreationFlows;
+	
+	@Autowired
+	private KeyValueProvider keyProvider;
 	
 
 	InstitutionCreation instutionCreation;
@@ -93,8 +97,8 @@ public class InstitutionCreationSteps {
 	public void selectInstitution() {
 		instituteCreationflows.selectNewlyCreatedInstitutionFlows();
 	}
-	@When("user edit $institute institution configuration and select $vendor ACS Vendor")
-	public void userEditInstitutionConfiguration(String institute,String vendor ){
+	@When("user edit $institute institution and select $vendor ACS Vendor to enable authentication options")
+	public void userEditInstitutionConfigurationAndEnableTwoFactorAuthentication(String institute,String vendor ){
 		InstitutionCreation institutioncreation=new InstitutionCreation();
 		institutioncreation.setInstitutionCode(institute);
 		institutioncreation.setAscVendor(vendor);
@@ -102,11 +106,17 @@ public class InstitutionCreationSteps {
 		boolean acsEnable=instituteCreationflows.isAdaptiveAuthenticationEnabledAndUserAbleToSelectACSVendor();
 		Assert.assertTrue("Adaptive authentication is not enabled",acsEnable);
 	}
-	
-	@Then("two factor authentication fields are enabled")
-	public void twoFactorAuthenticationFieldsAreEnable(){
-		boolean acsEnable=instituteCreationflows.twoFactorAuthenticationEnabled();
-		Assert.assertTrue("two factor authentication fields are not enabled",acsEnable);
+	@When("user edit institution and select ACS Vendor to enable authentication options")
+	public void userEditInstitutionAndEnableTwoFactorAuthentication(){
+		InstitutionCreation institutioncreation=InstitutionCreation.createWithProvider(keyProvider);
+		context.put("institutionData", institutioncreation);
+		boolean acsEnable=instituteCreationflows.isAdaptiveAuthenticationEnabledAndUserAbleToSelectACSVendor();
+		Assert.assertTrue("Adaptive authentication is not enabled",acsEnable);
+	}
+	@Then("two factor authentication options are configured")
+	public void twoFactorAuthenticationOptionsAreConfigured(){
+		boolean acsEnable=context.get("authenticationOptionsFlg");
+		Assert.assertTrue("Error in configuring two factor authentication options",acsEnable);
 	}
 
 }
