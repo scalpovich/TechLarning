@@ -1200,18 +1200,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	{		
 		try
 		{
-			//exe to handle all license validation dialogs and then fianlly to activate Finsim on the Server Name control
-			executeAutoITExe("HandleFinSimLicenseValidationProblem.exe");
-			wait(3000);	
-			pressTab();
-			setText(finSimSimulator.getIpAddress());
-			pressTab(2);
-			setText(finSimSimulator.getPort());
-			pressTab();
-			pressEnter();
-			wait(5000);
-			executeAutoITExe("ActivateFINSimPasswordScreen.exe");
-			setText(finSimSimulator.getPassword());
+			String parameters =   "\"" + finSimSimulator.getIpAddress() + PATH_BUILDER +  finSimSimulator.getPort() +  PATH_BUILDER + finSimSimulator.getPassword() + "\"";
+			MiscUtils.reportToConsole(" ******* Parameter for connectToFinSim : ******"  + parameters );
+			executeAutoITExe("connectToFinSim.exe " + parameters );		
 			wait(5000);
 		}
 		catch(Exception e)
