@@ -6,10 +6,15 @@ As a user
 I want to validate two factor authentication at processing center
 
 Meta:
-@StoryName two_factor_authentication
-@visafeecollection_transaction
-
+@StoryName editInstitutes
+@InstitutionAndUserCreation
 Scenario: validate two factor authentication at processing center
-Given user is logged in customer portal as admin user in processing institution
+
+Meta:
+@TCName TCEditInstitute
+@testDataFileName testdata
+@sheetName Institute
+@edit_institute_wibmo
+Given login to bank as a Bankadmin
 When user edit institution and select ACS Vendor to enable authentication options
 Then two factor authentication options are configured

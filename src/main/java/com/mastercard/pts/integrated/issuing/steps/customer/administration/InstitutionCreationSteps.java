@@ -108,15 +108,17 @@ public class InstitutionCreationSteps {
 	}
 	@When("user edit institution and select ACS Vendor to enable authentication options")
 	public void userEditInstitutionAndEnableTwoFactorAuthentication(){
-		InstitutionCreation institutioncreation=InstitutionCreation.createWithProvider(keyProvider);
+		//InstitutionCreation institutioncreation=InstitutionCreation.createWithProvider(keyProvider);
+		InstitutionCreation institutioncreation = InstitutionCreation.getInstitutionData();
 		context.put("institutionData", institutioncreation);
 		boolean acsEnable=instituteCreationflows.isAdaptiveAuthenticationEnabledAndUserAbleToSelectACSVendor();
 		Assert.assertTrue("Adaptive authentication is not enabled",acsEnable);
 	}
 	@Then("two factor authentication options are configured")
 	public void twoFactorAuthenticationOptionsAreConfigured(){
+		boolean RecoredUpdated=context.get("SuccessMessage");
 		boolean acsEnable=context.get("authenticationOptionsFlg");
-		Assert.assertTrue("Error in configuring two factor authentication options",acsEnable);
+		Assert.assertTrue("Error in configuring two factor authentication options",acsEnable&&RecoredUpdated);
 	}
 
 }

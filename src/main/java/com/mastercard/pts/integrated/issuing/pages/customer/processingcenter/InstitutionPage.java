@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -12,11 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
+
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -301,7 +304,7 @@ public class InstitutionPage extends AbstractBasePage{
 	public void editInstitute()
 	{
 		InstitutionCreation institutioncreation=context.get("institutionData");
-		WebElementUtils.enterText(instituteCode, institutioncreation.getInstitutionCode());
+		WebElementUtils.enterText(instituteCode, institutioncreation.getExistingInstitutionCode());
 		clickSearchButton();
 		waitForElementVisible(firstRowEditLink);
 		editFirstRecord();	
@@ -323,7 +326,6 @@ public class InstitutionPage extends AbstractBasePage{
 					context.put("authenticationOptionsFlg",isSMSServiceProviderAndMPINAreEnabled());
 					selectMpinAndSmsProvider();
 					clickSaveButton();
-					MiscUtils.reportToConsole("Clicked save button on userAbleToselectACSVendor");
 									});	
 		return ascFlag;
 	}
@@ -337,7 +339,9 @@ public class InstitutionPage extends AbstractBasePage{
 	public boolean checkASCVendorEnabledAndSelectASCVendor()
 	{
 		editInstitute();
-		return userAbleToselectACSVendor();
+		boolean recordUpdatedFlg=userAbleToselectACSVendor();
+		context.put("SuccessMessage",getSuccessMessage().equalsIgnoreCase(Constants.Record_Updated_Successfully));
+		return recordUpdatedFlg;
 	}
 	public boolean isSMSServiceProviderAndMPINAreEnabled()
 	{
@@ -346,8 +350,8 @@ public class InstitutionPage extends AbstractBasePage{
 	
 	public void selectMpinAndSmsProvider()
 	{
-		mpinEnabledCbx.click();
-		issuerSmsProviderCbx.click();
+		selectCheckBox(mpinEnabledCbx, "MPIN");
+		selectCheckBox(issuerSmsProviderCbx, "SmsProvider");
 	}
 	
 
