@@ -8,7 +8,7 @@ Meta:
 @BulkDeviceGenerationPrepaidCR
 @StoryName S193816
 
-Scenario: Scenario1 - Verify that the Users must be able to create bulk device production request from the system successfully for Visa Retail NFC Emv
+Scenario:1 - Verify that the Users must be able to create bulk device production request from the system successfully for Visa Retail NFC Emv
 Meta:
 @CR
 @all
@@ -19,9 +19,9 @@ Given login to portal as existing bank as a Customeruser
 When user configures the device range for Retail General Purpose, Visa, Physical NFC Device - Emv Paypass
 When user creates a bulk device request for product Prepaid
 When user runs the bulk device generation batch for product Prepaid
-When user check for the success status for SYSTEM INTERNAL PROCESSING batch
+When user check for the  Bulk Device Generation batch success status for SYSTEM INTERNAL PROCESSING batch
 When user runs the pre production batch for product Prepaid
-When user check for the success status for SYSTEM INTERNAL PROCESSING batch
+When user check for the Pre-Production batch success status for SYSTEM INTERNAL PROCESSING batch
 Then user processes all the devices and runs the device production batch for product Prepaid
 And Pack Id should be generated as per the template configured
 When user navigates to General in Helpdesk
@@ -31,7 +31,7 @@ When user creates a paired device plan and configures the device range for Retai
 When user creates a bulk device request for product Prepaid
 When user runs the bulk device generation batch for product Prepaid
 When user runs the pre production batch for product Prepaid
-When user check for the success status for SYSTEM INTERNAL PROCESSING batch
+When user check for the Pre-Production batch success status for SYSTEM INTERNAL PROCESSING batch
 Then user processes all the devices and runs the device production batch for product Prepaid
 When user retrieves the device number from the query
 When user navigates to General in Helpdesk
@@ -41,11 +41,8 @@ And user verifies the Pre generated flag at device level should be set to Y once
 !-- Then user logout from customer portal
 Then user onboard the Device through Agent Portal and Activate through HelpDesk
 
-Scenario: Scenario2 - Verify that the Users must be able to create bulk device production request from the system successfully for Visa Retail NFC Emv
+Scenario:2 - Verify that the Users must be able to create bulk device production request from the system successfully for Visa Retail NFC Emv
 Meta:
-Lifecycle:
-After:
-Outcome: SUCCESS
 @BulkDeviceGenerationPrepaidVisaRetailNFCEmv
 @TCName TC264306_Embossing File Generation_VISA
 @sheetName S205014
@@ -57,7 +54,7 @@ And user activates the device through HelpDesk
 Then activation of registered device prepaid is successful and activation date is updated
 
 
-Scenario: Scenario3 - Verify that the Users must be able to create bulk device production request from the system successfully for Visa Corporate NFC EMV
+Scenario:3 - Verify that the Users must be able to create bulk device production request from the system successfully for Visa Corporate NFC EMV
 Meta:
 @CR
 @all
@@ -68,9 +65,9 @@ Given login to portal as existing bank as a Customeruser
 When user configures the device range for Corporate General Purpose, Visa, Physical NFC Device - Emv Paypass
 When user creates a bulk device request for product Prepaid
 When user runs the bulk device generation batch for product Prepaid
-When user check for the success status for SYSTEM INTERNAL PROCESSING batch
+When user check for the  Bulk Device Generation batch success status for SYSTEM INTERNAL PROCESSING batch
 When user runs the pre production batch for product Prepaid
-When user check for the success status for SYSTEM INTERNAL PROCESSING batch
+When user check for the Pre-Production batch success status for SYSTEM INTERNAL PROCESSING batch
 Then user processes all the devices and runs the device production batch for product Prepaid
 And Pack Id should be generated as per the template configured
 When user navigates to General in Helpdesk
@@ -80,7 +77,7 @@ When user creates a paired device plan and configures the device range for Corpo
 When user creates a bulk device request for product Prepaid
 When user runs the bulk device generation batch for product Prepaid
 When user runs the pre production batch for product Prepaid
-When user check for the success status for SYSTEM INTERNAL PROCESSING batch
+When user check for the Pre-Production batch success status for SYSTEM INTERNAL PROCESSING batch
 Then user processes all the devices and runs the device production batch for product Prepaid
 When user retrieves the device number from the query
 When user navigates to General in Helpdesk
@@ -90,11 +87,8 @@ And user verifies the Pre generated flag at device level should be set to Y once
 Then user onboard the Device through Agent Portal and Activate through HelpDesk
 
 
-Scenario: Scenario4 - Verify that the Users must be able to create bulk device production request from the system successfully for Visa Corporate NFC EMV
+Scenario:4 - Verify that the Users must be able to create bulk device production request from the system successfully for Visa Corporate NFC EMV
 Meta:
-Lifecycle:
-After:
-Outcome: SUCCESS
 @BulkDeviceGenerationPrepaidVisaCorporateNFCEMV
 @TCName TC264306_Embossing File Generation_VISA
 @sheetName S205014

@@ -262,7 +262,6 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	public void addDeviceRange(DeviceCreation devicecreation) {
 		selectProduct(devicecreation);
-		waitForWicket(getFinder().getWebDriver());
 		selectProgram();
 		selectDevicePlan();
 		selectIssuerBIN();
