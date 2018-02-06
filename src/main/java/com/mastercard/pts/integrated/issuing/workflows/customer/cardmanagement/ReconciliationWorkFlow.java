@@ -14,6 +14,8 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Proc
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionReportsPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.PDFUtils;
 
 @Workflow
 public class ReconciliationWorkFlow {
@@ -49,6 +51,16 @@ public class ReconciliationWorkFlow {
 		page.generateTransactionAuthReport();
 		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
 		return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
+	}
+	
+	public List<String> verifyAuthReport(String fileName,String key) {
+		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
+		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
+		deleteExistingAuthorizationFilesFromSystem(fileName);
+		page.generateTransactionAuthReport();
+		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
+		return getReportContent(fileName,key);
+		//return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
 	}
 
 	public boolean verifyReportGenerationClearing() {
@@ -95,6 +107,24 @@ public class ReconciliationWorkFlow {
 			}
 		}
 		return fileCountAfterDownload;
+	}
+	
+	public List<String> getReportContent(String fileName,String key) {
+		PDFUtils pdfutils=new PDFUtils();
+		List<String> records = pdfutils.getContentRow(PDFUtils.getuserDownloadPath() + "\\"+fileName, key);
+		for(int i=0;i<records.size();i++)
+		{
+		if (records != null)
+		    logger.info("Authorization data file content {} ", records.get(i));
+		}
+		return records;
+	}
+	public void deleteExistingAuthorizationFilesFromSystem(String authFileName)
+	{
+		 for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
+		        if (!file.isDirectory()&& file.getName().startsWith(ConstantData.AUTHORIZATION_REPORT_NAME))   	
+		        	file.delete();
+		    }
 	}
 
 }
