@@ -1061,17 +1061,43 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		}
 	}
 
-	private void fillEmvChipKeySetDetails() {
+	private void fillEmvChipKeySetDetails() {		
+		
+		if("stagesa".equalsIgnoreCase(getEnv().toString()))
+			selectMChipKeySetForStageSA();
+		else
+			selectMChipKeySetDemoAutomation();	
+	}
+
+	public void selectMChipKeySetForStageSA()
+	{
 		executeAutoITExe("ActivateEditCardProfile.exe");
-		winiumClickOperation("ICC Related Data");
-		winiumClickOperation("Drop Down Button");
+		winiumClickOperation("ICC Related Data");	
+		performClickOperation("MChipKeySetDropDown");
+		wait(1000);	
+		winiumClickOperation("00998 - Example ETEC1 - 0213");
+		wait(1000);
+		winiumClickOperation("OK");
+		wait(1000);
+	}
+	
+	public void selectMChipKeySetDemoAutomation()
+	{
+		executeAutoITExe("ActivateEditCardProfile.exe");
+		winiumClickOperation("ICC Related Data");	
+		performClickOperation("MChipKeySetDropDown");
 		wait(1000);
 		winiumClickOperation("00999 - Example ETEC1 - 0213");	
 		wait(1000);
 		winiumClickOperation("OK");
 		wait(1000);
-	}
-
+	}	
+	
+	public String getEnv()
+	{
+		logger.info("System.getProperty ENV :"+System.getProperty("env").toString());
+		return System.getProperty("env").toString();
+	}	
 	private void fillCvvData(String cvvData) {
 
 		String cvvDataValue = "000" + cvvData;
