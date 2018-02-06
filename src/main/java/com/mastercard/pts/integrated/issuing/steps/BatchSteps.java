@@ -21,7 +21,6 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
-import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
 @Component
 public class BatchSteps {
@@ -54,7 +53,6 @@ public class BatchSteps {
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		try {
 			File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "Device");
-			wait(5000); // sometimes scripts are failing as files are not yet available
 			String[] fileData = LinuxUtils.getCardNumberAndExpiryDate(batchFile);
 			MiscUtils.reportToConsole("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3] + " - "  + " setIcvvData " + " : " +  fileData[4] + "  ***** ");
 			
@@ -87,7 +85,6 @@ public class BatchSteps {
 		String[] values = null;
 		DevicePlan tempdevice = context.get(ContextConstants.DEVICE_PLAN);
 		File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevice.getDevicePlanCode(), tempDirectory.toString(), "Pin");
-		SimulatorUtilities.wait(5000); // sometimes scripts are failing as files are not yet available
 		Device device = context.get(ContextConstants.DEVICE);
 		try(Scanner scanner = new Scanner(batchFile)){
 			while(scanner.hasNext()){
@@ -114,10 +111,12 @@ public class BatchSteps {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private String getHeaderPattern() {
 		return provider.getString("BATCH_HEADER_PATTERN", DEFAULT_HEADER);
 	}
 
+	@SuppressWarnings("unused")
 	private String getTrailerPattern() {
 		return provider.getString(" BATCH_TRAILER_PATTERN", DEFAULT_TRAILER);
 	}

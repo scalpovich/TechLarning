@@ -70,7 +70,6 @@ public abstract class LinuxUtils {
 	
 	public static String getFileAbsolutePath(RemoteConnectionDetails connectiondetails, String lookUpFor) throws Exception
 	{
-		MiscUtils.reportToConsole("******** getFileAbsolutePath Start ***** " );
 		return getFileFromLinuxBox(connectiondetails, lookUpFor);
 	}
 
@@ -89,16 +88,12 @@ public abstract class LinuxUtils {
 		logger.info("command for getFileFromLinuxBox {} --> ", cmd);
 		Channel channel=session.openChannel("exec");
 		((ChannelExec)channel).setCommand(cmd);
-		MiscUtils.reportToConsole(" ***** 92 ******");
 		channel.setInputStream(null);
-		MiscUtils.reportToConsole(" ***** 94 ******");
 		((ChannelExec)channel).setErrStream(System.err);
 		InputStream in=channel.getInputStream();
 		channel.connect();
-		MiscUtils.reportToConsole(" ***** 96 ******");
 		byte[] tmp=new byte[1024];
 		while(true){
-			MiscUtils.reportToConsole(" ***** 99 ******");
 			while(in.available()>0){
 				int i=in.read(tmp, 0, 1024);
 				if(i<0) { 
