@@ -1,13 +1,13 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
-import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
-
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 @Component
 public class DevicePlan implements HasCodeAndDescription {
@@ -49,81 +49,81 @@ public class DevicePlan implements HasCodeAndDescription {
 	private static final String FILL_EMV_PLAN = "FILL_EMV_PLAN";
 	private static final String REPLACEMENT_DEVICE_TECHNOLOGY = "REPLACEMENT_DEVICE_TECHNOLOGY";
 
-	private static final String	DP_ASSOCIATION	 = 	"DP_ASSOCIATION";
-	private static final String DP_DEVICE_TYPE	 = 	"DP_DEVICE_TYPE";
-	private static final String DP_SERVICE_CODE	 = 	"DP_SERVICE_CODE";
-	private static final String DP_DELIVERY_MODE	 = 	"DP_DELIVERY_MODE";
-	private static final String DP_DEVICE_ID_GENERATION_TEMPLATE	 = 	"DP_DEVICE_ID_GENERATION_TEMPLATE";
-	private static final String DP_CARD_PACKID_GENERATION_TEMPLATE	 = 	"DP_CARD_PACKID_GENERATION_TEMPLATE";
-	private static final String DP_PLASTIC_ID	 = 	"DP_PLASTIC_ID";
-	private static final String DP_PICTURE_CODE	 = 	"DP_PICTURE_CODE";
-	private static final String DP_PERSONALIZATION_CARD_PRODUCTION	 = 	"DP_PERSONALIZATION_CARD_PRODUCTION";
-	private static final String DP_PERSONALIZATION_EMBOSSING_VENDOR	 = 	"DP_PERSONALIZATION_EMBOSSING_VENDOR";
-	private static final String DP_PERSONALIZATION_ACTIVATION_CODE	 = 	"DP_PERSONALIZATION_ACTIVATION_CODE";
-	private static final String DP_PERSONALIZATION_EXPIRY_FLAG	 = 	"DP_PERSONALIZATION_EXPIRY_FLAG";
-	private static final String DP_PERSONALIZATION_VALIDITY_ON_INITIAL_MONTHS	 = 	"DP_PERSONALIZATION_VALIDITY_ON_INITIAL_MONTHS";
-	private static final String DP_RENEWAL_VALIDITY_ON_RENEWAL_MONTHS	 = 	"DP_RENEWAL_VALIDITY_ON_RENEWAL_MONTHS";
-	private static final String DP_REPLACEMENT_VALIDITY_ON_REPLACEMENT_MONTHS	 = 	"DP_REPLACEMENT_VALIDITY_ON_REPLACEMENT_MONTHS";
-	private static final String DP_RENEWAL_AUTO_RENEWAL_DAYS	 = 	"DP_RENEWAL_AUTO_RENEWAL_DAYS";
-	private static final String DP_RENEWAL_ADVANCE_RENEWAL_REPORT	 = 	"DP_RENEWAL_ADVANCE_RENEWAL_REPORT";
-	private static final String DP_RENEWAL_ACTIVATION_MODE	 = 	"DP_RENEWAL_ACTIVATION_MODE";
-	private static final String DP_REPLACEMENT_NO_OF_DAYS	 = 	"DP_REPLACEMENT_NO_OF_DAYS";
-	private static final String DP_REPLACEMENT_DEVICE_TECHNOLOGY	 = 	"DP_REPLACEMENT_DEVICE_TECHNOLOGY";
-	private static final String DP_PIN_GENERATION_PIN_DATA_TRANSMISSION	 = 	"DP_PIN_GENERATION_PIN_DATA_TRANSMISSION";
-	private static final String DP_PIN_GENERATION_OPTION	 = 	"DP_PIN_GENERATION_OPTION";
-	private static final String DP_PIN_GENERATION_PIN_LENGTH	 = 	"DP_PIN_GENERATION_PIN_LENGTH";
-	private static final String DP_PIN_GENERATION_PIN_REQUIRED	 = 	"DP_PIN_GENERATION_PIN_REQUIRED";
-	private static final String DP_PIN_GENERATION_PIN_RE_PIN_DAYS	 = 	"DP_PIN_GENERATION_PIN_RE_PIN_DAYS";
-	private static final String DP_PIN_GENERATION_PIN_PRODUCTION_VENDOR	 = 	"DP_PIN_GENERATION_PIN_PRODUCTION_VENDOR";
+	private static final String DP_ASSOCIATION = "DP_ASSOCIATION";
+	private static final String DP_DEVICE_TYPE = "DP_DEVICE_TYPE";
+	private static final String DP_SERVICE_CODE = "DP_SERVICE_CODE";
+	private static final String DP_DELIVERY_MODE = "DP_DELIVERY_MODE";
+	private static final String DP_DEVICE_ID_GENERATION_TEMPLATE = "DP_DEVICE_ID_GENERATION_TEMPLATE";
+	private static final String DP_CARD_PACKID_GENERATION_TEMPLATE = "DP_CARD_PACKID_GENERATION_TEMPLATE";
+	private static final String DP_PLASTIC_ID = "DP_PLASTIC_ID";
+	private static final String DP_PICTURE_CODE = "DP_PICTURE_CODE";
+	private static final String DP_PERSONALIZATION_CARD_PRODUCTION = "DP_PERSONALIZATION_CARD_PRODUCTION";
+	private static final String DP_PERSONALIZATION_EMBOSSING_VENDOR = "DP_PERSONALIZATION_EMBOSSING_VENDOR";
+	private static final String DP_PERSONALIZATION_ACTIVATION_CODE = "DP_PERSONALIZATION_ACTIVATION_CODE";
+	private static final String DP_PERSONALIZATION_EXPIRY_FLAG = "DP_PERSONALIZATION_EXPIRY_FLAG";
+	private static final String DP_PERSONALIZATION_VALIDITY_ON_INITIAL_MONTHS = "DP_PERSONALIZATION_VALIDITY_ON_INITIAL_MONTHS";
+	private static final String DP_RENEWAL_VALIDITY_ON_RENEWAL_MONTHS = "DP_RENEWAL_VALIDITY_ON_RENEWAL_MONTHS";
+	private static final String DP_REPLACEMENT_VALIDITY_ON_REPLACEMENT_MONTHS = "DP_REPLACEMENT_VALIDITY_ON_REPLACEMENT_MONTHS";
+	private static final String DP_RENEWAL_AUTO_RENEWAL_DAYS = "DP_RENEWAL_AUTO_RENEWAL_DAYS";
+	private static final String DP_RENEWAL_ADVANCE_RENEWAL_REPORT = "DP_RENEWAL_ADVANCE_RENEWAL_REPORT";
+	private static final String DP_RENEWAL_ACTIVATION_MODE = "DP_RENEWAL_ACTIVATION_MODE";
+	private static final String DP_REPLACEMENT_NO_OF_DAYS = "DP_REPLACEMENT_NO_OF_DAYS";
+	private static final String DP_REPLACEMENT_DEVICE_TECHNOLOGY = "DP_REPLACEMENT_DEVICE_TECHNOLOGY";
+	private static final String DP_PIN_GENERATION_PIN_DATA_TRANSMISSION = "DP_PIN_GENERATION_PIN_DATA_TRANSMISSION";
+	private static final String DP_PIN_GENERATION_OPTION = "DP_PIN_GENERATION_OPTION";
+	private static final String DP_PIN_GENERATION_PIN_LENGTH = "DP_PIN_GENERATION_PIN_LENGTH";
+	private static final String DP_PIN_GENERATION_PIN_REQUIRED = "DP_PIN_GENERATION_PIN_REQUIRED";
+	private static final String DP_PIN_GENERATION_PIN_RE_PIN_DAYS = "DP_PIN_GENERATION_PIN_RE_PIN_DAYS";
+	private static final String DP_PIN_GENERATION_PIN_PRODUCTION_VENDOR = "DP_PIN_GENERATION_PIN_PRODUCTION_VENDOR";
 	private static final String DP_DEVICE_NUMBER_GENERATION_CUSTOM_CODE = "DP_DEVICE_NUMBER_GENERATION_CUSTOM_CODE";
-	private static final String DP_DEVICE_NUMBER_GENERATION_ISSUE_PAIRED_DEVICE	 = 	"DP_DEVICE_NUMBER_GENERATION_ISSUE_PAIRED_DEVICE";
-	private static final String DP_PRIORITY_PASS_INDICATOR	 = 	"DP_PRIORITY_PASS_INDICATOR";
-	private static final String DP_PRIORITY_PASS_ID_TEMPLATE	 = 	"DP_PRIORITY_PASS_ID_TEMPLATE";
-	private static final String DP_PRIORITY_PASS_EXPIRY	 = 	"DP_PRIORITY_PASS_EXPIRY";
-	private static final String DP_PRIORITY_PASS_VENDOR	 = 	"DP_PRIORITY_PASS_VENDOR";
-	private static final String DP_PERSONALIZATION_COURIER_TRACKING	 = 	"DP_PERSONALIZATION_COURIER_TRACKING";
-	private static final String DP_PERSONALIZATION_MANUFACTURING_TRACKING	 = 	"DP_PERSONALIZATION_MANUFACTURING_TRACKING";
-	private static final String DP_PERSONALIZATION_GENERATE_CVVCVC	 = 	"DP_PERSONALIZATION_GENERATE_CVVCVC";
-	private static final String DP_PERSONALIZATION_GENERATE_CVV2CVC2	 = 	"DP_PERSONALIZATION_GENERATE_CVV2CVC2";
-	private static final String DP_PERSONALIZATION_NO_OF_DAYS	 = 	"DP_PERSONALIZATION_NO_OF_DAYS";
-	private static final String DP_PERSONALIZATION_CAF	 = 	"DP_PERSONALIZATION_CAF";
-	private static final String DP_PERSONALIZATION_EXPIRY_DATE	 = 	"DP_PERSONALIZATION_EXPIRY_DATE";
-	private static final String DP_RENEWAL_ALLOW_RENEWAL	 = 	"DP_RENEWAL_ALLOW_RENEWAL";
-	private static final String DP_RENEWAL_RENEWAL_DEVICE_TECHNOLOGY	 = 	"DP_RENEWAL_RENEWAL_DEVICE_TECHNOLOGY";
-	private static final String DP_REPLACEMENT_NEW_EXPIRY_FLAG	 = 	"DP_REPLACEMENT_NEW_EXPIRY_FLAG";
-	private static final String DP_REPLACEMENT_ALLOW_INSTANT_DEVICE_REPLAY	 = 	"DP_REPLACEMENT_ALLOW_INSTANT_DEVICE_REPLAY";
-	
-	private static final String	DP_TRANS_SET_PRESENTMENT_TIME_LIMIT	 = 	"DP_TRANS_SET_PRESENTMENT_TIME_LIMIT";
+	private static final String DP_DEVICE_NUMBER_GENERATION_ISSUE_PAIRED_DEVICE = "DP_DEVICE_NUMBER_GENERATION_ISSUE_PAIRED_DEVICE";
+	private static final String DP_PRIORITY_PASS_INDICATOR = "DP_PRIORITY_PASS_INDICATOR";
+	private static final String DP_PRIORITY_PASS_ID_TEMPLATE = "DP_PRIORITY_PASS_ID_TEMPLATE";
+	private static final String DP_PRIORITY_PASS_EXPIRY = "DP_PRIORITY_PASS_EXPIRY";
+	private static final String DP_PRIORITY_PASS_VENDOR = "DP_PRIORITY_PASS_VENDOR";
+	private static final String DP_PERSONALIZATION_COURIER_TRACKING = "DP_PERSONALIZATION_COURIER_TRACKING";
+	private static final String DP_PERSONALIZATION_MANUFACTURING_TRACKING = "DP_PERSONALIZATION_MANUFACTURING_TRACKING";
+	private static final String DP_PERSONALIZATION_GENERATE_CVVCVC = "DP_PERSONALIZATION_GENERATE_CVVCVC";
+	private static final String DP_PERSONALIZATION_GENERATE_CVV2CVC2 = "DP_PERSONALIZATION_GENERATE_CVV2CVC2";
+	private static final String DP_PERSONALIZATION_NO_OF_DAYS = "DP_PERSONALIZATION_NO_OF_DAYS";
+	private static final String DP_PERSONALIZATION_CAF = "DP_PERSONALIZATION_CAF";
+	private static final String DP_PERSONALIZATION_EXPIRY_DATE = "DP_PERSONALIZATION_EXPIRY_DATE";
+	private static final String DP_RENEWAL_ALLOW_RENEWAL = "DP_RENEWAL_ALLOW_RENEWAL";
+	private static final String DP_RENEWAL_RENEWAL_DEVICE_TECHNOLOGY = "DP_RENEWAL_RENEWAL_DEVICE_TECHNOLOGY";
+	private static final String DP_REPLACEMENT_NEW_EXPIRY_FLAG = "DP_REPLACEMENT_NEW_EXPIRY_FLAG";
+	private static final String DP_REPLACEMENT_ALLOW_INSTANT_DEVICE_REPLAY = "DP_REPLACEMENT_ALLOW_INSTANT_DEVICE_REPLAY";
+
+	private static final String DP_TRANS_SET_PRESENTMENT_TIME_LIMIT = "DP_TRANS_SET_PRESENTMENT_TIME_LIMIT";
 	private static final String DP_PRESCREENING_PIN_RETRY_LIMIT = "DP_PRESCREENING_PIN_RETRY_LIMIT";
-	private static final String	DP_PRESCREENING_PIN_CHANGE_TRANSACTION_FIRST	 = 	"DP_PRESCREENING_PIN_CHANGE_TRANSACTION_FIRST";
-	private static final String	DP_PRESCREENING_CAVV_CHECK	 = 	"DP_PRESCREENING_CAVV_CHECK";
-	private static final String	DP_PRESCREENING_ELECTRONIC_WARNING_BULLETIN_PURGE_DATE	 = 	"DP_PRESCREENING_ELECTRONIC_WARNING_BULLETIN_PURGE_DATE";
-	private static final String	DP_PRESCREENING_PIN_VALIDATION	 = 	"DP_PRESCREENING_PIN_VALIDATION";
-	private static final String	DP_PRESCREENING_STOPLIST	 = 	"DP_PRESCREENING_STOPLIST";
-	private static final String	DP_PRESCREENING_EXPIRY_DATE	 = 	"DP_PRESCREENING_EXPIRY_DATE";
-	private static final String	DP_PRESCREENING_CVCCVV_CHECK	 = 	"DP_PRESCREENING_CVCCVV_CHECK";
-	private static final String	DP_PRESCREENING_CVC2CVV2	 = 	"DP_PRESCREENING_CVC2CVV2";
-	private static final String	DP_PRESCREENING_CV3	 = 	"DP_PRESCREENING_CV3";
-	private static final String	DP_PRESCREENING_ALLOW_INTERNATTIONAL_TRANSACTION	 = 	"DP_PRESCREENING_ALLOW_INTERNATTIONAL_TRANSACTION";
-	private static final String	DP_PRESCREENING_ECOMMERCE_ALLOWED	 = 	"DP_PRESCREENING_ECOMMERCE_ALLOWED";
-	private static final String	DP_CROSS_BORDER_CHECK	 = 	"DP_CROSS_BORDER_CHECK";
-	private static final String	DP_CROSS_BORDER_CHECK_TIME_INTERVAL	 = 	"DP_CROSS_BORDER_CHECK_TIME_INTERVAL";
-	private static final String	DP_EMV_PLANS_ICVV_OPTION	 = 	"DP_EMV_PLANS_ICVV_OPTION";
-	private static final String DP_EMV_PLAN_CHIP_TYPE	 = 	"DP_EMV_PLAN_CHIP_TYPE";
-	private static final String	DP_EMV_PLAN_ABOVE_ATC_RANGE	 = 	"DP_EMV_PLAN_ABOVE_ATC_RANGE";
-	private static final String	DP_EMV_PLAN_BELOW_ATC_RANGE	 = 	"DP_EMV_PLAN_BELOW_ATC_RANGE";
-	private static final String	DP_EMV_PLAN_RESPONSE	 = 	"DP_EMV_PLAN_RESPONSE";
-	private static final String	DP_EMV_PLAN_ALLOW_FALLBACK	 = 	"DP_EMV_PLAN_ALLOW_FALLBACK";
-	private static final String	DP_EMV_PLAN_ISSUER_SCRIPTING	 = 	"DP_EMV_PLAN_ISSUER_SCRIPTING";
-	private static final String	DP_EMV_PLAN_UCOL	 = 	"DP_EMV_PLAN_UCOL";
-	private static final String	DP_EMV_PLAN_LCOL	 = 	"DP_EMV_PLAN_LCOL";
-	private static final String	DP_EMV_PLAN_UCOTA	 = 	"DP_EMV_PLAN_UCOTA";
-	private static final String	DP_EMV_PLAN_LCOTA	 = 	"DP_EMV_PLAN_LCOTA";
-	private static final String	DP_EMV_PLAN_APPLICATION_BLOCK	 = 	"DP_EMV_PLAN_APPLICATION_BLOCK";
-	private static final String	DP_EMV_PLAN_APPLICATION_UNBLOCK	 = 	"DP_EMV_PLAN_APPLICATION_UNBLOCK";
-	private static final String	DP_EMV_PLAN_PUT_DATA	 = 	"DP_EMV_PLAN_PUT_DATA";
-	private static final String	DP_EMV_PLAN_PIN_CHANGE	 = 	"DP_EMV_PLAN_PIN_CHANGE";
-	private static final String	DP_EMV_PLAN_PIN_UNBLOCK	 = 	"DP_EMV_PLAN_PIN_UNBLOCK";
+	private static final String DP_PRESCREENING_PIN_CHANGE_TRANSACTION_FIRST = "DP_PRESCREENING_PIN_CHANGE_TRANSACTION_FIRST";
+	private static final String DP_PRESCREENING_CAVV_CHECK = "DP_PRESCREENING_CAVV_CHECK";
+	private static final String DP_PRESCREENING_ELECTRONIC_WARNING_BULLETIN_PURGE_DATE = "DP_PRESCREENING_ELECTRONIC_WARNING_BULLETIN_PURGE_DATE";
+	private static final String DP_PRESCREENING_PIN_VALIDATION = "DP_PRESCREENING_PIN_VALIDATION";
+	private static final String DP_PRESCREENING_STOPLIST = "DP_PRESCREENING_STOPLIST";
+	private static final String DP_PRESCREENING_EXPIRY_DATE = "DP_PRESCREENING_EXPIRY_DATE";
+	private static final String DP_PRESCREENING_CVCCVV_CHECK = "DP_PRESCREENING_CVCCVV_CHECK";
+	private static final String DP_PRESCREENING_CVC2CVV2 = "DP_PRESCREENING_CVC2CVV2";
+	private static final String DP_PRESCREENING_CV3 = "DP_PRESCREENING_CV3";
+	private static final String DP_PRESCREENING_ALLOW_INTERNATTIONAL_TRANSACTION = "DP_PRESCREENING_ALLOW_INTERNATTIONAL_TRANSACTION";
+	private static final String DP_PRESCREENING_ECOMMERCE_ALLOWED = "DP_PRESCREENING_ECOMMERCE_ALLOWED";
+	private static final String DP_CROSS_BORDER_CHECK = "DP_CROSS_BORDER_CHECK";
+	private static final String DP_CROSS_BORDER_CHECK_TIME_INTERVAL = "DP_CROSS_BORDER_CHECK_TIME_INTERVAL";
+	private static final String DP_EMV_PLANS_ICVV_OPTION = "DP_EMV_PLANS_ICVV_OPTION";
+	private static final String DP_EMV_PLAN_CHIP_TYPE = "DP_EMV_PLAN_CHIP_TYPE";
+	private static final String DP_EMV_PLAN_ABOVE_ATC_RANGE = "DP_EMV_PLAN_ABOVE_ATC_RANGE";
+	private static final String DP_EMV_PLAN_BELOW_ATC_RANGE = "DP_EMV_PLAN_BELOW_ATC_RANGE";
+	private static final String DP_EMV_PLAN_RESPONSE = "DP_EMV_PLAN_RESPONSE";
+	private static final String DP_EMV_PLAN_ALLOW_FALLBACK = "DP_EMV_PLAN_ALLOW_FALLBACK";
+	private static final String DP_EMV_PLAN_ISSUER_SCRIPTING = "DP_EMV_PLAN_ISSUER_SCRIPTING";
+	private static final String DP_EMV_PLAN_UCOL = "DP_EMV_PLAN_UCOL";
+	private static final String DP_EMV_PLAN_LCOL = "DP_EMV_PLAN_LCOL";
+	private static final String DP_EMV_PLAN_UCOTA = "DP_EMV_PLAN_UCOTA";
+	private static final String DP_EMV_PLAN_LCOTA = "DP_EMV_PLAN_LCOTA";
+	private static final String DP_EMV_PLAN_APPLICATION_BLOCK = "DP_EMV_PLAN_APPLICATION_BLOCK";
+	private static final String DP_EMV_PLAN_APPLICATION_UNBLOCK = "DP_EMV_PLAN_APPLICATION_UNBLOCK";
+	private static final String DP_EMV_PLAN_PUT_DATA = "DP_EMV_PLAN_PUT_DATA";
+	private static final String DP_EMV_PLAN_PIN_CHANGE = "DP_EMV_PLAN_PIN_CHANGE";
+	private static final String DP_EMV_PLAN_PIN_UNBLOCK = "DP_EMV_PLAN_PIN_UNBLOCK";
 	public String association;
 	public String DeviceType;
 	public String ServiceCode;
@@ -203,7 +203,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	private String pinGenerationPinRequired;
 	private String pinGenerationPinRePinDays;
 	private String pinGenerationPinProductionVendor;
-	
+
 	private String transSetPresentmentTimeLimit;
 	private String prescreeningPinChangeTransactionFirst;
 	private String prescreeningCavvCheck;
@@ -280,7 +280,6 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setEmvAboveATCRange(provider.getString(EMV_ABOVE_ATC_RANGE));
 		plan.setFillEMVPlan(provider.getString(FILL_EMV_PLAN));
 
-
 		return plan;
 	}
 
@@ -298,13 +297,14 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setCustomCode(provider.getString(DP_DEVICE_NUMBER_GENERATION_CUSTOM_CODE));
 		plan.setPlasticId(provider.getString(DP_PLASTIC_ID));
 		plan.setPictureCode(provider.getString(DP_PICTURE_CODE));
-		plan.setDeviceNumberGenerationIssuePairedDevice(provider.getString(DP_DEVICE_NUMBER_GENERATION_ISSUE_PAIRED_DEVICE));
-		
+		plan.setDeviceNumberGenerationIssuePairedDevice(
+				provider.getString(DP_DEVICE_NUMBER_GENERATION_ISSUE_PAIRED_DEVICE));
+
 		plan.setPriorityPassIndicator(provider.getString(DP_PRIORITY_PASS_INDICATOR));
 		plan.setPriorityPassIdTemplate(provider.getString(DP_PRIORITY_PASS_ID_TEMPLATE));
 		plan.setPriorityPassVendor(provider.getString(DP_PRIORITY_PASS_VENDOR));
 		plan.setPriorityPassExpiry(provider.getString(DP_PRIORITY_PASS_EXPIRY));
-		
+
 		plan.setCardProduction(provider.getString(DP_PERSONALIZATION_CARD_PRODUCTION));
 		plan.setPersonalizationCAF(provider.getString(DP_PERSONALIZATION_CAF));
 		plan.setPersonalizationCourierTracking(provider.getString(DP_PERSONALIZATION_COURIER_TRACKING));
@@ -313,48 +313,51 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setPersonalizationGenerateCVV2CVC2(provider.getString(DP_PERSONALIZATION_GENERATE_CVV2CVC2));
 		plan.setPersonalizationGenerateCVVCVC(provider.getString(DP_PERSONALIZATION_GENERATE_CVVCVC));
 		plan.setPersonalizationNoOfDays(provider.getString(DP_PERSONALIZATION_NO_OF_DAYS));
-		plan.setPersonalizationValidityOnInitialMonths(provider.getString(DP_PERSONALIZATION_VALIDITY_ON_INITIAL_MONTHS));
+		plan.setPersonalizationValidityOnInitialMonths(
+				provider.getString(DP_PERSONALIZATION_VALIDITY_ON_INITIAL_MONTHS));
 		plan.setEmbossingVendor(provider.getString(DP_PERSONALIZATION_EMBOSSING_VENDOR));
 		plan.setActivationMode(provider.getString(DP_PERSONALIZATION_ACTIVATION_CODE));
 		plan.setExpiryFlag(provider.getString(DP_PERSONALIZATION_EXPIRY_FLAG));
-		
+
 		plan.setRenewalAllowRenewal(provider.getString(DP_RENEWAL_ALLOW_RENEWAL));
 		plan.setRenewalRenewalDeviceTechnology(provider.getString(DP_RENEWAL_RENEWAL_DEVICE_TECHNOLOGY));
 		plan.setValidityOnRenewalMonths(provider.getString(DP_RENEWAL_VALIDITY_ON_RENEWAL_MONTHS));
 		plan.setAutoRenewalDays(provider.getString(DP_RENEWAL_AUTO_RENEWAL_DAYS));
 		plan.setAdvanceRenewalReport(provider.getString(DP_RENEWAL_ADVANCE_RENEWAL_REPORT));
 		plan.setRenewalActivationMode(provider.getString(DP_RENEWAL_ACTIVATION_MODE));
-		
+
 		plan.setReplacementNewExpiryFlag(provider.getString(DP_REPLACEMENT_NEW_EXPIRY_FLAG));
 		plan.setReplacementAllowInstantDeviceReplay(provider.getString(DP_REPLACEMENT_ALLOW_INSTANT_DEVICE_REPLAY));
 		plan.setReplacementNoOfDays(provider.getString(DP_REPLACEMENT_NO_OF_DAYS));
 		plan.setValidityOnReplacementMonths(provider.getString(DP_REPLACEMENT_VALIDITY_ON_REPLACEMENT_MONTHS));
 		plan.setReplacementDeviceTechnology(provider.getString(DP_REPLACEMENT_DEVICE_TECHNOLOGY));
-		
+
 		plan.setPinGenerationPinRequired(provider.getString(DP_PIN_GENERATION_PIN_REQUIRED));
 		plan.setPinGenerationPinRePinDays(provider.getString(DP_PIN_GENERATION_PIN_RE_PIN_DAYS));
 		plan.setPinGenerationPinProductionVendor(provider.getString(DP_PIN_GENERATION_PIN_PRODUCTION_VENDOR));
 		plan.setPinLength(provider.getString(DP_PIN_GENERATION_PIN_LENGTH));
 		plan.setPinGenerationOption(provider.getString(DP_PIN_GENERATION_OPTION));
 		plan.setPinDataTransmission(provider.getString(DP_PIN_GENERATION_PIN_DATA_TRANSMISSION));
-		
+
 		plan.setTransSetPresentmentTimeLimit(provider.getString(DP_TRANS_SET_PRESENTMENT_TIME_LIMIT));
-		plan.setPrescreeningAllowInternattionalTransaction(provider.getString(DP_PRESCREENING_ALLOW_INTERNATTIONAL_TRANSACTION));
+		plan.setPrescreeningAllowInternattionalTransaction(
+				provider.getString(DP_PRESCREENING_ALLOW_INTERNATTIONAL_TRANSACTION));
 		plan.setPrescreeningCavvCheck(provider.getString(DP_PRESCREENING_CAVV_CHECK));
 		plan.setPrescreeningCv3(provider.getString(DP_PRESCREENING_CV3));
 		plan.setPrescreeningCvc2Cvv2(provider.getString(DP_PRESCREENING_CVC2CVV2));
 		plan.setPrescreeningCvccvvCheck(provider.getString(DP_PRESCREENING_CVCCVV_CHECK));
 		plan.setPrescreeningEcommerceAllowed(provider.getString(DP_PRESCREENING_ECOMMERCE_ALLOWED));
-		plan.setPrescreeningElectronicWarningBulletinPurgeDate(provider.getString(DP_PRESCREENING_ELECTRONIC_WARNING_BULLETIN_PURGE_DATE));
+		plan.setPrescreeningElectronicWarningBulletinPurgeDate(
+				provider.getString(DP_PRESCREENING_ELECTRONIC_WARNING_BULLETIN_PURGE_DATE));
 		plan.setPrescreeningExpiryDate(provider.getString(DP_PRESCREENING_EXPIRY_DATE));
 		plan.setPrescreeningPinChangeTransactionFirst(provider.getString(DP_PRESCREENING_PIN_CHANGE_TRANSACTION_FIRST));
 		plan.setPrescreeningPinValidation(provider.getString(DP_PRESCREENING_PIN_VALIDATION));
 		plan.setPrescreeningStoplist(provider.getString(DP_PRESCREENING_STOPLIST));
 		plan.setPinRetryLimit(provider.getString(DP_PRESCREENING_PIN_RETRY_LIMIT));
-		
+
 		plan.setCrossBorderCheck(provider.getString(DP_CROSS_BORDER_CHECK));
 		plan.setCrossBorderCheckTimeInterval(provider.getString(DP_CROSS_BORDER_CHECK_TIME_INTERVAL));
-		
+
 		plan.setEmvPlanResponse(provider.getString(DP_EMV_PLAN_RESPONSE));
 		plan.setEmvBelowATCRange(provider.getString(DP_EMV_PLAN_BELOW_ATC_RANGE));
 		plan.setEmvAboveATCRange(provider.getString(DP_EMV_PLAN_ABOVE_ATC_RANGE));
@@ -375,6 +378,7 @@ public class DevicePlan implements HasCodeAndDescription {
 
 		return plan;
 	}
+
 	public String getTransSetPresentmentTimeLimit() {
 		return transSetPresentmentTimeLimit;
 	}
@@ -387,8 +391,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		return prescreeningPinChangeTransactionFirst;
 	}
 
-	public void setPrescreeningPinChangeTransactionFirst(
-			String prescreeningPinChangeTransactionFirst) {
+	public void setPrescreeningPinChangeTransactionFirst(String prescreeningPinChangeTransactionFirst) {
 		this.prescreeningPinChangeTransactionFirst = prescreeningPinChangeTransactionFirst;
 	}
 
@@ -453,8 +456,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		return prescreeningAllowInternattionalTransaction;
 	}
 
-	public void setPrescreeningAllowInternattionalTransaction(
-			String prescreeningAllowInternattionalTransaction) {
+	public void setPrescreeningAllowInternattionalTransaction(String prescreeningAllowInternattionalTransaction) {
 		this.prescreeningAllowInternattionalTransaction = prescreeningAllowInternattionalTransaction;
 	}
 
@@ -545,7 +547,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	public void setEmvPlanLcota(String emvPlanLcota) {
 		this.emvPlanLcota = emvPlanLcota;
 	}
-	
+
 	public String getEmvPlanApplicationBlock() {
 		return emvPlanApplicationBlock;
 	}
@@ -590,13 +592,11 @@ public class DevicePlan implements HasCodeAndDescription {
 		this.validityOnInitialMonths = validityOnInitialMonths;
 	}
 
-
 	public String getDeviceNumberGenerationIssuePairedDevice() {
 		return deviceNumberGenerationIssuePairedDevice;
 	}
 
-	public void setDeviceNumberGenerationIssuePairedDevice(
-			String deviceNumberGenerationIssuePairedDevice) {
+	public void setDeviceNumberGenerationIssuePairedDevice(String deviceNumberGenerationIssuePairedDevice) {
 		this.deviceNumberGenerationIssuePairedDevice = deviceNumberGenerationIssuePairedDevice;
 	}
 
@@ -636,8 +636,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		return personalizationCourierTracking;
 	}
 
-	public void setPersonalizationCourierTracking(
-			String personalizationCourierTracking) {
+	public void setPersonalizationCourierTracking(String personalizationCourierTracking) {
 		this.personalizationCourierTracking = personalizationCourierTracking;
 	}
 
@@ -645,8 +644,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		return personalizationManufacturingTracking;
 	}
 
-	public void setPersonalizationManufacturingTracking(
-			String personalizationManufacturingTracking) {
+	public void setPersonalizationManufacturingTracking(String personalizationManufacturingTracking) {
 		this.personalizationManufacturingTracking = personalizationManufacturingTracking;
 	}
 
@@ -654,8 +652,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		return personalizationGenerateCVVCVC;
 	}
 
-	public void setPersonalizationGenerateCVVCVC(
-			String personalizationGenerateCVVCVC) {
+	public void setPersonalizationGenerateCVVCVC(String personalizationGenerateCVVCVC) {
 		this.personalizationGenerateCVVCVC = personalizationGenerateCVVCVC;
 	}
 
@@ -663,8 +660,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		return personalizationGenerateCVV2CVC2;
 	}
 
-	public void setPersonalizationGenerateCVV2CVC2(
-			String personalizationGenerateCVV2CVC2) {
+	public void setPersonalizationGenerateCVV2CVC2(String personalizationGenerateCVV2CVC2) {
 		this.personalizationGenerateCVV2CVC2 = personalizationGenerateCVV2CVC2;
 	}
 
@@ -704,8 +700,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		return renewalRenewalDeviceTechnology;
 	}
 
-	public void setRenewalRenewalDeviceTechnology(
-			String renewalRenewalDeviceTechnology) {
+	public void setRenewalRenewalDeviceTechnology(String renewalRenewalDeviceTechnology) {
 		this.renewalRenewalDeviceTechnology = renewalRenewalDeviceTechnology;
 	}
 
@@ -721,8 +716,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		return replacementAllowInstantDeviceReplay;
 	}
 
-	public void setReplacementAllowInstantDeviceReplay(
-			String replacementAllowInstantDeviceReplay) {
+	public void setReplacementAllowInstantDeviceReplay(String replacementAllowInstantDeviceReplay) {
 		this.replacementAllowInstantDeviceReplay = replacementAllowInstantDeviceReplay;
 	}
 
@@ -746,8 +740,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		return pinGenerationPinProductionVendor;
 	}
 
-	public void setPinGenerationPinProductionVendor(
-			String pinGenerationPinProductionVendor) {
+	public void setPinGenerationPinProductionVendor(String pinGenerationPinProductionVendor) {
 		this.pinGenerationPinProductionVendor = pinGenerationPinProductionVendor;
 	}
 
@@ -941,7 +934,6 @@ public class DevicePlan implements HasCodeAndDescription {
 		return getDevicePlanCode();
 	}
 
-
 	public String getDeviceIdGenerationTemplate() {
 		return deviceIdGenerationTemplate;
 	}
@@ -990,7 +982,6 @@ public class DevicePlan implements HasCodeAndDescription {
 		this.embossingVendor = embossingVendor;
 	}
 
-
 	public String getValidityOnInitialMonths() {
 		return validityOnInitialMonths;
 	}
@@ -998,7 +989,6 @@ public class DevicePlan implements HasCodeAndDescription {
 	public void setPersonalizationValidityOnInitialMonths(String validityOnInitialMonths) {
 		this.validityOnInitialMonths = validityOnInitialMonths;
 	}
-
 
 	public String getBaseDeviceEventBasedPlan() {
 		return baseDeviceEventBasedPlan;
@@ -1027,7 +1017,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	public String getAfterKYC() {
 		return afterKYC;
 	}
-	
+
 	public void setBeforeKYC(String beforeKYC) {
 		this.beforeKYC = beforeKYC;
 	}
@@ -1035,7 +1025,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	public String getBeforeKYC() {
 		return beforeKYC;
 	}
-	
+
 	public void setAfterKYC(String afterKYC) {
 		this.afterKYC = afterKYC;
 	}
@@ -1068,7 +1058,8 @@ public class DevicePlan implements HasCodeAndDescription {
 	public void setIsPinLess(String isPinLess) {
 		this.isPinLess = isPinLess;
 	}
-public String getActivationMode() {
+
+	public String getActivationMode() {
 		return activationMode;
 	}
 
@@ -1159,7 +1150,8 @@ public String getActivationMode() {
 	public String getDeliveryMode() {
 		return DeliveryMode;
 	}
-    public void setDeliveryMode(String deliveryMode) {
+
+	public void setDeliveryMode(String deliveryMode) {
 		DeliveryMode = deliveryMode;
 	}
 
@@ -1207,6 +1199,7 @@ public String getActivationMode() {
 
 	public void devicePlanDataprovider() {
 		// DevicePlan deviceplan = new DevicePlan();
+		setDescription(MapUtils.fnGetInputDataFromMap("DevicePlanDesc"));
 		setDevicePlanCode(CustomUtils.randomNumbers(5));
 		setValidateonInitialMonths(CustomUtils.randomNumbers(2));
 		setDeviceType(MapUtils.fnGetInputDataFromMap("DeviceType"));

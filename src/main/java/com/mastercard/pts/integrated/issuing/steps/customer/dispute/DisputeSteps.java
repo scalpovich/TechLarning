@@ -173,6 +173,13 @@ public class DisputeSteps{
 		disputeWorkflow.createChargeBackReversal(cb);
 	}
 	
+	@When("$chargeBackOrder charge back reversal is created for a transaction")
+	public void chargeBackReversalIsCreatedForATransaction(String chargeBackOrder){
+		ChargeBackReversal cb=ChargeBackReversal.createWithProvider(provider);
+		cb.setArn(context.get(ConstantData.ARN_NUMBER));				
+		disputeWorkflow.createChargeBackReversal(cb);
+	}
+	
 	@When("Download the IPM file")
 	public void whenDownloadTheIPMFile(){
 		ProcessBatches batch=new ProcessBatches();
@@ -228,7 +235,7 @@ public class DisputeSteps{
 	 
 	}
 	
-	@When("create arbitration for retrival requst")
+	@When("create arbitration for dispute request")
 	public void createArbitrationOfDispte(){
 		RetrievalRequest rr = RetrievalRequest.createWithProvider(keyProvider);
 		arbitrationworkflow.createArbitration(rr);
@@ -238,6 +245,11 @@ public class DisputeSteps{
 	public void cancelChargeBack(String cancelOption){
 		RetrievalRequest rr = RetrievalRequest.createWithProvider(keyProvider);
 		disputeWorkflow.cancelChargeBackRequst(rr);
+	}
+	
+	@When("reversal for second prepresentment with the reason code")
+	public void reversalRepresentmentWithTheReasonCode(){
+		//TO DO: Script is pending for now
 	}
 	
 }

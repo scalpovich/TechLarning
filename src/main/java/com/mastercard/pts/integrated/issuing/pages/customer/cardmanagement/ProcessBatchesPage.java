@@ -546,6 +546,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		getFinder().getWebDriver().switchTo().defaultContent();
 		return isProcessed;
 	}
+
 	public String visaOutgoingDownloadBatch(ProcessBatches batch) {
 		Device device=context.get(ContextConstants.DEVICE);
 		selectBatchType(batch.getBatchType());

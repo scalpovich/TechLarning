@@ -18,10 +18,11 @@
 	ControlClick("VTS Communications Handler (1)", "", "[CLASS:Button; INSTANCE:4]"); pressing on checkbox "raw message and then perform a shift tab
 	Send("+{TAB}") ; Presses Shift + Tab
 	Send("{RIGHT}")
+	Sleep(4000)
 	if(WinExists("VTS")) Then
-	WinActivate("VTS")
-    ControlClick("VTS", "", "[CLASS:Button; INSTANCE:1]") ; handling dialog to click Ok if it comes up
-	Send("{ENTER}")
+	  WinActivate("VTS")
+	  ControlClick("VTS", "", "[CLASS:Button; INSTANCE:1]") ; handling dialog to click Ok if it comes up
+	  Sleep(4000)
 	EndIf
 
     WinActivate("Communications Handler Settings")
@@ -31,9 +32,10 @@
 	Send("{TAB}") ; clicked Host IP Address (clicked 1st section out of 4 section in Host IP) and then tab to navigate to Port
 	Send("+{TAB}") ; Presses Shift + Tab to get to 1st postion of IP address in Host IP Address
 	sleep(1000)
-	Send("+{TAB}") ; Presses Shift + Tab to get to 1st postion of VTS address in VTS IP Address
-    Send($CmdLine[1]) ; filling VTS IP Address
-	Send("{TAB}")
+	; below 3 commented lines not needed anymore as the VTS IP Address is not needed to be filled and can be left without changing it.
+	;Send("+{TAB}") ; Presses Shift + Tab to get to 1st postion of VTS address in VTS IP Address
+   ; Send($CmdLine[1]) ; filling VTS IP Address
+	;Send("{TAB}")
 	Send($CmdLine[2]) ; filling HOST IP Address
 	Send("{TAB}")
 	Send($CmdLine[3]) ; filling HOST Port

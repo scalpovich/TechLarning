@@ -11,7 +11,7 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = TransactionsNav.TAB_TRANSACTIONS)
+@Navigation(tabTitle = TransactionsNav.TAB_TRANSACTIONS ,treeMenuItems = { TransactionsNav.L1_FUND_TRANSFER})
 public class FundTransferPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(FundTransferPage.class);
 
@@ -130,7 +130,7 @@ public class FundTransferPage extends AbstractBasePage {
 	public void verifyUiOperationStatus() {
 		logger.info("Fund Transfer");
 		verifyTitleCardHolderPortal("Fund Transfer");
-		verifyButton("Continue");
+		verifyButton("Submit");
 		verifyButton("Cancel");
 	}
 	public void selectTransferMastercardThroughOption(){

@@ -1,10 +1,43 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
+import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
+@Component
 public class DeviceCardPackTemplate {
 
 	public String Field1;
+
+	public String cardpackID;
+
+	public String DeviceNumberFromQuery;
+
+	public String PreGeneratedCardFlag;
+
+	public String getPreGeneratedCardFlag() {
+		return PreGeneratedCardFlag;
+	}
+
+	public void setPreGeneratedCardFlag(String preGeneratedCardFlag) {
+		PreGeneratedCardFlag = preGeneratedCardFlag;
+	}
+
+	public String getDeviceNumberFromQuery() {
+		return DeviceNumberFromQuery;
+	}
+
+	public void setDeviceNumberFromQuery(String deviceNumberFromQuery) {
+		DeviceNumberFromQuery = deviceNumberFromQuery;
+	}
+
+	public String getCardpackID() {
+		return cardpackID;
+	}
+
+	public void setCardpackID(String cardpackID) {
+		this.cardpackID = cardpackID;
+	}
 
 	public String getField1() {
 		return Field1;

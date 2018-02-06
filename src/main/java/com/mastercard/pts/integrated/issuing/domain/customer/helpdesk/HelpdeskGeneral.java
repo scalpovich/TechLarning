@@ -28,7 +28,6 @@ public class HelpdeskGeneral {
 		plan.setServiceCode(provider.getString(CS_SERVICE_CODE));
 		plan.setCurrencySetupServiceCode(provider.getString(CURRENCY_SETUP_SERVICE_CODE));
 		plan.setCurrencyWithPriority(provider.getString(HD_CURRENCY_WITH_PRIORITY));
-		//plan.setCurrencyWithPriority("USD [840]:2 [2],EUR [978]:3 [3]");
 		plan.setTransactionDetails(provider.getString(TRANSACTION_DETAILS));
 		plan.setInitialLoadTxnDetails(provider.getString(INITIAL_LOAD_TXN_DETAILS));
 		plan.setNotes(ConstantData.GENERIC_DESCRIPTION);

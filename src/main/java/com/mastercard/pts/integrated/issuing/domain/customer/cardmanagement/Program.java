@@ -10,6 +10,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+
 @Component
 public class Program implements HasCodeAndDescription {
 
@@ -18,44 +19,44 @@ public class Program implements HasCodeAndDescription {
 	private static final String PROGRAM_TYPE = "PROGRAM_TYPE";
 	private static final String INTERCHANGE = "INTERCHANGE";
 	private static final String REFUND_IN_CURRENCY = "REFUND_IN_CURRENCY";
-	private static final String PGM_INTERCHANGE	 = 	"PGM_INTERCHANGE";
-	private static final String PGM_PROGRAM_TYPE	 = 	"PGM_PROGRAM_TYPE";
-	private static final String PGM_BASE_CURRENCY	 = 	"PGM_BASE_CURRENCY";
-	private static final String PGM_NO_OF_CURRENCY_ALLOWED	 = 	"PGM_NO_OF_CURRENCY_ALLOWED";
-	private static final String PGM_CURRENCY_CONVERSION_BY	 = 	"PGM_CURRENCY_CONVERSION_BY";
-	private static final String PGM_CALENDER_START_MONTH	 = 	"PGM_CALENDER_START_MONTH";
-	private static final String PGM_MOBILE_NUMBER_FORMAT	 = 	"PGM_MOBILE_NUMBER_FORMAT";
-	private static final String PGM_WALLET_2_WALLET_TRANSFER_TYPE	 = 	"PGM_WALLET_2_WALLET_TRANSFER_TYPE";
-	private static final String PGM_REFERENCE_CURRENCY	 = 	"PGM_REFERENCE_CURRENCY";
-	private static final String PGM_KYC_REQUIRED	 = 	"PGM_KYC_REQUIRED";
-	private static final String PGM_KYC_LIMITS_MAX_BAL_WO_KYC	 = 	"PGM_KYC_LIMITS_MAX_BAL_WO_KYC";
-	private static final String PGM_KYC_LIMITS_MAX_BAL_AFTER_KYC	 = 	"PGM_KYC_LIMITS_MAX_BAL_AFTER_KYC";
-	private static final String PGM_KYC_LIMITS_NO_OF_LOADS_ALLOWED_WO_KYC	 = 	"PGM_KYC_LIMITS_NO_OF_LOADS_ALLOWED_WO_KYC";
-	private static final String PGM_KYC_LIMITS_NO_OF_LOADS_ALLOWED_AFTER_KYC	 = 	"PGM_KYC_LIMITS_NO_OF_LOADS_ALLOWED_AFTER_KYC";
-	private static final String PGM_ALLOW_FUNDS_RECIEVE	 = 	"PGM_ALLOW_FUNDS_RECIEVE";
-	private static final String PGM_ALLOW_FUNDS_SEND	 = 	"PGM_ALLOW_FUNDS_SEND";
-	private static final String PGM_LOAD_REFUND_TOLERANCE_UNIT_FOR_LOAD	 = 	"PGM_LOAD_REFUND_TOLERANCE_UNIT_FOR_LOAD";
-	private static final String PGM_LOAD_REFUND_TOLERANCE_UNIT_FOR_REFUND	 = 	"PGM_LOAD_REFUND_TOLERANCE_UNIT_FOR_REFUND";
-	private static final String PGM_LOAD_REFUND_REFUND_IN_CURRENCY	 = 	"PGM_LOAD_REFUND_REFUND_IN_CURRENCY";
-	private static final String PGM_TRAVEL_LIMIT_TRAVEL_PLAN	 = 	"PGM_TRAVEL_LIMIT_TRAVEL_PLAN";
-	private static final String PGM_CREDIT_LIMITS_MIN_CREDIT_LIMIT	 = 	"PGM_CREDIT_LIMITS_MIN_CREDIT_LIMIT";
-	private static final String PGM_CREDIT_LIMITS_MAX_CREDIT_LIMIT	 = 	"PGM_CREDIT_LIMITS_MAX_CREDIT_LIMIT";
-	private static final String PGM_CREDIT_LIMITS_CREDIT_LIMIT_VALIDATION	 = 	"PGM_CREDIT_LIMITS_CREDIT_LIMIT_VALIDATION";
-	private static final String PGM_CASH_LIMITS_CASH_LIMIT_TYPE	 = 	"PGM_CASH_LIMITS_CASH_LIMIT_TYPE";
-	private static final String PGM_CASH_LIMITS_CASH_LIMIT_AMOUNT	 = 	"PGM_CASH_LIMITS_CASH_LIMIT_AMOUNT";
-	private static final String PGM_CASH_LIMITS_MIN_CASH_LIMIT	 = 	"PGM_CASH_LIMITS_MIN_CASH_LIMIT";
-	private static final String PGM_CASH_LIMITS_MAX_CASH_LIMIT	 = 	"PGM_CASH_LIMITS_MAX_CASH_LIMIT";
-	private static final String PGM_CASH_LIMITS_PERCENTAGE_CREDIT_LIMIT	 = 	"PGM_CASH_LIMITS_PERCENTAGE_CREDIT_LIMIT";
-	private static final String PGM_RESET_LIMITS_CASH_LIMIT_RESET	 = 	"PGM_RESET_LIMITS_CASH_LIMIT_RESET";
-	private static final String PGM_RESET_LIMITS_ADDON_LIMIT_RESET	 = 	"PGM_RESET_LIMITS_ADDON_LIMIT_RESET";
-	private static final String PGM_EVENTS_SELECT_ALL	 = 	"PGM_EVENTS_SELECT_ALL";
-	
+	private static final String PGM_INTERCHANGE = "PGM_INTERCHANGE";
+	private static final String PGM_PROGRAM_TYPE = "PGM_PROGRAM_TYPE";
+	private static final String PGM_BASE_CURRENCY = "PGM_BASE_CURRENCY";
+	private static final String PGM_NO_OF_CURRENCY_ALLOWED = "PGM_NO_OF_CURRENCY_ALLOWED";
+	private static final String PGM_CURRENCY_CONVERSION_BY = "PGM_CURRENCY_CONVERSION_BY";
+	private static final String PGM_CALENDER_START_MONTH = "PGM_CALENDER_START_MONTH";
+	private static final String PGM_MOBILE_NUMBER_FORMAT = "PGM_MOBILE_NUMBER_FORMAT";
+	private static final String PGM_WALLET_2_WALLET_TRANSFER_TYPE = "PGM_WALLET_2_WALLET_TRANSFER_TYPE";
+	private static final String PGM_REFERENCE_CURRENCY = "PGM_REFERENCE_CURRENCY";
+	private static final String PGM_KYC_REQUIRED = "PGM_KYC_REQUIRED";
+	private static final String PGM_KYC_LIMITS_MAX_BAL_WO_KYC = "PGM_KYC_LIMITS_MAX_BAL_WO_KYC";
+	private static final String PGM_KYC_LIMITS_MAX_BAL_AFTER_KYC = "PGM_KYC_LIMITS_MAX_BAL_AFTER_KYC";
+	private static final String PGM_KYC_LIMITS_NO_OF_LOADS_ALLOWED_WO_KYC = "PGM_KYC_LIMITS_NO_OF_LOADS_ALLOWED_WO_KYC";
+	private static final String PGM_KYC_LIMITS_NO_OF_LOADS_ALLOWED_AFTER_KYC = "PGM_KYC_LIMITS_NO_OF_LOADS_ALLOWED_AFTER_KYC";
+	private static final String PGM_ALLOW_FUNDS_RECIEVE = "PGM_ALLOW_FUNDS_RECIEVE";
+	private static final String PGM_ALLOW_FUNDS_SEND = "PGM_ALLOW_FUNDS_SEND";
+	private static final String PGM_LOAD_REFUND_TOLERANCE_UNIT_FOR_LOAD = "PGM_LOAD_REFUND_TOLERANCE_UNIT_FOR_LOAD";
+	private static final String PGM_LOAD_REFUND_TOLERANCE_UNIT_FOR_REFUND = "PGM_LOAD_REFUND_TOLERANCE_UNIT_FOR_REFUND";
+	private static final String PGM_LOAD_REFUND_REFUND_IN_CURRENCY = "PGM_LOAD_REFUND_REFUND_IN_CURRENCY";
+	private static final String PGM_TRAVEL_LIMIT_TRAVEL_PLAN = "PGM_TRAVEL_LIMIT_TRAVEL_PLAN";
+	private static final String PGM_CREDIT_LIMITS_MIN_CREDIT_LIMIT = "PGM_CREDIT_LIMITS_MIN_CREDIT_LIMIT";
+	private static final String PGM_CREDIT_LIMITS_MAX_CREDIT_LIMIT = "PGM_CREDIT_LIMITS_MAX_CREDIT_LIMIT";
+	private static final String PGM_CREDIT_LIMITS_CREDIT_LIMIT_VALIDATION = "PGM_CREDIT_LIMITS_CREDIT_LIMIT_VALIDATION";
+	private static final String PGM_CASH_LIMITS_CASH_LIMIT_TYPE = "PGM_CASH_LIMITS_CASH_LIMIT_TYPE";
+	private static final String PGM_CASH_LIMITS_CASH_LIMIT_AMOUNT = "PGM_CASH_LIMITS_CASH_LIMIT_AMOUNT";
+	private static final String PGM_CASH_LIMITS_MIN_CASH_LIMIT = "PGM_CASH_LIMITS_MIN_CASH_LIMIT";
+	private static final String PGM_CASH_LIMITS_MAX_CASH_LIMIT = "PGM_CASH_LIMITS_MAX_CASH_LIMIT";
+	private static final String PGM_CASH_LIMITS_PERCENTAGE_CREDIT_LIMIT = "PGM_CASH_LIMITS_PERCENTAGE_CREDIT_LIMIT";
+	private static final String PGM_RESET_LIMITS_CASH_LIMIT_RESET = "PGM_RESET_LIMITS_CASH_LIMIT_RESET";
+	private static final String PGM_RESET_LIMITS_ADDON_LIMIT_RESET = "PGM_RESET_LIMITS_ADDON_LIMIT_RESET";
+	private static final String PGM_EVENTS_SELECT_ALL = "PGM_EVENTS_SELECT_ALL";
+
 	private static final String NO_OF_CURRENCY_ALLOWED = "NO_OF_CURRENCY_ALLOWED";
-	
+
 	private static final String WALLET_TO_WALLET_TRANSFER_TYPE = "WALLET_TO_WALLET_TRANSFER_TYPE";
-			
+
 	private static final String REFERENCE_CURRENCY = "REFERENCE_CURRENCY";
-	
+
 	private String walletToWalletTransferType;
 	private String refundInCurrency;
 	private String programCodeDevice;
@@ -70,7 +71,7 @@ public class Program implements HasCodeAndDescription {
 	private String firstWalletPlan;
 	private String secondWalletPlan;
 	private String devicePlanPlan1;
-    private String otherPlanStatementMessagePlan;
+	private String otherPlanStatementMessagePlan;
 	private String otherPlanMarketingMessagePlan;
 	private String creditLimit;
 	private String maximumCreditLimit;
@@ -114,10 +115,10 @@ public class Program implements HasCodeAndDescription {
 	private String resetLimitsAddonLimitReset;
 	private String eventsSelectAll;
 	private String institute;
-    public String loadsWithoutKyc;
+	public String loadsWithoutKyc;
 	public String Currency;
 	public String Program;
-	
+
 	public String DevicePlanProgram;
 
 	public String WalletType;
@@ -128,14 +129,13 @@ public class Program implements HasCodeAndDescription {
 
 	public String WalletPlan3;
 
-	
-	public static Program createWithProvider(DataProvider dataProvider, KeyValueProvider provider){
+	public static Program createWithProvider(DataProvider dataProvider, KeyValueProvider provider) {
 		Program programObject = dataProvider.getDataBySimpleClassName(Program.class);
 		programObject.setProgramCode(MiscUtils.generate6CharAlphaNumeric());
 		programObject.setDescription(ConstantData.GENERIC_DESCRIPTION);
 		programObject.setProgramType(provider.getString(PROGRAM_TYPE));
 		programObject.setMaximumBalanceWithoutKyc(RandomStringUtils.randomNumeric(4));
-		programObject.setNumberOfLoadsAllowedWithoutKyc(String.valueOf(RandomUtils.nextInt(1,99)));
+		programObject.setNumberOfLoadsAllowedWithoutKyc(String.valueOf(RandomUtils.nextInt(1, 99)));
 		programObject.setCreditLimit(RandomStringUtils.randomNumeric(5));
 		programObject.setMaximumCreditLimit(RandomStringUtils.randomNumeric(6));
 		programObject.setCashLimitAmount(RandomStringUtils.randomNumeric(5));
@@ -149,15 +149,15 @@ public class Program implements HasCodeAndDescription {
 		programObject.setWalletToWalletTransferType(provider.getString(WALLET_TO_WALLET_TRANSFER_TYPE));
 		return programObject;
 	}
-	
-	public static Program createDataWithProvider(DataProvider dataProvider, KeyValueProvider provider){
+
+	public static Program createDataWithProvider(DataProvider dataProvider, KeyValueProvider provider) {
 		Program programObject = dataProvider.getDataBySimpleClassName(Program.class);
 		programObject.setProgramCode(MiscUtils.generate6CharAlphaNumeric());
 		programObject.setDescription(ConstantData.GENERIC_DESCRIPTION);
 		programObject.setProgramType(provider.getString(PROGRAM_TYPE));
 		programObject.setInterchange(provider.getString(INTERCHANGE));
 		programObject.setMaximumBalanceWithoutKyc(RandomStringUtils.randomNumeric(4));
-		programObject.setNumberOfLoadsAllowedWithoutKyc(String.valueOf(RandomUtils.nextInt(1,99)));
+		programObject.setNumberOfLoadsAllowedWithoutKyc(String.valueOf(RandomUtils.nextInt(1, 99)));
 		programObject.setCreditLimit(RandomStringUtils.randomNumeric(5));
 		programObject.setMaximumCreditLimit(RandomStringUtils.randomNumeric(6));
 		programObject.setCashLimitAmount(RandomStringUtils.randomNumeric(5));
@@ -171,9 +171,8 @@ public class Program implements HasCodeAndDescription {
 		programObject.setWalletToWalletTransferType(provider.getString(WALLET_TO_WALLET_TRANSFER_TYPE));
 		return programObject;
 	}
-	
-	
-	public static Program createWithProvider(KeyValueProvider provider){
+
+	public static Program createWithProvider(KeyValueProvider provider) {
 		Program programObject = new Program();
 		programObject.setProgramCode(MiscUtils.generate6CharAlphaNumeric());
 		programObject.setDescription(ConstantData.GENERIC_DESCRIPTION);
@@ -189,17 +188,21 @@ public class Program implements HasCodeAndDescription {
 		programObject.setKycRequired(provider.getString(PGM_KYC_REQUIRED));
 		programObject.setKycLimitsMaxBalWithoutKyc(provider.getString(PGM_KYC_LIMITS_MAX_BAL_WO_KYC));
 		programObject.setKycLimitsMaxBalAfterKyc(provider.getString(PGM_KYC_LIMITS_MAX_BAL_AFTER_KYC));
-		programObject.setKycLimitsNoOfLoadsAllowedWithoutKyc(provider.getString(PGM_KYC_LIMITS_NO_OF_LOADS_ALLOWED_WO_KYC));
-		programObject.setKycLimitsNoOfLoadsAllowedAfterKyc(provider.getString(PGM_KYC_LIMITS_NO_OF_LOADS_ALLOWED_AFTER_KYC));
+		programObject
+				.setKycLimitsNoOfLoadsAllowedWithoutKyc(provider.getString(PGM_KYC_LIMITS_NO_OF_LOADS_ALLOWED_WO_KYC));
+		programObject
+				.setKycLimitsNoOfLoadsAllowedAfterKyc(provider.getString(PGM_KYC_LIMITS_NO_OF_LOADS_ALLOWED_AFTER_KYC));
 		programObject.setAllowFundsRecieve(provider.getString(PGM_ALLOW_FUNDS_RECIEVE));
 		programObject.setAllowFundsSend(provider.getString(PGM_ALLOW_FUNDS_SEND));
 		programObject.setLoadRefundToleranceUnitForLoad(provider.getString(PGM_LOAD_REFUND_TOLERANCE_UNIT_FOR_LOAD));
-		programObject.setLoadRefundToleranceUnitForRefund(provider.getString(PGM_LOAD_REFUND_TOLERANCE_UNIT_FOR_REFUND));
+		programObject
+				.setLoadRefundToleranceUnitForRefund(provider.getString(PGM_LOAD_REFUND_TOLERANCE_UNIT_FOR_REFUND));
 		programObject.setLoadRefundRefundInCurrency(provider.getString(PGM_LOAD_REFUND_REFUND_IN_CURRENCY));
 		programObject.setTravelLimitTravelPlan(provider.getString(PGM_TRAVEL_LIMIT_TRAVEL_PLAN));
 		programObject.setCreditLimitsMinCreditLimit(provider.getString(PGM_CREDIT_LIMITS_MIN_CREDIT_LIMIT));
 		programObject.setCreditLimitsMaxCreditLimit(provider.getString(PGM_CREDIT_LIMITS_MAX_CREDIT_LIMIT));
-		programObject.setCreditLimitsCreditLimitValidation(provider.getString(PGM_CREDIT_LIMITS_CREDIT_LIMIT_VALIDATION));
+		programObject
+				.setCreditLimitsCreditLimitValidation(provider.getString(PGM_CREDIT_LIMITS_CREDIT_LIMIT_VALIDATION));
 		programObject.setCashLimitsCashLimitType(provider.getString(PGM_CASH_LIMITS_CASH_LIMIT_TYPE));
 		programObject.setCashLimitsCashLimitAmount(provider.getString(PGM_CASH_LIMITS_CASH_LIMIT_AMOUNT));
 		programObject.setCashLimitsMinCashLimit(provider.getString(PGM_CASH_LIMITS_MIN_CASH_LIMIT));
@@ -212,7 +215,6 @@ public class Program implements HasCodeAndDescription {
 		return programObject;
 	}
 
-	
 	public String getProgramCodeDevice() {
 		return programCodeDevice;
 	}
@@ -253,7 +255,6 @@ public class Program implements HasCodeAndDescription {
 		WalletType = walletType;
 	}
 
-
 	public String getProgram() {
 		return Program;
 	}
@@ -270,7 +271,6 @@ public class Program implements HasCodeAndDescription {
 		Currency = currency;
 	}
 
-
 	public String MaxBalanceWithoutKYC;
 
 	public String getMaxBalanceWithoutKYC() {
@@ -281,9 +281,10 @@ public class Program implements HasCodeAndDescription {
 		MaxBalanceWithoutKYC = maxBalanceWithoutKYC;
 	}
 
-
 	public void ProgramDataProvider() {
 		// Program program = new Program();
+		setProgramCode(MapUtils.fnGetInputDataFromMap("ProgramCode"));
+		setDescription(MapUtils.fnGetInputDataFromMap("ProgramDesc"));
 		setRefundInCurrency("Program");
 		setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
 		setBaseCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
@@ -293,6 +294,7 @@ public class Program implements HasCodeAndDescription {
 		setInstitute(MapUtils.fnGetInputDataFromMap("institute"));
 
 	}
+
 	public String getCalenderStartMonth() {
 		return calenderStartMonth;
 	}
@@ -345,8 +347,7 @@ public class Program implements HasCodeAndDescription {
 		return kycLimitsNoOfLoadsAllowedWithoutKyc;
 	}
 
-	public void setKycLimitsNoOfLoadsAllowedWithoutKyc(
-			String kycLimitsNoOfLoadsAllowedWithoutKyc) {
+	public void setKycLimitsNoOfLoadsAllowedWithoutKyc(String kycLimitsNoOfLoadsAllowedWithoutKyc) {
 		this.kycLimitsNoOfLoadsAllowedWithoutKyc = kycLimitsNoOfLoadsAllowedWithoutKyc;
 	}
 
@@ -354,8 +355,7 @@ public class Program implements HasCodeAndDescription {
 		return kycLimitsNoOfLoadsAllowedAfterKyc;
 	}
 
-	public void setKycLimitsNoOfLoadsAllowedAfterKyc(
-			String kycLimitsNoOfLoadsAllowedAfterKyc) {
+	public void setKycLimitsNoOfLoadsAllowedAfterKyc(String kycLimitsNoOfLoadsAllowedAfterKyc) {
 		this.kycLimitsNoOfLoadsAllowedAfterKyc = kycLimitsNoOfLoadsAllowedAfterKyc;
 	}
 
@@ -379,8 +379,7 @@ public class Program implements HasCodeAndDescription {
 		return loadRefundToleranceUnitForLoad;
 	}
 
-	public void setLoadRefundToleranceUnitForLoad(
-			String loadRefundToleranceUnitForLoad) {
+	public void setLoadRefundToleranceUnitForLoad(String loadRefundToleranceUnitForLoad) {
 		this.loadRefundToleranceUnitForLoad = loadRefundToleranceUnitForLoad;
 	}
 
@@ -388,8 +387,7 @@ public class Program implements HasCodeAndDescription {
 		return loadRefundToleranceUnitForRefund;
 	}
 
-	public void setLoadRefundToleranceUnitForRefund(
-			String loadRefundToleranceUnitForRefund) {
+	public void setLoadRefundToleranceUnitForRefund(String loadRefundToleranceUnitForRefund) {
 		this.loadRefundToleranceUnitForRefund = loadRefundToleranceUnitForRefund;
 	}
 
@@ -429,8 +427,7 @@ public class Program implements HasCodeAndDescription {
 		return creditLimitsCreditLimitValidation;
 	}
 
-	public void setCreditLimitsCreditLimitValidation(
-			String creditLimitsCreditLimitValidation) {
+	public void setCreditLimitsCreditLimitValidation(String creditLimitsCreditLimitValidation) {
 		this.creditLimitsCreditLimitValidation = creditLimitsCreditLimitValidation;
 	}
 
@@ -470,8 +467,7 @@ public class Program implements HasCodeAndDescription {
 		return cashLimitsPercentageCreditLimit;
 	}
 
-	public void setCashLimitsPercentageCreditLimit(
-			String cashLimitsPercentageCreditLimit) {
+	public void setCashLimitsPercentageCreditLimit(String cashLimitsPercentageCreditLimit) {
 		this.cashLimitsPercentageCreditLimit = cashLimitsPercentageCreditLimit;
 	}
 
@@ -486,7 +482,7 @@ public class Program implements HasCodeAndDescription {
 	public String getResetLimitsAddonLimitReset() {
 		return resetLimitsAddonLimitReset;
 	}
-	
+
 	public String getLoadsWithoutKyc() {
 		return loadsWithoutKyc;
 	}
@@ -494,10 +490,11 @@ public class Program implements HasCodeAndDescription {
 	public String getDevicePlanProgram() {
 		return DevicePlanProgram;
 	}
+
 	public void setDevicePlanProgram(String devicePlanProgram) {
 		DevicePlanProgram = devicePlanProgram;
 	}
-	
+
 	public void setLoadsWithoutKyc(String loadsWithoutKyc) {
 		this.loadsWithoutKyc = loadsWithoutKyc;
 	}
@@ -517,7 +514,7 @@ public class Program implements HasCodeAndDescription {
 	public String getMccRulePlan() {
 		return mccRulePlan;
 	}
-	
+
 	@Override
 	public String getDescription() {
 		return description;
@@ -578,15 +575,16 @@ public class Program implements HasCodeAndDescription {
 	public String getProgramType() {
 		return programType;
 	}
-	
+
 	@Override
 	public String getCode() {
 		return getProgramCode();
 	}
-	
+
 	public String getProgramCode() {
 		return programCode;
 	}
+
 	public void setProgramCode(String programCode) {
 		this.programCode = programCode;
 	}
@@ -618,7 +616,7 @@ public class Program implements HasCodeAndDescription {
 	public void setCurrencyConversionBy(String currencyConversionBy) {
 		this.currencyConversionBy = currencyConversionBy;
 	}
-	
+
 	public String getFirstWalletPlan() {
 		return firstWalletPlan;
 	}
@@ -626,7 +624,7 @@ public class Program implements HasCodeAndDescription {
 	public void setFirstWalletPlan(String firstWalletPlan) {
 		this.firstWalletPlan = firstWalletPlan;
 	}
-	
+
 	public String getSecondWalletPlan() {
 		return secondWalletPlan;
 	}
@@ -634,7 +632,7 @@ public class Program implements HasCodeAndDescription {
 	public void setSecondWalletPlan(String secondWalletPlan) {
 		this.secondWalletPlan = secondWalletPlan;
 	}
-	
+
 	public String getDevicePlanPlan1() {
 		return devicePlanPlan1;
 	}
@@ -647,8 +645,7 @@ public class Program implements HasCodeAndDescription {
 		return otherPlanStatementMessagePlan;
 	}
 
-	public void setOtherPlanStatementMessagePlan(
-			String otherPlanStatementMessagePlan) {
+	public void setOtherPlanStatementMessagePlan(String otherPlanStatementMessagePlan) {
 		this.otherPlanStatementMessagePlan = otherPlanStatementMessagePlan;
 	}
 
@@ -656,11 +653,10 @@ public class Program implements HasCodeAndDescription {
 		return otherPlanMarketingMessagePlan;
 	}
 
-	public void setOtherPlanMarketingMessagePlan(
-			String otherPlanMarketingMessagePlan) {
+	public void setOtherPlanMarketingMessagePlan(String otherPlanMarketingMessagePlan) {
 		this.otherPlanMarketingMessagePlan = otherPlanMarketingMessagePlan;
 	}
-	
+
 	public String getCreditLimit() {
 		return creditLimit;
 	}
@@ -729,8 +725,7 @@ public class Program implements HasCodeAndDescription {
 		return numberOfLoadsAllowedWithoutKyc;
 	}
 
-	public void setNumberOfLoadsAllowedWithoutKyc(
-			String numberOfLoadsAllowedWithoutKyc) {
+	public void setNumberOfLoadsAllowedWithoutKyc(String numberOfLoadsAllowedWithoutKyc) {
 		this.numberOfLoadsAllowedWithoutKyc = numberOfLoadsAllowedWithoutKyc;
 	}
 
@@ -765,7 +760,7 @@ public class Program implements HasCodeAndDescription {
 	public void setPrepaidStatementPlan(String prepaidStatementPlan) {
 		this.prepaidStatementPlan = prepaidStatementPlan;
 	}
-	
+
 	public String getInstitute() {
 		return institute;
 	}

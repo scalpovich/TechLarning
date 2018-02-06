@@ -35,5 +35,4 @@ public class AuthorizationSearchSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		authorizationSearchWorkflow.verifyAuthTransactionSearchReport(device);
 	}
-	
 }

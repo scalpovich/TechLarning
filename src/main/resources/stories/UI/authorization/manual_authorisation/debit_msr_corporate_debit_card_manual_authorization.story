@@ -7,7 +7,6 @@ I want to create an msr debit card for client and perform manual authorization f
 
 Meta:
 @StoryName debit_cdc_manual_auth
-@NonUIBVTest
 @CRCardsWithAuthorization
 
 Scenario: Set up msr corporate debit card

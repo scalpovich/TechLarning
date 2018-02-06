@@ -12,7 +12,7 @@
 		<jbehave-maven-plugin.version>4.1</jbehave-maven-plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mtaf-ui-tools.version>1.5.0</mtaf-ui-tools.version>
-		<mtaf-provider-factory.version>2.3.0-20170411.160657-4</mtaf-provider-factory.version>
+		<mtaf-provider-factory.version>2.5.0-SNAPSHOT</mtaf-provider-factory.version>
 		<mtaf-automation-utils.version>1.5.0-SNAPSHOT</mtaf-automation-utils.version>
 		<aspectj.version>1.8.9</aspectj.version>
 		<junit.version>4.12</junit.version>
@@ -133,6 +133,8 @@
 			<groupId>com.mastercard.testing</groupId>
 			<artifactId>mtaf-provider-factory</artifactId>
 			<version>${mtaf-provider-factory.version}</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/mtaf-provider-factory-2.5.0-SNAPSHOT.jar</systemPath>
 			<exclusions>
 				<exclusion>
 					<artifactId>hamcrest-core</artifactId>

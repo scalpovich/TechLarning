@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.TransactionsNav;
+import com.mastercard.pts.integrated.issuing.domain.cardholder.CardHolderTransactions;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -76,6 +77,9 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.ID, valueToFind="mpts_cardHolderPortal_button_submit")
 	private MCWebElement cashRemittanceSubmitBtn;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind="mpts.cardHolderPortal.button.confirm")
+	private MCWebElement submitTransaction;
+		
 	@PageElement(findBy = FindBy.ID, valueToFind="firstName")
 	private MCWebElement beneficiaryFirstName;
 	
@@ -87,6 +91,25 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[@class='sectionHead']/span")
 	private MCWebElement isCashRemittanceAllowed;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="txnPassword")
+	private MCWebElement transactionPasswordInpt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="remarks")
+	private MCWebElement transactionRemarkInpt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//form[@name='WireTransferResponse']//.//table//.//td[@class='ResponseTxt']")
+	private MCWebElement transactionConfirmMsg;
+	
+	
+	
+	public void enterTransactionRemarks(String transactionRemarks ){
+		enterText(transactionRemarkInpt, transactionRemarks);
+	}
+	
+	public void enterTransactionPassword(String transactionPass ){
+		enterText(transactionPasswordInpt, transactionPass);
+	}
 	
 	public boolean isCashRemittanceAllowedForAccount(){
 	
@@ -167,13 +190,40 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 	}
 	
 	public void enterRemittanceCurrency(String remittanceCurrency){
-		enterText(selectedTxnCurrencyDDwn, remittanceCurrency);
+		SelectDropDownByText(selectedTxnCurrencyDDwn, remittanceCurrency);
 	}
 	
-	public void submitRemittanceRequst(){
+	public String submitRemittanceRequst(CardHolderTransactions cardhlTran){
 		ClickButton(cashRemittanceSubmitBtn);
+		waitForWicket();
+		logger.info("Transaction password for remittance request is {}",cardhlTran.getTransctionPassword());
+		enterTransactionPassword(cardhlTran.getTransctionPassword());
+		enterTransactionRemarks(cardhlTran.getTransactionRemark());
+		clickWhenClickable(submitTransaction);
+		return getTextFromPage(transactionConfirmMsg);
 	}
 	
-
+	
+	public String bookCashRemittance(CardHolderTransactions cardhlTran){
+		enterBeneficiaryId(cardhlTran.getBeneficiaryID());
+		enterBeneficiaryFirstName(cardhlTran.getBeneficiaryFirstName());
+		enterBeneficiaryMiddleName(cardhlTran.getBeneficiaryMiddleName());
+		enterBeneficiaryLastName(cardhlTran.getBeneficiaryLastName());
+		enterBeneficiaryAddress1(cardhlTran.getBeneficiaryAddressLine1());
+		enterBeneficiaryAddress2(cardhlTran.getBeneficiaryAddressLine2());
+		enterBeneficiaryAddress3(cardhlTran.getBeneficiaryAddressLine3());
+		enterBeneficiaryStateName(cardhlTran.getBeneficiaryStateName());
+		enterBeneficiaryCityName(cardhlTran.getBeneficiaryCityName());
+		enterBeneficiaryZipCode(cardhlTran.getBeneficiaryZIPCode());
+		enterBeneficiaryEmailAddress(cardhlTran.getBeneficiaryEmailAddress());
+		enterBeneficiaryMobileNumber(cardhlTran.getBeneficiaryMobileNumber());
+		enterRemittanceAmount(cardhlTran.getBeneficiaryRemittanceAmount());
+		enterRemittanceCurrency(cardhlTran.getBeneficiaryRemittanceCurrency());
+		return submitRemittanceRequst(cardhlTran);
+	}
+	
+	public void cancelRemittanceRequst(CardHolderTransactions cardhlTran){
+		
+	}
 
 }

@@ -17,6 +17,7 @@ public class ProcessBatches {
 	private String interchangeType;
 	private String extractType;
 	private String methodToGenerateFile;
+
 	
 	
 

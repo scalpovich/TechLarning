@@ -39,12 +39,37 @@ And user is logged in institution
 And search Pre-Auth authorization and verify Success status
 When perform an EMV_COMPLETION MAS transaction
 Then MAS test results are verified
-And MAS simulator is closed
-And user is logged in institution
-And search Pre-Auth Completion authorization and verify Success status
-And user sign out from customer portal
+Scenario: Generate Auth File for Clearing
+Meta:
+@TestId 
+When Auth file is generated after transaction
+When MAS simulator is closed
+Then user is logged in institution
+Then search Pre-Auth Completion authorization and verify 000-Successful status
+Then user sign out from customer portal
 
+Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
+Meta:
+@TestId 
+Given connection to MCPS is established
+When Auth file is generated
+When Auth file is loaded into MCPS and processed
+Then NOT file is successfully generated
+When MCPS simulator is closed
+
+Scenario: Upload ipm file from customer portal and process it
+Meta:
+@TestId 
 Given user is logged in institution
-When pre-clearing and Pre-EOD batches are run
-Then verify report for transactions with Program Balance Summary is downloaded
-And user sign out from customer portal
+When User uploads the NOT file
+When user processes batch for prepaid
+Then user sign out from customer portal
+
+Scenario: Matching & Posting to Cardholders account
+Meta:
+@TestId 
+Given user is logged in institution
+When transaction status is "Matching Pending"
+When "Matching" batch for prepaid is successful
+Then transaction status is "Presentment Matched with authorization"
+Then user sign out from customer portal
