@@ -502,6 +502,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void loadAuthFileIntoMCPS(String fileName)
 	{
+		activateMcps();
 		Actions action = new Actions(winiumDriver);				
 		winiumDriver.findElementByName("TDG").click();
 		action.moveToElement(winiumDriver.findElementByName("toolStripSplitButton1")).moveByOffset(10, 0).click().build().perform();  
