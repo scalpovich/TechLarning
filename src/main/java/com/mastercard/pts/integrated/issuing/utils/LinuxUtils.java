@@ -70,15 +70,16 @@ public abstract class LinuxUtils {
 	
 	public static String getFileAbsolutePath(RemoteConnectionDetails connectiondetails, String lookUpFor) throws Exception
 	{
-		logger.info("getFileAbsolutePath connection String {} --> ", connectiondetails.getUserName(), connectiondetails.getHostName(), connectiondetails.getPort());
+		MiscUtils.reportToConsole("******** getFileAbsolutePath Start ***** " );
 		return getFileFromLinuxBox(connectiondetails, lookUpFor);
 	}
 
 	private static String getFileFromLinuxBox (RemoteConnectionDetails connectiondetails, String lookUpFor) throws Exception
 	{
+		logger.info("getFileFromLinuxBox connection String {} --> ", connectiondetails.getUserName(), connectiondetails.getHostName(), connectiondetails.getPort());
+		
 		String result = null;
 		Session session = new JSch().getSession(connectiondetails.getUserName(), connectiondetails.getHostName(), connectiondetails.getPort());    
-		logger.info("getFileFromLinuxBox connection String {} --> ", connectiondetails.getUserName(), connectiondetails.getHostName(), connectiondetails.getPort());
 		session.setPassword(connectiondetails.getPassword());
 		java.util.Properties config = new java.util.Properties(); 
 		config.put("StrictHostKeyChecking", "no");
