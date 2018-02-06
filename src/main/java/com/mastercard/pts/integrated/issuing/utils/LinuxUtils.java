@@ -99,17 +99,14 @@ public abstract class LinuxUtils {
 				if(i<0) { 
 					break; 
 				}
-				MiscUtils.reportToConsole(" ***** 105 ******");
 				result = new String(tmp, 0, i).trim();
 				logger.info("Result of search for file with text : "+ lookUpFor + " : " + channel.getExitStatus());
 			}
 			if(channel.isClosed()){
-				MiscUtils.reportToConsole(" ***** 110 ******");
 				if(in.available()>0) continue; 
 				logger.info("exit-status: "+channel.getExitStatus());
 				break;
 			}
-			MiscUtils.reportToConsole(" ***** 115 ******");
 			try
 			{
 				Thread.sleep(1000);
