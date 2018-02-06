@@ -89,26 +89,32 @@ public abstract class LinuxUtils {
 		logger.info("command for getFileFromLinuxBox {} --> ", cmd);
 		Channel channel=session.openChannel("exec");
 		((ChannelExec)channel).setCommand(cmd);
+		MiscUtils.reportToConsole(" ***** 92 ******");
 		channel.setInputStream(null);
+		MiscUtils.reportToConsole(" ***** 94 ******");
 		((ChannelExec)channel).setErrStream(System.err);
 		InputStream in=channel.getInputStream();
 		channel.connect();
-
+		MiscUtils.reportToConsole(" ***** 96 ******");
 		byte[] tmp=new byte[1024];
 		while(true){
+			MiscUtils.reportToConsole(" ***** 99 ******");
 			while(in.available()>0){
 				int i=in.read(tmp, 0, 1024);
 				if(i<0) { 
 					break; 
 				}
+				MiscUtils.reportToConsole(" ***** 105 ******");
 				result = new String(tmp, 0, i).trim();
 				logger.info("Result of search for file with text : "+ lookUpFor + " : " + channel.getExitStatus());
 			}
 			if(channel.isClosed()){
+				MiscUtils.reportToConsole(" ***** 110 ******");
 				if(in.available()>0) continue; 
 				logger.info("exit-status: "+channel.getExitStatus());
 				break;
 			}
+			MiscUtils.reportToConsole(" ***** 115 ******");
 			try
 			{
 				Thread.sleep(1000);
