@@ -7,8 +7,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -24,6 +29,8 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L3_PIN_GENERATION_BATCH })
 public class PinGenerationBatchPage extends AbstractBasePage {
 
+	@Autowired
+	TestContext context;
 	private static final Logger logger = LoggerFactory
 			.getLogger(PinGenerationBatchPage.class);
 
@@ -53,6 +60,20 @@ public class PinGenerationBatchPage extends AbstractBasePage {
 		return getBatchNumberFromFeedbackPanel();
 
 	}
+	
+	public void processPinProductionBatchNewApplication(PinGenerationBatch batch) {
+		String batchNumber=context.get(ContextConstants.NEW_APPLICATION_BATCH);
+		WebElementUtils.enterText(batchNumberTxt, batchNumber);
+		waitAndSearchForRecordToExist();
+		verifyOperationStatus();
+		}
+		
+		public void processPinProductionBatchNewDevice(PinGenerationBatch batch) {
+		Device device=context.get(ContextConstants.DEVICE);
+		WebElementUtils.enterText(batchNumberTxt, device.getBatchNumber());
+		waitAndSearchForRecordToExist();
+		verifyOperationStatus();
+}
 
 	public void verifyUiOperationStatus() {
 		logger.info("Pin Generation Batch");

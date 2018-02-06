@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -92,6 +93,23 @@ public class ApplicationUploadSteps {
 		DeviceProductionBatch batch = new DeviceProductionBatch();
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processDeviceProductionBatchNewDevice(batch);
+	}
+	
+	@Then("$type processes pinProduction batch using new Application")
+	@When("$type processes pinProduction batch using new Application")
+	public void whenProcessesPinproductionBatchForNewApplication(String type) {
+		PinGenerationBatch batch = new PinGenerationBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processPinProductionBatchNewApplication(batch);
+	}
+	
+	
+	@Then("$type processes pinProduction batch using new Device")
+	@When("$type processes pinProduction batch using new Device")
+	public void whenProcessesPinproductionBatchForDevice(String type) {
+		PinGenerationBatch batch = new PinGenerationBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processPinProductionBatchNewDevice(batch);
 	}
 	
 	@Then("$type processes deviceproduction batch using new Application")

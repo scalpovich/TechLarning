@@ -12,10 +12,12 @@ import org.springframework.stereotype.Component;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.BatchProcessingPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceProductionPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PinGenerationBatchPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PreProductionBatchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.FileUtils;
@@ -140,6 +142,16 @@ public class BatchProcessFlows extends MenuFlows{
 	public void processDeviceProductionBatchNewApplication(DeviceProductionBatch batch) {
 		deviceProductionPage = navigator.navigateToPage(DeviceProductionPage.class);
 		deviceProductionPage.processDeviceProductionBatchNewApplication(batch);
+	}
+	
+	public void processPinProductionBatchNewDevice(PinGenerationBatch batch) {
+		PinGenerationBatchPage page = navigator.navigateToPage(PinGenerationBatchPage.class);
+		page.processPinProductionBatchNewDevice(batch);
+	}
+	
+	public void processPinProductionBatchNewApplication(PinGenerationBatch batch) {
+		PinGenerationBatchPage page = navigator.navigateToPage(PinGenerationBatchPage.class);
+		page.processPinProductionBatchNewApplication(batch);
 	}
 	
 }

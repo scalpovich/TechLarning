@@ -124,6 +124,8 @@ public class DevicePlan implements HasCodeAndDescription {
 	private static final String DP_EMV_PLAN_PUT_DATA = "DP_EMV_PLAN_PUT_DATA";
 	private static final String DP_EMV_PLAN_PIN_CHANGE = "DP_EMV_PLAN_PIN_CHANGE";
 	private static final String DP_EMV_PLAN_PIN_UNBLOCK = "DP_EMV_PLAN_PIN_UNBLOCK";
+	private static final String Expiry_Flag_date="Expiry_Flag_date";
+	
 	public String association;
 	public String DeviceType;
 	public String ServiceCode;
@@ -232,6 +234,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	private String emvPlanPinChange;
 	private String emvPlanPinUnblock;
 	private String isPinLess;
+	private String expiryDateExcel;
 
 	public static DevicePlan createWithProvider(KeyValueProvider provider) {
 		DevicePlan plan = new DevicePlan();
@@ -279,6 +282,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setEmvBelowATCRange(provider.getString(EMV_BELOW_ATC_RANGE));
 		plan.setEmvAboveATCRange(provider.getString(EMV_ABOVE_ATC_RANGE));
 		plan.setFillEMVPlan(provider.getString(FILL_EMV_PLAN));
+		plan.setExpiryDateExcel(provider.getString(Expiry_Flag_date));
 
 		return plan;
 	}
@@ -1195,6 +1199,15 @@ public class DevicePlan implements HasCodeAndDescription {
 
 	public void setDevicePlan(String devicePlan) {
 		DevicePlan = devicePlan;
+	}
+	
+
+	public String getExpiryDateExcel() {
+		return expiryDateExcel;
+	}
+
+	public void setExpiryDateExcel(String expiryDateExcel) {
+		this.expiryDateExcel = expiryDateExcel;
 	}
 
 	public void devicePlanDataprovider() {

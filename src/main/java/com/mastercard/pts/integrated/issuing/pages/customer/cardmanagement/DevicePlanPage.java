@@ -951,6 +951,13 @@ public class DevicePlanPage extends AbstractBasePage {
 		generateCVV2Chk.click();
 		// filling date when flag is fixed
 		if ("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
+			if(devicePlan.getProductType().equalsIgnoreCase("Credit [C]"))
+			{
+				devicePlan.setExpiryDate(devicePlan.getExpiryDateExcel());
+				enterIframeExpiryDateTxt(devicePlan.getExpiryDate());
+			}
+			else
+			{
 			enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
 			// making necessary changes so that this value can be set in the
 			// required format so that it can be used when a pinless card is
@@ -958,6 +965,7 @@ public class DevicePlanPage extends AbstractBasePage {
 			logger.info("Validity On Initial Months = {} ", devicePlan.getValidityOnInitialMonths());
 			String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
 			devicePlan.setExpiryDate(dateInYYMM);
+			}
 		} else {
 			enterIframeValidityOnInitialMonthsTxt(devicePlan.getValidityOnInitialMonths());
 		}
