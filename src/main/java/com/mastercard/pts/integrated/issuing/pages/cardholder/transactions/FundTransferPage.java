@@ -130,7 +130,7 @@ public class FundTransferPage extends AbstractBasePage {
 	public void verifyUiOperationStatus() {
 		logger.info("Fund Transfer");
 		verifyTitleCardHolderPortal("Fund Transfer");
-		verifyButton("Continue");
+		verifyButton("Submit");
 		verifyButton("Cancel");
 	}
 	public void selectTransferMastercardThroughOption(){
