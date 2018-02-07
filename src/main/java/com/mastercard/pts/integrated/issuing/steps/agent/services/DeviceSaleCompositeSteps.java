@@ -16,7 +16,7 @@ public class DeviceSaleCompositeSteps {
 			"When user assigns the program to agent and submits form", "Then user sign out from agent portal",
 			"Given user is logged in agent portal as agency user",
 			"When user enters order details and submits the form", "Then user sign out from agent portal",
-			"Given login to portal as existing bank as a Customeruser",
+			"Given login to portal as existing bank as a user",
 			"When user fills quantity to be dispatched and submits the form", "Then user logouts from customer portal",
 			"Given user is logged in agent portal as agency user",
 			"When user fills the order acceptance details and submits the form", "Then user sign out from agent portal",
