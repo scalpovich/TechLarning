@@ -23,6 +23,7 @@ When processes device production batch for debit
 When processes pin generation batch for debit
 Then device has "normal" status
 Then user activates device through helpdesk
+Then user sign out from customer portal
 Then connection to FINSim is established
 When Pin Offset file batch was generated successfully
 When embossing file batch was generated in correct format
