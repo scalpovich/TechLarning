@@ -2,6 +2,8 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.time.LocalDate;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +97,7 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDate, LocalDate.now());
 		clickSearchButton();
+		searchUntilBatchNumberIsDisplayed();
 		return batchNumberTxt.getText();
 		
 	}
@@ -102,6 +105,21 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		clickWhenClickable(SearchBtn);
 	}
 	
+	public void searchUntilBatchNumberIsDisplayed()
+	{
+		try
+		{
+			if(!getFinder().getWebDriver().findElement(By.xpath("//table[@class='dataview']//tr[@class!='headers']/td[5]/span")).isDisplayed())
+			{
+				clickSearchButton();
+				waitForPageToLoad(driver());
+				searchUntilBatchNumberIsDisplayed();
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 	
 	public void searchNewApplication(SearchApplicationDetails search){
 		enterFirstName(search);

@@ -15,8 +15,12 @@ Meta:
 @TestId TC398452
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "static virtual" card without pin
-When user creates new device of prepaid type for new client
-Then device has "normal" status
+Then prepaid device is created
+When user searches for created application
+When prepaid processes pre-production batch using new Application
+When prepaid processes deviceproduction batch using new Application
+When new Application processes pin generation batch for prepaid
+Then User search for new application on search screen for prepaid and validates the status as NORMAL
 When user has wallet number information for debit device
 When user performs adjustment transaction
 When user has current wallet balance amount information for debit device
