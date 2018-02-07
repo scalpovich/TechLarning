@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CardType;
 import com.mastercard.pts.integrated.issuing.domain.DeviceType;
+import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Vendor;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -26,6 +27,7 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -495,11 +497,20 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void checkCourierTracking(DevicePlan deviceplan) {
-		if (!(CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
-				&& CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
-				&& CardType.MOBILE.contains(deviceplan.getDeviceType())
-				&& CardType.ATM_ADMIN.contains(deviceplan.getDeviceType()))) {
-			Assert.assertTrue("courier tracking checkbox is enabled", courierTrackingChkBx.isEnabled());
+		if (deviceplan.getProductType().equalsIgnoreCase(ProductType.Debit)) {
+			if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
+					&& !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
+					&& !CardType.MOBILE.contains(deviceplan.getDeviceType())
+					&& !CardType.ATM_ADMIN.contains(deviceplan.getDeviceType())) {
+				Assert.assertTrue("courier tracking checkbox is enabled", courierTrackingChkBx.isEnabled());
+			}
+		} else if (deviceplan.getProductType().equalsIgnoreCase(ProductType.Prepaid)
+				|| deviceplan.getProductType().equalsIgnoreCase(ProductType.Credit)) {
+			if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
+					&& !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
+					&& !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+				Assert.assertTrue("courier tracking checkbox is enabled", courierTrackingChkBx.isEnabled());
+			}
 			ClickCheckBox(courierTrackingChkBx, true);
 		} else {
 			Assert.assertTrue("courier tracking checkbox is disabled for " + deviceplan.getDeviceType(),
@@ -508,15 +519,26 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void checkManufacturingTracking(DevicePlan deviceplan) {
-		if (!(CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
-				|| CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
-				|| CardType.MOBILE.contains(deviceplan.getDeviceType())
-				|| CardType.ATM_ADMIN.contains(deviceplan.getDeviceType()))) {
-			Assert.assertTrue("Manufactoring tracking checkbox dropdown is enabled",
-					manuFactoringTrackingChkBx.isEnabled());
+		if (deviceplan.getProductType().equalsIgnoreCase(ProductType.Debit)) {
+			if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
+					&& !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
+					&& !CardType.MOBILE.contains(deviceplan.getDeviceType())
+					&& !CardType.ATM_ADMIN.contains(deviceplan.getDeviceType())) {
+				Assert.assertTrue("Manufactoring tracking checkbox dropdown is enabled",
+						manuFactoringTrackingChkBx.isEnabled());
+			}
+		} else if (deviceplan.getProductType().equalsIgnoreCase(ProductType.Prepaid)
+				|| deviceplan.getProductType().equalsIgnoreCase(ProductType.Credit)) {
+			if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
+					&& !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
+					&& !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+				Assert.assertTrue("Manufactoring tracking checkbox dropdown is enabled",
+						manuFactoringTrackingChkBx.isEnabled());
+			}
 		} else {
 			Assert.assertTrue("Manufactoring tracking checkbox disabled for " + deviceplan.getDeviceType(),
 					!(manuFactoringTrackingChkBx.isEnabled()));
+
 		}
 	}
 
@@ -838,12 +860,17 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void clickIframeFinishButton() {
+		SimulatorUtilities.wait(500);
+		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
+				.until(WebElementUtils.visibilityOf(iframeFinishBtn));
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
 				.until(WebElementUtils.elementToBeClickable(iframeFinishBtn)).click();
 	}
 
 	public void clickIframeNextButton() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
+		SimulatorUtilities.wait(500);
+		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec).until(WebElementUtils.visibilityOf(iframeNextBtn));
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
 				.until(WebElementUtils.elementToBeClickable(iframeNextBtn)).click();
 	}
@@ -951,7 +978,7 @@ public class DevicePlanPage extends AbstractBasePage {
 			// making necessary changes so that this value can be set in the
 			// required format so that it can be used when a pinless card is
 			// used
-			logger.info("Validity On Initial Months = ", devicePlan.getValidityOnInitialMonths());
+			logger.info("Validity On Initial Months = {} ", devicePlan.getValidityOnInitialMonths());
 			String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
 			devicePlan.setExpiryDate(dateInYYMM);
 		} else {

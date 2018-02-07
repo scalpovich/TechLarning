@@ -65,8 +65,14 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKey
 public class TransactionWorkflow extends SimulatorUtilities {
 	private static final Logger logger = LoggerFactory.getLogger(TransactionWorkflow.class);
 	private static final String EDIT_DE_VALUE = "Edit DE Value";
+		private static final String SELECT_DE_VALUE = "Drop Down Button";
+	private static final String BILLING_CURRENCY_VALUE = "356 - Indian Rupee";
+	private static final String BILLING_CURRENCY_CODE = "051 - Currency Code, Cardholder Billing";
+	private static final String BILLING_AMOUNT = "006 - Amount, Cardholder Billing";	
+	private static final String TRANSACTION_AMOUNT = "004 - Amount, Transaction";
 	private static final String SET_VALUE = "Set Value";
 	private static final String CLOSE = "Close";
+	private static final String OK = "OK";
 	private static final String MESSAGE_TYPE_INDICATOR = "Message Type Indicator";
 	private static final String MIDDLE_PRESENTMENT = "Middle Presentment";
 	private static final String PATH_BUILDER =  "\" \"";
@@ -496,9 +502,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void loadAuthFileIntoMCPS(String fileName)
 	{
-		clickTDG();
-		performClickOperation("Down Arrow");
-		performClickOperation("Import Auth file");
+		activateMcps();
+		Actions action = new Actions(winiumDriver);				
+		winiumDriver.findElementByName("TDG").click();
+		action.moveToElement(winiumDriver.findElementByName("toolStripSplitButton1")).moveByOffset(10, 0).click().build().perform();  
+		action.moveToElement(winiumDriver.findElementByName("toolStripSplitButton1")).moveByOffset(10, 16).click().build().perform(); 
 		executeAutoITExe("LoadAuthFile.exe " + fileName );
 		loadFile(fileName);
 	}
@@ -544,12 +552,59 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			loadIpmFile(getIpmFileName());
 			Device device = context.get(ContextConstants.DEVICE);
 			updatePanNumber(device.getDeviceNumber());
+			updateAmountCardHolderBilling();
+			updateBillingCurrencyCode();
 			assignUniqueFileId();
 		} catch (Exception e) {
 			logger.debug("Exception occurred while editing fields", e);
 			MiscUtils.propagate(e);
 		}
 		return aRN;
+	}
+	
+	private void updateBillingCurrencyCode() throws AWTException{
+		Actions action = new Actions(winiumDriver);		
+		activateMcps();
+		clickMiddlePresentmentAndMessageTypeIndicator();
+		pressPageDown();
+		pressPageDown();
+		action.moveToElement(winiumDriver.findElementByName("051 - Currency Code, Cardholder Billing")).doubleClick().build().perform();  
+		activateEditField();
+		wait(2000);	
+		winiumDriver.findElementByName(SELECT_DE_VALUE).click();	
+		wait(2000);	
+		winiumDriver.findElementByName(BILLING_CURRENCY_VALUE).click();
+		winiumClickOperation("Set Value");
+		wait(2000);
+		winiumClickOperation(CLOSE);
+	}
+	
+	private void updateAmountCardHolderBilling() throws AWTException{
+		String amount = ""+getTransactionAmount();
+		Actions action = new Actions(winiumDriver);		
+		activateMcps();
+		clickMiddlePresentmentAndMessageTypeIndicator();		
+		action.moveToElement(winiumDriver.findElementByName("006 - Amount, Cardholder Billing")).doubleClick().build().perform();  
+		activateEditField();
+		winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
+		setText("");
+		setText(amount.toString());
+		wait(2000);
+		winiumClickOperation("Set Value");
+		wait(2000);
+		winiumClickOperation(CLOSE);
+	}
+	
+	private String getTransactionAmount() throws AWTException{
+		Actions action = new Actions(winiumDriver);		
+		String amount;
+		activateMcps();
+		clickMiddlePresentmentAndMessageTypeIndicator();		
+		action.moveToElement(winiumDriver.findElementByName("004 - Amount, Transaction")).doubleClick().build().perform();  
+		activateEditField();
+		amount = winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
+		winiumClickOperation(CLOSE);
+		return amount.toString();		
 	}
 
 	private void updatePanNumber(String cardNumber) throws AWTException{
@@ -607,7 +662,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		pressTab();
 		setText("");
 		setText(rRN);
-		winiumClickOperation("OK");
+		winiumClickOperation(OK);
 		wait(2000);
 		winiumClickOperation("Set Value");
 		String aRN = winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
@@ -634,7 +689,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(2000);
 		winiumClickOperation(CLOSE);
 		performClickOperation("Save");
-		performClickOperation("OK");
+		winiumClickOperation(OK);
 		wait(2000);
 		performClickOperation("Add file to CEE");
 		wait(2000);
@@ -752,8 +807,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(5000);
 		executeAutoITExe("ActivateLicenseProfiles.exe");		
 		winiumLicenseSelectOperation("License profiles");		
-		performClickOperation("License profiles");
-		performClickOperation("Select");		
+		winiumDriver.findElementByName("License profiles").click();
+		winiumDriver.findElementByName("Select").click();
 		wait(15000);
 	}
 
@@ -1006,17 +1061,43 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		}
 	}
 
-	private void fillEmvChipKeySetDetails() {
+	private void fillEmvChipKeySetDetails() {		
+		
+		if("stagesa".equalsIgnoreCase(getEnv().toString()))
+			selectMChipKeySetForStageSA();
+		else
+			selectMChipKeySetDemoAutomation();	
+	}
+
+	public void selectMChipKeySetForStageSA()
+	{
 		executeAutoITExe("ActivateEditCardProfile.exe");
-		winiumClickOperation("ICC Related Data");
-		winiumClickOperation("Drop Down Button");
+		winiumClickOperation("ICC Related Data");	
+		performClickOperation("MChipKeySetDropDown");
+		wait(1000);	
+		winiumClickOperation("00998 - Example ETEC1 - 0213");
+		wait(1000);
+		winiumClickOperation("OK");
+		wait(1000);
+	}
+	
+	public void selectMChipKeySetDemoAutomation()
+	{
+		executeAutoITExe("ActivateEditCardProfile.exe");
+		winiumClickOperation("ICC Related Data");	
+		performClickOperation("MChipKeySetDropDown");
 		wait(1000);
 		winiumClickOperation("00999 - Example ETEC1 - 0213");	
 		wait(1000);
 		winiumClickOperation("OK");
 		wait(1000);
-	}
-
+	}	
+	
+	public String getEnv()
+	{
+		logger.info("System.getProperty ENV :"+System.getProperty("env").toString());
+		return System.getProperty("env").toString();
+	}	
 	private void fillCvvData(String cvvData) {
 
 		String cvvDataValue = "000" + cvvData;

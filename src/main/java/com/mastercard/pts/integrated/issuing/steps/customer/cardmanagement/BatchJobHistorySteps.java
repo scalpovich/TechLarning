@@ -37,10 +37,15 @@ public class BatchJobHistorySteps {
 		assertThat("Statement (Type) Not Downloaded", result[1], is("Statement Download [STATEMENT_DOWNLOAD]"));
 	}
 
-	@When("user check for the success status for $batchType batch")
-	public void checkBatchStatus(@Named("batchType") String batchType) {
+	@When("user check for the $productionbatch batch success status for $batchType batch")
+	public void checkBatchStatus(@Named("productionbatch") String productionbatch,
+			@Named("batchType") String batchType) {
 		batchjobhistory.setBatchType(batchType);
-		batchjobhistory.setJobIdBatchJobHistory(bulkdevicerequestbatch.getPreProductionSourceJobid());
+		if (productionbatch.equals("Pre-Production")) {
+			batchjobhistory.setJobIdBatchJobHistory(bulkdevicerequestbatch.getPreProductionSourceJobid());
+		} else {
+			batchjobhistory.setJobIdBatchJobHistory(bulkdevicerequestbatch.getJobId());
+		}
 		batchjobhistoryflows.CheckBatchJobHistory(batchjobhistory);
 	}
 }

@@ -38,12 +38,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementFinderProvider;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -492,6 +494,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void verifyNoErrors() {
+		driver().switchTo().defaultContent();
 		List<WebElement> messages = driver().findElements(By.cssSelector(".feedbackPanelWARNING, .feedbackPanelERROR, .ketchup-error-container-alt[style*=block]"));
 		if (!messages.isEmpty()) {
 			String errors = messages.stream().map(WebElement::getText).collect(Collectors.joining("\n"));
@@ -537,6 +540,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void clickWhenClickable(MCWebElement element) {
+		SimulatorUtilities.wait(500);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
 		waitForWicket();
 	}
@@ -597,8 +601,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 				break;
 			}
 		}
-		selectFirstRecord();
-		clickProcessSelectedButton();
 	}
 	
 	protected void waitAndSearchForRecordToExist() {

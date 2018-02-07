@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -173,6 +174,11 @@ public class DateUtils {
 
 		return dateFormat.format(new Date()).replaceAll("[/,:,\\s+]", "");
 
+	}
+	
+	public String getDateDDMMFormat() {
+		
+		return getDateMMDDFormat().substring(2, 4)+getDateMMDDFormat().substring(0, 2);
 	}
 
 	public void datePicker(JFrame parent)// create constructor

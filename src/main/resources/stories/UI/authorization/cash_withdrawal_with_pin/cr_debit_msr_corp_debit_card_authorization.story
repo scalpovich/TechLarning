@@ -14,6 +14,7 @@ Given user is logged in institution
 And device range for program with device plan for "debit" "magnetic stripe" card
 When user creates new device of debit type for new client
 Then device has "normal" status
+And user sign out from customer portal
 
 Scenario: Device production - debit msr corp debit card
 Given user is logged in institution
@@ -44,7 +45,6 @@ Given connection to MAS is established
 When perform an MSR_CASH_WITHDRAWAL MAS transaction
 Then MAS test results are verified
 
-
 Scenario: Generate Auth File for Clearing
 Meta:
 @TestId 
@@ -68,7 +68,7 @@ Meta:
 @TestId 
 Given user is logged in institution
 When User uploads the NOT file
-When user processes batch for prepaid
+When user processes batch for debit
 Then user sign out from customer portal
 
 Scenario: Matching & Posting to Cardholders account
@@ -76,6 +76,6 @@ Meta:
 @TestId 
 Given user is logged in institution
 When transaction status is "Matching Pending"
-When "Matching" batch for prepaid is successful
+When "Matching" batch for debit is successful
 Then transaction status is "Presentment Matched with authorization"
 Then user sign out from customer portal
