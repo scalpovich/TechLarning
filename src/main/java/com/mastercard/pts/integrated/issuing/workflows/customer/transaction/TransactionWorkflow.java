@@ -1073,7 +1073,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	{
 		executeAutoITExe("ActivateEditCardProfile.exe");
 		winiumClickOperation("ICC Related Data");	
-		performClickOperation("MChipKeySetDropDown");
+		winiumClickOperation("Drop Down Button");		
 		wait(1000);	
 		winiumClickOperation("00998 - Example ETEC1 - 0213");
 		wait(1000);
@@ -1085,7 +1085,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	{
 		executeAutoITExe("ActivateEditCardProfile.exe");
 		winiumClickOperation("ICC Related Data");	
-		performClickOperation("MChipKeySetDropDown");
+		winiumClickOperation("Drop Down Button");	
 		wait(1000);
 		winiumClickOperation("00999 - Example ETEC1 - 0213");	
 		wait(1000);
