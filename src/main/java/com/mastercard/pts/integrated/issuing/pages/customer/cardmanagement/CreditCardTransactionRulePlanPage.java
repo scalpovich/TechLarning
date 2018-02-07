@@ -84,7 +84,8 @@ public class CreditCardTransactionRulePlanPage extends AbstractBasePage {
 						clickSaveButton();
 						errorMessagePresence();
 						creditCardPlan.setErrorStatus(errorMessagePresence());
-						canceled.set(true);
+						canceled.set(verifyAlreadyExistsAndClickCancel());
+						//canceled.set(true);
 					}
 				});
 		

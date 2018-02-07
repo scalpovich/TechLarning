@@ -40,22 +40,26 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview-div")
 	private MCWebElement batchNoColumn;
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[2]/div[4]/div[2]/div[2]/form[1]/div[2]/div[4]/table/tbody/tr/td[10]/span/input")
-	private MCWebElement CloseBatchRecord;
+	private MCWebElement closeBatchRecord;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElement ProcessSelected;
+	private MCWebElement processSelected;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]")
-	public MCWebElements allBatchNumberTxt;
+	private MCWebElements allBatchNumberTxt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElements allRowsTxt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Device Generation']")
+	private MCWebElement deviceGenerationLink;
+	
 
 	public void closebatch() {
 		waitForLoaderToDisappear();
-		CloseBatchRecord.click();
+		closeBatchRecord.click();
 		CustomUtils.ThreadDotSleep(1000);
-		ProcessSelected.click();
+		processSelected.click();
 		CustomUtils.ThreadDotSleep(1000);
 	}
 
@@ -85,13 +89,22 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	}
 	
 	public void processAppropriateBatchForApplication()
-	{
-		String checkBox="//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcess()+"]/td[10]/span/input";
+	{  
+		checkWhetherRecordPersists();
+		String checkBox="//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcess()+1+"]/td[8]/span/input";
 		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(checkBox)));
-		ProcessSelected.click();
+		processSelected.click();
 		verifyOperationStatus();
 		
 	}
+	
+	public void checkWhetherRecordPersists() {
+		if (isNoRecordsFoundInTable()) {
+			clickWhenClickable(deviceGenerationLink);
+			checkWhetherRecordPersists();
+		}
+	}
+	
     @Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(batchNoColumn));

@@ -15,7 +15,7 @@ public class ApproveRejectApplicationFlows {
 	{
 		ApproveRejectPage approveRejectPage = navigator.navigateToPage(ApproveRejectPage.class);
 		approveRejectPage.approveRejectApplication();
-		approveRejectPage.approveApplication();
-		return approveRejectPage.approveApplication();
+		String message=approveRejectPage.approveApplication();
+		return message;
 	}
 }

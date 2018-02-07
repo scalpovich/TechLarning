@@ -18,7 +18,7 @@ public class DeviceGenerationBatchFlows {
 	
 	protected  static final Logger logger = LoggerFactory.getLogger(DeviceGenerationBatchFlows.class);
 	
-	public void closeBatchExecution()
+	public void deviceGenerationBatchExecution()
 	{
 		deviceGenerationBatchPage=navigator.navigateToPage(DeviceGenerationBatchPage.class);
 		deviceGenerationBatchPage.allBatchNumberRetrieval();

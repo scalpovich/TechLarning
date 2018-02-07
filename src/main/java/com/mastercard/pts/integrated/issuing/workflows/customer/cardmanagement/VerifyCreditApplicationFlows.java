@@ -15,7 +15,7 @@ public class VerifyCreditApplicationFlows {
 	{
 		VerifyCreditPage verifyCreditPage = navigator.navigateToPage(VerifyCreditPage.class);
 		verifyCreditPage.verifyapplication();
-		verifyCreditPage.editAndVerifyApplication();
-		return verifyCreditPage.editAndVerifyApplication();
+		String message=verifyCreditPage.editAndVerifyApplication();
+		return message;
 	}
 }

@@ -37,6 +37,7 @@ When user verify the credit application device
 When user approve the credit application device
 When user process close batch for new Application
 When user process deviceGeneration batch for new Application
+When user searches for created application
 When credit processes pre-production batch using new Application
 When credit processes deviceproduction batch using new Application
 When new Application processes pin generation batch for credit

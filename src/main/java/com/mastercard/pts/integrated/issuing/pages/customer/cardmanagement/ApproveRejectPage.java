@@ -23,6 +23,8 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class ApproveRejectPage extends AbstractCardManagementPage {
 	@Autowired
 	TestContext context;
+	
+	private static final String APPROVE_REJECT_FRAME="View Application";
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addEmbossingPriorityPass;
 
@@ -50,16 +52,18 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 	public void approveRejectApplication() {
 		Device device=context.get(ContextConstants.APPLICATION);
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
-		WebElementUtils.pickDate(fromDatePicker, LocalDate.now());
+		WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDatePicker, LocalDate.now());
 		clickSearchButton();
 	}
 	public String approveApplication()
 	{
 		waitForPageToLoad(driver());
+		clickWhenClickableDoNotWaitForWicket(editImg);
+		switchToIframe(APPROVE_REJECT_FRAME);
 		clickWhenClickable(approveBtn);
 		verifyOperationStatus();
-		getCodeFromInfoMessage("Application Number");
-		return getCodeFromInfoMessage("Application Number");
+		String applicationNumber=getCodeFromInfoMessage("Application Number");
+		return applicationNumber;
 	}
 }

@@ -92,7 +92,7 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 	{
 		Device device=context.get(ContextConstants.APPLICATION);
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
-		WebElementUtils.pickDate(fromDate, LocalDate.now());
+		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDate, LocalDate.now());
 		clickSearchButton();
 		return batchNumberTxt.getText();

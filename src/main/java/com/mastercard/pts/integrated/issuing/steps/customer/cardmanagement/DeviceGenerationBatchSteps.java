@@ -14,6 +14,6 @@ DeviceGenerationBatchFlows deviceGenerationBatchFlows;
 @When("user process deviceGeneration batch for new Application")
 public void closeBatchExecutionForNewApplication()
 {
-	deviceGenerationBatchFlows.closeBatchExecution();
+	deviceGenerationBatchFlows.deviceGenerationBatchExecution();
 }
 }

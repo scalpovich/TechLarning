@@ -10,14 +10,12 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
-import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
-import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
@@ -30,7 +28,7 @@ public class VerifyCreditPage extends AbstractCardManagementPage {
 TestContext context;
 	// ------------- Card Management > Institution Parameter Setup > Institution
 	// Currency [ISSS05]
-
+    private static final String VERIFY_FRAME="View Application";
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addEmbossingPriorityPass;
 
@@ -60,7 +58,7 @@ TestContext context;
 	public void verifyapplication() {
 		Device device=context.get(ContextConstants.APPLICATION);
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
-		WebElementUtils.pickDate(fromDatePicker, LocalDate.now());
+		WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDatePicker, LocalDate.now());
 		clickSearchButton();
 	}
@@ -68,11 +66,12 @@ TestContext context;
 	public String editAndVerifyApplication()
 	{
 		waitForPageToLoad(driver());
-		clickWhenClickable(editImg);
+		clickWhenClickableDoNotWaitForWicket(editImg);
+		switchToIframe(VERIFY_FRAME);
 		clickWhenClickable(verifyBtn);
 		verifyOperationStatus();
-		getCodeFromInfoMessage("Application Number");
-		return getCodeFromInfoMessage("Application Number");
+		String applicationNumber=getCodeFromInfoMessage("Application Number");
+		return applicationNumber;
 	}
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
