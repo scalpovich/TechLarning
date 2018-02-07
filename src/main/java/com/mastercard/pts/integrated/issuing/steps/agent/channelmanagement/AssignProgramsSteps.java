@@ -81,14 +81,23 @@ public class AssignProgramsSteps {
 		 */
 	}
 
+	@Given("user assigns the program to agency and submits form")
+	@When("user assigns the program to agency and submits form")
+	public void whenUserAssignsProgramToAgencyAndSubmitsForm() {
+		Program program = context.get(ContextConstants.PROGRAM);
+		AssignPrograms details = AssignPrograms.createWithProvider(provider);
+		details.setProgramCode(program.buildDescriptionAndCode());
+		details.setDeviceType(CardType.fromShortName(devicePlan.getDeviceType()));
+		// details.setProgramCode("EmvProgram [5274]");
+		assignProgramsWorkflow.assignProgramAgency(details);
+	}
+
 	@Given("user fills information to assign program to agency and submits form")
 	@When("user fills information to assign program to agency and submits form")
 	public void whenUserFillsInformationToAssignProgramToAgencyAndSubmitsForm() {
 		Program program = context.get(ContextConstants.PROGRAM);
 		AssignPrograms details = AssignPrograms.createWithProvider(provider);
 		details.setProgramCode(program.buildDescriptionAndCode());
-		details.setDeviceType(CardType.fromShortName(devicePlan.getDeviceType()));
-		// details.setProgramCode("EmvProgram [5274]");
 		assignProgramsWorkflow.assignProgramAgency(details);
 	}
 
@@ -98,13 +107,22 @@ public class AssignProgramsSteps {
 				containsString(PROGRAM_ASSIGNED_MESSAGE));
 	}
 
+	@Given("user assigns the program to branch and submits form")
+	@When("user assigns the program to branch and submits form")
+	public void whenAssignProgramToBranchAndSubmitsForm() {
+		Program program = context.get(ContextConstants.PROGRAM);
+		AssignPrograms details = AssignPrograms.createWithProvider(provider);
+		details.setProgramCode(program.buildDescriptionAndCode());
+		details.setDeviceType(CardType.fromShortName(devicePlan.getDeviceType()));
+		assignProgramsWorkflow.assignProgramBranch(details);
+	}
+
 	@Given("user fills information to assign program to branch and submits form")
 	@When("user fills information to assign program to branch and submits form")
 	public void whenUserFillsInformationToAssignProgramToBranchAndSubmitsForm() {
 		Program program = context.get(ContextConstants.PROGRAM);
 		AssignPrograms details = AssignPrograms.createWithProvider(provider);
 		details.setProgramCode(program.buildDescriptionAndCode());
-		details.setDeviceType(CardType.fromShortName(devicePlan.getDeviceType()));
 		assignProgramsWorkflow.assignProgramBranch(details);
 	}
 
@@ -114,14 +132,22 @@ public class AssignProgramsSteps {
 				containsString(PROGRAM_ASSIGNED_MESSAGE));
 	}
 
+	@Given("user assigns the program to agent and submits form")
+	@When("user assigns the program to agent and submits form")
+	public void whenUserAssignProgramToAgentAndSubmitsForm() {
+		Program program = context.get(ContextConstants.PROGRAM);
+		AssignPrograms details = AssignPrograms.createWithProvider(provider);
+		details.setProgramCode(program.buildDescriptionAndCode());
+		details.setDeviceType(CardType.fromShortName(devicePlan.getDeviceType()));
+		assignProgramsWorkflow.assignProgramAgent(details);
+	}
+
 	@Given("user fills information to assign program to agent and submits form")
 	@When("user fills information to assign program to agent and submits form")
 	public void whenUserFillsInformationToAssignProgramToAgentAndSubmitsForm() {
 		Program program = context.get(ContextConstants.PROGRAM);
 		AssignPrograms details = AssignPrograms.createWithProvider(provider);
-		// details.setProgramCode("EmvProgram [5274]");
 		details.setProgramCode(program.buildDescriptionAndCode());
-		details.setDeviceType(CardType.fromShortName(devicePlan.getDeviceType()));
 		assignProgramsWorkflow.assignProgramAgent(details);
 	}
 
