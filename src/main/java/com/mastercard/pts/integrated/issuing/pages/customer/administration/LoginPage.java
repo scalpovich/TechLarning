@@ -114,6 +114,7 @@ public class LoginPage extends AbstractBasePage {
 
 		if (getFinder().getWebDriver().findElements(By.xpath("//div[@class = 'error-btn']")).size() != 0) {
 			System.out.println("Element is Present");
+			getFinder().getWebDriver().findElement(By.xpath("//div[@class = 'error-btn']")).click();
 		} else {
 			System.out.println("Element is Absent");
 		}
@@ -125,6 +126,7 @@ public class LoginPage extends AbstractBasePage {
 		getFinder().getWebDriver().get(MapUtils.fnGetInputDataFromMap("AppURL"));
 		if (getFinder().getWebDriver().findElements(By.xpath("//div[@class = 'error-btn']")).size() != 0) {
 			System.out.println("Element is Present");
+			getFinder().getWebDriver().findElement(By.xpath("//div[@class = 'error-btn']")).click();
 		} else {
 			System.out.println("Element is Absent");
 		}
