@@ -338,7 +338,6 @@ public class InstitutionPage extends AbstractBasePage{
 	
 	public boolean checkASCVendorEnabledAndSelectASCVendor()
 	{
-		editInstitute();
 		boolean recordUpdatedFlg=userAbleToselectACSVendor();
 		context.put("SuccessMessage",getSuccessMessage().equalsIgnoreCase(Constants.Record_Updated_Successfully));
 		return recordUpdatedFlg;

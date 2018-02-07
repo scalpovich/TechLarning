@@ -55,6 +55,7 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 	public boolean isAdaptiveAuthenticationEnabledAndUserAbleToSelectACSVendor()
 	{
 		InstitutionPage page = navigator.navigateToPage(InstitutionPage.class);
+		page.editInstitute();
 		return page.checkASCVendorEnabledAndSelectASCVendor();
 	}	
 

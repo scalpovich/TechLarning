@@ -97,16 +97,8 @@ public class InstitutionCreationSteps {
 	public void selectInstitution() {
 		instituteCreationflows.selectNewlyCreatedInstitutionFlows();
 	}
-	@When("user edit $institute institution and select $vendor ACS Vendor to enable authentication options")
-	public void userEditInstitutionConfigurationAndEnableTwoFactorAuthentication(String institute,String vendor ){
-		InstitutionCreation institutioncreation=new InstitutionCreation();
-		institutioncreation.setInstitutionCode(institute);
-		institutioncreation.setAscVendor(vendor);
-		context.put("institutionData", institutioncreation);
-		boolean acsEnable=instituteCreationflows.isAdaptiveAuthenticationEnabledAndUserAbleToSelectACSVendor();
-		Assert.assertTrue("Adaptive authentication is not enabled",acsEnable);
-	}
-	@When("user edit institution and select ACS Vendor to enable authentication options")
+	
+	@When("user edits institution to enable two factor authentication")
 	public void userEditInstitutionAndEnableTwoFactorAuthentication(){
 		//InstitutionCreation institutioncreation=InstitutionCreation.createWithProvider(keyProvider);
 		InstitutionCreation institutioncreation = InstitutionCreation.getInstitutionData();

@@ -16,5 +16,7 @@ Meta:
 @sheetName Institute
 @edit_institute_wibmo
 Given login to bank as a Bankadmin
-When user edit institution and select ACS Vendor to enable authentication options
+When user edits institution to enable two factor authentication
 Then two factor authentication options are configured
+
+
