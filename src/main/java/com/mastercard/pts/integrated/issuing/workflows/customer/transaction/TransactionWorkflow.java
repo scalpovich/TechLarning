@@ -173,7 +173,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			winiumClickOperation("Add a field to the current message");
 			searchForImageAndPerformDoubleClick(MESSAGE_REVERSAL_INDICATOR);
 			activateEditField();
-			performClickOperation("AddRemove");
+			winiumClickOperation("Add/Remove");
 			wait(2000);
 			searchForImageAndPerformDoubleClick(MESSAGE_REVERSAL_INDICATOR);
 			wait(3000);
@@ -190,8 +190,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			winiumClickOperation("Set Value");
 			winiumClickOperation(CLOSE);
 			//saving this file after modifications
-			performClickOperation("Save");
-			performClickOperation("OK");
+			winiumClickOperation("Save");
+			winiumClickOperation("OK");
 			wait(2000);
 		} catch (Exception e) {
 		}
@@ -637,8 +637,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			winiumClickOperation(CLOSE);
 			String trimmedRrn = rRN.substring(1, rRN.length());
 			arnNumber = addAcquirerReferenceData(trimmedRrn);
-			performClickOperation("Save");
-			performClickOperation("OK");
+			winiumClickOperation("Save");
+			winiumClickOperation("OK");
 		} catch (Exception e) {
 			logger.debug("Exception occurred while editing fields", e);
 			MiscUtils.propagate(e);
@@ -676,7 +676,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(3000);
 		searchForImageAndPerformDoubleClick("Transaction Originator Institution ID Code");
 		activateEditField();
-		performClickOperation("AddRemove");
+		winiumClickOperation("Add/Remove");
 		wait(2000);
 		performClickOperation("Bit Map Secondary");
 		wait(2000);
@@ -688,10 +688,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("Set Value");
 		wait(2000);
 		winiumClickOperation(CLOSE);
-		performClickOperation("Save");
+		winiumClickOperation("Save");
 		winiumClickOperation(OK);
 		wait(2000);
-		performClickOperation("Add file to CEE");
+		winiumClickOperation("Send File to CEE");
 		wait(2000);
 		winiumClickOperation("Process File(s)");
 		wait(5000);
@@ -708,7 +708,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	public void loadIpmFile(String fileName) {
 		try {
 			clickTDG();
-			performClickOperation("folder"); //open ipm file
+			winiumClickOperation("toolStripSplitButton1"); //open ipm file
 			wait(2000);
 			executeAutoITExe("ActivateOpenIPMFileScreen.exe " + fileName );
 			wait(5000);
@@ -722,14 +722,14 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		try {
 			activateMcps();
 			clickTDG();
-			performClickOperation("folder"); //open ipm file
+			winiumClickOperation("toolStripSplitButton1"); //open ipm file
 			wait(2000);
 			executeAutoITExe("ActivateOpenIPMFileScreen.exe " + fileName );
 			wait(5000);
-			performClickOperation("Add file to CEE");
+			winiumClickOperation("Send File to CEE");
 			wait(2000);
-			performClickOperation("processFiles");
-			performClickOperation("OK");
+			winiumClickOperation("Process File(s)");
+			winiumClickOperation("OK");
 
 		} catch (Exception e) {
 			logger.debug("Exception occurred while loading file in MCPS", e);
@@ -746,8 +746,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		fillFileId(fileId);
 		winiumClickOperation("1644/695 File Trailer");
 		fillFileId(fileId);		
-		performClickOperation("Save");
-		performClickOperation("OK");
+		winiumClickOperation("Save");
+		winiumClickOperation("OK");
 		wait(2000);
 	}
 
