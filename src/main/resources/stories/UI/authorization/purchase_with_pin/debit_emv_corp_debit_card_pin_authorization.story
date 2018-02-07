@@ -13,6 +13,8 @@ Given user is logged in institution
 And device range for program with device plan for "debit" "emv" card
 When user creates new device of debit type for new client
 And user sign out from customer portal
+
+Scenario: Device Production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for debit
@@ -24,6 +26,8 @@ When user has current wallet balance amount information for debit device
 Then device has "normal" status
 When user activates device through helpdesk
 And user sign out from customer portal
+
+Scenario: Pin Generation 
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 When embossing file batch was generated in correct format
@@ -40,14 +44,8 @@ Meta:
 @TestId 
 When Auth file is generated after transaction
 When MAS simulator is closed
-And user is logged in institution
-Then search Purchase authorization and verify Successful status
-And user sign out from customer portal
-And user is logged in institution
-Then search Purchase with Cash back authorization and verify Successful status
-And user sign out from customer portal
 Then user is logged in institution
-Then search Purchase authorization and verify 000-Successful status
+Then search Purchase with Cash back authorization and verify 000-Successful status
 Then user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
@@ -75,4 +73,3 @@ When transaction status is "Matching Pending"
 When "Matching" batch for debit is successful
 Then transaction status is "Presentment Matched with authorization"
 Then user sign out from customer portal
-
