@@ -50,7 +50,7 @@ public class LoginPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.ID, valueToFind = "useralias")
 	private MCWebElement useralias;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class = 'error-btn']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class = 'error-btn']//a[contains(text(),'Back to login page')]")
 	private MCWebElement backToLoginPageTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@type='password']")
@@ -114,7 +114,7 @@ public class LoginPage extends AbstractBasePage {
 
 		if (getFinder().getWebDriver().findElements(By.xpath("//div[@class = 'error-btn']")).size() != 0) {
 			System.out.println("Element is Present");
-			getFinder().getWebDriver().findElement(By.xpath("//div[@class = 'error-btn']")).click();
+			clickWhenClickable(backToLoginPageTxt);
 		} else {
 			System.out.println("Element is Absent");
 		}
@@ -126,7 +126,7 @@ public class LoginPage extends AbstractBasePage {
 		getFinder().getWebDriver().get(MapUtils.fnGetInputDataFromMap("AppURL"));
 		if (getFinder().getWebDriver().findElements(By.xpath("//div[@class = 'error-btn']")).size() != 0) {
 			System.out.println("Element is Present");
-			getFinder().getWebDriver().findElement(By.xpath("//div[@class = 'error-btn']")).click();
+			clickWhenClickable(backToLoginPageTxt);
 		} else {
 			System.out.println("Element is Absent");
 		}
