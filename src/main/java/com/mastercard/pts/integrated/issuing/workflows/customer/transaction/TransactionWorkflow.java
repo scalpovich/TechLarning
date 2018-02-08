@@ -799,7 +799,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setText(String.valueOf("AuthFileName"));
 		winiumClickOperation("Save");
 		wait(3000);
-		handleDialogs();
+		winiumClickOperation("OK");
 		pressEscape();
 	}
 
