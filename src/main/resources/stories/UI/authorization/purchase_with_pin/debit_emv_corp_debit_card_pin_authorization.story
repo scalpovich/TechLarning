@@ -13,6 +13,8 @@ Given user is logged in institution
 And device range for program with device plan for "debit" "emv" card
 When user creates new device of debit type for new client
 And user sign out from customer portal
+
+Scenario: Device Production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for debit
@@ -24,6 +26,8 @@ When user has current wallet balance amount information for debit device
 Then device has "normal" status
 When user activates device through helpdesk
 And user sign out from customer portal
+
+Scenario: Pin Generation 
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 When embossing file batch was generated in correct format
