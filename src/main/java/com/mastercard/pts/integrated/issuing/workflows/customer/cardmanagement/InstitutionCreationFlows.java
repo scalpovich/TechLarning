@@ -11,6 +11,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.processingcenter.Ins
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 
 @Component
@@ -55,9 +56,11 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 	public boolean isAdaptiveAuthenticationEnabledAndUserAbleToSelectACSVendor()
 	{
 		InstitutionPage page = navigator.navigateToPage(InstitutionPage.class);
-		page.editInstitute();
+		InstitutionCreation institutioncreation=context.get("institutionData");
+		page.enterInstitutionCode(institutioncreation);
+		clickSearchButton();
+		editFirstRecord();
 		return page.checkASCVendorEnabledAndSelectASCVendor();
 	}	
-
 
 }

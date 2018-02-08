@@ -300,16 +300,6 @@ public class InstitutionPage extends AbstractBasePage{
 		return Arrays.asList(WebElementUtils.elementToBeClickable(instituteCode));
 	}
 	
-
-	public void editInstitute()
-	{
-		InstitutionCreation institutioncreation=context.get("institutionData");
-		WebElementUtils.enterText(instituteCode, institutioncreation.getExistingInstitutionCode());
-		clickSearchButton();
-		waitForElementVisible(firstRowEditLink);
-		editFirstRecord();	
-	}
-	
 	public boolean isAdaptiveAuthenticationEnabled()
 	{
 		return adaptiveEcommFlagDwn.isEnabled();
@@ -352,6 +342,9 @@ public class InstitutionPage extends AbstractBasePage{
 		selectCheckBox(mpinEnabledCbx, "MPIN");
 		selectCheckBox(issuerSmsProviderCbx, "SmsProvider");
 	}
-	
+	public void enterInstitutionCode(InstitutionCreation institutioncreation)
+	{
+		WebElementUtils.enterText(instituteCode, institutioncreation.getExistingInstitutionCode());
+	}
 
 }
