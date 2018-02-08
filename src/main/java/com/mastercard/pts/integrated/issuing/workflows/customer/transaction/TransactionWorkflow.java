@@ -419,8 +419,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		MiscUtils.reportToConsole("******************** TRANSACTION to SELECT : " + testcaseName + " ******************");
 
 		scrollUpToSelectTest(testcaseName);
-//		activateMas(testcaseName);
 		winiumClickOperation(TEST_CASES);
+		pressTab();
+		pressRightArrow(2);
 		performClickOperationOnImages(ISSUER_TEST);
 		pressLeftArrow();
 		performClickOperation("Imported");

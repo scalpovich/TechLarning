@@ -97,13 +97,11 @@ public abstract class LinuxUtils {
 			channel.connect();
 			byte[] tmp=new byte[1024];
 			while(true){
-				MiscUtils.reportToConsole("103");
 				int i=in.read(tmp, 0, 1024);
 				result = new String(tmp, 0, i).trim();
-				MiscUtils.reportToConsole("115");
+				MiscUtils.reportToConsole("134 @ result " + result.toString());
 				//		   channel.disconnect();
 				//			session.disconnect();
-				MiscUtils.reportToConsole("134 @ result " + result.toString());
 				return result;
 			}
 		}
