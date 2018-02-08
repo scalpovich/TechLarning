@@ -720,13 +720,13 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(2000);
 		winiumClickOperation(CLOSE);
 		activateMcps();
-		winiumClickOperation("Save");
+		action.moveToElement(winiumDriver.findElementByName("Save")).click().build().perform();  		
 		winiumClickOperation(OK);
 		wait(2000);
 		activateMcps();
-		winiumClickOperation("Send File to CEE");
+		action.moveToElement(winiumDriver.findElementByName("Send File to CEE")).click().build().perform();
 		wait(2000);
-		winiumClickOperation("Process File(s)");
+		action.moveToElement(winiumDriver.findElementByName("Process File(s)")).click().build().perform();
 		wait(5000);
 		executeAutoITExe("GetCEEData.exe");				
 	}
