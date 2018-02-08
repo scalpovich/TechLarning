@@ -157,6 +157,7 @@ public class TransactionSteps {
 	}
 
 	private Transaction generateMasTestDataForTransaction(String transaction) {
+		MiscUtils.reportToConsole("********** start generateMasTestDataForTransaction ********");
 		Device device = context.get(ContextConstants.DEVICE);
 		// this line of code reads data from the "AuthorizationTransaction_DataDriven.xls" at \\Isser-automation-epam\src\main\resources\config\Data folder as the
 		 // "Transaction Templates" sheet has the template information
@@ -164,10 +165,12 @@ public class TransactionSteps {
 
 		// when data is dynamically passed when scripts run from end-2-end
 		if (device != null) {
+			MiscUtils.reportToConsole("********** Fetching data from DeviceContect ********");
 			// _____________________FOR PINLESS CARD________________ device plan context is used to get Expiry Date incase of PinLess card
 			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 			device.setServiceCode(devicePlan.getServiceCode());
 			if ("YES".equalsIgnoreCase(devicePlan.getIsPinLess())) {
+				MiscUtils.reportToConsole("********** Set as PinLess card ********");
 				device.setExpirationDate(devicePlan.getExpiryDate());
 				device.setPinNumberForTransaction("PINLESS");
 			}
@@ -201,7 +204,7 @@ public class TransactionSteps {
 	}
 
 	private void setDeElementsDynamically(Device device, Transaction transactionData, String transaction) {
-
+		MiscUtils.reportToConsole("********** Start setDeElementsDynamically ********");
 		if (!"pinless".equalsIgnoreCase(device.getPinNumberForTransaction()) && !transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE")) // ecomm transactions cannot have a PIN
 			transactionData.setDeKeyValuePairDynamic("052", device.getPinNumberForTransaction());
 		// data format is 12 digits hence leftpad with 0
@@ -224,6 +227,7 @@ public class TransactionSteps {
 	}
 
 	private void settingValuesDynamicallyFromDeviceContext(Device device, Transaction transactionData) {
+		MiscUtils.reportToConsole("********** Start settingValuesDynamicallyFromDeviceContext ********");
 		transactionData.setCardNumber(device.getDeviceNumber());
 		transactionData.setExpirationYear(device.getExpirationDate());
 		transactionData.setCardSequenceNumber(device.getSequenceNumber());
@@ -234,6 +238,7 @@ public class TransactionSteps {
 	}
 
 	private void setCardDataDynamically(Device device, Transaction transactionData) {
+		MiscUtils.reportToConsole("********** Start setCardDataDynamically ********");
 		transactionData.setCardDataElementsDynamic("035.01", device.getDeviceNumber());
 		transactionData.setCardDataElementsDynamic("035.03", device.getExpirationDate());
 		transactionData.setCardDataElementsDynamic("045.02", device.getDeviceNumber());

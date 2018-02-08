@@ -35,6 +35,7 @@ public class AuthorizationTransactionFactory {
 	private TestContext context;
 	
 	public String createCsvCardProfile(Transaction transaction) {
+		MiscUtils.reportToConsole(" *******  start createCsvCardProfile *******");
 		LinkedListMultimap<String, String> elements = LinkedListMultimap.create();
 		add(elements, "(path)", CARD_PROFILE_NAME);
 		add(elements, "(description)", transaction.getTestCaseToSelect());
@@ -65,6 +66,7 @@ public class AuthorizationTransactionFactory {
 	}
 	
 	public String createCsvTesCase(Transaction transaction) {
+		MiscUtils.reportToConsole(" *******  start createCsvTesCase *******");
 		LinkedListMultimap<String, String> elements = createTestCaseDataElements(transaction);
 		String header = elements.keySet().stream().collect(joining(","));
 		String values = elements.keySet().stream().map(name -> elements.get(name).get(0)).collect(joining(","));
