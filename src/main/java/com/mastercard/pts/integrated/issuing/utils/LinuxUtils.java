@@ -116,22 +116,14 @@ public abstract class LinuxUtils {
 				MiscUtils.reportToConsole("115");
 				logger.info("Result of search for file with text : "+ lookUpFor + " : " + channel.getExitStatus());
 			}
-			MiscUtils.reportToConsole("119");
-			MiscUtils.reportToConsole("120");
-			channel.disconnect();
-			MiscUtils.reportToConsole("122");
-			session.disconnect();
-			MiscUtils.reportToConsole("124");
-			return result;
-		}
-			/*if(channel.isClosed()){
+			if(channel.isClosed()){
 				MiscUtils.reportToConsole("113");
 				if(in.available()>0) continue; 
 				logger.info("exit-status: "+channel.getExitStatus());
 				MiscUtils.reportToConsole("116");
 				break;
 			}
-			try
+			/*try
 			{
 				MiscUtils.reportToConsole("121");
 				Thread.sleep(1000);
@@ -140,14 +132,14 @@ public abstract class LinuxUtils {
 			{
 				logger.debug(ConstantData.EXCEPTION, e);
 				MiscUtils.propagate(e);
-			}
+			}*/
 		}
 		MiscUtils.reportToConsole("130");
-		channel.disconnect();
+//		channel.disconnect();
 		MiscUtils.reportToConsole("132");
 		session.disconnect();
 		MiscUtils.reportToConsole("134");
-		return result;*/
+		return result;
 	}
 
 	private static void transferFile(String remoteSource, String localDestination, Channel channel) throws IOException {
