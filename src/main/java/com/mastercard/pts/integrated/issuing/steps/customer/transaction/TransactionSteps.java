@@ -209,7 +209,7 @@ public class TransactionSteps {
 			transactionData.setDeKeyValuePairDynamic("052", device.getPinNumberForTransaction());
 		// data format is 12 digits hence leftpad with 0
 		transactionData.setDeKeyValuePairDynamic("004", StringUtils.leftPad(device.getTransactionAmount(), 12, "0"));
-		if (transactionWorkflow.isContains(transaction, "BALANCE_INQUIRY")) {
+		if (transactionWorkflow.isContains(transaction, "BALANCE_INQUIRY") || transactionWorkflow.isContains(transaction, "PIN_CHANGE")) {
 			// this value is expected to be 0's for Balance Enquiry
 			transactionData.setDeKeyValuePairDynamic("004", "000000000000");
 		}
