@@ -93,21 +93,27 @@ public abstract class LinuxUtils {
 		channel.setInputStream(null);
 		((ChannelExec)channel).setErrStream(System.err);
 		InputStream in=channel.getInputStream();
+		MiscUtils.reportToConsole("96 in" + in);
+		MiscUtils.reportToConsole("96");
 		channel.connect();
-		MiscUtils.reportToConsole("95");
+		MiscUtils.reportToConsole("98");
 		byte[] tmp=new byte[1024];
+		MiscUtils.reportToConsole("101");
 		while(true){
-			MiscUtils.reportToConsole("98");
+			MiscUtils.reportToConsole("102 in" + in);
+			MiscUtils.reportToConsole("103");
 			while(in.available()>0){
-				MiscUtils.reportToConsole("100");
+				MiscUtils.reportToConsole("105");
 				int i=in.read(tmp, 0, 1024);
+				MiscUtils.reportToConsole("i value " + i);
+				MiscUtils.reportToConsole("107");
 				if(i<0) { 
-					MiscUtils.reportToConsole("103");
+					MiscUtils.reportToConsole("109");
 					break; 
 				}
-				MiscUtils.reportToConsole("106");
+				MiscUtils.reportToConsole("113");
 				result = new String(tmp, 0, i).trim();
-				MiscUtils.reportToConsole("108");
+				MiscUtils.reportToConsole("115");
 				logger.info("Result of search for file with text : "+ lookUpFor + " : " + channel.getExitStatus());
 			}
 			MiscUtils.reportToConsole("111");
