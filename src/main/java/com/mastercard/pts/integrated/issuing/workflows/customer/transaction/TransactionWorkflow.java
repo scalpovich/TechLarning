@@ -551,6 +551,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			winiumClickOperation(CLOSE);
 			wait(1000);
 			updateAuthCode();
+			wait(1000);
 			addField();
 			loadIpmFile(getIpmFileName());
 			Device device = context.get(ContextConstants.DEVICE);
