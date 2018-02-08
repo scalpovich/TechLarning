@@ -24,7 +24,7 @@ public abstract class LinuxUtils {
 
 	private static final Logger logger = LoggerFactory.getLogger(LinuxUtils.class);
 	private static String[] cardData;
-	
+
 	public interface RemoteConnectionDetails{
 		String getUserName(); 
 		String getPassword(); 
@@ -50,7 +50,7 @@ public abstract class LinuxUtils {
 		if (!remoteSource.startsWith("/")) {
 			remoteSource = "/" + remoteSource;
 		}
-		
+
 		MiscUtils.reportToConsole("54");
 		String command = "scp -f " + remoteSource;
 		logger.info("Linux Command  {} -> {} ", command);
@@ -69,7 +69,7 @@ public abstract class LinuxUtils {
 			throw MiscUtils.propagate(e);
 		}
 	}
-	
+
 	public static String getFileAbsolutePath(RemoteConnectionDetails connectiondetails, String lookUpFor) throws Exception
 	{
 		return getFileFromLinuxBox(connectiondetails, lookUpFor);
@@ -78,7 +78,7 @@ public abstract class LinuxUtils {
 	private static String getFileFromLinuxBox (RemoteConnectionDetails connectiondetails, String lookUpFor) throws Exception
 	{
 		logger.info("getFileFromLinuxBox connection String {} --> ", connectiondetails.getUserName(), connectiondetails.getHostName(), connectiondetails.getPort());
-		
+
 		String result = null;
 		Session session = new JSch().getSession(connectiondetails.getUserName(), connectiondetails.getHostName(), connectiondetails.getPort());    
 		session.setPassword(connectiondetails.getPassword());
@@ -102,7 +102,7 @@ public abstract class LinuxUtils {
 		while(true){
 			MiscUtils.reportToConsole("102 in" + in);
 			MiscUtils.reportToConsole("103");
-			while(in.available()>0){
+			/*while(in.available()>0){
 				MiscUtils.reportToConsole("105");
 				int i=in.read(tmp, 0, 1024);
 				MiscUtils.reportToConsole("i value " + i);
@@ -110,19 +110,20 @@ public abstract class LinuxUtils {
 				if(i<0) { 
 					MiscUtils.reportToConsole("109");
 					break; 
-				}
-				MiscUtils.reportToConsole("113");
-				result = new String(tmp, 0, i).trim();
-				MiscUtils.reportToConsole("115");
-				logger.info("Result of search for file with text : "+ lookUpFor + " : " + channel.getExitStatus());
-			}
-			if(channel.isClosed()){
+				}*/
+			MiscUtils.reportToConsole("113");
+			int i=in.read(tmp, 0, 1024);
+			result = new String(tmp, 0, i).trim();
+			MiscUtils.reportToConsole("115");
+			logger.info("Result of search for file with text : "+ lookUpFor + " : " + channel.getExitStatus());
+
+			/*if(channel.isClosed()){
 				MiscUtils.reportToConsole("113");
 				if(in.available()>0) continue; 
 				logger.info("exit-status: "+channel.getExitStatus());
 				MiscUtils.reportToConsole("116");
 				break;
-			}
+			}*/
 			/*try
 			{
 				MiscUtils.reportToConsole("121");
@@ -133,13 +134,14 @@ public abstract class LinuxUtils {
 				logger.debug(ConstantData.EXCEPTION, e);
 				MiscUtils.propagate(e);
 			}*/
+
+			MiscUtils.reportToConsole("130");
+			//		channel.disconnect();
+			MiscUtils.reportToConsole("132");
+//			session.disconnect();
+			MiscUtils.reportToConsole("134");
+			return result;
 		}
-		MiscUtils.reportToConsole("130");
-//		channel.disconnect();
-		MiscUtils.reportToConsole("132");
-		session.disconnect();
-		MiscUtils.reportToConsole("134");
-		return result;
 	}
 
 	private static void transferFile(String remoteSource, String localDestination, Channel channel) throws IOException {
@@ -247,32 +249,32 @@ public abstract class LinuxUtils {
 		scp.execute();
 		Thread.sleep(60000); // long sleep as file permission cron job runs every minute
 	}
-	
+
 	public static String[] getCardNumberAndExpiryDate(File filePath) {
 		MiscUtils.reportToConsole("*********   starting getCardNumberAndExpiryDate *******  ");
-  	  int lnNumber = 1;
-      try (BufferedReader br = new BufferedReader(new FileReader(filePath)))
-      {
-	    String strLine;
-	    while ((strLine = br.readLine()) != null)
-	    {
-	    	if (lnNumber == 2)
-	    	{
-	    		strLine = strLine.trim().replaceAll("\\s+"," ");
-	    		MiscUtils.reportToConsole("*********   File Data *******  " + strLine);
-	    		String[] data = strLine.trim().split(" ");
-				cardData = data[0].trim().split(":");
-	    		break;
-	    	}
-	    	lnNumber++;
-	    }
-	  } catch (Exception e) {
+		int lnNumber = 1;
+		try (BufferedReader br = new BufferedReader(new FileReader(filePath)))
+		{
+			String strLine;
+			while ((strLine = br.readLine()) != null)
+			{
+				if (lnNumber == 2)
+				{
+					strLine = strLine.trim().replaceAll("\\s+"," ");
+					MiscUtils.reportToConsole("*********   File Data *******  " + strLine);
+					String[] data = strLine.trim().split(" ");
+					cardData = data[0].trim().split(":");
+					break;
+				}
+				lnNumber++;
+			}
+		} catch (Exception e) {
 			MiscUtils.reportToConsole("getCardNumberAndExpiryDate Exception :  " + e.toString());
 			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
 			throw MiscUtils.propagate(e);
-	    }
-	  	return cardData;
-	  }
+		}
+		return cardData;
+	}
 
 	public static Session connectSession(String user, String host, String pwd,
 			int port) throws JSchException, IOException {
@@ -291,7 +293,7 @@ public abstract class LinuxUtils {
 			String fileName) throws JSchException, IOException {
 		ChannelExec channelExec = (ChannelExec) session.openChannel("exec");
 		channelExec
-				.setCommand("ls -t" + " " + filepath + " > " + "" + fileName);
+		.setCommand("ls -t" + " " + filepath + " > " + "" + fileName);
 		channelExec.getOutputStream();
 		channelExec.getInputStream();
 		channelExec.connect();
@@ -299,7 +301,7 @@ public abstract class LinuxUtils {
 	}
 
 	public static void movingToDir(Session session) throws JSchException,
-			IOException {
+	IOException {
 		ChannelExec channelExec1 = (ChannelExec) session.openChannel("exec");
 		channelExec1.setCommand("pwd > 576456.txt");
 		// channelExec.setCommand("pwd > 11121.txt");
@@ -393,6 +395,4 @@ public abstract class LinuxUtils {
 		// channel1.close();
 
 	}
-
-
 }
