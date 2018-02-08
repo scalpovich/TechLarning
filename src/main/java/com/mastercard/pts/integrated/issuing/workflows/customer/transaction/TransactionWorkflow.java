@@ -672,6 +672,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private void addField() throws AWTException {
+		
 		winiumClickOperation("Add a field to the current message");
 		wait(3000);
 		searchForImageAndPerformDoubleClick("Transaction Originator Institution ID Code");
@@ -796,8 +797,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(5000);
 		executeAutoITExe("ActivateImportAuthFileScreen.exe");
 		setText(String.valueOf("AuthFileName"));
-		pressTab(2);
-		pressEnter();
+		winiumClickOperation("Save");
 		wait(3000);
 		handleDialogs();
 		pressEscape();
