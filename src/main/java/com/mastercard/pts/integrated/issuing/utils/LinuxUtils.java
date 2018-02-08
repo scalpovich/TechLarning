@@ -44,13 +44,13 @@ public abstract class LinuxUtils {
 		config.put("StrictHostKeyChecking", "no");
 
 		session.setConfig(config);
-		session.connect();
+		if(!session.isConnected())
+			session.connect();
 		MiscUtils.reportToConsole("48");
 		//specify the location where the DAT file gets generated
 		if (!remoteSource.startsWith("/")) {
 			remoteSource = "/" + remoteSource;
 		}
-
 		MiscUtils.reportToConsole("54");
 		String command = "scp -f " + remoteSource;
 		logger.info("Linux Command  {} -> {} ", command);
@@ -79,33 +79,33 @@ public abstract class LinuxUtils {
 	{
 		logger.info("getFileFromLinuxBox connection String {} --> ", connectiondetails.getUserName(), connectiondetails.getHostName(), connectiondetails.getPort());
 		try {
-		String result = null;
-		Session session = new JSch().getSession(connectiondetails.getUserName(), connectiondetails.getHostName(), connectiondetails.getPort());    
-		session.setPassword(connectiondetails.getPassword());
-		java.util.Properties config = new java.util.Properties(); 
-		config.put("StrictHostKeyChecking", "no");
-		session.setConfig(config);
-		session.connect();
-		String cmd = "find /home/dc-user/integrated/elt_bo/data -name \"*" + lookUpFor + "*\"";
-		logger.info("command for getFileFromLinuxBox {} --> ", cmd);
-		Channel channel=session.openChannel("exec");
-		((ChannelExec)channel).setCommand(cmd);
-		channel.setInputStream(null);
-		((ChannelExec)channel).setErrStream(System.err);
-		InputStream in=channel.getInputStream();
-		channel.connect();
-		byte[] tmp=new byte[1024];
-		while(true){
-			MiscUtils.reportToConsole("103");
-			int i=in.read(tmp, 0, 1024);
-			result = new String(tmp, 0, i).trim();
-			MiscUtils.reportToConsole("115");
-			logger.info("Result of search for file with text : "+ lookUpFor + " : " + channel.getExitStatus());
- //		   channel.disconnect();
-//			session.disconnect();
-			MiscUtils.reportToConsole("134 @ result " + result.toString());
-			return result;
-		}
+			String result = null;
+			Session session = new JSch().getSession(connectiondetails.getUserName(), connectiondetails.getHostName(), connectiondetails.getPort());    
+			session.setPassword(connectiondetails.getPassword());
+			java.util.Properties config = new java.util.Properties(); 
+			config.put("StrictHostKeyChecking", "no");
+			session.setConfig(config);
+			if(!session.isConnected())
+				session.connect();
+			String cmd = "find /home/dc-user/integrated/elt_bo/data -name \"*" + lookUpFor + "*\"";
+			logger.info("command for getFileFromLinuxBox {} --> ", cmd);
+			Channel channel=session.openChannel("exec");
+			((ChannelExec)channel).setCommand(cmd);
+			channel.setInputStream(null);
+			((ChannelExec)channel).setErrStream(System.err);
+			InputStream in=channel.getInputStream();
+			channel.connect();
+			byte[] tmp=new byte[1024];
+			while(true){
+				MiscUtils.reportToConsole("103");
+				int i=in.read(tmp, 0, 1024);
+				result = new String(tmp, 0, i).trim();
+				MiscUtils.reportToConsole("115");
+				//		   channel.disconnect();
+				//			session.disconnect();
+				MiscUtils.reportToConsole("134 @ result " + result.toString());
+				return result;
+			}
 		}
 		catch(Exception e) {
 			MiscUtils.propagate(e);
