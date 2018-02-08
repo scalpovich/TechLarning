@@ -548,6 +548,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			winiumClickOperation("Set Value");
 			wait(2000);
 			winiumClickOperation(CLOSE);
+			wait(1000);
 			addField();
 			loadIpmFile(getIpmFileName());
 			Device device = context.get(ContextConstants.DEVICE);
@@ -608,9 +609,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private void updatePanNumber(String cardNumber) throws AWTException{
+		Actions action = new Actions(winiumDriver);		
 		activateMcps();
 		clickMiddlePresentmentAndMessageTypeIndicator();
-		searchForImageAndPerformDoubleClick("Primary Account Number (PAN)");
+		action.moveToElement(winiumDriver.findElementByName("002 - Primary Account Number (PAN)")).doubleClick().build().perform();  
 		winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
 		setText("");
 		setText(cardNumber);
@@ -621,13 +623,14 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public String assignUniqueARN(){
+		Actions action = new Actions(winiumDriver);		
 		String rRN = MiscUtils.generateRandomNumberAsString(12);
 		String arnNumber = "";
 		try{
 			wait(2000);
 			activateMcps();
 			clickMiddlePresentmentAndMessageTypeIndicator();
-			searchForImageAndPerformDoubleClick("Retrieval Reference Number");
+			action.moveToElement(winiumDriver.findElementByName("037 - Retrieval Reference Number")).doubleClick().build().perform();  
 			wait(2000);
 			activateEditField();
 			wait(2000);
@@ -652,12 +655,13 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private String addAcquirerReferenceData(String rRN) throws AWTException {
+		Actions action = new Actions(winiumDriver);	
 		performClickOperation(MESSAGE_TYPE_INDICATOR); // selecting the table
 		pressPageUp();
 		clickMiddlePresentment();
-		searchForImageAndPerformDoubleClick("Acquirer Reference Data");
+		action.moveToElement(winiumDriver.findElementByName("031 - Acquirer Reference Data")).doubleClick().build().perform();  
 		executeAutoITExe("ActivateEditSubfieldValueScreen.exe");
-		performClickOperation("Acquirer Sequence Number");
+		winiumClickOperation("Acquirer's Sequence Number");
 		wait(2000);
 		pressTab();
 		setText("");
@@ -672,16 +676,16 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private void addField() throws AWTException {
-		
+		Actions action = new Actions(winiumDriver);	
 		winiumClickOperation("Add a field to the current message");
-		wait(3000);
-		searchForImageAndPerformDoubleClick("Transaction Originator Institution ID Code");
+		wait(3000);		
+		action.moveToElement(winiumDriver.findElementByName("093 - Transaction Destination Institution ID Code")).doubleClick().build().perform();  
 		activateEditField();
 		winiumClickOperation("Add/Remove");
 		wait(2000);
-		performClickOperation("Bit Map Secondary");
-		wait(2000);
-		searchForImageAndPerformDoubleClick("093 Transaction Destination");
+		winiumClickOperation("001 - Bit Map, Secondary");
+		wait(2000);		
+		action.moveToElement(winiumDriver.findElementByName("093 - Transaction Destination Institution ID Code")).doubleClick().build().perform();  
 		winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
 		setText("");
 		setText("999684");
@@ -754,8 +758,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void fillFileId(String value) throws AWTException{
 		activateMcps();
-		performDoubleClickOperation("File ID");
-		performClickOperation("Processor ID");
+		Actions action = new Actions(winiumDriver);
+		action.moveToElement(winiumDriver.findElementByName("0105 - File ID")).doubleClick().build().perform(); 
+		winiumClickOperation("Processor ID");
 		wait(2000);
 		pressTab();
 		setText("");
