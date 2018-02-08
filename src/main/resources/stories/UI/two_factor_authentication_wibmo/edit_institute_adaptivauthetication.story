@@ -16,7 +16,14 @@ Meta:
 @sheetName Institute
 @edit_institute_wibmo
 Given login to bank as a Bankadmin
-When user edits institution to enable two factor authentication
+When user edits institution to disable two factor authentication
 Then two factor authentication options are configured
 
-
+Scenario: validate audit functionality for institution
+Meta:
+@TCName TC_validate_Audit_Report
+@testDataFileName testdata
+@sheetName AuditReport
+@edit_institute_AuditReport
+Given login to portal as existing bank as a Customeruser
+Then configuration changes should be audited in audit report

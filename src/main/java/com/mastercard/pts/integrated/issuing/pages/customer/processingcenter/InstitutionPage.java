@@ -339,8 +339,17 @@ public class InstitutionPage extends AbstractBasePage{
 	
 	public void selectMpinAndSmsProvider()
 	{
+		String option=context.get("authenticationFlg");
+		if(option.equalsIgnoreCase("enable"))
+		{
 		selectCheckBox(mpinEnabledCbx, "MPIN");
 		selectCheckBox(issuerSmsProviderCbx, "SmsProvider");
+		}
+		else
+		{
+		    ClickCheckBox(mpinEnabledCbx, false);
+			ClickCheckBox(issuerSmsProviderCbx, false);
+		}
 	}
 	public void enterInstitutionCode(InstitutionCreation institutioncreation)
 	{
