@@ -715,12 +715,12 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
 		setText("");
 		setText("999684");
-		wait(2000);
 		winiumClickOperation("Set Value");
 		wait(2000);
 		winiumClickOperation(CLOSE);
+		wait(2000);
 		activateMcps();
-		action.moveToElement(winiumDriver.findElementByName("Save")).click().build().perform();  		
+		action.moveToElement(winiumDriver.findElementByName("Save")).doubleClick().build().perform();  		
 		winiumClickOperation(OK);
 		wait(2000);
 		activateMcps();
