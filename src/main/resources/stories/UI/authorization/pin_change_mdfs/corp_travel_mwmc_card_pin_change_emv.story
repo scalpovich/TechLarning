@@ -23,11 +23,11 @@ When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
 And user sign out from customer portal
-Given connection to FINSim is established
+Then connection to FINSim is established
 When Pin Offset file batch was generated successfully
-When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
+When embossing file batch was generated in correct format
 Then connection to MDFS is established
 When user performs an optimized MDFS_EMV_PIN_CHANGE MDFS transaction
 Then MDFS test results are verified

@@ -28,9 +28,9 @@ Then user activates device through helpdesk
 Then user sign out from customer portal
 Then connection to FINSim is established
 When Pin Offset file batch was generated successfully
-When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
+When embossing file batch was generated in correct format
 Then connection to MDFS is established
 When user performs an optimized MDFS_EMV_PIN_CHANGE MDFS transaction
 Then MDFS test results are verified
