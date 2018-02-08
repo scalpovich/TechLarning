@@ -34,32 +34,34 @@ public abstract class LinuxUtils {
 
 	public static void download(RemoteConnectionDetails connectiondetails, String remoteSource, String localDestination ) throws JSchException  {
 		logger.info("Conection Details: {}", connectiondetails);
-
+		MiscUtils.reportToConsole("37");
 		JSch jsch = new JSch();
 		Session session = jsch.getSession(connectiondetails.getUserName(),
 				connectiondetails.getHostName(), connectiondetails.getPort());
 		session.setPassword(connectiondetails.getPassword());
 		Properties config = new Properties();
-
+		MiscUtils.reportToConsole("43");
 		config.put("StrictHostKeyChecking", "no");
 
 		session.setConfig(config);
 		session.connect();
-
+		MiscUtils.reportToConsole("48");
 		//specify the location where the DAT file gets generated
 		if (!remoteSource.startsWith("/")) {
 			remoteSource = "/" + remoteSource;
 		}
 		
-		
+		MiscUtils.reportToConsole("54");
 		String command = "scp -f " + remoteSource;
 		logger.info("Linux Command  {} -> {} ", command);
+		MiscUtils.reportToConsole("57");
 		Channel channel = session.openChannel("exec");
 		((ChannelExec)channel).setCommand(command);
-
+		MiscUtils.reportToConsole("60");
 		channel.connect();
 
 		try {
+			MiscUtils.reportToConsole("64");
 			transferFile(remoteSource, localDestination, channel);
 		} catch (IOException e) {
 			MiscUtils.reportToConsole("download Exception :  " + e.toString());
@@ -92,23 +94,33 @@ public abstract class LinuxUtils {
 		((ChannelExec)channel).setErrStream(System.err);
 		InputStream in=channel.getInputStream();
 		channel.connect();
+		MiscUtils.reportToConsole("95");
 		byte[] tmp=new byte[1024];
 		while(true){
+			MiscUtils.reportToConsole("98");
 			while(in.available()>0){
+				MiscUtils.reportToConsole("100");
 				int i=in.read(tmp, 0, 1024);
 				if(i<0) { 
+					MiscUtils.reportToConsole("103");
 					break; 
 				}
+				MiscUtils.reportToConsole("106");
 				result = new String(tmp, 0, i).trim();
+				MiscUtils.reportToConsole("108");
 				logger.info("Result of search for file with text : "+ lookUpFor + " : " + channel.getExitStatus());
 			}
+			MiscUtils.reportToConsole("111");
 			if(channel.isClosed()){
+				MiscUtils.reportToConsole("113");
 				if(in.available()>0) continue; 
 				logger.info("exit-status: "+channel.getExitStatus());
+				MiscUtils.reportToConsole("116");
 				break;
 			}
 			try
 			{
+				MiscUtils.reportToConsole("121");
 				Thread.sleep(1000);
 			}
 			catch(Exception e)
@@ -117,8 +129,11 @@ public abstract class LinuxUtils {
 				MiscUtils.propagate(e);
 			}
 		}
+		MiscUtils.reportToConsole("130");
 		channel.disconnect();
+		MiscUtils.reportToConsole("132");
 		session.disconnect();
+		MiscUtils.reportToConsole("134");
 		return result;
 	}
 
@@ -126,12 +141,12 @@ public abstract class LinuxUtils {
 		// get I/O streams for remote scp
 		OutputStream out = channel.getOutputStream();
 		InputStream in = channel.getInputStream();
-
+		MiscUtils.reportToConsole("144");
 		byte[] buf = new byte[1024];
 		buf[0] = 0;
 		out.write(buf, 0, 1);
 		out.flush();
-
+		MiscUtils.reportToConsole("149");
 		checkAck(in);
 
 		in.read(buf, 0, 5);
@@ -151,7 +166,9 @@ public abstract class LinuxUtils {
 		}
 		buf[0] = 0;
 		out.write(buf, 0, 1);
+		MiscUtils.reportToConsole("169");
 		out.flush();
+		MiscUtils.reportToConsole("171");
 		String fileName = getFileName(remoteSource.replace("/", "\\"));
 		logger.info("File Name of the file being downloaded: {}", fileName);
 		createFolderIfNotAlreadyExists(localDestination);
@@ -171,7 +188,9 @@ public abstract class LinuxUtils {
 				fileSize -= i;
 			}
 			buf[0] = 0;
+			MiscUtils.reportToConsole("191");
 			out.write(buf, 0, 1);
+			MiscUtils.reportToConsole("193");
 			out.flush();
 		}
 	}
