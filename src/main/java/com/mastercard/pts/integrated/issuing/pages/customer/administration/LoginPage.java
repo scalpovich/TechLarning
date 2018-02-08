@@ -114,7 +114,7 @@ public class LoginPage extends AbstractBasePage {
 
 		if (getFinder().getWebDriver().findElements(By.xpath("//div[@class = 'error-btn']")).size() != 0) {
 			System.out.println("Element is Present");
-			CustomUtils.ThreadDotSleep(4000);
+			CustomUtils.ThreadDotSleep(10000);
 			clickWhenClickable(backToLoginPageTxt);
 		} else {
 			System.out.println("Element is Absent");
@@ -127,7 +127,7 @@ public class LoginPage extends AbstractBasePage {
 		getFinder().getWebDriver().get(MapUtils.fnGetInputDataFromMap("AppURL"));
 		if (getFinder().getWebDriver().findElements(By.xpath("//div[@class = 'error-btn']")).size() != 0) {
 			System.out.println("Element is Present");
-			CustomUtils.ThreadDotSleep(4000);
+			CustomUtils.ThreadDotSleep(10000);
 			clickWhenClickable(backToLoginPageTxt);
 		} else {
 			System.out.println("Element is Absent");
