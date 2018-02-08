@@ -963,7 +963,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			//clicking again just incase as test will fais if this click fails
 			winiumClickOperation(BIN_TABLE);
 			wait(2000);
-			performClickOperation("Add New");
+			executeAutoITExe("ClickOnAddNew.exe");
+//			performClickOperation("Add New"); // this line is sometimes not perfroming operation on MDFS hence above autoIt script "ClickOnAddNew"
 			wait(10000);
 			executeAutoITExe(ADD_BIN_RANGE_SCROLL);
 			winiumClickOperation("General");
@@ -1072,14 +1073,14 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private void fillEmvChipKeySetDetails() {		
 		
 		if("stagesa".equalsIgnoreCase(getEnv().toString()))
-			selectMChipKeySetForStageSA();
+			selectMChipKeySet("00998 - Example ETEC1 - 0213");
 		else if("automation".equalsIgnoreCase(getEnv().toString()))
-			selectMChipKeySetDemoAutomation("00999 - Example - M/Chip  2.1 Select");
+			selectMChipKeySet("00999 - Example - M/Chip  2.1 Select");
 		else
-			selectMChipKeySetDemoAutomation("00999 - Example ETEC1 - 0213");	
+			selectMChipKeySet("00999 - Example ETEC1 - 0213");	
 	}
 
-	public void selectMChipKeySetForStageSA()
+/*	public void selectMChipKeySetForStageSA()
 	{
 		executeAutoITExe("ActivateEditCardProfile.exe");
 		winiumClickOperation("ICC Related Data");	
@@ -1090,8 +1091,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("OK");
 		wait(1000);
 	}
-	
-	public void selectMChipKeySetDemoAutomation(String valueToSelect)
+*/	
+	public void selectMChipKeySet(String valueToSelect)
 	{
 		executeAutoITExe("ActivateEditCardProfile.exe");
 		winiumClickOperation("ICC Related Data");	
