@@ -419,7 +419,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		MiscUtils.reportToConsole("******************** TRANSACTION to SELECT : " + testcaseName + " ******************");
 
 		scrollUpToSelectTest(testcaseName);
-		activateMas(testcaseName);
+//		activateMas(testcaseName);
 		winiumClickOperation(TEST_CASES);
 		performClickOperationOnImages(ISSUER_TEST);
 		pressLeftArrow();
@@ -1073,8 +1073,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		
 		if("stagesa".equalsIgnoreCase(getEnv().toString()))
 			selectMChipKeySetForStageSA();
+		else if("automation".equalsIgnoreCase(getEnv().toString()))
+			selectMChipKeySetDemoAutomation("00999 - Example - M/Chip  2.1 Select");
 		else
-			selectMChipKeySetDemoAutomation();	
+			selectMChipKeySetDemoAutomation("00999 - Example ETEC1 - 0213");	
 	}
 
 	public void selectMChipKeySetForStageSA()
@@ -1089,13 +1091,14 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(1000);
 	}
 	
-	public void selectMChipKeySetDemoAutomation()
+	public void selectMChipKeySetDemoAutomation(String valueToSelect)
 	{
 		executeAutoITExe("ActivateEditCardProfile.exe");
 		winiumClickOperation("ICC Related Data");	
-		performClickOperation("MChipKeySetDropDown");
+		//images are different in Windows 10 and 7
+		performClickOperationOnImages("MChipKeySetDropDown");
 		wait(1000);
-		winiumClickOperation("00999 - Example ETEC1 - 0213");	
+		winiumClickOperation(valueToSelect);	
 		wait(1000);
 		winiumClickOperation("OK");
 		wait(1000);
