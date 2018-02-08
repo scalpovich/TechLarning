@@ -696,6 +696,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private void addField() throws AWTException {
+		activateMcps();
 		Actions action = new Actions(winiumDriver);	
 		winiumClickOperation("Add a field to the current message");
 		wait(3000);		
