@@ -56,7 +56,7 @@ public class AuthorizationTransactionFactory {
 				DateUtils.getDateTimeDDMMYYYYHHMMSS());
 		try {
 			String fullPath = Files.write(tempDir.resolve(filename), lines).toString();
-			logger.info("Generate MAS card profile {}", fullPath);
+			logger.info("Generate card profile {}", fullPath);
 			return fullPath;
 		} catch (IOException e) {
 			//NO SONAR. We are propagating exception to another class where it is thrown
