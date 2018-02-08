@@ -521,6 +521,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private String editFieldsAndProcess(){
+		Actions action = new Actions(winiumDriver);	
 		String aRN = "";
 		try{
 			wait(2000);
@@ -538,8 +539,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			performClickOperation(MESSAGE_TYPE_INDICATOR); // selecting the
 			// table
 			pressPageUp();
-			clickMiddlePresentmentAndMessageTypeIndicator();
-			searchForImageAndPerformDoubleClick("Forwarding Institution Identification Code");
+			clickMiddlePresentmentAndMessageTypeIndicator();				
+			action.moveToElement(winiumDriver.findElementByName("033 - Forwarding Institution Identification Code")).doubleClick().build().perform();  
 			activateEditField();
 			winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
 			setText("");
@@ -549,6 +550,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(2000);
 			winiumClickOperation(CLOSE);
 			wait(1000);
+			updateAuthCode();
 			addField();
 			loadIpmFile(getIpmFileName());
 			Device device = context.get(ContextConstants.DEVICE);
@@ -562,6 +564,23 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		}
 		return aRN;
 	}
+	
+	private void updateAuthCode() throws AWTException{
+		activateMcps();
+		Actions action = new Actions(winiumDriver);				
+		String authCode = ""+context.get(ConstantData.AUTHORIZATION_CODE);
+		clickMiddlePresentmentAndMessageTypeIndicator();		
+		action.moveToElement(winiumDriver.findElementByName("038 - Approval Code")).doubleClick().build().perform();  
+		activateEditField();
+		winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
+		setText("");
+		setText(authCode.toString());
+		wait(2000);
+		winiumClickOperation("Set Value");
+		wait(2000);
+		winiumClickOperation(CLOSE);
+	}
+	
 	
 	private void updateBillingCurrencyCode() throws AWTException{
 		Actions action = new Actions(winiumDriver);		
