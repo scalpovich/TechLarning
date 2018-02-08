@@ -722,6 +722,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("Save");
 		winiumClickOperation(OK);
 		wait(2000);
+		activateMcps();
 		winiumClickOperation("Send File to CEE");
 		wait(2000);
 		winiumClickOperation("Process File(s)");
