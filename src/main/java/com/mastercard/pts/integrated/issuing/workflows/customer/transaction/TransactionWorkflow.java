@@ -293,6 +293,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			launchAndConnectToMCPS();
 
 		} else if(simulator.toUpperCase().contains("MDFS")) {
+			browserMinimize();
 			selectLicenseAndConfigure(SimulatorConstantsData.SELECT_MDFS_LICENSE, SimulatorConstantsData.MDFS_LICENSE_TYPE);
 			wait(4000);
 			connect2IPSHostModeAndConfigureIPOnMdfs(); 	
@@ -1229,6 +1230,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	{		
 		try
 		{
+			browserMinimize();
 			String parameters =   "\"" + finSimSimulator.getIpAddress() + PATH_BUILDER +  finSimSimulator.getPort() +  PATH_BUILDER + finSimSimulator.getPassword() + "\"";
 			MiscUtils.reportToConsole(" ******* Parameter for connectToFinSim : ******"  + parameters );
 			executeAutoITExe("connectToFinSim.exe " + parameters );		
