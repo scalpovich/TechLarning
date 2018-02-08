@@ -55,6 +55,7 @@ public class LinuxBox implements RemoteConnectionDetails {
 					MiscUtils.reportToConsole("55");
 					LinuxUtils.download(this, temp[i], localDestination);
 					logger.info("return path in downloadByLookUpForPartialFileName {} -->", Paths.get(localDestination).resolve(Paths.get(temp[i]).getFileName()).toFile());
+					MiscUtils.reportToConsole("return path in downloadByLookUpForPartialFileName {} -->", Paths.get(localDestination).resolve(Paths.get(temp[i]).getFileName()).toFile().toString());
 					return Paths.get(localDestination).resolve(Paths.get(temp[i]).getFileName()).toFile();
 				}
 			}

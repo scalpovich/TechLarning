@@ -33,11 +33,11 @@ public abstract class LinuxUtils {
 	}
 
 	public static void download(RemoteConnectionDetails connectiondetails, String remoteSource, String localDestination ) throws JSchException  {
+		MiscUtils.reportToConsole("********* start download ******** ");
 		logger.info("Conection Details: {}", connectiondetails);
 		MiscUtils.reportToConsole("37");
 		JSch jsch = new JSch();
-		Session session = jsch.getSession(connectiondetails.getUserName(),
-				connectiondetails.getHostName(), connectiondetails.getPort());
+		Session session = jsch.getSession(connectiondetails.getUserName(), 	connectiondetails.getHostName(), connectiondetails.getPort());
 		session.setPassword(connectiondetails.getPassword());
 		Properties config = new Properties();
 		MiscUtils.reportToConsole("43");
@@ -145,6 +145,7 @@ public abstract class LinuxUtils {
 	}
 
 	private static void transferFile(String remoteSource, String localDestination, Channel channel) throws IOException {
+		MiscUtils.reportToConsole("********* start transferFile ******** ");
 		// get I/O streams for remote scp
 		OutputStream out = channel.getOutputStream();
 		InputStream in = channel.getInputStream();
@@ -158,16 +159,21 @@ public abstract class LinuxUtils {
 
 		in.read(buf, 0, 5);
 		long fileSize = 0L;
+		MiscUtils.reportToConsole("162");
 		while (true) {
+			MiscUtils.reportToConsole("164");
 			if (in.read(buf, 0, 1) < 0 || buf[0] == ' ') {
+				MiscUtils.reportToConsole("166");
 				break;
 			}
+			MiscUtils.reportToConsole("169");
 			fileSize = fileSize * 10L + (long) (buf[0] - '0');
 		}
 		for (int i = 1; i < buf.length; i++) {
 			in.read(buf, i - 1, 1);
-
+			MiscUtils.reportToConsole("174");
 			if (buf[i-1] == (byte) 0x0a ) {
+				MiscUtils.reportToConsole("176");
 				break;
 			}
 		}
