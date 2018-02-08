@@ -1230,7 +1230,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	{		
 		try
 		{
-			browserMinimize();
 			String parameters =   "\"" + finSimSimulator.getIpAddress() + PATH_BUILDER +  finSimSimulator.getPort() +  PATH_BUILDER + finSimSimulator.getPassword() + "\"";
 			MiscUtils.reportToConsole(" ******* Parameter for connectToFinSim : ******"  + parameters );
 			executeAutoITExe("connectToFinSim.exe " + parameters );		
