@@ -65,11 +65,14 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKey
 public class TransactionWorkflow extends SimulatorUtilities {
 	private static final Logger logger = LoggerFactory.getLogger(TransactionWorkflow.class);
 	private static final String EDIT_DE_VALUE = "Edit DE Value";
-		private static final String SELECT_DE_VALUE = "Drop Down Button";
+	private static final String SELECT_DE_VALUE = "Drop Down Button";
 	private static final String BILLING_CURRENCY_VALUE = "356 - Indian Rupee";
 	private static final String BILLING_CURRENCY_CODE = "051 - Currency Code, Cardholder Billing";
 	private static final String BILLING_AMOUNT = "006 - Amount, Cardholder Billing";	
 	private static final String TRANSACTION_AMOUNT = "004 - Amount, Transaction";
+	private static final String SAVE = "Save";
+	private static final String SEND_FILE_TO_CEE = "Send File to CEE";	
+	private static final String PROCESS_FILES ="Process File(s)";
 	private static final String SET_VALUE = "Set Value";
 	private static final String CLOSE = "Close";
 	private static final String OK = "OK";
@@ -718,15 +721,18 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("Set Value");
 		wait(2000);
 		winiumClickOperation(CLOSE);
-		wait(2000);
 		activateMcps();
-		action.moveToElement(winiumDriver.findElementByName("Save")).doubleClick().build().perform();  		
+		wait(2000);		
+		winiumDriver.findElementByName(SAVE).click();
+		//action.moveToElement(winiumDriver.findElementByName("Save")).doubleClick().build().perform();  		
 		winiumClickOperation(OK);
 		wait(2000);
 		activateMcps();
-		action.moveToElement(winiumDriver.findElementByName("Send File to CEE")).click().build().perform();
+		winiumDriver.findElementByName(SEND_FILE_TO_CEE).click();
+		//action.moveToElement(winiumDriver.findElementByName("Send File to CEE")).click().build().perform();
 		wait(2000);
-		action.moveToElement(winiumDriver.findElementByName("Process File(s)")).click().build().perform();
+		winiumDriver.findElementByName(PROCESS_FILES).click();
+		//action.moveToElement(winiumDriver.findElementByName("Process File(s)")).click().build().perform();
 		wait(5000);
 		executeAutoITExe("GetCEEData.exe");				
 	}
