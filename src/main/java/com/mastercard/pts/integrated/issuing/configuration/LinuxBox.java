@@ -46,9 +46,13 @@ public class LinuxBox implements RemoteConnectionDetails {
 		String[] temp = null;
 		try {
 			fileName = LinuxUtils.getFileAbsolutePath(this, lokupForFile);
+			MiscUtils.reportToConsole("49");
 			temp = fileName.split("\n");
+			MiscUtils.reportToConsole("51");
 			for (int i = 0; i < temp.length; i++) {
+				MiscUtils.reportToConsole("53");
 				if (temp[i].contains(whatAreWeLookingFile)) {
+					MiscUtils.reportToConsole("55");
 					LinuxUtils.download(this, temp[i], localDestination);
 					logger.info("return path in downloadByLookUpForPartialFileName {} -->", Paths.get(localDestination).resolve(Paths.get(temp[i]).getFileName()).toFile());
 					return Paths.get(localDestination).resolve(Paths.get(temp[i]).getFileName()).toFile();

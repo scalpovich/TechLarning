@@ -118,7 +118,7 @@ public abstract class LinuxUtils {
 				MiscUtils.reportToConsole("116");
 				break;
 			}
-			try
+			/*try
 			{
 				MiscUtils.reportToConsole("121");
 				Thread.sleep(1000);
@@ -127,7 +127,7 @@ public abstract class LinuxUtils {
 			{
 				logger.debug(ConstantData.EXCEPTION, e);
 				MiscUtils.propagate(e);
-			}
+			}*/
 		}
 		MiscUtils.reportToConsole("130");
 		channel.disconnect();
