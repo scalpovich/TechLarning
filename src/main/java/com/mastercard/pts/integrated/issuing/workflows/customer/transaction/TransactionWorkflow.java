@@ -1173,7 +1173,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 			String ipAdd = mdfsSimulator.getIpAddress();
 			String[] ip = ipAdd.split("\\.");
-			winiumClickOperation("TCP/IP");              
+			winiumClickOperation("TCP/IP");     
+			wait(2000);
+			winiumClickOperation("TCP/IP");    
 
 			setMasIpOnMdfs(ip);
 		}
