@@ -50,7 +50,12 @@ public class LoginPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.ID, valueToFind = "useralias")
 	private MCWebElement useralias;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class = 'error-btn']//a[contains(text(),'Back to login page')]")
+	/*
+	 * @PageElement(findBy = FindBy.X_PATH, valueToFind =
+	 * "//div[@class = 'error-btn']//a[contains(text(),'Back to login page')]")
+	 * private MCWebElement backToLoginPageTxt;
+	 */
+	@PageElement(findBy = FindBy.TEXT_VALUE_CONTAINS, valueToFind = "Back to login page")
 	private MCWebElement backToLoginPageTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@type='password']")
@@ -128,7 +133,10 @@ public class LoginPage extends AbstractBasePage {
 		if (getFinder().getWebDriver().findElements(By.xpath("//div[@class = 'error-btn']")).size() != 0) {
 			System.out.println("Element is Present");
 			CustomUtils.ThreadDotSleep(10000);
-			clickWhenClickable(backToLoginPageTxt);
+			backToLoginPageTxt.click();
+			// clickWhenClickable(backToLoginPageTxt);
+			CustomUtils.ThreadDotSleep(10000);
+
 		} else {
 			System.out.println("Element is Absent");
 		}
