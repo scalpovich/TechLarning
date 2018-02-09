@@ -723,19 +723,12 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation(CLOSE);
 		activateMcps();
 		wait(2000);		
-		//winiumDriver.findElementByName(SAVE).click();
 		action.moveToElement(winiumDriver.findElementByName("toolStripSplitButton1")).moveByOffset(35, 0).click().build().perform();  
-		//winiumDriver.findElementByXPath("/*[contains(@ControlType,'ControlType.Button') and contains(@Name,'Save')]").click();
-		//action.moveToElement(winiumDriver.findElementByName("Save")).doubleClick().build().perform();  		
 		winiumClickOperation(OK);
 		wait(2000);
 		activateMcps();
-		//winiumDriver.findElementByName(SEND_FILE_TO_CEE).click();
-		//winiumDriver.findElementByXPath("/*[contains(@ControlType,'ControlType.Button') and contains(@Name,'Send File to CEE')]").click();
 		action.moveToElement(winiumDriver.findElementByName("Send File to CEE")).click().build().perform();
 		wait(2000);
-		//winiumDriver.findElementByName(PROCESS_FILES).click();
-		//winiumDriver.findElementByXPath("/*[contains(@ControlType,'ControlType.Button') and contains(@Name,'Process File(s)')]").click();
 		action.moveToElement(winiumDriver.findElementByName("Process File(s)")).click().build().perform();
 		wait(5000);
 		executeAutoITExe("GetCEEData.exe");				
@@ -798,7 +791,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		activateMcps();
 		Actions action = new Actions(winiumDriver);
 		action.moveToElement(winiumDriver.findElementByName("0105 - File ID")).doubleClick().build().perform(); 
-		winiumClickOperation("Processor ID");
+		winiumClickOperation("File Sequence Number");
 		wait(2000);
 		pressTab();
 		setText("");
