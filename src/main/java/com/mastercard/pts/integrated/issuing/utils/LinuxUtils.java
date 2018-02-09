@@ -33,17 +33,14 @@ public abstract class LinuxUtils {
 	}
 
 	public static void download(RemoteConnectionDetails connectiondetails, String remoteSource, String localDestination ) throws JSchException  {
-		MiscUtils.reportToConsole("********* start download ******** ");
 		logger.info("Conection Details: {}", connectiondetails);
 		JSch jsch = new JSch();
 		Session session = jsch.getSession(connectiondetails.getUserName(), 	connectiondetails.getHostName(), connectiondetails.getPort());
 		session.setPassword(connectiondetails.getPassword());
 		Properties config = new Properties();
 		config.put("StrictHostKeyChecking", "no");
-		MiscUtils.reportToConsole("45");
 		session.setConfig(config);
 		if(!session.isConnected()) {
-			MiscUtils.reportToConsole("48");
 			session.connect();
 		}
 		MiscUtils.reportToConsole("51");
@@ -52,22 +49,15 @@ public abstract class LinuxUtils {
 			remoteSource = "/" + remoteSource;
 			MiscUtils.reportToConsole("@remoteSource "+  remoteSource);
 		}
-		MiscUtils.reportToConsole("54");
 		String command = "scp -f " + remoteSource;
 		logger.info("Linux Command  {} -> {} ", command);
 		MiscUtils.reportToConsole("57");
 		Channel channel = session.openChannel("exec");
 		((ChannelExec)channel).setCommand(command);
-		MiscUtils.reportToConsole("60");
-		
 		channel.connect();
 
 		try {
-			MiscUtils.reportToConsole("64");
 			transferFile(remoteSource, localDestination, channel);
-			channel.disconnect();
-			session.disconnect();
-			MiscUtils.reportToConsole("70");
 		} catch (IOException e) {
 			MiscUtils.reportToConsole("download Exception :  " + e.toString());
 			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
@@ -104,7 +94,6 @@ public abstract class LinuxUtils {
 			while(true){
 				int i=in.read(tmp, 0, 1024);
 				result = new String(tmp, 0, i).trim();
-				MiscUtils.reportToConsole("134 @ result " + result.toString());
 				//		   channel.disconnect();
 				//			session.disconnect();
 				return result;
@@ -121,39 +110,29 @@ public abstract class LinuxUtils {
 		// get I/O streams for remote scp
 		OutputStream out = channel.getOutputStream();
 		InputStream in = channel.getInputStream();
-		MiscUtils.reportToConsole("144");
 		byte[] buf = new byte[1024];
 		buf[0] = 0;
 		out.write(buf, 0, 1);
 		out.flush();
-		MiscUtils.reportToConsole("149");
 		checkAck(in);
 
 		in.read(buf, 0, 5);
 		long fileSize = 0L;
-		MiscUtils.reportToConsole("162");
 		while (true) {
-			MiscUtils.reportToConsole("164");
 			if (in.read(buf, 0, 1) < 0 || buf[0] == ' ') {
-				MiscUtils.reportToConsole("166");
 				break;
 			}
-			MiscUtils.reportToConsole("169");
 			fileSize = fileSize * 10L + (long) (buf[0] - '0');
 		}
 		for (int i = 1; i < buf.length; i++) {
 			in.read(buf, i - 1, 1);
-			MiscUtils.reportToConsole("174");
 			if (buf[i-1] == (byte) 0x0a ) {
-				MiscUtils.reportToConsole("176");
 				break;
 			}
 		}
 		buf[0] = 0;
 		out.write(buf, 0, 1);
-		MiscUtils.reportToConsole("169");
 		out.flush();
-		MiscUtils.reportToConsole("171");
 		String fileName = getFileName(remoteSource.replace("/", "\\"));
 		logger.info("File Name of the file being downloaded: {}", fileName);
 		createFolderIfNotAlreadyExists(localDestination);
