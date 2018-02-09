@@ -33,6 +33,6 @@ public class DeviceSaleCompositeSteps {
 			"And user select the service code as Activate Device", "And user activates the device through HelpDesk",
 			"Then activation of registered device prepaid is successful and activation date is updated" })
 	public void deviceActivationonCSR() {
-		System.out.println("Inside the device Activation through HelpDesk");
+		System.out.println("Inside the device activation through helpDesk");
 	}
 }
