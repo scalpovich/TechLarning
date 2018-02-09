@@ -837,10 +837,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(5000);
 		executeAutoITExe("ActivateImportAuthFileScreen.exe");
 		setText(String.valueOf("AuthFileName"));
-		winiumClickOperation("Save");
+		winiumClickOperation(SAVE);
 		wait(3000);
 		winiumClickOperation("OK");
-		pressEscape();
+		//pressEscape();
 	}
 
 	private void selectMCPSLicense(){
