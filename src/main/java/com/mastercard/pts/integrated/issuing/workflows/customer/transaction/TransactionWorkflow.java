@@ -1097,9 +1097,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	{
 		executeAutoITExe("ActivateEditCardProfile.exe");
 		winiumClickOperation("ICC Related Data");	
-		//images are different in Windows 10 and 7
-//		performClickOperationOnImages("MChipKeySetDropDown");
-		winiumClickOperation("Open");
+		winiumClickOperation("Drop Down Button");
 		wait(2000);
 		winiumClickOperation(valueToSelect);	
 		wait(1000);
