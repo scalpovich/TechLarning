@@ -339,7 +339,8 @@ public class InstitutionPage extends AbstractBasePage{
 	
 	public void selectMpinAndSmsProvider()
 	{
-		String option=context.get("authenticationFlg");
+		InstitutionCreation institutioncreation=context.get("institutionData");
+		String option=institutioncreation.getAuthenticationFlg();
 		if(option.equalsIgnoreCase("enable"))
 		{
 		selectCheckBox(mpinEnabledCbx, "MPIN");

@@ -16,7 +16,7 @@ Meta:
 @sheetName Institute
 @edit_institute_wibmo
 Given login to bank as a Bankadmin
-When user edits institution to disable two factor authentication
+When user edits institution to enable two factor authentication
 Then two factor authentication options are configured
 
 Scenario: validate audit functionality for institution

@@ -33,19 +33,19 @@ public class AuditReportPage extends AbstractBasePage{
 	@PageElement(findBy = FindBy.NAME, valueToFind = "goButton")
 	private MCWebElement goBtn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:2:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='p_operation']//select")
 	private MCWebElement operationDDwn;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='p_user_id']//select")
 	private MCWebElement userIdDDwn;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:3:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='p_screen_id']//select")
 	private MCWebElement screenNameDDwn;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:3:rows:2:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='p_file_type']//select")
 	private MCWebElement fileTypeDDwn;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:3:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='p_report_generation_mode']//select")
 	private MCWebElement reportGenerationModeDDwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "generateReport")

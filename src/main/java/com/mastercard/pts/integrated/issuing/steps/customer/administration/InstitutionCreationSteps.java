@@ -101,8 +101,8 @@ public class InstitutionCreationSteps {
 	@When("user edits institution to $option two factor authentication")
 	public void userEditInstitutionAndEnableTwoFactorAuthentication(String option){
 		InstitutionCreation institutioncreation = InstitutionCreation.getInstitutionData();
+		institutioncreation.setAuthenticationFlg(option);
 		context.put("institutionData", institutioncreation);
-		context.put("authenticationFlg", option);
 		boolean acsEnable=instituteCreationflows.isAdaptiveAuthenticationEnabledAndUserAbleToSelectACSVendor();
 		Assert.assertTrue("Adaptive authentication is not enabled",acsEnable);
 	}

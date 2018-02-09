@@ -48,6 +48,7 @@ public class InstitutionCreation extends AbstractBasePage {
 	private String createdInstitution;
 	private String ascVendor;
 	private String existingInstitutionCode;
+	private String authenticationFlg;
 	
 	public String getCreatedInstitution() {
 		return createdInstitution;
@@ -400,6 +401,14 @@ public class InstitutionCreation extends AbstractBasePage {
 		institute.setExistingInstitutionCode(provider.getString("ExistingInstitutionCode"));
 		institute.setAscVendor(provider.getString("ASC_Vendor"));
 		return institute;
+	}
+
+	public String getAuthenticationFlg() {
+		return authenticationFlg;
+	}
+
+	public void setAuthenticationFlg(String authenticationFlg) {
+		this.authenticationFlg = authenticationFlg;
 	}
 	
 
