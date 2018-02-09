@@ -266,6 +266,7 @@ public class LoginPage extends AbstractBasePage {
 
 	public void clickLogout() {
 		signOut.click();
+		getFinder().getWebDriver().manage().deleteAllCookies();
 
 	}
 
