@@ -776,6 +776,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void assignUniqueFileId() throws AWTException{
 		activateMcps();
+		Actions action = new Actions(winiumDriver);
 		String fileId = RandomStringUtils.randomNumeric(5);
 		//step to ensure that File Header is not already selecdted
 		performClickOperation(MESSAGE_TYPE_INDICATOR); // selecting the table
@@ -783,7 +784,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		fillFileId(fileId);
 		winiumClickOperation("1644/695 File Trailer");
 		fillFileId(fileId);		
-		winiumClickOperation("Save");
+		activateMcps();
+		action.moveToElement(winiumDriver.findElementByName("toolStripSplitButton1")).moveByOffset(35, 0).click().build().perform(); 
+		wait(1000);
 		winiumClickOperation("OK");
 		wait(2000);
 	}
