@@ -836,9 +836,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		performClickOperation("Select Auth File");
 		wait(5000);
 		executeAutoITExe("ActivateImportAuthFileScreen.exe");
-		setText(String.valueOf("AuthFileName"));
 		winiumClickOperation(SAVE);
 		wait(3000);
+		setText(String.valueOf("AuthFileName"));
 		winiumClickOperation("OK");
 		pressEscape();
 	}
