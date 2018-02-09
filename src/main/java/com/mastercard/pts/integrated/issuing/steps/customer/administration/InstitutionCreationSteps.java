@@ -5,6 +5,7 @@ import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.InstitutionCreationFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.UserCreationFlows;
@@ -30,6 +32,9 @@ public class InstitutionCreationSteps {
 
 	@Autowired
 	private UserCreationFlows userCreationFlows;
+	
+	@Autowired
+	private KeyValueProvider keyProvider;
 	
 
 	InstitutionCreation instutionCreation;
@@ -91,6 +96,22 @@ public class InstitutionCreationSteps {
 	@When("admin selects the newly created institution")
 	public void selectInstitution() {
 		instituteCreationflows.selectNewlyCreatedInstitutionFlows();
+	}
+	
+	@When("user edits institution to $option two factor authentication")
+	public void userEditInstitutionAndEnableTwoFactorAuthentication(String option){
+		InstitutionCreation institutioncreation = InstitutionCreation.getInstitutionData();
+		institutioncreation.setAuthenticationFlg(option);
+		context.put("institutionData", institutioncreation);
+		boolean acsEnable=instituteCreationflows.isAdaptiveAuthenticationEnabledAndUserAbleToSelectACSVendor();
+		Assert.assertTrue("Adaptive authentication is not enabled",acsEnable);
+	}
+	
+	@Then("two factor authentication options are configured")
+	public void twoFactorAuthenticationOptionsAreConfigured(){
+		boolean RecoredUpdated=context.get("SuccessMessage");
+		boolean acsEnable=context.get("authenticationOptionsFlg");
+		Assert.assertTrue("Error in configuring two factor authentication options",acsEnable&&RecoredUpdated);
 	}
 
 }
