@@ -706,8 +706,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		pressPageDown();
 		pressPageDown();
 		pressPageDown();
-		action.moveToElement(winiumDriver.findElementByName("093 - Transaction Destination Institution ID Code")).doubleClick().build().perform();  
-		activateEditField();
+		action.moveToElement(winiumDriver.findElementByName("093 - Transaction Destination Institution ID Code")).doubleClick().build().perform();  		
 		winiumClickOperation("Add/Remove");
 		wait(2000);
 		winiumClickOperation("001 - Bit Map, Secondary");
@@ -724,6 +723,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		activateMcps();
 		wait(2000);		
 		action.moveToElement(winiumDriver.findElementByName("toolStripSplitButton1")).moveByOffset(35, 0).click().build().perform();  
+		wait(1000);	
 		winiumClickOperation(OK);
 		wait(2000);
 		activateMcps();
