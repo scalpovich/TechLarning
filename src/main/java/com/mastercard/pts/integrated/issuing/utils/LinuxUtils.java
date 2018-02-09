@@ -35,12 +35,10 @@ public abstract class LinuxUtils {
 	public static void download(RemoteConnectionDetails connectiondetails, String remoteSource, String localDestination ) throws JSchException  {
 		MiscUtils.reportToConsole("********* start download ******** ");
 		logger.info("Conection Details: {}", connectiondetails);
-		MiscUtils.reportToConsole("37");
 		JSch jsch = new JSch();
 		Session session = jsch.getSession(connectiondetails.getUserName(), 	connectiondetails.getHostName(), connectiondetails.getPort());
 		session.setPassword(connectiondetails.getPassword());
 		Properties config = new Properties();
-		MiscUtils.reportToConsole("43");
 		config.put("StrictHostKeyChecking", "no");
 		MiscUtils.reportToConsole("45");
 		session.setConfig(config);
@@ -67,6 +65,9 @@ public abstract class LinuxUtils {
 		try {
 			MiscUtils.reportToConsole("64");
 			transferFile(remoteSource, localDestination, channel);
+			channel.disconnect();
+			session.disconnect();
+			MiscUtils.reportToConsole("70");
 		} catch (IOException e) {
 			MiscUtils.reportToConsole("download Exception :  " + e.toString());
 			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
