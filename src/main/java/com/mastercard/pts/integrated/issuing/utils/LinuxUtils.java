@@ -42,14 +42,17 @@ public abstract class LinuxUtils {
 		Properties config = new Properties();
 		MiscUtils.reportToConsole("43");
 		config.put("StrictHostKeyChecking", "no");
-
+		MiscUtils.reportToConsole("45");
 		session.setConfig(config);
-		if(!session.isConnected())
+		if(!session.isConnected()) {
+			MiscUtils.reportToConsole("48");
 			session.connect();
-		MiscUtils.reportToConsole("48");
+		}
+		MiscUtils.reportToConsole("51");
 		//specify the location where the DAT file gets generated
 		if (!remoteSource.startsWith("/")) {
 			remoteSource = "/" + remoteSource;
+			MiscUtils.reportToConsole("@remoteSource "+  remoteSource);
 		}
 		MiscUtils.reportToConsole("54");
 		String command = "scp -f " + remoteSource;
@@ -58,6 +61,7 @@ public abstract class LinuxUtils {
 		Channel channel = session.openChannel("exec");
 		((ChannelExec)channel).setCommand(command);
 		MiscUtils.reportToConsole("60");
+		
 		channel.connect();
 
 		try {
