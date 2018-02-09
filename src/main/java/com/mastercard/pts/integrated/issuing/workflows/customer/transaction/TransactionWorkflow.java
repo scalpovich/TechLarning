@@ -709,6 +709,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		action.moveToElement(winiumDriver.findElementByName("093 - Transaction Destination Institution ID Code")).doubleClick().build().perform();  		
 		winiumClickOperation("Add/Remove");
 		wait(2000);
+		activateMcps();
 		winiumClickOperation("001 - Bit Map, Secondary");
 		wait(2000);		
 		pressPageDown();
@@ -718,7 +719,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setText("");
 		setText("999684");
 		winiumClickOperation("Set Value");
-		wait(2000);
+		wait(1000);
 		winiumClickOperation(CLOSE);
 		activateMcps();
 		wait(2000);		
