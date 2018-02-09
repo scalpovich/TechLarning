@@ -724,18 +724,19 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		activateMcps();
 		wait(2000);		
 		//winiumDriver.findElementByName(SAVE).click();
-		winiumDriver.findElementByXPath("/*[contains(@ControlType,'ControlType.Button') and contains(@Name,'Save')]").click();
+		action.moveToElement(winiumDriver.findElementByName("toolStripSplitButton1")).moveByOffset(35, 0).click().build().perform();  
+		//winiumDriver.findElementByXPath("/*[contains(@ControlType,'ControlType.Button') and contains(@Name,'Save')]").click();
 		//action.moveToElement(winiumDriver.findElementByName("Save")).doubleClick().build().perform();  		
 		winiumClickOperation(OK);
 		wait(2000);
 		activateMcps();
 		//winiumDriver.findElementByName(SEND_FILE_TO_CEE).click();
-		winiumDriver.findElementByXPath("/*[contains(@ControlType,'ControlType.Button') and contains(@Name,'Send File to CEE')]").click();
-		//action.moveToElement(winiumDriver.findElementByName("Send File to CEE")).click().build().perform();
+		//winiumDriver.findElementByXPath("/*[contains(@ControlType,'ControlType.Button') and contains(@Name,'Send File to CEE')]").click();
+		action.moveToElement(winiumDriver.findElementByName("Send File to CEE")).click().build().perform();
 		wait(2000);
 		//winiumDriver.findElementByName(PROCESS_FILES).click();
-		winiumDriver.findElementByXPath("/*[contains(@ControlType,'ControlType.Button') and contains(@Name,'Process File(s)')]").click();
-		//action.moveToElement(winiumDriver.findElementByName("Process File(s)")).click().build().perform();
+		//winiumDriver.findElementByXPath("/*[contains(@ControlType,'ControlType.Button') and contains(@Name,'Process File(s)')]").click();
+		action.moveToElement(winiumDriver.findElementByName("Process File(s)")).click().build().perform();
 		wait(5000);
 		executeAutoITExe("GetCEEData.exe");				
 	}
