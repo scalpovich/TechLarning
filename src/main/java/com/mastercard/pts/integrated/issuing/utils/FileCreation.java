@@ -455,6 +455,7 @@ public class FileCreation {
 				+ MiscUtils.generateRandomNumberAsString(6) + ".DAT";
 		HashMap<String, HashMap<String, String>> applicationUploadMap;
 		File file = new File(FileName);
+		String deviceType="";
 		String remoteDir = Constants.APPLICATION_UPLOAD_PREPAID_FILE_PATH;
 		applicationUploadMap = dataReader.dataProviderFileUpload(
 				"AllUploadTestData", "Prepaid Card File");
@@ -468,12 +469,21 @@ public class FileCreation {
 						.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
 					String name = CustomUtils.randomString(9).toUpperCase();
 					helpDeskGeneral.setFirstName(name);
+					if(deviceplan.getDeviceType().contains("Static Virtual"))
+					{
+						deviceType="7";
+					}
+					else if (deviceplan.getDeviceType().contains("Magnetic"))
+					{
+						deviceType="1";
+					}
 					if (customerType.equals("Individual")) {
 						writer.println(getUploadFileFromDatamap(
 								"Concatenated Application Record")
 								.replace("%B%", INSTITUTION_CODE)
 								.replace("%t%", "0")
 								.replace("%P%", program.getProgramCode())
+								.replace("%G%",deviceType)
 								.replace("%D%", deviceplan.getDevicePlanCode())
 								.replace("%b%", vendor.getBranchCode())
 								.replace("%Z%", "")
@@ -484,6 +494,7 @@ public class FileCreation {
 								.replace("%B%", INSTITUTION_CODE)
 								.replace("%t%", "1")
 								.replace("%P%", program.getProgramCode())
+								.replace("%G%",deviceType)
 								.replace("%D%", deviceplan.getDevicePlanCode())
 								.replace("%b%", vendor.getBranchCode())
 								.replace("%Z%", corporateClientCode)
@@ -494,6 +505,7 @@ public class FileCreation {
 								.replace("%B%", INSTITUTION_CODE)
 								.replace("%t%", "2")
 								.replace("%P%", program.getProgramCode())
+								.replace("%G%",deviceType)
 								.replace("%D%", deviceplan.getDevicePlanCode())
 								.replace("%b%", vendor.getBranchCode())
 								.replace("%Z%", "")
