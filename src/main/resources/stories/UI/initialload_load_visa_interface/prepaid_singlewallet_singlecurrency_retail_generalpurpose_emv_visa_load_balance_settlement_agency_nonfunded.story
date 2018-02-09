@@ -111,10 +111,3 @@ And user sign out from agent portal
 And user is logged in institution
 And balance in helpdesk updated correctly for prepaid device
 And user sign out from customer portal
-
-Scenario: Program Balance Summary reports download - Funded Agent
-Given user is logged in institution
-When pre-clearing and Pre-EOD batches are run
-Then verify report for transactions with Program Balance Summary is downloaded
-And Verify Program Balance Summary is downloaded
-And user sign out from customer portal

@@ -93,12 +93,12 @@ Then activation of registered device prepaid is successful and activation date i
 And initial load balance in helpdesk updated correctly for prepaid device
 And user sign out from customer portal
 
-Scenario: Prepaid - Setup Multi Currency Through Agent Portal - Non Funded Agent
+Scenario: Prepaid - Setup Multi Currency Through Agent Portal - Funded Agent
 
-Given user is logged in agent portal as nonfundedagent user
+Given user is logged in agent portal as agent user
 When user setup multiple currency for device through agent portal
 Then currency setup for the device is successful
-And user sign out from nonfundedagent portal
+And user sign out from agent portal
 And user is logged in institution
 And currency setup for prepaid device is done correctly and updated in wallet details tab
 And user sign out from customer portal
@@ -126,10 +126,3 @@ Scenario: Agency Settlement - Funded Agent
 Given user is logged in agent portal as agency user
 When user initiates settlement for agency
 Then settlement is initiated successfully
-
-Scenario: Program Balance Summary reports download - Funded Agent
-Given user is logged in institution
-When pre-clearing and Pre-EOD batches are run
-Then verify report for transactions with Program Balance Summary is downloaded
-And Verify Program Balance Summary is downloaded
-And user sign out from customer portal
