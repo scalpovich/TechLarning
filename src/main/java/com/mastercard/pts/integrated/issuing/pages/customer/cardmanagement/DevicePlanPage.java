@@ -544,23 +544,23 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	public void checkGenerateCVV(DevicePlan deviceplan) {
 		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
-				|| !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
-				|| !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+				&& !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
+				&& !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
 			Assert.assertTrue("Generate CVV/CVC checkbox is enabled", generateCvvChkBx.isEnabled());
 		} else {
 			Assert.assertTrue("Generate CVV/CVC checkbox is disabled for " + deviceplan.getDeviceType(),
-					generateCvvChkBx.isEnabled());
+					!generateCvvChkBx.isEnabled());
 		}
 	}
 
 	public void checkGenerateCVV2(DevicePlan deviceplan) {
 		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
-				|| !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
-				|| !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+				&& !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
+				&& !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
 			Assert.assertTrue("Generate CVV2/CVC2 checkbox is enabled", generateCvv2ChkBx.isEnabled());
 		} else {
 			Assert.assertTrue("Generate CVV2/CVC2 checkbox is disabled for " + deviceplan.getDeviceType(),
-					generateCvv2ChkBx.isEnabled());
+					!generateCvv2ChkBx.isEnabled());
 		}
 	}
 
