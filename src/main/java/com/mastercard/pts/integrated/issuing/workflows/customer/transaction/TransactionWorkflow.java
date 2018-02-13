@@ -965,9 +965,16 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			winiumClickOperation(BIN_TABLE);
 			wait(2000);
 			executeAutoITExe("ClickOnAddNew.exe");
-//			performClickOperation("Add New"); // this line is sometimes not perfroming operation on MDFS hence above autoIt script "ClickOnAddNew"
+			
+			Boolean connectionEstablished = winiumDriver.findElement(By.name("Max Account Range")).isDisplayed();
+			if(!connectionEstablished) {
+				winiumClickOperation(BIN_TABLE);
+				wait(2000);
+				executeAutoITExe("ClickOnAddNew.exe");
+			} 
 			wait(10000);
 			executeAutoITExe(ADD_BIN_RANGE_SCROLL);
+			
 			winiumClickOperation("General");
 			pressTab();
 			setText(binBinMinRange);
