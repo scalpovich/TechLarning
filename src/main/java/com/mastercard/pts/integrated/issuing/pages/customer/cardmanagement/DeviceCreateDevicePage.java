@@ -248,16 +248,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
 		generateDeviceBatchBtn.click();
 		waitForWicket();
-		 // sometimes the Number is getting genarated very late hence below logic to click further is button is showing up
-		int c = 0;
-		if(generateDeviceBatchBtn.isVisible()) {
-			generateDeviceBatchBtn.click();
-			SimulatorUtilities.wait(2000);
-			c++;
-			if(c>5)
-			return;
-		}
-		waitForWicket();
 		// fetching batch number and setting it for further use
 		device.setBatchNumber(batchNumberTxt.getText());
 		logger.info(" *********** Batch number *********** " + device.getBatchNumber());
