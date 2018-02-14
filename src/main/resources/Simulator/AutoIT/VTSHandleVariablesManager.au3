@@ -19,6 +19,12 @@
 		 ControlClick("Variables Manager","","&Yes") ; to handle OK dialog that may sometimes come up
 		 Sleep(1000)
 	  EndIf
+
+   If ControlCommand ("Variables Manager", "", "OK", "IsVisible") Then
+		 ControlClick("Variables Manager","","OK") ; to handle OK dialog that may sometimes come up
+		 Sleep(1000)
+	 EndIf
+
    If ControlCommand ("Variables Manager", "", "[CLASS:Button; INSTANCE:1]", "IsVisible") Then
 	  ControlClick("Variables Manager","","[CLASS:Button; INSTANCE:1]") ; to handle OK dialog that may sometimes come up
 	  sleep(3000)
