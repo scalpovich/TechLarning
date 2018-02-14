@@ -13,5 +13,5 @@
    #include <Constants.au3>
 
 
-   WinActive("LogViewer (1)")
-   WinMenuSelectItem("LogViewer (1)", "", "&File", "E&xit")
+   WinActive("LogViewer")
+   WinMenuSelectItem("LogViewer", "", "&File", "E&xit")

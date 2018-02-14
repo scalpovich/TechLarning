@@ -65,7 +65,7 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKey
 public class TransactionWorkflow extends SimulatorUtilities {
 	private static final Logger logger = LoggerFactory.getLogger(TransactionWorkflow.class);
 	private static final String EDIT_DE_VALUE = "Edit DE Value";
-		private static final String SELECT_DE_VALUE = "Drop Down Button";
+	private static final String SELECT_DE_VALUE = "Drop Down Button";
 	private static final String BILLING_CURRENCY_VALUE = "356 - Indian Rupee";
 	private static final String BILLING_CURRENCY_CODE = "051 - Currency Code, Cardholder Billing";
 	private static final String BILLING_AMOUNT = "006 - Amount, Cardholder Billing";	
@@ -205,18 +205,18 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 		if(!sameCard) {
 			importAndLoadCardProfile(transactionData.getCardProfile(), transaction);
-		
-		//filling Chip details for EMV cards
-		if(isContains(transaction, "emv")) {
-			activateMas(transaction);
-			performClickOperationOnImages("AUTOMATION CARD");
-			performRightClickOperation("AUTOMATION CARD_Selected");
-			wait(1000);
-			performClickOperation("Edit Node");
-			wait(4000);
 
-			fillEmvChipKeySetDetails();
-		}
+			//filling Chip details for EMV cards
+			if(isContains(transaction, "emv")) {
+				activateMas(transaction);
+				performClickOperationOnImages("AUTOMATION CARD");
+				performRightClickOperation("AUTOMATION CARD_Selected");
+				wait(1000);
+				performClickOperation("Edit Node");
+				wait(4000);
+
+				fillEmvChipKeySetDetails();
+			}
 		}
 		/*		
 		//filling CVV data for PREAUTH and COMPLETION
@@ -281,7 +281,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		} catch (Exception e) {
 			throw MiscUtils.propagate(e);
 		}
-		
+
 		if(simulator.toUpperCase().contains("FINSIM")) {
 			launchAndConnectToFinSim();
 
@@ -563,7 +563,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		}
 		return aRN;
 	}
-	
+
 	private void updateBillingCurrencyCode() throws AWTException{
 		Actions action = new Actions(winiumDriver);		
 		activateMcps();
@@ -580,7 +580,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(2000);
 		winiumClickOperation(CLOSE);
 	}
-	
+
 	private void updateAmountCardHolderBilling() throws AWTException{
 		String amount = ""+getTransactionAmount();
 		Actions action = new Actions(winiumDriver);		
@@ -596,7 +596,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(2000);
 		winiumClickOperation(CLOSE);
 	}
-	
+
 	private String getTransactionAmount() throws AWTException{
 		Actions action = new Actions(winiumDriver);		
 		String amount;
@@ -965,7 +965,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			winiumClickOperation(BIN_TABLE);
 			wait(2000);
 			executeAutoITExe("ClickOnAddNew.exe");
-			
+
 			Boolean connectionEstablished = winiumDriver.findElement(By.name("Max Account Range")).isDisplayed();
 			if(!connectionEstablished) {
 				winiumClickOperation(BIN_TABLE);
@@ -974,7 +974,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			} 
 			wait(10000);
 			executeAutoITExe(ADD_BIN_RANGE_SCROLL);
-			
+
 			winiumClickOperation("General");
 			pressTab();
 			setText(binBinMinRange);
@@ -991,10 +991,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			setText(issuerCurrencyCode);
 			pressTab();
 			setText(cardHolderBillingCurrency);
-			
+
 			// In MDFS 17.x, the OK button does not show up until we scroll down hence tabbing so that the focus goes to OK button
 			executeAutoITExe(ADD_BIN_RANGE_MAKE_OK_VISIBLE);
-			
+
 			if("MDFS_MSR_PIN_CHANGE".equalsIgnoreCase(transactionName)) {
 				pressTab(); // pressing tab so that General tab is visible
 				winiumClickOperation("M/Chip and PIN");
@@ -1079,7 +1079,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private void fillEmvChipKeySetDetails() {		
-		
+
 		if("stagesa".equalsIgnoreCase(getEnv().toString()))
 			selectMChipKeySet("00998 - Example ETEC1 - 0213");
 		else if("automation".equalsIgnoreCase(getEnv().toString()))
@@ -1088,7 +1088,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			selectMChipKeySet("00999 - Example ETEC1 - 0213");	
 	}
 
-/*	public void selectMChipKeySetForStageSA()
+	/*	public void selectMChipKeySetForStageSA()
 	{
 		executeAutoITExe("ActivateEditCardProfile.exe");
 		winiumClickOperation("ICC Related Data");	
@@ -1099,7 +1099,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("OK");
 		wait(1000);
 	}
-*/	
+	 */	
 	public void selectMChipKeySet(String valueToSelect)
 	{
 		executeAutoITExe("ActivateEditCardProfile.exe");
@@ -1111,7 +1111,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("OK");
 		wait(1000);
 	}	
-	
+
 	public String getEnv()
 	{
 		logger.info("System.getProperty ENV :"+System.getProperty("env").toString());
@@ -1577,17 +1577,17 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void navigateToVariableManagerAndLoadTestGroupTemplate() { 
 		//only launching Variable Manager through AutoIt
-        //clickin on "Open Most Recent Database" through Winium as doing with AutoIT on version 43 is crashing Variable Manager as the DLL to handle this does not support nSelect as it is not initaqilized ("error" we saw
-        //executeAutoITExe("VTSNavigateToVariablesManager.exe"  + SEPERATOR + vtsTestGroupInputFilePath + "\""); // vts varaible manager crashes on version 43 if this line is used hence broke this AutoIt action to below steps
-        
-        executeAutoITExe("VtsVariableManagerLaunch.exe");
-        if(!winiumDriver.findElementByName("Close Database").isEnabled()) // if this is enabled then the application is set to required state
-                    winiumClickOperation("Open Most Recent Database");
-        wait(5000);
-        //now loading the Excel file into Variable Manager
-        executeAutoITExe("vtsVariableManagerLoadExcelTestDataFile.exe"  + SEPERATOR + vtsTestGroupInputFilePath + "\"");
+		//clickin on "Open Most Recent Database" through Winium as doing with AutoIT on version 43 is crashing Variable Manager as the DLL to handle this does not support nSelect as it is not initaqilized ("error" we saw
+		//executeAutoITExe("VTSNavigateToVariablesManager.exe"  + SEPERATOR + vtsTestGroupInputFilePath + "\""); // vts varaible manager crashes on version 43 if this line is used hence broke this AutoIt action to below steps
 
-        executeAutoITExe("VTSHandleVariablesManager.exe");
+		executeAutoITExe("VtsVariableManagerLaunch.exe");
+		if(!winiumDriver.findElementByName("Close Database").isEnabled()) // if this is enabled then the application is set to required state
+			winiumClickOperation("Open Most Recent Database");
+		wait(5000);
+		//now loading the Excel file into Variable Manager
+		executeAutoITExe("vtsVariableManagerLoadExcelTestDataFile.exe"  + SEPERATOR + vtsTestGroupInputFilePath + "\"");
+
+		executeAutoITExe("VTSHandleVariablesManager.exe");
 
 	}
 
@@ -1616,8 +1616,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private String getFeildDescriptionFromLogViewer(String propertyByName) {
-		String resultResponse = "validations ok";
-		String tempValue;
+		String resultResponse;
+		String cardNumberOutput; 
+		String rRnOutput;
+		String f39output;
+		Device device = context.get(ContextConstants.DEVICE);
 		MiscUtils.reportToConsole(" ******* getFeildDescriptionFromLogViewer ******" );     
 
 		executeAutoITExe("VtsManageLogViewer.exe");
@@ -1625,32 +1628,51 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		if(winiumDriver.findElement(By.name(propertyByName)).isDisplayed()) {
 			winiumClickOperation(propertyByName);
 		} else {
-			//			logViewerFrame.click();
 			winiumClickOperation("F2");
 			pressPageDown(2); // scrolling down to the end of the page
 			winiumClickOperation(propertyByName);
 		}
+		//getting Card number for Visa Tranaction
+		cardNumberOutput = getDataForVisaTransaction("F2");
+		logMessage("**********  Card Number for Visa Transaction ********** ", cardNumberOutput);
+		if(!cardNumberOutput.equalsIgnoreCase(device.getDeviceNumber().trim())) {
+			logger.error("Card Number not updated in Visa Variable Manager. Please verify." );
+			return "validations not ok";
+		}
+		//getting RRN Number for Visa Tranaction
+		rRnOutput = getDataForVisaTransaction("F37");
+		logMessage("**********  RRN Number for Visa Transaction ********** ", rRnOutput);
+		//getting Response for 39  for Visa Tranaction
+		f39output = getDataForVisaTransaction("F39");
+		logMessage("**********  Output Response from F39 for Visa Transaction ********** ", f39output);
+
+		if("00".equalsIgnoreCase(f39output.trim()))
+			resultResponse =  "validations is ok. And value shown in the F39 response is : " + f39output;
+		else	
+			resultResponse =  "validations not ok. And value shown in the F39 response is : " + f39output;
+
+		logMessage("Visa Output Response Set to : ", f39output);	
+		return f39output;
+	}
+
+	private String getDataForVisaTransaction(String propertyByName) {
+		String tempValue;
+		winiumClickOperation(propertyByName);
 		List<WebElement> result= winiumDriver.findElement(By.name(propertyByName)).findElements(By.xpath("./*[contains(@LocalizedControlType, 'text')]"));
 		//printing values .. not needed but left it so that values can be seen in console
 		for(WebElement e : result) {
 			MiscUtils.reportToConsole(e.getAttribute("Name"));
 		}
-		//getting value from last section from F39 list item
+		//getting value from last section from "propertyByName" list item
 		tempValue = result.get(result.size()-1).getAttribute("Name");
-		logMessage("F39 response is : ", tempValue);		
-		if("00".equalsIgnoreCase(tempValue.toString().trim()))
-			resultResponse =  "validations is ok. And value shown in the F39 response is : " + tempValue;
-		else	
-			resultResponse =  "validations not ok. And value shown in the F39 response is : " + tempValue;
-
-		logMessage("Visa Output Response Set to : ", resultResponse);	
-		return resultResponse;
+		logMessage(" ********* " + propertyByName + " :  response is : ", tempValue);		
+		return tempValue;
 	}
 
 	public void executeVisaTest() {
 		MiscUtils.reportToConsole(" ******* executeVisaTest ******" );
 		//delete older logs from Detail Log
-		//deleteOldLogs();  // sometimes system is not responding when we delete old logs and click on Execute Test.. it crashes
+		deleteOldLogs();  // sometimes system is not responding when we delete old logs and click on Execute Test.. it crashes
 		winiumClickOperation("Execute Test");
 		wait(5000);
 		executeAutoITExe("visaTestExeution.exe");
