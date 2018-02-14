@@ -1651,8 +1651,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		else	
 			resultResponse =  "validations not ok. And value shown in the F39 response is : " + f39output;
 
-		logMessage("Visa Output Response Set to : ", f39output);	
-		return f39output;
+		logMessage("Visa Output Response Set to : ", resultResponse);	
+		return resultResponse;
 	}
 
 	private String getDataForVisaTransaction(String propertyByName) {
