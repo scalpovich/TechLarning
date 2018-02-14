@@ -1122,7 +1122,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 		if("stagesa".equalsIgnoreCase(getEnv()))
 			selectMChipKeySet("00998 - Example ETEC1 - 0213");
-		else if("automation".equalsIgnoreCase(getEnv()))
+		else if("automation".equalsIgnoreCase(getEnv()) || "demo".equalsIgnoreCase(getEnv()))
 			selectMChipKeySet("00999 - Example - M/Chip  2.1 Select");
 		else
 			selectMChipKeySet("00999 - Example ETEC1 - 0213");	
