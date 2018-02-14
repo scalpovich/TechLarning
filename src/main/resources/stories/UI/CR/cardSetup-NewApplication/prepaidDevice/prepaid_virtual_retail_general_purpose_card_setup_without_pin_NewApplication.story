@@ -15,7 +15,7 @@ Scenario: Set up prepaid virtual retail general purpose card pinless
 Meta:
 @TestId TC398452
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "static virtual" card without pin
+And device range for program with device plan for "prepaid" "static virtual" card without pin without dedupe
 Then prepaid device is created
 
 Scenario: prepaid virtual retail general purpose card pinless device production

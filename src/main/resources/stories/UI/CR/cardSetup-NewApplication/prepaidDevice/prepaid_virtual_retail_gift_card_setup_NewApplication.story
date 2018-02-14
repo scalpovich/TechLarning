@@ -24,5 +24,4 @@ Given user is logged in institution
 And a new device was created
 When user searches for created application
 When prepaid processes pre-production batch using new Application
-When new Application processes pin generation batch for prepaid
 Then User search for new application on search screen for prepaid and validates the status as NORMAL
