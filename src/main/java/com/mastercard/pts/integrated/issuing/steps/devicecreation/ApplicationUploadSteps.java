@@ -50,7 +50,7 @@ public class ApplicationUploadSteps {
 	private Device device;
 	
 	@When("user creates $application_upload_file batch file and uploads it on server for $customerType")
-	public void createFileForApplicationUpload(@Named("application_upload_file") String batchName,@Named("customerType") String customerType){	
+	public void createFileForApplicationUpload(@Named("application_upload_file") String batchName,@Named("customerType") String customerType) throws Exception{	
 		 String fileName=fileCreation.createApplicationUploadFile(program.getInstitute(),customerType);
 		processBatch.setJoBID(processBatchesFlows.processUploadBatches(batchName, fileName));
 			//CustomUtils.ThreadDotSleep(8000);
@@ -128,5 +128,15 @@ public class ApplicationUploadSteps {
 		batch.setBatchNumber(preProductionBatch.getBatchNumber());
 		MiscUtils.reportToConsole("device production Batch: {}",preProductionBatch.getBatchNumber());
 		batchProcessFlows.processDeviceProductionBatch(batch);
+	}
+	
+	@Then("All processes $type device production batch")
+	@When("All processes $type device production batch")
+	public void whenProcessesDeviceProductionBatchForAll(String type) {
+		DeviceProductionBatch batch = new DeviceProductionBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batch.setBatchNumber(preProductionBatch.getBatchNumber());
+		MiscUtils.reportToConsole("device production Batch: {}",preProductionBatch.getBatchNumber());
+		batchProcessFlows.processDeviceProductionBatchAll(batch);
 	}
 }

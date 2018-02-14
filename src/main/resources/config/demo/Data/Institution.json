@@ -1,7 +1,7 @@
 {  
-   "name":"BlackEyeCreDE",
-   "code":"034062",
-   "abbreviation":"BlackEyeCreDE",
+   "name":"AUTO",
+   "code":"121212",
+   "abbreviation":"AUTO",
    "debit":true,
    "credit":true,
    "prepaid":true,

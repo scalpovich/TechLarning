@@ -108,8 +108,18 @@ public class DeviceProductionPage extends AbstractBasePage {
 		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();*/
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
 		waitAndSearchForRecordToExist();
+		verifyOperationStatus();
+
+	}
+	
+	public void processDeviceProductionBatchForAll(DeviceProductionBatch batch) {
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
+		waitAndSearchForRecordToExist();
+		clickWhenClickable(processAllBtn);
 		verifyOperationStatus();
 
 	}

@@ -1,10 +1,11 @@
 package com.mastercard.pts.integrated.issuing.utils;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -447,71 +448,103 @@ public class FileCreation {
 	}
 
 	public String createApplicationUploadFile(String INSTITUTION_CODE,
-			String customerType) {
+			String customerType) throws Exception {
 		int totalRecords = 0;
-		List<String> uploadedValues = new ArrayList<String>();
-		String FileName = "APPPR" + INSTITUTION_CODE
-				+ DateUtils.getDateTimeDDMMYYHHMMSS()
-				+ MiscUtils.generateRandomNumberAsString(6) + ".DAT";
-		HashMap<String, HashMap<String, String>> applicationUploadMap;
-		File file = new File(FileName);
+		//List<String> uploadedValues = new ArrayList<String>();
+		String FileName = "";
 		String remoteDir = Constants.APPLICATION_UPLOAD_PREPAID_FILE_PATH;
-		applicationUploadMap = dataReader.dataProviderFileUpload(
-				"AllUploadTestData", "Prepaid Card File");
-		logger.info("applicationUploadMap" + applicationUploadMap);
-		try (PrintWriter writer = new PrintWriter(file)) {
-			writer.println("HD|" + INSTITUTION_CODE + "|"
-					+ DateUtils.getDateTimeDDMMYYYYHHMMSS() + "|" + "2.0");
+			File folder = new File(System.getProperty("user.dir"));
+			File[] listOfFiles = folder.listFiles();
+			logger.info("Length Of all Files:{}",listOfFiles.length);
 
-			for (int i = 0; i < applicationUploadMap.size(); i++) {
-				if (true == dataReader
-						.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
-					String name = CustomUtils.randomString(9).toUpperCase();
-					helpDeskGeneral.setFirstName(name);
-					if (customerType.equals("Individual")) {
-						writer.println(getUploadFileFromDatamap(
-								"Concatenated Application Record")
-								.replace("%B%", INSTITUTION_CODE)
-								.replace("%t%", "0")
-								.replace("%P%", program.getProgramCode())
-								.replace("%D%", deviceplan.getDevicePlanCode())
-								.replace("%b%", vendor.getBranchCode())
-								.replace("%Z%", "")
-								.replace("%N%", name));
-					} else if (customerType.equals("Corporate")) {
-						writer.println(getUploadFileFromDatamap(
-								"Concatenated Application Record")
-								.replace("%B%", INSTITUTION_CODE)
-								.replace("%t%", "1")
-								.replace("%P%", program.getProgramCode())
-								.replace("%D%", deviceplan.getDevicePlanCode())
-								.replace("%b%", vendor.getBranchCode())
-								.replace("%Z%", corporateClientCode)
-								.replace("%N%", name));
-					} else if (customerType.equals("Bank Staff")) {
-						writer.println(getUploadFileFromDatamap(
-								"Concatenated Application Record")
-								.replace("%B%", INSTITUTION_CODE)
-								.replace("%t%", "2")
-								.replace("%P%", program.getProgramCode())
-								.replace("%D%", deviceplan.getDevicePlanCode())
-								.replace("%b%", vendor.getBranchCode())
-								.replace("%Z%", "")
-								.replace("%N%", name));
-					}
+		for (int k = 0; k < listOfFiles.length; k++) {
 
-					totalRecords++;
-
-				}
-
-				writer.print("FT|" + createRecordNumber(9, totalRecords));
+			if (listOfFiles[k].getName().startsWith("APPPR")) {
+				FileName = listOfFiles[k].getName();
+				String name=readingFirstLineOfDatFileToRetrieveName(FileName);
+				helpDeskGeneral.setFirstName(name);
+				logger.info("Already existing fileName in workspace: {}",FileName);
 			}
-		} catch (IOException e) {
-			logger.error("Fail to create page object: {}", e);
-			throw Throwables.propagate(e);
 		}
-		System.out.println(file.getPath());
-		linuxBox.upload(file.getPath(), remoteDir);
+		if (FileName.contains("APPPR")) {
+			linuxBox.upload(FileName, remoteDir);
+		}
+			       else
+			       {
+
+                                FileName = "APPPR" + INSTITUTION_CODE
+								+ DateUtils.getDateTimeDDMMYYHHMMSS()
+								+ MiscUtils.generateRandomNumberAsString(6) + ".DAT";
+						HashMap<String, HashMap<String, String>> applicationUploadMap;
+						File file = new File(FileName);
+					applicationUploadMap = dataReader.dataProviderFileUpload(
+							"AllUploadTestDataTest", "Prepaid Card File");
+					logger.info("applicationUploadMap" + applicationUploadMap);
+					try (PrintWriter writer = new PrintWriter(file)) {
+						writer.println("HD|" + INSTITUTION_CODE + "|"
+								+ DateUtils.getDateTimeDDMMYYYYHHMMSS() + "|" + "2.0");
+						String name = CustomUtils.randomString(9).toUpperCase();
+						helpDeskGeneral.setFirstName(name);
+						for (int i = 0; i < applicationUploadMap.size(); i++) {
+							if (true == dataReader
+									.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
+								/*String name = CustomUtils.randomString(9).toUpperCase();
+								helpDeskGeneral.setFirstName(name);*/
+								if (customerType.equals("Individual")) {
+									writer.println(getUploadFileFromDatamap(
+											"Concatenated Application Record")
+											.replace("%B%", INSTITUTION_CODE)
+											.replace("%t%", "0")
+											.replace("%P%", program.getProgramCode())
+											.replace("%D%", deviceplan.getDevicePlanCode())
+											.replace("%b%", vendor.getBranchCode())
+											.replace("%Z%", "")
+											.replace("%N%", name)
+											.replace("%K%", CustomUtils.RandomNumbers(10))
+											.replace("%X%", CustomUtils.randomAlphaNumeric(5)+"@"+CustomUtils.randomAlphaNumeric(4)+".com"));
+								} else if (customerType.equals("Corporate")) {
+									writer.println(getUploadFileFromDatamap(
+											"Concatenated Application Record")
+											.replace("%B%", INSTITUTION_CODE)
+											.replace("%t%", "1")
+											.replace("%P%", program.getProgramCode())
+											.replace("%D%", deviceplan.getDevicePlanCode())
+											.replace("%b%", vendor.getBranchCode())
+											.replace("%Z%", corporateClientCode)
+											.replace("%N%", name)
+											.replace("%K%", CustomUtils.RandomNumbers(10))
+											.replace("%X%", CustomUtils.randomAlphaNumeric(5)+"@"+CustomUtils.randomAlphaNumeric(4)+".com"));
+								} else if (customerType.equals("Bank Staff")) {
+									writer.println(getUploadFileFromDatamap(
+											"Concatenated Application Record")
+											.replace("%B%", INSTITUTION_CODE)
+											.replace("%t%", "2")
+											.replace("%P%", program.getProgramCode())
+											.replace("%D%", deviceplan.getDevicePlanCode())
+											.replace("%b%", vendor.getBranchCode())
+											.replace("%Z%", "")
+											.replace("%N%", name)
+											.replace("%K%", CustomUtils.RandomNumbers(10))
+											.replace("%X%", CustomUtils.randomAlphaNumeric(5)+"@"+CustomUtils.randomAlphaNumeric(4)+".com"));
+								}
+
+								totalRecords++;
+
+							}
+
+							//writer.print("FT|" + createRecordNumber(9, totalRecords));
+						}
+						writer.print("FT|" + createRecordNumber(9, totalRecords));
+					} catch (IOException e) {
+						logger.error("Fail to create page object: {}", e);
+						throw Throwables.propagate(e);
+					}
+					System.out.println(file.getPath());
+					linuxBox.upload(file.getPath(), remoteDir);
+						
+			        
+			       }
+		
 		return FileName;
 	}
 
@@ -519,5 +552,30 @@ public class FileCreation {
 		return filename;
 
 	}
-
+   public String readingFirstLineOfDatFileToRetrieveName(String name) throws IOException
+   {
+	   String Name="";
+	   BufferedReader br = null;
+	   int counter=0;
+	   try{	
+           br = new BufferedReader(new FileReader(System.getProperty("user.dir")+"\\"+name));		
+	   String contentLine;
+	   while ((contentLine=br.readLine()) != null) {
+	      counter++;
+	      if(counter==2)
+	      {
+	    	  String lineRead=contentLine;
+	    	  String[]lineExcludingDelimiters=lineRead.split("\\|");
+	    	  Name=lineExcludingDelimiters[40];
+	      }
+	     
+	   }
+	   }
+	   catch (IOException e) {
+		   br.close();
+	       e.printStackTrace();
+	   }
+	return Name;
+   
+}
 }
