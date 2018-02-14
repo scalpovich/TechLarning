@@ -85,10 +85,3 @@ When user fills General details with product prepaid and submits the form for re
 Then status should be normal
 And device activated and activation date is updated in general details
 And user sign out from customer portal
-
-Scenario: Program Balance Summary reports download - nonfunded Agent
-Given user is logged in institution
-When pre-clearing and Pre-EOD batches are run
-Then verify report for transactions with Program Balance Summary is downloaded
-And Verify Program Balance Summary is downloaded
-And user sign out from customer portal
