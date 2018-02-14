@@ -3,15 +3,24 @@ package com.mastercard.pts.integrated.issuing.pages.customer.processingcenter;
 import java.util.Arrays;
 import java.util.Collection;
 
+
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+
+
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -24,6 +33,11 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		ProcessingCenterNav.L3_INSTITUTION,
 })
 public class InstitutionPage extends AbstractBasePage{
+	
+	@Autowired
+	private TestContext context;
+	
+	boolean ascFlag;
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(InstitutionPage.class);
@@ -177,6 +191,16 @@ public class InstitutionPage extends AbstractBasePage{
 	
 	@PageElement(findBy = FindBy.NAME , valueToFind = "refCurrencyCode:input:dropdowncomponent")
 	private MCWebElement refCurrencyDwn;
+	
+	@PageElement(findBy = FindBy.NAME , valueToFind = "adaptiveEcommFlag:input:dropdowncomponent")
+	private MCWebElement adaptiveEcommFlagDwn;
+	
+	@PageElement(findBy = FindBy.NAME , valueToFind = "issuerSmsProvider:checkBoxComponent")
+	private MCWebElement issuerSmsProviderCbx;
+	@PageElement(findBy = FindBy.NAME , valueToFind = "mpinEnabled:checkBoxComponent")
+	private MCWebElement mpinEnabledCbx;
+	
+	
 
 	public void verifyUiOperationStatus() {
 		logger.info("Processing Center UI Status");
@@ -275,4 +299,62 @@ public class InstitutionPage extends AbstractBasePage{
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(instituteCode));
 	}
+	
+	public boolean isAdaptiveAuthenticationEnabled()
+	{
+		return adaptiveEcommFlagDwn.isEnabled();
+	}
+	
+	public boolean userAbleToselectACSVendor()
+	{
+		runWithinPopup(
+				"Edit Institution",
+				() -> {
+					ascFlag=isAdaptiveAuthenticationEnabled();
+					selectACSVendor();
+					WebElementUtils.scrollDown(driver(), 0, 250);
+					context.put("authenticationOptionsFlg",isSMSServiceProviderAndMPINAreEnabled());
+					selectMpinAndSmsProvider();
+					clickSaveButton();
+									});	
+		return ascFlag;
+	}
+	
+	public void selectACSVendor()
+	{
+		InstitutionCreation institutioncreation=context.get("institutionData");
+		WebElementUtils.selectDropDownByVisibleText(adaptiveEcommFlagDwn, institutioncreation.getAscVendor());
+	}
+	
+	public boolean checkASCVendorEnabledAndSelectASCVendor()
+	{
+		boolean recordUpdatedFlg=userAbleToselectACSVendor();
+		context.put("SuccessMessage",getSuccessMessage().equalsIgnoreCase(Constants.Record_Updated_Successfully));
+		return recordUpdatedFlg;
+	}
+	public boolean isSMSServiceProviderAndMPINAreEnabled()
+	{
+		return issuerSmsProviderCbx.isEnabled() && mpinEnabledCbx.isEnabled();
+	}
+	
+	public void selectMpinAndSmsProvider()
+	{
+		InstitutionCreation institutioncreation=context.get("institutionData");
+		String option=institutioncreation.getAuthenticationFlg();
+		if(option.equalsIgnoreCase("enable"))
+		{
+		selectCheckBox(mpinEnabledCbx, "MPIN");
+		selectCheckBox(issuerSmsProviderCbx, "SmsProvider");
+		}
+		else
+		{
+		    ClickCheckBox(mpinEnabledCbx, false);
+			ClickCheckBox(issuerSmsProviderCbx, false);
+		}
+	}
+	public void enterInstitutionCode(InstitutionCreation institutioncreation)
+	{
+		WebElementUtils.enterText(instituteCode, institutioncreation.getExistingInstitutionCode());
+	}
+
 }

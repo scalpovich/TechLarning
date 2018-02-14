@@ -123,10 +123,3 @@ Scenario: Agency Settlement - Funded Agent
 Given user is logged in agent portal as agency user
 When user initiates settlement for agency
 Then settlement is initiated successfully
-
-Scenario: Program Balance Summary reports download - Funded Agent
-Given user is logged in institution
-When pre-clearing and Pre-EOD batches are run
-Then verify report for transactions with Program Balance Summary is downloaded
-And Verify Program Balance Summary is downloaded
-And user sign out from customer portal
