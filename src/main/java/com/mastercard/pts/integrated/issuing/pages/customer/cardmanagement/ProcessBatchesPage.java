@@ -121,7 +121,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=privateField14]")
 	private MCWebElement businessDatePreClearing;
 
-	@PageElement(findBy = FindBy.CSS, valueToFind = "table[class='dataview'] tbody tr:nth-child(3) td:nth-child(3)")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "table[class='dataview'] tbody tr:nth-child(2) td:nth-child(3)")
 	private MCWebElement jobId;
 
 	private String batchStatus;
