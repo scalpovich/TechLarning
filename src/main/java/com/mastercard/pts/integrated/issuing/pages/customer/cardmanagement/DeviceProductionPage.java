@@ -69,6 +69,9 @@ public class DeviceProductionPage extends AbstractBasePage {
 	private MCWebElement confirmationMsgTxt;
 
 	private MCWebElement ProcessSelectedBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers' and @class!='navigation'][1]/td[2]/span")
+	private MCWebElement deviceNumberFetch;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr")
 	private MCWebElements rowSize;

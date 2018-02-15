@@ -83,7 +83,8 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 	public String searchDeviceUsingName(String productType, String name) {
 		waitForElementVisible(this.productType);
 		SelectDropDownByText(this.productType, productType);
-		enterText(this.firstNameInput, String.valueOf(name));
+		//enterText(this.firstNameInput, String.valueOf(name));
+		enterText(this.deviceNumber,name);
 		waitForElementVisible(searchBtn);
 		searchBtn.click();
 		return normalStatus.getText();

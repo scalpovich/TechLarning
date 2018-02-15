@@ -59,6 +59,8 @@ public class ContextConstants {
 	public static final String CREDIT_BRANCH="CREDIT_BRANCH";
 	
 	public static final String DEVICE_BIN="DEVICE_BIN";
+	
+	public static final String DEVICE_NUMBER="DEVICE_NUMBER";
 
 	private ContextConstants() {
 	}

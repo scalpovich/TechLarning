@@ -141,7 +141,7 @@ public class HelpDeskFlows extends AbstractBasePage {
 	public String searchForDevicePrepaid(HelpDeskGeneral helpdeskgettersetter) {
 		generalPage = navigator.navigateToPage(GeneralPage.class);
 		String status = searchpanelhelpdesk.searchDeviceUsingName(helpdeskgettersetter.getProductType(),
-				helpdeskgettersetter.getFirstName());
+				/*helpdeskgettersetter.getFirstName()*/context.get(ContextConstants.DEVICE_NUMBER));
 		searchpanelhelpdesk.clickSearchBtn();
 		return status;
 	}

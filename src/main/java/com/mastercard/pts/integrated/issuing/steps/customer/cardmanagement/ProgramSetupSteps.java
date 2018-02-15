@@ -344,7 +344,7 @@ public class ProgramSetupSteps {
 			"When User fills MCC Rules for prepaid product", "When User fills Transaction Plan for prepaid product",
 			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
 			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin", "When User fills Wallet Plan for prepaid product", "When User fills Program section using newApplication for prepaid product",
 			 "When User fills Device Range section for prepaid product" })
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinWithoutDedupe(String deviceType) {
 		// composite step
