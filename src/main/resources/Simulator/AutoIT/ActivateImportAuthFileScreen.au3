@@ -34,8 +34,4 @@ DirCreate ($sTempFile_1);
 	sleep(1000)
     ControlSetText("Save As","","[CLASS:ComboBox; INSTANCE:1]", $filedir) ; set the Edit1 text to the $dest and hit the button to swithc directories.
     sleep(1000)
-    ControlClick("Save As","","[CLASS:Button; INSTANCE:1]")
-	sleep(2000)
-    ControlClick("Generate Text File","","[NAME:Cmd_OK]")
-
 	FileWrite($sTempFile_1 &"\AuthFileName.txt", $sFileName)
