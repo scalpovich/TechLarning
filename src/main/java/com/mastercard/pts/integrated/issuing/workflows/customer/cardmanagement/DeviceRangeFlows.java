@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,15 +15,32 @@ public class DeviceRangeFlows extends MenuFlows {
 	@Autowired
 	Navigator navigator;
 
+	DeviceRangePage devicerangepage;
+
 	public void addDeviceRange(DeviceCreation deviceCreation) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
-		DeviceRangePage devicerangepage = navigator.navigateToPage(DeviceRangePage.class);
+		devicerangepage = navigator.navigateToPage(DeviceRangePage.class);
 		devicerangepage.clickAddDeviceRange();
 		devicerangepage.addDeviceRange(deviceCreation);
 		devicerangepage.addDeviceRangeDetails();
 		devicerangepage.selectDebitInerface();
 		devicerangepage.Information();
 		devicerangepage.clickSaveButton();
+	}
+
+	public void editDeviceRange(String prog) {
+		devicerangepage = navigator.navigateToPage(DeviceRangePage.class);
+		devicerangepage.searchDeviceRangeAndEdit(prog);
+	}
+
+	public void checkAdaptiveAuthenticationEnabled() {
+		Assert.assertTrue("Adaptive Authentication Check Box is enabled",
+				devicerangepage.adaptiveAuthenticationChkBox());
+	}
+
+	public void checkAdaptiveAuthenticationDisabled() {
+		Assert.assertFalse("Adaptive Authentication Check Box is disabled",
+				devicerangepage.adaptiveAuthenticationChkBox());
 	}
 
 }

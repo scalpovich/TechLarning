@@ -20,7 +20,8 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP,
-		CardManagementNav.L2_DEVICE_CONFIGURATION, CardManagementNav.L3_DEVICE_PRIORITYPASSID_CARDPACKID_TEMPLATE_PLAN })
+		CardManagementNav.L2_DEVICE_CONFIGURATION,
+		CardManagementNav.L3_DEVICE_PRIORITYPASSID_CARDPACKID_TEMPLATE_PLAN })
 public class DeviceCardPackTemplatePage extends AbstractBasePage {
 	final Logger logger = LoggerFactory.getLogger(DeviceCardPackTemplatePage.class);
 	// ------------- Card Management > Institution Parameter Setup > Institution
@@ -98,9 +99,15 @@ public class DeviceCardPackTemplatePage extends AbstractBasePage {
 		enterValueinTextBox(TemplateLengthTxt, deviceCreation.getLength());
 	}
 
-	public void selectField1(DeviceCardPackTemplate devicecardtemplate) {
-		selectByVisibleText(Field1DDwn, devicecardtemplate.getField1());
-		enterValueinTextBox(Length1Txt, devicecardtemplate.getLength1());
+	public void selectField1(DeviceCreation deviceCreation, DeviceCardPackTemplate devicecardtemplate) {
+		if (deviceCreation.getTemplateType().contains("Device Template")) {
+			selectByVisibleText(Field1DDwn, devicecardtemplate.getField1());
+			enterValueinTextBox(Length1Txt, devicecardtemplate.getLength1());
+		}
+		if (deviceCreation.getTemplateType().contains("Card Pack ID Template")) {
+			selectByVisibleText(Field1DDwn, devicecardtemplate.getField3());
+			enterValueinTextBox(Length1Txt, devicecardtemplate.getLength3());
+		}
 
 	}
 
@@ -135,6 +142,7 @@ public class DeviceCardPackTemplatePage extends AbstractBasePage {
 		clickWhenClickable(submitBtn);
 	}
 
+	@Override
 	public void clickSaveButton() {
 		clickWhenClickable(saveBtn);
 		SwitchToDefaultFrame();
@@ -162,19 +170,19 @@ public class DeviceCardPackTemplatePage extends AbstractBasePage {
 	}
 
 	public void selectDeviceTemplateFields(DeviceCreation deviceCreation, DeviceCardPackTemplate devicetemplate) {
-		selectField1(devicetemplate);
-		selectField2(devicetemplate);
-		selectField3(devicetemplate);
-		selectField4(deviceCreation, devicetemplate);
-		selectField5(devicetemplate);
+		selectField1(deviceCreation, devicetemplate);
+		// selectField2(devicetemplate);
+		// selectField3(devicetemplate);
+		// selectField4(deviceCreation, devicetemplate);
+		// selectField5(devicetemplate);
 	}
 
 	public void selectCardTemplateFields(DeviceCreation deviceCreation, DeviceCardPackTemplate devicetemplate) {
-		selectField1(devicetemplate);
+		selectField1(deviceCreation, devicetemplate);
 		selectField2(devicetemplate);
-		selectField3(devicetemplate);
-		selectField4(deviceCreation, devicetemplate);
-		selectField5(devicetemplate);
+		// selectField3(devicetemplate);
+		// selectField4(deviceCreation, devicetemplate);
+		// selectField5(devicetemplate);
 	}
 
 	@Override

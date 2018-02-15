@@ -98,14 +98,21 @@ public class VendorPage extends AbstractBasePage {
 		switchToIframe(Constants.ADD_VENDOR_MASTER_FRAME);
 	}
 
-	public String enterVendorCode() {
-		enterValueinTextBox(VendorCodeTxt, "V" + CustomUtils.randomNumbers(5));
-		// enterValueinTextBox(VendorCodeTxt, "Aut011");
+	public String enterVendorCode(Vendor vendor) {
+		if (vendor.getVendorCode().length() != 0) {
+			enterValueinTextBox(VendorCodeTxt, vendor.getVendorCode());
+		} else {
+			enterValueinTextBox(VendorCodeTxt, "V" + CustomUtils.randomNumbers(5));
+		}
 		return VendorCodeTxt.getAttribute("value");
 	}
 
-	public String enterVendorName() {
-		enterValueinTextBox(VendorNameTxt, "HDFCVendor" + CustomUtils.randomNumbers(1));
+	public String enterVendorName(Vendor vendor) {
+		if (vendor.getVendorName().length() != 0) {
+			enterValueinTextBox(VendorNameTxt, vendor.getVendorName());
+		} else {
+			enterValueinTextBox(VendorNameTxt, "HDFCVendor" + CustomUtils.randomNumbers(1));
+		}
 		return VendorNameTxt.getAttribute("value");
 	}
 
@@ -181,8 +188,8 @@ public class VendorPage extends AbstractBasePage {
 	public String addVendorDetails(Vendor vendor) {
 		String vendorcode;
 		String vendorName;
-		vendorcode = enterVendorCode();
-		vendorName = enterVendorName();
+		vendorcode = enterVendorCode(vendor);
+		vendorName = enterVendorName(vendor);
 		selectVendorCategory(vendor);
 		selectBranchCode(vendor);
 		return buildDescriptionAndCode(vendorName, vendorcode);

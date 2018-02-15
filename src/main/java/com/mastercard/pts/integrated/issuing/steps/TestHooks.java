@@ -4,9 +4,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.AfterStory;
-import org.jbehave.core.annotations.BeforeScenario;
 import org.jbehave.core.annotations.BeforeStory;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.web.selenium.WebDriverProvider;
@@ -46,15 +44,19 @@ public class TestHooks {
 	@BeforeStory
 	public void initStoryContext(@Named("StoryName") String storyName) {
 		testContext.initStoryContext(storyName);
-		Optional<Map<String, String>> data = dataLoader.loadData(storyName);
-		if (data.isPresent()) {
-			testContext.put(TestContext.KEY_STORY_DATA, data.get());
-		} else {
-			logger.info("There is no data set for story {}", storyName);
+		if (storyName != "") {
+			Optional<Map<String, String>> data = dataLoader.loadData(storyName);
+			if (data.isPresent()) {
+				testContext.put(TestContext.KEY_STORY_DATA, data.get());
+			} else {
+				logger.info("There is no data set for story {}", storyName);
+			}
 		}
+		logger.info("There is no data required for API  story");
+
 	}
 
-	@BeforeScenario
+	// @BeforeScenario
 	public void initTimeouts() {
 		Timeouts timeouts = driverProvider.get().manage().timeouts();
 		timeouts.implicitlyWait(imlicitWaitTimeout, TimeUnit.MILLISECONDS);
@@ -63,7 +65,7 @@ public class TestHooks {
 		testContext.put("DRIVER", driverProvider.get());
 	}
 
-	@AfterScenario
+	// @AfterScenario
 	public void clearCookies() {
 		driverProvider.get().manage().deleteAllCookies();
 	}

@@ -42,11 +42,11 @@ When user creates DeviceJoining Fee plan for Prepaid
 When user creates Membership Fee plan for Prepaid
 When user creates Device Event Based Fee Plan for Prepaid
 When user creates Maintenance Wallet Fee Plan for Prepaid
-When user creates a wallet plan of default type for program Retail General Purpose for Prepaid
+When user creates a Open loop wallet plan of default type for program Retail General Purpose Card for Prepaid
 When user creates an Embossing File Template
 When user creates a Vendor of Category Personalization with Embossing template attached
 When user creates a Device Plan for Mastercard for Magnetic Stripe and Prepaid card,choose activation On Production and delivery mode Mail
-When user creates a Program for Mastercard for product Prepaid for program Retail General Purpose Card
+When user creates a Multi wallet Program for Mastercard for product Prepaid for program Retail General Purpose Card
 When user creates a Device Range for product Prepaid
 
 

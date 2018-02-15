@@ -784,8 +784,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public void enterValueinTextBox(MCWebElement txtBoxElement, String value) {
 		waitForElementVisible(txtBoxElement);
 		if (value != null && !value.isEmpty()) {
-			if (txtBoxElement.isEnabled())
+			if (txtBoxElement.isEnabled()) {
+				txtBoxElement.clearField();
 				enterText(txtBoxElement, value);
+			}
 		}
 	}
 

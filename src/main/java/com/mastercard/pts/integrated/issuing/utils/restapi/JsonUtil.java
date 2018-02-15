@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.utils.restapi;
 
 import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 
 import java.io.File;
 import java.io.FileReader;
@@ -8,7 +9,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import static org.hamcrest.Matchers.*;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
@@ -61,9 +61,8 @@ public class JsonUtil extends AbstractBaseSteps {
 		mapper = new ObjectMapper();
 		jsonFile = new File(jsonFilePath);
 		try {
-			reqMapObject = mapper.readValue(jsonFile,
-					new TypeReference<ArrayList<Map<String, Object>>>() {
-					});
+			reqMapObject = mapper.readValue(jsonFile, new TypeReference<ArrayList<Map<String, Object>>>() {
+			});
 		} catch (Exception e) {
 			logger.error(e.toString());
 		}
@@ -75,9 +74,8 @@ public class JsonUtil extends AbstractBaseSteps {
 		mapper = new ObjectMapper();
 		jsonFile = new File(jsonFilePath);
 		try {
-			reqMapObject = mapper.readValue(jsonFile,
-					new TypeReference<Map<String, Object>>() {
-					});
+			reqMapObject = mapper.readValue(jsonFile, new TypeReference<Map<String, Object>>() {
+			});
 		} catch (Exception e) {
 			logger.error(e.toString());
 		}
@@ -85,13 +83,11 @@ public class JsonUtil extends AbstractBaseSteps {
 
 	}
 
-	public List<Map<String, Object>> parseResponseToListMap(
-			String responseContent) {
+	public List<Map<String, Object>> parseResponseToListMap(String responseContent) {
 		mapper = new ObjectMapper();
 		try {
-			reqMapObject = mapper.readValue(responseContent,
-					new TypeReference<ArrayList<Map<String, Object>>>() {
-					});
+			reqMapObject = mapper.readValue(responseContent, new TypeReference<ArrayList<Map<String, Object>>>() {
+			});
 		} catch (Exception e) {
 			logger.error(e.toString());
 		}
@@ -101,11 +97,9 @@ public class JsonUtil extends AbstractBaseSteps {
 
 	public Response postRequest(String reqObject) {
 		RestAssured.baseURI = env.getProperty("api.base.uri");
-		response = given().body(reqObject).when().contentType(ContentType.JSON)
-				.post(CARD_ACTIVATION_END_POINT);
+		response = given().body(reqObject).when().contentType(ContentType.JSON).post("/users");
 		logger.info("**********Request String:" + reqObject.toString());
-		logger.info("**********Response String:"
-				+ response.asString().toString());
+		logger.info("**********Response String:" + response.asString().toString());
 		return response;
 
 	}
@@ -114,11 +108,10 @@ public class JsonUtil extends AbstractBaseSteps {
 		RestAssured.config = restAssuredConfiguration.getRestAssuredConfig();
 		RestAssured.baseURI = restAssuredConfiguration.getbaseUrl();
 
-		response = given().header(DN_KEY, STAGE_CARDACTIVATION_DN_VALUE)
-				.body(reqObject).when().contentType(ContentType.JSON).put("");
-		logger.info("**********Request String:{}" , reqObject.toString());
-		logger.info("**********Response String:{}"
-				, response.asString().toString());
+		response = given().header(DN_KEY, STAGE_CARDACTIVATION_DN_VALUE).body(reqObject).when()
+				.contentType(ContentType.JSON).put("");
+		logger.info("**********Request String:{}", reqObject.toString());
+		logger.info("**********Response String:{}", response.asString().toString());
 		return response;
 
 	}
@@ -126,20 +119,17 @@ public class JsonUtil extends AbstractBaseSteps {
 	public Response putRequest(String reqObject, String parameter) {
 		RestAssured.config = restAssuredConfiguration.getRestAssuredConfig();
 		RestAssured.baseURI = restAssuredConfiguration.getbaseUrl();
-		response = given().header(DN_KEY, STAGE_CARDACTIVATION_DN_VALUE)
-				.parameters("action", parameter).body(reqObject).when()
-				.contentType(ContentType.JSON).put("");
+		response = given().header(DN_KEY, STAGE_CARDACTIVATION_DN_VALUE).parameters("action", parameter).body(reqObject)
+				.when().contentType(ContentType.JSON).put("");
 		logger.info("**********Request String:" + reqObject.toString());
-		logger.info("**********Response String:"
-				+ response.asString().toString());
+		logger.info("**********Response String:" + response.asString().toString());
 		return response;
 
 	}
 
 	public void validateResponse(ExamplesTable attributeTable, Response response) {
 		for (int row = 0; row < attributeTable.getRows().size(); row++) {
-			String input = attributeTable.getRow(row).get(
-					attributeTable.getHeaders().get(0));
+			String input = attributeTable.getRow(row).get(attributeTable.getHeaders().get(0));
 			String actualData = input.split("=")[0];
 			String expectedData = input.split("=")[1];
 			response.then().body(actualData, equalTo(expectedData));
@@ -161,14 +151,12 @@ public class JsonUtil extends AbstractBaseSteps {
 
 	}
 
-	public List<Map<String, Object>> updateJsonWithAttributes(
-			ExamplesTable attributeTable) {
+	public List<Map<String, Object>> updateJsonWithAttributes(ExamplesTable attributeTable) {
 
 		for (int row = 0; row < attributeTable.getRows().size(); row++) {
 			for (int attr = 0; attr < attributeTable.getHeaders().size(); attr++) {
 				String attrKey = attributeTable.getHeaders().get(attr);
-				String attrValue = attributeTable.getRow(row).get(
-						attributeTable.getHeaders().get(attr));
+				String attrValue = attributeTable.getRow(row).get(attributeTable.getHeaders().get(attr));
 
 				reqMapObject.get(row).put(attrKey, attrValue);
 			}
@@ -183,11 +171,9 @@ public class JsonUtil extends AbstractBaseSteps {
 		return updateJasonFile(REQ_JSON_FILE_PATH + filepath, input);
 	}
 
-	public String updateJasonFileWithUserInputs(String filepath,
-			ExamplesTable attributeTable) {
+	public String updateJasonFileWithUserInputs(String filepath, ExamplesTable attributeTable) {
 
-		return updateJasonFileWithAttributes(REQ_JSON_FILE_PATH + filepath,
-				attributeTable);
+		return updateJasonFileWithAttributes(REQ_JSON_FILE_PATH + filepath, attributeTable);
 	}
 
 	public String updateJasonFile(String filepath, String input) {
@@ -202,14 +188,12 @@ public class JsonUtil extends AbstractBaseSteps {
 			params = inputArray[0].split(",");
 			String[] expectedKeyValue = inputArray[1].split("=");
 			updateKey = expectedKeyValue[0];
-			updateValue = getData(expectedKeyValue.length > 1 ? expectedKeyValue[1]
-					: null);
+			updateValue = getData(expectedKeyValue.length > 1 ? expectedKeyValue[1] : null);
 
 		} else {
 			String[] expectedKeyValue = input.split("=");
 			updateKey = expectedKeyValue[0];
-			updateValue = getData(expectedKeyValue.length > 1 ? expectedKeyValue[1]
-					: null);
+			updateValue = getData(expectedKeyValue.length > 1 ? expectedKeyValue[1] : null);
 
 		}
 
@@ -237,7 +221,7 @@ public class JsonUtil extends AbstractBaseSteps {
 
 			} else {
 
-				jData = (Map) jsonObject;
+				jData = jsonObject;
 				jData.put(updateKey, updateValue);
 				jsonObject = (JSONObject) jData;
 				tempJdata.add(jsonObject);
@@ -263,42 +247,33 @@ public class JsonUtil extends AbstractBaseSteps {
 			valueToUpdate = deviceDetails.getDeviceNumber();
 			break;
 		case "ActivatedCRD":
-			deviceDetails
-					.getCardStatusFromDB(DeviceDetails.GET_ACTIVATEDCARD_QUERY);
+			deviceDetails.getCardStatusFromDB(DeviceDetails.GET_ACTIVATEDCARD_QUERY);
 			valueToUpdate = deviceDetails.getDeviceNumber();
 			break;
 		case "Cancelled":
-			deviceDetails
-					.getCardStatusFromDB(DeviceDetails.GET_CANCELLEDCARD_QUERY);
+			deviceDetails.getCardStatusFromDB(DeviceDetails.GET_CANCELLEDCARD_QUERY);
 			valueToUpdate = deviceDetails.getDeviceNumber();
 			break;
 		case "Expired":
-			deviceDetails
-					.getCardStatusFromDB(DeviceDetails.GET_EXPIREDCARD_QUERY);
+			deviceDetails.getCardStatusFromDB(DeviceDetails.GET_EXPIREDCARD_QUERY);
 			valueToUpdate = deviceDetails.getDeviceNumber();
 			break;
 		case "Stoplisted":
-			deviceDetails
-					.getCardStatusFromDB(DeviceDetails.GET_STOPLISTEDCARD_QUERY);
+			deviceDetails.getCardStatusFromDB(DeviceDetails.GET_STOPLISTEDCARD_QUERY);
 			valueToUpdate = deviceDetails.getDeviceNumber();
 			break;
 		case "GetDevice":
-			valueToUpdate = deviceDetails.getDataFromDB(
-					DeviceDetails.GET_DEVICE, DeviceDetails.DEVICE_NUMBER_COLUMN);
+			valueToUpdate = deviceDetails.getDataFromDB(DeviceDetails.GET_DEVICE, DeviceDetails.DEVICE_NUMBER_COLUMN);
 			deviceDetails.setDeviceNumber(valueToUpdate);
 			break;
 		case "GenrateDefaultWalletNum":
-			valueToUpdate = CustomUtils.randomNumbers(Integer
-					.parseInt(deviceDetails.getDataFromDB(
-							DeviceDetails.GET_CLIENT_LENGTH,
-							DeviceDetails.CLIENT_LENGTH_COLUMN)));
+			valueToUpdate = CustomUtils.randomNumbers(Integer.parseInt(
+					deviceDetails.getDataFromDB(DeviceDetails.GET_CLIENT_LENGTH, DeviceDetails.CLIENT_LENGTH_COLUMN)));
 			deviceDetails.setDefaultWallet(valueToUpdate);
 			break;
 		case "GenrateCustomWalletNum":
-			valueToUpdate = CustomUtils.randomNumbers(Integer
-					.parseInt(deviceDetails.getDataFromDB(
-							DeviceDetails.GET_CLIENT_LENGTH,
-							DeviceDetails.CLIENT_LENGTH_COLUMN)));
+			valueToUpdate = CustomUtils.randomNumbers(Integer.parseInt(
+					deviceDetails.getDataFromDB(DeviceDetails.GET_CLIENT_LENGTH, DeviceDetails.CLIENT_LENGTH_COLUMN)));
 			deviceDetails.setCustomWallet(valueToUpdate);
 			break;
 		case "GetDeviceDOM":
@@ -317,8 +292,7 @@ public class JsonUtil extends AbstractBaseSteps {
 		return valueToUpdate;
 	}
 
-	public String updateJasonFileWithAttributes(String filepath,
-			ExamplesTable attributeTable) {
+	public String updateJasonFileWithAttributes(String filepath, ExamplesTable attributeTable) {
 		LinkedList<JSONObject> tempJdata = new LinkedList<>();
 		parser = new JSONParser();
 		String updatedString = null;
@@ -332,21 +306,18 @@ public class JsonUtil extends AbstractBaseSteps {
 			logger.error(e.toString());
 		}
 		for (int r = 0; r < attributeTable.getRowCount(); r++) {
-			String input = attributeTable.getRow(r).get(
-					attributeTable.getHeaders().get(0));
+			String input = attributeTable.getRow(r).get(attributeTable.getHeaders().get(0));
 			if (input.contains(":")) {
 				String[] inputArray = input.split(":");
 				params = inputArray[0].split(",");
 				String[] expectedKeyValue = inputArray[1].split("=");
 				updateKey = expectedKeyValue[0];
-				updateValue = getData(expectedKeyValue.length > 1 ? expectedKeyValue[1]
-						: null);
+				updateValue = getData(expectedKeyValue.length > 1 ? expectedKeyValue[1] : null);
 
 			} else {
 				String[] expectedKeyValue = input.split("=");
 				updateKey = expectedKeyValue[0];
-				updateValue = getData(expectedKeyValue.length > 1 ? expectedKeyValue[1]
-						: null);
+				updateValue = getData(expectedKeyValue.length > 1 ? expectedKeyValue[1] : null);
 
 			}
 
@@ -371,7 +342,7 @@ public class JsonUtil extends AbstractBaseSteps {
 
 			} else {
 
-				jData = (Map) jsonObject;
+				jData = jsonObject;
 				jData.put(updateKey, updateValue);
 				jsonObject = (JSONObject) jData;
 				tempJdata.add(jsonObject);

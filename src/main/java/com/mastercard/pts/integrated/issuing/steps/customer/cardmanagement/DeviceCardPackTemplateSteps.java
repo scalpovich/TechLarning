@@ -29,7 +29,7 @@ public class DeviceCardPackTemplateSteps {
 		if (Templatetype.contains("Device Template")) {
 			devicecardpacktemplflows.createDeviceTemplateCardPack(devicecreation, devicecardtemplate);
 		}
-		if (Templatetype.contains("Card Pack Id Template")) {
+		if (Templatetype.contains("Card Pack ID Template")) {
 			devicecardpacktemplflows.createCardPackTemplate(devicecreation, devicecardtemplate);
 		}
 	}

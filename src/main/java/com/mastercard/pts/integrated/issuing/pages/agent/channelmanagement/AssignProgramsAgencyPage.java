@@ -76,11 +76,11 @@ public class AssignProgramsAgencyPage extends AbstractBasePage {
 	}
 
 	public void selectProgramCode(String programCode) {
-		WebElementUtils.selectDropDownByVisibleText(programCodeDdwn, programCode);
+		WebElementUtils.selectDDByVisibleText(programCodeDdwn, programCode);
 	}
 
 	public void selectDeviceType(String deviceType) {
-		WebElementUtils.selectDropDownByVisibleText(deviceTypeDdwn, deviceType);
+		WebElementUtils.selectDDByVisibleText(deviceTypeDdwn, deviceType);
 	}
 
 	public void clickAddButton() {

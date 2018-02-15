@@ -237,7 +237,7 @@ public class ProgramPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class = 'feedbackPanelERROR']")
 	private MCWebElement PanelErrorTxt;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "buttons:cancel")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
 	private MCWebElement CancelBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "ofacScreeningOfNewApp:checkBoxComponent")
@@ -263,6 +263,9 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:allowFtOutOnClosedUsage:checkBoxComponent")
 	private MCWebElement sendCheckBx;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "adaptiveEcommFlag:checkBoxComponent")
+	private MCWebElement adaptiveAuthenticationCheckBx;
 
 	public void addProgram(String programCode) {
 		WebElementUtils.enterText(programTxt, programCode);
@@ -348,6 +351,24 @@ public class ProgramPage extends AbstractBasePage {
 
 	public void selectOtherPlanMarketingMessagePlan(String otherPlanMarketingMessagePlan) {
 		WebElementUtils.selectDropDownByVisibleText(otherPlanMarketingMessagePlanDDwn, otherPlanMarketingMessagePlan);
+	}
+
+	public void editProgram(String prog) {
+		enterValueinTextBox(enterProgram, prog);
+		clickWhenClickable(search);
+		waitForElementVisible(editProgram);
+		Scrolldown(editProgram);
+		clickWhenClickableDoNotWaitForWicket(editProgram);
+		CustomUtils.ThreadDotSleep(2000);
+		switchToEditProgramframe();
+	}
+
+	public boolean adaptiveAuthenticationChkBox() {
+		boolean flag = false;
+		flag = adaptiveAuthenticationCheckBx.isEnabled();
+		if (flag == true)
+			clickWhenClickable(save);
+		return flag;
 	}
 
 	public void addProgramData(Program program, String productType) {

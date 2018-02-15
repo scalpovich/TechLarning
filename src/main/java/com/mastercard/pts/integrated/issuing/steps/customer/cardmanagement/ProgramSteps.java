@@ -99,6 +99,7 @@ public class ProgramSteps {
 		}
 		Assert.assertNotNull(Program);
 		program.setProgram(Program);
+		System.out.println("program::= " + Program);
 		context.put(ContextConstants.PROGRAM, program);
 
 	}
@@ -156,5 +157,21 @@ public class ProgramSteps {
 	@Then("Program should get created")
 	public void VerifyProgramSuccess() {
 		programflows.VerifyProgramSuccess();
+	}
+
+	@When("user edits the program")
+	public void editProgram() {
+		programflows.editProgram(program.getProgramCode());
+	}
+
+	@When("Adaptive Authentication CheckBox should be $enabled")
+	@Then("Adaptive Authentication CheckBox should be $enabled")
+	public void verifyAdaptiveAuthenticationCheckBox(@Named("enabled") String enabled) {
+		if (enabled.equalsIgnoreCase("Enabled")) {
+			programflows.checkAdaptiveAuthenticationEnabled(program.getProgramCode());
+		}
+		if (enabled.equalsIgnoreCase("Disabled")) {
+			programflows.checkAdaptiveAuthenticationDisabled(program.getProgramCode());
+		}
 	}
 }

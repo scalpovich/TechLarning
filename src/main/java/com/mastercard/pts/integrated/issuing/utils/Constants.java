@@ -17,6 +17,8 @@ public class Constants {
 	public static final String ADD_USER = "Add User";
 	public static final String ADD_LOYALTY_PROMOTION_MAPPING = "Add Loyalty Plan & Promotion Mapping";
 	public static final String EDIT_PROGRAM_FRAME = "Edit Program";
+
+	public static final String EDIT_DEVICE_RANGE_FRAME = "Edit Device Range";
 	public static String BATCH_NAME = "Device Production";
 
 	public static String EDIT_BATCH_DEFINITION = "Edit Batch Definition";

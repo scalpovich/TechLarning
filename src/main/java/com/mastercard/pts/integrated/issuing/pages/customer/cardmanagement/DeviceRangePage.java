@@ -95,6 +95,9 @@ public class DeviceRangePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "CardRangeContainer:productCode:input:dropdowncomponent")
 	private MCWebElement ProgramDDwn;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent")
+	private MCWebElement searchScreenProgramDDwn;
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "CardRangeContainer:devicePlanCode:input:dropdowncomponent")
 	private MCWebElement DevicePlanCodeDDwn;
 
@@ -140,11 +143,36 @@ public class DeviceRangePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "CardRangeDetailContainer:cancel")
 	private MCWebElement CancelBtn;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "CardRangeDetailContainer:adaptiveEcommFlag:checkBoxComponent")
+	private MCWebElement adaptiveAuthChkBx;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td//span//img[@alt='Edit Record']")
+	private MCWebElement editDevicerange;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:3:buttonPanel:buttonCol:searchButton")
+	private MCWebElement searchbtn;
+
 	int i = 0;
 
 	public void clickAddDeviceRange() {
 		clickWhenClickable(AddDeviceRangeBtn);
 		switchToAddDeviceRangeFrame();
+	}
+
+	public void searchDeviceRangeAndEdit(String prog) {
+
+		selectByVisibleText(searchScreenProgramDDwn, prog);
+		clickWhenClickable(searchbtn);
+		waitForElementVisible(editDevicerange);
+		Scrolldown(editDevicerange);
+		clickWhenClickableDoNotWaitForWicket(editDevicerange);
+		CustomUtils.ThreadDotSleep(2000);
+		switchToEditDeviceRangeframe();
+
+	}
+
+	public void switchToEditDeviceRangeframe() {
+		switchToIframe(Constants.EDIT_DEVICE_RANGE_FRAME);
 	}
 
 	public void switchToAddDeviceRangeFrame() {
@@ -161,6 +189,7 @@ public class DeviceRangePage extends AbstractBasePage {
 		if (!MapUtils.fnGetInputDataFromMap("Program").isEmpty()) {
 			selectByVisibleText(ProgramDDwn, MapUtils.fnGetInputDataFromMap("Program"));
 		} else {
+			System.out.println("program::=devie range " + program.getProgram());
 			selectByVisibleText(ProgramDDwn, program.getProgram());
 		}
 
@@ -406,6 +435,12 @@ public class DeviceRangePage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(routingTypeDDwn, deviceRange.getRoutingType());
 			WebElementUtils.selectDropDownByVisibleText(interfaceNameDDwn, deviceRange.getInterfaceName());
 		}
+	}
+
+	public boolean adaptiveAuthenticationChkBox() {
+		boolean flag = false;
+		flag = adaptiveAuthChkBx.isEnabled();
+		return flag;
 	}
 
 	public void verifyUiOperationStatus() {

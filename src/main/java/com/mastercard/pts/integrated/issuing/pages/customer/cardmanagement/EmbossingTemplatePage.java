@@ -116,19 +116,18 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 		switchToIframe(Constants.ADD_EMBOSS_TEMPLATE_FRAME);
 	}
 
-	public String enterEmbossingFileCode() {
-		if (MapUtils.fnGetInputDataFromMap("Embosscode") != null) {
-			enterValueinTextBox(EmbossingFileTemplateCodeTxt,
-					MapUtils.fnGetInputDataFromMap("Embosscode") + CustomUtils.randomAlphaNumeric(3).toUpperCase());
+	public String enterEmbossingFileCode(EmbossingFile embossingFile) {
+		if (embossingFile.getEmbossingTempCode().length() != 0) {
+			enterValueinTextBox(EmbossingFileTemplateCodeTxt, embossingFile.getEmbossingTempCode());
 		} else {
 			enterValueinTextBox(EmbossingFileTemplateCodeTxt, CustomUtils.randomNumbers(3));
 		}
 		return EmbossingFileTemplateCodeTxt.getAttribute("value");
 	}
 
-	public String enterEmbossingFileDecsription() {
-		if (MapUtils.fnGetInputDataFromMap("Embosscode") != null) {
-			enterValueinTextBox(DescriptionTxt, MapUtils.fnGetInputDataFromMap("EmbossDesc"));
+	public String enterEmbossingFileDecsription(EmbossingFile embossingFile) {
+		if (embossingFile.getEmbossingTempDescription().length() != 0) {
+			enterValueinTextBox(DescriptionTxt, embossingFile.getEmbossingTempDescription());
 		} else {
 			enterValueinTextBox(DescriptionTxt, "AutoEmboss");
 		}
@@ -136,7 +135,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 	}
 
 	public void selectFileType(EmbossingFile embossing) {
-		selectByVisibleText(FileTypeDDwn, embossing.getTemplateType());
+		selectByVisibleText(FileTypeDDwn, embossing.getEmbosstemplateType());
 	}
 
 	@Override
@@ -148,7 +147,8 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 		return publishErrorOnPage();
 	}
 
-	public void verifyEmbossingTemplateSuccess() {
+	public void verifyEmbossingTemplateSuccess(EmbossingFile embossingFile) {
+		String EmbossingFileName = "EmbossingInputTemplate";
 		if (!verifyErrorsOnEmbossingTemplatePage()) {
 			logger.info("Embossing Template Added Successfully");
 			SwitchToDefaultFrame();
@@ -164,6 +164,12 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 			switchToAddEmbossingTemplateFrame();
 			CustomUtils.ThreadDotSleep(3000);
 			clickSaveButton();
+			try {
+				editEmbossTemplate(MapUtils.fnGetInputDataFromMap("LegalType"), EmbossingFileName, embossingFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+				log.error(e);
+			}
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(CancelBtn);
@@ -208,8 +214,8 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 	public String addEmbossingGeneral(EmbossingFile embossing) {
 		String templateCode;
 		String EmbossingDesc;
-		templateCode = enterEmbossingFileCode();
-		EmbossingDesc = enterEmbossingFileDecsription();
+		templateCode = enterEmbossingFileCode(embossing);
+		EmbossingDesc = enterEmbossingFileDecsription(embossing);
 		selectFileType(embossing);
 		clickSaveButton();
 		waitForPageToLoad(getFinder().getWebDriver());
@@ -257,10 +263,10 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 		return flag;
 	}
 
-	public void editEmbossTemplate(String legalType, String excelName) throws InterruptedException {
-		retryUntilNoErrors(() -> menusubMenuPage.getEmbossingTemplate().click());
+	public void editEmbossTemplate(String legalType, String excelName, EmbossingFile embossingFile)
+			throws InterruptedException {
 		WebElement EditEmbossingTemp = getFinder().getWebDriver().findElement(By.xpath("//td[contains(.,'"
-				+ MapUtils.fnGetInputDataFromMap("Embosscode") + "')]/following::a[1]/img[@alt='Edit Record']"));
+				+ embossingFile.getEmbossingTempCode() + "')]/following::a[1]/img[@alt='Edit Record']"));
 		EditEmbossingTemp.click();
 		switchToIframe(Constants.EDIT_EMBOSS_TEMPLATE_FRAME);
 		ClickCheckBox(CheckSumChkBx, true);
@@ -276,29 +282,28 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 		for (int i = 1; i < map.size(); i++) {
 			SwitchToDefaultFrame();
 			switchToIframe(Constants.EDIT_EMBOSS_TEMPLATE_FRAME);
-			addWicketAjaxListeners(getFinder().getWebDriver());
 			clickAddSubdetails();
 			excelTestData.dataProviderIterator(map, String.valueOf(i));
 			String FieldToBeAdded = MapUtils.getIterativeDataFromDatamap("Template Fields");
 			String LengthOfField = MapUtils.getIterativeDataFromDatamap("Length");
-			SelectDropDownByValue(DrpDown, FieldToBeAdded);
-			if (LengthTxt.isEnabled()) {
-				LengthTxt.clearField();
-				enterValueinTextBox(LengthTxt, LengthOfField);
-			}
+			selectByVisibleText(DrpDown, FieldToBeAdded);
+			enterValueinTextBox(LengthTxt, LengthOfField);
+			CustomUtils.ThreadDotSleep(3000);
+			clickWhenClickable(SaveBtn);
+
 			if (FieldToBeAdded.equalsIgnoreCase(Constants.Legal_Id_String)) {
-				addWicketAjaxListeners(getFinder().getWebDriver());
-				SelectDropDownByValue(LegalIDTypeDDwn, legalType);
-				ClickButton(SaveBtn);
+				waitForPageToLoad(getFinder().getWebDriver());
+				// SelectDropDownByValue(LegalIDTypeDDwn, legalType);
+				selectByVisibleText(LegalIDTypeDDwn, legalType);
+				waitForLoaderToDisappear();
+				clickWhenClickable(SaveBtn);
 				break;
 			}
 			if (FieldToBeAdded.contains(Constants.Filler_String)) {
+				waitForLoaderToDisappear();
 				enterValueinTextBox(FillerValueTxt, enterFilter(Integer.valueOf(LengthOfField)));
 				clickSaveButton();
-			} else {
-				clickSaveButton();
 			}
-
 		}
 		SwitchToDefaultFrame();
 		switchToIframe(Constants.EDIT_EMBOSS_TEMPLATE_FRAME);
@@ -306,6 +311,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 	}
 
 	public String enterFilter(int fillerLenght) {
+		waitForPageToLoad(getFinder().getWebDriver());
 		String filler = "";
 		for (int i = 0; i < fillerLenght; i++) {
 			filler = filler + "|";
@@ -326,7 +332,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 		clickAddEmbossingTemplate();
 		addEmbossingGeneral(embossingfile);
 		clickAddSubdetails();
-		enterEmbossingFileCode();
+		enterEmbossingFileCode(embossingfile);
 		SelectDropDownByText(FieldDDwn, PINfield);
 		clickSaveButton();
 		addRecordPIN(FieldDDwn, pinTable);
