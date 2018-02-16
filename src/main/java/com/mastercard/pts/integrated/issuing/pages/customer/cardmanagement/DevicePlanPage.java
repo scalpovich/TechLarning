@@ -382,6 +382,10 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:issueDevicePair:checkBoxComponent")
 	private MCWebElement issuePairDevicesChkBx;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "intTxnAllowed:checkBoxComponent")
+	private MCWebElement intTxnAllowedChkBx;
+	
 
 	public void AddDevicePlan() {
 		clickWhenClickable(AddDevicePlanBtn);
@@ -600,7 +604,11 @@ public class DevicePlanPage extends AbstractBasePage {
 	public void clickEcomCheckBox() {
 		ClickCheckBox(ecomChkBx, true);
 	}
-
+	
+	public void clickIntTxnAllowedCheckBox() {
+		ClickCheckBox(intTxnAllowedChkBx, true);
+	}
+	
 	public void clickGenerateCvv() {
 		ClickCheckBox(generateCvvChkBx, true);
 	}
@@ -952,6 +960,10 @@ public class DevicePlanPage extends AbstractBasePage {
 				&& "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 			WebElementUtils.enterText(pinRetryLimitTxt, devicePlan.getPinRetryLimit());
 		}
+		
+		if (devicePlan.getAllowInternationalTransaction().equalsIgnoreCase(STATUS_YES))
+			clickIntTxnAllowedCheckBox();
+			
 		clickIframeNextButton();
 		clickIframeNextButton();
 
