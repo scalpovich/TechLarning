@@ -283,7 +283,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setEmvBelowATCRange(provider.getString(EMV_BELOW_ATC_RANGE));
 		plan.setEmvAboveATCRange(provider.getString(EMV_ABOVE_ATC_RANGE));
 		plan.setFillEMVPlan(provider.getString(FILL_EMV_PLAN));
-		plan.setAllowInternationalTransaction(DP_ALLOW_INTERNATIONAL_TRANSACTIONS);
+		plan.setAllowInternationalTransaction(provider.getString(DP_ALLOW_INTERNATIONAL_TRANSACTIONS));
 		return plan;
 	}
 
@@ -379,7 +379,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setEmvPlansIcvvOption(provider.getString(DP_EMV_PLANS_ICVV_OPTION));
 		plan.setEmvPlanUcol(provider.getString(DP_EMV_PLAN_UCOL));
 		plan.setEmvPlanUcota(provider.getString(DP_EMV_PLAN_UCOTA));
-		plan.setAllowInternationalTransaction(DP_ALLOW_INTERNATIONAL_TRANSACTIONS);
+		plan.setAllowInternationalTransaction(provider.getString(DP_ALLOW_INTERNATIONAL_TRANSACTIONS));
 		return plan;
 	}
 	
