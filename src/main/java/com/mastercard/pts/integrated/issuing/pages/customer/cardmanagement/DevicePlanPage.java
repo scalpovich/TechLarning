@@ -956,8 +956,8 @@ public class DevicePlanPage extends AbstractBasePage {
 		}			
 		checkExpiryDate();		
 		
-		if(devicePlan.getAllowInternationalTransaction().equalsIgnoreCase(STATUS_YES))
-			clickIntTxnAllowedCheckBox();
+//		if(devicePlan.getAllowInternationalTransaction().equalsIgnoreCase(STATUS_YES))
+//			clickIntTxnAllowedCheckBox();
 			
 		WebElementUtils.checkCheckbox(ecommAllowedChkBx, devicePlan.isEcommerceAllowed());
 		if (!devicePlan.getDeviceType().equals(DeviceType.STATIC_VIRTUAL_CARD)
