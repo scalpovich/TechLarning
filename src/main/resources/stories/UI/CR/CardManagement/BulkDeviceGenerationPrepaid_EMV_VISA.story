@@ -38,6 +38,7 @@ When user navigates to General in Helpdesk
 And user search for device on search screen for product type Prepaid
 Then pair devices should be generated for each of the processed Device and the paired device should be inactive state
 Then user verifies the Pre generated flag at device level should be set to Y once the device created
+Then user logouts from customer portal
 Then user onboard the Device through Agent Portal and Activate through HelpDesk
 
 
@@ -84,6 +85,7 @@ When user navigates to General in Helpdesk
 And user search for device on search screen for product type Prepaid
 Then pair devices should be generated for each of the processed Device and the paired device should be inactive state
 Then user verifies the Pre generated flag at device level should be set to Y once the device created
+Then user logouts from customer portal
 Then user onboard the Device through Agent Portal and Activate through HelpDesk
 
 

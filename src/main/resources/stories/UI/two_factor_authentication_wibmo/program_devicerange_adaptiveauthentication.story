@@ -35,6 +35,7 @@ Then Adaptive Authentication CheckBox should be Enabled
 When user creates a Device Range for product Prepaid
 When user edits the device range
 Then Verify for Device Range Adaptive Authentication CheckBox should be Enabled
+!-- Then user should be able to create EMV Card for Prepaid product for Individual customer
 
 Scenario:3 validate two factor authentication at processing center
 
@@ -42,7 +43,7 @@ Meta:
 @TCName TCEditInstitute
 @testDataFileName testdata
 @sheetName Institute
-@edit_institute_wibmo
+@edit_institute_wibmo2
 Given login to bank as a Bankadmin
 When user edits institution to disable two factor authentication
 Then user logouts from customer portal
@@ -52,7 +53,7 @@ Meta:
 @TCName TC264306_Embossing File Generation
 @testDataFileName testdata
 @sheetName S205014
-@edit_institute_wibmo
+@edit_institute_wibmo2
 Given login to portal as existing bank as a Customeruser
 When user creates a Open loop wallet plan of default type for program Retail General Purpose for Prepaid
 When user creates an Embossing File Template

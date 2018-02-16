@@ -300,7 +300,7 @@ public class InstitutionPage extends AbstractBasePage {
 
 	public void selectACSVendor() {
 		InstitutionCreation institutioncreation = context.get("institutionData");
-		WebElementUtils.selectDropDownByVisibleText(adaptiveEcommFlagDwn, institutioncreation.getAscVendor());
+		WebElementUtils.selectDDByVisibleText(adaptiveEcommFlagDwn, institutioncreation.getAscVendor());
 	}
 
 	public void disableACSVendor() {

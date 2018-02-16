@@ -39,7 +39,7 @@ When user navigates to General in Helpdesk
 And user search for device on search screen for product type Prepaid
 Then pair devices should be generated for each of the processed Device and the paired device should be inactive state
 And user verifies the Pre generated flag at device level should be set to Y once the device created
-!-- Then user logout from customer portal
+Then user logouts from customer portal
 Then user onboard the Device through Agent Portal and Activate through HelpDesk
 
 Scenario:2 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Retail NFC MAGSTRIPE
@@ -84,7 +84,7 @@ When user navigates to General in Helpdesk
 And user search for device on search screen for product type Prepaid
 Then pair devices should be generated for each of the processed Device and the paired device should be inactive state
 And user verifies the Pre generated flag at device level should be set to Y once the device created
-!-- Then user logout from customer portal
+Then user logouts from customer portal
 Then user onboard the Device through Agent Portal and Activate through HelpDesk
 
 Scenario:4 - Verify that the Users must be able to create bulk device production request from the system successfully for MC Retail NFC MAGSTRIPE

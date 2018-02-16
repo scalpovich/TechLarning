@@ -299,6 +299,7 @@ public class DeviceRangePage extends AbstractBasePage {
 	}
 
 	public void addDeviceRangeDetails() {
+		CustomUtils.ThreadDotSleep(3000);
 		enterFromDeviceNo();
 		enterToDeviceNo();
 	}

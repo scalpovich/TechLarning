@@ -367,7 +367,8 @@ public class ProgramPage extends AbstractBasePage {
 		boolean flag = false;
 		flag = adaptiveAuthenticationCheckBx.isEnabled();
 		if (flag == true)
-			clickWhenClickable(save);
+			clickWhenClickable(adaptiveAuthenticationCheckBx);
+		clickWhenClickable(save);
 		return flag;
 	}
 
