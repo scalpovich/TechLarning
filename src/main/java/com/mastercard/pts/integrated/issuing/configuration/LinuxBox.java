@@ -46,6 +46,7 @@ public class LinuxBox implements RemoteConnectionDetails {
 		String[] temp = null;
 		try {
 			fileName = LinuxUtils.getFileAbsolutePath(this, lokupForFile);
+			MiscUtils.reportToConsole("fileName : " + fileName);
 			temp = fileName.split("\n");
 			for (int i = 0; i < temp.length; i++) {
 				if (temp[i].contains(whatAreWeLookingFile)) {

@@ -380,6 +380,26 @@ public class ProgramSetupSteps {
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidAlongWithActivationCodeWithoutPinForAnInterface(String deviceType) {
 		// composite step
 	}
+	
+	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" \"Manual\" activation code for card with pin for an interface")
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", 
+			"When User fills Marketing Message Plan for prepaid product",
+			"When User fills Prepaid Statement Plan", 
+			"When User fills MCC Rules for prepaid product", 
+			"When User fills Dedupe Plan", 
+			"When User fills Transaction Plan for prepaid product", 
+			"When User fills Transaction Limit Plan for prepaid product", 
+			"When User fills Document Checklist Screen for prepaid product",  
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", 
+			"When User fills Device Event Based Fee Plan for prepaid product", 
+			"When User fills Device Plan for  \"prepaid\" \"<deviceType>\" along with \"Manual\" activation mode for card", 
+			"When User fills Wallet Plan for prepaid product", 
+			"When User fills Program section for prepaid product for an interface", 
+			"When User fills Business Mandatory Fields Screen for prepaid product", 
+			"When User fills Device Range section for prepaid product for an interface" })
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidAlongWithActivationCodeWithPinForAnInterface(String deviceType) {
+		// composite step
+	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin for specific interface")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
@@ -487,6 +507,16 @@ public class ProgramSetupSteps {
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		programSetupWorkflow.createDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+	@When("When User fills Device Plan for  \"prepaid\" \"<deviceType>\" along with \"Manual\" activation mode for card")
+	public void whenUserFillsDevicePlanAlongWithActivationcodeWithPin(String productType, String deviceType, String activationMode) {
+		settingDevicePlanTestData(productType, deviceType); // call to re-usable method 
+		//modifiying the activation mode into the devicePlan based on the $activationMode parameter instead of creating new method. 
+		//Avoiding Sonar code duplication
+		devicePlan.setActivationMode(activationMode);
+
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}

@@ -1599,8 +1599,23 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		loadVisaTestGroupTemplate();
 
 		selectVisaTestCaseToMakeDataElementChange(transactionName);
+		
+		//to handle pin based scenarios, we need to modify pin number from Message Editor
+		if(transaction.toLowerCase().contains("pin")) {
+			Device device = context.get(ContextConstants.DEVICE);
+			setPinValueForTransction(transactionName, device.getPinNumberForTransaction());
+		}
 
 		executeVisaTest();
+	}
+
+	private void setPinValueForTransction(String element, String pinNumber) {
+		winiumClickOperation(element);
+		pressDownArrow(2);
+		executeAutoITExe("OpenMessageEditor.exe");
+		winiumClickOperation("F2");
+		pressDownArrow(2);
+		editFeildValues("F52", pinNumber);
 	}
 
 	private void navigateToVariableManagerAndLoadTestGroupTemplate() { 
@@ -1636,8 +1651,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private void editFeildValues(String fieldNumber, String value) {
-		MiscUtils.reportToConsole(" ******* editFeildValues ******" );     
-		activateVts();
 		String parameter =   "\"" + value + PATH_BUILDER + "\"";
 		winiumClickOperation(fieldNumber);
 		executeAutoITExe("SetValueInVisaMessageEditor.exe " + parameter);

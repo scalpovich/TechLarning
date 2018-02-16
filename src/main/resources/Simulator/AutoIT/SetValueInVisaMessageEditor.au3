@@ -21,5 +21,8 @@
 	Sleep(1000)
 	ControlClick("Field Editor", '', "[CLASS:Button; INSTANCE:11]")
 
+
 	WinActivate("VTS", "&Yes")
 	ControlClick("Field Editor", '', "&Yes")
+
+    ControlClick("Message Editor", "", "[CLASS:Button; INSTANCE:5]")
