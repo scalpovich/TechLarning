@@ -21,8 +21,8 @@ When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 When device has "normal" status
 When user activates device through helpdesk
-Then connection to FINSim is established
 When Pin Offset file batch was generated successfully
+Then connection to FINSim is established
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 When connection to VISA is established
