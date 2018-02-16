@@ -50,6 +50,8 @@ public class LoadFromFileUploadSteps {
 
 	private String jobId;
 	
+	private String jobStatus;
+	
 	private FileCreation file;
 	
 	@When("user processes batch for $type")
@@ -167,8 +169,12 @@ public class LoadFromFileUploadSteps {
         batch.setBatchFileName(file.getFilename());
 		batch.setProductType(ProductType.fromShortName(type));
 		HashMap<String, String> hm = (HashMap<String, String>) loadFromFileUploadWorkflow.processUploadBatch(batch);
-		assertEquals("SUCCESS [2]",hm.get("BatchStatus"));	
-		jobId =hm.get("JobId");			
-
+		jobStatus = hm.get("BatchStatus");
+		jobId = hm.get("JobId");			
+}
+	
+	@Then("batch is successful")
+	public void thenBatchisSuccesful(){
+		assertEquals("SUCCESS [2]", jobStatus);
 	}
 }
