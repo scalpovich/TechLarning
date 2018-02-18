@@ -12,6 +12,7 @@ import com.mastercard.pts.integrated.issuing.domain.agent.services.CurrencySetup
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -47,6 +48,7 @@ public class CurrencySetupPage extends ServicesAbstractPage {
 	}
 	
 	public void clickSearchButtonWithDeviceNumber() {
+		SimulatorUtilities.wait(3000);//this to wait till the search button is rendered
 		new WebDriverWait(driver(), timeoutInSec).until(
 				WebElementUtils.elementToBeClickable(searhBtn)).click();
 	}
@@ -58,6 +60,7 @@ public class CurrencySetupPage extends ServicesAbstractPage {
 		.click();
 	}
 	
+	@Override
 	public void clickSubmitButton() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		new WebDriverWait(driver(), timeoutInSec)

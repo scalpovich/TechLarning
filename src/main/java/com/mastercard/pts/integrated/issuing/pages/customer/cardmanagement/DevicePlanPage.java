@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CardType;
 import com.mastercard.pts.integrated.issuing.domain.DeviceType;
@@ -542,22 +541,24 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void checkGenerateCVV(DevicePlan deviceplan) {
-		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) 
-		&& !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) 
-		&& !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
-        	Assert.assertTrue("Generate CVV/CVC checkbox is enabled", generateCvvChkBx.isEnabled());
+		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
+				&& !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
+				&& !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+			Assert.assertTrue("Generate CVV/CVC checkbox is enabled", generateCvvChkBx.isEnabled());
 		} else {
-			Assert.assertTrue("Generate CVV/CVC checkbox is disabled for " + deviceplan.getDeviceType(), !generateCvvChkBx.isEnabled());
+			Assert.assertTrue("Generate CVV/CVC checkbox is disabled for " + deviceplan.getDeviceType(),
+					!generateCvvChkBx.isEnabled());
 		}
 	}
 
 	public void checkGenerateCVV2(DevicePlan deviceplan) {
-		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) 
-		&& !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
-		 && !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
-            Assert.assertTrue("Generate CVV2/CVC2 checkbox is enabled", generateCvv2ChkBx.isEnabled());
+		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
+				&& !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
+				&& !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+			Assert.assertTrue("Generate CVV2/CVC2 checkbox is enabled", generateCvv2ChkBx.isEnabled());
 		} else {
-			Assert.assertTrue("Generate CVV2/CVC2 checkbox is disabled for " + deviceplan.getDeviceType(), !generateCvv2ChkBx.isEnabled());
+			Assert.assertTrue("Generate CVV2/CVC2 checkbox is disabled for " + deviceplan.getDeviceType(),
+					!generateCvv2ChkBx.isEnabled());
 		}
 	}
 

@@ -52,6 +52,7 @@ public class LoadBalanceApprovePage extends TransactionsAbstractPage {
 	
 	@Override
 	public void clickSearchButton() {
+		SimulatorUtilities.wait(3000);//this to wait till the search button is rendered
 		new WebDriverWait(driver(), timeoutInSec).until(
 				WebElementUtils.elementToBeClickable(searchBtn)).click();
 	}
