@@ -166,6 +166,7 @@ public class DeviceRangePage extends AbstractBasePage {
 		if (!MapUtils.fnGetInputDataFromMap("Program").isEmpty()) {
 			selectByVisibleText(ProgramDDwn, MapUtils.fnGetInputDataFromMap("Program"));
 		} else {
+			logger.info("Program :{}",program.getProgram());
 			selectByVisibleText(ProgramDDwn, program.getProgram());
 		}
 

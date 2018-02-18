@@ -34,6 +34,7 @@ public class Institution {
 	private String collectPortalStatus;
 	private String institutionCurrency;
 	private String portalAdminId;
+	private String codeCredit;
 	
 	public String getName() {
 		return name;
@@ -218,6 +219,13 @@ public class Institution {
 		Institution inst=new Institution();
 		inst.setAbbreviation("xyz");
 		return inst;
+	}
+	
+	public String getCodeCredit() {
+		return codeCredit;
+	}
+	public void setCodeCredit(String codeCredit) {
+		this.codeCredit = codeCredit;
 	}
 	
 	@Override

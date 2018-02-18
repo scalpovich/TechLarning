@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardBillingCycle;
@@ -91,7 +91,7 @@ public class CreditCardBillingCyclePage extends AbstractBasePage {
 			WebElementUtils.enterText(descriptionTxt,
 					creditCardBillingCycle.getDescription());
 			logger.info("creditCardBillingCycleCodeAndDescription : {}",creditCardBillingCycle.buildDescriptionAndCode());
-			context.put(ContextConstants.BILLING_CYCLE, creditCardBillingCycle.buildDescriptionAndCode());
+			context.put(CreditConstants.BILLING_CYCLE, creditCardBillingCycle.buildDescriptionAndCode());
 			WebElementUtils.enterText(billingCycleDayTxt,
 					creditCardBillingCycle.getBillingCycleDay());
 			WebElementUtils.enterText(recordsPerBatchForProcessingTxt,
@@ -109,15 +109,6 @@ public class CreditCardBillingCyclePage extends AbstractBasePage {
 		return creditCardPlans.getErrorStatus();
 	}
 
-	/*private void performSearchOperationOnMainScreen(
-			CreditCardBillingCycle creditCardBillingCycle) {
-		WebElementUtils.enterText(billingPlanCodeOnMainScreenTxt,
-				creditCardBillingCycle.getBillingPlanCode());
-		WebElementUtils.enterText(descriptionOnMainScreenTxt,
-				creditCardBillingCycle.getDescription());
-		clickSearchButton();
-	}*/
-	
 		private void checkDuplicacyOfBillingPlanCode(CreditCardBillingCycle creditCardBillingCycle) {
 		if(!isNoRecordsFoundInTable())
 		{

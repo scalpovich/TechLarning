@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 
 
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardPaymentPriority;
@@ -114,7 +114,7 @@ public class CreditCardPaymentPriorityPage extends AbstractBasePage {
 			WebElementUtils.enterText(paymentPriorityPlanCodeTxt, creditCardPaymentPriority.getPaymentPriorityPlanCode());
 			WebElementUtils.enterText(descriptionTxt, creditCardPaymentPriority.getDescription());
 			logger.info("creditPaymentPriorityCodeAndDescription : {}",creditCardPaymentPriority.buildDescriptionAndCode());
-			context.put(ContextConstants.PAYMENT_PRIORITY, creditCardPaymentPriority.buildDescriptionAndCode());
+			context.put(CreditConstants.PAYMENT_PRIORITY, creditCardPaymentPriority.buildDescriptionAndCode());
 			WebElementUtils.enterText(cashTxt, creditCardPaymentPriority.getCash());
 			WebElementUtils.enterText(purchaseTxt, creditCardPaymentPriority.getPurchase());
 			WebElementUtils.enterText(uniqueTxt, creditCardPaymentPriority.getUnique());
@@ -136,13 +136,6 @@ public class CreditCardPaymentPriorityPage extends AbstractBasePage {
 		return creditCardPlans.getErrorStatus();
 	}
 
-	/*private void performSearchOperationOnMainScreen(
-			CreditCardPaymentPriority creditCardPaymentPriority) {
-		WebElementUtils.enterText(paymentPriorityPlanCodeOnMainScreenTxt,
-				creditCardPaymentPriority.getPaymentPriorityPlanCode());
-		clickSearchButton();
-	}*/
-	
 	private void checkDuplicacyOfPaymentPriorityPlanCode(CreditCardPaymentPriority creditCardPaymentPriority) {
 		if(!isNoRecordsFoundInTable())
 		{

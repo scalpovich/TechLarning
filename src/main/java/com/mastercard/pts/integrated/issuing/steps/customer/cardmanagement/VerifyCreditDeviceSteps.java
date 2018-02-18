@@ -11,7 +11,7 @@ public class VerifyCreditDeviceSteps {
 
 	@Autowired
 	VerifyCreditApplicationFlows verifyCreditApplicationFlows;
-	@When("user verify the credit application device")
+	@When("user verifies the credit application device")
 	public void verifyCreditDeviceAfterApplicaionCreation()
 	{
 		verifyCreditApplicationFlows.verifyCreditApplication();

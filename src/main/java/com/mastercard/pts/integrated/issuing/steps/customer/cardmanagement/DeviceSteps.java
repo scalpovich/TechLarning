@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -136,7 +137,7 @@ public class DeviceSteps {
 		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 
 		deviceWorkflow.createDeviceUsingApplication(device);
-		context.put(ContextConstants.APPLICATION, device);
+		context.put(CreditConstants.APPLICATION, device);
 	}
 		
 		@Then("$type device is created using new device screen")

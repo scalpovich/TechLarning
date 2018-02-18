@@ -19,6 +19,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Cred
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardPaymentBounceReason;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardPaymentPriority;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardTransactionRulePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DedupePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlanDetails;
@@ -686,8 +687,8 @@ public class ProgramSetupSteps {
 		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
 		walletPlan.setProductType(ProductType.fromShortName(type));
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-			walletPlan.setCreditPlan(/*creditCardCreditPlan.buildAbbreviationAndCode()*/context.get(ContextConstants.CREDIT_PLAN));
-			walletPlan.setBillingCyleCode(/*creditCardBillingCycle.buildDescriptionAndCode()*/context.get(ContextConstants.BILLING_CYCLE));
+			walletPlan.setCreditPlan(context.get(CreditConstants.CREDIT_PLAN));
+			walletPlan.setBillingCyleCode(context.get(CreditConstants.BILLING_CYCLE));
 		}
 		programSetupWorkflow.createWalletPlan(walletPlan);
 	}
@@ -699,8 +700,8 @@ public class ProgramSetupSteps {
 		walletPlan.setProgramType(programtype);
 		
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-			walletPlan.setCreditPlan(/*creditCardCreditPlan.buildAbbreviationAndCode()*/context.get(ContextConstants.CREDIT_PLAN));
-			walletPlan.setBillingCyleCode(/*creditCardBillingCycle.buildDescriptionAndCode()*/context.get(ContextConstants.BILLING_CYCLE));
+			walletPlan.setCreditPlan(context.get(CreditConstants.CREDIT_PLAN));
+			walletPlan.setBillingCyleCode(context.get(CreditConstants.BILLING_CYCLE));
 		}
 		programSetupWorkflow.createWalletPlan(walletPlan);
 	}
@@ -931,9 +932,9 @@ public class ProgramSetupSteps {
 		 * TransactionRulePlan & PaymentPriorityPlan are expected to come from related methods hence fetching data from them and setting them again below into setTransactionRulePlan &
 		 * setPaymentPriorityPlan
 		 */
-		creditCardCreditPlan.setTransactionRulePlan(/*transactionRulePlanTestDataObject.buildDescriptionAndCode()*/context.get(ContextConstants.TRANSACTION_RULE));
+		creditCardCreditPlan.setTransactionRulePlan(context.get(CreditConstants.TRANSACTION_RULE));
 
-		creditCardCreditPlan.setPaymentPriorityPlan(/*paymentPrioritytestDataObject.buildDescriptionAndCode()*/context.get(ContextConstants.PAYMENT_PRIORITY));
+		creditCardCreditPlan.setPaymentPriorityPlan(context.get(CreditConstants.PAYMENT_PRIORITY));
 
 		programSetupWorkflow.fillCreditCardCreditPlan(creditCardCreditPlan);
 	}

@@ -41,6 +41,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -53,7 +54,6 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.AbstractPage;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 
 public abstract class AbstractBasePage extends AbstractPage {
 
@@ -613,7 +613,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	protected void waitAndSearchForRecordToExist() {
 		waitAndSearchForRecordToAppear();
-        context.put(ContextConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
+        context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
 		selectFirstRecord();
 		clickProcessSelectedButton();
 	}
@@ -1277,8 +1277,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public void ClickButton(MCWebElement BtnName) {
 		WebElementUtils.scrollDown(driver(), 0, 250);
-		BtnName.click();
-		// addWicketAjaxListeners(getFinder().getWebDriver());
+		clickWhenClickable(BtnName);
+		//BtnName.click();
+		//addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
 	public void ClickCheckBox(MCWebElement optionChkBox, boolean value) {

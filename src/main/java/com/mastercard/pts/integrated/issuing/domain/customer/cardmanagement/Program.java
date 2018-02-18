@@ -300,6 +300,13 @@ public class Program implements HasCodeAndDescription {
 		setMaxBalanceWithoutKYC(MapUtils.fnGetInputDataFromMap("MaximumBalancewithoutKYC"));
 		setLoadsWithoutKyc(MapUtils.fnGetInputDataFromMap("LoadsWithoutKYC"));
 		setInstitute(MapUtils.fnGetInputDataFromMap("institute"));
+		setCreditLimit(MapUtils.fnGetInputDataFromMap("creditLimit"));
+		setMaximumCreditLimit(MapUtils.fnGetInputDataFromMap("maxCreditLimit"));
+		setCashLimitType(MapUtils.fnGetInputDataFromMap("cashLimitType"));
+		setCashLimitAmount(MapUtils.fnGetInputDataFromMap("cashLimitAmount"));
+		setCashLimitReset(MapUtils.fnGetInputDataFromMap("cashLimitReset"));
+		setAddOnLimitReset(MapUtils.fnGetInputDataFromMap("addOnLimitReset"));
+		
 
 	}
 

@@ -18,7 +18,6 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -39,9 +38,7 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	protected  static final Logger logger = LoggerFactory.getLogger(DeviceGenerationBatchPage.class);
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview-div")
 	private MCWebElement batchNoColumn;
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[2]/div[4]/div[2]/div[2]/form[1]/div[2]/div[4]/table/tbody/tr/td[10]/span/input")
-	private MCWebElement closeBatchRecord;
-
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement processSelected;
 	
@@ -53,15 +50,6 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Device Generation']")
 	private MCWebElement deviceGenerationLink;
-	
-
-	public void closebatch() {
-		waitForLoaderToDisappear();
-		closeBatchRecord.click();
-		CustomUtils.ThreadDotSleep(1000);
-		processSelected.click();
-		CustomUtils.ThreadDotSleep(1000);
-	}
 
 	public List<String> allBatchNumberRetrieval()
 	{

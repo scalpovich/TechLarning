@@ -8,8 +8,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -56,7 +56,7 @@ TestContext context;
 	//table[@class='dataview']//tbody/tr[1]/td[8]/span//img
 
 	public void verifyapplication() {
-		Device device=context.get(ContextConstants.APPLICATION);
+		Device device=context.get(CreditConstants.APPLICATION);
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
 		WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDatePicker, LocalDate.now());
@@ -66,7 +66,7 @@ TestContext context;
 	public String editAndVerifyApplication()
 	{
 		waitForPageToLoad(driver());
-		clickWhenClickableDoNotWaitForWicket(editImg);
+		clickWhenClickable(editImg);
 		switchToIframe(VERIFY_FRAME);
 		clickWhenClickable(verifyBtn);
 		verifyOperationStatus();

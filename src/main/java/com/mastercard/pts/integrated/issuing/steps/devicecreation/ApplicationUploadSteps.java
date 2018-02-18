@@ -15,6 +15,8 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreP
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SearchApplicationDetails;
+import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
+import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessFlows;
@@ -48,9 +50,20 @@ public class ApplicationUploadSteps {
 	@Autowired
 	private Device device;
 	
-	@When("user creates $application_upload_file batch file and uploads it on server for $customerType")
-	public void createFileForApplicationUpload(@Named("application_upload_file") String batchName,@Named("customerType") String customerType) throws Exception{	
-		 String fileName=fileCreation.createApplicationUploadFile(program.getInstitute(),customerType);
+	@Autowired
+	private DataProvider provider;
+	
+	@When("user creates $application_upload_file batch file and uploads it on server for $customerType for $cardType")
+	public void createFileForApplicationUpload(@Named("application_upload_file") String batchName,@Named("customerType") String customerType,@Named("cardType")String cardType) throws Exception{
+		 String fileName="";
+		if(cardType.equalsIgnoreCase("prepaid"))
+		{
+		 fileName=fileCreation.createApplicationUploadFile(Institution.createWithProvider(provider).getCode()/*program.getInstitute()*/,customerType,cardType);
+		}
+		else if(cardType.equalsIgnoreCase("credit"))
+		{
+			 fileName=fileCreation.createApplicationUploadFile(Institution.createWithProvider(provider).getCodeCredit(),customerType,cardType);	
+		}
 		processBatch.setJoBID(processBatchesFlows.processUploadBatches(batchName, fileName));
 			//CustomUtils.ThreadDotSleep(8000);
 		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(processBatch, fileName));

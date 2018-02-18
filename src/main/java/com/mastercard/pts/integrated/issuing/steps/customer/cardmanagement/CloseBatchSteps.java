@@ -11,7 +11,7 @@ public class CloseBatchSteps {
 @Autowired
 CloseBatchFlows closeBatchFlows;
 
-@When("user process close batch for new Application")
+@When("user processes close batch for new Application")
 public void closeBatchExecutionForNewApplication()
 {
 	closeBatchFlows.closeBatchExecution();

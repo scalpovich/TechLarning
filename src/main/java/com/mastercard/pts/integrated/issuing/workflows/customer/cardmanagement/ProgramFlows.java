@@ -13,6 +13,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Prog
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProgramPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.MenuFlows;
 
 @Component
@@ -90,6 +91,23 @@ public class ProgramFlows extends MenuFlows {
 		program.setProgram(PROGRAM);
 		programpage.clickFinishButton();
 		return PROGRAM;
+	}
+	
+	public String createprogramCredit(DeviceCreation deviceCreation, Program program) {
+		waitForElementVisible(menuSubMenuPage.getCardManagement());
+		programpage = navigator.navigateToPage(ProgramPage.class);
+		programpage.clickAddProgram();
+		String PROGRAM = programpage.addProgramGeneral(deviceCreation, program);
+		programpage.clickNextButton();
+		programpage.selectWalletPLan(program);
+		programpage.selectDevicePlan(program);
+		programpage.selectOtherPlans1();
+		programpage.clickNextButton();
+		programpage.fillDataForCreditCard(program);
+		programpage.clickNextButton();
+		program.setProgram(PROGRAM);
+		programpage.clickFinishButton();
+	    return PROGRAM;
 	}
 
 	public void VerifyProgramSuccess() {

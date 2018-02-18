@@ -11,7 +11,7 @@ public class DeviceGenerationBatchSteps {
 @Autowired
 DeviceGenerationBatchFlows deviceGenerationBatchFlows;
 
-@When("user process deviceGeneration batch for new Application")
+@When("user processes deviceGeneration batch for new Application")
 public void closeBatchExecutionForNewApplication()
 {
 	deviceGenerationBatchFlows.deviceGenerationBatchExecution();

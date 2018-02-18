@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardTransactionRulePlan;
@@ -77,7 +77,7 @@ public class CreditCardTransactionRulePlanPage extends AbstractBasePage {
 					WebElementUtils.enterText(descriptionTxt,
 							creditCardTransactionRulePlan.getDescription());
 					logger.info("TransactionRulePlanCodeAndDescription : {}",creditCardTransactionRulePlan.buildDescriptionAndCode());
-					context.put(ContextConstants.TRANSACTION_RULE, creditCardTransactionRulePlan.buildDescriptionAndCode());
+					context.put(CreditConstants.TRANSACTION_RULE, creditCardTransactionRulePlan.buildDescriptionAndCode());
 					clickAddDetailsButton();
 
 					if (!verifyAlreadyExistsAndClickCancel()) {

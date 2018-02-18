@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ApplicationBusinessMandatoryFields;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ApplicationDocumentChecklist;
@@ -14,6 +13,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Cred
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardPaymentBounceReason;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardPaymentPriority;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardTransactionRulePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DedupePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceJoiningAndMemberShipFeePlan;
@@ -133,7 +133,7 @@ public class ProgramSetupWorkflow {
 		CreditCardBillingCyclePage page = navigator.navigateToPage(CreditCardBillingCyclePage.class);
 		Boolean billingCycleStatus=page.addBillingCycle(creditCardBillingCycle);
 		logger.info("billingCycleStatus : {} ", billingCycleStatus);
-		context.put(ContextConstants.BILLING_CYCLE_CODE_ERROR_STATUS,billingCycleStatus);
+		context.put(CreditConstants.BILLING_CYCLE_CODE_ERROR_STATUS,billingCycleStatus);
 	}
 	
 	public void fillCreditCardPaymentPriority(CreditCardPaymentPriority creditCardPaymentPriority)
@@ -141,7 +141,7 @@ public class ProgramSetupWorkflow {
 		CreditCardPaymentPriorityPage page = navigator.navigateToPage(CreditCardPaymentPriorityPage.class);
 		Boolean paymentPriorityStatus=page.addPaymentPriority(creditCardPaymentPriority);
 		logger.info("paymentPriorityStatus : {} ", paymentPriorityStatus);
-		context.put(ContextConstants.PAYMENT_PRIORITY_STATUS,paymentPriorityStatus);
+		context.put(CreditConstants.PAYMENT_PRIORITY_STATUS,paymentPriorityStatus);
 	}
 	
 	public void fillCreditCardPaymentBounceReason(CreditCardPaymentBounceReason creditCardPaymentBounceReason)
@@ -149,7 +149,7 @@ public class ProgramSetupWorkflow {
 		CreditCardPaymentBounceReasonPage page = navigator.navigateToPage(CreditCardPaymentBounceReasonPage.class);
 		Boolean paymentBounceStatus=page.addPaymentBounceReason(creditCardPaymentBounceReason);
 		logger.info("paymentBounceStatus : {} ", paymentBounceStatus);
-		context.put(ContextConstants.PAYMENT_BOUNCE_STATUS,paymentBounceStatus);
+		context.put(CreditConstants.PAYMENT_BOUNCE_STATUS,paymentBounceStatus);
 	}
 
 	public void fillCreditCardTransactionRulePlancode(CreditCardTransactionRulePlan creditCardTransactionRulePlancode)
@@ -157,7 +157,7 @@ public class ProgramSetupWorkflow {
 		CreditCardTransactionRulePlanPage page = navigator.navigateToPage(CreditCardTransactionRulePlanPage.class);
 		Boolean transactionPlanStatus=page.addTransactionRulePlan(creditCardTransactionRulePlancode);
 		logger.info("transactionPlanStatus : {} ", transactionPlanStatus);
-		context.put(ContextConstants.TRANSACTION_PLAN_ERROR_STATUS, transactionPlanStatus);
+		context.put(CreditConstants.TRANSACTION_PLAN_ERROR_STATUS, transactionPlanStatus);
 	}
 	
 	public void fillCreditCardCreditPlan(CreditCardCreditPlan creditCardCreditPlan)
@@ -165,7 +165,7 @@ public class ProgramSetupWorkflow {
 		CreditCardCreditPlanPage page = navigator.navigateToPage(CreditCardCreditPlanPage.class);
 		Boolean creditPlanStatus=page.addCreditPlan(creditCardCreditPlan);
 		logger.info("creditPlanStatus : {} ", creditPlanStatus);
-		context.put(ContextConstants.CREDIT_PLAN_CODE_ERROR_STATUS, creditPlanStatus);
+		context.put(CreditConstants.CREDIT_PLAN_CODE_ERROR_STATUS, creditPlanStatus);
 	}
 	
 	public void createDedupePlan(DedupePlan dedupePlan){

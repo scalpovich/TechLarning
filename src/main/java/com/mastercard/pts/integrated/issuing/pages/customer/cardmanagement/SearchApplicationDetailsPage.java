@@ -3,14 +3,13 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.time.LocalDate;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SearchApplicationDetails;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.InstitutionCreationPageNew;
@@ -18,8 +17,8 @@ import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManag
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
-import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
@@ -92,7 +91,7 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 	
 	public String searchApplicationNumber()
 	{
-		Device device=context.get(ContextConstants.APPLICATION);
+		Device device=context.get(CreditConstants.APPLICATION);
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
 		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDate, LocalDate.now());

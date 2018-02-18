@@ -14,8 +14,11 @@ public class ApproveRejectApplicationFlows {
 	public String approveRejectCreditApplication()
 	{
 		ApproveRejectPage approveRejectPage = navigator.navigateToPage(ApproveRejectPage.class);
-		approveRejectPage.approveRejectApplication();
-		String message=approveRejectPage.approveApplication();
+		approveRejectPage.enterApplicationNumber();
+		approveRejectPage.selectFromAndToDate();
+		approveRejectPage.clickEditImageForTheREcordDisplayed();
+		approveRejectPage.approveButtonClick();
+		String message=approveRejectPage.getApplicationNumbere();
 		return message;
 	}
 }

@@ -10,11 +10,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
@@ -207,7 +208,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 		
 
 	public void processDeviceProductionBatchNewApplication(DeviceProductionBatch batch) {
-		String batchNumber=context.get(ContextConstants.NEW_APPLICATION_BATCH);
+		String batchNumber=context.get(CreditConstants.NEW_APPLICATION_BATCH);
 		WebElementUtils.enterText(batchNumberTxt, batchNumber);
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();

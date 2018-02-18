@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -100,7 +100,7 @@ private TestContext context;
 	}
 
 	public void selectCreditPlan(String creditPlan) {
-		if(context.get(ContextConstants.CREDIT_PLAN_CODE_ERROR_STATUS).equals(true))
+		if(context.get(CreditConstants.CREDIT_PLAN_CODE_ERROR_STATUS).equals(true))
 		{
 			WebElementUtils.selectDropDownByIndex(creditPlanDDwn, 1);
 		}
@@ -111,7 +111,7 @@ private TestContext context;
 	}
 
 	public void selectBillingCyleCode(String billingCyleCode) {
-		if(context.get(ContextConstants.BILLING_CYCLE_CODE_ERROR_STATUS).equals(true))
+		if(context.get(CreditConstants.BILLING_CYCLE_CODE_ERROR_STATUS).equals(true))
 		{
 			WebElementUtils.selectDropDownByIndex(billingCyleCodeDDwn, 1);
 		}

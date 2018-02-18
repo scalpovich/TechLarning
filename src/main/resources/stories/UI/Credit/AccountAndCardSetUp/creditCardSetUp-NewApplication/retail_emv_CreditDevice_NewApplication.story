@@ -33,10 +33,10 @@ And User fills Program section for credit product
 !-- And User adds a Risk Analysis Rule Plan by entering valid values
 When User fills Device Range section for credit product
 Then credit device is created
-When user verify the credit application device
+When user verifies the credit application device
 When user approve the credit application device
-When user process close batch for new Application
-When user process deviceGeneration batch for new Application
+When user processes close batch for new Application
+When user processes deviceGeneration batch for new Application
 When credit processes pre-production batch using new Application
 When credit processes deviceproduction batch using new Application
 When new Application processes pin generation batch for credit

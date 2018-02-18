@@ -448,18 +448,27 @@ public class FileCreation {
 	}
 
 	public String createApplicationUploadFile(String INSTITUTION_CODE,
-			String customerType) throws Exception {
+			String customerType,String cardType) throws Exception {
 		int totalRecords = 0;
 		//List<String> uploadedValues = new ArrayList<String>();
 		String FileName = "";
-		String remoteDir = Constants.APPLICATION_UPLOAD_PREPAID_FILE_PATH;
+		String remoteDir="";
+		if(cardType.equalsIgnoreCase("prepaid"))
+		{
+			remoteDir = Constants.APPLICATION_UPLOAD_PREPAID_FILE_PATH;
+		}
+		
+		else if(cardType.equalsIgnoreCase("credit"))
+		{
+			remoteDir = Constants.APPLICATION_UPLOAD_CREDIT_FILE_PATH;
+		}
 			File folder = new File(System.getProperty("user.dir"));
 			File[] listOfFiles = folder.listFiles();
 			logger.info("Length Of all Files:{}",listOfFiles.length);
 
 		for (int k = 0; k < listOfFiles.length; k++) {
 
-			if (listOfFiles[k].getName().startsWith("APPPR")) {
+			if (listOfFiles[k].getName().startsWith("APP")) {
 				FileName = listOfFiles[k].getName();
 				String name=readingFirstLineOfDatFileToRetrieveName(FileName);
 				helpDeskGeneral.setFirstName(name);
@@ -471,14 +480,30 @@ public class FileCreation {
 		}
 			       else
 			       {
-
+                             if(cardType.equalsIgnoreCase("prepaid"))
+                             {
                                 FileName = "APPPR" + INSTITUTION_CODE
 								+ DateUtils.getDateTimeDDMMYYHHMMSS()
 								+ MiscUtils.generateRandomNumberAsString(6) + ".DAT";
-						HashMap<String, HashMap<String, String>> applicationUploadMap;
+                             }
+                             else if(cardType.equalsIgnoreCase("credit"))
+                             {
+                                FileName = "APPCR" + INSTITUTION_CODE
+								+ DateUtils.getDateTimeDDMMYYHHMMSS()
+								+ MiscUtils.generateRandomNumberAsString(6) + ".DAT";
+                             }
+						HashMap<String, HashMap<String, String>> applicationUploadMap = new HashMap<>();
 						File file = new File(FileName);
-					applicationUploadMap = dataReader.dataProviderFileUpload(
-							"AllUploadTestDataTest", "Prepaid Card File");
+						if(cardType.equalsIgnoreCase("prepaid"))
+						{
+							applicationUploadMap = dataReader.dataProviderFileUpload(
+									"AllUploadTestData", "Prepaid Card File");
+						}
+						else if(cardType.equalsIgnoreCase("credit"))
+						{
+							applicationUploadMap = dataReader.dataProviderFileUpload(
+									"AllUploadTestData", "Credit Card File");
+						}
 					logger.info("applicationUploadMap" + applicationUploadMap);
 					try (PrintWriter writer = new PrintWriter(file)) {
 						writer.println("HD|" + INSTITUTION_CODE + "|"

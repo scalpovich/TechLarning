@@ -289,6 +289,7 @@ public class WalletPlanPage extends AbstractBasePage {
 	@Override
 	public void clickFinishButton() {
 		clickWhenClickable(finishBtn);
+		waitForWicket();
 		SwitchToDefaultFrame();
 	}
 
@@ -332,6 +333,12 @@ public class WalletPlanPage extends AbstractBasePage {
 		selectProgramType(walletplan);
 		waitForPageToLoad(getFinder().getWebDriver());
 		selectWalletUsage(walletplan);
+		if(walletplan.getProductType().equalsIgnoreCase("credit"))
+		{
+			selectCreditPlan();
+			selectBillingCycleCode();
+		}
+			
 		enterDummyAccountNumber();
 		enterReservedAmount();
 		return buildDescriptionAndCode(walletPlanDesc, walletPlancode);

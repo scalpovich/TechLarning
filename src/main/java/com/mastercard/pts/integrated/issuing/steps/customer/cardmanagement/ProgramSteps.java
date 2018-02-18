@@ -97,6 +97,9 @@ public class ProgramSteps {
 			Program = programflows.createProgramPrepaidMultiCurrency(devicecreation, program);
 			// sDNUncheckProgram(Program);
 		}
+		if (product.contains(ProductType.Credit)) {
+			Program = programflows.createprogramCredit(devicecreation, program);
+		}
 		Assert.assertNotNull(Program);
 		program.setProgram(Program);
 		context.put(ContextConstants.PROGRAM, program);

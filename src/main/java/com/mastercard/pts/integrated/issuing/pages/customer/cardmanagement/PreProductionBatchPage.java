@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
@@ -112,7 +113,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		waitForLoaderToDisappear();
 		SelectDropDownByText(productTypeDDwn, batch.getProductType());
 		CustomUtils.ThreadDotSleep(8000);
-		String batchNumber = context.get(ContextConstants.NEW_APPLICATION_BATCH);
+		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
 		enterText(batchNumberTxt, batchNumber);
 		ClickButton(searchBtn);
 		ClickCheckBox(preProductionBatchRecordChkBx, true);

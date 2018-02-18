@@ -169,6 +169,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 
 	public void selectBatchName(String option) {
+		waitForPageToLoad(driver());
 		selectByVisibleText(batchNameDDwn, option);
 	}
 

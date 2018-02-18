@@ -1,11 +1,8 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.helpdesk;
 
-import org.openqa.selenium.By;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -83,8 +80,8 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 	public String searchDeviceUsingName(String productType, String name) {
 		waitForElementVisible(this.productType);
 		SelectDropDownByText(this.productType, productType);
-		//enterText(this.firstNameInput, String.valueOf(name));
-		enterText(this.deviceNumber,name);
+		enterText(this.firstNameInput, String.valueOf(name));
+		//enterText(this.deviceNumber,name);
 		waitForElementVisible(searchBtn);
 		searchBtn.click();
 		return normalStatus.getText();

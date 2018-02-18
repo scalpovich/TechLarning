@@ -5,13 +5,13 @@ import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
-import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
@@ -48,22 +48,37 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[@name='approve']")
 	private MCWebElement approveBtn;
-
-	public void approveRejectApplication() {
-		Device device=context.get(ContextConstants.APPLICATION);
-		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
+    
+	public void enterApplicationNumber()
+	{
+		Device device=context.get(CreditConstants.APPLICATION);
+		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());	
+	}
+	
+	public void selectFromAndToDate()
+	{
 		WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDatePicker, LocalDate.now());
 		clickSearchButton();
 	}
-	public String approveApplication()
+	
+	public void clickEditImageForTheREcordDisplayed()
 	{
 		waitForPageToLoad(driver());
-		clickWhenClickableDoNotWaitForWicket(editImg);
+		clickWhenClickableDoNotWaitForWicket(editImg);	
+	}
+	
+	public void approveButtonClick()
+	{
 		switchToIframe(APPROVE_REJECT_FRAME);
 		clickWhenClickable(approveBtn);
 		verifyOperationStatus();
+	}
+	
+	public String getApplicationNumbere()
+	{
 		String applicationNumber=getCodeFromInfoMessage("Application Number");
 		return applicationNumber;
 	}
+	
 }

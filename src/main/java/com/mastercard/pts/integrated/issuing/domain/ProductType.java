@@ -9,7 +9,7 @@ public class ProductType {
 	public static final String CREDIT = "Credit [C]";
 	public static final String DEBIT = "Debit [D]";
 	public static final String Debit = "Debit";
-	public static final String Credit = "Credit";
+	public static final String Credit = "credit";
 	public static final String CORPORATE = "Corporate [1]";
 	public static final String INDIVIDUAL = "Individual [0]";
 	public static final String Corporate = "Corporate [1]";

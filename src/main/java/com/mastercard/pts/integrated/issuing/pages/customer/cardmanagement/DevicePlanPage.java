@@ -437,9 +437,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectActivationMode(DevicePlan deviceplan) {
-		if (/*!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType()) 
-		&&*/ !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) 
-		/*&& !CardType.MOBILE.contains(deviceplan.getDeviceType())*/) {
+		if (!CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) ) {
 			Assert.assertTrue("Card activation Mode dropdown is enabled", activationMode.isEnabled());
 			selectByText(activationMode, deviceplan.getActivationMode());
 		} else {
@@ -975,8 +973,10 @@ public class DevicePlanPage extends AbstractBasePage {
 		if ("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
 			if(devicePlan.getProductType().equalsIgnoreCase("Credit [C]"))
 			{
-				devicePlan.setExpiryDate(devicePlan.getExpiryDateExcel());
-				enterIframeExpiryDateTxt(devicePlan.getExpiryDate());
+				enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
+				String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
+				devicePlan.setExpiryDate(dateInYYMM);
+				logger.info("Expiry date for device = {}",devicePlan.getExpiryDate());
 			}
 			else
 			{

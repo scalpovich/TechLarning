@@ -23,7 +23,7 @@ import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;;
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_CREDIT_CARD,
@@ -107,13 +107,13 @@ public class CreditCardCreditPlanPage extends AbstractBasePage {
 			WebElementUtils.enterText(creditPlanCodeTxt, creditCardCreditPlan.getCreditPlanCode());
 			WebElementUtils.enterText(descriptionTxt, creditCardCreditPlan.getDescription());
 			logger.info("creditCardCreditPlanCodeAndDescription : {}",creditCardCreditPlan.buildAbbreviationAndCode());
-			context.put(ContextConstants.CREDIT_PLAN, creditCardCreditPlan.buildAbbreviationAndCode());
+			context.put(CreditConstants.CREDIT_PLAN, creditCardCreditPlan.buildAbbreviationAndCode());
 			WebElementUtils.enterText(abbreviationTxt, creditCardCreditPlan.getAbbreviation());
 			WebElementUtils.selectDropDownByVisibleText(paymentDateDDwn, creditCardCreditPlan.getPaymentDate());
 			WebElementUtils.enterTextIfControlIsEnabled(paymentDueDateDaysTxt, creditCardCreditPlan.getPaymentDueDateDays());
 			WebElementUtils.selectDropDownByVisibleText(unpaidDateDDwn, creditCardCreditPlan.getUnpaidDate());
 			WebElementUtils.enterTextIfControlIsEnabled(unpaidDateDaysTxt, creditCardCreditPlan.getUnpaidDateDays());
-			if(context.get(ContextConstants.TRANSACTION_PLAN_ERROR_STATUS).equals(true))
+			if(context.get(CreditConstants.TRANSACTION_PLAN_ERROR_STATUS).equals(true))
 			{
 				WebElementUtils.selectDropDownByIndex(transactionRuleDateDDwn, 1);
 			}
@@ -124,7 +124,7 @@ public class CreditCardCreditPlanPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(currenyDDwn, creditCardCreditPlan.getCurreny());
 			WebElementUtils.enterText(minimumDueTxt, creditCardCreditPlan.getMinimumDue());
 			WebElementUtils.enterText(totalDueTxt, creditCardCreditPlan.getTotalDue());
-			if(context.get(ContextConstants.PAYMENT_PRIORITY_STATUS).equals(true))
+			if(context.get(CreditConstants.PAYMENT_PRIORITY_STATUS).equals(true))
 			{
 				WebElementUtils.selectDropDownByIndex(paymentPriorityPlanDDwn, 1);
 			}

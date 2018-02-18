@@ -261,7 +261,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		waitForWicket();
 		// fetching batch number and setting it for further use
 		device.setBatchNumber(batchNumberTxt.getText());
-	//	context.put(ContextConstants.DEVICE,device);
 		logger.info(" *********** Batch number *********** " + device.getBatchNumber());
 		clickNextButton();
 	}
@@ -313,15 +312,8 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private void fillProfile(Device device) {
 		Program program=context.get(ContextConstants.PROGRAM);
 		if (corporateClientCodeDDwn.isEnabled())
-			if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)) {
-				WebElementUtils.selectDropDownByIndex(branchCodeDDwn, 1);
-		WebElementUtils.selectDropDownByIndex(corporateClientCodeDDwn, 1);
-		}
-		else
-		{
 			WebElementUtils.selectDropDownByVisibleText(branchCodeDDwn, device.getBranchCode());
 			WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
-		}
 		ClientDetails client = device.getClientDetails();
 		WebElementUtils.selectDropDownByVisibleText(titleDDwn, client.getTitle());
 		WebElementUtils.enterText(firstNameTxt, client.getFirstName());

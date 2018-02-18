@@ -1,6 +1,7 @@
 {  
    "name":"AUTO",
    "code":"121212",
+   "codeCredit":"554466",
    "abbreviation":"AUTO",
    "debit":true,
    "credit":true,

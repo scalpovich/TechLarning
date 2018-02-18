@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SearchApplicationDetails;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.SearchApplicationDetailsPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -34,7 +35,7 @@ public class SearchApplicationDetailsFlows {
 	public void searchApplicationDetails() {
 		searchpage = navigator.navigateToPage(SearchApplicationDetailsPage.class);
 		String batchNumber=searchpage.searchApplicationNumber();
-		context.put(ContextConstants.NEW_APPLICATION_BATCH, batchNumber);
+		context.put(CreditConstants.NEW_APPLICATION_BATCH, batchNumber);
 		
 	}
 }

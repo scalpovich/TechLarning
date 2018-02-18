@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
@@ -141,7 +142,7 @@ public class HelpDeskFlows extends AbstractBasePage {
 	public String searchForDevicePrepaid(HelpDeskGeneral helpdeskgettersetter) {
 		generalPage = navigator.navigateToPage(GeneralPage.class);
 		String status = searchpanelhelpdesk.searchDeviceUsingName(helpdeskgettersetter.getProductType(),
-				/*helpdeskgettersetter.getFirstName()*/context.get(ContextConstants.DEVICE_NUMBER));
+				helpdeskgettersetter.getFirstName()/*context.get(ContextConstants.DEVICE_NUMBER)*/);
 		searchpanelhelpdesk.clickSearchBtn();
 		return status;
 	}
@@ -155,7 +156,7 @@ public class HelpDeskFlows extends AbstractBasePage {
 	
 	public String searchForNewApplication(HelpDeskGeneral helpdeskgettersetter) {
 		generalPage = navigator.navigateToPage(GeneralPage.class);
-		Device device=context.get(ContextConstants.APPLICATION);
+		Device device=context.get(CreditConstants.APPLICATION);
         String status=searchpanelhelpdesk.searchNewDevice(helpdeskgettersetter.getProductType(),device.getDeviceNumber());
 		searchpanelhelpdesk.clickSearchBtn();
 		return status;

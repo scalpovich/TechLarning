@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -62,7 +62,7 @@ public class PinGenerationBatchPage extends AbstractBasePage {
 	}
 	
 	public void processPinProductionBatchNewApplication(PinGenerationBatch batch) {
-		String batchNumber=context.get(ContextConstants.NEW_APPLICATION_BATCH);
+		String batchNumber=context.get(CreditConstants.NEW_APPLICATION_BATCH);
 		WebElementUtils.enterText(batchNumberTxt, batchNumber);
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
