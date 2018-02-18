@@ -30,4 +30,7 @@ public class ContextConstants {
 
 	public static final String REMITTANCE = "REMITTANCE";
 
+	private ContextConstants() {
+	}
+
 }
