@@ -250,7 +250,7 @@ public class TransactionSteps {
 		if(transactionWorkflow.isContains(transaction, "EMV")) {
 			transactionData.setCardDataElementsDynamic("035.05", "000"+device.getIcvvData()); 
 		}else if(transactionWorkflow.isContains(transaction, "MSR")) {
-			transactionData.setDeKeyValuePairDynamic("035.05", "000"+device.getCvvData());
+			transactionData.setCardDataElementsDynamic("035.05", "000"+device.getCvvData());
 		}		
 	}
 
