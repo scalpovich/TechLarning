@@ -1612,6 +1612,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void setPinValueForTransction(String element, String pinNumber) {
 		winiumClickOperation(element);
+		pressEnter();
 		pressDownArrow(2);
 		executeAutoITExe("OpenMessageEditor.exe");
 		winiumClickOperation("F2");
