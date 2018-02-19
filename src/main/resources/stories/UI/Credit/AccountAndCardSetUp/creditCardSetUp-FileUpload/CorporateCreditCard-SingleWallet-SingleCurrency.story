@@ -20,7 +20,7 @@ When user creates a Device Plan for Mastercard for Magnetic Stripe and credit ca
 When user creates a Single wallet Program for Mastercard for product credit for program Corporate Credit Card
 Then Program should get created
 When user creates a Device Range for product credit
-When user creates Application Upload Credit batch file and uploads it on server for Individual for credit
+When user creates Application Upload Credit batch file and uploads it on server for Corporate for credit
 When processes credit pre-production batch
 When All processes credit device production batch
 When User search for device on search screen for product type prepaid and validates the status as NORMAL

@@ -104,7 +104,7 @@ public class CreditCardPaymentPriorityPage extends AbstractBasePage {
 		performSearchOperationOnMainScreen(creditCardPaymentPriority);
 		// if records are found then we just have to change the Billing Plan
 		// Code to make it work hence setting
-	    waitForPageToLoad(getFinder().getWebDriver());
+	    waitForPageToLoad(driver());
 	    checkDuplicacyOfPaymentPriorityPlanCode(creditCardPaymentPriority);
 		
 		clickAddNewButton();

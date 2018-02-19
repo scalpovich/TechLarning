@@ -37,7 +37,7 @@ public class CreditCardBillingCyclePage extends AbstractBasePage {
 	TestContext context;
 	
 	@Autowired
-	CreditCardPlan creditCardPlans;
+	CreditCardPlan creditCardPlan;
 	
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -78,7 +78,7 @@ public class CreditCardBillingCyclePage extends AbstractBasePage {
 		performSearchOperationOnMainScreen(creditCardBillingCycle);
 		// if records are found then we just have to change the Billing Plan
 		// Code to make it work hence setting
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		checkDuplicacyOfBillingPlanCode(creditCardBillingCycle);
 	   
 		clickAddNewButton();
@@ -97,8 +97,7 @@ public class CreditCardBillingCyclePage extends AbstractBasePage {
 			WebElementUtils.enterText(recordsPerBatchForProcessingTxt,
 					creditCardBillingCycle.getRecordsPerBatchForProcessing());
 			clickSaveButton();
-			errorMessagePresence();
-			creditCardPlans.setErrorStatus(errorMessagePresence());
+			creditCardPlan.setErrorStatus(errorMessagePresence());
 			canceled.set(verifyAlreadyExistsAndClickCancel());
 		});
 		// dont vereify status of Operation when duplicate exists
@@ -106,7 +105,7 @@ public class CreditCardBillingCyclePage extends AbstractBasePage {
 			verifyOperationStatus();
 		}
 		
-		return creditCardPlans.getErrorStatus();
+		return creditCardPlan.getErrorStatus();
 	}
 
 		private void checkDuplicacyOfBillingPlanCode(CreditCardBillingCycle creditCardBillingCycle) {

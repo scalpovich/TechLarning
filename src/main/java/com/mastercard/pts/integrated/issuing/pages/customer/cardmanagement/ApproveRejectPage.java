@@ -31,9 +31,6 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "planDesc:input:inputTextField")
 	private MCWebElement descriptionTxt;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElement save;
-	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='applicationNumber']")
 	private MCWebElement applicationNumberTxt;
 	
@@ -77,8 +74,7 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 	
 	public String getApplicationNumbere()
 	{
-		String applicationNumber=getCodeFromInfoMessage("Application Number");
-		return applicationNumber;
+		return getCodeFromInfoMessage("Application Number");
 	}
 	
 }

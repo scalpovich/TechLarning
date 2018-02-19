@@ -73,22 +73,22 @@ public class CloseBatchPage extends AbstractBasePage {
 	public int identifyBatchNumberToProcess()
 	{
 		Device device=context.get(ContextConstants.DEVICE);
-		int index = 0;
-		for(int i=0;i<allBatchNumberRetrieval().size();i++)
+		int i;
+		for(i=0;i<allBatchNumberRetrieval().size();i++)
 		{
 			if(allBatchNumberRetrieval().get(i).equals(device.getBatchNumber()))
 			{
 				logger.info("batchNumber: {}",allBatchNumberRetrieval().get(i));
-				index=i;
+				break;
 			}
 		}
-		return index;
+		return i;
 	}
 	
 	public void processAppropriateBatchForApplication()
 	{
 		String checkBox="//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcess()+1+"]/td[10]/span/input";
-		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(checkBox)));
+		clickWhenClickable(driver().findElement(By.xpath(checkBox)));
 		ProcessSelected.click();
 		verifyOperationStatus();
 		

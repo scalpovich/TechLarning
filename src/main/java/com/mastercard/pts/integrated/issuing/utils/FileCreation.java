@@ -79,6 +79,7 @@ public class FileCreation {
 
 	private static final String UPLOAD_FILENAME = "UploadFile";
 	private static final String corporateClientCode="12121217222000002";
+	private static final String corporateClientCodeCredit="12121218004000045";
 
 	private String filename;
 
@@ -536,7 +537,7 @@ public class FileCreation {
 											.replace("%N%", name)
 											.replace("%K%", CustomUtils.RandomNumbers(10))
 											.replace("%X%", CustomUtils.randomAlphaNumeric(5)+"@"+CustomUtils.randomAlphaNumeric(4)+".com"));
-								} else if (customerType.equals("Corporate")) {
+								} else if (customerType.equals("Corporate") && cardType.equalsIgnoreCase("prepaid")) {
 									writer.println(getUploadFileFromDatamap(
 											"Concatenated Application Record")
 											.replace("%B%", INSTITUTION_CODE)
@@ -548,7 +549,22 @@ public class FileCreation {
 											.replace("%N%", name)
 											.replace("%K%", CustomUtils.RandomNumbers(10))
 											.replace("%X%", CustomUtils.randomAlphaNumeric(5)+"@"+CustomUtils.randomAlphaNumeric(4)+".com"));
-								} else if (customerType.equals("Bank Staff")) {
+								} 
+								else if(customerType.equals("Corporate") && cardType.equalsIgnoreCase("credit"))
+								{
+									writer.println(getUploadFileFromDatamap(
+											"Concatenated Application Record")
+											.replace("%B%", INSTITUTION_CODE)
+											.replace("%t%", "1")
+											.replace("%P%", program.getProgramCode())
+											.replace("%D%", deviceplan.getDevicePlanCode())
+											.replace("%b%", vendor.getBranchCode())
+											.replace("%Z%", corporateClientCodeCredit)
+											.replace("%N%", name)
+											.replace("%K%", CustomUtils.RandomNumbers(10))
+											.replace("%X%", CustomUtils.randomAlphaNumeric(5)+"@"+CustomUtils.randomAlphaNumeric(4)+".com"));
+								}
+								else if (customerType.equals("Bank Staff")) {
 									writer.println(getUploadFileFromDatamap(
 											"Concatenated Application Record")
 											.replace("%B%", INSTITUTION_CODE)
