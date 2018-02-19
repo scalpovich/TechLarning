@@ -1277,8 +1277,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public void ClickButton(MCWebElement BtnName) {
 		WebElementUtils.scrollDown(driver(), 0, 250);
-		clickWhenClickable(BtnName);
-		//BtnName.click();
+		BtnName.click();
 		//addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
