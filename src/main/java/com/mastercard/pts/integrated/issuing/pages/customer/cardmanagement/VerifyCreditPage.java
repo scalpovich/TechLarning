@@ -28,7 +28,7 @@ public class VerifyCreditPage extends AbstractCardManagementPage {
 TestContext context;
 	// ------------- Card Management > Institution Parameter Setup > Institution
 	// Currency [ISSS05]
-    private static final String VERIFY_FRAME="View Application";
+    private static final String VERIFY_FRAME="Edit Application";
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addEmbossingPriorityPass;
 

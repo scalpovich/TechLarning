@@ -24,7 +24,7 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 	@Autowired
 	TestContext context;
 	
-	private static final String APPROVE_REJECT_FRAME="View Application";
+	private static final String APPROVE_REJECT_FRAME="Edit Application";
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addEmbossingPriorityPass;
 
