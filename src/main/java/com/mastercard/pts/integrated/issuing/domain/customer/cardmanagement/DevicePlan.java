@@ -124,6 +124,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	private static final String DP_EMV_PLAN_PUT_DATA = "DP_EMV_PLAN_PUT_DATA";
 	private static final String DP_EMV_PLAN_PIN_CHANGE = "DP_EMV_PLAN_PIN_CHANGE";
 	private static final String DP_EMV_PLAN_PIN_UNBLOCK = "DP_EMV_PLAN_PIN_UNBLOCK";
+	private static final String DP_ALLOW_INTERNATIONAL_TRANSACTIONS = "DP_ALLOW_INTERNATIONAL_TRANSACTIONS";
 	public String association;
 	public String DeviceType;
 	public String ServiceCode;
@@ -232,6 +233,9 @@ public class DevicePlan implements HasCodeAndDescription {
 	private String emvPlanPinChange;
 	private String emvPlanPinUnblock;
 	private String isPinLess;
+	private String allowInternationalTransaction;
+
+
 
 	public static DevicePlan createWithProvider(KeyValueProvider provider) {
 		DevicePlan plan = new DevicePlan();
@@ -279,7 +283,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setEmvBelowATCRange(provider.getString(EMV_BELOW_ATC_RANGE));
 		plan.setEmvAboveATCRange(provider.getString(EMV_ABOVE_ATC_RANGE));
 		plan.setFillEMVPlan(provider.getString(FILL_EMV_PLAN));
-
+		plan.setAllowInternationalTransaction(provider.getString(DP_ALLOW_INTERNATIONAL_TRANSACTIONS));
 		return plan;
 	}
 
@@ -375,8 +379,16 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setEmvPlansIcvvOption(provider.getString(DP_EMV_PLANS_ICVV_OPTION));
 		plan.setEmvPlanUcol(provider.getString(DP_EMV_PLAN_UCOL));
 		plan.setEmvPlanUcota(provider.getString(DP_EMV_PLAN_UCOTA));
-
+		plan.setAllowInternationalTransaction(provider.getString(DP_ALLOW_INTERNATIONAL_TRANSACTIONS));
 		return plan;
+	}
+	
+	public String getAllowInternationalTransaction() {
+		return allowInternationalTransaction;
+	}
+
+	public void setAllowInternationalTransaction(String allowInternationalTransaction) {
+		this.allowInternationalTransaction = allowInternationalTransaction;
 	}
 
 	public String getTransSetPresentmentTimeLimit() {

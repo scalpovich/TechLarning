@@ -382,6 +382,10 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:issueDevicePair:checkBoxComponent")
 	private MCWebElement issuePairDevicesChkBx;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:intTxnAllowed:checkBoxComponent")
+	private MCWebElement intTxnAllowedChkBx;
+	
 
 	public void AddDevicePlan() {
 		clickWhenClickable(AddDevicePlanBtn);
@@ -600,7 +604,11 @@ public class DevicePlanPage extends AbstractBasePage {
 	public void clickEcomCheckBox() {
 		ClickCheckBox(ecomChkBx, true);
 	}
-
+	
+	public void clickIntTxnAllowedCheckBox() {
+		ClickCheckBox(intTxnAllowedChkBx, true);
+	}
+	
 	public void clickGenerateCvv() {
 		ClickCheckBox(generateCvvChkBx, true);
 	}
@@ -945,13 +953,18 @@ public class DevicePlanPage extends AbstractBasePage {
 		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES)) {
 			selectAllcvccvv();
 			checkCvcCvv();
-		}
-		checkExpiryDate();
+		}			
+		checkExpiryDate();		
+		
+		if(devicePlan.getAllowInternationalTransaction().equalsIgnoreCase(STATUS_YES))
+			clickIntTxnAllowedCheckBox();
+			
 		WebElementUtils.checkCheckbox(ecommAllowedChkBx, devicePlan.isEcommerceAllowed());
 		if (!devicePlan.getDeviceType().equals(DeviceType.STATIC_VIRTUAL_CARD)
 				&& "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 			WebElementUtils.enterText(pinRetryLimitTxt, devicePlan.getPinRetryLimit());
-		}
+		}	
+
 		clickIframeNextButton();
 		clickIframeNextButton();
 
