@@ -19,6 +19,7 @@ When device has "normal" status
 When a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
+When processes pin generation batch for prepaid
 When device has "normal" status
 When user activates device through helpdesk
 When Pin Offset file batch was generated successfully
