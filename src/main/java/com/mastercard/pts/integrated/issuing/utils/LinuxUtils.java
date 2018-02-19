@@ -43,7 +43,6 @@ public abstract class LinuxUtils {
 		if(!session.isConnected()) {
 			session.connect();
 		}
-		MiscUtils.reportToConsole("51");
 		//specify the location where the DAT file gets generated
 		if (!remoteSource.startsWith("/")) {
 			remoteSource = "/" + remoteSource;
@@ -51,7 +50,6 @@ public abstract class LinuxUtils {
 		}
 		String command = "scp -f " + remoteSource;
 		logger.info("Linux Command  {} -> {} ", command);
-		MiscUtils.reportToConsole("57");
 		Channel channel = session.openChannel("exec");
 		((ChannelExec)channel).setCommand(command);
 		channel.connect();
@@ -60,7 +58,7 @@ public abstract class LinuxUtils {
 			transferFile(remoteSource, localDestination, channel);
 		} catch (IOException e) {
 			MiscUtils.reportToConsole("download Exception :  " + e.toString());
-			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
+			logger.info(ConstantData.EXCEPTION +" {} ",  e.getMessage());
 			throw MiscUtils.propagate(e);
 		}
 	}
@@ -72,7 +70,6 @@ public abstract class LinuxUtils {
 
 	private static String getFileFromLinuxBox (RemoteConnectionDetails connectiondetails, String lookUpFor) throws Exception
 	{
-		logger.info("getFileFromLinuxBox connection String {} --> ", connectiondetails.getUserName(), connectiondetails.getHostName(), connectiondetails.getPort());
 		try {
 			String result = null;
 			Session session = new JSch().getSession(connectiondetails.getUserName(), connectiondetails.getHostName(), connectiondetails.getPort());    
@@ -152,9 +149,7 @@ public abstract class LinuxUtils {
 				fileSize -= i;
 			}
 			buf[0] = 0;
-			MiscUtils.reportToConsole("191");
 			out.write(buf, 0, 1);
-			MiscUtils.reportToConsole("193");
 			out.flush();
 		}
 	}
@@ -315,9 +310,6 @@ public abstract class LinuxUtils {
 			}
 			fileSize = fileSize * 10L + buf[0] - '0';
 		}
-		// for (int i = 0;; i++) {
-		// if(buf.length <i){
-		// System.out.println(i);
 		for (int i = 1; i < buf.length; i++) {
 			in.read(buf, i, 1);
 
@@ -329,8 +321,6 @@ public abstract class LinuxUtils {
 		buf[0] = 0;
 		out.write(buf, 0, 1);
 		out.flush();
-		// String localDest = System.getProperty("user.dir") +
-		// "/src/main/resources/downloads";
 		fileOutputStream = new FileOutputStream(localDest);
 		int i;
 		while (true) {
