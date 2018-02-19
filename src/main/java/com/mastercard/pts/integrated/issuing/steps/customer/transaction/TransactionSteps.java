@@ -185,7 +185,7 @@ public class TransactionSteps {
 			//__________________CURRENCY VAL FROM EXCEL _________ This is a Single Wallet, Single Currency INDIA card */
 			settingValuesDynamicallyFromDeviceContext(device, transactionData);
 			//setting values of Card Data Element (Card Profile) which are placed in the "Transaction Templates" sheet
-			setCardDataDynamically(device, transactionData);
+			setCardDataDynamically(device, transactionData,transaction);
 			//setting values of Data Element which are placed in the "Transaction Templates" sheet
 			setDeElementsDynamically(device, transactionData, transaction);
 
@@ -237,13 +237,18 @@ public class TransactionSteps {
 		transactionData.setCardHolderBillingCurrency(device.getCurrency());
 	}
 
-	private void setCardDataDynamically(Device device, Transaction transactionData) {
+	private void setCardDataDynamically(Device device, Transaction transactionData, String transaction) {
 		MiscUtils.reportToConsole("********** Start setCardDataDynamically ********");
 		transactionData.setCardDataElementsDynamic("035.01", device.getDeviceNumber());
 		transactionData.setCardDataElementsDynamic("035.03", device.getExpirationDate());
 		transactionData.setCardDataElementsDynamic("045.02", device.getDeviceNumber());
 		transactionData.setCardDataElementsDynamic("045.06", device.getExpirationDate());
-		transactionData.setCardDataElementsDynamic("035.04", device.getServiceCode());
+		transactionData.setCardDataElementsDynamic("035.04", device.getServiceCode());				
+		if(transactionWorkflow.isContains(transaction, "EMV")) {
+			transactionData.setCardDataElementsDynamic("035.05", "000"+device.getIcvvData()); 
+		}else if(transactionWorkflow.isContains(transaction, "MSR")) {
+			transactionData.setCardDataElementsDynamic("035.05", "000"+device.getCvvData());
+		}		
 	}
 
 	@Given("Auth file is provided for $iteration")
