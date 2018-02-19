@@ -214,7 +214,6 @@ public class VendorPage extends AbstractBasePage {
 		selectMobileNumber(vendor);
 		enterMobileNumber();
 		enterEmail(vendor);
-		enterPostalCode(vendor);
 	}
 
 	public boolean verifyErrorsOnVendorPage() {
