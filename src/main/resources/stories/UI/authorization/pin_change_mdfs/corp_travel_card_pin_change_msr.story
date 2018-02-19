@@ -6,7 +6,7 @@ As an issuer
 I want to authorize Pin Change transactions for prepaid emv retail general purpose card
 
 Meta:
-@StoryName p_emv_corp_travel
+@StoryName p_msr_corp_travel
 @msrpinchange
 
 Scenario: Set up prepaid msr corporate travel card and perform Pin Change operation
