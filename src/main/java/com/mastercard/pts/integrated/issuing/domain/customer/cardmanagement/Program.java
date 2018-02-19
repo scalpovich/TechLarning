@@ -58,12 +58,6 @@ public class Program implements HasCodeAndDescription {
 	private static final String REFERENCE_CURRENCY = "REFERENCE_CURRENCY";
 	
 	private static final String CREDIT_LIMIT = "CREDIT_LIMIT";
-	
-	private static final String MAX_CREDIT_LIMIT = "MAX_CREDIT_LIMIT";
-	
-	private static final String CASH_LIMIT_AMOUNT = "CASH_LIMIT_AMOUNT";
-	
-	private static final String PERCENTAGE_CREDIT_LIMIT = "PERCENTAGE_CREDIT_LIMIT";
 
 	private String walletToWalletTransferType;
 	private String refundInCurrency;
@@ -145,9 +139,9 @@ public class Program implements HasCodeAndDescription {
 		programObject.setMaximumBalanceWithoutKyc(RandomStringUtils.randomNumeric(4));
 		programObject.setNumberOfLoadsAllowedWithoutKyc(String.valueOf(RandomUtils.nextInt(1, 99)));
 		programObject.setCreditLimit(provider.getString(CREDIT_LIMIT));
-		programObject.setMaximumCreditLimit(provider.getString(MAX_CREDIT_LIMIT));
-		programObject.setCashLimitAmount(provider.getString(CASH_LIMIT_AMOUNT));
-		programObject.setPercentageOfCreditLimit(provider.getString(PERCENTAGE_CREDIT_LIMIT));
+		programObject.setMaximumCreditLimit(provider.getString(PGM_CREDIT_LIMITS_MAX_CREDIT_LIMIT));
+		programObject.setCashLimitAmount(provider.getString(PGM_CASH_LIMITS_CASH_LIMIT_AMOUNT));
+		programObject.setPercentageOfCreditLimit(provider.getString(PGM_CASH_LIMITS_PERCENTAGE_CREDIT_LIMIT));
 		programObject.setCashLimitType(provider.getString(CASH_LIMIT_TYPE));
 		programObject.setCashLimitReset(provider.getString(CASH_LIMIT_RESET));
 		programObject.setAddOnLimitReset(provider.getString(CASH_LIMIT_RESET));

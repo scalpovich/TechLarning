@@ -62,12 +62,12 @@ public class CloseBatchPage extends AbstractBasePage {
 
 	public List<String> allBatchNumberRetrieval()
 	{
-		List<String>batchnumbers=new ArrayList<>();
+		List<String>batchNumbers=new ArrayList<>();
 		for(int i=0;i<allBatchNumberTxt.getElements().size();i++)
 		{
-			batchnumbers.add(allBatchNumberTxt.getElements().get(i).getText());
+			batchNumbers.add(allBatchNumberTxt.getElements().get(i).getText());
 		}
-		return batchnumbers;
+		return batchNumbers;
 	}
 	
 	public int identifyBatchNumberToProcess()
