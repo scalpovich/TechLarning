@@ -453,6 +453,7 @@ public class FileCreation {
 		//List<String> uploadedValues = new ArrayList<String>();
 		String FileName = "";
 		String remoteDir="";
+		String deviceType="";
 		if(cardType.equalsIgnoreCase("prepaid"))
 		{
 			remoteDir = Constants.APPLICATION_UPLOAD_PREPAID_FILE_PATH;
@@ -515,6 +516,14 @@ public class FileCreation {
 									.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
 								/*String name = CustomUtils.randomString(9).toUpperCase();
 								helpDeskGeneral.setFirstName(name);*/
+								if(deviceplan.getDeviceType().contains("Static Virtual"))
+								{
+									deviceType="7";
+								}
+								else if (deviceplan.getDeviceType().contains("Magnetic"))
+								{
+									deviceType="1";
+								}
 								if (customerType.equals("Individual")) {
 									writer.println(getUploadFileFromDatamap(
 											"Concatenated Application Record")
