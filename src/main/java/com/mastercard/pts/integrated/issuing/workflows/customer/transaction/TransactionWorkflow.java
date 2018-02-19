@@ -1602,8 +1602,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		
 		//to handle pin based scenarios, we need to modify pin number from Message Editor
 		if(transaction.toLowerCase().contains("pin")) {
-			Device device = context.get(ContextConstants.DEVICE);
-			setPinValueForTransction(transactionName, device.getPinNumberForTransaction());
+			setPinValueForTransction(transactionName, "7031");
+/*			Device device = context.get(ContextConstants.DEVICE);
+			setPinValueForTransction(transactionName, device.getPinNumberForTransaction());*/
 		}
 
 		executeVisaTest();

@@ -12,6 +12,6 @@ Meta:
 Scenario: VISA transactions
 
 !-- Given connection to VISA is established
-When perform an LoadAndActivate VISA transaction
-Then VISA test results are verified for LoadAndActivate
+When perform an LoadAndActivate_with_pin VISA transaction
+Then VISA test results are verified for LoadAndActivate_with_pin
 Then VISA simulator is closed
