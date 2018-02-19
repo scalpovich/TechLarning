@@ -475,7 +475,7 @@ public class FileCreation {
 				logger.info("Already existing fileName in workspace: {}",FileName);
 			}
 		}
-		if (FileName.contains("APPPR")) {
+		if (FileName.contains("APP")) {
 			linuxBox.upload(FileName, remoteDir);
 		}
 			       else
