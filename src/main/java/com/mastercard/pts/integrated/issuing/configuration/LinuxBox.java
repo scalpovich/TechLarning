@@ -68,7 +68,7 @@ public class LinuxBox implements RemoteConnectionDetails {
 			LinuxUtils.upload(this, localSource, remoteDir);
 		} catch (Exception e) {
 			MiscUtils.reportToConsole("upload Exception :  " + e.toString());
-			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
+			logger.info(ConstantData.EXCEPTION +" {} " ,  e.getMessage());
 			throw MiscUtils.propagate(e);
 		}
 	}
@@ -93,7 +93,6 @@ public class LinuxBox implements RemoteConnectionDetails {
 
 	@Override
 	public String getHostName() {
-		logger.info("Linux hostName {} -> {}", hostName);
 		return hostName;
 	}
 
@@ -103,7 +102,6 @@ public class LinuxBox implements RemoteConnectionDetails {
 
 	@Override
 	public int getPort() {
-		logger.info("Linux port {} -> {}", port);
 		return port;
 	}
 
@@ -113,7 +111,6 @@ public class LinuxBox implements RemoteConnectionDetails {
 
 	@Override
 	public String getUserName() {
-		logger.info("Linux userName {} -> {}", userName);
 		return userName;
 	}
 
