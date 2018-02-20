@@ -334,16 +334,26 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
 		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDDwn, client.getLanguagePreference());
 		WebElementUtils.selectDropDownByVisibleText(vipDDwn, device.getVip());
-		if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)) {
-			WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);
-			WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));
-		   }
-		else
-		{
-		   WebElementUtils.selectDropDownByVisibleText(statementPreferenceDDwn, device.getOtherInfoStatementPreference());
-		   WebElementUtils.enterText(faxNumberTxt, device.getOtherInfoFaxNo());
-		}
 		
+		try{
+			if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)) {
+				WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);
+				WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));
+			   }
+			else
+			{
+			   WebElementUtils.selectDropDownByVisibleText(statementPreferenceDDwn, device.getOtherInfoStatementPreference());
+			   WebElementUtils.enterText(faxNumberTxt, device.getOtherInfoFaxNo());
+			}
+		}catch(Exception e){
+			if(device.getAppliedForProduct().equalsIgnoreCase("Credit [C]")){
+				WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);
+				WebElementUtils.enterText(creditLimitTxt,"5000");
+			}else{
+				WebElementUtils.selectDropDownByVisibleText(statementPreferenceDDwn, device.getOtherInfoStatementPreference());
+				WebElementUtils.enterText(faxNumberTxt, device.getOtherInfoFaxNo());
+			}
+		} 
 		
 		clickNextButton();
 	}

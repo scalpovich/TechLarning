@@ -21,7 +21,9 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Vendor;
+import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
+import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CurrencyExchangeRatesPage;
 @Component
@@ -47,6 +49,9 @@ public class FileCreation {
 	Vendor vendor;
 	@Autowired
 	HelpDeskGeneral helpDeskGeneral;
+	
+	@Autowired
+	private DataProvider provider;
 
 	private static final String INSTITUTION_CODE = "INSTITUTION_CODE";
 
@@ -457,12 +462,12 @@ public class FileCreation {
 		String deviceType="";
 		if(cardType.equalsIgnoreCase("prepaid"))
 		{
-			remoteDir = Constants.APPLICATION_UPLOAD_PREPAID_FILE_PATH;
+			remoteDir = Institution.createWithProvider(provider).getPrepaidLinuxUploadPath();
 		}
 		
 		else if(cardType.equalsIgnoreCase("credit"))
 		{
-			remoteDir = Constants.APPLICATION_UPLOAD_CREDIT_FILE_PATH;
+			remoteDir = Institution.createWithProvider(provider).getCreditLinuxUploadPath();
 		}
 			File folder = new File(System.getProperty("user.dir"));
 			File[] listOfFiles = folder.listFiles();

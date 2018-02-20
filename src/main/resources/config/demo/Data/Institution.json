@@ -3,6 +3,8 @@
    "code":"121212",
    "codeCredit":"554466",
    "abbreviation":"AUTO",
+   "prepaidLinuxUploadPath" : "/home/dc-user/integrated/elt_bo/data/121212/input",
+   "creditLinuxUploadPath" : "/home/dc-user/integrated/elt_bo/data/554466/input",
    "debit":true,
    "credit":true,
    "prepaid":true,

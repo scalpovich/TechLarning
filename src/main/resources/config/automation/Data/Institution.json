@@ -1,8 +1,11 @@
 {  
    "name":"AUTO",
    "code":"121212",
+   "codeCredit":"121212",
    "abbreviation":"AUTO",
    "debit":true,
+   "prepaidLinuxUploadPath" : "/home/dc-user/integrated/elt_bo/data/121212/input",
+   "creditLinuxUploadPath" : "/home/dc-user/integrated/elt_bo/data/121212/input",
    "credit":true,
    "prepaid":true,
    "agentPortalSupport":true,

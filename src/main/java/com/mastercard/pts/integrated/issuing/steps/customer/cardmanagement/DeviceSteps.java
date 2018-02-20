@@ -170,4 +170,23 @@ public class DeviceSteps {
 			programFlows.programEdit(value);
 			program.setProgramCode(value);
 		}
+		
+		@Then("$type device is created using new device screen by data driven")
+	      public void thenCreditDevicePlanAndProgramAreMadeAvailableFroDeviceCreationUsingNewDeviceDataDriven(String type){
+	            Device device = Device.createWithProvider(provider);
+	            device.setAppliedForProduct(ProductType.fromShortName(type));                 
+	            Device deviceTemp = Device.createWithProviderForOtherDetails(provider); 
+	            device.setOtherInfoDeliveryMode(deviceTemp.getOtherInfoDeliveryMode());
+	            device.setOtherInfoEmailAlertRequired(deviceTemp.getOtherInfoEmailAlertRequired());
+	            device.setOtherInfoFaxNo(deviceTemp.getOtherInfoFaxNo());
+	            device.setOtherInfoPreferredLanguage(deviceTemp.getOtherInfoPreferredLanguage());
+	            device.setOtherInfoRegisteredEmailAddress(deviceTemp.getOtherInfoRegisteredEmailAddress());
+	            device.setOtherInfoRegisteredMobileNumber(deviceTemp.getOtherInfoRegisteredMobileNumber());
+	            device.setOtherInfoRegisterForDncr(deviceTemp.getOtherInfoRegisterForDncr());
+	            device.setOtherInfoSmsAlertRequired(deviceTemp.getOtherInfoSmsAlertRequired());
+	            device.setOtherInfoStatementPreference(deviceTemp.getOtherInfoStatementPreference());
+	            sdnUncheckProgram(program.getProgramCode());
+	            deviceWorkflow.createDevice(device);
+	            context.put(ContextConstants.DEVICE, device);
+	      }
 }
