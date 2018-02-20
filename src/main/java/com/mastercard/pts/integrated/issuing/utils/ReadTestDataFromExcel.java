@@ -133,7 +133,7 @@ public class ReadTestDataFromExcel {
 
 			for (int i = 1; i <= rowCount; i++) {
 				rowData = new HashMap<String, String>();
-				if (i == 8) {
+				if (i >= 8) {
 					Row row = excelSheet.getRow(i);
 					for (int j = 0; j < row.getLastCellNum(); j++) {
 						row.getCell(j).setCellType(Cell.CELL_TYPE_STRING);

@@ -1,8 +1,11 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ApplicationBusinessMandatoryFields;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ApplicationDocumentChecklist;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardBillingCycle;
@@ -10,6 +13,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Cred
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardPaymentBounceReason;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardPaymentPriority;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardTransactionRulePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DedupePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceJoiningAndMemberShipFeePlan;
@@ -56,7 +60,9 @@ public class ProgramSetupWorkflow {
 	
 	@Autowired
 	private Navigator navigator;
-
+    @Autowired
+    private TestContext context;
+    private static final Logger logger = LoggerFactory.getLogger(ProgramSetupWorkflow.class);
 	public void createStatementMessagePlan(StatementMessagePlan statementMessagePlan) {
 		StatementMessagePlanPage page = navigator.navigateToPage(StatementMessagePlanPage.class);
 		page.createStatementMessagePlan(statementMessagePlan);
@@ -125,31 +131,41 @@ public class ProgramSetupWorkflow {
 	public void fillCreditCardBillingCycle(CreditCardBillingCycle creditCardBillingCycle)
 	{
 		CreditCardBillingCyclePage page = navigator.navigateToPage(CreditCardBillingCyclePage.class);
-		page.addBillingCycle(creditCardBillingCycle);
+		Boolean billingCycleStatus=page.addBillingCycle(creditCardBillingCycle);
+		logger.info("billingCycleStatus : {} ", billingCycleStatus);
+		context.put(CreditConstants.BILLING_CYCLE_CODE_ERROR_STATUS,billingCycleStatus);
 	}
 	
 	public void fillCreditCardPaymentPriority(CreditCardPaymentPriority creditCardPaymentPriority)
 	{
 		CreditCardPaymentPriorityPage page = navigator.navigateToPage(CreditCardPaymentPriorityPage.class);
-		page.addPaymentPriority(creditCardPaymentPriority);
+		Boolean paymentPriorityStatus=page.addPaymentPriority(creditCardPaymentPriority);
+		logger.info("paymentPriorityStatus : {} ", paymentPriorityStatus);
+		context.put(CreditConstants.PAYMENT_PRIORITY_STATUS,paymentPriorityStatus);
 	}
 	
 	public void fillCreditCardPaymentBounceReason(CreditCardPaymentBounceReason creditCardPaymentBounceReason)
 	{
 		CreditCardPaymentBounceReasonPage page = navigator.navigateToPage(CreditCardPaymentBounceReasonPage.class);
-		page.addPaymentBounceReason(creditCardPaymentBounceReason);
+		Boolean paymentBounceStatus=page.addPaymentBounceReason(creditCardPaymentBounceReason);
+		logger.info("paymentBounceStatus : {} ", paymentBounceStatus);
+		context.put(CreditConstants.PAYMENT_BOUNCE_STATUS,paymentBounceStatus);
 	}
 
 	public void fillCreditCardTransactionRulePlancode(CreditCardTransactionRulePlan creditCardTransactionRulePlancode)
 	{
 		CreditCardTransactionRulePlanPage page = navigator.navigateToPage(CreditCardTransactionRulePlanPage.class);
-		page.addTransactionRulePlan(creditCardTransactionRulePlancode);
+		Boolean transactionPlanStatus=page.addTransactionRulePlan(creditCardTransactionRulePlancode);
+		logger.info("transactionPlanStatus : {} ", transactionPlanStatus);
+		context.put(CreditConstants.TRANSACTION_PLAN_ERROR_STATUS, transactionPlanStatus);
 	}
 	
 	public void fillCreditCardCreditPlan(CreditCardCreditPlan creditCardCreditPlan)
 	{
 		CreditCardCreditPlanPage page = navigator.navigateToPage(CreditCardCreditPlanPage.class);
-		page.addCreditPlan(creditCardCreditPlan);
+		Boolean creditPlanStatus=page.addCreditPlan(creditCardCreditPlan);
+		logger.info("creditPlanStatus : {} ", creditPlanStatus);
+		context.put(CreditConstants.CREDIT_PLAN_CODE_ERROR_STATUS, creditPlanStatus);
 	}
 	
 	public void createDedupePlan(DedupePlan dedupePlan){

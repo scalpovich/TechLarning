@@ -34,6 +34,11 @@ public class Institution {
 	private String collectPortalStatus;
 	private String institutionCurrency;
 	private String portalAdminId;
+	private String codeCredit;
+	private String prepaidLinuxUploadPath;
+	private String creditLinuxUploadPath;
+	private String corporateClientCodePrepaid;
+	private String corporateClientCodeCredit;
 	
 	public String getName() {
 		return name;
@@ -218,6 +223,39 @@ public class Institution {
 		Institution inst=new Institution();
 		inst.setAbbreviation("xyz");
 		return inst;
+	}
+	
+	public String getCodeCredit() {
+		return codeCredit;
+	}
+	public void setCodeCredit(String codeCredit) {
+		this.codeCredit = codeCredit;
+	}
+	
+	public String getPrepaidLinuxUploadPath() {
+		return prepaidLinuxUploadPath;
+	}
+	public void setPrepaidLinuxUploadPath(String prepaidLinuxUploadPath) {
+		this.prepaidLinuxUploadPath = prepaidLinuxUploadPath;
+	}
+	public String getCreditLinuxUploadPath() {
+		return creditLinuxUploadPath;
+	}
+	public void setCreditLinuxUploadPath(String creditLinuxUploadPath) {
+		this.creditLinuxUploadPath = creditLinuxUploadPath;
+	}
+	
+	public String getCorporateClientCodePrepaid() {
+		return corporateClientCodePrepaid;
+	}
+	public void setCorporateClientCodePrepaid(String corporateClientCodePrepaid) {
+		this.corporateClientCodePrepaid = corporateClientCodePrepaid;
+	}
+	public String getCorporateClientCodeCredit() {
+		return corporateClientCodeCredit;
+	}
+	public void setCorporateClientCodeCredit(String corporateClientCodeCredit) {
+		this.corporateClientCodeCredit = corporateClientCodeCredit;
 	}
 	
 	@Override

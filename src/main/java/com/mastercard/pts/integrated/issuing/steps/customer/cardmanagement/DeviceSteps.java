@@ -2,18 +2,21 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramFlows;
 
 @Component
 public class DeviceSteps {
@@ -26,6 +29,12 @@ public class DeviceSteps {
 
 	@Autowired
 	private DeviceWorkflow deviceWorkflow;
+	
+	@Autowired
+	ProgramFlows programFlows;
+	
+	@Autowired
+	Program program;
 
 	private static final String CORPORATE_CLIENT_CODE_DEVICE2 = "CORPORATE_CLIENT_CODE_DEVICE2";
 
@@ -124,10 +133,61 @@ public class DeviceSteps {
 
 		Program program = context.get(ContextConstants.PROGRAM);
 		device.setProgramCode(program.buildDescriptionAndCode());
-
+		sdnUncheckProgram(program.getProgramCode());
 		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 
-		deviceWorkflow.createDeviceUsingApplication(device);
+		Assert.assertTrue("Application is not created successfully",deviceWorkflow.createDeviceUsingApplication(device));
+		context.put(CreditConstants.APPLICATION, device);
 	}
+		
+		@Then("$type device is created using new device screen")
+		public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceCreationUsingNewDevice(String type){
+			Device device = Device.createWithProvider(provider);
+			device.setAppliedForProduct(ProductType.fromShortName(type));
+			
+			Device deviceTemp = Device.createWithProviderForOtherDetails(provider); 
+			device.setOtherInfoDeliveryMode(deviceTemp.getOtherInfoDeliveryMode());
+			device.setOtherInfoEmailAlertRequired(deviceTemp.getOtherInfoEmailAlertRequired());
+			device.setOtherInfoFaxNo(deviceTemp.getOtherInfoFaxNo());
+			device.setOtherInfoPreferredLanguage(deviceTemp.getOtherInfoPreferredLanguage());
+			device.setOtherInfoRegisteredEmailAddress(deviceTemp.getOtherInfoRegisteredEmailAddress());
+			device.setOtherInfoRegisteredMobileNumber(deviceTemp.getOtherInfoRegisteredMobileNumber());
+			device.setOtherInfoRegisterForDncr(deviceTemp.getOtherInfoRegisterForDncr());
+			device.setOtherInfoSmsAlertRequired(deviceTemp.getOtherInfoSmsAlertRequired());
+			device.setOtherInfoStatementPreference(deviceTemp.getOtherInfoStatementPreference());
+			
+			Program program = context.get(ContextConstants.PROGRAM);
+			device.setProgramCode(program.buildDescriptionAndCode());
+			sdnUncheckProgram(program.getProgramCode());
+			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+			
+			deviceWorkflow.createDevice(device);
+			context.put(ContextConstants.DEVICE, device);
+		}
+	
+		public void sdnUncheckProgram(String value) {
+			programFlows.programEdit(value);
+			program.setProgramCode(value);
+		}
+		
+		@Then("$type device is created using new device screen by data driven")
+	      public void thenCreditDevicePlanAndProgramAreMadeAvailableFroDeviceCreationUsingNewDeviceDataDriven(String type){
+	            Device device = Device.createWithProvider(provider);
+	            device.setAppliedForProduct(ProductType.fromShortName(type));                 
+	            Device deviceTemp = Device.createWithProviderForOtherDetails(provider); 
+	            device.setOtherInfoDeliveryMode(deviceTemp.getOtherInfoDeliveryMode());
+	            device.setOtherInfoEmailAlertRequired(deviceTemp.getOtherInfoEmailAlertRequired());
+	            device.setOtherInfoFaxNo(deviceTemp.getOtherInfoFaxNo());
+	            device.setOtherInfoPreferredLanguage(deviceTemp.getOtherInfoPreferredLanguage());
+	            device.setOtherInfoRegisteredEmailAddress(deviceTemp.getOtherInfoRegisteredEmailAddress());
+	            device.setOtherInfoRegisteredMobileNumber(deviceTemp.getOtherInfoRegisteredMobileNumber());
+	            device.setOtherInfoRegisterForDncr(deviceTemp.getOtherInfoRegisterForDncr());
+	            device.setOtherInfoSmsAlertRequired(deviceTemp.getOtherInfoSmsAlertRequired());
+	            device.setOtherInfoStatementPreference(deviceTemp.getOtherInfoStatementPreference());
+	            sdnUncheckProgram(program.getProgramCode());
+	            deviceWorkflow.createDevice(device);
+	            context.put(ContextConstants.DEVICE, device);
+	      }
 }

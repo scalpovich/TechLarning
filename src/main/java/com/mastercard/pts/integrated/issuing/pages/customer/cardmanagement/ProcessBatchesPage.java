@@ -170,6 +170,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 
 	public void selectBatchName(String option) {
+		waitForPageToLoad(driver());
 		selectByVisibleText(batchNameDDwn, option);
 	}
 
@@ -544,7 +545,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		processBatchesDomain.setJoBID(processBatchjobIDTxt.getText());
 		MiscUtils.reportToConsole("JobID: {}", processBatchesDomain.getJoBID());
 		ClickButton(closeBtn);
-		waitForPageToLoad(getFinder().getWebDriver());
+		//waitForPageToLoad(getFinder().getWebDriver());
+		waitForWicket(driver());
 		getFinder().getWebDriver().switchTo().defaultContent();
 		return isProcessed;
 	}

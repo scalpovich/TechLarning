@@ -56,6 +56,8 @@ public class Program implements HasCodeAndDescription {
 	private static final String WALLET_TO_WALLET_TRANSFER_TYPE = "WALLET_TO_WALLET_TRANSFER_TYPE";
 
 	private static final String REFERENCE_CURRENCY = "REFERENCE_CURRENCY";
+	
+	private static final String CREDIT_LIMIT = "CREDIT_LIMIT";
 
 	private String walletToWalletTransferType;
 	private String refundInCurrency;
@@ -136,10 +138,10 @@ public class Program implements HasCodeAndDescription {
 		programObject.setProgramType(provider.getString(PROGRAM_TYPE));
 		programObject.setMaximumBalanceWithoutKyc(RandomStringUtils.randomNumeric(4));
 		programObject.setNumberOfLoadsAllowedWithoutKyc(String.valueOf(RandomUtils.nextInt(1, 99)));
-		programObject.setCreditLimit(RandomStringUtils.randomNumeric(5));
-		programObject.setMaximumCreditLimit(RandomStringUtils.randomNumeric(6));
-		programObject.setCashLimitAmount(RandomStringUtils.randomNumeric(5));
-		programObject.setPercentageOfCreditLimit(RandomStringUtils.randomNumeric(2));
+		programObject.setCreditLimit(provider.getString(CREDIT_LIMIT));
+		programObject.setMaximumCreditLimit(provider.getString(PGM_CREDIT_LIMITS_MAX_CREDIT_LIMIT));
+		programObject.setCashLimitAmount(provider.getString(PGM_CASH_LIMITS_CASH_LIMIT_AMOUNT));
+		programObject.setPercentageOfCreditLimit(provider.getString(PGM_CASH_LIMITS_PERCENTAGE_CREDIT_LIMIT));
 		programObject.setCashLimitType(provider.getString(CASH_LIMIT_TYPE));
 		programObject.setCashLimitReset(provider.getString(CASH_LIMIT_RESET));
 		programObject.setAddOnLimitReset(provider.getString(CASH_LIMIT_RESET));
@@ -292,6 +294,13 @@ public class Program implements HasCodeAndDescription {
 		setMaxBalanceWithoutKYC(MapUtils.fnGetInputDataFromMap("MaximumBalancewithoutKYC"));
 		setLoadsWithoutKyc(MapUtils.fnGetInputDataFromMap("LoadsWithoutKYC"));
 		setInstitute(MapUtils.fnGetInputDataFromMap("institute"));
+		setCreditLimit(MapUtils.fnGetInputDataFromMap("creditLimit"));
+		setMaximumCreditLimit(MapUtils.fnGetInputDataFromMap("maxCreditLimit"));
+		setCashLimitType(MapUtils.fnGetInputDataFromMap("cashLimitType"));
+		setCashLimitAmount(MapUtils.fnGetInputDataFromMap("cashLimitAmount"));
+		setCashLimitReset(MapUtils.fnGetInputDataFromMap("cashLimitReset"));
+		setAddOnLimitReset(MapUtils.fnGetInputDataFromMap("addOnLimitReset"));
+		
 
 	}
 

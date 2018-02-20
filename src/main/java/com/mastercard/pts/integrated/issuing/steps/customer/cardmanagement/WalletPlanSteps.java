@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.WalletType;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
@@ -37,6 +38,7 @@ public class WalletPlanSteps {
 		plan.setWalletType(walletType);
 		plan.setProgramType(programType);
 		plan.setProductType(product);
+		context.put(CreditConstants.USAGE_TYPE, "Open Loop");
 		String walletPlan = "";
 		if (walletType.contains(WalletType.DEFAULT_WALLET)) {
 			walletPlan = walletplanflows.createOpenWalletPlan(plan);
@@ -60,6 +62,7 @@ public class WalletPlanSteps {
 		plan.setWalletType(walletType);
 		plan.setProgramType(programType);
 		plan.setProductType(product);
+		context.put(CreditConstants.USAGE_TYPE, "Closed Loop");
 		String walletPlan = "";
 		if (walletType.contains(WalletType.DEFAULT_WALLET)) {
 			walletPlan = walletplanflows.createClosedWalletPlan(plan);

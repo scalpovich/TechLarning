@@ -43,7 +43,6 @@ public class CardHolderTransactions {
 	private static final String BENEFICIARY_REMITTANCE_AMOUNT = "BENEFICIARY_REMITTANCE_AMOUNT";
 	private static final String BENEFICIARY_REMITTANCE_CURRENCY = "BENEFICIARY_REMITTANCE_CURRENCY";
 	
-	
 	private String CardNumber;
 	private String TransferAmount;
 	private String CurrencyName;

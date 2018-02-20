@@ -4,13 +4,25 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+
+
+
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+
+
+
+
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardPaymentPriority;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -28,7 +40,11 @@ public class CreditCardPaymentPriorityPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(CreditCardPaymentPriorityPage.class);
-
+    @Autowired
+    TestContext context;
+    
+    @Autowired
+    CreditCardPlan creditCardPlans;
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
@@ -80,7 +96,7 @@ public class CreditCardPaymentPriorityPage extends AbstractBasePage {
 				WebElementUtils.visibilityOf(descriptionOnMainScreenTxt));
 	}
 
-	public void addPaymentPriority(
+	public boolean addPaymentPriority(
 			CreditCardPaymentPriority creditCardPaymentPriority) {
 		logger.info("Add Credit Card Payment Priority: {}",
 				creditCardPaymentPriority);
@@ -88,17 +104,17 @@ public class CreditCardPaymentPriorityPage extends AbstractBasePage {
 		performSearchOperationOnMainScreen(creditCardPaymentPriority);
 		// if records are found then we just have to change the Billing Plan
 		// Code to make it work hence setting
-		if (!isNoRecordsFoundInTable()) {
-			creditCardPaymentPriority.setPaymentPriorityPlanCode(MiscUtils
-					.generateRandomNumberBetween2Number(100, 999));
-		}
-
+	    waitForPageToLoad(driver());
+	    checkDuplicacyOfPaymentPriorityPlanCode(creditCardPaymentPriority);
+		
 		clickAddNewButton();
 		// Add Document Checklist section
 		AtomicBoolean canceled = new AtomicBoolean(false);
 		runWithinPopup("Add Payment Priority", () -> {
 			WebElementUtils.enterText(paymentPriorityPlanCodeTxt, creditCardPaymentPriority.getPaymentPriorityPlanCode());
 			WebElementUtils.enterText(descriptionTxt, creditCardPaymentPriority.getDescription());
+			logger.info("creditPaymentPriorityCodeAndDescription : {}",creditCardPaymentPriority.buildDescriptionAndCode());
+			context.put(CreditConstants.PAYMENT_PRIORITY, creditCardPaymentPriority.buildDescriptionAndCode());
 			WebElementUtils.enterText(cashTxt, creditCardPaymentPriority.getCash());
 			WebElementUtils.enterText(purchaseTxt, creditCardPaymentPriority.getPurchase());
 			WebElementUtils.enterText(uniqueTxt, creditCardPaymentPriority.getUnique());
@@ -109,17 +125,30 @@ public class CreditCardPaymentPriorityPage extends AbstractBasePage {
 			WebElementUtils.enterText(interestTxt, creditCardPaymentPriority.getInterest());
 		
 			clickSaveButton();
+			errorMessagePresence();
+			creditCardPlans.setErrorStatus(errorMessagePresence());
 			canceled.set(verifyAlreadyExistsAndClickCancel());
 		});
 		if (!canceled.get()) {
 			verifyOperationStatus();
 		}
+		
+		return creditCardPlans.getErrorStatus();
 	}
 
-	private void performSearchOperationOnMainScreen(
-			CreditCardPaymentPriority creditCardPaymentPriority) {
-		WebElementUtils.enterText(paymentPriorityPlanCodeOnMainScreenTxt,
-				creditCardPaymentPriority.getPaymentPriorityPlanCode());
+	private void checkDuplicacyOfPaymentPriorityPlanCode(CreditCardPaymentPriority creditCardPaymentPriority) {
+		if(!isNoRecordsFoundInTable())
+		{
+			 creditCardPaymentPriority.setPaymentPriorityPlanCode(MiscUtils.generateRandomNumberBetween2Number(100, 999));
+			 logger.info("PaymentPriorityPlanCode: {}",creditCardPaymentPriority.getPaymentPriorityPlanCode());
+			 performSearchOperationOnMainScreen(creditCardPaymentPriority);
+			 waitForPageToLoad(getFinder().getWebDriver());
+			 checkDuplicacyOfPaymentPriorityPlanCode(creditCardPaymentPriority);
+		}
+	}
+
+	private void performSearchOperationOnMainScreen(CreditCardPaymentPriority creditCardPaymentPriority) {
+		WebElementUtils.enterText(paymentPriorityPlanCodeOnMainScreenTxt, creditCardPaymentPriority.getPaymentPriorityPlanCode());
 		clickSearchButton();
 	}
 }

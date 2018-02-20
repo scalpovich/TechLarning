@@ -440,9 +440,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectActivationMode(DevicePlan deviceplan) {
-		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
-				|| !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
-				|| !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+		if (!CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) ) {
 			Assert.assertTrue("Card activation Mode dropdown is enabled", activationMode.isEnabled());
 			selectByText(activationMode, deviceplan.getActivationMode());
 		} else {
@@ -459,10 +457,10 @@ public class DevicePlanPage extends AbstractBasePage {
 		}
 	}
 
-	public void selectDeliveryMode(DevicePlan deviceplan) {
-		if (!CardType.STATIC_VIRTUAL.contains(DeviceType.fromShortName(deviceplan.getDeviceType()))
-				&& !CardType.LIMITED_VALIDITY.contains(DeviceType.fromShortName(deviceplan.getDeviceType()))
-				&& !CardType.MOBILE.contains(DeviceType.fromShortName(deviceplan.getDeviceType()))) {
+    public void selectDeliveryMode(DevicePlan deviceplan) {
+		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
+		 && !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) 
+		 && !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
 			Assert.assertTrue("delivery Mode dropdown is enabled", deliveryModeDDwn.isEnabled());
 			selectByVisibleText(deliveryModeDDwn, deviceplan.getDeliveryMode());
 		} else {
@@ -987,6 +985,15 @@ public class DevicePlanPage extends AbstractBasePage {
 		generateCVV2Chk.click();
 		// filling date when flag is fixed
 		if ("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
+			if(devicePlan.getProductType().equalsIgnoreCase("Credit [C]"))
+			{
+				enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
+				String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
+				devicePlan.setExpiryDate(dateInYYMM);
+				logger.info("Expiry date for device = {}",devicePlan.getExpiryDate());
+			}
+			else
+			{
 			enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
 			// making necessary changes so that this value can be set in the
 			// required format so that it can be used when a pinless card is
@@ -994,6 +1001,7 @@ public class DevicePlanPage extends AbstractBasePage {
 			logger.info("Validity On Initial Months = {} ", devicePlan.getValidityOnInitialMonths());
 			String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
 			devicePlan.setExpiryDate(dateInYYMM);
+			}
 		} else {
 			enterIframeValidityOnInitialMonthsTxt(devicePlan.getValidityOnInitialMonths());
 		}
