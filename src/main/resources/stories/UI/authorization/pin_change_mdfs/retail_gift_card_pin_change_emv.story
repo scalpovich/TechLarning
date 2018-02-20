@@ -9,7 +9,7 @@ Meta:
 @StoryName S203707
 @emvpinchange
 
-Scenario: Set up prepaid emv retail giftcard card and perform Pin Change operation
+Scenario: Set up prepaid emv retail gift card and perform Pin Change operation
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client

@@ -337,7 +337,7 @@ public class TransactionSteps {
 		Transaction transactionData = Transaction.generateFinSimPinTestData(device, finSimConfig, provider);
 
 		String pinNumber = transactionWorkflow.getPinNumber(transactionData);
-		MiscUtils.reportToConsole("FINSim PIN Number generated : " + pinNumber);
+		logger.info("FINSim PIN Number generated : {} " , pinNumber);
 		device.setPinNumberForTransaction(pinNumber);
 	}
 

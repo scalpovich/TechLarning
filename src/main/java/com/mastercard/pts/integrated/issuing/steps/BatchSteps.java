@@ -54,7 +54,7 @@ public class BatchSteps {
 		try {
 			File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "Device");
 			String[] fileData = LinuxUtils.getCardNumberAndExpiryDate(batchFile);
-			MiscUtils.reportToConsole("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3] + " - "  + " setIcvvData " + " : " +  fileData[4] + "  ***** ");
+			logger.info("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3] + " - "  + " setIcvvData " + " : " +  fileData[4] + "  ***** ");
 			
 			Device device = context.get(ContextConstants.DEVICE);
 			device.setDeviceNumber(fileData[0]);
@@ -67,12 +67,12 @@ public class BatchSteps {
 			//for format of date to be passed is YYMM
 			String tempDate = fileData[1].substring(fileData[1].length()-2) + fileData[1].substring(0, 2);
 			device.setExpirationDate(tempDate);
-			MiscUtils.reportToConsole("Expiration Data :  " + tempDate );
+			logger.info("Expiration Data :  {} ", tempDate );
 			MiscUtils.reportToConsole("******** Embossing File Completed ***** " );
 
 		} catch (Exception e) {
 			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
-			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
+			logger.info(ConstantData.EXCEPTION +" {} " ,  e.getMessage());
 			throw MiscUtils.propagate(e);
 		}
 	}
@@ -92,7 +92,7 @@ public class BatchSteps {
 			}
 
 			device.setPinOffset(values[0]);
-			MiscUtils.reportToConsole("Pin Offset :  " + values[0] );
+			logger.info("Pin Offset :  {}" , values[0] );
 			scanner.close();
 			//			reanming file name as sometimes the embosing file name is also same
 			MiscUtils.renamePinFile(batchFile.toString());

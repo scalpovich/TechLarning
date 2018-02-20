@@ -9,7 +9,7 @@ Meta:
 @StoryName d_msr_corp
 @msrpinchange
 
-Scenario: Set up program for debit emv retail debit card and perform Pin Change operation
+Scenario: Set up program for debit msr corporate card and perform Pin Change operation
 Given user is logged in institution
 And device range for program with device plan for "debit" "magnetic stripe" card
 When user creates new device of debit type for new client

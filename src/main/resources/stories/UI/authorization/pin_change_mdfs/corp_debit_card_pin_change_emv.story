@@ -9,7 +9,7 @@ Meta:
 @StoryName d_emv_corp
 @emvpinchange
 
-Scenario: Set up program for debit emv retail debit card and perform Pin Change operation
+Scenario: Set up program for debit emv corporate card and perform Pin Change operation
 Given user is logged in institution
 And device range for program with device plan for "debit" "emv" card
 When user creates new device of debit type for new client
