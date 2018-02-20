@@ -255,7 +255,7 @@ public class TransactionSteps {
 		if(transactionWorkflow.isContains(transaction, "EMV")) {
 			return "000"+device.getIcvvData(); 
 		}else if(transactionWorkflow.isContains(transaction, "MSR")) {
-			if(!(transactionWorkflow.isContains(transaction, "ECOM") || transactionWorkflow.isContains(transaction, "CASH_ADVANCED ") || transactionWorkflow.isContains(transaction, "MMSR") || transactionWorkflow.isContains(transaction, "ASI"))) 
+			if(!(transactionWorkflow.isContains(transaction, "ECOM") || transactionWorkflow.isContains(transaction, "CASH_ADVANCE") || transactionWorkflow.isContains(transaction, "MMSR") || transactionWorkflow.isContains(transaction, "ASI"))) 
 				return "000"+device.getCvvData();
 		}			
 		return "(default)";		
