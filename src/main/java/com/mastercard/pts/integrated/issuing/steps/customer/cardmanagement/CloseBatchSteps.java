@@ -16,4 +16,10 @@ public void closeBatchExecutionForNewApplication()
 {
 	closeBatchFlows.closeBatchExecution();
 }
+
+@When("user processes close batch for new Application for FileUpload")
+public void closeFirstBatchExecutionForNewApplication()
+{
+	closeBatchFlows.closeFirstBatchExecution();;
+}
 }

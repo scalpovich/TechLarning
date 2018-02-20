@@ -52,8 +52,6 @@ TestContext context;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[@name='verify']")
 	private MCWebElement verifyBtn;
-	
-	//table[@class='dataview']//tbody/tr[1]/td[8]/span//img
 
 	public void verifyapplication() {
 		Device device=context.get(CreditConstants.APPLICATION);

@@ -58,7 +58,7 @@ public class ApplicationUploadSteps {
 		 String fileName="";
 		if(cardType.equalsIgnoreCase("prepaid"))
 		{
-		 fileName=fileCreation.createApplicationUploadFile(Institution.createWithProvider(provider).getCode()/*program.getInstitute()*/,customerType,cardType);
+		 fileName=fileCreation.createApplicationUploadFile(Institution.createWithProvider(provider).getCode(),customerType,cardType);
 		}
 		else if(cardType.equalsIgnoreCase("credit"))
 		{

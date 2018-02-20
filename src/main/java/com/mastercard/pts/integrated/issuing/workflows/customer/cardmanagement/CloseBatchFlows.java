@@ -26,5 +26,11 @@ public class CloseBatchFlows {
 		closeBatchPage.processAppropriateBatchForApplication();
 	}
 	
+	public void closeFirstBatchExecution()
+	{
+		closeBatchPage=navigator.navigateToPage(CloseBatchPage.class);
+		closeBatchPage.processFirstBatch();
+	}
+	
 
 }

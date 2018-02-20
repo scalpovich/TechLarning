@@ -50,6 +50,9 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Device Generation']")
 	private MCWebElement deviceGenerationLink;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[1]/td[10]/span/input")
+	public MCWebElement firstBatchNumberTxt;
 
 	public List<String> allBatchNumberRetrieval()
 	{
@@ -91,6 +94,12 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 			clickWhenClickable(deviceGenerationLink);
 			checkWhetherRecordPersists();
 		}
+	}
+	
+	public void processFirstBatch() {
+		clickWhenClickable(firstBatchNumberTxt);
+		processSelected.click();
+		verifyOperationStatus();
 	}
 	
     @Override

@@ -11,7 +11,7 @@ public class ApproveCreditDeviceSteps {
 
 	@Autowired
 	ApproveRejectApplicationFlows approveRejectApplicationFlows;
-	@When("user approve the credit application device")
+	@When("user approves the credit application device")
 	public void verifyCreditDeviceAfterApplicaionCreation()
 	{
 		approveRejectApplicationFlows.approveRejectCreditApplication();

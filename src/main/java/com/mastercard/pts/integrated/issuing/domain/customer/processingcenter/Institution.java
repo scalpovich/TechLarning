@@ -37,6 +37,8 @@ public class Institution {
 	private String codeCredit;
 	private String prepaidLinuxUploadPath;
 	private String creditLinuxUploadPath;
+	private String corporateClientCodePrepaid;
+	private String corporateClientCodeCredit;
 	
 	public String getName() {
 		return name;
@@ -241,6 +243,19 @@ public class Institution {
 	}
 	public void setCreditLinuxUploadPath(String creditLinuxUploadPath) {
 		this.creditLinuxUploadPath = creditLinuxUploadPath;
+	}
+	
+	public String getCorporateClientCodePrepaid() {
+		return corporateClientCodePrepaid;
+	}
+	public void setCorporateClientCodePrepaid(String corporateClientCodePrepaid) {
+		this.corporateClientCodePrepaid = corporateClientCodePrepaid;
+	}
+	public String getCorporateClientCodeCredit() {
+		return corporateClientCodeCredit;
+	}
+	public void setCorporateClientCodeCredit(String corporateClientCodeCredit) {
+		this.corporateClientCodeCredit = corporateClientCodeCredit;
 	}
 	
 	@Override

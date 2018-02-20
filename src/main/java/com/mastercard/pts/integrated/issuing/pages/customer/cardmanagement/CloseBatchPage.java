@@ -49,6 +49,9 @@ public class CloseBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]")
 	public MCWebElements allBatchNumberTxt;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[1]/td[10]/span/input")
+	public MCWebElement firstBatchNumberTxt;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElements allRowsTxt;
 
@@ -93,6 +96,13 @@ public class CloseBatchPage extends AbstractBasePage {
 		verifyOperationStatus();
 		
 	}
+	
+	public void processFirstBatch() {
+		clickWhenClickable(firstBatchNumberTxt);
+		ProcessSelected.click();
+		verifyOperationStatus();
+	}
+	
     @Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(batchNoColumn));

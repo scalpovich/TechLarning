@@ -94,6 +94,5 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 		waitForElementVisible(searchBtn);
 		searchBtn.click();
 		return normalStatus.getText();
-	   //getFinder().getWebDriver().findElement(By.xpath(".//*[@alt='Edit Record']")).click();
 	}
 }

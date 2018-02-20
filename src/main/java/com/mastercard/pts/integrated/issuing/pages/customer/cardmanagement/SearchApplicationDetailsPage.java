@@ -108,7 +108,7 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 	{
 		try
 		{
-			if(!getFinder().getWebDriver().findElement(By.xpath("//table[@class='dataview']//tr[@class!='headers']/td[5]/span")).isDisplayed())
+			if(!driver().findElement(By.xpath("//table[@class='dataview']//tr[@class!='headers']/td[5]/span")).isDisplayed())
 			{
 				clickSearchButton();
 				waitForPageToLoad(driver());

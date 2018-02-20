@@ -550,7 +550,7 @@ public class FileCreation {
 											.replace("%P%", program.getProgramCode())
 											.replace("%D%", deviceplan.getDevicePlanCode())
 											.replace("%b%", vendor.getBranchCode())
-											.replace("%Z%", corporateClientCode)
+											.replace("%Z%",  Institution.createWithProvider(provider).getCorporateClientCodePrepaid())
 											.replace("%N%", name)
 											.replace("%K%", CustomUtils.RandomNumbers(10))
 											.replace("%X%", CustomUtils.randomAlphaNumeric(5)+"@"+CustomUtils.randomAlphaNumeric(4)+".com"));
@@ -564,7 +564,7 @@ public class FileCreation {
 											.replace("%P%", program.getProgramCode())
 											.replace("%D%", deviceplan.getDevicePlanCode())
 											.replace("%b%", vendor.getBranchCode())
-											.replace("%Z%", corporateClientCodeCredit)
+											.replace("%Z%", Institution.createWithProvider(provider).getCorporateClientCodeCredit())
 											.replace("%N%", name)
 											.replace("%K%", CustomUtils.RandomNumbers(10))
 											.replace("%X%", CustomUtils.randomAlphaNumeric(5)+"@"+CustomUtils.randomAlphaNumeric(4)+".com"));

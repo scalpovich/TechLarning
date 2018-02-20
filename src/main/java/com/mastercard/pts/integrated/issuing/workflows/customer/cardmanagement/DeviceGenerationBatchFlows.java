@@ -26,5 +26,11 @@ public class DeviceGenerationBatchFlows {
 		deviceGenerationBatchPage.processAppropriateBatchForApplication();
 	}
 	
+	public void deviceGenerationFirstBatchExecution()
+	{
+		deviceGenerationBatchPage=navigator.navigateToPage(DeviceGenerationBatchPage.class);
+		deviceGenerationBatchPage.processFirstBatch();
+	}
+	
 
 }

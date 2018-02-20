@@ -7,6 +7,8 @@
    "prepaidLinuxUploadPath" : "/home/dc-user/integrated/elt_bo/data/121212/input",
    "creditLinuxUploadPath" : "/home/dc-user/integrated/elt_bo/data/121212/input",
    "credit":true,
+   "corporateClientCodePrepaid" :"12121217222000002",
+   "corporateClientCodeCredit" :"12121218003000051",
    "prepaid":true,
    "agentPortalSupport":true,
    "collectPortalSupport":true,

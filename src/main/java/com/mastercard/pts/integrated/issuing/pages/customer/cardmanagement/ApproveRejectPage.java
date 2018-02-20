@@ -59,7 +59,7 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 		clickSearchButton();
 	}
 	
-	public void clickEditImageForTheREcordDisplayed()
+	public void clickEditImageForTheRecordDisplayed()
 	{
 		waitForPageToLoad(driver());
 		clickWhenClickableDoNotWaitForWicket(editImg);	
@@ -72,7 +72,7 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 		verifyOperationStatus();
 	}
 	
-	public String getApplicationNumbere()
+	public String getApplicationNumber()
 	{
 		return getCodeFromInfoMessage("Application Number");
 	}

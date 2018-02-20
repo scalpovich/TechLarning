@@ -1,3 +1,4 @@
+!-- Author e076177
 Narrative:
 As a(n)  Customer portal user 
 I want to onborad prepaid customer using application upload 
@@ -12,6 +13,8 @@ Meta:
 
 Given login to portal as existing bank as a Customeruser
 When user creates Application Upload Credit batch file and uploads it on server for Individual for credit
+When user processes close batch for new Application for FileUpload
+When user processes deviceGeneration batch for new Application for FileUpload
 When processes prepaid pre-production batch
 When All processes prepaid device production batch
 When User search for device on search screen for product type prepaid and validates the status as NORMAL

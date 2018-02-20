@@ -207,8 +207,9 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		device.setWalletNumber(getCodeFromInfoMessage("wallet"));
 		device.setDeviceNumber(getCodeFromInfoMessage("device(s)"));
 	}
-	public void createDeviceNewApplication(Device device) {
+	public boolean createDeviceNewApplication(Device device) {
 		logger.info("Add Device for program: {}", device.getProgramCode());
+		Boolean applicationNumber=false;
 		clickAddNewButton();
 
 		runWithinPopup("Add Application", () -> {
@@ -242,8 +243,12 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		logger.info("DeviceNumber: {}",device.getDeviceNumber());
 		logger.info("Application: {}",device.getApplicationNumber());
 		}
-
+        if(device.getApplicationNumber()!=null && !device.getApplicationNumber().isEmpty())
+        {
+        	applicationNumber=true;
+        }
 		//scolling "PageUp" is needed here as the Menu item is not visible
+        return applicationNumber;
 		
 	}
 

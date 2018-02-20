@@ -1591,7 +1591,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	public boolean errorMessagePresence() {
 		try {
-			if (getFinder().getWebDriver()
+			if (driver()
 					.findElement(By.xpath("//*[@class='feedbackPanelERROR']"))
 					.isDisplayed()) {
 				return true;

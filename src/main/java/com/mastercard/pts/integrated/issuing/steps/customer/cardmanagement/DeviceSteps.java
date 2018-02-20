@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -136,7 +137,7 @@ public class DeviceSteps {
 		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 
-		deviceWorkflow.createDeviceUsingApplication(device);
+		Assert.assertTrue("Application is not created successfully",deviceWorkflow.createDeviceUsingApplication(device));
 		context.put(CreditConstants.APPLICATION, device);
 	}
 		

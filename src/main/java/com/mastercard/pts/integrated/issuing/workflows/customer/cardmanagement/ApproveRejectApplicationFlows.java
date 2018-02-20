@@ -16,9 +16,9 @@ public class ApproveRejectApplicationFlows {
 		ApproveRejectPage approveRejectPage = navigator.navigateToPage(ApproveRejectPage.class);
 		approveRejectPage.enterApplicationNumber();
 		approveRejectPage.selectFromAndToDate();
-		approveRejectPage.clickEditImageForTheREcordDisplayed();
+		approveRejectPage.clickEditImageForTheRecordDisplayed();
 		approveRejectPage.approveButtonClick();
-		String message=approveRejectPage.getApplicationNumbere();
+		String message=approveRejectPage.getApplicationNumber();
 		return message;
 	}
 }
