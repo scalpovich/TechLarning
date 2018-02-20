@@ -13,7 +13,7 @@ Scenario: Set up prepaid mwmc retail travel msr pinless card and perform Visa Lo
 Meta:
 @TestId
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "magnetic stripe" "Manual" activation code for card with pin for an interface
+And device range for program with device plan for "prepaid" "magnetic stripe" "Load" activation code for card with pin for an interface
 When user creates new device of prepaid type for new client
 When device has "normal" status
 When a new device was created
