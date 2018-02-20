@@ -13,7 +13,6 @@ Scenario: Setup - debit msr corp debit card
 Given user is logged in institution
 And device range for program with device plan for "debit" "magnetic stripe" card
 When user creates new device of debit type for new client
-When user updates cvccvv as uncheck on device plan
 Then device has "normal" status
 Then user sign out from customer portal
 
@@ -28,6 +27,7 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for debit device
 Then device has "normal" status
 When user activates device through helpdesk
+When user updates cvccvv as uncheck on device plan
 Then user sign out from customer portal
 
 Scenario: Pin Generation 
