@@ -386,6 +386,11 @@ public class DevicePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:intTxnAllowed:checkBoxComponent")
 	private MCWebElement intTxnAllowedChkBx;
 	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=devicePlanCode]")
+	private MCWebElement devicePlanCode;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Authorization']")
+	private MCWebElement authorizationTab;
 
 	public void AddDevicePlan() {
 		clickWhenClickable(AddDevicePlanBtn);
@@ -396,6 +401,10 @@ public class DevicePlanPage extends AbstractBasePage {
 		switchToIframe(Constants.ADD_DEVICE_PLAN_FRAME);
 	}
 
+	public void switchToEditDevicePlanFrame() {
+		switchToIframe(Constants.EDIT_DEVICE_PLAN);
+	}
+	
 	public String enterDevicePlanCode(DevicePlan devicePlan) {
 		if (devicePlan.getDevicePlanCode().length() != 0) {
 			enterValueinTextBox(iframeDevicePlanCodeTxt, devicePlan.getDevicePlanCode());
@@ -911,6 +920,20 @@ public class DevicePlanPage extends AbstractBasePage {
 		return successMessage.getText().equalsIgnoreCase(ConstantData.SUCCESS_MESSAGE);
 	}
 
+	public void updateCVCCVVDevicePlan(DevicePlan devicePlanDataObject) {
+		logger.info("Update Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
+		enterValueinTextBox(devicePlanCode, devicePlanDataObject.getDevicePlanCode());
+		clickSearchButton();
+		editFirstRecord();				
+		runWithinPopup("Edit Device Plan", () -> {	
+			clickWhenClickable(authorizationTab);				
+			checkCvcCvv();
+			clickSaveButton();
+		});
+
+		verifyOperationStatus();
+	}
+	
 	public void createDevicePlan(DevicePlan devicePlanDataObject) {
 		logger.info("Create Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
 		clickAddNewButton();
@@ -937,6 +960,8 @@ public class DevicePlanPage extends AbstractBasePage {
 		verifyOperationStatus();
 	}
 
+	
+	
 	private void createDevicePlanContinuation(DevicePlan devicePlan) {
 		cvvCvv2PinGenerationSelectionScreen(devicePlan);
 

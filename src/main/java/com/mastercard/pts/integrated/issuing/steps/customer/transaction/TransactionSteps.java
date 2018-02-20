@@ -247,11 +247,18 @@ public class TransactionSteps {
 		transactionData.setCardDataElementsDynamic("045.02", device.getDeviceNumber());
 		transactionData.setCardDataElementsDynamic("045.06", device.getExpirationDate());
 		transactionData.setCardDataElementsDynamic("035.04", device.getServiceCode());				
+		transactionData.setCardDataElementsDynamic("035.05", getCVVICCData(transaction,transactionData,device)); 	
+	}
+	
+	public String getCVVICCData(String transaction,Transaction transactionData,Device device)	{
+		
 		if(transactionWorkflow.isContains(transaction, "EMV")) {
-			transactionData.setCardDataElementsDynamic("035.05", "000"+device.getIcvvData()); 
+			return "000"+device.getIcvvData(); 
 		}else if(transactionWorkflow.isContains(transaction, "MSR")) {
-			transactionData.setCardDataElementsDynamic("035.05", "000"+device.getCvvData());
-		}		
+			if(!transactionWorkflow.isContains(transaction, "ECOM") && !transactionWorkflow.isContains(transaction, "CASH_ADVANCED ") && !transactionWorkflow.isContains(transaction, "MMSR") && !transactionWorkflow.isContains(transaction, "ASI")) 
+				return "000"+device.getCvvData();
+		}			
+		return "(default)";		
 	}
 
 	@Given("Auth file is provided for $iteration")

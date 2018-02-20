@@ -68,8 +68,10 @@ public class Constants {
 	public static String ADD_VENDOR_MASTER_FRAME = "Add Vendor Master";
 
 	public static String ADD_DEVICE_PLAN_FRAME = "Add Device Plan";
-
+	
 	public static String EDIT_DEVICE_PLAN_FRAME = "Edit Device BIN";
+	
+	public static String EDIT_DEVICE_PLAN = "Edit Device Plan";
 
 	public static String ADD_PROGRAM_FRAME = "Add Program";
 
