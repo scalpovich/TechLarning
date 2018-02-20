@@ -289,8 +289,8 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		fillProfile(device);
 		
 		//Validate only when environment is demo
-		if(System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)){
-			clickNextButton();
+		if(System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)||System.getProperty("env").equalsIgnoreCase("stageSA")){
+		clickNextButton();
 		}
 		
 		fillAddress(device);
@@ -320,8 +320,8 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private void fillProfile(Device device) {
 		Program program=context.get(ContextConstants.PROGRAM);
 		if (corporateClientCodeDDwn.isEnabled())
-			WebElementUtils.selectDDByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
 		WebElementUtils.selectDropDownByVisibleText(branchCodeDDwn, device.getBranchCode());
+			WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
 		ClientDetails client = device.getClientDetails();
 		WebElementUtils.selectDropDownByVisibleText(titleDDwn, client.getTitle());
 		WebElementUtils.enterText(firstNameTxt, client.getFirstName());
