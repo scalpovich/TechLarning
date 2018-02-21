@@ -362,6 +362,8 @@ public class Constants {
 	public static final String UPLOAD_FILE_PATH = "/home/dc-user/integrated/elt_bo/data/102030/RUPAY_INCOMING";
 
 	public static final String APPLICATION_UPLOAD_PREPAID_FILE_PATH = "/home/dc-user/integrated/elt_bo/data/121212/input";
+	
+	public static final String APPLICATION_UPLOAD_CREDIT_FILE_PATH = "/home/dc-user/integrated/elt_bo/data/554466/INPUT";
 
 	public static final String GENERIC_DESCRIPTION = "AUTOMATION";
 

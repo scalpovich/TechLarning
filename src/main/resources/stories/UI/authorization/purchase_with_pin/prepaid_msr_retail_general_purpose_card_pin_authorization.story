@@ -13,6 +13,8 @@ Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
 And user sign out from customer portal
+
+Scenario: Device Production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
@@ -24,11 +26,15 @@ When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
 And user sign out from customer portal
+
+Scenario: Pin Generation 
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
+
+Scenario: Transaction
 Given connection to MAS is established
 When perform an MSR_PURCHASE MAS transaction
 Then MAS test results are verified

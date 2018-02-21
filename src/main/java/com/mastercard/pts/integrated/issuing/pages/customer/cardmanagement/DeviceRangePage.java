@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
@@ -83,6 +85,9 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	@Autowired
 	DeviceBin issuerbin;
+	
+	@Autowired
+	TestContext context;
 	// ------------- Card Management > Institution Parameter Setup > Institution
 	// Currency [ISSS05]
 
@@ -161,6 +166,7 @@ public class DeviceRangePage extends AbstractBasePage {
 		if (!MapUtils.fnGetInputDataFromMap("Program").isEmpty()) {
 			selectByVisibleText(ProgramDDwn, MapUtils.fnGetInputDataFromMap("Program"));
 		} else {
+			logger.info("Program :{}",program.getProgram());
 			selectByVisibleText(ProgramDDwn, program.getProgram());
 		}
 
@@ -180,7 +186,11 @@ public class DeviceRangePage extends AbstractBasePage {
 		if (!MapUtils.fnGetInputDataFromMap("DMSIssuerBIN").isEmpty()) {
 			selectByVisibleText(IssuerBINDDwn, MapUtils.fnGetInputDataFromMap("DMSIssuerBIN"));
 		} else if (!MapUtils.fnGetInputDataFromMap("SMSIssuerBIN").isEmpty()) {
-			selectByVisibleText(IssuerBINDDwn, MapUtils.fnGetInputDataFromMap("SMSIssuerBIN"));
+			selectByVisibleText(IssuerBINDDwn,
+					MapUtils.fnGetInputDataFromMap("SMSIssuerBIN"));
+		}
+		if (issuerbin.getBinType().contains("Dual")) {
+			selectByVisibleText(IssuerBINDDwn, issuerbin.getIssuerBin());
 		} else {
 			IssuerBINDDwn.getSelect().selectByIndex(1);
 		}
@@ -394,6 +404,9 @@ public class DeviceRangePage extends AbstractBasePage {
 		selectProductType(deviceRange.getProductType());
 		selectProgram(deviceRange.getProgram());
 		selectDevicePlanCode(deviceRange.getDevicePlanCode());
+		DevicePlan devicePlan=context.get(ContextConstants.DEVICE_PLAN);
+		logger.info("ProductType : {}",devicePlan.getProductType());
+		logger.info("issuerBin :{}",deviceRange.getIssuerBin());
 		selectIssuerBin(deviceRange.getIssuerBin());
 		selectBranch(deviceRange.getBranch());
 		addBtn.click();

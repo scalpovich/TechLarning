@@ -113,7 +113,7 @@ public class CardHolderTransactionsWorkFlows extends AbstractBasePage{
 		fundTransfer.enterTransactionRemark(cardhlfTran.getTransactionRemark());
 		fundTransfer.confirmTransaction();
 		waitForLoaderToDisappear();
-		Assert.assertTrue(fundTransfer.checkWalletToWalletTransferStatusMessage().contains(cardhlfTran.getWalletToWalletTransSucessMsg()));		
+		Assert.assertTrue(fundTransfer.checkWalletToWalletTransferStatusMessage().contains("Your transaction is successful")); 
 	}
 	
 	public boolean checkCashRemittanceAllowedOrNot(){

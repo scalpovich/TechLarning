@@ -1,6 +1,5 @@
 package com.mastercard.pts.integrated.issuing.steps.devicecreation;
 
-import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -11,10 +10,13 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SearchApplicationDetails;
+import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
+import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessFlows;
@@ -48,9 +50,20 @@ public class ApplicationUploadSteps {
 	@Autowired
 	private Device device;
 	
-	@When("user creates $application_upload_file batch file and uploads it on server for $customerType")
-	public void createFileForApplicationUpload(@Named("application_upload_file") String batchName,@Named("customerType") String customerType){	
-		 String fileName=fileCreation.createApplicationUploadFile(program.getInstitute(),customerType);
+	@Autowired
+	private DataProvider provider;
+	
+	@When("user creates $application_upload_file batch file and uploads it on server for $customerType for $cardType")
+	public void createFileForApplicationUpload(@Named("application_upload_file") String batchName,@Named("customerType") String customerType,@Named("cardType")String cardType) throws Exception{
+		 String fileName="";
+		if(cardType.equalsIgnoreCase("prepaid"))
+		{
+		 fileName=fileCreation.createApplicationUploadFile(Institution.createWithProvider(provider).getCode(),customerType,cardType);
+		}
+		else if(cardType.equalsIgnoreCase("credit"))
+		{
+			 fileName=fileCreation.createApplicationUploadFile(Institution.createWithProvider(provider).getCodeCredit(),customerType,cardType);	
+		}
 		processBatch.setJoBID(processBatchesFlows.processUploadBatches(batchName, fileName));
 			//CustomUtils.ThreadDotSleep(8000);
 		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(processBatch, fileName));
@@ -70,14 +83,56 @@ public class ApplicationUploadSteps {
 		preProductionBatch.setJobID(processBatch.getJoBID());
 		batchProcessFlows.processPreProductionBatch(preProductionBatch);
 	}
-	@When("$type processes pre-production batch using new Application")
+	@Then("$type processes pre-production batch using new Device")
+	@When("$type processes pre-production batch using new Device")
 	public void whenProcessesPreproductionBatchForDevice(String type) {
+
+		preProductionBatch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processPreProductionBatchNewDevice(preProductionBatch);
+	}
+	
+	@Then("$type processes pre-production batch using new Application")
+	@When("$type processes pre-production batch using new Application")
+	public void whenProcessesPreproductionBatchForDeviceUsingApplication(String type) {
 
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPreProductionBatchNewApplication(preProductionBatch);
 	}
+	
+	@Then("$type processes deviceproduction batch using new Device")
+	@When("$type processes deviceproduction batch using new Device")
+	public void whenProcessesDeviceproductionBatchForDevice(String type) {
+		DeviceProductionBatch batch = new DeviceProductionBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processDeviceProductionBatchNewDevice(batch);
+	}
+	
+	@Then("$type processes pinProduction batch using new Application")
+	@When("$type processes pinProduction batch using new Application")
+	public void whenProcessesPinproductionBatchForNewApplication(String type) {
+		PinGenerationBatch batch = new PinGenerationBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processPinProductionBatchNewApplication(batch);
+	}
+	
+	
+	@Then("$type processes pinProduction batch using new Device")
+	@When("$type processes pinProduction batch using new Device")
+	public void whenProcessesPinproductionBatchForDevice(String type) {
+		PinGenerationBatch batch = new PinGenerationBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processPinProductionBatchNewDevice(batch);
+	}
+	
+	@Then("$type processes deviceproduction batch using new Application")
+	@When("$type processes deviceproduction batch using new Application")
+	public void whenProcessesDeviceproductionBatchForNewApplication(String type) {
+		DeviceProductionBatch batch = new DeviceProductionBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processDeviceProductionBatchNewApplication(batch);
+	}
 
-
+	@Then("processes $type device production batch")
 	@When("processes $type device production batch")
 	public void whenProcessesDeviceProductionBatch(String type) {
 		DeviceProductionBatch batch = new DeviceProductionBatch();
@@ -85,5 +140,15 @@ public class ApplicationUploadSteps {
 		batch.setBatchNumber(preProductionBatch.getBatchNumber());
 		MiscUtils.reportToConsole("device production Batch: {}",preProductionBatch.getBatchNumber());
 		batchProcessFlows.processDeviceProductionBatch(batch);
+	}
+	
+	@Then("All processes $type device production batch")
+	@When("All processes $type device production batch")
+	public void whenProcessesDeviceProductionBatchForAll(String type) {
+		DeviceProductionBatch batch = new DeviceProductionBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batch.setBatchNumber(preProductionBatch.getBatchNumber());
+		MiscUtils.reportToConsole("device production Batch: {}",preProductionBatch.getBatchNumber());
+		batchProcessFlows.processDeviceProductionBatchAll(batch);
 	}
 }

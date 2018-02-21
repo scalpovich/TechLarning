@@ -39,7 +39,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -57,6 +59,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@Autowired
 	CreditCardPlan creditCardPlans;
+	
+	@Autowired
+	TestContext context;
 
 	final static int ELEMENT_WAIT_MAX = 6000;
 
@@ -240,6 +245,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@type='submit' or @name='save']")
 	private MCWebElement saveOrDetailsOrSearchBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers' and @class!='navigation'][1]/td[2]/span")
+	private MCWebElement deviceNumberFetch;
 
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -605,7 +613,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	protected void waitAndSearchForRecordToExist() {
 		waitAndSearchForRecordToAppear();
-
+        context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
 		selectFirstRecord();
 		clickProcessSelectedButton();
 	}
@@ -1270,7 +1278,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public void ClickButton(MCWebElement BtnName) {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		BtnName.click();
-		// addWicketAjaxListeners(getFinder().getWebDriver());
+		//addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
 	public void ClickCheckBox(MCWebElement optionChkBox, boolean value) {
@@ -1574,6 +1582,25 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public int frames() {
 		frameSwitch.getElements();
 		return frameSwitch.getElements().size();
+	}
+	
+	public void clickSaveButtonWithOutWicket() {
+		WebElementUtils.scrollDown(driver(), 0, 250);
+		clickWhenClickableDoNotWaitForWicket(saveBtn);
+	}
+	
+	public boolean errorMessagePresence() {
+		try {
+			if (driver()
+					.findElement(By.xpath("//*[@class='feedbackPanelERROR']"))
+					.isDisplayed()) {
+				return true;
+			}
+
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return false;
 	}
 
 	@Override

@@ -41,6 +41,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String description;
 	private String walletPlanCode;
 	private String currency;
+	private String anotherCurrency;
 	private String productType;
 	private String programType;
 	private String product;
@@ -432,12 +433,21 @@ public class WalletPlan implements HasCodeAndDescription {
 		this.WalletPlanUsage = walletPlanUsage;
 	}
 
+	public String getAnotherCurrency() {
+		return anotherCurrency;
+	}
+
+	public void setAnotherCurrency(String anotherCurrency) {
+		this.anotherCurrency = anotherCurrency;
+	}
+
 	public static WalletPlan walletplanDataprovider() {
 		WalletPlan walletplan = new WalletPlan();
 		walletplan.setWalletPlanCode(MapUtils.fnGetInputDataFromMap("WalletPlancode"));
 		walletplan.setDescription(MapUtils.fnGetInputDataFromMap("WalletPlanDescription"));
 		walletplan.setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
 		walletplan.setWalletPlanUsage(MapUtils.fnGetInputDataFromMap("WalletplanUsage"));
+		walletplan.setAnotherCurrency(MapUtils.fnGetInputDataFromMap("Currency1"));
 		return walletplan;
 	}
 

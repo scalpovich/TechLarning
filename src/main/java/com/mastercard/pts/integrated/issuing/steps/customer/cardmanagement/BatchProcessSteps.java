@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.math.BigDecimal;
 import java.nio.file.Path;
 
 import org.jbehave.core.annotations.Given;
@@ -23,6 +22,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceGenerationBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequest;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
@@ -135,6 +135,17 @@ public class BatchProcessSteps {
 	public void whenProcessesPinGenerationBatch(String type){
 		PinGenerationBatch batch = new PinGenerationBatch();
 		batch.setProductType(ProductType.fromShortName(type));
+		batch.setBatchNumber(batchNumber);
+		MiscUtils.reportToConsole("pin generation Batch: {}", batchNumber);
+		jobId = batchProcessWorkflow.processPinGenerationBatch(batch);
+		MiscUtils.reportToConsole("pin generation Job Id: {}", jobId);
+	}
+	
+	@When("new Application processes pin generation batch for $type")
+	public void whenProcessesPinGenerationBatchUsingNewApplication(String type){
+		PinGenerationBatch batch = new PinGenerationBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		String batchNumber=context.get(CreditConstants.NEW_APPLICATION_BATCH);
 		batch.setBatchNumber(batchNumber);
 		MiscUtils.reportToConsole("pin generation Batch: {}", batchNumber);
 		jobId = batchProcessWorkflow.processPinGenerationBatch(batch);

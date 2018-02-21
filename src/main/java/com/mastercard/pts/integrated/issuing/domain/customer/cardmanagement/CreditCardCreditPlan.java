@@ -23,7 +23,7 @@ public class CreditCardCreditPlan implements HasCodeAndDescription {
 	private String paymentPriorityPlan;	
 	private String allowedPercentage;
 	
-    private static final String PAYMENT_DATE = "PAYMENT_DATE";
+	private static final String PAYMENT_DATE = "PAYMENT_DATE";
 
 	private static final String UNPAID_DATE = "UNPAID_DATE";
 	
@@ -158,7 +158,7 @@ public class CreditCardCreditPlan implements HasCodeAndDescription {
 	public void setAbbreviation(String abbreviation) {
 		this.abbreviation = abbreviation;
 	}
-
+    
 	@Override
 	public String toString() {
 		return "CreditCardCreditPlan [creditPlanCode;=" + creditPlanCode + ", abbreviation="+ abbreviation +  ", description="+ description 
