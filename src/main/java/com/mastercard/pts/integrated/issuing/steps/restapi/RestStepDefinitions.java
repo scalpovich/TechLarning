@@ -1,16 +1,24 @@
 package com.mastercard.pts.integrated.issuing.steps.restapi;
 
+import java.util.Map;
+import java.util.Optional;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.model.ExamplesTable;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.provider.DataLoader;
 import com.mastercard.pts.integrated.issuing.domain.restapi.DeviceDetails;
 import com.mastercard.pts.integrated.issuing.domain.restapi.JsonRequestResponseParameters;
+import com.mastercard.pts.integrated.issuing.utils.ReadTestDataFromExcel;
 import com.mastercard.pts.integrated.issuing.utils.restapi.JsonUtil;
 
 @Component
@@ -22,6 +30,12 @@ public class RestStepDefinitions {
 	JsonRequestResponseParameters reqResParams;
 	@Autowired
 	DeviceDetails deviceDetails;
+	
+	@Autowired
+	private TestContext context;
+	
+	@Autowired
+	private DataLoader dataLoader;
 
 	final Logger logger = LoggerFactory.getLogger(RestStepDefinitions.class);
 
@@ -59,11 +73,24 @@ public class RestStepDefinitions {
 		reqResParams.setUpdatedReq(jsonutil.updateJasonFileWithUserInputs(
 				jsonFile, attributeTable));
 	}
+	@Given("user update $jsonFile file")
+	public void userUpdateJsonWithExcelData(@Named("jsonFile") String jsonfile,@Named("datasheet") String datasheet) {
+       //  Map<String, String> reqMap=context.get(TestContext.KEY_STORY_DATA);
+		Map<String, String> reqMap = dataLoader.loadData(datasheet).get();
+		reqResParams.setUpdatedReq(jsonutil.updateJasonFileWithExcel(
+				jsonfile, reqMap));
+	}
 	@When("user send post request with updateded attributes")
 	@Then("user send post request with updateded attributes")
 	public void sendPostRequestWithMultipleAttributes() {
 		reqResParams.setResponse(jsonutil.postRequest(reqResParams
 				.getUpdatedReq()));
+	}
+	@When("user send post request at $endPoint")
+	@Then("user send post request at $endPoint")
+	public void sendPostRequestAtEndPoint(String endPoint) {
+		reqResParams.setResponse(jsonutil.postRequest(reqResParams
+				.getUpdatedReq(),endPoint));
 	}
 	@Then("user send put request with updateded attributes")
 	@When("user send put request with updateded attributes")

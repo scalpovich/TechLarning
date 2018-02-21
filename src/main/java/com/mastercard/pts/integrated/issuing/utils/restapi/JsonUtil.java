@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+
 import static org.hamcrest.Matchers.*;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -102,10 +104,21 @@ public class JsonUtil extends AbstractBaseSteps {
 	public Response postRequest(String reqObject) {
 		RestAssured.baseURI = env.getProperty("api.base.uri");
 		response = given().body(reqObject).when().contentType(ContentType.JSON)
-				.post(CARD_ACTIVATION_END_POINT);
-		logger.info("**********Request String:" + reqObject.toString());
-		logger.info("**********Response String:"
-				+ response.asString().toString());
+				.post("/users");
+		logger.info("**********Request String:{}" , reqObject.toString());
+		logger.info("**********Response String:{}"
+				, response.asString().toString());
+		return response;
+
+	}
+	public Response postRequest(String reqObject,String endPoint) {
+		RestAssured.config = restAssuredConfiguration.getRestAssuredConfig();
+		RestAssured.baseURI = restAssuredConfiguration.getbaseUrl();
+		response = given().body(reqObject).when().contentType(ContentType.JSON)
+				.post("/"+endPoint);
+		logger.info("**********Request String:{}" , reqObject.toString());
+		logger.info("**********Response String:{}"
+				, response.asString().toString());
 		return response;
 
 	}
@@ -188,6 +201,13 @@ public class JsonUtil extends AbstractBaseSteps {
 
 		return updateJasonFileWithAttributes(REQ_JSON_FILE_PATH + filepath,
 				attributeTable);
+	}
+	
+	public String updateJasonFileWithExcel(String filepath,
+			Map<String,String> mapReq) {
+
+		return updateJasonFileWithExcelData(REQ_JSON_FILE_PATH + filepath,
+				mapReq);
 	}
 
 	public String updateJasonFile(String filepath, String input) {
@@ -310,6 +330,9 @@ public class JsonUtil extends AbstractBaseSteps {
 		case "GetCustomWalletDOM":
 			valueToUpdate = deviceDetails.getCustomWallet();
 			break;
+		case "GET_ISSUER_SESSION_ID":
+			valueToUpdate = deviceDetails.getTransactionId();
+			break;
 		default:
 
 		}
@@ -377,6 +400,70 @@ public class JsonUtil extends AbstractBaseSteps {
 				tempJdata.add(jsonObject);
 			}
 			updatedString = tempJdata.get(0).toString();
+		}
+		return updatedString;
+	}
+	public String updateJasonFileWithExcelData(String filepath,
+			Map<String, String> exceldata) {
+		LinkedList<JSONObject> tempJdata = new LinkedList<>();
+		parser = new JSONParser();
+		String updatedString = null;
+		String[] params = null;
+		String updateKey = null;
+		String updateValue = null;
+		try {
+			obj = parser.parse(new FileReader(filepath));
+		} catch (Exception e) {
+
+			logger.error(e.toString());
+		}
+		for(Entry<String, String> entry: exceldata.entrySet()) {
+			System.out.println(entry.getKey()+"="+entry.getValue());
+			String input = entry.getKey()+"="+entry.getValue();
+			if (input.contains(">")) {
+				String[] inputArray = input.split(">");
+				params = inputArray[0].split(",");
+				String[] expectedKeyValue = inputArray[1].split("=");
+				updateKey = expectedKeyValue[0];
+				updateValue = getData(expectedKeyValue.length > 1 ? expectedKeyValue[1]
+						: null);
+
+			} else {
+				String[] expectedKeyValue = input.split("=");
+				updateKey = expectedKeyValue[0];
+				updateValue = getData(expectedKeyValue.length > 1 ? expectedKeyValue[1]
+						: null);
+
+			}
+
+			jsonObject = (JSONObject) obj;
+
+			Map jData = null;
+
+			if (null != params) {
+				tempJdata.add(jsonObject);
+				int size = params.length;
+				for (int i = 0; i < size; i++) {
+					jData = (Map) jsonObject.get(params[i]);
+
+					if (size - 1 == i) {
+						jData.put(updateKey, updateValue);
+						jsonObject = (JSONObject) jData;
+					} else {
+						jsonObject = (JSONObject) jData;
+					}
+					tempJdata.add(jsonObject);
+				}
+
+			} else {
+
+				jData = (Map) jsonObject;
+				jData.put(updateKey, updateValue);
+				jsonObject = (JSONObject) jData;
+				tempJdata.add(jsonObject);
+			}
+			updatedString = tempJdata.get(0).toString();
+			params=null;
 		}
 		return updatedString;
 	}

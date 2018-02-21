@@ -4,8 +4,9 @@ I want to Execute multiple API
 In order to Validate json respose
 
 Meta:
-@Scenarios
+@SampleAPI
 @storyType API
+@storyName
 
 Scenario: Validate user Response's attribute
 Meta:
@@ -13,6 +14,7 @@ Meta:
 
 Given user update sample.json with below Attributes:
 |AttributesToUpdate|
+|id=11|
 |name=Updated name|
 |email=Updatedemail@.com|
 |address:city=pune|
@@ -40,6 +42,3 @@ Examples:
 |field|validate|
 |address,geo:lng=12345|address.geo.lng=12345|
 |address:city=pune|address.city=pune|
-
-
-

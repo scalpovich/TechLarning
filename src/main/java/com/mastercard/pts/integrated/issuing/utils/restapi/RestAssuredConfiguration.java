@@ -32,6 +32,12 @@ public class RestAssuredConfiguration extends AbstractBaseSteps {
 		case "CardActivation":
 			baseUrl = env.getProperty("api.base.uri_CardActivation");
 			break;
+		case "Sample":
+			baseUrl = env.getProperty("api.base.uri_sample");
+			break;
+		case "Wibmo":
+			baseUrl = env.getProperty("api.base.uri_wibmo");
+			break;
 		default:
 			baseUrl = env.getProperty("api.base.uri_DeviceAPI");
 

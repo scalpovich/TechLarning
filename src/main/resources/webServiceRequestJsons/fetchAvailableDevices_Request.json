@@ -1,8 +1,8 @@
 {
-"service": "RSA Client 211",
-"sessionId": "12345678901234",
-"transactionId": "fb4bf9c3-8144-4520-9f94-ecb2e6e2a8ef",
-"pan": "1234567890123456",
+"service": "ECOM_CLIENT",
+"issuerSessionId": "3f19faa8-82cc-4391-8ee3-5e76d2527472", 
+"sessionId": "6126787543124444",
+"pan": "5887654082290017",
 "version": "1.0",
-"timeStamp": "2017-05-25T02:50:59"
-}
+"timeStamp": "2018-02-16T14:15:59.222Z"
+} 
