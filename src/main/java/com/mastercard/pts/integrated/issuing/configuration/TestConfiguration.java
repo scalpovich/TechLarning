@@ -45,8 +45,9 @@ public class TestConfiguration {
 			logger.error("Exception has been caugh while creating a temp folder.\nMessage :: {}\nTrace :: {}", e.getMessage(), e.getStackTrace());
 			MiscUtils.propagate(e);
 		}
-		
-		//Utils.killChromeDriver();
+		if(System.getProperty("storyType")==null){
+		Utils.killChromeDriver();
+		}
 		logger.info("Temp directory path: {}", temp);
 		return temp;
 	}

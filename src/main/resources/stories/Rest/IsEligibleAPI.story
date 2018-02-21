@@ -14,12 +14,11 @@ Given user update isEligibleRequest.json file
 When user send post request at isEligible
 Then Validate Response for below Attributes:
 |AttributesToValidate|
-|isEligible=true|	 
+|isEligible=false|	 
 Then store issuerSessionId for furtheruse
 
 Scenario:  TO Check fetch avilable aliases With Valid Fields
 Meta:
-@storyType API
 @datasheet fetch_Available_Aliases
 Given user update fetchAvailableDevices_Request.json file
 When user send post request at fetchAvailableAliases
