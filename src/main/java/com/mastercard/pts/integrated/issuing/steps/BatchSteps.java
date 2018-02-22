@@ -56,7 +56,7 @@ public class BatchSteps {
 			//MiscUtils.reportToConsole("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3] + " - "  + " setIcvvData " + " : " +  fileData[4] + "  ***** ");
 			
 			Device device = context.get(ContextConstants.DEVICE);
-			if(device.getDeviceType1().toLowerCase().contains("magnetic stripe card"))
+			if(device.getDeviceType1().toLowerCase().contains(ConstantData.MSR_CARD))
 			{
 				device.setDeviceNumber(fileData[0]);
 				device.setCvv2Data(fileData[2]);
