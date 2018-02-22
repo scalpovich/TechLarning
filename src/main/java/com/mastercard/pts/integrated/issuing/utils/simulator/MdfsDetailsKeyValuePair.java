@@ -29,7 +29,7 @@ public class MdfsDetailsKeyValuePair {
 	// add more parent Window handle property based on the title seen on the
 	// version of MAS
 	private static void setMdfsParentWindowHandlerPropertyVersionData() {
-		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_18_Q2, "MasterCard Debit Financial Simulator <MDFS18.Q2 SP1 - IPS Host Testing>");
+		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_18_Q2, "MasterCard Debit Financial Simulator");
 		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_17_Q4, "MasterCard Debit Financial Simulator <MDFS17.Q4 SP1 - IPS Host Testing>");
 		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_16_Q4, "MasterCard Debit Financial Simulator <MDFS16.Q4>");
 	}
