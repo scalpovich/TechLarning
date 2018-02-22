@@ -21,21 +21,16 @@ public class MdfsDetailsKeyValuePair {
 	// add more installations here along with EXE path details
 	private static void setMdfsInstallationVersionData() {
 		// same exe needs to be invoked for MAS and MDFS
-		mdfsInstallationVersionKeyValuePair.put(MDFS_18_Q2,
-				"C://Program Files (x86)//MasterCard//OTP 7.32.1016//Bin//MSPMCW.exe");
-		mdfsInstallationVersionKeyValuePair.put(MDFS_17_Q4,
-				"C://Program Files (x86)//MasterCard//OTP 7.32.1014//Bin//MSPMCW1740.exe");
-		mdfsInstallationVersionKeyValuePair.put(MDFS_16_Q4,
-				"C://Program Files (x86)//MasterCard//OTP 7.32.1003//Bin//MSPMCW.exe");
+		mdfsInstallationVersionKeyValuePair.put(MDFS_18_Q2, "C://Program Files (x86)//MasterCard//OTP 7.32.1014//Bin//MSPMCW1820.exe");
+		mdfsInstallationVersionKeyValuePair.put(MDFS_17_Q4, "C://Program Files (x86)//MasterCard//OTP 7.32.1014//Bin//MSPMCW1740.exe");
+		mdfsInstallationVersionKeyValuePair.put(MDFS_16_Q4, "C://Program Files (x86)//MasterCard//OTP 7.32.1003//Bin//MSPMCW.exe");
 	}
 
 	// add more parent Window handle property based on the title seen on the
 	// version of MAS
 	private static void setMdfsParentWindowHandlerPropertyVersionData() {
-		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_18_Q2,
-				"MasterCard Debit Financial Simulator <MDFS18.Q2 SP1 - IPS Host Testing>");
-		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_17_Q4,
-				"MasterCard Debit Financial Simulator <MDFS17.Q4 SP1 - IPS Host Testing>");
+		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_18_Q2, "MasterCard Debit Financial Simulator <MDFS18.Q2 SP1 - IPS Host Testing>");
+		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_17_Q4, "MasterCard Debit Financial Simulator <MDFS17.Q4 SP1 - IPS Host Testing>");
 		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_16_Q4, "MasterCard Debit Financial Simulator <MDFS16.Q4>");
 	}
 

@@ -20,20 +20,16 @@ public class MasDetailsKeyValuePair {
 
 	// add more installations here along with EXE path details
 	private static void setMasInstallationVersionData() {
-		masInstallationVersionKeyValuePair.put(MAS_18_Q2,
-				"C://Program Files (x86)//MasterCard//OTP 7.32.1016//Bin//MSPMCW.exe");
-		masInstallationVersionKeyValuePair.put(MAS_17_Q4,
-				"C://Program Files (x86)//MasterCard//OTP 7.32.1014//Bin//MSPMCW1740.exe");
-		masInstallationVersionKeyValuePair.put(MAS_16_Q4,
-				"C://Program Files (x86)//MasterCard//OTP 7.32.1003//Bin//MSPMCW.exe");
+		masInstallationVersionKeyValuePair.put(MAS_18_Q2, 	"C://Program Files (x86)//MasterCard//OTP 7.32.1014//Bin//MSPMCW1820.exe");
+		masInstallationVersionKeyValuePair.put(MAS_17_Q4, "C://Program Files (x86)//MasterCard//OTP 7.32.1014//Bin//MSPMCW1740.exe");
+		masInstallationVersionKeyValuePair.put(MAS_16_Q4, "C://Program Files (x86)//MasterCard//OTP 7.32.1003//Bin//MSPMCW.exe");
 	}
 
 	// add more parent Window handle property based on the title seen on the
 	// version of MAS
 	private static void setMasParentWindowHandlerPropertyVersionData() {
-		masParentWindowHandlerPropertyKeyValuePair.put(MAS_18_Q2, "MasterCard Authorization Simulator <MAS17.Q4 SP1>");
-		masParentWindowHandlerPropertyKeyValuePair.put(MAS_17_Q4,
-				"MasterCard Authorization Simulator <MAS17.Q4 SP1 - IPS Host Testing>");
+		masParentWindowHandlerPropertyKeyValuePair.put(MAS_18_Q2, "MasterCard Authorization Simulator <MAS18.Q2 SP1 - IPS Host Testing>");
+		masParentWindowHandlerPropertyKeyValuePair.put(MAS_17_Q4, "MasterCard Authorization Simulator <MAS17.Q4 SP1 - IPS Host Testing>");
 		masParentWindowHandlerPropertyKeyValuePair.put(MAS_16_Q4, "MasterCard Authorization Simulator <MAS16.Q4>");
 	}
 
