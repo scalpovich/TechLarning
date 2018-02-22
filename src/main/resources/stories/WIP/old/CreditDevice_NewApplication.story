@@ -6,7 +6,7 @@ I want to assert pages
 
 Meta:
 CreditRegression
-@StoryName S190639					 
+@StoryName credit_emv_corp					 
 Scenario:1 UI verification - Customer Portal - User is able to add Approval Score,Risk analysis for Credit Device SetUp and creates a Credit Device Using New Application
 Meta:
 @UserAddsApprovalScore
@@ -29,10 +29,15 @@ And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product
 And User fills MCC Rules for credit product
 And User fills Program section for credit product
-And user navigates to Approval Score Page and add a approvalScore
-And User adds a Risk Analysis Rule Plan by entering valid values
+!-- And user navigates to Approval Score Page and add a approvalScore
+!-- And User adds a Risk Analysis Rule Plan by entering valid values
 When User fills Device Range section for credit product
 Then credit device is created
+When user verify the credit application device
+When user approve the credit application device
+When user process close batch for new Application
+When user process deviceGeneration batch for new Application
 When credit processes pre-production batch using new Application
-When processes credit device production batch
-
+When credit processes deviceproduction batch using new Application
+When new Application processes pin generation batch for credit
+Then User search for new application on search screen for credit and validates the status as NORMAL

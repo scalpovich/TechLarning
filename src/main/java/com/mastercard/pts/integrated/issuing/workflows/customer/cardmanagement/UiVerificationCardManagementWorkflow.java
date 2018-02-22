@@ -957,7 +957,7 @@ public class UiVerificationCardManagementWorkflow {
 	}
 
 	public void verifyVerifyPage() {
-		VerifyPage page = navigator.navigateToPage(VerifyPage.class);
+		VerifyCreditPage page = navigator.navigateToPage(VerifyCreditPage.class);
 		page.verifyUiOperationStatus();
 	}
 

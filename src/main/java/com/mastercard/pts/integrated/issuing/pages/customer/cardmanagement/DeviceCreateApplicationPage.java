@@ -207,8 +207,9 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		device.setWalletNumber(getCodeFromInfoMessage("wallet"));
 		device.setDeviceNumber(getCodeFromInfoMessage("device(s)"));
 	}
-	public void createDeviceNewApplication(Device device) {
+	public boolean createDeviceNewApplication(Device device) {
 		logger.info("Add Device for program: {}", device.getProgramCode());
+		Boolean applicationNumber=false;
 		clickAddNewButton();
 
 		runWithinPopup("Add Application", () -> {
@@ -227,8 +228,27 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			});
 
 		verifyOperationStatus();
-
+		if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)) {
+			device.setApplicationNumber(getCodeFromInfoMessage("Application Number"));
+			logger.info("Application: {}",device.getApplicationNumber());
+		}
+		else
+		{
+		device.setClientCode(getCodeFromInfoMessage("client"));
+		device.setWalletNumber(getCodeFromInfoMessage("wallet"));
+		device.setDeviceNumber(getCodeFromInfoMessage("device(s)"));
+		device.setApplicationNumber(getCodeFromInfoMessage("Application Number"));
+		logger.info("clientCode: {}",device.getClientCode());
+		logger.info("WalletNumber: {}",device.getWalletNumber());
+		logger.info("DeviceNumber: {}",device.getDeviceNumber());
+		logger.info("Application: {}",device.getApplicationNumber());
+		}
+        if(device.getApplicationNumber()!=null && !device.getApplicationNumber().isEmpty())
+        {
+        	applicationNumber=true;
+        }
 		//scolling "PageUp" is needed here as the Menu item is not visible
+        return applicationNumber;
 		
 	}
 
@@ -264,7 +284,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 
 		fillProfile(device);
 		fillAddress(device);
-		if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)) {
+		
 			// skip employment details
 			clickNextButton();
 			// Bank Details applicable only for Credit type product
@@ -276,20 +296,6 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			// skip device extra fields
 			clickNextButton();
 			clickNextButton();
-		}
-		else
-		{
-		// skip employment details
-		clickNextButton();
-		// Bank Details applicable only for Credit type product
-		clickNextButton();
-		// Nomination Details applicable only for Credit type product
-		clickNextButton();
-		// skip client extra fields
-		clickNextButton();
-		// skip device extra fields
-		clickNextButton();
-		}
 	}
 
 	private void fillAddress(Device device) {
@@ -311,10 +317,8 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 	private void fillProfile(Device device) {
 		Program program=context.get(ContextConstants.PROGRAM);
 		if (corporateClientCodeDDwn.isEnabled())
-			//WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
-		WebElementUtils.selectDropDownByIndex(corporateClientCodeDDwn, 1);
-
-		WebElementUtils.selectDropDownByVisibleText(branchCodeDDwn, device.getBranchCode());
+			 WebElementUtils.selectDropDownByVisibleText(branchCodeDDwn, device.getBranchCode());
+			WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
 		ClientDetails client = device.getClientDetails();
 		WebElementUtils.selectDropDownByVisibleText(titleDDwn, client.getTitle());
 		WebElementUtils.enterText(firstNameTxt, client.getFirstName());
