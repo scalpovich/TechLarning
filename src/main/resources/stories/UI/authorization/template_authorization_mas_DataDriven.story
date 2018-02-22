@@ -17,4 +17,4 @@ Then MAS test results are verified
 
 Examples:
 |transaction|
-|MSR_PURCHASE_WITH_CASHBACK|
+|EMV_PURCHASE_PIN|
