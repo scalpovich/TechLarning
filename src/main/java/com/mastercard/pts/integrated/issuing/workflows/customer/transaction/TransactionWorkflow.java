@@ -296,7 +296,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			launchAndConnectToMCPS();
 
 		} else if(simulator.toUpperCase().contains("MDFS")) {
-//			browserMinimize();
+			//browserMinimize();
 			selectLicenseAndConfigure(SimulatorConstantsData.SELECT_MDFS_LICENSE, SimulatorConstantsData.MDFS_LICENSE_TYPE);
 			wait(4000);
 			connect2IPSHostModeAndConfigureIPOnMdfs(); 	
