@@ -28,7 +28,7 @@ public class MasDetailsKeyValuePair {
 	// add more parent Window handle property based on the title seen on the
 	// version of MAS
 	private static void setMasParentWindowHandlerPropertyVersionData() {
-		masParentWindowHandlerPropertyKeyValuePair.put(MAS_18_Q2, "MasterCard Authorization Simulator <MAS18.Q2 SP1 - IPS Host Testing>");
+		masParentWindowHandlerPropertyKeyValuePair.put(MAS_18_Q2, "MasterCard Authorization Simulator");
 		masParentWindowHandlerPropertyKeyValuePair.put(MAS_17_Q4, "MasterCard Authorization Simulator <MAS17.Q4 SP1 - IPS Host Testing>");
 		masParentWindowHandlerPropertyKeyValuePair.put(MAS_16_Q4, "MasterCard Authorization Simulator <MAS16.Q4>");
 	}
