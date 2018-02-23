@@ -26,6 +26,7 @@ When Pin Offset file batch was generated successfully
 Then connection to FINSim is established
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
+When embossing file batch was generated in correct format
 When connection to VISA is established
 When perform an LoadAndActivate_with_pin VISA transaction
 When VISA test results are verified for LoadAndActivate_with_pin
