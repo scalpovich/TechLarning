@@ -328,6 +328,7 @@ public class WalletPlanPage extends AbstractBasePage {
 		selectProduct(walletplan);
 		waitForPageToLoad(getFinder().getWebDriver());
 		waitForLoaderToDisappear();
+		CustomUtils.ThreadDotSleep(5000);
 		selectProgramType(walletplan);
 		waitForPageToLoad(getFinder().getWebDriver());
 		selectWalletUsage(walletplan);
