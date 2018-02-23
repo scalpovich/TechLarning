@@ -29,6 +29,6 @@ Then FINSim simulator is closed
 When connection to VISA is established
 When perform an LoadAndActivate_with_pin VISA transaction
 When VISA test results are verified for LoadAndActivate_with_pin
-!-- Then search Load and Activate authorization and verify Successful status
-!-- And user sign out from customer portal
+Then search Load and Activate authorization and verify Successful status
+And user sign out from customer portal
 Then VISA simulator is closed
