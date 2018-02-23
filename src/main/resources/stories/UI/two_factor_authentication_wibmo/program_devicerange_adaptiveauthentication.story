@@ -24,7 +24,7 @@ Meta:
 @TCName TC264306_Embossing File Generation
 @testDataFileName testdata
 @sheetName S205014
-@edit_institute_wibmo222
+@edit_institute_wibmo
 Given login to portal as existing bank as a Customeruser
 When user creates a Open loop wallet plan of default type for program Retail General Purpose for Prepaid
 When user creates an Embossing File Template
