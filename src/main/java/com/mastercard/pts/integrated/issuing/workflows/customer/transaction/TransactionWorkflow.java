@@ -1610,10 +1610,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		//setting CVV
 		//CVV not needed
 		// setValueInMessageEditorForTransction("F35.05", transactionName, "00"+device.getCvvData());
-		
-		winiumClickOperation(transaction);
-		pressEnter();
-		executeVisaTest();
+		executeVisaTest(transactionName);
 	}
 
 	private void setValueInMessageEditorForTransction(String key, String element, String value) {
@@ -1717,10 +1714,12 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		return tempValue;
 	}
 
-	public void executeVisaTest() {
+	public void executeVisaTest(String transaction) {
 		MiscUtils.reportToConsole(" ******* executeVisaTest ******" );
 		//delete older logs from Detail Log
 		deleteOldLogs();  // sometimes system is not responding when we delete old logs and click on Execute Test.. it crashes
+		winiumClickOperation(transaction);
+		pressEnter();
 		winiumClickOperation("Execute Test");
 		wait(5000);
 		executeAutoITExe("visaTestExeution.exe");
