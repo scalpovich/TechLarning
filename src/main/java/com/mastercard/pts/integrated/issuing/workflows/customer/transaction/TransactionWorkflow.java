@@ -1600,23 +1600,30 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 		selectVisaTestCaseToMakeDataElementChange(transactionName);
 		
+		Device device = context.get(ContextConstants.DEVICE);
 		//to handle pin based scenarios, we need to modify pin number from Message Editor
 		if(transaction.toLowerCase().contains("pin")) {
-			Device device = context.get(ContextConstants.DEVICE);
-			setPinValueForTransction(transactionName, device.getPinNumberForTransaction());
+			//setting Pin
+			setValueInMessageEditorForTransction("F2", transactionName, device.getPinNumberForTransaction());
 		}
-
+		
+		//setting CVV
+		setValueInMessageEditorForTransction("35.05", transactionName, "00"+device.getCvvData());
+		
+		winiumClickOperation(transaction);
+		pressEnter();
 		executeVisaTest();
 	}
 
-	private void setPinValueForTransction(String element, String pinNumber) {
+	private void setValueInMessageEditorForTransction(String key, String element, String value) {
 		winiumClickOperation(element);
 		pressEnter();
 		pressDownArrow(2);
 		executeAutoITExe("OpenMessageEditor.exe");
-		winiumClickOperation("F2");
+		winiumClickOperation(key);
 		pressDownArrow(2);
-		editFeildValues("F52", pinNumber);
+		editFeildValues("F52", value);
+		logger.info("Values modfied in Mesagge editor : Key/value {} :" , key + " / " + value);
 	}
 
 	private void navigateToVariableManagerAndLoadTestGroupTemplate() { 
@@ -1647,8 +1654,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		pressEnter();
 		pressDownArrow(1); // to select Properties
 		executeAutoITExe("VtsSetDefaultAutoamtionCardInProperties.exe"); 	// to select properties file and set default Test Group;
-		winiumClickOperation(transaction);
-		pressEnter();
 	}
 
 	private void editFeildValues(String fieldNumber, String value) {
