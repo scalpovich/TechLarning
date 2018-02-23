@@ -1620,7 +1620,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		executeAutoITExe("OpenMessageEditor.exe");
 		winiumClickOperation(key);
 		pressDownArrow(2);
-		editFeildValues("F52", value);
+		editFeildValues(key, value);
 		logger.info("Values modfied in Mesagge editor : Key/value {} :" , key + " / " + value);
 	}
 

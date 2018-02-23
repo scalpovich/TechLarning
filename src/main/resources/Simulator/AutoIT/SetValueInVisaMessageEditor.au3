@@ -18,7 +18,7 @@
 	WinActivate("Field Editor")
     ControlCommand("Field Editor", '', "[CLASS:ComboBox; INSTANCE:2]", "SetCurrentSelection", "Literal")
 	ControlSetText("Field Editor", '', "[CLASS:Edit; INSTANCE:3]", $CmdLine[1])
-	Sleep(1000)
+	Sleep(5000)
 	ControlClick("Field Editor", '', "[CLASS:Button; INSTANCE:11]")
 
 
