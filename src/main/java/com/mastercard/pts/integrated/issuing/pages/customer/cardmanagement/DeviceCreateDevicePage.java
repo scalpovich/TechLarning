@@ -311,8 +311,8 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	private void fillProfile(Device device) {
 		Program program=context.get(ContextConstants.PROGRAM);
-		if (corporateClientCodeDDwn.isEnabled())
-			WebElementUtils.selectDropDownByVisibleText(branchCodeDDwn, device.getBranchCode());
+		WebElementUtils.selectDropDownByVisibleText(branchCodeDDwn, device.getBranchCode());
+			if (corporateClientCodeDDwn.isEnabled())
 			WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
 		ClientDetails client = device.getClientDetails();
 		WebElementUtils.selectDropDownByVisibleText(titleDDwn, client.getTitle());
