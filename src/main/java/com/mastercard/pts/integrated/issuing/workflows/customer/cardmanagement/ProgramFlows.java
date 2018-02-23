@@ -43,7 +43,7 @@ public class ProgramFlows extends MenuFlows {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
 		programpage = navigator.navigateToPage(ProgramPage.class);
 		programpage.clickAddProgram();
-		String PROGRAM = programpage.addProgramGeneral(deviceCreation, program);
+		String PROGRAM = programpage.addProgramGeneral(program);
 		programpage.addKYCLimits(program);
 		programpage.selectLoadAndRefundParameters(program);
 		programpage.clickNextButton();
@@ -79,7 +79,7 @@ public class ProgramFlows extends MenuFlows {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
 		programpage = navigator.navigateToPage(ProgramPage.class);
 		programpage.clickAddProgram();
-		String PROGRAM = programpage.addProgramGeneral(deviceCreation, program);
+		String PROGRAM = programpage.addProgramGeneral(program);
 		programpage.addKYCLimits(program);
 		programpage.selectLoadAndRefundParameters(program);
 		programpage.clickNextButton();

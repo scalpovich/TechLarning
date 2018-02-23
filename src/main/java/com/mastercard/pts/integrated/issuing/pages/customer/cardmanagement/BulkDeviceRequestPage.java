@@ -15,6 +15,7 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -114,7 +115,7 @@ public class BulkDeviceRequestPage extends AbstractBasePage {
 	}
 
 	public void selectBranch() {
-		waitForLoaderToDisappear();
+		CustomUtils.ThreadDotSleep(5000);
 		SelectDropDownByIndex(BranchDDwn, 1);
 	}
 
@@ -124,6 +125,7 @@ public class BulkDeviceRequestPage extends AbstractBasePage {
 	}
 
 	public void selectCorporateClientCode() {
+		CustomUtils.ThreadDotSleep(5000);
 		SelectDropDownByIndex(CorporateClientCodeDDwn, 1);
 	}
 

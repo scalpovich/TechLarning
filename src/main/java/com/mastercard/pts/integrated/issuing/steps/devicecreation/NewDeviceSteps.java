@@ -452,9 +452,9 @@ public class NewDeviceSteps {
 	public void createNewPrepaidDevice(@Named("DeviceType") String DeviceType, @Named("product") String product,
 			@Named("CustomerType") String CustomerType) {
 		newDevice.setDeviceType(DeviceType);
-		deviceCreation.setProduct(product);
+		// newDevice.setApp
 		newDevice.setCustomerType(CustomerType);
-		String devicenumber = newDeviceflows.createNewDevicePrepaid();
+		String devicenumber = newDeviceflows.createNewDevicePrepaid(newDevice, program);
 		newDevice.setDeviceNumber(devicenumber);
 
 	}

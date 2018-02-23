@@ -25,7 +25,8 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_ACTIVITY, CardManagementNav.L2_DEVICE, CardManagementNav.L3_NEW_DEVICE })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_ACTIVITY,
+		CardManagementNav.L2_DEVICE, CardManagementNav.L3_NEW_DEVICE })
 public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(DeviceCreateDevicePage.class);
@@ -190,10 +191,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			fillProfileAndAddressDetailsAndClickNext(device);
 
 			// skip wallet extra fields
-				clickFinishButton();
+			clickFinishButton();
 
-				verifyNoErrors();
-			});
+			verifyNoErrors();
+		});
 
 		verifyOperationStatus();
 
@@ -220,10 +221,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			fillProfileAndAddressDetailsAndClickNext(device);
 
 			// skip wallet extra fields
-				clickFinishButton();
+			clickFinishButton();
 
-				verifyNoErrors();
-			});
+			verifyNoErrors();
+		});
 
 		verifyOperationStatus();
 
@@ -245,7 +246,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	}
 
 	private void fillBatchDetails(Device device) {
-		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
+		WebElementUtils.selectDDByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
 		generateDeviceBatchBtn.click();
 		waitForWicket();
 		// fetching batch number and setting it for further use
@@ -255,20 +256,20 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	}
 
 	private void fillDeviceInformation(Device device) {
-		WebElementUtils.selectDropDownByVisibleText(appliedForProdutDDwn, device.getAppliedForProduct());
-		WebElementUtils.selectDropDownByVisibleText(applicationTypeDDwn, device.getApplicationType());
-		WebElementUtils.selectDropDownByVisibleText(subApplicationTypeDDwn, device.getSubApplicationType());
+		WebElementUtils.selectDDByVisibleText(appliedForProdutDDwn, device.getAppliedForProduct());
+		WebElementUtils.selectDDByVisibleText(applicationTypeDDwn, device.getApplicationType());
+		WebElementUtils.selectDDByVisibleText(subApplicationTypeDDwn, device.getSubApplicationType());
 		clickNextButton();
 	}
 
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
-		WebElementUtils.selectDropDownByVisibleText(customerTypeDDwn, device.getCustomerType());
-		WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, device.getProgramCode());
+		WebElementUtils.selectDDByVisibleText(customerTypeDDwn, device.getCustomerType());
+		WebElementUtils.selectDDByVisibleText(programCodeDDwn, device.getProgramCode());
 		clickNextButton();
 
-		WebElementUtils.selectDropDownByVisibleText(deviceType1DDwn, device.getDeviceType1());
-		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
-		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
+		WebElementUtils.selectDDByVisibleText(deviceType1DDwn, device.getDeviceType1());
+		WebElementUtils.selectDDByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
+		WebElementUtils.selectDDByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
 	}
 
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
@@ -289,7 +290,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private void fillAddress(Device device) {
 		Address currentAddress = device.getCurrentAddress();
 		WebElementUtils.enterText(currentAddressLine1Txt, currentAddress.getAddressLine1());
-		WebElementUtils.selectDropDownByVisibleText(currentCountryCodeDDwn, currentAddress.getCountry());
+		WebElementUtils.selectDDByVisibleText(currentCountryCodeDDwn, currentAddress.getCountry());
 		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());
 
 		SimulatorUtilities.wait(5000);
@@ -300,11 +301,12 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private void fillProfile(Device device) {
 		if (corporateClientCodeDDwn.isEnabled())
 			WebElementUtils.selectDropDownByIndex(corporateClientCodeDDwn, 1);
-			// WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
-			
-		WebElementUtils.selectDropDownByVisibleText(branchCodeDDwn, device.getBranchCode());
+		// WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn,
+		// device.getCorporateClientCode());
+
+		WebElementUtils.selectDDByVisibleText(branchCodeDDwn, device.getBranchCode());
 		ClientDetails client = device.getClientDetails();
-		WebElementUtils.selectDropDownByVisibleText(titleDDwn, client.getTitle());
+		WebElementUtils.selectDDByVisibleText(titleDDwn, client.getTitle());
 		WebElementUtils.enterText(firstNameTxt, client.getFirstName());
 		if (client.getMiddleName1() != null) {
 			WebElementUtils.enterText(middleName1Txt, client.getMiddleName1());
@@ -312,18 +314,18 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		WebElementUtils.enterText(lastNameTxt, client.getLastName());
 		WebElementUtils.enterText(middleName2Txt, device.getMiddleName2());
 		WebElementUtils.enterText(encodedNameTxt, device.getEncodedName());
-		WebElementUtils.selectDropDownByVisibleText(genderDDwn, client.getGender());
-		WebElementUtils.selectDropDownByVisibleText(nationalityDDwn, client.getNationality());
+		WebElementUtils.selectDDByVisibleText(genderDDwn, client.getGender());
+		WebElementUtils.selectDDByVisibleText(nationalityDDwn, client.getNationality());
 		WebElementUtils.pickDate(birthDateDPkr, client.getBirthDate());
-		WebElementUtils.selectDropDownByVisibleText(maritialStatusDDwn, client.getMaritialStatus());
+		WebElementUtils.selectDDByVisibleText(maritialStatusDDwn, client.getMaritialStatus());
 		if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.DEBIT)) {
 			WebElementUtils.enterText(accountNbrTxt, device.getAccountNumber());
-			WebElementUtils.selectDropDownByVisibleText(accountTypeDDwn, device.getAccountType());
+			WebElementUtils.selectDDByVisibleText(accountTypeDDwn, device.getAccountType());
 		}
 		WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
-		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDDwn, client.getLanguagePreference());
-		WebElementUtils.selectDropDownByVisibleText(vipDDwn, device.getVip());
-		WebElementUtils.selectDropDownByVisibleText(statementPreferenceDDwn, device.getOtherInfoStatementPreference());
+		WebElementUtils.selectDDByVisibleText(languagePreferencesDDwn, client.getLanguagePreference());
+		WebElementUtils.selectDDByVisibleText(vipDDwn, device.getVip());
+		WebElementUtils.selectDDByVisibleText(statementPreferenceDDwn, device.getOtherInfoStatementPreference());
 		WebElementUtils.enterText(faxNumberTxt, device.getOtherInfoFaxNo());
 
 		clickNextButton();

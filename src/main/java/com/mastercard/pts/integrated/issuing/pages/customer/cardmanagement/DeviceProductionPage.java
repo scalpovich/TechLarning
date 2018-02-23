@@ -111,7 +111,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	}
 
 	public void enterBatchNumber(BulkDeviceRequestbatch bulkdeviceGenBatch) {
-		enterValueinTextBox(batchNumberTxt, bulkdeviceGenBatch.getBatchNumber());
+		enterValueinTextBox(batchNumberTxt, bulkdeviceGenBatch.getBatchNumberForDeviceProduction());
 	}
 
 	public void enterDeviceNumber(BulkDeviceRequestbatch bulkdeviceGenBatch) {
@@ -126,9 +126,9 @@ public class DeviceProductionPage extends AbstractBasePage {
 		clickWhenClickable(searchBtn);
 	}
 
-	public void clickDeviceProductionChkBox(BulkDeviceRequestbatch bulkdeviceGenBatch) {
+	public void clickDeviceProductionChkBox(BulkDeviceRequestbatch bulkdevicereqBatch) {
 		WebElement SelectProcessChkBx = getFinder().getWebDriver().findElement(By.xpath("//td[contains(.,'"
-				+ bulkdeviceGenBatch.getBatchNumberForDeviceGeneration()
+				+ bulkdevicereqBatch.getBatchNumberForDeviceProduction()
 				+ "')]/following::span/input[@name='dataPanel:BasicDataTable:datatable:body:rows:1:cells:7:cell:columnCheckBox']"));
 		waitForElementVisible(SelectProcessChkBx);
 		clickWhenClickable(SelectProcessChkBx);
@@ -148,8 +148,8 @@ public class DeviceProductionPage extends AbstractBasePage {
 		search();
 	}
 
-	public void ProcessSelectedBatch(BulkDeviceRequestbatch bulkdeviceGenBatch) {
-		clickDeviceProductionChkBox(bulkdeviceGenBatch);
+	public void ProcessSelectedBatch(BulkDeviceRequestbatch bulkdevicereqBatch) {
+		clickDeviceProductionChkBox(bulkdevicereqBatch);
 		clickProcessSelectedBtn();
 	}
 

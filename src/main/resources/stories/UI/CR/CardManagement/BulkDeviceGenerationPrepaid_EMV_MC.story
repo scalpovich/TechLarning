@@ -62,17 +62,7 @@ Meta:
 @TCName TC264315_Embossing File Generation
 @sheetName S205014
 Given login to portal as existing bank as a Customeruser
-When user configures the device range for Retail General Purpose, Mastercard, EMV
-When user creates a bulk device request for product Prepaid
-When user runs the bulk device generation batch for product Prepaid
-When user check for the  Bulk Device Generation batch success status for SYSTEM INTERNAL PROCESSING batch
-When user runs the pre production batch for product Prepaid
-When user check for the Pre-Production batch success status for SYSTEM INTERNAL PROCESSING batch
-Then user processes all the devices and runs the device production batch for product Prepaid
-And Pack Id should be generated as per the template configured
-When user navigates to General in Helpdesk
-And user search for device on search screen for product type Prepaid
-Then Expiry date should be calculated as per the flag configured at device plan
+
 When user creates a paired device plan and configures the device range for Retail General Purpose, Mastercard, EMV
 When user creates a bulk device request for product Prepaid
 When user runs the bulk device generation batch for product Prepaid

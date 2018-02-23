@@ -19,8 +19,6 @@ public class DeviceProductionFlows extends MenuFlows {
 		waitForElementVisible(menusubmenuPage.getCardManagement());
 		DeviceProductionPage deviceproductionpage = navigator.navigateToPage(DeviceProductionPage.class);
 		deviceproductionpage.searchDeviceProductionBatch(devicecreation, bulkdevicerequestbatch);
-		bulkdevicerequestbatch
-				.setDeviceNumberFromBulkDevice(deviceproductionpage.getDeviceNumber(bulkdevicerequestbatch));
 		deviceproductionpage.ProcessSelectedBatch(bulkdevicerequestbatch);
 		deviceproductionpage.verifyDeviceProductionRequestSuccess();
 		return deviceproductionpage.checkDeviceProductionJobID();

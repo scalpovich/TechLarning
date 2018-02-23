@@ -584,8 +584,8 @@ public class ProgramPage extends AbstractBasePage {
 		selectByVisibleText(InterchangeDDwn, program.getInterchange());
 	}
 
-	public void selectProduct(DeviceCreation deviceCreation) {
-		selectByVisibleText(ProductDDwn, deviceCreation.getProduct());
+	public void selectProduct(Program program) {
+		selectByVisibleText(ProductDDwn, program.getProduct());
 	}
 
 	public void selectRefundinCurrency(Program program) {
@@ -720,13 +720,13 @@ public class ProgramPage extends AbstractBasePage {
 		}
 	}
 
-	public String addProgramGeneral(DeviceCreation devicecreation, Program program) {
+	public String addProgramGeneral(Program program) {
 		String programCode;
 		String ProgramDescription;
 		programCode = enterProgramCode(program);
 		ProgramDescription = enterProgramDescription(program);
 		selectInterchange(program);
-		selectProduct(devicecreation);
+		selectProduct(program);
 		selectProgramType(program);
 		selectBaseCurrency(program);
 		selectCurrencyConversionBy(program);
@@ -740,7 +740,7 @@ public class ProgramPage extends AbstractBasePage {
 		programCode = enterProgramCode(program);
 		ProgramDescription = enterProgramDescription(program);
 		selectInterchange(program);
-		selectProduct(devicecreation);
+		selectProduct(program);
 		selectProgramType(program);
 		selectBaseCurrency(program);
 		enterNoOfCurrencyAllowed();

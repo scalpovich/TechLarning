@@ -21,7 +21,8 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_REPORTS, CardManagementNav.L2_TRANSACTION_REPORTS })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_REPORTS,
+		CardManagementNav.L2_TRANSACTION_REPORTS })
 public class TransactionReportsPage extends AbstractBasePage {
 
 	@Autowired
@@ -46,10 +47,8 @@ public class TransactionReportsPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:3:rows:2:cols:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement fileTypeAuthReportDDwn;
-	
-	
-	
-	@PageElement(findBy=FindBy.NAME, valueToFind = "p_product_type:input:dropdowncomponent")
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "p_product_type:input:dropdowncomponent")
 	private MCWebElement productTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "p_product_code:input:dropdowncomponent")
@@ -93,7 +92,8 @@ public class TransactionReportsPage extends AbstractBasePage {
 	}
 
 	public void generateProgramWiseBalanceSummaryReport() {
-		WebElementUtils.selectDropDownByVisibleText(selectReportDDwn, provider.getString("PROGRAM_WISE_BALANCE_SUMMARY"));
+		WebElementUtils.selectDropDownByVisibleText(selectReportDDwn,
+				provider.getString("PROGRAM_WISE_BALANCE_SUMMARY"));
 		clicksearchButtonElement();
 		WebElementUtils.selectDropDownByVisibleText(fileTypeDDwn, provider.getString(FILE_TYPE_REPORT));
 		SimulatorUtilities.wait(10000);
@@ -101,7 +101,8 @@ public class TransactionReportsPage extends AbstractBasePage {
 	}
 
 	public void generateTransactionAuthReport() {
-		WebElementUtils.selectDropDownByVisibleText(selectReportDDwn, provider.getString("PROGRAM_TRANSACTION_SUMMARY"));
+		WebElementUtils.selectDropDownByVisibleText(selectReportDDwn,
+				provider.getString("PROGRAM_TRANSACTION_SUMMARY"));
 		clicksearchButtonElement();
 		WebElementUtils.selectDropDownByVisibleText(productTypeAuthReportDDwn, ALL);
 		WebElementUtils.selectDropDownByVisibleText(programNameAuthReportDDwn, ALL);
@@ -123,5 +124,10 @@ public class TransactionReportsPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeClearingReportDDwn, ALL);
 		WebElementUtils.selectDropDownByVisibleText(fileTypeAuthReportDDwn, provider.getString(FILE_TYPE_REPORT));
 		generateReportBtn.click();
+	}
+
+	public void generateWebAPIServiceDetailReport() {
+		// selectByVisibleText(selectReportDDwn, optionName);
+
 	}
 }

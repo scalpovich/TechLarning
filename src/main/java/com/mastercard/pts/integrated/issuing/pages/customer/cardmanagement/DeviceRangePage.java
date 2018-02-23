@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -160,7 +159,6 @@ public class DeviceRangePage extends AbstractBasePage {
 	}
 
 	public void searchDeviceRangeAndEdit(String prog) {
-
 		selectByVisibleText(searchScreenProgramDDwn, prog);
 		clickWhenClickable(searchbtn);
 		waitForElementVisible(editDevicerange);
@@ -179,9 +177,9 @@ public class DeviceRangePage extends AbstractBasePage {
 		switchToIframe(Constants.ADD_DEVICE_RANGE_FRAME);
 	}
 
-	public void selectProduct(DeviceCreation deviceCreation) {
+	public void selectProduct(Program program) {
 		waitForElementVisible(ProductTypeDDwn);
-		selectByVisibleText(ProductTypeDDwn, deviceCreation.getProduct());
+		selectByVisibleText(ProductTypeDDwn, program.getProduct());
 	}
 
 	public void selectProgram() {
@@ -221,7 +219,8 @@ public class DeviceRangePage extends AbstractBasePage {
 	}
 
 	public void clickAddButton() {
-		clickWhenClickable(AddTxt);
+		AddTxt.click();
+		// clickWhenClickable(AddTxt);
 	}
 
 	public void enterFromDeviceNo() {
@@ -289,8 +288,8 @@ public class DeviceRangePage extends AbstractBasePage {
 		}
 	}
 
-	public void addDeviceRange(DeviceCreation devicecreation) {
-		selectProduct(devicecreation);
+	public void addDeviceRange(Program program) {
+		selectProduct(program);
 		selectProgram();
 		selectDevicePlan();
 		selectIssuerBIN();
@@ -299,7 +298,7 @@ public class DeviceRangePage extends AbstractBasePage {
 	}
 
 	public void addDeviceRangeDetails() {
-		CustomUtils.ThreadDotSleep(3000);
+		CustomUtils.ThreadDotSleep(7000);
 		enterFromDeviceNo();
 		enterToDeviceNo();
 	}
@@ -441,6 +440,9 @@ public class DeviceRangePage extends AbstractBasePage {
 	public boolean adaptiveAuthenticationChkBox() {
 		boolean flag = false;
 		flag = adaptiveAuthChkBx.isEnabled();
+		if (flag == true)
+			clickWhenClickable(adaptiveAuthChkBx);
+		clickWhenClickable(SaveBtn);
 		return flag;
 	}
 

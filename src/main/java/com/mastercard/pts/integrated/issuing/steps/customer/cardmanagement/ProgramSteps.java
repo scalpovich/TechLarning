@@ -60,7 +60,7 @@ public class ProgramSteps {
 			@Named("programType") String programType) {
 		program.ProgramDataProvider();
 		program.setInterchange(interchange);
-		devicecreation.setProduct(product);
+		program.setProduct(ProductType.fromShortName(product));
 		program.setProgramType(programType);
 		program.setWalletType(walletType);
 		program.setWalletPlan1(walletplan.getOpenloopWalletPlan());
