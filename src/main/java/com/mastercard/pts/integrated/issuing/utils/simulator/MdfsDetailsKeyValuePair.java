@@ -11,6 +11,7 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 public class MdfsDetailsKeyValuePair {
 	private static final Logger logger = LoggerFactory.getLogger(MdfsDetailsKeyValuePair.class);
 
+	//MDFS 18.Q2, MDFS 17.Q4 etc are the values to be used in the environment.properties file we want to use specific version
 	private static final String MDFS_18_Q2 = "MDFS 18.Q2";
 	private static final String MDFS_17_Q4 = "MDFS 17.Q4";
 	private static final String MDFS_16_Q4 = "MDFS 16.Q4";

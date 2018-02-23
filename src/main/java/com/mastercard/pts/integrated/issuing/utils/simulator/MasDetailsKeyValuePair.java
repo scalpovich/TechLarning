@@ -11,6 +11,7 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 public class MasDetailsKeyValuePair {
 	private static final Logger logger = LoggerFactory.getLogger(MasDetailsKeyValuePair.class);
 
+	//MAS 18.Q2, MAS 17.Q4 etc are the values to be used in the environment.properties file we want to use specific version
 	private static final String MAS_18_Q2 = "MAS 18.Q2";
 	private static final String MAS_17_Q4 = "MAS 17.Q4";
 	private static final String MAS_16_Q4 = "MAS 16.Q4";
