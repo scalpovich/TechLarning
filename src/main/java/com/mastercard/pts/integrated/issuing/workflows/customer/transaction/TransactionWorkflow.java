@@ -1608,7 +1608,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		}
 		
 		//setting CVV
-		setValueInMessageEditorForTransction("F35.05", transactionName, "00"+device.getCvvData());
+		//CVV not needed
+		// setValueInMessageEditorForTransction("F35.05", transactionName, "00"+device.getCvvData());
 		
 		winiumClickOperation(transaction);
 		pressEnter();
