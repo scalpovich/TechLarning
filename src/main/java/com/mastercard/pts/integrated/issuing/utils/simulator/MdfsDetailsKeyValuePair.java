@@ -30,8 +30,8 @@ public class MdfsDetailsKeyValuePair {
 	// version of MAS
 	private static void setMdfsParentWindowHandlerPropertyVersionData() {
 		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_18_Q2, "MasterCard Debit Financial Simulator");
-		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_17_Q4, "MasterCard Debit Financial Simulator <MDFS17.Q4 SP1 - IPS Host Testing>");
-		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_16_Q4, "MasterCard Debit Financial Simulator <MDFS16.Q4>");
+		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_17_Q4, "MasterCard Debit Financial Simulator");
+		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_16_Q4, "MasterCard Debit Financial Simulator");
 	}
 
 	// add What License type to select on Select Services screen on MAS

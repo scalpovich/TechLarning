@@ -29,8 +29,8 @@ public class MasDetailsKeyValuePair {
 	// version of MAS
 	private static void setMasParentWindowHandlerPropertyVersionData() {
 		masParentWindowHandlerPropertyKeyValuePair.put(MAS_18_Q2, "MasterCard Authorization Simulator");
-		masParentWindowHandlerPropertyKeyValuePair.put(MAS_17_Q4, "MasterCard Authorization Simulator <MAS17.Q4 SP1 - IPS Host Testing>");
-		masParentWindowHandlerPropertyKeyValuePair.put(MAS_16_Q4, "MasterCard Authorization Simulator <MAS16.Q4>");
+		masParentWindowHandlerPropertyKeyValuePair.put(MAS_17_Q4, "MasterCard Authorization Simulator");
+		masParentWindowHandlerPropertyKeyValuePair.put(MAS_16_Q4, "MasterCard Authorization Simulator");
 	}
 
 	// add What License type to select on Select Services screen on MAS
