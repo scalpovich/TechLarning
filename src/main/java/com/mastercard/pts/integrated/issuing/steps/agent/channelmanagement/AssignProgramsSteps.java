@@ -35,22 +35,14 @@ public class AssignProgramsSteps {
 	DevicePlan devicePlan;
 
 	@Given("bulk card generation for prepaid $deviceType is completed for an interface")
-	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
-			"When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
-			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan",
-			"When User fills Transaction Plan for prepaid product",
-			"When User fills Transaction Limit Plan for prepaid product",
-			"When User fills Document Checklist Screen for prepaid product",
-			"When User fills Device Joining and Membership Fee Plan for prepaid product",
-			"When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card",
-			"When User fills Wallet Plan for prepaid product",
-			"When User fills Program section for prepaid product for an interface",
-			"When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product for an interface",
-			"When user creates a bulk device production request for prepaid",
-			"When processes created bulk device generation request for prepaid",
-			"When processes pre-production batch for prepaid", "When processes device production batch for prepaid",
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Wallet Plan for prepaid product",
+			"When User fills Program section for prepaid product for an interface", "When User fills Business Mandatory Fields Screen for prepaid product",
+			"When User fills Device Range section for prepaid product for an interface", "When user creates a bulk device production request for prepaid",
+			"When processes created bulk device generation request for prepaid", "When processes pre-production batch for prepaid", "When processes device production batch for prepaid",
 			"When processes pin generation batch for prepaid" })
 	public void givenBulkCardGenerationForPrepaidIsCompletedAnInterface(String deviceType) {
 		/*
@@ -59,22 +51,14 @@ public class AssignProgramsSteps {
 	}
 
 	@Given("bulk card generation for prepaid $deviceType is completed")
-	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
-			"When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
-			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan",
-			"When User fills Transaction Plan for prepaid product",
-			"When User fills Transaction Limit Plan for prepaid product",
-			"When User fills Document Checklist Screen for prepaid product",
-			"When User fills Device Joining and Membership Fee Plan for prepaid product",
-			"When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card",
-			"When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
-			"When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product",
-			"When user creates a bulk device production request for prepaid",
-			"When processes created bulk device generation request for prepaid",
-			"When processes pre-production batch for prepaid", "When processes device production batch for prepaid",
-			"When processes pin generation batch for prepaid" })
+	@Composite(steps = { "When User fills Wallet Plan for prepaid product", "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product",
+			"When User fills Prepaid Statement Plan", "When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Program section for prepaid product",
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product",
+			"When user creates a bulk device production request for prepaid", "When processes created bulk device generation request for prepaid", "When processes pre-production batch for prepaid",
+			"When processes device production batch for prepaid", "When processes pin generation batch for prepaid" })
 	public void givenBulkCardGenerationForPrepaidIsCompleted(String deviceType) {
 		/*
 		 * This is a composite step to be executed before assigning a program
@@ -103,8 +87,7 @@ public class AssignProgramsSteps {
 
 	@Then("program assigned to agency successfully")
 	public void thenProgramAssignedToAgencySuccessfully() {
-		assertThat("Assigning Program to Agency Failed", assignProgramsWorkflow.getAgencyProgramAssignedMessage(),
-				containsString(PROGRAM_ASSIGNED_MESSAGE));
+		assertThat("Assigning Program to Agency Failed", assignProgramsWorkflow.getAgencyProgramAssignedMessage(), containsString(PROGRAM_ASSIGNED_MESSAGE));
 	}
 
 	@Given("user assigns the program to branch and submits form")
@@ -128,8 +111,7 @@ public class AssignProgramsSteps {
 
 	@Then("program assigned to branch successfully")
 	public void thenProgramAssignedToBranchSuccessfully() {
-		assertThat("Assigning Program to Branch Failed", assignProgramsWorkflow.getBranchProgramAssignedMessage(),
-				containsString(PROGRAM_ASSIGNED_MESSAGE));
+		assertThat("Assigning Program to Branch Failed", assignProgramsWorkflow.getBranchProgramAssignedMessage(), containsString(PROGRAM_ASSIGNED_MESSAGE));
 	}
 
 	@Given("user assigns the program to agent and submits form")
@@ -153,8 +135,7 @@ public class AssignProgramsSteps {
 
 	@Then("program assigned to agent successfully")
 	public void thenProgramAssignedToAgentSuccessfully() {
-		assertThat("Assigning Program to Agent Failed", assignProgramsWorkflow.getAgentProgramAssignedMessage(),
-				containsString(PROGRAM_ASSIGNED_MESSAGE));
+		assertThat("Assigning Program to Agent Failed", assignProgramsWorkflow.getAgentProgramAssignedMessage(), containsString(PROGRAM_ASSIGNED_MESSAGE));
 	}
 
 }

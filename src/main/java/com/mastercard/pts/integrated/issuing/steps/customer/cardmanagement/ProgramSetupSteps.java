@@ -939,9 +939,20 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.fillCreditCardCreditPlan(creditCardCreditPlan);
 	}
 
+	// @When("User fills Device Range section for $type product")
+	// public void whenUserFillsDeviceRangeSection(String type) {
+	// DeviceRange deviceRange =
+	// DeviceRange.createWithProvider(dataProvider,provider, type);
+	// deviceRange.setProductType(ProductType.fromShortName(type));
+	// deviceRange.setProgram(program.buildDescriptionAndCode());
+	// deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
+	//
+	// programSetupWorkflow.createDeviceRange(deviceRange);
+	// }
+	
 	@When("User fills Device Range section for $type product")
 	public void whenUserFillsDeviceRangeSection(String type) {
-		DeviceRange deviceRange = DeviceRange.createWithProvider(dataProvider,provider, type);
+		DeviceRange deviceRange = DeviceRange.createWithProvider(dataProvider, type);
 		deviceRange.setProductType(ProductType.fromShortName(type));
 		deviceRange.setProgram(program.buildDescriptionAndCode());
 		deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
