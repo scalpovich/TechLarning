@@ -950,6 +950,8 @@ public class DevicePlanPage extends AbstractBasePage {
 			selectAllPinValidation();
 		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES)) {
 			selectAllcvccvv();
+			// as of now, we do not need CVV check for MDFS pin change transactions
+			if(!getStoryName().toLowerCase().contains("pin_change"))
 			checkCvcCvv();
 		}			
 		checkExpiryDate();		
@@ -1076,6 +1078,12 @@ public class DevicePlanPage extends AbstractBasePage {
 		enterTotalTransactionLimit(devicePlan);
 		enterVelocity(devicePlan);
 		enterValidity(devicePlan);
-
+	}
+	
+	private String getStoryName()
+	{
+		String name = System.getProperty("storyName").toString();
+		logger.info("System.getStoryName  : "+name);
+		return name;
 	}
 }
