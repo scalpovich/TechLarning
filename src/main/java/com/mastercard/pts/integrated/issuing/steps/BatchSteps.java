@@ -53,7 +53,7 @@ public class BatchSteps {
 		try {
 			File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "Device");
 			String[] fileData = LinuxUtils.getCardNumberAndExpiryDate(batchFile);
-			//MiscUtils.reportToConsole("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3] + " - "  + " setIcvvData " + " : " +  fileData[4] + "  ***** ");
+			
 			
 			Device device = context.get(ContextConstants.DEVICE);
 			if(device.getDeviceType1().toLowerCase().contains(ConstantData.MSR_CARD))
@@ -61,6 +61,8 @@ public class BatchSteps {
 				device.setDeviceNumber(fileData[0]);
 				device.setCvv2Data(fileData[2]);
 				device.setCvvData(fileData[3]);
+				
+				logger.info("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3]);
 			}
 			else
 			{
@@ -69,11 +71,13 @@ public class BatchSteps {
 	//			device.setPvvData(fileData[3]);
 				device.setCvvData(fileData[3]);
 				device.setIcvvData(fileData[4]);		
-				device.setPvkiData(fileData[5]);
+				device.setPvkiData(fileData[5]);				
+				logger.info("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3] + " - "  + " setIcvvData " + " : " +  fileData[4] + "  ***** ");
 			}
 			//for format of date to be passed is YYMM
 			String tempDate = fileData[1].substring(fileData[1].length()-2) + fileData[1].substring(0, 2);
 			device.setExpirationDate(tempDate);
+			logger.info("Expiration Data :  {} ", tempDate );
 			MiscUtils.reportToConsole("Expiration Data :  " + tempDate );
 
 		} catch (Exception e) {
