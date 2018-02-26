@@ -86,7 +86,6 @@ public class BatchSteps {
 			throw MiscUtils.propagate(e);
 		}
 	}
- 
 	
 	
 	@When("Pin Offset file batch was generated successfully")
@@ -104,10 +103,11 @@ public class BatchSteps {
 			}
 
 			device.setPinOffset(values[0]);
-			MiscUtils.reportToConsole("Pin Offset :  " + values[0] );
+			logger.info("Pin Offset :  {}" , values[0] );
 			scanner.close();
 			//			reanming file name as sometimes the embosing file name is also same
 			MiscUtils.renamePinFile(batchFile.toString());
+			MiscUtils.reportToConsole("******** Pin Offset Completed ***** " );
 		}
 		catch(NullPointerException | FileNotFoundException e)
 		{
@@ -121,11 +121,13 @@ public class BatchSteps {
 			throw MiscUtils.propagate(e);
 		}
 	}
-
+	
+	@SuppressWarnings("unused")
 	private String getHeaderPattern() {
 		return provider.getString("BATCH_HEADER_PATTERN", DEFAULT_HEADER);
 	}
 
+	@SuppressWarnings("unused")
 	private String getTrailerPattern() {
 		return provider.getString(" BATCH_TRAILER_PATTERN", DEFAULT_TRAILER);
 	}
