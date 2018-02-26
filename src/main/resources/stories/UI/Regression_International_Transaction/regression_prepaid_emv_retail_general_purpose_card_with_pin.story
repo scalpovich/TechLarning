@@ -16,7 +16,7 @@ And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
 Then device has "normal" status
 When user has wallet number information for debit device
-When user performs adjustment transaction
+When user performs adjustment transaction with 10000 amount
 When user has current wallet balance amount information for prepaid device
 
 Scenario: prepaid emv retail general purpose card device production

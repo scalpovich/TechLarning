@@ -28,7 +28,7 @@ Then device has "normal" status
 When user has wallet number information for prepaid device
 Then user sign out from customer portal
 Then user is logged in institution
-When user performs adjustment transaction
+When user performs adjustment transaction with 10000 amount
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
@@ -62,13 +62,6 @@ And user is logged in institution
 And search Purchase with Cash back authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform INT_MSR_CASH_ADVANCE Authorization transaction
-When perform an INT_MSR_CASH_ADVANCE MAS transaction on the same card
-Then MAS test results are verified
-Then user is logged in institution
-Then search Cash Advance authorization and verify 000-Successful status
-And user sign out from customer portal
-
 Scenario: Perform INT_ECOMM_PURCHASE Authorization transaction
 When perform an INT_ECOMM_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
@@ -90,5 +83,13 @@ Then user is logged in institution
 Then search Refund authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: MAS is closed
+Scenario: Perform INT_MSR_CASH_ADVANCE Authorization transaction
+Given user is logged in institution
+When user updates cvccvv as uncheck on device plan
+And user sign out from customer portal
+When perform an INT_MSR_CASH_ADVANCE MAS transaction on the same card
+Then MAS test results are verified
 When MAS simulator is closed
+Then user is logged in institution
+Then search Cash Advance authorization and verify 000-Successful status
+And user sign out from customer portal
