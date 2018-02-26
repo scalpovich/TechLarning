@@ -20,6 +20,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Cred
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardPaymentBounceReason;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardPaymentPriority;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardTransactionRulePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DedupePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlanDetails;
@@ -94,7 +95,7 @@ public class ProgramSetupSteps {
 	private CreditCardBillingCycle creditCardBillingCycle;
 
 	private DevicePlan devicePlan;
-
+    
 	private Program program;
 
 	private DevicePriorityPassIDAndCardPackIDTemplate cardPackIDTemplate;
@@ -349,6 +350,17 @@ public class ProgramSetupSteps {
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPin(String deviceType) {
 		// composite step
 	}
+	
+	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin without dedupe")
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin", "When User fills Wallet Plan for prepaid product", "When User fills Program section using newApplication for prepaid product",
+			 "When User fills Device Range section for prepaid product" })
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinWithoutDedupe(String deviceType) {
+		// composite step
+	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin for non-default institution")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
@@ -391,6 +403,26 @@ public class ProgramSetupSteps {
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidAlongWithActivationCodeWithoutPinForAnInterface(String deviceType) {
 		// composite step
 	}
+	
+	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" \"Load\" activation code for card with pin for an interface")
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
+			"When User fills Marketing Message Plan for prepaid product",
+			"When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product",
+			"When User fills Dedupe Plan",
+			"When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product",
+			"When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product",
+			"When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" along with \"Load\" activation mode for card",
+			"When User fills Wallet Plan for prepaid product",
+			"When User fills Program section for prepaid product for an interface",
+			"When User fills Business Mandatory Fields Screen for prepaid product",
+			"When User fills Device Range section for prepaid product for an interface" })
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidAlongWithActivationCodeWithPinForAnInterface(String deviceType) {
+		// composite step
+	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin for specific interface")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
@@ -422,6 +454,17 @@ public class ProgramSetupSteps {
 			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
 			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product" })
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaid(String deviceType) {
+		// composite step
+	}
+	
+	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without dedupe")
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Wallet Plan for prepaid product", "When User fills Program section using newApplication for prepaid product",
+			"When User fills Device Range section for prepaid product" })
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutDedupe(String deviceType) {
 		// composite step
 	}
 
@@ -498,6 +541,16 @@ public class ProgramSetupSteps {
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		programSetupWorkflow.createDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+	@When("User fills Device Plan for \"$productType\" \"$deviceType\" along with \"$activationMode\" activation mode for card")
+	public void whenUserFillsDevicePlanAlongWithActivationcodeWithPin(String productType, String deviceType, String activationMode) {
+		settingDevicePlanTestData(productType, deviceType); // call to re-usable method 
+		//modifiying the activation mode into the devicePlan based on the $activationMode parameter instead of creating new method. 
+		//Avoiding Sonar code duplication
+		devicePlan.setActivationMode(activationMode);
+
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
@@ -675,8 +728,8 @@ public class ProgramSetupSteps {
 		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
 		walletPlan.setProductType(ProductType.fromShortName(type));
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-			walletPlan.setCreditPlan(creditCardCreditPlan.buildAbbreviationAndCode());
-			walletPlan.setBillingCyleCode(creditCardBillingCycle.buildDescriptionAndCode());
+			walletPlan.setCreditPlan(context.get(CreditConstants.CREDIT_PLAN));
+			walletPlan.setBillingCyleCode(context.get(CreditConstants.BILLING_CYCLE));
 		}
 		programSetupWorkflow.createWalletPlan(walletPlan);
 	}
@@ -688,8 +741,8 @@ public class ProgramSetupSteps {
 		walletPlan.setProgramType(programtype);
 		
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-			walletPlan.setCreditPlan(creditCardCreditPlan.buildAbbreviationAndCode());
-			walletPlan.setBillingCyleCode(creditCardBillingCycle.buildDescriptionAndCode());
+			walletPlan.setCreditPlan(context.get(CreditConstants.CREDIT_PLAN));
+			walletPlan.setBillingCyleCode(context.get(CreditConstants.BILLING_CYCLE));
 		}
 		programSetupWorkflow.createWalletPlan(walletPlan);
 	}
@@ -920,9 +973,9 @@ public class ProgramSetupSteps {
 		 * TransactionRulePlan & PaymentPriorityPlan are expected to come from related methods hence fetching data from them and setting them again below into setTransactionRulePlan &
 		 * setPaymentPriorityPlan
 		 */
-		creditCardCreditPlan.setTransactionRulePlan(transactionRulePlanTestDataObject.buildDescriptionAndCode());
+		creditCardCreditPlan.setTransactionRulePlan(context.get(CreditConstants.TRANSACTION_RULE));
 
-		creditCardCreditPlan.setPaymentPriorityPlan(paymentPrioritytestDataObject.buildDescriptionAndCode());
+		creditCardCreditPlan.setPaymentPriorityPlan(context.get(CreditConstants.PAYMENT_PRIORITY));
 
 		programSetupWorkflow.fillCreditCardCreditPlan(creditCardCreditPlan);
 	}
@@ -964,5 +1017,26 @@ public class ProgramSetupSteps {
 
 	private void setPinRequiredToDefaultState() {
 		context.put(ConstantData.IS_PIN_REQUIRED, "TRUE");
+	}
+	
+    @When("User fills Program section using newApplication for $type product")
+	public void whenUserFillsProgramSectionUsingNewApplication(String type) {
+		program = Program.createWithProvider(dataProvider, provider);
+		program.setProduct(ProductType.fromShortName(type));
+		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
+			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
+			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+		}
+		program.setFirstWalletPlan(walletPlan.buildDescriptionAndCode());
+		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
+
+		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
+		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
+
+		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID))
+			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+
+		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
+		context.put(ContextConstants.PROGRAM, program);
 	}
 }

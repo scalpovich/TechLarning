@@ -125,6 +125,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	private static final String DP_EMV_PLAN_PIN_CHANGE = "DP_EMV_PLAN_PIN_CHANGE";
 	private static final String DP_EMV_PLAN_PIN_UNBLOCK = "DP_EMV_PLAN_PIN_UNBLOCK";
 	private static final String DP_ALLOW_INTERNATIONAL_TRANSACTIONS = "DP_ALLOW_INTERNATIONAL_TRANSACTIONS";
+
 	public String association;
 	public String DeviceType;
 	public String ServiceCode;
@@ -233,9 +234,8 @@ public class DevicePlan implements HasCodeAndDescription {
 	private String emvPlanPinChange;
 	private String emvPlanPinUnblock;
 	private String isPinLess;
-	private String allowInternationalTransaction;
-
-
+	private String expiryDateExcel;
+    private String allowInternationalTransaction;
 
 	public static DevicePlan createWithProvider(KeyValueProvider provider) {
 		DevicePlan plan = new DevicePlan();
@@ -1207,6 +1207,15 @@ public class DevicePlan implements HasCodeAndDescription {
 
 	public void setDevicePlan(String devicePlan) {
 		DevicePlan = devicePlan;
+	}
+	
+
+	public String getExpiryDateExcel() {
+		return expiryDateExcel;
+	}
+
+	public void setExpiryDateExcel(String expiryDateExcel) {
+		this.expiryDateExcel = expiryDateExcel;
 	}
 
 	public void devicePlanDataprovider() {

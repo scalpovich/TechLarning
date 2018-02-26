@@ -39,4 +39,8 @@ public class ProgramType {
 	public static final String OPEN_LOOP = "Open Loop [O]";
 	
 	public static final String CLOSED_LOOP = "Closed Loop [C]";
+	
+	public static final String CORPORATE_CREDIT_CARD="Corporate Credit Card [10]";
+	
+	public static final String RETAIL_CREDIT_CARD="Retail Credit Card [9]";
 }

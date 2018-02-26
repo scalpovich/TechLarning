@@ -584,7 +584,52 @@ public class HelpDeskSteps {
 		}
 
 	}
+	
+	@Then("User search for new device on search screen for $productType and validates the status as $NORMAL")
+	@When("User search for new device on search screen for $productType and validates the status as $NORMAL")
+	public void thenUserSearchForDeviceOnSearchScreen(String productType, String status) {
+		helpdeskgettersetter.setProductType(ProductType.fromShortName(productType));
 
+		String actualStatus=helpdeskFlows.searchForNewDevice(helpdeskgettersetter);
+		if(actualStatus.contains(status))
+		{
+		Assert.assertTrue("status of newly created device is normal ", true);
+		}
+		else
+		{
+		Assert.assertTrue("status of newly created device is not normal ", false);
+		}
+
+	}
+	
+	@Then("User search for new application on search screen for $productType and validates the status as $NORMAL")
+	@When("User search for new application on search screen for $productType and validates the status as $NORMAL")
+	public void thenUserSearchForApplicationOnSearchScreen(String productType, String status) {
+		helpdeskgettersetter.setProductType(ProductType.fromShortName(productType));
+
+		String actualStatus=helpdeskFlows.searchForNewApplication(helpdeskgettersetter);
+		if(actualStatus.contains(status))
+		{
+		Assert.assertTrue("status of newly created device is normal ", true);
+		}
+		else
+		{
+		Assert.assertTrue("status of newly created device is not normal ", false);
+		}
+
+	}
+	
+	@Then ("currency setup for device")
+	public void searchDevice(){
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);		
+		Device device = context.get(ContextConstants.DEVICE); 		
+		thenUserNavigatesToGeneralInHelpdesk(); 
+		helpdeskWorkflow.searchByDeviceNumber(device);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.setupDeviceCurrency(helpdeskGeneral);
+		device.setNewWalletNumber(helpdeskGeneral.getNewWalletNumber());
+	}
+	
 	@Then("Expiry date should be calculated as per the flag configured at device plan")
 	@When("User calculates the expiry date as oer the date configured at device plan")
 	public void userCalculatesdate() {
@@ -594,17 +639,6 @@ public class HelpDeskSteps {
 	@Then("pair devices should be generated for each of the processed Device and the paired device should be inactive state")
 	public void checkPaireddevice() {
 		helpdeskFlows.VerifyPairedDeviceStatus();
-	}
-
-	@Then("currency setup for device")
-	public void searchDevice() {
-		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
-		Device device = context.get(ContextConstants.DEVICE);
-		thenUserNavigatesToGeneralInHelpdesk();
-		helpdeskWorkflow.searchByDeviceNumber(device);
-		helpdeskWorkflow.clickCustomerCareEditLink();
-		helpdeskWorkflow.setupDeviceCurrency(helpdeskGeneral);
-		device.setNewWalletNumber(helpdeskGeneral.getNewWalletNumber());
 	}
 
 	@When("wallet to wallet transfer selected account")

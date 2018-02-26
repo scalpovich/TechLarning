@@ -32,6 +32,8 @@ public class Device {
 	private static final String CHP_NEW_PASSWORD = "CHP_NEW_PASSWORD";
 	private static final String PRODUCT_TYPE = "PRODUCT_TYPE";
 	private static final String DATE_TYPE = "DATE_TYPE";
+	private static final String PROGRAM_CODE = "PROGRAM_CODE";
+	private static final String DEVICE_PLAN= "DEVICE_PLAN"; 
 	
 	
 
@@ -88,6 +90,7 @@ public class Device {
 	private String serviceCode;
 	private String productType;
 	private String transactionDateType;
+	private String applicationNumber;
 	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -113,6 +116,8 @@ public class Device {
 		device.setConfirmNewTransPassword(provider.getString(CHP_NEW_PASSWORD));	
 		device.setProductType(provider.getString(PRODUCT_TYPE));
 		device.setTransactionDateType(provider.getString(DATE_TYPE));
+		device.setProgramCode(provider.getString(PROGRAM_CODE));
+		device.setDevicePlan1(provider.getString(DEVICE_PLAN));
 		return device;
 	}
 	
@@ -559,5 +564,13 @@ public class Device {
 
 	public void setTransactionDateType(String transactionDateType) {
 		this.transactionDateType = transactionDateType;
+	}
+	
+    public String getApplicationNumber() {
+		return applicationNumber;
+	}
+
+	public void setApplicationNumber(String applicationNumber) {
+		this.applicationNumber = applicationNumber;
 	}
 }

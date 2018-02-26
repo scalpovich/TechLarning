@@ -50,6 +50,10 @@ public class LoadFromFileUploadSteps {
 
 	private String jobId;
 	
+	private String jobStatus;
+	
+	private FileCreation file;
+	
 	@When("user processes batch for $type")
 	public void whenUserProcessesBatchForPrepaid(String type){
 		//since data is constant for this transaction, we do not need this data to go into Excel
@@ -65,7 +69,7 @@ public class LoadFromFileUploadSteps {
 	public void whenUserCreatesAndUploadsTransactionFile(){
 		Device device = context.get(ContextConstants.DEVICE);
 		String defaultLine  = FileCreation.createTransactionLine(device.getDeviceNumber(),device.getWalletNumber(), provider);
-		FileCreation file = FileCreation.createFile(provider);
+		file = FileCreation.createFile(provider);
 		file.setTransactionLine(defaultLine);
 		loadFromFileUploadWorkflow.createFileForUpload(file);	
 		}
@@ -177,11 +181,16 @@ public class LoadFromFileUploadSteps {
 	@When("user processes transaction upload batch for $type")
 	public void whenUserProcessesTransactionUploadBatchForPrepaid(String type){
 		ProcessBatches batch =  ProcessBatches.getBatchData();
-        batch.setBatchName("Transaction Upload [TRANSACTION_UPLOAD]");		
+        batch.setBatchName("Transaction Upload [TRANSACTION_UPLOAD]");
+        batch.setBatchFileName(file.getFilename());
 		batch.setProductType(ProductType.fromShortName(type));
 		HashMap<String, String> hm = (HashMap<String, String>) loadFromFileUploadWorkflow.processUploadBatch(batch);
-		assertEquals("SUCCESS [2]",hm.get("BatchStatus"));	
-		jobId =hm.get("JobId");			
-
+		jobStatus = hm.get("BatchStatus");
+		jobId = hm.get("JobId");			
+}
+	
+	@Then("batch is successful")
+	public void thenBatchisSuccesful(){
+		assertEquals("SUCCESS [2]", jobStatus);
 	}
 }

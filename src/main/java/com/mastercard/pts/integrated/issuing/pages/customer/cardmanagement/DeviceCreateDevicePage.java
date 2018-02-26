@@ -10,12 +10,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Address;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -27,7 +31,8 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_ACTIVITY, CardManagementNav.L2_DEVICE, CardManagementNav.L3_NEW_DEVICE })
 public class DeviceCreateDevicePage extends AbstractBasePage {
-
+	@Autowired
+	private TestContext context;
 	private static final Logger logger = LoggerFactory.getLogger(DeviceCreateDevicePage.class);
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
@@ -134,8 +139,11 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//ul[@class='feedbackPanel']//.//li[4]/span")
 	private MCWebElement createdWalletList;
-
-	public String getWalletsFromPage() {
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:creditLimit:input:inputAmountField")
+	private MCWebElement creditLimitTxt;
+	
+	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
 	}
 
@@ -235,6 +243,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		device.setWalletNumber(getCodeFromInfoMessage("wallet"));
 		// device.setWalletNumber(getWalletsId(getWalletsFromPage()));
 		device.setDeviceNumber(getCodeFromInfoMessage("device(s)"));
+		logger.info("clientCode: {}",device.getClientCode());
+		logger.info("WalletNumber: {}",device.getWalletNumber());
+		logger.info("DeviceNumber: {}",device.getDeviceNumber());
 	}
 
 	public String getWalletsId(String wallets) {
@@ -272,6 +283,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	}
 
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
+
 		fillProfile(device);
 		fillAddress(device);
 		// skip employment details
@@ -298,10 +310,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	}
 
 	private void fillProfile(Device device) {
+		Program program=context.get(ContextConstants.PROGRAM);
 		if (corporateClientCodeDDwn.isEnabled())
 			WebElementUtils.selectDropDownByIndex(corporateClientCodeDDwn, 1);
-			// WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
-			
 		WebElementUtils.selectDropDownByVisibleText(branchCodeDDwn, device.getBranchCode());
 		ClientDetails client = device.getClientDetails();
 		WebElementUtils.selectDropDownByVisibleText(titleDDwn, client.getTitle());
@@ -323,9 +334,27 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
 		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDDwn, client.getLanguagePreference());
 		WebElementUtils.selectDropDownByVisibleText(vipDDwn, device.getVip());
-		WebElementUtils.selectDropDownByVisibleText(statementPreferenceDDwn, device.getOtherInfoStatementPreference());
-		WebElementUtils.enterText(faxNumberTxt, device.getOtherInfoFaxNo());
-
+		
+		try{
+			if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)) {
+				WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);
+				WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));
+			   }
+			else
+			{
+			   WebElementUtils.selectDropDownByVisibleText(statementPreferenceDDwn, device.getOtherInfoStatementPreference());
+			   WebElementUtils.enterText(faxNumberTxt, device.getOtherInfoFaxNo());
+			}
+		}catch(Exception e){
+			if(device.getAppliedForProduct().equalsIgnoreCase("Credit [C]")){
+				WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);
+				WebElementUtils.enterText(creditLimitTxt,"5000");
+			}else{
+				WebElementUtils.selectDropDownByVisibleText(statementPreferenceDDwn, device.getOtherInfoStatementPreference());
+				WebElementUtils.enterText(faxNumberTxt, device.getOtherInfoFaxNo());
+			}
+		} 
+		
 		clickNextButton();
 	}
 }

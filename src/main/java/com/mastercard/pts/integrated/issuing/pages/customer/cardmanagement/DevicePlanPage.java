@@ -386,11 +386,6 @@ public class DevicePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:intTxnAllowed:checkBoxComponent")
 	private MCWebElement intTxnAllowedChkBx;
 	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=devicePlanCode]")
-	private MCWebElement devicePlanCode;
-
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Authorization']")
-	private MCWebElement authorizationTab;
 
 	public void AddDevicePlan() {
 		clickWhenClickable(AddDevicePlanBtn);
@@ -401,10 +396,6 @@ public class DevicePlanPage extends AbstractBasePage {
 		switchToIframe(Constants.ADD_DEVICE_PLAN_FRAME);
 	}
 
-	public void switchToEditDevicePlanFrame() {
-		switchToIframe(Constants.EDIT_DEVICE_PLAN);
-	}
-	
 	public String enterDevicePlanCode(DevicePlan devicePlan) {
 		if (devicePlan.getDevicePlanCode().length() != 0) {
 			enterValueinTextBox(iframeDevicePlanCodeTxt, devicePlan.getDevicePlanCode());
@@ -449,9 +440,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectActivationMode(DevicePlan deviceplan) {
-		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
-				|| !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType())
-				|| !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+		if (!CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) ) {
 			Assert.assertTrue("Card activation Mode dropdown is enabled", activationMode.isEnabled());
 			selectByText(activationMode, deviceplan.getActivationMode());
 		} else {
@@ -468,10 +457,10 @@ public class DevicePlanPage extends AbstractBasePage {
 		}
 	}
 
-	public void selectDeliveryMode(DevicePlan deviceplan) {
-		if (!CardType.STATIC_VIRTUAL.contains(DeviceType.fromShortName(deviceplan.getDeviceType()))
-				&& !CardType.LIMITED_VALIDITY.contains(DeviceType.fromShortName(deviceplan.getDeviceType()))
-				&& !CardType.MOBILE.contains(DeviceType.fromShortName(deviceplan.getDeviceType()))) {
+    public void selectDeliveryMode(DevicePlan deviceplan) {
+		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
+		 && !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) 
+		 && !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
 			Assert.assertTrue("delivery Mode dropdown is enabled", deliveryModeDDwn.isEnabled());
 			selectByVisibleText(deliveryModeDDwn, deviceplan.getDeliveryMode());
 		} else {
@@ -920,20 +909,6 @@ public class DevicePlanPage extends AbstractBasePage {
 		return successMessage.getText().equalsIgnoreCase(ConstantData.SUCCESS_MESSAGE);
 	}
 
-	public void updateCVCCVVDevicePlan(DevicePlan devicePlanDataObject) {
-		logger.info("Update Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
-		enterValueinTextBox(devicePlanCode, devicePlanDataObject.getDevicePlanCode());
-		clickSearchButton();
-		editFirstRecord();				
-		runWithinPopup("Edit Device Plan", () -> {	
-			clickWhenClickable(authorizationTab);				
-			checkCvcCvv();
-			clickSaveButton();
-		});
-
-		verifyOperationStatus();
-	}
-	
 	public void createDevicePlan(DevicePlan devicePlanDataObject) {
 		logger.info("Create Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
 		clickAddNewButton();
@@ -960,8 +935,6 @@ public class DevicePlanPage extends AbstractBasePage {
 		verifyOperationStatus();
 	}
 
-	
-	
 	private void createDevicePlanContinuation(DevicePlan devicePlan) {
 		cvvCvv2PinGenerationSelectionScreen(devicePlan);
 
@@ -977,6 +950,8 @@ public class DevicePlanPage extends AbstractBasePage {
 			selectAllPinValidation();
 		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES)) {
 			selectAllcvccvv();
+			// as of now, we do not need CVV check for MDFS pin change transactions
+			if(!getStoryName().toLowerCase().contains("pin_change"))
 			checkCvcCvv();
 		}			
 		checkExpiryDate();		
@@ -1012,6 +987,15 @@ public class DevicePlanPage extends AbstractBasePage {
 		generateCVV2Chk.click();
 		// filling date when flag is fixed
 		if ("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
+			if(devicePlan.getProductType().equalsIgnoreCase("Credit [C]"))
+			{
+				enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
+				String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
+				devicePlan.setExpiryDate(dateInYYMM);
+				logger.info("Expiry date for device = {}",devicePlan.getExpiryDate());
+			}
+			else
+			{
 			enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
 			// making necessary changes so that this value can be set in the
 			// required format so that it can be used when a pinless card is
@@ -1019,6 +1003,7 @@ public class DevicePlanPage extends AbstractBasePage {
 			logger.info("Validity On Initial Months = {} ", devicePlan.getValidityOnInitialMonths());
 			String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
 			devicePlan.setExpiryDate(dateInYYMM);
+			}
 		} else {
 			enterIframeValidityOnInitialMonthsTxt(devicePlan.getValidityOnInitialMonths());
 		}
@@ -1093,6 +1078,12 @@ public class DevicePlanPage extends AbstractBasePage {
 		enterTotalTransactionLimit(devicePlan);
 		enterVelocity(devicePlan);
 		enterValidity(devicePlan);
-
+	}
+	
+	private String getStoryName()
+	{
+		String name = System.getProperty("storyName").toString();
+		logger.info("System.getStoryName  : "+name);
+		return name;
 	}
 }
