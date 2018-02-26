@@ -1618,8 +1618,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		pressEnter();
 		pressDownArrow(2);
 		executeAutoITExe("OpenMessageEditor.exe");
-		winiumClickOperation(key);
-		pressDownArrow(2);
+		winiumClickOperation("F2"); //pressing F2 as a starting point so that we can press page down
+		pressPageDown();
 		editFeildValues(key, value);
 		logger.info("Values modfied in Mesagge editor : Key/value {} :" , key + " / " + value);
 	}
@@ -1657,6 +1657,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private void editFeildValues(String fieldNumber, String value) {
 		String parameter =   "\"" + value + PATH_BUILDER + "\"";
 		winiumClickOperation(fieldNumber);
+		wait(2000);
 		executeAutoITExe("SetValueInVisaMessageEditor.exe " + parameter);
 	}
 
