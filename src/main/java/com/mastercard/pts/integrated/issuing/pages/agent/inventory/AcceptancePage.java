@@ -24,7 +24,8 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = InventoryNav.TAB_INVENTORY, treeMenuItems = { InventoryNav.L1_ORDER, InventoryNav.L2_ACCEPTANCE })
+@Navigation(tabTitle = InventoryNav.TAB_INVENTORY, treeMenuItems = { InventoryNav.L1_ORDER,
+		InventoryNav.L2_ACCEPTANCE })
 public class AcceptancePage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(AcceptancePage.class);
 
@@ -70,10 +71,10 @@ public class AcceptancePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".SuccessMessageTxt")
 	private MCWebElement acceptanceMessage;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@id='mpts_agentPortal_modifyIntraBranch_downloadinXLS']")
 	private MCWebElement downloadinXLSBtn;
-	
+
 	public void verifyUiOperationStatus() {
 		logger.info("Acceptance");
 		verifyButton("Search");
@@ -88,38 +89,38 @@ public class AcceptancePage extends AbstractBasePage {
 	// methods
 	@Override
 	public void clickSearchButton() {
-		new WebDriverWait(driver(), timeoutInSec).until(
-				WebElementUtils.elementToBeClickable(searchBtn)).click();
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(searchBtn)).click();
 	}
-	
+
 	public String getMasterDetailContentTitleText() {
 		logger.info("Corporate User View Edit Master Detail Tilte Text: {}");
-		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle)).getText();
+		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle))
+				.getText();
 	}
 
 	public void selectBranchId(String branchId) {
-		WebElementUtils.selectDropDownByVisibleText(branchIdDdwn, branchId);
+		WebElementUtils.selectDDByVisibleText(branchIdDdwn, branchId);
 	}
 
 	public void selectOrderNumber(String orderNumber) {
-		WebElementUtils.selectDropDownByVisibleText(orderNumberDdwn, orderNumber);
+		WebElementUtils.selectDDByVisibleText(orderNumberDdwn, orderNumber);
 	}
 
 	public void clickTableFirstRecord() {
-		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
-		WebElementUtils.retryUntil(tableFirstRecord::click,
-				() -> WebElementUtils.hasClass(getFinder().findOne(FindBy.X_PATH, "//*[@class='dataview']/tbody/tr[1]"), "select"));
+		SimulatorUtilities.wait(3000);// this to wait till the table gets loaded
+		WebElementUtils.retryUntil(tableFirstRecord::click, () -> WebElementUtils
+				.hasClass(getFinder().findOne(FindBy.X_PATH, "//*[@class='dataview']/tbody/tr[1]"), "select"));
 	}
 
 	public void clickModifyButton() {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(modifyBtn)).click();
 	}
-	
+
 	public void clickDownloadinXLSButton() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
-		new WebDriverWait(driver(), timeoutInSec).until(
-				WebElementUtils.elementToBeClickable(downloadinXLSBtn)).click();
-		SimulatorUtilities.wait(5000);//this delay to wait till the file is downloaded
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(downloadinXLSBtn)).click();
+		SimulatorUtilities.wait(5000);// this delay to wait till the file is
+										// downloaded
 	}
 
 	public void enterQuantityRecieved(String quantityOrdered) {
@@ -130,6 +131,7 @@ public class AcceptancePage extends AbstractBasePage {
 		WebElementUtils.enterText(acceptanceMemoTxt, memo);
 	}
 
+	@Override
 	public void clickSubmitButton() {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(submitBtn)).click();
 	}
@@ -143,16 +145,17 @@ public class AcceptancePage extends AbstractBasePage {
 	}
 
 	public String getDispatchAcceptanceMessage() {
-		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(acceptanceMessage)).getText();
+		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(acceptanceMessage))
+				.getText();
 	}
 
 	public int errorElementCount() {
 		return getFinder().getWebDriver().findElements(By.cssSelector(".ResponseTxt")).size();
 	}
-	
+
 	public void acceptDispatch(Acceptance details) {
 		logger.info("Order Acceptance: {}", details.getBranchId());
-		
+
 		selectBranchId(details.getBranchId());
 		selectOrderNumber(details.getOrderNumber());
 		clickSearchButton();
@@ -163,7 +166,7 @@ public class AcceptancePage extends AbstractBasePage {
 		enterCurrentDateddMMyyyy(DateUtils.currentDateddMMyyyy());
 		SimulatorUtilities.wait(3000);
 		WebElementUtils.asWebElement(effectiveDateTxt).sendKeys(Keys.ESCAPE);
-		SimulatorUtilities.wait(3000);//Waiting for Datepicker popup close
+		SimulatorUtilities.wait(3000);// Waiting for Datepicker popup close
 		enterMemo(details.getMemo());
 		clickDownloadinXLSButton();
 		clickSubmitButton();

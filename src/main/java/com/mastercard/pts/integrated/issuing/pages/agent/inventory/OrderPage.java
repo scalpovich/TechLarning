@@ -52,11 +52,11 @@ public class OrderPage extends InventoryAbstractPage {
 	}
 
 	public void selectBranchId(String branchId) {
-		WebElementUtils.selectDropDownByVisibleText(brancIdDDwn, branchId);
+		WebElementUtils.selectDDByVisibleText(brancIdDDwn, branchId);
 	}
 
 	public void selectProgramCode(String programCode) {
-		WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, programCode);
+		WebElementUtils.selectDDByVisibleText(programCodeDDwn, programCode);
 	}
 
 	public void selectDeviceType(String deviceType) {
@@ -71,6 +71,7 @@ public class OrderPage extends InventoryAbstractPage {
 		WebElementUtils.enterText(memoTxt, memo);
 	}
 
+	@Override
 	public void clickSubmitButton() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(submitBtn)).click();
