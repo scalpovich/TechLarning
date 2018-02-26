@@ -18,6 +18,7 @@ public class MdfsDetailsKeyValuePair {
 	private static final Map<String, String> mdfsInstallationVersionKeyValuePair = new LinkedHashMap<>();
 	private static final Map<String, String> mdfsParentWindowHandlerPropertyKeyValuePair = new LinkedHashMap<>();
 	private static final Map<String, String> mdfsLicenseTypeToSelect = new LinkedHashMap<>();
+	private static final String simulatorHeaderHandle = "MasterCard Debit Financial Simulator";
 
 	// add more installations here along with EXE path details
 	private static void setMdfsInstallationVersionData() {
@@ -30,9 +31,9 @@ public class MdfsDetailsKeyValuePair {
 	// add more parent Window handle property based on the title seen on the
 	// version of MAS
 	private static void setMdfsParentWindowHandlerPropertyVersionData() {
-		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_18_Q2, "MasterCard Debit Financial Simulator");
-		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_17_Q4, "MasterCard Debit Financial Simulator");
-		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_16_Q4, "MasterCard Debit Financial Simulator");
+		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_18_Q2, simulatorHeaderHandle);
+		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_17_Q4, simulatorHeaderHandle);
+		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_16_Q4, simulatorHeaderHandle);
 	}
 
 	// add What License type to select on Select Services screen on MAS

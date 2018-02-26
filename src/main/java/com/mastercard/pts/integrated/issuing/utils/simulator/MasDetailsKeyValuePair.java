@@ -18,6 +18,7 @@ public class MasDetailsKeyValuePair {
 	private static final Map<String, String> masInstallationVersionKeyValuePair = new LinkedHashMap<>();
 	private static final Map<String, String> masParentWindowHandlerPropertyKeyValuePair = new LinkedHashMap<>();
 	private static final Map<String, String> masLicenseTypeToSelect = new LinkedHashMap<>();
+	private static final String simulatorHeaderHandle = "MasterCard Authorization Simulator";
 
 	// add more installations here along with EXE path details
 	private static void setMasInstallationVersionData() {
@@ -29,9 +30,9 @@ public class MasDetailsKeyValuePair {
 	// add more parent Window handle property based on the title seen on the
 	// version of MAS
 	private static void setMasParentWindowHandlerPropertyVersionData() {
-		masParentWindowHandlerPropertyKeyValuePair.put(MAS_18_Q2, "MasterCard Authorization Simulator");
-		masParentWindowHandlerPropertyKeyValuePair.put(MAS_17_Q4, "MasterCard Authorization Simulator");
-		masParentWindowHandlerPropertyKeyValuePair.put(MAS_16_Q4, "MasterCard Authorization Simulator");
+		masParentWindowHandlerPropertyKeyValuePair.put(MAS_18_Q2, simulatorHeaderHandle);
+		masParentWindowHandlerPropertyKeyValuePair.put(MAS_17_Q4, simulatorHeaderHandle);
+		masParentWindowHandlerPropertyKeyValuePair.put(MAS_16_Q4, simulatorHeaderHandle);
 	}
 
 	// add What License type to select on Select Services screen on MAS
