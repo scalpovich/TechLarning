@@ -49,6 +49,7 @@ public class BatchSteps {
 	@When("embossing file batch was generated in correct format")
 	@Then("embossing file batch was generated in correct format")
 	public void  embossingFileWasGeneratedSuccessfully() {
+		MiscUtils.reportToConsole("******** Embossing File Start ***** " );
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		try {
 			File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "Device");
@@ -79,6 +80,7 @@ public class BatchSteps {
 			device.setExpirationDate(tempDate);
 			logger.info("Expiration Data :  {} ", tempDate );
 			MiscUtils.reportToConsole("Expiration Data :  " + tempDate );
+			MiscUtils.reportToConsole("******** Embossing File Completed ***** " );
 
 		} catch (Exception e) {
 			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
