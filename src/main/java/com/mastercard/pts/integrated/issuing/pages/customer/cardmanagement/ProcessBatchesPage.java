@@ -305,7 +305,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		/*
 		 * WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, batch.getBatchType()); WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, batch.getBatchName());
 		 */
-		
+		SimulatorUtilities.wait(5000);//this delay is for table to load data 
 		WebElement selectChkIPM = driver().findElement(By.xpath("//td[.//*[text()='"+batch.getFileName()+"']]/following-sibling::td[1]/input"));
 		selectChkIPM.click();
 		//selectChkBx.click();

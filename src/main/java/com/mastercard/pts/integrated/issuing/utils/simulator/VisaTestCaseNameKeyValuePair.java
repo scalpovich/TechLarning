@@ -15,12 +15,14 @@ public class VisaTestCaseNameKeyValuePair {
 		visaTestCaseDetailsKeyValuePair.put("LoadAndActivate", "Case 1.1 - Authorization Load");
 		visaTestCaseDetailsKeyValuePair.put("LoadAndActivate_with_pin", "Case 1.1 - Authorization Load");
 		visaTestCaseDetailsKeyValuePair.put("Rvmt_Receiving", "4.11 - OCT - Velocity Checking Limits");
+		visaTestCaseDetailsKeyValuePair.put("Rvmt_Receiving_certification_1", "Case 1 - 0100/0110 Original Credit (TAG 57, 5F & 71)");
 	}
 
 	private void setFileNameToUpload() {
 		visaTestDataFileToSelectKeyValuePair.put("LoadAndActivate", "POS_Load_And_Activate_without_Pin");
 		visaTestDataFileToSelectKeyValuePair.put("LoadAndActivate_with_pin", "POS_Load_And_Activate_with_Pin");
 		visaTestDataFileToSelectKeyValuePair.put("Rvmt_Receiving", "RVMT_Receiving_without_Pin");
+		visaTestCaseDetailsKeyValuePair.put("Rvmt_Receiving_certification_1", "RVMT_Receiving_Certification_1");
 	}
 
 	public String getVisaTestCaseToSelect(String key) {

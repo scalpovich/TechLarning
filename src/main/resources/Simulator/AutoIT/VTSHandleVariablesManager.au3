@@ -12,15 +12,21 @@
    #include <WinAPIFiles.au3>
    #include <Constants.au3>
 
-   WinWaitActive("Variables Manager")
-   Sleep(10000)
+   WinActive("Variables Manager")
+   WinMenuSelectItem("Variables Manager", "", "&File", "E&xit") ; closing the window
 
-   If ControlCommand ("Variables Manager", "", "[CLASS:Button; INSTANCE:1]", "IsVisible") Then
-	  ControlClick("Variables Manager","","[CLASS:Button; INSTANCE:1]") ; to handle OK dialog that may sometimes come up
-	  Sleep(1000)
-   EndIf
+   If ControlCommand ("Variables Manager", "", "&Yes", "IsVisible") Then
+		 ControlClick("Variables Manager","","&Yes") ; to handle OK dialog that may sometimes come up
+		 Sleep(1000)
+	  EndIf
+
+   If ControlCommand ("Variables Manager", "", "OK", "IsVisible") Then
+		 ControlClick("Variables Manager","","OK") ; to handle OK dialog that may sometimes come up
+		 Sleep(1000)
+	 EndIf
+
    If ControlCommand ("Variables Manager", "", "[CLASS:Button; INSTANCE:1]", "IsVisible") Then
 	  ControlClick("Variables Manager","","[CLASS:Button; INSTANCE:1]") ; to handle OK dialog that may sometimes come up
 	  sleep(3000)
 	EndIf
-   WinMenuSelectItem("Variables Manager", "", "&File", "E&xit")
+   WinWaitClose("Variables Manager")

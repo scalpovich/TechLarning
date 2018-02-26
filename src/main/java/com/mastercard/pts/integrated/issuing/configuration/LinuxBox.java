@@ -41,15 +41,18 @@ public class LinuxBox implements RemoteConnectionDetails {
 	}
 
 	public File downloadByLookUpForPartialFileName(String lokupForFile, String localDestination, String whatAreWeLookingFile) {
-		//logger.info("Download {} -> {} at folder", lokupForFile, localDestination);
+		logger.info("Download {} -> {} at folder", lokupForFile, localDestination);
 		String fileName = null;
 		String[] temp = null;
 		try {
 			fileName = LinuxUtils.getFileAbsolutePath(this, lokupForFile);
+			MiscUtils.reportToConsole("fileName : " + fileName);
 			temp = fileName.split("\n");
 			for (int i = 0; i < temp.length; i++) {
 				if (temp[i].contains(whatAreWeLookingFile)) {
 					LinuxUtils.download(this, temp[i], localDestination);
+					logger.info("return path in downloadByLookUpForPartialFileName {} -->", Paths.get(localDestination).resolve(Paths.get(temp[i]).getFileName()).toFile());
+					MiscUtils.reportToConsole("return path in downloadByLookUpForPartialFileName {} -->", Paths.get(localDestination).resolve(Paths.get(temp[i]).getFileName()).toFile().toString());
 					return Paths.get(localDestination).resolve(Paths.get(temp[i]).getFileName()).toFile();
 				}
 			}
@@ -65,7 +68,7 @@ public class LinuxBox implements RemoteConnectionDetails {
 			LinuxUtils.upload(this, localSource, remoteDir);
 		} catch (Exception e) {
 			MiscUtils.reportToConsole("upload Exception :  " + e.toString());
-			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
+			logger.info(ConstantData.EXCEPTION +" {} " ,  e.getMessage());
 			throw MiscUtils.propagate(e);
 		}
 	}

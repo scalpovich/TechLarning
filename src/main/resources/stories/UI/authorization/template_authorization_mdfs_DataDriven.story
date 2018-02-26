@@ -12,11 +12,9 @@ Meta:
 Scenario: SMS transactions
 
 !-- Given connection to MDFS is established
-When user performs an optimized <transaction> MAS transaction
+When user performs an optimized <transaction> MDFS transaction
 Then MDFS test results are verified
 
 Examples:
 |transaction|
-|MDFS_MSR_PURCHASE_WITH_CASHBACK_PIN|
-|MDFS_MSR_PURCHASE_WITH_CASHBACK|
-|MDFS_EMV_PURCHASE_WITH_CASHBACK_PIN|
+|MDFS_MSR_PIN_CHANGE|
