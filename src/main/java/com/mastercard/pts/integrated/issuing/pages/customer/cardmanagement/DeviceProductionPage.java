@@ -29,8 +29,7 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_OPERATION,
-		CardManagementNav.L2_PROCESSING_BATCHES, CardManagementNav.L3_DEVICE_PRODUCTION_BATCH })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_OPERATION, CardManagementNav.L2_PROCESSING_BATCHES, CardManagementNav.L3_DEVICE_PRODUCTION_BATCH })
 public class DeviceProductionPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(DeviceProductionPage.class);
 	@Autowired
@@ -57,7 +56,6 @@ public class DeviceProductionPage extends AbstractBasePage {
 	private MCWebElement deviceProductionBatchRecordChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "processSelected")
-
 	private MCWebElement processSelectedBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "processAll")
@@ -70,7 +68,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	private MCWebElement confirmationMsgTxt;
 
 	private MCWebElement ProcessSelectedBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers' and @class!='navigation'][1]/td[2]/span")
 	private MCWebElement deviceNumberFetch;
 
@@ -106,7 +104,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 		verifyOperationStatus();
 
 	}
-	
+
 	public void processDeviceProductionBatchForAll(DeviceProductionBatch batch) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
@@ -137,9 +135,9 @@ public class DeviceProductionPage extends AbstractBasePage {
 	}
 
 	public void clickDeviceProductionChkBox(BulkDeviceRequestbatch bulkdeviceGenBatch) {
-		WebElement SelectProcessChkBx = getFinder().getWebDriver().findElement(By.xpath("//td[contains(.,'"
-				+ bulkdeviceGenBatch.getBatchNumberForDeviceGeneration()
-				+ "')]/following::span/input[@name='dataPanel:BasicDataTable:datatable:body:rows:1:cells:7:cell:columnCheckBox']"));
+		WebElement SelectProcessChkBx = getFinder().getWebDriver().findElement(
+				By.xpath("//td[contains(.,'" + bulkdeviceGenBatch.getBatchNumberForDeviceGeneration()
+						+ "')]/following::span/input[@name='dataPanel:BasicDataTable:datatable:body:rows:1:cells:7:cell:columnCheckBox']"));
 		waitForElementVisible(SelectProcessChkBx);
 		clickWhenClickable(SelectProcessChkBx);
 	}
@@ -188,31 +186,29 @@ public class DeviceProductionPage extends AbstractBasePage {
 	}
 
 	public String getDeviceNumber(BulkDeviceRequestbatch bulkdeviceGenBatch) {
-		WebElement SelectProcessChkBx = getFinder().getWebDriver().findElement(By.xpath("//tr[1]//td[contains(.,'"
-				+ bulkdeviceGenBatch.getBatchNumberForDeviceGeneration() + "')]/preceding-sibling::td[3]"));
+		WebElement SelectProcessChkBx = getFinder().getWebDriver().findElement(
+				By.xpath("//tr[1]//td[contains(.,'" + bulkdeviceGenBatch.getBatchNumberForDeviceGeneration() + "')]/preceding-sibling::td[3]"));
 		return SelectProcessChkBx.getText().substring(9);
-		}
-		
-		
+	}
 
 	public void processDeviceProductionBatchNewApplication(DeviceProductionBatch batch) {
-		String batchNumber=context.get(CreditConstants.NEW_APPLICATION_BATCH);
+		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
 		WebElementUtils.enterText(batchNumberTxt, batchNumber);
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
-		}
-		
-		public void processDeviceProductionBatchNewDevice(DeviceProductionBatch batch) {
-		Device device=context.get(ContextConstants.DEVICE);
+	}
+
+	public void processDeviceProductionBatchNewDevice(DeviceProductionBatch batch) {
+		Device device = context.get(ContextConstants.DEVICE);
 		WebElementUtils.enterText(batchNumberTxt, device.getBatchNumber());
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
-}
+	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	}
+
+}
