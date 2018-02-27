@@ -1122,9 +1122,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 		if("stagesa".equalsIgnoreCase(getEnv()))
 			selectMChipKeySet("00998 - Example ETEC1 - 0213");
-		else if("automation".equalsIgnoreCase(getEnv()) || "demo".equalsIgnoreCase(getEnv()))
-			
-			if(SimulatorConstantsData.MAS_LICENSE_TYPE.contains("18"))
+		else if("automation".equalsIgnoreCase(getEnv()) || "demo".equalsIgnoreCase(getEnv()))			
+			if(SimulatorConstantsData.MAS_LICENSE_TYPE.contains("18") || SimulatorConstantsData.MAS_LICENSE_TYPE.contains("16"))
 				selectMChipKeySet("00999 - Example ETEC1 - 0213"); //for MDFS 18.Q2
 			else
 			selectMChipKeySet("00999 - Example - M/Chip  2.1 Select"); //for MDFS 16.Q4 and may be 17

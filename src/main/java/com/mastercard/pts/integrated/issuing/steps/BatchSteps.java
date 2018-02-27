@@ -54,29 +54,42 @@ public class BatchSteps {
 		try {
 			File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "Device");
 			String[] fileData = LinuxUtils.getCardNumberAndExpiryDate(batchFile);
-			logger.info("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3] + " - "  + " setIcvvData " + " : " +  fileData[4] + "  ***** ");
+			
 			
 			Device device = context.get(ContextConstants.DEVICE);
-			device.setDeviceNumber(fileData[0]);
-			device.setCvv2Data(fileData[2]);
-//			device.setPvvData(fileData[3]);
-			device.setCvvData(fileData[3]);
-			device.setIcvvData(fileData[4]);
-			device.setPvkiData(fileData[5]);
-
+			if(device.getDeviceType1().toLowerCase().contains(ConstantData.MSR_CARD))
+			{
+				device.setDeviceNumber(fileData[0]);
+				device.setCvv2Data(fileData[2]);
+				device.setCvvData(fileData[3]);
+				
+				logger.info("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3]);
+			}
+			else
+			{
+				device.setDeviceNumber(fileData[0]);
+				device.setCvv2Data(fileData[2]);
+	//			device.setPvvData(fileData[3]);
+				device.setCvvData(fileData[3]);
+				device.setIcvvData(fileData[4]);		
+				device.setPvkiData(fileData[5]);				
+				logger.info("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3] + " - "  + " setIcvvData " + " : " +  fileData[4] + "  ***** ");
+			}
 			//for format of date to be passed is YYMM
 			String tempDate = fileData[1].substring(fileData[1].length()-2) + fileData[1].substring(0, 2);
 			device.setExpirationDate(tempDate);
 			logger.info("Expiration Data :  {} ", tempDate );
+			MiscUtils.reportToConsole("Expiration Data :  " + tempDate );
 			MiscUtils.reportToConsole("******** Embossing File Completed ***** " );
 
 		} catch (Exception e) {
 			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
-			logger.info(ConstantData.EXCEPTION +" {} " ,  e.getMessage());
+			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
 			throw MiscUtils.propagate(e);
 		}
 	}
-
+	
+	
 	@When("Pin Offset file batch was generated successfully")
 	@Then("Pin Offset file batch was generated successfully")
 	public void  getPinFileData()
@@ -110,7 +123,7 @@ public class BatchSteps {
 			throw MiscUtils.propagate(e);
 		}
 	}
-
+	
 	@SuppressWarnings("unused")
 	private String getHeaderPattern() {
 		return provider.getString("BATCH_HEADER_PATTERN", DEFAULT_HEADER);

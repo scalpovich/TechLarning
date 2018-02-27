@@ -17,6 +17,8 @@ Meta:
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
+When user updates cvccvv as uncheck on device plan
+Then user sign out from customer portal
 
 Scenario: prepaid msr corporate travel card device production
 Meta:
@@ -26,7 +28,6 @@ And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 When processes pin generation batch for prepaid
-
 Then device has "normal" status
 When user has wallet number information for prepaid device
 Then user sign out from customer portal
