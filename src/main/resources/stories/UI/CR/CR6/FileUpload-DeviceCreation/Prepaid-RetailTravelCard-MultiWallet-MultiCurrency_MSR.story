@@ -27,7 +27,7 @@ When user creates Application Upload Prepaid batch file and uploads it on server
 When processes prepaid pre-production batch
 When processes prepaid device production batch
 When User search for device on search screen for product type prepaid and validates the status as NORMAL 
-When user setup device currency through helpdesk for FileUpload
+When user sets up device currency through helpdesk for FileUpload
 Then currency setup for prepaid device is done correctly and updated in wallet details tab
 Then user logouts from customer portal
 

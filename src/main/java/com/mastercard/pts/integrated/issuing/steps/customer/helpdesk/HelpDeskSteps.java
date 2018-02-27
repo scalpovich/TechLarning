@@ -496,8 +496,8 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.setupDeviceCurrency(helpdeskGeneral);
 	}
 
-	@Given("user setup device currency through helpdesk for FileUpload")
-	@When("user setup device currency through helpdesk for FileUpload")
+	@Given("user sets up device currency through helpdesk for FileUpload")
+	@When("user sets up device currency through helpdesk for FileUpload")
 	public void whenUserSetupDeviceCurrencyThroughHelpDeskForFileUpload() {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskWorkflow.clickCustomerCareEditLink();

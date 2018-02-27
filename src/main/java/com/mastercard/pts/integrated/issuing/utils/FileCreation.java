@@ -407,7 +407,7 @@ public class FileCreation {
 		this.getUploadedValues = uploadedValues;
 	}
 
-	public String createApplicationUploadForFile(String INSTITUTION_CODE, String customerType) throws FileNotFoundException {
+	public String createApplicationUploadForFile(String institutionCode, String customerType) throws FileNotFoundException {
 		int totalRecords = 0;
 		String FileName = "APPPR" + INSTITUTION_CODE + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
 		HashMap<String, HashMap<String, String>> applicationUploadMap;
@@ -442,7 +442,7 @@ public class FileCreation {
 			writer.print("FT|" + createRecordNumber(9, totalRecords));
 		} catch (IOException e) {
 			logger.error("Fail to create page object: {}", e);
-			throw Throwables.propagate(e);
+			throw MiscUtils.propagate(e);	
 		}
 
 		linuxBox.upload(file.getPath(), remoteDir);
@@ -450,9 +450,8 @@ public class FileCreation {
 		return FileName;
 	}
 
-	public String createApplicationUploadFile(String INSTITUTION_CODE, String customerType, String cardType) throws Exception {
+	public String createApplicationUploadFile(String institutionCode, String customerType, String cardType) throws Exception {
 		int totalRecords = 0;
-		// List<String> uploadedValues = new ArrayList<String>();
 		String FileName = "";
 		String remoteDir = "";
 		String deviceType = "";
@@ -498,11 +497,7 @@ public class FileCreation {
 				helpDeskGeneral.setFirstName(name);
 				for (int i = 0; i < applicationUploadMap.size(); i++) {
 					if (true == dataReader.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
-						/*
-						 * String name =
-						 * CustomUtils.randomString(9).toUpperCase();
-						 * helpDeskGeneral.setFirstName(name);
-						 */
+
 						if (deviceplan.getDeviceType().contains("Static Virtual")) {
 							deviceType = "7";
 						} else if (deviceplan.getDeviceType().contains("Magnetic")) {
@@ -532,8 +527,6 @@ public class FileCreation {
 
 					}
 
-					// writer.print("FT|" + createRecordNumber(9,
-					// totalRecords));
 				}
 				writer.print("FT|" + createRecordNumber(9, totalRecords));
 			} catch (IOException e) {
