@@ -409,28 +409,28 @@ public class FileCreation {
 
 	public String createApplicationUploadForFile(String institutionCode, String customerType) throws FileNotFoundException {
 		int totalRecords = 0;
-		String FileName = "APPPR" + INSTITUTION_CODE + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
+		String FileName = "APPPR" + institutionCode + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
 		HashMap<String, HashMap<String, String>> applicationUploadMap;
 		File file = new File(FileName);
 		String remoteDir = Constants.APPLICATION_UPLOAD_PREPAID_FILE_PATH;
 		applicationUploadMap = dataReader.dataProviderFileUpload("AllUploadTestData", "Prepaid Card File");
 		logger.info("applicationUploadMap = {} ", applicationUploadMap);
 		try (PrintWriter writer = new PrintWriter(file)) {
-			writer.println("HD|" + INSTITUTION_CODE + "|" + DateUtils.getDateTimeDDMMYYYYHHMMSS() + "|" + "2.0");
+			writer.println("HD|" + institutionCode + "|" + DateUtils.getDateTimeDDMMYYYYHHMMSS() + "|" + "2.0");
 
 			for (int i = 0; i < applicationUploadMap.size(); i++) {
 				if (true == dataReader.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
 					String name = CustomUtils.randomString(9).toUpperCase();
 					helpDeskGeneral.setFirstName(name);
 					if (customerType.equals("Individual")) {
-						writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%t%", "0").replace("%P%", program.getProgramCode())
+						writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", institutionCode).replace("%t%", "0").replace("%P%", program.getProgramCode())
 								.replace("%D%", deviceplan.getDevicePlanCode()).replace("%b%", vendor.getBranchCode()).replace("%Z%", "").replace("%N%", name)
 								.replace("%K%", CustomUtils.RandomNumbers(10)).replace("%X%", CustomUtils.randomAlphaNumeric(5) + "@" + CustomUtils.randomAlphaNumeric(4) + ".com"));
 					} else if (customerType.equals("Corporate")) {
-						writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%t%", "1").replace("%P%", program.getProgramCode())
+						writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", institutionCode).replace("%t%", "1").replace("%P%", program.getProgramCode())
 								.replace("%D%", deviceplan.getDevicePlanCode()).replace("%b%", vendor.getBranchCode()).replace("%Z%", corporateClientCode).replace("%N%", name));
 					} else if (customerType.equals("Bank Staff")) {
-						writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%t%", "2").replace("%P%", program.getProgramCode())
+						writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", institutionCode).replace("%t%", "2").replace("%P%", program.getProgramCode())
 								.replace("%D%", deviceplan.getDevicePlanCode()).replace("%b%", vendor.getBranchCode()).replace("%Z%", "").replace("%N%", name));
 					}
 
