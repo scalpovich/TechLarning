@@ -7,9 +7,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -22,6 +25,9 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_WALLET_CONFIGURATION, CardManagementNav.L3_WALLET_PLAN })
 public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
+
+@Autowired
+private TestContext context;
 
 	private static final Logger logger = LoggerFactory.getLogger(WalletConfigurationWalletPlanPage.class);
 
@@ -94,11 +100,26 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectCreditPlan(String creditPlan) {
+		if(context.get(CreditConstants.CREDIT_PLAN_CODE_ERROR_STATUS).equals(true))
+		{
+			WebElementUtils.selectDropDownByIndex(creditPlanDDwn, 1);
+		}
+		else
+		{
 		WebElementUtils.selectDropDownByVisibleText(creditPlanDDwn, creditPlan);
+		}
 	}
 
 	public void selectBillingCyleCode(String billingCyleCode) {
-		WebElementUtils.selectDropDownByVisibleText(billingCyleCodeDDwn, billingCyleCode);
+		if(context.get(CreditConstants.BILLING_CYCLE_CODE_ERROR_STATUS).equals(true))
+		{
+			WebElementUtils.selectDropDownByIndex(billingCyleCodeDDwn, 1);
+		}
+		else
+		{
+		WebElementUtils.selectDropDownByVisibleText(billingCyleCodeDDwn,
+				billingCyleCode);
+		}
 	}
 
 	public void inputReservedAmount() {
@@ -172,6 +193,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 			selectCreditPlan(walletPlan.getCreditPlan());
 			selectBillingCyleCode(walletPlan.getBillingCyleCode());
+			
 		}
 		if (productType.equalsIgnoreCase(ProductType.DEBIT)) {
 			WebElementUtils.enterText(dummyAccountNumberTxt, walletPlan.getDummyAccountNumber());

@@ -34,6 +34,7 @@ import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
@@ -169,6 +170,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 
 	public void selectBatchName(String option) {
+		waitForPageToLoad(driver());
 		selectByVisibleText(batchNameDDwn, option);
 	}
 
@@ -303,7 +305,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		/*
 		 * WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, batch.getBatchType()); WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, batch.getBatchName());
 		 */
-		
+		SimulatorUtilities.wait(5000);//this delay is for table to load data 
 		WebElement selectChkIPM = driver().findElement(By.xpath("//td[.//*[text()='"+batch.getFileName()+"']]/following-sibling::td[1]/input"));
 		selectChkIPM.click();
 		//selectChkBx.click();
@@ -317,6 +319,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			batchStatus = batchStatusTxt.getText();
 			clickCloseButton();
 		});
+		SimulatorUtilities.wait(3000);//this delay is for table to load data
 		String jobNumber = jobId.getText();
 		hm.put("JobId", jobNumber);
 		hm.put("BatchStatus", batchStatus);
@@ -542,7 +545,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		processBatchesDomain.setJoBID(processBatchjobIDTxt.getText());
 		MiscUtils.reportToConsole("JobID: {}", processBatchesDomain.getJoBID());
 		ClickButton(closeBtn);
-		waitForPageToLoad(getFinder().getWebDriver());
+		//waitForPageToLoad(getFinder().getWebDriver());
+		waitForWicket(driver());
 		getFinder().getWebDriver().switchTo().defaultContent();
 		return isProcessed;
 	}

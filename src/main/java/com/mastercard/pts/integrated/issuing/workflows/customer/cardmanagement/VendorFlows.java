@@ -37,8 +37,7 @@ public class VendorFlows extends MenuFlows {
 		vendorpage.addressDetails(vendor);
 		vendorpage.contactDetails(vendor);
 		vendorpage.Save();
-		waitForPageToLoad(getFinder().getWebDriver());
-		waitForLoaderToDisappear();
+		waitForWicket(driver());
 		vendorpage.verifyNewVendorSuccess();
 		return newVendor;
 	}

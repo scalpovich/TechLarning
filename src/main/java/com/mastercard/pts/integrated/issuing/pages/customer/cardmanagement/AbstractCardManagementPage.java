@@ -16,7 +16,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 public class AbstractCardManagementPage extends AbstractBasePage {
 
-	private static final Logger logger = LoggerFactory.getLogger(VerifyPage.class);
+	private static final Logger logger = LoggerFactory.getLogger(AbstractCardManagementPage.class);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=applicationNumber]")
 	protected MCWebElement applicationNumber;

@@ -8,8 +8,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardTransactionRulePlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -27,7 +31,12 @@ public class CreditCardTransactionRulePlanPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(CreditCardPaymentBounceReasonPage.class);
-
+   @Autowired
+   TestContext context;
+   
+   @Autowired
+   CreditCardPlan creditCardPlan;
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=planCode]")
 	private MCWebElement transactionRulePlanCodeTxt;
 
@@ -46,7 +55,7 @@ public class CreditCardTransactionRulePlanPage extends AbstractBasePage {
 				WebElementUtils.visibilityOf(descriptionTxt));
 	}
 
-	public void addTransactionRulePlan(
+	public boolean addTransactionRulePlan(
 			CreditCardTransactionRulePlan creditCardTransactionRulePlan) {
 		logger.info("Add Transaction Rule Plan {}",
 				creditCardTransactionRulePlan);
@@ -54,11 +63,8 @@ public class CreditCardTransactionRulePlanPage extends AbstractBasePage {
 		performSearchOperationOnMainScreen(creditCardTransactionRulePlan);
 		// if records are found then we just have to change the Billing Plan
 		// Code to make it work hence setting
-		if (!isNoRecordsFoundInTable()) {
-			creditCardTransactionRulePlan.setTransactionRulePlanCode(MiscUtils
-					.generateRandomNumberBetween2Number(100, 999));
-		}
-
+		waitForPageToLoad(getFinder().getWebDriver());
+		checkDuplicacyOfTransactionPlanCode(creditCardTransactionRulePlan);
 		clickAddNewButton();
 
 		AtomicBoolean canceled = new AtomicBoolean(false);
@@ -70,17 +76,24 @@ public class CreditCardTransactionRulePlanPage extends AbstractBasePage {
 									.getTransactionRulePlanCode());
 					WebElementUtils.enterText(descriptionTxt,
 							creditCardTransactionRulePlan.getDescription());
+					logger.info("TransactionRulePlanCodeAndDescription : {}",creditCardTransactionRulePlan.buildDescriptionAndCode());
+					context.put(CreditConstants.TRANSACTION_RULE, creditCardTransactionRulePlan.buildDescriptionAndCode());
 					clickAddDetailsButton();
 
 					if (!verifyAlreadyExistsAndClickCancel()) {
 						clickSaveButton();
-						canceled.set(true);
+						errorMessagePresence();
+						creditCardPlan.setErrorStatus(errorMessagePresence());
+						canceled.set(verifyAlreadyExistsAndClickCancel());
+						//canceled.set(true);
 					}
 				});
-
+		
 		if (!canceled.get()) {
 			verifyOperationStatus();
 		}
+		
+		return creditCardPlan.getErrorStatus();
 	}
 
 	private void performSearchOperationOnMainScreen(
@@ -89,4 +102,17 @@ public class CreditCardTransactionRulePlanPage extends AbstractBasePage {
 				creditCardTransactionRulePlan.getTransactionRulePlanCode());
 		clickSearchButton();
 	}
+	
+		private void checkDuplicacyOfTransactionPlanCode(CreditCardTransactionRulePlan creditCardTransactionRulePlan) {
+		if(!isNoRecordsFoundInTable())
+		{
+			 creditCardTransactionRulePlan.setTransactionRulePlanCode(MiscUtils
+					.generateRandomNumberBetween2Number(100, 999));
+			 logger.info("transactionRulePlanCode: {}",creditCardTransactionRulePlan.getTransactionRulePlanCode());
+			 performSearchOperationOnMainScreen(creditCardTransactionRulePlan);
+			 waitForPageToLoad(getFinder().getWebDriver());
+			 checkDuplicacyOfTransactionPlanCode(creditCardTransactionRulePlan);
+		}
+	}
+
 }
