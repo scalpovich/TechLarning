@@ -66,7 +66,6 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 		enterText(this.deviceNumber, deviceNumber);
 		waitForElementVisible(searchBtn);
 		searchBtn.click();
-		// getFinder().getWebDriver().findElement(By.xpath(".//*[@alt='Edit Record']")).click();
 	}
 
 	public void clickEditBtn() {
@@ -83,7 +82,6 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 		waitForElementVisible(this.productType);
 		SelectDropDownByText(this.productType, productType);
 		enterText(this.firstNameInput, String.valueOf(name));
-		//enterText(this.deviceNumber, deviceNumber);
 		waitForElementVisible(searchBtn);
 		searchBtn.click();
 		return normalStatus.getText();
