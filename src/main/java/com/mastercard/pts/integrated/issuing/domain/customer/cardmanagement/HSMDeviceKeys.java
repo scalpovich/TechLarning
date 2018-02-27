@@ -33,6 +33,15 @@ public class HSMDeviceKeys {
 	public String ATCOffsetOnTrack;
 	public String UNOffsetOnTrack;
 	public String CVC3OffsetOnTrack;
+	public String ComponentType;
+	
+	public String getComponentType() {
+		return ComponentType;
+	}
+
+	public void setComponentType(String componentType) {
+		ComponentType = componentType;
+	}
 
 	public String getBinStart() {
 		return BinStart;

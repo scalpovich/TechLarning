@@ -121,13 +121,14 @@ public class OfficePage extends AbstractBasePage {
 		switchToIframe(Constants.ADD_OFFICE_FRAME);
 	}
 
-	public void selectOfficeType(Office office) {
+	public void selectOfficeType(Office office) { 
 		selectByVisibleText(OfficeTypeDDwn, office.getOfficeType());
 	}
 
 	public void selectControlOffice(Office office) {
 		if (ControlCodeDDwn.isEnabled()) {
-			selectByVisibleText(ControlCodeDDwn, office.getOfficeCode());
+			WebElementUtils.selectDropDownByVisibleText(ControlCodeDDwn, office.getOfficeCode());
+			//selectByVisibleText(ControlCodeDDwn, office.getOfficeCode());
 		}
 	}
 
@@ -183,8 +184,8 @@ public class OfficePage extends AbstractBasePage {
 	public String addOfficeDetails(String type, Office office) {
 		String ControlCode;
 		String ZoneName;
-		selectOfficeType(office);
-		ControlCode = enterZoneCode();
+		selectOfficeType(office); 
+		ControlCode = enterZoneCode();		
 		ZoneName = enterZoneName(type);
 		selectControlOffice(office);
 		enterAddressLine1(office);

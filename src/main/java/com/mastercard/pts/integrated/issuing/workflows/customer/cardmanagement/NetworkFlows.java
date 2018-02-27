@@ -35,13 +35,17 @@ public class NetworkFlows extends AbstractBaseFlows {
 				MapUtils.fnGetInputDataFromMap("NetworkDescription"));
 	}
 
-	public void verifyNetworkPresent() {
+	public void verifyNetworkPresent(String Text) {
 		waitForElementVisible(processingcenterpage.getProcessingCenter());
 		processingcenterpage.clickSubOptionProcessingCenter(
 				processingcenterpage.getSetup(),
 				processingcenterpage.getMasterParameters());
 		menuSubMenuPage.getNetwork().click();
-		networkpage.getRupayNtkCode().isVisible();
+		//networkpage.getRupayNtkCode().isVisible();
+		networkpage.isInterchagePresent(Text);
+		
+		
+		
 
 	}
 

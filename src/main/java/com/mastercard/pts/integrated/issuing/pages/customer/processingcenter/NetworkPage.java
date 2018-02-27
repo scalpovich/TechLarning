@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.processingcenter;
 
 import net.serenitybdd.core.annotations.findby.By;
 
+
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +54,12 @@ public class NetworkPage extends AbstractBasePage {
 		ClickButton(SaveBtn);
 		SwitchToDefaultFrame();
 
+	}
+	
+	public void isInterchagePresent(String interchangeText){
+		
+		
+		System.out.println(getCellTextByColumnName(6, "Network Description"));
 	}
 
 }

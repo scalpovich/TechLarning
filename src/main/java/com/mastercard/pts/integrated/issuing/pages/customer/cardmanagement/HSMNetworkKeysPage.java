@@ -1,11 +1,13 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.HSMNetworkKeys;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -48,7 +50,9 @@ public class HSMNetworkKeysPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement save;
-
+	
+	WebElementUtils webutil;
+	
 	public void addHSMKeys() {
 		waitForElementVisible(addHSMNetworkKeys);
 		ClickButton(addHSMNetworkKeys);
@@ -59,10 +63,12 @@ public class HSMNetworkKeysPage extends AbstractBasePage {
 		switchToIframe(Constants.ADD_NETWORK_KEYS_FRAME);
 	}
 
-	public void SelectNetworkInterface(HSMNetworkKeys hsmnetwork) {
+	public void selectNetworkInterface(HSMNetworkKeys hsmnetwork) {
+
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		waitForElementVisible(NetworkInterface);
-		SelectDropDownByText(NetworkInterface, hsmnetwork.getNetworkInterface());
+		waitForElementVisible(NetworkInterface); 
+		selectByVisibleText(NetworkInterface, hsmnetwork.getNetworkInterface());
+		
 	}
 
 	public void fillSubNetworkID(HSMNetworkKeys hsmnetwork) {
@@ -80,31 +86,36 @@ public class HSMNetworkKeysPage extends AbstractBasePage {
 	public void SelectKeyType(HSMNetworkKeys hsmnetwork) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(KeyType);
-		SelectDropDownByText(KeyType, hsmnetwork.getKeyType());
+		selectByVisibleText(KeyType, hsmnetwork.getKeyType());
 	}
 
 	public void fillNetworkCryptogram(HSMNetworkKeys hsmnetwork) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(NetworkCryptogram);
-		SelectDropDownByText(NetworkCryptogram, hsmnetwork.getNetworkCryptogram());
+		//SelectDropDownByText(NetworkCryptogram, hsmnetwork.getNetworkCryptogram());
+		enterText(NetworkCryptogram, hsmnetwork.getNetworkCryptogram());
 	}
 
 	public void fillConfirmNetworkCryptogram(HSMNetworkKeys hsmnetwork) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(ConfirmNetworkCryptogram);
-		SelectDropDownByText(ConfirmNetworkCryptogram, hsmnetwork.getConfirmNetworkCryptogram());
+		//SelectDropDownByText(ConfirmNetworkCryptogram, hsmnetwork.getConfirmNetworkCryptogram());
+		enterText(ConfirmNetworkCryptogram, hsmnetwork.getConfirmNetworkCryptogram());
 	}
 
 	public void fillNetworkCryptogramCheckValue(HSMNetworkKeys hsmnetwork) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(NetworkCryptogramCheckValue);
-		SelectDropDownByText(NetworkCryptogramCheckValue, hsmnetwork.getNetworkCryptogramCheckValue());
+		//SelectDropDownByText(NetworkCryptogramCheckValue, hsmnetwork.getNetworkCryptogramCheckValue());
+		enterText(NetworkCryptogramCheckValue, hsmnetwork.getNetworkCryptogramCheckValue());
 	}
 
 	public void fillConfirmNetworkCryptogramCheckValue(HSMNetworkKeys hsmnetwork) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(ConfirmNetworkCryptogramCheckValue);
-		SelectDropDownByText(ConfirmNetworkCryptogramCheckValue, hsmnetwork.getConfirmNetworkCryptogramCheckValue());
+	//	SelectDropDownByText(ConfirmNetworkCryptogramCheckValue, hsmnetwork.getConfirmNetworkCryptogramCheckValue());
+		enterText(ConfirmNetworkCryptogramCheckValue, hsmnetwork.getConfirmNetworkCryptogramCheckValue());
+
 	}
 
 	public void clickSaveBtn() {

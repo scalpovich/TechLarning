@@ -53,7 +53,7 @@ public class NetworkSteps extends AbstractBaseSteps {
 
 	@Then("the user must not be allowed to delete the rupay network from the screen")
 	public void verifyDeleteNotPerformed() {
-		ntkflows.verifyNetworkPresent();
+		//ntkflows.verifyNetworkPresent();
 	}
 
 	@When("user is configuring device ranges and selects rupay network")
