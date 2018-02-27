@@ -396,7 +396,8 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 
 		if (AccountTypeDDwn.isEnabled()) {
-			selectByVisibleText(AccountTypeDDwn, newDevice.getAccountType());
+			SelectDropDownByIndex(AccountTypeDDwn, 1);
+			// selectByVisibleText(AccountTypeDDwn, newDevice.getAccountType());
 		}
 	}
 

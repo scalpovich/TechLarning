@@ -251,17 +251,20 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	public void selectEndPoint() {
 		if (EndpointDDwn.isEnabled()) {
+			waitForPageToLoad(getFinder().getWebDriver());
 			SelectDropDownByIndex(EndpointDDwn, 1);
 		}
 	}
 
 	public void selectInterface() {
+		waitForPageToLoad(getFinder().getWebDriver());
 		if (InterfaceDDwn.isEnabled()) {
 			SelectDropDownByIndex(InterfaceDDwn, 1);
 		}
 	}
 
 	public void selectRoutingType() {
+		waitForPageToLoad(getFinder().getWebDriver());
 		if (RoutingTypeDDwn.isEnabled()) {
 			SelectDropDownByIndex(RoutingTypeDDwn, 1);
 		}
@@ -305,8 +308,8 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	public void selectDebitInerface() {
 		selectEndPoint();
-		selectInterface();
 		selectRoutingType();
+		selectInterface();
 	}
 
 	public void Information() {

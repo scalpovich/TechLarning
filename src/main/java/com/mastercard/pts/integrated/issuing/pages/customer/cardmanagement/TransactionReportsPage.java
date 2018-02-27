@@ -14,6 +14,8 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
+import com.mastercard.pts.integrated.issuing.utils.DatePicker;
+import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -75,11 +77,17 @@ public class TransactionReportsPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:5:cols:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement transactionOriginDDwn;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:2:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	private MCWebElement transactionCodeDDwn;
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:5:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement deviceTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:2:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement productTypeClearingReportDDwn;
+
+	@Autowired
+	DatePicker date;
 
 	public void verifyUiOperationStatus() {
 		logger.info("Transaction Reports");
@@ -127,7 +135,22 @@ public class TransactionReportsPage extends AbstractBasePage {
 	}
 
 	public void generateWebAPIServiceDetailReport() {
-		// selectByVisibleText(selectReportDDwn, optionName);
+		selectByVisibleText(selectReportDDwn, "WEB API Services Details Report");
+		clicksearchButtonElement();
 
 	}
+
+	public void selectCalender() {
+		String[] date22 = DateUtils.getDateinDDMMYYYY().split("/");
+		int newdate = Integer.parseInt(date22[1]);
+		int i = newdate - 1;
+		date22[1] = String.valueOf(i);
+		String date11 = date22[0] + "/" + date22[1] + "/" + date22[2];
+		date.setDate(date11);
+		// date.setDate(date11);
+		waitForPageToLoad(getFinder().getWebDriver());
+		// date.setDateCalendar2(DateUtils.getDateinDDMMYYYY(), calelement);
+		waitForPageToLoad(getFinder().getWebDriver());
+	}
+
 }
