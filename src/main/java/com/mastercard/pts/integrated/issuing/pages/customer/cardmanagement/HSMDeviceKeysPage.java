@@ -59,7 +59,7 @@ public class HSMDeviceKeysPage extends AbstractBasePage {
 	private MCWebElement GenerationMethodDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "compType:input:dropdowncomponent")
-	private MCWebElement componentType;
+	private MCWebElement componentTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrHexdecimibm:input:inputTextField")
 	private MCWebElement DecimalizationTabletxt;
@@ -262,9 +262,9 @@ public class HSMDeviceKeysPage extends AbstractBasePage {
 		enterText(CVVOffsetOnTrackTxt, hsmKeys.getCVVOffsetOnTrack());
 	}
 	public void selectComponentType(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
-		waitForElementVisible(componentType);
-		SelectDropDownByText(componentType, hsmKeys.getComponentType());
+		addWicketAjaxListeners(driver());
+		waitForElementVisible(componentTypeDDwn);
+		SelectDropDownByText(componentTypeDDwn, hsmKeys.getcomponentType());
 	}
 	
 	public void fillCVKACryptogram(HSMDeviceKeys hsmKeys) {
