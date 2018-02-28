@@ -1,11 +1,11 @@
 Narrative:
 As a processor
-I want to integrate with RSA Adaptive Authentication for eCommerce 3DSecure product
+I want to integrate with Adaptive Authentication for eCommerce 3DSecure product
 So that our customers can experience the benefits of 3DSecure (SecureCode, Identity Check, Verified By VISA) such as risk reduction, cardholder authentication, and interchange protection for e-commerce transactions made by cardholders.
 
 Meta:
 @StoryName IsEligiable
-		 
+@storyType API		 
 Scenario:  TO Check Card Eligibility With Valid Fields
 Meta:
 @storyType API
@@ -14,15 +14,28 @@ Given user update isEligibleRequest.json file
 When user send post request at isEligible
 Then Validate Response for below Attributes:
 |AttributesToValidate|
-|isEligible=false|	 
-Then store issuerSessionId for furtheruse
+|isEligible=true| 
+And store issuerSessionId for furtheruse
 
 Scenario:  TO Check fetch avilable aliases With Valid Fields
 Meta:
 @datasheet fetch_Available_Aliases
-Given user update fetchAvailableDevices_Request.json file
+Given user update fetchAvailableAliases_Request.json file
 When user send post request at fetchAvailableAliases
 Then Validate Response for below Attributes:
 |AttributesToValidate|
-|fetchAliasesValidResponse.availableOtpDevices=jsonarray|
-Then store issuerSessionId for furtheruse
+|availableAliases[0].aliasType=SMS|
+|availableAliases[1].aliasType=EMAIL|
+|availableAliases[0].displayAliasType=mobile|
+|availableAliases[1].displayAliasType=mail|
+And store issuerSessionId for furtheruse
+
+Scenario:  TO Check verifyOtp Call with Valid Fields
+Meta:
+@datasheet verifyOtp
+Given user update verifyOtp_Request.json file
+When user send post request at verifyOtp
+Then Validate Response for below Attributes:
+|AttributesToValidate|
+|issuerSessionId=GET_ISSUER_SESSION_ID|
+

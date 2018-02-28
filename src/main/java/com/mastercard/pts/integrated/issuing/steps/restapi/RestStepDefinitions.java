@@ -1,6 +1,8 @@
 package com.mastercard.pts.integrated.issuing.steps.restapi;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 
 import org.jbehave.core.annotations.Given;
@@ -80,6 +82,12 @@ public class RestStepDefinitions {
 		reqResParams.setUpdatedReq(jsonutil.updateJasonFileWithExcel(
 				jsonfile, reqMap));
 	}
+	@Given("user create json request")
+	public void userCreateJsonWithExcelData(@Named("datasheet") String datasheet) {
+       //  Map<String, String> reqMap=context.get(TestContext.KEY_STORY_DATA);
+		Map<String, String> reqMap = dataLoader.loadData(datasheet).get();
+		reqResParams.setUpdatedReq(jsonutil.createJsonFileWithExcel(reqMap));
+	}
 	@When("user send post request with updateded attributes")
 	@Then("user send post request with updateded attributes")
 	public void sendPostRequestWithMultipleAttributes() {
@@ -125,11 +133,25 @@ public class RestStepDefinitions {
 	public void checkWalletDelinkStatus() {
 		deviceDetails.checkWalletDelinkStatus();
 	}
+	@Given("store $transactionId for furtheruse")
+	@When("store $transactionId for furtheruse")
 	@Then("store $transactionId for furtheruse")
 	public void storeTransactionIdForFetchAvailableDevicesAPI(
 			String transactionId) {
 		deviceDetails.setTransactionId(reqResParams.getResponse().path(
 				transactionId));
+	}
+	@Given("user update $jsonFile file to send post request at $endPoint and validate data")
+	public void userUpdateJsonAndValidateDataDriven(@Named("jsonFile") String jsonfile,@Named("datasheet") String datasheet,@Named("endPoint") String endPoint) {
+		Map<String, String> reqMap = dataLoader.loadData(datasheet).get();
+		for(Entry<String, String> entry: reqMap.entrySet()){
+			reqResParams.setUpdatedReq(jsonutil.updateJasonFileWithUserInput(
+					jsonfile, entry.getKey()));
+			reqResParams.setResponse(jsonutil.postRequest(reqResParams
+					.getUpdatedReq(),endPoint));
+			jsonutil.validateResponse(reqResParams.getResponse(), entry.getValue());
+			
+		}
 	}
 
 }

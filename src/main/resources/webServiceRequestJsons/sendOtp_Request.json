@@ -1,17 +1,16 @@
 {
-"service": "RSA Client 211",
-"sessionId": "12345678901234",
-"transactionId": "fb4bf9c3-8144-4520-9f94-ecb2e6e2a8ef",
-"otpValue": "22223333",
+"service": "ECOM_CLIENT",
+"issuerSessionId": "c21bf10f-3091-4388-933f-c89b8f8d59f1", 
+"sessionId": "6126787543124444",
+"otpValue": "123455",
+"selectedAliasId": "001",
 "version": "1.0",
-"timeStamp": "2017-05-25T02:50:59",
-"purchaseAttributes": {
+"timeStamp": "2017-10-16T17:50:59.123Z",
+"purchaseAttributes": 
+{
 "purchaseMerchantName": "Merchant Name123",
-"purchaseAmount": "100.00",
+"purchaseAmount": "444.00",
 "purchaseCurrency": "USD"
-},
-"selectedDevice": {
-"otpDeviceId": "001",
-"otpDeviceTarget": "972541111111"
-}
-}
+} 
+} 
+	

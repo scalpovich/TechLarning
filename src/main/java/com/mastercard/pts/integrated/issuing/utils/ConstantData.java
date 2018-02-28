@@ -55,6 +55,8 @@ public class ConstantData {
 	public static final String  TRANSACTION_AMOUNT = "transactionAmount";
 	
 	public static final String OPTION_SELECT_ONE = "Select One";
+	
+	public static final String API_NAME = "API_NAME";
 
 	private ConstantData() {}
 }
