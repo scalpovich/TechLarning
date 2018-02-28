@@ -23,7 +23,7 @@ When user creates a Single wallet Program for Mastercard for product Prepaid for
 Then Program should get created
 When user creates Device BIN for Mastercard for product prepaid for BinType as Dual Message Type
 When user creates a Device Range for product Prepaid
-When user creates Application Upload Prepaid batch file and upload it on server for Individual for "Static Virtual Card"
+When user creates Application Upload Prepaid batch file and uploads it on server for Individual for "Static Virtual Card"
 When processes prepaid pre-production batch
 When User search for device on search screen for product type prepaid and validates the status as NORMAL
 Then user logouts from customer portal

@@ -54,7 +54,7 @@ public class ApplicationUploadSteps {
 	@Autowired
 	private DataProvider provider;
 
-	@When("user creates $application_upload_file batch file and upload it on server for $customerType for $cardType")
+	@When("user creates $application_upload_file batch file and uploads it on server for $customerType for $cardType")
 	public void createFileForApplicationUpload(@Named("application_upload_file") String batchName, @Named("customerType") String customerType, @Named("cardType") String cardType) throws Exception {
 		String fileName = "";
 		if (cardType.equalsIgnoreCase("prepaid")) {
