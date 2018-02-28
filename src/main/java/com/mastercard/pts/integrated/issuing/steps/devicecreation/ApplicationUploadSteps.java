@@ -61,10 +61,14 @@ public class ApplicationUploadSteps {
 			fileName = fileCreation.createApplicationUploadFile(Institution.createWithProvider(provider).getCode(), customerType, cardType);
 		} else if (cardType.equalsIgnoreCase("credit")) {
 			fileName = fileCreation.createApplicationUploadFile(Institution.createWithProvider(provider).getCodeCredit(), customerType, cardType);
+		} else if (cardType.contains("Static"))
+		{
+			fileName=fileCreation.createApplicationUploadForFileStaticVirtualCard(program.getInstitute(), customerType);
+			processBatch.setJoBID(processBatchesFlows.processUploadBatches(batchName, fileName));
+			CustomUtils.ThreadDotSleep(5000);
+			Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(processBatch, fileName));
 		}
-		processBatch.setJoBID(processBatchesFlows.processUploadBatches(batchName, fileName));
-		CustomUtils.ThreadDotSleep(8000);
-		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(processBatch, fileName));
+		
 	}
 
 	@When("user creates $application_upload_file batch file and uploads it on server for $customerType")
@@ -74,6 +78,7 @@ public class ApplicationUploadSteps {
 		CustomUtils.ThreadDotSleep(5000);
 		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(processBatch, fileName));
 	}
+	
 
 	@Then("The file will process the records successfully if all the all the business mandatory field are configured in file")
 	public void verifyApplicationFileUpload() {
