@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
+import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -273,7 +274,17 @@ public class ProgramSetupSteps {
 	public void givenDeviceRangeForDebitProgramWithDevicePlan(String deviceType) {
 		// composite step
 	}
+	
+	
+	@Given("user updates cvccvv as uncheck on device plan")
+	@When("user updates cvccvv as uncheck on device plan")
+	@Then("user updates cvccvv as uncheck on device plan")
+	public void userUpdateCVCCVVDevicePlan() {
+		programSetupWorkflow.uncheckCVCCVVDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
 
+	
 	@When("device range for program with device plan for \"debit\" \"$deviceType\" card without pin")
 	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin")
 	@Composite(steps = { "When User fills Dedupe Plan", "When User fills MCC Rules for debit product", "When User fills Transaction Plan for debit product",

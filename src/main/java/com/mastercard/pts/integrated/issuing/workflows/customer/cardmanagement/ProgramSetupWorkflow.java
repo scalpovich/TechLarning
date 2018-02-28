@@ -118,6 +118,12 @@ public class ProgramSetupWorkflow {
 	}
 	// Device configuration ends
 	
+	public void uncheckCVCCVVDevicePlan(DevicePlan devicePlan) {
+		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
+		page.updateCVCCVVDevicePlan(devicePlan);
+	}
+	// Device configuration ends
+	
 	public void fillDocumentChecklist(ApplicationDocumentChecklist  applicationDocumentChecklist) {
 		ApplicationDocumentChecklistPage page = navigator.navigateToPage(ApplicationDocumentChecklistPage.class);
 		page.addDocumentsInDocumentsChecklist(applicationDocumentChecklist);
