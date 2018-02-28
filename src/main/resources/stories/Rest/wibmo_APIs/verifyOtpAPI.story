@@ -10,7 +10,7 @@ Scenario:  TO Check Card Eligibility With Valid Fields
 Meta:
 @storyType API
 @datasheet IsEligiable
-Given user update isEligibleRequest.json file
+Given user create json request
 When user send post request at isEligible
 Then Validate Response for below Attributes:
 |AttributesToValidate|
@@ -20,7 +20,7 @@ And store issuerSessionId for furtheruse
 Scenario:  TO Check fetch avilable aliases With Valid Fields
 Meta:
 @datasheet fetch_Available_Aliases
-Given user update fetchAvailableAliases_Request.json file
+Given user create json request
 When user send post request at fetchAvailableAliases
 Then Validate Response for below Attributes:
 |AttributesToValidate|
@@ -33,7 +33,7 @@ And store issuerSessionId for furtheruse
 Scenario:  TO Check verifyOtp Call with Valid Fields
 Meta:
 @datasheet verifyOtp
-Given user update verifyOtp_Request.json file
+Given user create json request
 When user send post request at verifyOtp
 Then Validate Response for below Attributes:
 |AttributesToValidate|
