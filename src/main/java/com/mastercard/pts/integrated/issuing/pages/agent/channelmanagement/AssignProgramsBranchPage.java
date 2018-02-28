@@ -75,19 +75,19 @@ public class AssignProgramsBranchPage extends AbstractBasePage {
 	}
 
 	public void selectBranchId(String branchId) {
-		WebElementUtils.selectDDByVisibleText(branchIdDdwn, branchId);
+		WebElementUtils.selectDropDownByVisibleText(branchIdDdwn, branchId);
 	}
 
 	public void selectAgency(String agency) {
-		WebElementUtils.selectDDByVisibleText(agencyIdDdwn, agency);
+		WebElementUtils.selectDropDownByVisibleText(agencyIdDdwn, agency);
 	}
 
 	public void selectProgramCode(String programCode) {
-		WebElementUtils.selectDDByVisibleText(programCodeDdwn, programCode);
+		WebElementUtils.selectDropDownByVisibleText(programCodeDdwn, programCode);
 	}
 
 	public void selectDeviceType(String deviceType) {
-		WebElementUtils.selectDDByVisibleText(deviceTypeDdwn, deviceType);
+		WebElementUtils.selectDropDownByVisibleText(deviceTypeDdwn, deviceType);
 	}
 
 	public void clickAddButton() {

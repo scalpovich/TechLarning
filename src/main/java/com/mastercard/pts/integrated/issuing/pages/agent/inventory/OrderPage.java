@@ -52,11 +52,11 @@ public class OrderPage extends InventoryAbstractPage {
 	}
 
 	public void selectBranchId(String branchId) {
-		WebElementUtils.selectDDByVisibleText(brancIdDDwn, branchId);
+		WebElementUtils.selectDropDownByVisibleText(brancIdDDwn, branchId);
 	}
 
 	public void selectProgramCode(String programCode) {
-		WebElementUtils.selectDDByVisibleText(programCodeDDwn, programCode);
+		WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, programCode);
 	}
 
 	public void selectDeviceType(String deviceType) {

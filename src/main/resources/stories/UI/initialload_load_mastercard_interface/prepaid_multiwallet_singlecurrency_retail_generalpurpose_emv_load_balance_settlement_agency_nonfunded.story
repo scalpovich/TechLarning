@@ -65,7 +65,7 @@ And user sign out from agent portal
 
 Scenario: Prepaid - Agent User - Device Sale with Registration
 
-Given user is logged in agent portal as agent user
+Given user is logged in agent portal as nonfundedagent user
 When user fills program details with registration
 Then registration is successful
 And user sign out from agent portal
@@ -148,7 +148,7 @@ And user sign out from agent portal
 
 Scenario: Prepaid - New Program to Existing Device - Agent User - Device Sale with new program Registration
 
-Given user is logged in agent portal as agent user
+Given user is logged in agent portal as nonfundedagent user
 When user fills program details with new program for prepaid product emv device
 Then registration is successful
 And user sign out from agent portal
@@ -194,11 +194,4 @@ Then load balance approve is successful
 And user sign out from agent portal
 And user is logged in institution
 And balance in helpdesk updated correctly for prepaid device
-And user sign out from customer portal
-
-Scenario: Program Balance Summary reports download - Funded Agent
-Given user is logged in institution
-When pre-clearing and Pre-EOD batches are run
-Then verify report for transactions with Program Balance Summary is downloaded
-And Verify Program Balance Summary is downloaded
 And user sign out from customer portal

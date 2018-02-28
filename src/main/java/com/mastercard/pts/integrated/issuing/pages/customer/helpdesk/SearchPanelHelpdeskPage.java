@@ -1,10 +1,8 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.helpdesk;
 
-import org.openqa.selenium.By;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -56,7 +54,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 	private MCWebElement editBtn;
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr//following-sibling::td[7]/span")
 	private MCWebElement normalStatus;
-	
+
 	public MCWebElement getEditBtn() {
 		return editBtn;
 	}
@@ -68,21 +66,32 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 		enterText(this.deviceNumber, deviceNumber);
 		waitForElementVisible(searchBtn);
 		searchBtn.click();
-	   //getFinder().getWebDriver().findElement(By.xpath(".//*[@alt='Edit Record']")).click();
 	}
 
 	public void clickEditBtn() {
 		waitForElementVisible(editBtn);
 		editBtn.click();
 	}
+
 	public void clickSearchBtn() {
 		waitForElementVisible(searchBtn);
 		searchBtn.click();
 	}
+
 	public String searchDeviceUsingName(String productType, String name) {
 		waitForElementVisible(this.productType);
 		SelectDropDownByText(this.productType, productType);
 		enterText(this.firstNameInput, String.valueOf(name));
+		waitForElementVisible(searchBtn);
+		searchBtn.click();
+		return normalStatus.getText();
+	}
+
+	public String searchNewDevice(String productType, String deviceNumber) {
+		waitForElementVisible(this.productType);
+		SelectDropDownByText(this.productType, productType);
+		waitForElementVisible(this.deviceNumber);
+		enterText(this.deviceNumber, deviceNumber);
 		waitForElementVisible(searchBtn);
 		searchBtn.click();
 		return normalStatus.getText();

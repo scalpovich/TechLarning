@@ -5,6 +5,7 @@ import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,6 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.InstitutionCreationFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.UserCreationFlows;
 
-import junit.framework.Assert;
-
 @Component
 public class InstitutionCreationSteps {
 
@@ -32,12 +31,12 @@ public class InstitutionCreationSteps {
 	@Autowired
 	private UserCreationFlows userCreationFlows;
 
+	@Autowired
+	private KeyValueProvider keyProvider;
+
 	InstitutionCreation instutionCreation;
 
 	UserCreation userCreation;
-
-	@Autowired
-	private KeyValueProvider keyProvider;
 
 	final Logger logger = LoggerFactory.getLogger(InstitutionCreationSteps.class);
 

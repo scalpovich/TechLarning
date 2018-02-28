@@ -30,6 +30,10 @@ public class ContextConstants {
 
 	public static final String REMITTANCE = "REMITTANCE";
 
+	public static final String DEVICE_NUMBER = "DEVICE_NUMBER";
+
+	public static final String DEVICE_BIN = "DEVICE_BIN";
+
 	private ContextConstants() {
 	}
 

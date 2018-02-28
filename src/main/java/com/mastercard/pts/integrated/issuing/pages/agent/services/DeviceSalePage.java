@@ -221,11 +221,11 @@ public class DeviceSalePage extends AbstractBasePage {
 	}
 
 	public void selectProgramCode(String programCode) {
-		WebElementUtils.selectDDByVisibleText(programCodeDdwn, programCode);
+		WebElementUtils.selectDropDownByVisibleText(programCodeDdwn, programCode);
 	}
 
 	public void selectDeviceType(String deviceType) {
-		WebElementUtils.selectDDByVisibleText(deviceTypeDdwn, deviceType);
+		WebElementUtils.selectDropDownByVisibleText(deviceTypeDdwn, deviceType);
 	}
 
 	public void enterCardPackId(String cardPackId) {
@@ -241,7 +241,7 @@ public class DeviceSalePage extends AbstractBasePage {
 	}
 
 	public void selectTitle(String title) {
-		WebElementUtils.selectDDByVisibleText(titleDdwn, title);
+		WebElementUtils.selectDropDownByVisibleText(titleDdwn, title);
 	}
 
 	public void enterFirstName(String firstName) {
@@ -253,19 +253,19 @@ public class DeviceSalePage extends AbstractBasePage {
 	}
 
 	public void selectMaritalStatus(String maritalStatus) {
-		WebElementUtils.selectDDByVisibleText(maritalStatusDdwn, maritalStatus);
+		WebElementUtils.selectDropDownByVisibleText(maritalStatusDdwn, maritalStatus);
 	}
 
 	public void selectGender(String gender) {
-		WebElementUtils.selectDDByVisibleText(genderDdwn, gender);
+		WebElementUtils.selectDropDownByVisibleText(genderDdwn, gender);
 	}
 
 	public void selectNationality(String nationality) {
-		WebElementUtils.selectDDByVisibleText(nationalityDdwn, nationality);
+		WebElementUtils.selectDropDownByVisibleText(nationalityDdwn, nationality);
 	}
 
 	public void selectLanguagePreference(String languagePreference) {
-		WebElementUtils.selectDDByVisibleText(languagePreferencesDdwn, languagePreference);
+		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDdwn, languagePreference);
 	}
 
 	@Override
@@ -275,7 +275,7 @@ public class DeviceSalePage extends AbstractBasePage {
 	}
 
 	public void selectPreferredMailingAddress(String preferredMailingAddress) {
-		WebElementUtils.selectDDByVisibleText(preferredMailingAddressDdwn, preferredMailingAddress);
+		WebElementUtils.selectDropDownByVisibleText(preferredMailingAddressDdwn, preferredMailingAddress);
 	}
 
 	public void enterCurrentAddressLine1(String currentAddressLine1) {
@@ -287,7 +287,7 @@ public class DeviceSalePage extends AbstractBasePage {
 	}
 
 	public void selectCountry(String country) {
-		WebElementUtils.selectDDByVisibleText(countryDdwn, country);
+		WebElementUtils.selectDropDownByVisibleText(countryDdwn, country);
 	}
 
 	public void enterPostalCode(String postalCode) {
@@ -296,7 +296,7 @@ public class DeviceSalePage extends AbstractBasePage {
 	}
 
 	public void selectApplicantProfession(String applicantProfession) {
-		WebElementUtils.selectDDByVisibleText(applicantProfessionDdwn, applicantProfession);
+		WebElementUtils.selectDropDownByVisibleText(applicantProfessionDdwn, applicantProfession);
 	}
 
 	public void clickKYCStatusCheckBox() {
@@ -308,7 +308,7 @@ public class DeviceSalePage extends AbstractBasePage {
 	}
 
 	public void selectDocument1Type(String passportType) {
-		WebElementUtils.selectDDByVisibleText(document1TypeDdwn, passportType);
+		WebElementUtils.selectDropDownByVisibleText(document1TypeDdwn, passportType);
 	}
 
 	public void enterLegalId1(String legalId1) {

@@ -358,7 +358,6 @@ public class InstitutionCreation extends AbstractBasePage {
 		institute.setAgentPortalAdminID(MiscUtils.generateRandomNumberAsString(6));
 		institute.setAgentPortalAdminName(
 				MapUtils.fnGetInputDataFromMap("AgentPortalAdminName") + MiscUtils.generateRandomNumberAsString(5));
-
 		institute.setAscVendor(MapUtils.fnGetInputDataFromMap("ASC_Vendor"));
 		institute.setExistingInstitutionCode(MapUtils.fnGetInputDataFromMap("ExistingInstitutionCode"));
 		return institute;

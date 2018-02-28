@@ -99,11 +99,11 @@ public class AcceptancePage extends AbstractBasePage {
 	}
 
 	public void selectBranchId(String branchId) {
-		WebElementUtils.selectDDByVisibleText(branchIdDdwn, branchId);
+		WebElementUtils.selectDropDownByVisibleText(branchIdDdwn, branchId);
 	}
 
 	public void selectOrderNumber(String orderNumber) {
-		WebElementUtils.selectDDByVisibleText(orderNumberDdwn, orderNumber);
+		WebElementUtils.selectDropDownByVisibleText(orderNumberDdwn, orderNumber);
 	}
 
 	public void clickTableFirstRecord() {

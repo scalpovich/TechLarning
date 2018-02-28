@@ -43,7 +43,7 @@ public class ProgramFlows extends MenuFlows {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
 		programpage = navigator.navigateToPage(ProgramPage.class);
 		programpage.clickAddProgram();
-		String PROGRAM = programpage.addProgramGeneral(program);
+		String PROGRAM = programpage.addProgramGeneral(deviceCreation, program);
 		programpage.addKYCLimits(program);
 		programpage.selectLoadAndRefundParameters(program);
 		programpage.clickNextButton();
@@ -79,13 +79,30 @@ public class ProgramFlows extends MenuFlows {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
 		programpage = navigator.navigateToPage(ProgramPage.class);
 		programpage.clickAddProgram();
-		String PROGRAM = programpage.addProgramGeneral(program);
+		String PROGRAM = programpage.addProgramGeneral(deviceCreation, program);
 		programpage.addKYCLimits(program);
 		programpage.selectLoadAndRefundParameters(program);
 		programpage.clickNextButton();
 		programpage.selectWalletPLan(program);
 		programpage.selectDevicePlan(program);
 		programpage.clickNextButton();
+		programpage.clickNextButton();
+		program.setProgram(PROGRAM);
+		programpage.clickFinishButton();
+		return PROGRAM;
+	}
+
+	public String createprogramCredit(DeviceCreation deviceCreation, Program program) {
+		waitForElementVisible(menuSubMenuPage.getCardManagement());
+		programpage = navigator.navigateToPage(ProgramPage.class);
+		programpage.clickAddProgram();
+		String PROGRAM = programpage.addProgramGeneral(deviceCreation, program);
+		programpage.clickNextButton();
+		programpage.selectWalletPLan(program);
+		programpage.selectDevicePlan(program);
+		programpage.selectOtherPlans1();
+		programpage.clickNextButton();
+		programpage.fillDataForCreditCard(program);
 		programpage.clickNextButton();
 		program.setProgram(PROGRAM);
 		programpage.clickFinishButton();

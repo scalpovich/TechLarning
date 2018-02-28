@@ -15,7 +15,6 @@ import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCr
 import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -300,11 +299,7 @@ public class InstitutionPage extends AbstractBasePage {
 
 	public void selectACSVendor() {
 		InstitutionCreation institutioncreation = context.get("institutionData");
-		WebElementUtils.selectDDByVisibleText(adaptiveEcommFlagDwn, institutioncreation.getAscVendor());
-	}
-
-	public void disableACSVendor() {
-		WebElementUtils.selectDDByVisibleText(adaptiveEcommFlagDwn, ConstantData.OPTION_SELECT_ONE);
+		WebElementUtils.selectDropDownByVisibleText(adaptiveEcommFlagDwn, institutioncreation.getAscVendor());
 	}
 
 	public boolean checkASCVendorEnabledAndSelectASCVendor() {
@@ -324,9 +319,8 @@ public class InstitutionPage extends AbstractBasePage {
 			selectCheckBox(mpinEnabledCbx, "MPIN");
 			selectCheckBox(issuerSmsProviderCbx, "SmsProvider");
 		} else {
-			disableACSVendor();
-			acceptPopup();
-
+			ClickCheckBox(mpinEnabledCbx, false);
+			ClickCheckBox(issuerSmsProviderCbx, false);
 		}
 	}
 

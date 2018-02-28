@@ -10,7 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -32,6 +36,8 @@ public class DeviceProductionPage extends AbstractBasePage {
 	@Autowired
 	MenuSubMenuPage menuSubMenuPage;
 
+	@Autowired
+	TestContext context;
 	// ------------- Card Management > Institution Parameter Setup > Institution
 	// Currency [ISSS05]
 
@@ -51,7 +57,6 @@ public class DeviceProductionPage extends AbstractBasePage {
 	private MCWebElement deviceProductionBatchRecordChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "processSelected")
-
 	private MCWebElement processSelectedBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "processAll")
@@ -64,6 +69,9 @@ public class DeviceProductionPage extends AbstractBasePage {
 	private MCWebElement confirmationMsgTxt;
 
 	private MCWebElement ProcessSelectedBtn;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers' and @class!='navigation'][1]/td[2]/span")
+	private MCWebElement deviceNumberFetch;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr")
 	private MCWebElements rowSize;
@@ -91,17 +99,18 @@ public class DeviceProductionPage extends AbstractBasePage {
 	}
 
 	public void processDeviceProductionBatch(DeviceProductionBatch batch) {
-		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
-		ClickButton(searchBtn);
-		if (deviceProductionBatchRecordChkBx.isVisible()) {
-			ClickCheckBox(deviceProductionBatchRecordChkBx, true);
-		} else {
-			ClickButton(searchBtn);
-		}
-		ClickButton(processSelectedBtn);
-
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
 		waitAndSearchForRecordToExist();
+		verifyOperationStatus();
+
+	}
+
+	public void processDeviceProductionBatchForAll(DeviceProductionBatch batch) {
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
+		waitAndSearchForRecordToExist();
+		clickWhenClickable(processAllBtn);
 		verifyOperationStatus();
 
 	}
@@ -181,6 +190,20 @@ public class DeviceProductionPage extends AbstractBasePage {
 		WebElement SelectProcessChkBx = getFinder().getWebDriver().findElement(By.xpath("//tr[1]//td[contains(.,'"
 				+ bulkdeviceGenBatch.getBatchNumberForDeviceGeneration() + "')]/preceding-sibling::td[3]"));
 		return SelectProcessChkBx.getText().substring(9);
+	}
+
+	public void processDeviceProductionBatchNewApplication(DeviceProductionBatch batch) {
+		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
+		WebElementUtils.enterText(batchNumberTxt, batchNumber);
+		waitAndSearchForRecordToExist();
+		verifyOperationStatus();
+	}
+
+	public void processDeviceProductionBatchNewDevice(DeviceProductionBatch batch) {
+		Device device = context.get(ContextConstants.DEVICE);
+		WebElementUtils.enterText(batchNumberTxt, device.getBatchNumber());
+		waitAndSearchForRecordToExist();
+		verifyOperationStatus();
 	}
 
 	@Override

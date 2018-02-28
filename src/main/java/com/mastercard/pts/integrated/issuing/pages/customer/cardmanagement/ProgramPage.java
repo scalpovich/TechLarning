@@ -535,14 +535,14 @@ public class ProgramPage extends AbstractBasePage {
 		}
 	}
 
-	private void fillDataForCreditCard(Program program) {
+	public void fillDataForCreditCard(Program program) {
 		WebElementUtils.enterText(creditLimitTxt, program.getCreditLimit());
 		WebElementUtils.enterText(maximumCreditLimitTxt, program.getMaximumCreditLimit());
 		WebElementUtils.selectDropDownByVisibleText(cashLimitTypeDDwn, program.getCashLimitType());
 		WebElementUtils.enterText(cashLimitAmountTxt, program.getCashLimitAmount());
 		WebElementUtils.selectDropDownByVisibleText(cashLimitResetDDwn, program.getCashLimitReset());
 		WebElementUtils.selectDropDownByVisibleText(addOnLimitResetDDwn, program.getAddOnLimitReset());
-		CustomUtils.ThreadDotSleep(10000);
+		// CustomUtils.ThreadDotSleep(10000);
 	}
 
 	public void verifyUiOperationStatus() {
@@ -564,7 +564,7 @@ public class ProgramPage extends AbstractBasePage {
 		if (program.getCode().length() != 0) {
 			enterValueinTextBox(programTxt, program.getCode());
 		} else {
-			enterValueinTextBox(programTxt, CustomUtils.randomNumbers(4));
+			enterValueinTextBox(programTxt, CustomUtils.randomAlphaNumeric(5).toUpperCase());
 		}
 		program.setProgramCode(programTxt.getAttribute("value"));
 		return programTxt.getAttribute("value");
@@ -604,7 +604,9 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	public void selectCurrencyConversionBy(Program program) {
-		selectByVisibleText(CurrencyConversionByDDwn, program.getCurrencyConversionBy());
+		if (CurrencyConversionByDDwn.isEnabled()) {
+			selectByVisibleText(CurrencyConversionByDDwn, program.getCurrencyConversionBy());
+		}
 
 	}
 
@@ -644,6 +646,7 @@ public class ProgramPage extends AbstractBasePage {
 	@Override
 	public void clickNextButton() {
 		ClickButton(NEXTBtn);
+		waitForWicket();
 		SimulatorUtilities.wait(2000);
 	}
 
@@ -712,6 +715,7 @@ public class ProgramPage extends AbstractBasePage {
 	public void verifyNewProgramSuccess() {
 		if (!verifyErrorsOnProgramPage()) {
 			logger.info("Program Added Successfully");
+			waitForPageToLoad(driver());
 			SwitchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
@@ -720,10 +724,11 @@ public class ProgramPage extends AbstractBasePage {
 		}
 	}
 
-	public String addProgramGeneral(Program program) {
+	public String addProgramGeneral(DeviceCreation devicecreation, Program program) {
 		String programCode;
 		String ProgramDescription;
 		programCode = enterProgramCode(program);
+		program.setProgramCode(programCode);
 		ProgramDescription = enterProgramDescription(program);
 		selectInterchange(program);
 		selectProduct(program);
@@ -738,6 +743,7 @@ public class ProgramPage extends AbstractBasePage {
 		String programCode;
 		String ProgramDescription;
 		programCode = enterProgramCode(program);
+		program.setProgramCode(programCode);
 		ProgramDescription = enterProgramDescription(program);
 		selectInterchange(program);
 		selectProduct(program);
@@ -787,9 +793,8 @@ public class ProgramPage extends AbstractBasePage {
 	public void enterProgramValue(String a) {
 		enterValueinTextBox(enterProgram, a);
 		clickWhenClickable(search);
-		waitForElementVisible(editProgram);
-		Scrolldown(editProgram);
-		clickWhenClickableDoNotWaitForWicket(editProgram);
+		waitForWicket(driver());
+		clickWhenClickable(editProgram);
 		CustomUtils.ThreadDotSleep(2000);
 		switchToEditProgramframe();
 		ClickCheckBox(sdnCheckBox, false);

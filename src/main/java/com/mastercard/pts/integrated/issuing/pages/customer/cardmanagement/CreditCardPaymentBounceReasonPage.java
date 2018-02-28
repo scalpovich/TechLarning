@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -45,7 +46,7 @@ public class CreditCardPaymentBounceReasonPage extends AbstractBasePage{
 				WebElementUtils.visibilityOf(descriptionOnMainScreenTxt));
 	}
 	
-	public void addPaymentBounceReason(CreditCardPaymentBounceReason creditCardPaymentBounceReason)
+	public boolean addPaymentBounceReason(CreditCardPaymentBounceReason creditCardPaymentBounceReason)
 	{
 		logger.info("Add Payment Bounce Reason {}", creditCardPaymentBounceReason);
 		
@@ -55,17 +56,25 @@ public class CreditCardPaymentBounceReasonPage extends AbstractBasePage{
 		{
 			creditCardPaymentBounceReason.setPaymentBouncePlanCode(MiscUtils.generateRandomNumberBetween2Number(100,999));
 		}	
-		
+		else
+		{
 		clickAddNewButton();		
 		//Fill "Add Payment Bounce Reason" section
+		AtomicBoolean canceled = new AtomicBoolean(false);
 		runWithinPopup("Add Payment Bounce Reason", () -> {
 			WebElementUtils.enterText(paymentBouncePlanCodeTxt, creditCardPaymentBounceReason.getPaymentBouncePlanCode());	
 			WebElementUtils.enterText(descriptionOnMainScreenTxt, creditCardPaymentBounceReason.getDescription());
 			clickSaveButton();
-			
-			verifyNoErrors();
-		});		
+			errorMessagePresence();
+			canceled.set(verifyAlreadyExistsAndClickCancel());
+			//verifyNoErrors();
+		});	
+		if(!canceled.get())
+		{
 		verifyOperationStatus();
+		}
+	 }
+		return errorMessagePresence();
 	}
 	
 	private void performSearchOperationOnMainScreen(CreditCardPaymentBounceReason creditCardPaymentBounceReason)

@@ -43,6 +43,8 @@ public class AdministrationNav {
 	public static final String L1_REPORTS = "SYRE00";
 	
 	public static final String L2_USER_MANAGEMENT_REPORT = "SYRE02";
+	
+	public static final String L2_AUDIT_REPORT = "SYRE03";
 
 	private AdministrationNav() {}
 

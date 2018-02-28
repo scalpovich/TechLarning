@@ -197,6 +197,19 @@ public class PreProductionBatchPage extends AbstractBasePage {
 
 	}
 
+	public void processPreProductionBatchNewDevice(PreProductionBatch batch) {
+		waitForLoaderToDisappear();
+		SelectDropDownByText(productTypeDDwn, batch.getProductType());
+		CustomUtils.ThreadDotSleep(8000);
+		Device device = context.get(ContextConstants.DEVICE);
+		enterText(batchNumberTxt, device.getBatchNumber());
+		ClickButton(searchBtn);
+		ClickCheckBox(preProductionBatchRecordChkBx, true);
+		ClickButton(processSelectedBtn);
+		verifyOperationStatus();
+		SwitchToDefaultFrame();
+	}
+
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(batchNumberTxt));

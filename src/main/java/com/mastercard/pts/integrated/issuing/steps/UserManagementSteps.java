@@ -142,7 +142,7 @@ public class UserManagementSteps {
 		userDefaultInstitution = ConstantData.PROCESSING_INSTITUTION;
 		loginWorkflow.logInInstitutionAsAdmin(csrPortal, userDefaultInstitution);
 	}
-
+    @Given("user logs in with valid credentials")
 	@When("user logs in with valid credentials")
 	public void whenUserLogsInWithValidCredentials() {
 		loginWorkflow.login(portal.getUserName(), portal.getPassword());

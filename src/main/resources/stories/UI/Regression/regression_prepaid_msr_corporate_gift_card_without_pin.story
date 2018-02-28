@@ -57,13 +57,6 @@ And user is logged in institution
 And search Purchase with Cash back authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
-When perform an MSR_CASH_ADVANCE MAS transaction on the same card
-Then MAS test results are verified
-Then user is logged in institution
-Then search Cash Advance authorization and verify 000-Successful status
-And user sign out from customer portal
-
 Scenario: Perform ECOMM_PURCHASE Authorization transaction
 When perform an ECOMM_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
@@ -85,5 +78,13 @@ Then user is logged in institution
 Then search Refund authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: MAS is closed
+Scenario: Perform INT_MSR_CASH_ADVANCE Authorization transaction
+Given user is logged in institution
+When user updates cvccvv as uncheck on device plan
+And user sign out from customer portal
+When perform an INT_MSR_CASH_ADVANCE MAS transaction on the same card
+Then MAS test results are verified
 When MAS simulator is closed
+Then user is logged in institution
+Then search Cash Advance authorization and verify 000-Successful status
+And user sign out from customer portal

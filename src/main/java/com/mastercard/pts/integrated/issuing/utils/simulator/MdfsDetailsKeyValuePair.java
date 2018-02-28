@@ -11,32 +11,29 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 public class MdfsDetailsKeyValuePair {
 	private static final Logger logger = LoggerFactory.getLogger(MdfsDetailsKeyValuePair.class);
 
+	//MDFS 18.Q2, MDFS 17.Q4 etc are the values to be used in the environment.properties file we want to use specific version
 	private static final String MDFS_18_Q2 = "MDFS 18.Q2";
 	private static final String MDFS_17_Q4 = "MDFS 17.Q4";
 	private static final String MDFS_16_Q4 = "MDFS 16.Q4";
 	private static final Map<String, String> mdfsInstallationVersionKeyValuePair = new LinkedHashMap<>();
 	private static final Map<String, String> mdfsParentWindowHandlerPropertyKeyValuePair = new LinkedHashMap<>();
 	private static final Map<String, String> mdfsLicenseTypeToSelect = new LinkedHashMap<>();
+	private static final String simulatorHeaderHandle = "MasterCard Debit Financial Simulator";
 
 	// add more installations here along with EXE path details
 	private static void setMdfsInstallationVersionData() {
 		// same exe needs to be invoked for MAS and MDFS
-		mdfsInstallationVersionKeyValuePair.put(MDFS_18_Q2,
-				"C://Program Files (x86)//MasterCard//OTP 7.32.1016//Bin//MSPMCW.exe");
-		mdfsInstallationVersionKeyValuePair.put(MDFS_17_Q4,
-				"C://Program Files (x86)//MasterCard//OTP 7.32.1014//Bin//MSPMCW1740.exe");
-		mdfsInstallationVersionKeyValuePair.put(MDFS_16_Q4,
-				"C://Program Files (x86)//MasterCard//OTP 7.32.1003//Bin//MSPMCW.exe");
+		mdfsInstallationVersionKeyValuePair.put(MDFS_18_Q2, "C://Program Files (x86)//MasterCard//OTP 7.32.1014//Bin//MSPMCW1820.exe");
+		mdfsInstallationVersionKeyValuePair.put(MDFS_17_Q4, "C://Program Files (x86)//MasterCard//OTP 7.32.1014//Bin//MSPMCW1740.exe");
+		mdfsInstallationVersionKeyValuePair.put(MDFS_16_Q4, "C://Program Files (x86)//MasterCard//OTP 7.32.1003//Bin//MSPMCW.exe");
 	}
 
 	// add more parent Window handle property based on the title seen on the
 	// version of MAS
 	private static void setMdfsParentWindowHandlerPropertyVersionData() {
-		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_18_Q2,
-				"MasterCard Debit Financial Simulator <MDFS18.Q2 SP1 - IPS Host Testing>");
-		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_17_Q4,
-				"MasterCard Debit Financial Simulator <MDFS17.Q4 SP1 - IPS Host Testing>");
-		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_16_Q4, "MasterCard Debit Financial Simulator <MDFS16.Q4>");
+		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_18_Q2, simulatorHeaderHandle);
+		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_17_Q4, simulatorHeaderHandle);
+		mdfsParentWindowHandlerPropertyKeyValuePair.put(MDFS_16_Q4, simulatorHeaderHandle);
 	}
 
 	// add What License type to select on Select Services screen on MAS

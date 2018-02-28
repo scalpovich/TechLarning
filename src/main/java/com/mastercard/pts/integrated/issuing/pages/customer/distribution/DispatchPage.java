@@ -79,11 +79,11 @@ public class DispatchPage extends AbstractBasePage {
 
 	// methods
 	public void selectAgency(String agency) {
-		WebElementUtils.selectDDByVisibleText(agencyDdwn, agency);
+		WebElementUtils.selectDropDownByVisibleText(agencyDdwn, agency);
 	}
 
 	public void selectBranchId(String branchId) {
-		WebElementUtils.selectDDByVisibleText(branchIdDdwn, branchId);
+		WebElementUtils.selectDropDownByVisibleText(branchIdDdwn, branchId);
 	}
 
 	public void enterOrderNumber(String orderNumber) {
@@ -91,7 +91,7 @@ public class DispatchPage extends AbstractBasePage {
 	}
 
 	public void selectCourierAgency(String courierAgency) {
-		WebElementUtils.selectDDByVisibleText(courierAgencyDdwn, courierAgency);
+		WebElementUtils.selectDropDownByVisibleText(courierAgencyDdwn, courierAgency);
 	}
 
 	public void enterQuantityToDispatch(String quantityToDispatch) {

@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import org.jbehave.core.annotations.AfterStory;
+import org.jbehave.core.annotations.BeforeScenario;
 import org.jbehave.core.annotations.BeforeStory;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.web.selenium.WebDriverProvider;
@@ -56,7 +57,7 @@ public class TestHooks {
 
 	}
 
-	// @BeforeScenario
+	@BeforeScenario
 	public void initTimeouts() {
 		Timeouts timeouts = driverProvider.get().manage().timeouts();
 		timeouts.implicitlyWait(imlicitWaitTimeout, TimeUnit.MILLISECONDS);

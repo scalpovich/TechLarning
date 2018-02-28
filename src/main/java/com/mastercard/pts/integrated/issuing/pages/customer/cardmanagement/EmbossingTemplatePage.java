@@ -47,58 +47,58 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 	private MCWebElement addDeviceCardPackTemplateBtn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a/img[@alt='Edit Record']")
-	private MCWebElement EditDeviceCardPackTemplateBtn;
+	private MCWebElement editDeviceCardPackTemplateBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "checksumRequired:checkBoxComponent")
-	private MCWebElement CheckSumChkBx;
+	private MCWebElement checkSumChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "header1:checkBoxComponent")
-	private MCWebElement HeaderChkBx;
+	private MCWebElement headerChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "trailer:checkBoxComponent")
-	private MCWebElement TrailerChkBx;
+	private MCWebElement trailerChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "paramValue:input:inputTextField")
-	private MCWebElement FillerValueTxt;
+	private MCWebElement fillerValueTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "templateId:input:inputTextField")
-	private MCWebElement EmbossingFileTemplateCodeTxt;
+	private MCWebElement embossingFileTemplateCodeTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "templateDesc:input:inputTextField")
-	private MCWebElement DescriptionTxt;
+	private MCWebElement descriptionTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "fileType:input:dropdowncomponent")
-	private MCWebElement FileTypeDDwn;
+	private MCWebElement fileTypeDDwn;
 
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
-	private MCWebElement AddSubDetailsBtn;
+	private MCWebElement addSubDetailsBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "sequenceNumber:input:inputTextField")
-	private MCWebElement SequenceNoTxt;
+	private MCWebElement sequenceNoTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "param:input:dropdowncomponent")
-	private MCWebElement FieldDDwn;
+	private MCWebElement fieldDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "paramLength:input:inputTextField")
-	private MCWebElement LengthTxt;
+	private MCWebElement lengthTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@id='EmbossingFileParamDetailsOrderBy']//div//a[@class='addR']")
-	private MCWebElement AddSubDetails2Btn;
+	private MCWebElement addSubDetails2Btn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "legalIdType:input:dropdowncomponent")
-	private MCWebElement LegalIDTypeDDwn;
+	private MCWebElement legalIDTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "paramPriority:input:inputTextField")
-	private MCWebElement PriorityTxt;
+	private MCWebElement priorityTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElement SaveBtn;
+	private MCWebElement saveBtn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class = 'feedbackPanelERROR']")
-	private MCWebElement PanelErrorTxt;
+	private MCWebElement panelErrorTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
-	private MCWebElement CancelBtn;
+	private MCWebElement cancelBtn;
 
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElements addBtn;
@@ -118,29 +118,29 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 
 	public String enterEmbossingFileCode(EmbossingFile embossingFile) {
 		if (embossingFile.getEmbossingTempCode().length() != 0) {
-			enterValueinTextBox(EmbossingFileTemplateCodeTxt, embossingFile.getEmbossingTempCode());
+			enterValueinTextBox(embossingFileTemplateCodeTxt, embossingFile.getEmbossingTempCode());
 		} else {
-			enterValueinTextBox(EmbossingFileTemplateCodeTxt, CustomUtils.randomNumbers(3));
+			enterValueinTextBox(embossingFileTemplateCodeTxt, CustomUtils.randomNumbers(3));
 		}
-		return EmbossingFileTemplateCodeTxt.getAttribute("value");
+		return embossingFileTemplateCodeTxt.getAttribute("value");
 	}
 
 	public String enterEmbossingFileDecsription(EmbossingFile embossingFile) {
 		if (embossingFile.getEmbossingTempDescription().length() != 0) {
-			enterValueinTextBox(DescriptionTxt, embossingFile.getEmbossingTempDescription());
+			enterValueinTextBox(descriptionTxt, embossingFile.getEmbossingTempDescription());
 		} else {
-			enterValueinTextBox(DescriptionTxt, "AutoEmboss");
+			enterValueinTextBox(descriptionTxt, "AutoEmboss");
 		}
-		return DescriptionTxt.getAttribute("value");
+		return descriptionTxt.getAttribute("value");
 	}
 
 	public void selectFileType(EmbossingFile embossing) {
-		selectByVisibleText(FileTypeDDwn, embossing.getEmbosstemplateType());
+		selectByVisibleText(fileTypeDDwn, embossing.getEmbosstemplateType());
 	}
 
 	@Override
 	public void clickSaveButton() {
-		clickWhenClickable(SaveBtn);
+		clickWhenClickable(saveBtn);
 	}
 
 	public boolean verifyErrorsOnEmbossingTemplatePage() {
@@ -172,13 +172,13 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 			}
 		} else {
 			logger.info("Error in Record Addition");
-			clickWhenClickable(CancelBtn);
+			clickWhenClickable(cancelBtn);
 			SwitchToDefaultFrame();
 		}
 	}
 
 	public void clickAddSubdetails() {
-		clickWhenClickable(AddSubDetailsBtn);
+		clickWhenClickable(addSubDetailsBtn);
 		SwitchToDefaultFrame();
 		switchToAddRecordFieldFormatFrame();
 	}
@@ -188,17 +188,17 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 	}
 
 	public void enterSequenceNoTxt() {
-		enterValueinTextBox(SequenceNoTxt, "1");
+		enterValueinTextBox(sequenceNoTxt, "1");
 	}
 
 	public void selectField() {
 		// addWicketAjaxListeners(getFinder().getWebDriver());
-		waitForElementVisible(FieldDDwn);
-		selectByVisibleText(FieldDDwn, "CARD NUMBER [DEVICE_NUMBER]");
+		waitForElementVisible(fieldDDwn);
+		selectByVisibleText(fieldDDwn, "CARD NUMBER [DEVICE_NUMBER]");
 	}
 
 	public void clickAddSubDetails2() {
-		clickWhenClickable(AddSubDetails2Btn);
+		clickWhenClickable(addSubDetails2Btn);
 		switchToAddOrderFieldFormatFrame();
 	}
 
@@ -208,7 +208,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 	}
 
 	public void enterPriority() {
-		enterValueinTextBox(PriorityTxt, "1");
+		enterValueinTextBox(priorityTxt, "1");
 	}
 
 	public String addEmbossingGeneral(EmbossingFile embossing) {
@@ -229,32 +229,32 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 
 		retryUntilNoErrors(() -> menusubMenuPage.getEmbossingTemplate().click());
 		// addDeviceCardPackTemplate();
-		enterText(EmbossingFileTemplateCodeTxt, Embosscode);
+		enterText(embossingFileTemplateCodeTxt, Embosscode);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(DescriptionTxt, EmbossDesc);
+		enterText(descriptionTxt, EmbossDesc);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByText(FileTypeDDwn, EmbossFileType);
+		SelectDropDownByText(fileTypeDDwn, EmbossFileType);
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		CustomUtils.ThreadDotSleep(2000);
-		ClickButton(SaveBtn);
+		ClickButton(saveBtn);
 		try {
-			if (PanelErrorTxt.isVisible()) {
+			if (panelErrorTxt.isVisible()) {
 				logger.info("inside error pannel");
-				ClickButton(CancelBtn);
+				ClickButton(cancelBtn);
 				flag = "Not added";
 			}
 		} catch (Exception e) {
 			logger.info("error pannel not present");
-			ClickButton(AddSubDetailsBtn);
+			ClickButton(addSubDetailsBtn);
 			addWicketAjaxListeners(getFinder().getWebDriver());
 			SwitchToDefaultFrame();
 			switchToIframe(Constants.ADD_RECORD_FIELD_FORMAT_FRAME);
 			addWicketAjaxListeners(getFinder().getWebDriver());
-			enterText(SequenceNoTxt, sequenceNo);
+			enterText(sequenceNoTxt, sequenceNo);
 			addWicketAjaxListeners(getFinder().getWebDriver());
-			SelectDropDownByText(FieldDDwn, EmbossingField);
+			SelectDropDownByText(fieldDDwn, EmbossingField);
 			addWicketAjaxListeners(getFinder().getWebDriver());
-			ClickButton(SaveBtn);
+			ClickButton(saveBtn);
 			SwitchToDefaultFrame();
 			addOrderFormatRecord();
 			flag = "Added";
@@ -269,10 +269,10 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 				+ embossingFile.getEmbossingTempCode() + "')]/following::a[1]/img[@alt='Edit Record']"));
 		EditEmbossingTemp.click();
 		switchToIframe(Constants.EDIT_EMBOSS_TEMPLATE_FRAME);
-		ClickCheckBox(CheckSumChkBx, true);
-		ClickCheckBox(HeaderChkBx, true);
-		ClickCheckBox(TrailerChkBx, true);
-		addRecordFormatData(FieldDDwn, excelName, legalType);
+		ClickCheckBox(checkSumChkBx, true);
+		ClickCheckBox(headerChkBx, true);
+		ClickCheckBox(trailerChkBx, true);
+		addRecordFormatData(fieldDDwn, excelName, legalType);
 		SwitchToDefaultFrame();
 	}
 
@@ -287,21 +287,21 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 			String FieldToBeAdded = MapUtils.getIterativeDataFromDatamap("Template Fields");
 			String LengthOfField = MapUtils.getIterativeDataFromDatamap("Length");
 			selectByVisibleText(DrpDown, FieldToBeAdded);
-			enterValueinTextBox(LengthTxt, LengthOfField);
+			enterValueinTextBox(lengthTxt, LengthOfField);
 			CustomUtils.ThreadDotSleep(3000);
-			clickWhenClickable(SaveBtn);
+			clickWhenClickable(saveBtn);
 
 			if (FieldToBeAdded.equalsIgnoreCase(Constants.Legal_Id_String)) {
 				waitForPageToLoad(getFinder().getWebDriver());
 				// SelectDropDownByValue(LegalIDTypeDDwn, legalType);
-				selectByVisibleText(LegalIDTypeDDwn, legalType);
+				selectByVisibleText(legalIDTypeDDwn, legalType);
 				waitForLoaderToDisappear();
-				clickWhenClickable(SaveBtn);
+				clickWhenClickable(saveBtn);
 				break;
 			}
 			if (FieldToBeAdded.contains(Constants.Filler_String)) {
 				waitForLoaderToDisappear();
-				enterValueinTextBox(FillerValueTxt, enterFilter(Integer.valueOf(LengthOfField)));
+				enterValueinTextBox(fillerValueTxt, enterFilter(Integer.valueOf(LengthOfField)));
 				clickSaveButton();
 			}
 		}
@@ -333,9 +333,9 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 		addEmbossingGeneral(embossingfile);
 		clickAddSubdetails();
 		enterEmbossingFileCode(embossingfile);
-		SelectDropDownByText(FieldDDwn, PINfield);
+		SelectDropDownByText(fieldDDwn, PINfield);
 		clickSaveButton();
-		addRecordPIN(FieldDDwn, pinTable);
+		addRecordPIN(fieldDDwn, pinTable);
 		SwitchToDefaultFrame();
 		addOrderFormatRecord();
 		SwitchToDefaultFrame();
@@ -350,12 +350,12 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 			DropDownValue = pinTable.getRow(i).get(pinTable.getHeaders().get(0));
 			SelectDropDownByText(DrpDown, DropDownValue);
 			if (DropDownValue.equalsIgnoreCase(Constants.Delimiter_String)) {
-				enterValueinTextBox(FillerValueTxt, ":");
+				enterValueinTextBox(fillerValueTxt, ":");
 				clickSaveButton();
 			}
 			if (DropDownValue.equalsIgnoreCase(Constants.Filler_String)) {
 				addWicketAjaxListeners(getFinder().getWebDriver());
-				enterValueinTextBox(FillerValueTxt, "|");
+				enterValueinTextBox(fillerValueTxt, "|");
 				clickSaveButton();
 
 			} else {

@@ -50,6 +50,10 @@ public class LoadFromFileUploadSteps {
 
 	private String jobId;
 	
+	private String jobStatus;
+	
+	private FileCreation file;
+	
 	@When("user processes batch for $type")
 	public void whenUserProcessesBatchForPrepaid(String type){
 		//since data is constant for this transaction, we do not need this data to go into Excel
@@ -65,7 +69,7 @@ public class LoadFromFileUploadSteps {
 	public void whenUserCreatesAndUploadsTransactionFile(){
 		Device device = context.get(ContextConstants.DEVICE);
 		String defaultLine  = FileCreation.createTransactionLine(device.getDeviceNumber(),device.getWalletNumber(), provider);
-		FileCreation file = FileCreation.createFile(provider);
+		file = FileCreation.createFile(provider);
 		file.setTransactionLine(defaultLine);
 		loadFromFileUploadWorkflow.createFileForUpload(file);	
 		}
@@ -83,6 +87,22 @@ public class LoadFromFileUploadSteps {
 		loadFromFileUploadWorkflow.createAdjustmentTransaction(transaction);
 	}
 
+	
+	@Given("user performs adjustment transaction with $amount amount")
+	@When("user performs adjustment transaction with $amount amount")
+	@Then("user performs adjustment transaction with $amount amount")
+	public void whenUserPerformsAdjustmentTransactionWithAmount(String amount){
+		Device device = context.get(ContextConstants.DEVICE);
+		AdjustmentTransaction transaction = AdjustmentTransaction.createWithProvider(provider);
+		AdjustmentTransactionDetails details = AdjustmentTransactionDetails.createTransactionWithDetails();
+		details.setAdjustmentAmount(amount);
+		details.setDeviceNumber(device.getDeviceNumber());
+		details.setWalletNumber(device.getWalletNumber());
+		transaction.getAdjustmentTransactionDetails().add(details);
+		loadFromFileUploadWorkflow.createAdjustmentTransaction(transaction);
+	}
+
+	
 	@When("user performs adjustment transaction for second wallet")
 	public void whenUserPerformsAdjustmentTransactionForAllWallets(){
 		Device device = context.get(ContextConstants.DEVICE);
@@ -161,11 +181,16 @@ public class LoadFromFileUploadSteps {
 	@When("user processes transaction upload batch for $type")
 	public void whenUserProcessesTransactionUploadBatchForPrepaid(String type){
 		ProcessBatches batch =  ProcessBatches.getBatchData();
-        batch.setBatchName("Transaction Upload [TRANSACTION_UPLOAD]");		
+        batch.setBatchName("Transaction Upload [TRANSACTION_UPLOAD]");
+        batch.setBatchFileName(file.getFilename());
 		batch.setProductType(ProductType.fromShortName(type));
 		HashMap<String, String> hm = (HashMap<String, String>) loadFromFileUploadWorkflow.processUploadBatch(batch);
-		assertEquals("SUCCESS [2]",hm.get("BatchStatus"));	
-		jobId =hm.get("JobId");			
-
+		jobStatus = hm.get("BatchStatus");
+		jobId = hm.get("JobId");			
+}
+	
+	@Then("batch is successful")
+	public void thenBatchisSuccesful(){
+		assertEquals("SUCCESS [2]", jobStatus);
 	}
 }
