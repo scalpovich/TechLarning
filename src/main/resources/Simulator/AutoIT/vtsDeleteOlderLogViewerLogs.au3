@@ -14,8 +14,8 @@
 
    WinActivate("Visa Test System")
    WinMenuSelectItem("Visa Test System", "", "&View", "&Detail Log...")
-   WinWaitActive("LogViewer (1)")
-   WinMenuSelectItem("LogViewer (1)", "", "&File", "&Delete...")
+   WinWaitActive("LogViewer")
+   WinMenuSelectItem("LogViewer", "", "&File", "&Delete...")
    WinWaitActive("Delete Log")
    ControlClick("Delete Log", "", "[CLASS:Button; INSTANCE:5]")
    ControlClick("Delete Log", "", "[CLASS:Button; INSTANCE:2]")
@@ -23,6 +23,6 @@
    ControlClick("LogViewer", "", "[CLASS:Button; INSTANCE:1]")
    Sleep(1000)
    ControlClick("LogViewer", "", "[CLASS:Button; INSTANCE:1]")
-   WinMenuSelectItem("LogViewer (1)", "", "&File", "E&xit")
+   WinMenuSelectItem("LogViewer", "", "&File", "E&xit")
 
-   WinMenuSelectItem("LogViewer (1)", "", "&File", "&E&xit")
+   WinMenuSelectItem("LogViewer", "", "&File", "&E&xit")

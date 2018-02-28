@@ -35,6 +35,7 @@ public class AuthorizationTransactionFactory {
 	private TestContext context;
 	
 	public String createCsvCardProfile(Transaction transaction) {
+		MiscUtils.reportToConsole(" *******  start createCsvCardProfile *******");
 		LinkedListMultimap<String, String> elements = LinkedListMultimap.create();
 		add(elements, "(path)", CARD_PROFILE_NAME);
 		add(elements, "(description)", transaction.getTestCaseToSelect());
@@ -56,7 +57,7 @@ public class AuthorizationTransactionFactory {
 				DateUtils.getDateTimeDDMMYYYYHHMMSS());
 		try {
 			String fullPath = Files.write(tempDir.resolve(filename), lines).toString();
-			logger.info("Generate MAS card profile {}", fullPath);
+			logger.info("Generate card profile {}", fullPath);
 			return fullPath;
 		} catch (IOException e) {
 			//NO SONAR. We are propagating exception to another class where it is thrown
@@ -65,6 +66,7 @@ public class AuthorizationTransactionFactory {
 	}
 	
 	public String createCsvTesCase(Transaction transaction) {
+		MiscUtils.reportToConsole(" *******  start createCsvTesCase *******");
 		LinkedListMultimap<String, String> elements = createTestCaseDataElements(transaction);
 		String header = elements.keySet().stream().collect(joining(","));
 		String values = elements.keySet().stream().map(name -> elements.get(name).get(0)).collect(joining(","));

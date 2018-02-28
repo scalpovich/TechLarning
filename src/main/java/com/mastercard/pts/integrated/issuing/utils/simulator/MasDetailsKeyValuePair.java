@@ -11,30 +11,28 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 public class MasDetailsKeyValuePair {
 	private static final Logger logger = LoggerFactory.getLogger(MasDetailsKeyValuePair.class);
 
+	//MAS 18.Q2, MAS 17.Q4 etc are the values to be used in the environment.properties file we want to use specific version
 	private static final String MAS_18_Q2 = "MAS 18.Q2";
 	private static final String MAS_17_Q4 = "MAS 17.Q4";
 	private static final String MAS_16_Q4 = "MAS 16.Q4";
 	private static final Map<String, String> masInstallationVersionKeyValuePair = new LinkedHashMap<>();
 	private static final Map<String, String> masParentWindowHandlerPropertyKeyValuePair = new LinkedHashMap<>();
 	private static final Map<String, String> masLicenseTypeToSelect = new LinkedHashMap<>();
+	private static final String simulatorHeaderHandle = "MasterCard Authorization Simulator";
 
 	// add more installations here along with EXE path details
 	private static void setMasInstallationVersionData() {
-		masInstallationVersionKeyValuePair.put(MAS_18_Q2,
-				"C://Program Files (x86)//MasterCard//OTP 7.32.1016//Bin//MSPMCW.exe");
-		masInstallationVersionKeyValuePair.put(MAS_17_Q4,
-				"C://Program Files (x86)//MasterCard//OTP 7.32.1014//Bin//MSPMCW1740.exe");
-		masInstallationVersionKeyValuePair.put(MAS_16_Q4,
-				"C://Program Files (x86)//MasterCard//OTP 7.32.1003//Bin//MSPMCW.exe");
+		masInstallationVersionKeyValuePair.put(MAS_18_Q2, 	"C://Program Files (x86)//MasterCard//OTP 7.32.1014//Bin//MSPMCW1820.exe");
+		masInstallationVersionKeyValuePair.put(MAS_17_Q4, "C://Program Files (x86)//MasterCard//OTP 7.32.1014//Bin//MSPMCW1740.exe");
+		masInstallationVersionKeyValuePair.put(MAS_16_Q4, "C://Program Files (x86)//MasterCard//OTP 7.32.1003//Bin//MSPMCW.exe");
 	}
 
 	// add more parent Window handle property based on the title seen on the
 	// version of MAS
 	private static void setMasParentWindowHandlerPropertyVersionData() {
-		masParentWindowHandlerPropertyKeyValuePair.put(MAS_18_Q2, "MasterCard Authorization Simulator <MAS17.Q4 SP1>");
-		masParentWindowHandlerPropertyKeyValuePair.put(MAS_17_Q4,
-				"MasterCard Authorization Simulator <MAS17.Q4 SP1 - IPS Host Testing>");
-		masParentWindowHandlerPropertyKeyValuePair.put(MAS_16_Q4, "MasterCard Authorization Simulator <MAS16.Q4>");
+		masParentWindowHandlerPropertyKeyValuePair.put(MAS_18_Q2, simulatorHeaderHandle);
+		masParentWindowHandlerPropertyKeyValuePair.put(MAS_17_Q4, simulatorHeaderHandle);
+		masParentWindowHandlerPropertyKeyValuePair.put(MAS_16_Q4, simulatorHeaderHandle);
 	}
 
 	// add What License type to select on Select Services screen on MAS

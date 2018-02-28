@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
+import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -273,7 +274,17 @@ public class ProgramSetupSteps {
 	public void givenDeviceRangeForDebitProgramWithDevicePlan(String deviceType) {
 		// composite step
 	}
+	
+	
+	@Given("user updates cvccvv as uncheck on device plan")
+	@When("user updates cvccvv as uncheck on device plan")
+	@Then("user updates cvccvv as uncheck on device plan")
+	public void userUpdateCVCCVVDevicePlan() {
+		programSetupWorkflow.uncheckCVCCVVDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
 
+	
 	@When("device range for program with device plan for \"debit\" \"$deviceType\" card without pin")
 	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin")
 	@Composite(steps = { "When User fills Dedupe Plan", "When User fills MCC Rules for debit product", "When User fills Transaction Plan for debit product",
@@ -390,6 +401,26 @@ public class ProgramSetupSteps {
 			"When User fills Business Mandatory Fields Screen for prepaid product", 
 			"When User fills Device Range section for prepaid product for an interface" })
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidAlongWithActivationCodeWithoutPinForAnInterface(String deviceType) {
+		// composite step
+	}
+	
+	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" \"Load\" activation code for card with pin for an interface")
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
+			"When User fills Marketing Message Plan for prepaid product",
+			"When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product",
+			"When User fills Dedupe Plan",
+			"When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product",
+			"When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product",
+			"When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" along with \"Load\" activation mode for card",
+			"When User fills Wallet Plan for prepaid product",
+			"When User fills Program section for prepaid product for an interface",
+			"When User fills Business Mandatory Fields Screen for prepaid product",
+			"When User fills Device Range section for prepaid product for an interface" })
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidAlongWithActivationCodeWithPinForAnInterface(String deviceType) {
 		// composite step
 	}
 
@@ -510,6 +541,16 @@ public class ProgramSetupSteps {
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		programSetupWorkflow.createDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+	@When("User fills Device Plan for \"$productType\" \"$deviceType\" along with \"$activationMode\" activation mode for card")
+	public void whenUserFillsDevicePlanAlongWithActivationcodeWithPin(String productType, String deviceType, String activationMode) {
+		settingDevicePlanTestData(productType, deviceType); // call to re-usable method 
+		//modifiying the activation mode into the devicePlan based on the $activationMode parameter instead of creating new method. 
+		//Avoiding Sonar code duplication
+		devicePlan.setActivationMode(activationMode);
+
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
@@ -941,7 +982,7 @@ public class ProgramSetupSteps {
 
 	@When("User fills Device Range section for $type product")
 	public void whenUserFillsDeviceRangeSection(String type) {
-		DeviceRange deviceRange = DeviceRange.createWithProvider(dataProvider,provider, type);
+		DeviceRange deviceRange = DeviceRange.createWithProvider(dataProvider, type);
 		deviceRange.setProductType(ProductType.fromShortName(type));
 		deviceRange.setProgram(program.buildDescriptionAndCode());
 		deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());

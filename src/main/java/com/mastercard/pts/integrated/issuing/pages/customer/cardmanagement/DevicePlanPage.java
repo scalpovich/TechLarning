@@ -386,6 +386,11 @@ public class DevicePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:intTxnAllowed:checkBoxComponent")
 	private MCWebElement intTxnAllowedChkBx;
 	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=devicePlanCode]")
+	private MCWebElement devicePlanCode;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Authorization']")
+	private MCWebElement authorizationTab;
 
 	public void AddDevicePlan() {
 		clickWhenClickable(AddDevicePlanBtn);
@@ -909,6 +914,20 @@ public class DevicePlanPage extends AbstractBasePage {
 		return successMessage.getText().equalsIgnoreCase(ConstantData.SUCCESS_MESSAGE);
 	}
 
+	public void updateCVCCVVDevicePlan(DevicePlan devicePlanDataObject) {
+		logger.info("Update Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
+		enterValueinTextBox(devicePlanCode, devicePlanDataObject.getDevicePlanCode());
+		clickSearchButton();
+		editFirstRecord();				
+		runWithinPopup("Edit Device Plan", () -> {	
+			clickWhenClickable(authorizationTab);				
+			checkCvcCvv();
+			clickSaveButton();
+		});
+
+		verifyOperationStatus();
+	}
+	
 	public void createDevicePlan(DevicePlan devicePlanDataObject) {
 		logger.info("Create Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
 		clickAddNewButton();
@@ -950,6 +969,8 @@ public class DevicePlanPage extends AbstractBasePage {
 			selectAllPinValidation();
 		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES)) {
 			selectAllcvccvv();
+			// as of now, we do not need CVV check for MDFS pin change transactions
+			if(!getStoryName().toLowerCase().contains("pin_change"))
 			checkCvcCvv();
 		}			
 		checkExpiryDate();		
@@ -1076,6 +1097,12 @@ public class DevicePlanPage extends AbstractBasePage {
 		enterTotalTransactionLimit(devicePlan);
 		enterVelocity(devicePlan);
 		enterValidity(devicePlan);
-
+	}
+	
+	private String getStoryName()
+	{
+		String name = System.getProperty("storyName").toString();
+		logger.info("System.getStoryName  : "+name);
+		return name;
 	}
 }

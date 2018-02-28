@@ -15,12 +15,12 @@
 
     WinActivate("FINsim - Connect To Device", "Please Select Device To Connect To")
 	ControlSetText("FINsim - Connect To Device", "", "[CLASS:Edit; INSTANCE:2]", "Automation")
-	ControlSetText("FINsim - Connect To Device", "", "[CLASS:Edit; INSTANCE:1]", "DEV_MDS-OFT")
+	ControlSetText("FINsim - Connect To Device", "", "[CLASS:Edit; INSTANCE:1]", "DEV_")
 		Sleep(5000)
-		
-	ControlClick("FINsim - Connect To Device", "", "Select") 
+
+	ControlClick("FINsim - Connect To Device", "", "Select")
 		Sleep(5000)
-		
+
     WinActivate("[CLASS:FINsim. The EFT Simulator]", "Card To Use For Transactions")
 	Send ("!T")
     Send ("o")
