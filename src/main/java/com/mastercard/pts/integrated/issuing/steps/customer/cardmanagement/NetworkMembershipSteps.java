@@ -25,7 +25,7 @@ public class NetworkMembershipSteps {
 		ntk.setInterchange(network);
 		networkmembershipflows.CreateNetworkMemberShipFlows(ntk);
 	}
-	@When("user check for interchage present in processing in Network tab for $network")
+	@When("user check for interchage present in processing center in Network tab for $network")
 	public void userCheckInterchageOnProcessingCenter(@Named("network") String network) {
 		networkFlow.verifyNetworkPresent(network);
 	}

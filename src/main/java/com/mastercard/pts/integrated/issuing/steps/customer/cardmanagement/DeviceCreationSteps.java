@@ -68,14 +68,9 @@ public class DeviceCreationSteps {
 
 	}
 
-	@When("Create HSM Device Keys for $interchange")
-	public void createHSMDeviceKeys(@Named("Intercahnge") String interchange) {
-		/*hsmKeys.setBinStart(MapUtils.fnGetInputDataFromMap("IssuerBIN")
-				+ "0000");
-		hsmKeys.setBinEnd(MapUtils.fnGetInputDataFromMap("IssuerBIN") + "9999");
-		hsmKeys.setGenerationMethodDDwn(MapUtils
-				.fnGetInputDataFromMap("GeneralisationMethod"));*/
-		hsmKeys.setBinStart(deviceBin.getIssuerBin()
+	@When("user creates HSM Device Keys for $interchange")
+	public void createHSMDeviceKeys(@Named("Interchange") String interchange) {
+		 hsmKeys.setBinStart(deviceBin.getIssuerBin()
 				+ "0000");
 		hsmKeys.setBinEnd(deviceBin.getIssuerBin() + "9999");
 		hsmKeys.setGenerationMethodDDwn(MapUtils
@@ -131,8 +126,8 @@ public class DeviceCreationSteps {
 		hsmdeviceflows.addHSMDeviceKeys(hsmKeys);
 	}
 
-	@When("Create HSM $KeyType Network Keys for $interchange")
-	public void createHSMNetworkKeys(@Named("KeyType") String keyType, @Named("Intercahnge") String interchange) {
+	@When("user creates HSM $KeyType Network Keys for $interchange")
+	public void createHSMNetworkKeys(@Named("KeyType") String keyType, @Named("Interchange") String interchange) {
 		hsmNtkKeys.setNetworkInterface(interchange);
 		hsmNtkKeys.setSubNetworkID(CustomUtils.RandomNumbers(2));
 		hsmNtkKeys.setKeyIndex(CustomUtils.RandomNumbers(2));
@@ -149,8 +144,8 @@ public class DeviceCreationSteps {
 
 	}
 
-	@When("Create MDK keys for $interchange")
-	public void addMDKKeys(@Named("Intercahnge") String interchange) {
+	@When("user creates MDK keys for $interchange")
+	public void addMDKKeys(@Named("Interchange") String interchange) {
 		mdkKeys.setInterchange(interchange);
 		mdkKeys.setBinLow(deviceBin.getIssuerBin() + "0000");
 		mdkKeys.setBinHigh(deviceBin.getIssuerBin() + "9999");

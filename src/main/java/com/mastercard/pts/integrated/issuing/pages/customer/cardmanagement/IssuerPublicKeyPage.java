@@ -31,7 +31,7 @@ public class IssuerPublicKeyPage extends AbstractBasePage {
 
 	public String ExpiryCal = "//span[@id='certExpDate']";
 
-	public String IssueYear = "//span[@id = 'certIssDate']";
+	public String issueYear = "//span[@id = 'certIssDate']";
 
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addIssuerPublicKey;
@@ -126,8 +126,7 @@ public class IssuerPublicKeyPage extends AbstractBasePage {
 	}
 
 	public void selectIssuerDate(IssuerPublicKey ipk) {
-		//date.setDate(ipk.getIssuerDate());
-		date.setDateCalendar2(ipk.getIssuerDate(), IssueYear);
+		date.setDateCalendar2(ipk.getIssuerDate(), issueYear);
 		
 	}
 

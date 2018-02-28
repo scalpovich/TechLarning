@@ -109,13 +109,7 @@ public class MasterDerivationKeysPage extends AbstractBasePage {
 	}
 
 	public void switchToAddMDKKey() {
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		addWicketAjaxListeners(driver());
 		switchToIframe(Constants.ADD_MDK_KEY_FRAME);
 	}
 

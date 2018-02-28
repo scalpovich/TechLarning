@@ -22,9 +22,6 @@ public class NetworkFlows extends AbstractBaseFlows {
 	@Autowired
 	ProcessingCenterPage processingcenterpage;
 
-	// @Autowired
-	// FileUtils fileutils;
-
 	public void editNetworkCode() {
 		waitForElementVisible(processingcenterpage.getProcessingCenter());
 		processingcenterpage.clickSubOptionProcessingCenter(
@@ -35,18 +32,13 @@ public class NetworkFlows extends AbstractBaseFlows {
 				MapUtils.fnGetInputDataFromMap("NetworkDescription"));
 	}
 
-	public void verifyNetworkPresent(String Text) {
+	public void verifyNetworkPresent(String interchangeText ){
 		waitForElementVisible(processingcenterpage.getProcessingCenter());
 		processingcenterpage.clickSubOptionProcessingCenter(
 				processingcenterpage.getSetup(),
 				processingcenterpage.getMasterParameters());
 		menuSubMenuPage.getNetwork().click();
-		//networkpage.getRupayNtkCode().isVisible();
-		networkpage.isInterchagePresent(Text);
 		
-		
-		
-
 	}
 
 	public void configureDeviceRange() {

@@ -45,15 +45,10 @@ public class NetworkSteps extends AbstractBaseSteps {
 		ntkmembershipflows.verifyMessage("Edit",
 				Constants.Record_Updated_Successfully);
 	}
-
-	// @When("admin user tries to delete this record on the network screen")
-	// public void deleteNotallowed() {
-	// ntkflows.deleteNetworkCode();
-	// }
-
+ 
 	@Then("the user must not be allowed to delete the rupay network from the screen")
 	public void verifyDeleteNotPerformed() {
-		//ntkflows.verifyNetworkPresent();
+		 
 	}
 
 	@When("user is configuring device ranges and selects rupay network")

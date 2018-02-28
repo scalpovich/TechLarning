@@ -56,10 +56,5 @@ public class NetworkPage extends AbstractBasePage {
 
 	}
 	
-	public void isInterchagePresent(String interchangeText){
-		
-		
-		System.out.println(getCellTextByColumnName(6, "Network Description"));
-	}
 
 }
