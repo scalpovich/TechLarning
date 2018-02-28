@@ -313,12 +313,12 @@ public class TransactionSteps {
 			assertTrue("Transaction is succcessful!  - Expected Result : "+ testResults, true);
 		} else if (testResults.contains("Validations Not OK")) {
 			assertFalse("Transaction failed!  -  Result : " + testResults, false);
-			transactionWorkflow.closeSimulator(tool);
+			//transactionWorkflow.closeSimulator(tool);
 			throw new ValidationException("Transaction failed! -  Result : "+ testResults);
 		} else {
 			logger.error("Test Results retrieved from Simulator :- ", testResults);
 			assertFalse("Transaction failed! ", false);
-			transactionWorkflow.closeSimulator(tool);
+			//transactionWorkflow.closeSimulator(tool);
 			throw new ValidationException("Transaction failed!");
 		}
 	}
