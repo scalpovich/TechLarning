@@ -14,7 +14,8 @@ Given user create json request
 When user send post request at isEligible
 Then Validate Response for below Attributes:
 |AttributesToValidate|
-|isEligible=true| 
+|isEligible=true|
+Then Validate Status code as 200
 And store issuerSessionId for furtheruse
 
 Scenario:  TO Check fetch avilable aliases With Valid Fields
@@ -28,6 +29,7 @@ Then Validate Response for below Attributes:
 |availableAliases[1].aliasType=EMAIL|
 |availableAliases[0].displayAliasType=mobile|
 |availableAliases[1].displayAliasType=mail|
+Then Validate Status code as 200
 And store issuerSessionId for furtheruse
 
 Scenario:  TO Check sendOtp Call with Valid Fields
@@ -38,4 +40,5 @@ When user send post request at sendOtp
 Then Validate Response for below Attributes:
 |AttributesToValidate|
 |issuerSessionId=GET_ISSUER_SESSION_ID|
+Then Validate Status code as 200
 
