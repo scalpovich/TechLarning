@@ -82,7 +82,7 @@ public class IssuerPublicKey {
 	}
 
 	public void setIssuerDate(String issuerDate) {
-		issuerDate = issuerDate;
+		this.issuerDate = issuerDate;
 	}
 
 
@@ -106,7 +106,7 @@ public class IssuerPublicKey {
 
 		setIPKExpiryDate(MapUtils.fnGetInputDataFromMap("iPKExpiryDate"));
 		setStatus(MapUtils.fnGetInputDataFromMap("StatusValue"));
-		setIssuerDate(DateUtils.getDateinDDMMYYYY());
+		setIssuerDate(DateUtils.getNextDateinDDMMYYYY());
 
 	}
 
