@@ -5,7 +5,7 @@ So that new device can be created for Credit
 
 
 Meta:
-@InstituteTestDebit
+@InstituteTestCredit
 
 Scenario: Scenario1 - Institution parameter setup for Credit type/ Mastercard
 Meta:
@@ -49,7 +49,7 @@ Scenario: Scenario1 - Institution parameter setup for Credit type/ Visa
 Meta:
 @Regression
 @Smoke
-@DebitVisa
+@CreditVisa
 @TCName AmexInstituionSetup
 @sheetName S205014
 Given login to portal as existing bank as a Customeruser
@@ -85,7 +85,7 @@ Scenario: Scenario1 - Institution parameter setup for Credit type/ Rupay
 Meta:
 @Regression
 @Smoke
-@DebitRupay
+@CreditRupay
 @TCName AmexInstituionSetup
 @sheetName S205014
 
@@ -121,7 +121,7 @@ When user creates a Vendor of Category Personalization with Embossing template a
 
 
 
-Scenario: Scenario1 - Institution parameter setup for Debit type/ Amex
+Scenario: Scenario1 - Institution parameter setup for Credit type/ Amex
 Meta:
 @Regression
 @Smoke
