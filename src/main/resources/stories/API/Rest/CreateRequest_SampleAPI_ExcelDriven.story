@@ -1,7 +1,7 @@
-Narrative: afslkfj
+Narrative:
 As a User
 I want to Execute multiple API
-In order to Validate json respose
+In order to Validate json response
 
 Meta:
 @StoryName post_Data
@@ -11,7 +11,7 @@ Scenario: update sample json and validate response
 Meta:
 @datasheet post_Data
 Given user create json request
-When user send post request at users
+When user sends post request at users
 Then Validate Response for below Attributes:
 |AttributesToValidate|
 |name=Updated name|

@@ -4,14 +4,14 @@ I want to integrate with Adaptive Authentication for eCommerce 3DSecure product
 So that our customers can experience the benefits of 3DSecure (SecureCode, Identity Check, Verified By VISA) such as risk reduction, cardholder authentication, and interchange protection for e-commerce transactions made by cardholders.
 
 Meta:
-@StoryName IsEligiable
+@StoryName IsEligible
 @storyType API		 
 Scenario:  TO Check Card Eligibility With Valid Fields
 Meta:
 @storyType API
-@datasheet IsEligiable
+@datasheet IsEligible
 Given user create json request
-When user send post request at isEligible
+When user sends post request at isEligible
 Then Validate Response for below Attributes:
 |AttributesToValidate|
 |isEligible=true|
@@ -22,7 +22,7 @@ Scenario:  TO Check fetch avilable aliases With Valid Fields
 Meta:
 @datasheet fetch_Available_Aliases
 Given user create json request
-When user send post request at fetchAvailableAliases
+When user sends post request at fetchAvailableAliases
 Then Validate Response for below Attributes:
 |AttributesToValidate|
 |availableAliases[0].aliasType=SMS|
@@ -36,7 +36,7 @@ Scenario:  TO Check sendOtp Call with Valid Fields
 Meta:
 @datasheet sendOtp
 Given user create json request
-When user send post request at sendOtp
+When user sends post request at sendOtp
 Then Validate Response for below Attributes:
 |AttributesToValidate|
 |issuerSessionId=GET_ISSUER_SESSION_ID|
