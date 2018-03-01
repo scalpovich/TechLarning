@@ -97,13 +97,6 @@ public class IssuerPublicKey {
 
 
 	public void ipkDatProvider() {
-		// IssuerPublicKey ipk = new IssuerPublicKey();
-		// if (MapUtils.fnGetInputDataFromMap("DMSIssuerBIN") != null) {
-		// ipk.setIssuerBIN(MapUtils.fnGetInputDataFromMap("DMSIssuerBIN"));
-		// } else if (MapUtils.fnGetInputDataFromMap("SMSIssuerBIN") != null) {
-		// ipk.setIssuerBIN(MapUtils.fnGetInputDataFromMap("SMSIssuerBIN"));
-		// }
-
 		setIPKExpiryDate(MapUtils.fnGetInputDataFromMap("iPKExpiryDate"));
 		setStatus(MapUtils.fnGetInputDataFromMap("StatusValue"));
 		setIssuerDate(DateUtils.getNextDateInDDMMYYYY());
