@@ -58,6 +58,9 @@ public class HSMDeviceKeysPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrPingenmode:input:dropdowncomponent")
 	private MCWebElement GenerationMethodDDwn;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "compType:input:dropdowncomponent")
+	private MCWebElement componentTypeDDwn;
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrHexdecimibm:input:inputTextField")
 	private MCWebElement DecimalizationTabletxt;
 
@@ -73,7 +76,7 @@ public class HSMDeviceKeysPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrOffsetpvki:input:inputTextField")
 	private MCWebElement PVKiOffsetOnTrackTxt;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrOffsetpvki:input:inputTextField")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrIsPvkData:checkBoxComponent")
 	private MCWebElement PVKDataExistsChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrPinvaldata:input:inputTextField")
@@ -258,7 +261,12 @@ public class HSMDeviceKeysPage extends AbstractBasePage {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		enterText(CVVOffsetOnTrackTxt, hsmKeys.getCVVOffsetOnTrack());
 	}
-
+	public void selectComponentType(HSMDeviceKeys hsmKeys) {
+		addWicketAjaxListeners(driver());
+		waitForElementVisible(componentTypeDDwn);
+		SelectDropDownByText(componentTypeDDwn, hsmKeys.getcomponentType());
+	}
+	
 	public void fillCVKACryptogram(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		enterText(CVKACryptogramTxt, hsmKeys.getCVKACryptogram());

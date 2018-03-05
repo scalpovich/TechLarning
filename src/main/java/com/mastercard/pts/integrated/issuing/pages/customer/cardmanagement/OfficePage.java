@@ -39,28 +39,28 @@ public class OfficePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='branchName']")
 	private MCWebElement branchNamePopupTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='branchCode']")
 	private MCWebElement branchCodePopupTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='address1']")
 	private MCWebElement address1PopupTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='address2']")
 	private MCWebElement address2PopupTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='address3']")
 	private MCWebElement address3PopupTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='zipCode']")
 	private MCWebElement zipPopupTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='officeType']/span/select")
 	private MCWebElement ofcTypeDwn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='controlCode']/span/select")
 	private MCWebElement controlCodeDwn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='countryCode']/select")
 	private MCWebElement countryCodeDwn;
 
@@ -121,13 +121,13 @@ public class OfficePage extends AbstractBasePage {
 		switchToIframe(Constants.ADD_OFFICE_FRAME);
 	}
 
-	public void selectOfficeType(Office office) {
+	public void selectOfficeType(Office office) { 
 		selectByVisibleText(OfficeTypeDDwn, office.getOfficeType());
 	}
 
 	public void selectControlOffice(Office office) {
 		if (ControlCodeDDwn.isEnabled()) {
-			selectByVisibleText(ControlCodeDDwn, office.getOfficeCode());
+			WebElementUtils.selectDropDownByVisibleText(ControlCodeDDwn, office.getOfficeCode());
 		}
 	}
 
@@ -176,16 +176,15 @@ public class OfficePage extends AbstractBasePage {
 			waitForPageToLoad(getFinder().getWebDriver());
 			clickWhenClickable(cancelBtn);
 			SwitchToDefaultFrame();
-
 		}
 	}
 
 	public String addOfficeDetails(String type, Office office) {
-		String ControlCode;
-		String ZoneName;
-		selectOfficeType(office);
-		ControlCode = enterZoneCode();
-		ZoneName = enterZoneName(type);
+		String controlCode;
+		String zoneName;
+		selectOfficeType(office); 
+		controlCode = enterZoneCode();		
+		zoneName = enterZoneName(type);
 		selectControlOffice(office);
 		enterAddressLine1(office);
 		enterAddressLine2(office);
@@ -195,15 +194,15 @@ public class OfficePage extends AbstractBasePage {
 		clickWhenClickable(AddressLine1Txt);
 		waitForPageToLoad(getFinder().getWebDriver());
 		clickSaveBtn();
-		return ZoneName + " " + "[" + ControlCode + "]";
+		return zoneName + " " + "[" + controlCode + "]";
 
 	}
 	public void verifyUiOperationStatus() {
 		logger.info("Office");
 		verifyUiOperation("Add Office");
 	}
-	
-	
+
+
 	public void addOffice(List<Office> officeList)
 	{
 		officeList.forEach(ofc->{
@@ -215,32 +214,32 @@ public class OfficePage extends AbstractBasePage {
 				runWithinPopup(
 						"Add Office",
 						() -> {
-								addOffice(ofc);
-								verifyNoErrors();
+							addOffice(ofc);
+							verifyNoErrors();
 						});
-		
+
 				verifyOperationStatus(); 
 			}      
 		});
 	}
-	
+
 	private void addOffice(Office ofc)
 	{					
-			WebElementUtils.selectDropDownByVisibleText(ofcTypeDwn, ofc.getOfficeType());
-			if(!ofc.getOfficeType().toUpperCase().contains("ZONAL"))
-			{
-				WebElementUtils.selectDropDownByVisibleText(controlCodeDwn, ofc.getControlOffice());
-			}
-			WebElementUtils.selectDropDownByVisibleText(countryCodeDwn, ofc.getCountry());
-			WebElementUtils.enterText(branchCodePopupTxt, ofc.getOfficeCode());
-			WebElementUtils.enterText(branchNamePopupTxt, ofc.getOfficeName());
-			WebElementUtils.enterText(address1PopupTxt, ofc.getAddressLine1());
-			WebElementUtils.enterText(address2PopupTxt, ofc.getAddressLine2());
-			WebElementUtils.enterText(zipPopupTxt, ofc.getZip());
-			SimulatorUtilities.wait(5000);
-			WebElementUtils.enterText(address3PopupTxt, ofc.getAddressLine2());
-			SimulatorUtilities.wait(5000);
-			clickSaveButton();
+		WebElementUtils.selectDropDownByVisibleText(ofcTypeDwn, ofc.getOfficeType());
+		if(!ofc.getOfficeType().toUpperCase().contains("ZONAL"))
+		{
+			WebElementUtils.selectDropDownByVisibleText(controlCodeDwn, ofc.getControlOffice());
+		}
+		WebElementUtils.selectDropDownByVisibleText(countryCodeDwn, ofc.getCountry());
+		WebElementUtils.enterText(branchCodePopupTxt, ofc.getOfficeCode());
+		WebElementUtils.enterText(branchNamePopupTxt, ofc.getOfficeName());
+		WebElementUtils.enterText(address1PopupTxt, ofc.getAddressLine1());
+		WebElementUtils.enterText(address2PopupTxt, ofc.getAddressLine2());
+		WebElementUtils.enterText(zipPopupTxt, ofc.getZip());
+		SimulatorUtilities.wait(5000);
+		WebElementUtils.enterText(address3PopupTxt, ofc.getAddressLine2());
+		SimulatorUtilities.wait(5000);
+		clickSaveButton();
 	}
 
 	private void performSearchOperationOnMainScreen(Office ofc)

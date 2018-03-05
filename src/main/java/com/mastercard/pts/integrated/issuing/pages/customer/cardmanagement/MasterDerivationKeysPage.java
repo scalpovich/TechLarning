@@ -109,13 +109,13 @@ public class MasterDerivationKeysPage extends AbstractBasePage {
 	}
 
 	public void switchToAddMDKKey() {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		addWicketAjaxListeners(driver());
 		switchToIframe(Constants.ADD_MDK_KEY_FRAME);
 	}
 
 	public void SelectInterchange(MasterDerivationKeys mdkKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByText(Interchange, mdkKeys.getInterchange());
+		selectByVisibleText(Interchange, mdkKeys.getInterchange());
 	}
 
 	public void fillBinLow(MasterDerivationKeys mdkKeys) {
