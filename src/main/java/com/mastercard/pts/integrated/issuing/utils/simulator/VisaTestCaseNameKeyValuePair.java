@@ -22,7 +22,7 @@ public class VisaTestCaseNameKeyValuePair {
 		visaTestDataFileToSelectKeyValuePair.put("LoadAndActivate", "POS_Load_And_Activate_without_Pin");
 		visaTestDataFileToSelectKeyValuePair.put("LoadAndActivate_with_pin", "POS_Load_And_Activate_with_Pin");
 		visaTestDataFileToSelectKeyValuePair.put("Rvmt_Receiving", "RVMT_Receiving_without_Pin");
-		visaTestCaseDetailsKeyValuePair.put("Rvmt_Receiving_certification_1", "RVMT_Receiving_Certification_1");
+		visaTestDataFileToSelectKeyValuePair.put("Rvmt_Receiving_certification_1", "RVMT_Receiving_Certification_1");
 	}
 
 	public String getVisaTestCaseToSelect(String key) {
