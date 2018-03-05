@@ -19,10 +19,20 @@ When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 Then device has "normal" status
 And user activates device through helpdesk
+And user sign out from customer portal
 
 Scenario: VISARvmt_Receiving_certification_1
 Given connection to VISA is established
 When perform an Rvmt_Receiving_certification_1 VISA transaction
-When VISA test results are verified for Rvmt_Receiving_certification_1
+Then VISA test results are verified for Rvmt_Receiving_certification_1
+Given user is logged in institution
+Then search Rvmt_Receiving authorization and verify Successful status
+And user sign out from customer portal
+
+Scenario: VISARvmt_Receiving_certification_2
+Given connection to VISA is established
+When perform an Rvmt_Receiving_certification_2 VISA transaction
+Then VISA test results are verified for Rvmt_Receiving_certification_2
+Given user is logged in institution
 Then search Rvmt_Receiving authorization and verify Successful status
 And user sign out from customer portal
