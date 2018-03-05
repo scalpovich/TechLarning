@@ -4,12 +4,13 @@ I want to Execute multiple API
 In order to Validate json response
 
 Meta:
-@StoryName post_Data
+@StoryName sample_post_Data
 @storyType API
 
 Scenario: update sample json and validate response
-
-Given user updates sample.json file
+Meta:
+@datasheet post_Data
+Given user creates json request
 When user sends post request at users
 Then Validate Response for below Attributes:
 |AttributesToValidate|

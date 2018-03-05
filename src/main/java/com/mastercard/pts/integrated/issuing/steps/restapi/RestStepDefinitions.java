@@ -81,7 +81,7 @@ public class RestStepDefinitions {
 		reqResParams.setUpdatedReq(jsonutil.updateJasonFileWithExcel(
 				jsonfile, reqMap));
 	}
-	@Given("user create json request")
+	@Given("user creates json request")
 	public void userCreateJsonWithExcelData(@Named("datasheet") String datasheet) {
 		Map<String, String> reqMap = dataLoader.loadData(datasheet).get();
 		reqResParams.setUpdatedReq(jsonutil.createJsonFileWithExcel(reqMap));
@@ -139,7 +139,7 @@ public class RestStepDefinitions {
 		deviceDetails.setTransactionId(reqResParams.getResponse().path(
 				transactionId));
 	}
-	@Given("user updates $jsonFile file to sends post request at $endPoint and validate data")
+	@Given("user update $jsonFile file to send post request at $endPoint and validate data")
 	public void userUpdateJsonAndValidateDataDriven(@Named("jsonFile") String jsonfile,@Named("datasheet") String datasheet,@Named("endPoint") String endPoint) {
 		Map<String, String> reqMap = dataLoader.loadData(datasheet).get();
 		for(Entry<String, String> entry: reqMap.entrySet()){
