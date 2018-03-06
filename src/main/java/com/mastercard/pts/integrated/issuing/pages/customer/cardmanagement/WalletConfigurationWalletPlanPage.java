@@ -142,7 +142,7 @@ private TestContext context;
 
 	@Override
 	public void clickFinishButton() {
-		SimulatorUtilities.wait(400);
+		SimulatorUtilities.wait(900);
 		finishBtn.click();
 	}
 
