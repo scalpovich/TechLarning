@@ -22,34 +22,34 @@ When processes device production batch for prepaid
 When device has "normal" status
 When user activates device through helpdesk
 
-Scenario: VISARvmt_Receiving_certification_1
+Scenario: VISARVMT_Receiving_Certification_1
 Given connection to VISA is established
-When perform an Rvmt_Receiving_certification_1 VISA transaction
-Then VISA test results are verified for Rvmt_Receiving_certification_1
+When perform an RVMT_Receiving_Certification_1 VISA transaction
+Then VISA test results are verified for RVMT_Receiving_Certification_1
 Given user is logged in institution
 Then search Rvmt_Receiving authorization and verify Successful status
 And user signs out from customer portal
 
-Scenario: VISARvmt_Receiving_certification_2
+Scenario: VISARVMT_Receiving_Certification_2
 Given connection to VISA is established
-When perform an Rvmt_Receiving_certification_2 VISA transaction
-Then VISA test results are verified for Rvmt_Receiving_certification_2
+When perform an RVMT_Receiving_Certification_2 VISA transaction
+Then VISA test results are verified for RVMT_Receiving_Certification_2
 Given user is logged in institution
 Then search Rvmt_Receiving authorization and verify Successful status
 And user signs out from customer portal
 
-Scenario: VISARvmt_Receiving_certification_3
+Scenario: VISARVMT_Receiving_Certification_3
 Given connection to VISA is established
-When perform an Rvmt_Receiving_certification_3 VISA transaction
-Then VISA test results are verified for Rvmt_Receiving_certification_3
+When perform an RVMT_Receiving_Certification_3 VISA transaction
+Then VISA test results are verified for RVMT_Receiving_Certification_3
 Given user is logged in institution
 Then search Rvmt_Receiving authorization and verify Successful status
 And user signs out from customer portal
 
-Scenario: VISARvmt_Receiving_certification_4
+Scenario: VISARVMT_Receiving_Certification_4
 Given connection to VISA is established
-When perform an Rvmt_Receiving_certification_4 VISA transaction
-Then VISA test results are verified for Rvmt_Receiving_certification_4
+When perform an RVMT_Receiving_Certification_4 VISA transaction
+Then VISA test results are verified for RVMT_Receiving_Certification_4
 Given user is logged in institution
 Then search Rvmt_Receiving authorization and verify Successful status
 And user signs out from customer portal
