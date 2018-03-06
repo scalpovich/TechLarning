@@ -5,12 +5,15 @@ import java.security.KeyStore;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.config.RestAssuredConfig;
 import com.jayway.restassured.config.SSLConfig;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.steps.AbstractBaseSteps;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 
 @Component
 public class RestAssuredConfiguration extends AbstractBaseSteps {
@@ -20,9 +23,13 @@ public class RestAssuredConfiguration extends AbstractBaseSteps {
 	String baseUrl;
 	final Logger logger = LoggerFactory
 			.getLogger(RestAssuredConfiguration.class);
+	
+	@Autowired
+	private TestContext context;
 
 	public String getbaseUrl() {
-		switch (System.getProperty("APIName")) {
+		String apiName=context.get(ConstantData.API_NAME);
+		switch (apiName) {
 		case "WalletLink":
 			baseUrl = env.getProperty("api.base.uri_Wallet");
 			break;
@@ -31,6 +38,12 @@ public class RestAssuredConfiguration extends AbstractBaseSteps {
 			break;
 		case "CardActivation":
 			baseUrl = env.getProperty("api.base.uri_CardActivation");
+			break;
+		case "Sample":
+			baseUrl = env.getProperty("api.base.uri_sample");
+			break;
+		case "Wibmo":
+			baseUrl = env.getProperty("api.base.uri_wibmo");
 			break;
 		default:
 			baseUrl = env.getProperty("api.base.uri_DeviceAPI");
