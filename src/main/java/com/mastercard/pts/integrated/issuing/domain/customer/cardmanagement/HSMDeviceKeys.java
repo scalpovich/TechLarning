@@ -5,34 +5,34 @@ import org.springframework.stereotype.Component;
 @Component
 public class HSMDeviceKeys {
 
-	public String BinStart;
-	public String BinEnd;
-	public String GenerationMethodDDwn;
-	public String DecimalizationTable;
-	public String PINlength;
-	public String PVVOffset;
-	public String PVKOffset;
-	public String PINValidationData;
-	public String ConfirmValidationData;
-	public String PINVerificationKey;
-	public String ConfirmPINVerificationKey;
-	public String PINVerificationKeyCheck;
-	public String CVVOffsetOnTrack;
-	public String CVKACryptogram;
-	public String ConfirmACryptogram;
-	public String CVKAKeyCheck;
-	public String ConfirmAKeyCheck;
-	public String CVKBCryptogram;
-	public String ConfirmBCryptogram;
-	public String CVKBKeyCheck;
-	public String ConfirmBKeyCheck;
-	public String CVV3Cryptogram;
-	public String ConfirmCVV3Cryptogram;
-	public String CVV3KeyCheckvalue;
-	public String ConfirmCVV3KeyCheckValue;
-	public String ATCOffsetOnTrack;
-	public String UNOffsetOnTrack;
-	public String CVC3OffsetOnTrack;
+	public String binStart;
+	public String binEnd;
+	public String generationMethodDDwn;
+	public String decimalizationTable;
+	public String pinLength;
+	public String pVVOffset;
+	public String pVKOffset;
+	public String pINValidationData;
+	public String confirmValidationData;
+	public String pinVerificationKey;
+	public String confirmPINVerificationKey;
+	public String pinVerificationKeyCheck;
+	public String cvvOffsetOnTrack;
+	public String cvkACryptogram;
+	public String confirmACryptogram;
+	public String cvkAKeyCheck;
+	public String confirmAKeyCheck;
+	public String cvkBCryptogram;
+	public String confirmBCryptogram;
+	public String cvkBKeyCheck;
+	public String confirmBKeyCheck;
+	public String cvv3Cryptogram;
+	public String confirmCVV3Cryptogram;
+	public String cvv3KeyCheckvalue;
+	public String confirmCVV3KeyCheckValue;
+	public String atcOffsetOnTrack;
+	public String unOffsetOnTrack;
+	public String cvc3OffsetOnTrack;
 	public String componentType;
 	
 	public String getcomponentType() {
@@ -44,227 +44,227 @@ public class HSMDeviceKeys {
 	}
 
 	public String getBinStart() {
-		return BinStart;
+		return binStart;
 	}
 
 	public void setBinStart(String binStart) {
-		BinStart = binStart;
+		this.binStart = binStart;
 	}
 
 	public String getBinEnd() {
-		return BinEnd;
+		return binEnd;
 	}
 
 	public void setBinEnd(String binEnd) {
-		BinEnd = binEnd;
+		this.binEnd = binEnd;
 	}
 
 	public String getGenerationMethodDDwn() {
-		return GenerationMethodDDwn;
+		return generationMethodDDwn;
 	}
 
 	public void setGenerationMethodDDwn(String generationMethodDDwn) {
-		GenerationMethodDDwn = generationMethodDDwn;
+		this.generationMethodDDwn = generationMethodDDwn;
 	}
 
 	public String getDecimalizationTable() {
-		return DecimalizationTable;
+		return decimalizationTable;
 	}
 
 	public void setDecimalizationTable(String decimalizationTable) {
-		DecimalizationTable = decimalizationTable;
+		this.decimalizationTable = decimalizationTable;
 	}
 
 	public String getPINlength() {
-		return PINlength;
+		return pinLength;
 	}
 
 	public void setPINlength(String pINlength) {
-		PINlength = pINlength;
+		this.pinLength = pINlength;
 	}
 
 	public String getPVVOffset() {
-		return PVVOffset;
+		return pVVOffset;
 	}
 
 	public void setPVVOffset(String pVVOffset) {
-		PVVOffset = pVVOffset;
+		this.pVVOffset = pVVOffset;
 	}
 
 	public String getPVKOffset() {
-		return PVKOffset;
+		return pVKOffset;
 	}
 
 	public void setPVKOffset(String pVKOffset) {
-		PVKOffset = pVKOffset;
+		this.pVKOffset = pVKOffset;
 	}
 
 	public String getPINValidationData() {
-		return PINValidationData;
+		return pINValidationData;
 	}
 
 	public void setPINValidationData(String pINValidationData) {
-		PINValidationData = pINValidationData;
+		this.pINValidationData = pINValidationData;
 	}
 
 	public String getConfirmValidationData() {
-		return ConfirmValidationData;
+		return confirmValidationData;
 	}
 
 	public void setConfirmValidationData(String confirmValidationData) {
-		ConfirmValidationData = confirmValidationData;
+		this.confirmValidationData = confirmValidationData;
 	}
 
 	public String getPINVerificationKey() {
-		return PINVerificationKey;
+		return pinVerificationKey;
 	}
 
-	public void setPINVerificationKey(String pINVerificationKey) {
-		PINVerificationKey = pINVerificationKey;
+	public void setPINVerificationKey(String pin) {
+		this.pinVerificationKey = pin;
 	}
 
 	public String getConfirmPINVerificationKey() {
-		return ConfirmPINVerificationKey;
+		return confirmPINVerificationKey;
 	}
 
 	public void setConfirmPINVerificationKey(String confirmPINVerificationKey) {
-		ConfirmPINVerificationKey = confirmPINVerificationKey;
+		this.confirmPINVerificationKey = confirmPINVerificationKey;
 	}
 
 	public String getPINVerificationKeyCheck() {
-		return PINVerificationKeyCheck;
+		return pinVerificationKeyCheck;
 	}
 
 	public void setPINVerificationKeyCheck(String pINVerificationKeyCheck) {
-		PINVerificationKeyCheck = pINVerificationKeyCheck;
+		this.pinVerificationKeyCheck = pINVerificationKeyCheck;
 	}
 
 	public String getCVVOffsetOnTrack() {
-		return CVVOffsetOnTrack;
+		return cvvOffsetOnTrack;
 	}
 
 	public void setCVVOffsetOnTrack(String cVVOffsetOnTrack) {
-		CVVOffsetOnTrack = cVVOffsetOnTrack;
+		this.cvvOffsetOnTrack = cVVOffsetOnTrack;
 	}
 
 	public String getCVKACryptogram() {
-		return CVKACryptogram;
+		return cvkACryptogram;
 	}
 
 	public void setCVKACryptogram(String cVKACryptogram) {
-		CVKACryptogram = cVKACryptogram;
+		this.cvkACryptogram = cVKACryptogram;
 	}
 
 	public String getConfirmACryptogram() {
-		return ConfirmACryptogram;
+		return confirmACryptogram;
 	}
 
-	public void setConfirmACryptogram(String confirmACryptogram) {
-		ConfirmACryptogram = confirmACryptogram;
+	public void setConfirmACryptogram(String confirmACrypto) {
+		this.confirmACryptogram = confirmACrypto;
 	}
 
 	public String getCVKAKeyCheck() {
-		return CVKAKeyCheck;
+		return cvkAKeyCheck;
 	}
 
-	public void setCVKAKeyCheck(String cVKAKeyCheck) {
-		CVKAKeyCheck = cVKAKeyCheck;
+	public void setCVKAKeyCheck(String cvkAKeyCheck) {
+		this.cvkAKeyCheck = cvkAKeyCheck;
 	}
 
 	public String getConfirmAKeyCheck() {
-		return ConfirmAKeyCheck;
+		return confirmAKeyCheck;
 	}
 
-	public void setConfirmAKeyCheck(String confirmAKeyCheck) {
-		ConfirmAKeyCheck = confirmAKeyCheck;
+	public void setConfirmAKeyCheck(String keyAConfCheck) {
+		this.confirmAKeyCheck = keyAConfCheck;
 	}
 
 	public String getCVKBCryptogram() {
-		return CVKBCryptogram;
+		return cvkBCryptogram;
 	}
 
 	public void setCVKBCryptogram(String cVKBCryptogram) {
-		CVKBCryptogram = cVKBCryptogram;
+		this.cvkBCryptogram = cVKBCryptogram;
 	}
 
 	public String getConfirmBCryptogram() {
-		return ConfirmBCryptogram;
+		return confirmBCryptogram;
 	}
 
 	public void setConfirmBCryptogram(String confirmBCryptogram) {
-		ConfirmBCryptogram = confirmBCryptogram;
+		this.confirmBCryptogram = confirmBCryptogram;
 	}
 
 	public String getCVKBKeyCheck() {
-		return CVKBKeyCheck;
+		return cvkBKeyCheck;
 	}
 
-	public void setCVKBKeyCheck(String cVKBKeyCheck) {
-		CVKBKeyCheck = cVKBKeyCheck;
+	public void setCVKBKeyCheck(String keyCheckCVKB) {
+		this.cvkBKeyCheck = keyCheckCVKB;
 	}
 
 	public String getConfirmBKeyCheck() {
-		return ConfirmBKeyCheck;
+		return confirmBKeyCheck;
 	}
 
 	public void setConfirmBKeyCheck(String confirmBKeyCheck) {
-		ConfirmBKeyCheck = confirmBKeyCheck;
+		this.confirmBKeyCheck = confirmBKeyCheck;
 	}
 
 	public String getCVV3Cryptogram() {
-		return CVV3Cryptogram;
+		return cvv3Cryptogram;
 	}
 
 	public void setCVV3Cryptogram(String cVV3Cryptogram) {
-		CVV3Cryptogram = cVV3Cryptogram;
+		this.cvv3Cryptogram = cVV3Cryptogram;
 	}
 
 	public String getConfirmCVV3Cryptogram() {
-		return ConfirmCVV3Cryptogram;
+		return confirmCVV3Cryptogram;
 	}
 
 	public void setConfirmCVV3Cryptogram(String confirmCVV3Cryptogram) {
-		ConfirmCVV3Cryptogram = confirmCVV3Cryptogram;
+		this.confirmCVV3Cryptogram = confirmCVV3Cryptogram;
 	}
 
 	public String getCVV3KeyCheckvalue() {
-		return CVV3KeyCheckvalue;
+		return cvv3KeyCheckvalue;
 	}
 
 	public void setCVV3KeyCheckvalue(String cVV3KeyCheckvalue) {
-		CVV3KeyCheckvalue = cVV3KeyCheckvalue;
+		this.cvv3KeyCheckvalue = cVV3KeyCheckvalue;
 	}
 
 	public String getConfirmCVV3KeyCheckValue() {
-		return ConfirmCVV3KeyCheckValue;
+		return confirmCVV3KeyCheckValue;
 	}
 
-	public void setConfirmCVV3KeyCheckValue(String confirmCVV3KeyCheckValue) {
-		ConfirmCVV3KeyCheckValue = confirmCVV3KeyCheckValue;
+	public void setConfirmCVV3KeyCheckValue(String conCVV3KeyCheckValue) {
+		this.confirmCVV3KeyCheckValue = conCVV3KeyCheckValue;
 	}
 
 	public String getATCOffsetOnTrack() {
-		return ATCOffsetOnTrack;
+		return atcOffsetOnTrack;
 	}
 
 	public void setATCOffsetOnTrack(String aTCOffsetOnTrack) {
-		ATCOffsetOnTrack = aTCOffsetOnTrack;
+		this.atcOffsetOnTrack = aTCOffsetOnTrack;
 	}
 
 	public String getUNOffsetOnTrack() {
-		return UNOffsetOnTrack;
+		return unOffsetOnTrack;
 	}
 
 	public void setUNOffsetOnTrack(String uNOffsetOnTrack) {
-		UNOffsetOnTrack = uNOffsetOnTrack;
+		this.unOffsetOnTrack = uNOffsetOnTrack;
 	}
 
 	public String getCVC3OffsetOnTrack() {
-		return CVC3OffsetOnTrack;
+		return cvc3OffsetOnTrack;
 	}
 
 	public void setCVC3OffsetOnTrack(String cVC3OffsetOnTrack) {
-		CVC3OffsetOnTrack = cVC3OffsetOnTrack;
+		this.cvc3OffsetOnTrack = cVC3OffsetOnTrack;
 	}
 
 }

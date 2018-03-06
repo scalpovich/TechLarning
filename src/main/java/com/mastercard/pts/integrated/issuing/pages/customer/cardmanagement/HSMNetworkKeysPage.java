@@ -7,7 +7,6 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
-import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -22,38 +21,38 @@ public class HSMNetworkKeysPage extends AbstractBasePage {
 	// Currency [ISSS05]
 
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
-	private MCWebElement addHSMNetworkKeys;
+	private MCWebElement addHSMNetworkKeysBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "netcrField:input:dropdowncomponent")
-	private MCWebElement NetworkInterface;
+	private MCWebElement networkInterfaceDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "netcrSecNet:input:inputTextField")
-	private MCWebElement SubNetworkID;
+	private MCWebElement subNetworkIDTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "netcrKeyIndex:input:inputTextField")
-	private MCWebElement KeyIndex;
+	private MCWebElement keyIndexTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "netcrKeytyp:input:dropdowncomponent")
-	private MCWebElement KeyType;
+	private MCWebElement keyTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "netcrCrypto:input:inputTextField")
-	private MCWebElement NetworkCryptogram;
+	private MCWebElement networkCryptogramTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "netcrTempCrypto:input:inputTextField")
-	private MCWebElement ConfirmNetworkCryptogram;
+	private MCWebElement confirmNetworkCryptogramTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "netcrKchkValue:input:inputTextField")
-	private MCWebElement NetworkCryptogramCheckValue;
+	private MCWebElement networkCryptogramCheckValueTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "netcrTempKchkValue:input:inputTextField")
-	private MCWebElement ConfirmNetworkCryptogramCheckValue;
+	private MCWebElement confirmNetworkCryptogramCheckValueTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElement save;
+	private MCWebElement saveBtn;
 		
 	public void addHSMKeys() {
-		waitForElementVisible(addHSMNetworkKeys);
-		ClickButton(addHSMNetworkKeys);
+		waitForElementVisible(addHSMNetworkKeysBtn);
+		ClickButton(addHSMNetworkKeysBtn);
 	}
 
 	public void switchToAddNetworkKeys() {
@@ -64,57 +63,57 @@ public class HSMNetworkKeysPage extends AbstractBasePage {
 	public void selectNetworkInterface(HSMNetworkKeys hsmnetwork) {
 
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		waitForElementVisible(NetworkInterface); 
-		selectByVisibleText(NetworkInterface, hsmnetwork.getNetworkInterface());
+		waitForElementVisible(networkInterfaceDDwn); 
+		selectByVisibleText(networkInterfaceDDwn, hsmnetwork.getNetworkInterface());
 		
 	}
 
 	public void fillSubNetworkID(HSMNetworkKeys hsmnetwork) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		waitForElementVisible(SubNetworkID);
-		enterText(SubNetworkID, hsmnetwork.getSubNetworkID());
+		waitForElementVisible(subNetworkIDTxt);
+		enterText(subNetworkIDTxt, hsmnetwork.getSubNetworkID());
 	}
 
 	public void fillKeyIndex(HSMNetworkKeys hsmnetwork) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		waitForElementVisible(KeyIndex);
-		enterText(KeyIndex, hsmnetwork.getKeyIndex());
+		waitForElementVisible(keyIndexTxt);
+		enterText(keyIndexTxt, hsmnetwork.getKeyIndex());
 	}
 
-	public void SelectKeyType(HSMNetworkKeys hsmnetwork) {
+	public void selectKeyType(HSMNetworkKeys hsmnetwork) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		waitForElementVisible(KeyType);
-		selectByVisibleText(KeyType, hsmnetwork.getKeyType());
+		waitForElementVisible(keyTypeDDwn);
+		selectByVisibleText(keyTypeDDwn, hsmnetwork.getKeyType());
 	}
 
 	public void fillNetworkCryptogram(HSMNetworkKeys hsmnetwork) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		waitForElementVisible(NetworkCryptogram);
-		enterText(NetworkCryptogram, hsmnetwork.getNetworkCryptogram());
+		waitForElementVisible(networkCryptogramTxt);
+		enterText(networkCryptogramTxt, hsmnetwork.getNetworkCryptogram());
 	}
 
 	public void fillConfirmNetworkCryptogram(HSMNetworkKeys hsmnetwork) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		waitForElementVisible(ConfirmNetworkCryptogram);
-		enterText(ConfirmNetworkCryptogram, hsmnetwork.getConfirmNetworkCryptogram());
+		waitForElementVisible(confirmNetworkCryptogramTxt);
+		enterText(confirmNetworkCryptogramTxt, hsmnetwork.getConfirmNetworkCryptogram());
 	}
 
 	public void fillNetworkCryptogramCheckValue(HSMNetworkKeys hsmnetwork) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		waitForElementVisible(NetworkCryptogramCheckValue);
-		enterText(NetworkCryptogramCheckValue, hsmnetwork.getNetworkCryptogramCheckValue());
+		waitForElementVisible(networkCryptogramCheckValueTxt);
+		enterText(networkCryptogramCheckValueTxt, hsmnetwork.getNetworkCryptogramCheckValue());
 	}
 
 	public void fillConfirmNetworkCryptogramCheckValue(HSMNetworkKeys hsmnetwork) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		waitForElementVisible(ConfirmNetworkCryptogramCheckValue);
-		enterText(ConfirmNetworkCryptogramCheckValue, hsmnetwork.getConfirmNetworkCryptogramCheckValue());
+		waitForElementVisible(confirmNetworkCryptogramCheckValueTxt);
+		enterText(confirmNetworkCryptogramCheckValueTxt, hsmnetwork.getConfirmNetworkCryptogramCheckValue());
 
 	}
 
 	public void clickSaveBtn() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		waitForElementVisible(save);
-		ClickButton(save);
+		waitForElementVisible(saveBtn);
+		ClickButton(saveBtn);
 	}
 }

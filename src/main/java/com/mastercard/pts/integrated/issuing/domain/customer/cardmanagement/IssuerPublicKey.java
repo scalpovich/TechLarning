@@ -20,7 +20,7 @@ public class IssuerPublicKey {
 	private String serialNumber;
 	private String status;
 	private String issueDataCurrentDatePlus;
-	public String DeviceBin;
+	public String deviceBin;
 	public LocalDate expiryDate;
 	public String getIpkId() {
 		return ipkId;
@@ -74,11 +74,11 @@ public class IssuerPublicKey {
 		this.issueDataCurrentDatePlus = issueDataCurrentDatePlus;
 	}	
 	public String getDeviceBin() {
-		return DeviceBin;
+		return deviceBin;
 	}
 
-	public void setDeviceBin(String deviceBin) {
-		DeviceBin = deviceBin;
+	public void setDeviceBin(String device_Bin) {
+		this.deviceBin = device_Bin;
 	}
 
 	public void setIssuerDate(String issuerDate) {
