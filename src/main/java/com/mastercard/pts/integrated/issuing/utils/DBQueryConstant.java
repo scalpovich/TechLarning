@@ -30,6 +30,8 @@ public class DBQueryConstant {
 
 	public static String PREGENERATEDFLAG_COLUMN = "PRE_GENERATED_CARD";
 
+	public static String JOBID_EVENTSALERTS_COLUMN = "JOB_ID";
+
 	public static String DEVICENUMBER_QUERY = "select * from device  where DEVICE_NUMBER like";
 
 	public static String DEVICE_QUERY = "select * from device where DEVICE_NUMBER =";
@@ -37,5 +39,9 @@ public class DBQueryConstant {
 	public static String CARDPACKID_QUERY = "Select CARD_PACK_ID from DEVICE where DEVICE_NUMBER =";
 
 	public static String PREGENERATEDFLAG_QUERY = "select PRE_GENERATED_CARD from DEVICE where DEVICE_NUMBER =";
+
+	public static String EVENTSALERTS_SMS_QUERY = "select max(job_id) from alert_queue where event_code = 'OTPG0A0001'";
+
+	public static String EVENTSALERTS_EMAIL_QUERY = "select max(job_id) from alert_queue where event_code = 'OTPG0A0002'";
 
 }

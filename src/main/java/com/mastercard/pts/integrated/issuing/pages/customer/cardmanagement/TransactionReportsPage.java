@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WebAPIReports;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -37,6 +38,11 @@ public class TransactionReportsPage extends AbstractBasePage {
 	private static final String BOTH = "Both";
 
 	private static final String FILE_TYPE_REPORT = "FILE_TYPE_REPORT";
+
+	// private static final String THREE_D_SECURE_INFO_REPORT = "328-3-D Secure
+	// Information Report";
+
+	private static final String PDF_REPORT = "PDF Format [pdf]";
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "componentPanel")
 	private MCWebElement selectReportDDwn;
@@ -86,6 +92,8 @@ public class TransactionReportsPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:2:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement productTypeClearingReportDDwn;
 
+	public String calelement = "//td[2]";
+
 	@Autowired
 	DatePicker date;
 
@@ -134,10 +142,13 @@ public class TransactionReportsPage extends AbstractBasePage {
 		generateReportBtn.click();
 	}
 
-	public void generateWebAPIServiceDetailReport() {
+	public void generateWebAPIServiceDetailReport(WebAPIReports webapiReport) {
 		selectByVisibleText(selectReportDDwn, "WEB API Services Details Report");
 		clicksearchButtonElement();
-
+		WebElementUtils.selectDropDownByVisibleText(productTypeAuthReportDDwn, webapiReport.getReportType());
+		selectCalender();
+		selectByVisibleText(fileTypeAuthReportDDwn, webapiReport.getReportFormat());
+		generateReportBtn.click();
 	}
 
 	public void selectCalender() {
@@ -149,7 +160,7 @@ public class TransactionReportsPage extends AbstractBasePage {
 		date.setDate(date11);
 		// date.setDate(date11);
 		waitForPageToLoad(getFinder().getWebDriver());
-		// date.setDateCalendar2(DateUtils.getDateinDDMMYYYY(), calelement);
+		date.setDateCalendar2(DateUtils.getDateinDDMMYYYY(), calelement);
 		waitForPageToLoad(getFinder().getWebDriver());
 	}
 

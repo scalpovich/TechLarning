@@ -1,11 +1,12 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -138,7 +139,7 @@ public class NewDevicePage extends AbstractCardManagementPage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:nationality:input:dropdowncomponent")
 	private MCWebElement NationalityDDwn;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "/html/body/div[2]/div/form/table/tbody/tr/td[2]/table/tbody/tr[3]/td/div/table[1]/tbody/tr[14]/td[4]/span/span/span/img")
+	@PageElement(findBy = FindBy.ID, valueToFind = "birthDate")
 	private MCWebElement BirthDateCalendar;
 
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "calnav")
@@ -364,20 +365,7 @@ public class NewDevicePage extends AbstractCardManagementPage {
 	}
 
 	public void selectBirthDate() {
-		BirthDateCalendar.click();
-		List<WebElement> calendar = getFinder().getWebDriver().findElements(By.xpath("//a[@class='calnav']"));
-		for (int i = 0; i <= calendar.size(); i++) {
-			calendar.get(i).click();
-			break;
-		}
-		YearTxt.clearField();
-		enterText(YearTxt, "19" + CustomUtils.randomNumbers(2));
-		addWicketAjaxListeners(getFinder().getWebDriver());
-		CustomUtils.ThreadDotSleep(3000);
-		ClickButton(OkBtn);
-		addWicketAjaxListeners(getFinder().getWebDriver());
-		BirthDate.click();
-		CustomUtils.ThreadDotSleep(1000);
+		WebElementUtils.pickDate(BirthDateCalendar, LocalDate.now().minusYears(RandomUtils.nextLong(20, 50)));
 	}
 
 	public void selectMaritalStatus() {
