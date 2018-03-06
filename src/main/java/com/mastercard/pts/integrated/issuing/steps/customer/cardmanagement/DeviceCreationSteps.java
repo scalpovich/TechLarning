@@ -6,6 +6,7 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.HSMDeviceKeys;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.HSMNetworkKeys;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MasterDerivationKeys;
@@ -49,6 +50,9 @@ public class DeviceCreationSteps {
 
 	@Autowired
 	EMVMDKKeyFlows mdkflows;
+	
+	@Autowired
+	DeviceBin deviceBin;
 
 	@When("user creates a new $device with the required configuration")
 	public void createNewDevice(@Named("device") String deviceType)
@@ -64,13 +68,13 @@ public class DeviceCreationSteps {
 
 	}
 
-	@When("Create HSM Device Keys")
-	public void createHSMDeviceKeys() {
-		hsmKeys.setBinStart(MapUtils.fnGetInputDataFromMap("IssuerBIN")
+	@When("user creates HSM Device Keys for $interchange")
+	public void createHSMDeviceKeys(@Named("Interchange") String interchange) {
+		 hsmKeys.setBinStart(deviceBin.getIssuerBin()
 				+ "0000");
-		hsmKeys.setBinEnd(MapUtils.fnGetInputDataFromMap("IssuerBIN") + "9999");
+		hsmKeys.setBinEnd(deviceBin.getIssuerBin() + "9999");
 		hsmKeys.setGenerationMethodDDwn(MapUtils
-				.fnGetInputDataFromMap("GeneralisationMethod"));
+				.fnGetInputDataFromMap("GeneralisationMethod"));		
 		hsmKeys.setDecimalizationTable(CustomUtils.RandomNumbers(16));
 		hsmKeys.setPINlength(MapUtils.fnGetInputDataFromMap("PINlength"));
 		hsmKeys.setPVVOffset(MapUtils.fnGetInputDataFromMap("PVVOffset"));
@@ -91,6 +95,8 @@ public class DeviceCreationSteps {
 				.fnGetInputDataFromMap("CVVOffsetOnTrack"));
 		hsmKeys.setCVKACryptogram(MapUtils
 				.fnGetInputDataFromMap("CVKACryptogram"));
+		hsmKeys.setComponentType(MapUtils
+				.fnGetInputDataFromMap("ComponentType"));
 		hsmKeys.setConfirmACryptogram(MapUtils
 				.fnGetInputDataFromMap("CVKACryptogram"));
 		hsmKeys.setCVKAKeyCheck(MapUtils.fnGetInputDataFromMap("CVKAKeyCheck"));
@@ -120,13 +126,12 @@ public class DeviceCreationSteps {
 		hsmdeviceflows.addHSMDeviceKeys(hsmKeys);
 	}
 
-	@When("Create HSM Network Keys")
-	public void createHSMNetworkKeys() {
-		hsmNtkKeys.setNetworkInterface(MapUtils
-				.fnGetInputDataFromMap("NetworkInterface"));
+	@When("user creates HSM $KeyType Network Keys for $interchange")
+	public void createHSMNetworkKeys(@Named("KeyType") String keyType, @Named("Interchange") String interchange) {
+		hsmNtkKeys.setNetworkInterface(interchange);
 		hsmNtkKeys.setSubNetworkID(CustomUtils.RandomNumbers(2));
 		hsmNtkKeys.setKeyIndex(CustomUtils.RandomNumbers(2));
-		hsmNtkKeys.setKeyType(MapUtils.fnGetInputDataFromMap("KeyType"));
+		hsmNtkKeys.setKeyType(keyType);
 		hsmNtkKeys.setNetworkCryptogram(MapUtils
 				.fnGetInputDataFromMap("NetworkCryptogram"));
 		hsmNtkKeys.setConfirmNetworkCryptogram(MapUtils
@@ -139,14 +144,13 @@ public class DeviceCreationSteps {
 
 	}
 
-	@When("Create MDK keys")
-	public void addMDKKeys() {
-		mdkKeys.setInterchange(MapUtils
-				.fnGetInputDataFromMap("InterchangeType"));
-		mdkKeys.setBinLow(MapUtils.fnGetInputDataFromMap("IssuerBIN") + "0000");
-		mdkKeys.setBinHigh(MapUtils.fnGetInputDataFromMap("IssuerBIN") + "9999");
-		mdkKeys.setStatus(MapUtils.fnGetInputDataFromMap("Status"));
-		mdkKeys.setKeyType(MapUtils.fnGetInputDataFromMap("KeyType"));
+	@When("user creates MDK keys for $interchange")
+	public void addMDKKeys(@Named("Interchange") String interchange) {
+		mdkKeys.setInterchange(interchange);
+		mdkKeys.setBinLow(deviceBin.getIssuerBin() + "0000");
+		mdkKeys.setBinHigh(deviceBin.getIssuerBin() + "9999");
+		mdkKeys.setStatus(MapUtils.fnGetInputDataFromMap("MDKStatus"));
+		mdkKeys.setKeyType(MapUtils.fnGetInputDataFromMap("MDKKeyType"));
 		mdkKeys.setMDKEncryptedUnderLMK(MapUtils
 				.fnGetInputDataFromMap("MDKEncryptedUnderLMK"));
 		mdkKeys.setConfirmMDK(MapUtils

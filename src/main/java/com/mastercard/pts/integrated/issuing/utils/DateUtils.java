@@ -301,6 +301,14 @@ public class DateUtils {
 		Date date = new Date();
 		return new SimpleDateFormat("MMMM/dd/yyyy").format(date);
 	}
+	public static String getNextDateInDDMMYYYY() {
+		   Calendar calendar = Calendar.getInstance(); 
+		   Date today = calendar.getTime();  
+		  calendar.add(Calendar.DAY_OF_YEAR, 1); 
+		  Date tomorrow = calendar.getTime(); 
+		return new SimpleDateFormat("MMMM/dd/yyyy").format(tomorrow);
+	}
+
 
 	public static void main(String[] args) {
 		DateUtils date = new DateUtils();

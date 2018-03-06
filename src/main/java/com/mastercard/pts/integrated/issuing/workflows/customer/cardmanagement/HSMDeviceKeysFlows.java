@@ -37,6 +37,7 @@ public class HSMDeviceKeysFlows extends MenuFlows {
 		hsmdevicepage.selectCVVExistsCheckBox();
 		hsmdevicepage.selectControlFlagCheckBox();
 		hsmdevicepage.fillCVVOffsetOnTrack(hsmKeys);
+		hsmdevicepage.selectComponentType(hsmKeys);
 		hsmdevicepage.fillCVKACryptogram(hsmKeys);
 		hsmdevicepage.fillConfirmACryptogram(hsmKeys);
 		hsmdevicepage.fillCVKAKeyCheck(hsmKeys);

@@ -18,6 +18,7 @@ import org.springframework.core.env.Environment;
 
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.Utils;
 import com.mastercard.testing.mtaf.ui.configuration.MTAFWebToolsConfiguration;
 import com.mastercard.testing.utils.encryption.EncryptUtils;
 
@@ -47,7 +48,10 @@ public class TestConfiguration {
 					e.getMessage(), e.getStackTrace());
 			MiscUtils.propagate(e);
 		}
-		// Utils.killChromeDriver();
+
+		if (System.getProperty("storyType") == null) {
+			Utils.killChromeDriver();
+		}
 		logger.info("Temp directory path: {}", temp);
 		return temp;
 	}

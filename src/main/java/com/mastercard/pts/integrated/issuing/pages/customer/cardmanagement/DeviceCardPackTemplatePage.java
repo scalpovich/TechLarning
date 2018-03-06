@@ -171,18 +171,11 @@ public class DeviceCardPackTemplatePage extends AbstractBasePage {
 
 	public void selectDeviceTemplateFields(DeviceCreation deviceCreation, DeviceCardPackTemplate devicetemplate) {
 		selectField1(deviceCreation, devicetemplate);
-		// selectField2(devicetemplate);
-		// selectField3(devicetemplate);
-		// selectField4(deviceCreation, devicetemplate);
-		// selectField5(devicetemplate);
 	}
 
 	public void selectCardTemplateFields(DeviceCreation deviceCreation, DeviceCardPackTemplate devicetemplate) {
 		selectField1(deviceCreation, devicetemplate);
 		selectField2(devicetemplate);
-		// selectField3(devicetemplate);
-		// selectField4(deviceCreation, devicetemplate);
-		// selectField5(devicetemplate);
 	}
 
 	@Override
