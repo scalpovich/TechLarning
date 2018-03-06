@@ -189,7 +189,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			winiumClickOperation("OK");
 			wait(2000);
 		} catch (Exception e) {
-			logger.debug(e.getMessage());
+			logger.error(e.getMessage());
 			throw MiscUtils.propagate(e);
 		}
 	}

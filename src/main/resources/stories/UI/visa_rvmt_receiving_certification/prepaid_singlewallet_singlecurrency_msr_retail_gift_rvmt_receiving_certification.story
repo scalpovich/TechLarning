@@ -28,7 +28,7 @@ When perform an Rvmt_Receiving_certification_1 VISA transaction
 Then VISA test results are verified for Rvmt_Receiving_certification_1
 Given user is logged in institution
 Then search Rvmt_Receiving authorization and verify Successful status
-And user sign out from customer portal
+And user signs out from customer portal
 
 Scenario: VISARvmt_Receiving_certification_2
 Given connection to VISA is established
@@ -36,7 +36,7 @@ When perform an Rvmt_Receiving_certification_2 VISA transaction
 Then VISA test results are verified for Rvmt_Receiving_certification_2
 Given user is logged in institution
 Then search Rvmt_Receiving authorization and verify Successful status
-And user sign out from customer portal
+And user signs out from customer portal
 
 Scenario: VISARvmt_Receiving_certification_3
 Given connection to VISA is established
@@ -44,7 +44,7 @@ When perform an Rvmt_Receiving_certification_3 VISA transaction
 Then VISA test results are verified for Rvmt_Receiving_certification_3
 Given user is logged in institution
 Then search Rvmt_Receiving authorization and verify Successful status
-And user sign out from customer portal
+And user signs out from customer portal
 
 Scenario: VISARvmt_Receiving_certification_4
 Given connection to VISA is established
@@ -52,5 +52,5 @@ When perform an Rvmt_Receiving_certification_4 VISA transaction
 Then VISA test results are verified for Rvmt_Receiving_certification_4
 Given user is logged in institution
 Then search Rvmt_Receiving authorization and verify Successful status
-And user sign out from customer portal
+And user signs out from customer portal
 
