@@ -51,7 +51,6 @@ And user is logged in institution
 And balance in helpdesk updated correctly for prepaid device
 And user sign out from customer portal
 
-
 Scenario: Post maintenance batch and pre-clearing batch is run
 Meta:
 @TestId 
