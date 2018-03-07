@@ -159,6 +159,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			fillBatchDetails(device);
 
 			clickNextButton();
+			SimulatorUtilities.wait(500);
 			WebElementUtils.selectDropDownByVisibleText(customerTypeDDwn, device.getCustomerType());
 
 			List<String> programs = WebElementUtils.getOptionsTextFromSelect(programCodeDDwn);
@@ -273,7 +274,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	}
 
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
+		SimulatorUtilities.wait(500);
 		WebElementUtils.selectDropDownByVisibleText(customerTypeDDwn, device.getCustomerType());
+		SimulatorUtilities.wait(500);
 		WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, device.getProgramCode());
 		clickNextButton();
 
