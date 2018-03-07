@@ -61,7 +61,7 @@ private TestContext context;
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[@name='view:whiteListedMcgCode:input:dropdowncomponent']")
 	private MCWebElement whiteListedMsg;
 
-	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value=Finish]")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "buttons:finish")
 	private MCWebElement finishBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Next >']")
@@ -161,10 +161,13 @@ private TestContext context;
 			selectUsage(walletPlan.getUsage());
 
 			fillDetailsBasedOnCardType(walletPlan, productType);
-
+			
 			clickNextButton(); // Click on next button
-				clickFinishButton(); // click on finish button
+			clickFinishButton(); // click on finish button
+			
 			});
+		
+		ClickButton(finishBtn);
 		verifyOperationStatus();
 	}
 
