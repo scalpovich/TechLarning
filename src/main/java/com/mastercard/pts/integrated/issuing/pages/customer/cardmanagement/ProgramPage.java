@@ -464,7 +464,9 @@ public class ProgramPage extends AbstractBasePage {
 		}
 
 		WebElementUtils.selectDropDownByOptionalVisibleText(dedupePlanCodeDDwn, program.getDedupPlan());
+		SimulatorUtilities.wait(500);
 		WebElementUtils.selectDropDownByOptionalVisibleText(documentPlanCodeDDwn, program.getDocumentChecklistPlan());
+		SimulatorUtilities.wait(500);
 		WebElementUtils.selectDropDownByOptionalVisibleText(mccRulePlanCodeDDwn, program.getMmcRulePlan());
 
 		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
