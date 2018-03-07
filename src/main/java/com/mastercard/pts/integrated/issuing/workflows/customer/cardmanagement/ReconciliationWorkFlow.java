@@ -34,7 +34,7 @@ public class ReconciliationWorkFlow {
 			processBatch.processSystemInternalProcessingBatch(batch.get(1));
 		}
 	}
-
+	
 	public void runPreClearingAndLoyaltyCalcBatch(List<ProcessBatches> batch) {
 		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
 		processBatch.processSystemInternalProcessingBatch(batch.get(1));
@@ -44,7 +44,11 @@ public class ReconciliationWorkFlow {
 		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
 		return processBatch.processSystemInternalProcessingBatch(batch);
 	}
-
+	
+	public String runPostMaintenenceBatch(List<ProcessBatches> batch) {
+		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
+		return processBatch.processSystemInternalProcessingBatchPostMaintenence(batch.get(0));
+	}
 	public boolean verifyReportGeneration() {
 		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
 		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();

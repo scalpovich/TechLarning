@@ -28,6 +28,7 @@ import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -175,8 +176,10 @@ public class DeviceRangePage extends AbstractBasePage {
 	public void selectDevicePlan() {
 		waitForElementVisible(DevicePlanCodeDDwn);
 		if (!MapUtils.fnGetInputDataFromMap("DevicePlan").isEmpty()) {
+			SimulatorUtilities.wait(1100);
 			selectByVisibleText(DevicePlanCodeDDwn, MapUtils.fnGetInputDataFromMap("DevicePlan"));
 		} else {
+			SimulatorUtilities.wait(1100);
 			selectByVisibleText(DevicePlanCodeDDwn, program.getDevicePlanProgram());
 		}
 	}
@@ -402,12 +405,14 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	private void fillAddDevicePage(DeviceRange deviceRange) {
 		selectProductType(deviceRange.getProductType());
+		SimulatorUtilities.wait(1100);
 		selectProgram(deviceRange.getProgram());
 		selectDevicePlanCode(deviceRange.getDevicePlanCode());
 		DevicePlan devicePlan=context.get(ContextConstants.DEVICE_PLAN);
 		logger.info("ProductType : {}",devicePlan.getProductType());
 		logger.info("issuerBin :{}",deviceRange.getIssuerBin());
 		selectIssuerBin(deviceRange.getIssuerBin());
+		SimulatorUtilities.wait(1100);
 		selectBranch(deviceRange.getBranch());
 		addBtn.click();
 		waitForWicket();

@@ -52,6 +52,20 @@ public class ReconciliationSteps {
 		reconciliationWorkFlow.runPreClearingAndPrepaidEodBatch(processBatches);
 	}
 
+	@When("post maintenence batch is run")
+	public void whenpostmaintenencebatchisrun() {
+
+		List<ProcessBatches> processBatches = new ArrayList<>();
+
+		ProcessBatches postMaintenenceBatch = new ProcessBatches();
+		postMaintenenceBatch.setProductType(provider.getString(BATCH_TYPE));
+		postMaintenenceBatch.setBatchName(provider.getString("BATCH_NAME_POST_MAINTENENCE"));
+
+		processBatches.add(postMaintenenceBatch);
+
+		reconciliationWorkFlow.runPostMaintenenceBatch(processBatches);
+	}
+
 	@When("pre-clearing and Loyalty Calc batches are run")
 	public void whenPreclearingAndLoyaltyBatchesAreRun() {
 

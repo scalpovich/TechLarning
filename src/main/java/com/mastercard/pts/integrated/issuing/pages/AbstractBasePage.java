@@ -441,7 +441,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected boolean waitForRow() {
 		try {
 			waitForWicket();
-			Thread.sleep(20000); // Pre-production batch and device production
+			Thread.sleep(30000); // Pre-production batch and device production
 									// batch takes little longer hence the wait
 			return driver().findElement(By.cssSelector(FIRST_ROW_SELECT)).isDisplayed();
 		} catch (NoSuchElementException | InterruptedException e) {
@@ -602,7 +602,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickSearchButton();
 		// Pre-production batch and device production batch & Authorization Search page take little long to
 				// be completed, and do not appear in search result, hence a for loop
-		for (int l = 0; l < 21; l++) {
+		for (int l = 0; l < 41; l++) {
 			if (!waitForRow())
 				clickSearchButton();
 			else {
