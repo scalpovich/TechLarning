@@ -87,6 +87,7 @@ public class DeviceCreationSteps {
 				.fnGetInputDataFromMap("PINVerificationKey"));
 		hsmKeys.setConfirmPINVerificationKey(MapUtils
 				.fnGetInputDataFromMap("PINVerificationKey"));
+		
 		hsmKeys.setPINVerificationKeyCheck(MapUtils
 				.fnGetInputDataFromMap("PINVerificationKeyCheck"));
 		hsmKeys.setConfirmPINVerificationKey(MapUtils
@@ -181,17 +182,17 @@ public class DeviceCreationSteps {
 
 	@Then("device should get generated with the device number")
 	public void generateDeviceNumber() {
-
+		//TODO
 	}
 
 	@Then("device should get generated with the $device number")
 	public void generateDeviceNumber(@Named("device number") String deviceType) {
-
+		//TODO
 	}
 
 	@When("user creates creates a $WhitelistedMCG wallet plan")
 	public void generateDeviceNur() {
-
+		//TODO
 	}
 
 }
