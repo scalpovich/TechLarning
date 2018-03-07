@@ -61,7 +61,7 @@ private TestContext context;
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[@name='view:whiteListedMcgCode:input:dropdowncomponent']")
 	private MCWebElement whiteListedMsg;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "buttons:finish")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Finish']")
 	private MCWebElement finishBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Next >']")
@@ -142,7 +142,7 @@ private TestContext context;
 
 	@Override
 	public void clickFinishButton() {
-		SimulatorUtilities.wait(400);
+		SimulatorUtilities.wait(1000);
 		finishBtn.click();
 	}
 
@@ -167,7 +167,7 @@ private TestContext context;
 			
 			});
 		
-		ClickButton(finishBtn);
+		
 		verifyOperationStatus();
 	}
 
