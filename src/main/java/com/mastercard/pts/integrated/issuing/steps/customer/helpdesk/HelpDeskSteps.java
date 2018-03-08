@@ -60,6 +60,7 @@ public class HelpDeskSteps {
 	private static final String STATUS_INCORRECT_INFO_MSG = "Device has incorrect status";
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
 	private String clientID;
+	private String loginType="login";
 	
 	@Autowired
 	private TestContext context;
@@ -676,7 +677,7 @@ public class HelpDeskSteps {
 			helpdeskWorkflow.searchByClientId(clientID,ProductType.fromShortName(cardType));
 			helpdeskWorkflow.clickCustomerCareEditLink();
 			
-			if(passwordType.equalsIgnoreCase("login")){
+			if(passwordType.equalsIgnoreCase(loginType)){
 				helpdeskWorkflow.resetCardholderLoginPassword(clientID);
 			}else{
 				helpdeskWorkflow.resetCardholderTranPassword(clientID);	

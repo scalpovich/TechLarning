@@ -41,6 +41,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String REGISTERED = "registered";
 	private static final String NOT_REGISTERED = "notregistered";
 	private static final String NOTE_WALLET_FUND_TRANSFER = "Notes for Wallet to Wallet transfer";
+	private static final String SERV_CODE_TRANSACTION_PASSWORD = "250";
+	private static final String SERV_CODE_LOGIN_PASSWORD = "459";	
+	private static final String LABEL_LOGIN_PASSWORD = "459 - Reset Cardholder Login Password";
+	private static final String LABEL_TRANSACTION_PASSWORD = "250 - Reset Cardholder Transaction Password";
+	
+	
 	private static String service_request_status = "Request processed successfully";
 	
 	private static final Logger logger = LoggerFactory.getLogger(HelpdeskGeneralPage.class);
@@ -681,10 +687,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public boolean serviceRequestCardholderLoginPassword(String clientID) {
-		logger.info("Reset Cardholder Login Password [459]", "");
-		selectServiceCodeByValue("459");
+		logger.info("Reset Cardholder Login Password [459] for {}", clientID );
+		selectServiceCodeByValue(SERV_CODE_LOGIN_PASSWORD);
 		clickGoButton();
-		runWithinPopup("459 - Reset Cardholder Login Password", () -> {
+		runWithinPopup(LABEL_LOGIN_PASSWORD, () -> {
 			enterNotes("Servic_Request for " + clientID);
 			clickSaveButton();
 
@@ -703,11 +709,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public boolean serviceRequestCardholderTransactionPassword(String clientID) {
-		logger.info("Reset Cardholder Transaction Password [250]", "");
+		logger.info("Reset Cardholder Transaction Password [250] for {}", clientID);
 		
-		selectServiceCodeByValue("250");
+		selectServiceCodeByValue(SERV_CODE_TRANSACTION_PASSWORD);
 		clickGoButton();
-		runWithinPopup("250 - Reset Cardholder Transaction Password", () -> {			
+		runWithinPopup(LABEL_TRANSACTION_PASSWORD, () -> {			
 			enterNotes("Servic_Request for " + clientID);
 			clickSaveButton();
 			
