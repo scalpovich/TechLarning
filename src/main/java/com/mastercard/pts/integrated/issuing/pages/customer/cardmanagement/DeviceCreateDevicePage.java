@@ -33,6 +33,9 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class DeviceCreateDevicePage extends AbstractBasePage {
 	@Autowired
 	private TestContext context;
+	
+	private static final String ENVIRONMENT ="demo";
+	
 	private static final Logger logger = LoggerFactory.getLogger(DeviceCreateDevicePage.class);
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
@@ -285,6 +288,11 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
 
 		fillProfile(device);
+		
+		//Validate only when environment is demo
+		if(System.getProperty("env").equalsIgnoreCase(ENVIRONMENT)){
+			clickNextButton();
+		}
 		fillAddress(device);
 		// skip employment details
 		clickNextButton();

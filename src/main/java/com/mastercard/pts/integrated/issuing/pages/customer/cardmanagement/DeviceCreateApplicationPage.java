@@ -34,6 +34,9 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class DeviceCreateApplicationPage extends AbstractBasePage {
 	@Autowired
 	private TestContext context;
+	
+	private static final String ENVIRONMENT ="demo";
+	
     private CreditLimitRulePage creditLimitRulePage;
 	private static final Logger logger = LoggerFactory.getLogger(DeviceCreateApplicationPage.class);
 
@@ -283,6 +286,12 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
 
 		fillProfile(device);
+		
+		//Validate only when environment is demo
+		if(System.getProperty("env").equalsIgnoreCase(ENVIRONMENT)){
+			clickNextButton();
+		}
+		
 		fillAddress(device);
 		
 			// skip employment details
