@@ -87,17 +87,16 @@ public class HSMNetworkKeys {
 	public static HSMNetworkKeys createWithProvider(DataProvider provider) {
 		return provider.getDataBySimpleClassName(HSMNetworkKeys.class);
 	}
-	public static HSMNetworkKeys hsmNetworkKeysCurrencyDataProvider() {
-		HSMNetworkKeys hsmNtkKeys = new HSMNetworkKeys();
-		hsmNtkKeys.setNetworkCryptogram(MapUtils
+	public void hsmNetworkKeysCurrencyDataProvider() {
+	 	setNetworkCryptogram(MapUtils
 				.fnGetInputDataFromMap("NetworkCryptogram"));
-		hsmNtkKeys.setConfirmNetworkCryptogram(MapUtils
+		setConfirmNetworkCryptogram(MapUtils
 				.fnGetInputDataFromMap("NetworkCryptogram"));
-		hsmNtkKeys.setNetworkCryptogramCheckValue(MapUtils
+		setNetworkCryptogramCheckValue(MapUtils
 				.fnGetInputDataFromMap("NetworkCryptogramCheckValue"));
-		hsmNtkKeys.setConfirmNetworkCryptogramCheckValue(MapUtils
+		setConfirmNetworkCryptogramCheckValue(MapUtils
 				.fnGetInputDataFromMap("NetworkCryptogramCheckValue"));
-		return hsmNtkKeys;
+		
 	}
 	
 

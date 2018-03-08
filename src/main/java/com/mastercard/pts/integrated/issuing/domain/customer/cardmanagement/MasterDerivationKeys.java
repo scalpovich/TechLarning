@@ -184,33 +184,33 @@ public class MasterDerivationKeys {
 	public static MasterDerivationKeys createWithProvider(DataProvider provider) {
 		return provider.getDataBySimpleClassName(MasterDerivationKeys.class);
 	}
-	public static MasterDerivationKeys masterDerivationKeysCurrencyDataProvider() {
-		MasterDerivationKeys mdkKeys = new MasterDerivationKeys();	
-		mdkKeys.setMDKEncryptedUnderLMK(MapUtils
+	public void masterDerivationKeysCurrencyDataProvider() {
+		 setMDKEncryptedUnderLMK(MapUtils
 				.fnGetInputDataFromMap("MDKEncryptedUnderLMK"));
-		mdkKeys.setConfirmMDK(MapUtils
+		setConfirmMDK(MapUtils
 				.fnGetInputDataFromMap("MDKEncryptedUnderLMK"));
-		mdkKeys.setMDKKeyCheckValue(MapUtils
+		setMDKKeyCheckValue(MapUtils
 				.fnGetInputDataFromMap("MDKKeyCheckValue"));
-		mdkKeys.setConfirmMDKKeyCheckValue(MapUtils
+		setConfirmMDKKeyCheckValue(MapUtils
 				.fnGetInputDataFromMap("MDKKeyCheckValue"));
-		mdkKeys.setSMIEncryptedUnderLMKTxt(MapUtils
+		setSMIEncryptedUnderLMKTxt(MapUtils
 				.fnGetInputDataFromMap("SMIEncryptedUnderLMKTxt"));
-		mdkKeys.setConfirmSMI(MapUtils
+		setConfirmSMI(MapUtils
 				.fnGetInputDataFromMap("SMIEncryptedUnderLMKTxt"));
-		mdkKeys.setSMIKeyCheckvalue(MapUtils
+		setSMIKeyCheckvalue(MapUtils
 				.fnGetInputDataFromMap("SMIKeyCheckvalues"));
-		mdkKeys.setConfirmSMIKeyCheckvalue(MapUtils
+		setConfirmSMIKeyCheckvalue(MapUtils
 				.fnGetInputDataFromMap("SMIKeyCheckvalues"));
-		mdkKeys.setSMCEncryptedUnderLMKTxt(MapUtils
+		setSMCEncryptedUnderLMKTxt(MapUtils
 				.fnGetInputDataFromMap("SMCEncryptedUnderLMKTxt"));
-		mdkKeys.setConfirmSMC(MapUtils
+		setConfirmSMC(MapUtils
 				.fnGetInputDataFromMap("SMCEncryptedUnderLMKTxt"));
-		mdkKeys.setSMCKeyCheckvalue(MapUtils
+		setSMCKeyCheckvalue(MapUtils
 				.fnGetInputDataFromMap("SMCKeyCheckvalue"));
-		mdkKeys.setConfirmSMCKeyCheckvalue(MapUtils
+		setConfirmSMCKeyCheckvalue(MapUtils
 				.fnGetInputDataFromMap("SMCKeyCheckvalue"));
-		return mdkKeys;
+		setStatus(MapUtils.fnGetInputDataFromMap("MDKStatus"));
+	setKeyType(MapUtils.fnGetInputDataFromMap("MDKKeyType"));	
 	}
 
 }

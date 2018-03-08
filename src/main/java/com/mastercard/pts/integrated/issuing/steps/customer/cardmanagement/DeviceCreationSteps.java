@@ -90,8 +90,7 @@ public class DeviceCreationSteps {
 		mdkKeys.setInterchange(interchange);
 		mdkKeys.setBinLow(deviceBin.getIssuerBin() + "0000");
 		mdkKeys.setBinHigh(deviceBin.getIssuerBin() + "9999");
-		mdkKeys.setStatus(MapUtils.fnGetInputDataFromMap("MDKStatus"));
-		mdkKeys.setKeyType(MapUtils.fnGetInputDataFromMap("MDKKeyType"));		
+		mdkKeys.masterDerivationKeysCurrencyDataProvider();	
 		mdkflows.addMDKKey(mdkKeys);
 	}
 
