@@ -1,7 +1,7 @@
-Narrative: afslkfj
+Narrative:
 As a User
 I want to Execute multiple API
-In order to Validate json respose
+In order to Validate json response
 
 Meta:
 @CA_Scenarios
@@ -9,8 +9,8 @@ Meta:
 
 Meta:
 @CA2
-Given user update CardActivation_CRD_Request.json with <field>
-When user send put request
+Given user updates CardActivation_CRD_Request.json with <field>
+When user sends put request
 Then Validate Response for <validate>
 Examples:
 |field|validate|
