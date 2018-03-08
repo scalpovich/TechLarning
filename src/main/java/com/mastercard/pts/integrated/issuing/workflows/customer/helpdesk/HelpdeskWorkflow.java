@@ -41,9 +41,9 @@ public class HelpdeskWorkflow {
 		helpDeskPage.searchByDeviceNumber(device);
 	}
 	
-	public void searchByClientId(String clientId){
+	public void searchByClientId(String clientId,String cardType){
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);		
-		helpDeskPage.searchByClientID(clientId);
+		helpDeskPage.searchByClientID(clientId, cardType);
 	}
 	
 	public String getDeviceNumberStatus() {

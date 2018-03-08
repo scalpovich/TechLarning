@@ -668,25 +668,19 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.walletToWalletTransfer(device);
 	}
 	
-	@When("reset cardholder login password service request")
-	public void userCreateServiceRequestForLgnPassword(@Named("datasheet") String datasheet) {
+	@When("user creates service request to reset cardholder $passwordType password for $cardType user")
+	public void userCreateServiceRequestForLoginPassword(@Named("datasheet") String datasheet, String passwordType,String cardType ) {
 		Map<String, String> reqMap = dataLoader.loadData(datasheet).get();
 		for(Entry<String, String> entry: reqMap.entrySet()){
 			clientID = entry.getValue();
-			helpdeskWorkflow.searchByClientId(clientID);
+			helpdeskWorkflow.searchByClientId(clientID,ProductType.fromShortName(cardType));
 			helpdeskWorkflow.clickCustomerCareEditLink();
-			helpdeskWorkflow.resetCardholderLoginPassword(clientID);
-		}
-	}
-	
-	@When("reset cardholder transaction password service request")
-	public void userCreateServiceRequestForTranPassword(@Named("datasheet") String datasheet) {
-		Map<String, String> reqMap = dataLoader.loadData(datasheet).get();
-		for(Entry<String, String> entry: reqMap.entrySet()){
-			clientID = entry.getValue();
-			helpdeskWorkflow.searchByClientId(clientID);
-			helpdeskWorkflow.clickCustomerCareEditLink();
-			helpdeskWorkflow.resetCardholderTranPassword(clientID);			
+			
+			if(passwordType.equalsIgnoreCase("login")){
+				helpdeskWorkflow.resetCardholderLoginPassword(clientID);
+			}else{
+				helpdeskWorkflow.resetCardholderTranPassword(clientID);	
+			}
 		}
 	}
 }

@@ -469,8 +469,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return balanceAmount;
 	}
 	
-	public void searchByClientID(String clientID){
-		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn,"Prepaid [P]");
+	public void searchByClientID(String clientID, String cardType){
+		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn,cardType);
 		WebElementUtils.enterText(clientIDInpt,clientID);
 		clickSearchButton();
 	}
@@ -684,8 +684,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		logger.info("Reset Cardholder Login Password [459]", "");
 		selectServiceCodeByValue("459");
 		clickGoButton();
-		//runWithinPopup("459 - Reset Cardholder Login Password", () -> {
-		runWithinPopup("459 - Reset Deviceholder Selfcare Password", () -> {		
+		runWithinPopup("459 - Reset Cardholder Login Password", () -> {
 			enterNotes("Servic_Request for " + clientID);
 			clickSaveButton();
 
@@ -697,6 +696,29 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				logger.info("Reset Login password service request is not completed for {}", clientID);
 				clickCancelButtonPopup();
 			}			
+		});
+		SimulatorUtilities.wait(5000);
+		clickEndCall();
+		return serviceStatus;
+	}
+	
+	public boolean serviceRequestCardholderTransactionPassword(String clientID) {
+		logger.info("Reset Cardholder Transaction Password [250]", "");
+		
+		selectServiceCodeByValue("250");
+		clickGoButton();
+		runWithinPopup("250 - Reset Cardholder Transaction Password", () -> {			
+			enterNotes("Servic_Request for " + clientID);
+			clickSaveButton();
+			
+			if(verifyServiceRequestStatus().contains(service_request_status)){
+				logger.info("Reset Transaction password service request is completed for {}", clientID);
+				clickOKButtonPopup();
+				serviceStatus = true;
+			}else{
+				logger.info("Reset Transaction password service request is not completed for {}", clientID);
+				clickCancelButtonPopup();
+			}
 		});
 		SimulatorUtilities.wait(5000);
 		clickEndCall();
