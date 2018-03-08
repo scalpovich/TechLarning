@@ -40,6 +40,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.TransactionProvider;
 import com.mastercard.pts.integrated.issuing.pages.ValidationException;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKeyValuePair;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
@@ -179,9 +180,17 @@ public class TransactionSteps {
 			// this line of code is temporary as this will only work for Single wallet currency for multi wallet, we may have to set other setter
 			// --> setIssuerCountryCode, setIssuerCurrencyCode, setCardHolderBillingCurrency
 			device.setCurrency(tempData.getCurrency());
-			if ("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
-				device.setExpirationDate(devicePlan.getExpiryDate());
+			
+			if(!Constants.DATA_DRIVEN_CARD_BOARDING.equalsIgnoreCase("YES")){
+				if ("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
+					device.setExpirationDate(devicePlan.getExpiryDate());
+				}
+			}else{
+				if ("Fixed [F]".equalsIgnoreCase(device.getExpiryFlag())) {
+					device.setExpirationDate(device.getExpirationDate());
+				}
 			}
+			
 			//__________________CURRENCY VAL FROM EXCEL _________ This is a Single Wallet, Single Currency INDIA card */
 			settingValuesDynamicallyFromDeviceContext(device, transactionData);
 			//setting values of Card Data Element (Card Profile) which are placed in the "Transaction Templates" sheet

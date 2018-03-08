@@ -293,6 +293,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		if(System.getProperty("env").equalsIgnoreCase(ENVIRONMENT)){
 			clickNextButton();
 		}
+		
 		fillAddress(device);
 		// skip employment details
 		clickNextButton();
@@ -356,7 +357,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		}catch(Exception e){
 			if(device.getAppliedForProduct().equalsIgnoreCase("Credit [C]")){
 				WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);
-				WebElementUtils.enterText(creditLimitTxt,"5000");
+				WebElementUtils.enterText(creditLimitTxt,device.getCreditLimit());
 			}else{
 				WebElementUtils.selectDropDownByVisibleText(statementPreferenceDDwn, device.getOtherInfoStatementPreference());
 				WebElementUtils.enterText(faxNumberTxt, device.getOtherInfoFaxNo());

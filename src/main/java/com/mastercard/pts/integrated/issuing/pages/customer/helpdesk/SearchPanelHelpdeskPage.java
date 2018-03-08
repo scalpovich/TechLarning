@@ -94,6 +94,6 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 		enterText(this.deviceNumber, deviceNumber);
 		waitForElementVisible(searchBtn);
 		searchBtn.click();
-		return normalStatus.getText();
+		return getCellTextByColumnName(1,"Status");
 	}
 }

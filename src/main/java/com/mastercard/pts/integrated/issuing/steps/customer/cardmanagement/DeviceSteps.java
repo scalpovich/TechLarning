@@ -14,6 +14,8 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramFlows;
@@ -190,4 +192,33 @@ public class DeviceSteps {
 	            deviceWorkflow.createDevice(device);
 	            context.put(ContextConstants.DEVICE, device);
 	      }
+		
+		@When("$type device is created using new device screen by data driven \"$pinOption\" Pin")
+		@Then("$type device is created using new device screen by data driven \"$pinOption\" Pin")
+		public void createWithProviderDataDriven(String type,String pinOption){
+			Device device = Device.createWithProviderDataDriven(provider);
+			
+			Constants.DATA_DRIVEN_CARD_BOARDING ="YES";
+			
+			if(pinOption.equalsIgnoreCase("with")){
+				context.put(ConstantData.IS_PIN_REQUIRED, "TRUE");
+			}else{
+				context.put(ConstantData.IS_PIN_REQUIRED, "FALSE");
+			}
+			
+			device.setAppliedForProduct(ProductType.fromShortName(type));			
+			Device deviceTemp = Device.createWithProviderForOtherDetails(provider); 
+			device.setOtherInfoDeliveryMode(deviceTemp.getOtherInfoDeliveryMode());
+			device.setOtherInfoEmailAlertRequired(deviceTemp.getOtherInfoEmailAlertRequired());
+			device.setOtherInfoFaxNo(deviceTemp.getOtherInfoFaxNo());
+			device.setOtherInfoPreferredLanguage(deviceTemp.getOtherInfoPreferredLanguage());
+			device.setOtherInfoRegisteredEmailAddress(deviceTemp.getOtherInfoRegisteredEmailAddress());
+			device.setOtherInfoRegisteredMobileNumber(deviceTemp.getOtherInfoRegisteredMobileNumber());
+			device.setOtherInfoRegisterForDncr(deviceTemp.getOtherInfoRegisterForDncr());
+			device.setOtherInfoSmsAlertRequired(deviceTemp.getOtherInfoSmsAlertRequired());
+			device.setOtherInfoStatementPreference(deviceTemp.getOtherInfoStatementPreference());			
+			sdnUncheckProgram(program.getProgramCode());			
+			deviceWorkflow.createDevice(device);
+			context.put(ContextConstants.DEVICE, device);
+		}
 }
