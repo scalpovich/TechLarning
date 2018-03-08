@@ -2,6 +2,10 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+
 @Component
 public class HSMDeviceKeys {
 
@@ -10,9 +14,9 @@ public class HSMDeviceKeys {
 	public String generationMethodDDwn;
 	public String decimalizationTable;
 	public String pinLength;
-	public String pVVOffset;
-	public String pVKOffset;
-	public String pINValidationData;
+	public String pvvOffset;
+	public String pvkOffset;
+	public String pinValidationData;
 	public String confirmValidationData;
 	public String pinVerificationKey;
 	public String confirmPINVerificationKey;
@@ -84,27 +88,27 @@ public class HSMDeviceKeys {
 	}
 
 	public String getPVVOffset() {
-		return pVVOffset;
+		return pvvOffset;
 	}
 
 	public void setPVVOffset(String pVVOffset) {
-		this.pVVOffset = pVVOffset;
+		this.pvvOffset = pVVOffset;
 	}
 
 	public String getPVKOffset() {
-		return pVKOffset;
+		return pvkOffset;
 	}
 
 	public void setPVKOffset(String pVKOffset) {
-		this.pVKOffset = pVKOffset;
+		this.pvkOffset = pVKOffset;
 	}
 
 	public String getPINValidationData() {
-		return pINValidationData;
+		return pinValidationData;
 	}
 
 	public void setPINValidationData(String pINValidationData) {
-		this.pINValidationData = pINValidationData;
+		this.pinValidationData = pINValidationData;
 	}
 
 	public String getConfirmValidationData() {
@@ -265,6 +269,64 @@ public class HSMDeviceKeys {
 
 	public void setCVC3OffsetOnTrack(String cVC3OffsetOnTrack) {
 		this.cvc3OffsetOnTrack = cVC3OffsetOnTrack;
+	}
+	public static HSMNetworkKeys createWithProvider(DataProvider provider) {
+		return provider.getDataBySimpleClassName(HSMNetworkKeys.class);
+	}
+	public static HSMDeviceKeys hsmDeviceKeysDataProvider() {
+		HSMDeviceKeys hsmKeys = new HSMDeviceKeys();
+		hsmKeys.setGenerationMethodDDwn(MapUtils
+				.fnGetInputDataFromMap("GeneralisationMethod"));		
+		hsmKeys.setDecimalizationTable(CustomUtils.RandomNumbers(16));
+		hsmKeys.setPINlength(MapUtils.fnGetInputDataFromMap("PINlength"));
+		hsmKeys.setPVVOffset(MapUtils.fnGetInputDataFromMap("PVVOffset"));
+		hsmKeys.setPVKOffset(MapUtils.fnGetInputDataFromMap("PVKOffset"));
+		hsmKeys.setPINValidationData(MapUtils
+				.fnGetInputDataFromMap("PINValidationData"));
+		hsmKeys.setConfirmValidationData(MapUtils
+				.fnGetInputDataFromMap("PINValidationData"));
+		hsmKeys.setPINVerificationKey(MapUtils
+				.fnGetInputDataFromMap("PINVerificationKey"));
+		hsmKeys.setConfirmPINVerificationKey(MapUtils
+				.fnGetInputDataFromMap("PINVerificationKey"));
+		
+		hsmKeys.setPINVerificationKeyCheck(MapUtils
+				.fnGetInputDataFromMap("PINVerificationKeyCheck"));
+		hsmKeys.setConfirmPINVerificationKey(MapUtils
+				.fnGetInputDataFromMap("PINVerificationKeyCheck"));
+		hsmKeys.setCVVOffsetOnTrack(MapUtils
+				.fnGetInputDataFromMap("CVVOffsetOnTrack"));
+		hsmKeys.setCVKACryptogram(MapUtils
+				.fnGetInputDataFromMap("CVKACryptogram"));
+		hsmKeys.setComponentType(MapUtils
+				.fnGetInputDataFromMap("ComponentType"));
+		hsmKeys.setConfirmACryptogram(MapUtils
+				.fnGetInputDataFromMap("CVKACryptogram"));
+		hsmKeys.setCVKAKeyCheck(MapUtils.fnGetInputDataFromMap("CVKAKeyCheck"));
+		hsmKeys.setConfirmAKeyCheck(MapUtils
+				.fnGetInputDataFromMap("CVKAKeyCheck"));
+		hsmKeys.setCVKBCryptogram(MapUtils
+				.fnGetInputDataFromMap("CVKBCryptogram"));
+		hsmKeys.setConfirmBCryptogram(MapUtils
+				.fnGetInputDataFromMap("CVKBCryptogram"));
+		hsmKeys.setCVKBKeyCheck(MapUtils.fnGetInputDataFromMap("CVKBKeyCheck"));
+		hsmKeys.setConfirmBKeyCheck(MapUtils
+				.fnGetInputDataFromMap("CVKBKeyCheck"));
+		hsmKeys.setCVV3Cryptogram(MapUtils
+				.fnGetInputDataFromMap("CVV3Cryptogram"));
+		hsmKeys.setConfirmCVV3Cryptogram(MapUtils
+				.fnGetInputDataFromMap("CVV3Cryptogram"));
+		hsmKeys.setCVV3KeyCheckvalue(MapUtils
+				.fnGetInputDataFromMap("CVV3KeyCheckvalue"));
+		hsmKeys.setConfirmCVV3KeyCheckValue(MapUtils
+				.fnGetInputDataFromMap("CVV3KeyCheckvalue"));
+		hsmKeys.setATCOffsetOnTrack(MapUtils
+				.fnGetInputDataFromMap("ATCOffsetOnTrack"));
+		hsmKeys.setUNOffsetOnTrack(MapUtils
+				.fnGetInputDataFromMap("UNOffsetOnTrack"));
+		hsmKeys.setCVC3OffsetOnTrack(MapUtils
+				.fnGetInputDataFromMap("CVC3OffsetOnTrack"));
+		return hsmKeys;
 	}
 
 }

@@ -15,7 +15,6 @@ public class HSMNetworkKeysFlows extends MenuFlows {
 	Navigator navigator;
 
 	public void addHSMNetworkKeys(HSMNetworkKeys hsmnetworkKeys) {
-		waitForElementVisible(menusubmenuPage.getCardManagement());
 		HSMNetworkKeysPage hsmnetworkpage = navigator.navigateToPage(HSMNetworkKeysPage.class);
 		hsmnetworkpage.addHSMKeys();
 		hsmnetworkpage.switchToAddNetworkKeys();

@@ -14,7 +14,6 @@ public class EMVMDKKeyFlows extends MenuFlows {
 	Navigator navigator;
 
 	public void addMDKKey(MasterDerivationKeys mdkKeys) {
-		waitForElementVisible(menusubmenuPage.getCardManagement());
 		MasterDerivationKeysPage mdkpage = navigator.navigateToPage(MasterDerivationKeysPage.class);
 		mdkpage.addMDK();
 		mdkpage.switchToAddMDKKey();

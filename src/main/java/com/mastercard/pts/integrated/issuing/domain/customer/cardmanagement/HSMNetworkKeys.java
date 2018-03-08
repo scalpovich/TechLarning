@@ -2,6 +2,10 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+
 @Component
 public class HSMNetworkKeys {
 
@@ -79,5 +83,22 @@ public class HSMNetworkKeys {
 			String confirmNetworkCryptogramCheckValue) {
 		ConfirmNetworkCryptogramCheckValue = confirmNetworkCryptogramCheckValue;
 	}
+	
+	public static HSMNetworkKeys createWithProvider(DataProvider provider) {
+		return provider.getDataBySimpleClassName(HSMNetworkKeys.class);
+	}
+	public static HSMNetworkKeys hsmNetworkKeysCurrencyDataProvider() {
+		HSMNetworkKeys hsmNtkKeys = new HSMNetworkKeys();
+		hsmNtkKeys.setNetworkCryptogram(MapUtils
+				.fnGetInputDataFromMap("NetworkCryptogram"));
+		hsmNtkKeys.setConfirmNetworkCryptogram(MapUtils
+				.fnGetInputDataFromMap("NetworkCryptogram"));
+		hsmNtkKeys.setNetworkCryptogramCheckValue(MapUtils
+				.fnGetInputDataFromMap("NetworkCryptogramCheckValue"));
+		hsmNtkKeys.setConfirmNetworkCryptogramCheckValue(MapUtils
+				.fnGetInputDataFromMap("NetworkCryptogramCheckValue"));
+		return hsmNtkKeys;
+	}
+	
 
 }

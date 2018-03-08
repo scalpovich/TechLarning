@@ -49,70 +49,58 @@ public class HSMNetworkKeysPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement saveBtn;
-		
+
 	public void addHSMKeys() {
 		waitForElementVisible(addHSMNetworkKeysBtn);
 		ClickButton(addHSMNetworkKeysBtn);
 	}
 
 	public void switchToAddNetworkKeys() {
-		addWicketAjaxListeners(getFinder().getWebDriver());
 		switchToIframe(Constants.ADD_NETWORK_KEYS_FRAME);
 	}
 
 	public void selectNetworkInterface(HSMNetworkKeys hsmnetwork) {
-
-		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(networkInterfaceDDwn); 
 		selectByVisibleText(networkInterfaceDDwn, hsmnetwork.getNetworkInterface());
-		
+
 	}
 
 	public void fillSubNetworkID(HSMNetworkKeys hsmnetwork) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(subNetworkIDTxt);
 		enterText(subNetworkIDTxt, hsmnetwork.getSubNetworkID());
 	}
 
 	public void fillKeyIndex(HSMNetworkKeys hsmnetwork) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(keyIndexTxt);
 		enterText(keyIndexTxt, hsmnetwork.getKeyIndex());
 	}
 
-	public void selectKeyType(HSMNetworkKeys hsmnetwork) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+	public void selectKeyType(HSMNetworkKeys hsmnetwork) { 
 		waitForElementVisible(keyTypeDDwn);
 		selectByVisibleText(keyTypeDDwn, hsmnetwork.getKeyType());
 	}
 
-	public void fillNetworkCryptogram(HSMNetworkKeys hsmnetwork) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+	public void fillNetworkCryptogram(HSMNetworkKeys hsmnetwork) { 
 		waitForElementVisible(networkCryptogramTxt);
 		enterText(networkCryptogramTxt, hsmnetwork.getNetworkCryptogram());
 	}
 
-	public void fillConfirmNetworkCryptogram(HSMNetworkKeys hsmnetwork) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+	public void fillConfirmNetworkCryptogram(HSMNetworkKeys hsmnetwork) { 
 		waitForElementVisible(confirmNetworkCryptogramTxt);
 		enterText(confirmNetworkCryptogramTxt, hsmnetwork.getConfirmNetworkCryptogram());
 	}
 
-	public void fillNetworkCryptogramCheckValue(HSMNetworkKeys hsmnetwork) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+	public void fillNetworkCryptogramCheckValue(HSMNetworkKeys hsmnetwork) { 
 		waitForElementVisible(networkCryptogramCheckValueTxt);
 		enterText(networkCryptogramCheckValueTxt, hsmnetwork.getNetworkCryptogramCheckValue());
 	}
 
-	public void fillConfirmNetworkCryptogramCheckValue(HSMNetworkKeys hsmnetwork) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+	public void fillConfirmNetworkCryptogramCheckValue(HSMNetworkKeys hsmnetwork) { 
 		waitForElementVisible(confirmNetworkCryptogramCheckValueTxt);
 		enterText(confirmNetworkCryptogramCheckValueTxt, hsmnetwork.getConfirmNetworkCryptogramCheckValue());
-
 	}
-
-	public void clickSaveBtn() {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+	
+	public void clickSaveBtn() { 
 		waitForElementVisible(saveBtn);
 		ClickButton(saveBtn);
 	}

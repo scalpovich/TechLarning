@@ -77,8 +77,8 @@ public class IssuerPublicKey {
 		return deviceBin;
 	}
 
-	public void setDeviceBin(String device_Bin) {
-		this.deviceBin = device_Bin;
+	public void setDeviceBin(String deviceBin) {
+		this.deviceBin = deviceBin;
 	}
 
 	public void setIssuerDate(String issuerDate) {
