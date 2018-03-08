@@ -23,35 +23,35 @@ public class NetworkPage extends AbstractBasePage {
 	final Logger logger = LoggerFactory.getLogger(NetworkPage.class);
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a/span[contains(text(),'06')]")
-	private MCWebElement RupayNtkCode;
+	private MCWebElement rupayNtkCode;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'06')]/following::a/img[@alt='Delete Recorkjmjuhuiuigd']")
-	private MCWebElement DeleteRupayNtkCode;
+	private MCWebElement deleteRupayNtkCode;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "networkLabel:input:inputTextField")
-	private MCWebElement NetworkDescTxt;
+	private MCWebElement retworkDescTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElement SaveBtn;
+	private MCWebElement saveBtn;
 
 	public MCWebElement getRupayNtkCode() {
-		return RupayNtkCode;
+		return rupayNtkCode;
 	}
 
 	public void editNetwork(String ntkCode, String networkdesc) {
 		waitForElementVisible(processingcenter.getProcessingCenter());
-		WebElement EditRupayNtkCode = getFinder().getWebDriver().findElement(
+		WebElement editRupayNtkCode = getFinder().getWebDriver().findElement(
 				By.xpath("//td[contains(.,'" + ntkCode
 						+ "')]/following::a[1]/img[@alt='Edit Record']"));
 		waitForElementVisible(processingcenter.getProcessingCenter());
-		retryUntilNoErrors(() -> EditRupayNtkCode.click());
+		retryUntilNoErrors(() -> editRupayNtkCode.click());
 		switchToIframe(Constants.EDIT_NETWORK_FRAME);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		NetworkDescTxt.clearField();
+		retworkDescTxt.clearField();
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(NetworkDescTxt, networkdesc);
+		enterText(retworkDescTxt, networkdesc);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		ClickButton(SaveBtn);
+		ClickButton(saveBtn);
 		SwitchToDefaultFrame();
 
 	}
