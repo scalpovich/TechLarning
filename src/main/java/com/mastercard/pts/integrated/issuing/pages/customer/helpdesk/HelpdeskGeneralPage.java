@@ -41,6 +41,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String REGISTERED = "registered";
 	private static final String NOT_REGISTERED = "notregistered";
 	private static final String NOTE_WALLET_FUND_TRANSFER = "Notes for Wallet to Wallet transfer";
+	private static String service_request_status = "Request processed successfully";
 	
 	private static final Logger logger = LoggerFactory.getLogger(HelpdeskGeneralPage.class);
 	private String activeDeviceNumber;
@@ -51,6 +52,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private String status;
 	private String[] values;
 	private String walletBalanceInformation;
+	public  boolean serviceStatus = false;
+	
 	
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -90,6 +93,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'OK']")
 	private MCWebElement okBtn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'Cancel']")
+	private MCWebElement cancelBtn;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody img[alt='Edit Record']")
 	private MCWebElement firstRowEditLink;
@@ -150,6 +156,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//span[@class='feedbackPanelINFO']")
 	private MCWebElement walletToWalletConfirMsg;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="searchDiv:rows:3:componentList:0:componentPanel:input:inputTextField")
+	private MCWebElement clientIDInpt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//ul[@class='feedbackPanel']/.//span")
+	private MCWebElement responseMessage;
 	
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
 	
@@ -222,6 +234,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return saleDate;
 	}
 	
+	public void selectServiceCodeByValue(String serviceCode){
+		WebElementUtils.selectDropDownByValue(serviceCodeDdwn, serviceCode);
+	}	
 	public void storeActivationDate(){
 		activationDate = new WebDriverWait(driver(), timeoutInSec)
 		.until(WebElementUtils.visibilityOf(activationDateTxt)).getText();
@@ -264,6 +279,13 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(5000);
 		new WebDriverWait(driver(), timeoutInSec)
 		.until(WebElementUtils.elementToBeClickable(okBtn))
+		.click();
+	}
+	
+	public void clickCancelButtonPopup(){
+		SimulatorUtilities.wait(5000);
+		new WebDriverWait(driver(), timeoutInSec)
+		.until(WebElementUtils.elementToBeClickable(cancelBtn))
 		.click();
 	}
 	
@@ -445,6 +467,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		BigDecimal balanceAmount = new BigDecimal(getFirstRecordCellTextByColumnNameInEmbeddedTab(CURRENT_AVAILABLE_BALANCE));
 		clickEndCall();
 		return balanceAmount;
+	}
+	
+	public void searchByClientID(String clientID){
+		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn,"Prepaid [P]");
+		WebElementUtils.enterText(clientIDInpt,clientID);
+		clickSearchButton();
 	}
 	
 	public String getWalletNumber(Device device){
@@ -650,5 +678,32 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickOKButtonPopup();
 		});
 		clickEndCall();
+	}
+	
+	public boolean serviceRequestCardholderLoginPassword(String clientID) {
+		logger.info("Reset Cardholder Login Password [459]", "");
+		selectServiceCodeByValue("459");
+		clickGoButton();
+		//runWithinPopup("459 - Reset Cardholder Login Password", () -> {
+		runWithinPopup("459 - Reset Deviceholder Selfcare Password", () -> {		
+			enterNotes("Servic_Request for " + clientID);
+			clickSaveButton();
+
+			if(verifyServiceRequestStatus().contains(service_request_status)){
+				logger.info("Reset Login password service request is completed for {}", clientID);
+				clickOKButtonPopup();
+				serviceStatus = true;
+			}else{
+				logger.info("Reset Login password service request is not completed for {}", clientID);
+				clickCancelButtonPopup();
+			}			
+		});
+		SimulatorUtilities.wait(5000);
+		clickEndCall();
+		return serviceStatus;
+	}
+	
+	public String verifyServiceRequestStatus(){		
+		return getTextFromPage(responseMessage);
 	}
 }
