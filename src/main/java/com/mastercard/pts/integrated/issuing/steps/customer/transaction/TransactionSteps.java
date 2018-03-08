@@ -480,4 +480,14 @@ public class TransactionSteps {
 		context.put(ConstantData.ARN_NUMBER, arn);
 		logger.info("ARN for device transactions = {} ", arn);
 	}
+	
+	//Win SCP step
+	@Given("connection to WinSCP is provided")
+	@When("connection to WinSCP is provided")
+	public void connectionToApplicationIsEstablished(){
+		transactionWorkflow.launchWinSCP();
+		transactionWorkflow.loginToWinSCP();
+		transactionWorkflow.setFolderPermisson();
+		transactionWorkflow.closeWinSCP();
+	}
 }

@@ -4,6 +4,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,6 +19,7 @@ import java.util.List;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -28,11 +31,13 @@ import org.sikuli.script.FindFailed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import winium.elements.desktop.ComboBox;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.configuration.FinSimSimulator;
+import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
 import com.mastercard.pts.integrated.issuing.configuration.MasSimulator;
 import com.mastercard.pts.integrated.issuing.configuration.MdfsSimulator;
 import com.mastercard.pts.integrated.issuing.configuration.VtsSimulator;
@@ -60,6 +65,7 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.MdfsDetailsKeyValue
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorConstantsData;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKeyValuePair;
+import com.opera.core.systems.scope.protos.ExecProtos.ActionList.Action;
 
 @Workflow
 public class TransactionWorkflow extends SimulatorUtilities {
@@ -321,6 +327,27 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			MiscUtils.propagate(e);
 		}
 	}
+	/**
+	 * This method is use to launch WInium driver
+	 * @param Application
+	 * @author E079917
+	 */
+	public void startWiniumDriverWithApplication(DesktopOptions options) {
+		try
+		{
+			String path = getResourceFolderPath() + SimulatorConstantsData.WINIUM_DRIVER_EXE_PATH.replace("\\", "\\\\");
+			Runtime.getRuntime().exec(path, null, new File( path.replace("Winium.Desktop.Driver.exe", ""))) ;
+			wait(3000);
+			winiumDriver = new WiniumDriver(new URL("http://localhost:9999"), options);
+			wait(8000);
+		}
+		catch(Exception e)
+		{
+			logger.debug("Exception occurred while starting Winium", e);
+			MiscUtils.propagate(e);
+		}
+	}
+
 
 	private DesktopOptions launchSimulator(String serviceName) {
 		DesktopOptions option = new DesktopOptions();
@@ -586,8 +613,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(2000);
 		winiumClickOperation(CLOSE);
 	}
-	
-	
+
+
 	private void updateBillingCurrencyCode() throws AWTException{
 		Actions action = new Actions(winiumDriver);		
 		activateMcps();
@@ -1123,12 +1150,12 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		if("stagesa".equalsIgnoreCase(getEnv()))
 			selectMChipKeySet("00998 - Example ETEC1 - 0213");
 		else if("automation".equalsIgnoreCase(getEnv()) || "demo".equalsIgnoreCase(getEnv()))
-			
+
 			if(SimulatorConstantsData.MAS_LICENSE_TYPE.contains("18"))
 				selectMChipKeySet("00999 - Example ETEC1 - 0213"); //for MDFS 18.Q2
 			else
-			selectMChipKeySet("00999 - Example - M/Chip  2.1 Select"); //for MDFS 16.Q4 and may be 17
-		
+				selectMChipKeySet("00999 - Example - M/Chip  2.1 Select"); //for MDFS 16.Q4 and may be 17
+
 		else
 			selectMChipKeySet("00999 - Example ETEC1 - 0213");	
 	}
@@ -1604,14 +1631,14 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		loadVisaTestGroupTemplate();
 
 		selectVisaTestCaseToMakeDataElementChange(transactionName);
-		
+
 		Device device = context.get(ContextConstants.DEVICE);
 		//to handle pin based scenarios, we need to modify pin number from Message Editor
 		if(transaction.toLowerCase().contains("pin")) {
 			//setting Pin
 			setValueInMessageEditorForTransction("F52", transactionName, device.getPinNumberForTransaction());
 		}
-		
+
 		//setting CVV
 		//CVV not needed
 		// setValueInMessageEditorForTransction("F35.05", transactionName, "00"+device.getCvvData());
@@ -1845,4 +1872,143 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
 		return page.searchTransactionWithDevice(deviceNumber, ts);
 	}
+
+
+
+	//
+
+	@Autowired
+	LinuxBox linuxbox ;
+
+	//public static final String  WIN_SCP_PATH = "../WinSCPTool/WinSCP/WinSCP.exe" ;//"C:\\WinSCP\\WinSCP.exe"; 
+
+	@Value("${linux.host.name}")
+	private String hostName;
+
+	@Value("${linux.port.number}")
+	private String number;
+
+	@Value("${linux.user.name}")
+	private String username;
+
+	@Value("${linux.folder.path}")
+	private String folderPath;
+	
+	@Value("${linux.WinSCPTool.Path}")
+	private String winSCPPath;
+
+
+	private DesktopOptions setWinSCPAsApplication() {
+		MiscUtils.killProcessFromTaskManager("Winium.Desktop.Driver");
+		MiscUtils.killProcessFromTaskManager("WinSCP");
+		DesktopOptions options = new DesktopOptions();
+		MiscUtils.reportToConsole(ConstantData.MESSAGE_CONSTANT  + winSCPPath );
+		options.setApplicationPath(winSCPPath);
+		return options;
+	}
+
+	public void launchWinSCP(){
+		startWiniumDriverWithApplication(setWinSCPAsApplication());
+	}
+
+	public void loginToWinSCP(){
+		try {
+			winiumClickOperation("Session");
+			wait(2000);
+			pressTab();
+			pressTab();
+			pressTab();
+			setText(hostName); 
+			pressTab();
+			setText(number);
+			pressTab();
+			setText(username);
+			pressTab();
+			setText(linuxbox.getPassword());
+			winiumClickOperation("Login");
+			logger.info("User Logged Into WinSCP Application");
+		} catch (AWTException e) {
+			logger.error(e.getMessage());
+		}
+
+		/*winiumClickOperation("Stored sessions");
+		wait(3000);
+		winiumClickOperation("New");
+		winiumDriver.findElement(By.className("TUpDownEdit")).sendKeys(Keys.DELETE);
+		wait(2000);
+		winiumDriver.findElement(By.className("TUpDownEdit")).sendKeys(Keys.DELETE);
+		wait(4000);
+		winiumDriver.findElement(By.className("TUpDownEdit")).sendKeys("2222");
+		setHostName("10.168.129.65");
+		wait(4000);
+		clearAndSetPortNumber("2222");
+		wait(4000);
+		winiumDriver.findElement(By.className("TEdit")).sendKeys("dc-user");
+		winiumDriver.findElement(By.className("TPasswordEdit")).sendKeys("andro#1234"); */
+	}
+
+	/*private void setHostName(String hostName){
+		List<WebElement> lst = winiumDriver.findElements(By.className("TEdit"));
+		lst.get(lst.size()-1).sendKeys(hostName);
+	}*/
+
+	/*private void clearAndSetPortNumber(String number){
+		new Actions(winiumDriver).doubleClick(winiumDriver.findElement(By.className("TUpDownEdit"))).build().perform();
+		wait(2000);
+		pressDelete();
+		winiumDriver.findElement(By.className("TUpDownEdit")).sendKeys(number);
+	}*/
+
+	public void setFolderPermisson(){
+		try {
+			Actions action = new Actions(winiumDriver);
+			wait(10000);
+			action.moveToElement(winiumDriver.findElement(By.name("Rights"))).moveByOffset(0,-30).doubleClick().build().perform();
+			wait(3000);
+			setText(folderPath);  //INPUT
+			wait(2000);
+			winiumClickOperation("OK");
+			wait(2000);
+			winiumClickOperation("121212"); //AE8060225839_00000999901_180301_001_NOT_03682.IPM
+			pressF9Key();
+			wait(3000);
+			action.moveToElement(winiumDriver.findElement(By.name("Cancel"))).moveByOffset(0,-30).click().build().perform();
+			wait(3000);
+			action.moveToElement(winiumDriver.findElement(By.name("Cancel"))).moveByOffset(-20,-90).doubleClick().build().perform();
+			setText("0777");
+			wait(3000);
+			winiumClickOperation("OK");
+		} catch (AWTException e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+	public void closeWinSCP(){
+		//MiscUtils.killProcessFromTaskManager("WinSCP");
+		winiumClickOperation("Close");
+		wait(2000);
+		winiumClickOperation("OK");
+		
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
