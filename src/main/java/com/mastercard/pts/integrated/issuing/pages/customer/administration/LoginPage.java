@@ -113,13 +113,8 @@ public class LoginPage extends AbstractBasePage {
 	private MCWebElement signUpConfirmBtn;
 
 	public void loadPage() {
-		CustomUtils.ThreadDotSleep(4000);
 		getFinder().getWebDriver().get(env.getProperty("application.url"));
-		CustomUtils.ThreadDotSleep(4000);
-
-		if (getFinder().getWebDriver().findElements(By.xpath("//div[@class = 'error-btn']")).size() != 0) {
-			System.out.println("Element is Present");
-			CustomUtils.ThreadDotSleep(10000);
+		if (!(driver().findElements(By.xpath("//div[@class = 'error-btn']")).isEmpty())) {
 			clickWhenClickable(backToLoginPageTxt);
 		} else {
 			System.out.println("Element is Absent");
@@ -130,13 +125,8 @@ public class LoginPage extends AbstractBasePage {
 	public void loadAppURL() {
 		getFinder().getWebDriver().manage().deleteAllCookies();
 		getFinder().getWebDriver().get(MapUtils.fnGetInputDataFromMap("AppURL"));
-		if (getFinder().getWebDriver().findElements(By.xpath("//div[@class = 'error-btn']")).size() != 0) {
-			System.out.println("Element is Present");
-			CustomUtils.ThreadDotSleep(10000);
+		if (!(driver().findElements(By.xpath("//div[@class = 'error-btn']")).isEmpty())) {
 			backToLoginPageTxt.click();
-			// clickWhenClickable(backToLoginPageTxt);
-			CustomUtils.ThreadDotSleep(10000);
-
 		} else {
 			System.out.println("Element is Absent");
 		}

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -17,6 +18,8 @@ import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
+
+import junit.framework.Assert;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_SEARCH,
@@ -86,6 +89,15 @@ public class EventAlertHistoryPage extends AbstractBasePage {
 		WebElementUtils.pickDate(loggedToDateDPkr, LocalDate.now());
 		WebElementUtils.enterText(jobId, eventAlertJobId);
 		searchButtonElement.click();
+		try {
+			WebElement SelectJob = getFinder().getWebDriver()
+					.findElement(By.xpath("//td[contains(.,'" + eventAlertJobId + "')]"));
+			if (SelectJob.isDisplayed()) {
+				logger.info("Event triggered");
+			}
+		} catch (Exception e) {
+			Assert.fail("event not triggered");
+		}
 	}
 
 	@Override

@@ -30,7 +30,7 @@ public class DBQueryConstant {
 
 	public static String PREGENERATEDFLAG_COLUMN = "PRE_GENERATED_CARD";
 
-	public static String JOBID_EVENTSALERTS_COLUMN = "JOB_ID";
+	public static String JOBID_EVENTSALERTS_COLUMN = "MAX(JOB_ID)";
 
 	public static String DEVICENUMBER_QUERY = "select * from device  where DEVICE_NUMBER like";
 

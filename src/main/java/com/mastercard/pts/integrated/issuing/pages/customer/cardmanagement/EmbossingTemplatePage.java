@@ -135,7 +135,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 	}
 
 	public void selectFileType(EmbossingFile embossing) {
-		selectByVisibleText(fileTypeDDwn, embossing.getEmbosstemplateType());
+		selectByVisibleText(fileTypeDDwn, embossing.getEmbossTemplateType());
 	}
 
 	@Override

@@ -26,29 +26,31 @@ public class EventAlertHistoryWorkflow {
 		return page.verifyEvent();
 	}
 
-	public Set<String> getEventAlertJobId() {
-		String Query1 = DBQueryConstant.EVENTSALERTS_SMS_QUERY;
+	public Set<String> getEventAlertJobId(EventsAndAlerts eventsAndAlerts) {
+		String Query1 = null;
+		if (eventsAndAlerts.getEventID().contains("SMS")) {
+			Query1 = DBQueryConstant.EVENTSALERTS_SMS_QUERY;
+		}
+		if (eventsAndAlerts.getEventID().contains("Email")) {
+			Query1 = DBQueryConstant.EVENTSALERTS_EMAIL_QUERY;
+		}
 
-		System.out.println(Query1);
 		return connutils.getAllValuesOfAColumn(Query1, DBQueryConstant.JOBID_EVENTSALERTS_COLUMN);
 
 	}
 
-	public String getEventsAlertsJobId() {
-		Set<String> list = getEventAlertJobId();
-		String CARD = "";
+	public String getEventsAlertsJobId(EventsAndAlerts eventsAndAlerts) {
+		Set<String> list = getEventAlertJobId(eventsAndAlerts);
+		String eventJobid = "";
 		for (String card : list) {
-
-			CARD = card;
+			eventJobid = card;
 		}
-		System.out.println(CARD);
-
-		return CARD;
+		return eventJobid;
 
 	}
 
 	public void checkEventAlertJobIdCreated(EventsAndAlerts eventsAndAlerts) {
 		EventAlertHistoryPage page = navigator.navigateToPage(EventAlertHistoryPage.class);
-		page.checkEventGeneratedForSMSEmail(getEventsAlertsJobId(), eventsAndAlerts);
+		page.checkEventGeneratedForSMSEmail(getEventsAlertsJobId(eventsAndAlerts), eventsAndAlerts);
 	}
 }

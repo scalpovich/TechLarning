@@ -27,8 +27,8 @@ public class DeviceRangeSteps {
 		devicerangeflows.addDeviceRange(program);
 	}
 
-	@When("Verify for Device Range Adaptive Authentication CheckBox should be $enabled")
-	@Then("Verify for Device Range Adaptive Authentication CheckBox should be $enabled")
+	@When("Device Range Adaptive Authentication CheckBox should be $enabled")
+	@Then("Device Range Adaptive Authentication CheckBox should be $enabled")
 	public void verifyAdaptiveAuthenticationCheckBox(@Named("enabled") String enabled) {
 		if (enabled.equalsIgnoreCase("Enabled")) {
 			devicerangeflows.checkAdaptiveAuthenticationEnabled();

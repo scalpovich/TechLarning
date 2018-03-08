@@ -44,7 +44,7 @@ public class TestConfiguration {
 		try {
 			temp = Files.createTempDirectory(new DateUtils().getDateyyyyMMdd() + "_IssuingTests_");
 		} catch (Exception e) {
-			logger.error("Exception has been caugh while creating a temp folder.\nMessage :: {}\nTrace :: {}",
+			logger.error("Exception has been caught while creating a temp folder.\nMessage :: {}\nTrace :: {}",
 					e.getMessage(), e.getStackTrace());
 			MiscUtils.propagate(e);
 		}

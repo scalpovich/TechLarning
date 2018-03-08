@@ -15,32 +15,30 @@ public class DeviceRangeFlows extends MenuFlows {
 	@Autowired
 	Navigator navigator;
 
-	DeviceRangePage devicerangepage;
+	DeviceRangePage deviceRangePage;
 
 	public void addDeviceRange(Program program) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
-		devicerangepage = navigator.navigateToPage(DeviceRangePage.class);
-		devicerangepage.clickAddDeviceRange();
-		devicerangepage.addDeviceRange(program);
-		devicerangepage.addDeviceRangeDetails();
-		devicerangepage.selectDebitInerface();
-		devicerangepage.Information();
-		devicerangepage.clickSaveButton();
+		deviceRangePage = navigator.navigateToPage(DeviceRangePage.class);
+		deviceRangePage.clickAddDeviceRange();
+		deviceRangePage.addDeviceRange(program);
+		deviceRangePage.addDeviceRangeDetails();
+		deviceRangePage.selectDebitInerface();
+		deviceRangePage.Information();
+		deviceRangePage.clickSaveButton();
 	}
 
 	public void editDeviceRange(String prog) {
-		devicerangepage = navigator.navigateToPage(DeviceRangePage.class);
-		devicerangepage.searchDeviceRangeAndEdit(prog);
+		deviceRangePage = navigator.navigateToPage(DeviceRangePage.class);
+		deviceRangePage.searchDeviceRangeAndEdit(prog);
 	}
 
 	public void checkAdaptiveAuthenticationEnabled() {
-		Assert.assertTrue("Adaptive Authentication Check Box is enabled",
-				devicerangepage.adaptiveAuthenticationChkBox());
+		Assert.assertTrue("Adaptive Authentication Check Box is enabled", deviceRangePage.clickAdaptiveAuthChkBox());
 	}
 
 	public void checkAdaptiveAuthenticationDisabled() {
-		Assert.assertFalse("Adaptive Authentication Check Box is disabled",
-				devicerangepage.adaptiveAuthenticationChkBox());
+		Assert.assertFalse("Adaptive Authentication Check Box is disabled", deviceRangePage.clickAdaptiveAuthChkBox());
 	}
 
 }

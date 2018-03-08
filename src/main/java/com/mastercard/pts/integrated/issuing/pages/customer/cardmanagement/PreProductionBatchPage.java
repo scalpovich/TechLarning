@@ -133,7 +133,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	}
 
 	public void enterBatchNumber(NewDevice newDevice) {
-		enterValueinTextBox(batchNumberTxt, newDevice.getBatchNum());
+		enterValueinTextBox(batchNumberTxt, newDevice.getbatchNum());
 	}
 
 	public void enterSourceJobId(BulkDeviceRequestbatch bulkdeviceGenBatch) {

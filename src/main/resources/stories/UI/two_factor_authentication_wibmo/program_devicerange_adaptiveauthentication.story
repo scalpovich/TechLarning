@@ -34,13 +34,12 @@ When user creates a Single wallet Program for Mastercard for product prepaid for
 Then Adaptive Authentication CheckBox should be Enabled
 When user creates a Device Range for product prepaid
 When user edits the device range
-Then Verify for Device Range Adaptive Authentication CheckBox should be Enabled
+Then Device Range Adaptive Authentication CheckBox should be Enabled
 Then user should be able to create Magnetic Stripe card for Prepaid product for Individual customer
 When user runs the pre production batch for product Prepaid
-When user check for the Pre-Production batch success status for SYSTEM INTERNAL PROCESSING batch
+When user checks for the Pre-Production batch success status for SYSTEM INTERNAL PROCESSING batch
 Then user runs the device production batch for product Prepaid
-!-- When user creates new device of prepaid type for new client of Individual customer
-!-- Then device has "normal" status
+
 
 Scenario:2 validate two factor authentication at program level and device range level
 Meta:
@@ -57,10 +56,10 @@ When user creates a Single wallet Program for Mastercard for product Debit for p
 Then Adaptive Authentication CheckBox should be Enabled
 When user creates a Device Range for product prepaid
 When user edits the device range
-Then Verify for Device Range Adaptive Authentication CheckBox should be Enabled
+Then Device Range Adaptive Authentication CheckBox should be Enabled
 Then user should be able to create Magnetic Stripe card for Debit product for Individual customer
 When user runs the pre production batch for product Debit
-When user check for the Pre-Production batch success status for SYSTEM INTERNAL PROCESSING batch
+When user checks for the Pre-Production batch success status for SYSTEM INTERNAL PROCESSING batch
 Then user runs the device production batch for product Debit
 
 
@@ -90,4 +89,4 @@ When user creates a Single wallet Program for Mastercard for product Prepaid for
 Then Adaptive Authentication CheckBox should be Disabled
 When user creates a Device Range for product Prepaid
 When user edits the device range
-Then Verify for Device Range Adaptive Authentication CheckBox should be Disabled
+Then Device Range Adaptive Authentication CheckBox should be Enabled

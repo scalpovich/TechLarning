@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.AfterStory;
 import org.jbehave.core.annotations.BeforeScenario;
 import org.jbehave.core.annotations.BeforeStory;
@@ -66,7 +67,7 @@ public class TestHooks {
 		}
 	}
 
-	// @AfterScenario
+	@AfterScenario
 	public void clearCookies() {
 		if (System.getProperty("storyType") == null) {
 			driverProvider.get().manage().deleteAllCookies();

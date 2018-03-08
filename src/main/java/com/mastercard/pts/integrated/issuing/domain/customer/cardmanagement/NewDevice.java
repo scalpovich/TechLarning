@@ -10,14 +10,14 @@ public class NewDevice extends AbstractBasePage {
 
 	public String DeviceNumber;
 
-	public String BatchNum;
+	public String batchNum;
 
-	public String getBatchNum() {
-		return BatchNum;
+	public String getbatchNum() {
+		return batchNum;
 	}
 
-	public void setBatchNum(String batchNum) {
-		BatchNum = batchNum;
+	public void setbatchNum(String batchNum) {
+		this.batchNum = batchNum;
 	}
 
 	public String getDeviceNumber() {

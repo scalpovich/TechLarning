@@ -39,11 +39,6 @@ public class TransactionReportsPage extends AbstractBasePage {
 
 	private static final String FILE_TYPE_REPORT = "FILE_TYPE_REPORT";
 
-	// private static final String THREE_D_SECURE_INFO_REPORT = "328-3-D Secure
-	// Information Report";
-
-	private static final String PDF_REPORT = "PDF Format [pdf]";
-
 	@PageElement(findBy = FindBy.NAME, valueToFind = "componentPanel")
 	private MCWebElement selectReportDDwn;
 
@@ -152,13 +147,12 @@ public class TransactionReportsPage extends AbstractBasePage {
 	}
 
 	public void selectCalender() {
-		String[] date22 = DateUtils.getDateinDDMMYYYY().split("/");
-		int newdate = Integer.parseInt(date22[1]);
+		String[] dateTransReportCal1 = DateUtils.getDateinDDMMYYYY().split("/");
+		int newdate = Integer.parseInt(dateTransReportCal1[1]);
 		int i = newdate - 1;
-		date22[1] = String.valueOf(i);
-		String date11 = date22[0] + "/" + date22[1] + "/" + date22[2];
+		dateTransReportCal1[1] = String.valueOf(i);
+		String date11 = dateTransReportCal1[0] + "/" + dateTransReportCal1[1] + "/" + dateTransReportCal1[2];
 		date.setDate(date11);
-		// date.setDate(date11);
 		waitForPageToLoad(getFinder().getWebDriver());
 		date.setDateCalendar2(DateUtils.getDateinDDMMYYYY(), calelement);
 		waitForPageToLoad(getFinder().getWebDriver());

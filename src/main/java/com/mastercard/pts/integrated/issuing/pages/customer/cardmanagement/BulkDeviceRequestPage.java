@@ -15,7 +15,6 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -87,18 +86,10 @@ public class BulkDeviceRequestPage extends AbstractBasePage {
 
 	public String getBatchNumber() {
 		String strOutputMessage = ConfirmationMsgTxt.getText().split("\\n")[0];
-		System.out.println("Request Number " + strOutputMessage);
-		// Record Added Successfully, Batch Number is 17149055
 		String strOuputMessagePattern = "Record\\s*Added\\d*\\s*Successfully\\s*,\\s*Batch\\s*Number\\s*is\\s*";
 		System.out.println("strOuputMessagePattern" + strOuputMessagePattern);
-		// Assert.assertTrue("Record Added Successfully",
-		// strOutputMessage.matches(strOuputMessagePattern));
 
 		String strRequestNumber = strOutputMessage.replaceAll("[^\\d]", "").trim();
-		// int intIndex = strOutputMessage.indexOf("is");
-		// String strRequestNumber = strOutputMessage.substring(43, intIndex +
-		// 1);
-		System.out.println("Request Number is " + strRequestNumber);
 		MapUtils.fnSetInputDataToInputMap("BatchNumber", strRequestNumber);
 		return strRequestNumber;
 
@@ -115,7 +106,7 @@ public class BulkDeviceRequestPage extends AbstractBasePage {
 	}
 
 	public void selectBranch() {
-		CustomUtils.ThreadDotSleep(5000);
+		waitForElementVisible(BranchDDwn);
 		SelectDropDownByIndex(BranchDDwn, 1);
 	}
 
@@ -125,7 +116,7 @@ public class BulkDeviceRequestPage extends AbstractBasePage {
 	}
 
 	public void selectCorporateClientCode() {
-		CustomUtils.ThreadDotSleep(5000);
+		waitForElementVisible(CorporateClientCodeDDwn);
 		SelectDropDownByIndex(CorporateClientCodeDDwn, 1);
 	}
 
@@ -177,7 +168,6 @@ public class BulkDeviceRequestPage extends AbstractBasePage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -208,7 +208,6 @@ public class NewDevicePage extends AbstractCardManagementPage {
 	public void clickAddnewDevice() {
 		waitForElementVisible(AddNewDevice);
 		retryUntilNoErrors(() -> AddNewDevice.click());
-		// ClickButton(AddNewDevice);
 	}
 
 	public void switchToAddNewDeviceFrame() {
@@ -220,8 +219,6 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		waitForElementVisible(AppliedForProductDDwn);
 		CustomUtils.ThreadDotSleep(1000);
 		selectByVisibleText(AppliedForProductDDwn, program.getProduct());
-		// selectByVisibleText(AppliedForProductDDwn,
-		// deviceCreation.getProduct());
 	}
 
 	public void selectAppliedType() {
@@ -229,16 +226,12 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		waitForElementVisible(AppliedTypeDDwn);
 		CustomUtils.ThreadDotSleep(1000);
 		selectByVisibleText(AppliedTypeDDwn, newDevice.newdeviceDataProvider().getApplicationType());
-		// selectByVisibleText(AppliedTypeDDwn,
-		// newDevice.newdeviceDataProvider().getApplicationType());
 	}
 
 	public void selectApplicationSubType() {
 		waitForElementVisible(ApplicationSubtypeDDwn);
 		CustomUtils.ThreadDotSleep(1000);
 		selectByVisibleText(ApplicationSubtypeDDwn, newDevice.newdeviceDataProvider().getApplicationSubType());
-		// selectByVisibleText(ApplicationSubtypeDDwn,
-		// newDevice.newdeviceDataProvider().getApplicationSubType());
 	}
 
 	@Override
@@ -261,8 +254,6 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		waitForElementVisible(CreateOpenBatchDDwn);
 		CustomUtils.ThreadDotSleep(1000);
 		selectByVisibleText(CreateOpenBatchDDwn, newDevice.newdeviceDataProvider().getBatchType());
-		// selectByVisibleText(CreateOpenBatchDDwn,
-		// newDevice.newdeviceDataProvider().getBatchType());
 	}
 
 	public void clickGenerateBatch() {
@@ -276,8 +267,6 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		CustomUtils.ThreadDotSleep(5000);
 		waitForElementVisible(CustomerTypeDDwn);
-		// selectByVisibleText(CustomerTypeDDwn,
-		// newDevice.getCustomerType());
 		selectByVisibleText(CustomerTypeDDwn, newDevice.getCustomerType());
 	}
 
@@ -285,16 +274,11 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		waitForElementVisible(ProgramCodeDDwn);
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		CustomUtils.ThreadDotSleep(1000);
-		// selectByVisibleText(ProgramCodeDDwn,
-		// program.getProgramCode());
 		selectByVisibleText(ProgramCodeDDwn, program.getProgramCode());
-		// selectByVisibleText(ProgramCodeDDwn, "program [856]");
 	}
 
 	public void selectDeviceType() {
 		waitForElementVisible(DeviceTypeDDwn);
-		// selectByVisibleText(DeviceTypeDDwn,
-		// newDevice.getDeviceType());
 		selectByVisibleText(DeviceTypeDDwn, newDevice.getDeviceType());
 	}
 
@@ -302,8 +286,7 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(DevicePlanDDwn);
 		CustomUtils.ThreadDotSleep(1000);
-		// selectByVisibleText(DevicePlanDDwn,
-		// deviceplan.getDevicePlan());
+
 		selectByVisibleText(DevicePlanDDwn, deviceplan.getDevicePlan());
 	}
 
@@ -382,10 +365,8 @@ public class NewDevicePage extends AbstractCardManagementPage {
 
 	public void selectAccounType() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-
 		if (AccountTypeDDwn.isEnabled()) {
 			SelectDropDownByIndex(AccountTypeDDwn, 1);
-			// selectByVisibleText(AccountTypeDDwn, newDevice.getAccountType());
 		}
 	}
 
@@ -481,7 +462,6 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		ClickButton(NextBtn);
 		CustomUtils.ThreadDotSleep(1000);
-		// GenerateBatchFrame();
 		GeneralInformationFrame();
 		DeviceInformationScreen();
 		ProfileScreen();
@@ -506,8 +486,8 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		selectCreateOpenBatch();
 		CustomUtils.ThreadDotSleep(3000);
 		clickGenerateBatch();
-		newDevice.setBatchNum(batchNumberTxt.getText());
-		logger.info(" *********** Batch number *********** " + newDevice.getBatchNum());
+		newDevice.setbatchNum(batchNumberTxt.getText());
+		logger.info(" *********** Batch number *********** " + newDevice.getbatchNum());
 		CustomUtils.ThreadDotSleep(5000);
 		clickNextButton();
 		CustomUtils.ThreadDotSleep(3000);

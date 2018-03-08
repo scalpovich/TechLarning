@@ -29,6 +29,7 @@ public class NewDeviceFlows extends MenuFlows {
 		newDevicepage.GeneralInformationFrame();
 		newDevicepage.DeviceInformationScreen();
 		newDevicepage.ProfileScreen();
+		newDevicepage.clickNextButton();
 		newDevicepage.AddressScreen();
 		newDevicepage.OccupationDetailsScreen();
 		newDevicepage.clickNextButton();

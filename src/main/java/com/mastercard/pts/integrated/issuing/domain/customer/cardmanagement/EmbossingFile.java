@@ -7,7 +7,7 @@ import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 @Component
 public class EmbossingFile {
 
-	public String embosstemplateType;
+	public String embossTemplateType;
 
 	public String embossingFileTemplateName;
 
@@ -15,12 +15,12 @@ public class EmbossingFile {
 
 	public String embossingTempDescription;
 
-	public String getEmbosstemplateType() {
-		return embosstemplateType;
+	public String getEmbossTemplateType() {
+		return embossTemplateType;
 	}
 
-	public void setEmbosstemplateType(String embosstemplateType) {
-		this.embosstemplateType = embosstemplateType;
+	public void setEmbossTemplateType(String embossTemplateType) {
+		this.embossTemplateType = embossTemplateType;
 	}
 
 	public String getEmbossingTempCode() {

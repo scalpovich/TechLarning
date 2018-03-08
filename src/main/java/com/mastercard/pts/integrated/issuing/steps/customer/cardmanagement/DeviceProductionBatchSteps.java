@@ -32,7 +32,7 @@ public class DeviceProductionBatchSteps {
 		String JobId = "";
 		bulkdevicerequestbatch.BulkDeviceRequestDataProvider();
 		devicecreation.setProduct(productType);
-		bulkdevicerequestbatch.setBatchNumberForDeviceProduction(newDevice.getBatchNum());
+		bulkdevicerequestbatch.setBatchNumberForDeviceProduction(newDevice.getbatchNum());
 		JobId = deviceproductionflows.createDeviceProductionBatch(devicecreation, bulkdevicerequestbatch);
 		bulkdevicerequestbatch.setDeviceProductionJobId(JobId);
 	}

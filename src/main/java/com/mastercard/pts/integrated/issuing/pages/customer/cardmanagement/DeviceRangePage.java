@@ -187,7 +187,6 @@ public class DeviceRangePage extends AbstractBasePage {
 		if (!MapUtils.fnGetInputDataFromMap("Program").isEmpty()) {
 			selectByVisibleText(ProgramDDwn, MapUtils.fnGetInputDataFromMap("Program"));
 		} else {
-			System.out.println("program::=devie range " + program.getProgram());
 			selectByVisibleText(ProgramDDwn, program.getProgram());
 		}
 
@@ -220,7 +219,6 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	public void clickAddButton() {
 		AddTxt.click();
-		// clickWhenClickable(AddTxt);
 	}
 
 	public void enterFromDeviceNo() {
@@ -251,20 +249,20 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	public void selectEndPoint() {
 		if (EndpointDDwn.isEnabled()) {
-			waitForPageToLoad(getFinder().getWebDriver());
+			waitForPageToLoad(driver());
 			SelectDropDownByIndex(EndpointDDwn, 1);
 		}
 	}
 
 	public void selectInterface() {
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		if (InterfaceDDwn.isEnabled()) {
 			SelectDropDownByIndex(InterfaceDDwn, 1);
 		}
 	}
 
 	public void selectRoutingType() {
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		if (RoutingTypeDDwn.isEnabled()) {
 			SelectDropDownByIndex(RoutingTypeDDwn, 1);
 		}
@@ -301,7 +299,6 @@ public class DeviceRangePage extends AbstractBasePage {
 	}
 
 	public void addDeviceRangeDetails() {
-		CustomUtils.ThreadDotSleep(7000);
 		enterFromDeviceNo();
 		enterToDeviceNo();
 	}
@@ -320,13 +317,13 @@ public class DeviceRangePage extends AbstractBasePage {
 		ClickButton(AddDeviceRangeBtn);
 		switchToIframe(Constants.ADD_DEVICE_RANGE_FRAME);
 		SelectDropDownByText(ProductTypeDDwn, prodType);
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		addWicketAjaxListeners(driver());
 		SelectDropDownByIndex(ProgramDDwn, 1);
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		addWicketAjaxListeners(driver());
 		SelectDropDownByIndex(BranchDDwn, 1);
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		addWicketAjaxListeners(driver());
 		SelectDropDownByIndex(DevicePlanCodeDDwn, 1);
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		addWicketAjaxListeners(driver());
 		SelectDropDownByIndex(IssuerBINDDwn, 1);
 
 	}
@@ -347,23 +344,6 @@ public class DeviceRangePage extends AbstractBasePage {
 				Assert.fail("Interchange is not present");
 
 			}
-
-			// List<Map<String, String>> aSAS = interchangeTable.getRows().get;
-
-			// String interchangedropDown =
-			// InterchangeDDwn.getSelect().getOptions().get(i).getText();
-			// aSAS.contains(DropDownValue);
-
-			//
-			//
-			// for (WebElement we : interchangedropDown) {
-			// match = false;
-			// if (we.getText().equals(DropDownValue)) {
-			// match = true;
-			// }
-			//
-			// }
-			// Assert.assertTrue(aSAS.contains(DropDownValue));
 
 		}
 
@@ -440,13 +420,14 @@ public class DeviceRangePage extends AbstractBasePage {
 		}
 	}
 
-	public boolean adaptiveAuthenticationChkBox() {
-		boolean flag = false;
-		flag = adaptiveAuthChkBx.isEnabled();
-		if (flag == true)
+	public boolean clickAdaptiveAuthChkBox() {
+		boolean enabled = false;
+		enabled = adaptiveAuthChkBx.isEnabled();
+		if (enabled) {
 			clickWhenClickable(adaptiveAuthChkBx);
+		}
 		clickWhenClickable(SaveBtn);
-		return flag;
+		return enabled;
 	}
 
 	public void verifyUiOperationStatus() {

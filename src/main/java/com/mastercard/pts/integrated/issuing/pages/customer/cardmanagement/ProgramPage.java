@@ -359,7 +359,6 @@ public class ProgramPage extends AbstractBasePage {
 		waitForElementVisible(editProgram);
 		Scrolldown(editProgram);
 		clickWhenClickableDoNotWaitForWicket(editProgram);
-		CustomUtils.ThreadDotSleep(2000);
 		switchToEditProgramframe();
 	}
 

@@ -22,7 +22,7 @@ public class EventAlertHistorySteps {
 	private String date;
 
 	@Autowired
-	EventsAndAlerts eventsandAlerts;
+	EventsAndAlerts eventsAndAlerts;
 
 	@When("user searches for alert on ui")
 	public void whenUserSearchesForAlertOnUi() {
@@ -35,8 +35,8 @@ public class EventAlertHistorySteps {
 	}
 
 	@Then("verify the alert is generated succesfully for $3DSecureOTP")
-	public void verifyEventGenerated(@Named("3DSecureOTP") String SecureOTP) {
-		eventsandAlerts.setEventID(SecureOTP);
-		eventAlertHistoryWorkflow.checkEventAlertJobIdCreated(eventsandAlerts);
+	public void verifyEventGenerated(@Named("3DSecureOTP") String secureOTP) {
+		eventsAndAlerts.setEventID(secureOTP);
+		eventAlertHistoryWorkflow.checkEventAlertJobIdCreated(eventsAndAlerts);
 	}
 }
