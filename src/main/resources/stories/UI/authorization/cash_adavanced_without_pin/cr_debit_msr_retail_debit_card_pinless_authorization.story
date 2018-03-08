@@ -13,6 +13,8 @@ Scenario: Setup - debit msr retail debit card
 Given user is logged in institution
 And device range for program with device plan for "debit" "magnetic stripe" card without pin
 When user creates new device of debit type for new client
+When user updates cvccvv as uncheck on device plan
+Then user sign out from customer portal
 
 Scenario: Device production - debit msr retail debit card
 Given user is logged in institution

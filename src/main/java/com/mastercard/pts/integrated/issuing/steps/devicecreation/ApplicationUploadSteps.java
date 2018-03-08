@@ -17,6 +17,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Prog
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SearchApplicationDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessFlows;
@@ -25,19 +26,19 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.S
 
 @Component
 public class ApplicationUploadSteps {
-	
+
 	@Autowired
 	private FileCreation fileCreation;
-	
+
 	@Autowired
 	private ProcessBatches processBatch;
-	
+
 	@Autowired
 	private SearchApplicationDetailsFlows search;
-	
+
 	@Autowired
 	private BatchProcessFlows batchProcessingFlows;
-	
+
 	public SearchApplicationDetails searchDomain;
 	@Autowired
 	private ProcessBatchesFlows processBatchesFlows;
@@ -49,32 +50,41 @@ public class ApplicationUploadSteps {
 	Program program;
 	@Autowired
 	private Device device;
-	
+
 	@Autowired
 	private DataProvider provider;
-	
-	@When("user creates $application_upload_file batch file and uploads it on server for $customerType for $cardType")
-	public void createFileForApplicationUpload(@Named("application_upload_file") String batchName,@Named("customerType") String customerType,@Named("cardType")String cardType) throws Exception{
-		 String fileName="";
-		if(cardType.equalsIgnoreCase("prepaid"))
+
+	@When("user creates $application_upload_file batch file and upload it on server for $customerType for $cardType")
+	public void createFileForApplicationUpload(@Named("application_upload_file") String batchName, @Named("customerType") String customerType, @Named("cardType") String cardType) throws Exception {
+		String fileName = "";
+		if (cardType.equalsIgnoreCase("prepaid")) {
+			fileName = fileCreation.createApplicationUploadFile(Institution.createWithProvider(provider).getCode(), customerType, cardType);
+		} else if (cardType.equalsIgnoreCase("credit")) {
+			fileName = fileCreation.createApplicationUploadFile(Institution.createWithProvider(provider).getCodeCredit(), customerType, cardType);
+		} else if (cardType.contains("Static"))
 		{
-		 fileName=fileCreation.createApplicationUploadFile(Institution.createWithProvider(provider).getCode(),customerType,cardType);
+			fileName=fileCreation.createApplicationUploadForFileStaticVirtualCard(program.getInstitute(), customerType);
+			processBatch.setJoBID(processBatchesFlows.processUploadBatches(batchName, fileName));
+			CustomUtils.ThreadDotSleep(5000);
+			Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(processBatch, fileName));
 		}
-		else if(cardType.equalsIgnoreCase("credit"))
-		{
-			 fileName=fileCreation.createApplicationUploadFile(Institution.createWithProvider(provider).getCodeCredit(),customerType,cardType);	
-		}
+		
+	}
+
+	@When("user creates $application_upload_file batch file and uploads it on server for $customerType")
+	public void createFileForApplicationUpload(@Named("application_upload_file") String batchName, @Named("customerType") String customerType) throws Exception {
+		String fileName = fileCreation.createApplicationUploadForFile(program.getInstitute(), customerType);
 		processBatch.setJoBID(processBatchesFlows.processUploadBatches(batchName, fileName));
-			//CustomUtils.ThreadDotSleep(8000);
+		CustomUtils.ThreadDotSleep(5000);
 		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(processBatch, fileName));
-		}
+	}
 	
+
 	@Then("The file will process the records successfully if all the all the business mandatory field are configured in file")
-	public void verifyApplicationFileUpload(){
+	public void verifyApplicationFileUpload() {
 		searchDomain = searchDomain.getSearchApplicationData();
 		search.verifyApplicationUploadSuccess(searchDomain);
 	}
-
 
 	@When("processes $type pre-production batch")
 	public void whenProcessesPreproductionBatchForPrepaid(String type) {
@@ -83,6 +93,7 @@ public class ApplicationUploadSteps {
 		preProductionBatch.setJobID(processBatch.getJoBID());
 		batchProcessFlows.processPreProductionBatch(preProductionBatch);
 	}
+
 	@Then("$type processes pre-production batch using new Device")
 	@When("$type processes pre-production batch using new Device")
 	public void whenProcessesPreproductionBatchForDevice(String type) {
@@ -90,7 +101,7 @@ public class ApplicationUploadSteps {
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPreProductionBatchNewDevice(preProductionBatch);
 	}
-	
+
 	@Then("$type processes pre-production batch using new Application")
 	@When("$type processes pre-production batch using new Application")
 	public void whenProcessesPreproductionBatchForDeviceUsingApplication(String type) {
@@ -98,7 +109,7 @@ public class ApplicationUploadSteps {
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPreProductionBatchNewApplication(preProductionBatch);
 	}
-	
+
 	@Then("$type processes deviceproduction batch using new Device")
 	@When("$type processes deviceproduction batch using new Device")
 	public void whenProcessesDeviceproductionBatchForDevice(String type) {
@@ -106,7 +117,7 @@ public class ApplicationUploadSteps {
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processDeviceProductionBatchNewDevice(batch);
 	}
-	
+
 	@Then("$type processes pinProduction batch using new Application")
 	@When("$type processes pinProduction batch using new Application")
 	public void whenProcessesPinproductionBatchForNewApplication(String type) {
@@ -114,8 +125,7 @@ public class ApplicationUploadSteps {
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPinProductionBatchNewApplication(batch);
 	}
-	
-	
+
 	@Then("$type processes pinProduction batch using new Device")
 	@When("$type processes pinProduction batch using new Device")
 	public void whenProcessesPinproductionBatchForDevice(String type) {
@@ -123,7 +133,7 @@ public class ApplicationUploadSteps {
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPinProductionBatchNewDevice(batch);
 	}
-	
+
 	@Then("$type processes deviceproduction batch using new Application")
 	@When("$type processes deviceproduction batch using new Application")
 	public void whenProcessesDeviceproductionBatchForNewApplication(String type) {
@@ -138,17 +148,18 @@ public class ApplicationUploadSteps {
 		DeviceProductionBatch batch = new DeviceProductionBatch();
 		batch.setProductType(ProductType.fromShortName(type));
 		batch.setBatchNumber(preProductionBatch.getBatchNumber());
-		MiscUtils.reportToConsole("device production Batch: {}",preProductionBatch.getBatchNumber());
+		MiscUtils.reportToConsole("device production Batch: {}", preProductionBatch.getBatchNumber());
 		batchProcessFlows.processDeviceProductionBatch(batch);
 	}
-	
+
 	@Then("All processes $type device production batch")
 	@When("All processes $type device production batch")
 	public void whenProcessesDeviceProductionBatchForAll(String type) {
 		DeviceProductionBatch batch = new DeviceProductionBatch();
 		batch.setProductType(ProductType.fromShortName(type));
 		batch.setBatchNumber(preProductionBatch.getBatchNumber());
-		MiscUtils.reportToConsole("device production Batch: {}",preProductionBatch.getBatchNumber());
+		MiscUtils.reportToConsole("device production Batch: {}", preProductionBatch.getBatchNumber());
 		batchProcessFlows.processDeviceProductionBatchAll(batch);
 	}
+
 }

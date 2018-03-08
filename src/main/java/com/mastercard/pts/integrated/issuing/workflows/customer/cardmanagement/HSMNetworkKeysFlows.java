@@ -19,10 +19,10 @@ public class HSMNetworkKeysFlows extends MenuFlows {
 		HSMNetworkKeysPage hsmnetworkpage = navigator.navigateToPage(HSMNetworkKeysPage.class);
 		hsmnetworkpage.addHSMKeys();
 		hsmnetworkpage.switchToAddNetworkKeys();
+		hsmnetworkpage.selectNetworkInterface(hsmnetworkKeys);
 		hsmnetworkpage.SelectKeyType(hsmnetworkKeys);
 		hsmnetworkpage.fillSubNetworkID(hsmnetworkKeys);
 		hsmnetworkpage.fillKeyIndex(hsmnetworkKeys);
-		hsmnetworkpage.SelectKeyType(hsmnetworkKeys);
 		hsmnetworkpage.fillNetworkCryptogram(hsmnetworkKeys);
 		hsmnetworkpage.fillConfirmNetworkCryptogram(hsmnetworkKeys);
 		hsmnetworkpage.fillNetworkCryptogramCheckValue(hsmnetworkKeys);

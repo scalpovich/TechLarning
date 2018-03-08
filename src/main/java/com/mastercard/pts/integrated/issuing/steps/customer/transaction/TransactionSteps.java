@@ -220,10 +220,10 @@ public class TransactionSteps {
 			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); // Transaction currency code
 		}
 		// This is a Single Wallet, Single Currency INDIA card
-		transactionData.setDeKeyValuePairDynamic("049", device.getCurrency()); // Transaction currency  code
-		transactionData.setDeKeyValuePairDynamic("050", device.getCurrency()); // Settlement currency  code 
-		transactionData.setDeKeyValuePairDynamic("051", device.getCurrency()); // CardHolder billing currency  code
-		transactionData.setDeKeyValuePairDynamic("061.13", device.getCurrency()); // POS country code
+//		transactionData.setDeKeyValuePairDynamic("049", device.getCurrency()); // Transaction currency  code
+//		transactionData.setDeKeyValuePairDynamic("050", device.getCurrency()); // Settlement currency  code 
+//		transactionData.setDeKeyValuePairDynamic("051", device.getCurrency()); // CardHolder billing currency  code
+//		transactionData.setDeKeyValuePairDynamic("061.13", device.getCurrency()); // POS country code
 	}
 
 	private void settingValuesDynamicallyFromDeviceContext(Device device, Transaction transactionData) {

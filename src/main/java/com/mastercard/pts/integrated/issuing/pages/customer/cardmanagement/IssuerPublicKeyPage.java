@@ -31,7 +31,7 @@ public class IssuerPublicKeyPage extends AbstractBasePage {
 
 	public String ExpiryCal = "//span[@id='certExpDate']";
 
-	public String ExpiryYear = "//span[@id = 'certIssDate']";
+	public String issueYear = "//span[@id = 'certIssDate']";
 
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addIssuerPublicKey;
@@ -113,7 +113,7 @@ public class IssuerPublicKeyPage extends AbstractBasePage {
 	public void selectIssuerBin(IssuerPublicKey ipk) {
 		System.out.println(ipk.getDeviceBin());
 		selectByVisibleText(IssuerBIN, ipk.getDeviceBin());
-
+		
 	}
 
 	public void enterSerialNumber() {
@@ -126,7 +126,8 @@ public class IssuerPublicKeyPage extends AbstractBasePage {
 	}
 
 	public void selectIssuerDate(IssuerPublicKey ipk) {
-		date.setDate(ipk.getIssuerDate());
+		date.setDateCalendar2(ipk.getIssuerDate(), issueYear);
+		
 	}
 
 	public void selectStatus(IssuerPublicKey ipk) {
@@ -153,12 +154,12 @@ public class IssuerPublicKeyPage extends AbstractBasePage {
 	}
 
 	public void addIPKDetails(IssuerPublicKey ipk) {
-		enterIPKId();
+		enterIPKId(); 
 		selectInterchangeType(ipk);
 		selectIssuerBin(ipk);
 		enterSerialNumber();
-		selectExpiryDate(ipk);
 		selectIssuerDate(ipk);
+		selectExpiryDate(ipk);
 		selectStatus(ipk);
 		clickSaveButton();
 		SwitchToDefaultFrame();

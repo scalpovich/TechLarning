@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+
 import static org.hamcrest.Matchers.*;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -24,8 +26,10 @@ import org.springframework.stereotype.Component;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.restapi.DeviceDetails;
 import com.mastercard.pts.integrated.issuing.steps.AbstractBaseSteps;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 
 @Component
@@ -56,6 +60,8 @@ public class JsonUtil extends AbstractBaseSteps {
 	DeviceDetails deviceDetails;
 	@Autowired
 	RestAssuredConfiguration restAssuredConfiguration;
+	@Autowired
+	private TestContext context;
 
 	public List<Map<String, Object>> parseToListMap(String jsonFilePath) {
 		mapper = new ObjectMapper();
@@ -102,10 +108,21 @@ public class JsonUtil extends AbstractBaseSteps {
 	public Response postRequest(String reqObject) {
 		RestAssured.baseURI = env.getProperty("api.base.uri");
 		response = given().body(reqObject).when().contentType(ContentType.JSON)
-				.post(CARD_ACTIVATION_END_POINT);
-		logger.info("**********Request String:" + reqObject.toString());
-		logger.info("**********Response String:"
-				+ response.asString().toString());
+				.post("/users");
+		logger.info("**********Request String:{}" , reqObject.toString());
+		logger.info("**********Response String:{}"
+				, response.asString().toString());
+		return response;
+
+	}
+	public Response postRequest(String reqObject,String endPoint) {
+		RestAssured.config = restAssuredConfiguration.getRestAssuredConfig();
+		RestAssured.baseURI = restAssuredConfiguration.getbaseUrl();
+		response = given().body(reqObject).when().contentType(ContentType.JSON)
+				.post("/"+endPoint);
+		logger.info("**********Request String:{}" , reqObject.toString());
+		logger.info("**********Response String:{}"
+				, response.asString().toString());
 		return response;
 
 	}
@@ -141,11 +158,11 @@ public class JsonUtil extends AbstractBaseSteps {
 			String input = attributeTable.getRow(row).get(
 					attributeTable.getHeaders().get(0));
 			String actualData = input.split("=")[0];
-			String expectedData = input.split("=")[1];
+			String expectedData = getData(input.split("=")[1]);
 			response.then().body(actualData, equalTo(expectedData));
 			logger.info("Status Code" + response.getStatusCode());
 			logger.info("Status Line" + response.getStatusLine());
-
+            
 		}
 
 	}
@@ -188,6 +205,18 @@ public class JsonUtil extends AbstractBaseSteps {
 
 		return updateJasonFileWithAttributes(REQ_JSON_FILE_PATH + filepath,
 				attributeTable);
+	}
+	
+	public String updateJasonFileWithExcel(String filepath,
+			Map<String,String> mapReq) {
+
+		return updateJasonFileWithExcelData(REQ_JSON_FILE_PATH + filepath,
+				mapReq);
+	}
+	
+	public String createJsonFileWithExcel(Map<String,String> mapReq) {
+
+		return createJsonFileWithExcelData(mapReq);
 	}
 
 	public String updateJasonFile(String filepath, String input) {
@@ -310,6 +339,9 @@ public class JsonUtil extends AbstractBaseSteps {
 		case "GetCustomWalletDOM":
 			valueToUpdate = deviceDetails.getCustomWallet();
 			break;
+		case "GET_ISSUER_SESSION_ID":
+			valueToUpdate = deviceDetails.getTransactionId();
+			break;
 		default:
 
 		}
@@ -379,5 +411,150 @@ public class JsonUtil extends AbstractBaseSteps {
 			updatedString = tempJdata.get(0).toString();
 		}
 		return updatedString;
+	}
+	public String updateJasonFileWithExcelData(String filepath,
+			Map<String, String> exceldata) {
+		LinkedList<JSONObject> tempJdata = new LinkedList<>();
+		parser = new JSONParser();
+		String updatedString = null;
+		String[] params = null;
+		String updateKey = null;
+		String updateValue = null;
+		try {
+			obj = parser.parse(new FileReader(filepath));
+		} catch (Exception e) {
+			logger.error(e.toString());
+		}
+		for(Entry<String, String> entry: exceldata.entrySet()) {
+			System.out.println(entry.getKey()+"="+entry.getValue());
+			String input = entry.getKey()+"="+entry.getValue();
+			if (input.contains(">")) {
+				String[] inputArray = input.split(">");
+				params = inputArray[0].split(",");
+				String[] expectedKeyValue = inputArray[1].split("=");
+				updateKey = expectedKeyValue[0];
+				updateValue = getData(expectedKeyValue.length > 1 ? expectedKeyValue[1]
+						: null);
+
+			} else {
+				String[] expectedKeyValue = input.split("=");
+				updateKey = expectedKeyValue[0];
+				updateValue = getData(expectedKeyValue.length > 1 ? expectedKeyValue[1]
+						: null);
+
+			}
+
+			jsonObject = (JSONObject) obj;
+
+			Map jData = null;
+
+			if (null != params) {
+				tempJdata.add(jsonObject);
+				int size = params.length;
+				for (int i = 0; i < size; i++) {
+					jData = (Map) jsonObject.get(params[i]);
+
+					if (size - 1 == i) {
+						jData.put(updateKey, updateValue);
+						jsonObject = (JSONObject) jData;
+					} else {
+						jsonObject = (JSONObject) jData;
+					}
+					tempJdata.add(jsonObject);
+				}
+
+			} else {
+
+				jData = (Map) jsonObject;
+				jData.put(updateKey, updateValue);
+				jsonObject = (JSONObject) jData;
+				tempJdata.add(jsonObject);
+			}
+			updatedString = tempJdata.get(0).toString();
+			params=null;
+		}
+		return updatedString;
+	}
+	public String createJsonFileWithExcelData(
+			Map<String, String> exceldata) {
+
+		LinkedList<JSONObject> tempJdata = new LinkedList<>();
+		jsonObject = new JSONObject();
+		String updatedString = null;
+		String[] params = null;
+		String updateKey = null;
+		String updateValue = null;
+		for(Entry<String, String> entry: exceldata.entrySet()) {
+			if(!entry.getKey().equalsIgnoreCase(ConstantData.API_NAME)){
+			System.out.println(entry.getKey()+"="+entry.getValue());
+			String input = entry.getKey()+"="+entry.getValue();
+			if (input.contains(">")) {
+				String[] inputArray = input.split(">");
+				params = inputArray[0].split(",");
+				String[] expectedKeyValue = inputArray[1].split("=");
+				updateKey = expectedKeyValue[0];
+				updateValue = getData(expectedKeyValue.length > 1 ? expectedKeyValue[1]
+						: null);
+
+			} else {
+				String[] expectedKeyValue = input.split("=");
+				updateKey = expectedKeyValue[0];
+				updateValue = getData(expectedKeyValue.length > 1 ? expectedKeyValue[1]
+						: null);
+
+			}
+
+			Map jData = null;
+
+			if (null != params) {
+				int size = params.length;
+				for (int i = 0; i < size; i++) {
+					if(jsonObject.containsKey(params[i]))
+					{
+					 jData = (Map) jsonObject.get(params[i]);
+					}
+					else
+					{
+						jsonObject.put(params[i], new JSONObject());
+						 jData = (Map) jsonObject.get(params[i]);
+					}
+					if (size - 1 == i) {
+						jData.put(updateKey, updateValue);
+						
+					} else {
+						if(jData.containsKey(params[i+1]))
+						{
+						   Map nestedjData =(Map)jData.get(params[i+1]);
+						   nestedjData.put(updateKey, updateValue);
+						   break;
+						}
+						else
+						{
+							jData.put(params[i+1], new  JSONObject());
+							Map nestedjData =(Map)jData.get(params[i+1]);
+							nestedjData.put(updateKey, updateValue);
+							break;
+						}
+					}
+					tempJdata.add(jsonObject);
+				}
+
+			} else {
+
+				jData = (Map) jsonObject;
+				jData.put(updateKey, updateValue);
+				jsonObject = (JSONObject) jData;
+				tempJdata.add(jsonObject);
+			}
+			updatedString = tempJdata.get(0).toString();
+			
+			params=null;
+		}
+		else{
+			context.put(ConstantData.API_NAME, entry.getValue());
+		}
+		}
+		return updatedString;
+	
 	}
 }

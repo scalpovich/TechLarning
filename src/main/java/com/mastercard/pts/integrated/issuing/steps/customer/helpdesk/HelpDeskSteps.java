@@ -6,6 +6,8 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
@@ -32,8 +34,10 @@ import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ServiceCode;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ServiceRequestDropDownValues;
+import com.mastercard.pts.integrated.issuing.domain.provider.DataLoader;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -42,11 +46,22 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.Helpdes
 
 @Component
 public class HelpDeskSteps {
-	private HelpdeskGeneral helpdeskGeneral;
+	@Autowired
+	HelpdeskGeneral helpdeskGeneral;
+
+	@Autowired
+	HelpdeskGeneralPage helpdeskPage;
+	
+	@Autowired
+	DataLoader dataLoader;
+
 	private BigDecimal currentBalanceAmount;
 	private String beforeLoadBalanceInformation;
 	private static final String STATUS_INCORRECT_INFO_MSG = "Device has incorrect status";
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
+	private String clientID;
+	private String loginType="login";
+	
 	@Autowired
 	private TestContext context;
 
@@ -148,8 +163,7 @@ public class HelpDeskSteps {
 	}
 
 	@Then("User edit the $Mailing Address service Code with email indicator to $Office and note to $Mailing")
-	public void editMailingAddressServicesCode(@Named("Mailing Address") String iframeName,
-			@Named("Office") String indicator, @Named("Mailing") String noteName) {
+	public void editMailingAddressServicesCode(@Named("Mailing Address") String iframeName, @Named("Office") String indicator, @Named("Mailing") String noteName) {
 
 		helpdeskgettersetter.setNotes(noteName);
 		helpdeskgettersetter.setEventsIFrameName(iframeName);
@@ -162,8 +176,7 @@ public class HelpDeskSteps {
 	}
 
 	@Then("User edit the $Stop list service Code for $reason with $note")
-	public void thenUserEditTheServiceWithReason(@Named("Stop") String iframeName, @Named("note") String noteName,
-			@Named("reason") String reason) {
+	public void thenUserEditTheServiceWithReason(@Named("Stop") String iframeName, @Named("note") String noteName, @Named("reason") String reason) {
 
 		helpdeskgettersetter.setNotes(noteName);
 		helpdeskgettersetter.setEventsIFrameName(iframeName);
@@ -201,8 +214,8 @@ public class HelpDeskSteps {
 	}
 
 	@Then("User edit the $International Use service Code of operation $Activate for Activation type $Life Long with note $Activated")
-	public void thenUserEditTheServiceWithOperationAndReason(@Named("International") String iframeName,
-			@Named("note") String noteName, @Named("Life") String activationType, @Named("Activate") String operation) {
+	public void thenUserEditTheServiceWithOperationAndReason(@Named("International") String iframeName, @Named("note") String noteName, @Named("Life") String activationType,
+			@Named("Activate") String operation) {
 
 		helpdeskgettersetter.setNotes(noteName);
 		helpdeskgettersetter.setEventsIFrameName(iframeName);
@@ -314,8 +327,7 @@ public class HelpDeskSteps {
 	}
 
 	@When("user defines the service code as $servicecode and creates $multiwallet wallets for $product card")
-	public void createMultiWalletForCard(@Named("servicecode") String servicecode,
-			@Named("multiwallet") String multiwallet, @Named("product") String product) {
+	public void createMultiWalletForCard(@Named("servicecode") String servicecode, @Named("multiwallet") String multiwallet, @Named("product") String product) {
 		deviceCreation = new DeviceCreation();
 		helpdeskgettersetter.setServiceCode(ServiceCode.fromShortName(servicecode));
 		helpdeskgettersetter.setNoOfWallets(multiwallet);
@@ -351,7 +363,9 @@ public class HelpDeskSteps {
 
 	@Then("currency setup for $type device is done correctly and updated in wallet details tab")
 	public void thenCurrencySetupForDeviceIsDoneCorrectlyAndUpdatedInWalletDetailsTab(String type) {
-		Device device = context.get(ContextConstants.DEVICE);
+		Device device = new Device();
+		device.setDeviceNumber(context.get(ContextConstants.DEVICE_NUMBER));
+		device.setAppliedForProduct(ProductType.fromShortName(type));
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
 		assertTrue(helpdeskWorkflow.verifyCurrencySetupDoneCorrectly(helpdeskGeneral, device));
@@ -399,8 +413,7 @@ public class HelpDeskSteps {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
 		device.setAppliedForProduct(ProductType.fromShortName(type));
-		assertTrue(helpdeskWorkflow.verifyBalanceUpdatedCorreclty(beforeLoadBalanceInformation,
-				helpdeskGeneral.getTransactionDetails(), helpdeskWorkflow.getWalletBalanceInformation(device)));
+		assertTrue(helpdeskWorkflow.verifyBalanceUpdatedCorreclty(beforeLoadBalanceInformation, helpdeskGeneral.getTransactionDetails(), helpdeskWorkflow.getWalletBalanceInformation(device)));
 	}
 
 	@When("balance in helpdesk deducted correctly for $type device")
@@ -410,8 +423,7 @@ public class HelpDeskSteps {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
 		device.setAppliedForProduct(ProductType.fromShortName(type));
-		assertTrue(helpdeskWorkflow.verifyBalanceDeductedCorreclty(beforeLoadBalanceInformation,
-				helpdeskGeneral.getTransactionDetails(), helpdeskWorkflow.getWalletBalanceInformation(device)));
+		assertTrue(helpdeskWorkflow.verifyBalanceDeductedCorreclty(beforeLoadBalanceInformation, helpdeskGeneral.getTransactionDetails(), helpdeskWorkflow.getWalletBalanceInformation(device)));
 	}
 
 	@When("balance in helpdesk not changed for $type device")
@@ -421,8 +433,7 @@ public class HelpDeskSteps {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
 		device.setAppliedForProduct(ProductType.fromShortName(type));
-		assertTrue(helpdeskWorkflow.verifyBalanceNotChanged(beforeLoadBalanceInformation,
-				helpdeskWorkflow.getWalletBalanceInformation(device)));
+		assertTrue(helpdeskWorkflow.verifyBalanceNotChanged(beforeLoadBalanceInformation, helpdeskWorkflow.getWalletBalanceInformation(device)));
 	}
 
 	@When("initial load balance in helpdesk updated correctly for $type device")
@@ -432,8 +443,7 @@ public class HelpDeskSteps {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
 		device.setAppliedForProduct(ProductType.fromShortName(type));
-		assertTrue(helpdeskWorkflow.verifyInitialLoadBalanceUpdatedCorreclty(helpdeskGeneral.getInitialLoadTxnDetails(),
-				helpdeskWorkflow.getWalletBalanceInformation(device)));
+		assertTrue(helpdeskWorkflow.verifyInitialLoadBalanceUpdatedCorreclty(helpdeskGeneral.getInitialLoadTxnDetails(), helpdeskWorkflow.getWalletBalanceInformation(device)));
 	}
 
 	@Given("user has current wallet balance amount information for $type device")
@@ -495,6 +505,14 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.setupDeviceCurrency(helpdeskGeneral);
 	}
 
+	@Given("user sets up device currency through helpdesk for FileUpload")
+	@When("user sets up device currency through helpdesk for FileUpload")
+	public void whenUserSetupDeviceCurrencyThroughHelpDeskForFileUpload() {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.setupDeviceCurrency(helpdeskGeneral);
+	}
+
 	/*
 	 * This method gets the device status using search product type and device
 	 * number
@@ -531,8 +549,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.storeSaleDate();
 		helpdeskWorkflow.clickEndCall();
-		assertThat("Device has incorrect Sale Date", helpdeskWorkflow.saleDate(),
-				equalTo(DateUtils.currentDateddMMyyyy()));
+		assertThat("Device has incorrect Sale Date", helpdeskWorkflow.saleDate(), equalTo(DateUtils.currentDateddMMyyyy()));
 	}
 
 	@Then("device activated and activation date is updated in general details")
@@ -540,8 +557,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.storeActivationDate();
 		helpdeskWorkflow.clickEndCall();
-		assertThat("Device has incorrect Activation Date", helpdeskWorkflow.activationDate(),
-				equalTo(DateUtils.currentDateddMMyyyy()));
+		assertThat("Device has incorrect Activation Date", helpdeskWorkflow.activationDate(), equalTo(DateUtils.currentDateddMMyyyy()));
 	}
 
 	@Then("delivery date is updated in general details")
@@ -549,8 +565,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.storeDeliveryDate();
 		helpdeskWorkflow.clickEndCall();
-		assertThat("Device has incorrect Delivery Date", helpdeskWorkflow.deliveryDate(),
-				equalTo(DateUtils.currentDateddMMyyyy()));
+		assertThat("Device has incorrect Delivery Date", helpdeskWorkflow.deliveryDate(), equalTo(DateUtils.currentDateddMMyyyy()));
 	}
 
 	/*
@@ -568,8 +583,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.storeActivationDate();
 		helpdeskWorkflow.clickEndCall();
-		assertThat("Device has incorrect Activation Date", helpdeskWorkflow.activationDate(),
-				equalTo(DateUtils.currentDateddMMyyyy()));
+		assertThat("Device has incorrect Activation Date", helpdeskWorkflow.activationDate(), equalTo(DateUtils.currentDateddMMyyyy()));
 	}
 
 	@When("User search for device on search screen for product type $prepaid and validates the status as $NORMAL")
@@ -584,52 +598,46 @@ public class HelpDeskSteps {
 		}
 
 	}
-	
+
 	@Then("User search for new device on search screen for $productType and validates the status as $NORMAL")
 	@When("User search for new device on search screen for $productType and validates the status as $NORMAL")
 	public void thenUserSearchForDeviceOnSearchScreen(String productType, String status) {
 		helpdeskgettersetter.setProductType(ProductType.fromShortName(productType));
 
-		String actualStatus=helpdeskFlows.searchForNewDevice(helpdeskgettersetter);
-		if(actualStatus.contains(status))
-		{
-		Assert.assertTrue("status of newly created device is normal ", true);
-		}
-		else
-		{
-		Assert.assertTrue("status of newly created device is not normal ", false);
+		String actualStatus = helpdeskFlows.searchForNewDevice(helpdeskgettersetter);
+		if (actualStatus.contains(status)) {
+			Assert.assertTrue("status of newly created device is normal ", true);
+		} else {
+			Assert.assertTrue("status of newly created device is not normal ", false);
 		}
 
 	}
-	
+
 	@Then("User search for new application on search screen for $productType and validates the status as $NORMAL")
 	@When("User search for new application on search screen for $productType and validates the status as $NORMAL")
 	public void thenUserSearchForApplicationOnSearchScreen(String productType, String status) {
 		helpdeskgettersetter.setProductType(ProductType.fromShortName(productType));
 
-		String actualStatus=helpdeskFlows.searchForNewApplication(helpdeskgettersetter);
-		if(actualStatus.contains(status))
-		{
-		Assert.assertTrue("status of newly created device is normal ", true);
-		}
-		else
-		{
-		Assert.assertTrue("status of newly created device is not normal ", false);
+		String actualStatus = helpdeskFlows.searchForNewApplication(helpdeskgettersetter);
+		if (actualStatus.contains(status)) {
+			Assert.assertTrue("status of newly created device is normal ", true);
+		} else {
+			Assert.assertTrue("status of newly created device is not normal ", false);
 		}
 
 	}
-	
-	@Then ("currency setup for device")
-	public void searchDevice(){
-		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);		
-		Device device = context.get(ContextConstants.DEVICE); 		
-		thenUserNavigatesToGeneralInHelpdesk(); 
+
+	@Then("currency setup for device")
+	public void searchDevice() {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		thenUserNavigatesToGeneralInHelpdesk();
 		helpdeskWorkflow.searchByDeviceNumber(device);
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.setupDeviceCurrency(helpdeskGeneral);
 		device.setNewWalletNumber(helpdeskGeneral.getNewWalletNumber());
 	}
-	
+
 	@Then("Expiry date should be calculated as per the flag configured at device plan")
 	@When("User calculates the expiry date as oer the date configured at device plan")
 	public void userCalculatesdate() {
@@ -659,5 +667,21 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.searchByDeviceNumber(device);
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.walletToWalletTransfer(device);
+	}
+	
+	@When("user creates service request to reset cardholder $passwordType password for $cardType user")
+	public void userCreateServiceRequestForLoginPassword(@Named("datasheet") String datasheet, String passwordType,String cardType ) {
+		Map<String, String> reqMap = dataLoader.loadData(datasheet).get();
+		for(Entry<String, String> entry: reqMap.entrySet()){
+			clientID = entry.getValue();
+			helpdeskWorkflow.searchByClientId(clientID,ProductType.fromShortName(cardType));
+			helpdeskWorkflow.clickCustomerCareEditLink();
+			
+			if(passwordType.equalsIgnoreCase(loginType)){
+				helpdeskWorkflow.resetCardholderLoginPassword(clientID);
+			}else{
+				helpdeskWorkflow.resetCardholderTranPassword(clientID);	
+			}
+		}
 	}
 }
