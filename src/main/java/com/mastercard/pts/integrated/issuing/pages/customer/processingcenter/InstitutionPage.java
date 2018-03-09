@@ -195,7 +195,8 @@ public class InstitutionPage extends AbstractBasePage{
 	private MCWebElement issuerSmsProviderCbx;
 	@PageElement(findBy = FindBy.NAME , valueToFind = "mpinEnabled:checkBoxComponent")
 	private MCWebElement mpinEnabledCbx;
-	
+	@PageElement(findBy = FindBy.NAME , valueToFind = "credentialMaskFlag:checkBoxComponent")
+	private MCWebElement credentialMaskFlagCbx;
 	
 
 	public void verifyUiOperationStatus() {
@@ -311,6 +312,7 @@ public class InstitutionPage extends AbstractBasePage{
 					WebElementUtils.scrollDown(driver(), 0, 250);
 					context.put("authenticationOptionsFlg",isSMSServiceProviderAndMPINAreEnabled());
 					selectMpinAndSmsProvider();
+					selectCredentialMaskingOption();
 					clickSaveButton();
 									});	
 		return ascFlag;
@@ -353,6 +355,20 @@ public class InstitutionPage extends AbstractBasePage{
 			acceptPopup();
 
 			
+		}
+	}
+	public void selectCredentialMaskingOption()
+	{
+		InstitutionCreation institutioncreation=context.get("institutionData");
+		String optionFlag=institutioncreation.getAuthenticationFlg();
+		if(optionFlag.equalsIgnoreCase("enable")){
+		String option=institutioncreation.getCredentialMasking();
+		if(option.equalsIgnoreCase("masked")){
+			ClickCheckBox(credentialMaskFlagCbx, true);
+		}
+		else{
+			ClickCheckBox(credentialMaskFlagCbx, false);
+		}
 		}
 	}
 	public void enterInstitutionCode(InstitutionCreation institutioncreation)
