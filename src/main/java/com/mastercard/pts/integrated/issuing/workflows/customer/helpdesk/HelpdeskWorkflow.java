@@ -40,7 +40,12 @@ public class HelpdeskWorkflow {
 	public void searchByDeviceNumber(Device device) {
 		helpDeskPage.searchByDeviceNumber(device);
 	}
-
+	
+	public void searchByClientId(String clientId,String cardType){
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);		
+		helpDeskPage.searchByClientID(clientId, cardType);
+	}
+	
 	public String getDeviceNumberStatus() {
 		return helpDeskPage.getDeviceNumberStatus();
 	}
@@ -122,5 +127,13 @@ public class HelpdeskWorkflow {
 	public boolean verifyInitialLoadBalanceUpdatedCorreclty(String transactionDetailsFromExcel, String afterLoadBalanceInformation) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		return helpDeskPage.verifyInitialLoadBalanceUpdatedCorreclty(transactionDetailsFromExcel, afterLoadBalanceInformation);
+	}
+	
+	public boolean resetCardholderLoginPassword(String clientID){		
+		return helpDeskPage.serviceRequestCardholderLoginPassword(clientID);
+	}
+	
+	public boolean resetCardholderTranPassword(String clientID){		
+		return helpDeskPage.serviceRequestCardholderTransactionPassword(clientID);
 	}
 }

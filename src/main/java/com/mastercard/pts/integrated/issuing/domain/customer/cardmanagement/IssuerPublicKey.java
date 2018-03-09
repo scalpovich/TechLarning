@@ -20,7 +20,7 @@ public class IssuerPublicKey {
 	private String serialNumber;
 	private String status;
 	private String issueDataCurrentDatePlus;
-	public String DeviceBin;
+	public String deviceBin;
 	public LocalDate expiryDate;
 	public String getIpkId() {
 		return ipkId;
@@ -74,15 +74,15 @@ public class IssuerPublicKey {
 		this.issueDataCurrentDatePlus = issueDataCurrentDatePlus;
 	}	
 	public String getDeviceBin() {
-		return DeviceBin;
+		return deviceBin;
 	}
 
 	public void setDeviceBin(String deviceBin) {
-		DeviceBin = deviceBin;
+		this.deviceBin = deviceBin;
 	}
 
 	public void setIssuerDate(String issuerDate) {
-		issuerDate = issuerDate;
+		this.issuerDate = issuerDate;
 	}
 
 
@@ -97,16 +97,9 @@ public class IssuerPublicKey {
 
 
 	public void ipkDatProvider() {
-		// IssuerPublicKey ipk = new IssuerPublicKey();
-		// if (MapUtils.fnGetInputDataFromMap("DMSIssuerBIN") != null) {
-		// ipk.setIssuerBIN(MapUtils.fnGetInputDataFromMap("DMSIssuerBIN"));
-		// } else if (MapUtils.fnGetInputDataFromMap("SMSIssuerBIN") != null) {
-		// ipk.setIssuerBIN(MapUtils.fnGetInputDataFromMap("SMSIssuerBIN"));
-		// }
-
 		setIPKExpiryDate(MapUtils.fnGetInputDataFromMap("iPKExpiryDate"));
 		setStatus(MapUtils.fnGetInputDataFromMap("StatusValue"));
-		setIssuerDate(DateUtils.getDateinDDMMYYYY());
+		setIssuerDate(DateUtils.getNextDateInDDMMYYYY());
 
 	}
 

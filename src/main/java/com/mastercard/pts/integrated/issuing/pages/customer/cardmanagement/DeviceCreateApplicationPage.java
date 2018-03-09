@@ -23,6 +23,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Prog
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -34,7 +35,10 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class DeviceCreateApplicationPage extends AbstractBasePage {
 	@Autowired
 	private TestContext context;
+	
+	
     private CreditLimitRulePage creditLimitRulePage;
+    
 	private static final Logger logger = LoggerFactory.getLogger(DeviceCreateApplicationPage.class);
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
@@ -283,6 +287,12 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
 
 		fillProfile(device);
+		
+		//Validate only when environment is demo
+		if(System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)){
+			clickNextButton();
+		}
+		
 		fillAddress(device);
 		
 			// skip employment details

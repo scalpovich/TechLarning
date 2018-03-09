@@ -35,7 +35,7 @@ public class ConstantData {
 	public static final String ARN_NUMBER="ARN_NUMBER";
 	public static final String PROCESSING_INSTITUTION="BNK [000000]";
 	
-	public static final String EXCEPTION = "Exception occurred {}";
+	public static final String EXCEPTION = "Exception occurred :: {}";
 	public static final String SIKUKI_EXCEPTION = "Image could not be clicked";
 	public static final String MESSAGE_CONSTANT = "Simulator path being set :  ";
 	public static final String IS_PIN_REQUIRED = "TRUE";
@@ -59,6 +59,10 @@ public class ConstantData {
 	public static final String API_NAME = "API_NAME";
 
 	public static final String  MSR_CARD = "magnetic stripe card";
+	public static final String  DEBIT_DEVICE = "Debitdevice";
+	public static final String  PREPAID_DEVICE = "Prepaiddevice";
+	
+	
 	
 	private ConstantData() {}
 }

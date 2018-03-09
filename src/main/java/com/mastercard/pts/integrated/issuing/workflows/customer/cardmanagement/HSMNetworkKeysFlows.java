@@ -15,14 +15,13 @@ public class HSMNetworkKeysFlows extends MenuFlows {
 	Navigator navigator;
 
 	public void addHSMNetworkKeys(HSMNetworkKeys hsmnetworkKeys) {
-		waitForElementVisible(menusubmenuPage.getCardManagement());
 		HSMNetworkKeysPage hsmnetworkpage = navigator.navigateToPage(HSMNetworkKeysPage.class);
 		hsmnetworkpage.addHSMKeys();
 		hsmnetworkpage.switchToAddNetworkKeys();
-		hsmnetworkpage.SelectKeyType(hsmnetworkKeys);
+		hsmnetworkpage.selectNetworkInterface(hsmnetworkKeys);
+		hsmnetworkpage.selectKeyType(hsmnetworkKeys);
 		hsmnetworkpage.fillSubNetworkID(hsmnetworkKeys);
 		hsmnetworkpage.fillKeyIndex(hsmnetworkKeys);
-		hsmnetworkpage.SelectKeyType(hsmnetworkKeys);
 		hsmnetworkpage.fillNetworkCryptogram(hsmnetworkKeys);
 		hsmnetworkpage.fillConfirmNetworkCryptogram(hsmnetworkKeys);
 		hsmnetworkpage.fillNetworkCryptogramCheckValue(hsmnetworkKeys);

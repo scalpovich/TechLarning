@@ -30,10 +30,10 @@ public class MasterDerivationKeysPage extends AbstractBasePage {
 			.getLogger(MasterDerivationKeysPage.class);
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
-	private MCWebElement interchange;
+	private MCWebElement interchangeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent")
-	private MCWebElement status;
+	private MCWebElement statusDDwn;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=binLow]")
 	private MCWebElement binLow;
@@ -44,64 +44,64 @@ public class MasterDerivationKeysPage extends AbstractBasePage {
 	private MCWebElement addMasterDerivationKeys;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "networkCode:input:dropdowncomponent")
-	private MCWebElement Interchange;
+	private MCWebElement interchangeNetworkDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "status:input:dropdowncomponent")
-	private MCWebElement Status;
+	private MCWebElement statusInputDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "keyType:input:dropdowncomponent")
-	private MCWebElement KeyType;
+	private MCWebElement keyTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "binLow:input:inputTextField")
-	private MCWebElement BinLow;
+	private MCWebElement binLowTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "binHigh:input:inputTextField")
-	private MCWebElement BinHigh;
+	private MCWebElement binHighTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mdkEncrypLmk:input:inputTextField")
-	private MCWebElement MDKEncryptedUnderLMK;
+	private MCWebElement mdkEncryptedUnderLMKTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "confirmMdkEncrypLmk:input:inputTextField")
-	private MCWebElement ConfirmMDK;
+	private MCWebElement confirmMDKTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mdkKeycheckVal:input:inputTextField")
-	private MCWebElement MDKKeyCheckValue;
+	private MCWebElement mdkKeyCheckValueTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "confirmMdkKeycheckVal:input:inputTextField")
-	private MCWebElement ConfirmMDKKeyCheckValue;
+	private MCWebElement confirmMDKKeyCheckValueTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "isSmi:checkBoxComponent")
-	private MCWebElement SMIExistsChkBx;
+	private MCWebElement smiExistsChkBxTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "smiEncrypLmk:input:inputTextField")
-	private MCWebElement SMIEncryptedUnderLMKTxt;
+	private MCWebElement smiEncryptedUnderLMKTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cnfSmiEncrypLmk:input:inputTextField")
-	private MCWebElement ConfirmSMI;
+	private MCWebElement confirmSMITxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "smiKeycheckVal:input:inputTextField")
-	private MCWebElement SMIKeyCheckvalue;
+	private MCWebElement sMIKeyCheckvalueTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cnfSmiKeycheckVal:input:inputTextField")
-	private MCWebElement ConfirmSMIKeyCheckvalue;
+	private MCWebElement confirmSMIKeyCheckvalueTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "isSmc:checkBoxComponent")
-	private MCWebElement SMCExistsChkBx;
+	private MCWebElement smcExistsChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "smcEncrytLmk:input:inputTextField")
-	private MCWebElement SMCEncryptedUnderLMKTxt;
+	private MCWebElement smcEncryptedUnderLMKTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cnfSmcEncrytLmk:input:inputTextField")
-	private MCWebElement ConfirmSMC;
+	private MCWebElement confirmSMCTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "smcKeycheckVal:input:inputTextField")
-	private MCWebElement SMCKeyCheckvalue;
+	private MCWebElement smcKeyCheckvalueTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cnfSmcKeycheckVal:input:inputTextField")
-	private MCWebElement ConfirmSMCKeyCheckvalue;
+	private MCWebElement confirmSMCKeyCheckvalue;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElement save;
+	private MCWebElement saveBtn;
 
 	public void addMDK() {
 		waitForElementVisible(addMasterDerivationKeys);
@@ -109,108 +109,108 @@ public class MasterDerivationKeysPage extends AbstractBasePage {
 	}
 
 	public void switchToAddMDKKey() {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		addWicketAjaxListeners(driver());
 		switchToIframe(Constants.ADD_MDK_KEY_FRAME);
 	}
 
-	public void SelectInterchange(MasterDerivationKeys mdkKeys) {
+	public void selectInterchange(MasterDerivationKeys mdkKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByText(Interchange, mdkKeys.getInterchange());
+		selectByVisibleText(interchangeNetworkDDwn, mdkKeys.getInterchange());
 	}
 
 	public void fillBinLow(MasterDerivationKeys mdkKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(BinLow, mdkKeys.getBinLow());
+		enterText(binLowTxt, mdkKeys.getBinLow());
 	}
 
 	public void fillBinHigh(MasterDerivationKeys mdkKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(BinHigh, mdkKeys.getBinHigh());
+		enterText(binHighTxt, mdkKeys.getBinHigh());
 	}
 
-	public void SelectStatus(MasterDerivationKeys mdkKeys) {
+	public void selectStatus(MasterDerivationKeys mdkKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByText(Status, mdkKeys.getStatus());
+		SelectDropDownByText(statusInputDDwn, mdkKeys.getStatus());
 	}
 
-	public void SelectKeyType(MasterDerivationKeys mdkKeys) {
+	public void selectKeyType(MasterDerivationKeys mdkKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByText(KeyType, mdkKeys.getKeyType());
+		SelectDropDownByText(keyTypeDDwn, mdkKeys.getKeyType());
 	}
 
 	public void fillMDKEncryptedUnderLMK(MasterDerivationKeys mdkKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(MDKEncryptedUnderLMK, mdkKeys.getMDKEncryptedUnderLMK());
+		enterText(mdkEncryptedUnderLMKTxt, mdkKeys.getMDKEncryptedUnderLMK());
 	}
 
 	public void fillConfirmMDKEncryptedUnderLMK(MasterDerivationKeys mdkKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(ConfirmMDK, mdkKeys.getConfirmMDK());
+		enterText(confirmMDKTxt, mdkKeys.getConfirmMDK());
 	}
 
 	public void fillMDKKeyCheckvalue(MasterDerivationKeys mdkKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(MDKKeyCheckValue, mdkKeys.getMDKKeyCheckValue());
+		enterText(mdkKeyCheckValueTxt, mdkKeys.getMDKKeyCheckValue());
 	}
 
 	public void fillConfirmMDKKeyCheckvalue(MasterDerivationKeys mdkKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(ConfirmMDKKeyCheckValue, mdkKeys.getConfirmMDKKeyCheckValue());
+		enterText(confirmMDKKeyCheckValueTxt, mdkKeys.getConfirmMDKKeyCheckValue());
 	}
 
-	public void SelectSMIExists() {
+	public void selectSMIExists() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		ClickCheckBox(SMIExistsChkBx, true);
+		ClickCheckBox(smiExistsChkBxTxt, true);
 	}
 
 	public void fillSMIEncryptedUnderLMK(MasterDerivationKeys mdkKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(SMIEncryptedUnderLMKTxt, mdkKeys.getSMIEncryptedUnderLMKTxt());
+		enterText(smiEncryptedUnderLMKTxt, mdkKeys.getSMIEncryptedUnderLMKTxt());
 	}
 
 	public void fillConfirmSMI(MasterDerivationKeys mdkKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(ConfirmSMI, mdkKeys.getConfirmSMI());
+		enterText(confirmSMITxt, mdkKeys.getConfirmSMI());
 	}
 
 	public void fillSMIkeyCheckvalue(MasterDerivationKeys mdkKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(SMIKeyCheckvalue, mdkKeys.getSMIKeyCheckvalue());
+		enterText(sMIKeyCheckvalueTxt, mdkKeys.getSMIKeyCheckvalue());
 	}
 
 	public void fillConfirmSMIkeyCheckvalue(MasterDerivationKeys mdkKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(ConfirmSMIKeyCheckvalue, mdkKeys.getConfirmSMIKeyCheckvalue());
+		enterText(confirmSMIKeyCheckvalueTxt, mdkKeys.getConfirmSMIKeyCheckvalue());
 	}
 
-	public void SelectSMCExists() {
+	public void selectSMCExists() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		ClickCheckBox(SMCExistsChkBx, true);
+		ClickCheckBox(smcExistsChkBx, true);
 	}
 
 	public void fillSMCEncryptedUnderLMK(MasterDerivationKeys mdkKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(SMCEncryptedUnderLMKTxt, mdkKeys.getSMCEncryptedUnderLMKTxt());
+		enterText(smcEncryptedUnderLMKTxt, mdkKeys.getSMCEncryptedUnderLMKTxt());
 	}
 
 	public void fillConfirmSMC(MasterDerivationKeys mdkKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(ConfirmSMC, mdkKeys.getConfirmSMC());
+		enterText(confirmSMCTxt, mdkKeys.getConfirmSMC());
 	}
 
 	public void fillSMCkeyCheckvalue(MasterDerivationKeys mdkKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(SMCKeyCheckvalue, mdkKeys.getSMCKeyCheckvalue());
+		enterText(smcKeyCheckvalueTxt, mdkKeys.getSMCKeyCheckvalue());
 	}
 
 	public void fillConfirmSMCkeyCheckvalue(MasterDerivationKeys mdkKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(ConfirmSMCKeyCheckvalue, mdkKeys.getConfirmSMCKeyCheckvalue());
+		enterText(confirmSMCKeyCheckvalue, mdkKeys.getConfirmSMCKeyCheckvalue());
 	}
 
 	public void clickSaveBtn() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		ClickButton(save);
+		ClickButton(saveBtn);
 	}
 
 	public void enterMDKDetails(MasterDerivationKeys mdkKeys) {
@@ -221,7 +221,7 @@ public class MasterDerivationKeysPage extends AbstractBasePage {
 	}
 
 	public void enterSMIDetails(MasterDerivationKeys mdkKey) {
-		SelectSMIExists();
+		selectSMIExists();
 		fillSMIEncryptedUnderLMK(mdkKey);
 		fillConfirmSMI(mdkKey);
 		fillSMIkeyCheckvalue(mdkKey);
@@ -229,7 +229,7 @@ public class MasterDerivationKeysPage extends AbstractBasePage {
 	}
 
 	public void enterSMCDetails(MasterDerivationKeys mdkKey) {
-		SelectSMCExists();
+		selectSMCExists();
 		fillSMCEncryptedUnderLMK(mdkKey);
 		fillConfirmSMC(mdkKey);
 		fillSMCkeyCheckvalue(mdkKey);
@@ -243,8 +243,8 @@ public class MasterDerivationKeysPage extends AbstractBasePage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(interchange),
-				WebElementUtils.elementToBeClickable(status),
+				WebElementUtils.elementToBeClickable(interchangeDDwn),
+				WebElementUtils.elementToBeClickable(statusDDwn),
 				WebElementUtils.elementToBeClickable(binLow),
 				WebElementUtils.elementToBeClickable(binHigh)
 				);
