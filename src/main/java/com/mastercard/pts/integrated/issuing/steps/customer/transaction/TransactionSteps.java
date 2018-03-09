@@ -41,6 +41,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.TransactionProvider
 import com.mastercard.pts.integrated.issuing.pages.ValidationException;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKeyValuePair;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
@@ -160,6 +161,7 @@ public class TransactionSteps {
 	private Transaction generateMasTestDataForTransaction(String transaction) {
 		MiscUtils.reportToConsole("********** start generateMasTestDataForTransaction ********");
 		Device device = context.get(ContextConstants.DEVICE);
+		DevicePlan devicePlan = null;
 		// this line of code reads data from the "AuthorizationTransaction_DataDriven.xls" at \\Isser-automation-epam\src\main\resources\config\Data folder as the
 		 // "Transaction Templates" sheet has the template information
 		Transaction transactionData = transactionProvider.loadTransaction(transaction);
@@ -168,12 +170,18 @@ public class TransactionSteps {
 		if (device != null) {
 			MiscUtils.reportToConsole("********** Fetching data from DeviceContect ********");
 			// _____________________FOR PINLESS CARD________________ device plan context is used to get Expiry Date incase of PinLess card
-			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
-			device.setServiceCode(devicePlan.getServiceCode());
-			if ("YES".equalsIgnoreCase(devicePlan.getIsPinLess())) {
-				MiscUtils.reportToConsole("********** Set as PinLess card ********");
-				device.setExpirationDate(devicePlan.getExpiryDate());
-				device.setPinNumberForTransaction("PINLESS");
+			if(!Constants.DATA_DRIVEN_CARD_BOARDING.equalsIgnoreCase("YES")){
+				devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+				device.setServiceCode(devicePlan.getServiceCode());				
+				if ("YES".equalsIgnoreCase(devicePlan.getIsPinLess())) {
+					device.setExpirationDate(devicePlan.getExpiryDate());
+					device.setPinNumberForTransaction("PINLESS");
+				}
+			}else{
+				if ("YES".equalsIgnoreCase(device.getIsPinRequired())) {
+					device.setExpirationDate(DateUtils.getValueInYYMMFormatForExpiryDate(device.getExpirationDate()));
+					device.setPinNumberForTransaction("PINLESS");
+				}
 			}
 			// ____________FOR PINLESS CARD__________CURRENCY VAL FROM EXCEL _________ fetching currency value from excel
 			Transaction tempData = transactionProvider.createWithProvider(provider);
