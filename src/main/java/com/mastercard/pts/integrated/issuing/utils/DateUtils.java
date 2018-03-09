@@ -308,7 +308,7 @@ public class DateUtils {
 		  Date tomorrow = calendar.getTime(); 
 		return new SimpleDateFormat("MMMM/dd/yyyy").format(tomorrow);
 	}
-	public static String getValueInYYMMFormatForExpiryDate(String dateVal) {
+	public static String getDateInYYMM(String dateVal) {
 		// for format of date to be passed is YYMM .Ex: Input is 10-2022..
 		// output should be 2210
 		String[] tempArr = dateVal.split("-");

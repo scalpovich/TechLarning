@@ -179,7 +179,7 @@ public class TransactionSteps {
 				}
 			}else{
 				if ("YES".equalsIgnoreCase(device.getIsPinRequired())) {
-					device.setExpirationDate(DateUtils.getValueInYYMMFormatForExpiryDate(device.getExpirationDate()));
+					device.setExpirationDate(DateUtils.getDateInYYMM(device.getExpirationDate()));
 					device.setPinNumberForTransaction("PINLESS");
 				}
 			}

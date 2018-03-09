@@ -2,7 +2,7 @@
 Narrative:
 In order to add new device from data provided
 As a user
-I want to assert that newly created device is present into the system
+I want to assert that newly created device is present into the system and able to perform the transaction
 
 Meta:
 @StoryName NewDeviceCredit_corporate_msr
