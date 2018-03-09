@@ -23,139 +23,139 @@ public class HSMDeviceKeysPage extends AbstractBasePage {
 	private MCWebElement addHSMDeviceKeys;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrBinInf:input:inputTextField")
-	private MCWebElement BinStartTxt;
+	private MCWebElement binStartTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrBinSup:input:inputTextField")
-	private MCWebElement BinEndTxt;
+	private MCWebElement binEndTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrCvkA:input:inputTextField")
-	private MCWebElement CVKACryptogram;
+	private MCWebElement cvkACryptogram;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cnfbincrCvkA:input:inputTextField")
-	private MCWebElement ConfirmACryptogram;
+	private MCWebElement confirmACryptogram;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrKchkValueA:input:inputTextField")
-	private MCWebElement CVKAKeyCheckValue;
+	private MCWebElement cvkAKeyCheckValue;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cnfbincrKchkValueA:input:inputTextField")
-	private MCWebElement ConfirmAKeyCheckValue;
+	private MCWebElement confirmAKeyCheckValue;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrCvkB:input:inputTextField")
-	private MCWebElement CVKBCryptogram;
+	private MCWebElement cvkBCryptogram;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cnfbincrCvkB:input:inputTextField")
-	private MCWebElement ConfirmBCryptogram;
+	private MCWebElement confirmBCryptogram;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrKchkValueB:input:inputTextField")
-	private MCWebElement CVKBKeyCheckValue;
+	private MCWebElement cvkBKeyCheckValue;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cnfbincrKchkValueB:input:inputTextField")
-	private MCWebElement ConfirmBKeyCheckValue;
+	private MCWebElement confirmBKeyCheckValue;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrIsPinData:checkBoxComponent")
-	private MCWebElement PINDataExistsChkBx;
+	private MCWebElement pinDataExistsChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrPingenmode:input:dropdowncomponent")
-	private MCWebElement GenerationMethodDDwn;
+	private MCWebElement generationMethodDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "compType:input:dropdowncomponent")
 	private MCWebElement componentTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrHexdecimibm:input:inputTextField")
-	private MCWebElement DecimalizationTabletxt;
+	private MCWebElement decimalizationTabletxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrMinPinlg:input:inputTextField")
-	private MCWebElement PINlengthtxt;
+	private MCWebElement pinLengthtxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrIsPvki:checkBoxComponent")
-	private MCWebElement PVKiExistsChkBx;
+	private MCWebElement pvkiExistsChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrOffsetpvv:input:inputTextField")
-	private MCWebElement PVVOffsetOnTrackTxt;
+	private MCWebElement pvvOffsetOnTrackTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrOffsetpvki:input:inputTextField")
-	private MCWebElement PVKiOffsetOnTrackTxt;
+	private MCWebElement pvkiOffsetOnTrackTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrIsPvkData:checkBoxComponent")
-	private MCWebElement PVKDataExistsChkBx;
+	private MCWebElement pvkDataExistsChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrPinvaldata:input:inputTextField")
-	private MCWebElement PINValidationDataTxt;
+	private MCWebElement pinValidationDataTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cnfbincrPinvaldata:input:inputTextField")
-	private MCWebElement ConfirmValidationDataTxt;
+	private MCWebElement confirmValidationDataTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "pvk:input:inputTextField")
-	private MCWebElement PINVerificationKeyTxt;
+	private MCWebElement pinVerificationKeyTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cnfpvk:input:inputTextField")
-	private MCWebElement ConfirmPINVerificationKeyTxt;
+	private MCWebElement confirmPINVerificationKeyTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "pvkKchkValue:input:inputTextField")
-	private MCWebElement PINVerificationKeyCheckTxt;
+	private MCWebElement pinVerificationKeyCheckTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cnfpvkKchkValue:input:inputTextField")
-	private MCWebElement ConfirmPINVerificationKeyCheckTxt;
+	private MCWebElement confirmPINVerificationKeyCheckTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrIsCv:checkBoxComponent")
-	private MCWebElement CVVExistsChkBx;
+	private MCWebElement cvvExistsChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrCvCtl:checkBoxComponent")
-	private MCWebElement ControlFlagChkBx;
+	private MCWebElement controlFlagChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrOffsetcvv:input:inputTextField")
-	private MCWebElement CVVOffsetOnTrackTxt;
+	private MCWebElement cvvOffsetOnTrackTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrCvkA:input:inputTextField")
-	private MCWebElement CVKACryptogramTxt;
+	private MCWebElement cvkACryptogramTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cnfbincrCvkA:input:inputTextField")
-	private MCWebElement ConfirmACryptogramTxt;
+	private MCWebElement confirmACryptogramTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrKchkValueA:input:inputTextField")
-	private MCWebElement CVKAKeyCheckTxt;
+	private MCWebElement cvkAKeyCheckTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cnfbincrKchkValueA:input:inputTextField")
-	private MCWebElement ConfirmAKeyCheckTxt;
+	private MCWebElement confirmAKeyCheckTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrCvkB:input:inputTextField")
-	private MCWebElement CVKBCryptogramTxt;
+	private MCWebElement cvkBCryptogramTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cnfbincrCvkB:input:inputTextField")
-	private MCWebElement ConfirmBCryptogramTxt;
+	private MCWebElement confirmBCryptogramTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrKchkValueB:input:inputTextField")
-	private MCWebElement CVKBKeyCheckTxt;
+	private MCWebElement cvkBKeyCheckTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cnfbincrKchkValueB:input:inputTextField")
-	private MCWebElement ConfirmBKeyCheckTxt;
+	private MCWebElement confirmBKeyCheckTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "bincrIsCvv3:checkBoxComponent")
-	private MCWebElement CVV3ExistsChkBx;
+	private MCWebElement cvv3ExistsChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "payPassWaveKey:input:inputTextField")
-	private MCWebElement CVV3CryptogramTxt;
+	private MCWebElement cvv3CryptogramTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cnfPayPassWaveKey:input:inputTextField")
-	private MCWebElement ConfirmCVV3CryptogramTxt;
+	private MCWebElement confirmCVV3CryptogramTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "payPassWaveKchk:input:inputTextField")
-	private MCWebElement CVV3KeyCheckvalueTxt;
+	private MCWebElement cvv3KeyCheckvalueTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cnfPayPassWaveKchk:input:inputTextField")
-	private MCWebElement ConfirmCVV3KeyCheckValueTxt;
+	private MCWebElement confirmCVV3KeyCheckValueTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "atcOffsetTrack2:input:inputTextField")
-	private MCWebElement ATCOffsetOnTrackTxt;
+	private MCWebElement atcOffsetOnTrackTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "unOffsetTrack2:input:inputTextField")
-	private MCWebElement UNOffsetOnTrackTxt;
+	private MCWebElement unOffsetOnTrackTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cvc3OffsetTrack2:input:inputTextField")
-	private MCWebElement CVC3OffsetOnTrackTxt;
+	private MCWebElement cvc3OffsetOnTrackTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElement save;
+	private MCWebElement saveBtn;
 
 	public void addHSMKeys() {
 		waitForElementVisible(addHSMDeviceKeys);
@@ -164,102 +164,102 @@ public class HSMDeviceKeysPage extends AbstractBasePage {
 
 	public void fillBinStart(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		waitForElementVisible(BinStartTxt);
-		enterText(BinStartTxt, hsmKeys.getBinStart());
+		waitForElementVisible(binStartTxt);
+		enterText(binStartTxt, hsmKeys.getBinStart());
 	}
 
 	public void fillBinEnd(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		waitForElementVisible(BinEndTxt);
-		enterText(BinEndTxt, hsmKeys.getBinEnd());
+		waitForElementVisible(binEndTxt);
+		enterText(binEndTxt, hsmKeys.getBinEnd());
 	}
 
 	public void selectPINDataCheckBox() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		ClickCheckBox(PINDataExistsChkBx, true);
+		ClickCheckBox(pinDataExistsChkBx, true);
 	}
 
 	public void selectGenerationMethod(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		waitForElementVisible(GenerationMethodDDwn);
-		SelectDropDownByText(GenerationMethodDDwn, hsmKeys.getGenerationMethodDDwn());
+		waitForElementVisible(generationMethodDDwn);
+		SelectDropDownByText(generationMethodDDwn, hsmKeys.getGenerationMethodDDwn());
 	}
 
 	public void fillDecimalization(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		waitForElementVisible(DecimalizationTabletxt);
-		enterText(DecimalizationTabletxt, hsmKeys.getDecimalizationTable());
+		waitForElementVisible(decimalizationTabletxt);
+		enterText(decimalizationTabletxt, hsmKeys.getDecimalizationTable());
 	}
 
 	public void fillPINlength(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		waitForElementVisible(PINlengthtxt);
-		enterText(PINlengthtxt, hsmKeys.getPINlength());
+		waitForElementVisible(pinLengthtxt);
+		enterText(pinLengthtxt, hsmKeys.getPINlength());
 	}
 
 	public void selectPVKiExistsCheckBox() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		ClickCheckBox(PVKiExistsChkBx, true);
+		ClickCheckBox(pvkiExistsChkBx, true);
 	}
 
 	public void fillPVVOffset(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(PVVOffsetOnTrackTxt, hsmKeys.getPVVOffset());
+		enterText(pvvOffsetOnTrackTxt, hsmKeys.getPVVOffset());
 	}
 
 	public void fillPVKOffset(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(PVKiOffsetOnTrackTxt, hsmKeys.getPVKOffset());
+		enterText(pvkiOffsetOnTrackTxt, hsmKeys.getPVKOffset());
 	}
 
 	public void selectPVKDataExistsCheckBox() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		ClickCheckBox(PVKDataExistsChkBx, true);
+		ClickCheckBox(pvkDataExistsChkBx, true);
 	}
 
 	public void fillPINValidationData(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(PINValidationDataTxt, hsmKeys.getPINValidationData());
+		enterText(pinValidationDataTxt, hsmKeys.getPINValidationData());
 	}
 
 	public void fillConfirmValidationData(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(ConfirmValidationDataTxt, hsmKeys.getPINValidationData());
+		enterText(confirmValidationDataTxt, hsmKeys.getPINValidationData());
 	}
 
 	public void fillPINVerificationKey(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(PINVerificationKeyTxt, hsmKeys.getPINVerificationKey());
+		enterText(pinVerificationKeyTxt, hsmKeys.getPINVerificationKey());
 	}
 
 	public void fillConfirmPINVerificationKey(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(ConfirmPINVerificationKeyTxt, hsmKeys.getPINVerificationKey());
+		enterText(confirmPINVerificationKeyTxt, hsmKeys.getPINVerificationKey());
 	}
 
 	public void fillPINVerificationKeyCheck(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(PINVerificationKeyCheckTxt, hsmKeys.getPINVerificationKeyCheck());
+		enterText(pinVerificationKeyCheckTxt, hsmKeys.getPINVerificationKeyCheck());
 	}
 
 	public void fillConfirmPINVerificationKeyCheck(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(ConfirmPINVerificationKeyCheckTxt, hsmKeys.getPINVerificationKeyCheck());
+		enterText(confirmPINVerificationKeyCheckTxt, hsmKeys.getPINVerificationKeyCheck());
 	}
 
 	public void selectCVVExistsCheckBox() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		ClickCheckBox(CVVExistsChkBx, true);
+		ClickCheckBox(cvvExistsChkBx, true);
 	}
 
 	public void selectControlFlagCheckBox() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		ClickCheckBox(ControlFlagChkBx, true);
+		ClickCheckBox(controlFlagChkBx, true);
 	}
 
 	public void fillCVVOffsetOnTrack(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(CVVOffsetOnTrackTxt, hsmKeys.getCVVOffsetOnTrack());
+		enterText(cvvOffsetOnTrackTxt, hsmKeys.getCVVOffsetOnTrack());
 	}
 	public void selectComponentType(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(driver());
@@ -269,87 +269,87 @@ public class HSMDeviceKeysPage extends AbstractBasePage {
 	
 	public void fillCVKACryptogram(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(CVKACryptogramTxt, hsmKeys.getCVKACryptogram());
+		enterText(cvkACryptogramTxt, hsmKeys.getCVKACryptogram());
 	}
 
 	public void fillConfirmACryptogram(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(ConfirmACryptogramTxt, hsmKeys.getConfirmACryptogram());
+		enterText(confirmACryptogramTxt, hsmKeys.getConfirmACryptogram());
 	}
 
 	public void fillCVKAKeyCheck(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(CVKAKeyCheckTxt, hsmKeys.getCVKAKeyCheck());
+		enterText(cvkAKeyCheckTxt, hsmKeys.getCVKAKeyCheck());
 	}
 
 	public void fillConfirmAKeyCheck(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(ConfirmAKeyCheckTxt, hsmKeys.getConfirmAKeyCheck());
+		enterText(confirmAKeyCheckTxt, hsmKeys.getConfirmAKeyCheck());
 	}
 
 	public void fillCVKBCryptogram(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(CVKBCryptogramTxt, hsmKeys.getCVKBCryptogram());
+		enterText(cvkBCryptogramTxt, hsmKeys.getCVKBCryptogram());
 	}
 
 	public void fillConfirmBCryptogram(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(ConfirmBCryptogramTxt, hsmKeys.getConfirmBCryptogram());
+		enterText(confirmBCryptogramTxt, hsmKeys.getConfirmBCryptogram());
 	}
 
 	public void fillCVKBKeyCheck(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(CVKBKeyCheckTxt, hsmKeys.getCVKBKeyCheck());
+		enterText(cvkBKeyCheckTxt, hsmKeys.getCVKBKeyCheck());
 	}
 
 	public void fillConfirmBKeyCheck(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(ConfirmBKeyCheckTxt, hsmKeys.getConfirmBKeyCheck());
+		enterText(confirmBKeyCheckTxt, hsmKeys.getConfirmBKeyCheck());
 	}
 
 	public void selectCVV3ExistsCheckBox() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		ClickCheckBox(CVV3ExistsChkBx, true);
+		ClickCheckBox(cvv3ExistsChkBx, true);
 	}
 
 	public void fillCVV3Cryptogram(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(CVV3CryptogramTxt, hsmKeys.getCVV3Cryptogram());
+		enterText(cvv3CryptogramTxt, hsmKeys.getCVV3Cryptogram());
 	}
 
 	public void fillConfirmCVV3Cryptogram(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(ConfirmCVV3CryptogramTxt, hsmKeys.getConfirmCVV3Cryptogram());
+		enterText(confirmCVV3CryptogramTxt, hsmKeys.getConfirmCVV3Cryptogram());
 	}
 
 	public void fillCVV3KeyCheckvalue(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(CVV3KeyCheckvalueTxt, hsmKeys.getCVV3KeyCheckvalue());
+		enterText(cvv3KeyCheckvalueTxt, hsmKeys.getCVV3KeyCheckvalue());
 	}
 
 	public void fillConfirmCVV3KeyCheckValue(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(ConfirmCVV3KeyCheckValueTxt, hsmKeys.getConfirmCVV3KeyCheckValue());
+		enterText(confirmCVV3KeyCheckValueTxt, hsmKeys.getConfirmCVV3KeyCheckValue());
 	}
 
 	public void fillATCOffsetOnTrack(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(ATCOffsetOnTrackTxt, hsmKeys.getATCOffsetOnTrack());
+		enterText(atcOffsetOnTrackTxt, hsmKeys.getATCOffsetOnTrack());
 	}
 
 	public void fillUNOffsetOnTrack(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(UNOffsetOnTrackTxt, hsmKeys.getUNOffsetOnTrack());
+		enterText(unOffsetOnTrackTxt, hsmKeys.getUNOffsetOnTrack());
 	}
 
 	public void fillCVC3OffsetOnTrack(HSMDeviceKeys hsmKeys) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		enterText(CVC3OffsetOnTrackTxt, hsmKeys.getCVVOffsetOnTrack());
+		enterText(cvc3OffsetOnTrackTxt, hsmKeys.getCVVOffsetOnTrack());
 	}
-
+	@Override
 	public void clickSaveButton() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		ClickButton(save);
+		ClickButton(saveBtn);
 	}
 
 	public void switchToAddDeviceKeysFrame() {

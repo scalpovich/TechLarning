@@ -34,7 +34,11 @@ public class Device {
 	private static final String DATE_TYPE = "DATE_TYPE";
 	private static final String PROGRAM_CODE = "PROGRAM_CODE";
 	private static final String DEVICE_PLAN= "DEVICE_PLAN"; 
-	
+	private static final String IS_TRANSACTION_PINLESS = "IS_TRANSACTION_PINLESS";
+	private static final String SERVICE_CODE = "SERVICE_CODE";
+	private static final String VALIDITY_ON_INITIAL_MONTHS = "VALIDITY_ON_INITIAL_MONTHS";
+	private static final String EXPIRY_FLAG = "EXPIRY_FLAG";
+	private static final String CREDIT_LIMIT = "CREDIT_LIMIT";
 	
 
 	private String currentTransPassword;
@@ -91,6 +95,9 @@ public class Device {
 	private String productType;
 	private String transactionDateType;
 	private String applicationNumber;
+	private String isTransactionPinless;
+	private String expiryFlag;	
+	private String creditLimit;
 	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -121,6 +128,18 @@ public class Device {
 		return device;
 	}
 	
+	public  static Device createWithProviderDataDriven(KeyValueProvider provider) {
+		Device device = Device.createWithProvider(provider);		
+		device.setProgramCode(provider.getString(PROGRAM_CODE));
+		device.setDevicePlan1(provider.getString(DEVICE_PLAN));
+		device.setIsPinRequired(provider.getString(IS_TRANSACTION_PINLESS));	
+		device.setServiceCode(provider.getString(SERVICE_CODE));
+		device.setExpirationDate(provider.getString(VALIDITY_ON_INITIAL_MONTHS));
+		device.setExpiryFlag(provider.getString(EXPIRY_FLAG));
+		device.setCreditLimit(provider.getString(CREDIT_LIMIT));
+		return device;
+	}
+	
 	public  static Device createWithProviderForOtherDetails(KeyValueProvider provider) {
 		Device device = new Device();
 		device.setOtherInfoDeliveryMode(provider.getString(ND_OTHERINFO_DELIVERY_MODE));
@@ -148,9 +167,33 @@ public class Device {
 	public void setEncodedName(String encodedName) {
 		this.encodedName = encodedName;
 	}
+	
+	public String getExpiryFlag() {
+		return expiryFlag;
+	}
+
+	public void setExpiryFlag(String expiryFlag) {
+		this.expiryFlag = expiryFlag;
+	}
 
 	public static String getNdOtherinfoStatementPreference() {
 		return ND_OTHERINFO_STATEMENT_PREFERENCE;
+	}
+	
+	public String getCreditLimit() {
+		return creditLimit;
+	}
+
+	public void setCreditLimit(String creditLimit) {
+		this.creditLimit = creditLimit;
+	}
+	
+	public String getIsPinRequired() {
+		return isTransactionPinless;
+	}
+
+	public void setIsPinRequired(String isTransactionPinless) {
+		this.isTransactionPinless = isTransactionPinless;
 	}
 
 	public String getProductType() {

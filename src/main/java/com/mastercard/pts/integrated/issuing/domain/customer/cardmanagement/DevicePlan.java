@@ -205,7 +205,6 @@ public class DevicePlan implements HasCodeAndDescription {
 	private String pinGenerationPinRequired;
 	private String pinGenerationPinRePinDays;
 	private String pinGenerationPinProductionVendor;
-	private String transactionFeePlan;
 
 	private String transSetPresentmentTimeLimit;
 	private String prescreeningPinChangeTransactionFirst;
@@ -1026,14 +1025,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	public void setTransactionLimitPlan(String transactionLimitPlan) {
 		this.transactionLimitPlan = transactionLimitPlan;
 	}
-	    public String getTransactionFeePlan(){
-	    	
-			return transactionFeePlan;
-	    }
-	    public void setTransactionFeePlan (String transactionFeePlan){
-	    	
-			this.transactionFeePlan=transactionFeePlan;
-	    }
+
 	public String getAfterKYC() {
 		return afterKYC;
 	}
