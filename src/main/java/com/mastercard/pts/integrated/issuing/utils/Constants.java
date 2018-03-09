@@ -425,6 +425,9 @@ public class Constants {
 	public static final String WAIVERPLAN_CODE_ERRMSG = "[A-Z 0-9] and underscore are allowed and must start and end with an alphanumeric character.";
 	public static final String WAIVERPLAN_DESC_ERRMSG = "[a-z A-Z 0-9], SPACES and special characters [.,&#:*()-] are allowed and must start with an alphanumeric.";
 	
+	public static String DATA_DRIVEN_CARD_BOARDING = "NO";
 	public static final String ENVIRONMENT ="demo";
+	public static final String COLUMN_NAME = "Status";
+	public static final int TABLE_ROW_NUM = 1;
 
 }

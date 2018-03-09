@@ -35,7 +35,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	@Autowired
 	private TestContext context;
 	
-		
 	private static final Logger logger = LoggerFactory.getLogger(DeviceCreateDevicePage.class);
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
@@ -293,6 +292,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		if(System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)){
 			clickNextButton();
 		}
+		
 		fillAddress(device);
 		// skip employment details
 		clickNextButton();
@@ -356,7 +356,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		}catch(Exception e){
 			if(device.getAppliedForProduct().equalsIgnoreCase("Credit [C]")){
 				WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);
-				WebElementUtils.enterText(creditLimitTxt,"5000");
+				WebElementUtils.enterText(creditLimitTxt,device.getCreditLimit());
 			}else{
 				WebElementUtils.selectDropDownByVisibleText(statementPreferenceDDwn, device.getOtherInfoStatementPreference());
 				WebElementUtils.enterText(faxNumberTxt, device.getOtherInfoFaxNo());
