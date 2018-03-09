@@ -18,9 +18,9 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP, CardManagementNav.L2EMV,
+		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
+		CardManagementNav.L2EMV,
 		CardManagementNav.L3IPK_CERTIFICATE_INFORMATION })
-
 public class IssuerPublicKeyPage extends AbstractBasePage {
 	final Logger logger = LoggerFactory.getLogger(IssuerPublicKeyPage.class);
 	// ------------- Card Management > Institution Parameter Setup > Institution
@@ -29,7 +29,7 @@ public class IssuerPublicKeyPage extends AbstractBasePage {
 	@Autowired
 	DatePicker date;
 
-	public String ExpiryCal = "//span[@id='certExpDate']";
+	public String expiryCal = "//span[@id='certExpDate']";
 
 	public String issueYear = "//span[@id = 'certIssDate']";
 
@@ -37,61 +37,61 @@ public class IssuerPublicKeyPage extends AbstractBasePage {
 	private MCWebElement addIssuerPublicKey;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:1:cols:colspanMarkup:inputField:input:inputTextField")
-	private MCWebElement IPKID;
+	private MCWebElement ipkIDTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:1:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
-	private MCWebElement Interchange;
+	private MCWebElement interchangeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:2:cols:colspanMarkup:inputField:input:dropdowncomponent")
-	private MCWebElement IssuerBIN;
+	private MCWebElement issuerBINDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:2:cols:nextCol:colspanMarkup:inputField:input:inputTextField")
-	private MCWebElement SerialNumber;
+	private MCWebElement serialNumberTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[2]/div/div/form/table[1]/tbody/tr[3]/td[2]/span/span/span/img")
-	private MCWebElement IssueDate;
+	private MCWebElement issueDate;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[contains(text(), 'Next Month (')]")
-	private MCWebElement IssueDateNxtMonth;
+	private MCWebElement issueDateNxtMonth;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[2]/div/div/form/table[1]/tbody/tr[3]/td[2]/span/span/span/span/table/tbody/tr[3]/td[1]/a")
 	private MCWebElement selectIssueDate;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[2]/div/div/form/table[1]/tbody/tr[3]/td[4]/span/span/span/img")
-	private MCWebElement ExpiryDate;
+	private MCWebElement expiryDate;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[contains(text(), 'Next Month (')]")
-	private MCWebElement ExpiryDateNxtMonth;
+	private MCWebElement expiryDateNxtMonth;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[2]/div/div/form/table[1]/tbody/tr[3]/td[4]/span/span/span/span/table/tbody/tr[4]/td[3]/a")
 	private MCWebElement selectExpiryDate;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:4:cols:colspanMarkup:inputField:input:dropdowncomponent")
-	private MCWebElement Status;
+	private MCWebElement statusDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement save;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name = 'cancel']")
-	private MCWebElement CancelBtn;
+	private MCWebElement cancelBtn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class = 'feedbackPanelERROR']")
-	private MCWebElement PanelErrorTxt;
+	private MCWebElement panelErrorTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class = 'feedbackPanelINFO']")
-	private MCWebElement PanelInfo;
+	private MCWebElement panelInfo;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "/html/body/div[2]/div/div/form/table[1]/tbody/tr[3]/td[4]/span/span/span/span/table/thead/tr[1]/th/div/a[2]/img")
-	private MCWebElement ExpiryDateCalendar;
+	private MCWebElement expiryDateCalendar;
 
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "calnav")
-	private MCWebElement CalendarNav;
+	private MCWebElement calendarNav;
 
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "yui-cal-nav-yc")
-	private MCWebElement YearTxt;
+	private MCWebElement yearTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class ='yui-cal-nav-btn yui-default']/button")
-	private MCWebElement OkBtn;
+	private MCWebElement okBtn;
 
 	public void clickaddIPKCertification() {
 		clickWhenClickable(addIssuerPublicKey);
@@ -103,37 +103,36 @@ public class IssuerPublicKeyPage extends AbstractBasePage {
 	}
 
 	public void enterIPKId() {
-		enterValueinTextBox(IPKID, CustomUtils.randomNumbers(6));
+		enterValueinTextBox(ipkIDTxt, CustomUtils.randomNumbers(6));
 	}
 
 	public void selectInterchangeType(IssuerPublicKey ipk) {
-		selectByVisibleText(Interchange, ipk.getInterchange());
+		selectByVisibleText(interchangeDDwn, ipk.getInterchange());
 	}
 
 	public void selectIssuerBin(IssuerPublicKey ipk) {
-		System.out.println(ipk.getDeviceBin());
-		selectByVisibleText(IssuerBIN, ipk.getDeviceBin());
-		
+		logger.info("Issuer bin Selected - " + ipk.getDeviceBin());
+		selectByVisibleText(issuerBINDDwn, ipk.getDeviceBin());
 	}
 
 	public void enterSerialNumber() {
-		enterValueinTextBox(SerialNumber, CustomUtils.randomNumbers(6));
+		enterValueinTextBox(serialNumberTxt, CustomUtils.randomNumbers(6));
 
 	}
 
 	public void selectExpiryDate(IssuerPublicKey ipk) {
-		date.setDateCalendar2(ipk.getIPKExpiryDate(), ExpiryCal);
+		date.setDateCalendar2(ipk.getIPKExpiryDate(), expiryCal);
 	}
 
 	public void selectIssuerDate(IssuerPublicKey ipk) {
 		date.setDateCalendar2(ipk.getIssuerDate(), issueYear);
-		
 	}
 
 	public void selectStatus(IssuerPublicKey ipk) {
-		SelectDropDownByText(Status, ipk.getStatus());
+		SelectDropDownByText(statusDDwn, ipk.getStatus());
 	}
-
+	
+	@Override
 	public void clickSaveButton() {
 		clickWhenClickable(save);
 	}
@@ -148,13 +147,13 @@ public class IssuerPublicKeyPage extends AbstractBasePage {
 			SwitchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
-			clickWhenClickable(CancelBtn);
+			clickWhenClickable(cancelBtn);
 			SwitchToDefaultFrame();
 		}
 	}
 
 	public void addIPKDetails(IssuerPublicKey ipk) {
-		enterIPKId(); 
+		enterIPKId();
 		selectInterchangeType(ipk);
 		selectIssuerBin(ipk);
 		enterSerialNumber();

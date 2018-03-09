@@ -38,6 +38,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 	
 	
     private CreditLimitRulePage creditLimitRulePage;
+    
 	private static final Logger logger = LoggerFactory.getLogger(DeviceCreateApplicationPage.class);
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
