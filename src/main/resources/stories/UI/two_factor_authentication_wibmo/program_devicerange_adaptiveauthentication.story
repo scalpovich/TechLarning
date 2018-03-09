@@ -89,4 +89,4 @@ When user creates a Single wallet Program for Mastercard for product Prepaid for
 Then Adaptive Authentication CheckBox should be Disabled
 When user creates a Device Range for product Prepaid
 When user edits the device range
-Then Device Range Adaptive Authentication CheckBox should be Enabled
+Then Device Range Adaptive Authentication CheckBox should be Disabled
