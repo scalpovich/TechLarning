@@ -193,8 +193,8 @@ public class DeviceSteps {
 	            context.put(ContextConstants.DEVICE, device);
 	      }
 		
-		@When("$type device is created using new device screen by data driven \"$pinOption\" Pin")
-		@Then("$type device is created using new device screen by data driven \"$pinOption\" Pin")
+		@When("$type device is created using new device screen by data driven $pinOption Pin")
+		@Then("$type device is created using new device screen by data driven $pinOption Pin")
 		public void createWithProviderDataDriven(String type,String pinOption){
 			Device device = Device.createWithProviderDataDriven(provider);
 			

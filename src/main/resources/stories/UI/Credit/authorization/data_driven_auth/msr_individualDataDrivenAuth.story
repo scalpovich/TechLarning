@@ -9,7 +9,7 @@ Meta:
 
 Scenario: Create new device from data sheet
 Given user is logged in institution
-When credit device is created using new device screen by data driven "without" Pin
+When credit device is created using new device screen by data driven without Pin
 Then credit processes pre-production batch using new Device
 Then credit processes deviceproduction batch using new Device
 Then User search for new device on search screen for credit and validates the status as NORMAL

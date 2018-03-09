@@ -427,5 +427,7 @@ public class Constants {
 	
 	public static String DATA_DRIVEN_CARD_BOARDING = "NO";
 	public static final String ENVIRONMENT ="demo";
+	public static final String COLUMN_NAME = "Status";
+	public static final int TABLE_ROW_NUM = 1;
 
 }
