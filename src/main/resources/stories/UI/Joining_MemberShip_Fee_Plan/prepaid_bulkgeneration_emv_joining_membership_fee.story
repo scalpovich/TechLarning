@@ -1,3 +1,4 @@
+
 prepaid msr retail gift card pinless authorization
 
 Narrative:
@@ -6,14 +7,26 @@ As an issuer
 I want to create an magnetic stripe prepaid card pinless and perform various transaction
 
 Meta:
-@StoryName test_post_maintenence1
+@StoryName p_emv_retail_gift
+
+Scenario: Set up prepaid emv retail general purpose card
+Given user is logged in institution
+And device range for program with device plan for "prepaid" "emv" card without pin
+When user creates new device of prepaid type for new client
+Then user sign out from customer portal
+
+Scenario: prepaid emv retail general purpose card device production
+Given user is logged in institution
+And a new device was created
+When processes pre-production batch for prepaid
+When processes device production batch for prepaid
+Then user sign out from customer portal
+Then user is logged in institution
+Then device has "normal" status
 
 Scenario: Prepaid - Admin User - Assign Program to Agency
 
-Given user is logged in institution
-And bulk card generation for prepaid emv is completed
-And user sign out from customer portal
-And user is logged in agent portal as admin user
+When user is logged in agent portal as admin user
 When user fills information to assign program to agency and submits form
 Then program assigned to agency successfully
 And user sign out from agent portal
@@ -35,7 +48,7 @@ And user sign out from agent portal
 Scenario: Prepaid - Load Balance Request - Funded Agent
 
 Given user is logged in agent portal as agent user
-When user performs load balance request
+When user performs load balance request for Joining and Membership plan
 Then load balance request is successful
 And user sign out from agent portal
 
@@ -56,5 +69,5 @@ Meta:
 @TestId 
 Given user is logged in institution
 When post maintenence batch is run
-And user sign out from customer portal
 Then "Pre-clearing" batch for prepaid is successful
+And user sign out from customer portal

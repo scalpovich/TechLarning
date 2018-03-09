@@ -614,6 +614,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected void waitAndSearchForRecordToExist() {
 		waitAndSearchForRecordToAppear();
         context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
+        logger.info(context.get(CreditConstants.DEVICE_NUMBER));
 		selectFirstRecord();
 		clickProcessSelectedButton();
 	}

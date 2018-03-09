@@ -27,6 +27,7 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.agent.channelmanagement.AssignPrograms;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -391,6 +392,17 @@ public class TransactionSteps {
 	@When("user performs load balance request")
 	public void whenUserPerformsLoadBalanceRequest() {
 		Device device = context.get(ContextConstants.DEVICE);
+		LoadBalanceRequest lbr = LoadBalanceRequest.getProviderData(provider);
+		String loadRequestReferenceNumber = transactionWorkflow.performLoadBalanceRequestAndGetRequestReferenceNumber(device, lbr);
+		lbr.setLoadRequestReferenceNumber(loadRequestReferenceNumber);
+		context.put("LOADBALANCEREQUEST", lbr);
+	}
+	
+	@When("user performs load balance request for Joining and Membership plan")
+	public void whenUserPerformsLoadBalanceRequestforJoiningandMemberShipPlan() {
+		Device device= new Device();
+		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
+		System.out.println(device);
 		LoadBalanceRequest lbr = LoadBalanceRequest.getProviderData(provider);
 		String loadRequestReferenceNumber = transactionWorkflow.performLoadBalanceRequestAndGetRequestReferenceNumber(device, lbr);
 		lbr.setLoadRequestReferenceNumber(loadRequestReferenceNumber);
