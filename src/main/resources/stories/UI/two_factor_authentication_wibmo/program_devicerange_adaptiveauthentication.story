@@ -21,7 +21,7 @@ Then user logouts from customer portal
 
 Scenario:2 validate two factor authentication at program level and device range level
 Meta:
-@TCName adaptiveAuth_debit
+@TCName TC264306_Embossing File Generation
 @testDataFileName testdata
 @sheetName S205014
 @edit_institute_wibmo1111
@@ -43,7 +43,7 @@ Then user runs the device production batch for product Prepaid
 
 Scenario:2 validate two factor authentication at program level and device range level
 Meta:
-@TCName TC264306_Embossing File Generation
+@TCName adaptiveAuth_debit
 @testDataFileName testdata
 @sheetName S205014
 @edit_institute_wibmo
