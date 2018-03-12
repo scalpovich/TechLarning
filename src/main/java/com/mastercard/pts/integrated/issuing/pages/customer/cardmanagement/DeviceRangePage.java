@@ -76,8 +76,6 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#activeFlag select")
 	private MCWebElement statusDDwn;
-	@Autowired
-	Program program;
 
 	@Autowired
 	DevicePlan deviceplan;
@@ -188,7 +186,7 @@ public class DeviceRangePage extends AbstractBasePage {
 		selectByVisibleText(ProductTypeDDwn, program.getProduct());
 	}
 
-	public void selectProgram() {
+	public void selectProgram(Program program) {
 		waitForElementVisible(ProgramDDwn);
 		if (!MapUtils.fnGetInputDataFromMap("Program").isEmpty()) {
 			selectByVisibleText(ProgramDDwn, MapUtils.fnGetInputDataFromMap("Program"));
@@ -198,7 +196,7 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	}
 
-	public void selectDevicePlan() {
+	public void selectDevicePlan(Program program) {
 		waitForElementVisible(DevicePlanCodeDDwn);
 		if (!MapUtils.fnGetInputDataFromMap("DevicePlan").isEmpty()) {
 			selectByVisibleText(DevicePlanCodeDDwn, MapUtils.fnGetInputDataFromMap("DevicePlan"));
@@ -300,8 +298,8 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	public void addDeviceRange(Program program) {
 		selectProduct(program);
-		selectProgram();
-		selectDevicePlan();
+		selectProgram(program);
+		selectDevicePlan(program);
 		selectIssuerBIN();
 		selectBranch();
 		clickAddButton();
