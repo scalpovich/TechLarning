@@ -71,3 +71,9 @@ Given user is logged in institution
 When post maintenence batch is run
 Then "Pre-clearing" batch for prepaid is successful
 And user sign out from customer portal
+
+Scenario: Joining and MemberShip Fees is been Deducted
+
+Given user is logged in institution
+Then search with device in transaction screen and status for Joning and Membership Fees
+And user sign out from customer portal

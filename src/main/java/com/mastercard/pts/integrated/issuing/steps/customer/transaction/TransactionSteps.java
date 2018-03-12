@@ -405,6 +405,14 @@ public class TransactionSteps {
 		Assert.assertTrue("successfully completed the wallet to wallet fund transfer",
 				transactionWorkflow.searchTransactionWithDeviceAndGetStatus(device, ts).contains(" Wallet to Wallet Transfer(Credit)"));
 	}
+	
+	@Then("search with device in transaction screen and status for Joning and Membership Fees")
+	public void thenSearchWithDeviceInTransactionScreenandststusforJoiningandMembershipFees() {
+		
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		Device device = context.get(ContextConstants.DEVICE_NUMBER);
+	    transactionWorkflow.searchTransactionWithDeviceAndGetStatus(device, ts);
+				}
 
 	@When("user performs load balance request")
 	public void whenUserPerformsLoadBalanceRequest() {

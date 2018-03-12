@@ -47,7 +47,7 @@ public class ReconciliationWorkFlow {
 	
 	public String runPostMaintenenceBatch(List<ProcessBatches> batch) {
 		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
-		return processBatch.processSystemInternalProcessingBatchPostMaintenence(batch.get(0));
+		return processBatch.processSystemInternalProcessingBatchPostMaintenence(batch.get(1));
 	}
 	public boolean verifyReportGeneration() {
 		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
