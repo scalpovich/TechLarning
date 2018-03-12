@@ -359,10 +359,10 @@ public class InstitutionPage extends AbstractBasePage{
 	}
 	public void selectCredentialMaskingOption()
 	{
-		InstitutionCreation institutioncreation=context.get("institutionData");
-		String optionFlag=institutioncreation.getAuthenticationFlg();
+		InstitutionCreation institutionCreation=context.get("institutionData");
+		String optionFlag=institutionCreation.getAuthenticationFlg();
 		if(optionFlag.equalsIgnoreCase("enable")){
-		String option=institutioncreation.getCredentialMasking();
+		String option=institutionCreation.getCredentialMasking();
 		if(option.equalsIgnoreCase("masked")){
 			ClickCheckBox(credentialMaskFlagCbx, true);
 		}
