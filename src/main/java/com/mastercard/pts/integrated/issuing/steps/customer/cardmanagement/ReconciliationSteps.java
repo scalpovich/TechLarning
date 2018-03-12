@@ -17,7 +17,6 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.R
 @Component
 public class ReconciliationSteps {
 	private static final String BATCH_TYPE = "BATCH_TYPE";
-	private static final String BATCH_NAME_POST_MAINTENANCE = "BATCH_NAME_POST_MAINTENANCE";
 	@Autowired
 	private TestContext context;
 
@@ -59,7 +58,7 @@ public class ReconciliationSteps {
 
 		ProcessBatches postMaintenenceBatch = new ProcessBatches();
 		postMaintenenceBatch.setProductType(provider.getString(BATCH_TYPE));
-		postMaintenenceBatch.setBatchName(provider.getString(BATCH_NAME_POST_MAINTENANCE));
+		postMaintenenceBatch.setBatchName(provider.getString("BATCH_NAME_POST_MAINTENANCE"));
 
 		processBatches.add(postMaintenenceBatch);
 
