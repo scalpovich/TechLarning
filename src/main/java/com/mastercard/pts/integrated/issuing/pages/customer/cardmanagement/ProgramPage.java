@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -583,8 +582,8 @@ public class ProgramPage extends AbstractBasePage {
 		selectByVisibleText(InterchangeDDwn, program.getInterchange());
 	}
 
-	public void selectProduct(DeviceCreation deviceCreation) {
-		selectByVisibleText(ProductDDwn, deviceCreation.getProduct());
+	public void selectProduct(Program program) {
+		selectByVisibleText(ProductDDwn, program.getProduct());
 	}
 
 	public void selectRefundinCurrency(Program program) {
@@ -723,14 +722,14 @@ public class ProgramPage extends AbstractBasePage {
 		}
 	}
 
-	public String addProgramGeneral(DeviceCreation devicecreation, Program program) {
+	public String addProgramGeneral(Program program) {
 		String programCode;
 		String ProgramDescription;
 		programCode = enterProgramCode(program);
 		program.setProgramCode(programCode);
 		ProgramDescription = enterProgramDescription(program);
 		selectInterchange(program);
-		selectProduct(devicecreation);
+		selectProduct(program);
 		selectProgramType(program);
 		selectBaseCurrency(program);
 		selectCurrencyConversionBy(program);
@@ -738,14 +737,14 @@ public class ProgramPage extends AbstractBasePage {
 		return buildDescriptionAndCode(ProgramDescription, programCode);
 	}
 
-	public String addProgramGeneralMultiCurrency(DeviceCreation devicecreation, Program program) {
+	public String addProgramGeneralMultiCurrency(Program program) {
 		String programCode;
 		String ProgramDescription;
 		programCode = enterProgramCode(program);
 		program.setProgramCode(programCode);
 		ProgramDescription = enterProgramDescription(program);
 		selectInterchange(program);
-		selectProduct(devicecreation);
+		selectProduct(program);
 		selectProgramType(program);
 		selectBaseCurrency(program);
 		enterNoOfCurrencyAllowed();
