@@ -237,7 +237,7 @@ public class ProgramPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class = 'feedbackPanelERROR']")
 	private MCWebElement PanelErrorTxt;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "buttons:cancel")
 	private MCWebElement CancelBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "ofacScreeningOfNewApp:checkBoxComponent")
@@ -583,8 +583,8 @@ public class ProgramPage extends AbstractBasePage {
 		selectByVisibleText(InterchangeDDwn, program.getInterchange());
 	}
 
-	public void selectProduct(Program program) {
-		selectByVisibleText(ProductDDwn, program.getProduct());
+	public void selectProduct(DeviceCreation deviceCreation) {
+		selectByVisibleText(ProductDDwn, deviceCreation.getProduct());
 	}
 
 	public void selectRefundinCurrency(Program program) {
@@ -730,7 +730,7 @@ public class ProgramPage extends AbstractBasePage {
 		program.setProgramCode(programCode);
 		ProgramDescription = enterProgramDescription(program);
 		selectInterchange(program);
-		selectProduct(program);
+		selectProduct(devicecreation);
 		selectProgramType(program);
 		selectBaseCurrency(program);
 		selectCurrencyConversionBy(program);
@@ -745,7 +745,7 @@ public class ProgramPage extends AbstractBasePage {
 		program.setProgramCode(programCode);
 		ProgramDescription = enterProgramDescription(program);
 		selectInterchange(program);
-		selectProduct(program);
+		selectProduct(devicecreation);
 		selectProgramType(program);
 		selectBaseCurrency(program);
 		enterNoOfCurrencyAllowed();

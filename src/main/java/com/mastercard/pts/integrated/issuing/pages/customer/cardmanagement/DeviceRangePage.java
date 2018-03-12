@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
@@ -82,6 +84,10 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	@Autowired
 	DeviceBin issuerbin;
+
+	@Autowired
+	TestContext context;
+
 	// ------------- Card Management > Institution Parameter Setup > Institution
 	// Currency [ISSS05]
 
@@ -207,6 +213,9 @@ public class DeviceRangePage extends AbstractBasePage {
 			selectByVisibleText(IssuerBINDDwn, MapUtils.fnGetInputDataFromMap("DMSIssuerBIN"));
 		} else if (!MapUtils.fnGetInputDataFromMap("SMSIssuerBIN").isEmpty()) {
 			selectByVisibleText(IssuerBINDDwn, MapUtils.fnGetInputDataFromMap("SMSIssuerBIN"));
+		}
+		if (issuerbin.getBinType().contains("Dual")) {
+			selectByVisibleText(IssuerBINDDwn, issuerbin.getIssuerBin());
 		} else {
 			IssuerBINDDwn.getSelect().selectByIndex(1);
 		}
@@ -218,7 +227,7 @@ public class DeviceRangePage extends AbstractBasePage {
 	}
 
 	public void clickAddButton() {
-		AddTxt.click();
+		clickWhenClickable(AddTxt);
 	}
 
 	public void enterFromDeviceNo() {
@@ -406,6 +415,9 @@ public class DeviceRangePage extends AbstractBasePage {
 		selectProductType(deviceRange.getProductType());
 		selectProgram(deviceRange.getProgram());
 		selectDevicePlanCode(deviceRange.getDevicePlanCode());
+		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		logger.info("ProductType : {}", devicePlan.getProductType());
+		logger.info("issuerBin :{}", deviceRange.getIssuerBin());
 		selectIssuerBin(deviceRange.getIssuerBin());
 		selectBranch(deviceRange.getBranch());
 		addBtn.click();

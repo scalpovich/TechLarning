@@ -134,7 +134,9 @@ public class DeviceBinPage extends AbstractBasePage {
 			enterValueinTextBox(IssuerBINTxt, "4" + CustomUtils.RandomNumbers(5));
 		} else if (DeviceBin.getInterchange().contains("Rupay")) {
 			enterValueinTextBox(IssuerBINTxt, "6" + CustomUtils.RandomNumbers(5));
-		} else {
+		} else if (DeviceBin.getInterchange().contains("Amex")) {
+			enterValueinTextBox(IssuerBINTxt, "37" + CustomUtils.RandomNumbers(4));
+		}else {
 			enterValueinTextBox(IssuerBINTxt, "2" + CustomUtils.RandomNumbers(5));
 		}
 		return IssuerBINTxt.getAttribute("value");

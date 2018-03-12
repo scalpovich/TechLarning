@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
@@ -113,8 +114,8 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		waitForLoaderToDisappear();
 		SelectDropDownByText(productTypeDDwn, batch.getProductType());
 		CustomUtils.ThreadDotSleep(8000);
-		Device device = context.get(ContextConstants.DEVICE);
-		enterText(batchNumberTxt, device.getBatchNumber());
+		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
+		enterText(batchNumberTxt, batchNumber);
 		ClickButton(searchBtn);
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		ClickButton(processSelectedBtn);
@@ -198,6 +199,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	}
 
 	public void processPreProductionBatchNewDevice(PreProductionBatch batch) {
+
 		waitForLoaderToDisappear();
 		SelectDropDownByText(productTypeDDwn, batch.getProductType());
 		CustomUtils.ThreadDotSleep(8000);

@@ -31,43 +31,43 @@ public class DeviceCardPackTemplatePage extends AbstractBasePage {
 	private MCWebElement addDeviceCardPackTemplateBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "firstContainer:templateType:input:dropdowncomponent")
-	private MCWebElement TemplateTypeDDwn;
+	private MCWebElement templateTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "firstContainer:templateDesc:input:inputTextField")
-	private MCWebElement DescriptionTxt;
+	private MCWebElement descriptionTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "firstContainer:cardNumberLength:input:inputTextField")
-	private MCWebElement TemplateLengthTxt;
+	private MCWebElement templateLengthTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mainContainer:trnsTypeDescBin:input:dropdowncomponent")
-	private MCWebElement Field1DDwn;
+	private MCWebElement field1DDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mainContainer:trnsTypeDescLenBin:input:inputTextField")
-	private MCWebElement Length1Txt;
+	private MCWebElement length1Txt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mainContainer:trnsTypeDesc2:input:dropdowncomponent")
-	private MCWebElement Field2DDwn;
+	private MCWebElement field2DDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mainContainer:trnsTypeDescLen2:input:inputTextField")
-	private MCWebElement Length2Txt;
+	private MCWebElement length2Txt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mainContainer:trnsTypeDesc3:input:dropdowncomponent")
-	private MCWebElement Field3DDwn;
+	private MCWebElement field3DDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mainContainer:trnsTypeDescLen3:input:inputTextField")
-	private MCWebElement Length3Txt;
+	private MCWebElement length3Txt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mainContainer:trnsTypeDesc4:input:dropdowncomponent")
-	private MCWebElement Field4DDwn;
+	private MCWebElement field4DDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mainContainer:trnsTypeDescLen4:input:inputTextField")
-	private MCWebElement Length4Txt;
+	private MCWebElement length4Txt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mainContainer:trnsTypeDesc5:input:dropdowncomponent")
-	private MCWebElement Field5DDwn;
+	private MCWebElement field5DDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mainContainer:trnsTypeDescLen5:input:inputTextField")
-	private MCWebElement Length5Txt;
+	private MCWebElement length5Txt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "buttonContainer:submitTemplate")
 	private MCWebElement submitBtn;
@@ -76,7 +76,7 @@ public class DeviceCardPackTemplatePage extends AbstractBasePage {
 	private MCWebElement saveBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
-	private MCWebElement CancelBtn;
+	private MCWebElement cancelBtn;
 
 	public void clickAddDeviceCardPackTemplate() {
 		clickWhenClickable(addDeviceCardPackTemplateBtn);
@@ -88,53 +88,47 @@ public class DeviceCardPackTemplatePage extends AbstractBasePage {
 	}
 
 	public void selectTemplateType(DeviceCreation deviceCreation) {
-		selectByVisibleText(TemplateTypeDDwn, deviceCreation.getTemplateType());
+		selectByVisibleText(templateTypeDDwn, deviceCreation.getTemplateType());
 	}
 
 	public void enterCardpackDeviceDescription() {
-		enterValueinTextBox(DescriptionTxt, "CardTemplate/DeviceTemplate");
+		enterValueinTextBox(descriptionTxt, "CardTemplate/DeviceTemplate");
 	}
 
 	public void enterTemplateLength(DeviceCreation deviceCreation) {
-		enterValueinTextBox(TemplateLengthTxt, deviceCreation.getLength());
+		enterValueinTextBox(templateLengthTxt, deviceCreation.getLength());
 	}
 
-	public void selectField1(DeviceCreation deviceCreation, DeviceCardPackTemplate deviceCardTemplate) {
-		if (deviceCreation.getTemplateType().contains("Device Template")) {
-			selectByVisibleText(Field1DDwn, deviceCardTemplate.getField1());
-			enterValueinTextBox(Length1Txt, deviceCardTemplate.getLength1());
-		}
-		if (deviceCreation.getTemplateType().contains("Card Pack ID Template")) {
-			selectByVisibleText(Field1DDwn, deviceCardTemplate.getField3());
-			enterValueinTextBox(Length1Txt, deviceCardTemplate.getLength3());
-		}
+	public void selectField1(DeviceCardPackTemplate devicecardtemplate) {
+		selectByVisibleText(field1DDwn, devicecardtemplate.getField1());
+		enterValueinTextBox(length1Txt, devicecardtemplate.getLength1());
 
 	}
 
-	public void selectField2(DeviceCardPackTemplate deviceCardTemplate) {
-		selectByVisibleText(Field2DDwn, deviceCardTemplate.getField2());
-		enterValueinTextBox(Length2Txt, deviceCardTemplate.getLength2());
+	public void selectField2(DeviceCardPackTemplate devicecardtemplate) {
+		selectByVisibleText(field2DDwn, devicecardtemplate.getField2());
+		enterValueinTextBox(length2Txt, devicecardtemplate.getLength2());
 	}
 
 	public void selectField3(DeviceCardPackTemplate devicecardtemplate) {
-		selectByVisibleText(Field3DDwn, devicecardtemplate.getField3());
-		enterValueinTextBox(Length3Txt, devicecardtemplate.getLength3());
+		selectByVisibleText(field3DDwn, devicecardtemplate.getField3());
+		enterValueinTextBox(length3Txt, devicecardtemplate.getLength3());
 	}
 
-	public void selectField4(DeviceCreation deviceCreation, DeviceCardPackTemplate deviceCardTemplate) {
+	public void selectField4(DeviceCreation deviceCreation, DeviceCardPackTemplate devicecardtemplate) {
 		if (deviceCreation.getTemplateType().contains("Device Template")) {
-			selectByVisibleText(Field4DDwn, deviceCardTemplate.getField4());
-			enterValueinTextBox(Length4Txt, deviceCardTemplate.getLength4());
+			selectByVisibleText(field4DDwn, devicecardtemplate.getField4());
+			enterValueinTextBox(length4Txt, devicecardtemplate.getLength4());
 		}
 		if (deviceCreation.getTemplateType().contains("Card Pack ID Template")) {
-			selectByVisibleText(Field4DDwn, deviceCardTemplate.getField6());
+			selectByVisibleText(field4DDwn, devicecardtemplate.getField6());
 		}
 	}
 
-	public void selectField5(DeviceCardPackTemplate deviceCardTemplate) {
-		if (deviceCardTemplate.getField5() != null && deviceCardTemplate.getLength5() != null) {
-			selectByVisibleText(Field5DDwn, deviceCardTemplate.getField5());
-			enterValueinTextBox(Length5Txt, deviceCardTemplate.getLength5());
+	public void selectField5(DeviceCardPackTemplate devicecardtemplate) {
+		if (devicecardtemplate.getField5() != null && devicecardtemplate.getLength5() != null) {
+			selectByVisibleText(field5DDwn, devicecardtemplate.getField5());
+			enterValueinTextBox(length5Txt, devicecardtemplate.getLength5());
 		}
 	}
 
@@ -158,7 +152,7 @@ public class DeviceCardPackTemplatePage extends AbstractBasePage {
 			SwitchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
-			clickWhenClickable(CancelBtn);
+			clickWhenClickable(cancelBtn);
 			SwitchToDefaultFrame();
 		}
 	}
@@ -169,13 +163,15 @@ public class DeviceCardPackTemplatePage extends AbstractBasePage {
 		enterTemplateLength(deviceCreation);
 	}
 
-	public void selectDeviceTemplateFields(DeviceCreation deviceCreation, DeviceCardPackTemplate deviceCardTemplate) {
-		selectField1(deviceCreation, deviceCardTemplate);
+	public void selectDeviceTemplateFields(DeviceCardPackTemplate devicetemplate) {
+		selectField1(devicetemplate);
+
 	}
 
-	public void selectCardTemplateFields(DeviceCreation deviceCreation, DeviceCardPackTemplate deviceCardTemplate) {
-		selectField1(deviceCreation, deviceCardTemplate);
-		selectField2(deviceCardTemplate);
+	public void selectCardTemplateFields(DeviceCardPackTemplate devicetemplate) {
+		selectField1(devicetemplate);
+		selectField2(devicetemplate);
+
 	}
 
 	@Override

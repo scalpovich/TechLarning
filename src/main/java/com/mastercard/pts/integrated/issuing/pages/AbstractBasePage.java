@@ -78,8 +78,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	private static final String SUCCESS_MESSAGE = "Success message: {}";
 
-	private static final String WALLET_NUMBER = "Wallet number: {}";
-
 	public static final String ERROR_MESSAGE = "Error: {}";
 
 	public static final String RESPONSE_MESSAGE = "Response message: {}";
@@ -560,7 +558,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void clickWhenClickable(MCWebElement element) {
-		SimulatorUtilities.wait(500);
+		SimulatorUtilities.wait(900);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
 		waitForWicket();
 	}
@@ -792,8 +790,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public void enterValueinTextBox(MCWebElement txtBoxElement, String value) {
 		waitForElementVisible(txtBoxElement);
 		if (value != null && !value.isEmpty()) {
-			if (txtBoxElement.isEnabled())
-				enterText(txtBoxElement, value);
+			enterText(txtBoxElement, value);
 		}
 	}
 

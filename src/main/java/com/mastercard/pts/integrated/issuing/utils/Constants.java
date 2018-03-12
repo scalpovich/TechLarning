@@ -70,9 +70,9 @@ public class Constants {
 	public static String ADD_VENDOR_MASTER_FRAME = "Add Vendor Master";
 
 	public static String ADD_DEVICE_PLAN_FRAME = "Add Device Plan";
-	
+
 	public static String EDIT_DEVICE_PLAN_FRAME = "Edit Device BIN";
-	
+
 	public static String EDIT_DEVICE_PLAN = "Edit Device Plan";
 
 	public static String ADD_PROGRAM_FRAME = "Add Program";
@@ -366,7 +366,7 @@ public class Constants {
 	public static final String UPLOAD_FILE_PATH = "/home/dc-user/integrated/elt_bo/data/102030/RUPAY_INCOMING";
 
 	public static final String APPLICATION_UPLOAD_PREPAID_FILE_PATH = "/home/dc-user/integrated/elt_bo/data/121212/input";
-	
+
 	public static final String APPLICATION_UPLOAD_CREDIT_FILE_PATH = "/home/dc-user/integrated/elt_bo/data/554466/INPUT";
 
 	public static final String GENERIC_DESCRIPTION = "AUTOMATION";
@@ -426,5 +426,10 @@ public class Constants {
 	public static final String MARKETING_PLAN = "Marketing Message Plan";
 	public static final String WAIVERPLAN_CODE_ERRMSG = "[A-Z 0-9] and underscore are allowed and must start and end with an alphanumeric character.";
 	public static final String WAIVERPLAN_DESC_ERRMSG = "[a-z A-Z 0-9], SPACES and special characters [.,&#:*()-] are allowed and must start with an alphanumeric.";
+
+	public static String DATA_DRIVEN_CARD_BOARDING = "NO";
+	public static final String ENVIRONMENT = "demo";
+	public static final String COLUMN_NAME = "Status";
+	public static final int TABLE_ROW_NUM = 1;
 
 }
