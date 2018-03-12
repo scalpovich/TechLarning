@@ -37,7 +37,7 @@ Then user sign out from customer portal
 
 Scenario:Connect to MAS Simulator and perform the transaction
 Given connection to MAS is established
-When perform an EMV_PURCHASE MAS transaction
+When user performs an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
 Then MAS simulator is closed
 

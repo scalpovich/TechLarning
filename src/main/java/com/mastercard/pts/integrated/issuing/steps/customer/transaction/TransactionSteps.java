@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jbehave.core.annotations.Alias;
+import org.jbehave.core.annotations.Aliases;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -97,7 +98,7 @@ public class TransactionSteps {
 	}
 
 	@When("perform an $transaction MAS transaction")
-	@Alias("a sample simulator \"$transaction\" is executed")
+	@Aliases(values={"a sample simulator \"$transaction\" is executed","user performs an $transaction MAS transaction"})
 	@Given("perform an $transaction MAS transaction")
 	public void givenTransactionIsExecuted(String transaction) {
 		

@@ -48,7 +48,7 @@ Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
 Meta:
 @TestId 
 Given connection to MAS is established
-When perform an EMV_CASH_WITHDRAWAL MAS transaction
+When user performs an EMV_CASH_WITHDRAWAL MAS transaction
 Then MAS test results are verified
 
 Scenario: Generate Auth File for Clearing

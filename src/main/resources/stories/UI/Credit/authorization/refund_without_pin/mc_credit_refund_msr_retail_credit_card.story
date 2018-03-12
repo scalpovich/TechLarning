@@ -41,7 +41,7 @@ And user sign out from customer portal
 
 Scenario:Connect to MAS Simulator and perform the transaction
 Given connection to MAS is established
-When perform an MSR_REFUND MAS transaction
+When user performs an MSR_REFUND MAS transaction
 Then MAS test results are verified
 
 Scenario:Verify the transaction on Authorization search on customer portal
