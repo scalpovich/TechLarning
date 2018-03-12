@@ -363,12 +363,12 @@ public class InstitutionPage extends AbstractBasePage{
 		String optionFlag=institutionCreation.getAuthenticationFlg();
 		if(optionFlag.equalsIgnoreCase("enable")){
 		String option=institutionCreation.getCredentialMasking();
-		if(option.equalsIgnoreCase("masked")){
-			ClickCheckBox(credentialMaskFlagCbx, true);
-		}
-		else{
-			ClickCheckBox(credentialMaskFlagCbx, false);
-		}
+			if(option.equalsIgnoreCase("masked")){
+				ClickCheckBox(credentialMaskFlagCbx, true);
+			}
+			else{
+				ClickCheckBox(credentialMaskFlagCbx, false);
+			}
 		}
 	}
 	public void enterInstitutionCode(InstitutionCreation institutioncreation)
