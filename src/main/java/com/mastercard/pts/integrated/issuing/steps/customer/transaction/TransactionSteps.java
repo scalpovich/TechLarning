@@ -482,8 +482,8 @@ public class TransactionSteps {
 	}
 	
 	//Win SCP step
-	@Given("connection to WinSCP is provided")
-	@When("connection to WinSCP is provided")
+	@Given("user update folder permission through WinSCP")
+	@When("user update folder permission through WinSCP")
 	public void connectionToApplicationIsEstablished(){
 		transactionWorkflow.launchWinSCP();
 		transactionWorkflow.loginToWinSCP();
