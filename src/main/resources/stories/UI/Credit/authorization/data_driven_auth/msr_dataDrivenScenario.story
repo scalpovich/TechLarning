@@ -6,6 +6,7 @@ I want to assert that newly created device is present into the system and able t
 
 Meta:
 @StoryName NewDeviceCredit_corporate_msr
+@msr_without_pin
 
 Scenario: Create new device from data sheet
 Given user is logged in institution

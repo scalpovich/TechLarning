@@ -6,6 +6,7 @@ I want to able to perform and validate the transaction
 Meta:
 @StoryName TC556866
 @CreditPurchasePinLess
+@msr_without_pin
 
 Scenario: To verify cash withdrawal transaction for MasterCard corporate msr device
 Given user is logged in institution
