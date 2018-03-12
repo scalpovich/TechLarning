@@ -131,6 +131,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	@Autowired
 	private VisaTestCaseNameKeyValuePair visaTestCaseNameKeyValuePair;
+	
+	@Autowired
+	private LinuxBox linuxbox ;
+
 
 	public void initiateSettlementForAgency(String branchID, String programCode) {
 		ispage = navigator.navigateToPage(InitiateSettlementPage.class);
@@ -1652,9 +1656,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		return page.searchTransactionWithDevice(deviceNumber, ts);
 	}
 
-	@Autowired
-	LinuxBox linuxbox ;
-
 	@Value("${linux.host.name}")
 	private String hostName;
 
@@ -1666,6 +1667,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	@Value("${linux.folder.path}")
 	private String folderPath;
+	
+	@Value("${linux.folder.name}")
+	private String folderName;
 
 	@Value("${linux.WinSCPTool.Path}")
 	private String winSCPPath;
@@ -1752,14 +1756,14 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	public void setFolderPermisson(){
 		try {
 			Actions action = new Actions(winiumDriver);
-			wait(10000);
+			wait(20000);
 			action.moveToElement(winiumDriver.findElement(By.name("Rights"))).moveByOffset(0,-30).doubleClick().build().perform();
 			wait(3000);
 			setText(folderPath);  //Folder Path
 			wait(2000);
 			winiumClickOperation("OK");
 			wait(2000);
-			winiumClickOperation("121212"); //AE8060225839_00000999901_180301_001_NOT_03682.IPM Folder Name
+			winiumClickOperation(folderName); //AE8060225839_00000999901_180301_001_NOT_03682.IPM Folder Name
 			pressF9Key();
 			wait(3000);
 			action.moveToElement(winiumDriver.findElement(By.name("Cancel"))).moveByOffset(0,-30).click().build().perform();

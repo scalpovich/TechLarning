@@ -69,7 +69,7 @@ When MCPS simulator is closed
 
 Scenario: Upload ipm file from customer portal and process it
 Meta:
-@TestId 
+@TestId
 Given user is logged in institution
 When User uploads the NOT file
 When connection to WinSCP is provided
