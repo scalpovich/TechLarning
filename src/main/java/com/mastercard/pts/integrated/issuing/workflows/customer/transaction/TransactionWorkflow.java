@@ -1668,9 +1668,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	@Value("${linux.folder.path}")
 	private String folderPath;
 	
-	@Value("${linux.folder.name}")
-	private String folderName;
-
 	@Value("${linux.WinSCPTool.Path}")
 	private String winSCPPath;
 
@@ -1753,17 +1750,18 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumDriver.findElement(By.className("TUpDownEdit")).sendKeys(number);
 	}*/
 
-	public void setFolderPermisson(){
+	public void setFolderPermisson(String fName){
 		try {
+			String folderName = (folderPath+fName).substring((folderPath+fName).lastIndexOf("/")+1);
 			Actions action = new Actions(winiumDriver);
 			wait(20000);
 			action.moveToElement(winiumDriver.findElement(By.name("Rights"))).moveByOffset(0,-30).doubleClick().build().perform();
 			wait(3000);
-			setText(folderPath);  //Folder Path
+			setText((folderPath+fName).replace(folderName,""));  //Folder Path
 			wait(2000);
 			winiumClickOperation("OK");
-			wait(2000);
-			winiumClickOperation(folderName); //AE8060225839_00000999901_180301_001_NOT_03682.IPM Folder Name
+			wait(2000);			
+			winiumClickOperation(folderName); 	//AE8060225839_00000999901_180301_001_NOT_03682.IPM Folder Name
 			pressF9Key();
 			wait(3000);
 			action.moveToElement(winiumDriver.findElement(By.name("Cancel"))).moveByOffset(0,-30).click().build().perform();

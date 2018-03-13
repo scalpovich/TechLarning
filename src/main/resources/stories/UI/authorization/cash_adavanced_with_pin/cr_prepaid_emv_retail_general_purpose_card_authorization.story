@@ -44,7 +44,7 @@ Then FINSim simulator is closed
 
 Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
 Meta:
-@TestId_test_test 
+@TestId 
 Given connection to MAS is established
 When perform an EMV_CASH_ADVANCE MAS transaction
 Then MAS test results are verified
@@ -72,7 +72,7 @@ Meta:
 @TestId
 Given user is logged in institution
 When User uploads the NOT file
-When user update folder permission through WinSCP
+When user update folder permission through WinSCP for ipm incoming folder
 When user processes batch for prepaid
 Then user sign out from customer portal
 
