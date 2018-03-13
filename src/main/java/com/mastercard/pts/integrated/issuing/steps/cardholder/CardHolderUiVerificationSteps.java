@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.steps.cardholder;
 
 import org.jbehave.core.annotations.Then;
+import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -140,5 +141,15 @@ public class CardHolderUiVerificationSteps {
 	@Then("user signs out from cardholder portal")
 	public void signOutFromPortal() {
 		loginWorkflow.signOutCardholder();
+	}
+
+	@When("user $blocks the device from cardholder portal")
+	@Then("user $blocks the device from cardholder portal")
+	public void blockDeviceCHP(String status) {
+		if ("blocks".equalsIgnoreCase(status))
+			cardHolderUiVerificationServicesWorkflow.blockDevice();
+		else
+			cardHolderUiVerificationServicesWorkflow.unblockDevice();
+
 	}
 }

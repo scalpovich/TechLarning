@@ -17,6 +17,9 @@ public class CardHolderUiVerificationServicesWorkflow {
 	@Autowired
 	private Navigator navigator;
 
+	String blockDevice = "Blocking the device";
+	String unblockDevice = "Unblocking the device";
+
 	public void verifyActivateDeactivateWalletPage() {
 		ActivateDeactivateWalletPage page = navigator.navigateToPage(ActivateDeactivateWalletPage.class);
 		page.verifyUiOperationStatus();
@@ -50,6 +53,19 @@ public class CardHolderUiVerificationServicesWorkflow {
 	public void verifyUnblockDevicePage() {
 		UnblockDevicePage page = navigator.navigateToPage(UnblockDevicePage.class);
 		page.verifyUiOperationStatus();
+	}
+
+	public void blockDevice() {
+		BlockDevicePage page = navigator.navigateToPage(BlockDevicePage.class);
+		page.enterCardBlockRemark(blockDevice);
+		page.confirmCardBlockRequest();
+	}
+
+	public void unblockDevice() {
+		UnblockDevicePage page = navigator
+				.navigateToPage(UnblockDevicePage.class);
+		page.enterCardUnblockRemerk(unblockDevice);
+		page.confirmUnblockCardRequestBtn();
 	}
 
 }
