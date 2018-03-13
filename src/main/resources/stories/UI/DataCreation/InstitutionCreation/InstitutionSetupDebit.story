@@ -90,7 +90,7 @@ Meta:
 @sheetName S205014
 Given login to portal as existing bank as a Customeruser
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
-When user creates a Network MemberShip for Rupay
+When user creates a Network MemberShip for RUPAY
 When user creates a Transaction Registration
 When user creates an Institution Currency with status as Active
 When user creates a Zonal Office
