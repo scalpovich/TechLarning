@@ -26,9 +26,9 @@ When user creates a Branch Office
 When user creates a Plastic Code
 When user creates Picture Code
 When user creates Device BIN for Mastercard for product Debit for BinType as Dual Message Type
-When user creates HSM Device Keys
-When user creates HSM Network Keys
-When user creates MDK keys
+When user creates HSM Device Keys for Amex
+When user creates HSM ZPK Network Keys for Amex(DMS)
+When user creates MDK keys for Amex
 When user creates MCG
 When user creates Dedupe Plan
 When user creates Saving account type
