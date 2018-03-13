@@ -26,7 +26,7 @@ When user creates a Plastic Code
 When user creates Picture Code
 When user creates Device BIN for Mastercard for product prepaid for BinType as Dual Message Type
 When user creates HSM Device Keys for Mastercard
-When user creates HSM ZPK Network Keys for Mastercard(DMS)
+When user creates HSM ZPK Network Keys for Mastercard(CIS)
 When user creates MDK keys for Mastercard
 When user creates MCG
 When user creates Dedupe Plan
