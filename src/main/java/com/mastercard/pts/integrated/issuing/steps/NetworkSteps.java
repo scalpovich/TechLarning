@@ -48,7 +48,7 @@ public class NetworkSteps extends AbstractBaseSteps {
  
 	@Then("the user must not be allowed to delete the rupay network from the screen")
 	public void verifyDeleteNotPerformed() {
-		 
+		 //TODO
 	}
 
 	@When("user is configuring device ranges and selects rupay network")
@@ -67,18 +67,19 @@ public class NetworkSteps extends AbstractBaseSteps {
 	}
 
 	@Then("the user must be able to download all the Bank Network configured in the excel file format (CSV)")
-	public void readFile() throws ZipException, FileNotFoundException {
+	public void readFile() {
 		String filepath = System.getProperty("user.dir") + "\\TempFiles";
-		File Filename = FileUtils.getTheNewestFile(filepath, "zip");
-		try {
-			ZipUnzipUtils.unZip(Filename, filepath,
-					zipunziputils.getReportPassword());
-
-		} catch (java.util.zip.ZipException e) {
-			e.printStackTrace();
-		}
-		File Filename1 = FileUtils.getTheNewestFile(filepath, "csv");
-		FileUtils.ReadFileAndValidate(Filename1, "06");
+		File filename = FileUtils.getTheNewestFile(filepath, "zip");
+		 
+			try {
+				ZipUnzipUtils.unZip(filename, filepath,
+						zipunziputils.getReportPassword());
+				File filenameNew = FileUtils.getTheNewestFile(filepath, "csv");
+				FileUtils.ReadFileAndValidate(filenameNew, "06");
+			} catch (ZipException|FileNotFoundException|java.util.zip.ZipException e) {
+				e.printStackTrace();
+				LOG.info(e.toString());
+			}   
 	}
 
 }
