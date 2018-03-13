@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceRangePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -17,11 +18,11 @@ public class DeviceRangeFlows extends MenuFlows {
 
 	DeviceRangePage deviceRangePage;
 
-	public void addDeviceRange(Program program) {
+	public void addDeviceRange(Program program, DeviceBin devicebin) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
 		deviceRangePage = navigator.navigateToPage(DeviceRangePage.class);
 		deviceRangePage.clickAddDeviceRange();
-		deviceRangePage.addDeviceRange(program);
+		deviceRangePage.addDeviceRange(program, devicebin);
 		deviceRangePage.addDeviceRangeDetails();
 		deviceRangePage.selectDebitInerface();
 		deviceRangePage.Information();

@@ -205,10 +205,11 @@ public class DeviceRangePage extends AbstractBasePage {
 		}
 	}
 
-	public void selectIssuerBIN() {
+	public void selectIssuerBIN(DeviceBin issuerbin) {
 		waitForElementVisible(IssuerBINDDwn);
 		if (!MapUtils.fnGetInputDataFromMap("DMSIssuerBIN").isEmpty()) {
 			selectByVisibleText(IssuerBINDDwn, MapUtils.fnGetInputDataFromMap("DMSIssuerBIN"));
+
 		} else if (!MapUtils.fnGetInputDataFromMap("SMSIssuerBIN").isEmpty()) {
 			selectByVisibleText(IssuerBINDDwn, MapUtils.fnGetInputDataFromMap("SMSIssuerBIN"));
 		}
@@ -296,11 +297,11 @@ public class DeviceRangePage extends AbstractBasePage {
 		}
 	}
 
-	public void addDeviceRange(Program program) {
+	public void addDeviceRange(Program program, DeviceBin issuerbin) {
 		selectProduct(program);
 		selectProgram(program);
 		selectDevicePlan(program);
-		selectIssuerBIN();
+		selectIssuerBIN(issuerbin);
 		selectBranch();
 		clickAddButton();
 	}

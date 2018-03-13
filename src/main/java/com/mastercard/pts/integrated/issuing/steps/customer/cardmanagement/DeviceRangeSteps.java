@@ -6,6 +6,7 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceRangeFlows;
@@ -22,9 +23,12 @@ public class DeviceRangeSteps {
 	@Autowired
 	Program program;
 
+	@Autowired
+	DeviceBin devicebin;
+
 	@When("user creates a Device Range for product $product")
 	public void whenUserCreatesADeviceRangeForProductPrepaid(@Named("product") String product) {
-		devicerangeflows.addDeviceRange(program);
+		devicerangeflows.addDeviceRange(program, devicebin);
 	}
 
 	@When("Device Range Adaptive Authentication CheckBox should be $enabled")
