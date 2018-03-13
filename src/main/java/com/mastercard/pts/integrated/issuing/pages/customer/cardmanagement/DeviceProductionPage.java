@@ -120,7 +120,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	}
 
 	public void enterBatchNumber(BulkDeviceRequestbatch bulkdeviceGenBatch) {
-		enterValueinTextBox(batchNumberTxt, bulkdeviceGenBatch.getBatchNumber());
+		enterValueinTextBox(batchNumberTxt, bulkdeviceGenBatch.getBatchNumberForDeviceProduction());
 	}
 
 	public void enterDeviceNumber(BulkDeviceRequestbatch bulkdeviceGenBatch) {
