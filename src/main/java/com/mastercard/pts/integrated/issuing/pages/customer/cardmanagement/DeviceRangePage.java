@@ -212,11 +212,11 @@ public class DeviceRangePage extends AbstractBasePage {
 
 		} else if (!MapUtils.fnGetInputDataFromMap("SMSIssuerBIN").isEmpty()) {
 			selectByVisibleText(IssuerBINDDwn, MapUtils.fnGetInputDataFromMap("SMSIssuerBIN"));
-		}
-		if (issuerbin.getBinType().contains("Dual")) {
-			selectByVisibleText(IssuerBINDDwn, issuerbin.getIssuerBin());
 		} else {
 			IssuerBINDDwn.getSelect().selectByIndex(1);
+		}
+		if (issuerbin.getBinType() != null && issuerbin.getBinType().contains("Dual")) {
+			selectByVisibleText(IssuerBINDDwn, issuerbin.getIssuerBin());
 		}
 
 	}
