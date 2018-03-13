@@ -349,7 +349,7 @@ public class CardManagementNav {
 	public static final String L2_DEVICE_ACTIVITY = "ISREV1";
 	public static final String L2_FINANCIAL_REPORTS = "ISRFR0";
 
-	public static final String L1_DE_DUPE_SDN_VERIFICATION = "ISAA0D";
+	public static final String L2_DE_DUPE_SDN_VERIFICATION = "ISAA0D";
 
 	private CardManagementNav() {
 	}

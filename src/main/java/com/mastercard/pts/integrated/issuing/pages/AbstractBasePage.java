@@ -246,6 +246,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers' and @class!='navigation'][1]/td[2]/span")
 	private MCWebElement deviceNumberFetch;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview td:first-child>span>a>span")
+	private MCWebElements firstElementOfTable;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview tr.even a>img[alt='Delete Record'],table.dataview tr.odd a>img[alt='Delete Record']")
+	private MCWebElements deleteAddedRecordsIcon;
 
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -1600,6 +1606,19 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 		return false;
 	}
+	
+	public void identifyAddedRecordinTableAndDelete(String parameter)
+	   {
+		  int index=0;
+		  for(int i=0;i<firstElementOfTable.getElements().size();i++)
+		  {
+			  if(firstElementOfTable.getElements().get(i).getText().equals(parameter))
+			  {
+				  index=i;
+				  clickWhenClickable(deleteAddedRecordsIcon.getElements().get(index));
+			  }
+		  }
+	   }
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
