@@ -52,7 +52,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@id='tab1']//span[contains(text(),'Transaction Fee')]/..//span[@class='labeltextr']")
 	private MCWebElement fixedTransactionFee;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@id='tab1']//span[contains(text(),'Service Tax')]/..//span[contains(text(), '0.10')]")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='tab_content']//span[contains(text(),'Transaction Fee')]/../following-sibling::td//span[@class='labeltextr']")
 	private MCWebElement serviceTaxFees;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@id='tab1']//span[contains(text(),'Transaction Amount :')]/..//span[@class='labeltextr']")
