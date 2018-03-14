@@ -29,10 +29,12 @@ When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 When processes pin generation batch for prepaid
 Then device has "normal" status
+
 When user has wallet number information for prepaid device
 Then user sign out from customer portal
 Then user is logged in institution
 When user performs adjustment transaction
+
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
@@ -43,6 +45,7 @@ Meta:
 @TestId 
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
+
 When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed

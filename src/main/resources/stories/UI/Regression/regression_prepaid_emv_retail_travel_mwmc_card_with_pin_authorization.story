@@ -32,6 +32,7 @@ And user sign out from customer portal
 Scenario: Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
+When user update folder permission through WinSCP for device production folder
 When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
