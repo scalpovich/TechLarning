@@ -1697,6 +1697,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public void launchWinSCP(){
+		browserMinimize();
 		startWiniumDriverWithApplication(setWinSCPAsApplication());
 	}
 
