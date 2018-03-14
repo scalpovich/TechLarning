@@ -25,7 +25,10 @@ public class AuthorizationSearchSteps {
 	
 	@Autowired
 	private AuthorizationSearchWorkflow authorizationSearchWorkflow;
-
+	
+	private String fixedTxnFee="10.00";
+	private String fixedRateFee="0.10";
+	private String billingAmount="10.00";
 	@Then("search $type authorization and verify $state status")
 	public void thenUserSearchDeviceNumerWithTodaysDate(String type, String state) {
 		Device device = context.get(ContextConstants.DEVICE);
@@ -42,7 +45,7 @@ public class AuthorizationSearchSteps {
 	public void veriyFixedTransactionFeeonPurchaseTransaction(String type, String state)
 	{
 			Device device = context.get(ContextConstants.DEVICE);
-			assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()), Matchers.hasItems("10.00","0.10","10.00"));
+			assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()), Matchers.hasItems(fixedTxnFee,fixedRateFee,billingAmount));
 	}
 	
 	
