@@ -131,7 +131,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	@Autowired
 	private VisaTestCaseNameKeyValuePair visaTestCaseNameKeyValuePair;
-	
+
 	@Autowired
 	private LinuxBox linuxbox ;
 
@@ -1667,14 +1667,12 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	@Value("${linux.folder.path}")
 	private String folderPath;
-	
+
 	@Value("${linux.WinSCPTool.Path}")
 	private String winSCPPath;
 
 
 	private DesktopOptions setWinSCPAsApplication() {
-		MiscUtils.killProcessFromTaskManager("Winium.Desktop.Driver");
-		MiscUtils.killProcessFromTaskManager("WinSCP");
 		DesktopOptions options = new DesktopOptions();
 		MiscUtils.reportToConsole(ConstantData.MESSAGE_CONSTANT  + winSCPPath );
 		options.setApplicationPath(winSCPPath);
@@ -1682,6 +1680,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private void startWiniumDriverWithApplication(DesktopOptions options) {
+		MiscUtils.killProcessFromTaskManager("WINIUM");
 		try
 		{
 			String path = getResourceFolderPath() + SimulatorConstantsData.WINIUM_DRIVER_EXE_PATH.replace("\\", "\\\\");
@@ -1776,7 +1775,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public void closeWinSCP(){
-		//MiscUtils.killProcessFromTaskManager("WinSCP");
 		winiumClickOperation("Close");
 		wait(2000);
 		winiumClickOperation("OK");

@@ -16,5 +16,3 @@ Meta:
 @TestId_test_test
 
 When user update folder permission through WinSCP for ipm incoming folder
-
-

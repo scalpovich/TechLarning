@@ -32,6 +32,7 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
+When user update folder permission through WinSCP for device production folder
 Then embossing file batch was generated in correct format
 Then user sign out from customer portal
 

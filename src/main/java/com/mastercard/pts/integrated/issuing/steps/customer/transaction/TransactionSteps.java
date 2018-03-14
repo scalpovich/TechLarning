@@ -496,12 +496,14 @@ public class TransactionSteps {
 	public void connectionToApplicationIsEstablished(String type){
 		transactionWorkflow.launchWinSCP();
 		transactionWorkflow.loginToWinSCP();
+		
 		if(type.equalsIgnoreCase("device production"))
 			transactionWorkflow.setFolderPermisson(provider.getString(DEVICE_PRODUCTION_FOLDER));
 		else if(type.equalsIgnoreCase("pin production"))
 			transactionWorkflow.setFolderPermisson(provider.getString(PIN_PRODUCTION_FOLDER));
 		else if(type.equalsIgnoreCase("ipm incoming"))
 		transactionWorkflow.setFolderPermisson(provider.getString(IPM_INCOMING));
+		
 		transactionWorkflow.closeWinSCP();
 	}
 }
