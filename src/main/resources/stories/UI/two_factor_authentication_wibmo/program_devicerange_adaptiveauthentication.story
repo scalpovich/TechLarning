@@ -46,7 +46,7 @@ Meta:
 @TCName adaptiveAuth_debit
 @testDataFileName testdata
 @sheetName S205014
-@edit_institute_wibmo
+@edit_institute_wibmo_debit
 Given login to portal as existing bank as a Customeruser
 When user creates a Open loop wallet plan of default type for program Retail Debit Card for Debit
 When user creates an Embossing File Template

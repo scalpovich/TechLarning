@@ -48,6 +48,15 @@ public class InstitutionCreation extends AbstractBasePage {
 	private String ascVendor;
 	private String existingInstitutionCode;
 	private String authenticationFlg;
+	private String credentialMasking;
+
+	public String getCredentialMasking() {
+		return credentialMasking;
+	}
+
+	public void setCredentialMasking(String credentialMasking) {
+		this.credentialMasking = credentialMasking;
+	}
 
 	public String getCreatedInstitution() {
 		return createdInstitution;
