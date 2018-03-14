@@ -1609,13 +1609,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	public void identifyAddedRecordinTableAndDelete(String parameter)
 	   {
-		  int index=0;
 		  for(int i=0;i<firstElementOfTable.getElements().size();i++)
 		  {
 			  if(firstElementOfTable.getElements().get(i).getText().equals(parameter))
 			  {
-				  index=i;
-				  clickWhenClickable(deleteAddedRecordsIcon.getElements().get(index));
+				  clickWhenClickable(deleteAddedRecordsIcon.getElements().get(i));
 			  }
 		  }
 	   }

@@ -52,8 +52,8 @@ public class HighRiskMCCPage extends AbstractBasePage {
 		clickAddNewButton();
 		runWithinPopup("High Risk MCC", () -> {
 			addNewHighRiskMCC();
-			verifyDuplicateAndClickCancel();
-			if (!verifyDuplicateAndClickCancel()) {
+			Boolean addedRecord=verifyDuplicateAndClickCancel();
+			if (!addedRecord) {
 				identifyAddedRecordinTableAndDelete(MCC_CODE);
 			}
 		});

@@ -48,8 +48,8 @@ public class HighRiskCountryPage extends AbstractBasePage {
 		clickAddNewButton();
 		runWithinPopup("High Risk Country", () -> {
 			addNewHighRiskCountry();
-			verifyDuplicateAndClickCancel();
-			if (!verifyDuplicateAndClickCancel()) {
+			Boolean addedRecord=verifyDuplicateAndClickCancel();
+			if (!addedRecord) {
 				identifyAddedRecordinTableAndDelete(HIGH_RISK_COUNTRY);
 			}
 		});
