@@ -49,16 +49,16 @@ public class WalletFeePlanPage extends AbstractBasePage {
 	private MCWebElement addWalletFeePlanBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "productType:input:dropdowncomponent")
-	private MCWebElement ProductTypeDDwn;
+	private MCWebElement productTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "walletFeePlanCode:input:inputTextField")
-	private MCWebElement PlancodeTxt;
+	private MCWebElement plancodeTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "description:input:inputTextField")
-	private MCWebElement DescriptionTxt;
+	private MCWebElement descriptionTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "currencyCode:input:dropdowncomponent")
-	private MCWebElement CurrencyDDwn;
+	private MCWebElement currencyDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement saveBtn;
@@ -77,13 +77,13 @@ public class WalletFeePlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "waiveNumOfCycle:input:inputTextField")
 	private MCWebElement waiveNoOfCycleTxt;
-
+	
+	public String calelement = "//span[@id = 'walletFeeEndDate']";
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Wallet Fee Plan");
 		verifyUiOperation("Add Wallet Fee Plan");
 	}
-	public String Calelement = "//span[@id = 'walletFeeEndDate']";
-
 	public void clickAddWalletFeePlan() {
 		clickWhenClickable(addWalletFeePlanBtn);
 		switchToAddFeeWalletPlanFrame();
@@ -94,23 +94,23 @@ public class WalletFeePlanPage extends AbstractBasePage {
 	}
 
 	public void selectProduct(DeviceCreation deviceCreation) {
-		selectByVisibleText(ProductTypeDDwn, deviceCreation.getProduct());
+		selectByVisibleText(productTypeDDwn, deviceCreation.getProduct());
 	}
 
 	public String enterPlanCode() {
-		enterValueinTextBox(PlancodeTxt, CustomUtils.randomNumbers(6));
-		return PlancodeTxt.getAttribute("value");
+		enterValueinTextBox(plancodeTxt, CustomUtils.randomNumbers(6));
+		return plancodeTxt.getAttribute("value");
 	}
 
 	public String enterDescription() {
-		enterValueinTextBox(DescriptionTxt, "Corporate gift prepaid emv");
-		return DescriptionTxt.getAttribute("value");
+		enterValueinTextBox(descriptionTxt, "Corporate gift prepaid emv");
+		return descriptionTxt.getAttribute("value");
 	}
 
 	public void selectCurrency(WalletFeePlan walletfeeplan) {
-		selectByVisibleText(CurrencyDDwn, walletfeeplan.getCurrency());
+		selectByVisibleText(currencyDDwn, walletfeeplan.getCurrency());
 	}
-
+	@Override
 	public void clickSaveButton() {
 		clickWhenClickable(saveBtn);
 	}
@@ -134,7 +134,7 @@ public class WalletFeePlanPage extends AbstractBasePage {
 	}
 
 	public void selectEndDate(WalletFeePlan walletfeeplan) {
-		date.setDateCalendar2(walletfeeplan.getEndDate(), Calelement);
+		date.setDateCalendar2(walletfeeplan.getEndDate(), calelement);
 
 	}
 
@@ -162,7 +162,7 @@ public class WalletFeePlanPage extends AbstractBasePage {
 
 	}
 
-	public void addWalletFeePlanDetails(DeviceCreation deviceCreation, WalletFeePlan walletfeeplan) {
+	public void addWalletFeePlanDetails(WalletFeePlan walletfeeplan) {
 		clickWhenClickable(walletPlanSubdetailsBtn);
 		SwitchToDefaultFrame();
 		selectFeeType(walletfeeplan);

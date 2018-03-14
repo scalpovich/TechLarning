@@ -58,6 +58,10 @@ public class ConstantData {
 	public static final String API_NAME = "API_NAME";
 
 	public static final String  MSR_CARD = "magnetic stripe card";
+	public static final String  DEBIT_DEVICE = "Debitdevice";
+	public static final String  PREPAID_DEVICE = "Prepaiddevice";
+	
+	
 	
 	private ConstantData() {}
 }

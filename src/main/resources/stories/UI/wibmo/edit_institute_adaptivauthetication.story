@@ -16,7 +16,7 @@ Meta:
 @sheetName Institute
 @edit_institute_wibmo
 Given login to bank as a Bankadmin
-When user edits institution to enable two factor authentication
+When user edits institution to enable two factor authentication with masked option
 Then two factor authentication options are configured
 
 Scenario: disable two factor authentication at processing center

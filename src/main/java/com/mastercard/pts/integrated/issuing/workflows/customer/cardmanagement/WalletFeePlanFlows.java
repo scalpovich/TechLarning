@@ -21,7 +21,7 @@ public class WalletFeePlanFlows extends MenuFlows {
 		walletfeeplanpage.clickAddWalletFeePlan();
 		String walletFeeplan = walletfeeplanpage.addWalletFeePlan(deviceCreation, walletfeeplan);
 		if(!deviceCreation.getProduct().equalsIgnoreCase("Credit")){
-			walletfeeplanpage.addWalletFeePlanDetails(deviceCreation, walletfeeplan);
+			walletfeeplanpage.addWalletFeePlanDetails(walletfeeplan);
 			walletfeeplanpage.switchToAddFeeWalletPlanFrame();
 			walletfeeplanpage.clickSaveButton();
 		}
