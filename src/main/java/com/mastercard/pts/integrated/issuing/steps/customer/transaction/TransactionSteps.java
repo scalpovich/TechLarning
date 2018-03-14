@@ -51,6 +51,12 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.Tran
 public class TransactionSteps {
 	private static final Logger logger = LoggerFactory.getLogger(TransactionSteps.class);
 
+	private static final String DEVICE_PRODUCTION_FOLDER = "DEVICE_PRODUCTION_FOLDER";
+	private static final String PIN_PRODUCTION_FOLDER = "PIN_PRODUCTION_FOLDER";
+	private static final String IPM_INCOMING = "IPM_INCOMING";
+	private static final String DEVICE_PRODUCTION = "device production";
+	private static final String PIN_PRODUCTION = "pin production";
+	private static final String IPMINCOMING = "ipm incoming";
 	private static Boolean sameCard = false;
 
 	@Autowired
@@ -497,5 +503,20 @@ public class TransactionSteps {
 		String arn = transactionWorkflow.getARN(deviceNumber, ts);
 		context.put(ConstantData.ARN_NUMBER, arn);
 		logger.info("ARN for device transactions = {} ", arn);
+	}
+	
+	//Win SCP step
+	@Given("user update folder permission through WinSCP for $type folder")
+	@When("user update folder permission through WinSCP for $type folder")
+	public void connectionToApplicationIsEstablished(String type){
+		transactionWorkflow.launchWinSCP();
+		transactionWorkflow.loginToWinSCP();
+		if(type.equalsIgnoreCase(DEVICE_PRODUCTION))
+			transactionWorkflow.setFolderPermisson(provider.getString(DEVICE_PRODUCTION_FOLDER));
+		else if(type.equalsIgnoreCase(PIN_PRODUCTION))
+			transactionWorkflow.setFolderPermisson(provider.getString(PIN_PRODUCTION_FOLDER));
+		else if(type.equalsIgnoreCase(IPMINCOMING))
+		transactionWorkflow.setFolderPermisson(provider.getString(IPM_INCOMING));
+		transactionWorkflow.closeWinSCP();
 	}
 }
