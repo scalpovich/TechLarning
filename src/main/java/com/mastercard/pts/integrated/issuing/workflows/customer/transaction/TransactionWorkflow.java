@@ -134,6 +134,21 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	@Autowired
 	private LinuxBox linuxbox ;
+	
+	@Value("${linux.host.name}")
+	private String hostName;
+
+	@Value("${linux.port.number}")
+	private String number;
+
+	@Value("${linux.user.name}")
+	private String username;
+
+	@Value("${linux.folder.path}")
+	private String folderPath;
+
+	@Value("${linux.WinSCPTool.Path}")
+	private String winSCPPath;
 
 
 	public void initiateSettlementForAgency(String branchID, String programCode) {
@@ -1656,22 +1671,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		return page.searchTransactionWithDevice(deviceNumber, ts);
 	}
 
-	@Value("${linux.host.name}")
-	private String hostName;
-
-	@Value("${linux.port.number}")
-	private String number;
-
-	@Value("${linux.user.name}")
-	private String username;
-
-	@Value("${linux.folder.path}")
-	private String folderPath;
-
-	@Value("${linux.WinSCPTool.Path}")
-	private String winSCPPath;
-
-
 	private DesktopOptions setWinSCPAsApplication() {
 		DesktopOptions options = new DesktopOptions();
 		MiscUtils.reportToConsole(ConstantData.MESSAGE_CONSTANT  + winSCPPath );
@@ -1700,8 +1699,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		browserMinimize();
 		startWiniumDriverWithApplication(setWinSCPAsApplication());
 	}
-
-
+	
 	public void loginToWinSCP(){
 		try {
 			winiumClickOperation("Session");
@@ -1721,34 +1719,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		} catch (AWTException e) {
 			logger.error(e.getMessage());
 		}
-
-		/*winiumClickOperation("Stored sessions");
-		wait(3000);
-		winiumClickOperation("New");
-		winiumDriver.findElement(By.className("TUpDownEdit")).sendKeys(Keys.DELETE);
-		wait(2000);
-		winiumDriver.findElement(By.className("TUpDownEdit")).sendKeys(Keys.DELETE);
-		wait(4000);
-		winiumDriver.findElement(By.className("TUpDownEdit")).sendKeys("2222");
-		setHostName("10.168.129.65");
-		wait(4000);
-		clearAndSetPortNumber("2222");
-		wait(4000);
-		winiumDriver.findElement(By.className("TEdit")).sendKeys("dc-user");
-		winiumDriver.findElement(By.className("TPasswordEdit")).sendKeys("andro#1234"); */
 	}
-
-	/*private void setHostName(String hostName){
-		List<WebElement> lst = winiumDriver.findElements(By.className("TEdit"));
-		lst.get(lst.size()-1).sendKeys(hostName);
-	}*/
-
-	/*private void clearAndSetPortNumber(String number){
-		new Actions(winiumDriver).doubleClick(winiumDriver.findElement(By.className("TUpDownEdit"))).build().perform();
-		wait(2000);
-		pressDelete();
-		winiumDriver.findElement(By.className("TUpDownEdit")).sendKeys(number);
-	}*/
 
 	public void setFolderPermisson(String fName){
 		try {
@@ -1761,7 +1732,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(2000);
 			winiumClickOperation("OK");
 			wait(2000);			
-			winiumClickOperation(folderName); 	//AE8060225839_00000999901_180301_001_NOT_03682.IPM Folder Name
+			winiumClickOperation(folderName); 	//Folder Name
 			pressF9Key();
 			wait(3000);
 			action.moveToElement(winiumDriver.findElement(By.name("Cancel"))).moveByOffset(0,-30).click().build().perform();

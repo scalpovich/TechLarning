@@ -165,9 +165,7 @@ public class LoadFromFileUploadSteps {
 	public void thenUserUploadsTheNOTFile(){
 		ProcessBatches batch =  ProcessBatches.getBatchData();
 		loadFromFileUploadWorkflow.loadIncomingIPM(notFileName);
-		//	loadFromFileUploadWorkflow.loadIncomingIPM(new File("C:\\Users\\E079917\\Desktop\\test.ipm.txt"));
 		batch.setBatchFileName(notFileName.getName());	
-		//	batch.setBatchFileName(new File("C:\\Users\\E079917\\Desktop\\test.ipm").getName());	
 	}
 
 	@When("user processes upload batch for $type")
