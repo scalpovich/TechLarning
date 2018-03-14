@@ -18,28 +18,23 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_PROGRAM_SETUP,
-		CardManagementNav.L2_DEVICE_CONFIGURATION,
-		CardManagementNav.L3_TRANSACTION_FEE_PLAN
-		})
-
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_DEVICE_CONFIGURATION,
+		CardManagementNav.L3_TRANSACTION_FEE_PLAN })
 public class TransactionFeePlanPage extends AbstractBasePage {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(TransactionFeePlanPage.class);
+	private static final Logger logger = LoggerFactory.getLogger(TransactionFeePlanPage.class);
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addTransactionFeePlan;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=txnFeePlanCode]")
 	private MCWebElement txnFeePlanCodeTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=description]")
 	private MCWebElement descriptionTxt;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "transactionCode:input:dropdowncomponent")
 	private MCWebElement transactionTypeDDwn;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "currencyCode:input:dropdowncomponent")
 	private MCWebElement walletCurrencyDDwn;
 
@@ -108,46 +103,58 @@ public class TransactionFeePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement save;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:searchButtonPanel:buttonCol:searchButton")
+	private MCWebElement search;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//span[contains(text(),'Purchase/Auth Completion')]/..")
+	private MCWebElement purchase;
+
 	public void verifyUiOperationStatus() {
 		logger.info("Transaction Fee Plan Master");
 		verifyUiOperation("Add Transaction Fee Plan Master");
 	}
 
-	public void addTransactionFeePlanMasterDetail(TransactionFeePlan plan){
-		logger.info("Create transaction Fee Plan Master: {}",
-				plan.getTransactionFeePlanCode());
+	public void addTransactionFeePlanMasterDetail(TransactionFeePlan plan) {
+		logger.info("Create transaction Fee Plan Master: {}", plan.getTransactionFeePlanCode());
 		clickAddNewButton();
-		runWithinPopup("Add Transaction Fee Plan Master",() -> {
-					WebElementUtils.enterText(txnFeePlanCodeTxt, plan.getTransactionFeePlanCode());
-					WebElementUtils.enterText(descriptionTxt, plan.getDescription());
-					clickAddDetailsButton();
-					addTransactionFeePlanDetails(plan);
-					clickSaveButton();
-				});
+		runWithinPopup("Add Transaction Fee Plan Master", () -> {
+			WebElementUtils.enterText(txnFeePlanCodeTxt, plan.getTransactionFeePlanCode());
+			WebElementUtils.enterText(descriptionTxt, plan.getDescription());
+			clickAddDetailsButton();
+			addTransactionFeePlanDetails(plan);
+			clickSaveButton();
+		});
 	}
 
-	private void addTransactionFeePlanDetails(TransactionFeePlan plan){
-		clickAddNewButton();
-		runWithinPopup("Add Transaction Fee Plan Details",() -> {
-					WebElementUtils.selectDropDownByVisibleText(transactionTypeDDwn, plan.getTransactionType());
-					WebElementUtils.selectDropDownByVisibleText(walletCurrencyDDwn, plan.getWalletCurrency());
-					WebElementUtils.selectDropDownByVisibleText(transactionSourceDDwn, plan.getTransactionSource());
-					WebElementUtils.selectDropDownByVisibleText(transactionOriginDDwn, plan.getTransactionOrigin());
-					WebElementUtils.pickDate(effectiveDateTxt, plan.getEffectiveDate());
-					WebElementUtils.pickDate(endDateTxt, plan.getEndDate());
-					WebElementUtils.enterText(fromAmountTxt, plan.getFromAmount());
-					WebElementUtils.enterText(toAmountTxt, plan.getToAmount());
-					WebElementUtils.enterText(fixTxt, plan.getFix());
-					WebElementUtils.enterText(rateTxt, plan.getRate());
-					clickSaveButton();								
-				});
+	public void fixedTransactionFeesForPurchase(TransactionFeePlan plan) {
+		WebElementUtils.enterText(txnFeePlanCodeTxt, plan.getTransactionFeePlanCode());
+		WebElementUtils.enterText(descriptionTxt, plan.getDescription());
+		clickSearchButton();
+		viewFirstRecord();
+		clickWhenClickable(purchase);
+		
+
 	}
-	
+
+	private void addTransactionFeePlanDetails(TransactionFeePlan plan) {
+		clickAddNewButton();
+		runWithinPopup("Add Transaction Fee Plan Details", () -> {
+			WebElementUtils.selectDropDownByVisibleText(transactionTypeDDwn, plan.getTransactionType());
+			WebElementUtils.selectDropDownByVisibleText(walletCurrencyDDwn, plan.getWalletCurrency());
+			WebElementUtils.selectDropDownByVisibleText(transactionSourceDDwn, plan.getTransactionSource());
+			WebElementUtils.selectDropDownByVisibleText(transactionOriginDDwn, plan.getTransactionOrigin());
+			WebElementUtils.pickDate(effectiveDateTxt, plan.getEffectiveDate());
+			WebElementUtils.pickDate(endDateTxt, plan.getEndDate());
+			WebElementUtils.enterText(fromAmountTxt, plan.getFromAmount());
+			WebElementUtils.enterText(toAmountTxt, plan.getToAmount());
+			WebElementUtils.enterText(fixTxt, plan.getFix());
+			WebElementUtils.enterText(rateTxt, plan.getRate());
+			clickSaveButton();
+		});
+	}
+
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(txnFeePlanCodeTxt),
-				WebElementUtils.elementToBeClickable(descriptionTxt)
-				);
+		return Arrays.asList(WebElementUtils.elementToBeClickable(txnFeePlanCodeTxt), WebElementUtils.elementToBeClickable(descriptionTxt));
 	}
 }

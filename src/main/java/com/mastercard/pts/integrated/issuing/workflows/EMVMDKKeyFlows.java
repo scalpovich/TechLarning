@@ -14,15 +14,14 @@ public class EMVMDKKeyFlows extends MenuFlows {
 	Navigator navigator;
 
 	public void addMDKKey(MasterDerivationKeys mdkKeys) {
-		waitForElementVisible(menusubmenuPage.getCardManagement());
 		MasterDerivationKeysPage mdkpage = navigator.navigateToPage(MasterDerivationKeysPage.class);
 		mdkpage.addMDK();
 		mdkpage.switchToAddMDKKey();
-		mdkpage.SelectInterchange(mdkKeys);
+		mdkpage.selectInterchange(mdkKeys);
 		mdkpage.fillBinLow(mdkKeys);
 		mdkpage.fillBinHigh(mdkKeys);
-		mdkpage.SelectStatus(mdkKeys);
-		mdkpage.SelectKeyType(mdkKeys);
+		mdkpage.selectStatus(mdkKeys);
+		mdkpage.selectKeyType(mdkKeys);
 		mdkpage.fillMDKEncryptedUnderLMK(mdkKeys);
 		mdkpage.fillConfirmMDKEncryptedUnderLMK(mdkKeys);
 		mdkpage.fillMDKKeyCheckvalue(mdkKeys);

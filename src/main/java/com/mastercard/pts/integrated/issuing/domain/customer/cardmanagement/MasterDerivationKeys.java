@@ -2,6 +2,9 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+
 @Component
 public class MasterDerivationKeys {
 	public String Interchange;
@@ -176,6 +179,38 @@ public class MasterDerivationKeys {
 
 	public void setConfirmSMCKeyCheckvalue(String confirmSMCKeyCheckvalue) {
 		ConfirmSMCKeyCheckvalue = confirmSMCKeyCheckvalue;
+	}
+	
+	public static MasterDerivationKeys createWithProvider(DataProvider provider) {
+		return provider.getDataBySimpleClassName(MasterDerivationKeys.class);
+	}
+	public void masterDerivationKeysCurrencyDataProvider() {
+		 setMDKEncryptedUnderLMK(MapUtils
+				.fnGetInputDataFromMap("MDKEncryptedUnderLMK"));
+		setConfirmMDK(MapUtils
+				.fnGetInputDataFromMap("MDKEncryptedUnderLMK"));
+		setMDKKeyCheckValue(MapUtils
+				.fnGetInputDataFromMap("MDKKeyCheckValue"));
+		setConfirmMDKKeyCheckValue(MapUtils
+				.fnGetInputDataFromMap("MDKKeyCheckValue"));
+		setSMIEncryptedUnderLMKTxt(MapUtils
+				.fnGetInputDataFromMap("SMIEncryptedUnderLMKTxt"));
+		setConfirmSMI(MapUtils
+				.fnGetInputDataFromMap("SMIEncryptedUnderLMKTxt"));
+		setSMIKeyCheckvalue(MapUtils
+				.fnGetInputDataFromMap("SMIKeyCheckvalues"));
+		setConfirmSMIKeyCheckvalue(MapUtils
+				.fnGetInputDataFromMap("SMIKeyCheckvalues"));
+		setSMCEncryptedUnderLMKTxt(MapUtils
+				.fnGetInputDataFromMap("SMCEncryptedUnderLMKTxt"));
+		setConfirmSMC(MapUtils
+				.fnGetInputDataFromMap("SMCEncryptedUnderLMKTxt"));
+		setSMCKeyCheckvalue(MapUtils
+				.fnGetInputDataFromMap("SMCKeyCheckvalue"));
+		setConfirmSMCKeyCheckvalue(MapUtils
+				.fnGetInputDataFromMap("SMCKeyCheckvalue"));
+		setStatus(MapUtils.fnGetInputDataFromMap("MDKStatus"));
+	setKeyType(MapUtils.fnGetInputDataFromMap("MDKKeyType"));	
 	}
 
 }
