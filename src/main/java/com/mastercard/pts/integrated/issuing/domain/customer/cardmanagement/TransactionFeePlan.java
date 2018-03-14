@@ -17,6 +17,8 @@ public class TransactionFeePlan {
 
 	private static final String TRANSACTION_ORIGIN = "TRANSACITON_ORIGIN";
 
+	private static final String TRANSACTION_FEE_PLAN = "TRANSACTION_FEE_PLAN";
+
 	private String transactionFeePlanCode;
 	
 	private String description;
@@ -47,7 +49,7 @@ public class TransactionFeePlan {
 	
 	public static TransactionFeePlan createWithProvider(KeyValueProvider provider){
 		TransactionFeePlan details = new TransactionFeePlan();
-		details.setTransactionFeePlanCode("AUT" + RandomStringUtils.randomNumeric(7));
+		details.setTransactionFeePlanCode(provider.getString(TRANSACTION_FEE_PLAN));
 		details.setDescription(ConstantData.GENERIC_DESCRIPTION);
 		details.setTransactionType(provider.getString(TRANSACTION_TYPE));
 		details.setWalletCurrency(provider.getString(WALLET_CURRENCY));

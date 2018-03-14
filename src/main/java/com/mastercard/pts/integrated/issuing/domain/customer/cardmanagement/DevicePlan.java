@@ -236,6 +236,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	private String isPinLess;
 	private String expiryDateExcel;
     private String allowInternationalTransaction;
+    private String transactionFeePlan;
 
 	public static DevicePlan createWithProvider(KeyValueProvider provider) {
 		DevicePlan plan = new DevicePlan();
@@ -1018,6 +1019,17 @@ public class DevicePlan implements HasCodeAndDescription {
 		this.baseDeviceJoiningMemberShipPlan = baseDeviceJoiningMemberShipPlan;
 	}
 
+	public String getTransactionFeePlan() {
+
+
+		
+		return transactionFeePlan;
+	}
+
+	public void setTransactionFeePlan(String transactionFeePlan) {
+
+		this.transactionFeePlan = transactionFeePlan;
+	}
 	public String getTransactionLimitPlan() {
 		return transactionLimitPlan;
 	}

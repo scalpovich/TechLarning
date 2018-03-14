@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 import java.time.LocalDate;
 import java.util.List;
 
+import junit.framework.Assert;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +83,18 @@ public class AuthorizationSearchWorkflow {
 
 		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
 	}
+	
+ public List <String> checkTransactionFixedFee(String deviceNumber)
+ {
+	
+	 AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
+	 page.inputDeviceNumber(deviceNumber);
+	 page.inputFromDate(LocalDate.now().minusDays(1));
+	 page.inputToDate(LocalDate.now());
+	 page.waitAndSearchForRecordToAppear();
+	 page.viewDeviceDetails();
+	 return page.checkFixedTransactionFee(); 
+ }
 	public void verifyAuthTransactionSearchReport(Device device)
 	{
 		List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME,context.get(ConstantData.AUTHORIZATION_CODE));
@@ -92,4 +106,5 @@ public class AuthorizationSearchWorkflow {
 
 		assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
 	}
+	
 }
