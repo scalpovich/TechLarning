@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jbehave.core.annotations.Alias;
+import org.jbehave.core.annotations.Aliases;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -40,6 +41,8 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.TransactionProvider;
 import com.mastercard.pts.integrated.issuing.pages.ValidationException;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKeyValuePair;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
@@ -48,6 +51,12 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.Tran
 public class TransactionSteps {
 	private static final Logger logger = LoggerFactory.getLogger(TransactionSteps.class);
 
+	private static final String DEVICE_PRODUCTION_FOLDER = "DEVICE_PRODUCTION_FOLDER";
+	private static final String PIN_PRODUCTION_FOLDER = "PIN_PRODUCTION_FOLDER";
+	private static final String IPM_INCOMING = "IPM_INCOMING";
+	private static final String DEVICE_PRODUCTION = "device production";
+	private static final String PIN_PRODUCTION = "pin production";
+	private static final String IPMINCOMING = "ipm incoming";
 	private static Boolean sameCard = false;
 
 	@Autowired
@@ -95,7 +104,7 @@ public class TransactionSteps {
 	}
 
 	@When("perform an $transaction MAS transaction")
-	@Alias("a sample simulator \"$transaction\" is executed")
+	@Aliases(values={"a sample simulator \"$transaction\" is executed","user performs an $transaction MAS transaction"})
 	@Given("perform an $transaction MAS transaction")
 	public void givenTransactionIsExecuted(String transaction) {
 		
@@ -159,6 +168,7 @@ public class TransactionSteps {
 	private Transaction generateMasTestDataForTransaction(String transaction) {
 		MiscUtils.reportToConsole("********** start generateMasTestDataForTransaction ********");
 		Device device = context.get(ContextConstants.DEVICE);
+		DevicePlan devicePlan = null;
 		// this line of code reads data from the "AuthorizationTransaction_DataDriven.xls" at \\Isser-automation-epam\src\main\resources\config\Data folder as the
 		 // "Transaction Templates" sheet has the template information
 		Transaction transactionData = transactionProvider.loadTransaction(transaction);
@@ -167,21 +177,35 @@ public class TransactionSteps {
 		if (device != null) {
 			MiscUtils.reportToConsole("********** Fetching data from DeviceContect ********");
 			// _____________________FOR PINLESS CARD________________ device plan context is used to get Expiry Date incase of PinLess card
-			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
-			device.setServiceCode(devicePlan.getServiceCode());
-			if ("YES".equalsIgnoreCase(devicePlan.getIsPinLess())) {
-				MiscUtils.reportToConsole("********** Set as PinLess card ********");
-				device.setExpirationDate(devicePlan.getExpiryDate());
-				device.setPinNumberForTransaction("PINLESS");
+			if(!Constants.DATA_DRIVEN_CARD_BOARDING.equalsIgnoreCase("YES")){
+				devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+				device.setServiceCode(devicePlan.getServiceCode());				
+				if ("YES".equalsIgnoreCase(devicePlan.getIsPinLess())) {
+					device.setExpirationDate(devicePlan.getExpiryDate());
+					device.setPinNumberForTransaction("PINLESS");
+				}
+			}else{
+				if ("YES".equalsIgnoreCase(device.getIsPinRequired())) {
+					device.setExpirationDate(DateUtils.getDateInYYMM(device.getExpirationDate()));
+					device.setPinNumberForTransaction("PINLESS");
+				}
 			}
 			// ____________FOR PINLESS CARD__________CURRENCY VAL FROM EXCEL _________ fetching currency value from excel
 			Transaction tempData = transactionProvider.createWithProvider(provider);
 			// this line of code is temporary as this will only work for Single wallet currency for multi wallet, we may have to set other setter
 			// --> setIssuerCountryCode, setIssuerCurrencyCode, setCardHolderBillingCurrency
 			device.setCurrency(tempData.getCurrency());
-			if ("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
-				device.setExpirationDate(devicePlan.getExpiryDate());
+			
+			if(!Constants.DATA_DRIVEN_CARD_BOARDING.equalsIgnoreCase("YES")){
+				if ("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
+					device.setExpirationDate(devicePlan.getExpiryDate());
+				}
+			}else{
+				if ("Fixed [F]".equalsIgnoreCase(device.getExpiryFlag())) {
+					device.setExpirationDate(device.getExpirationDate());
+				}
 			}
+			
 			//__________________CURRENCY VAL FROM EXCEL _________ This is a Single Wallet, Single Currency INDIA card */
 			settingValuesDynamicallyFromDeviceContext(device, transactionData);
 			//setting values of Card Data Element (Card Profile) which are placed in the "Transaction Templates" sheet
@@ -479,5 +503,20 @@ public class TransactionSteps {
 		String arn = transactionWorkflow.getARN(deviceNumber, ts);
 		context.put(ConstantData.ARN_NUMBER, arn);
 		logger.info("ARN for device transactions = {} ", arn);
+	}
+	
+	//Win SCP step
+	@Given("user update folder permission through WinSCP for $type folder")
+	@When("user update folder permission through WinSCP for $type folder")
+	public void connectionToApplicationIsEstablished(String type){
+		transactionWorkflow.launchWinSCP();
+		transactionWorkflow.loginToWinSCP();
+		if(type.equalsIgnoreCase(DEVICE_PRODUCTION))
+			transactionWorkflow.setFolderPermisson(provider.getString(DEVICE_PRODUCTION_FOLDER));
+		else if(type.equalsIgnoreCase(PIN_PRODUCTION))
+			transactionWorkflow.setFolderPermisson(provider.getString(PIN_PRODUCTION_FOLDER));
+		else if(type.equalsIgnoreCase(IPMINCOMING))
+		transactionWorkflow.setFolderPermisson(provider.getString(IPM_INCOMING));
+		transactionWorkflow.closeWinSCP();
 	}
 }

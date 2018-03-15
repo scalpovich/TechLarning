@@ -6,6 +6,8 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
@@ -32,6 +34,7 @@ import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ServiceCode;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ServiceRequestDropDownValues;
+import com.mastercard.pts.integrated.issuing.domain.provider.DataLoader;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
@@ -48,11 +51,17 @@ public class HelpDeskSteps {
 
 	@Autowired
 	HelpdeskGeneralPage helpdeskPage;
+	
+	@Autowired
+	DataLoader dataLoader;
 
 	private BigDecimal currentBalanceAmount;
 	private String beforeLoadBalanceInformation;
 	private static final String STATUS_INCORRECT_INFO_MSG = "Device has incorrect status";
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
+	private String clientID;
+	private String loginType="login";
+	
 	@Autowired
 	private TestContext context;
 
@@ -658,5 +667,21 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.searchByDeviceNumber(device);
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.walletToWalletTransfer(device);
+	}
+	
+	@When("user creates service request to reset cardholder $passwordType password for $cardType user")
+	public void userCreateServiceRequestForLoginPassword(@Named("datasheet") String datasheet, String passwordType,String cardType ) {
+		Map<String, String> reqMap = dataLoader.loadData(datasheet).get();
+		for(Entry<String, String> entry: reqMap.entrySet()){
+			clientID = entry.getValue();
+			helpdeskWorkflow.searchByClientId(clientID,ProductType.fromShortName(cardType));
+			helpdeskWorkflow.clickCustomerCareEditLink();
+			
+			if(passwordType.equalsIgnoreCase(loginType)){
+				helpdeskWorkflow.resetCardholderLoginPassword(clientID);
+			}else{
+				helpdeskWorkflow.resetCardholderTranPassword(clientID);	
+			}
+		}
 	}
 }

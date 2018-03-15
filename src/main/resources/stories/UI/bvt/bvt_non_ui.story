@@ -17,7 +17,7 @@ Then device has "normal" status
 When a new device was created
 And processes pre-production batch for debit
 And processes device production batch for debit
-And processes pin generation batch for debit
+!-- And processes pin generation batch for debit
 !-- When user has wallet number information for debit device
 !-- When user performs adjustment transaction
 !-- When user has current wallet balance amount information for debit device

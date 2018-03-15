@@ -28,7 +28,6 @@ import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
-import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -403,7 +402,6 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	private void fillAddDevicePage(DeviceRange deviceRange) {
 		selectProductType(deviceRange.getProductType());
-		SimulatorUtilities.wait(1000);
 		selectProgram(deviceRange.getProgram());
 		selectDevicePlanCode(deviceRange.getDevicePlanCode());
 		DevicePlan devicePlan=context.get(ContextConstants.DEVICE_PLAN);

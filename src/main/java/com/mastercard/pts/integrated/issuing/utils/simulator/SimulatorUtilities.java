@@ -127,6 +127,10 @@ public class SimulatorUtilities {
 	public void pressLeftArrow(int numberOfTabs) {
 		robotOperation("tabLeft", numberOfTabs);
 	}
+	
+	public void pressF9Key(){
+		robotOperation("pressF9Key", numberOfTabs);
+	}
 
 	public void pressEnter() {
 		robotOperation("pressEnter", numberOfTabs);
@@ -209,6 +213,10 @@ public class SimulatorUtilities {
 			break;
 		case "pressDelete":
 			robot.keyPress(KeyEvent.VK_DELETE);
+			break;
+		case "pressF9Key" :
+			robot.keyPress(KeyEvent.VK_F9);
+			robot.keyPress(KeyEvent.VK_F9);
 			break;
 		default:
 			break;

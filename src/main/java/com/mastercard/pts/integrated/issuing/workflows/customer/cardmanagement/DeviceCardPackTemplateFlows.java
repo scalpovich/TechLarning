@@ -21,7 +21,7 @@ public class DeviceCardPackTemplateFlows extends MenuFlows {
 				.navigateToPage(DeviceCardPackTemplatePage.class);
 		devicecardpacktemplatepage.clickAddDeviceCardPackTemplate();
 		devicecardpacktemplatepage.addTemplateFields(deviceCreation);
-		devicecardpacktemplatepage.selectCardTemplateFields(deviceCreation, deviceTemplate);
+		devicecardpacktemplatepage.selectCardTemplateFields(deviceTemplate);
 		devicecardpacktemplatepage.clickSubmit();
 		devicecardpacktemplatepage.clickSaveButton();
 		devicecardpacktemplatepage.verifyNewVendorSuccess();
@@ -33,7 +33,7 @@ public class DeviceCardPackTemplateFlows extends MenuFlows {
 				.navigateToPage(DeviceCardPackTemplatePage.class);
 		devicecardpacktemplatepage.clickAddDeviceCardPackTemplate();
 		devicecardpacktemplatepage.addTemplateFields(deviceCreation);
-		devicecardpacktemplatepage.selectDeviceTemplateFields(deviceCreation, deviceTemplate);
+		devicecardpacktemplatepage.selectDeviceTemplateFields(deviceTemplate);
 		devicecardpacktemplatepage.clickSubmit();
 		devicecardpacktemplatepage.clickSaveButton();
 		devicecardpacktemplatepage.verifyNewVendorSuccess();

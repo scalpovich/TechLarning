@@ -47,12 +47,10 @@ public class AuthorizationSearchWorkflow {
 
 	private void authSearchAndVerification(String deviceNumber, String type, String state, String codeColumnName, String descriptionColumnName ) {
 		boolean condition;
-
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		page.inputDeviceNumber(deviceNumber);
 		page.inputFromDate(LocalDate.now().minusDays(1));
 		page.inputToDate(LocalDate.now());
-		//using waitAndSearchForRecordToAppear instead of page.clickSearchButton(); it iterates for sometime before failing
 		page.waitAndSearchForRecordToAppear();
 
 		int rowCount = page.getRowCountFromTable();

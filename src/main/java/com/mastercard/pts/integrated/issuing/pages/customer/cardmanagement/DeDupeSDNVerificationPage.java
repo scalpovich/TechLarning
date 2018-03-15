@@ -11,7 +11,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_DE_DUPE_SDN_VERIFICATION })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {  CardManagementNav.L1_ACTIVITY,CardManagementNav.L2_DE_DUPE_SDN_VERIFICATION })
 public class DeDupeSDNVerificationPage extends AbstractCardManagementPage {
 
 	@Override
