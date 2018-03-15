@@ -6,6 +6,7 @@ import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.jbehave.core.annotations.Then;
+import org.jbehave.core.annotations.When;
 
 import static org.junit.Assert.assertThat;
 
@@ -41,8 +42,9 @@ public class AuthorizationSearchSteps {
 		authorizationSearchWorkflow.verifyTransactionAndBillingCurrency(tcurrency, bcurrency, device.getDeviceNumber());
 	}
 	
+	@When("verify fixed transaction fee applied on purchase transaction")
 	@Then("verify fixed transaction fee applied on purchase transaction")
-	public void veriyFixedTransactionFeeonPurchaseTransaction(String type, String state)
+	public void veriyFixedTransactionFeeonPurchaseTransaction()
 	{
 			Device device = context.get(ContextConstants.DEVICE);
 			assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()), Matchers.hasItems(fixedTxnFee,fixedRateFee,billingAmount));

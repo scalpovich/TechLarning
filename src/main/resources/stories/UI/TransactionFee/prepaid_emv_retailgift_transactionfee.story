@@ -40,5 +40,5 @@ And user sign out from customer portal
 
 Scenario: Perform EMV_PURCHASE Authorization transaction
 Given user is logged in institution
-Then verify fixed transaction fee applied on purchase transaction
+When verify fixed transaction fee applied on purchase transaction
 And user sign out from customer portal
