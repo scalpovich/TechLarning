@@ -18,6 +18,7 @@ import com.mastercard.pts.integrated.issuing.pages.collect.administration.Admini
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.AuthorizationSearchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
 @Workflow
 public class AuthorizationSearchWorkflow {
@@ -93,6 +94,7 @@ public class AuthorizationSearchWorkflow {
 	 page.inputToDate(LocalDate.now());
 	 page.waitAndSearchForRecordToAppear();
 	 page.viewDeviceDetails();
+	 SimulatorUtilities.wait(2000);
 	 return page.checkFixedTransactionFee(); 
  }
 	public void verifyAuthTransactionSearchReport(Device device)

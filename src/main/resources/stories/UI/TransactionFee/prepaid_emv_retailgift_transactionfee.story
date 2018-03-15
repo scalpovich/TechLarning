@@ -38,7 +38,7 @@ And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform EMV_PURCHASE Authorization transaction
+Scenario: Calculate Fix and Rate Transaction Fee
 Given user is logged in institution
 When verify fixed transaction fee applied on purchase transaction
 And user sign out from customer portal
