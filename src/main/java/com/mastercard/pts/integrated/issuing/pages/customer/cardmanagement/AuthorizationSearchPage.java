@@ -25,6 +25,8 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(AuthorizationSearchPage.class);
 
+	List<String> txnFeesFields = new ArrayList<>();
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=cardNumber]")
 	private MCWebElement cardNumber;
 
@@ -49,7 +51,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=branchRefNumber]")
 	private MCWebElement branchRefNumber;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@id='tab1']//span[contains(text(),'Transaction Fee')]/..//span[@class='labeltextr']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.//*[text()='Transaction Fee :']]/.//span[@class='labeltextr']")
 	private MCWebElement fixedTransactionFee;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='tab_content']//span[contains(text(),'Transaction Fee')]/../following-sibling::td//span[@class='labeltextr']")
@@ -83,11 +85,15 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	}
 
 	public List<String> checkFixedTransactionFee() {
-		List<String> txnFeesFields = new ArrayList<String>();
-		txnFeesFields.add(fixedTransactionFee.getText());
-		txnFeesFields.add(serviceTaxFees.getText());
-		txnFeesFields.add(txnAmount.getText());
-		txnFeesFields.add(billingAmount.getText());
+		runWithinPopup("View Authorization", () -> {
+
+			txnFeesFields.add(fixedTransactionFee.getText());
+			txnFeesFields.add(serviceTaxFees.getText());
+			txnFeesFields.add(txnAmount.getText());
+			txnFeesFields.add(billingAmount.getText());
+			clickCloseButton();
+
+		});
 		return txnFeesFields;
 	}
 
