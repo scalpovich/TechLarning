@@ -1,7 +1,7 @@
 {  
-   "name":"CANARA",
-   "code":"110000",
-   "abbreviation":"CANARA",
+   "name":"AUTOBNK",
+   "code":"110088",
+   "abbreviation":"AUTOBNK",
    "debit":true,
    "credit":true,
    "prepaid":true,

@@ -17,7 +17,13 @@ public class ApplicationBusinessMandatoryFields {
 	
 	public  static ApplicationBusinessMandatoryFields createWithProvider(KeyValueProvider provider) {
 		ApplicationBusinessMandatoryFields details = new ApplicationBusinessMandatoryFields();
-		details.setCustomerType(provider.getString(CUSTOMER_TYPE));
+		if(provider.getString(CUSTOMER_TYPE).contains("Corporate")){
+			details.setCustomerType("1");
+		}
+		else{
+			details.setCustomerType("0");
+		}		
+		
 		details.setMandatoryFields(provider.getString(MANDATORY_FIELDS));
 		details.setSelectAll(provider.getString(BMF_SELECT_ALL));
 		return details;
@@ -26,7 +32,12 @@ public class ApplicationBusinessMandatoryFields {
 	public static ApplicationBusinessMandatoryFields createWithProvider(DataProvider provider, KeyValueProvider excelProvider) {
 		ApplicationBusinessMandatoryFields details = provider.getDataBySimpleClassName(ApplicationBusinessMandatoryFields.class);
 		//Customer type is already defined in JSON file. Until the fix is in place for "Ravi" to work, let this line be commented		
-		details.setCustomerType(excelProvider.getString(CUSTOMER_TYPE));
+		if(excelProvider.getString(CUSTOMER_TYPE).contains("Corporate")){
+			details.setCustomerType("1");
+		}
+		else{
+			details.setCustomerType("0");
+		}
 		return details;
 	}
 
