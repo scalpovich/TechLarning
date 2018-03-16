@@ -31,6 +31,7 @@ public class AuthorizationSearchWorkflow {
 	private ReconciliationWorkFlow reconciliationWorkFlow;
 
 	private String ratetxnfee;
+	private int fixedTxnFee = 10;
 
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
@@ -120,7 +121,9 @@ public class AuthorizationSearchWorkflow {
 		List<String> myList= page.checkFixedTransactionFee();
 		int billAmount= Integer.parseInt(myList.get(3).substring(0, 2));	
 		int rate = Integer.parseInt(ratetxnfee);
-		int txnRateFee = billAmount+(rate/100)*billAmount;
+		System.out.println(rate);
+		int txnRateFee = fixedTxnFee+(billAmount*(rate/100));
+		System.out.println(txnRateFee);
 		String txnRateFeeString = Integer.toString(txnRateFee);
 		myList.add(txnRateFeeString);
 		System.out.println(myList);
