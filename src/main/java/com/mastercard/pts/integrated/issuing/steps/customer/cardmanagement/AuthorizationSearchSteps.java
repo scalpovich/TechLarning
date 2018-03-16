@@ -1,6 +1,15 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import java.util.List;
+
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.jbehave.core.annotations.Then;
+import org.jbehave.core.annotations.When;
+
+import static org.junit.Assert.assertThat;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +26,10 @@ public class AuthorizationSearchSteps {
 	
 	@Autowired
 	private AuthorizationSearchWorkflow authorizationSearchWorkflow;
-
+	
+	private String fixedTxnFee="10.00";
+	private String fixedRateFee="0.10";
+	private String billingAmount="10.00";
 	@Then("search $type authorization and verify $state status")
 	public void thenUserSearchDeviceNumerWithTodaysDate(String type, String state) {
 		Device device = context.get(ContextConstants.DEVICE);
@@ -28,7 +40,16 @@ public class AuthorizationSearchSteps {
 	public void verifyBillingCurrency(String tcurrency, String bcurrency) {
 		Device device = context.get(ContextConstants.DEVICE);
 		authorizationSearchWorkflow.verifyTransactionAndBillingCurrency(tcurrency, bcurrency, device.getDeviceNumber());
-	}	
+	}
+	
+	@When("verify fixed transaction fee applied on purchase transaction")
+	@Then("verify fixed transaction fee applied on purchase transaction")
+	public void veriyFixedTransactionFeeonPurchaseTransaction()
+	{
+			Device device = context.get(ContextConstants.DEVICE);
+			assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()), Matchers.hasItems(fixedTxnFee,fixedRateFee,billingAmount));
+	}
+	
 	
 @Then("validate auth report")
 	public void validateAuthReport() {

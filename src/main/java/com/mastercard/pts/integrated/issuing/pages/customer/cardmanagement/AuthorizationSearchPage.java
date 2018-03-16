@@ -1,8 +1,10 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -18,11 +20,12 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_SEARCH, CardManagementNav.L2_SEARCH_AUTHORIZATION,
-		CardManagementNav.L3_AUTHORIZATION_SEARCH })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_SEARCH, CardManagementNav.L2_SEARCH_AUTHORIZATION, CardManagementNav.L3_AUTHORIZATION_SEARCH })
 public class AuthorizationSearchPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(AuthorizationSearchPage.class);
+
+	List<String> txnFeesFields = new ArrayList<>();
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=cardNumber]")
 	private MCWebElement cardNumber;
@@ -48,6 +51,18 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=branchRefNumber]")
 	private MCWebElement branchRefNumber;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.//*[text()='Transaction Fee :']]/.//span[@class='labeltextr']")
+	private MCWebElement fixedTransactionFee;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='tab_content']//span[contains(text(),'Transaction Fee')]/../following-sibling::td//span[@class='labeltextr']")
+	private MCWebElement serviceTaxFees;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@id='tab1']//span[contains(text(),'Transaction Amount :')]/..//span[@class='labeltextr']")
+	private MCWebElement txnAmount;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@id='tab1']//span[contains(text(),'Billing Amount')]/..//span[@class='labeltextr']")
+	private MCWebElement billingAmount;
+
 	public void verifyUiOperationStatus() {
 		logger.info("Authorization Search");
 		verifySearchButton("Search");
@@ -65,15 +80,28 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		WebElementUtils.pickDate(toDate, date);
 	}
 
-	@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.elementToBeClickable(cardNumber), WebElementUtils.elementToBeClickable(referenceNumber),
-				WebElementUtils.elementToBeClickable(authorizationCode), WebElementUtils.elementToBeClickable(productType),
-				WebElementUtils.elementToBeClickable(fromDate), WebElementUtils.elementToBeClickable(toDate), WebElementUtils.elementToBeClickable(invalid),
-				WebElementUtils.elementToBeClickable(branchRefNumber));
+	public void viewDeviceDetails() {
+		viewFirstRecord();
 	}
 
+	public List<String> checkFixedTransactionFee() {
+		runWithinPopup("View Authorization", () -> {
 
-	
-	
+			txnFeesFields.add(fixedTransactionFee.getText());
+			txnFeesFields.add(serviceTaxFees.getText());
+			txnFeesFields.add(txnAmount.getText());
+			txnFeesFields.add(billingAmount.getText());
+			clickCloseButton();
+
+		});
+		return txnFeesFields;
+	}
+
+	@Override
+	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
+		return Arrays.asList(WebElementUtils.elementToBeClickable(cardNumber), WebElementUtils.elementToBeClickable(referenceNumber), WebElementUtils.elementToBeClickable(authorizationCode),
+				WebElementUtils.elementToBeClickable(productType), WebElementUtils.elementToBeClickable(fromDate), WebElementUtils.elementToBeClickable(toDate),
+				WebElementUtils.elementToBeClickable(invalid), WebElementUtils.elementToBeClickable(branchRefNumber));
+	}
+
 }
