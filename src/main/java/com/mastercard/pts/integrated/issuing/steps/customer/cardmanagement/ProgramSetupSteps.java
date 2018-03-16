@@ -649,7 +649,7 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createTransactionFeePlan(plan);
 	}
 
-	@When("User fill Transaction Fee Plan for $type product")
+	@When("User fills Transaction Fee Plan for $type product")
 	public void whenUserFillsTransactionFeePlan(String type) {
 		deviceJoiningAndMemberShipFeePlan = DeviceJoiningAndMemberShipFeePlan.createWithProvider(dataProvider);
 		deviceJoiningAndMemberShipFeePlan.setProductType(ProductType.fromShortName(type));
