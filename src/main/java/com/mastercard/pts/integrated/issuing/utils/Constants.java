@@ -132,6 +132,8 @@ public class Constants {
 	public static String VIEW_TRANSACTION_TYPE_FRAME = "View Transaction Type";
 
 	public static String ADD_ADD_INSTITUTION_FRAME = "Add Institution";
+	
+	public static String EDIT_INSTITUTION_FRAME = "Edit Institution";
 
 	public static String ADD_ACCOUNT_MASTER_FRAME = "Add Account Master";
 

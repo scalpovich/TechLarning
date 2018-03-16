@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,9 +11,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.administration.Insti
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.LoginPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.processingcenter.InstitutionPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
-import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
-import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 
 @Component
@@ -20,6 +20,7 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 	@Autowired
 	public Navigator navigator;
 
+	@Autowired
 	InstitutionCreationPageNew institute;
 
 	@Autowired
@@ -27,6 +28,8 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 	
 	@Autowired
 	private TestContext context;
+	
+	public static final String TAB_ADDRESS = "Address"; 
 
 	public void institutionCreation(InstitutionCreation institutionCreation) {
 
@@ -37,14 +40,13 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 		institute.provideGeneralDetails(institutionCreation);		
 		institute.provideAdaptiveAuthentication();
 		institute.provideCustomCareDetails(institutionCreation);
-		institute.navigateToTab("Address");
+		institute.navigateToTab(TAB_ADDRESS);
 		institute.providePersonalDetailsAdressTab(institutionCreation);
 		institute.provideAddressDetails(institutionCreation);
 		institute.save();
 	}
 
-	public void checkSuccessfullInstitutionCreation(
-			InstitutionCreation institutionCreation) {
+	public void checkSuccessfullInstitutionCreation(InstitutionCreation institutionCreation) {
 		institute.verifyNewInstituteCreationSuccess(institutionCreation);
 	}
 
@@ -61,6 +63,40 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 		clickSearchButton();
 		editFirstRecord();
 		return page.checkASCVendorEnabledAndSelectASCVendor();
-	}	
+	}
+
+	public void addCustomerCareIntlVIP(InstitutionCreation institutionCreation) {
+		institute = navigator.navigateToPage(InstitutionCreationPageNew.class);
+		institute.clickAddBtn();
+		institute.provideInstitutionDetails(institutionCreation);
+		institute.provideInstitutionType(institutionCreation);
+		institute.provideGeneralDetails(institutionCreation);
+		institute.provideCustomCareDetails(institutionCreation);
+		institute.provideCustomerCareIntVIPno(institutionCreation);
+		institute.navigateToTab(TAB_ADDRESS);
+		institute.providePersonalDetailsAdressTab(institutionCreation);
+		institute.provideAddressDetails(institutionCreation);
+		institute.save();
+	}
+
+	public void updateCustomerCareIntlVIP(
+			InstitutionCreation institutionCreation) {
+		institute = navigator.navigateToPage(InstitutionCreationPageNew.class);
+		institute.enterNewInstitution(institutionCreation);
+		institute.updateCustomerCareIntlVIP(institutionCreation);
+		institute.save();
+	}
+	public boolean validateCutomerCareIntlVIP(InstitutionCreation institutionCreation){
+		institute = navigator.navigateToPage(InstitutionCreationPageNew.class);
+		institute.enterNewInstitution(institutionCreation);
+		boolean status = institute.validateCustomerCareIntlVIP(institutionCreation);
+		institute.cancel();
+		return status;
+	}
+	
+
+	public String verifyInstitiueUpdate() {
+		return institute.getInstUpdateMessage();
+	}
 
 }
