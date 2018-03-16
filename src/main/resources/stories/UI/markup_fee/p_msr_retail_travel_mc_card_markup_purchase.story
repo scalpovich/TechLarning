@@ -31,6 +31,8 @@ Scenario: Perform PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an MSR_PURCHASE MAS transaction
 Then MAS test results are verified
-And user is logged in institution
+When MAS simulator is closed
+Then user is logged in institution
 And search Purchase authorization and verify 000-Successful status
+And verify markup fee applied on transaction
 And user sign out from customer portal

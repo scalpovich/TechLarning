@@ -42,8 +42,7 @@ public class InventoryAbstractPage extends AbstractBasePage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.visibilityOf(masterDetailContentTitle), WebElementUtils.visibilityOf(brancIdDDwn),
-				WebElementUtils.visibilityOf(programCodeDDwn), WebElementUtils.visibilityOf(deviceTypeDDwn));
+		return Arrays.asList(WebElementUtils.visibilityOf(masterDetailContentTitle));
 	}
 
 	public String getMasterDetailContentTitleText() {
