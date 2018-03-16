@@ -35,7 +35,7 @@ public class AuthorizationSearchSteps {
 	private String fixedRateFee = "0.10";
 	private String billingAmount = "10.00";
 
-	private String rateTxnFee = "12";
+	private String rateTxnFee = "12.0";
 	private String billingAmountRate = "20.00";
 
 	@Then("search $type authorization and verify $state status")
