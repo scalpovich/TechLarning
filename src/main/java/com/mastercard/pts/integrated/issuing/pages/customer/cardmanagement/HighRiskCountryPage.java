@@ -22,6 +22,8 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class HighRiskCountryPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(HighRiskCountryPage.class);
+	
+	public static final String HIGH_RISK_COUNTRY="ALGERIA [012]"; 
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement countryCodeDDwn;
@@ -46,7 +48,10 @@ public class HighRiskCountryPage extends AbstractBasePage {
 		clickAddNewButton();
 		runWithinPopup("High Risk Country", () -> {
 			addNewHighRiskCountry();
-			verifyDuplicateAndClickCancel();
+			Boolean addedRecord=verifyDuplicateAndClickCancel();
+			if (!addedRecord) {
+				identifyAddedRecordinTableAndDelete(HIGH_RISK_COUNTRY);
+			}
 		});
 	}
 
@@ -56,7 +61,7 @@ public class HighRiskCountryPage extends AbstractBasePage {
 		WebElementUtils.pickDate(endDateDPkr, futureDate);
 		clickSaveButton();
 	}
-
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(countryCodeDDwn));

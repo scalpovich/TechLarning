@@ -189,6 +189,7 @@ public class OfficePage extends AbstractBasePage {
 		enterAddressLine1(office);
 		enterAddressLine2(office);
 		selectCountry(office);
+		waitForLoaderToDisappear();
 		enterPostalCode(office);
 		waitForLoaderToDisappear();
 		clickWhenClickable(addressLine1Txt);

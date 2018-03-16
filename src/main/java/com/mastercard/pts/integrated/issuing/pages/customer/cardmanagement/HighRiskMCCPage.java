@@ -26,6 +26,8 @@ public class HighRiskMCCPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(HighRiskMCCPage.class);
+	
+	public static final String MCC_CODE="Accent Rent-A-Car [3374]";
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement mccCode;
@@ -38,10 +40,10 @@ public class HighRiskMCCPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#endDate")
 	private MCWebElement endDateDPkr;
-
+	
 	public void verifyUiOperationStatus() {
 		logger.info("High Risk MCC");
-		//addHighRiskMCC();
+		addHighRiskMCC();
 		verifyUiOperation("Add High Risk MCC");
 	}
 	
@@ -50,12 +52,15 @@ public class HighRiskMCCPage extends AbstractBasePage {
 		clickAddNewButton();
 		runWithinPopup("High Risk MCC", () -> {
 			addNewHighRiskMCC();
-			verifyDuplicateAndClickCancel();
+			Boolean addedRecord=verifyDuplicateAndClickCancel();
+			if (!addedRecord) {
+				identifyAddedRecordinTableAndDelete(MCC_CODE);
+			}
 		});
 	}
 
 	private void addNewHighRiskMCC() {
-		WebElementUtils.selectDropDownByIndex(mccCodePopupDDwn, 1);
+		WebElementUtils.selectDropDownByVisibleText(mccCodePopupDDwn, MCC_CODE);
 		WebElementUtils.pickDate(effectiveDateDPkr, futureDate);
 		WebElementUtils.pickDate(endDateDPkr, futureDate);
 		clickSaveButton();

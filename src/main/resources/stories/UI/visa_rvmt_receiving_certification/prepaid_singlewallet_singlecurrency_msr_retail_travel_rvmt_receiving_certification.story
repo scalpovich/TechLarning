@@ -54,3 +54,26 @@ Given user is logged in institution
 Then search Rvmt_Receiving authorization and verify Successful status
 And user signs out from customer portal
 
+Scenario: VISARVMT_Receiving_Certification_5
+Given connection to VISA is established
+When perform an RVMT_Receiving_Certification_5 VISA transaction
+Then VISA test results are verified for RVMT_Receiving_Certification_5
+Given user is logged in institution
+Then search Rvmt_Receiving authorization and verify Successful status
+And user signs out from customer portal
+
+Scenario: VISARVMT_Receiving_Certification_6
+Given connection to VISA is established
+When perform an RVMT_Receiving_Certification_6 VISA transaction
+Then VISA test results are verified for RVMT_Receiving_Certification_6
+Given user is logged in institution
+Then search Rvmt_Receiving authorization and verify Successful status
+And user signs out from customer portal
+
+Scenario: VISARVMT_Receiving_Certification_7
+Given connection to VISA is established
+When perform an RVMT_Receiving_Certification_7 VISA transaction
+Then VISA test results are verified for RVMT_Receiving_Certification_7
+Given user is logged in institution
+Then search Rvmt_Receiving authorization and verify Successful status
+And user signs out from customer portal

@@ -67,6 +67,7 @@ Meta:
 @TestId 
 Given user is logged in institution
 When User uploads the NOT file
+When connection to WinSCP is provided
 When user processes batch for debit
 Then user sign out from customer portal
 
