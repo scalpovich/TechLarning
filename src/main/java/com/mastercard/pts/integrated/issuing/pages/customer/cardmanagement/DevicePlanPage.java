@@ -975,7 +975,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		}			
 		checkExpiryDate();		
 		
-		if(devicePlan.getAllowInternationalTransaction().equalsIgnoreCase(STATUS_YES))
+		//if(devicePlan.getAllowInternationalTransaction().equalsIgnoreCase(STATUS_YES))
 			clickIntTxnAllowedCheckBox();
 			
 		WebElementUtils.checkCheckbox(ecommAllowedChkBx, devicePlan.isEcommerceAllowed());
