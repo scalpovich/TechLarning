@@ -4,9 +4,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
@@ -28,6 +30,8 @@ public class AuthorizationSearchWorkflow {
 	@Autowired
 	private ReconciliationWorkFlow reconciliationWorkFlow;
 
+	private String ratetxnfee;
+
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
 	public void verifyAuthTransactionSearch(String type, String state, String deviceNumber) {
@@ -43,6 +47,15 @@ public class AuthorizationSearchWorkflow {
 
 	public void verifyTransactionAndBillingCurrency(String transactionCurrency, String billingCurrency, String deviceNumber) {
 		authSearchAndVerification(deviceNumber, transactionCurrency, billingCurrency, "Transaction Currency", "Billing Currency");
+	}
+
+	public String getRateTxnFee() {
+		return ratetxnfee;
+	}
+
+	public void setRateTxnFee(String ratetxnfee) {
+		this.ratetxnfee = ratetxnfee;
+
 	}
 
 	private void authSearchAndVerification(String deviceNumber, String type, String state, String codeColumnName, String descriptionColumnName) {
@@ -93,6 +106,29 @@ public class AuthorizationSearchWorkflow {
 		page.viewDeviceDetails();
 		SimulatorUtilities.wait(2000);
 		return page.checkFixedTransactionFee();
+	}
+
+	public List<String> checkTransactionRateFee(String deviceNumber) {
+
+		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
+		page.inputDeviceNumber(deviceNumber);
+		page.inputFromDate(LocalDate.now().minusDays(1));
+		page.inputToDate(LocalDate.now());
+		page.waitAndSearchForRecordToAppear();
+		page.viewDeviceDetails();
+		SimulatorUtilities.wait(2000);
+		List<String> myList= page.checkFixedTransactionFee();
+		int billAmount= Integer.parseInt(myList.get(3).substring(0, 2));	
+		int rate = Integer.parseInt(ratetxnfee);
+		int txnRateFee = billAmount+(rate/100)*billAmount;
+		String txnRateFeeString = Integer.toString(txnRateFee);
+		myList.add(txnRateFeeString);
+		System.out.println(myList);
+		return myList;
+		
+		
+		
+		
 	}
 
 	public void verifyAuthTransactionSearchReport(Device device) {
