@@ -133,7 +133,7 @@ public class Constants {
 
 	public static String ADD_ADD_INSTITUTION_FRAME = "Add Institution";
 	
-	public static String EDIT_INSTITUTION_FRAME = "Edit Institution";
+	public static final String EDIT_INSTITUTION_FRAME = "Edit Institution";
 
 	public static String ADD_ACCOUNT_MASTER_FRAME = "Add Account Master";
 

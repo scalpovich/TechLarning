@@ -29,7 +29,7 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 	@Autowired
 	private TestContext context;
 	
-	public static final String TAB_ADDRESS = "Address"; 
+	private static final String TAB_ADDRESS = "Address"; 
 
 	public void institutionCreation(InstitutionCreation institutionCreation) {
 
@@ -46,7 +46,7 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 		institute.save();
 	}
 
-	public void checkSuccessfullInstitutionCreation(InstitutionCreation institutionCreation) {
+	public void checkSuccessfulInstitutionCreation(InstitutionCreation institutionCreation) {
 		institute.verifyNewInstituteCreationSuccess(institutionCreation);
 	}
 
@@ -86,7 +86,7 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 		institute.updateCustomerCareIntlVIP(institutionCreation);
 		institute.save();
 	}
-	public boolean validateCutomerCareIntlVIP(InstitutionCreation institutionCreation){
+	public boolean validateCustomerCareIntlVIP(InstitutionCreation institutionCreation){
 		institute = navigator.navigateToPage(InstitutionCreationPageNew.class);
 		institute.enterNewInstitution(institutionCreation);
 		boolean status = institute.validateCustomerCareIntlVIP(institutionCreation);
