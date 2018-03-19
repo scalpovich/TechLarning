@@ -5,7 +5,8 @@ So that new device can be created for Prepaid
 
 
 Meta:
-@InstituteTestPrepaid
+@InstituteSetUpPrepaid
+@InstituionSetUpForAllType
 
 Scenario: Scenario1 - Institution parameter setup for prepaid type/ Mastercard
 Meta:
