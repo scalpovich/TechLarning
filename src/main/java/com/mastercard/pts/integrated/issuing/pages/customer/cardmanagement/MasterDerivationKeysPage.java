@@ -114,102 +114,102 @@ public class MasterDerivationKeysPage extends AbstractBasePage {
 	}
 
 	public void selectInterchange(MasterDerivationKeys mdkKeys) {
-		waitforElemenet(interchangeNetworkDDwn);
+		waitforElement(interchangeNetworkDDwn);
 		selectByVisibleText(interchangeNetworkDDwn, mdkKeys.getInterchange());
 	}
 
 	public void fillBinLow(MasterDerivationKeys mdkKeys) {
-		waitforElemenet(binLowTxt);
+		waitforElement(binLowTxt);
 		enterText(binLowTxt, mdkKeys.getBinLow());
 	}
 
 	public void fillBinHigh(MasterDerivationKeys mdkKeys) {
-		waitforElemenet(binHighTxt);
+		waitforElement(binHighTxt);
 		enterText(binHighTxt, mdkKeys.getBinHigh());
 	}
 
 	public void selectStatus(MasterDerivationKeys mdkKeys) {
-		waitforElemenet(statusInputDDwn);
+		waitforElement(statusInputDDwn);
 		SelectDropDownByText(statusInputDDwn, mdkKeys.getStatus());
 	}
 
 	public void selectKeyType(MasterDerivationKeys mdkKeys) { 
-		waitforElemenet(keyTypeDDwn);
+		waitforElement(keyTypeDDwn);
 		SelectDropDownByText(keyTypeDDwn, mdkKeys.getKeyType());
 	}
 
 	public void fillMDKEncryptedUnderLMK(MasterDerivationKeys mdkKeys) {
-		waitforElemenet(mdkEncryptedUnderLMKTxt);
+		waitforElement(mdkEncryptedUnderLMKTxt);
 		enterText(mdkEncryptedUnderLMKTxt, mdkKeys.getMDKEncryptedUnderLMK());
 	}
 
 	public void fillConfirmMDKEncryptedUnderLMK(MasterDerivationKeys mdkKeys) {
-		waitforElemenet(confirmMDKTxt);
+		waitforElement(confirmMDKTxt);
 		enterText(confirmMDKTxt, mdkKeys.getConfirmMDK());
 	}
 
 	public void fillMDKKeyCheckvalue(MasterDerivationKeys mdkKeys) {
-		waitforElemenet(mdkKeyCheckValueTxt);
+		waitforElement(mdkKeyCheckValueTxt);
 		enterText(mdkKeyCheckValueTxt, mdkKeys.getMDKKeyCheckValue());
 	}
 
 	public void fillConfirmMDKKeyCheckvalue(MasterDerivationKeys mdkKeys) {
-		waitforElemenet(confirmMDKKeyCheckValueTxt);
+		waitforElement(confirmMDKKeyCheckValueTxt);
 		enterText(confirmMDKKeyCheckValueTxt, mdkKeys.getConfirmMDKKeyCheckValue());
 	}
 
 	public void selectSMIExists() {
-		waitforElemenet(smiExistsChkBxTxt);
+		waitforElement(smiExistsChkBxTxt);
 		ClickCheckBox(smiExistsChkBxTxt, true);
 	}
 
 	public void fillSMIEncryptedUnderLMK(MasterDerivationKeys mdkKeys) {
-		waitforElemenet(smiEncryptedUnderLMKTxt);	 
+		waitforElement(smiEncryptedUnderLMKTxt);	 
 		enterText(smiEncryptedUnderLMKTxt, mdkKeys.getSMIEncryptedUnderLMKTxt());
 	}
 
 	public void fillConfirmSMI(MasterDerivationKeys mdkKeys) {
-		waitforElemenet(confirmSMITxt);
+		waitforElement(confirmSMITxt);
 		enterText(confirmSMITxt, mdkKeys.getConfirmSMI());
 	}
 
 	public void fillSMIkeyCheckvalue(MasterDerivationKeys mdkKeys) {
-		waitforElemenet(sMIKeyCheckvalueTxt);
+		waitforElement(sMIKeyCheckvalueTxt);
 		enterText(sMIKeyCheckvalueTxt, mdkKeys.getSMIKeyCheckvalue());
 	}
 
 	public void fillConfirmSMIkeyCheckvalue(MasterDerivationKeys mdkKeys) {
-		waitforElemenet(confirmSMIKeyCheckvalueTxt);
+		waitforElement(confirmSMIKeyCheckvalueTxt);
 		enterText(confirmSMIKeyCheckvalueTxt, mdkKeys.getConfirmSMIKeyCheckvalue());
 	}
 
 	public void selectSMCExists() {
-		waitforElemenet(smcExistsChkBx);
+		waitforElement(smcExistsChkBx);
 		ClickCheckBox(smcExistsChkBx, true);
 	}
 
 	public void fillSMCEncryptedUnderLMK(MasterDerivationKeys mdkKeys) {
-		waitforElemenet(smcEncryptedUnderLMKTxt);
+		waitforElement(smcEncryptedUnderLMKTxt);
 		enterText(smcEncryptedUnderLMKTxt, mdkKeys.getSMCEncryptedUnderLMKTxt());
 	}
 
 	public void fillConfirmSMC(MasterDerivationKeys mdkKeys) {
-		waitforElemenet(confirmSMCTxt);
+		waitforElement(confirmSMCTxt);
 		enterText(confirmSMCTxt, mdkKeys.getConfirmSMC());
 	}
 
 	public void fillSMCkeyCheckvalue(MasterDerivationKeys mdkKeys) {
-		waitforElemenet(smcKeyCheckvalueTxt);
+		waitforElement(smcKeyCheckvalueTxt);
 		enterText(smcKeyCheckvalueTxt, mdkKeys.getSMCKeyCheckvalue());
 	}
 
 	public void fillConfirmSMCkeyCheckvalue(MasterDerivationKeys mdkKeys) {
-		waitforElemenet(confirmSMCKeyCheckvalue);
+		waitforElement(confirmSMCKeyCheckvalue);
 		enterText(confirmSMCKeyCheckvalue, mdkKeys.getConfirmSMCKeyCheckvalue());
 	}
 
 	public void clickSaveBtn() {
-		waitforElemenet(mdkKeyCheckValueTxt);
+		waitforElement(mdkKeyCheckValueTxt);
 		ClickButton(saveBtn);
 	}
 

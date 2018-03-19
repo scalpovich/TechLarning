@@ -853,7 +853,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return ispresent;
 	}
 
-	public boolean waitforElemenet(MCWebElement ele) {
+	public boolean waitforElement(MCWebElement ele) {
 		try {
 			getFinder().waitUntil(ExpectedConditions.visibilityOf((WebElement) ele));
 			return true;

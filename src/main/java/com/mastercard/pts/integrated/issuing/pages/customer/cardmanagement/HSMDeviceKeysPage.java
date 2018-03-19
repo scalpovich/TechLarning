@@ -8,6 +8,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManag
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -175,189 +176,185 @@ public class HSMDeviceKeysPage extends AbstractBasePage {
 	}
 
 	public void selectPINDataCheckBox() {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(cvv3ExistsChkBx);
 		waitForElementVisible(pinDataExistsChkBx);
 		ClickCheckBox(pinDataExistsChkBx, true);
 	}
 
 	public void selectGenerationMethod(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(cvv3ExistsChkBx);
 		waitForElementVisible(generationMethodDDwn);
 		SelectDropDownByText(generationMethodDDwn, hsmKeys.getGenerationMethodDDwn());
 	}
 
-	public void fillDecimalization(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+	public void fillDecimalization(HSMDeviceKeys hsmKeys) { 
 		waitForElementVisible(decimalizationTabletxt);
 		enterText(decimalizationTabletxt, hsmKeys.getDecimalizationTable());
 	}
 
-	public void fillPINlength(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+	public void fillPINlength(HSMDeviceKeys hsmKeys) { 
 		waitForElementVisible(pinLengthtxt);
 		enterText(pinLengthtxt, hsmKeys.getPINlength());
 	}
 
 	public void selectPVKiExistsCheckBox() {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(pvkiExistsChkBx);
 		ClickCheckBox(pvkiExistsChkBx, true);
 	}
 
 	public void fillPVVOffset(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(pvvOffsetOnTrackTxt);
 		enterText(pvvOffsetOnTrackTxt, hsmKeys.getPVVOffset());
 	}
 
 	public void fillPVKOffset(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(pvkiOffsetOnTrackTxt);
 		enterText(pvkiOffsetOnTrackTxt, hsmKeys.getPVKOffset());
 	}
 
 	public void selectPVKDataExistsCheckBox() {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(pvkDataExistsChkBx);
 		ClickCheckBox(pvkDataExistsChkBx, true);
 	}
 
 	public void fillPINValidationData(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(pinValidationDataTxt);
 		enterText(pinValidationDataTxt, hsmKeys.getPINValidationData());
 	}
 
 	public void fillConfirmValidationData(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(confirmValidationDataTxt);
 		enterText(confirmValidationDataTxt, hsmKeys.getPINValidationData());
 	}
 
 	public void fillPINVerificationKey(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(pinVerificationKeyTxt);
 		enterText(pinVerificationKeyTxt, hsmKeys.getPINVerificationKey());
 	}
 
 	public void fillConfirmPINVerificationKey(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(confirmPINVerificationKeyTxt);
 		enterText(confirmPINVerificationKeyTxt, hsmKeys.getPINVerificationKey());
 	}
 
 	public void fillPINVerificationKeyCheck(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(pinVerificationKeyCheckTxt);
 		enterText(pinVerificationKeyCheckTxt, hsmKeys.getPINVerificationKeyCheck());
 	}
 
 	public void fillConfirmPINVerificationKeyCheck(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(confirmPINVerificationKeyCheckTxt);
 		enterText(confirmPINVerificationKeyCheckTxt, hsmKeys.getPINVerificationKeyCheck());
 	}
 
 	public void selectCVVExistsCheckBox() {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(cvvExistsChkBx);
 		ClickCheckBox(cvvExistsChkBx, true);
 	}
 
 	public void selectControlFlagCheckBox() {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(controlFlagChkBx);
 		ClickCheckBox(controlFlagChkBx, true);
 	}
 
 	public void fillCVVOffsetOnTrack(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(cvvOffsetOnTrackTxt);
 		enterText(cvvOffsetOnTrackTxt, hsmKeys.getCVVOffsetOnTrack());
 	}
-	public void selectComponentType(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(driver());
+	public void selectComponentType(HSMDeviceKeys hsmKeys) { 
 		waitForElementVisible(componentTypeDDwn);
 		SelectDropDownByText(componentTypeDDwn, hsmKeys.getcomponentType());
 	}
 	
 	public void fillCVKACryptogram(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(cvkACryptogramTxt);
 		enterText(cvkACryptogramTxt, hsmKeys.getCVKACryptogram());
 	}
 
 	public void fillConfirmACryptogram(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(confirmACryptogramTxt);
 		enterText(confirmACryptogramTxt, hsmKeys.getConfirmACryptogram());
 	}
 
 	public void fillCVKAKeyCheck(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(cvkAKeyCheckTxt);
 		enterText(cvkAKeyCheckTxt, hsmKeys.getCVKAKeyCheck());
 	}
 
 	public void fillConfirmAKeyCheck(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(confirmAKeyCheckTxt);
 		enterText(confirmAKeyCheckTxt, hsmKeys.getConfirmAKeyCheck());
 	}
 
 	public void fillCVKBCryptogram(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(cvkBCryptogramTxt);
 		enterText(cvkBCryptogramTxt, hsmKeys.getCVKBCryptogram());
 	}
 
 	public void fillConfirmBCryptogram(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(confirmBCryptogramTxt);		
 		enterText(confirmBCryptogramTxt, hsmKeys.getConfirmBCryptogram());
 	}
 
 	public void fillCVKBKeyCheck(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(cvkBKeyCheckTxt);
 		enterText(cvkBKeyCheckTxt, hsmKeys.getCVKBKeyCheck());
 	}
 
 	public void fillConfirmBKeyCheck(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(confirmBKeyCheckTxt);
 		enterText(confirmBKeyCheckTxt, hsmKeys.getConfirmBKeyCheck());
 	}
 
 	public void selectCVV3ExistsCheckBox() {
-		waitforElemenet(cvv3ExistsChkBx);
+		waitforElement(cvv3ExistsChkBx);
 		ClickCheckBox(cvv3ExistsChkBx, true);
 	}
 
 	public void fillCVV3Cryptogram(HSMDeviceKeys hsmKeys) {
-		waitforElemenet(cvv3CryptogramTxt);
-		waitforElemenet(cvv3CryptogramTxt);
-		CustomUtils.ThreadDotSleep(1000);
+		waitforElement(cvv3CryptogramTxt);
 		enterText(cvv3CryptogramTxt, hsmKeys.getCVV3Cryptogram());
 	}
 
 	public void fillConfirmCVV3Cryptogram(HSMDeviceKeys hsmKeys) {
-		waitforElemenet(confirmCVV3CryptogramTxt);
-		waitforElemenet(confirmCVV3CryptogramTxt);
+		waitforElement(confirmCVV3CryptogramTxt);
 		enterText(confirmCVV3CryptogramTxt, hsmKeys.getConfirmCVV3Cryptogram());
 	}
 
 	public void fillCVV3KeyCheckvalue(HSMDeviceKeys hsmKeys) { 
-		waitforElemenet(cvv3KeyCheckvalueTxt);
+		waitforElement(cvv3KeyCheckvalueTxt);
+		CustomUtils.ThreadDotSleep(2000) ;
+		 new SimulatorUtilities().wait(100);
 		enterText(cvv3KeyCheckvalueTxt, hsmKeys.getCVV3KeyCheckvalue());
 	}
 
 	public void fillConfirmCVV3KeyCheckValue(HSMDeviceKeys hsmKeys) {
-		waitforElemenet(confirmCVV3KeyCheckValueTxt);
+		waitforElement(confirmCVV3KeyCheckValueTxt);
 		enterText(confirmCVV3KeyCheckValueTxt, hsmKeys.getConfirmCVV3KeyCheckValue());
 	}
 
 	public void fillATCOffsetOnTrack(HSMDeviceKeys hsmKeys) {
-		waitforElemenet(atcOffsetOnTrackTxt);
+		waitforElement(atcOffsetOnTrackTxt);
 		enterText(atcOffsetOnTrackTxt, hsmKeys.getATCOffsetOnTrack());
 	}
 
 	public void fillUNOffsetOnTrack(HSMDeviceKeys hsmKeys) {
-		waitforElemenet(unOffsetOnTrackTxt);
+		waitforElement(unOffsetOnTrackTxt);
 		enterText(unOffsetOnTrackTxt, hsmKeys.getUNOffsetOnTrack());
 	}
 
 	public void fillCVC3OffsetOnTrack(HSMDeviceKeys hsmKeys) {
-		waitforElemenet(cvc3OffsetOnTrackTxt);
+		waitforElement(cvc3OffsetOnTrackTxt);
 		enterText(cvc3OffsetOnTrackTxt, hsmKeys.getCVVOffsetOnTrack());
 	}
 	@Override
 	public void clickSaveButton() {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(cvv3ExistsChkBx);
 		ClickButton(saveBtn);
 	}
 
 	public void switchToAddDeviceKeysFrame() {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(cvv3ExistsChkBx);
 		switchToIframe(Constants.ADD_DEVICE_KEYS_FRAME);
 	}
 }
