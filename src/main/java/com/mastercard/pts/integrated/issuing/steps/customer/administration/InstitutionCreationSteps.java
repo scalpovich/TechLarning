@@ -41,7 +41,7 @@ public class InstitutionCreationSteps {
 	
 	UserCreation userCreation;
 
-	public static final String VERIFY_MESSAGE = "Record Updated Successfully.";
+	private static final String VERIFY_MESSAGE = "Record Updated Successfully.";
 
 	final Logger logger = LoggerFactory
 			.getLogger(InstitutionCreationSteps.class);
@@ -59,7 +59,7 @@ public class InstitutionCreationSteps {
 	@Then("user should be able to create new institute")
 	public void verifyinstitutionCreationSucess() {
 		instituteCreationflows
-				.checkSuccessfullInstitutionCreation(instutionCreation);
+				.checkSuccessfulInstitutionCreation(instutionCreation);
 		context.put(ContextConstants.INSTITUTION, instutionCreation);
 	}
 
@@ -132,7 +132,7 @@ public class InstitutionCreationSteps {
 		
 	}
 
-	@When("user adds the Customer Care Interantional and VIP Number while creating new $institutionType Institute")
+	@When("user adds the Customer Care International and VIP Number while creating new $institutionType Institute")
 	public void addCustomerCareIntlVIPNo(
 			@Named("institutionType") String institutionType) {
 		logger.info("user should be able to add the Customer Care International and VIP Number");
@@ -141,15 +141,15 @@ public class InstitutionCreationSteps {
 		instituteCreationflows.addCustomerCareIntlVIP(instutionCreation);
 	}
 	
-	@Then("user should be able to add Customer Care Interantional and VIP Number")
+	@Then("user should be able to add Customer Care International and VIP Number")
 	public void validateCustomerCareIntlVIPNo(){
 		logger.info("user should be able to add the Customer Care International and VIP Number");
 		InstitutionCreation instutionCreation = context
 				.get(ContextConstants.INSTITUTION);
-		Assert.assertTrue("Error in adding Customer Care Interantional and VIP Number",instituteCreationflows.validateCutomerCareIntlVIP(instutionCreation));
+		Assert.assertTrue("Error in adding Customer Care International and VIP Number",instituteCreationflows.validateCustomerCareIntlVIP(instutionCreation));
 	}
 
-	@When("user updates the Customer Care Interantional and VIP Number while editing Institute")
+	@When("user updates the Customer Care International and VIP Number while editing Institute")
 	public void updateCustomerCareIntlVIPNo() {
 		logger.info("user should be able to update the Customer Care International and VIP Number");
 		if (context.get(ContextConstants.INSTITUTION) != null) {
@@ -163,7 +163,7 @@ public class InstitutionCreationSteps {
 		}
 	}
 
-	@Then("Institute should be get updated")
+	@Then("Institute should get updated")
 	public void VerifyInstitiueUpdate() {
 		Assert.assertEquals("Update Verification unsuccessful",instituteCreationflows.verifyInstitiueUpdate(),
 				VERIFY_MESSAGE);

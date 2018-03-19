@@ -201,7 +201,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	private MCWebElement searchBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".feedbackPanelINFO>span")
-	private MCWebElement institueUpdateMessage;
+	private MCWebElement instituteUpdateMessage;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody//tr")
 	private MCWebElements resultTableRow;
@@ -326,15 +326,15 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public void checkDebit() {
-		ClickCheckBox(debitChkBX, true);
+		selectCheckBox(debitChkBX, "Debit");
 	}
 
 	public void checkCredit() {
-		ClickCheckBox(creditChkBx, true);
+		selectCheckBox(creditChkBx, "Credit");
 	}
 
 	public void checkPrepaid() {
-		ClickCheckBox(prepaidChkBx, true);
+		selectCheckBox(prepaidChkBx, "Prepaid");
 	}
 
 	public void selectInstitutionCurrency(InstitutionCreation institute) {
@@ -453,7 +453,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 		}
 	}
 
-	public void enterCustomerVIP(InstitutionCreation institute) {
+	private void enterCustomerVIP(InstitutionCreation institute) {
 		selectValueFromDropDown(custCareVIPDdwn,
 				institute.getCustomerCareVIPISDCode());
 		enterValueinTextBox(custCareVIPNoTxtBx,
@@ -892,8 +892,8 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public boolean validateCustomerCareIntlVIP(InstitutionCreation institution) {
-		return (verifyCustCareIntl(institution) && verifyCustCareVIP(institution));
-				}
+		return (verifyCustCareIntl(institution) && verifyCustCareVIP(institution));	
+	}
 
 	public void updateCustomerCareIntlVIP(InstitutionCreation institution) {
 		institution.setCustomerCareIntlNo(CustomUtils.RandomNumbers(6));
@@ -903,6 +903,6 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public String getInstUpdateMessage() {
-		return institueUpdateMessage.getText();
+		return instituteUpdateMessage.getText();
 	}
 }
