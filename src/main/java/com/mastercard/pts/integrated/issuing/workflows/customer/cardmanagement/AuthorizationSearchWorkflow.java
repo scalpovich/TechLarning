@@ -37,7 +37,7 @@ public class AuthorizationSearchWorkflow {
 	KeyValueProvider provider;
 
 	@Autowired
-	TransactionFeePlan txnFeePlan;
+	private TransactionFeePlan txnFeePlan;
 
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
