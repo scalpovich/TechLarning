@@ -55,6 +55,21 @@ public class AuthorizationSearchSteps {
 		assertThat(authorizationSearchWorkflow.checkTransactionRateFee(device.getDeviceNumber()), Matchers.hasItems(Constants.rateTxnFee, Constants.billingAmountRate));
 
 	}
+	
+	@When("verify maximum transaction fee applied on purchase transaction")
+	@Then("verify rate maximum fee applied on purchase transaction")
+	public void veriyMaxTransactionFeeonPurchaseTransaction() {
+		Device device = context.get(ContextConstants.DEVICE);
+		assertThat(authorizationSearchWorkflow.checkTransactionMaxFee(device.getDeviceNumber()), Matchers.hasItems(Constants.maxTrxRate, Constants.billingAmountRate));
+
+	}
+	@When("verify minimum transaction fee applied on purchase transaction")
+	@Then("verify minimum fee applied on purchase transaction")
+	public void veriyMinTransactionFeeonPurchaseTransaction() {
+		Device device = context.get(ContextConstants.DEVICE);
+		assertThat(authorizationSearchWorkflow.checkTransactionMinFee(device.getDeviceNumber()), Matchers.hasItems(Constants.minTrxRate, Constants.billingAmountRate));
+
+	}
 
 	@Then("validate auth report")
 	public void validateAuthReport() {

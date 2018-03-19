@@ -32,7 +32,6 @@ public class AuthorizationSearchWorkflow {
 
 	@Autowired
 	private ReconciliationWorkFlow reconciliationWorkFlow;
-	
 
 	@Autowired
 	KeyValueProvider provider;
@@ -121,6 +120,30 @@ public class AuthorizationSearchWorkflow {
 		String txnRateFeeString = Double.toString(txnRateFee);
 		myList.add(txnRateFeeString);
 		return myList;
+
+	}
+
+	public List<String> checkTransactionMaxFee(String deviceNumber) {
+		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
+		page.inputDeviceNumber(deviceNumber);
+		page.inputFromDate(LocalDate.now().minusDays(1));
+		page.inputToDate(LocalDate.now());
+		page.waitAndSearchForRecordToAppear();
+		page.viewDeviceDetails();
+		SimulatorUtilities.wait(2000);
+		return page.checkFixedTransactionFee();
+
+	}
+	
+	public List<String> checkTransactionMinFee(String deviceNumber) {
+		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
+		page.inputDeviceNumber(deviceNumber);
+		page.inputFromDate(LocalDate.now().minusDays(1));
+		page.inputToDate(LocalDate.now());
+		page.waitAndSearchForRecordToAppear();
+		page.viewDeviceDetails();
+		SimulatorUtilities.wait(2000);
+		return page.checkFixedTransactionFee();
 
 	}
 
