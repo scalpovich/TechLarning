@@ -8,46 +8,50 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 
 public class TransactionFeePlan {
-	
+
 	private static final String TRANSACTION_TYPE = "TRANSACITON_TYPE";
 
 	private static final String WALLET_CURRENCY = "CURRENCY";
-	
+
 	private static final String TRANSACTION_SOURCE = "TRANSACITON_SOURCE";
 
 	private static final String TRANSACTION_ORIGIN = "TRANSACITON_ORIGIN";
 
 	private static final String TRANSACTION_FEE_PLAN = "TRANSACTION_FEE_PLAN";
 
+	private static final String TRANSACTION_RATE = "TRANSACTION_RATE";
+
 	private String transactionFeePlanCode;
-	
+
 	private String description;
-	
+
 	private String transactionType;
-	
+
 	private String walletCurrency;
-	
+
 	private String transactionSource;
-	
+
 	private String transactionOrigin;
-	
+
 	private LocalDate effectiveDate;
-	
+
 	private LocalDate endDate;
 
 	private String fromAmount;
-	
+
 	private String toAmount;
-	
+
 	private String fix;
-	
+
 	private String rate;
 
 	private String minimumFeeAmount;
-	
+
 	private String maximumFeeAmount;
-	
-	public static TransactionFeePlan createWithProvider(KeyValueProvider provider){
+
+	private String ratetxnfee;
+
+	public static TransactionFeePlan createWithProvider(KeyValueProvider provider) {
 		TransactionFeePlan details = new TransactionFeePlan();
 		details.setTransactionFeePlanCode(provider.getString(TRANSACTION_FEE_PLAN));
 		details.setDescription(ConstantData.GENERIC_DESCRIPTION);
@@ -65,7 +69,14 @@ public class TransactionFeePlan {
 		details.setMaximumFeeAmount("20");
 		return details;
 	}
-	
+
+	public static TransactionFeePlan allTxnFee(KeyValueProvider provider) {
+
+		TransactionFeePlan txnFee = new TransactionFeePlan();
+		txnFee.setRateTxnFee(provider.getString(TRANSACTION_RATE));
+		return txnFee;
+	}
+
 	public String getTransactionType() {
 		return transactionType;
 	}
@@ -145,7 +156,7 @@ public class TransactionFeePlan {
 	public void setRate(String rate) {
 		this.rate = rate;
 	}
-	
+
 	public String getMinimumFeeAmount() {
 		return minimumFeeAmount;
 	}
@@ -178,4 +189,12 @@ public class TransactionFeePlan {
 		this.description = description;
 	}
 
+	public String getRateTxnFee() {
+		return ratetxnfee;
+	}
+
+	public void setRateTxnFee(String ratetxnfee) {
+		this.ratetxnfee = ratetxnfee;
+
+	}
 }

@@ -17,6 +17,7 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.AuthorizationSearchWorkflow;
 
 @Component
@@ -27,16 +28,6 @@ public class AuthorizationSearchSteps {
 
 	@Autowired
 	private AuthorizationSearchWorkflow authorizationSearchWorkflow;
-
-	@Autowired
-	KeyValueProvider provider;
-
-	private String fixedTxnFee = "10.00";
-	private String fixedRateFee = "0.10";
-	private String billingAmount = "10.00";
-
-	private String rateTxnFee = "12.0";
-	private String billingAmountRate = "20.00";
 
 	@Then("search $type authorization and verify $state status")
 	public void thenUserSearchDeviceNumerWithTodaysDate(String type, String state) {
@@ -54,15 +45,14 @@ public class AuthorizationSearchSteps {
 	@Then("verify fixed transaction fee applied on purchase transaction")
 	public void veriyFixedTransactionFeeonPurchaseTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
-		assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()), Matchers.hasItems(fixedTxnFee, fixedRateFee, billingAmount));
+		assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()), Matchers.hasItems(Constants.fixedTxnFees, Constants.fixedRateFee, Constants.billingAmount));
 	}
 
 	@When("verify rate transaction fee applied on purchase transaction")
 	@Then("verify rate transaction fee applied on purchase transaction")
 	public void veriyRateTransactionFeeonPurchaseTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
-		authorizationSearchWorkflow.setRateTxnFee(provider.getString("TRANSACTION_RATE"));
-		assertThat(authorizationSearchWorkflow.checkTransactionRateFee(device.getDeviceNumber()), Matchers.hasItems(rateTxnFee, billingAmountRate));
+		assertThat(authorizationSearchWorkflow.checkTransactionRateFee(device.getDeviceNumber()), Matchers.hasItems(Constants.rateTxnFee, Constants.billingAmountRate));
 
 	}
 

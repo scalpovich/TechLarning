@@ -12,10 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.collect.administration.AdministrationHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.AuthorizationSearchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
 @Workflow
@@ -28,10 +31,18 @@ public class AuthorizationSearchWorkflow {
 	private TestContext context;
 
 	@Autowired
+	private AuthorizationSearchWorkflow authorizationSearchWorkflow;
+
+	@Autowired
 	private ReconciliationWorkFlow reconciliationWorkFlow;
 
-	private String ratetxnfee;
-	private double fixedTxnFee = 10;
+	@Autowired
+	KeyValueProvider provider;
+
+	@Autowired
+	TransactionFeePlan txnFeePlan;
+
+	
 	private double txnRateFee;
 
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
@@ -51,33 +62,24 @@ public class AuthorizationSearchWorkflow {
 		authSearchAndVerification(deviceNumber, transactionCurrency, billingCurrency, "Transaction Currency", "Billing Currency");
 	}
 
-	public String getRateTxnFee() {
-		return ratetxnfee;
-	}
-
-	public void setRateTxnFee(String ratetxnfee) {
-		this.ratetxnfee = ratetxnfee;
-
-	}
-
 	private void authSearchAndVerification(String deviceNumber, String type, String state, String codeColumnName, String descriptionColumnName) {
 		boolean condition;
 
-		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
-		page.inputDeviceNumber(deviceNumber);
-		page.inputFromDate(LocalDate.now().minusDays(1));
-		page.inputToDate(LocalDate.now());
+		AuthorizationSearchPage authSearchPage = navigator.navigateToPage(AuthorizationSearchPage.class);
+		authSearchPage.inputDeviceNumber(deviceNumber);
+		authSearchPage.inputFromDate(LocalDate.now().minusDays(1));
+		authSearchPage.inputToDate(LocalDate.now());
 		// using waitAndSearchForRecordToAppear instead of
 		// page.clickSearchButton(); it iterates for sometime before failing
-		page.waitAndSearchForRecordToAppear();
+		authSearchPage.waitAndSearchForRecordToAppear();
 
-		int rowCount = page.getRowCountFromTable();
+		int rowCount = authSearchPage.getRowCountFromTable();
 		logger.info("Row Count on Authorization Search Page : {} ", rowCount);
 		assertTrue("No Rows Found on Authorization Search Page", rowCount > 0);
-		String actualCodeAction = page.getCellTextByColumnName(1, codeColumnName);
-		String actualDescription = page.getCellTextByColumnName(1, descriptionColumnName);
-		String authCodeValue = page.getCellTextByColumnName(1, "Auth Code");
-		String transactionAmountValue = page.getCellTextByColumnName(1, "Transaction Amount");
+		String actualCodeAction = authSearchPage.getCellTextByColumnName(1, codeColumnName);
+		String actualDescription = authSearchPage.getCellTextByColumnName(1, descriptionColumnName);
+		String authCodeValue = authSearchPage.getCellTextByColumnName(1, "Auth Code");
+		String transactionAmountValue = authSearchPage.getCellTextByColumnName(1, "Transaction Amount");
 		context.put(ConstantData.AUTHORIZATION_CODE, authCodeValue);
 		context.put(ConstantData.TRANSACTION_AMOUNT, transactionAmountValue);
 		logger.info("CodeAction on Authorization Search Page : {} ", actualCodeAction);
@@ -111,7 +113,7 @@ public class AuthorizationSearchWorkflow {
 	}
 
 	public List<String> checkTransactionRateFee(String deviceNumber) {
-
+		TransactionFeePlan.allTxnFee(provider);
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		page.inputDeviceNumber(deviceNumber);
 		page.inputFromDate(LocalDate.now().minusDays(1));
@@ -119,20 +121,14 @@ public class AuthorizationSearchWorkflow {
 		page.waitAndSearchForRecordToAppear();
 		page.viewDeviceDetails();
 		SimulatorUtilities.wait(2000);
-		List<String> myList= page.checkFixedTransactionFee();
-		double billAmount= Integer.parseInt(myList.get(3).substring(0, 2));	
-		double rate = Double.parseDouble(ratetxnfee);
-		System.out.println(rate);
-		txnRateFee = billAmount*(rate/100)+fixedTxnFee;
-		System.out.println(txnRateFee);
+		List<String> myList = page.checkFixedTransactionFee();
+		double billAmount = Integer.parseInt(myList.get(3).substring(0, 2));
+		double rate = Double.parseDouble(txnFeePlan.getRateTxnFee());
+		txnRateFee = billAmount * (rate / 100) + Constants.fixedTxnFee;
 		String txnRateFeeString = Double.toString(txnRateFee);
 		myList.add(txnRateFeeString);
-		System.out.println(myList);
 		return myList;
-		
-		
-		
-		
+
 	}
 
 	public void verifyAuthTransactionSearchReport(Device device) {
