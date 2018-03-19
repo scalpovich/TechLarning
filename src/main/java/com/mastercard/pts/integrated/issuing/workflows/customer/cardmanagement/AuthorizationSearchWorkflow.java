@@ -32,12 +32,10 @@ public class AuthorizationSearchWorkflow {
 
 	@Autowired
 	private ReconciliationWorkFlow reconciliationWorkFlow;
+	
 
 	@Autowired
 	KeyValueProvider provider;
-
-	@Autowired
-	private TransactionFeePlan txnFeePlan;
 
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
@@ -108,7 +106,7 @@ public class AuthorizationSearchWorkflow {
 
 	public List<String> checkTransactionRateFee(String deviceNumber) {
 		double txnRateFee;
-		TransactionFeePlan.allTxnFee(provider);
+		TransactionFeePlan txnFeePlan = TransactionFeePlan.allTxnFee(provider);
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		page.inputDeviceNumber(deviceNumber);
 		page.inputFromDate(LocalDate.now().minusDays(1));
