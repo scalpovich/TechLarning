@@ -164,7 +164,7 @@ public class WalletFeePlanPage extends AbstractBasePage {
 
 	public void addWalletFeePlanDetails(WalletFeePlan walletfeeplan) {
 		clickWhenClickable(walletPlanSubdetailsBtn);
-		SwitchToDefaultFrame();
+		switchToAddWalletFeePlanDetailsFrame();
 		selectFeeType(walletfeeplan);
 		selectEffectiveDate(walletfeeplan);
 		selectEndDate(walletfeeplan);

@@ -1,11 +1,13 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.HSMDeviceKeys;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -163,19 +165,18 @@ public class HSMDeviceKeysPage extends AbstractBasePage {
 	}
 
 	public void fillBinStart(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(binStartTxt);
 		enterText(binStartTxt, hsmKeys.getBinStart());
 	}
 
 	public void fillBinEnd(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(binEndTxt);
 		enterText(binEndTxt, hsmKeys.getBinEnd());
 	}
 
 	public void selectPINDataCheckBox() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitForElementVisible(pinDataExistsChkBx);
 		ClickCheckBox(pinDataExistsChkBx, true);
 	}
 
@@ -308,42 +309,45 @@ public class HSMDeviceKeysPage extends AbstractBasePage {
 	}
 
 	public void selectCVV3ExistsCheckBox() {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElemenet(cvv3ExistsChkBx);
 		ClickCheckBox(cvv3ExistsChkBx, true);
 	}
 
 	public void fillCVV3Cryptogram(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElemenet(cvv3CryptogramTxt);
+		waitforElemenet(cvv3CryptogramTxt);
+		CustomUtils.ThreadDotSleep(1000);
 		enterText(cvv3CryptogramTxt, hsmKeys.getCVV3Cryptogram());
 	}
 
 	public void fillConfirmCVV3Cryptogram(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElemenet(confirmCVV3CryptogramTxt);
+		waitforElemenet(confirmCVV3CryptogramTxt);
 		enterText(confirmCVV3CryptogramTxt, hsmKeys.getConfirmCVV3Cryptogram());
 	}
 
-	public void fillCVV3KeyCheckvalue(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+	public void fillCVV3KeyCheckvalue(HSMDeviceKeys hsmKeys) { 
+		waitforElemenet(cvv3KeyCheckvalueTxt);
 		enterText(cvv3KeyCheckvalueTxt, hsmKeys.getCVV3KeyCheckvalue());
 	}
 
 	public void fillConfirmCVV3KeyCheckValue(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElemenet(confirmCVV3KeyCheckValueTxt);
 		enterText(confirmCVV3KeyCheckValueTxt, hsmKeys.getConfirmCVV3KeyCheckValue());
 	}
 
 	public void fillATCOffsetOnTrack(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElemenet(atcOffsetOnTrackTxt);
 		enterText(atcOffsetOnTrackTxt, hsmKeys.getATCOffsetOnTrack());
 	}
 
 	public void fillUNOffsetOnTrack(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElemenet(unOffsetOnTrackTxt);
 		enterText(unOffsetOnTrackTxt, hsmKeys.getUNOffsetOnTrack());
 	}
 
 	public void fillCVC3OffsetOnTrack(HSMDeviceKeys hsmKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElemenet(cvc3OffsetOnTrackTxt);
 		enterText(cvc3OffsetOnTrackTxt, hsmKeys.getCVVOffsetOnTrack());
 	}
 	@Override

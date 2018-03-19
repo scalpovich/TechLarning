@@ -20,7 +20,7 @@ public class StatementMessageFlows extends MenuFlows {
 		StatementMessagePlanPage stmntMsgPlanpage = navigator.navigateToPage(StatementMessagePlanPage.class);
 		stmntMsgPlanpage.clickaddStatementMessagePlan();
 		String stmntMessagePLan = stmntMsgPlanpage.statementMessagePlanDetails(deviceCreation);
-		stmntMsgPlanpage.clickSaveButton();
+		stmntMsgPlanpage.clickAddDetailsButton();
 		stmntMsgPlanpage.clickaddStatementMessageDetails();
 		stmntMsgPlanpage.addStatementMsgDetails(stmnt);
 		waitForPageToLoad(getFinder().getWebDriver());
@@ -29,3 +29,4 @@ public class StatementMessageFlows extends MenuFlows {
 
 	}
 }
+

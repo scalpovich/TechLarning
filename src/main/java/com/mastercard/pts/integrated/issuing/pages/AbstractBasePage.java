@@ -312,7 +312,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickWhenClickable(closeBtn);
 	}
 
-	protected void clickAddDetailsButton() {
+	public void clickAddDetailsButton() {
 		clickWhenClickable(addDetailsBtn);
 	}
 
