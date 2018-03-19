@@ -364,6 +364,7 @@ public class DeviceRangePage extends AbstractBasePage {
 	}
 
 	public void selectBranch(String branch) {
+		
 		WebElementUtils.selectDropDownByVisibleText(branchDDwn, branch);
 	}
 
@@ -408,6 +409,7 @@ public class DeviceRangePage extends AbstractBasePage {
 		logger.info("ProductType : {}",devicePlan.getProductType());
 		logger.info("issuerBin :{}",deviceRange.getIssuerBin());
 		selectIssuerBin(deviceRange.getIssuerBin());
+		logger.info("Branch :{}",deviceRange.getBranch());
 		selectBranch(deviceRange.getBranch());
 		addBtn.click();
 		waitForWicket();

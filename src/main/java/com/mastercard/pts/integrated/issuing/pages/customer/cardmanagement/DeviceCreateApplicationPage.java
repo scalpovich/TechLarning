@@ -289,9 +289,9 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		fillProfile(device);
 		
 		//Validate only when environment is demo
-		if(System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)){
+		//if(System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)){
 			clickNextButton();
-		}
+	//	}
 		
 		fillAddress(device);
 		

@@ -32,6 +32,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 import net.serenitybdd.core.annotations.findby.By;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
@@ -502,11 +503,11 @@ public class NewDevicePage extends AbstractCardManagementPage {
 
 	public void GenerateBatchFrame() {
 		selectCreateOpenBatch();
-		CustomUtils.ThreadDotSleep(3000);
+		SimulatorUtilities.wait(4000);
 		clickGenerateBatch();
-		CustomUtils.ThreadDotSleep(5000);
+		SimulatorUtilities.wait(4000);
 		clickNextButton();
-		CustomUtils.ThreadDotSleep(3000);
+		SimulatorUtilities.wait(4000);
 
 	}
 

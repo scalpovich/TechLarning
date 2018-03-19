@@ -169,6 +169,9 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:deviceMntFeePlanCodeCard1:input:dropdowncomponent")
 	private MCWebElement iframeBaseDeviceJoiningMemberShipPlanDdwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnFeePlanCode:input:dropdowncomponent")
+	private MCWebElement iframeTransactionFeePlanDdwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnLimitPlanCode:input:dropdowncomponent")
 	private MCWebElement iframeTransactionLimitPlanDdwn;
@@ -343,6 +346,9 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:deviceMntFeePlanCodeCard1:input:dropdowncomponent")
 	private MCWebElement membershipFeePlanDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnFeePlanCode:input:dropdowncomponent")
+	private MCWebElement iframeTransactionFee;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnLimitPlanCode:input:dropdowncomponent")
 	private MCWebElement transactionLimitPlanDDwn;
@@ -852,6 +858,12 @@ public class DevicePlanPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(iframeBaseDeviceJoiningMemberShipPlanDdwn,
 					deviceJoiningMemberShipPlan);
 	}
+	
+	public void selectIframeTransactionFeePlan(String transactionFeePlan) {
+		if (iframeTransactionFeePlanDdwn.isEnabled())
+			WebElementUtils.selectDropDownByVisibleText(iframeTransactionFeePlanDdwn,
+					transactionFeePlan);
+	}
 
 	public void selectIframeTransactionLimitPlanDdwn(String transactionLimitPlan) {
 		if (iframeTransactionLimitPlanDdwn.isEnabled())
@@ -871,7 +883,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void clickIframeFinishButton() {
-		SimulatorUtilities.wait(500);
+		SimulatorUtilities.wait(900);
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
 				.until(WebElementUtils.visibilityOf(iframeFinishBtn));
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
@@ -997,6 +1009,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	private void fillDevicePlanPage(DevicePlan devicePlan) {
 		selectIframeBaseDeviceEventBasedPlanDdwn(devicePlan.getBaseDeviceEventBasedPlan());
 		selectIframeBaseDeviceJoiningMemberShipPlanDdwn(devicePlan.getBaseDeviceJoiningMemberShipPlan());
+		selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
 		selectIframeTransactionLimitPlanDdwn(devicePlan.getTransactionLimitPlan());
 		clickIframeNextButton();
 	}

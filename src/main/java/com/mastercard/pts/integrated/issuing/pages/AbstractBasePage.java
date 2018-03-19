@@ -553,7 +553,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void clickWhenClickable(MCWebElement element) {
 		SimulatorUtilities.wait(900);
-		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();		
 		waitForWicket();
 	}
 
