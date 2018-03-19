@@ -31,9 +31,6 @@ public class AuthorizationSearchWorkflow {
 	private TestContext context;
 
 	@Autowired
-	private AuthorizationSearchWorkflow authorizationSearchWorkflow;
-
-	@Autowired
 	private ReconciliationWorkFlow reconciliationWorkFlow;
 
 	@Autowired
@@ -41,9 +38,6 @@ public class AuthorizationSearchWorkflow {
 
 	@Autowired
 	TransactionFeePlan txnFeePlan;
-
-	
-	private double txnRateFee;
 
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
@@ -113,6 +107,7 @@ public class AuthorizationSearchWorkflow {
 	}
 
 	public List<String> checkTransactionRateFee(String deviceNumber) {
+		double txnRateFee;
 		TransactionFeePlan.allTxnFee(provider);
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		page.inputDeviceNumber(deviceNumber);
