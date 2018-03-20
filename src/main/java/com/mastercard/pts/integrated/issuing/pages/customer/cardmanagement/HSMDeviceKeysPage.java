@@ -313,18 +313,19 @@ public class HSMDeviceKeysPage extends AbstractBasePage {
 
 	public void fillCVV3Cryptogram(HSMDeviceKeys hsmKeys) {
 		waitforElement(cvv3CryptogramTxt);
+		new SimulatorUtilities().wait(200);
 		enterText(cvv3CryptogramTxt, hsmKeys.getCVV3Cryptogram());
 	}
 
 	public void fillConfirmCVV3Cryptogram(HSMDeviceKeys hsmKeys) {
 		waitforElement(confirmCVV3CryptogramTxt);
+		new SimulatorUtilities().wait(200);
 		enterText(confirmCVV3CryptogramTxt, hsmKeys.getConfirmCVV3Cryptogram());
 	}
 
 	public void fillCVV3KeyCheckvalue(HSMDeviceKeys hsmKeys) { 
 		waitforElement(cvv3KeyCheckvalueTxt);
-		CustomUtils.ThreadDotSleep(2000) ;
-		 new SimulatorUtilities().wait(100);
+		new SimulatorUtilities().wait(200);
 		enterText(cvv3KeyCheckvalueTxt, hsmKeys.getCVV3KeyCheckvalue());
 	}
 
