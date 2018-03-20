@@ -16,11 +16,10 @@ public class StatementMessageFlows extends MenuFlows {
 	Navigator navigator;
 
 	public String createStatementMessagePlan(StatementMessagePlan stmnt, DeviceCreation deviceCreation) {
-		waitForElementVisible(menusubmenuPage.getCardManagement());
 		StatementMessagePlanPage stmntMsgPlanpage = navigator.navigateToPage(StatementMessagePlanPage.class);
 		stmntMsgPlanpage.clickaddStatementMessagePlan();
 		String stmntMessagePLan = stmntMsgPlanpage.statementMessagePlanDetails(deviceCreation);
-		stmntMsgPlanpage.clickSaveButton();
+		stmntMsgPlanpage.clickAddDetailsButton();
 		stmntMsgPlanpage.clickaddStatementMessageDetails();
 		stmntMsgPlanpage.addStatementMsgDetails(stmnt);
 		waitForPageToLoad(getFinder().getWebDriver());
@@ -29,3 +28,4 @@ public class StatementMessageFlows extends MenuFlows {
 
 	}
 }
+

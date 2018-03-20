@@ -317,6 +317,7 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 
 	public void clickSaveButton() {
 		clickWhenClickable(saveBtn);
+		waitForLoaderToDisappear();
 		SwitchToDefaultFrame();
 	}
 
@@ -332,32 +333,46 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 	}
 
 	public void selectTransactionType(TransactionLimitPlan transactionlimitplan) {
+		waitForElementVisible(TransactionTypeDDwn);
 		selectByVisibleText(TransactionTypeDDwn, transactionlimitplan.getTransactionType());
+		waitForLoaderToDisappear();
 	}
 
 	public void selectTransactionSource() {
+		waitForElementVisible(TransactionSourceDDwn);
 		SelectDropDownByIndex(TransactionSourceDDwn, 1);
+		waitForLoaderToDisappear();
 	}
 
 	public void selectTransactionChannel() {
+		waitForElementVisible(TransactionChannelDDwn);
 		SelectDropDownByIndex(TransactionChannelDDwn, 1);
+		waitForLoaderToDisappear();
 	}
 
 	public void selectTransactionOrigin() {
+		waitForElementVisible(TransactionOriginDDwn);
 		SelectDropDownByIndex(TransactionOriginDDwn, 1);
+		waitForLoaderToDisappear();
 	}
 
 	public void enterFloorAmount(TransactionLimitPlan transactionlimitplan) {
+		waitForElementVisible(FloorAmountTxt);
 		enterValueinTextBox(FloorAmountTxt, transactionlimitplan.getFloorAmount());
+		waitForLoaderToDisappear();
 	}
 
 	public void enterCeilingAmount(TransactionLimitPlan transactionlimitplan) {
+		waitForElementVisible(CeilingAmountTxt);
 		enterValueinTextBox(CeilingAmountTxt, transactionlimitplan.getCeilingAmount());
+		waitForLoaderToDisappear();
 	}
 
 	public void enterStandInAmount(TransactionLimitPlan transactionlimitplan) {
+		waitForElementVisible(StandInAmountTxt);
 		if (StandInAmountTxt.isEnabled()) {
 			enterValueinTextBox(StandInAmountTxt, transactionlimitplan.getCeilingAmount());
+			waitForLoaderToDisappear();
 		}
 	}
 
@@ -395,6 +410,7 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 		enterCeilingAmount(transactionlimitplan);
 		enterStandInAmount(transactionlimitplan);
 		clickSaveButton();
+		waitForLoaderToDisappear();
 
 	}
 

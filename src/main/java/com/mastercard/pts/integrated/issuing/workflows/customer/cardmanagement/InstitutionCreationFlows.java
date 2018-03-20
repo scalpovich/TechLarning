@@ -41,6 +41,7 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 		institute.providePersonalDetailsAdressTab(institutionCreation);
 		institute.provideAddressDetails(institutionCreation);
 		institute.save();
+		waitForLoaderToDisappear();
 	}
 
 	public void checkSuccessfullInstitutionCreation(
