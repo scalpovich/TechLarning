@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
@@ -94,17 +95,18 @@ public class AuthorizationSearchWorkflow {
 	public List<String> checkTransactionFixedFee(String deviceNumber) {
 
 		TransactionFeePlan txnFeePlan = TransactionFeePlan.allTxnFee(provider);
+		context.put(ContextConstants.TRANSACTION_FEE_PLAN, txnFeePlan);
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		page.authCheckTransactionFee(page, deviceNumber);
 		return page.checkFixedTransactionFee();
 	}
 
-	public List<String> checkTransactionRateFee(String deviceNumber) {
+	public List<String> checkTransactionRateFee(String deviceNumber, TransactionFeePlan txnFeePlan) {
 
 		double txnRateFee;
-		TransactionFeePlan txnFeePlan = TransactionFeePlan.allTxnFee(provider);
+		context.put(ContextConstants.TRANSACTION_FEE_PLAN, txnFeePlan);
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
-		page.authCheckTransactionFee(page, deviceNumber);
+		page.authCheckTransactionFee(deviceNumber);
 		List<String> myList = page.checkFixedTransactionFee();
 		double billAmount = Integer.parseInt(myList.get(3).substring(0, 2));
 		double rate = Double.parseDouble(txnFeePlan.getRateTxnFee());
@@ -116,7 +118,7 @@ public class AuthorizationSearchWorkflow {
 	}
 
 	public List<String> checkTransactionMaxFee(String deviceNumber) {
-		TransactionFeePlan txnFeePlan = TransactionFeePlan.allTxnFee(provider);
+		
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		page.authCheckTransactionFee(page, deviceNumber);
 		return page.checkFixedTransactionFee();
@@ -124,6 +126,7 @@ public class AuthorizationSearchWorkflow {
 
 	public List<String> checkTransactionMinFee(String deviceNumber) {
 		TransactionFeePlan txnFeePlan = TransactionFeePlan.allTxnFee(provider);
+		context.put(ContextConstants.TRANSACTION_FEE_PLAN, txnFeePlan);
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		page.authCheckTransactionFee(page, deviceNumber);
 		return page.checkFixedTransactionFee();

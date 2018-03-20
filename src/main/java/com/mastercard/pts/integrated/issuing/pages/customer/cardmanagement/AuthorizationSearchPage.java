@@ -85,13 +85,13 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		viewFirstRecord();
 	}
 	
-	public void authCheckTransactionFee(AuthorizationSearchPage page, String deviceNumber)
+	public void authCheckTransactionFee(String deviceNumber)
 	{
-		page.inputDeviceNumber(deviceNumber);
-		page.inputFromDate(LocalDate.now().minusDays(1));
-		page.inputToDate(LocalDate.now());
-		page.waitAndSearchForRecordToAppear();
-		page.viewDeviceDetails();
+		inputDeviceNumber(deviceNumber);
+		inputFromDate(LocalDate.now().minusDays(1));
+		inputToDate(LocalDate.now());
+		waitAndSearchForRecordToAppear();
+		viewDeviceDetails();
 		SimulatorUtilities.wait(2000);
 	}
 

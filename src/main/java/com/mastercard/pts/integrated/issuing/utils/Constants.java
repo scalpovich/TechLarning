@@ -35,7 +35,7 @@ public class Constants {
 	public static String maxTrxRate = "19.00";
 	public static String rateTxnFee = "12.5";
 	public static String billingAmountRate = "20.00";
-	public static String minTrxRate="12.0";
+	public static String minTrxRate = "12.0";
 	public static String Purchase_Auth_String = "Purchase/Auth Completion";
 
 	public static String Purchase_Auth_Code = "01";
@@ -438,7 +438,6 @@ public class Constants {
 
 	public static String DATA_DRIVEN_CARD_BOARDING = "NO";
 
-	
 	public static final String ENVIRONMENT = "demo";
 	public static final String COLUMN_NAME = "Status";
 	public static final int TABLE_ROW_NUM = 1;
