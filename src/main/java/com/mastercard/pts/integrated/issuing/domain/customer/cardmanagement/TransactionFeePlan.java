@@ -3,10 +3,12 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 import java.time.LocalDate;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 
+@Component
 public class TransactionFeePlan {
 
 	private static final String TRANSACTION_TYPE = "TRANSACITON_TYPE";
