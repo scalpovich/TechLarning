@@ -73,7 +73,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 		WebElementUtils.pickDate(fromDateTxt, LocalDate.now().minusDays(FROM_DATE));
 		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
 		clickSearchButton();
-		waitforElemenet(retrieveARNLabel);
+		waitforElement(retrieveARNLabel);
 		String retrieveARN = retrieveARNLabel.getText();
 		logger.info("retrievedARN {} ", retrieveARN);
 		return retrieveARN;

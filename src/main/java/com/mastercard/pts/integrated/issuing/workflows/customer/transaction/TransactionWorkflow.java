@@ -20,6 +20,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.winium.DesktopOptions;
@@ -62,6 +63,7 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.MdfsDetailsKeyValue
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorConstantsData;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKeyValuePair;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 
 @Workflow
 public class TransactionWorkflow extends SimulatorUtilities {
@@ -1725,7 +1727,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		try {
 			String folderName = (folderPath+fName).substring((folderPath+fName).lastIndexOf("/")+1);
 			Actions action = new Actions(winiumDriver);
-			wait(20000);
+			waitForExepectedCondition(username);
+			//wait(20000);
 			action.moveToElement(winiumDriver.findElement(By.name("Rights"))).moveByOffset(0,-30).doubleClick().build().perform();
 			wait(3000);
 			setText((folderPath+fName).replace(folderName,""));  //Folder Path
@@ -1750,6 +1753,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("Close");
 		wait(2000);
 		winiumClickOperation("OK");
-
+	}
+	
+	private ExpectedCondition<Boolean> waitForNewWindow(String title) {
+		return ExpectedConditions.titleContains(title);
 	}
 }
