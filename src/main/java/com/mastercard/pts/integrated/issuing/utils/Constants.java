@@ -26,8 +26,6 @@ public class Constants {
 	public static String Balance_Inquiry_String = "Balance Inquiry";
 
 	public static String Balance_Inquiry_Code = "31";
-
-	public static double fixedTxnFee = 10;
 	
 	public static String Purchase_Auth_String = "Purchase/Auth Completion";
 

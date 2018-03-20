@@ -38,8 +38,7 @@ public class AuthorizationSearchSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		authorizationSearchWorkflow.verifyTransactionAndBillingCurrency(tcurrency, bcurrency, device.getDeviceNumber());
 	}
-
-	@When("verify fixed transaction fee applied on purchase transaction")
+	
 	@Then("verify fixed transaction fee applied on purchase transaction")
 	public void veriyFixedTransactionFeeonPurchaseTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
@@ -48,7 +47,6 @@ public class AuthorizationSearchSteps {
 				Matchers.hasItems(txnFeePlan.getfixedTxnFees(), txnFeePlan.getFixedRateFee(), txnFeePlan.getBillingAmount()));
 	}
 
-	@When("verify rate transaction fee applied on purchase transaction")
 	@Then("verify rate transaction fee applied on purchase transaction")
 	public void verifyRateTransactiOnFeeonPurchaseTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);

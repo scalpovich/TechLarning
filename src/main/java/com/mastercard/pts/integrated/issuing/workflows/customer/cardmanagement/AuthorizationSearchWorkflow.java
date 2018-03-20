@@ -38,8 +38,8 @@ public class AuthorizationSearchWorkflow {
 	KeyValueProvider provider;
 
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
-	
-	public static final int BILL_AMOUNT_INDEX_VALUE=3;
+
+	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
 
 	public void verifyAuthTransactionSearch(String type, String state, String deviceNumber) {
 		String varType = type;
@@ -96,8 +96,6 @@ public class AuthorizationSearchWorkflow {
 
 	public List<String> checkTransactionFixedFee(String deviceNumber) {
 
-		TransactionFeePlan txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
-		context.put(ContextConstants.TRANSACTION_FEE_PLAN, txnFeePlan);
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		page.authCheckTransactionFee(deviceNumber);
 		return page.checkFixedTransactionFee();
@@ -106,12 +104,13 @@ public class AuthorizationSearchWorkflow {
 	public List<String> checkTransactionRateFee(String deviceNumber, TransactionFeePlan txnFeePlan) {
 
 		double txnRateFee;
+		int FIXED_TRANSACTION_FEE=Integer.parseInt(txnFeePlan.getfixedTxnFees());
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		page.authCheckTransactionFee(deviceNumber);
 		List<String> myList = page.checkFixedTransactionFee();
 		double billAmount = Integer.parseInt(myList.get(BILL_AMOUNT_INDEX_VALUE).substring(0, 2));
 		double rate = Double.parseDouble(txnFeePlan.getRateTxnFee());
-		txnRateFee = billAmount * (rate / 100) + Constants.fixedTxnFee;
+		txnRateFee = billAmount * (rate / 100) + FIXED_TRANSACTION_FEE;
 		String txnRateFeeString = Double.toString(txnRateFee);
 		myList.add(txnRateFeeString);
 		return myList;
@@ -119,14 +118,14 @@ public class AuthorizationSearchWorkflow {
 	}
 
 	public List<String> checkTransactionMaxFee(String deviceNumber) {
-		
+
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		page.authCheckTransactionFee(deviceNumber);
 		return page.checkFixedTransactionFee();
 	}
 
 	public List<String> checkTransactionMinFee(String deviceNumber) {
-	
+
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		page.authCheckTransactionFee(deviceNumber);
 		return page.checkFixedTransactionFee();
