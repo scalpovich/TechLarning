@@ -21,6 +21,14 @@ public class TransactionFeePlan {
 
 	private static final String TRANSACTION_RATE = "TRANSACTION_RATE";
 
+	private static final String BILLING_AMOUNT = "BILLING_AMOUNT";
+	private static final String BILLING_AMOUNT_RATE = "BILLING_AMOUNT_RATE";
+	private static final String MIN_TXN_RATE = "MIN_TXN_RATE";
+
+	private static final String RATE_TXN_FEE = "RATE_TXN_FEE";
+	private static final String MAX_TXN_RATE = "MAX_TXN_RATE";
+	private static final String FIXED_RATE_FEE = "FIXED_RATE_FEE";
+	private static final String FIXED_TXN_FEE = "FIXED_TXN_FEE";
 	private String transactionFeePlanCode;
 
 	private String description;
@@ -51,6 +59,20 @@ public class TransactionFeePlan {
 
 	private String ratetxnfee;
 
+	private String fixedTxnFees;
+
+	private String fixedRateFee;
+
+	private String billingAmount;
+
+	private String maxTxnRate;
+
+	private String rateTxnFee;
+
+	private String billingAmountRate;
+
+	private String minTxnRate;
+
 	public static TransactionFeePlan createWithProvider(KeyValueProvider provider) {
 		TransactionFeePlan details = new TransactionFeePlan();
 		details.setTransactionFeePlanCode(provider.getString(TRANSACTION_FEE_PLAN));
@@ -74,6 +96,13 @@ public class TransactionFeePlan {
 
 		TransactionFeePlan txnFee = new TransactionFeePlan();
 		txnFee.setRateTxnFee(provider.getString(TRANSACTION_RATE));
+		txnFee.setBillingAmount(provider.getString(BILLING_AMOUNT));
+		txnFee.setBillingAmountRate(provider.getString(BILLING_AMOUNT_RATE));
+		txnFee.setMinTxnRate(provider.getString(MIN_TXN_RATE));
+		txnFee.setRateTxnFee(provider.getString(RATE_TXN_FEE));
+		txnFee.setMaxTxnRate(provider.getString(MAX_TXN_RATE));
+		txnFee.setFixedRateFee(provider.getString(FIXED_RATE_FEE));
+		txnFee.setFixedTxnFees(provider.getString(FIXED_TXN_FEE));
 		return txnFee;
 	}
 
@@ -196,5 +225,54 @@ public class TransactionFeePlan {
 	public void setRateTxnFee(String ratetxnfee) {
 		this.ratetxnfee = ratetxnfee;
 
+	}
+
+	public String getfixedTxnFees() {
+
+		return fixedTxnFees;
+	}
+
+	public void setFixedTxnFees(String fixedTxnFees) {
+		this.fixedTxnFees = fixedTxnFees;
+	}
+
+	public String getFixedRateFee() {
+		return fixedRateFee;
+	}
+
+	public void setFixedRateFee(String fixedRateFee) {
+		this.fixedRateFee = fixedRateFee;
+	}
+
+	public String getBillingAmount() {
+		return billingAmount;
+	}
+
+	public void setBillingAmount(String billingAmount) {
+		this.billingAmount = billingAmount;
+	}
+
+	public String getMaxTxnRate() {
+		return maxTxnRate;
+	}
+
+	public void setMaxTxnRate(String maxTxnRate) {
+		this.maxTxnRate = maxTxnRate;
+	}
+
+	public String getBillingAmountRate() {
+		return billingAmountRate;
+	}
+
+	public void setBillingAmountRate(String billingAmountRate) {
+		this.billingAmountRate = billingAmountRate;
+	}
+
+	public String getMinTxnRate() {
+		return minTxnRate;
+	}
+
+	public void setMinTxnRate(String minTxnRate) {
+		this.minTxnRate = minTxnRate;
 	}
 }

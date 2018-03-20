@@ -93,26 +93,18 @@ public class AuthorizationSearchWorkflow {
 
 	public List<String> checkTransactionFixedFee(String deviceNumber) {
 
+		TransactionFeePlan txnFeePlan = TransactionFeePlan.allTxnFee(provider);
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
-		page.inputDeviceNumber(deviceNumber);
-		page.inputFromDate(LocalDate.now().minusDays(1));
-		page.inputToDate(LocalDate.now());
-		page.waitAndSearchForRecordToAppear();
-		page.viewDeviceDetails();
-		SimulatorUtilities.wait(2000);
+		page.authCheckTransactionFee(page, deviceNumber);
 		return page.checkFixedTransactionFee();
 	}
 
 	public List<String> checkTransactionRateFee(String deviceNumber) {
+
 		double txnRateFee;
 		TransactionFeePlan txnFeePlan = TransactionFeePlan.allTxnFee(provider);
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
-		page.inputDeviceNumber(deviceNumber);
-		page.inputFromDate(LocalDate.now().minusDays(1));
-		page.inputToDate(LocalDate.now());
-		page.waitAndSearchForRecordToAppear();
-		page.viewDeviceDetails();
-		SimulatorUtilities.wait(2000);
+		page.authCheckTransactionFee(page, deviceNumber);
 		List<String> myList = page.checkFixedTransactionFee();
 		double billAmount = Integer.parseInt(myList.get(3).substring(0, 2));
 		double rate = Double.parseDouble(txnFeePlan.getRateTxnFee());
@@ -124,25 +116,16 @@ public class AuthorizationSearchWorkflow {
 	}
 
 	public List<String> checkTransactionMaxFee(String deviceNumber) {
+		TransactionFeePlan txnFeePlan = TransactionFeePlan.allTxnFee(provider);
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
-		page.inputDeviceNumber(deviceNumber);
-		page.inputFromDate(LocalDate.now().minusDays(1));
-		page.inputToDate(LocalDate.now());
-		page.waitAndSearchForRecordToAppear();
-		page.viewDeviceDetails();
-		SimulatorUtilities.wait(2000);
+		page.authCheckTransactionFee(page, deviceNumber);
 		return page.checkFixedTransactionFee();
-
 	}
-	
+
 	public List<String> checkTransactionMinFee(String deviceNumber) {
+		TransactionFeePlan txnFeePlan = TransactionFeePlan.allTxnFee(provider);
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
-		page.inputDeviceNumber(deviceNumber);
-		page.inputFromDate(LocalDate.now().minusDays(1));
-		page.inputToDate(LocalDate.now());
-		page.waitAndSearchForRecordToAppear();
-		page.viewDeviceDetails();
-		SimulatorUtilities.wait(2000);
+		page.authCheckTransactionFee(page, deviceNumber);
 		return page.checkFixedTransactionFee();
 
 	}

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.AuthorizationSearchWorkflow;
@@ -25,6 +26,9 @@ public class AuthorizationSearchSteps {
 
 	@Autowired
 	private TestContext context;
+
+	@Autowired
+	private TransactionFeePlan txnFeePlan;
 
 	@Autowired
 	private AuthorizationSearchWorkflow authorizationSearchWorkflow;
@@ -45,29 +49,32 @@ public class AuthorizationSearchSteps {
 	@Then("verify fixed transaction fee applied on purchase transaction")
 	public void veriyFixedTransactionFeeonPurchaseTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
-		assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()), Matchers.hasItems(Constants.fixedTxnFees, Constants.fixedRateFee, Constants.billingAmount));
+		assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),
+				Matchers.hasItems(txnFeePlan.getfixedTxnFees(), txnFeePlan.getFixedRateFee(), txnFeePlan.getBillingAmount()));
 	}
 
 	@When("verify rate transaction fee applied on purchase transaction")
 	@Then("verify rate transaction fee applied on purchase transaction")
 	public void veriyRateTransactionFeeonPurchaseTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
-		assertThat(authorizationSearchWorkflow.checkTransactionRateFee(device.getDeviceNumber()), Matchers.hasItems(Constants.rateTxnFee, Constants.billingAmountRate));
+		assertThat(authorizationSearchWorkflow.checkTransactionRateFee(device.getDeviceNumber()), Matchers.hasItems(txnFeePlan.getRateTxnFee(), txnFeePlan.getBillingAmountRate()));
 
 	}
-	
+
 	@When("verify maximum transaction fee applied on purchase transaction")
 	@Then("verify rate maximum fee applied on purchase transaction")
 	public void veriyMaxTransactionFeeonPurchaseTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
-		assertThat(authorizationSearchWorkflow.checkTransactionMaxFee(device.getDeviceNumber()), Matchers.hasItems(Constants.maxTrxRate, Constants.billingAmountRate));
+		assertThat(authorizationSearchWorkflow.checkTransactionMaxFee(device.getDeviceNumber()), Matchers.hasItems(txnFeePlan.getMaxTxnRate(), txnFeePlan.getBillingAmountRate()));
 
 	}
+
 	@When("verify minimum transaction fee applied on purchase transaction")
 	@Then("verify minimum fee applied on purchase transaction")
 	public void veriyMinTransactionFeeonPurchaseTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
-		assertThat(authorizationSearchWorkflow.checkTransactionMinFee(device.getDeviceNumber()), Matchers.hasItems(Constants.minTrxRate, Constants.billingAmountRate));
+		TransactionFeePlan txnFeePlan = new TransactionFeePlan();
+		assertThat(authorizationSearchWorkflow.checkTransactionMinFee(device.getDeviceNumber()), Matchers.hasItems(txnFeePlan.getMinTxnRate(), txnFeePlan.getBillingAmountRate()));
 
 	}
 
