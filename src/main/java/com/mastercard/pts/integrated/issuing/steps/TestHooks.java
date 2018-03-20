@@ -52,7 +52,7 @@ public class TestHooks {
 		if (data.isPresent()) {
 			testContext.put(TestContext.KEY_STORY_DATA, data.get());
 		} else {
-			logger.info("There is no data set for story {}", storyName);
+			logger.warn("There is no data set for story: {}", storyName);
 		}
 	}
 
