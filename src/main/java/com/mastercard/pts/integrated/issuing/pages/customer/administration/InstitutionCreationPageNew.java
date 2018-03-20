@@ -756,6 +756,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public void verifyNewInstituteCreationSuccess(InstitutionCreation instution) {
+		try{
 		if (!verifyErrorsOnInstitutePage()) {
 			SwitchToDefaultFrame();
 			enterNewInstitutionName(instution);
@@ -781,6 +782,11 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 		} else {
 			logg.error("Error in new intitution creation");
 		}
+		}catch(Exception e)
+		{
+			logg.error("Error in new intitution creation"+ e);
+			e.printStackTrace();
+		}
 	}
 
 	public void enterInstitutionName(InstitutionCreation institute) {
@@ -789,6 +795,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 	public void save() {
 		clickWhenClickable(saveBtn);
+		waitForLoaderToDisappear();
 		SwitchToDefaultFrame();
 	}
 	
