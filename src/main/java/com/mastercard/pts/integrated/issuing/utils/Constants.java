@@ -28,14 +28,7 @@ public class Constants {
 	public static String Balance_Inquiry_Code = "31";
 
 	public static double fixedTxnFee = 10;
-
-	public static String fixedTxnFees = "10.00";
-	public static String fixedRateFee = "0.10";
-	public static String billingAmount = "10.00";
-	public static String maxTrxRate = "19.00";
-	public static String rateTxnFee = "12.5";
-	public static String billingAmountRate = "20.00";
-	public static String minTrxRate = "12.0";
+	
 	public static String Purchase_Auth_String = "Purchase/Auth Completion";
 
 	public static String Purchase_Auth_Code = "01";

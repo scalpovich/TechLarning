@@ -40,5 +40,5 @@ And user sign out from customer portal
 
 Scenario: Calculate Rate Transaction Fee
 Given user is logged in institution
-When verify maximum transaction fee applied on purchase transaction
+Then verify rate maximum fee applied on purchase transaction
 And user sign out from customer portal

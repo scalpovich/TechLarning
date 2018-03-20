@@ -38,6 +38,8 @@ public class AuthorizationSearchWorkflow {
 	KeyValueProvider provider;
 
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
+	
+	public static final int BILL_AMOUNT_INDEX_VALUE=3;
 
 	public void verifyAuthTransactionSearch(String type, String state, String deviceNumber) {
 		String varType = type;
@@ -107,7 +109,7 @@ public class AuthorizationSearchWorkflow {
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		page.authCheckTransactionFee(deviceNumber);
 		List<String> myList = page.checkFixedTransactionFee();
-		double billAmount = Integer.parseInt(myList.get(3).substring(0, 2));
+		double billAmount = Integer.parseInt(myList.get(BILL_AMOUNT_INDEX_VALUE).substring(0, 2));
 		double rate = Double.parseDouble(txnFeePlan.getRateTxnFee());
 		txnRateFee = billAmount * (rate / 100) + Constants.fixedTxnFee;
 		String txnRateFeeString = Double.toString(txnRateFee);

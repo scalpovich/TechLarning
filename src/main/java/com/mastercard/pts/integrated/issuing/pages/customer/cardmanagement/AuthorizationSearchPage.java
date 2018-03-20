@@ -92,7 +92,6 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		inputToDate(LocalDate.now());
 		waitAndSearchForRecordToAppear();
 		viewDeviceDetails();
-		SimulatorUtilities.wait(2000);
 	}
 
 	public List<String> checkFixedTransactionFee() {
