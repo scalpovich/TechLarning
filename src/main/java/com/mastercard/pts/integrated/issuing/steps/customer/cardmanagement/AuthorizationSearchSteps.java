@@ -73,8 +73,8 @@ public class AuthorizationSearchSteps {
 	@Then("verify minimum fee applied on purchase transaction")
 	public void veriyMinTransactionFeeonPurchaseTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
-		transactionFeePlan=context.get(ContextConstants.TRANSACTION_FEE_PLAN);
-		assertThat(authorizationSearchWorkflow.checkTransactionMinFee(device.getDeviceNumber()), Matchers.hasItems(transactionFeePlan.getMinTxnRate(), transactionFeePlan.getBillingAmountRate()));
+		TransactionFeePlan txnFeePlan = TransactionFeePlan.allTxnFee(provider);
+		assertThat(authorizationSearchWorkflow.checkTransactionMinFee(device.getDeviceNumber()), Matchers.hasItems(txnFeePlan.getMinTxnRate(), txnFeePlan.getBillingAmountRate()));
 
 	}
 
