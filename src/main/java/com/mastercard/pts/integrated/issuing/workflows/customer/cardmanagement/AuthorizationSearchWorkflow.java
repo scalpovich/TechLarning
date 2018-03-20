@@ -94,17 +94,16 @@ public class AuthorizationSearchWorkflow {
 
 	public List<String> checkTransactionFixedFee(String deviceNumber) {
 
-		TransactionFeePlan txnFeePlan = TransactionFeePlan.allTxnFee(provider);
+		TransactionFeePlan txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
 		context.put(ContextConstants.TRANSACTION_FEE_PLAN, txnFeePlan);
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
-		page.authCheckTransactionFee(page, deviceNumber);
+		page.authCheckTransactionFee(deviceNumber);
 		return page.checkFixedTransactionFee();
 	}
 
 	public List<String> checkTransactionRateFee(String deviceNumber, TransactionFeePlan txnFeePlan) {
 
 		double txnRateFee;
-		context.put(ContextConstants.TRANSACTION_FEE_PLAN, txnFeePlan);
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		page.authCheckTransactionFee(deviceNumber);
 		List<String> myList = page.checkFixedTransactionFee();
@@ -120,15 +119,14 @@ public class AuthorizationSearchWorkflow {
 	public List<String> checkTransactionMaxFee(String deviceNumber) {
 		
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
-		page.authCheckTransactionFee(page, deviceNumber);
+		page.authCheckTransactionFee(deviceNumber);
 		return page.checkFixedTransactionFee();
 	}
 
 	public List<String> checkTransactionMinFee(String deviceNumber) {
-		TransactionFeePlan txnFeePlan = TransactionFeePlan.allTxnFee(provider);
-		context.put(ContextConstants.TRANSACTION_FEE_PLAN, txnFeePlan);
+	
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
-		page.authCheckTransactionFee(page, deviceNumber);
+		page.authCheckTransactionFee(deviceNumber);
 		return page.checkFixedTransactionFee();
 
 	}

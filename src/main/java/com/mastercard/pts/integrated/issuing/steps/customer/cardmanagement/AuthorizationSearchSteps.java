@@ -20,16 +20,13 @@ public class AuthorizationSearchSteps {
 
 	@Autowired
 	private TestContext context;
-	
-	@Autowired
-	private TransactionFeePlan transactionFeePlan;
-	
+
 	@Autowired
 	private AuthorizationSearchWorkflow authorizationSearchWorkflow;
-	
+
 	@Autowired
 	private KeyValueProvider provider;
-	
+
 	@Then("search $type authorization and verify $state status")
 	public void thenUserSearchDeviceNumerWithTodaysDate(String type, String state) {
 		Device device = context.get(ContextConstants.DEVICE);
@@ -46,17 +43,17 @@ public class AuthorizationSearchSteps {
 	@Then("verify fixed transaction fee applied on purchase transaction")
 	public void veriyFixedTransactionFeeonPurchaseTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
-		transactionFeePlan=context.get(ContextConstants.TRANSACTION_FEE_PLAN);
-		assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),Matchers.hasItems(transactionFeePlan.getfixedTxnFees(), transactionFeePlan.getFixedRateFee(), transactionFeePlan.getBillingAmount()));
+		TransactionFeePlan txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
+		assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),
+				Matchers.hasItems(txnFeePlan.getfixedTxnFees(), txnFeePlan.getFixedRateFee(), txnFeePlan.getBillingAmount()));
 	}
 
 	@When("verify rate transaction fee applied on purchase transaction")
 	@Then("verify rate transaction fee applied on purchase transaction")
 	public void veriyRateTransactionFeeonPurchaseTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
-		TransactionFeePlan txnFeePlan = TransactionFeePlan.allTxnFee(provider);
-		transactionFeePlan=context.get(ContextConstants.TRANSACTION_FEE_PLAN);
-		assertThat(authorizationSearchWorkflow.checkTransactionRateFee(device.getDeviceNumber(),txnFeePlan), Matchers.hasItems(transactionFeePlan.getRateTxnFee(), transactionFeePlan.getBillingAmountRate()));
+		TransactionFeePlan txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
+		assertThat(authorizationSearchWorkflow.checkTransactionRateFee(device.getDeviceNumber(), txnFeePlan), Matchers.hasItems(txnFeePlan.getRateTxnFee(), txnFeePlan.getBillingAmountRate()));
 
 	}
 
@@ -64,7 +61,7 @@ public class AuthorizationSearchSteps {
 	@Then("verify rate maximum fee applied on purchase transaction")
 	public void veriyMaxTransactionFeeonPurchaseTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
-		TransactionFeePlan txnFeePlan = TransactionFeePlan.allTxnFee(provider);
+		TransactionFeePlan txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
 		assertThat(authorizationSearchWorkflow.checkTransactionMaxFee(device.getDeviceNumber()), Matchers.hasItems(txnFeePlan.getMaxTxnRate(), txnFeePlan.getBillingAmountRate()));
 
 	}
@@ -73,7 +70,7 @@ public class AuthorizationSearchSteps {
 	@Then("verify minimum fee applied on purchase transaction")
 	public void veriyMinTransactionFeeonPurchaseTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
-		TransactionFeePlan txnFeePlan = TransactionFeePlan.allTxnFee(provider);
+		TransactionFeePlan txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
 		assertThat(authorizationSearchWorkflow.checkTransactionMinFee(device.getDeviceNumber()), Matchers.hasItems(txnFeePlan.getMinTxnRate(), txnFeePlan.getBillingAmountRate()));
 
 	}

@@ -59,7 +59,7 @@ public class TransactionFeePlan {
 
 	private String maximumFeeAmount;
 
-	private String ratetxnfee;
+	private String rateTxnfee;
 
 	private String fixedTxnFees;
 
@@ -94,7 +94,7 @@ public class TransactionFeePlan {
 		return details;
 	}
 
-	public static TransactionFeePlan allTxnFee(KeyValueProvider provider) {
+	public static TransactionFeePlan getAllTransactionFee(KeyValueProvider provider) {
 
 		TransactionFeePlan txnFee = new TransactionFeePlan();
 		txnFee.setRateTxnFee(provider.getString(TRANSACTION_RATE));
@@ -221,11 +221,11 @@ public class TransactionFeePlan {
 	}
 
 	public String getRateTxnFee() {
-		return ratetxnfee;
+		return rateTxnfee;
 	}
 
-	public void setRateTxnFee(String ratetxnfee) {
-		this.ratetxnfee = ratetxnfee;
+	public void setRateTxnFee(String rateTxnfee) {
+		this.rateTxnfee = rateTxnfee;
 
 	}
 
