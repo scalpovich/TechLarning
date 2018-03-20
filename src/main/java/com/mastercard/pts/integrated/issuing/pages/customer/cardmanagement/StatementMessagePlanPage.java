@@ -220,7 +220,6 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 	}
 
 	public void clickaddStatementMessageDetails() {
-		switchToIframe(Constants.ADD_STATEMENT_MESSAGE_PLAN_FRAME);
 		clickWhenClickable(addSubDetails);
 	}
 
@@ -262,5 +261,6 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 		Scrolldown(save);
 		waitForElementVisible(save);
 		ClickButton(save);
+		waitForLoaderToDisappear();
 	}
 }
