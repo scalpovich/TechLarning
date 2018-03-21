@@ -606,7 +606,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickSearchButton();
 		// Pre-production batch and device production batch & Authorization Search page take little long to
 				// be completed, and do not appear in search result, hence a for loop
-		for (int l = 0; l < 21; l++) {
+		for (int l = 0; l < 50; l++) {
 			if (!waitForRow())
 				clickSearchButton();
 			else {

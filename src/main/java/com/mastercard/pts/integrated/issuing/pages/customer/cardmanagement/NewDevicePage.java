@@ -255,7 +255,7 @@ public class NewDevicePage extends AbstractCardManagementPage {
 
 	public void clickGenerateBatch() {
 		waitForElementVisible(GenerateBatchBtn);
-		CustomUtils.ThreadDotSleep(3000);
+		CustomUtils.ThreadDotSleep(70000);
 		retryUntilNoErrors(() -> ClickButton(GenerateBatchBtn));
 		CustomUtils.ThreadDotSleep(3000);
 	}

@@ -202,6 +202,26 @@ public abstract class LinuxUtils {
 		Thread.sleep(60000); // long sleep as file permission cron job runs every minute
 	}
 
+	
+	public static void downloadScp(RemoteConnectionDetails connectiondetails, String localsource,
+			String remoteDir) throws JSchException, InterruptedException  {
+
+		Scp scp = new Scp();
+		int portSSH = connectiondetails.getPort();
+		String serverSSH = connectiondetails.getHostName();
+		String userSSH = connectiondetails.getUserName(); 
+		String pswdSSH = connectiondetails.getPassword();
+
+		scp.setPort( portSSH );
+		scp.setRemoteFile(remoteDir);
+		scp.setLocalTodir(localsource);
+		scp.setTodir( userSSH + ":" + pswdSSH + "@" + serverSSH + ":" + remoteDir );
+		scp.setProject( new Project() );
+		scp.setTrust( true );
+		scp.execute();
+		Thread.sleep(60000); // long sleep as file permission cron job runs every minute
+	}
+	
 	public static String[] getCardNumberAndExpiryDate(File filePath) {
 		MiscUtils.reportToConsole("*********   starting getCardNumberAndExpiryDate *******  ");
 		int lnNumber = 1;

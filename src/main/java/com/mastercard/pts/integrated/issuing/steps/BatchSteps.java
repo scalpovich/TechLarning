@@ -53,6 +53,7 @@ public class BatchSteps {
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		try {
 			File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "Device");
+			
 			String[] fileData = LinuxUtils.getCardNumberAndExpiryDate(batchFile);
 			
 			
