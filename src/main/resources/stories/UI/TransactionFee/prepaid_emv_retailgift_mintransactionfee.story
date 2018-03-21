@@ -6,7 +6,7 @@ As an issuer
 I want to create an magnetic stripe prepaid card pinless and perform various transaction
 
 Meta:
-@StoryName p_emv_retail_travel
+@StoryName p_emv_retail_travel_min
 
 Scenario: Set up prepaid emv retail general purpose card
 Given user is logged in institution
@@ -38,7 +38,7 @@ And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Calculate Fix and Rate Transaction Fee
+Scenario: Calculate Rate Transaction Fee
 Given user is logged in institution
-Then verify fixed transaction fee applied on purchase transaction
+Then verify minimum fee applied on purchase transaction
 And user sign out from customer portal
