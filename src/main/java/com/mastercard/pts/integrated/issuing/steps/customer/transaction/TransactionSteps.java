@@ -107,7 +107,7 @@ public class TransactionSteps {
 	@Aliases(values={"a sample simulator \"$transaction\" is executed","user performs an $transaction MAS transaction"})
 	@Given("perform an $transaction MAS transaction")
 	public void givenTransactionIsExecuted(String transaction) {
-		
+
 		String temp = transaction;
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));
@@ -170,7 +170,7 @@ public class TransactionSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		DevicePlan devicePlan = null;
 		// this line of code reads data from the "AuthorizationTransaction_DataDriven.xls" at \\Isser-automation-epam\src\main\resources\config\Data folder as the
-		 // "Transaction Templates" sheet has the template information
+		// "Transaction Templates" sheet has the template information
 		Transaction transactionData = transactionProvider.loadTransaction(transaction);
 
 		// when data is dynamically passed when scripts run from end-2-end
@@ -195,7 +195,7 @@ public class TransactionSteps {
 			// this line of code is temporary as this will only work for Single wallet currency for multi wallet, we may have to set other setter
 			// --> setIssuerCountryCode, setIssuerCurrencyCode, setCardHolderBillingCurrency
 			device.setCurrency(tempData.getCurrency());
-			
+
 			if(!Constants.DATA_DRIVEN_CARD_BOARDING.equalsIgnoreCase("YES")){
 				if ("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
 					device.setExpirationDate(devicePlan.getExpiryDate());
@@ -205,7 +205,7 @@ public class TransactionSteps {
 					device.setExpirationDate(device.getExpirationDate());
 				}
 			}
-			
+
 			//__________________CURRENCY VAL FROM EXCEL _________ This is a Single Wallet, Single Currency INDIA card */
 			settingValuesDynamicallyFromDeviceContext(device, transactionData);
 			//setting values of Card Data Element (Card Profile) which are placed in the "Transaction Templates" sheet
@@ -222,7 +222,7 @@ public class TransactionSteps {
 		}
 		//creating & import card profile to temp location ex:C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413
 		transactionData.setCardProfile(transactionFactory.createCsvCardProfile(transactionData));
-		 // creating & import testcase/transaction file to temp location ex: * C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413	
+		// creating & import testcase/transaction file to temp location ex: * C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413	
 		transactionData.setTestCase(transactionFactory.createCsvTesCase(transactionData));
 		return transactionData;
 	}
@@ -244,10 +244,10 @@ public class TransactionSteps {
 			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); // Transaction currency code
 		}
 		// This is a Single Wallet, Single Currency INDIA card
-//		transactionData.setDeKeyValuePairDynamic("049", device.getCurrency()); // Transaction currency  code
-//		transactionData.setDeKeyValuePairDynamic("050", device.getCurrency()); // Settlement currency  code 
-//		transactionData.setDeKeyValuePairDynamic("051", device.getCurrency()); // CardHolder billing currency  code
-//		transactionData.setDeKeyValuePairDynamic("061.13", device.getCurrency()); // POS country code
+		//		transactionData.setDeKeyValuePairDynamic("049", device.getCurrency()); // Transaction currency  code
+		//		transactionData.setDeKeyValuePairDynamic("050", device.getCurrency()); // Settlement currency  code 
+		//		transactionData.setDeKeyValuePairDynamic("051", device.getCurrency()); // CardHolder billing currency  code
+		//		transactionData.setDeKeyValuePairDynamic("061.13", device.getCurrency()); // POS country code
 	}
 
 	private void settingValuesDynamicallyFromDeviceContext(Device device, Transaction transactionData) {
@@ -331,7 +331,7 @@ public class TransactionSteps {
 			testResults = transactionWorkflow.verifyTestResultsOnMdfs();
 		}
 		transactionWorkflow.browserMaximize(); // restoring browser after
-		
+
 		if (testResults.contains("Validations OK")) {
 			logger.info("Expected Result :- ", testResults);
 			assertTrue("Transaction is succcessful!  - Expected Result : "+ testResults, true);
@@ -497,14 +497,14 @@ public class TransactionSteps {
 	@Then("ARN is retrieved from transaction search page")
 	public void arnIsRetrievedFromTransactionSearchPage() {
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
-	  // Device device = context.get(ContextConstants.DEVICE); // comenting hte line as Device context is not used
+		// Device device = context.get(ContextConstants.DEVICE); // comenting hte line as Device context is not used
 		// String deviceNumber = device.getDeviceNumber();
 		String deviceNumber = "5877656209771912";
 		String arn = transactionWorkflow.getARN(deviceNumber, ts);
 		context.put(ConstantData.ARN_NUMBER, arn);
 		logger.info("ARN for device transactions = {} ", arn);
 	}
-	
+
 	//Win SCP step
 	@Given("user update folder permission through WinSCP for $type folder")
 	@When("user update folder permission through WinSCP for $type folder")
@@ -516,7 +516,7 @@ public class TransactionSteps {
 		else if(type.equalsIgnoreCase(PIN_PRODUCTION))
 			transactionWorkflow.setFolderPermisson(provider.getString(PIN_PRODUCTION_FOLDER));
 		else if(type.equalsIgnoreCase(IPMINCOMING))
-		transactionWorkflow.setFolderPermisson(provider.getString(IPM_INCOMING));
+			transactionWorkflow.setFolderPermisson(provider.getString(IPM_INCOMING));
 		transactionWorkflow.closeWinSCP();
 	}
 }

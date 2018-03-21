@@ -136,7 +136,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	@Autowired
 	private LinuxBox linuxbox ;
-	
+
 	@Value("${linux.host.name}")
 	private String hostName;
 
@@ -1701,7 +1701,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		browserMinimize();
 		startWiniumDriverWithApplication(setWinSCPAsApplication());
 	}
-	
+
 	public void loginToWinSCP(){
 		try {
 			winiumClickOperation("Session");
@@ -1727,8 +1727,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		try {
 			String folderName = (folderPath+fName).substring((folderPath+fName).lastIndexOf("/")+1);
 			Actions action = new Actions(winiumDriver);
-			waitForExepectedCondition(username);
-			//wait(20000);
+			wait(20000);
 			action.moveToElement(winiumDriver.findElement(By.name("Rights"))).moveByOffset(0,-30).doubleClick().build().perform();
 			wait(3000);
 			setText((folderPath+fName).replace(folderName,""));  //Folder Path
@@ -1754,8 +1753,5 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(2000);
 		winiumClickOperation("OK");
 	}
-	
-	private ExpectedCondition<Boolean> waitForNewWindow(String title) {
-		return ExpectedConditions.titleContains(title);
-	}
+
 }
