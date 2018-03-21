@@ -105,6 +105,7 @@ public class TransactionFeePlan {
 		txnFee.setMaxTxnRate(provider.getString(MAX_TXN_RATE));
 		txnFee.setFixedRateFee(provider.getString(FIXED_RATE_FEE));
 		txnFee.setFixedTxnFees(provider.getString(FIXED_TXN_FEE));
+
 		return txnFee;
 	}
 

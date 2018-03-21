@@ -104,7 +104,7 @@ public class AuthorizationSearchWorkflow {
 	public List<String> checkTransactionRateFee(String deviceNumber, TransactionFeePlan txnFeePlan) {
 
 		double txnRateFee;
-		int FIXED_TRANSACTION_FEE=Integer.parseInt(txnFeePlan.getfixedTxnFees());
+		int FIXED_TRANSACTION_FEE = Integer.parseInt(txnFeePlan.getfixedTxnFees());
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		page.authCheckTransactionFee(deviceNumber);
 		List<String> myList = page.checkFixedTransactionFee();
