@@ -5,8 +5,8 @@ So that new device can be created for Credit
 
 
 Meta:
-@InstituteTestCredit
-
+@InstituteSetUpCredit
+@InstituionSetUpForAllType
 Scenario: Scenario1 - Institution parameter setup for Credit type/ Mastercard
 Meta:
 @Regression

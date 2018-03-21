@@ -33,6 +33,8 @@ public class ContextConstants {
 	public static final String DEVICE_NUMBER = "DEVICE_NUMBER";
 
 	public static final String DEVICE_BIN = "DEVICE_BIN";
+	
+	public static final String TRANSACTION_FEE_PLAN = "TRANSACTION_FEE_PLAN";
 
 	private ContextConstants() {
 	}

@@ -312,7 +312,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickWhenClickable(closeBtn);
 	}
 
-	protected void clickAddDetailsButton() {
+	public void clickAddDetailsButton() {
 		clickWhenClickable(addDetailsBtn);
 	}
 
@@ -553,7 +553,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void clickWhenClickable(MCWebElement element) {
 		SimulatorUtilities.wait(900);
-		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();		
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
 		waitForWicket();
 	}
 
@@ -606,7 +606,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickSearchButton();
 		// Pre-production batch and device production batch & Authorization Search page take little long to
 				// be completed, and do not appear in search result, hence a for loop
-		for (int l = 0; l < 50; l++) {
+		for (int l = 0; l < 21; l++) {
 			if (!waitForRow())
 				clickSearchButton();
 			else {
@@ -853,7 +853,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return ispresent;
 	}
 
-	public boolean waitforElemenet(MCWebElement ele) {
+	public boolean waitforElement(MCWebElement ele) {
 		try {
 			getFinder().waitUntil(ExpectedConditions.visibilityOf((WebElement) ele));
 			return true;
