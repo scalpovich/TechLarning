@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.NewDevicePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.workflows.MenuFlows;
@@ -15,22 +14,22 @@ public class NewDeviceFlows extends MenuFlows {
 	@Autowired
 	Navigator navigator;
 
-	public String createNewDevicePrepaid(NewDevice newDevice, Program program) {
+	public String createNewDevicePrepaid(NewDevice newDevice) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
 		NewDevicePage newDevicepage = navigator.navigateToPage(NewDevicePage.class);
 
 		newDevicepage.clickAddnewDevice();
 		newDevicepage.switchToAddNewDeviceFrame();
-		newDevicepage.selectAppliedForProduct(program);
-		newDevicepage.selectAppliedType();
-		newDevicepage.selectApplicationSubType();
+		newDevicepage.selectAppliedForProduct(newDevice);
+		newDevicepage.selectAppliedType(newDevice);
+		newDevicepage.selectApplicationSubType(newDevice);
 		newDevicepage.clickNextButton();
 		newDevicepage.GenerateBatchFrame(newDevice);
-		newDevicepage.GeneralInformationFrame();
-		newDevicepage.DeviceInformationScreen();
-		newDevicepage.ProfileScreen();
+		newDevicepage.GeneralInformationFrame(newDevice);
+		newDevicepage.DeviceInformationScreen(newDevice);
+		newDevicepage.ProfileScreen(newDevice);
 		newDevicepage.clickNextButton();
-		newDevicepage.AddressScreen();
+		newDevicepage.AddressScreen(newDevice);
 		newDevicepage.OccupationDetailsScreen();
 		newDevicepage.clickNextButton();
 		newDevicepage.clickNextButton();

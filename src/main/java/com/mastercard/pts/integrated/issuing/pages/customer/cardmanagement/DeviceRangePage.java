@@ -19,7 +19,6 @@ import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -181,27 +180,27 @@ public class DeviceRangePage extends AbstractBasePage {
 		switchToIframe(Constants.ADD_DEVICE_RANGE_FRAME);
 	}
 
-	public void selectProduct(Program program) {
+	public void selectProduct(DeviceBin issuerbin) {
 		waitForElementVisible(ProductTypeDDwn);
-		selectByVisibleText(ProductTypeDDwn, program.getProduct());
+		selectByVisibleText(ProductTypeDDwn, issuerbin.getProductType());
 	}
 
-	public void selectProgram(Program program) {
+	public void selectProgram(DeviceBin issuerbin) {
 		waitForElementVisible(ProgramDDwn);
 		if (!MapUtils.fnGetInputDataFromMap("Program").isEmpty()) {
 			selectByVisibleText(ProgramDDwn, MapUtils.fnGetInputDataFromMap("Program"));
 		} else {
-			selectByVisibleText(ProgramDDwn, program.getProgram());
+			selectByVisibleText(ProgramDDwn, issuerbin.getProgram());
 		}
 
 	}
 
-	public void selectDevicePlan(Program program) {
+	public void selectDevicePlan(DeviceBin issuerbin) {
 		waitForElementVisible(DevicePlanCodeDDwn);
 		if (!MapUtils.fnGetInputDataFromMap("DevicePlan").isEmpty()) {
 			selectByVisibleText(DevicePlanCodeDDwn, MapUtils.fnGetInputDataFromMap("DevicePlan"));
 		} else {
-			selectByVisibleText(DevicePlanCodeDDwn, program.getDevicePlanProgram());
+			selectByVisibleText(DevicePlanCodeDDwn, issuerbin.getDeviceplan());
 		}
 	}
 
@@ -297,10 +296,10 @@ public class DeviceRangePage extends AbstractBasePage {
 		}
 	}
 
-	public void addDeviceRange(Program program, DeviceBin issuerbin) {
-		selectProduct(program);
-		selectProgram(program);
-		selectDevicePlan(program);
+	public void addDeviceRange(DeviceBin issuerbin) {
+		selectProduct(issuerbin);
+		selectProgram(issuerbin);
+		selectDevicePlan(issuerbin);
 		selectIssuerBIN(issuerbin);
 		selectBranch();
 		clickAddButton();

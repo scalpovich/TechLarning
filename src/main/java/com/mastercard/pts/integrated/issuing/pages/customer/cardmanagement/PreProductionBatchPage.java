@@ -16,8 +16,6 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
@@ -129,12 +127,12 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		verifySearchButton("Search");
 	}
 
-	public void selectProduct(DeviceCreation deviceCreation) {
-		selectByText(productTypeDDwn, deviceCreation.getProduct());
+	public void selectProduct(BulkDeviceRequestbatch bulkdeviceGenBatch) {
+		selectByText(productTypeDDwn, bulkdeviceGenBatch.getProduct());
 	}
 
-	public void enterBatchNumber(NewDevice newDevice) {
-		enterValueinTextBox(batchNumberTxt, newDevice.getbatchNum());
+	public void enterBatchNumber(BulkDeviceRequestbatch bulkdeviceGenBatch) {
+		enterValueinTextBox(batchNumberTxt, bulkdeviceGenBatch.getBatchNumber());
 	}
 
 	public void enterSourceJobId(BulkDeviceRequestbatch bulkdeviceGenBatch) {
@@ -165,10 +163,9 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		clickWhenClickable(processSelectedBtn);
 	}
 
-	public void searchBulkPreProductionBatch(DeviceCreation deviceCreation, BulkDeviceRequestbatch bulkdeviceGenBatch,
-			NewDevice newDevice) {
-		selectProduct(deviceCreation);
-		enterBatchNumber(newDevice);
+	public void searchBulkPreProductionBatch(BulkDeviceRequestbatch bulkdeviceGenBatch) {
+		selectProduct(bulkdeviceGenBatch);
+		enterBatchNumber(bulkdeviceGenBatch);
 		enterSourceJobId(bulkdeviceGenBatch);
 		search();
 	}

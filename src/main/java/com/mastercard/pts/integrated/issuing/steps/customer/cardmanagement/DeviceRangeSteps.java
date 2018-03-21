@@ -28,7 +28,10 @@ public class DeviceRangeSteps {
 
 	@When("user creates a Device Range for product $product")
 	public void whenUserCreatesADeviceRangeForProductPrepaid(@Named("product") String product) {
-		devicerangeflows.addDeviceRange(program, devicebin);
+		devicebin.setProgram(program.getProgram());
+		devicebin.setDeviceplan(program.getDevicePlanProgram());
+		devicebin.setProductType(program.getProduct());
+		devicerangeflows.addDeviceRange(devicebin);
 	}
 
 	@When("Device Range Adaptive Authentication CheckBox should be $enabled")

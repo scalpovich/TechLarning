@@ -115,12 +115,4 @@ public class DeviceCreationFlows extends MenuFlows {
 
 	}
 
-	public void addNewDevice() {
-		waitForElementVisible(menusubmenuPage.getCardManagement());
-		clickMenuSubOption(menuSubMenuPage.getActivity(), menuSubMenuPage.getDeviceMenu());
-		menuSubMenuPage.getNewDevice().click();
-		newDevicePage.createNewDevice();
-
-	}
-
 }

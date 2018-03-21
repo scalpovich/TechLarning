@@ -15,7 +15,6 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
@@ -115,8 +114,8 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	}
 
-	public void selectProduct(DeviceCreation deviceCreation) {
-		selectByVisibleText(productTypeDDwn, deviceCreation.getProduct());
+	public void selectProduct(BulkDeviceRequestbatch bulkdeviceGenBatch) {
+		selectByVisibleText(productTypeDDwn, bulkdeviceGenBatch.getProduct());
 	}
 
 	public void enterBatchNumber(BulkDeviceRequestbatch bulkdeviceGenBatch) {
@@ -151,8 +150,8 @@ public class DeviceProductionPage extends AbstractBasePage {
 		clickWhenClickable(processAllBtn);
 	}
 
-	public void searchDeviceProductionBatch(DeviceCreation deviceCreation, BulkDeviceRequestbatch bulkdeviceGenBatch) {
-		selectProduct(deviceCreation);
+	public void searchDeviceProductionBatch(BulkDeviceRequestbatch bulkdeviceGenBatch) {
+		selectProduct(bulkdeviceGenBatch);
 		enterBatchNumber(bulkdeviceGenBatch);
 		search();
 	}

@@ -29,9 +29,10 @@ public class PreProductionBatchSteps {
 	public void runBulkDeviceGenerationBatch(String product) {
 		String JobId = "";
 		bulkdevicerequestbatch.BulkDeviceRequestDataProvider();
-		devicecreation.setProduct(ProductType.fromShortName(product));
+		bulkdevicerequestbatch.setProduct(ProductType.fromShortName(product));
 		bulkdevicerequestbatch.setPreProductionSourceJobid(bulkdevicerequestbatch.getJobId());
-		JobId = preproductionflows.createPreProductionBatch(devicecreation, bulkdevicerequestbatch, newDevice);
+		bulkdevicerequestbatch.setBatchNumber(newDevice.getBatchNum());
+		JobId = preproductionflows.createPreProductionBatch(bulkdevicerequestbatch);
 		bulkdevicerequestbatch.setPreProductionSourceJobid(JobId);
 	}
 

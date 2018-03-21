@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.NewDeviceFlows;
@@ -25,6 +26,9 @@ public class NewDeviceSteps {
 
 	@Autowired
 	Program program;
+
+	@Autowired
+	DevicePlan devicePlan;
 
 	@Autowired
 	NewDeviceFlows newDeviceflows;
@@ -457,9 +461,12 @@ public class NewDeviceSteps {
 	public void createNewPrepaidDevice(@Named("DeviceType") String DeviceType, @Named("product") String product,
 			@Named("CustomerType") String CustomerType) {
 		newDevice.setDeviceType(DeviceType);
-		// newDevice.setApp
 		newDevice.setCustomerType(CustomerType);
-		String devicenumber = newDeviceflows.createNewDevicePrepaid(newDevice, program);
+		newDevice.setProduct(product);
+		newDevice.setProgramForDevice(program.getProgramCode());
+		newDevice.setDevicePlanForDevice(devicePlan.getDevicePlan());
+		context.put(ContextConstants.DEVICE, newDevice);
+		String devicenumber = newDeviceflows.createNewDevicePrepaid(newDevice);
 		newDevice.setDeviceNumber(devicenumber);
 		context.put(ContextConstants.DEVICE, newDevice);
 

@@ -14,11 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Vendor;
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -42,21 +38,6 @@ public class NewDevicePage extends AbstractCardManagementPage {
 
 	@Autowired
 	MenuSubMenuPage menusubMenuPage;
-
-	@Autowired
-	Program program;
-
-	@Autowired
-	NewDevice newDevice;
-
-	@Autowired
-	DevicePlan deviceplan;
-
-	@Autowired
-	Vendor vendor;
-
-	@Autowired
-	DeviceCreation deviceCreation;
 
 	@Autowired
 	private ReadTestDataFromExcel excelTestData;
@@ -215,20 +196,20 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		switchToIframe(Constants.ADD_NEW_DEVICE_FRAME);
 	}
 
-	public void selectAppliedForProduct(Program program) {
+	public void selectAppliedForProduct(NewDevice newDevice) {
 		waitForElementVisible(AppliedForProductDDwn);
 		CustomUtils.ThreadDotSleep(1000);
-		selectByVisibleText(AppliedForProductDDwn, program.getProduct());
+		selectByVisibleText(AppliedForProductDDwn, newDevice.getProduct());
 	}
 
-	public void selectAppliedType() {
+	public void selectAppliedType(NewDevice newDevice) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(AppliedTypeDDwn);
 		CustomUtils.ThreadDotSleep(1000);
 		selectByVisibleText(AppliedTypeDDwn, newDevice.newdeviceDataProvider().getApplicationType());
 	}
 
-	public void selectApplicationSubType() {
+	public void selectApplicationSubType(NewDevice newDevice) {
 		waitForElementVisible(ApplicationSubtypeDDwn);
 		CustomUtils.ThreadDotSleep(1000);
 		selectByVisibleText(ApplicationSubtypeDDwn, newDevice.newdeviceDataProvider().getApplicationSubType());
@@ -249,7 +230,7 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		CustomUtils.ThreadDotSleep(1000);
 	}
 
-	public void selectCreateOpenBatch() {
+	public void selectCreateOpenBatch(NewDevice newDevice) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(CreateOpenBatchDDwn);
 		CustomUtils.ThreadDotSleep(1000);
@@ -263,31 +244,31 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		CustomUtils.ThreadDotSleep(3000);
 	}
 
-	public void selectCustomerType() {
+	public void selectCustomerType(NewDevice newDevice) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		CustomUtils.ThreadDotSleep(5000);
 		waitForElementVisible(CustomerTypeDDwn);
 		selectByVisibleText(CustomerTypeDDwn, newDevice.getCustomerType());
 	}
 
-	public void selectProgramCode() {
+	public void selectProgramCode(NewDevice newDevice) {
 		waitForElementVisible(ProgramCodeDDwn);
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		CustomUtils.ThreadDotSleep(1000);
-		selectByVisibleText(ProgramCodeDDwn, program.getProgramCode());
+		selectByVisibleText(ProgramCodeDDwn, newDevice.getProgramForDevice());
 	}
 
-	public void selectDeviceType() {
+	public void selectDeviceType(NewDevice newDevice) {
 		waitForElementVisible(DeviceTypeDDwn);
 		selectByVisibleText(DeviceTypeDDwn, newDevice.getDeviceType());
 	}
 
-	public void selectDevicePlan() {
+	public void selectDevicePlan(NewDevice newDevice) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(DevicePlanDDwn);
 		CustomUtils.ThreadDotSleep(1000);
 
-		selectByVisibleText(DevicePlanDDwn, deviceplan.getDevicePlan());
+		selectByVisibleText(DevicePlanDDwn, newDevice.getDevicePlanForDevice());
 	}
 
 	public void selectPhotoIndicator() {
@@ -309,39 +290,39 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		SelectDropDownByIndex(BranchCodeDDwn, 1);
 	}
 
-	public void selectTitle() {
+	public void selectTitle(NewDevice newDevice) {
 		CustomUtils.ThreadDotSleep(1000);
 		waitForElementVisible(TitleDDwn);
 		selectByVisibleText(TitleDDwn, newDevice.newdeviceDataProvider().getTitle());
 	}
 
-	public void enterFirstName() {
+	public void enterFirstName(NewDevice newDevice) {
 		enterValueinTextBox(FirstnameTxt,
 				newDevice.newdeviceDataProvider().getFirstName() + CustomUtils.randomNumbers(3));
 	}
 
-	public void enterMiddleName1() {
+	public void enterMiddleName1(NewDevice newDevice) {
 		if (newDevice.newdeviceDataProvider().getFirstName() != null)
 			enterValueinTextBox(MiddleName1Txt, newDevice.newdeviceDataProvider().getMiddleName1());
 	}
 
-	public void enterMiddleName2() {
+	public void enterMiddleName2(NewDevice newDevice) {
 		if (newDevice.newdeviceDataProvider().getFirstName() != null)
 			enterValueinTextBox(MiddleName2Txt,
 					newDevice.newdeviceDataProvider().getMiddleName2() + CustomUtils.randomNumbers(3));
 	}
 
-	public void enterLastName() {
+	public void enterLastName(NewDevice newDevice) {
 		enterValueinTextBox(LastnameTxt,
 				newDevice.newdeviceDataProvider().getLastName() + CustomUtils.randomNumbers(3));
 	}
 
-	public void selectGender() {
+	public void selectGender(NewDevice newDevice) {
 		waitForElementVisible(GenderDDwn);
 		selectByVisibleText(GenderDDwn, newDevice.newdeviceDataProvider().getGender());
 	}
 
-	public void selectNationality() {
+	public void selectNationality(NewDevice newDevice) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		CustomUtils.ThreadDotSleep(1000);
 		selectByVisibleText(NationalityDDwn, newDevice.newdeviceDataProvider().getNationality());
@@ -351,7 +332,7 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		WebElementUtils.pickDate(BirthDateCalendar, LocalDate.now().minusYears(RandomUtils.nextLong(20, 50)));
 	}
 
-	public void selectMaritalStatus() {
+	public void selectMaritalStatus(NewDevice newDevice) {
 		CustomUtils.ThreadDotSleep(1000);
 		selectByVisibleText(MaritalStatusDDwn, newDevice.newdeviceDataProvider().getMaritalStatus());
 	}
@@ -370,20 +351,20 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		}
 	}
 
-	public void selectPreferedLanguage() {
+	public void selectPreferedLanguage(NewDevice newDevice) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		CustomUtils.ThreadDotSleep(1000);
 		selectByVisibleText(PreferredLangDDwn, newDevice.newdeviceDataProvider().getPreferedLanguage());
 	}
 
-	public void enterRegisteredEmail() {
+	public void enterRegisteredEmail(NewDevice newDevice) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(RegisteredEmailIDDDwn);
 		CustomUtils.ThreadDotSleep(1000);
 		enterText(RegisteredEmailIDDDwn, newDevice.newdeviceDataProvider().getEmail());
 	}
 
-	public void enterRegisteredMobile() {
+	public void enterRegisteredMobile(NewDevice newDevice) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		if (RegisteredMobileDDDwn.isEnabled()) {
 			waitForElementVisible(RegisteredMobileDDDwn);
@@ -393,31 +374,31 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		}
 	}
 
-	public void enterAddressLine1() {
+	public void enterAddressLine1(NewDevice newDevice) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		enterValueinTextBox(AddressLine1Txt, newDevice.newdeviceDataProvider().getAddressLine1());
 	}
 
-	public void enterAddressLine2() {
+	public void enterAddressLine2(NewDevice newDevice) {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		enterValueinTextBox(AddressLine2Txt, newDevice.newdeviceDataProvider().getAddressLine2());
 	}
 
-	public void enterAddressLine3() {
+	public void enterAddressLine3(NewDevice newDevice) {
 		enterValueinTextBox(AddressLine3Txt, newDevice.newdeviceDataProvider().getAddressLine3());
 	}
 
-	public void enterAddressLine4() {
+	public void enterAddressLine4(NewDevice newDevice) {
 		enterValueinTextBox(AddressLine4Txt, newDevice.newdeviceDataProvider().getAddressLine4());
 	}
 
-	public void selectCountry() {
+	public void selectCountry(NewDevice newDevice) {
 
 		waitForElementVisible(CountryDDwn);
 		selectByVisibleText(CountryDDwn, newDevice.newdeviceDataProvider().getCountry());
 	}
 
-	public void enterPostalCode() {
+	public void enterPostalCode(NewDevice newDevice) {
 
 		waitForElementVisible(PostalCodeTxt);
 		CustomUtils.ThreadDotSleep(1000);
@@ -443,107 +424,68 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		enterValueinTextBox(LegalIDTxtDDwn, "JKX" + CustomUtils.randomNumbers(6));
 	}
 
-	public String createNewDevice() {
-		waitForElementVisible(menusubMenuPage.getNewDevice());
-		retryUntilNoErrors(() -> menusubMenuPage.getNewDevice().click());
-		ClickButton(AddNewDevice);
-		switchToIframe(Constants.ADD_NEW_DEVICE_FRAME);
-		waitForElementVisible(AppliedForProductDDwn);
-		CustomUtils.ThreadDotSleep(1000);
-		SelectDropDownByText(AppliedForProductDDwn, MapUtils.fnGetInputDataFromMap("ProductType"));
-		addWicketAjaxListeners(getFinder().getWebDriver());
-		waitForElementVisible(AppliedTypeDDwn);
-		CustomUtils.ThreadDotSleep(1000);
-		SelectDropDownByText(AppliedTypeDDwn, MapUtils.fnGetInputDataFromMap("ApplicationType"));
-		addWicketAjaxListeners(getFinder().getWebDriver());
-		waitForElementVisible(ApplicationSubtypeDDwn);
-		CustomUtils.ThreadDotSleep(1000);
-		SelectDropDownByText(ApplicationSubtypeDDwn, MapUtils.fnGetInputDataFromMap("ApplicationSubType"));
-		addWicketAjaxListeners(getFinder().getWebDriver());
-		ClickButton(NextBtn);
-		CustomUtils.ThreadDotSleep(1000);
-		GeneralInformationFrame();
-		DeviceInformationScreen();
-		ProfileScreen();
-		AddressScreen();
-		OccupationDetailsScreen();
-		addWicketAjaxListeners(getFinder().getWebDriver());
-		ClickButton(NextBtn);
-		addWicketAjaxListeners(getFinder().getWebDriver());
-		ClickButton(NextBtn);
-		addWicketAjaxListeners(getFinder().getWebDriver());
-		ClickButton(NextBtn);
-		addWicketAjaxListeners(getFinder().getWebDriver());
-		ClickButton(NextBtn);
-		addWicketAjaxListeners(getFinder().getWebDriver());
-		ClickButton(FinishBtn);
-		SwitchToDefaultFrame();
-		newDevice.getDeviceNumber();
-		return null;
-	}
-
 	public void GenerateBatchFrame(NewDevice newDevice) {
-		selectCreateOpenBatch();
+		selectCreateOpenBatch(newDevice);
 		CustomUtils.ThreadDotSleep(3000);
 		clickGenerateBatch();
-		newDevice.setbatchNum(batchNumberTxt.getText());
-		logger.info(" *********** Batch number *********** " + newDevice.getbatchNum());
+		newDevice.setBatchNum(batchNumberTxt.getText());
+		logger.info(" *********** Batch number *********** " + newDevice.getBatchNum());
 		CustomUtils.ThreadDotSleep(5000);
 		clickNextButton();
 		CustomUtils.ThreadDotSleep(3000);
 
 	}
 
-	public void GeneralInformationFrame() {
+	public void GeneralInformationFrame(NewDevice newDevice) {
 		CustomUtils.ThreadDotSleep(1000);
-		selectCustomerType();
-		selectProgramCode();
+		selectCustomerType(newDevice);
+		selectProgramCode(newDevice);
 		clickNextButton();
 		CustomUtils.ThreadDotSleep(1000);
 
 	}
 
-	public void DeviceInformationScreen() {
-		selectDeviceType();
-		selectDevicePlan();
+	public void DeviceInformationScreen(NewDevice newDevice) {
+		selectDeviceType(newDevice);
+		selectDevicePlan(newDevice);
 		selectPhotoIndicator();
 		clickNextButton();
 		CustomUtils.ThreadDotSleep(1000);
 
 	}
 
-	public void ProfileScreen() {
+	public void ProfileScreen(NewDevice newDevice) {
 		// VerifyBusinessmandatoryFields("BusinessMandatoryFields.xlsx");
 		selectCorporateClientCode();
 		selectBranch();
-		selectTitle();
-		enterFirstName();
+		selectTitle(newDevice);
+		enterFirstName(newDevice);
 		// enterMiddleName1();
-		enterMiddleName2();
-		enterLastName();
-		selectGender();
-		selectNationality();
+		enterMiddleName2(newDevice);
+		enterLastName(newDevice);
+		selectGender(newDevice);
+		selectNationality(newDevice);
 		selectBirthDate();
-		selectMaritalStatus();
+		selectMaritalStatus(newDevice);
 		enterAccountNumber();
 		selectAccounType();
-		selectPreferedLanguage();
-		enterRegisteredEmail();
-		enterRegisteredMobile();
+		selectPreferedLanguage(newDevice);
+		enterRegisteredEmail(newDevice);
+		enterRegisteredMobile(newDevice);
 		CustomUtils.ThreadDotSleep(1000);
 		clickNextButton();
 		CustomUtils.ThreadDotSleep(1000);
 
 	}
 
-	public void AddressScreen() {
+	public void AddressScreen(NewDevice newDevice) {
 		// VerifyBusinessmandatoryFields("BusinessMandatoryFields.xlsx");
-		enterAddressLine1();
-		enterAddressLine2();
-		enterAddressLine3();
-		enterAddressLine4();
-		selectCountry();
-		enterPostalCode();
+		enterAddressLine1(newDevice);
+		enterAddressLine2(newDevice);
+		enterAddressLine3(newDevice);
+		enterAddressLine4(newDevice);
+		selectCountry(newDevice);
+		enterPostalCode(newDevice);
 		clickCopyAddress();
 		clickNextButton();
 		CustomUtils.ThreadDotSleep(1000);

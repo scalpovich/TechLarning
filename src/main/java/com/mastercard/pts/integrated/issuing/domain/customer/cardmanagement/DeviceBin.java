@@ -16,9 +16,26 @@ public class DeviceBin {
 	private String issuerBin;
 	private String binType;
 	private String remarks;
-	
-	public DeviceBin(String interchange, String productType, String issuerBin,
-			String binType, String remarks) {
+	private String program;
+	private String deviceplan;
+
+	public String getProgram() {
+		return program;
+	}
+
+	public void setProgram(String program) {
+		this.program = program;
+	}
+
+	public String getDeviceplan() {
+		return deviceplan;
+	}
+
+	public void setDeviceplan(String deviceplan) {
+		this.deviceplan = deviceplan;
+	}
+
+	public DeviceBin(String interchange, String productType, String issuerBin, String binType, String remarks) {
 		super();
 		this.interchange = interchange;
 		this.productType = productType;
@@ -26,48 +43,59 @@ public class DeviceBin {
 		this.binType = binType;
 		this.remarks = remarks;
 	}
+
 	public DeviceBin() {
 		super();
 	}
-	
+
 	public String getInterchange() {
 		return interchange;
 	}
+
 	public void setInterchange(String interchange) {
 		this.interchange = interchange;
 	}
+
 	public String getProductType() {
 		return productType;
 	}
+
 	public void setProductType(String productType) {
 		this.productType = productType;
 	}
+
 	public String getIssuerBin() {
 		return issuerBin;
 	}
+
 	public void setIssuerBin(String issuerBin) {
 		this.issuerBin = issuerBin;
 	}
+
 	public String getBinType() {
 		return binType;
 	}
+
 	public void setBinType(String binType) {
 		this.binType = binType;
 	}
+
 	public String getRemarks() {
 		return remarks;
 	}
+
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+
 	public void devicebinDataProvider() {
 		setRemarks(CustomUtils.randomAlphaNumeric(5));
 
 	}
 
-	public static List<DeviceBin> createWithProvider(DataProvider provider)
-	{
-		return provider.getData(new TypeReference<List<DeviceBin>>() {}, "DeviceBin");
+	public static List<DeviceBin> createWithProvider(DataProvider provider) {
+		return provider.getData(new TypeReference<List<DeviceBin>>() {
+		}, "DeviceBin");
 	}
-	
+
 }

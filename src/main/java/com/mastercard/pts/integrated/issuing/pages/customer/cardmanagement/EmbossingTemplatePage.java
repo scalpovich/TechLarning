@@ -300,7 +300,6 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 				break;
 			}
 			if (FieldToBeAdded.contains(Constants.Filler_String)) {
-				waitForLoaderToDisappear();
 				enterValueinTextBox(fillerValueTxt, enterFilter(Integer.valueOf(LengthOfField)));
 				clickSaveButton();
 			}
