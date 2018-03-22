@@ -22,16 +22,94 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+class CSVData {
+
+	private List<String> headerRow;
+	private List<List<String>> dataRows;
+
+	public CSVData(List<String> headers, List<List<String>> data) {
+		super();
+		this.headerRow = headers;
+		this.dataRows = data;
+	}
+
+	public List<String> getHeaderRow() {
+		return headerRow;
+	}
+
+	public List<List<String>> getDataRows() {
+		return dataRows;
+	}
+
+}
+
 public class FileConverter {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileConverter.class);
-	private String[] listOfEnvs = { "demo" };
 	private static final String CSV_EXTN = ".csv";
 
-	private void echoAsCSV(Sheet sheet, String env) {
-		// for vertical data
+	private String createDirs(Sheet sheet, String env) {
+		File dir = new File("C" + ":" + File.separatorChar + "Temp" + File.separatorChar + env);
+		dir.mkdirs();
+
+		return (dir.getAbsolutePath() + File.separatorChar + sheet.getSheetName() + CSV_EXTN);
+	}
+
+	private void convertXlsToCsv(Workbook wb, String env) {
+		for (int i = 0; i < wb.getNumberOfSheets(); i++) {
+			LOGGER.info("sheetNo -> {} sheetName -> {}", i + 1, wb.getSheetAt(i).getSheetName());
+			Sheet sheet = wb.getSheetAt(i);
+			String fileAbsPath = createDirs(sheet, env);
+			CSVData csv = convertColumnDataInXls(sheet);
+			writeToCSV(csv, fileAbsPath);
+		}
+		LOGGER.info("*** Total {} sheets converted for '{}' environment ***", wb.getNumberOfSheets(), env);
+	}
+
+	private void convertXlsxToCsv(Workbook wb, String env) {
+		for (int i = 0; i < wb.getNumberOfSheets(); i++) {
+			LOGGER.info("sheetNo -> {} sheetName -> {}", i + 1, wb.getSheetAt(i).getSheetName());
+			Sheet sheet = wb.getSheetAt(i);
+			String fileAbsPath = createDirs(sheet, env);
+			CSVData csv = convertRowDataInXlsx(sheet);
+			writeToCSV(csv, fileAbsPath);
+		}
+		LOGGER.info("*** Total {} sheets converted for '{}' environment ***", wb.getNumberOfSheets(), env);
+	}
+
+	private CSVData convertRowDataInXlsx(Sheet sheet) {
+		int startOfDataRow = 1;
+		int headerRowNo = 0;
+		List<String> headers = new ArrayList<>();
+		List<List<String>> dataRows = new ArrayList<>();
+		DataFormatter dataFormatter = new DataFormatter();
+
+		Row headerRow = sheet.getRow(headerRowNo);
+		if (headerRow != null) {
+			int colEnd = headerRow.getLastCellNum();
+			for (int i = 0; i < colEnd; i++) {
+				headers.add(dataFormatter.formatCellValue(headerRow.getCell(i)));
+			}
+
+			for (int i = startOfDataRow; i <= sheet.getLastRowNum(); i++) {
+				Row row = sheet.getRow(i);
+				List<String> dataRow = new ArrayList<>();
+				for (int j = 0; j < colEnd; j++) {
+					if (row != null) {
+						dataRow.add(dataFormatter.formatCellValue(row.getCell(j)));
+					}
+				}
+				dataRows.add(dataRow);
+			}
+		}
+
+		return new CSVData(headers, dataRows);
+	}
+
+	private CSVData convertColumnDataInXls(Sheet sheet) {
 		int startOfDataRow = 1;
 		List<String> headers = new ArrayList<>();
-		List<String> data = new ArrayList<>();
+		List<String> dataRow = new ArrayList<>();
+		List<List<String>> dataRows = new ArrayList<>();
 		DataFormatter dataFormatter = new DataFormatter();
 		for (int i = startOfDataRow; i <= sheet.getLastRowNum(); i++) {
 			Row row = sheet.getRow(i);
@@ -40,47 +118,55 @@ public class FileConverter {
 				String dataCellVal = dataFormatter.formatCellValue(row.getCell(1));
 				if (!headerCellVal.trim().isEmpty()) {
 					headers.add(headerCellVal);
-					data.add(dataCellVal);
+					dataRow.add(dataCellVal);
 				}
 			}
 		}
+		dataRows.add(dataRow);
 
-		LOGGER.info("{} {}", headers.size(), headers.toString());
-		LOGGER.info("{} {}", data.size(), data.toString());
-
-		File dir = new File("C" + ":" + File.separatorChar + "Temp" + File.separatorChar + env);
-		dir.mkdirs();
-		String fileAbsPath = dir.getAbsolutePath() + File.separatorChar + sheet.getSheetName() + CSV_EXTN;
-		writeToCSV(headers, data, fileAbsPath);
+		return new CSVData(headers, dataRows);
 	}
 
-	private void writeToCSV(List<String> headers, List<String> data, String filePath) {
+	private void writeToCSV(CSVData csv, String filePath) {
 		try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(filePath));
-				CSVPrinter printer = CSVFormat.EXCEL.withHeader(headers.toArray(new String[0])).print(writer);) {
-			printer.printRecord(data);
-			printer.flush();
-			LOGGER.info("CSV file created at: {}", filePath);
+				CSVPrinter printer = CSVFormat.EXCEL.withHeader(csv.getHeaderRow().toArray(new String[0]))
+						.print(writer);) {
+			printRowsInCSV(csv.getDataRows(), printer);
+			LOGGER.info("CSV file created at -> {}", filePath);
 		} catch (IOException e) {
-			LOGGER.error("IOException while creating CSV file at: {}", filePath, e);
+			LOGGER.error("IOException occurred while creating CSV file at -> {}", filePath, e);
 		}
 	}
 
-	public void convertExcelToCSV() throws IOException, InvalidFormatException {
-		for (String env : listOfEnvs) {
-			try (InputStream in = new FileInputStream(
-					String.format("./src/main/resources/config/%s/Data/TestData.xls", env));
-					Workbook wb = WorkbookFactory.create(in)) {
-				for (int i = 0; i < wb.getNumberOfSheets(); i++) {
-					LOGGER.info("sheetNo> {} sheetName> {}", i + 1, wb.getSheetAt(i).getSheetName());
-					echoAsCSV(wb.getSheetAt(i), env);
-				}
+	private void printRowsInCSV(List<List<String>> dataRows, CSVPrinter printer) {
+		dataRows.forEach(row -> {
+			try {
+				printer.printRecord(row);
+				printer.flush();
+			} catch (IOException e) {
+				LOGGER.error("IOException occurred while printing row in CSV file -> {}", row);
 			}
-		}
+		});
 	}
 
 	@Test
-	public void test() throws InvalidFormatException, IOException {
-		convertExcelToCSV();
+	public void convertExcelToCsv() throws IOException, InvalidFormatException {
+		String[] listOfEnvs = { "demo" };
+		String[] dataFiles = { "Data/TestData.xls", "TestData/TestData.xlsx" };
+		// Data/TestData.xls or TestData/TestData.xlsx
+		for (String env : listOfEnvs) {
+			for (String dataFile : dataFiles) {
+				try (InputStream in = new FileInputStream(
+						String.format("./src/main/resources/config/%s/%s", env, dataFile));
+						Workbook wb = WorkbookFactory.create(in)) {
+					if (dataFile.endsWith(".xls")) {
+						convertXlsToCsv(wb, env);
+					} else {
+						convertXlsxToCsv(wb, env);
+					}
+				}
+			}
+		}
 	}
 
 }
