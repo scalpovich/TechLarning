@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -26,8 +27,9 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(AuthorizationSearchPage.class);
 
 	List<String> txnFeesFields = new ArrayList<>();
-	
-	
+
+	private String billingAmountForMarkUpFee;
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=cardNumber]")
 	private MCWebElement cardNumber;
 
@@ -69,7 +71,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='tab_content']//span[contains(text(),'Markup Fee')]/../following-sibling::td//span[@class='labeltextr']")
 	private MCWebElement markupFeeTax;
-	
+
 	public void verifyUiOperationStatus() {
 		logger.info("Authorization Search");
 		verifySearchButton("Search");
@@ -91,6 +93,22 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		viewFirstRecord();
 	}
 
+	public void authCheckTransactionFee(String deviceNumber) {
+		inputDeviceNumber(deviceNumber);
+		inputFromDate(LocalDate.now().minusDays(1));
+		inputToDate(LocalDate.now());
+		waitAndSearchForRecordToAppear();
+		viewDeviceDetails();
+	}
+
+	public void authCheckMarkUpFee(String deviceNumber) {
+		inputDeviceNumber(deviceNumber);
+		inputFromDate(LocalDate.now().minusDays(1));
+		inputToDate(LocalDate.now());
+		waitAndSearchForRecordToAppear();
+		viewDeviceDetails();
+	}
+
 	public List<String> checkFixedTransactionFee() {
 		runWithinPopup("View Authorization", () -> {
 			txnFeesFields.add(fixedTransactionFee.getText());
@@ -105,9 +123,9 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	public List<String> checkMarkupFee() {
 		List<String> markupFeeDetails = new ArrayList<>();
 		runWithinPopup("View Authorization", () -> {
-			txnFeesFields.add(billingAmount.getText());
-			txnFeesFields.add(markupFee.getText());
-			txnFeesFields.add(markupFeeTax.getText());
+			markupFeeDetails.add(billingAmount.getText());
+			markupFeeDetails.add(markupFee.getText());
+			markupFeeDetails.add(markupFeeTax.getText());
 			clickCloseButton();
 		});
 		return markupFeeDetails;

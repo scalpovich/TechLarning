@@ -114,102 +114,102 @@ public class MasterDerivationKeysPage extends AbstractBasePage {
 	}
 
 	public void selectInterchange(MasterDerivationKeys mdkKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(interchangeNetworkDDwn);
 		selectByVisibleText(interchangeNetworkDDwn, mdkKeys.getInterchange());
 	}
 
 	public void fillBinLow(MasterDerivationKeys mdkKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(binLowTxt);
 		enterText(binLowTxt, mdkKeys.getBinLow());
 	}
 
 	public void fillBinHigh(MasterDerivationKeys mdkKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(binHighTxt);
 		enterText(binHighTxt, mdkKeys.getBinHigh());
 	}
 
 	public void selectStatus(MasterDerivationKeys mdkKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(statusInputDDwn);
 		SelectDropDownByText(statusInputDDwn, mdkKeys.getStatus());
 	}
 
-	public void selectKeyType(MasterDerivationKeys mdkKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+	public void selectKeyType(MasterDerivationKeys mdkKeys) { 
+		waitforElement(keyTypeDDwn);
 		SelectDropDownByText(keyTypeDDwn, mdkKeys.getKeyType());
 	}
 
 	public void fillMDKEncryptedUnderLMK(MasterDerivationKeys mdkKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(mdkEncryptedUnderLMKTxt);
 		enterText(mdkEncryptedUnderLMKTxt, mdkKeys.getMDKEncryptedUnderLMK());
 	}
 
 	public void fillConfirmMDKEncryptedUnderLMK(MasterDerivationKeys mdkKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(confirmMDKTxt);
 		enterText(confirmMDKTxt, mdkKeys.getConfirmMDK());
 	}
 
 	public void fillMDKKeyCheckvalue(MasterDerivationKeys mdkKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(mdkKeyCheckValueTxt);
 		enterText(mdkKeyCheckValueTxt, mdkKeys.getMDKKeyCheckValue());
 	}
 
 	public void fillConfirmMDKKeyCheckvalue(MasterDerivationKeys mdkKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(confirmMDKKeyCheckValueTxt);
 		enterText(confirmMDKKeyCheckValueTxt, mdkKeys.getConfirmMDKKeyCheckValue());
 	}
 
 	public void selectSMIExists() {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(smiExistsChkBxTxt);
 		ClickCheckBox(smiExistsChkBxTxt, true);
 	}
 
 	public void fillSMIEncryptedUnderLMK(MasterDerivationKeys mdkKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(smiEncryptedUnderLMKTxt);	 
 		enterText(smiEncryptedUnderLMKTxt, mdkKeys.getSMIEncryptedUnderLMKTxt());
 	}
 
 	public void fillConfirmSMI(MasterDerivationKeys mdkKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(confirmSMITxt);
 		enterText(confirmSMITxt, mdkKeys.getConfirmSMI());
 	}
 
 	public void fillSMIkeyCheckvalue(MasterDerivationKeys mdkKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(sMIKeyCheckvalueTxt);
 		enterText(sMIKeyCheckvalueTxt, mdkKeys.getSMIKeyCheckvalue());
 	}
 
 	public void fillConfirmSMIkeyCheckvalue(MasterDerivationKeys mdkKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(confirmSMIKeyCheckvalueTxt);
 		enterText(confirmSMIKeyCheckvalueTxt, mdkKeys.getConfirmSMIKeyCheckvalue());
 	}
 
 	public void selectSMCExists() {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(smcExistsChkBx);
 		ClickCheckBox(smcExistsChkBx, true);
 	}
 
 	public void fillSMCEncryptedUnderLMK(MasterDerivationKeys mdkKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(smcEncryptedUnderLMKTxt);
 		enterText(smcEncryptedUnderLMKTxt, mdkKeys.getSMCEncryptedUnderLMKTxt());
 	}
 
 	public void fillConfirmSMC(MasterDerivationKeys mdkKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(confirmSMCTxt);
 		enterText(confirmSMCTxt, mdkKeys.getConfirmSMC());
 	}
 
 	public void fillSMCkeyCheckvalue(MasterDerivationKeys mdkKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(smcKeyCheckvalueTxt);
 		enterText(smcKeyCheckvalueTxt, mdkKeys.getSMCKeyCheckvalue());
 	}
 
 	public void fillConfirmSMCkeyCheckvalue(MasterDerivationKeys mdkKeys) {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(confirmSMCKeyCheckvalue);
 		enterText(confirmSMCKeyCheckvalue, mdkKeys.getConfirmSMCKeyCheckvalue());
 	}
 
 	public void clickSaveBtn() {
-		addWicketAjaxListeners(getFinder().getWebDriver());
+		waitforElement(mdkKeyCheckValueTxt);
 		ClickButton(saveBtn);
 	}
 
