@@ -23,7 +23,7 @@ public class CSVDataLoader implements DataLoader {
 	private static final Logger LOGGER = LoggerFactory.getLogger(CSVDataLoader.class);
 	private static final String FILE_EXTN = ".csv";
 
-	@Value("./src/main/resources/config/${env}/TestData/")
+	@Value("./src/main/resources/config/${env}/Data/")
 	private String csvPath;
 
 	@Override
