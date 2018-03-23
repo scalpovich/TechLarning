@@ -52,7 +52,7 @@ public class BatchSteps {
 		MiscUtils.reportToConsole("******** Embossing File Start ***** " );
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		try {
-			File batchFile =linuxBox.downloadSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE");		
+			File batchFile =linuxBox.downloadSCPByPartialFileName("P01CCMC09V", tempDirectory.toString(), "DEVICE");		
 					
 			String[] fileData = LinuxUtils.getCardNumberAndExpiryDate(batchFile);
 					
@@ -83,9 +83,9 @@ public class BatchSteps {
 			MiscUtils.reportToConsole("******** Embossing File Completed ***** " );
 
 		} catch (Exception e) {
-//			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
-//			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
-//			throw MiscUtils.propagate(e);
+			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
+			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
+			throw MiscUtils.propagate(e);
 		}
 	}
 	
