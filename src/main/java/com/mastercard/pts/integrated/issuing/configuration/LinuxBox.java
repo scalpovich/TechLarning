@@ -28,6 +28,9 @@ public class LinuxBox implements RemoteConnectionDetails {
 	@Value("${linux.user.name}")
 	private String userName;
 
+	@Value("${linux.folder.path}")
+	private String folderPath;
+	
 	private String password;
 
 	public File download(String remoteSource, String localDestination) {
@@ -41,9 +44,20 @@ public class LinuxBox implements RemoteConnectionDetails {
 	}
 
 	
+	public void downloadSCP(String remoteSource, String localDestination) {
+		logger.info("Download {} -> {}", remoteSource, localDestination);
+		try {
+			LinuxUtils.downloadScp(this, remoteSource, localDestination);
+		} catch (Exception e) {
+			MiscUtils.propagate(e);
+		}		
+	}
 	
 	public File downloadByLookUpForPartialFileName(String lokupForFile, String localDestination, String whatAreWeLookingFile) {
-		logger.info("Download {} -> {} at folder", lokupForFile, localDestination);
+		
+		
+		logger.info("Download {} -> {} at folder", lokupForFile, localDestination);	
+			
 		String fileName = null;
 		String[] temp = null;
 		try {
@@ -63,6 +77,32 @@ public class LinuxBox implements RemoteConnectionDetails {
 		}
 		return null;
 	}
+	
+	public String ListFile(String path,String lokupForFile)
+	{
+	File folder = new File(path);
+	File[] listOfFiles = folder.listFiles();
+
+	    for (int i = 0; i < listOfFiles.length; i++) {
+	      if (listOfFiles[i].isFile()) {
+	    	if(listOfFiles[i].getName().contains(lokupForFile))
+	    		return listOfFiles[i].getName();
+	      } else if (listOfFiles[i].isDirectory()) {
+	        System.out.println("Directory " + listOfFiles[i].getName());
+	      }
+	    }
+	    
+	    return null;
+	}
+	
+	public File downloadSCPByPartialFileName(String lokupForFile, String localDestination, String whatAreWeLookingFile) {		
+		
+		logger.info("Download {} -> {} at folder", lokupForFile, localDestination);			
+		downloadSCP(folderPath+"*"+whatAreWeLookingFile+"*//proc//*"+lokupForFile+"*", localDestination);	
+		logger.info(Paths.get(localDestination).resolve(Paths.get(localDestination+"\\"+ListFile(localDestination,lokupForFile)).getFileName()).toFile().getAbsolutePath());
+		return Paths.get(localDestination).resolve(Paths.get(localDestination+"\\"+ListFile(localDestination,lokupForFile)).getFileName()).toFile();		
+	}
+
 
 	public void upload(String localSource, String remoteDir) {
 		logger.info("Upload {} -> {}", localSource);

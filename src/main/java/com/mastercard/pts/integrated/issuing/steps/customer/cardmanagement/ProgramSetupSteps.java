@@ -86,8 +86,6 @@ public class ProgramSetupSteps {
 
 	private TransactionPlan transactionPlan;
 	
-	private static final String TRANSACTION_FEE_PLAN = "TRANSACTION_FEE_PLAN";	
-
 	private TransactionLimitPlan transactionLimitPlan;
 
 	private WalletPlan walletPlan;
@@ -121,6 +119,8 @@ public class ProgramSetupSteps {
 	private static final String ISSUER_BIN_FOR_DEVICE2 = "ISSUER_BIN_FOR_DEVICE2";
 	
 	private static final String INTERCHANGE = "INTERCHANGE";
+
+	private static final String TRANSACTION_FEE_PLAN = "TRANSACTION_FEE_PLAN";
 	
 	@When("prepaid $deviceType device is available with balance amount")
 	@Given("prepaid $deviceType device is available with balance amount")
@@ -594,7 +594,7 @@ public class ProgramSetupSteps {
 		devicePlan.setProductType(ProductType.fromShortName(productType));
 		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
 		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
-		devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
+		//devicePlan.setTransactionFeePlan(devicePlan.getTransactionFeePlan());
 		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());

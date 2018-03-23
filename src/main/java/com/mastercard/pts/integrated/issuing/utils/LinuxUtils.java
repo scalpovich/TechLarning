@@ -203,22 +203,22 @@ public abstract class LinuxUtils {
 	}
 
 	
-	public static void downloadScp(RemoteConnectionDetails connectiondetails, String localsource,
-			String remoteDir) throws JSchException, InterruptedException  {
+	public static void downloadScp(RemoteConnectionDetails connectiondetails, String remoteDir,
+			String localsource) throws JSchException, InterruptedException  {
 
 		Scp scp = new Scp();
 		int portSSH = connectiondetails.getPort();
 		String serverSSH = connectiondetails.getHostName();
 		String userSSH = connectiondetails.getUserName(); 
 		String pswdSSH = connectiondetails.getPassword();
-
-		scp.setPort( portSSH );
-		scp.setRemoteFile(remoteDir);
+		logger.info("localsource "+localsource+" remoteDir: "+remoteDir+" ");
+		scp.setPort( portSSH );			
+		scp.setRemoteFile(userSSH + ":" + pswdSSH + "@" + serverSSH + ":" + remoteDir);
 		scp.setLocalTodir(localsource);
-		scp.setTodir( userSSH + ":" + pswdSSH + "@" + serverSSH + ":" + remoteDir );
+		//scp.setTodir( userSSH + ":" + pswdSSH + "@" + serverSSH + ":" + remoteDir );
 		scp.setProject( new Project() );
 		scp.setTrust( true );
-		scp.execute();
+		scp.execute();	
 		Thread.sleep(60000); // long sleep as file permission cron job runs every minute
 	}
 	
