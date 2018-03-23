@@ -511,12 +511,13 @@ public class TransactionSteps {
 	public void connectionToApplicationIsEstablished(String type){
 		transactionWorkflow.launchWinSCP();
 		transactionWorkflow.loginToWinSCP();
-		if(type.equalsIgnoreCase(DEVICE_PRODUCTION))
+		/*if(type.equalsIgnoreCase(DEVICE_PRODUCTION))
 			transactionWorkflow.setFolderPermisson(provider.getString(DEVICE_PRODUCTION_FOLDER));
 		else if(type.equalsIgnoreCase(PIN_PRODUCTION))
 			transactionWorkflow.setFolderPermisson(provider.getString(PIN_PRODUCTION_FOLDER));
 		else if(type.equalsIgnoreCase(IPMINCOMING))
-			transactionWorkflow.setFolderPermisson(provider.getString(IPM_INCOMING));
+			transactionWorkflow.setFolderPermisson(provider.getString(IPM_INCOMING));*/
+		
 		transactionWorkflow.closeWinSCP();
 	}
 }
