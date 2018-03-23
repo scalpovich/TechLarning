@@ -13,6 +13,7 @@ import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -22,30 +23,16 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class CSVData {
-
-	private List<String> headerRow;
-	private List<List<String>> dataRows;
-
-	public CSVData(List<String> headers, List<List<String>> data) {
-		super();
-		this.headerRow = headers;
-		this.dataRows = data;
-	}
-
-	public List<String> getHeaderRow() {
-		return headerRow;
-	}
-
-	public List<List<String>> getDataRows() {
-		return dataRows;
-	}
-
-}
+import com.mastercard.pts.integrated.issuing.domain.CSVData;
 
 public class FileConverter {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileConverter.class);
 	private static final String CSV_EXTN = ".csv";
+	
+	public String getCellValAsString(Cell cell) {
+		DataFormatter dataFormatter = new DataFormatter();
+		return dataFormatter.formatCellValue(cell);
+	}
 
 	private String createDirs(Sheet sheet, String env) {
 		File dir = new File("C" + ":" + File.separatorChar + "Temp" + File.separatorChar + env);
@@ -81,13 +68,12 @@ public class FileConverter {
 		int headerRowNo = 0;
 		List<String> headers = new ArrayList<>();
 		List<List<String>> dataRows = new ArrayList<>();
-		DataFormatter dataFormatter = new DataFormatter();
 
 		Row headerRow = sheet.getRow(headerRowNo);
 		if (headerRow != null) {
 			int colEnd = headerRow.getLastCellNum();
 			for (int i = 0; i < colEnd; i++) {
-				headers.add(dataFormatter.formatCellValue(headerRow.getCell(i)));
+				headers.add(getCellValAsString(headerRow.getCell(i)));
 			}
 
 			for (int i = startOfDataRow; i <= sheet.getLastRowNum(); i++) {
@@ -95,7 +81,7 @@ public class FileConverter {
 				List<String> dataRow = new ArrayList<>();
 				for (int j = 0; j < colEnd; j++) {
 					if (row != null) {
-						dataRow.add(dataFormatter.formatCellValue(row.getCell(j)));
+						dataRow.add(getCellValAsString(row.getCell(j)));
 					}
 				}
 				dataRows.add(dataRow);
@@ -110,12 +96,12 @@ public class FileConverter {
 		List<String> headers = new ArrayList<>();
 		List<String> dataRow = new ArrayList<>();
 		List<List<String>> dataRows = new ArrayList<>();
-		DataFormatter dataFormatter = new DataFormatter();
+		
 		for (int i = startOfDataRow; i <= sheet.getLastRowNum(); i++) {
 			Row row = sheet.getRow(i);
 			if (row != null) {
-				String headerCellVal = dataFormatter.formatCellValue(row.getCell(0));
-				String dataCellVal = dataFormatter.formatCellValue(row.getCell(1));
+				String headerCellVal = getCellValAsString(row.getCell(0));
+				String dataCellVal = getCellValAsString(row.getCell(1));
 				if (!headerCellVal.trim().isEmpty()) {
 					headers.add(headerCellVal);
 					dataRow.add(dataCellVal);
