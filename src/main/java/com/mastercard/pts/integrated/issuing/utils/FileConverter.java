@@ -116,7 +116,7 @@ public class FileConverter {
 
 	private void writeToCSV(CSVData csv, String filePath) {
 		try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(filePath));
-				CSVPrinter printer = CSVFormat.EXCEL.withHeader(csv.getHeaderRow().toArray(new String[0]))
+				CSVPrinter printer = CSVFormat.EXCEL.withIgnoreHeaderCase().withHeader(csv.getHeaderRow().toArray(new String[0]))
 						.print(writer);) {
 			printRowsInCSV(csv.getDataRows(), printer);
 			LOGGER.info("CSV file created at -> {}", filePath);
