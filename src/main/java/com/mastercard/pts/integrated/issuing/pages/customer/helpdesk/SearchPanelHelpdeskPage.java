@@ -1,9 +1,18 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.helpdesk;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
+
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -14,6 +23,11 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
  */
 @Component
 public class SearchPanelHelpdeskPage extends AbstractBasePage {
+	
+	public static final String UPLOAD_EXPECTED_STATUS="NORMAL [0]";
+	public static final String STATUS_DEVICE_NOT_NORMAL="device status is not normal";
+	private static final Logger logger = LoggerFactory.getLogger(SearchPanelHelpdeskPage.class);
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement productType;
 
@@ -55,6 +69,21 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 	private MCWebElement editBtn;
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr//following-sibling::td[7]/span")
 	private MCWebElement normalStatus;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='client.firstName']")
+	private MCWebElement firstNameUpload;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='client.lastName']")
+	private MCWebElement lastNameUpload;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='client.registeredMobileNumber']")
+	private MCWebElement mobileNumberUpload;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr//following-sibling::td[1]/span/a/span")
+	private MCWebElement deviceNumberTxt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr//following-sibling::td[8]/span")
+	private MCWebElement normalStatusCredit;
 
 	public MCWebElement getEditBtn() {
 		return editBtn;
@@ -96,5 +125,22 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 		waitForElementVisible(searchBtn);
 		searchBtn.click();
 		return getCellTextByColumnName(Constants.TABLE_ROW_NUM,Constants.COLUMN_NAME);
+	}
+	
+	public void normalStatusCheckFileUploadInBulk(String productType,Map<String, Object>mapFileUpload) {
+		int counter=0;
+		waitForElementVisible(this.productType);
+		SelectDropDownByText(this.productType, productType);
+		for (Map.Entry<String, Object> entry : mapFileUpload.entrySet()) {
+			counter++;
+			HelpDeskGeneral helpDeskGeneral=(HelpDeskGeneral) entry.getValue();
+			WebElementUtils.enterText(firstNameUpload,helpDeskGeneral.getFirstName());
+			WebElementUtils.enterText(lastNameUpload,helpDeskGeneral.getLastName());
+			WebElementUtils.enterText(mobileNumberUpload,helpDeskGeneral.getMobileNumber());
+			clickSearchButtonWithoutWicket();
+			waitForPageToLoad(driver());
+			assertThat(STATUS_DEVICE_NOT_NORMAL, normalStatusCredit.getText(), equalTo(UPLOAD_EXPECTED_STATUS));
+			logger.info("Device Number :" +"  "+counter+"   "+ "-" +" "+ deviceNumberTxt.getText());
+		}
 	}
 }

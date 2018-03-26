@@ -15,10 +15,12 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
@@ -51,9 +53,10 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Device Generation']")
 	private MCWebElement deviceGenerationLink;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[1]/td[10]/span/input")
-	public MCWebElement firstBatchNumberTxt;
-
+	@PageElement(findBy = FindBy.NAME, valueToFind = "saveAll")
+	private MCWebElement processAllTxt;
+	
+	
 	public List<String> allBatchNumberRetrieval()
 	{
 		List<String>batchnumbers=new ArrayList<>();
@@ -96,10 +99,37 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 		}
 	}
 	
-	public void processFirstBatch() {
-		clickWhenClickable(firstBatchNumberTxt);
+	public int identifyBatchNumberToProcessForFileUpload()
+	{
+		int index = 0;
+		String batchNumber=context.get(CreditConstants.BATCH_NUMBER_FILEUPLOAD);
+		logger.info("BatchNumber_Application:{}",batchNumber);
+		for(int i=0;i<allBatchNumberRetrieval().size();i++)
+		{
+			if(allBatchNumberRetrieval().get(i).equals(batchNumber))
+			{
+				logger.info("batchNumber: {}",allBatchNumberRetrieval().get(i));
+				index=i;
+			}
+		}
+		return index;
+	}
+	
+	public void processAppropriateBatchForApplicationForFileUpload()
+	{  
+		checkWhetherRecordPersists();
+		String checkBox="//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcessForFileUpload()+1+"]/td[8]/span/input";
+		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(checkBox)));
 		processSelected.click();
 		verifyOperationStatus();
+		
+	}
+	
+	public void processAllClick()
+	{
+		SimulatorUtilities.wait(8000);
+		clickWhenClickable(deviceGenerationLink);
+		clickWhenClickable(processAllTxt);
 	}
 	
     @Override

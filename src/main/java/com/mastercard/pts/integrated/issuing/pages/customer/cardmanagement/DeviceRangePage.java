@@ -16,11 +16,13 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Vendor;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -200,6 +202,10 @@ public class DeviceRangePage extends AbstractBasePage {
 	public void selectBranch() {
 		SelectDropDownByIndex(BranchDDwn, 1);
 	}
+	
+	public void selectBranchUpload() {
+		WebElementUtils.selectDropDownByVisibleText(BranchDDwn,context.get(CreditConstants.VENDOR_BRANCH));
+	}
 
 	public void clickAddButton() {
 		clickWhenClickable(AddTxt);
@@ -276,6 +282,15 @@ public class DeviceRangePage extends AbstractBasePage {
 		selectDevicePlan();
 		selectIssuerBIN();
 		selectBranch();
+		clickAddButton();
+	}
+	
+	public void addDeviceRangeUpload(DeviceCreation devicecreation) {
+		selectProduct(devicecreation);
+		selectProgram();
+		selectDevicePlan();
+		selectIssuerBIN();
+		selectBranchUpload();
 		clickAddButton();
 	}
 

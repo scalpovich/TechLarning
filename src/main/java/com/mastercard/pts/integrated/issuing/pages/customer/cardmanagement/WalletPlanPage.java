@@ -16,6 +16,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -289,7 +290,7 @@ public class WalletPlanPage extends AbstractBasePage {
 	@Override
 	public void clickFinishButton() {
 		clickWhenClickable(finishBtn);
-		waitForWicket();
+		//waitForWicket();
 		SwitchToDefaultFrame();
 	}
 

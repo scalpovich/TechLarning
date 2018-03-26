@@ -26,11 +26,11 @@ public class DeviceGenerationBatchFlows {
 		deviceGenerationBatchPage.processAppropriateBatchForApplication();
 	}
 	
-	public void deviceGenerationFirstBatchExecution()
+	public void deviceGenerationBatchExecutionForFileUpload()
 	{
 		deviceGenerationBatchPage=navigator.navigateToPage(DeviceGenerationBatchPage.class);
-		deviceGenerationBatchPage.processFirstBatch();
+		navigator.navigateToPage(DeviceGenerationBatchPage.class);
+		deviceGenerationBatchPage.processAllClick();
 	}
 	
-
 }

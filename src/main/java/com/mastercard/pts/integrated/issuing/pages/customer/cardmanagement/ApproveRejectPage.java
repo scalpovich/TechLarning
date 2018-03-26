@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -8,8 +9,10 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -45,6 +48,18 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[@name='approve']")
 	private MCWebElement approveBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='formNumber']")
+	private MCWebElement formNumberTxt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Approve/Reject']")
+	private MCWebElement approveRejectLink;
+	
+    @PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='firstName']")
+	private MCWebElement firstNameTxt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='lastName']")
+	private MCWebElement lastNameTxt;
     
 	public void enterApplicationNumber()
 	{
@@ -77,4 +92,28 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 		return getCodeFromInfoMessage("Application Number");
 	}
 	
+	public void enterFormNumber()
+	{
+		String formNumber=context.get(CreditConstants.FORM_NUMBER);
+		WebElementUtils.enterText(formNumberTxt,formNumber);	
+	}
+	
+	public void approveApplicationFileUpload() {
+		Map<String, Object>mapFileUpload=context.get(CreditConstants.FILEUPLOAD_IN_BULK);
+		for (Map.Entry<String, Object> entry : mapFileUpload.entrySet()) {
+			HelpDeskGeneral helpDeskGeneral=(HelpDeskGeneral) entry.getValue();
+			WebElementUtils.enterText(formNumberTxt,helpDeskGeneral.getFormNumber());
+			WebElementUtils.enterText(firstNameTxt, helpDeskGeneral.getFirstName());
+			WebElementUtils.enterText(lastNameTxt, helpDeskGeneral.getLastName());
+			WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
+			WebElementUtils.pickDate(toDatePicker, LocalDate.now());
+			clickSearchButton();
+			waitForPageToLoad(driver());
+			clickWhenClickable(editImg);
+			switchToIframe(APPROVE_REJECT_FRAME);
+			SimulatorUtilities.wait(5000);
+			clickWhenClickable(approveBtn);
+			clickWhenClickable(approveRejectLink);
+		}
+	}
 }

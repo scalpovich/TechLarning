@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -120,6 +121,23 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		ClickButton(processSelectedBtn);
 		verifyOperationStatus();
 		SwitchToDefaultFrame();
+
+	}
+	
+	public void processPreProductionBatchNewApplicationForFileUpload(PreProductionBatch batch) {
+        List<String>batchNumbers=context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
+        /*for(int i=0;i<batchNumbers.size();i++)
+        {*/
+		waitForLoaderToDisappear();
+		SelectDropDownByText(productTypeDDwn, batch.getProductType());
+		CustomUtils.ThreadDotSleep(8000);
+		enterText(batchNumberTxt, batchNumbers.get(0));
+		ClickButton(searchBtn);
+		ClickCheckBox(preProductionBatchRecordChkBx, true);
+		ClickButton(processSelectedBtn);
+		verifyOperationStatus();
+		SwitchToDefaultFrame();
+        //}
 
 	}
 	

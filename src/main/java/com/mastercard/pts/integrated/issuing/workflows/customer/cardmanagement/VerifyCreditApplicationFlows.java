@@ -18,4 +18,12 @@ public class VerifyCreditApplicationFlows {
 		String message=verifyCreditPage.editAndVerifyApplication();
 		return message;
 	}
+	
+	public /*String*/void verifyCreditApplicationFileUpload()
+	{
+		VerifyCreditPage verifyCreditPage = navigator.navigateToPage(VerifyCreditPage.class);
+		verifyCreditPage.verifyApplicationFileUpload();
+		/*String message=verifyCreditPage.editAndVerifyApplication();
+		return message;*/
+	}
 }

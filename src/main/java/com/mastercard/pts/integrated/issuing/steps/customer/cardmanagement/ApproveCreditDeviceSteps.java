@@ -16,4 +16,10 @@ public class ApproveCreditDeviceSteps {
 	{
 		approveRejectApplicationFlows.approveRejectCreditApplication();
 	}
+	
+	@When("user approves the credit application device for fileUpload")
+	public void verifyCreditDeviceAfterApplicaionCreationFileUpload()
+	{
+		approveRejectApplicationFlows.approveRejectCreditApplication_FileUpload();
+	}
 }

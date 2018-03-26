@@ -77,6 +77,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	private static final String SUCCESS_MESSAGE = "Success message: {}";
 
+	private static final String WALLET_NUMBER = "Wallet number: {}";
 	public static final String ERROR_MESSAGE = "Error: {}";
 
 	public static final String RESPONSE_MESSAGE = "Response message: {}";
@@ -552,7 +553,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void clickWhenClickable(MCWebElement element) {
-		SimulatorUtilities.wait(900);
+		SimulatorUtilities.wait(2000);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
 		waitForWicket();
 	}
@@ -612,6 +613,30 @@ public abstract class AbstractBasePage extends AbstractPage {
 			else {
 				break;
 			}
+		}
+	}
+	
+	public void waitAndSearchForApplicationBatchNumberToAppear() {
+		clickSearchButton();
+		// Pre-production batch and device production batch & Authorization Search page take little long to
+				// be completed, and do not appear in search result, hence a for loop
+		for (int l = 0; l < 21; l++) {
+			if (!waitForbatchNumber())
+				clickSearchButton();
+			else {
+				break;
+			}
+		}
+	}
+	
+	protected boolean waitForbatchNumber() {
+		try {
+			waitForWicket();
+			Thread.sleep(20000); 
+			return driver().findElement(By.xpath("//table[@class='dataview']//tr[@class!='headers']/td[5]/span")).isDisplayed();
+		} catch (NoSuchElementException | InterruptedException e) {
+			logger.debug("Result not found", e);
+			return false;
 		}
 	}
 	
@@ -1085,6 +1110,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public void selectByVisibleText(MCWebElement ele, String optionName) {
 		String optionVisbleText = "";
+		SimulatorUtilities.wait(2000);
 		waitUntilSelectOptionsPopulated(ele);
 		List<WebElement> selectedOptions = ele.getSelect().getOptions();
 		for (WebElement element : selectedOptions) {
@@ -1617,6 +1643,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 			  }
 		  }
 	   }
+	
+	public void clickSearchButtonWithoutWicket()
+	{
+		clickWhenClickableDoNotWaitForWicket(searchBtn);
+	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

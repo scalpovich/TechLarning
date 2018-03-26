@@ -21,4 +21,10 @@ public class ApproveRejectApplicationFlows {
 		String message=approveRejectPage.getApplicationNumber();
 		return message;
 	}
+	
+	public void approveRejectCreditApplication_FileUpload()
+	{
+		ApproveRejectPage approveRejectPage = navigator.navigateToPage(ApproveRejectPage.class);
+		approveRejectPage.approveApplicationFileUpload();
+	}
 }

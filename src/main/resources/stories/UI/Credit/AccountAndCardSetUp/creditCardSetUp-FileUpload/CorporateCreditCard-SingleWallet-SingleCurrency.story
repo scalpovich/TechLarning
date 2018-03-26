@@ -16,15 +16,19 @@ Given login to portal as existing bank as a Customeruser
 When user creates Device BIN for Mastercard for product credit for BinType as Single Message Type
 When user creates a Open loop wallet plan of default type for program Corporate Credit Card for credit
 When user creates an Embossing File Template
-When user creates a Vendor of Category Personalization with Embossing template attached
+When user creates a Vendor of Category Personalization with Embossing template attached for fileUpload
 When user creates a Device Plan for Mastercard for Magnetic Stripe and credit card,choose activation On Production and delivery mode Mail
 When user creates a Single wallet Program for Mastercard for product credit for program Corporate Credit Card
 Then Program should get created
 When user creates a Device Range for product credit
 When user creates Application Upload Credit batch file and uploads it on server for Corporate for credit
-When user processes close batch for new Application for FileUpload
-When user processes deviceGeneration batch for new Application for FileUpload
-When processes credit pre-production batch
-When All processes credit device production batch
-When User search for device on search screen for product type prepaid and validates the status as NORMAL
+When user verifies the credit application device for fileUpload
+When user approves the credit application device for fileUpload
+When user processes close batch for new Application for fileUpload
+When user processes deviceGeneration batch for new Application for fileUpload
+When user searches for created application for fileUpload
+When credit processes pre-production batch using new Application for fileUpload in Bulk
+When All processes credit device production batch for fileUpload in Bulk
+!-- When All processes credit device production batch
+When For fileUpload when user search for new application on search screen for credit and validates the status as NORMAL
 Then user logouts from customer portal

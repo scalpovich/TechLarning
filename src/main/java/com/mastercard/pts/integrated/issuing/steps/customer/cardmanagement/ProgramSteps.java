@@ -99,6 +99,7 @@ public class ProgramSteps {
 		}
 		if (product.contains(ProductType.Credit)) {
 			Program = programflows.createprogramCredit(devicecreation, program);
+			sDNUncheckProgram(Program);
 		}
 		Assert.assertNotNull(Program);
 		program.setProgram(Program);

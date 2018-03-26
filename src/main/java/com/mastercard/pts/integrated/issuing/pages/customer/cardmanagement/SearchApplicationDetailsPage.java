@@ -1,6 +1,8 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.slf4j.Logger;
@@ -96,7 +98,7 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDate, LocalDate.now());
 		clickSearchButton();
-		searchUntilBatchNumberIsDisplayed();
+		waitAndSearchForApplicationBatchNumberToAppear();
 		return batchNumberTxt.getText();
 		
 	}
@@ -134,5 +136,22 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 			if(element.getText().contains("abc"));
 			logger.info("New application processed successfully");
 		}
+	}
+	
+	public void searchApplicationNumberForFileUpload()
+	{
+		List<String>applicationNumbers=context.get(CreditConstants.ALL_APPLICATION_NUMBERS);
+		logger.info("size :{}",applicationNumbers.size());
+		List<String>batchNumbersForPreProduction=new LinkedList<>();
+		/*for(int i=0;i<applicationNumbers.size();i++)
+		{*/
+			waitForLoaderToDisappear();
+			WebElementUtils.enterText(applicationNumberTxt,applicationNumbers.get(0));
+			WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
+			WebElementUtils.pickDate(toDate, LocalDate.now());
+			waitAndSearchForApplicationBatchNumberToAppear();
+			batchNumbersForPreProduction.add(batchNumberTxt.getText());
+		//}
+		context.put(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION, batchNumbersForPreProduction);
 	}
 }

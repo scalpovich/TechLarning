@@ -3,7 +3,6 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SearchApplicationDetails;
@@ -36,6 +35,12 @@ public class SearchApplicationDetailsFlows {
 		searchpage = navigator.navigateToPage(SearchApplicationDetailsPage.class);
 		String batchNumber=searchpage.searchApplicationNumber();
 		context.put(CreditConstants.NEW_APPLICATION_BATCH, batchNumber);
+		
+	}
+	
+	public void searchApplicationDetailsForFileUpload() {
+		searchpage = navigator.navigateToPage(SearchApplicationDetailsPage.class);
+		searchpage.searchApplicationNumberForFileUpload();
 		
 	}
 }

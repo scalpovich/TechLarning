@@ -777,6 +777,7 @@ public class ProgramPage extends AbstractBasePage {
 		enterValueinTextBox(enterProgram, a);
 		clickWhenClickable(search);
 		waitForWicket(driver());
+		SimulatorUtilities.wait(4000);
 		clickWhenClickable(editProgram);
 		CustomUtils.ThreadDotSleep(2000);
 		switchToEditProgramframe();

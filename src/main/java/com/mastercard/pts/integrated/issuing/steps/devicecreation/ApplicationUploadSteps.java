@@ -20,6 +20,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProcessBatchesFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.SearchApplicationDetailsFlows;
@@ -65,7 +66,7 @@ public class ApplicationUploadSteps {
 		{
 			fileName=fileCreation.createApplicationUploadForFileStaticVirtualCard(program.getInstitute(), customerType);
 			processBatch.setJoBID(processBatchesFlows.processUploadBatches(batchName, fileName));
-			CustomUtils.ThreadDotSleep(5000);
+			SimulatorUtilities.wait(5000);
 			Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(processBatch, fileName));
 		}
 		
@@ -108,6 +109,14 @@ public class ApplicationUploadSteps {
 
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPreProductionBatchNewApplication(preProductionBatch);
+	}
+	
+	@Then("$type processes pre-production batch using new Application for fileUpload in Bulk")
+	@When("$type processes pre-production batch using new Application for fileUpload in Bulk")
+	public void whenProcessesPreproductionBatchForDeviceUsingApplicationForFileUpload(String type) {
+
+		preProductionBatch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processPreProductionBatchNewApplicationFileUpload(preProductionBatch);
 	}
 
 	@Then("$type processes deviceproduction batch using new Device")
@@ -161,5 +170,11 @@ public class ApplicationUploadSteps {
 		MiscUtils.reportToConsole("device production Batch: {}", preProductionBatch.getBatchNumber());
 		batchProcessFlows.processDeviceProductionBatchAll(batch);
 	}
-
+	@Then("All processes $type device production batch for fileUpload in Bulk")
+	@When("All processes $type device production batch for fileUpload in Bulk")
+	public void whenProcessesDeviceProductionBatchForAllForFileUpload(String type) {
+		DeviceProductionBatch batch = new DeviceProductionBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processDeviceProductionBatchAllForFileUpload(batch);
+	}
 }

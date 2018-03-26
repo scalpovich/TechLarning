@@ -26,11 +26,10 @@ public class CloseBatchFlows {
 		closeBatchPage.processAppropriateBatchForApplication();
 	}
 	
-	public void closeFirstBatchExecution()
+	public void closeBatchExecutionForFileUpload()
 	{
 		closeBatchPage=navigator.navigateToPage(CloseBatchPage.class);
-		closeBatchPage.processFirstBatch();
+		closeBatchPage.processAllClick();
 	}
-	
 
 }

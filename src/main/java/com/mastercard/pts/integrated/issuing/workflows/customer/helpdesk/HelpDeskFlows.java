@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,6 +163,12 @@ public class HelpDeskFlows extends AbstractBasePage {
 		searchpanelhelpdesk.clickSearchBtn();
 		return status;
 	}
+	
+	public void searchForNewApplicationFileUpload(HelpDeskGeneral helpdeskgettersetter) {
+		generalPage = navigator.navigateToPage(GeneralPage.class);
+		Map<String, Object>mapFileUpload=context.get(CreditConstants.FILEUPLOAD_IN_BULK);
+        searchpanelhelpdesk.normalStatusCheckFileUploadInBulk(helpdeskgettersetter.getProductType(),mapFileUpload);
+	}
 
 	public void verifyExpiryDate() {
 		generalPage.CalculateExpiryDate();
@@ -170,6 +178,14 @@ public class HelpDeskFlows extends AbstractBasePage {
 	public void VerifyPairedDeviceStatus() {
 		generalPage.checkNoAndStatusOfCards();
 		generalPage.endCall();
+	}
+	
+	public String searchForNewDeviceInBulk(HelpDeskGeneral helpdeskgettersetter) {
+		generalPage = navigator.navigateToPage(GeneralPage.class);
+		String status = searchpanelhelpdesk.searchDeviceUsingName(helpdeskgettersetter.getProductType(),
+				helpdeskgettersetter.getFirstName()/*context.get(ContextConstants.DEVICE_NUMBER)*/);
+		searchpanelhelpdesk.clickSearchBtn();
+		return status;
 	}
 
 }

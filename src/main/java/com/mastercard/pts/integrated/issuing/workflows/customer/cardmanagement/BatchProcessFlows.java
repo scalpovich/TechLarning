@@ -125,7 +125,11 @@ public class BatchProcessFlows extends MenuFlows {
 		PreProductionBatchPage page = navigator.navigateToPage(PreProductionBatchPage.class);
 		page.processPreProductionBatchNewApplication(batch);
 	}
-
+	public void processPreProductionBatchNewApplicationFileUpload(PreProductionBatch batch) {
+		PreProductionBatchPage page = navigator.navigateToPage(PreProductionBatchPage.class);
+		page.processPreProductionBatchNewApplicationForFileUpload(batch);
+	}
+	
 	public void processDeviceProductionBatch(DeviceProductionBatch batch) {
 		deviceProductionPage = navigator.navigateToPage(DeviceProductionPage.class);
 		deviceProductionPage.processDeviceProductionBatch(batch);
@@ -134,6 +138,11 @@ public class BatchProcessFlows extends MenuFlows {
 	public void processDeviceProductionBatchAll(DeviceProductionBatch batch) {
 		deviceProductionPage = navigator.navigateToPage(DeviceProductionPage.class);
 		deviceProductionPage.processDeviceProductionBatchForAll(batch);
+	}
+	
+	public void processDeviceProductionBatchAllForFileUpload(DeviceProductionBatch batch) {
+		deviceProductionPage = navigator.navigateToPage(DeviceProductionPage.class);
+		deviceProductionPage.processDeviceProductionBatchForAllForFileUpload(batch);
 	}
 
 	public void processDeviceProductionBatchNewDevice(DeviceProductionBatch batch) {

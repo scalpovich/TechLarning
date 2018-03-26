@@ -17,9 +17,9 @@ public void closeBatchExecutionForNewApplication()
 	deviceGenerationBatchFlows.deviceGenerationBatchExecution();
 }
 
-@When("user processes deviceGeneration batch for new Application for FileUpload")
-public void closeFirstBatchExecutionForNewApplication()
+@When("user processes deviceGeneration batch for new Application for fileUpload")
+public void closeBatchExecutionForNewApplicationForFileUpload()
 {
-	deviceGenerationBatchFlows.deviceGenerationFirstBatchExecution();
+	deviceGenerationBatchFlows.deviceGenerationBatchExecutionForFileUpload();
 }
 }

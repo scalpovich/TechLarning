@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -29,7 +30,8 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_OPERATION, CardManagementNav.L2_PROCESSING_BATCHES, CardManagementNav.L3_DEVICE_PRODUCTION_BATCH })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_OPERATION,
+		CardManagementNav.L2_PROCESSING_BATCHES, CardManagementNav.L3_DEVICE_PRODUCTION_BATCH })
 public class DeviceProductionPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(DeviceProductionPage.class);
 	@Autowired
@@ -113,6 +115,22 @@ public class DeviceProductionPage extends AbstractBasePage {
 		verifyOperationStatus();
 
 	}
+	
+	public void processDeviceProductionBatchForAllForFileUpload(
+			DeviceProductionBatch batch) {
+		List<String> batchNumbers = context
+				.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
+		//for (int i = 0; i < batchNumbers.size(); i++) {
+			waitForLoaderToDisappear();
+			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn,
+					batch.getProductType());
+			WebElementUtils.enterText(batchNumberTxt, batchNumbers.get(0));
+			waitAndSearchForRecordToExist();
+			clickWhenClickable(processAllBtn);
+			verifyOperationStatus();
+		//}
+
+	}
 
 	public void selectProduct(DeviceCreation deviceCreation) {
 		selectByVisibleText(productTypeDDwn, deviceCreation.getProduct());
@@ -135,8 +153,8 @@ public class DeviceProductionPage extends AbstractBasePage {
 	}
 
 	public void clickDeviceProductionChkBox(BulkDeviceRequestbatch bulkdeviceGenBatch) {
-		WebElement SelectProcessChkBx = getFinder().getWebDriver().findElement(
-				By.xpath("//td[contains(.,'" + bulkdeviceGenBatch.getBatchNumberForDeviceGeneration()
+		WebElement SelectProcessChkBx = getFinder().getWebDriver().findElement(By.xpath("//td[contains(.,'"
+				+ bulkdeviceGenBatch.getBatchNumberForDeviceGeneration()
 						+ "')]/following::span/input[@name='dataPanel:BasicDataTable:datatable:body:rows:1:cells:7:cell:columnCheckBox']"));
 		waitForElementVisible(SelectProcessChkBx);
 		clickWhenClickable(SelectProcessChkBx);
@@ -186,8 +204,8 @@ public class DeviceProductionPage extends AbstractBasePage {
 	}
 
 	public String getDeviceNumber(BulkDeviceRequestbatch bulkdeviceGenBatch) {
-		WebElement SelectProcessChkBx = getFinder().getWebDriver().findElement(
-				By.xpath("//tr[1]//td[contains(.,'" + bulkdeviceGenBatch.getBatchNumberForDeviceGeneration() + "')]/preceding-sibling::td[3]"));
+		WebElement SelectProcessChkBx = getFinder().getWebDriver().findElement(By.xpath("//tr[1]//td[contains(.,'"
+				+ bulkdeviceGenBatch.getBatchNumberForDeviceGeneration() + "')]/preceding-sibling::td[3]"));
 		return SelectProcessChkBx.getText().substring(9);
 	}
 

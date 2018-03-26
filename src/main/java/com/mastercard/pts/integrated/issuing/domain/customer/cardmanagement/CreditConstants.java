@@ -34,6 +34,26 @@ public class CreditConstants {
 	public static final String DEVICE_BIN="DEVICE_BIN";
 	
 	public static final String DEVICE_NUMBER="DEVICE_NUMBER";
+	
+	public static final String HELPDESK_FILEUPLOAD="HELPDESK_FILEUPLOAD";
+	
+	public static final String HELPDESK_FILEUPLOAD_MULTIPLEDEVICES="HELPDESK_FILEUPLOAD_MULTIPLEDEVICES";
+	
+	public static final String FORM_NUMBER="FORM_NUMBER";
+	
+	public static final String BATCH_NUMBER_FILEUPLOAD="BATCH_NUMBER_FILEUPLOAD";
+	
+	public static final String APPLICATION_NUMBER_FILEUPLOAD="APPLICATION_NUMBER_FILEUPLOAD";
+	
+	public static final String FILEUPLOAD_IN_BULK="FILEUPLOAD_IN_BULK";
+	
+	public static final String ALL_APPLICATION_NUMBERS="ALL_APPLICATION_NUMBERS";
+	
+	public static final String ALL_BATCH_NUMBERS="ALL_BATCH_NUMBERS";
+	
+	public static final String ALL_BATCH_NUMBERS_PREPRODUCTION="ALL_BATCH_NUMBERS_PREPRODUCTION";
+	
+	public static final String VENDOR_BRANCH="VENDOR_BRANCH";
 
 	private CreditConstants() {
 	}
