@@ -1,0 +1,2 @@
+API_NAME,id,name,email,address>street,address>suite,address>city,address>zipcode,"address,geo>lat","address,geo>lng",phone,website,company>name,company>catchPhrase,company>bs
+Sample,11,updateName,update@april.biz,Yerwada,Apt. 8556,Pune,421002,12345,54321,8446833310,update.como,Siyan,oiniiunfd,ijniubns
