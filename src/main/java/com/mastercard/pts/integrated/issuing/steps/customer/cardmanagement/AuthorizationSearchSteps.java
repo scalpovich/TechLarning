@@ -91,10 +91,10 @@ public class AuthorizationSearchSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		TransactionFeePlan txnFeePlan = TransactionFeePlan.getMarkUpFees(provider);
 		Double billingAmount = Double.parseDouble(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()).get(0));
-		Double markUpFee = billingAmount * Double.parseDouble(txnFeePlan.getMarkUpRate()) / 100;
-		String markUpFees = String.valueOf(Math.round(markUpFee * 100) / 100);
+		Double markUpFee = billingAmount * Double.parseDouble(txnFeePlan.getMarkUpRate()) / 100.0;
+		String markUpFees = String.valueOf(Math.round(markUpFee * 100.0) / 100.0);
 		Double markUpFeeTax = Double.parseDouble(markUpFees) * Double.parseDouble(txnFeePlan.getMarkupFeeTax()) / 100;
-		String markUpFeesTax = String.valueOf(Math.round(markUpFeeTax * 100) / 100);
+		String markUpFeesTax = String.valueOf(Math.round(markUpFeeTax * 100.0) / 100.0);
 		assertThat(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()), Matchers.hasItems(markUpFees, markUpFeesTax));
 	}
 

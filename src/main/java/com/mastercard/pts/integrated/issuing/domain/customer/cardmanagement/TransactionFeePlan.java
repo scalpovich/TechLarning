@@ -82,7 +82,7 @@ public class TransactionFeePlan {
 
 	private String markupfeetax;
 	
-	private String markuprateplan;
+	private String markuprate;
 
 	public static TransactionFeePlan createWithProvider(KeyValueProvider provider) {
 		TransactionFeePlan details = new TransactionFeePlan();
@@ -314,12 +314,12 @@ public class TransactionFeePlan {
 	}
 	
    public String getMarkUpRate(){
-	   return markuprateplan;
+	   return markuprate;
    }
    
-   public void setMarkUpRate(String markuprateplan)
+   public void setMarkUpRate(String markuprate)
    {
-	   this.markuprateplan=markuprateplan;
+	   this.markuprate=markuprate;
    }
 
 }
