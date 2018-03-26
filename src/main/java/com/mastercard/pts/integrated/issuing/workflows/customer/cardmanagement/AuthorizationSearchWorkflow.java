@@ -18,7 +18,6 @@ import com.mastercard.pts.integrated.issuing.pages.collect.administration.Admini
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.AuthorizationSearchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
-import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
 @Workflow
 public class AuthorizationSearchWorkflow {
@@ -38,8 +37,6 @@ public class AuthorizationSearchWorkflow {
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
 	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
-
-	private String billingAmount;
 
 	public void verifyAuthTransactionSearch(String type, String state, String deviceNumber) {
 		String varType = type;

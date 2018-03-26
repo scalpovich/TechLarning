@@ -20,7 +20,7 @@ public class TransactionFeePlan {
 	private static final String TRANSACTION_ORIGIN = "TRANSACITON_ORIGIN";
 
 	private static final String TRANSACTION_FEE_PLAN = "TRANSACTION_FEE_PLAN";
-
+	private static final String MARKUP_FEE_RATE="MARKUP_FEE_RATE";
 	private static final String TRANSACTION_RATE = "TRANSACTION_RATE";
 
 	private static final String MARKUP_FEE = "MARKUP_FEE";
@@ -81,6 +81,8 @@ public class TransactionFeePlan {
 	private String markupfee;
 
 	private String markupfeetax;
+	
+	private String markuprateplan;
 
 	public static TransactionFeePlan createWithProvider(KeyValueProvider provider) {
 		TransactionFeePlan details = new TransactionFeePlan();
@@ -121,6 +123,7 @@ public class TransactionFeePlan {
 		TransactionFeePlan markupfee = new TransactionFeePlan();
 		markupfee.setMarkupFee(provider.getString(MARKUP_FEE));
 		markupfee.setMarkupFeeTax(provider.getString(MARKUP_FEE_TAX));
+		markupfee.setMarkUpRate(provider.getString(MARKUP_FEE_RATE));
 		return markupfee;
 	}
 
@@ -309,5 +312,14 @@ public class TransactionFeePlan {
 	public void setMarkupFeeTax(String markupfeetax) {
 		this.markupfeetax = markupfeetax;
 	}
+	
+   public String getMarkUpRate(){
+	   return markuprateplan;
+   }
+   
+   public void setMarkUpRate(String markuprateplan)
+   {
+	   this.markuprateplan=markuprateplan;
+   }
 
 }

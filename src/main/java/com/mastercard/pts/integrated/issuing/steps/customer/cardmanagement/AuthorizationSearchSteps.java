@@ -18,8 +18,6 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.A
 @Component
 public class AuthorizationSearchSteps {
 
-	private static final double markupFee = 3.5;
-	private static final double markupFeeTax = 1;
 
 	@Autowired
 	private TestContext context;
@@ -81,10 +79,22 @@ public class AuthorizationSearchSteps {
 		TransactionFeePlan txnFeePlan = TransactionFeePlan.getMarkUpFees(provider);
 		Double billingAmount = Double.parseDouble(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()).get(0));
 		Double markUpFee = billingAmount * Double.parseDouble(txnFeePlan.getMarkupFee()) / 100;
-		String markUpFees = String.valueOf(Math.floor(markUpFee * 100) / 100);
-
+		String markUpFees = String.valueOf(Math.round(markUpFee * 100) / 100);
 		Double markUpFeeTax = Double.parseDouble(markUpFees) * Double.parseDouble(txnFeePlan.getMarkupFeeTax()) / 100;
 		String markUpFeesTax = String.valueOf(Math.floor(markUpFeeTax * 100) / 100);
+		assertThat(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()), Matchers.hasItems(markUpFees, markUpFeesTax));
+	}
+	
+	@When("verify markup rate fee applied on transaction")
+	@Then("verify markup rate fee applied on transaction")
+	public void veriyMarkupRateFeeOnTransaction() {
+		Device device = context.get(ContextConstants.DEVICE);
+		TransactionFeePlan txnFeePlan = TransactionFeePlan.getMarkUpFees(provider);
+		Double billingAmount = Double.parseDouble(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()).get(0));
+		Double markUpFee = billingAmount * Double.parseDouble(txnFeePlan.getMarkUpRate()) / 100;
+		String markUpFees = String.valueOf(Math.round(markUpFee * 100) / 100);
+		Double markUpFeeTax = Double.parseDouble(markUpFees) * Double.parseDouble(txnFeePlan.getMarkupFeeTax()) / 100;
+		String markUpFeesTax = String.valueOf(Math.round(markUpFeeTax * 100) / 100);
 		assertThat(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()), Matchers.hasItems(markUpFees, markUpFeesTax));
 	}
 

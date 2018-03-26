@@ -51,6 +51,7 @@ import com.mastercard.pts.integrated.issuing.pages.ValidationException;
 import com.mastercard.pts.integrated.issuing.pages.agent.settlement.InitiateSettlementPage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceApprovePage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceRequestPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.MarkupFeePlanPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReversalTransactionPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionSearchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -133,8 +134,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private VisaTestCaseNameKeyValuePair visaTestCaseNameKeyValuePair;
 
 	@Autowired
-	private LinuxBox linuxbox ;
-	
+	private LinuxBox linuxbox;
+
 	@Value("${linux.host.name}")
 	private String hostName;
 
@@ -149,7 +150,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	@Value("${linux.WinSCPTool.Path}")
 	private String winSCPPath;
-
 
 	public void initiateSettlementForAgency(String branchID, String programCode) {
 		ispage = navigator.navigateToPage(InitiateSettlementPage.class);
@@ -264,7 +264,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public void launchWiniumAndSimulator(String simulator) {
-		launchRequiredSimulatorSession(simulator); // to fetch required Simulator installed on the machine or read value from WhichSimulatorVersionToChoose.java
+		launchRequiredSimulatorSession(simulator); // to fetch required
+													// Simulator installed on
+													// the machine or read value
+													// from
+													// WhichSimulatorVersionToChoose.java
 		closeSimulator(simulator);
 
 		try {
@@ -510,7 +514,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			aRN = addAcquirerReferenceData(trimmedRrn);
 			MiscUtils.reportToConsole("rRN :  trimmedRrn : aRN  -  " + rRN + " : - : " + trimmedRrn + " : - :" + aRN);
 			updatePanNumber(SimulatorConstantsData.SAMPLE_PAN_NUMBER);
-			performClickOperation(MESSAGE_TYPE_INDICATOR); // selecting the table
+			performClickOperation(MESSAGE_TYPE_INDICATOR); // selecting the
+															// table
 			pressPageUp();
 			clickMiddlePresentmentAndMessageTypeIndicator();
 			action.moveToElement(winiumDriver.findElementByName("033 - Forwarding Institution Identification Code")).doubleClick().build().perform();
@@ -925,8 +930,16 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void configureBinRangeForMdfs(Transaction transactionData, String transactionName) {
 		String bin = transactionData.getCardNumber();
-		String issuerCurrencyCode = transactionData.getIssuerCurrencyCode(); // value from DE Element 49
-		String cardHolderBillingCurrency = transactionData.getCardHolderBillingCurrency(); // value from DE Element 61_13
+		String issuerCurrencyCode = transactionData.getIssuerCurrencyCode(); // value
+																				// from
+																				// DE
+																				// Element
+																				// 49
+		String cardHolderBillingCurrency = transactionData.getCardHolderBillingCurrency(); // value
+																							// from
+																							// DE
+																							// Element
+																							// 61_13
 		String binBinMinRange = bin.substring(0, 9) + "00";
 		String binMaxBinRange = bin.substring(0, 9) + "99";
 		try {
@@ -1673,41 +1686,38 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private DesktopOptions setWinSCPAsApplication() {
 		DesktopOptions options = new DesktopOptions();
-		MiscUtils.reportToConsole(ConstantData.MESSAGE_CONSTANT  + winSCPPath );
+		MiscUtils.reportToConsole(ConstantData.MESSAGE_CONSTANT + winSCPPath);
 		options.setApplicationPath(winSCPPath);
 		return options;
 	}
 
 	private void startWiniumDriverWithApplication(DesktopOptions options) {
 		MiscUtils.killProcessFromTaskManager("WINIUM");
-		try
-		{
+		try {
 			String path = getResourceFolderPath() + SimulatorConstantsData.WINIUM_DRIVER_EXE_PATH.replace("\\", "\\\\");
-			Runtime.getRuntime().exec(path, null, new File( path.replace("Winium.Desktop.Driver.exe", ""))) ;
+			Runtime.getRuntime().exec(path, null, new File(path.replace("Winium.Desktop.Driver.exe", "")));
 			wait(3000);
 			winiumDriver = new WiniumDriver(new URL("http://localhost:9999"), options);
 			wait(8000);
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			logger.debug("Exception occurred while starting Winium", e);
 			MiscUtils.propagate(e);
 		}
 	}
 
-	public void launchWinSCP(){
+	public void launchWinSCP() {
 		browserMinimize();
 		startWiniumDriverWithApplication(setWinSCPAsApplication());
 	}
-	
-	public void loginToWinSCP(){
+
+	public void loginToWinSCP() {
 		try {
 			winiumClickOperation("Session");
 			wait(2000);
 			pressTab();
 			pressTab();
 			pressTab();
-			setText(hostName); 
+			setText(hostName);
 			pressTab();
 			setText(number);
 			pressTab();
@@ -1721,23 +1731,24 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		}
 	}
 
-	public void setFolderPermisson(String fName){
+	public void setFolderPermisson(String fName) {
 		try {
-			String folderName = (folderPath+fName).substring((folderPath+fName).lastIndexOf("/")+1);
+			String folderName = (folderPath + fName).substring((folderPath + fName).lastIndexOf("/") + 1);
 			Actions action = new Actions(winiumDriver);
 			wait(20000);
-			action.moveToElement(winiumDriver.findElement(By.name("Rights"))).moveByOffset(0,-30).doubleClick().build().perform();
+			action.moveToElement(winiumDriver.findElement(By.name("Rights"))).moveByOffset(0, -30).doubleClick().build().perform();
 			wait(3000);
-			setText((folderPath+fName).replace(folderName,""));  //Folder Path
+			setText((folderPath + fName).replace(folderName, "")); // Folder
+																	// Path
 			wait(2000);
 			winiumClickOperation("OK");
-			wait(2000);			
-			winiumClickOperation(folderName); 	//Folder Name
+			wait(2000);
+			winiumClickOperation(folderName); // Folder Name
 			pressF9Key();
 			wait(3000);
-			action.moveToElement(winiumDriver.findElement(By.name("Cancel"))).moveByOffset(0,-30).click().build().perform();
+			action.moveToElement(winiumDriver.findElement(By.name("Cancel"))).moveByOffset(0, -30).click().build().perform();
 			wait(3000);
-			action.moveToElement(winiumDriver.findElement(By.name("Cancel"))).moveByOffset(-20,-90).doubleClick().build().perform();
+			action.moveToElement(winiumDriver.findElement(By.name("Cancel"))).moveByOffset(-20, -90).doubleClick().build().perform();
 			setText("0777");
 			wait(3000);
 			winiumClickOperation("OK");
@@ -1746,7 +1757,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		}
 	}
 
-	public void closeWinSCP(){
+	public void closeWinSCP() {
 		winiumClickOperation("Close");
 		wait(2000);
 		winiumClickOperation("OK");
