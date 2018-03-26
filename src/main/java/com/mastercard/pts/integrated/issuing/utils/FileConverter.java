@@ -28,6 +28,7 @@ import com.mastercard.pts.integrated.issuing.domain.CSVData;
 public class FileConverter {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileConverter.class);
 	private static final String CSV_EXTN = ".csv";
+	private static final String CONFIG_PATH = "./src/main/resources/config/";
 	
 	public String getCellValAsString(Cell cell) {
 		DataFormatter dataFormatter = new DataFormatter();
@@ -35,7 +36,7 @@ public class FileConverter {
 	}
 
 	private String createDirs(Sheet sheet, String env) {
-		File dir = new File("C" + ":" + File.separatorChar + "Temp" + File.separatorChar + env);
+		File dir = new File(CONFIG_PATH + env + "/Data");
 		dir.mkdirs();
 
 		return (dir.getAbsolutePath() + File.separatorChar + sheet.getSheetName() + CSV_EXTN);
@@ -137,13 +138,12 @@ public class FileConverter {
 
 	@Test
 	public void convertExcelToCsv() throws IOException, InvalidFormatException {
-		String[] listOfEnvs = { "demo" };
-		// Data/TestData.xls or TestData/TestData.xlsx
-		String[] dataFiles = { "Data/TestData.xls", "TestData/TestData.xlsx" };		
+		String[] listOfEnvs = { "demo", "automation", "automation2", "stage" };
+		String[] dataFiles = { "Data/TestData.xls", /*"TestData/TestData.xlsx"*/ };		
 		for (String env : listOfEnvs) {
 			for (String dataFile : dataFiles) {
 				try (InputStream in = new FileInputStream(
-						String.format("./src/main/resources/config/%s/%s", env, dataFile));
+						String.format("%s%s/%s", CONFIG_PATH, env, dataFile));
 						Workbook wb = WorkbookFactory.create(in)) {
 					if (dataFile.endsWith(".xls")) {
 						convertXlsToCsv(wb, env);
