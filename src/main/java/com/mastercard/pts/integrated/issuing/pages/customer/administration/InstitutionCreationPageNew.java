@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import junit.framework.Assert;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCr
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.ProcessingCenterNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -123,6 +125,18 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "customerCareFax:input:inputTextField")
 	private MCWebElement custCareFaxTxtBx;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "customerCareNumberInt:input:inputTextField")
+	private MCWebElement custCareIntNoTxtBx;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "select[name='customerCareNumberIntCntryCode:input:dropdowncomponent']")
+	private MCWebElement custCareIntDdwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "customerCareNumberVipCntryCode:input:dropdowncomponent")
+	private MCWebElement custCareVIPDdwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "customerCareNumberVip:input:inputTextField")
+	private MCWebElement custCareVIPNoTxtBx;
+
 	// ------------- Processing Center > Setup > Master Parameters > Institution
 	// > Add Institution > Address
 
@@ -167,6 +181,9 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement saveBtn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
+	private MCWebElement cancelBtn;
 
 	@PageElement(findBy = FindBy.ID, valueToFind = "institution_selection")
 	private MCWebElement instituteSelectionDrpDwn;
@@ -182,6 +199,9 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Search']")
 	private MCWebElement searchBtn;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = ".feedbackPanelINFO>span")
+	private MCWebElement instituteUpdateMessage;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody//tr")
 	private MCWebElements resultTableRow;
@@ -285,6 +305,8 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "agtMailId:input:inputTextField")
 	private MCWebElement agentEmailTxt;
+	
+	public static final String ATTRIBUTE_VALUE =  "value";
 
 	/**
 	 * Click add button and switch to frame
@@ -391,6 +413,51 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 	public void enterCustomerFax(InstitutionCreation institute) {
 		enterValueinTextBox(custCareFaxTxtBx, institute.getCustomerCareFax());
+	}
+
+	private void enterCustomerIntl(InstitutionCreation institute) {
+		selectValueFromDropDown(custCareIntDdwn,
+				institute.getCustomerCareIntlISDCode());
+		enterValueinTextBox(custCareIntNoTxtBx,
+				institute.getCustomerCareIntlNo());
+	}
+
+	public boolean verifyCustCareIntl(InstitutionCreation institute) {
+		try{
+		waitForElementVisible(custCareIntDdwn);
+		return (custCareIntDdwn.getSelect().getFirstSelectedOption().getText()
+				.equalsIgnoreCase(institute.getCustomerCareIntlISDCode())
+				&& custCareIntNoTxtBx.getAttribute(ATTRIBUTE_VALUE).equalsIgnoreCase(
+						institute.getCustomerCareIntlNo()));
+			}
+		catch(Exception e)
+		{
+			logg.error("Error in Verifying Customer Care International details",e);
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean verifyCustCareVIP(InstitutionCreation institute) {
+		try{
+		return (custCareVIPDdwn.getSelect().getFirstSelectedOption().getText()
+				.equalsIgnoreCase(institute.getCustomerCareVIPISDCode())
+				&& custCareVIPNoTxtBx.getAttribute(ATTRIBUTE_VALUE).equalsIgnoreCase(
+						institute.getCustomerCareVIPNo()));
+		}
+		catch(Exception e)
+		{
+			logg.error("Error in Verifying Customer Care VIP details",e);
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	private void enterCustomerVIP(InstitutionCreation institute) {
+		selectValueFromDropDown(custCareVIPDdwn,
+				institute.getCustomerCareVIPISDCode());
+		enterValueinTextBox(custCareVIPNoTxtBx,
+				institute.getCustomerCareVIPNo());
 	}
 
 	public void navigateToTab(String tabName) {
@@ -606,7 +673,8 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 			selectFinancialYearStartMonth(institution);
 			selectSDNPlan(institution);
 		} catch (Exception e) {
-			logg.error("Error in providing general details :: " + e);
+			logg.error("Error in providing general details :: " ,e);
+			e.printStackTrace();
 		}
 	}
 
@@ -616,7 +684,17 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 			enterGeneralTabEmailID(instution);
 			enterCustomerFax(instution);
 		} catch (Exception e) {
-			logg.error("Error in providing general details" + e);
+			logg.error("Error in providing Customer Care details" ,e);
+		}
+	}
+
+	public void provideCustomerCareIntVIPno(InstitutionCreation instution) {
+		try {
+			enterCustomerIntl(instution);
+			enterCustomerVIP(instution);
+		} catch (Exception e) {
+			logg.error("Error in providing Customer Care International details"
+					,e);
 		}
 	}
 
@@ -628,7 +706,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 			enterMobileNumberCountryCode(instution);
 			enterAddressTabEmailID(instution);
 		} catch (Exception e) {
-			logg.error("Error in providing personal details" + e);
+			logg.error("Error in providing personal details" ,e);
 		}
 	}
 
@@ -661,7 +739,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 			enterAddressLine2(instution);
 			waitForLoaderToDisappear();
 		} catch (Exception e) {
-			logg.error("Error in providing address details" + e);
+			logg.error("Error in providing address details" ,e);
 		}
 	}
 
@@ -678,6 +756,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public void verifyNewInstituteCreationSuccess(InstitutionCreation instution) {
+		try{
 		if (!verifyErrorsOnInstitutePage()) {
 			SwitchToDefaultFrame();
 			enterNewInstitutionName(instution);
@@ -703,6 +782,11 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 		} else {
 			logg.error("Error in new intitution creation");
 		}
+		}catch(Exception e)
+		{
+			logg.error("Error in new intitution creation"+ e);
+			e.printStackTrace();
+		}
 	}
 
 	public void enterInstitutionName(InstitutionCreation institute) {
@@ -710,7 +794,14 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public void save() {
-		clickWhenClickable(saveBtn);		
+		clickWhenClickable(saveBtn);
+		waitForLoaderToDisappear();
+		SwitchToDefaultFrame();
+	}
+	
+	public void cancel() {
+		clickWhenClickable(cancelBtn);
+		SwitchToDefaultFrame();
 	}
 
 	public void provideInstitutionType(InstitutionCreation institution) {
@@ -745,7 +836,8 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 		} catch (Exception e) {
 			logg.error("Error in selecting intitutionType "
-					+ institution.getInstitutionType() + ":::" + e);
+					+ institution.getInstitutionType() + ":::" ,e);
+			e.printStackTrace();
 		}
 	}
 
@@ -799,4 +891,25 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 		selectCheckBox(smsProvider, "SMS Service Provider");
 	}
 
+	public void enterNewInstitution(InstitutionCreation institution) {
+		enterNewInstitutionName(institution);
+		searchNewInstitution();
+		editFirstRecord();
+		switchToIframe(Constants.EDIT_INSTITUTION_FRAME);
+	}
+
+	public boolean validateCustomerCareIntlVIP(InstitutionCreation institution) {
+		return (verifyCustCareIntl(institution) && verifyCustCareVIP(institution));	
+	}
+
+	public void updateCustomerCareIntlVIP(InstitutionCreation institution) {
+		institution.setCustomerCareIntlNo(CustomUtils.RandomNumbers(6));
+		enterCustomerIntl(institution);
+		institution.setCustomerCareVIPNo(CustomUtils.RandomNumbers(6));
+		enterCustomerVIP(institution);
+	}
+
+	public String getInstUpdateMessage() {
+		return instituteUpdateMessage.getText();
+	}
 }
