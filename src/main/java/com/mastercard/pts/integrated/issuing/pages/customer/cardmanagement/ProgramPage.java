@@ -418,9 +418,13 @@ public class ProgramPage extends AbstractBasePage {
 			addProgram(program.getProgramCode());
 			addDescription(program.getDescription());
 			selectInterchange(program.getInterchange());
+			SimulatorUtilities.wait(400);
 			selectProduct(program.getProduct());
+			SimulatorUtilities.wait(400);
 			selectProgramType(program.getProgramType());
+			SimulatorUtilities.wait(400);
 			selectBaseCurrency(program.getBaseCurrency());
+			SimulatorUtilities.wait(400);
 			program.setProgramCodeDevice(program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
