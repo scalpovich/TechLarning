@@ -302,16 +302,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		HashMap<String, String> hm = new HashMap<>();
 		WebElementUtils.selectDDByVisibleText(batchTypeDDwn, batch.getBatchType());
 		WebElementUtils.selectDDByVisibleText(batchNameDDwn, batch.getBatchName());
-		/*
-		 * WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn,
-		 * batch.getBatchType());
-		 * WebElementUtils.selectDropDownByVisibleText(batchNameDDwn,
-		 * batch.getBatchName());
-		 */
 		SimulatorUtilities.wait(5000);// this delay is for table to load data
 		WebElement selectChkIPM = driver().findElement(By.xpath("//td[.//*[text()='" + batch.getFileName() + "']]/following-sibling::td[1]/input"));
 		selectChkIPM.click();
-		// selectChkBx.click();
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		submitBtn.click();
 		WebElementUtils.waitForWicket(driver());
@@ -383,7 +376,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
 			dateFromUI = getDateFromUI(dateFormatter, batch);
 		} catch (ParseException e) {
-			throw Throwables.propagate(e);
+			throw new RuntimeException(e);
 		}
 
 		submitAndVerifyBatch();

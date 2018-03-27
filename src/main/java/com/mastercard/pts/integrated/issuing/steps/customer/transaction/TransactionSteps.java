@@ -407,10 +407,12 @@ public class TransactionSteps {
 	}
 	
 	@Then("search with device in transaction screen and status for Joning and Membership Fees")
-	public void thenSearchWithDeviceInTransactionScreenandststusforJoiningandMembershipFees() {
+	public void thenSearchWithDeviceInTransactionScreenAndStatusForJoiningandMembershipFees() {
 		
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
-		Device device = context.get(ContextConstants.DEVICE_NUMBER);
+		Device device = new Device();
+		device.setDeviceNumber(context.get(ContextConstants.DEVICE_NUMBER));
+		device.setProductType(provider.getString("PRODUCT_TYPE"));
 	    transactionWorkflow.searchTransactionWithDeviceAndGetStatus(device, ts);
 				}
 

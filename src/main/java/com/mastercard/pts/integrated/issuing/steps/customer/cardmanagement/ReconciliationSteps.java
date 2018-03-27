@@ -52,13 +52,13 @@ public class ReconciliationSteps {
 	}
 
 	@When("post maintenence batch is run")
-	public void whenpostmaintenencebatchisrun() {
+	public void whenPostMaintenenceBatchIsRun() {
 
 		List<ProcessBatches> processBatches = new ArrayList<>();
 
 		ProcessBatches postMaintenenceBatch = new ProcessBatches();
 		postMaintenenceBatch.setProductType(provider.getString(BATCH_TYPE));
-		postMaintenenceBatch.setBatchName(provider.getString("BATCH_NAME_POST_MAINTENANCE"));
+		postMaintenenceBatch.setBatchName(provider.getString("BATCH_NAME_POST_MAINTENENCE"));
 
 		processBatches.add(postMaintenenceBatch);
 

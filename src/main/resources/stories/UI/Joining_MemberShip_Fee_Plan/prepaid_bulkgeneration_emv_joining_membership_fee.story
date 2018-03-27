@@ -13,14 +13,14 @@ Scenario: Set up prepaid emv retail general purpose card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client
-Then user sign out from customer portal
+Then user signs out from customer portal
 
 Scenario: prepaid emv retail general purpose card device production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
-Then user sign out from customer portal
+Then user signs out from customer portal
 Then user is logged in institution
 Then device has "normal" status
 
@@ -62,7 +62,7 @@ Then load balance approve is successful
 And user sign out from agent portal
 And user is logged in institution
 And balance in helpdesk updated correctly for prepaid device
-And user sign out from customer portal
+And user signs out from customer portal
 
 Scenario: Post maintenance batch and pre-clearing batch is run
 Meta:
@@ -70,10 +70,10 @@ Meta:
 Given user is logged in institution
 When post maintenence batch is run
 Then "Pre-clearing" batch for prepaid is successful
-And user sign out from customer portal
+And user signs out from customer portal
 
 Scenario: Joining and MemberShip Fees is been Deducted
 
 Given user is logged in institution
 Then search with device in transaction screen and status for Joning and Membership Fees
-And user sign out from customer portal
+And user signs out from customer portal
