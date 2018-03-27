@@ -11,6 +11,9 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 @Component
 public class InstitutionCreation extends AbstractBasePage {
 
+	public static final String CUSTOMER_CARE_INTL_NO = "CustCareIntl";
+	public static final String CUSTOMER_CARE_ISD_CODE = "CustCareSTD";
+
 	private String institutionCode;
 	private String institutionName;
 	private String institutionAbbrevation;
@@ -48,6 +51,10 @@ public class InstitutionCreation extends AbstractBasePage {
 	private String ascVendor;
 	private String existingInstitutionCode;
 	private String authenticationFlg;
+	private String customerCareIntlISDCode;
+	private String customerCareIntlNo;
+	private String customerCareVIPISDCode;
+	private String customerCareVIPNo;
 	private String credentialMasking;
 
 	public String getCredentialMasking() {
@@ -330,6 +337,38 @@ public class InstitutionCreation extends AbstractBasePage {
 		this.smsServiceProvider = smsServiceProvider;
 	}
 
+	public String getCustomerCareIntlISDCode() {
+		return customerCareIntlISDCode;
+	}
+
+	public void setCustomerCareIntlISDCode(String customerCareIntlISDCode) {
+		this.customerCareIntlISDCode = customerCareIntlISDCode;
+	}
+
+	public String getCustomerCareIntlNo() {
+		return customerCareIntlNo;
+	}
+
+	public void setCustomerCareIntlNo(String customerCareIntlNo) {
+		this.customerCareIntlNo = customerCareIntlNo;
+	}
+
+	public String getCustomerCareVIPISDCode() {
+		return customerCareVIPISDCode;
+	}
+
+	public void setCustomerCareVIPISDCode(String customerCareVIPISDCode) {
+		this.customerCareVIPISDCode = customerCareVIPISDCode;
+	}
+
+	public String getCustomerCareVIPNo() {
+		return customerCareVIPNo;
+	}
+
+	public void setCustomerCareVIPNo(String customerCareVIPNo) {
+		this.customerCareVIPNo = customerCareVIPNo;
+	}
+
 	public static InstitutionCreation getInstitutionData() {
 		InstitutionCreation institute = new InstitutionCreation();
 		institute.setInstitutionCode(CustomUtils.RandomNumbers(6));
@@ -368,7 +407,16 @@ public class InstitutionCreation extends AbstractBasePage {
 		institute.setAgentPortalAdminName(
 				MapUtils.fnGetInputDataFromMap("AgentPortalAdminName") + MiscUtils.generateRandomNumberAsString(5));
 		institute.setAscVendor(MapUtils.fnGetInputDataFromMap("ASC_Vendor"));
-		institute.setExistingInstitutionCode(MapUtils.fnGetInputDataFromMap("ExistingInstitutionCode"));
+		institute.setExistingInstitutionCode(MapUtils
+				.fnGetInputDataFromMap("ExistingInstitutionCode"));
+		institute.setCustomerCareVIPNo(MapUtils
+				.fnGetInputDataFromMap(CUSTOMER_CARE_INTL_NO));
+		institute.setCustomerCareVIPISDCode(MapUtils
+				.fnGetInputDataFromMap(CUSTOMER_CARE_ISD_CODE));
+		institute.setCustomerCareIntlISDCode(MapUtils
+				.fnGetInputDataFromMap(CUSTOMER_CARE_ISD_CODE));
+		institute.setCustomerCareIntlNo(MapUtils
+				.fnGetInputDataFromMap(CUSTOMER_CARE_INTL_NO));
 		return institute;
 	}
 

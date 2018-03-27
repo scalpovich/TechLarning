@@ -18,6 +18,7 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 	@Autowired
 	public Navigator navigator;
 
+	@Autowired
 	InstitutionCreationPageNew institute;
 
 	@Autowired
@@ -25,6 +26,8 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 
 	@Autowired
 	private TestContext context;
+
+	private static final String TAB_ADDRESS = "Address";
 
 	public void institutionCreation(InstitutionCreation institutionCreation) {
 
@@ -35,14 +38,14 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 		institute.provideGeneralDetails(institutionCreation);
 		institute.provideAdaptiveAuthentication();
 		institute.provideCustomCareDetails(institutionCreation);
-		institute.navigateToTab("Address");
+		institute.navigateToTab(TAB_ADDRESS);
 		institute.providePersonalDetailsAdressTab(institutionCreation);
 		institute.provideAddressDetails(institutionCreation);
 		institute.save();
 		waitForLoaderToDisappear();
 	}
 
-	public void checkSuccessfullInstitutionCreation(InstitutionCreation institutionCreation) {
+	public void checkSuccessfulInstitutionCreation(InstitutionCreation institutionCreation) {
 		institute.verifyNewInstituteCreationSuccess(institutionCreation);
 	}
 
@@ -58,6 +61,39 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 		clickSearchButton();
 		editFirstRecord();
 		return page.checkASCVendorEnabledAndSelectASCVendor();
+	}
+
+	public void addCustomerCareIntlVIP(InstitutionCreation institutionCreation) {
+		institute = navigator.navigateToPage(InstitutionCreationPageNew.class);
+		institute.clickAddBtn();
+		institute.provideInstitutionDetails(institutionCreation);
+		institute.provideInstitutionType(institutionCreation);
+		institute.provideGeneralDetails(institutionCreation);
+		institute.provideCustomCareDetails(institutionCreation);
+		institute.provideCustomerCareIntVIPno(institutionCreation);
+		institute.navigateToTab(TAB_ADDRESS);
+		institute.providePersonalDetailsAdressTab(institutionCreation);
+		institute.provideAddressDetails(institutionCreation);
+		institute.save();
+	}
+
+	public void updateCustomerCareIntlVIP(InstitutionCreation institutionCreation) {
+		institute = navigator.navigateToPage(InstitutionCreationPageNew.class);
+		institute.enterNewInstitution(institutionCreation);
+		institute.updateCustomerCareIntlVIP(institutionCreation);
+		institute.save();
+	}
+
+	public boolean validateCustomerCareIntlVIP(InstitutionCreation institutionCreation) {
+		institute = navigator.navigateToPage(InstitutionCreationPageNew.class);
+		institute.enterNewInstitution(institutionCreation);
+		boolean status = institute.validateCustomerCareIntlVIP(institutionCreation);
+		institute.cancel();
+		return status;
+	}
+
+	public String verifyInstitiueUpdate() {
+		return institute.getInstUpdateMessage();
 	}
 
 }
