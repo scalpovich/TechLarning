@@ -25,7 +25,8 @@ public class TransactionFeePlan {
 
 	private static final String MARKUP_FEE = "MARKUP_FEE";
 	private static final String MARKUP_FEE_TAX = "MARKUP_FEE_TAX";
-
+	private static final String SOURCE_CURRENCY = "SOURCE_CURRENCY";
+	private static final String BILLING_CURRENCY = "BILLING_CURRENCY";
 	private static final String BILLING_AMOUNT = "BILLING_AMOUNT";
 	private static final String BILLING_AMOUNT_RATE = "BILLING_AMOUNT_RATE";
 	private static final String MIN_TXN_RATE = "MIN_TXN_RATE";
@@ -83,6 +84,10 @@ public class TransactionFeePlan {
 	private String markupfeetax;
 	
 	private String markuprate;
+	
+	private String sourcecurrency;
+	
+	private String billingcurrency;
 
 	public static TransactionFeePlan createWithProvider(KeyValueProvider provider) {
 		TransactionFeePlan details = new TransactionFeePlan();
@@ -124,6 +129,8 @@ public class TransactionFeePlan {
 		markupfee.setMarkupFee(provider.getString(MARKUP_FEE));
 		markupfee.setMarkupFeeTax(provider.getString(MARKUP_FEE_TAX));
 		markupfee.setMarkUpRate(provider.getString(MARKUP_FEE_RATE));
+		markupfee.setSourceCurrency(provider.getString(SOURCE_CURRENCY));
+		markupfee.setBillingCurrency(provider.getString(BILLING_CURRENCY));
 		return markupfee;
 	}
 
@@ -320,6 +327,24 @@ public class TransactionFeePlan {
    public void setMarkUpRate(String markuprate)
    {
 	   this.markuprate=markuprate;
+   }
+   
+   public String getSourceCurrency(){
+	   return sourcecurrency;
+   }
+   
+   public void setSourceCurrency(String sourcecurrency)
+   {
+	   this.sourcecurrency=sourcecurrency;
+   }
+   
+   public String getBillingCurrency(){
+	   return billingcurrency;
+   }
+   
+   public void setBillingCurrency(String billingcurrency)
+   {
+	   this.billingcurrency=billingcurrency;
    }
 
 }

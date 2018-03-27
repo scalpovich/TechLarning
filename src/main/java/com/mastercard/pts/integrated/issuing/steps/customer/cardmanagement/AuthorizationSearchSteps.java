@@ -95,7 +95,9 @@ public class AuthorizationSearchSteps {
 		String markUpFees = String.valueOf(Math.round(markUpFee * 100.0) / 100.0);
 		Double markUpFeeTax = Double.parseDouble(markUpFees) * Double.parseDouble(txnFeePlan.getMarkupFeeTax()) / 100;
 		String markUpFeesTax = String.valueOf(Math.round(markUpFeeTax * 100.0) / 100.0);
-		assertThat(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()), Matchers.hasItems(markUpFees, markUpFeesTax));
+		String sourceCurrency = txnFeePlan.getSourceCurrency();
+		String billingCurrency = txnFeePlan.getBillingCurrency();
+		assertThat(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()), Matchers.hasItems(markUpFees, markUpFeesTax, sourceCurrency,billingCurrency));
 	}
 
 	@Then("validate auth report")

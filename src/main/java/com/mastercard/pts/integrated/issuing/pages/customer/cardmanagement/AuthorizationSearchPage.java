@@ -71,6 +71,13 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='tab_content']//span[contains(text(),'Markup Fee')]/../following-sibling::td//span[@class='labeltextr']")
 	private MCWebElement markupFeeTax;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='tab_content']//span[contains(text(),'Transaction Currency :')]/following-sibling::span//span[@class='labelselectf']")
+	private MCWebElement sourceCurrency;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='tab_content']//span[contains(text(),'Billing Currency :')]/following-sibling::span//span[@class='labelselectf']")
+	private MCWebElement billingCurrency;
+	
 
 	public void verifyUiOperationStatus() {
 		logger.info("Authorization Search");
@@ -126,6 +133,8 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 			markupFeeDetails.add(billingAmount.getText());
 			markupFeeDetails.add(markupFee.getText());
 			markupFeeDetails.add(markupFeeTax.getText());
+			markupFeeDetails.add(billingCurrency.getText());
+			markupFeeDetails.add(sourceCurrency.getText());
 			clickCloseButton();
 		});
 		return markupFeeDetails;
