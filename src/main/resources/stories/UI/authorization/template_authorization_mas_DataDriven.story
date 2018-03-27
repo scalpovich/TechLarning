@@ -17,4 +17,4 @@ Then MAS test results are verified
 
 Examples:
 |transaction|
-|EMV_PURCHASE_PIN|
+|RECURRING_PUR_TXN_PIN|

@@ -1074,8 +1074,12 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void closeSimulator(String name) {
 		winiumDriver = null;
-		if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains("17"))
+		logger.info("Simulator version : " + name);
+		if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains("18"))
+			name = "MAS18";
+		else if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains("17"))
 			name = "MAS17";
+		
 		if (SimulatorConstantsData.MDFS_LICENSE_TYPE.contains("17"))
 			name = "MDFS17";
 		if ("visa".equalsIgnoreCase(name)) {
