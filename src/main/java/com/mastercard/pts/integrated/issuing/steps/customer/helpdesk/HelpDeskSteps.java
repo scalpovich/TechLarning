@@ -358,8 +358,6 @@ public class HelpDeskSteps {
 	@Then("currency setup for $type device is done correctly and updated in wallet details tab")
 	public void thenCurrencySetupForDeviceIsDoneCorrectlyAndUpdatedInWalletDetailsTab(String type) {
 		Device device = context.get(ContextConstants.DEVICE);
-//		device.setDeviceNumber(context.get(ContextConstants.DEVICE_NUMBER));
-//		device.setAppliedForProduct(ProductType.fromShortName(type));
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
 		assertTrue(helpdeskWorkflow.verifyCurrencySetupDoneCorrectly(helpdeskGeneral, device));

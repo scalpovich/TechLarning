@@ -18,7 +18,6 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.A
 @Component
 public class AuthorizationSearchSteps {
 
-
 	@Autowired
 	private TestContext context;
 
@@ -72,7 +71,6 @@ public class AuthorizationSearchSteps {
 
 	}
 
-	@When("verify markup fee applied on transaction")
 	@Then("verify markup fee applied on transaction")
 	public void veriyMarkupFeeOnTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
@@ -84,8 +82,7 @@ public class AuthorizationSearchSteps {
 		String markUpFeesTax = String.valueOf(Math.floor(markUpFeeTax * 100) / 100);
 		assertThat(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()), Matchers.hasItems(markUpFees, markUpFeesTax));
 	}
-	
-	@When("verify markup rate fee applied on transaction")
+
 	@Then("verify markup rate fee applied on transaction")
 	public void veriyMarkupRateFeeOnTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
@@ -97,7 +94,7 @@ public class AuthorizationSearchSteps {
 		String markUpFeesTax = String.valueOf(Math.round(markUpFeeTax * 100.0) / 100.0);
 		String sourceCurrency = txnFeePlan.getSourceCurrency();
 		String billingCurrency = txnFeePlan.getBillingCurrency();
-		assertThat(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()), Matchers.hasItems(markUpFees, markUpFeesTax, sourceCurrency,billingCurrency));
+		assertThat(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()), Matchers.hasItems(markUpFees, markUpFeesTax, sourceCurrency, billingCurrency));
 	}
 
 	@Then("validate auth report")

@@ -19,7 +19,7 @@ public class Encryptor {
 
 	private static String encrypt(String text) {
 		try {
-			return EncryptUtils.encrypt(text);
+			return EncryptUtils.decrypt(text);
 		} catch (Exception e) {
 			logger.error("Fail to encrypt: " + e);
 			MiscUtils.propagate(e);

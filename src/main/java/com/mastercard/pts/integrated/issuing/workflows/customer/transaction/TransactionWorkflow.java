@@ -264,11 +264,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public void launchWiniumAndSimulator(String simulator) {
-		launchRequiredSimulatorSession(simulator); // to fetch required
-													// Simulator installed on
-													// the machine or read value
-													// from
-													// WhichSimulatorVersionToChoose.java
+		launchRequiredSimulatorSession(simulator); // to fetch required Simulator installed on the machine or read value from WhichSimulatorVersionToChoose.java
+													
 		closeSimulator(simulator);
 
 		try {
@@ -514,8 +511,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			aRN = addAcquirerReferenceData(trimmedRrn);
 			MiscUtils.reportToConsole("rRN :  trimmedRrn : aRN  -  " + rRN + " : - : " + trimmedRrn + " : - :" + aRN);
 			updatePanNumber(SimulatorConstantsData.SAMPLE_PAN_NUMBER);
-			performClickOperation(MESSAGE_TYPE_INDICATOR); // selecting the
-															// table
+			performClickOperation(MESSAGE_TYPE_INDICATOR); // selecting the table
 			pressPageUp();
 			clickMiddlePresentmentAndMessageTypeIndicator();
 			action.moveToElement(winiumDriver.findElementByName("033 - Forwarding Institution Identification Code")).doubleClick().build().perform();
@@ -930,16 +926,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void configureBinRangeForMdfs(Transaction transactionData, String transactionName) {
 		String bin = transactionData.getCardNumber();
-		String issuerCurrencyCode = transactionData.getIssuerCurrencyCode(); // value
-																				// from
-																				// DE
-																				// Element
-																				// 49
-		String cardHolderBillingCurrency = transactionData.getCardHolderBillingCurrency(); // value
-																							// from
-																							// DE
-																							// Element
-																							// 61_13
+		String issuerCurrencyCode = transactionData.getIssuerCurrencyCode(); // value from DE element 49																	
+		String cardHolderBillingCurrency = transactionData.getCardHolderBillingCurrency(); // value from DE element 61_13																				
 		String binBinMinRange = bin.substring(0, 9) + "00";
 		String binMaxBinRange = bin.substring(0, 9) + "99";
 		try {
@@ -1738,8 +1726,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(20000);
 			action.moveToElement(winiumDriver.findElement(By.name("Rights"))).moveByOffset(0, -30).doubleClick().build().perform();
 			wait(3000);
-			setText((folderPath + fName).replace(folderName, "")); // Folder
-																	// Path
+			setText((folderPath + fName).replace(folderName, "")); // Folder Path
 			wait(2000);
 			winiumClickOperation("OK");
 			wait(2000);

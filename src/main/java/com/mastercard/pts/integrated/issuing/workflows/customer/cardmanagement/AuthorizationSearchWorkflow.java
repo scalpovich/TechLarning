@@ -132,7 +132,7 @@ public class AuthorizationSearchWorkflow {
 	public List<String> checkMarkupFee(String deviceNumber) {
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		page.authCheckMarkUpFee(deviceNumber);
-		return page.checkMarkupFee();
+		return page.getMarkUpFeeDetails();
 
 	}
 

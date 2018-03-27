@@ -79,15 +79,15 @@ public class TransactionFeePlan {
 
 	private String minTxnRate;
 
-	private String markupfee;
+	private String markUpFee;
 
-	private String markupfeetax;
+	private String markUpFeeTax;
 	
-	private String markuprate;
+	private String markUpRate;
 	
-	private String sourcecurrency;
+	private String sourceCurrency;
 	
-	private String billingcurrency;
+	private String billingCurrency;
 
 	public static TransactionFeePlan createWithProvider(KeyValueProvider provider) {
 		TransactionFeePlan details = new TransactionFeePlan();
@@ -305,46 +305,46 @@ public class TransactionFeePlan {
 	}
 
 	public String getMarkupFee() {
-		return markupfee;
+		return markUpFee;
 	}
 
-	public void setMarkupFee(String markupfee) {
-		this.markupfee = markupfee;
+	public void setMarkupFee(String markUpFee) {
+		this.markUpFee = markUpFee;
 	}
 
 	public String getMarkupFeeTax() {
-		return markupfeetax;
+		return markUpFeeTax;
 	}
 
 	public void setMarkupFeeTax(String markupfeetax) {
-		this.markupfeetax = markupfeetax;
+		this.markUpFeeTax = markupfeetax;
 	}
 	
    public String getMarkUpRate(){
-	   return markuprate;
+	   return markUpRate;
    }
    
    public void setMarkUpRate(String markuprate)
    {
-	   this.markuprate=markuprate;
+	   this.markUpRate=markuprate;
    }
    
    public String getSourceCurrency(){
-	   return sourcecurrency;
+	   return sourceCurrency;
    }
    
    public void setSourceCurrency(String sourcecurrency)
    {
-	   this.sourcecurrency=sourcecurrency;
+	   this.sourceCurrency=sourcecurrency;
    }
    
    public String getBillingCurrency(){
-	   return billingcurrency;
+	   return billingCurrency;
    }
    
    public void setBillingCurrency(String billingcurrency)
    {
-	   this.billingcurrency=billingcurrency;
+	   this.billingCurrency=billingcurrency;
    }
 
 }
