@@ -116,6 +116,7 @@ public class TransactionSteps {
 			if (!transaction.toLowerCase().contains("ecom"))
 				temp = transaction + "_PIN";
 		}
+		MiscUtils.reportToConsole("***Temp Value***** : " + temp);
 		performOperationOnSamecard(false);
 		givenOptimizedTransactionIsExecuted(temp);
 	}
