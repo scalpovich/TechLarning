@@ -3,51 +3,81 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 import java.time.LocalDate;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 
+@Component
 public class TransactionFeePlan {
-	
+
 	private static final String TRANSACTION_TYPE = "TRANSACITON_TYPE";
 
 	private static final String WALLET_CURRENCY = "CURRENCY";
-	
+
 	private static final String TRANSACTION_SOURCE = "TRANSACITON_SOURCE";
 
 	private static final String TRANSACTION_ORIGIN = "TRANSACITON_ORIGIN";
 
+	private static final String TRANSACTION_FEE_PLAN = "TRANSACTION_FEE_PLAN";
+
+	private static final String TRANSACTION_RATE = "TRANSACTION_RATE";
+
+	private static final String BILLING_AMOUNT = "BILLING_AMOUNT";
+	private static final String BILLING_AMOUNT_RATE = "BILLING_AMOUNT_RATE";
+	private static final String MIN_TXN_RATE = "MIN_TXN_RATE";
+
+	private static final String RATE_TXN_FEE = "RATE_TXN_FEE";
+	private static final String MAX_TXN_RATE = "MAX_TXN_RATE";
+	private static final String FIXED_RATE_FEE = "FIXED_RATE_FEE";
+	private static final String FIXED_TXN_FEE = "FIXED_TXN_FEE";
 	private String transactionFeePlanCode;
-	
+
 	private String description;
-	
+
 	private String transactionType;
-	
+
 	private String walletCurrency;
-	
+
 	private String transactionSource;
-	
+
 	private String transactionOrigin;
-	
+
 	private LocalDate effectiveDate;
-	
+
 	private LocalDate endDate;
 
 	private String fromAmount;
-	
+
 	private String toAmount;
-	
+
 	private String fix;
-	
+
 	private String rate;
 
 	private String minimumFeeAmount;
-	
+
 	private String maximumFeeAmount;
-	
-	public static TransactionFeePlan createWithProvider(KeyValueProvider provider){
+
+	private String rateTxnfee;
+
+	private String fixedTxnFees;
+
+	private String fixedRateFee;
+
+	private String billingAmount;
+
+	private String maxTxnRate;
+
+	private String rateTxnFee;
+
+	private String billingAmountRate;
+
+	private String minTxnRate;
+
+	public static TransactionFeePlan createWithProvider(KeyValueProvider provider) {
 		TransactionFeePlan details = new TransactionFeePlan();
-		details.setTransactionFeePlanCode("AUT" + RandomStringUtils.randomNumeric(7));
+		details.setTransactionFeePlanCode(provider.getString(TRANSACTION_FEE_PLAN));
 		details.setDescription(ConstantData.GENERIC_DESCRIPTION);
 		details.setTransactionType(provider.getString(TRANSACTION_TYPE));
 		details.setWalletCurrency(provider.getString(WALLET_CURRENCY));
@@ -63,7 +93,22 @@ public class TransactionFeePlan {
 		details.setMaximumFeeAmount("20");
 		return details;
 	}
-	
+
+	public static TransactionFeePlan getAllTransactionFee(KeyValueProvider provider) {
+
+		TransactionFeePlan txnFee = new TransactionFeePlan();
+		txnFee.setRateTxnFee(provider.getString(TRANSACTION_RATE));
+		txnFee.setBillingAmount(provider.getString(BILLING_AMOUNT));
+		txnFee.setBillingAmountRate(provider.getString(BILLING_AMOUNT_RATE));
+		txnFee.setMinTxnRate(provider.getString(MIN_TXN_RATE));
+		txnFee.setRateTxnFee(provider.getString(RATE_TXN_FEE));
+		txnFee.setMaxTxnRate(provider.getString(MAX_TXN_RATE));
+		txnFee.setFixedRateFee(provider.getString(FIXED_RATE_FEE));
+		txnFee.setFixedTxnFees(provider.getString(FIXED_TXN_FEE));
+
+		return txnFee;
+	}
+
 	public String getTransactionType() {
 		return transactionType;
 	}
@@ -143,7 +188,7 @@ public class TransactionFeePlan {
 	public void setRate(String rate) {
 		this.rate = rate;
 	}
-	
+
 	public String getMinimumFeeAmount() {
 		return minimumFeeAmount;
 	}
@@ -176,4 +221,61 @@ public class TransactionFeePlan {
 		this.description = description;
 	}
 
+	public String getRateTxnFee() {
+		return rateTxnfee;
+	}
+
+	public void setRateTxnFee(String rateTxnfee) {
+		this.rateTxnfee = rateTxnfee;
+
+	}
+
+	public String getfixedTxnFees() {
+
+		return fixedTxnFees;
+	}
+
+	public void setFixedTxnFees(String fixedTxnFees) {
+		this.fixedTxnFees = fixedTxnFees;
+	}
+
+	public String getFixedRateFee() {
+		return fixedRateFee;
+	}
+
+	public void setFixedRateFee(String fixedRateFee) {
+		this.fixedRateFee = fixedRateFee;
+	}
+
+	public String getBillingAmount() {
+		return billingAmount;
+	}
+
+	public void setBillingAmount(String billingAmount) {
+		this.billingAmount = billingAmount;
+	}
+
+	public String getMaxTxnRate() {
+		return maxTxnRate;
+	}
+
+	public void setMaxTxnRate(String maxTxnRate) {
+		this.maxTxnRate = maxTxnRate;
+	}
+
+	public String getBillingAmountRate() {
+		return billingAmountRate;
+	}
+
+	public void setBillingAmountRate(String billingAmountRate) {
+		this.billingAmountRate = billingAmountRate;
+	}
+
+	public String getMinTxnRate() {
+		return minTxnRate;
+	}
+
+	public void setMinTxnRate(String minTxnRate) {
+		this.minTxnRate = minTxnRate;
+	}
 }

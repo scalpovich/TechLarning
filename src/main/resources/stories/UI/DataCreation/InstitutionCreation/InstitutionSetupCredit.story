@@ -5,8 +5,8 @@ So that new device can be created for Credit
 
 
 Meta:
-@InstituteTestCredit
-
+@InstituteSetUpCredit
+@InstituionSetUpForAllType
 Scenario: Scenario1 - Institution parameter setup for Credit type/ Mastercard
 Meta:
 @Regression
@@ -73,8 +73,8 @@ When user creates IPKCertificationInformation for interchange Visa
 When user creates Transaction Plan for Credit and transaction type Purchase/Auth Completion
 When user creates Transaction Limit Plan for Credit and plan type as Device/Wallet/Promotion Entity Plan
 When user creates Document checklist for Credit for document type Passport
-When user creates Template of type Device Template and of length 24
-When user creates Template of type Card Pack ID Template and of length 24
+When user creates Template of type Device Template and of length 16
+When user creates Template of type Card Pack ID Template and of length 16
 When user creates DeviceJoining Fee plan for Credit
 When user creates Membership Fee plan for Credit
 When user creates Device Event Based Fee Plan for Credit
@@ -129,7 +129,7 @@ Meta:
 @TCName AmexInstituionSetup
 @sheetName S205014
 
-Given login to portal as existing bank as a Customeruser 
+Given login to portal as existing bank as a Customeruser
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
 When user creates a Network MemberShip for Amex
 When user creates a Transaction Registration

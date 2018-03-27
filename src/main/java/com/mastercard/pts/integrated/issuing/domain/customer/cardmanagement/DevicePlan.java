@@ -235,7 +235,8 @@ public class DevicePlan implements HasCodeAndDescription {
 	private String emvPlanPinUnblock;
 	private String isPinLess;
 	private String expiryDateExcel;
-    private String allowInternationalTransaction;
+	private String allowInternationalTransaction;
+	private String transactionFeePlan;
 
 	public static DevicePlan createWithProvider(KeyValueProvider provider) {
 		DevicePlan plan = new DevicePlan();
@@ -301,8 +302,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setCustomCode(provider.getString(DP_DEVICE_NUMBER_GENERATION_CUSTOM_CODE));
 		plan.setPlasticId(provider.getString(DP_PLASTIC_ID));
 		plan.setPictureCode(provider.getString(DP_PICTURE_CODE));
-		plan.setDeviceNumberGenerationIssuePairedDevice(
-				provider.getString(DP_DEVICE_NUMBER_GENERATION_ISSUE_PAIRED_DEVICE));
+		plan.setDeviceNumberGenerationIssuePairedDevice(provider.getString(DP_DEVICE_NUMBER_GENERATION_ISSUE_PAIRED_DEVICE));
 
 		plan.setPriorityPassIndicator(provider.getString(DP_PRIORITY_PASS_INDICATOR));
 		plan.setPriorityPassIdTemplate(provider.getString(DP_PRIORITY_PASS_ID_TEMPLATE));
@@ -317,8 +317,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setPersonalizationGenerateCVV2CVC2(provider.getString(DP_PERSONALIZATION_GENERATE_CVV2CVC2));
 		plan.setPersonalizationGenerateCVVCVC(provider.getString(DP_PERSONALIZATION_GENERATE_CVVCVC));
 		plan.setPersonalizationNoOfDays(provider.getString(DP_PERSONALIZATION_NO_OF_DAYS));
-		plan.setPersonalizationValidityOnInitialMonths(
-				provider.getString(DP_PERSONALIZATION_VALIDITY_ON_INITIAL_MONTHS));
+		plan.setPersonalizationValidityOnInitialMonths(provider.getString(DP_PERSONALIZATION_VALIDITY_ON_INITIAL_MONTHS));
 		plan.setEmbossingVendor(provider.getString(DP_PERSONALIZATION_EMBOSSING_VENDOR));
 		plan.setActivationMode(provider.getString(DP_PERSONALIZATION_ACTIVATION_CODE));
 		plan.setExpiryFlag(provider.getString(DP_PERSONALIZATION_EXPIRY_FLAG));
@@ -344,15 +343,13 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setPinDataTransmission(provider.getString(DP_PIN_GENERATION_PIN_DATA_TRANSMISSION));
 
 		plan.setTransSetPresentmentTimeLimit(provider.getString(DP_TRANS_SET_PRESENTMENT_TIME_LIMIT));
-		plan.setPrescreeningAllowInternattionalTransaction(
-				provider.getString(DP_PRESCREENING_ALLOW_INTERNATTIONAL_TRANSACTION));
+		plan.setPrescreeningAllowInternattionalTransaction(provider.getString(DP_PRESCREENING_ALLOW_INTERNATTIONAL_TRANSACTION));
 		plan.setPrescreeningCavvCheck(provider.getString(DP_PRESCREENING_CAVV_CHECK));
 		plan.setPrescreeningCv3(provider.getString(DP_PRESCREENING_CV3));
 		plan.setPrescreeningCvc2Cvv2(provider.getString(DP_PRESCREENING_CVC2CVV2));
 		plan.setPrescreeningCvccvvCheck(provider.getString(DP_PRESCREENING_CVCCVV_CHECK));
 		plan.setPrescreeningEcommerceAllowed(provider.getString(DP_PRESCREENING_ECOMMERCE_ALLOWED));
-		plan.setPrescreeningElectronicWarningBulletinPurgeDate(
-				provider.getString(DP_PRESCREENING_ELECTRONIC_WARNING_BULLETIN_PURGE_DATE));
+		plan.setPrescreeningElectronicWarningBulletinPurgeDate(provider.getString(DP_PRESCREENING_ELECTRONIC_WARNING_BULLETIN_PURGE_DATE));
 		plan.setPrescreeningExpiryDate(provider.getString(DP_PRESCREENING_EXPIRY_DATE));
 		plan.setPrescreeningPinChangeTransactionFirst(provider.getString(DP_PRESCREENING_PIN_CHANGE_TRANSACTION_FIRST));
 		plan.setPrescreeningPinValidation(provider.getString(DP_PRESCREENING_PIN_VALIDATION));
@@ -382,7 +379,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setAllowInternationalTransaction(provider.getString(DP_ALLOW_INTERNATIONAL_TRANSACTIONS));
 		return plan;
 	}
-	
+
 	public String getAllowInternationalTransaction() {
 		return allowInternationalTransaction;
 	}
@@ -411,8 +408,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		return prescreeningElectronicWarningBulletinPurgeDate;
 	}
 
-	public void setPrescreeningElectronicWarningBulletinPurgeDate(
-			String prescreeningElectronicWarningBulletinPurgeDate) {
+	public void setPrescreeningElectronicWarningBulletinPurgeDate(String prescreeningElectronicWarningBulletinPurgeDate) {
 		this.prescreeningElectronicWarningBulletinPurgeDate = prescreeningElectronicWarningBulletinPurgeDate;
 	}
 
@@ -1018,6 +1014,16 @@ public class DevicePlan implements HasCodeAndDescription {
 		this.baseDeviceJoiningMemberShipPlan = baseDeviceJoiningMemberShipPlan;
 	}
 
+	public String getTransactionFeePlan() {
+
+		return transactionFeePlan;
+	}
+
+	public void setTransactionFeePlan(String transactionFeePlan) {
+		
+		this.transactionFeePlan = transactionFeePlan;
+	}
+
 	public String getTransactionLimitPlan() {
 		return transactionLimitPlan;
 	}
@@ -1208,7 +1214,6 @@ public class DevicePlan implements HasCodeAndDescription {
 	public void setDevicePlan(String devicePlan) {
 		DevicePlan = devicePlan;
 	}
-	
 
 	public String getExpiryDateExcel() {
 		return expiryDateExcel;
@@ -1219,7 +1224,6 @@ public class DevicePlan implements HasCodeAndDescription {
 	}
 
 	public void devicePlanDataprovider() {
-		// DevicePlan deviceplan = new DevicePlan();
 		setDescription(MapUtils.fnGetInputDataFromMap("DevicePlanDesc"));
 		setDevicePlanCode(CustomUtils.randomNumbers(5));
 		setValidateonInitialMonths(CustomUtils.randomNumbers(2));

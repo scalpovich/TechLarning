@@ -76,6 +76,8 @@ public class ProgramSetupSteps {
 
 	private DeviceEventBasedFeePlan deviceEventBasedFeePlan;
 
+	private TransactionFeePlan transactionFee;
+
 	private CreditCardTransactionRulePlan transactionRulePlanTestDataObject;
 
 	private CreditCardPaymentPriority paymentPrioritytestDataObject;
@@ -83,6 +85,8 @@ public class ProgramSetupSteps {
 	private StatementMessagePlan statementMessagePlan;
 
 	private TransactionPlan transactionPlan;
+
+	private static final String TRANSACTION_FEE_PLAN = "TRANSACTION_FEE_PLAN";
 
 	private TransactionLimitPlan transactionLimitPlan;
 
@@ -759,7 +763,6 @@ public class ProgramSetupSteps {
 	public void whenUserFillsDevicePlanForCrdd(String productType, String deviceType) {
 		settingDevicePlanTestData(productType, deviceType); // call to re-usable
 															// method
-
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
@@ -776,6 +779,7 @@ public class ProgramSetupSteps {
 		devicePlan.setProductType(ProductType.fromShortName(productType));
 		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
 		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
 		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
@@ -832,6 +836,22 @@ public class ProgramSetupSteps {
 	public void whenUserFillsTransactionFeePlan() {
 		TransactionFeePlan plan = TransactionFeePlan.createWithProvider(provider);
 		programSetupWorkflow.createTransactionFeePlan(plan);
+	}
+
+	@When("User fills Transaction Fee Plan for $type product")
+	public void whenUserFillsTransactionFeePlan(String type) {
+		deviceJoiningAndMemberShipFeePlan = DeviceJoiningAndMemberShipFeePlan.createWithProvider(dataProvider);
+		deviceJoiningAndMemberShipFeePlan.setProductType(ProductType.fromShortName(type));
+		DeviceJoiningAndMemberShipFeePlanDetails details = DeviceJoiningAndMemberShipFeePlanDetails
+				.createWithProvider(dataProvider);
+		// for credit card, an additonal value is added in
+		// DeviceJoiningAndMembershipFeePlanPage.JSON
+		if (ProductType.fromShortName(type).toUpperCase().contains("CREDIT")) {
+			details.setPostIssuanceFeeOn(details.getPostIssuanceFeeOnForCreditCard());
+		}
+
+		deviceJoiningAndMemberShipFeePlan.getDeviceJoiningAndMemberShipFeePlanDetails().add(details);
+		programSetupWorkflow.createDeviceJoiningAndMemberShipFeePlan(deviceJoiningAndMemberShipFeePlan);
 	}
 
 	@When("User fills Transaction Limit Plan for $type product")

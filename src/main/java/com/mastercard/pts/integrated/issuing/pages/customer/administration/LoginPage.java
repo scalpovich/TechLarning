@@ -183,7 +183,7 @@ public class LoginPage extends AbstractBasePage {
 		CustomUtils.ThreadDotSleep(3000);
 		enterUserIDCardHolder(uName).enterPwd(pwd).clickSignIn();
 
-		return waitforElemenet(chpSignUpUserAlias);
+		return waitforElement(chpSignUpUserAlias);
 	}
 
 	public void loginToCardholderAfterSignUp(String uName, String pwd) {

@@ -257,5 +257,6 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 		Scrolldown(save);
 		waitForElementVisible(save);
 		ClickButton(save);
+		waitForLoaderToDisappear();
 	}
 }
