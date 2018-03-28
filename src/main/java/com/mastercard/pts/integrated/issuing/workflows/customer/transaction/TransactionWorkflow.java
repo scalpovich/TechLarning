@@ -102,6 +102,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private String vtsTestGroupInputFilePath = getResourceFolderPath().replace("\\\\", "\\") + SimulatorConstantsData.VISA_EXCEL_TEMPLATE_FILE_PATH;
 	private static final String RESULT_IDENTIFIER = "Refresh";
 	private static final String VISA_FAILURE_MESSAGE = "Visa Incomming Message for transaction did not come :: {}";
+	private static final String SIMULATOR_LICENSE_TYPE_17 = "17";
+	private static final String SIMULATOR_LICENSE_TYPE_18 = "18";
 
 	@Autowired
 	private WebDriverProvider webProvider;
@@ -1072,10 +1074,16 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void closeSimulator(String name) {
 		winiumDriver = null;
-		if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains("17"))
+		
+		if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_18)){
+			name = "MAS18";
+		}
+		else if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_17)){
 			name = "MAS17";
-		if (SimulatorConstantsData.MDFS_LICENSE_TYPE.contains("17"))
+		}
+		if (SimulatorConstantsData.MDFS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_17)){
 			name = "MDFS17";
+		}
 		if ("visa".equalsIgnoreCase(name)) {
 			disconnectAndCloseVts();
 		}

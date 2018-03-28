@@ -66,7 +66,6 @@ Meta:
 @TestId 
 Given user is logged in institution
 When User uploads the NOT file
-When user update folder permission through WinSCP for ipm incoming folder
 When user processes batch for debit
 Then user sign out from customer portal
 
