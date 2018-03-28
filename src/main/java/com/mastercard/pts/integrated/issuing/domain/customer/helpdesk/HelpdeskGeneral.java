@@ -13,7 +13,7 @@ public class HelpdeskGeneral {
 	private static final String HD_CURRENCY_WITH_PRIORITY = "HD_CURRENCY_WITH_PRIORITY";
 	private static final String TRANSACTION_DETAILS = "TRANSACTION_DETAILS";
 	private static final String INITIAL_LOAD_TXN_DETAILS = "INITIAL_LOAD_TXN_DETAILS";
-	private static final String TRANSACTION_NOTE = "TRANSACTION_NOTE";
+	private static final String NEW_EMAIL_ID = "NEW_EMAIL_ID";
 	private String transactionNote;
 	private String initialLoadTxnDetails;
 	private String transactionDetails;
@@ -25,7 +25,9 @@ public class HelpdeskGeneral {
 	private String currencySetupServiceCode;
 	private String currencyWithPriority;
 	private String newWalletNumber;
-
+	private String newEmailID;
+	
+	
 	public static HelpdeskGeneral createWithProvider(KeyValueProvider provider) {
 		HelpdeskGeneral plan = new HelpdeskGeneral();
 		plan.setServiceCode(provider.getString(CS_SERVICE_CODE));
@@ -35,10 +37,10 @@ public class HelpdeskGeneral {
 		plan.setInitialLoadTxnDetails(provider.getString(INITIAL_LOAD_TXN_DETAILS));
 		plan.setNotes(ConstantData.GENERIC_DESCRIPTION);
 		plan.setProductType(ProductType.PREPAID);
-		plan.setProductType(provider.getString(TRANSACTION_NOTE));
+		plan.setNewEmailID(provider.getString(NEW_EMAIL_ID));
 		return plan;
 	}
-
+	
 	public String getNewWalletNumber() {
 		return newWalletNumber;
 	}
@@ -125,6 +127,14 @@ public class HelpdeskGeneral {
 
 	public void setServiceCode(String serviceCode) {
 		this.serviceCode = serviceCode;
+	}
+
+	public String getNewEmailID() {
+		return newEmailID;
+	}
+
+	public void setNewEmailID(String newEmailID) {
+		this.newEmailID = newEmailID;
 	}
 
 	@Override

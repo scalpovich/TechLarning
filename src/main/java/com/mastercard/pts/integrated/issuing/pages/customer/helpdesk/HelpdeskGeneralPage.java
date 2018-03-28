@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -42,12 +43,18 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String NOT_REGISTERED = "notregistered";
 	private static final String NOTE_WALLET_FUND_TRANSFER = "Notes for Wallet to Wallet transfer";
 	private static final String SERV_CODE_TRANSACTION_PASSWORD = "250";
-	private static final String SERV_CODE_LOGIN_PASSWORD = "459";	
+	private static final String SERV_CODE_CHANGE_REGISTERED_EMAIL_ID ="105";
+	private static final String SERV_CODE_CHANGE_REGISTERED_MOBILE_NO ="103";
+	private static final String CHANGE_REGISTERED_EMAIL_ID="105 - Change Registered Email Id Request";
+	private static final String CHANGE_REGISTERED_MOBILE_NO="103 - Change Registered Mobile Number Request";
+	private static final String SERV_CODE_LOGIN_PASSWORD = 	"459";	
 	private static final String LABEL_LOGIN_PASSWORD = "459 - Reset Cardholder Login Password";
 	private static final String LABEL_TRANSACTION_PASSWORD = "250 - Reset Cardholder Transaction Password";
+	private static final String ERROR_MESSAGE_XPATH="//div[@class='ketchup-error-container-alt']//li";
 	
 	
-	private static String service_request_status = "Request processed successfully";
+	private static String service_request_status = "Request processed succesfully.";
+	private static String ERROR_MESSAGE = "This field is required.";
 	
 	private static final Logger logger = LoggerFactory.getLogger(HelpdeskGeneralPage.class);
 	private String activeDeviceNumber;
@@ -166,8 +173,18 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind="searchDiv:rows:3:componentList:0:componentPanel:input:inputTextField")
 	private MCWebElement clientIDInpt;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind="udf21:input:inputTextField")
+	private MCWebElement emailIDInpt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="udf24:input:inputTextField")
+	private MCWebElement mobileInpt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="udf23:input:dropdowncomponent")
+	private MCWebElement ISDCodeDdwn;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//ul[@class='feedbackPanel']/.//span")
 	private MCWebElement responseMessage;
+	
 	
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
 	
@@ -262,10 +279,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 		
 	public void clickGoButton(){
-		new WebDriverWait(driver(), timeoutInSec)
-		.until(WebElementUtils.elementToBeClickable(goBtn))
-		.click();
-		waitForWicket();
+//		new WebDriverWait(driver(), timeoutInSec)
+//		.until(WebElementUtils.elementToBeClickable(goBtn))
+//		.click();
+//		waitForWicket();
+		clickWhenClickableDoNotWaitForWicket(goBtn);
 	}
 	
 	public void clickCustomerCareEditLink(){
@@ -274,6 +292,24 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	public void enterNotes(String notes){
 		WebElementUtils.enterText(notesTxt, notes);
+	}
+	
+	private void enterEmailID(HelpdeskGeneral general){
+		enterValueinTextBox(emailIDInpt,general.getNewEmailID());
+	}
+	
+	private void enterMobileNo(HelpdeskGeneral general){
+		SelectDropDownByValue(ISDCodeDdwn,general.getNewEmailID());
+		enterValueinTextBox(mobileInpt,general.getNewEmailID());
+	}
+	
+	public boolean validateMandatoryFields(int mandatoryFields){
+		clickSaveButton();
+		clickSaveButton();
+		if(errorMessage().size()== mandatoryFields && errorMessage().get(mandatoryFields-1).equalsIgnoreCase(ERROR_MESSAGE))
+			return true;
+		else
+			return false;
 	}
 
 	public String activationMessage(){
@@ -734,4 +770,69 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public String verifyServiceRequestStatus(){		
 		return getTextFromPage(responseMessage);
 	}
+
+	private List<String> errorMessage(){		
+		return getListOfElements(ERROR_MESSAGE_XPATH);
+	}
+	public boolean changeRegisteredEmailID(HelpdeskGeneral general) {
+		logger.info("change Registered Email ID");
+		
+		selectServiceCodeByValue(SERV_CODE_CHANGE_REGISTERED_EMAIL_ID);
+		clickGoButton();
+		runWithinPopup(CHANGE_REGISTERED_EMAIL_ID, () -> {			
+			enterEmailID(general);
+			enterNotes("Servic_Request for registered email ID" );
+			clickSaveButton();
+			
+			if(verifyServiceRequestStatus().contains(service_request_status)){
+				logger.info("Registered Email ID service request processed successfully");
+				clickOKButtonPopup();
+				serviceStatus = true;
+			}else{
+				logger.info("Registered Email ID service request rejected");
+				clickCancelButtonPopup();
+			}
+		});
+		//SimulatorUtilities.wait(5000);
+		clickEndCall();
+		return serviceStatus;
+	}
+	
+	public boolean changeRegisteredMobileNo(HelpdeskGeneral general) { 
+		logger.info("change Registered Mobile No");
+
+		selectServiceCodeByValue(SERV_CODE_CHANGE_REGISTERED_MOBILE_NO);
+		clickGoButton();
+		runWithinPopup(
+				CHANGE_REGISTERED_MOBILE_NO,
+				() -> {
+					enterMobileNo(general);
+					enterNotes("Servic_Request for registered Mobile No");
+					clickSaveButton();
+
+					if (verifyServiceRequestStatus().contains(
+							service_request_status)) {
+						logger.info("Registered Mobile No service request processed successfully");
+						clickOKButtonPopup();
+						serviceStatus = true;
+					} else {
+						logger.info("Registered Mobile No service request rejected");
+						clickCancelButtonPopup();
+					}
+				});
+		// SimulatorUtilities.wait(5000);
+		clickEndCall();
+		return serviceStatus;
+	}
+	
+	public boolean validateRequiredFields(){
+		logger.info("Validate required fields in change Registered Email ID Screen");
+		
+		selectServiceCodeByValue(SERV_CODE_CHANGE_REGISTERED_EMAIL_ID);
+		clickGoButton();
+		runWithinPopup(CHANGE_REGISTERED_EMAIL_ID, () -> {			
+		});
+		return true;
+	}
+	
 }

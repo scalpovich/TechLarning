@@ -1,6 +1,8 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk;
 
 import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -9,6 +11,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.ConnectionUtils;
 
 @Workflow
 public class HelpdeskWorkflow {
@@ -17,6 +20,9 @@ public class HelpdeskWorkflow {
 
 	@Autowired
 	private Navigator navigator;
+	
+	@Autowired
+	ConnectionUtils connctionUtils;
 
 	public String getDeviceStatus(Device device) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
@@ -34,6 +40,7 @@ public class HelpdeskWorkflow {
 	}
 
 	public void searchWithDeviceNumber(HelpdeskGeneral helpdeskGeneral) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
 		helpDeskPage.searchWithDeviceNumber(helpdeskGeneral);
 	}
 
@@ -135,5 +142,34 @@ public class HelpdeskWorkflow {
 	
 	public boolean resetCardholderTranPassword(String clientID){		
 		return helpDeskPage.serviceRequestCardholderTransactionPassword(clientID);
+	}
+	
+	public boolean changeRegisteredEmailID(HelpdeskGeneral general){		
+		return helpDeskPage.changeRegisteredEmailID(general);
+	}
+	
+	public boolean changeRegisteredMobileNo(HelpdeskGeneral general){
+		return helpDeskPage.changeRegisteredMobileNo(general);
+	}
+	
+	public String[] getDeviceTypeAndNumber(String institutionSelector){	
+		String institution = System.getProperty("institution");
+		if (institution != null && !institution.trim().isEmpty())
+			institutionSelector=institution;
+		String query = "SELECT * FROM device WHERE bank_code = '"+ institutionSelector +"'AND activation_date IS NOT NULL  AND status_code = 0 AND ROWNUM <= 1";
+		ResultSet set = connctionUtils.executeQueryForBIN(query);
+		try {
+	        set.next();
+	       return new String[]{ set.getString("PRODUCT_TYPE"),set.getString("DEVICE_NUMBER")};
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public void validateRequiredFields(HelpdeskGeneral general){
+		helpDeskPage.validateRequiredFields();
+		helpDeskPage.validateMandatoryFields(3);
 	}
 }

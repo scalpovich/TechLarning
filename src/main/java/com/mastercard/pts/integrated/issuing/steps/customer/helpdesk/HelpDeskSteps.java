@@ -39,6 +39,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDeskFlows;
@@ -683,5 +684,33 @@ public class HelpDeskSteps {
 				helpdeskWorkflow.resetCardholderTranPassword(clientID);	
 			}
 		}
+	}
+	
+	@When("user creates service request to change the registered mobile number")
+	public void ServiceRequestForChangeRegisteredMobileNumber() {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		String[] device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
+		helpdeskGeneral.setProductType(ProductType.fromShortName(device[0]));
+		helpdeskGeneral.setDeviceNumber(device[1]);
+		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.changeRegisteredMobileNo(helpdeskGeneral);
+	}
+	
+	@When("user creates service request to change the registered Email ID")
+	public void ServiceRequestForChangeRegisteredEmailID() {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		String[] device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
+		helpdeskGeneral.setProductType(ProductType.fromShortName(device[0]));
+		helpdeskGeneral.setDeviceNumber(device[1]);
+		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.changeRegisteredEmailID(helpdeskGeneral);
+	}
+	
+	@Then("user validates registered mobile number update screen with the required fields")
+	public void registeredMobileNumberUpdateScreenValidation() {
+		String[] device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
+		helpdeskWorkflow.validateRequiredFields(helpdeskGeneral);
 	}
 }
