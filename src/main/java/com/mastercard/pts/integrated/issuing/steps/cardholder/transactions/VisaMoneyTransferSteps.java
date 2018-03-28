@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
-import com.mastercard.pts.integrated.issuing.domain.cardholder.transactions.MastercardMoneySend;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.transactions.VisaMoneyTransfer;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
@@ -19,9 +18,7 @@ import com.mastercard.pts.integrated.issuing.workflows.cardholder.transactions.M
 import com.mastercard.pts.integrated.issuing.workflows.cardholder.transactions.VisaMoneyTransferWorkflow;
 
 @Component
-public class MastercardMoneySendSteps {
-
-	private static final String STATUS_MESSAGE = "Success";
+public class VisaMoneyTransferSteps {
 
 	@Autowired
 	private MastercardMoneySendWorkflow mastercardMoneySendWorkflow;
@@ -36,16 +33,17 @@ public class MastercardMoneySendSteps {
 	private TestContext context;
 
 	private String actualResult = "Transaction not executed!!!";
+	private static final String STATUS_MESSAGE = "Success";
 
-	@When("MMS CHP Transaction is performed")
-	public void whenMmsChpTransactionIsPerformed() {
-		MastercardMoneySend mms = MastercardMoneySend.createWithProvider(provider);
+	@When("VISA CHP Transaction is performed")
+	public void whenVisaChpTransactionIsPerformed() {
+		VisaMoneyTransfer vmt = VisaMoneyTransfer.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE2);
-		MiscUtils.reportToConsole("Device Number in MMS-CHP Steps - " + device.getDeviceNumber());
-		actualResult = mastercardMoneySendWorkflow.doMmsTransaction(mms, device);
+//		MiscUtils.reportToConsole("Device Number in VTS-CHP Steps - " + device.getDeviceNumber());
+		actualResult = visaMoneyTransferWorkflow.doVtsTransaction(vmt, device);
 	}
 
-	@Then("Validate Response Message on CHP")
+	@Then("Validate Response Message on CHP for VMT")
 	public void thenvalidateResponseMessageOnChp() {
 		assertThat(actualResult, containsString(STATUS_MESSAGE));
 	}
