@@ -8,15 +8,15 @@ I want to validate two factor authentication at processing center
 Meta:
 @StoryName c_helpdesk_wallet_transfer
 @oldReferenceSheet_S203707
-Scenario:1 validate two factor authentication at processing center
 
+Scenario:1 validate two factor authentication at processing center
 Meta:
 @TCName TCEditInstitute
 @testDataFileName testdata
 @sheetName Institute
 @edit_institute_wibmo
 Given login to bank as a Bankadmin
-When user edits institution to enable two factor authentication
+When user edits institution to enable two factor authentication with masked option
 Then user logouts from customer portal
 
 Scenario:2 validate two factor authentication at program level and device range level
@@ -24,7 +24,7 @@ Meta:
 @TCName TC264306_Embossing File Generation
 @testDataFileName testdata
 @sheetName S205014
-@edit_institute_wibmo1111
+@edit_institute_wibmo
 Given login to portal as existing bank as a Customeruser
 When user creates a Open loop wallet plan of default type for program Retail General Purpose for Prepaid
 When user creates an Embossing File Template
