@@ -50,14 +50,11 @@ public class Program implements HasCodeAndDescription {
 	private static final String PGM_RESET_LIMITS_CASH_LIMIT_RESET = "PGM_RESET_LIMITS_CASH_LIMIT_RESET";
 	private static final String PGM_RESET_LIMITS_ADDON_LIMIT_RESET = "PGM_RESET_LIMITS_ADDON_LIMIT_RESET";
 	private static final String PGM_EVENTS_SELECT_ALL = "PGM_EVENTS_SELECT_ALL";
-
 	private static final String NO_OF_CURRENCY_ALLOWED = "NO_OF_CURRENCY_ALLOWED";
-
 	private static final String WALLET_TO_WALLET_TRANSFER_TYPE = "WALLET_TO_WALLET_TRANSFER_TYPE";
-
 	private static final String REFERENCE_CURRENCY = "REFERENCE_CURRENCY";
-	
 	private static final String CREDIT_LIMIT = "CREDIT_LIMIT";
+	private static final String MARK_UP_FEE_PLAN = "MARK_UP_FEE_PLAN";
 
 	private String walletToWalletTransferType;
 	private String refundInCurrency;
@@ -94,7 +91,7 @@ public class Program implements HasCodeAndDescription {
 	private String wallet2WalletTransferType;
 	private String referenceCurrency;
 	private String kycRequired;
-
+	private String markUpFeePlan;
 	private String kycLimitsMaxBalWithoutKyc;
 	private String kycLimitsMaxBalAfterKyc;
 	private String kycLimitsNoOfLoadsAllowedWithoutKyc;
@@ -149,6 +146,7 @@ public class Program implements HasCodeAndDescription {
 		programObject.setNoOfCurrencyAllowed(provider.getString(NO_OF_CURRENCY_ALLOWED));
 		programObject.setReferenceCurrency(provider.getString(REFERENCE_CURRENCY));
 		programObject.setWalletToWalletTransferType(provider.getString(WALLET_TO_WALLET_TRANSFER_TYPE));
+		programObject.setMarkUpFeePlan(provider.getString(MARK_UP_FEE_PLAN));
 		return programObject;
 	}
 
@@ -171,6 +169,7 @@ public class Program implements HasCodeAndDescription {
 		programObject.setNoOfCurrencyAllowed(provider.getString(NO_OF_CURRENCY_ALLOWED));
 		programObject.setReferenceCurrency(provider.getString(REFERENCE_CURRENCY));
 		programObject.setWalletToWalletTransferType(provider.getString(WALLET_TO_WALLET_TRANSFER_TYPE));
+		programObject.setMarkUpFeePlan(provider.getString(MARK_UP_FEE_PLAN));
 		return programObject;
 	}
 
@@ -190,21 +189,17 @@ public class Program implements HasCodeAndDescription {
 		programObject.setKycRequired(provider.getString(PGM_KYC_REQUIRED));
 		programObject.setKycLimitsMaxBalWithoutKyc(provider.getString(PGM_KYC_LIMITS_MAX_BAL_WO_KYC));
 		programObject.setKycLimitsMaxBalAfterKyc(provider.getString(PGM_KYC_LIMITS_MAX_BAL_AFTER_KYC));
-		programObject
-				.setKycLimitsNoOfLoadsAllowedWithoutKyc(provider.getString(PGM_KYC_LIMITS_NO_OF_LOADS_ALLOWED_WO_KYC));
-		programObject
-				.setKycLimitsNoOfLoadsAllowedAfterKyc(provider.getString(PGM_KYC_LIMITS_NO_OF_LOADS_ALLOWED_AFTER_KYC));
+		programObject.setKycLimitsNoOfLoadsAllowedWithoutKyc(provider.getString(PGM_KYC_LIMITS_NO_OF_LOADS_ALLOWED_WO_KYC));
+		programObject.setKycLimitsNoOfLoadsAllowedAfterKyc(provider.getString(PGM_KYC_LIMITS_NO_OF_LOADS_ALLOWED_AFTER_KYC));
 		programObject.setAllowFundsRecieve(provider.getString(PGM_ALLOW_FUNDS_RECIEVE));
 		programObject.setAllowFundsSend(provider.getString(PGM_ALLOW_FUNDS_SEND));
 		programObject.setLoadRefundToleranceUnitForLoad(provider.getString(PGM_LOAD_REFUND_TOLERANCE_UNIT_FOR_LOAD));
-		programObject
-				.setLoadRefundToleranceUnitForRefund(provider.getString(PGM_LOAD_REFUND_TOLERANCE_UNIT_FOR_REFUND));
+		programObject.setLoadRefundToleranceUnitForRefund(provider.getString(PGM_LOAD_REFUND_TOLERANCE_UNIT_FOR_REFUND));
 		programObject.setLoadRefundRefundInCurrency(provider.getString(PGM_LOAD_REFUND_REFUND_IN_CURRENCY));
 		programObject.setTravelLimitTravelPlan(provider.getString(PGM_TRAVEL_LIMIT_TRAVEL_PLAN));
 		programObject.setCreditLimitsMinCreditLimit(provider.getString(PGM_CREDIT_LIMITS_MIN_CREDIT_LIMIT));
 		programObject.setCreditLimitsMaxCreditLimit(provider.getString(PGM_CREDIT_LIMITS_MAX_CREDIT_LIMIT));
-		programObject
-				.setCreditLimitsCreditLimitValidation(provider.getString(PGM_CREDIT_LIMITS_CREDIT_LIMIT_VALIDATION));
+		programObject.setCreditLimitsCreditLimitValidation(provider.getString(PGM_CREDIT_LIMITS_CREDIT_LIMIT_VALIDATION));
 		programObject.setCashLimitsCashLimitType(provider.getString(PGM_CASH_LIMITS_CASH_LIMIT_TYPE));
 		programObject.setCashLimitsCashLimitAmount(provider.getString(PGM_CASH_LIMITS_CASH_LIMIT_AMOUNT));
 		programObject.setCashLimitsMinCashLimit(provider.getString(PGM_CASH_LIMITS_MIN_CASH_LIMIT));
@@ -213,7 +208,7 @@ public class Program implements HasCodeAndDescription {
 		programObject.setResetLimitsCashLimitReset(provider.getString(PGM_RESET_LIMITS_CASH_LIMIT_RESET));
 		programObject.setResetLimitsAddonLimitReset(provider.getString(PGM_RESET_LIMITS_ADDON_LIMIT_RESET));
 		programObject.setEventsSelectAll(provider.getString(PGM_EVENTS_SELECT_ALL));
-
+		programObject.setMarkUpFeePlan(provider.getString(MARK_UP_FEE_PLAN));
 		return programObject;
 	}
 
@@ -300,7 +295,6 @@ public class Program implements HasCodeAndDescription {
 		setCashLimitAmount(MapUtils.fnGetInputDataFromMap("cashLimitAmount"));
 		setCashLimitReset(MapUtils.fnGetInputDataFromMap("cashLimitReset"));
 		setAddOnLimitReset(MapUtils.fnGetInputDataFromMap("addOnLimitReset"));
-		
 
 	}
 
@@ -778,8 +772,17 @@ public class Program implements HasCodeAndDescription {
 		this.institute = institute;
 	}
 
+	public String getMarkUpFeePlan() {
+		return markUpFeePlan;
+	}
+
+	public void setMarkUpFeePlan(String markUpFeePlan) {
+		this.markUpFeePlan = markUpFeePlan;
+	}
+
 	@Override
 	public String toString() {
 		return MiscUtils.toString(this);
 	}
+
 }
