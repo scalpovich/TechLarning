@@ -12,7 +12,7 @@ Meta:
 @FileUpload
 
 Given login to portal as existing bank as a Customeruser
-When user creates Application Upload Credit batch file and uploads it on server for Individual for credit
+When user creates Application Upload Credit batch file and upload it on server for Individual for credit
 When user verifies the credit application device for fileUpload
 When user approves the credit application device for fileUpload
 When user processes close batch for new Application for fileUpload

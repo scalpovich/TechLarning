@@ -20,8 +20,8 @@ When user creates a Vendor of Category Personalization with Embossing template a
 When user creates a Device Plan for Mastercard for Magnetic Stripe and credit card,choose activation On Production and delivery mode Mail
 When user creates a Single wallet Program for Mastercard for product credit for program Retail Credit Card
 Then Program should get created
-When user creates a Device Range for product credit
-When user creates Application Upload Credit batch file and uploads it on server for Individual for credit
+When for application upload scenario user creates a Device Range for product credit
+When user creates Application Upload Credit batch file and upload it on server for Individual for credit
 When user verifies the credit application device for fileUpload
 When user approves the credit application device for fileUpload
 When user processes close batch for new Application for fileUpload

@@ -175,7 +175,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 
 	public void clickSubmitBtn() {
-		clickWhenClickableDoNotWaitForWicket(submitBtn);
+		clickWhenClickable(submitBtn);
 	}
 
 	public static final String FILE_CHK_BOX = "//span[.='%s']/following::input[1]";

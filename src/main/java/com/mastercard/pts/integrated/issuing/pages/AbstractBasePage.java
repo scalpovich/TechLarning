@@ -632,9 +632,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected boolean waitForbatchNumber() {
 		try {
 			waitForWicket();
-			Thread.sleep(20000); 
+			SimulatorUtilities.wait(20000); 
 			return driver().findElement(By.xpath("//table[@class='dataview']//tr[@class!='headers']/td[5]/span")).isDisplayed();
-		} catch (NoSuchElementException | InterruptedException e) {
+		} catch (Exception e) {
 			logger.debug("Result not found", e);
 			return false;
 		}

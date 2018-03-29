@@ -24,6 +24,7 @@ import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -130,7 +131,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
         {*/
 		waitForLoaderToDisappear();
 		SelectDropDownByText(productTypeDDwn, batch.getProductType());
-		CustomUtils.ThreadDotSleep(8000);
+		SimulatorUtilities.wait(8000);
 		enterText(batchNumberTxt, batchNumbers.get(0));
 		ClickButton(searchBtn);
 		ClickCheckBox(preProductionBatchRecordChkBx, true);

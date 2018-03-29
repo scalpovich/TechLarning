@@ -290,7 +290,7 @@ public class WalletPlanPage extends AbstractBasePage {
 	@Override
 	public void clickFinishButton() {
 		clickWhenClickable(finishBtn);
-		//waitForWicket();
+		waitForWicket();
 		SwitchToDefaultFrame();
 	}
 
