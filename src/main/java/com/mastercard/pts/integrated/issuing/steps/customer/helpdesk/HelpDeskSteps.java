@@ -363,7 +363,7 @@ public class HelpDeskSteps {
 
 	@Then("currency setup for $type device is done correctly and updated in wallet details tab")
 	public void thenCurrencySetupForDeviceIsDoneCorrectlyAndUpdatedInWalletDetailsTab(String type) {
-		Device device = new Device();
+		Device device =context.get(ContextConstants.DEVICE);// new Device();
 		device.setDeviceNumber(context.get(ContextConstants.DEVICE_NUMBER));
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
