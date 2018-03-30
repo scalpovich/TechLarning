@@ -192,7 +192,6 @@ public abstract class LinuxUtils {
 		String serverSSH = connectiondetails.getHostName();
 		String userSSH = connectiondetails.getUserName(); 
 		String pswdSSH = connectiondetails.getPassword();
-
 		scp.setPort( portSSH );
 		scp.setLocalFile(localsource);
 		scp.setTodir( userSSH + ":" + pswdSSH + "@" + serverSSH + ":" + remoteDir );
