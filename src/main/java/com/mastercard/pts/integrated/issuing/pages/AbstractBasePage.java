@@ -246,6 +246,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers' and @class!='navigation'][1]/td[2]/span")
 	private MCWebElement deviceNumberFetch;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview td:first-child>span>a>span")
+	private MCWebElements firstElementOfTable;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview tr.even a>img[alt='Delete Record'],table.dataview tr.odd a>img[alt='Delete Record']")
+	private MCWebElements deleteAddedRecordsIcon;
 
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -306,7 +312,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickWhenClickable(closeBtn);
 	}
 
-	protected void clickAddDetailsButton() {
+	public void clickAddDetailsButton() {
 		clickWhenClickable(addDetailsBtn);
 	}
 
@@ -439,7 +445,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected boolean waitForRow() {
 		try {
 			waitForWicket();
-			Thread.sleep(30000); // Pre-production batch and device production
+			Thread.sleep(20000); // Pre-production batch and device production
 									// batch takes little longer hence the wait
 			return driver().findElement(By.cssSelector(FIRST_ROW_SELECT)).isDisplayed();
 		} catch (NoSuchElementException | InterruptedException e) {
@@ -600,7 +606,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickSearchButton();
 		// Pre-production batch and device production batch & Authorization Search page take little long to
 				// be completed, and do not appear in search result, hence a for loop
-		for (int l = 0; l < 41; l++) {
+		for (int l = 0; l < 21; l++) {
 			if (!waitForRow())
 				clickSearchButton();
 			else {
@@ -848,7 +854,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return ispresent;
 	}
 
-	public boolean waitforElemenet(MCWebElement ele) {
+	public boolean waitforElement(MCWebElement ele) {
 		try {
 			getFinder().waitUntil(ExpectedConditions.visibilityOf((WebElement) ele));
 			return true;
@@ -1601,6 +1607,17 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 		return false;
 	}
+	
+	public void identifyAddedRecordinTableAndDelete(String parameter)
+	   {
+		  for(int i=0;i<firstElementOfTable.getElements().size();i++)
+		  {
+			  if(firstElementOfTable.getElements().get(i).getText().equals(parameter))
+			  {
+				  clickWhenClickable(deleteAddedRecordsIcon.getElements().get(i));
+			  }
+		  }
+	   }
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

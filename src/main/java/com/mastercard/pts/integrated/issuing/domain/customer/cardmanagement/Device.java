@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+
 @Component
 public class Device {
 
@@ -17,29 +18,31 @@ public class Device {
 	private static final String ACCOUNT_TYPE = "ACCOUNT_TYPE";
 	private static final String TRANSACTION_AMOUNT = "TRANSACTION_AMOUNT";
 	private static final String CORPORATE_CLIENT_CODE = "CORPORATE_CLIENT_CODE";
-	private static final String ND_OTHERINFO_PREFERRED_LANGUAGE	 = 	"ND_OTHERINFO_PREFERRED_LANGUAGE";
-	private static final String ND_OTHERINFO_STATEMENT_PREFERENCE	 = 	"ND_OTHERINFO_STATEMENT_PREFERENCE";
-	private static final String ND_OTHERINFO_EMAIL_ALERT_REQUIRED	 = 	"ND_OTHERINFO_EMAIL_ALERT_REQUIRED";
-	private static final String ND_OTHERINFO_SMS_ALERT_REQUIRED	 = 	"ND_OTHERINFO_SMS_ALERT_REQUIRED";
-	private static final String ND_OTHERINFO_REGISTERED_EMAIL_ADDRESS	 = 	"ND_OTHERINFO_REGISTERED_EMAIL_ADDRESS";
-	private static final String ND_OTHERINFO_FAX_NO	 = 	"ND_OTHERINFO_FAX_NO";
-	private static final String ND_OTHERINFO_REGISTERED_MOBILE_NUMBER	 = 	"ND_OTHERINFO_REGISTERED_MOBILE_NUMBER";
-	private static final String ND_OTHERINFO_REGISTER_FOR_DCNR	 = 	"ND_OTHERINFO_REGISTER_FOR_DCNR";
-	private static final String ND_OTHERINFO_DELIVERY_MODE	 = 	"ND_OTHERINFO_DELIVERY_MODE";
-	private static final String ND_VIP	 = 	"ND_VIP";
+	private static final String ND_OTHERINFO_PREFERRED_LANGUAGE = "ND_OTHERINFO_PREFERRED_LANGUAGE";
+	private static final String ND_OTHERINFO_STATEMENT_PREFERENCE = "ND_OTHERINFO_STATEMENT_PREFERENCE";
+	private static final String ND_OTHERINFO_EMAIL_ALERT_REQUIRED = "ND_OTHERINFO_EMAIL_ALERT_REQUIRED";
+	private static final String ND_OTHERINFO_SMS_ALERT_REQUIRED = "ND_OTHERINFO_SMS_ALERT_REQUIRED";
+	private static final String ND_OTHERINFO_REGISTERED_EMAIL_ADDRESS = "ND_OTHERINFO_REGISTERED_EMAIL_ADDRESS";
+	private static final String ND_OTHERINFO_FAX_NO = "ND_OTHERINFO_FAX_NO";
+	private static final String ND_OTHERINFO_REGISTERED_MOBILE_NUMBER = "ND_OTHERINFO_REGISTERED_MOBILE_NUMBER";
+	private static final String ND_OTHERINFO_REGISTER_FOR_DCNR = "ND_OTHERINFO_REGISTER_FOR_DCNR";
+	private static final String ND_OTHERINFO_DELIVERY_MODE = "ND_OTHERINFO_DELIVERY_MODE";
+	private static final String ND_VIP = "ND_VIP";
 	private static final String ND_MIDDLE_NAME_2 = "ND_MIDDLE_NAME_2";
 	private static final String ND_ENCODED_NAME = "ND_ENCODED_NAME";
 	private static final String CHP_NEW_PASSWORD = "CHP_NEW_PASSWORD";
 	private static final String PRODUCT_TYPE = "PRODUCT_TYPE";
 	private static final String DATE_TYPE = "DATE_TYPE";
 	private static final String PROGRAM_CODE = "PROGRAM_CODE";
-	private static final String DEVICE_PLAN= "DEVICE_PLAN"; 
+	private static final String DEVICE_PLAN = "DEVICE_PLAN";
 	private static final String IS_TRANSACTION_PINLESS = "IS_TRANSACTION_PINLESS";
 	private static final String SERVICE_CODE = "SERVICE_CODE";
 	private static final String VALIDITY_ON_INITIAL_MONTHS = "VALIDITY_ON_INITIAL_MONTHS";
 	private static final String EXPIRY_FLAG = "EXPIRY_FLAG";
 	private static final String CREDIT_LIMIT = "CREDIT_LIMIT";
-	
+	private static final String JOINING_FEES = "JOINING_FEES";
+
+	private static final String MEMBERSHIP_FEES = "MEMBERSHIP_FEES";
 
 	private String currentTransPassword;
 	private String newTransPassword;
@@ -96,10 +99,12 @@ public class Device {
 	private String transactionDateType;
 	private String applicationNumber;
 	private String isTransactionPinless;
-	private String expiryFlag;	
+	private String expiryFlag;
 	private String creditLimit;
-	
-	public  static Device createWithProvider(KeyValueProvider provider) {
+	private String joiningFees;
+	private String membershipFees;
+
+	public static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
 		device.setApplicationType(provider.getString(APPLICATION_TYPE));
 		device.setCorporateClientCode(provider.getString(CORPORATE_CLIENT_CODE));
@@ -120,27 +125,27 @@ public class Device {
 		device.setOtherInfoStatementPreference(provider.getString(ND_OTHERINFO_STATEMENT_PREFERENCE));
 		device.setOtherInfoFaxNo(provider.getString(ND_OTHERINFO_FAX_NO));
 		device.setNewTransPassword(provider.getString(CHP_NEW_PASSWORD));
-		device.setConfirmNewTransPassword(provider.getString(CHP_NEW_PASSWORD));	
+		device.setConfirmNewTransPassword(provider.getString(CHP_NEW_PASSWORD));
 		device.setProductType(provider.getString(PRODUCT_TYPE));
 		device.setTransactionDateType(provider.getString(DATE_TYPE));
 		device.setProgramCode(provider.getString(PROGRAM_CODE));
 		device.setDevicePlan1(provider.getString(DEVICE_PLAN));
 		return device;
 	}
-	
-	public  static Device createWithProviderDataDriven(KeyValueProvider provider) {
-		Device device = Device.createWithProvider(provider);		
+
+	public static Device createWithProviderDataDriven(KeyValueProvider provider) {
+		Device device = Device.createWithProvider(provider);
 		device.setProgramCode(provider.getString(PROGRAM_CODE));
 		device.setDevicePlan1(provider.getString(DEVICE_PLAN));
-		device.setIsPinRequired(provider.getString(IS_TRANSACTION_PINLESS));	
+		device.setIsPinRequired(provider.getString(IS_TRANSACTION_PINLESS));
 		device.setServiceCode(provider.getString(SERVICE_CODE));
 		device.setExpirationDate(provider.getString(VALIDITY_ON_INITIAL_MONTHS));
 		device.setExpiryFlag(provider.getString(EXPIRY_FLAG));
 		device.setCreditLimit(provider.getString(CREDIT_LIMIT));
 		return device;
 	}
-	
-	public  static Device createWithProviderForOtherDetails(KeyValueProvider provider) {
+
+	public static Device createWithProviderForOtherDetails(KeyValueProvider provider) {
 		Device device = new Device();
 		device.setOtherInfoDeliveryMode(provider.getString(ND_OTHERINFO_DELIVERY_MODE));
 		device.setOtherInfoEmailAlertRequired(provider.getString(ND_OTHERINFO_EMAIL_ALERT_REQUIRED));
@@ -167,7 +172,7 @@ public class Device {
 	public void setEncodedName(String encodedName) {
 		this.encodedName = encodedName;
 	}
-	
+
 	public String getExpiryFlag() {
 		return expiryFlag;
 	}
@@ -179,7 +184,7 @@ public class Device {
 	public static String getNdOtherinfoStatementPreference() {
 		return ND_OTHERINFO_STATEMENT_PREFERENCE;
 	}
-	
+
 	public String getCreditLimit() {
 		return creditLimit;
 	}
@@ -187,7 +192,7 @@ public class Device {
 	public void setCreditLimit(String creditLimit) {
 		this.creditLimit = creditLimit;
 	}
-	
+
 	public String getIsPinRequired() {
 		return isTransactionPinless;
 	}
@@ -203,7 +208,7 @@ public class Device {
 	public void setProductType(String productType) {
 		this.productType = productType;
 	}
-	
+
 	public String getCurrentTransPassword() {
 		return currentTransPassword;
 	}
@@ -219,7 +224,7 @@ public class Device {
 	public void setNewTransPassword(String newTransPassword) {
 		this.newTransPassword = newTransPassword;
 	}
-	
+
 	public String getConfirmNewTransPassword() {
 		return confirmNewTransPassword;
 	}
@@ -227,7 +232,7 @@ public class Device {
 	public void setConfirmNewTransPassword(String confirmNewTransPassword) {
 		this.confirmNewTransPassword = confirmNewTransPassword;
 	}
-	
+
 	public static String getNdOtherinfoFaxNo() {
 		return ND_OTHERINFO_FAX_NO;
 	}
@@ -276,8 +281,7 @@ public class Device {
 		return otherInfoRegisteredEmailAddress;
 	}
 
-	public void setOtherInfoRegisteredEmailAddress(
-			String otherInfoRegisteredEmailAddress) {
+	public void setOtherInfoRegisteredEmailAddress(String otherInfoRegisteredEmailAddress) {
 		this.otherInfoRegisteredEmailAddress = otherInfoRegisteredEmailAddress;
 	}
 
@@ -293,8 +297,7 @@ public class Device {
 		return otherInfoRegisteredMobileNumber;
 	}
 
-	public void setOtherInfoRegisteredMobileNumber(
-			String otherInfoRegisteredMobileNumber) {
+	public void setOtherInfoRegisteredMobileNumber(String otherInfoRegisteredMobileNumber) {
 		this.otherInfoRegisteredMobileNumber = otherInfoRegisteredMobileNumber;
 	}
 
@@ -381,7 +384,7 @@ public class Device {
 	public String getWalletNumber() {
 		return walletNumber;
 	}
-	
+
 	public String getNewWalletNumber() {
 		return newWalletNumber;
 	}
@@ -389,7 +392,7 @@ public class Device {
 	public void setNewWalletNumber(String newWalletNumber) {
 		this.newWalletNumber = newWalletNumber;
 	}
-	
+
 	public void setWalletNumber(String walletNumber) {
 		this.walletNumber = walletNumber;
 	}
@@ -513,7 +516,7 @@ public class Device {
 	public void setDevicePlan1(String devicePlan1) {
 		this.devicePlan1 = devicePlan1;
 	}
-	
+
 	@Override
 	public String toString() {
 		return ReflectionToStringBuilder.toString(this);
@@ -559,16 +562,13 @@ public class Device {
 		this.expirationYear = expirationYear;
 	}
 
-
 	public String getPinNumberForTransaction() {
 		return pinNumberForTransaction;
 	}
 
-
 	public void setPinNumberForTransaction(String pinNumberForTransaction) {
 		this.pinNumberForTransaction = pinNumberForTransaction;
 	}
-
 
 	public String getCurrency() {
 		return currency;
@@ -577,6 +577,7 @@ public class Device {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
+
 	public String getCorporateClientCode() {
 		return corporateClientCode;
 	}
@@ -588,11 +589,11 @@ public class Device {
 	public String getVip() {
 		return vip;
 	}
-	
+
 	public void setVip(String vip) {
 		this.vip = vip;
 	}
-	
+
 	public String getServiceCode() {
 		return serviceCode;
 	}
@@ -608,12 +609,28 @@ public class Device {
 	public void setTransactionDateType(String transactionDateType) {
 		this.transactionDateType = transactionDateType;
 	}
-	
-    public String getApplicationNumber() {
+
+	public String getApplicationNumber() {
 		return applicationNumber;
 	}
 
 	public void setApplicationNumber(String applicationNumber) {
 		this.applicationNumber = applicationNumber;
+	}
+
+	public String getJoiningFees() {
+		return joiningFees;
+	}
+
+	public void setJoiningFees(String joiningFees) {
+		this.joiningFees = joiningFees;
+	}
+
+	public String getMembershipFees() {
+		return membershipFees;
+	}
+
+	public void setMemberShipFees(String membershipFees) {
+		this.membershipFees = membershipFees;
 	}
 }

@@ -44,7 +44,7 @@ public class ClientPortfolioPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=lastName]")
 	private MCWebElement lastNameTxt;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:4:componentList:0:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:3:componentList:1:componentPanel:input:dropdowncomponent")
 	private MCWebElement statusDDwn	;
 
 	public void verifyUiOperationStatus() {
@@ -57,7 +57,6 @@ public class ClientPortfolioPage extends AbstractBasePage {
 		return Arrays.asList(
 				WebElementUtils.elementToBeClickable(clientCodeTxt),
 				WebElementUtils.elementToBeClickable(cbsClientIdTxt),
-				WebElementUtils.elementToBeClickable(customerTypeTxt),
 				WebElementUtils.elementToBeClickable(branchCodeTxt),
 				WebElementUtils.elementToBeClickable(firstNameTxt),
 				WebElementUtils.elementToBeClickable(lastNameTxt),

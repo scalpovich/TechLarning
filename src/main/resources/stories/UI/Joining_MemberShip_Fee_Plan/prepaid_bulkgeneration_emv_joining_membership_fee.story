@@ -1,4 +1,3 @@
-
 prepaid msr retail gift card pinless authorization
 
 Narrative:
@@ -65,8 +64,6 @@ And balance in helpdesk updated correctly for prepaid device
 And user signs out from customer portal
 
 Scenario: Post maintenance batch and pre-clearing batch is run
-Meta:
-@TestId 
 Given user is logged in institution
 When post maintenence batch is run
 Then "Pre-clearing" batch for prepaid is successful

@@ -1,9 +1,12 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -63,8 +66,15 @@ public class TransactionSearchPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[1]/td/span[contains(text(),'DR')]/../../td[1]/span/a/span")
 	private MCWebElement retrieveARNLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr[@class='even']//span[contains(.,'FEE(Card fees)')]/../preceding-sibling::td[@class='rightalign']")
+	private MCWebElement membershipFees;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr[@class='odd']//span[contains(.,'FEE(Card fees)')]/../preceding-sibling::td[@class='rightalign']")
+	private MCWebElement joiningFees;
 
-	private String authorizationStatus;	
+	private String authorizationStatus;
+	List<String> joinAndMemFees = new ArrayList();
 	
 	public String searchTransactionWithDevice(String deviceNumber, TransactionSearch ts) {
 		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
@@ -73,7 +83,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 		WebElementUtils.pickDate(fromDateTxt, LocalDate.now().minusDays(FROM_DATE));
 		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
 		clickSearchButton();
-		waitforElemenet(retrieveARNLabel);
+		waitforElement(retrieveARNLabel);
 		String retrieveARN = retrieveARNLabel.getText();
 		logger.info("retrievedARN {} ", retrieveARN);
 		return retrieveARN;
@@ -109,6 +119,8 @@ public class TransactionSearchPage extends AbstractBasePage {
 		}
 		return getCellTextByColumnName(i, "Transaction");
 	}
+	
+	
 
 	public String searchTransactionWithArnAndGetStatus(String arnNumber, TransactionSearch ts) {
 		int i;
@@ -144,6 +156,27 @@ public class TransactionSearchPage extends AbstractBasePage {
 		}
 		return getCellTextByColumnName(i, "Description");
 	}
+	
+	public List<String> searchTransactionWithDeviceAndGetJoiningAndMemberShipFees(Device device, TransactionSearch ts) {
+		logger.info("Select product {}", device.getProductType());
+		WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
+		logger.info("Search transaction for device {}", device.getDeviceNumber());
+		WebElementUtils.enterText(searchDeviceTxt, device.getDeviceNumber());
+		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
+		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
+		waitForWicket();
+		WebElementUtils.elementToBeClickable(tranDateDDwn);
+		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
+		clickSearchButton();
+		waitForWicket();
+		joinAndMemFees.add(joiningFees.getText());
+		joinAndMemFees.add(membershipFees.getText());
+		System.out.println(joinAndMemFees);
+		return joinAndMemFees;
+		
+	}
+	
+	
 
 	public void verifyUiOperationStatus() {
 		logger.info("Transaction Search");

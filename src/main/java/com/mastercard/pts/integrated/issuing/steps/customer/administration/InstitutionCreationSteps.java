@@ -41,6 +41,8 @@ public class InstitutionCreationSteps {
 	
 	UserCreation userCreation;
 
+	private static final String VERIFY_MESSAGE = "Record Updated Successfully.";
+
 	final Logger logger = LoggerFactory
 			.getLogger(InstitutionCreationSteps.class);
 
@@ -57,7 +59,7 @@ public class InstitutionCreationSteps {
 	@Then("user should be able to create new institute")
 	public void verifyinstitutionCreationSucess() {
 		instituteCreationflows
-				.checkSuccessfullInstitutionCreation(instutionCreation);
+				.checkSuccessfulInstitutionCreation(instutionCreation);
 		context.put(ContextConstants.INSTITUTION, instutionCreation);
 	}
 
@@ -98,6 +100,16 @@ public class InstitutionCreationSteps {
 		instituteCreationflows.selectNewlyCreatedInstitutionFlows();
 	}
 	
+	@When("user edits institution to $option two factor authentication with $maskedOption option")
+	public void userEditInstitutionAndEnableTwoFactorAuthentication(String option,String maskedOption){
+		InstitutionCreation institutioncreation = InstitutionCreation.getInstitutionData();
+		institutioncreation.setAuthenticationFlg(option);
+		institutioncreation.setCredentialMasking(maskedOption);
+		context.put("institutionData", institutioncreation);
+		boolean acsEnable=instituteCreationflows.isAdaptiveAuthenticationEnabledAndUserAbleToSelectACSVendor();
+		Assert.assertTrue("Adaptive authentication is not enabled",acsEnable);
+	}
+
 	@When("user edits institution to $option two factor authentication")
 	public void userEditInstitutionAndEnableTwoFactorAuthentication(String option){
 		InstitutionCreation institutioncreation = InstitutionCreation.getInstitutionData();
@@ -108,10 +120,53 @@ public class InstitutionCreationSteps {
 	}
 	
 	@Then("two factor authentication options are configured")
-	public void twoFactorAuthenticationOptionsAreConfigured(){
-		boolean RecoredUpdated=context.get("SuccessMessage");
-		boolean acsEnable=context.get("authenticationOptionsFlg");
-		Assert.assertTrue("Error in configuring two factor authentication options",acsEnable&&RecoredUpdated);
+	public void twoFactorAuthenticationOptionsAreConfigured() {
+		boolean RecoredUpdated = context.get("SuccessMessage");
+		boolean acsEnable = context.get("authenticationOptionsFlg");
+		Assert.assertTrue(
+				"Error in configuring two factor authentication options",
+				acsEnable );
+		Assert.assertTrue(
+				"Error in configuring two factor authentication options",
+				RecoredUpdated);
+		
+	}
+
+	@When("user adds the Customer Care International and VIP Number while creating new $institutionType Institute")
+	public void addCustomerCareIntlVIPNo(
+			@Named("institutionType") String institutionType) {
+		logger.info("user should be able to add the Customer Care International and VIP Number");
+		instutionCreation = InstitutionCreation.getInstitutionData();
+		instutionCreation.setInstitutionType(institutionType);
+		instituteCreationflows.addCustomerCareIntlVIP(instutionCreation);
+	}
+	
+	@Then("user should be able to add Customer Care International and VIP Number")
+	public void validateCustomerCareIntlVIPNo(){
+		logger.info("user should be able to add the Customer Care International and VIP Number");
+		InstitutionCreation instutionCreation = context
+				.get(ContextConstants.INSTITUTION);
+		Assert.assertTrue("Error in adding Customer Care International and VIP Number",instituteCreationflows.validateCustomerCareIntlVIP(instutionCreation));
+	}
+
+	@When("user updates the Customer Care International and VIP Number while editing Institute")
+	public void updateCustomerCareIntlVIPNo() {
+		logger.info("user should be able to update the Customer Care International and VIP Number");
+		if (context.get(ContextConstants.INSTITUTION) != null) {
+			InstitutionCreation institute = context
+					.get(ContextConstants.INSTITUTION);
+			instituteCreationflows.updateCustomerCareIntlVIP(institute);
+		}else{
+			instutionCreation = InstitutionCreation.getInstitutionData();
+			instutionCreation.setInstitutionName(instutionCreation.getInstitutionName().substring(0,(instutionCreation.getInstitutionName().length()-2)));
+			instituteCreationflows.updateCustomerCareIntlVIP(instutionCreation);
+		}
+	}
+
+	@Then("Institute should get updated")
+	public void VerifyInstitiueUpdate() {
+		Assert.assertEquals("Update Verification unsuccessful",instituteCreationflows.verifyInstitiueUpdate(),
+				VERIFY_MESSAGE);
 	}
 
 }

@@ -236,6 +236,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	private String isPinLess;
 	private String expiryDateExcel;
 	private String allowInternationalTransaction;
+	private String transactionFeePlan;
 
 	public static DevicePlan createWithProvider(KeyValueProvider provider) {
 		DevicePlan plan = new DevicePlan();
@@ -1013,6 +1014,16 @@ public class DevicePlan implements HasCodeAndDescription {
 		this.baseDeviceJoiningMemberShipPlan = baseDeviceJoiningMemberShipPlan;
 	}
 
+	public String getTransactionFeePlan() {
+
+		return transactionFeePlan;
+	}
+
+	public void setTransactionFeePlan(String transactionFeePlan) {
+		
+		this.transactionFeePlan = transactionFeePlan;
+	}
+
 	public String getTransactionLimitPlan() {
 		return transactionLimitPlan;
 	}
@@ -1213,7 +1224,6 @@ public class DevicePlan implements HasCodeAndDescription {
 	}
 
 	public void devicePlanDataprovider() {
-		// DevicePlan deviceplan = new DevicePlan();
 		setDescription(MapUtils.fnGetInputDataFromMap("DevicePlanDesc"));
 		setDevicePlanCode(CustomUtils.randomNumbers(5));
 		setValidateonInitialMonths(CustomUtils.randomNumbers(2));
