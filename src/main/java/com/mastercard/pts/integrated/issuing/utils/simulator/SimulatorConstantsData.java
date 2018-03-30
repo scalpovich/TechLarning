@@ -9,7 +9,7 @@ public class SimulatorConstantsData {
 	public static final String KILL_MAS_PROCESS = "MSPMCW"; // same process for
 															// MAS & MDFS
 	public static final String KILL_MAS17_PROCESS = "MSPMCW1740"; // same
-																	// process
+	public static final String KILL_MAS18_PROCESS = "MSPMCW1840";																// process
 																	// for MAS &
 																	// MDFS
 	public static final String KILL_MCPS_PROCESS = "MCPS";
