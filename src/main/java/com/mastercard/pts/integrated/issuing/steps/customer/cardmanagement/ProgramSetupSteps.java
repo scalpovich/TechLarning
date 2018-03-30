@@ -601,7 +601,7 @@ public class ProgramSetupSteps {
 		devicePlan.setProductType(ProductType.fromShortName(productType));
 		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
 		devicePlan.setBaseDeviceJoiningMemberShipPlan(provider.getString(JOINING_FEE_PLAN, deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode()));
-		//devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
+		devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
 		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());

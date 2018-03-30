@@ -1,4 +1,4 @@
-package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
+	package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.List;
@@ -1009,7 +1009,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	private void fillDevicePlanPage(DevicePlan devicePlan) {
 		selectIframeBaseDeviceEventBasedPlanDdwn(devicePlan.getBaseDeviceEventBasedPlan());
 		selectIframeBaseDeviceJoiningMemberShipPlanDdwn(devicePlan.getBaseDeviceJoiningMemberShipPlan());
-		//selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
+		selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
 		selectIframeTransactionLimitPlanDdwn(devicePlan.getTransactionLimitPlan());
 		clickIframeNextButton();
 	}
