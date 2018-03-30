@@ -403,7 +403,11 @@ public class HelpDeskSteps {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
 		device.setAppliedForProduct(ProductType.fromShortName(type));
-		beforeLoadBalanceInformation = helpdeskWorkflow.getWalletBalanceInformation(device);
+		beforeLoadBalanceInformation = helpdeskWorkflow.getWalletBalanceInformation(device);	
+		String walletinfo [] = beforeLoadBalanceInformation.split(",");
+		walletinfo=walletinfo[1].split(":");
+		device.setWalletNumber(walletinfo[2]);
+		context.put(ContextConstants.DEVICE,device);
 	}
 
 	@When("balance in helpdesk updated correctly for $type device")
@@ -412,8 +416,15 @@ public class HelpDeskSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
-		device.setAppliedForProduct(ProductType.fromShortName(type));
-		assertTrue(helpdeskWorkflow.verifyBalanceUpdatedCorreclty(beforeLoadBalanceInformation, helpdeskGeneral.getTransactionDetails(), helpdeskWorkflow.getWalletBalanceInformation(device)));
+		device.setAppliedForProduct(ProductType.fromShortName(type));		
+		assertTrue(helpdeskWorkflow.verifyBalanceUpdatedCorreclty(beforeLoadBalanceInformation, helpdeskGeneral.getTransactionDetails(), helpdeskWorkflow.getWalletBalanceInformation(device)));	
+		beforeLoadBalanceInformation = helpdeskWorkflow.getWalletBalanceInformation(device);	
+		logger.info("beforeLoadBalanceInformation: "+beforeLoadBalanceInformation.toString());
+		String walletinfo [] = beforeLoadBalanceInformation.split(",");
+		walletinfo=walletinfo[1].split(":");
+		logger.info("Wallet Number : "+walletinfo[2]);
+		device.setWalletNumber(walletinfo[2]);
+		context.put(ContextConstants.DEVICE,device);
 	}
 
 	@When("balance in helpdesk deducted correctly for $type device")

@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.agent.services.CurrencySetup;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
+import com.mastercard.pts.integrated.issuing.domain.agent.transactions.TransferFunds;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
@@ -222,4 +225,19 @@ public class TransactionsSteps {
 	public void thenViewChargesPageLoaded(String expectedTitleText){
 		assertThat(FAILED_MESSAGE_INFO, transactionsWorkflow.getViewChargesMasterDetailContentTitleText(), containsString(expectedTitleText));
 	}
+	
+	@Then("user transfer fund through $transaferThrough using agent portal")
+	@When("user transfer fund through $transaferThrough using agent portal")
+	public void transferFund(String transaferThrough){
+		Device device = context.get(ContextConstants.DEVICE);	
+		Device device2 = context.get(ContextConstants.DEVICE2);
+		TransferFunds transferDetails = TransferFunds.createWithProvider(provider);		
+		transferDetails.setTransaferThrough(transaferThrough);
+		device.setExistingDeviceNumber(device2.getDeviceNumber());
+		context.put(ContextConstants.DEVICE_NUMBER,device.getDeviceNumber());	
+		transactionsWorkflow.transferFund(transferDetails,device);			
+	}
+	
+
+	
 }	
