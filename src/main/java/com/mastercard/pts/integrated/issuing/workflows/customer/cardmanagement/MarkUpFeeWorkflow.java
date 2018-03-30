@@ -15,7 +15,7 @@ public class MarkUpFeeWorkflow {
 	Navigator navigator;
 
 	public void addMarkUpPlan(MarkupFeePlan plan) {
-		MarkupFeePlanPage markupplanpage = navigator.navigateToPage(MarkupFeePlanPage.class);
-		markupplanpage.createMarkupFeePlanPage(plan);		
+		MarkupFeePlanPage page = navigator.navigateToPage(MarkupFeePlanPage.class);
+		page.createMarkupFeePlanPage(plan);		
 	}
 }
