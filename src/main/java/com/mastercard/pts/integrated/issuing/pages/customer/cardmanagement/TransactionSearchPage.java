@@ -171,7 +171,6 @@ public class TransactionSearchPage extends AbstractBasePage {
 		waitForWicket();
 		joinAndMemFees.add(joiningFees.getText());
 		joinAndMemFees.add(membershipFees.getText());
-		System.out.println(joinAndMemFees);
 		return joinAndMemFees;
 		
 	}

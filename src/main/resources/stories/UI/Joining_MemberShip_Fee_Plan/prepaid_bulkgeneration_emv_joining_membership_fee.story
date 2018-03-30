@@ -70,7 +70,6 @@ Then "Pre-clearing" batch for prepaid is successful
 And user signs out from customer portal
 
 Scenario: Joining and MemberShip Fees is been Deducted
-
 Given user is logged in institution
-Then search with device in transaction screen and status for Joning and Membership Fees
+Then search with device in transaction screen and status for Joining and Membership Fees
 And user signs out from customer portal

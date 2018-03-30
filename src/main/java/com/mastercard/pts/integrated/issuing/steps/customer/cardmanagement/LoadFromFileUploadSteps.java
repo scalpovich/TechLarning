@@ -25,6 +25,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
 
@@ -55,29 +56,29 @@ public class LoadFromFileUploadSteps {
 	private FileCreation file;
 
 	@When("user processes batch for $type")
-	public void whenUserProcessesBatchForPrepaid(String type){
-		//since data is constant for this transaction, we do not need this data to go into Excel
-		ProcessBatches batch =  ProcessBatches.getBatchData();
-		//batch.setBatchName("Load IPM Incoming File [IPM_INCOMING]");		
+	public void whenUserProcessesBatchForPrepaid(String type) {
+		// since data is constant for this transaction, we do not need this data to go into Excel
+		ProcessBatches batch = ProcessBatches.getBatchData();
+		// batch.setBatchName("Load IPM Incoming File [IPM_INCOMING]");
 		batch.setProductType(ProductType.fromShortName(type));
 		HashMap<String, String> hm = (HashMap<String, String>) loadFromFileUploadWorkflow.processUploadBatch(batch);
-		assertEquals("SUCCESS [2]",hm.get("BatchStatus"));	
-		jobId =hm.get("JobId");
+		assertEquals("SUCCESS [2]", hm.get("BatchStatus"));
+		jobId = hm.get("JobId");
 	}
 
 	@When("user creates and uploads transaction file")
-	public void whenUserCreatesAndUploadsTransactionFile(){
+	public void whenUserCreatesAndUploadsTransactionFile() {
 		Device device = context.get(ContextConstants.DEVICE);
-		String defaultLine  = FileCreation.createTransactionLine(device.getDeviceNumber(),device.getWalletNumber(), provider);
+		String defaultLine = FileCreation.createTransactionLine(device.getDeviceNumber(), device.getWalletNumber(), provider);
 		file = FileCreation.createFile(provider);
 		file.setTransactionLine(defaultLine);
-		loadFromFileUploadWorkflow.createFileForUpload(file);	
+		loadFromFileUploadWorkflow.createFileForUpload(file);
 	}
 
 	@Given("user performs adjustment transaction")
 	@When("user performs adjustment transaction")
 	@Then("user performs adjustment transaction")
-	public void whenUserPerformsAdjustmentTransaction(){
+	public void whenUserPerformsAdjustmentTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
 		AdjustmentTransaction transaction = AdjustmentTransaction.createWithProvider(provider);
 		AdjustmentTransactionDetails details = AdjustmentTransactionDetails.createTransactionWithDetails();
@@ -87,11 +88,10 @@ public class LoadFromFileUploadSteps {
 		loadFromFileUploadWorkflow.createAdjustmentTransaction(transaction);
 	}
 
-
 	@Given("user performs adjustment transaction with $amount amount")
 	@When("user performs adjustment transaction with $amount amount")
 	@Then("user performs adjustment transaction with $amount amount")
-	public void whenUserPerformsAdjustmentTransactionWithAmount(String amount){
+	public void whenUserPerformsAdjustmentTransactionWithAmount(String amount) {
 		Device device = context.get(ContextConstants.DEVICE);
 		AdjustmentTransaction transaction = AdjustmentTransaction.createWithProvider(provider);
 		AdjustmentTransactionDetails details = AdjustmentTransactionDetails.createTransactionWithDetails();
@@ -102,40 +102,40 @@ public class LoadFromFileUploadSteps {
 		loadFromFileUploadWorkflow.createAdjustmentTransaction(transaction);
 	}
 
-
 	@When("user performs adjustment transaction for second wallet")
-	public void whenUserPerformsAdjustmentTransactionForAllWallets(){
+	public void whenUserPerformsAdjustmentTransactionForAllWallets() {
 		Device device = context.get(ContextConstants.DEVICE);
 		AdjustmentTransaction transaction = AdjustmentTransaction.createWithProvider(provider);
 		AdjustmentTransactionDetails details = AdjustmentTransactionDetails.createTransactionWithDetails();
 		details.setDeviceNumber(device.getDeviceNumber());
 		details.setWalletNumber(device.getWalletNumber2());
+		MiscUtils.reportToConsole("Get Second Wallet Info :: ", details.getWalletNumber());
 		transaction.getAdjustmentTransactionDetails().add(details);
 		loadFromFileUploadWorkflow.createAdjustmentTransaction(transaction);
 	}
 
 	@Then("user get attached wallet details for device")
-	public void getWalletDetailsForDevice(){
+	public void getWalletDetailsForDevice() {
 		Device device = context.get(ContextConstants.DEVICE);
-		List<String> wallets = loadFromFileUploadWorkflow.searchWalletDetailsPage(device);		
+		List<String> wallets = loadFromFileUploadWorkflow.searchWalletDetailsPage(device);
 		device.setWalletNumber(wallets.get(0));
-		device.setNewWalletNumber(wallets.get(1));		
+		device.setNewWalletNumber(wallets.get(1));
 	}
 
 	@Given("in batch trace history transaction is successful")
 	@Then("in batch trace history transaction is successful")
 	@When("in batch trace history transaction is successful")
-	public void thenInBatchTraceHistoryTransactionIsSuccessful(){
-		assertTrue("Adjustment transaction was successful", loadFromFileUploadWorkflow.searchBatchTraceHistory());			
+	public void thenInBatchTraceHistoryTransactionIsSuccessful() {
+		assertTrue("Adjustment transaction was successful", loadFromFileUploadWorkflow.searchBatchTraceHistory());
 	}
 
 	@Then("in batch trace history transaction is successful using job id")
-	public void thenInBatchTraceHistoryTransactionIsSuccessfulUsingJobId(){
-		assertTrue("Load transaction was successful", loadFromFileUploadWorkflow.searchBatchJobHistory(jobId));			
+	public void thenInBatchTraceHistoryTransactionIsSuccessfulUsingJobId() {
+		assertTrue("Load transaction was successful", loadFromFileUploadWorkflow.searchBatchJobHistory(jobId));
 	}
 
 	@Then("transaction is succesful")
-	public void thenTransactionIsSuccesful(){
+	public void thenTransactionIsSuccesful() {
 		Device device = context.get(ContextConstants.DEVICE);
 		assertTrue("Adjustment transaction is visible under transactions device", loadFromFileUploadWorkflow.verifyTransactionforDevice(device));
 	}
@@ -143,8 +143,8 @@ public class LoadFromFileUploadSteps {
 	@Given("NOT file is successfully generated")
 	@Then("NOT file is successfully generated")
 	@When("NOT file is successfully generated")
-	public void givenNOTFileIsSuccessfullyGenerated() throws IOException{
-		String filePath =  "CEEData.txt";
+	public void givenNOTFileIsSuccessfullyGenerated() throws IOException {
+		String filePath = "CEEData.txt";
 		String fileData = transWorkflow.getFileData(filePath);
 		notFileName = loadFromFileUploadWorkflow.getFileNameFromCEEFile(fileData);
 		assertNotNull("IPM fileName is not null", notFileName);
@@ -153,8 +153,8 @@ public class LoadFromFileUploadSteps {
 	@Given("NOT file is successfully generated for iteration")
 	@Then("NOT file is successfully generated for iteration")
 	@When("NOT file is successfully generated for iteration")
-	public void givenNOTFileIsSuccessfullyGeneratedForIteration() throws IOException{
-		String filePath =  "CEEData.txt";
+	public void givenNOTFileIsSuccessfullyGeneratedForIteration() throws IOException {
+		String filePath = "CEEData.txt";
 		String fileData = transWorkflow.getFileData(filePath);
 		fileData.split(" ");
 		notFileName = loadFromFileUploadWorkflow.getFileNameFromCEEFile(fileData);
@@ -162,35 +162,35 @@ public class LoadFromFileUploadSteps {
 	}
 
 	@When("User uploads the NOT file")
-	public void thenUserUploadsTheNOTFile(){
-		ProcessBatches batch =  ProcessBatches.getBatchData();
+	public void thenUserUploadsTheNOTFile() {
+		ProcessBatches batch = ProcessBatches.getBatchData();
 		loadFromFileUploadWorkflow.loadIncomingIPM(notFileName);
-		batch.setBatchFileName(notFileName.getName());	
+		batch.setBatchFileName(notFileName.getName());
 	}
 
 	@When("user processes upload batch for $type")
-	public void whenUserProcessesUploadBatchForPrepaid(String type){
-		ProcessBatches batch =  ProcessBatches.getBatchData();
+	public void whenUserProcessesUploadBatchForPrepaid(String type) {
+		ProcessBatches batch = ProcessBatches.getBatchData();
 		batch.setProductType(ProductType.fromShortName(type));
 		HashMap<String, String> hm = (HashMap<String, String>) loadFromFileUploadWorkflow.processUploadBatch(batch);
-		assertEquals("SUCCESS [2]",hm.get("BatchStatus"));	
-		jobId =hm.get("JobId");			
+		assertEquals("SUCCESS [2]", hm.get("BatchStatus"));
+		jobId = hm.get("JobId");
 
 	}
 
 	@When("user processes transaction upload batch for $type")
-	public void whenUserProcessesTransactionUploadBatchForPrepaid(String type){
-		ProcessBatches batch =  ProcessBatches.getBatchData();
+	public void whenUserProcessesTransactionUploadBatchForPrepaid(String type) {
+		ProcessBatches batch = ProcessBatches.getBatchData();
 		batch.setBatchName("Transaction Upload [TRANSACTION_UPLOAD]");
 		batch.setBatchFileName(file.getFilename());
 		batch.setProductType(ProductType.fromShortName(type));
 		HashMap<String, String> hm = (HashMap<String, String>) loadFromFileUploadWorkflow.processUploadBatch(batch);
 		jobStatus = hm.get("BatchStatus");
-		jobId = hm.get("JobId");			
+		jobId = hm.get("JobId");
 	}
 
 	@Then("batch is successful")
-	public void thenBatchisSuccesful(){
+	public void thenBatchisSuccesful() {
 		assertEquals("SUCCESS [2]", jobStatus);
 	}
 }
