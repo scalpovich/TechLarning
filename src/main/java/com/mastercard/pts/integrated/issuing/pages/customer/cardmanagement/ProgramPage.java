@@ -219,6 +219,9 @@ public class ProgramPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#stmtPlanCode select")
 	private MCWebElement stmtPlanCodeDDwn;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:markupFeePlanCode:input:dropdowncomponent")
+	private MCWebElement markupFeePlanDDwn;
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:cashLimitCycleIndicatior:input:dropdowncomponent")
 	private MCWebElement CashLimitResetDDwn;
 
@@ -352,24 +355,6 @@ public class ProgramPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(otherPlanMarketingMessagePlanDDwn, otherPlanMarketingMessagePlan);
 	}
 
-	public void editProgram(String prog) {
-		enterValueinTextBox(enterProgram, prog);
-		clickWhenClickable(search);
-		waitForElementVisible(editProgram);
-		Scrolldown(editProgram);
-		clickWhenClickableDoNotWaitForWicket(editProgram);
-		switchToEditProgramframe();
-	}
-
-	public boolean adaptiveAuthenticationChkBox() {
-		boolean flag = false;
-		flag = adaptiveAuthenticationCheckBx.isEnabled();
-		if (flag == true)
-			clickWhenClickable(adaptiveAuthenticationCheckBx);
-		clickWhenClickable(save);
-		return flag;
-	}
-
 	public void addProgramData(Program program, String productType) {
 		logger.info("Add Program: {}", program.getProgramCode());
 		clickAddNewButton();
@@ -488,6 +473,7 @@ public class ProgramPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByOptionalVisibleText(mccRulePlanCodeDDwn, program.getMmcRulePlan());
 
 		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
+			WebElementUtils.selectDropDownByOptionalVisibleText(markupFeePlanDDwn, program.getMarkUpFeePlan());
 			WebElementUtils.selectDropDownByOptionalVisibleText(stmtPlanCodeDDwn, program.getPrepaidStatementPlan());
 		}
 		waitForLoaderToDisappear();
@@ -722,6 +708,24 @@ public class ProgramPage extends AbstractBasePage {
 		}
 	}
 
+	public void editProgram(String prog) {
+		enterValueinTextBox(enterProgram, prog);
+		clickWhenClickable(search);
+		waitForElementVisible(editProgram);
+		Scrolldown(editProgram);
+		clickWhenClickableDoNotWaitForWicket(editProgram);
+		switchToEditProgramframe();
+	}
+
+	public boolean adaptiveAuthenticationChkBox() {
+		boolean flag = false;
+		flag = adaptiveAuthenticationCheckBx.isEnabled();
+		if (flag == true)
+			clickWhenClickable(adaptiveAuthenticationCheckBx);
+		clickWhenClickable(save);
+		return flag;
+	}
+
 	public String addProgramGeneral(Program program) {
 		String programCode;
 		String ProgramDescription;
@@ -806,5 +810,6 @@ public class ProgramPage extends AbstractBasePage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(programSearchTxt));
+
 	}
 }

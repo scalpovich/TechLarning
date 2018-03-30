@@ -38,7 +38,7 @@ public class AuthorizationSearchSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		authorizationSearchWorkflow.verifyTransactionAndBillingCurrency(tcurrency, bcurrency, device.getDeviceNumber());
 	}
-	
+
 	@Then("verify fixed transaction fee applied on purchase transaction")
 	public void veriyFixedTransactionFeeonPurchaseTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
@@ -69,6 +69,32 @@ public class AuthorizationSearchSteps {
 		TransactionFeePlan txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
 		assertThat(authorizationSearchWorkflow.checkTransactionMinFee(device.getDeviceNumber()), Matchers.hasItems(txnFeePlan.getMinTxnRate(), txnFeePlan.getBillingAmountRate()));
 
+	}
+
+	@Then("verify markup fee applied on transaction")
+	public void veriyMarkupFeeOnTransaction() {
+		Device device = context.get(ContextConstants.DEVICE);
+		TransactionFeePlan txnFeePlan = TransactionFeePlan.getMarkUpFees(provider);
+		Double billingAmount = Double.parseDouble(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()).get(0));
+		Double markUpFee = billingAmount * Double.parseDouble(txnFeePlan.getMarkupFee()) / 100;
+		String markUpFees = String.valueOf(Math.round(markUpFee * 100.0) / 100.0);
+		Double markUpFeeTax = Double.parseDouble(markUpFees) * Double.parseDouble(txnFeePlan.getMarkupFeeTax()) / 100;
+		String markUpFeesTax = String.valueOf(Math.round(markUpFeeTax * 100.0) / 100.0);
+		assertThat(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()), Matchers.hasItems(markUpFees, markUpFeesTax));
+	}
+
+	@Then("verify markup rate fee applied on transaction")
+	public void veriyMarkupRateFeeOnTransaction() {
+		Device device = context.get(ContextConstants.DEVICE);
+		TransactionFeePlan txnFeePlan = TransactionFeePlan.getMarkUpFees(provider);
+		Double billingAmount = Double.parseDouble(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()).get(0));
+		Double markUpFee = billingAmount * Double.parseDouble(txnFeePlan.getMarkUpRate()) / 100.0;
+		String markUpFees = String.valueOf(Math.round(markUpFee * 100.0) / 100.0);
+		Double markUpFeeTax = Double.parseDouble(markUpFees) * Double.parseDouble(txnFeePlan.getMarkupFeeTax()) / 100;
+		String markUpFeesTax = String.valueOf(Math.round(markUpFeeTax * 100.0) / 100.0);
+		String sourceCurrency = txnFeePlan.getSourceCurrency();
+		String billingCurrency = txnFeePlan.getBillingCurrency();
+		assertThat(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()), Matchers.hasItems(markUpFees, markUpFeesTax, sourceCurrency, billingCurrency));
 	}
 
 	@Then("validate auth report")
