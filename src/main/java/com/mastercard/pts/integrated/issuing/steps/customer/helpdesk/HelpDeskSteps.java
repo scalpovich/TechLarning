@@ -51,7 +51,7 @@ public class HelpDeskSteps {
 
 	@Autowired
 	HelpdeskGeneralPage helpdeskPage;
-	
+
 	@Autowired
 	DataLoader dataLoader;
 
@@ -60,8 +60,8 @@ public class HelpDeskSteps {
 	private static final String STATUS_INCORRECT_INFO_MSG = "Device has incorrect status";
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
 	private String clientID;
-	private String loginType="login";
-	
+	private String loginType = "login";
+
 	@Autowired
 	private TestContext context;
 
@@ -129,11 +129,9 @@ public class HelpDeskSteps {
 	}
 
 	/**
-	 * Step Definition for verifying that an event is generated on activating a
-	 * device
+	 * Step Definition for verifying that an event is generated on activating a device
 	 * <p>
-	 * StoryFile usage : Then verify an event is generated on device activation
-	 * through HelpDesk
+	 * StoryFile usage : Then verify an event is generated on device activation through HelpDesk
 	 * <p>
 	 */
 	@Then("verify an event is generated on device activation through Helpdesk")
@@ -230,8 +228,7 @@ public class HelpDeskSteps {
 	/**
 	 * Step Definition for adding a card to the Do Not Call Register
 	 * <p>
-	 * StoryFile usage : When user add the card into the Do Not Call Register
-	 * through HelpDesk
+	 * StoryFile usage : When user add the card into the Do Not Call Register through HelpDesk
 	 * <p>
 	 */
 	@When("user add the card into the Do Not Call Register through HelpDesk")
@@ -275,8 +272,7 @@ public class HelpDeskSteps {
 	/**
 	 * Step Definition for requesting an Address Change through HelpDesk
 	 * <p>
-	 * StoryFile usage : When user requests for an address change through
-	 * HelpDesk
+	 * StoryFile usage : When user requests for an address change through HelpDesk
 	 * <p>
 	 */
 	@When("user requests for an address change through HelpDesk")
@@ -295,11 +291,9 @@ public class HelpDeskSteps {
 	}
 
 	/**
-	 * Step Definition for requesting activating immediately for n hours of
-	 * E-Commerce
+	 * Step Definition for requesting activating immediately for n hours of E-Commerce
 	 * <p>
-	 * StoryFile usage : When user requests to activate immediately for n hours
-	 * of e commerce
+	 * StoryFile usage : When user requests to activate immediately for n hours of e commerce
 	 * <p>
 	 */
 	@When("user requests to $activate for $nhours for ecommerce")
@@ -363,9 +357,7 @@ public class HelpDeskSteps {
 
 	@Then("currency setup for $type device is done correctly and updated in wallet details tab")
 	public void thenCurrencySetupForDeviceIsDoneCorrectlyAndUpdatedInWalletDetailsTab(String type) {
-		Device device =context.get(ContextConstants.DEVICE);// new Device();
-		device.setDeviceNumber(context.get(ContextConstants.DEVICE_NUMBER));
-		device.setAppliedForProduct(ProductType.fromShortName(type));
+		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
 		assertTrue(helpdeskWorkflow.verifyCurrencySetupDoneCorrectly(helpdeskGeneral, device));
@@ -514,8 +506,7 @@ public class HelpDeskSteps {
 	}
 
 	/*
-	 * This method gets the device status using search product type and device
-	 * number
+	 * This method gets the device status using search product type and device number
 	 */
 	@When("device has \"$deviceStatus\" status")
 	@Then("device has \"$deviceStatus\" status")
@@ -535,8 +526,7 @@ public class HelpDeskSteps {
 	}
 
 	/*
-	 * This method gets the device status on the page without search product
-	 * type and device number
+	 * This method gets the device status on the page without search product type and device number
 	 */
 	@Then("status should be $deviceStatus")
 	public void thenStatusShouldBe(String deviceStatus) {
@@ -668,19 +658,19 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.walletToWalletTransfer(device);
 	}
-	
+
 	@When("user creates service request to reset cardholder $passwordType password for $cardType user")
-	public void userCreateServiceRequestForLoginPassword(@Named("datasheet") String datasheet, String passwordType,String cardType ) {
+	public void userCreateServiceRequestForLoginPassword(@Named("datasheet") String datasheet, String passwordType, String cardType) {
 		Map<String, String> reqMap = dataLoader.loadData(datasheet).get();
-		for(Entry<String, String> entry: reqMap.entrySet()){
+		for (Entry<String, String> entry : reqMap.entrySet()) {
 			clientID = entry.getValue();
-			helpdeskWorkflow.searchByClientId(clientID,ProductType.fromShortName(cardType));
+			helpdeskWorkflow.searchByClientId(clientID, ProductType.fromShortName(cardType));
 			helpdeskWorkflow.clickCustomerCareEditLink();
-			
-			if(passwordType.equalsIgnoreCase(loginType)){
+
+			if (passwordType.equalsIgnoreCase(loginType)) {
 				helpdeskWorkflow.resetCardholderLoginPassword(clientID);
-			}else{
-				helpdeskWorkflow.resetCardholderTranPassword(clientID);	
+			} else {
+				helpdeskWorkflow.resetCardholderTranPassword(clientID);
 			}
 		}
 	}

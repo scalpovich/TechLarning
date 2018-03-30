@@ -219,6 +219,9 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#stmtPlanCode select")
 	private MCWebElement stmtPlanCodeDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:markupFeePlanCode:input:dropdowncomponent")
+	private MCWebElement markupFeePlanDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:cashLimitCycleIndicatior:input:dropdowncomponent")
 	private MCWebElement CashLimitResetDDwn;
@@ -464,12 +467,11 @@ public class ProgramPage extends AbstractBasePage {
 		}
 
 		WebElementUtils.selectDropDownByOptionalVisibleText(dedupePlanCodeDDwn, program.getDedupPlan());
-		SimulatorUtilities.wait(500);
 		WebElementUtils.selectDropDownByOptionalVisibleText(documentPlanCodeDDwn, program.getDocumentChecklistPlan());
-		SimulatorUtilities.wait(900);
 		WebElementUtils.selectDropDownByOptionalVisibleText(mccRulePlanCodeDDwn, program.getMmcRulePlan());
 
 		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
+			WebElementUtils.selectDropDownByOptionalVisibleText(markupFeePlanDDwn, program.getMarkUpFeePlan());
 			WebElementUtils.selectDropDownByOptionalVisibleText(stmtPlanCodeDDwn, program.getPrepaidStatementPlan());
 		}
 		waitForLoaderToDisappear();
