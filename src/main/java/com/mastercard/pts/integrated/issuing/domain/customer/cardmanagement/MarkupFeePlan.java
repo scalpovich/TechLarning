@@ -12,7 +12,7 @@ public class MarkupFeePlan{
 	private String status;
 	private String defaultRate;
 	private String clubIntoTheTransaction;
-	private String interchageTransaction;
+	private String interchangeTransaction;
 	private String onUsTransaction;
 	private String portalApiTransaction;
 	private String chargeMarkupFees;
@@ -22,7 +22,7 @@ public class MarkupFeePlan{
 	private String chargMarkupFeeCheckbox;
 	private static final String MP_STATUS="MP_STATUS";
 	private static final String MP_DEFAULT_RATE="MP_DEFAULT_RATE";
-	private static final String MP_CHARGE_MARKUP_FEES_CHECKBOX="MP_CHARGE_MARKUP_FEES_CHECKBOX";
+	private static final String MP_CHARGE_MARKUP_FEE_CHECKBOX="MP_CHARGE_MARKUP_FEE_CHECKBOX";
 	private static final String MP_CLUB_INTO_THE_TRANSACTION="MP_CLUB_INTO_THE_TRANSACTION";
 	private static final String MP_INTERCHANGE_TRANSACTION ="MP_INTERCHANGE_TRANSACTION";
 	private static final String MP_ON_US_TRANSACTION="MP_ON_US_TRANSACTION";
@@ -54,12 +54,12 @@ public class MarkupFeePlan{
 		this.clubIntoTheTransaction = clubIntoTheTransaction;
 	}
 
-	public String getInterchageTransaction() {
-		return interchageTransaction;
+	public String getinterchangeTransaction() {
+		return interchangeTransaction;
 	}
 
-	public void setInterchageTransaction(String interchageTransaction) {
-		this.interchageTransaction = interchageTransaction;
+	public void setinterchangeTransaction(String interchangeTransaction) {
+		this.interchangeTransaction = interchangeTransaction;
 	}
 
 	public String getOnUsTransaction() {
@@ -122,12 +122,12 @@ public class MarkupFeePlan{
 		return markupFeePlanCode;
 	}
 
-	public void setMarkup_fee_plan_code(String markupFeePlanCode) {
+	public void setMarkupFeePlanCode(String markupFeePlanCode) {
 		this.markupFeePlanCode = markupFeePlanCode;
 	}
 	
-	public static String getChargeMarkupFeesCheckbox() {
-		return MP_CHARGE_MARKUP_FEES_CHECKBOX;
+	public static String getChargeMarkupFeeCheckbox() {
+		return MP_CHARGE_MARKUP_FEE_CHECKBOX;
 	}
 
 	public String getDescription() {
@@ -146,16 +146,16 @@ public class MarkupFeePlan{
 		MarkupFeePlan plan = new MarkupFeePlan();
 		plan.setStatus(provider.getString(MP_STATUS));
 		plan.setDefaultRate(provider.getString(MP_DEFAULT_RATE));
-		plan.setChargMarkupFeeCheckbox(MP_CHARGE_MARKUP_FEES_CHECKBOX);
+		plan.setChargMarkupFeeCheckbox(MP_CHARGE_MARKUP_FEE_CHECKBOX);
 		plan.setClubIntoTheTransaction(provider.getString(MP_CLUB_INTO_THE_TRANSACTION));
 		plan.setPostalApiTransaction(provider.getString(MP_PORTAL_API_TRANSACTION));
-		plan.setInterchageTransaction(provider.getString(MP_INTERCHANGE_TRANSACTION));
+		plan.setinterchangeTransaction(provider.getString(MP_INTERCHANGE_TRANSACTION));
 		plan.setOnUsTransaction(provider.getString(MP_ON_US_TRANSACTION));
 		plan.setSourceCurrency(provider.getString(MP_SOURCE_CURRENCY));
 		plan.setDestinationCurrency(provider.getString(MP_DESTINATION_CURRENCY));
 		plan.setCurrencySpecificRate(provider.getString(MP_CURRENCY_SPECIFIC_RATE));
 		plan.setChargeMarkupFees(provider.getString(MP_CHARGE_MARKUP_FEES));
-		plan.setMarkup_fee_plan_code(CustomUtils.randomNumbers(4));
+		plan.setMarkupFeePlanCode(CustomUtils.randomNumbers(4));
 		return plan;
 	}
 	

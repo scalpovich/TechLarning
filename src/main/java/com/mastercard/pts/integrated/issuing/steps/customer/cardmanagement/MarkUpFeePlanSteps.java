@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,7 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.M
 
 @Component 
 public class MarkUpFeePlanSteps{
-	
+
 	@Autowired
 	private KeyValueProvider provider;
 	
@@ -18,9 +19,8 @@ public class MarkUpFeePlanSteps{
 	private MarkUpFeeWorkflow markUpFeeWorkflow;
 	
 	@When("user creates a mark up fee plan")
-	public void whenUserCreatesAMarkUpFeePlan(){
+	public void createMarkupFeePlan(){
 		MarkupFeePlan plan = MarkupFeePlan.createWithProvider(provider);
 		markUpFeeWorkflow.addMarkUpPlan(plan);
-		
 	}
 }

@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
-import com.kenai.constantine.Constant;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -15,7 +14,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MarkupFeePlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -122,7 +121,7 @@ public class MarkupFeePlanPage extends AbstractBasePage {
 					WebElementUtils.enterText(currencySpecificRateTxtBx,plan.getCurrencySpecificRate());
 					clickSaveButton();
 					verifyNoErrors();
-				});	
+				});		
 			}
 			else{
 				clickSaveButton();

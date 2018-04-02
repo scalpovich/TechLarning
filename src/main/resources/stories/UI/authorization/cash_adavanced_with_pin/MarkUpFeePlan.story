@@ -15,3 +15,4 @@ Meta:
 @TestId TC398452
 Given user is logged in institution
 When user creates a mark up fee plan
+Then user sign out from customer portal
