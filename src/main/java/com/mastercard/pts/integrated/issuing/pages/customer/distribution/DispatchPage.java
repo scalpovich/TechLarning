@@ -21,12 +21,10 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = DistributionNav.TAB_DISTRIBUTION, treeMenuItems = {
-		DistributionNav.L1_ACTIVITY, DistributionNav.L2_INVENTORY,
-		DistributionNav.L3_DISPATCH })
+@Navigation(tabTitle = DistributionNav.TAB_DISTRIBUTION, treeMenuItems = { DistributionNav.L1_ACTIVITY,
+		DistributionNav.L2_INVENTORY, DistributionNav.L3_DISPATCH })
 public class DispatchPage extends AbstractBasePage {
-	private static final Logger logger = LoggerFactory
-			.getLogger(DispatchPage.class);
+	private static final Logger logger = LoggerFactory.getLogger(DispatchPage.class);
 	private String cardPackIdCreationMessage;
 
 	@Value("${default.wait.timeout_in_sec}")
@@ -62,7 +60,7 @@ public class DispatchPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "memoDispatch:input:textAreaComponent")
 	private MCWebElement memoTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Download in xls']")
 	private MCWebElement downloadinXLSBtn;
 
@@ -93,8 +91,7 @@ public class DispatchPage extends AbstractBasePage {
 	}
 
 	public void selectCourierAgency(String courierAgency) {
-		WebElementUtils.selectDropDownByVisibleText(courierAgencyDdwn,
-				courierAgency);
+		WebElementUtils.selectDropDownByVisibleText(courierAgencyDdwn, courierAgency);
 	}
 
 	public void enterQuantityToDispatch(String quantityToDispatch) {
@@ -105,20 +102,19 @@ public class DispatchPage extends AbstractBasePage {
 		WebElementUtils.enterText(memoTxt, memo);
 	}
 
+	@Override
 	public void clickSubmitButton() {
-		new WebDriverWait(driver(), timeoutInSec).until(
-				WebElementUtils.elementToBeClickable(submitBtn)).click();
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(submitBtn)).click();
 	}
-	
+
 	public void clickDownloadinXLSButton() {
-		new WebDriverWait(driver(), timeoutInSec).until(
-				WebElementUtils.elementToBeClickable(downloadinXLSBtn)).click();
-		SimulatorUtilities.wait(5000);//this delay to wait till the file is downloaded
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(downloadinXLSBtn)).click();
+		SimulatorUtilities.wait(5000);// this delay to wait till the file is
+										// downloaded
 	}
-	
+
 	public void clickOKButton() {
-		new WebDriverWait(driver(), timeoutInSec).until(
-				WebElementUtils.elementToBeClickable(okBtn)).click();
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(okBtn)).click();
 	}
 
 	public String getLastCardPackID() {
@@ -131,8 +127,7 @@ public class DispatchPage extends AbstractBasePage {
 	}
 
 	public String getDisptachSuccessMessage() {
-		return new WebDriverWait(driver(), timeoutInSec).until(
-				WebElementUtils.visibilityOf(successMessage)).getText();
+		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(successMessage)).getText();
 	}
 
 	public String dispatchOrder(Dispatch details) {
@@ -144,19 +139,16 @@ public class DispatchPage extends AbstractBasePage {
 		clickSearchButton();
 		editFirstRecord();
 
-		runWithinPopup(
-				"Edit Dispatch",
-				() -> {
-					selectCourierAgency(details.getCourierAgency());
-					WebElementUtils.pickDate(dispatchDateDpkr,
-							details.getEffectiveDate());
-					enterQuantityToDispatch(details.getQuantityToDispatch());
-					enterMemo(details.getMemo());
-					clickDownloadinXLSButton();
-					clickSaveButton();
-					cardPackIdCreationMessage = getDisptachSuccessMessage();
-					clickOKButton();
-				});
+		runWithinPopup("Edit Dispatch", () -> {
+			selectCourierAgency(details.getCourierAgency());
+			WebElementUtils.pickDate(dispatchDateDpkr, details.getEffectiveDate());
+			enterQuantityToDispatch(details.getQuantityToDispatch());
+			enterMemo(details.getMemo());
+			clickDownloadinXLSButton();
+			clickSaveButton();
+			cardPackIdCreationMessage = getDisptachSuccessMessage();
+			clickOKButton();
+		});
 		verifyOperationStatus();
 		return getLastCardPackID();
 	}

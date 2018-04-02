@@ -7,144 +7,154 @@ import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 @Component
 public class BulkDeviceRequestbatch {
 
-	public String BatchNumber;
+	public String batchNumber;
 
-	public String Branch;
+	public String branch;
 
-	public String Program;
+	public String program;
 
-	public String DevicePlan;
+	public String devicePlan;
 
-	public String QuantityRequested;
+	public String quantityRequested;
 
-	public String JobId;
+	public String jobId;
 
-	public String PreProductionSourceJobid;
+	public String preProductionSourceJobid;
 
-	public String DeviceProductionJobId;
+	public String deviceProductionJobId;
 
-	public String BatchNumberForDeviceProduction;
+	public String batchNumberForDeviceProduction;
 
-	public String DeviceNumberFromBulkDevice;
+	public String deviceNumberFromBulkDevice;
 
-	public String getDeviceNumberFromBulkDevice() {
-		return DeviceNumberFromBulkDevice;
+	public String deviceNumber;
+
+	public String actionCode;
+
+	public String batchNumberForDeviceGeneration;
+
+	public String batchType;
+
+	public String product;
+
+	public String getProduct() {
+		return product;
 	}
 
-	public void setDeviceNumberFromBulkDevice(String deviceNumberFromBulkDevice) {
-		DeviceNumberFromBulkDevice = deviceNumberFromBulkDevice;
-	}
-
-	public String getBatchNumberForDeviceProduction() {
-		return BatchNumberForDeviceProduction;
-	}
-
-	public void setBatchNumberForDeviceProduction(String batchNumberForDeviceProduction) {
-		BatchNumberForDeviceProduction = batchNumberForDeviceProduction;
-	}
-
-	public String getDeviceProductionJobId() {
-		return DeviceProductionJobId;
-	}
-
-	public void setDeviceProductionJobId(String deviceProductionJobId) {
-		DeviceProductionJobId = deviceProductionJobId;
-	}
-
-	public String DeviceNumber;
-
-	public String ActionCode;
-
-	public String getActionCode() {
-		return ActionCode;
-	}
-
-	public void setActionCode(String actionCode) {
-		ActionCode = actionCode;
-	}
-
-	public String getDeviceNumber() {
-		return DeviceNumber;
-	}
-
-	public void setDeviceNumber(String deviceNumber) {
-		DeviceNumber = deviceNumber;
-	}
-
-	public String getPreProductionSourceJobid() {
-		return PreProductionSourceJobid;
-	}
-
-	public void setPreProductionSourceJobid(String preProductionSourceJobid) {
-		PreProductionSourceJobid = preProductionSourceJobid;
-	}
-
-	public String getBatchType() {
-		return BatchType;
-	}
-
-	public void setBatchType(String batchType) {
-		BatchType = batchType;
-	}
-
-	public String BatchNumberForDeviceGeneration;
-
-	public String BatchType;
-
-	public String getBatchNumberForDeviceGeneration() {
-		return BatchNumberForDeviceGeneration;
-	}
-
-	public void setBatchNumberForDeviceGeneration(String batchNumberForDeviceGeneration) {
-		BatchNumberForDeviceGeneration = batchNumberForDeviceGeneration;
-	}
-
-	public String getJobId() {
-		return JobId;
-	}
-
-	public void setJobId(String jobId) {
-		JobId = jobId;
-	}
-
-	public String getQuantityRequested() {
-		return QuantityRequested;
-	}
-
-	public void setQuantityRequested(String quantityRequested) {
-		QuantityRequested = quantityRequested;
-	}
-
-	public String getDevicePlan() {
-		return DevicePlan;
-	}
-
-	public void setDevicePlan(String devicePlan) {
-		DevicePlan = devicePlan;
-	}
-
-	public String getBranch() {
-		return Branch;
-	}
-
-	public void setBranch(String branch) {
-		Branch = branch;
-	}
-
-	public String getProgram() {
-		return Program;
-	}
-
-	public void setProgram(String program) {
-		Program = program;
+	public void setProduct(String product) {
+		this.product = product;
 	}
 
 	public String getBatchNumber() {
-		return BatchNumber;
+		return batchNumber;
 	}
 
 	public void setBatchNumber(String batchNumber) {
-		BatchNumber = batchNumber;
+		this.batchNumber = batchNumber;
+	}
+
+	public String getBranch() {
+		return branch;
+	}
+
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
+
+	public String getProgram() {
+		return program;
+	}
+
+	public void setProgram(String program) {
+		this.program = program;
+	}
+
+	public String getDevicePlan() {
+		return devicePlan;
+	}
+
+	public void setDevicePlan(String devicePlan) {
+		this.devicePlan = devicePlan;
+	}
+
+	public String getQuantityRequested() {
+		return quantityRequested;
+	}
+
+	public void setQuantityRequested(String quantityRequested) {
+		this.quantityRequested = quantityRequested;
+	}
+
+	public String getJobId() {
+		return jobId;
+	}
+
+	public void setJobId(String jobId) {
+		this.jobId = jobId;
+	}
+
+	public String getPreProductionSourceJobid() {
+		return preProductionSourceJobid;
+	}
+
+	public void setPreProductionSourceJobid(String preProductionSourceJobid) {
+		this.preProductionSourceJobid = preProductionSourceJobid;
+	}
+
+	public String getDeviceProductionJobId() {
+		return deviceProductionJobId;
+	}
+
+	public void setDeviceProductionJobId(String deviceProductionJobId) {
+		this.deviceProductionJobId = deviceProductionJobId;
+	}
+
+	public String getBatchNumberForDeviceProduction() {
+		return batchNumberForDeviceProduction;
+	}
+
+	public void setBatchNumberForDeviceProduction(String batchNumberForDeviceProduction) {
+		this.batchNumberForDeviceProduction = batchNumberForDeviceProduction;
+	}
+
+	public String getDeviceNumberFromBulkDevice() {
+		return deviceNumberFromBulkDevice;
+	}
+
+	public void setDeviceNumberFromBulkDevice(String deviceNumberFromBulkDevice) {
+		this.deviceNumberFromBulkDevice = deviceNumberFromBulkDevice;
+	}
+
+	public String getDeviceNumber() {
+		return deviceNumber;
+	}
+
+	public void setDeviceNumber(String deviceNumber) {
+		this.deviceNumber = deviceNumber;
+	}
+
+	public String getActionCode() {
+		return actionCode;
+	}
+
+	public void setActionCode(String actionCode) {
+		this.actionCode = actionCode;
+	}
+
+	public String getBatchNumberForDeviceGeneration() {
+		return batchNumberForDeviceGeneration;
+	}
+
+	public void setBatchNumberForDeviceGeneration(String batchNumberForDeviceGeneration) {
+		this.batchNumberForDeviceGeneration = batchNumberForDeviceGeneration;
+	}
+
+	public String getBatchType() {
+		return batchType;
+	}
+
+	public void setBatchType(String batchType) {
+		this.batchType = batchType;
 	}
 
 	public void BulkDeviceRequestDataProvider() {

@@ -315,6 +315,7 @@ public class DeviceSalePage extends AbstractBasePage {
 		WebElementUtils.enterText(legalId1Txt, legalId1);
 	}
 
+	@Override
 	public void clickSubmitButton() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(submitBtn)).click();
