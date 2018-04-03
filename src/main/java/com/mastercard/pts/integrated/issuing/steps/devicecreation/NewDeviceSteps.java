@@ -7,7 +7,10 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.NewDeviceFlows;
@@ -25,7 +28,13 @@ public class NewDeviceSteps {
 	Program program;
 
 	@Autowired
+	DevicePlan devicePlan;
+
+	@Autowired
 	NewDeviceFlows newDeviceflows;
+
+	@Autowired
+	private TestContext context;
 
 	@When("user configures the device range for Corporate Travel card, single wallet single currency for MagStripe")
 	@Composite(steps = {
@@ -452,10 +461,14 @@ public class NewDeviceSteps {
 	public void createNewPrepaidDevice(@Named("DeviceType") String DeviceType, @Named("product") String product,
 			@Named("CustomerType") String CustomerType) {
 		newDevice.setDeviceType(DeviceType);
-		deviceCreation.setProduct(product);
 		newDevice.setCustomerType(CustomerType);
-		String devicenumber = newDeviceflows.createNewDevicePrepaid();
+		newDevice.setProduct(product);
+		newDevice.setProgramForDevice(program.getProgramCode());
+		newDevice.setDevicePlanForDevice(devicePlan.getDevicePlan());
+		context.put(ContextConstants.DEVICE, newDevice);
+		String devicenumber = newDeviceflows.createNewDevicePrepaid(newDevice);
 		newDevice.setDeviceNumber(devicenumber);
+		context.put(ContextConstants.DEVICE, newDevice);
 
 	}
 

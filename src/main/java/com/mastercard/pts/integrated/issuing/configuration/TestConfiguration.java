@@ -25,8 +25,10 @@ import com.mastercard.testing.utils.encryption.EncryptUtils;
 @Configuration
 @ComponentScan(basePackages = { "com.mastercard.pts.integrated.issuing" })
 @PropertySources({ @PropertySource(value = "/config/${env}/environment.properties", ignoreResourceNotFound = false),
-		@PropertySource(value = "/config/${env}/user.properties", ignoreResourceNotFound = false), @PropertySource(value = "/config/${env}/test.properties", ignoreResourceNotFound = false),
-		@PropertySource(value = "/config/${env}/apitest.properties", ignoreResourceNotFound = false), @PropertySource(value = "/config/${env}/validation.properties", ignoreResourceNotFound = false), })
+		@PropertySource(value = "/config/${env}/user.properties", ignoreResourceNotFound = false),
+		@PropertySource(value = "/config/${env}/test.properties", ignoreResourceNotFound = false),
+		@PropertySource(value = "/config/${env}/apitest.properties", ignoreResourceNotFound = false),
+		@PropertySource(value = "/config/${env}/validation.properties", ignoreResourceNotFound = false), })
 @Import({ MTAFWebToolsConfiguration.class, Portal.class })
 @EnableAspectJAutoProxy
 public class TestConfiguration {
@@ -42,11 +44,13 @@ public class TestConfiguration {
 		try {
 			temp = Files.createTempDirectory(new DateUtils().getDateyyyyMMdd() + "_IssuingTests_");
 		} catch (Exception e) {
-			logger.error("Exception has been caugh while creating a temp folder.\nMessage :: {}\nTrace :: {}", e.getMessage(), e.getStackTrace());
+			logger.error("Exception has been caught while creating a temp folder.\nMessage :: {}\nTrace :: {}",
+					e.getMessage(), e.getStackTrace());
 			MiscUtils.propagate(e);
 		}
-		if(System.getProperty("storyType")==null){
-		Utils.killChromeDriver();
+
+		if (System.getProperty("storyType") == null) {
+			Utils.killChromeDriver();
 		}
 		logger.info("Temp directory path: {}", temp);
 		return temp;

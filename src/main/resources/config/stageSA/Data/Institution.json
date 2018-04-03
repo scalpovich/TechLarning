@@ -1,7 +1,7 @@
 {  
-   "name":"CANARA",
-   "code":"110000",
-   "abbreviation":"CANARA",
+   "name":"RII",
+   "code":"336699",
+   "abbreviation":"RII",
    "debit":true,
    "credit":true,
    "prepaid":true,

@@ -3,8 +3,6 @@ package com.mastercard.pts.integrated.issuing.utils;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.hamcrest.Matcher;
-
 public class Constants {
 
 	public static final String Record_Added_Successfully = "Record Added Successfully.";
@@ -19,6 +17,8 @@ public class Constants {
 	public static final String ADD_USER = "Add User";
 	public static final String ADD_LOYALTY_PROMOTION_MAPPING = "Add Loyalty Plan & Promotion Mapping";
 	public static final String EDIT_PROGRAM_FRAME = "Edit Program";
+
+	public static final String EDIT_DEVICE_RANGE_FRAME = "Edit Device Range";
 	public static String BATCH_NAME = "Device Production";
 
 	public static String EDIT_BATCH_DEFINITION = "Edit Batch Definition";
@@ -26,7 +26,7 @@ public class Constants {
 	public static String Balance_Inquiry_String = "Balance Inquiry";
 
 	public static String Balance_Inquiry_Code = "31";
-	
+
 	public static String Purchase_Auth_String = "Purchase/Auth Completion";
 
 	public static String Purchase_Auth_Code = "01";
@@ -430,7 +430,6 @@ public class Constants {
 	public static final String WAIVERPLAN_DESC_ERRMSG = "[a-z A-Z 0-9], SPACES and special characters [.,&#:*()-] are allowed and must start with an alphanumeric.";
 
 	public static String DATA_DRIVEN_CARD_BOARDING = "NO";
-
 	public static final String ENVIRONMENT = "demo";
 	public static final String COLUMN_NAME = "Status";
 	public static final int TABLE_ROW_NUM = 1;

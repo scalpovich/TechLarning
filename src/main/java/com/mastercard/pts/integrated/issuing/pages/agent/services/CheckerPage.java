@@ -21,7 +21,8 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = ServicesNav.TAB_SERVICES, treeMenuItems = { ServicesNav.L1_DEVICE_SALE_ISSUANCE, ServicesNav.L2_CHECKER_REQUEST })
+@Navigation(tabTitle = ServicesNav.TAB_SERVICES, treeMenuItems = { ServicesNav.L1_DEVICE_SALE_ISSUANCE,
+		ServicesNav.L2_CHECKER_REQUEST })
 public class CheckerPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(CheckerPage.class);
 
@@ -78,15 +79,18 @@ public class CheckerPage extends AbstractBasePage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.visibilityOf(applicationNumberTxt), WebElementUtils.visibilityOf(applicationTypeDdwn),
-				WebElementUtils.visibilityOf(programCodeDdwn), WebElementUtils.visibilityOf(cardPackIdTxt), WebElementUtils.visibilityOf(mobileNumberTxt),
-				WebElementUtils.visibilityOf(applicationDateTxt), WebElementUtils.visibilityOf(masterDetailContentTitle));
+		return Arrays.asList(WebElementUtils.visibilityOf(applicationNumberTxt),
+				WebElementUtils.visibilityOf(applicationTypeDdwn), WebElementUtils.visibilityOf(programCodeDdwn),
+				WebElementUtils.visibilityOf(cardPackIdTxt), WebElementUtils.visibilityOf(mobileNumberTxt),
+				WebElementUtils.visibilityOf(applicationDateTxt),
+				WebElementUtils.visibilityOf(masterDetailContentTitle));
 	}
 
 	// methods
 	public String getMasterDetailContentTitleText() {
 		logger.info("Corporate User View Edit Master Detail Tilte Text: {}");
-		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle)).getText();
+		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle))
+				.getText();
 	}
 
 	public void enterApplicationNumber(String applicationNumber) {
@@ -123,9 +127,9 @@ public class CheckerPage extends AbstractBasePage {
 	}
 
 	public void clickTableFirstRecord() {
-		SimulatorUtilities.wait(3000);//this to wait till the table gets loaded
-		WebElementUtils.retryUntil(tableFirstRecord::click,
-				() -> WebElementUtils.hasClass(getFinder().findOne(FindBy.X_PATH, "//*[@class='dataview']/tbody/tr[1]"), "select"));
+		SimulatorUtilities.wait(3000);// this to wait till the table gets loaded
+		WebElementUtils.retryUntil(tableFirstRecord::click, () -> WebElementUtils
+				.hasClass(getFinder().findOne(FindBy.X_PATH, "//*[@class='dataview']/tbody/tr[1]"), "select"));
 	}
 
 	public void clickOKButton() {
@@ -148,7 +152,7 @@ public class CheckerPage extends AbstractBasePage {
 		clickSearchButton();
 		clickTableFirstRecord();
 		clickModifyButton();
-		SimulatorUtilities.wait(5000);//this to wait till the page gets loaded
+		SimulatorUtilities.wait(5000);// this to wait till the page gets loaded
 		WebElementUtils.scrollDown(driver(), 0, 350);
 		enterComment(details.getComment());
 		clickApproveButton();

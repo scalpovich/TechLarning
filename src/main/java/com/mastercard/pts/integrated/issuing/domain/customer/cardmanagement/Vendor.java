@@ -1,11 +1,12 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
-import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
 @Component
 public class Vendor {
@@ -22,7 +23,6 @@ public class Vendor {
 	public String newVendorDetails;
 	public String NewVendor;
 
-
 	private String addressLine1;
 	private String addressLine2;
 	private String country;
@@ -33,8 +33,6 @@ public class Vendor {
 	private String mobileNumber;
 	private String phoneNumber;
 	private String email;
-
-	
 
 	public String getVendorCode() {
 		return vendorCode;
@@ -59,7 +57,7 @@ public class Vendor {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	
+
 	public String getContactPerson() {
 		return contactPerson;
 	}
@@ -92,34 +90,31 @@ public class Vendor {
 		this.phoneNumber = phoneNumber;
 	}
 
-	
-	public static List<Vendor>  createWithProvider(KeyValueProvider provider)
-	{
-		
+	public static List<Vendor> createWithProvider(KeyValueProvider provider) {
+
 		List<Vendor> vendorMasterData = new ArrayList<>();
-		
+
 		Vendor autoBranchCourier = new Vendor();
 		autoBranchCourier.setVendorName(provider.getString("AUTOMATION_ BRANCH_COURIER_VENDOR_NAME"));
 		autoBranchCourier.setCategory(provider.getString("AUTOMATION_BRANCH_COURIER_CATEGORY"));
 		autoBranchCourier.setBranchCode(provider.getString("AUTOMATION_BRANCH_COURIER_BRANCH"));
 		autoBranchCourier.setVendorCode(provider.getString("AUTOMATION_BRANCH_COURIER_VENDOR_CODE"));
 		vendorMasterData.add(autoBranchCourier);
-		
+
 		Vendor autoRedAgent = new Vendor();
 		autoRedAgent.setVendorName(provider.getString("AUTOMATION_RED_AGENT_VENDOR_NAME"));
 		autoRedAgent.setCategory(provider.getString("AUTOMATION_RED_AGENT_CATEGORY"));
 		autoRedAgent.setBranchCode(provider.getString("AUTOMATION_RED_AGENT_BRANCH"));
 		autoRedAgent.setVendorCode(provider.getString("AUTOMATION_RED_AGENT_VENDOR_CODE"));
 		vendorMasterData.add(autoRedAgent);
-		
-		
+
 		Vendor autoPlasticManuf = new Vendor();
 		autoPlasticManuf.setVendorName(provider.getString("AUTOMATION_PLASTIC_MANUF_VENDOR_NAME"));
 		autoPlasticManuf.setCategory(provider.getString("AUTOMATION_PLASTIC_MANUF_CATEGORY"));
 		autoPlasticManuf.setBranchCode(provider.getString("AUTOMATION_PLASTIC_MANUF_BRANCH"));
 		autoPlasticManuf.setVendorCode(provider.getString("AUTOMATION_PLASTIC_MANUF_VENDOR_CODE"));
 		vendorMasterData.add(autoPlasticManuf);
-		
+
 		Vendor autoPersBureau = new Vendor();
 		autoPersBureau.setVendorName(provider.getString("AUTOMATION_PERS_BUREAU_VENDOR_NAME"));
 		autoPersBureau.setCategory(provider.getString("AUTOMATION_PERS_BUREAU_CATEGORY"));
@@ -127,24 +122,23 @@ public class Vendor {
 		autoPersBureau.setVendorCode(provider.getString("AUTOMATION_PERS_BUREAU_VENDOR_CODE"));
 		autoPersBureau.setEmbosingFileTemplate(provider.getString("AUTOMATION_EMBOSING_FILE_TEMPLATE"));
 		vendorMasterData.add(autoPersBureau);
-		
+
 		Vendor autoDirectSaleAgent = new Vendor();
 		autoDirectSaleAgent.setVendorName(provider.getString("AUTOMATION_DIRECT_SALE_AGENT_VENDOR_NAME"));
 		autoDirectSaleAgent.setCategory(provider.getString("AUTOMATION_DIRECT_SALE_AGENT_CATEGORY"));
 		autoDirectSaleAgent.setBranchCode(provider.getString("AUTOMATION_DIRECT_SALE_AGENT_BRANCH"));
 		autoDirectSaleAgent.setVendorCode(provider.getString("AUTOMATION_DIRECT_SALE_AGENT_VENDOR_CODE"));
 		vendorMasterData.add(autoDirectSaleAgent);
-		
+
 		Vendor autoZoneCourier = new Vendor();
 		autoZoneCourier.setVendorName(provider.getString("AUTOMATION_ZONE_COURIER_VENDOR_NAME"));
 		autoZoneCourier.setCategory(provider.getString("AUTOMATION_ZONE_COURIER_CATEGORY"));
 		autoZoneCourier.setBranchCode(provider.getString("AUTOMATION_ZONE_COURIER_BRANCH"));
 		autoZoneCourier.setVendorCode(provider.getString("AUTOMATION_ZONE_COURIER_VENDOR_CODE"));
 		vendorMasterData.add(autoZoneCourier);
-		
+
 		return vendorMasterData;
-		
-		
+
 	}
 
 	public String getEmbosingFileTemplate() {
@@ -154,6 +148,7 @@ public class Vendor {
 	public void setEmbosingFileTemplate(String embosingFileTemplate) {
 		this.embosingFileTemplate = embosingFileTemplate;
 	}
+
 	public String getNewVendorDetails() {
 		return newVendorDetails;
 	}
@@ -251,6 +246,8 @@ public class Vendor {
 	}
 
 	public void vendorDataProvider() {
+		setVendorCode(MapUtils.fnGetInputDataFromMap("VendorCode"));
+		setVendorName(MapUtils.fnGetInputDataFromMap("VendorName"));
 		setAddressLine1(MapUtils.fnGetInputDataFromMap("AddressLine1"));
 		setAddressLine2(MapUtils.fnGetInputDataFromMap("AddressLine2"));
 		setCountry(MapUtils.fnGetInputDataFromMap("country"));
@@ -261,6 +258,5 @@ public class Vendor {
 		setEmail(MapUtils.fnGetInputDataFromMap("email"));
 
 	}
-
 
 }
