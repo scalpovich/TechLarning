@@ -3,16 +3,22 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 
+
+
+import org.openqa.jetty.jetty.servlet.WebApplicationContext;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+
+
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCCRulePlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -53,6 +59,8 @@ public class MCCRulePlanPage extends AbstractBasePage {
 
 		runWithinPopup("Add MCC Rule Plan", () -> {
 			WebElementUtils.enterText(planCodeTxt, plan.getMccRulePlanCode());
+			descriptionTxt.click();
+			SimulatorUtilities.wait(500);
 			WebElementUtils.enterText(descriptionTxt, plan.getDescription());
 			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, plan.getProductType());
 			WebElementUtils.scrollDown(driver(),0,250);
