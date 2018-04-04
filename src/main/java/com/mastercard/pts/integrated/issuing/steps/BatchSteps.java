@@ -52,10 +52,9 @@ public class BatchSteps {
 		MiscUtils.reportToConsole("******** Embossing File Start ***** " );
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		try {
-			File batchFile =linuxBox.downloadSCPByPartialFileName("P01CCMC09V", tempDirectory.toString(), "DEVICE");		
-					
+			File batchFile =linuxBox.downloadSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE");		
 			String[] fileData = LinuxUtils.getCardNumberAndExpiryDate(batchFile);
-					
+			MiscUtils.reportToConsole("File Data : " + fileData);
 			Device device = context.get(ContextConstants.DEVICE);
 			if(device.getDeviceType1().toLowerCase().contains(ConstantData.MSR_CARD))
 			{

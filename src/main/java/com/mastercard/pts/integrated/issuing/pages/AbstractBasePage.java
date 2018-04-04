@@ -272,7 +272,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void clickNextButton() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
+		SimulatorUtilities.wait(500);
 		clickWhenClickable(nextBtn);
+		SimulatorUtilities.wait(500);
 		WebElementUtils.addWicketAjaxListeners(driver());
 	}
 
@@ -445,7 +447,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected boolean waitForRow() {
 		try {
 			waitForWicket();
-			Thread.sleep(20000); // Pre-production batch and device production
+			Thread.sleep(30000); // Pre-production batch and device production
 									// batch takes little longer hence the wait
 			return driver().findElement(By.cssSelector(FIRST_ROW_SELECT)).isDisplayed();
 		} catch (NoSuchElementException | InterruptedException e) {

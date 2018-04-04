@@ -261,7 +261,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		clickWhenClickable(generateDeviceBatchBtn);
 		//generateDeviceBatchBtn.click();
 		waitForWicket();
-		SimulatorUtilities.wait(7000);
+		SimulatorUtilities.wait(30000);
 		// fetching batch number and setting it for further use
 		device.setBatchNumber(batchNumberTxt.getText());
 		logger.info(" *********** Batch number *********** " + device.getBatchNumber());
