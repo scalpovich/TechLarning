@@ -1015,7 +1015,8 @@ public class ProgramSetupSteps {
 	@When("User fills Device Range section for $type product")
 	public void whenUserFillsDeviceRangeSection(String type) {
 		DeviceRange deviceRange;
-			deviceRange = DeviceRange.createWithProvider(dataProvider, provider, type);
+		if (type.equalsIgnoreCase(ProductType.Credit)) {
+			deviceRange = DeviceRange.createWithProvider(dataProvider,provider, type);
 		} else {
 			deviceRange = DeviceRange.createWithProvider(dataProvider, type);
 		}
