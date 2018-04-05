@@ -35,6 +35,10 @@ public class CreditConstants {
 	
 	public static final String DEVICE_NUMBER="DEVICE_NUMBER";
 	
+	public static final String EXCEL_VALUES="EXCEL_VALUES";
+	
+	public static final String JSON_VALUES="JSON_VALUES";
+	
 	public static final String VENDOR_BRANCH="VENDOR_BRANCH";
 
 	private CreditConstants() {

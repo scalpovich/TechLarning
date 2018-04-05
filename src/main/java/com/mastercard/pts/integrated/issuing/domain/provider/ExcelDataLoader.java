@@ -3,7 +3,6 @@ package com.mastercard.pts.integrated.issuing.domain.provider;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
@@ -50,7 +49,8 @@ public class ExcelDataLoader implements DataLoader {
 				}
 				Sheet sheet = workbook.getSheet(sheetName);
 				Map<String, String> data = ExcelUtils.readExcel(sheet);
-				return Optional.of(Collections.unmodifiableMap(data));
+				return Optional.of(data);
+				//return Optional.of(Collections.unmodifiableMap(data));
 			} finally {
 				if (workbook != null) {
 					workbook.close();
