@@ -45,6 +45,7 @@ public class CreditUtilitySteps {
 		Method[]methodsJson=CreditMappingForJson.class.getDeclaredMethods();
 		Method[]methodsExcel=CreditMappingForExcel.class.getDeclaredMethods();
 		creditMappingForExcel=creditMappingForExcel.createWithProviderForRegression(keyValueProvider);
+	
 		context.put(CreditConstants.EXCEL_VALUES,creditMappingForExcel);
 		if(StringUtils.isEmpty(institution))
 		{
@@ -82,18 +83,18 @@ public class CreditUtilitySteps {
 						 jsonMap.put(methodsJson[i].getName(), valueJson);
 		
 				}
+			           
+					
 			}	
+				
 		}
 		for (Map.Entry<String, Object> entry : map.entrySet()) {
 			for(Map.Entry<String, String> entryJson:jsonMap.entrySet())
 			{
-	            
-
 			  if (entryJson.getKey().toUpperCase().contains(entry.getKey().replaceAll("_", ""))) {
 				   updated_Value=String.valueOf(entry.getValue()).replaceAll(".+", entryJson.getValue());
 					map.put(entry.getKey(), updated_Value);
 				}
-
 		}
 	}
 		context.put(TestContext.KEY_STORY_DATA,map);

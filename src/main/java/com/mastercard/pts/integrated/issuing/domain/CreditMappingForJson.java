@@ -49,7 +49,6 @@ public class CreditMappingForJson {
 	public void setInterchange(String interchange) {
 		this.interchange = interchange;
 	}
-	
 	public String getCardPackIdGenerationTemplate() {
 		return cardPackIdGenerationTemplate;
 	}

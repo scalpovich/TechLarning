@@ -1110,7 +1110,7 @@ public class DevicePlanPage extends AbstractBasePage {
 			else
 			{
 			 if(!devicePlan.getDeviceType().equalsIgnoreCase("Static Virtual Card [7]")){
-				 selectIframeEmbossingVendorDdwn(devicePlan.getEmbossingVendor());
+			selectIframeEmbossingVendorDdwn(devicePlan.getEmbossingVendor());
 			 }
 			 
 			}
