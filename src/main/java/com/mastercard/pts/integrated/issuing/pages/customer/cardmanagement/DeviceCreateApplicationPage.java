@@ -268,17 +268,38 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 
 	private void fillDeviceInformation(Device device) {
 		WebElementUtils.selectDropDownByVisibleText(appliedForProdutDDwn, device.getAppliedForProduct());
+		if(device.getAppliedForProduct().equalsIgnoreCase(ProductType.Credit))
+		{
+			selectByVisibleText(applicationTypeDDwn, device.getApplicationType());
+			selectByVisibleText(subApplicationTypeDDwn, device.getSubApplicationType());
+		}
+		else
+		{
 		WebElementUtils.selectDropDownByVisibleText(applicationTypeDDwn, device.getApplicationType());
 		WebElementUtils.selectDropDownByVisibleText(subApplicationTypeDDwn, device.getSubApplicationType());
+		}
 		clickNextButton();
 	}
 
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
+		if(device.getAppliedForProduct().equalsIgnoreCase(ProductType.Credit))
+		{
+		selectByVisibleText(customerTypeDDwn, device.getCustomerType());
+		}
+		else
+		{
 		WebElementUtils.selectDropDownByVisibleText(customerTypeDDwn, device.getCustomerType());
+		}
 		WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, device.getProgramCode());
 		clickNextButton();
-
+		if(device.getAppliedForProduct().equalsIgnoreCase(ProductType.Credit))
+		{
+		 selectByVisibleText(deviceType1DDwn, device.getDeviceType1());
+		}
+		else
+		{
 		WebElementUtils.selectDropDownByVisibleText(deviceType1DDwn, device.getDeviceType1());
+		}
 		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
 		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
 	}

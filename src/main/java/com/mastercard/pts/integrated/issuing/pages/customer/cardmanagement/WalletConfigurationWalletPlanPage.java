@@ -155,14 +155,18 @@ private TestContext context;
 			String productType = walletPlan.getProductType();
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
 			inputDescription(walletPlan.getDescription());				
-			selectProductType(productType);
-			waitForPageToLoad(driver());
-			selectProgramType(walletPlan.getProgramType());
-			waitForPageToLoad(driver());
 			selectCurrency(walletPlan.getCurrency());
-			waitForPageToLoad(driver());			
+			selectProductType(productType);
+			if(walletPlan.getProductType().equalsIgnoreCase(ProductType.Credit))
+			{
+			selectByVisibleText(programTypeDDwn, walletPlan.getProgramType());	
+			}
+			else
+			{
+			selectProgramType(walletPlan.getProgramType());
+			}
 			selectUsage(walletPlan.getUsage());
-			waitForPageToLoad(driver());
+
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			clickNextButton(); // Click on next button
 			clickFinishButton(); // click on finish button

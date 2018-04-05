@@ -150,7 +150,13 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 		runWithinPopup("Add Statement Message Details", () -> {
 			WebElementUtils.enterText(messageLabelTxt, details.getMessageLabel());
 			WebElementUtils.enterText(messageTxt, details.getMessage());
-			WebElementUtils.selectDropDownByVisibleText(branchDDwn, details.getBranch());
+			if (productType.contains("Credit")) {
+				logger.info("branch :{}",details.getBranch());
+				selectByVisibleText(branchDDwn, details.getBranch());
+			} else {
+				WebElementUtils.selectDropDownByVisibleText(branchDDwn,
+						details.getBranch());
+			}
 			WebElementUtils.pickDate(effectiveDateDPkr, details.getEffectiveDate());
 			WebElementUtils.pickDate(endDateDPkr, details.getEndDate());
 

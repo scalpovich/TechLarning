@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -362,9 +363,23 @@ public class ProgramPage extends AbstractBasePage {
 		runWithinPopup("Add Program", () -> {
 			addProgram(program.getProgramCode());
 			addDescription(program.getDescription());
+			if(productType.equalsIgnoreCase(ProductType.Credit))
+			{
+			selectByVisibleText(interchangeDDwn, program.getInterchange());	
+			}
+			else
+			{
 			selectInterchange(program.getInterchange());
+			}
 			selectProduct(program.getProduct());
+			if(productType.equalsIgnoreCase(ProductType.Credit))
+			{
+			selectByVisibleText(programTypeDDwn, program.getProgramType());
+			}
+			else
+			{
 			selectProgramType(program.getProgramType());
+			}
 			selectBaseCurrency(program.getBaseCurrency());
 			program.setProgramCodeDevice(program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");

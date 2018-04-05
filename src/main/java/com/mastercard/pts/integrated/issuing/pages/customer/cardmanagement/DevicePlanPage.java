@@ -945,15 +945,33 @@ public class DevicePlanPage extends AbstractBasePage {
 		runWithinPopup("Add Device Plan", () -> {
 			enterIframeDevicePlanCode(devicePlanDataObject.getDevicePlanCode());
 			enterIframeDescription(devicePlanDataObject.getDescription());
+			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.Credit))
+			{
+			selectByVisibleText(iframeAssociationDdwn, devicePlanDataObject.getAssociation());
+			}
+			else
+			{
 			selectIframeAssociationType(devicePlanDataObject.getAssociation());
+			}
 			selectIframeProductType(devicePlanDataObject.getProductType());
 			selectIframeDeviceType(devicePlanDataObject.getDeviceType());
 			enterIframeServiceCode(devicePlanDataObject.getServiceCode());
 			selectIframeDeliveryMode(devicePlanDataObject.getDeliveryMode());
+			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.Credit))
+			{
+			selectByVisibleText(iframeDeviceIDGenerationTemplateDdwn, devicePlanDataObject.getDeviceIdGenerationTemplate());
+			selectByVisibleText(iframeCardPackIDGenerationTemplateDdwn, devicePlanDataObject.getCardPackIdGenerationTemplate());
+			selectByVisibleText(iframePlasticIdDdwn, devicePlanDataObject.getPlasticId());
+			selectByVisibleText(iframePictureCodeDdwn, devicePlanDataObject.getPictureCode());
+			
+			}
+			else
+			{
 			selectIframeDeviceIDGenerationTemplate(devicePlanDataObject.getDeviceIdGenerationTemplate());
 			selectIframeCardPackIDGenerationTemplate(devicePlanDataObject.getCardPackIdGenerationTemplate());
 			selectIframePlasticIdDdwn(devicePlanDataObject.getPlasticId());
 			selectIframePictureCodeDdwn(devicePlanDataObject.getPictureCode());
+			}
 			selectIframeActivationModeLst(devicePlanDataObject.getActivationMode());
 			selectIframeExpiryFlagDdwn(devicePlanDataObject.getExpiryFlag());
 			// next steps have been pushed to below method due to SONAR
@@ -1008,7 +1026,10 @@ public class DevicePlanPage extends AbstractBasePage {
 	private void fillDevicePlanPage(DevicePlan devicePlan) {
 		selectIframeBaseDeviceEventBasedPlanDdwn(devicePlan.getBaseDeviceEventBasedPlan());
 		selectIframeBaseDeviceJoiningMemberShipPlanDdwn(devicePlan.getBaseDeviceJoiningMemberShipPlan());
+		if(!devicePlan.getProductType().equalsIgnoreCase(ProductType.Credit))
+		{
 		selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
+		}
 		selectIframeTransactionLimitPlanDdwn(devicePlan.getTransactionLimitPlan());
 		clickIframeNextButton();
 	}
@@ -1040,8 +1061,14 @@ public class DevicePlanPage extends AbstractBasePage {
 		}
 		enableIframeCardProductionChkbx();
 
-		if (iframeEmbossingVendorDdwn.isEnabled())
-			selectIframeEmbossingVendorDdwn(devicePlan.getEmbossingVendor());
+		if (iframeEmbossingVendorDdwn.isEnabled()&& devicePlan.getProductType().equalsIgnoreCase(ProductType.Credit))
+		{
+		  selectByVisibleText(iframeEmbossingVendorDdwn, devicePlan.getEmbossingVendor());
+		}
+		else
+		{
+		 selectIframeEmbossingVendorDdwn(devicePlan.getEmbossingVendor());
+		}
 		if (devicePlan.getFillRenewalSection().equalsIgnoreCase(STATUS_YES))
 			fillRenewalSection(devicePlan);
 		if (devicePlan.getFillReplacementSection().equalsIgnoreCase(STATUS_YES))
