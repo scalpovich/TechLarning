@@ -945,7 +945,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		runWithinPopup("Add Device Plan", () -> {
 			enterIframeDevicePlanCode(devicePlanDataObject.getDevicePlanCode());
 			enterIframeDescription(devicePlanDataObject.getDescription());
-			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.Credit))
+			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT))
 			{
 			selectByVisibleText(iframeAssociationDdwn, devicePlanDataObject.getAssociation());
 			}
@@ -957,7 +957,7 @@ public class DevicePlanPage extends AbstractBasePage {
 			selectIframeDeviceType(devicePlanDataObject.getDeviceType());
 			enterIframeServiceCode(devicePlanDataObject.getServiceCode());
 			selectIframeDeliveryMode(devicePlanDataObject.getDeliveryMode());
-			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.Credit))
+			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT))
 			{
 			selectByVisibleText(iframeDeviceIDGenerationTemplateDdwn, devicePlanDataObject.getDeviceIdGenerationTemplate());
 			selectByVisibleText(iframeCardPackIDGenerationTemplateDdwn, devicePlanDataObject.getCardPackIdGenerationTemplate());
