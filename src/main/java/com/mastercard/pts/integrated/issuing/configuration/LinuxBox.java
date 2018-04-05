@@ -85,7 +85,7 @@ public class LinuxBox implements RemoteConnectionDetails {
 
 	    for (int i = 0; i < listOfFiles.length; i++) {
 	      if (listOfFiles[i].isFile()) {
-	    	if(listOfFiles[i].getName().contains(lokupForFile))
+	    	if(listOfFiles[i].getName().contains(lokupForFile) && !(listOfFiles[i].getName().contains("Pin")))
 	    		return listOfFiles[i].getName();
 	      } else if (listOfFiles[i].isDirectory()) {
 	        System.out.println("Directory " + listOfFiles[i].getName());
