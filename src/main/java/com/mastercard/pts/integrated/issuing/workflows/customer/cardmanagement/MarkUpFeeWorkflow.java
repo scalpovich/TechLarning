@@ -18,3 +18,4 @@ public class MarkUpFeeWorkflow {
 		page.createMarkupFeePlanPage(plan);		
 	}
 }
+
