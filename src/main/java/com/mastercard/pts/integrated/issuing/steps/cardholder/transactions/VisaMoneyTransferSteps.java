@@ -39,7 +39,7 @@ public class VisaMoneyTransferSteps {
 	public void whenVisaChpTransactionIsPerformed() {
 		VisaMoneyTransfer vmt = VisaMoneyTransfer.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE2);
-//		MiscUtils.reportToConsole("Device Number in VTS-CHP Steps - " + device.getDeviceNumber());
+		MiscUtils.reportToConsole("Device Number in VTS-CHP Steps - " + device.getDeviceNumber());
 		actualResult = visaMoneyTransferWorkflow.doVtsTransaction(vmt, device);
 	}
 

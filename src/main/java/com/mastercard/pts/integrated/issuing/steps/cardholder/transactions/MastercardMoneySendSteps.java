@@ -11,12 +11,10 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.transactions.MastercardMoneySend;
-import com.mastercard.pts.integrated.issuing.domain.cardholder.transactions.VisaMoneyTransfer;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.cardholder.transactions.MastercardMoneySendWorkflow;
-import com.mastercard.pts.integrated.issuing.workflows.cardholder.transactions.VisaMoneyTransferWorkflow;
 
 @Component
 public class MastercardMoneySendSteps {
@@ -25,9 +23,6 @@ public class MastercardMoneySendSteps {
 
 	@Autowired
 	private MastercardMoneySendWorkflow mastercardMoneySendWorkflow;
-
-	@Autowired
-	private VisaMoneyTransferWorkflow visaMoneyTransferWorkflow;
 
 	@Autowired
 	private KeyValueProvider provider;
@@ -43,6 +38,7 @@ public class MastercardMoneySendSteps {
 		Device device = context.get(ContextConstants.DEVICE2);
 		MiscUtils.reportToConsole("Device Number in MMS-CHP Steps - " + device.getDeviceNumber());
 		actualResult = mastercardMoneySendWorkflow.doMmsTransaction(mms, device);
+
 	}
 
 	@Then("Validate Response Message on CHP")
