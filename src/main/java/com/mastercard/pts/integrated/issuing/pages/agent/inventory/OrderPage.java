@@ -71,6 +71,7 @@ public class OrderPage extends InventoryAbstractPage {
 		WebElementUtils.enterText(memoTxt, memo);
 	}
 
+	@Override
 	public void clickSubmitButton() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(submitBtn)).click();

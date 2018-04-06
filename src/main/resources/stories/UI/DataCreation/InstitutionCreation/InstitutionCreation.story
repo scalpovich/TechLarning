@@ -25,7 +25,7 @@ Then user should be able to create new institute
 
 Scenario:2 New user creation prepaid
 Meta:
-@TCName TCInstituteCreationPR
+@TCName TCInstituteCreation`
 @testDataFileName testdata
 @sheetName Institute
 @PrepaidUserCreation
