@@ -31,7 +31,7 @@ Then user activates device through helpdesk
 And add menus to access card holder portal
 And user sign out from customer portal
 
-Scenario: 0.3 MMS - VMT
+Scenario: 03. MMS - VMT
 Given user is on login page of cardholder portal
 And cardholder signup with valid details
 When VISA CHP Transaction is performed

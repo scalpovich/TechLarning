@@ -2,259 +2,91 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+
 @Component
-public class NewDevice extends AbstractBasePage {
+public class NewDevice {
 
-	public String DeviceNumber;
+	public String deviceNumber;
 
-	public String getDeviceNumber() {
-		return DeviceNumber;
+	public String batchNum;
+
+	public String applicationType;
+
+	public String applicationSubType;
+
+	public String batchType;
+
+	public String customerType;
+
+	public String deviceType;
+
+	public String title;
+
+	public String firstName;
+
+	public String lastName;
+
+	public String middleName1;
+
+	public String middleName2;
+
+	public String gender;
+
+	public String nationality;
+
+	public String yearOfBiirth;
+
+	public String maritalStatus;
+
+	public String accountType;
+
+	public String preferedLanguage;
+
+	public String email;
+
+	public String addressLine1;
+
+	public String addressLine2;
+
+	public String addressLine3;
+
+	public String addressLine4;
+
+	public String country;
+
+	public String postalCode;
+
+	public String mobileNo;
+
+	public String programForDevice;
+
+	public String product;
+
+	public String devicePlanForDevice;
+
+	public String getDevicePlanForDevice() {
+		return devicePlanForDevice;
 	}
 
-	public void setDeviceNumber(String deviceNumber) {
-		DeviceNumber = deviceNumber;
+	public void setDevicePlanForDevice(String devicePlanForDevice) {
+		this.devicePlanForDevice = devicePlanForDevice;
 	}
 
-	public String getApplicationType() {
-		return ApplicationType;
+	public String getProduct() {
+		return product;
 	}
 
-	public void setApplicationType(String applicationType) {
-		ApplicationType = applicationType;
+	public void setProduct(String product) {
+		this.product = product;
 	}
 
-	public String getApplicationSubType() {
-		return ApplicationSubType;
+	public String getProgramForDevice() {
+		return programForDevice;
 	}
 
-	public void setApplicationSubType(String applicationSubType) {
-		ApplicationSubType = applicationSubType;
-	}
-
-	public String ApplicationType;
-
-	public String ApplicationSubType;
-
-	public String BatchType;
-
-	public String getBatchType() {
-		return BatchType;
-	}
-
-	public void setBatchType(String batchType) {
-		BatchType = batchType;
-	}
-
-	public String CustomerType;
-
-	public String getCustomerType() {
-		return CustomerType;
-	}
-
-	public void setCustomerType(String customerType) {
-		CustomerType = customerType;
-	}
-
-	public String DeviceType;
-
-	public String getDeviceType() {
-		return DeviceType;
-	}
-
-	public void setDeviceType(String deviceType) {
-		DeviceType = deviceType;
-	}
-
-	public String Title;
-
-	public String getTitle() {
-		return Title;
-	}
-
-	public void setTitle(String title) {
-		Title = title;
-	}
-
-	public String FirstName;
-
-	public String getFirstName() {
-		return FirstName;
-	}
-
-	public void setFirstName(String firstName) {
-		FirstName = firstName;
-	}
-
-	public String getLastName() {
-		return LastName;
-	}
-
-	public void setLastName(String lastName) {
-		LastName = lastName;
-	}
-
-	public String LastName;
-
-	public String MiddleName1;
-
-	public String getMiddleName1() {
-		return MiddleName1;
-	}
-
-	public void setMiddleName1(String middleName1) {
-		MiddleName1 = middleName1;
-	}
-
-	public String getMiddleName2() {
-		return MiddleName2;
-	}
-
-	public void setMiddleName2(String middleName2) {
-		MiddleName2 = middleName2;
-	}
-
-	public String MiddleName2;
-
-	public String Gender;
-
-	public String getGender() {
-		return Gender;
-	}
-
-	public void setGender(String gender) {
-		Gender = gender;
-	}
-
-	public String Nationality;
-
-	public String getNationality() {
-		return Nationality;
-	}
-
-	public void setNationality(String nationality) {
-		Nationality = nationality;
-	}
-
-	public String YearOfBiirth;
-
-	public String getYearOfBiirth() {
-		return YearOfBiirth;
-	}
-
-	public void setYearOfBiirth(String yearOfBiirth) {
-		YearOfBiirth = yearOfBiirth;
-	}
-
-	public String MaritalStatus;
-
-	public String getMaritalStatus() {
-		return MaritalStatus;
-	}
-
-	public void setMaritalStatus(String maritalStatus) {
-		MaritalStatus = maritalStatus;
-	}
-
-	public String AccountType;
-
-	public String getAccountType() {
-		return AccountType;
-	}
-
-	public void setAccountType(String accountType) {
-		AccountType = accountType;
-	}
-
-	public String PreferedLanguage;
-
-	public String getPreferedLanguage() {
-		return PreferedLanguage;
-	}
-
-	public void setPreferedLanguage(String preferedLanguage) {
-		PreferedLanguage = preferedLanguage;
-	}
-
-	public String Email;
-
-	public String getEmail() {
-		return Email;
-	}
-
-	public void setEmail(String email) {
-		Email = email;
-	}
-
-	public String getAddressLine1() {
-		return AddressLine1;
-	}
-
-	public void setAddressLine1(String addressLine1) {
-		AddressLine1 = addressLine1;
-	}
-
-	public String getAddressLine2() {
-		return AddressLine2;
-	}
-
-	public void setAddressLine2(String addressLine2) {
-		AddressLine2 = addressLine2;
-	}
-
-	public String getAddressLine3() {
-		return AddressLine3;
-	}
-
-	public void setAddressLine3(String addressLine3) {
-		AddressLine3 = addressLine3;
-	}
-
-	public String getAddressLine4() {
-		return AddressLine4;
-	}
-
-	public void setAddressLine4(String addressLine4) {
-		AddressLine4 = addressLine4;
-	}
-
-	public String getCountry() {
-		return Country;
-	}
-
-	public void setCountry(String country) {
-		Country = country;
-	}
-
-	public String getPostalCode() {
-		return PostalCode;
-	}
-
-	public void setPostalCode(String postalCode) {
-		PostalCode = postalCode;
-	}
-
-	public String AddressLine1;
-
-	public String AddressLine2;
-
-	public String AddressLine3;
-
-	public String AddressLine4;
-
-	public String Country;
-
-	public String PostalCode;
-
-	public String MobileNo;
-
-	public String getMobileNo() {
-		return MobileNo;
-	}
-
-	public void setMobileNo(String mobileNo) {
-		MobileNo = mobileNo;
+	public void setProgramForDevice(String programForDevice) {
+		this.programForDevice = programForDevice;
 	}
 
 	public NewDevice newdeviceDataProvider() {
@@ -284,5 +116,213 @@ public class NewDevice extends AbstractBasePage {
 
 		return newdevice;
 
+	}
+
+	public String getDeviceNumber() {
+		return deviceNumber;
+	}
+
+	public void setDeviceNumber(String deviceNumber) {
+		this.deviceNumber = deviceNumber;
+	}
+
+	public String getBatchNum() {
+		return batchNum;
+	}
+
+	public void setBatchNum(String batchNum) {
+		this.batchNum = batchNum;
+	}
+
+	public String getApplicationType() {
+		return applicationType;
+	}
+
+	public void setApplicationType(String applicationType) {
+		this.applicationType = applicationType;
+	}
+
+	public String getApplicationSubType() {
+		return applicationSubType;
+	}
+
+	public void setApplicationSubType(String applicationSubType) {
+		this.applicationSubType = applicationSubType;
+	}
+
+	public String getBatchType() {
+		return batchType;
+	}
+
+	public void setBatchType(String batchType) {
+		this.batchType = batchType;
+	}
+
+	public String getCustomerType() {
+		return customerType;
+	}
+
+	public void setCustomerType(String customerType) {
+		this.customerType = customerType;
+	}
+
+	public String getDeviceType() {
+		return deviceType;
+	}
+
+	public void setDeviceType(String deviceType) {
+		this.deviceType = deviceType;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getMiddleName1() {
+		return middleName1;
+	}
+
+	public void setMiddleName1(String middleName1) {
+		this.middleName1 = middleName1;
+	}
+
+	public String getMiddleName2() {
+		return middleName2;
+	}
+
+	public void setMiddleName2(String middleName2) {
+		this.middleName2 = middleName2;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
+	public String getYearOfBiirth() {
+		return yearOfBiirth;
+	}
+
+	public void setYearOfBiirth(String yearOfBiirth) {
+		this.yearOfBiirth = yearOfBiirth;
+	}
+
+	public String getMaritalStatus() {
+		return maritalStatus;
+	}
+
+	public void setMaritalStatus(String maritalStatus) {
+		this.maritalStatus = maritalStatus;
+	}
+
+	public String getAccountType() {
+		return accountType;
+	}
+
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
+
+	public String getPreferedLanguage() {
+		return preferedLanguage;
+	}
+
+	public void setPreferedLanguage(String preferedLanguage) {
+		this.preferedLanguage = preferedLanguage;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getAddressLine1() {
+		return addressLine1;
+	}
+
+	public void setAddressLine1(String addressLine1) {
+		this.addressLine1 = addressLine1;
+	}
+
+	public String getAddressLine2() {
+		return addressLine2;
+	}
+
+	public void setAddressLine2(String addressLine2) {
+		this.addressLine2 = addressLine2;
+	}
+
+	public String getAddressLine3() {
+		return addressLine3;
+	}
+
+	public void setAddressLine3(String addressLine3) {
+		this.addressLine3 = addressLine3;
+	}
+
+	public String getAddressLine4() {
+		return addressLine4;
+	}
+
+	public void setAddressLine4(String addressLine4) {
+		this.addressLine4 = addressLine4;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public String getMobileNo() {
+		return mobileNo;
+	}
+
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
 	}
 }

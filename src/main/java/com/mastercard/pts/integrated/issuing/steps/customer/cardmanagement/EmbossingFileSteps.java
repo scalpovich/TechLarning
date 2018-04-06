@@ -20,10 +20,12 @@ public class EmbossingFileSteps {
 
 	@When("user creates an $file Template")
 	public void whenUserCreatesAnEmbossingFileTemplate(@Named("file") String file) {
-		embossingfile.setTemplateType(file);
+		embossingfile.embossingFileDataprovider();
+		embossingfile.setEmbossTemplateType(file);
 		String EmbossingTemplate = "";
 		EmbossingTemplate = embossingtemplateflows.createEmbossingTemplate(embossingfile);
 		Assert.assertNotNull(EmbossingTemplate);
 		embossingfile.setEmbossingFileTemplateName(EmbossingTemplate);
 	}
+
 }
