@@ -1,31 +1,37 @@
-Prepaid msr corporate general purpose pinless card : Visa RVMT Receiving
+prepaid msr corporate general purpose card visa money transfer
 
 Narrative:
-In order to provide to client easy-to-use payment method
+In order to provide to client easy-to-use multi-purpose prepaid card
 As an issuer
-I want to perform RVMT Receiving through vts
+I want to create an magnetic stripe prepaid card and perform visa money transfer request
 
 Meta:
-@StoryName SWSC_MSR_CGP_LOAD_ACTV_VTS_NPIN
-@visa_rvmt_receiving
+@StoryName p_visa_msr_corp_general_purpose
 
-Scenario: Set up prepaid msr corporate general purpose pinless card and perform Visa RVMT Receiving
+Scenario: 01. Set up prepaid msr corporate general purpose card from another institute
+Given user is logged in non-default institution
+And device range for program with device plan for "prepaid" "magnetic stripe" card without pin for non-default institution
+When user creates new device of prepaid type for non-default institution
+Then device has "normal" status for non-default institution
+Then user sign out from customer portal
+
+Scenario: 02. Set up prepaid msr corporate general purpose card
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "magnetic stripe" "Manual" activation code for card without pin for an interface
+And device range for program with device plan for "prepaid" "magnetic stripe" card without pin for specific interface
 When user creates new device of prepaid type for new client
-When device has "normal" status
-When a new device was created
+And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
-When user has wallet number information for prepaid device
+Then device has "normal" status
+When user has wallet number information for debit device
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
-And user activates device through helpdesk
+Then user activates device through helpdesk
 And add menus to access card holder portal
 And user sign out from customer portal
 
-Scenario: MMS - CHP - msr retail travel multi currency card
+Scenario: 03. MMS - VMT
 Given user is on login page of cardholder portal
 And cardholder signup with valid details
 When VISA CHP Transaction is performed
