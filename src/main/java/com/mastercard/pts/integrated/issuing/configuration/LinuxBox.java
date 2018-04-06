@@ -78,14 +78,14 @@ public class LinuxBox implements RemoteConnectionDetails {
 		return null;
 	}
 	
-	public String ListFile(String path,String lokupForFile)
+	public String ListFileOffSetAndEmbossing(String path,String lookupForFile)
 	{
 	File folder = new File(path);
 	File[] listOfFiles = folder.listFiles();
 
 	    for (int i = 0; i < listOfFiles.length; i++) {
 	      if (listOfFiles[i].isFile()) {
-	    	if(listOfFiles[i].getName().contains(lokupForFile) && !(listOfFiles[i].getName().contains("Pin")))
+	    	if(listOfFiles[i].getName().contains(lookupForFile) && !(listOfFiles[i].getName().contains("Pin")))
 	    		return listOfFiles[i].getName();
 	      } else if (listOfFiles[i].isDirectory()) {
 	        System.out.println("Directory " + listOfFiles[i].getName());
@@ -95,12 +95,12 @@ public class LinuxBox implements RemoteConnectionDetails {
 	    return null;
 	}
 	
-	public File downloadSCPByPartialFileName(String lokupForFile, String localDestination, String whatAreWeLookingFile) {		
+	public File downloadFileThroughSCPByPartialFileName(String lookupForFile, String localDestination, String whatAreWeLookingFile) {		
 		
-		logger.info("Download {} -> {} at folder", lokupForFile, localDestination);			
-		downloadSCP(folderPath+"*"+whatAreWeLookingFile+"*//proc//*"+lokupForFile+"*", localDestination);	
-		logger.info(Paths.get(localDestination).resolve(Paths.get(localDestination+"\\"+ListFile(localDestination,lokupForFile)).getFileName()).toFile().getAbsolutePath());
-		return Paths.get(localDestination).resolve(Paths.get(localDestination+"\\"+ListFile(localDestination,lokupForFile)).getFileName()).toFile();		
+		logger.info("Download {} -> {} at folder", lookupForFile, localDestination);			
+		downloadSCP(folderPath+"*"+whatAreWeLookingFile+"*//proc//*"+lookupForFile+"*", localDestination);	
+		logger.info(Paths.get(localDestination).resolve(Paths.get(localDestination+"\\"+ListFileOffSetAndEmbossing(localDestination,lookupForFile)).getFileName()).toFile().getAbsolutePath());
+		return Paths.get(localDestination).resolve(Paths.get(localDestination+"\\"+ListFileOffSetAndEmbossing(localDestination,lookupForFile)).getFileName()).toFile();		
 	}
 
 

@@ -17,14 +17,14 @@ public class TransferFunds {
 	private String beneficiaryName;
 	private String contactNumber;
 	private String memo;
-	private String transaferThrough;
+	private String transferThrough;
 	private String transferDetails;	
 	
 	public static TransferFunds createWithProvider(KeyValueProvider provider) {
-		TransferFunds transaferFund = new TransferFunds();
-		transaferFund.setTransferDetails(provider.getString(TRANSFER_DETAILS));
-		transaferFund.setContactNumber(""+MiscUtils.randomNumber(5)+""+MiscUtils.randomNumber(5));
-		return transaferFund;
+		TransferFunds transferFund = new TransferFunds();
+		transferFund.setTransferDetails(provider.getString(TRANSFER_DETAILS));
+		transferFund.setContactNumber(""+MiscUtils.randomNumber(5)+""+MiscUtils.randomNumber(5));
+		return transferFund;
 	}
 	
 		
@@ -77,11 +77,11 @@ public class TransferFunds {
 	}
 
 	public String getTransaferThrough() {
-		return transaferThrough;
+		return transferThrough;
 	}
 
-	public void setTransaferThrough(String transaferThrough) {
-		this.transaferThrough = transaferThrough;
+	public void setTransferThrough(String transferThrough) {
+		this.transferThrough = transferThrough;
 	}		
 	
 	

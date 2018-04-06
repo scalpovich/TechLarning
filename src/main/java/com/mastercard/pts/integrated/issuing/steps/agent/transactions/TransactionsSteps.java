@@ -226,13 +226,13 @@ public class TransactionsSteps {
 		assertThat(FAILED_MESSAGE_INFO, transactionsWorkflow.getViewChargesMasterDetailContentTitleText(), containsString(expectedTitleText));
 	}
 	
-	@Then("user transfer fund through $transaferThrough using agent portal")
-	@When("user transfer fund through $transaferThrough using agent portal")
-	public void transferFund(String transaferThrough){
+	@Then("user transfer fund through $transferThrough using agent portal")
+	@When("user transfer fund through $transferThrough using agent portal")
+	public void transferFund(String transferThrough){
 		Device device = context.get(ContextConstants.DEVICE);	
 		Device device2 = context.get(ContextConstants.DEVICE2);
 		TransferFunds transferDetails = TransferFunds.createWithProvider(provider);		
-		transferDetails.setTransaferThrough(transaferThrough);
+		transferDetails.setTransferThrough(transferThrough);
 		device.setExistingDeviceNumber(device2.getDeviceNumber());
 		context.put(ContextConstants.DEVICE_NUMBER,device.getDeviceNumber());	
 		transactionsWorkflow.transferFund(transferDetails,device);			
