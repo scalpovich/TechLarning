@@ -259,7 +259,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private void fillBatchDetails(Device device) {
 		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
 		clickWhenClickable(generateDeviceBatchBtn);
-		//generateDeviceBatchBtn.click();
 		waitForWicket();
 		SimulatorUtilities.wait(30000);
 		// fetching batch number and setting it for further use

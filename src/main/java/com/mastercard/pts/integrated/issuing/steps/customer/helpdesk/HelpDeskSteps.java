@@ -411,8 +411,12 @@ public class HelpDeskSteps {
 		device.setAppliedForProduct(ProductType.fromShortName(type));		
 		assertTrue(helpdeskWorkflow.verifyBalanceUpdatedCorreclty(beforeLoadBalanceInformation, helpdeskGeneral.getTransactionDetails(), helpdeskWorkflow.getWalletBalanceInformation(device)));	
 		beforeLoadBalanceInformation = helpdeskWorkflow.getWalletBalanceInformation(device);	
-		logger.info("beforeLoadBalanceInformation: "+beforeLoadBalanceInformation.toString());
-		String walletinfo [] = beforeLoadBalanceInformation.split(",");
+		logger.info("beforeLoadBalanceInformation: "+beforeLoadBalanceInformation.toString());	
+		/*It returns the wallet info from helpdesk
+		walletinfo[1] contains card-number and currency
+		 where walletinfo[2] contains wallet number and amount
+		*/	
+		String[] walletinfo = beforeLoadBalanceInformation.split(",");
 		walletinfo=walletinfo[1].split(":");
 		logger.info("Wallet Number : "+walletinfo[2]);
 		device.setWalletNumber(walletinfo[2]);

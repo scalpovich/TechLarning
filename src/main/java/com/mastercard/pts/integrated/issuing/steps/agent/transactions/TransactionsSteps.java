@@ -230,10 +230,10 @@ public class TransactionsSteps {
 	@When("user transfer fund through $transferThrough using agent portal")
 	public void transferFund(String transferThrough){
 		Device device = context.get(ContextConstants.DEVICE);	
-		Device device2 = context.get(ContextConstants.DEVICE2);
+		Device destinationDevice = context.get(ContextConstants.DEVICE2);
 		TransferFunds transferDetails = TransferFunds.createWithProvider(provider);		
 		transferDetails.setTransferThrough(transferThrough);
-		device.setExistingDeviceNumber(device2.getDeviceNumber());
+		device.setExistingDeviceNumber(destinationDevice.getDeviceNumber());
 		context.put(ContextConstants.DEVICE_NUMBER,device.getDeviceNumber());	
 		transactionsWorkflow.transferFund(transferDetails,device);			
 	}

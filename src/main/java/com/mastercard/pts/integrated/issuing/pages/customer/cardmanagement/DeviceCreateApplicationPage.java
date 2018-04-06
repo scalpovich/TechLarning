@@ -259,7 +259,6 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 	private void fillBatchDetails(Device device) {
 		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
 		clickWhenClickable(generateDeviceBatchBtn);
-		//generateDeviceBatchBtn.click();
 		waitForWicket();
 		// fetching batch number and setting it for further use
 		device.setBatchNumber(batchNumberTxt.getText());
@@ -289,11 +288,8 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 
 		fillProfile(device);
 		
-		//Validate only when environment is demo
-		//if(System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)){
-			clickNextButton();
-	//	}
-		
+		clickNextButton();
+
 		fillAddress(device);
 		
 			// skip employment details

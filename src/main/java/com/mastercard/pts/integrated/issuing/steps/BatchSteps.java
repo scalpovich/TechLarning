@@ -105,7 +105,8 @@ public class BatchSteps {
 
 			device.setPinOffset(values[0]);
 			logger.info("Pin Offset :  {}" , values[0] );
-			scanner.close();			//			reanming file name as sometimes the embosing file name is also same
+			scanner.close();			
+			//renaming file name as sometimes the embosing file name is also same
 			MiscUtils.renamePinFile(batchFile.toString());
 			MiscUtils.reportToConsole("******** Pin Offset Completed ***** " );
 		}
