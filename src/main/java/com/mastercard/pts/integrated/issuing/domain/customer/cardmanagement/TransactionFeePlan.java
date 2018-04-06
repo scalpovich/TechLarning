@@ -20,9 +20,13 @@ public class TransactionFeePlan {
 	private static final String TRANSACTION_ORIGIN = "TRANSACITON_ORIGIN";
 
 	private static final String TRANSACTION_FEE_PLAN = "TRANSACTION_FEE_PLAN";
-
+	private static final String MARKUP_FEE_RATE="MARKUP_FEE_RATE";
 	private static final String TRANSACTION_RATE = "TRANSACTION_RATE";
 
+	private static final String MARKUP_FEE = "MARKUP_FEE";
+	private static final String MARKUP_FEE_TAX = "MARKUP_FEE_TAX";
+	private static final String SOURCE_CURRENCY = "SOURCE_CURRENCY";
+	private static final String BILLING_CURRENCY = "BILLING_CURRENCY";
 	private static final String BILLING_AMOUNT = "BILLING_AMOUNT";
 	private static final String BILLING_AMOUNT_RATE = "BILLING_AMOUNT_RATE";
 	private static final String MIN_TXN_RATE = "MIN_TXN_RATE";
@@ -75,6 +79,16 @@ public class TransactionFeePlan {
 
 	private String minTxnRate;
 
+	private String markUpFee;
+
+	private String markUpFeeTax;
+	
+	private String markUpRate;
+	
+	private String sourceCurrency;
+	
+	private String billingCurrency;
+
 	public static TransactionFeePlan createWithProvider(KeyValueProvider provider) {
 		TransactionFeePlan details = new TransactionFeePlan();
 		details.setTransactionFeePlanCode(provider.getString(TRANSACTION_FEE_PLAN));
@@ -107,6 +121,17 @@ public class TransactionFeePlan {
 		txnFee.setFixedTxnFees(provider.getString(FIXED_TXN_FEE));
 
 		return txnFee;
+	}
+
+	public static TransactionFeePlan getMarkUpFees(KeyValueProvider provider) {
+
+		TransactionFeePlan markupfee = new TransactionFeePlan();
+		markupfee.setMarkupFee(provider.getString(MARKUP_FEE));
+		markupfee.setMarkupFeeTax(provider.getString(MARKUP_FEE_TAX));
+		markupfee.setMarkUpRate(provider.getString(MARKUP_FEE_RATE));
+		markupfee.setSourceCurrency(provider.getString(SOURCE_CURRENCY));
+		markupfee.setBillingCurrency(provider.getString(BILLING_CURRENCY));
+		return markupfee;
 	}
 
 	public String getTransactionType() {
@@ -278,4 +303,48 @@ public class TransactionFeePlan {
 	public void setMinTxnRate(String minTxnRate) {
 		this.minTxnRate = minTxnRate;
 	}
+
+	public String getMarkupFee() {
+		return markUpFee;
+	}
+
+	public void setMarkupFee(String markUpFee) {
+		this.markUpFee = markUpFee;
+	}
+
+	public String getMarkupFeeTax() {
+		return markUpFeeTax;
+	}
+
+	public void setMarkupFeeTax(String markupfeetax) {
+		this.markUpFeeTax = markupfeetax;
+	}
+	
+   public String getMarkUpRate(){
+	   return markUpRate;
+   }
+   
+   public void setMarkUpRate(String markuprate)
+   {
+	   this.markUpRate=markuprate;
+   }
+   
+   public String getSourceCurrency(){
+	   return sourceCurrency;
+   }
+   
+   public void setSourceCurrency(String sourcecurrency)
+   {
+	   this.sourceCurrency=sourcecurrency;
+   }
+   
+   public String getBillingCurrency(){
+	   return billingCurrency;
+   }
+   
+   public void setBillingCurrency(String billingcurrency)
+   {
+	   this.billingCurrency=billingcurrency;
+   }
+
 }
