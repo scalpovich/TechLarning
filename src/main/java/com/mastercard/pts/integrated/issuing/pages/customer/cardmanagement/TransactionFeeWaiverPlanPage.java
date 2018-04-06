@@ -79,8 +79,8 @@ public class TransactionFeeWaiverPlanPage extends AbstractBasePage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(waiverPlanCode),
-				WebElementUtils.elementToBeClickable(description)
+				WebElementUtils.elementToBeClickable(waiverPlanCodeTxt),
+				WebElementUtils.elementToBeClickable(descriptionTxt)
 				);
 	}
 }
