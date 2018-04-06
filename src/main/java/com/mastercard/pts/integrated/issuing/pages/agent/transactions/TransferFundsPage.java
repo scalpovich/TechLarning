@@ -46,7 +46,7 @@ public class TransferFundsPage extends AbstractBasePage {
 	private MCWebElement masterCardMoneySendHomeRBtn;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value=Continue]")
-	private MCWebElement ContinueBtn;
+	private MCWebElement continueBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "deviceNumber")
 	private MCWebElement deviceNumberTxt;
@@ -73,10 +73,10 @@ public class TransferFundsPage extends AbstractBasePage {
 	private MCWebElement memoTxt;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value=Submit]")
-	private MCWebElement SubmitBtn;
+	private MCWebElement submitBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value=Confirm]")
-	private MCWebElement ConfirmBtn;
+	private MCWebElement confirmBtn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "txnPassword")
 	private MCWebElement txnPasswordTxt;
@@ -108,7 +108,7 @@ public class TransferFundsPage extends AbstractBasePage {
 			ClickButton(masterCardMoneySendHomeRBtn);
 		
 		ClickButton(masterCardMoneySendHomeRBtn);
-		clickWhenClickable(ContinueBtn);
+		clickWhenClickable(continueBtn);
 		enterText(deviceNumberTxt, device.getDeviceNumber());
 		SimulatorUtilities.wait(100);	
 		clickWhenClickable(walletNumberDropDown);
