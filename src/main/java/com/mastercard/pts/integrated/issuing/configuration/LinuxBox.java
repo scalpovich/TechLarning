@@ -44,10 +44,10 @@ public class LinuxBox implements RemoteConnectionDetails {
 	}
 
 	
-	public void downloadSCP(String remoteSource, String localDestination) {
+	public void downloadFileViaScp(String remoteSource, String localDestination) {
 		logger.info("Download {} -> {}", remoteSource, localDestination);
 		try {
-			LinuxUtils.downloadScp(this, remoteSource, localDestination);
+			LinuxUtils.downloadFileViaScp(this, remoteSource, localDestination);
 		} catch (Exception e) {
 			MiscUtils.propagate(e);
 		}		
@@ -98,7 +98,7 @@ public class LinuxBox implements RemoteConnectionDetails {
 	public File downloadFileThroughSCPByPartialFileName(String lookupForFile, String localDestination, String whatAreWeLookingFile) {		
 		
 		logger.info("Download {} -> {} at folder", lookupForFile, localDestination);			
-		downloadSCP(folderPath+"*"+whatAreWeLookingFile+"*//proc//*"+lookupForFile+"*", localDestination);	
+		downloadFileViaScp(folderPath+"*"+whatAreWeLookingFile+"*//proc//*"+lookupForFile+"*", localDestination);	
 		logger.info(Paths.get(localDestination).resolve(Paths.get(localDestination+"\\"+ListFileOffSetAndEmbossing(localDestination,lookupForFile)).getFileName()).toFile().getAbsolutePath());
 		return Paths.get(localDestination).resolve(Paths.get(localDestination+"\\"+ListFileOffSetAndEmbossing(localDestination,lookupForFile)).getFileName()).toFile();		
 	}

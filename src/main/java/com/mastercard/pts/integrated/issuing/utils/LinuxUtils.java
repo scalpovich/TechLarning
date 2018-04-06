@@ -202,16 +202,15 @@ public abstract class LinuxUtils {
 	}
 
 	
-	public static void downloadScp(RemoteConnectionDetails connectiondetails, String remoteDir,
+	public static void downloadFileViaScp(RemoteConnectionDetails connectiondetails, String remoteDir,
 			String localsource) throws JSchException, InterruptedException  {
 
 		Scp scp = new Scp();
-		int portSSH = connectiondetails.getPort();
 		String serverSSH = connectiondetails.getHostName();
 		String userSSH = connectiondetails.getUserName(); 
 		String pswdSSH = connectiondetails.getPassword();
 		logger.info("localsource "+localsource+" remoteDir: "+remoteDir+" ");
-		scp.setPort( portSSH );			
+		scp.setPort( connectiondetails.getPort() );			
 		scp.setRemoteFile(userSSH + ":" + pswdSSH + "@" + serverSSH + ":" + remoteDir);
 		scp.setLocalTodir(localsource);
 		//scp.setTodir( userSSH + ":" + pswdSSH + "@" + serverSSH + ":" + remoteDir );
