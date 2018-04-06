@@ -1,4 +1,4 @@
-prepaid msr corporate general purpose card visa money transfer
+prepaid msr retail gift card visa money transfer
 
 Narrative:
 In order to provide to client easy-to-use multi-purpose prepaid card
@@ -6,16 +6,16 @@ As an issuer
 I want to create an magnetic stripe prepaid card and perform visa money transfer request
 
 Meta:
-@StoryName p_visa_msr_corp_general_purpose
+@StoryName p_visa_msr_retail_gift
 
-Scenario: 01. Set up prepaid msr corporate general purpose card from another institute
+Scenario: 01. Set up prepaid msr retail gift card from another institute
 Given user is logged in non-default institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin for non-default institution
 When user creates new device of prepaid type for non-default institution
 Then device has "normal" status for non-default institution
 Then user sign out from customer portal
 
-Scenario: 02. Set up prepaid msr corporate general purpose card
+Scenario: 02. Set up prepaid msr retail gift card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin for specific interface
 When user creates new device of prepaid type for new client
