@@ -1186,7 +1186,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	private void fillRenewalSection(DevicePlan devicePlan) {
 		allowRenewalChkBx.click();
 		if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
-		{	
+		{
 			selectByVisibleText(renwalDeviceTechnologyDdwn, "Magnetic Stripe Card [1]" /*devicePlan.getDeviceType()*/);
 		}
 		else

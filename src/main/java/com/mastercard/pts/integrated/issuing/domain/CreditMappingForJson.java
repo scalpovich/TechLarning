@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.domain;
 
+
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
@@ -96,6 +97,7 @@ public class CreditMappingForJson {
 	public void setPictureCode(String pictureCode) {
 		this.pictureCode = pictureCode;
 	}
+	
 
 	public String getCode() {
 		return code;
