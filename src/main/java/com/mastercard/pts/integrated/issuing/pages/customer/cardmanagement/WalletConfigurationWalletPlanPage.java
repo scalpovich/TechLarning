@@ -157,7 +157,7 @@ private TestContext context;
 			inputDescription(walletPlan.getDescription());				
 			selectCurrency(walletPlan.getCurrency());
 			selectProductType(productType);
-			if(walletPlan.getProductType().equalsIgnoreCase(ProductType.Credit))
+			if(walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
 			{
 			selectByVisibleText(programTypeDDwn, walletPlan.getProgramType());	
 			}
