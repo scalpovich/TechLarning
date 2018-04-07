@@ -11,6 +11,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 import java.util.stream.Stream.Builder;
 
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,10 +71,20 @@ public class JsonDataProvider implements DataProvider {
 			throw MiscUtils.propagate(e);
 		}
 	}
-
-	private JsonNode loadNode(String typeName, String key, String... tags) {
+	
+	@Override
+	public <T> T getData(Class<T> typeToLoad, String key,String key1,String value, String... tags) {
+		Preconditions.checkNotNull(typeToLoad, "typeToLoad");
+		JsonNode node = loadNode(typeToLoad.getSimpleName(), key,key1,value, tags);
+		try {
+			return mapper.treeToValue(node, typeToLoad);
+		} catch (JsonProcessingException e) {
+			throw MiscUtils.propagate(e);
+		}
+	}
+	
+	private JsonNode loadNode(String typeName,String key, String... tags) {
 		Preconditions.checkArgument(!Strings.isNullOrEmpty(key), "key is not provided");
-		
 		List<String> keyStream = Stream.concat(Stream.of(key),
 				Arrays.stream(tags).map(tag -> String.format("%s.%s", key, tag)))
 				.collect(toList());
@@ -97,9 +108,42 @@ public class JsonDataProvider implements DataProvider {
 		return node;
 	}
 	
+	private JsonNode loadNode(String typeName,String key,String key1,String value, String... tags) {
+		Preconditions.checkArgument(!Strings.isNullOrEmpty(key), "key is not provided");
+		List<String> keyStream = Stream.concat(Stream.of(key),
+				Arrays.stream(tags).map(tag -> String.format("%s.%s", key, tag)))
+				.collect(toList());
+		
+		logger.info("Loading data for {} by keys {}", typeName,
+				String.join(", ", keyStream));
+		
+		Builder<String> builder = Stream.<String>builder()
+				.add(BASELINE_PATH_TEMPLATE)
+				.add(environmentPathTemplate);
+		getStoryPathTemplate().ifPresent(builder::accept);
+		
+		Stream<String> pathStream = builder.build()
+				.flatMap(template -> keyStream.stream()
+						.map(keyValue -> String.format(template, keyValue)));
+		
+		JsonNode node = pathStream
+				.<Function<JsonNode, JsonNode>>map(path -> target -> loadAndApplyData(target, path,key1,value))
+				.reduce(Function.identity(), Function::andThen)
+				.apply(null);
+		return node;
+	}
+	
 	private JsonNode loadAndApplyData(JsonNode target, String path) {
 		try {
 			return buildJsonNode(target, path);
+		} catch (Exception e) {
+			throw MiscUtils.propagate(e);
+		}
+	}
+	
+	private JsonNode loadAndApplyData(JsonNode target, String path,String institutionName,String institutionCode) {
+		try {
+			return buildJsonNode(target, path,institutionName,institutionCode);
 		} catch (Exception e) {
 			throw MiscUtils.propagate(e);
 		}
@@ -126,6 +170,42 @@ public class JsonDataProvider implements DataProvider {
 		} catch (IOException e) {
 			//NO SONAR. It is based on the exception, we are performing other operations so cannot throw this as an error hence Info message
 			JsonMergePatch merge = JsonMergePatch.fromJson(node);
+			logger.info("Merge data from {}", path);
+			return merge.apply(target);
+		}
+	}
+	
+	private JsonNode buildJsonNode(JsonNode target, String path,String key,String value)
+			throws IOException, JsonPatchException, ParseException {
+		InputStream inputStream = getResource(path);
+		if (inputStream == null) {
+			return target;
+		}
+		
+		JsonNode node = mapper.readTree(inputStream).get("institute");
+		JsonNode nodeArray=null;
+		if (node.isArray()) {
+			for (JsonNode objNode : node) {
+				if (objNode.get("abbreviation").asText().equals(value)&& objNode.get("code").asText().equals(key)) {
+					nodeArray=objNode;
+					return objNode;
+				}
+			}
+
+		}
+
+		else if (target == null) {
+			logger.info("Load data from {}", path);
+			return node;
+		}
+		
+		try {
+			JsonPatch patch = JsonPatch.fromJson(nodeArray);
+			logger.info("Patch data from {}", path);
+			return patch.apply(target);
+		} catch (IOException e) {
+			//NO SONAR. It is based on the exception, we are performing other operations so cannot throw this as an error hence Info message
+			JsonMergePatch merge = JsonMergePatch.fromJson(nodeArray);
 			logger.info("Merge data from {}", path);
 			return merge.apply(target);
 		}

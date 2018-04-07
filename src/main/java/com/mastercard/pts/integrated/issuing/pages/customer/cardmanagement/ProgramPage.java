@@ -374,7 +374,7 @@ public class ProgramPage extends AbstractBasePage {
 		runWithinPopup("Add Program", () -> {
 			addProgram(program.getProgramCode());
 			addDescription(program.getDescription());
-			if(productType.equalsIgnoreCase(ProductType.Credit))
+			if(productType.equalsIgnoreCase(ProductType.CREDIT))
 			{
 			selectByVisibleText(interchangeDDwn, program.getInterchange());	
 			}
@@ -383,7 +383,7 @@ public class ProgramPage extends AbstractBasePage {
 			selectInterchange(program.getInterchange());
 			}
 			selectProduct(program.getProduct());
-			if(productType.equalsIgnoreCase(ProductType.Credit))
+			if(productType.equalsIgnoreCase(ProductType.CREDIT))
 			{
 			selectByVisibleText(programTypeDDwn, program.getProgramType());
 			}

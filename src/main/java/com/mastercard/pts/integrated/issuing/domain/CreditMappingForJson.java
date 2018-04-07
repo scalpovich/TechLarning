@@ -1,5 +1,8 @@
 package com.mastercard.pts.integrated.issuing.domain;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
@@ -10,10 +13,13 @@ public class CreditMappingForJson {
 	private String device_id_generation_template;
 	private String device_customer_type;
 	private String embossing_vendor;
-	private String interchange;
+    private String interchange;
 	private String issuer_bin;
 	private String plastic_id;
 	private String picture_code;
+	//private List<CreditMappingForJson>institute;
+	private String code;
+	private String abbreviation;
 	
 	
 	public String getAssociation() {
@@ -97,9 +103,25 @@ public class CreditMappingForJson {
 	public void setPicture_code(String picture_code) {
 		this.picture_code = picture_code;
 	}
+	
+	public String getCode() {
+		return code;
+	}
 
-	public static CreditMappingForJson createWithProvider(DataProvider provider) {
-		return provider.getDataBySimpleClassName(CreditMappingForJson.class);
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getAbbreviation() {
+		return abbreviation;
+	}
+
+	public void setAbbreviation(String abbreviation) {
+		this.abbreviation = abbreviation;
+	}
+
+	public static CreditMappingForJson createWithProvider(DataProvider provider,String key,String value) {
+         return  provider.getDataBySimpleClassNameForInstitute(CreditMappingForJson.class, key,value);
 	}
 	
 	@Override

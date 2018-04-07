@@ -947,7 +947,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		runWithinPopup("Add Device Plan", () -> {
 			enterIframeDevicePlanCode(devicePlanDataObject.getDevicePlanCode());
 			enterIframeDescription(devicePlanDataObject.getDescription());
-			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.Credit))
+			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT))
 			{
 			selectByVisibleText(iframeAssociationDdwn, devicePlanDataObject.getAssociation());
 			}
@@ -956,10 +956,17 @@ public class DevicePlanPage extends AbstractBasePage {
 			selectIframeAssociationType(devicePlanDataObject.getAssociation());
 			}
 			selectIframeProductType(devicePlanDataObject.getProductType());
+			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT))
+			{
+			selectByVisibleText(iframeDeviceTypeDdwn, devicePlanDataObject.getDeviceType());
+			}
+			else
+			{
 			selectIframeDeviceType(devicePlanDataObject.getDeviceType());
+			}
 			enterIframeServiceCode(devicePlanDataObject.getServiceCode());
 			selectIframeDeliveryMode(devicePlanDataObject.getDeliveryMode());
-			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.Credit))
+			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT))
 			{
 			selectByVisibleText(iframeDeviceIDGenerationTemplateDdwn, devicePlanDataObject.getDeviceIdGenerationTemplate());
 			selectByVisibleText(iframeCardPackIDGenerationTemplateDdwn, devicePlanDataObject.getCardPackIdGenerationTemplate());
@@ -1028,7 +1035,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	private void fillDevicePlanPage(DevicePlan devicePlan) {
 		selectIframeBaseDeviceEventBasedPlanDdwn(devicePlan.getBaseDeviceEventBasedPlan());
 		selectIframeBaseDeviceJoiningMemberShipPlanDdwn(devicePlan.getBaseDeviceJoiningMemberShipPlan());
-		if(!devicePlan.getProductType().equalsIgnoreCase(ProductType.Credit))
+		if(!devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
 		{
 		selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
 		}
@@ -1063,7 +1070,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		}
 		enableIframeCardProductionChkbx();
 
-		if (iframeEmbossingVendorDdwn.isEnabled()&& devicePlan.getProductType().equalsIgnoreCase(ProductType.Credit))
+		if (iframeEmbossingVendorDdwn.isEnabled()&& devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
 		{
 		  selectByVisibleText(iframeEmbossingVendorDdwn, devicePlan.getEmbossingVendor());
 		}
@@ -1109,14 +1116,28 @@ public class DevicePlanPage extends AbstractBasePage {
 			pinRequiredChk.click();
 			WebElementUtils.selectDropDownByVisibleText(pinDataTransmissionDDwn, devicePlan.getPinDataTransmission());
 			WebElementUtils.enterText(pinLengthTxt, devicePlan.getPinLength());
+			if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
+			{
+			selectByVisibleText(pinProductionVendorDDwn, devicePlan.getEmbossingVendor());
+			}
+			else
+			{
 			WebElementUtils.selectDropDownByVisibleText(pinProductionVendorDDwn, devicePlan.getEmbossingVendor());
+			}
 			WebElementUtils.selectDropDownByVisibleText(pinGenerationOptionDDwn, devicePlan.getPinGenerationOption());
 		}
 	}
 
 	private void fillRenewalSection(DevicePlan devicePlan) {
 		allowRenewalChkBx.click();
+		if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
+		{
+			selectByVisibleText(renwalDeviceTechnologyDdwn, devicePlan.getDeviceType());
+		}
+		else
+		{
 		WebElementUtils.selectDropDownByVisibleText(renwalDeviceTechnologyDdwn, devicePlan.getDeviceType());
+		}
 		WebElementUtils.enterText(validityOnRenewalMonthsTxt, devicePlan.getValidityOnRenewalMonths());
 		WebElementUtils.enterText(autoRenewalDaysTxt, devicePlan.getAutoRenewalDays());
 		WebElementUtils.enterText(advanceRenewalReportTxt, devicePlan.getAdvanceRenewalReport());

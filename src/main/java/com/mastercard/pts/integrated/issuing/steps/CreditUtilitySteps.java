@@ -1,12 +1,8 @@
 package com.mastercard.pts.integrated.issuing.steps;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import org.jbehave.core.annotations.Given;
 import org.slf4j.Logger;
@@ -18,6 +14,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditMappingForExcel;
 import com.mastercard.pts.integrated.issuing.domain.CreditMappingForJson;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 
@@ -45,15 +42,15 @@ public class CreditUtilitySteps {
 	{
 		Method[]methodsJson=CreditMappingForJson.class.getDeclaredMethods();
 		Method[]methodsExcel=CreditMappingForExcel.class.getDeclaredMethods();
-		Field[]jsonFields=CreditMappingForJson.class.getDeclaredFields();
 		creditMappingForExcel=creditMappingForExcel.createWithProviderForRegression(keyValueProvider);
-		creditMappingForJson = CreditMappingForJson.createWithProvider(provider);
-	
 		context.put(CreditConstants.EXCEL_VALUES,creditMappingForExcel);
-		context.put(CreditConstants.JSON_VALUES, creditMappingForJson);
+		creditMappingForJson =CreditMappingForJson.createWithProvider(provider,Institution.createWithProvider(provider).getCode(),Institution.createWithProvider(provider).getName());
+	    context.put(CreditConstants.JSON_VALUES, creditMappingForJson);
+
 		Map<String,String>jsonMap=new LinkedHashMap<String, String>();
         String updated_Value="";
          Map<String, Object> map = context.get(TestContext.KEY_STORY_DATA);
+         
 		for(int i=0;i<methodsJson.length;i++)
 		{
 			String valueExcel="";
@@ -69,9 +66,6 @@ public class CreditUtilitySteps {
 						 valueExcel = valueExcel.replaceAll(".+", valueJson);
 						 jsonMap.put(methodsJson[i].getName(), valueJson);
 		
-			
-			           
-					
 				}
 				
 		}
@@ -79,13 +73,12 @@ public class CreditUtilitySteps {
 			for(Map.Entry<String, String> entryJson:jsonMap.entrySet())
 			{
 	
-			//  for (int j = 0; j < jsonFields.length; j++) {
-			  if (/*entry.getKey().equalsIgnoreCase(jsonFields[j].getName())&&*/ entryJson.getKey().toUpperCase().contains(entry.getKey())) {
-					updated_Value=String.valueOf(entry.getValue()).replaceAll(".+", entryJson.getValue());
-					logger.info("key"+entry.getKey()+ "   "+"value"+updated_Value);
+
+			  if (entryJson.getKey().toUpperCase().contains(entry.getKey())) {
+				   updated_Value=String.valueOf(entry.getValue()).replaceAll(".+", entryJson.getValue());
 					map.put(entry.getKey(), updated_Value);
 				}
-			//}
+
 		}
 	}
 		context.put(TestContext.KEY_STORY_DATA,map);
