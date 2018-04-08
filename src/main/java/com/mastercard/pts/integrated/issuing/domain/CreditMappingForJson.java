@@ -1,8 +1,5 @@
 package com.mastercard.pts.integrated.issuing.domain;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
@@ -17,7 +14,6 @@ public class CreditMappingForJson {
 	private String issuer_bin;
 	private String plastic_id;
 	private String picture_code;
-	//private List<CreditMappingForJson>institute;
 	private String code;
 	private String abbreviation;
 	
