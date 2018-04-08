@@ -426,7 +426,7 @@ public class DeviceRangePage extends AbstractBasePage {
 		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		logger.info("ProductType : {}", devicePlan.getProductType());
 		logger.info("issuerBin :{}", deviceRange.getIssuerBin());
-		if (deviceRange.getProductType().equalsIgnoreCase(ProductType.Credit)) {
+		if (deviceRange.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			selectByVisibleText(issuerBinDDwn, deviceRange.getIssuerBin());
 		} else {
 			selectIssuerBin(deviceRange.getIssuerBin());
