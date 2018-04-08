@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.jbehave.core.annotations.Given;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,11 +41,23 @@ public class CreditUtilitySteps {
 	@Given("setting json values in excel")
 	public void mappingJsonValuesInExcel() throws Exception
 	{
+		String institution=System.getProperty("institution");
 		Method[]methodsJson=CreditMappingForJson.class.getDeclaredMethods();
 		Method[]methodsExcel=CreditMappingForExcel.class.getDeclaredMethods();
 		creditMappingForExcel=creditMappingForExcel.createWithProviderForRegression(keyValueProvider);
 		context.put(CreditConstants.EXCEL_VALUES,creditMappingForExcel);
+		if(StringUtils.isEmpty(institution))
+		{
 		creditMappingForJson =CreditMappingForJson.createWithProvider(provider,Institution.createWithProvider(provider).getCode(),Institution.createWithProvider(provider).getName());
+		}
+		else
+		{
+			institution=institution.replaceAll("\\s+","");
+			String[]institutionSplit=institution.split("\\[");
+			String institutionName=institutionSplit[0];
+			String institutionCode=institutionSplit[1].substring(0, institutionSplit[1].length()-1);
+			creditMappingForJson =CreditMappingForJson.createWithProvider(provider,institutionCode,institutionName);
+		}
 	    context.put(CreditConstants.JSON_VALUES, creditMappingForJson);
 
 		Map<String,String>jsonMap=new LinkedHashMap<String, String>();

@@ -141,9 +141,9 @@ public class JsonDataProvider implements DataProvider {
 		}
 	}
 	
-	private JsonNode loadAndApplyData(JsonNode target, String path,String institutionName,String institutionCode) {
+	private JsonNode loadAndApplyData(JsonNode target, String path,String key,String value) {
 		try {
-			return buildJsonNode(target, path,institutionName,institutionCode);
+			return buildJsonNode(target, path,key,value);
 		} catch (Exception e) {
 			throw MiscUtils.propagate(e);
 		}
