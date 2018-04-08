@@ -268,7 +268,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 
 	private void fillDeviceInformation(Device device) {
 		WebElementUtils.selectDropDownByVisibleText(appliedForProdutDDwn, device.getAppliedForProduct());
-		if(device.getAppliedForProduct().equalsIgnoreCase(ProductType.Credit))
+		if(device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT))
 		{
 			selectByVisibleText(applicationTypeDDwn, device.getApplicationType());
 			selectByVisibleText(subApplicationTypeDDwn, device.getSubApplicationType());
@@ -282,7 +282,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 	}
 
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
-		if(device.getAppliedForProduct().equalsIgnoreCase(ProductType.Credit))
+		if(device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT))
 		{
 		selectByVisibleText(customerTypeDDwn, device.getCustomerType());
 		}
@@ -292,7 +292,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		}
 		WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, device.getProgramCode());
 		clickNextButton();
-		if(device.getAppliedForProduct().equalsIgnoreCase(ProductType.Credit))
+		if(device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT))
 		{
 		 selectByVisibleText(deviceType1DDwn, device.getDeviceType1());
 		}
