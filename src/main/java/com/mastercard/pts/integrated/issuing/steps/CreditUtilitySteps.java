@@ -63,30 +63,33 @@ public class CreditUtilitySteps {
 		Map<String,String>jsonMap=new LinkedHashMap<String, String>();
         String updated_Value="";
          Map<String, Object> map = context.get(TestContext.KEY_STORY_DATA);
-		for(int i=0;i<methodsExcel.length;i++)
+		for(int i=0;i<methodsJson.length;i++)
 		{
 			String valueExcel="";
 			String valueJson="";
-				if(methodsJson[i].getName().equalsIgnoreCase(methodsExcel[i].getName())&&methodsJson[i].getName().startsWith("get"))
+			
+			for(int j=0;j<methodsExcel.length;j++)
+			{
+				if(methodsJson[i].getName().equalsIgnoreCase(methodsExcel[j].getName())&&methodsJson[i].getName().startsWith("get"))
 				{
 					
 						creditMappingForExcel=context.get(CreditConstants.EXCEL_VALUES);
 						creditMappingForJson=context.get(CreditConstants.JSON_VALUES);
 						
-						 valueExcel=(String) creditMappingForExcel.getClass().getMethod(methodsExcel[i].getName()).invoke(creditMappingForExcel);
+						 valueExcel=(String) creditMappingForExcel.getClass().getMethod(methodsExcel[j].getName()).invoke(creditMappingForExcel);
 						 valueJson=(String) creditMappingForJson.getClass().getMethod(methodsJson[i].getName()).invoke(creditMappingForJson);
 						 valueExcel = valueExcel.replaceAll(".+", valueJson);
 						 jsonMap.put(methodsJson[i].getName(), valueJson);
 		
 				}
-				
+			}	
 		}
 		for (Map.Entry<String, Object> entry : map.entrySet()) {
 			for(Map.Entry<String, String> entryJson:jsonMap.entrySet())
 			{
-	
+	            
 
-			  if (entryJson.getKey().toUpperCase().contains(entry.getKey())) {
+			  if (entryJson.getKey().toUpperCase().contains(entry.getKey().replaceAll("_", ""))) {
 				   updated_Value=String.valueOf(entry.getValue()).replaceAll(".+", entryJson.getValue());
 					map.put(entry.getKey(), updated_Value);
 				}
@@ -94,5 +97,6 @@ public class CreditUtilitySteps {
 		}
 	}
 		context.put(TestContext.KEY_STORY_DATA,map);
+		context.get(TestContext.KEY_STORY_DATA);
 	}
 }

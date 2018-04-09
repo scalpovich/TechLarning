@@ -6,14 +6,14 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 public class CreditMappingForJson {
 	private String association;
 	private String branch;
-	private String card_packid_generation_template;
-	private String device_id_generation_template;
-	private String device_customer_type;
-	private String embossing_vendor;
+	private String cardPackIdGenerationTemplate;
+	private String deviceIdGenerationTemplate;
+	private String customerType;
+	private String embossingVendor;
     private String interchange;
-	private String issuer_bin;
-	private String plastic_id;
-	private String picture_code;
+    private String issuerBin;
+	private String plasticId;
+	private String pictureCode;
 	private String code;
 	private String abbreviation;
 	
@@ -34,38 +34,12 @@ public class CreditMappingForJson {
 		this.branch = branch;
 	}
 
-	public String getCard_packid_generation_template() {
-		return card_packid_generation_template;
+	public String getCustomerType() {
+		return customerType;
 	}
 
-	public void setCard_packid_generation_template(
-			String card_packid_generation_template) {
-		this.card_packid_generation_template = card_packid_generation_template;
-	}
-
-	public String getDevice_id_generation_template() {
-		return device_id_generation_template;
-	}
-
-	public void setDevice_id_generation_template(
-			String device_id_generation_template) {
-		this.device_id_generation_template = device_id_generation_template;
-	}
-
-	public String getDevice_customer_type() {
-		return device_customer_type;
-	}
-
-	public void setDevice_customer_type(String device_customer_type) {
-		this.device_customer_type = device_customer_type;
-	}
-
-	public String getEmbossing_vendor() {
-		return embossing_vendor;
-	}
-
-	public void setEmbossing_vendor(String embossing_vendor) {
-		this.embossing_vendor = embossing_vendor;
+	public void setCustomerType(String customerType) {
+		this.customerType = customerType;
 	}
 
 	public String getInterchange() {
@@ -75,31 +49,55 @@ public class CreditMappingForJson {
 	public void setInterchange(String interchange) {
 		this.interchange = interchange;
 	}
-
-	public String getIssuer_bin() {
-		return issuer_bin;
-	}
-
-	public void setIssuer_bin(String issuer_bin) {
-		this.issuer_bin = issuer_bin;
-	}
-
-	public String getPlastic_id() {
-		return plastic_id;
-	}
-
-	public void setPlastic_id(String plastic_id) {
-		this.plastic_id = plastic_id;
-	}
-
-	public String getPicture_code() {
-		return picture_code;
-	}
-
-	public void setPicture_code(String picture_code) {
-		this.picture_code = picture_code;
-	}
 	
+	public String getCardPackIdGenerationTemplate() {
+		return cardPackIdGenerationTemplate;
+	}
+
+	public void setCardPackIdGenerationTemplate(String cardPackIdGenerationTemplate) {
+		this.cardPackIdGenerationTemplate = cardPackIdGenerationTemplate;
+	}
+
+	public String getDeviceIdGenerationTemplate() {
+		return deviceIdGenerationTemplate;
+	}
+
+	public void setDeviceIdGenerationTemplate(String deviceIdGenerationTemplate) {
+		this.deviceIdGenerationTemplate = deviceIdGenerationTemplate;
+	}
+
+	public String getEmbossingVendor() {
+		return embossingVendor;
+	}
+
+	public void setEmbossingVendor(String embossingVendor) {
+		this.embossingVendor = embossingVendor;
+	}
+
+	public String getIssuerBin() {
+		return issuerBin;
+	}
+
+	public void setIssuerBin(String issuerBin) {
+		this.issuerBin = issuerBin;
+	}
+
+	public String getPlasticId() {
+		return plasticId;
+	}
+
+	public void setPlasticId(String plasticId) {
+		this.plasticId = plasticId;
+	}
+
+	public String getPictureCode() {
+		return pictureCode;
+	}
+
+	public void setPictureCode(String pictureCode) {
+		this.pictureCode = pictureCode;
+	}
+
 	public String getCode() {
 		return code;
 	}
