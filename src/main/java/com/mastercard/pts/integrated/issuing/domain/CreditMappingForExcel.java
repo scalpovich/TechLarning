@@ -20,27 +20,27 @@ public class CreditMappingForExcel {
 	
 	private String association;
 	private String branch;
-	private String card_packid_generation_template;
-	private String device_id_generation_template;
-	private String device_customer_type;
-	private String embossing_vendor;
+	private String cardPackIdGenerationTemplate;
+	private String deviceIdGenerationTemplate;
+	private String customerType;
+	private String embossingVendor;
 	private String interchange;
-	private String issuer_bin;
-	private String plastic_id;
-	private String picture_code;
+	private String issuerBin;
+	private String plasticId;
+	private String pictureCode;
 	
 	public CreditMappingForExcel createWithProviderForRegression(KeyValueProvider provider) {
 		CreditMappingForExcel creditMappingForExcelFromJson=new CreditMappingForExcel();
 		creditMappingForExcelFromJson.setBranch(provider.getString(BRANCH));
 		creditMappingForExcelFromJson.setAssociation(provider.getString(ASSOCIATION));
-		creditMappingForExcelFromJson.setCard_packid_generation_template(provider.getString(CARD_PACKID_GENERATION_TEMPLATE));
-		creditMappingForExcelFromJson.setDevice_id_generation_template(provider.getString(DEVICE_ID_GENERATION_TEMPLATE));
-		creditMappingForExcelFromJson.setDevice_customer_type(provider.getString(DEVICE_CUSTOMER_TYPE));
-		creditMappingForExcelFromJson.setEmbossing_vendor(provider.getString(EMBOSSING_VENDOR));
+		creditMappingForExcelFromJson.setCardPackIdGenerationTemplate(provider.getString(CARD_PACKID_GENERATION_TEMPLATE));
+		creditMappingForExcelFromJson.setDeviceIdGenerationTemplate(provider.getString(DEVICE_ID_GENERATION_TEMPLATE));
+		creditMappingForExcelFromJson.setCustomerType(provider.getString(DEVICE_CUSTOMER_TYPE));
+		creditMappingForExcelFromJson.setEmbossingVendor(provider.getString(EMBOSSING_VENDOR));
 		creditMappingForExcelFromJson.setInterchange(provider.getString(INTERCHANGE));
-		creditMappingForExcelFromJson.setIssuer_bin(provider.getString(ISSUER_BIN));
-		creditMappingForExcelFromJson.setPlastic_id(provider.getString(PLASTIC_ID));
-		creditMappingForExcelFromJson.setPicture_code(provider.getString(PICTURE_CODE));
+		creditMappingForExcelFromJson.setIssuerBin(provider.getString(ISSUER_BIN));
+		creditMappingForExcelFromJson.setPlasticId(provider.getString(PLASTIC_ID));
+		creditMappingForExcelFromJson.setPictureCode(provider.getString(PICTURE_CODE));
 		return creditMappingForExcelFromJson;
 		
 	}
@@ -61,38 +61,12 @@ public class CreditMappingForExcel {
 		this.branch = branch;
 	}
 
-	public String getCard_packid_generation_template() {
-		return card_packid_generation_template;
+	public String getCustomerType() {
+		return customerType;
 	}
 
-	public void setCard_packid_generation_template(
-			String card_packid_generation_template) {
-		this.card_packid_generation_template = card_packid_generation_template;
-	}
-
-	public String getDevice_id_generation_template() {
-		return device_id_generation_template;
-	}
-
-	public void setDevice_id_generation_template(
-			String device_id_generation_template) {
-		this.device_id_generation_template = device_id_generation_template;
-	}
-	
-	public String getDevice_customer_type() {
-		return device_customer_type;
-	}
-
-	public void setDevice_customer_type(String device_customer_type) {
-		this.device_customer_type = device_customer_type;
-	}
-
-	public String getEmbossing_vendor() {
-		return embossing_vendor;
-	}
-
-	public void setEmbossing_vendor(String embossing_vendor) {
-		this.embossing_vendor = embossing_vendor;
+	public void setCustomerType(String customerType) {
+		this.customerType = customerType;
 	}
 
 	public String getInterchange() {
@@ -103,28 +77,53 @@ public class CreditMappingForExcel {
 		this.interchange = interchange;
 	}
 
-	public String getIssuer_bin() {
-		return issuer_bin;
+	
+	public String getIssuerBin() {
+		return issuerBin;
 	}
 
-	public void setIssuer_bin(String issuer_bin) {
-		this.issuer_bin = issuer_bin;
+	public void setIssuerBin(String issuerBin) {
+		this.issuerBin = issuerBin;
 	}
 
-	public String getPlastic_id() {
-		return plastic_id;
+	public String getCardPackIdGenerationTemplate() {
+		return cardPackIdGenerationTemplate;
 	}
 
-	public void setPlastic_id(String plastic_id) {
-		this.plastic_id = plastic_id;
+	public void setCardPackIdGenerationTemplate(String cardPackIdGenerationTemplate) {
+		this.cardPackIdGenerationTemplate = cardPackIdGenerationTemplate;
 	}
 
-	public String getPicture_code() {
-		return picture_code;
+	public String getDeviceIdGenerationTemplate() {
+		return deviceIdGenerationTemplate;
 	}
 
-	public void setPicture_code(String picture_code) {
-		this.picture_code = picture_code;
+	public void setDeviceIdGenerationTemplate(String deviceIdGenerationTemplate) {
+		this.deviceIdGenerationTemplate = deviceIdGenerationTemplate;
+	}
+
+	public String getEmbossingVendor() {
+		return embossingVendor;
+	}
+
+	public void setEmbossingVendor(String embossingVendor) {
+		this.embossingVendor = embossingVendor;
+	}
+
+	public String getPlasticId() {
+		return plasticId;
+	}
+
+	public void setPlasticId(String plasticId) {
+		this.plasticId = plasticId;
+	}
+
+	public String getPictureCode() {
+		return pictureCode;
+	}
+
+	public void setPictureCode(String pictureCode) {
+		this.pictureCode = pictureCode;
 	}
 
 	@Override
