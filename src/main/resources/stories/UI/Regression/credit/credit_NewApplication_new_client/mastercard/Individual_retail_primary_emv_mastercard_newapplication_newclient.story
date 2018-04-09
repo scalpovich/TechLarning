@@ -9,6 +9,7 @@ CreditRegression
 Scenario:User is able to add Approval Score,Risk analysis for Credit Device SetUp and creates a Credit Device Using New Application
 Meta:
 @UserAddsApprovalScore
+Given setting json values in excel
 Given user is logged in institution
 When User fills Dedupe Plan
 And User fills Statement Message Plan for credit product

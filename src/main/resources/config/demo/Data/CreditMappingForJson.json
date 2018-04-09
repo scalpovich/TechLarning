@@ -1,8 +1,8 @@
 {  
    "association":"MASTERCARD",
-   "branch":"auto branch",
-   "card_packid_generation_template":"PAN723",
-   "device_id_generation_template":"PAN042",
+   "branch":"OfficeBranch2 [259]",
+   "card_packid_generation_template":"AUTOMATION [PAN042]",
+   "device_id_generation_template":"AUTOMATION [PAN022]",
    "device_customer_type":"Individual",
    "embossing_vendor":"V57602",
    "interchange":"MASTERCARD",
