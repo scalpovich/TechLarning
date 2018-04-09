@@ -241,6 +241,7 @@ public class ServicesSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		CurrencySetup details = CurrencySetup.createWithProvider(provider);
 		servicesWorkflow.setupCurrency(details, device);
+		context.put(ContextConstants.DEVICE_NUMBER,device.getDeviceNumber());
 	}
 
 	@Then("currency setup for the device is successful")

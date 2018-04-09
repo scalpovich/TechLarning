@@ -135,7 +135,8 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	public String enterWalletPlanCode(WalletPlan walletPlan) {
 		if (walletPlan.getWalletPlanCode().length() != 0) {
-			 logger.info(walletPlan.getWalletPlanCode());
+			logger.info(walletPlan.getWalletPlanCode());
+			waitForPageToLoad(driver());
 			enterValueinTextBox(walletPlancodeTxt, walletPlan.getWalletPlanCode());
 		} else {
 			enterValueinTextBox(walletPlancodeTxt, "WP" + CustomUtils.randomNumbers(4));
@@ -209,12 +210,12 @@ public class WalletPlanPage extends AbstractBasePage {
 		walletPlancode = enterWalletPlanCode(walletplan);
 		WalletPlanDesc = enterWalletPlanDescription(walletplan);
 		selectCurrency(walletplan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		selectProduct(devicecreation);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		waitForLoaderToDisappear();
 		selectProgramType(walletplan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		selectWalletUsage(walletplan);
 		enterDummyAccountNumber();
 		enterReservedAmount();
@@ -330,19 +331,19 @@ public class WalletPlanPage extends AbstractBasePage {
 		walletPlancode = enterWalletPlanCode(walletplan);
 		walletPlanDesc = enterWalletPlanDescription(walletplan);
 		selectCurrency(walletplan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		selectProduct(walletplan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		waitForLoaderToDisappear();
+		CustomUtils.ThreadDotSleep(5000);
 		selectProgramType(walletplan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		selectWalletUsage(walletplan);
-		if(walletplan.getProductType().equalsIgnoreCase("credit"))
-		{
+		if (walletplan.getProductType().equalsIgnoreCase("credit")) {
 			selectCreditPlan();
 			selectBillingCycleCode();
 		}
-			
+
 		enterDummyAccountNumber();
 		enterReservedAmount();
 		return buildDescriptionAndCode(walletPlanDesc, walletPlancode);
@@ -352,11 +353,11 @@ public class WalletPlanPage extends AbstractBasePage {
 		enterWalletPlanCode(plan);
 		enterWalletPlanDescription(plan);
 		selectCurrency(plan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		selectProductType(plan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		selectProgramType(plan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		selectWalletUsage(plan);
 	}
 

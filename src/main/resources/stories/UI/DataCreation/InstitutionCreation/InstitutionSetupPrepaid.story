@@ -49,6 +49,7 @@ When user creates an Embossing File Template
 When user creates a Vendor of Category Personalization with Embossing template attached
 
 
+
 Scenario: Scenario2 - Institution parameter setup for prepaid type/Visa
 Meta:
 @Regression

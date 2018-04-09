@@ -125,8 +125,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	private static final String DP_EMV_PLAN_PIN_CHANGE = "DP_EMV_PLAN_PIN_CHANGE";
 	private static final String DP_EMV_PLAN_PIN_UNBLOCK = "DP_EMV_PLAN_PIN_UNBLOCK";
 	private static final String DP_ALLOW_INTERNATIONAL_TRANSACTIONS = "DP_ALLOW_INTERNATIONAL_TRANSACTIONS";
-	private static final String TRANSACTION_FEE_PLAN  = "TRANSACTION_FEE_PLAN";
-	
+	private static final String TRANSACTION_FEE_PLAN = "TRANSACTION_FEE_PLAN";
 
 	public String association;
 	public String DeviceType;
@@ -379,7 +378,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setEmvPlansIcvvOption(provider.getString(DP_EMV_PLANS_ICVV_OPTION));
 		plan.setEmvPlanUcol(provider.getString(DP_EMV_PLAN_UCOL));
 		plan.setEmvPlanUcota(provider.getString(DP_EMV_PLAN_UCOTA));
-		plan.setAllowInternationalTransaction(provider.getString(DP_ALLOW_INTERNATIONAL_TRANSACTIONS));
+		plan.setAllowInternationalTransaction(provider.getString(DP_ALLOW_INTERNATIONAL_TRANSACTIONS));		
 		plan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
 		return plan;
 	}

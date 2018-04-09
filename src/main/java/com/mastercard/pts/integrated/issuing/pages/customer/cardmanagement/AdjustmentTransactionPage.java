@@ -97,9 +97,7 @@ public class AdjustmentTransactionPage extends AbstractBasePage {
 			WebElementUtils.asWebElement(deviceNumberTxt).sendKeys(Keys.TAB);
 			waitForWicket();
 			SimulatorUtilities.wait(500);
-			logger.info("Wallet Details: {}",
-					 transactionDetails.getWalletNumber());
-			//WebElementUtils.selectDropDownByValue(walletNumberDDwn, transactionDetails.getWalletNumber());
+			logger.info("Wallet Details: {}",transactionDetails.getWalletNumber());
 			WebElementUtils.selectDropDownByVisibleText(walletNumberDDwn, transactionDetails.getWalletNumber());
 			WebElementUtils.enterText(adjustmentAmountTxt, transactionDetails.getAdjustmentAmount());
 			pickTransactionDate(transactionDetails.getTransactionDate());

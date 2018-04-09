@@ -16,7 +16,6 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
@@ -122,14 +121,14 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		SwitchToDefaultFrame();
 
 	}
-	
+
 	public void verifyUiOperationStatus() {
 		logger.info("Pre-Prodcution Batch");
 		verifySearchButton("Search");
 	}
 
-	public void selectProduct(DeviceCreation deviceCreation) {
-		selectByText(productTypeDDwn, deviceCreation.getProduct());
+	public void selectProduct(BulkDeviceRequestbatch bulkdeviceGenBatch) {
+		selectByText(productTypeDDwn, bulkdeviceGenBatch.getProduct());
 	}
 
 	public void enterBatchNumber(BulkDeviceRequestbatch bulkdeviceGenBatch) {
@@ -164,8 +163,9 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		clickWhenClickable(processSelectedBtn);
 	}
 
-	public void searchBulkPreProductionBatch(DeviceCreation deviceCreation, BulkDeviceRequestbatch bulkdeviceGenBatch) {
-		selectProduct(deviceCreation);
+	public void searchBulkPreProductionBatch(BulkDeviceRequestbatch bulkdeviceGenBatch) {
+		selectProduct(bulkdeviceGenBatch);
+		enterBatchNumber(bulkdeviceGenBatch);
 		enterSourceJobId(bulkdeviceGenBatch);
 		search();
 	}
@@ -194,20 +194,20 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		return strOutputMessage.replaceAll("[^\\d]", "").trim();
 
 	}
-	
-	 public void processPreProductionBatchNewDevice(PreProductionBatch batch) {
 
-			waitForLoaderToDisappear();
-       SelectDropDownByText(productTypeDDwn, batch.getProductType());
-        CustomUtils.ThreadDotSleep(8000);
-        Device device=context.get(ContextConstants.DEVICE);
-			enterText(batchNumberTxt,device.getBatchNumber() );
-			ClickButton(searchBtn);
-			ClickCheckBox(preProductionBatchRecordChkBx, true);
-			ClickButton(processSelectedBtn);
-			verifyOperationStatus();
-			SwitchToDefaultFrame();
-	 }
+	public void processPreProductionBatchNewDevice(PreProductionBatch batch) {
+
+		waitForLoaderToDisappear();
+		SelectDropDownByText(productTypeDDwn, batch.getProductType());
+		CustomUtils.ThreadDotSleep(8000);
+		Device device = context.get(ContextConstants.DEVICE);
+		enterText(batchNumberTxt, device.getBatchNumber());
+		ClickButton(searchBtn);
+		ClickCheckBox(preProductionBatchRecordChkBx, true);
+		ClickButton(processSelectedBtn);
+		verifyOperationStatus();
+		SwitchToDefaultFrame();
+	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

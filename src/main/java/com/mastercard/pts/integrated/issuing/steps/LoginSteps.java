@@ -16,7 +16,6 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.LoginCardholder;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceCreateDevicePage;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
@@ -41,10 +40,10 @@ public class LoginSteps extends AbstractBaseFlows {
 
 	@Autowired
 	public QMRReportFlows qmrReportFlows;
-	
+
 	@Autowired
 	private LoginWorkflow loginWorkflow;
-	
+
 	@Autowired
 	private ReadTestDataFromExcel excelTestData;
 
@@ -53,28 +52,28 @@ public class LoginSteps extends AbstractBaseFlows {
 
 	@Autowired
 	public LoginFlows loginflows;
-	
+
 	@Autowired
 	public DeviceCreateDevicePage deviceCreationPage;
-	
+
 	@Autowired
 	private TestContext context;
-	
+
 	@Autowired
 	private KeyValueProvider provider;
 
 	@Autowired
 	public UserManagementSteps user;
-	
+
 	public LoginCardholder loginCardHolderProvider;
-	
-	
+
 	@Given("login with chp")
-	public void loginInCardholder(){			
+	public void loginInCardholder() {
 		getFinder().getWebDriver().manage().deleteAllCookies();
-		getFinder().getWebDriver().get("http://ech-10-168-129-135.mastercard.int:25003/integratedIssuing-cardholderPortal/WebPages/Login.jsp");
+		getFinder().getWebDriver().get(
+				"http://ech-10-168-129-135.mastercard.int:25003/integratedIssuing-cardholderPortal/WebPages/Login.jsp");
 		Device device = context.get(ContextConstants.DEVICE);
-		loginCardholder(device.getClientCode(),device.getClientCode());
+		loginCardholder(device.getClientCode(), device.getClientCode());
 		switchToWindowCHP();
 		CustomUtils.ThreadDotSleep(1100);
 	}
@@ -146,16 +145,15 @@ public class LoginSteps extends AbstractBaseFlows {
 				loginCardHolderProvider.getSecondSequrityAnsw());
 
 	}
-	
+
 	@Given("cardholder signup with valid details")
 	@Then("cardholder signup with valid details")
-	public void cardHolderSignUp(){
+	public void cardHolderSignUp() {
 		Device device = context.get(ContextConstants.DEVICE);
 		loginWorkflow.login(device.getClientCode(), device.getClientCode());
-		loginFlows.signUpCardHolderPortal(device.getClientCode(),device.getNewTransPassword());
+		loginFlows.signUpCardHolderPortal(device.getClientCode(), device.getNewTransPassword());
 		switchToNewWindow();
 	}
-	
 
 	@Then("switch to new window")
 	public void switchToNewWindow() {
@@ -165,17 +163,23 @@ public class LoginSteps extends AbstractBaseFlows {
 	@Given("login to bank as a $user")
 	public void Login(@Named("TCName") String strStoryName, @Named("sheetName") String strSheetName,
 			@Named("testDataFileName") String testDataFileName, @Named("user") String userType) {
+		/*
+		 * logger.info("Reading entire test data"); if (testDataFileName != "")
+		 * { excelTestData.fnReadEntireTestData(testDataFileName, strSheetName,
+		 * "TCName"); if (excelTestData == null) {
+		 * Assert.fail("Test Data not found for " + strStoryName + "in File:" +
+		 * testDataFileName); } else {
+		 * excelTestData.fnSetCurrentStoryTestData(strStoryName); } }
+		 */
+		String f = "TestData";
 		logger.info("Reading entire test data");
-		if (testDataFileName != "") {
-			excelTestData.fnReadEntireTestData(testDataFileName, strSheetName, "TCName");
-			if (excelTestData == null) {
-				Assert.fail("Test Data not found for " + strStoryName + "in File:" + testDataFileName);
-			} else {
-				excelTestData.fnSetCurrentStoryTestData(strStoryName);
-			}
+		excelTestData.fnReadEntireTestData(f, strSheetName, "TCName");
+		if (excelTestData == null) {
+			Assert.fail("Unable to read entire test data");
+		} else {
+			excelTestData.fnSetCurrentStoryTestData(strStoryName);
 		}
-		
-		if(userType.contains("Bank"))
+		if (userType.contains("Bank"))
 			user.givenUserIsLoggedInCustomerPortal();
 		else
 			user.givenUserIsLoggedInInstitution();

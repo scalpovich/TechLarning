@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.PreProductionFlows;
 
 @Component
@@ -19,15 +20,19 @@ public class PreProductionBatchSteps {
 	DeviceCreation devicecreation;
 
 	@Autowired
+	NewDevice newDevice;
+
+	@Autowired
 	PreProductionFlows preproductionflows;
 
 	@When("user runs the pre production batch for product $product")
 	public void runBulkDeviceGenerationBatch(String product) {
 		String JobId = "";
 		bulkdevicerequestbatch.BulkDeviceRequestDataProvider();
-		devicecreation.setProduct(ProductType.fromShortName(product));
+		bulkdevicerequestbatch.setProduct(ProductType.fromShortName(product));
 		bulkdevicerequestbatch.setPreProductionSourceJobid(bulkdevicerequestbatch.getJobId());
-		JobId = preproductionflows.createPreProductionBatch(devicecreation, bulkdevicerequestbatch);
+		bulkdevicerequestbatch.setBatchNumber(newDevice.getBatchNum());
+		JobId = preproductionflows.createPreProductionBatch(bulkdevicerequestbatch);
 		bulkdevicerequestbatch.setPreProductionSourceJobid(JobId);
 	}
 
