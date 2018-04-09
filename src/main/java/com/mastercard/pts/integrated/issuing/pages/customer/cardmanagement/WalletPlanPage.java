@@ -16,6 +16,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -124,6 +125,7 @@ public class WalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectProduct(DeviceCreation deviceCreation) {
+		SimulatorUtilities.wait(500);
 		selectByVisibleText(productTypeDDwn, deviceCreation.getProduct());
 	}
 
@@ -227,6 +229,7 @@ public class WalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectProgramType(WalletPlan walletplan) {
+		SimulatorUtilities.wait(500);
 		selectByVisibleText(programeTypeDDwn, walletplan.getProgramType());
 	}
 
@@ -238,6 +241,7 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	public void selectWalletUsage(WalletPlan walletplan) {
 		if (usageDDwn.isEnabled()) {
+			SimulatorUtilities.wait(500);
 			selectByVisibleText(usageDDwn, walletplan.getWalletPlanUsage());
 		}
 	}

@@ -140,10 +140,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//ul[@class='feedbackPanel']//.//li[4]/span")
 	private MCWebElement createdWalletList;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:creditLimit:input:inputAmountField")
 	private MCWebElement creditLimitTxt;
-	
+
 	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
 	}
@@ -200,10 +200,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			fillProfileAndAddressDetailsAndClickNext(device);
 
 			// skip wallet extra fields
-				clickFinishButton();
+			clickFinishButton();
 
-				verifyNoErrors();
-			});
+			verifyNoErrors();
+		});
 
 		verifyOperationStatus();
 
@@ -229,11 +229,12 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 			fillProfileAndAddressDetailsAndClickNext(device);
 
+			SimulatorUtilities.wait(3000);
 			// skip wallet extra fields
-				clickFinishButton();
+			clickFinishButton();
 
-				verifyNoErrors();
-			});
+			verifyNoErrors();
+		});
 
 		verifyOperationStatus();
 
@@ -345,16 +346,16 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
 		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDDwn, client.getLanguagePreference());
 		WebElementUtils.selectDropDownByVisibleText(vipDDwn, device.getVip());
-		
+
 		try{
 			if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)) {
 				WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);
 				WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));
-			   }
+			}
 			else
 			{
-			   WebElementUtils.selectDropDownByVisibleText(statementPreferenceDDwn, device.getOtherInfoStatementPreference());
-			   WebElementUtils.enterText(faxNumberTxt, device.getOtherInfoFaxNo());
+				WebElementUtils.selectDropDownByVisibleText(statementPreferenceDDwn, device.getOtherInfoStatementPreference());
+				WebElementUtils.enterText(faxNumberTxt, device.getOtherInfoFaxNo());
 			}
 		}catch(Exception e){
 			if(device.getAppliedForProduct().equalsIgnoreCase("Credit [C]")){
@@ -365,7 +366,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 				WebElementUtils.enterText(faxNumberTxt, device.getOtherInfoFaxNo());
 			}
 		} 
-		
+
 		clickNextButton();
 		clickNextButton();
 	}

@@ -821,6 +821,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			winiumDriver.findElement(By.name("OK")).click();
 		}
 		wait(15000);
+		
 	}
 
 	public void selectLicenseAndConfigure(String licenseTypeToSelect, String licenseFor) {

@@ -859,7 +859,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	
 	public void selectIframeTransactionFeePlan(String transactionFeePlan) {
 		if (iframeTransactionFeePlanDdwn.isEnabled())
-			WebElementUtils.selectDropDownByVisibleText(iframeTransactionFeePlanDdwn,
+			WebElementUtils.selectDropDownByVisibleText(iframeTransactionFeePlanDdwn, 
 					transactionFeePlan);
 	}
 
