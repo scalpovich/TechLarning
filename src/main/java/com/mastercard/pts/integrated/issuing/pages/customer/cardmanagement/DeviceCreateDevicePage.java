@@ -30,12 +30,10 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_ACTIVITY,
-		CardManagementNav.L2_DEVICE, CardManagementNav.L3_NEW_DEVICE })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_ACTIVITY, CardManagementNav.L2_DEVICE, CardManagementNav.L3_NEW_DEVICE })
 public class DeviceCreateDevicePage extends AbstractBasePage {
 	@Autowired
 	private TestContext context;
-
 	private static final Logger logger = LoggerFactory.getLogger(DeviceCreateDevicePage.class);
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
@@ -142,11 +140,11 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//ul[@class='feedbackPanel']//.//li[4]/span")
 	private MCWebElement createdWalletList;
-
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:creditLimit:input:inputAmountField")
 	private MCWebElement creditLimitTxt;
-
-	public String getWalletsFromPage() {
+	
+	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
 	}
 
@@ -162,6 +160,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			fillBatchDetails(device);
 
 			clickNextButton();
+			SimulatorUtilities.wait(500);
 			WebElementUtils.selectDropDownByVisibleText(customerTypeDDwn, device.getCustomerType());
 
 			List<String> programs = WebElementUtils.getOptionsTextFromSelect(programCodeDDwn);
@@ -201,10 +200,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			fillProfileAndAddressDetailsAndClickNext(device);
 
 			// skip wallet extra fields
-			clickFinishButton();
+				clickFinishButton();
 
-			verifyNoErrors();
-		});
+				verifyNoErrors();
+			});
 
 		verifyOperationStatus();
 
@@ -231,10 +230,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			fillProfileAndAddressDetailsAndClickNext(device);
 
 			// skip wallet extra fields
-			clickFinishButton();
+				clickFinishButton();
 
-			verifyNoErrors();
-		});
+				verifyNoErrors();
+			});
 
 		verifyOperationStatus();
 
@@ -246,9 +245,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		device.setWalletNumber(getCodeFromInfoMessage("wallet"));
 		// device.setWalletNumber(getWalletsId(getWalletsFromPage()));
 		device.setDeviceNumber(getCodeFromInfoMessage("device(s)"));
-		logger.info("clientCode: {}", device.getClientCode());
-		logger.info("WalletNumber: {}", device.getWalletNumber());
-		logger.info("DeviceNumber: {}", device.getDeviceNumber());
+		logger.info("clientCode: {}",device.getClientCode());
+		logger.info("WalletNumber: {}",device.getWalletNumber());
+		logger.info("DeviceNumber: {}",device.getDeviceNumber());
 	}
 
 	public String getWalletsId(String wallets) {
@@ -260,8 +259,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	private void fillBatchDetails(Device device) {
 		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
-		generateDeviceBatchBtn.click();
+		clickWhenClickable(generateDeviceBatchBtn);
 		waitForWicket();
+		SimulatorUtilities.wait(30000);
 		// fetching batch number and setting it for further use
 		device.setBatchNumber(batchNumberTxt.getText());
 		logger.info(" *********** Batch number *********** " + device.getBatchNumber());
@@ -276,7 +276,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	}
 
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
+		SimulatorUtilities.wait(500);
 		WebElementUtils.selectDropDownByVisibleText(customerTypeDDwn, device.getCustomerType());
+		SimulatorUtilities.wait(500);
 		WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, device.getProgramCode());
 		clickNextButton();
 
@@ -288,12 +290,12 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
 
 		fillProfile(device);
-
-		// Validate only when environment is demo
-		if (System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)) {
+		
+		//Validate only when environment is demo
+		if(!System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)){
 			clickNextButton();
 		}
-
+		
 		fillAddress(device);
 		// skip employment details
 		clickNextButton();
@@ -319,7 +321,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	}
 
 	private void fillProfile(Device device) {
-		Program program = context.get(ContextConstants.PROGRAM);
+		Program program=context.get(ContextConstants.PROGRAM);
 		if (corporateClientCodeDDwn.isEnabled())
 			WebElementUtils.selectDDByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
 		WebElementUtils.selectDropDownByVisibleText(branchCodeDDwn, device.getBranchCode());
@@ -343,28 +345,28 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
 		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDDwn, client.getLanguagePreference());
 		WebElementUtils.selectDropDownByVisibleText(vipDDwn, device.getVip());
-
-		try {
+		
+		try{
 			if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)) {
-				WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn, 1);
-				WebElementUtils.enterText(creditLimitTxt,
-						String.valueOf(Integer.parseInt(program.getCreditLimit()) + 1));
-			} else {
-				WebElementUtils.selectDropDownByVisibleText(statementPreferenceDDwn,
-						device.getOtherInfoStatementPreference());
+				WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);
+				WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));
+			   }
+			else
+			{
+			   WebElementUtils.selectDropDownByVisibleText(statementPreferenceDDwn, device.getOtherInfoStatementPreference());
+			   WebElementUtils.enterText(faxNumberTxt, device.getOtherInfoFaxNo());
+			}
+		}catch(Exception e){
+			if(device.getAppliedForProduct().equalsIgnoreCase("Credit [C]")){
+				WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);
+				WebElementUtils.enterText(creditLimitTxt,device.getCreditLimit());
+			}else{
+				WebElementUtils.selectDropDownByVisibleText(statementPreferenceDDwn, device.getOtherInfoStatementPreference());
 				WebElementUtils.enterText(faxNumberTxt, device.getOtherInfoFaxNo());
 			}
-		} catch (Exception e) {
-			if (device.getAppliedForProduct().equalsIgnoreCase("Credit [C]")) {
-				WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn, 1);
-				WebElementUtils.enterText(creditLimitTxt, device.getCreditLimit());
-			} else {
-				WebElementUtils.selectDropDownByVisibleText(statementPreferenceDDwn,
-						device.getOtherInfoStatementPreference());
-				WebElementUtils.enterText(faxNumberTxt, device.getOtherInfoFaxNo());
-			}
-		}
-
+		} 
+		
+		clickNextButton();
 		clickNextButton();
 	}
 }

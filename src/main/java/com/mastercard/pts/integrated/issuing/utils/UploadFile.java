@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Throwables;
@@ -25,6 +26,9 @@ public class UploadFile extends SimulatorUtilities{
 	@Autowired
 	private LinuxBox linuxBox;
 
+	@Value("${linux.folder.path}")
+	private String folderPath;
+	
 public void createTransactionUploadFileMC(FileCreation fileCreation,String remoteDir) {
 
 		File file = new File(fileCreation.getFilename());
@@ -39,6 +43,7 @@ public void createTransactionUploadFileMC(FileCreation fileCreation,String remot
 		}
 		linuxBox.upload(file.getPath(), remoteDir);
 	}
+
 	public void createTransactionUploadFile(FileCreation fileCreation){
 		
 		File file = tempDirectory.resolve(fileCreation.getFilename()).toFile();
@@ -57,7 +62,7 @@ public void createTransactionUploadFileMC(FileCreation fileCreation,String remot
 	}
 	
 	public void uploadIpmFile(File fileName){
-		String remoteDir = ConstantData.IPM_UPLOAD_FILE_PATH;
-		linuxBox.upload(getTempDirectoryLocationForSimulatorResults() + "\\" + fileName, remoteDir);
+		String remoteDir = folderPath+"IPM_INCOMING/INPUT";
+		linuxBox.upload(getTempDirectoryLocationForSimulatorResults() + "\\" + fileName, remoteDir);		
 	}
 }

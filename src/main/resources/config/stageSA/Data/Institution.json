@@ -1,7 +1,7 @@
 {  
-   "name":"RII",
-   "code":"336699",
-   "abbreviation":"RII",
+   "name":"AUTOBNK",
+   "code":"110088",
+   "abbreviation":"AUTOBNK",
    "debit":true,
    "credit":true,
    "prepaid":true,

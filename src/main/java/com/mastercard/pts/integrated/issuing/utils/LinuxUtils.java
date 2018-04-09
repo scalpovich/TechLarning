@@ -192,7 +192,6 @@ public abstract class LinuxUtils {
 		String serverSSH = connectiondetails.getHostName();
 		String userSSH = connectiondetails.getUserName(); 
 		String pswdSSH = connectiondetails.getPassword();
-
 		scp.setPort( portSSH );
 		scp.setLocalFile(localsource);
 		scp.setTodir( userSSH + ":" + pswdSSH + "@" + serverSSH + ":" + remoteDir );
@@ -202,6 +201,25 @@ public abstract class LinuxUtils {
 		Thread.sleep(60000); // long sleep as file permission cron job runs every minute
 	}
 
+	
+	public static void downloadFileViaScp(RemoteConnectionDetails connectiondetails, String remoteDir,
+			String localsource) throws JSchException, InterruptedException  {
+
+		Scp scp = new Scp();
+		String serverSSH = connectiondetails.getHostName();
+		String userSSH = connectiondetails.getUserName(); 
+		String pswdSSH = connectiondetails.getPassword();
+		logger.info("localsource "+localsource+" remoteDir: "+remoteDir+" ");
+		scp.setPort( connectiondetails.getPort() );			
+		scp.setRemoteFile(userSSH + ":" + pswdSSH + "@" + serverSSH + ":" + remoteDir);
+		scp.setLocalTodir(localsource);
+		//scp.setTodir( userSSH + ":" + pswdSSH + "@" + serverSSH + ":" + remoteDir );
+		scp.setProject( new Project() );
+		scp.setTrust( true );
+		scp.execute();	
+		Thread.sleep(60000); // long sleep as file permission cron job runs every minute
+	}
+	
 	public static String[] getCardNumberAndExpiryDate(File filePath) {
 		MiscUtils.reportToConsole("*********   starting getCardNumberAndExpiryDate *******  ");
 		int lnNumber = 1;
