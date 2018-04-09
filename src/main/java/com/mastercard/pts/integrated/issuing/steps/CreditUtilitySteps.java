@@ -63,8 +63,7 @@ public class CreditUtilitySteps {
 		Map<String,String>jsonMap=new LinkedHashMap<String, String>();
         String updated_Value="";
          Map<String, Object> map = context.get(TestContext.KEY_STORY_DATA);
-         
-		for(int i=0;i<methodsJson.length;i++)
+		for(int i=0;i<methodsExcel.length;i++)
 		{
 			String valueExcel="";
 			String valueJson="";
