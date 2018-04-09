@@ -62,7 +62,7 @@ public void createTransactionUploadFileMC(FileCreation fileCreation,String remot
 	}
 	
 	public void uploadIpmFile(File fileName){
-		String remoteDir = folderPath+"IPM_INCOMING/INPUT";
+		String remoteDir = folderPath+"IPM_INCOMING/input/";
 		linuxBox.upload(getTempDirectoryLocationForSimulatorResults() + "\\" + fileName, remoteDir);		
 	}
 }
