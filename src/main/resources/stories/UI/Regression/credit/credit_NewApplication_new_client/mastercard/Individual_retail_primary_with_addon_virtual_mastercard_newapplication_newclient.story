@@ -41,13 +41,3 @@ When credit processes pre-production batch using new Application
 When credit processes deviceproduction batch using new Application
 When new Application processes pin generation batch for credit
 !-- Then User search for new application on search screen for credit and validates the status as NORMAL
-Then credit is created with Add-on Device [A] as application type
-When user verifies the credit application device
-When user approves the credit application device
-When user processes close batch for new Application
-When user processes deviceGeneration batch for new Application
-When user searches for created application
-When credit processes pre-production batch using new Application
-When credit processes deviceproduction batch using new Application
-When new Application processes pin generation batch for credit
-!-- Then User search for new application on search screen for credit and validates the status as NORMAL
