@@ -194,7 +194,6 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			clickNextButton();
 
 			fillProfileAndAddressDetailsAndClickNext(device);
-			clickNextButton();
 			// skip wallet extra fields
 				clickFinishButton();
 

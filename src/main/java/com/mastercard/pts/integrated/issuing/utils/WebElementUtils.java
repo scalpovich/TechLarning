@@ -107,7 +107,6 @@ public class WebElementUtils {
 
 	@SuppressWarnings("deprecation")
 	public static void selectDropDownByVisibleText(MCWebElement element, String visibleText) {
-		SimulatorUtilities.wait(500);
 		retryUntilNoErrors(() -> new Select(asWebElement(element)).selectByVisibleText(visibleText));
 		waitForWicket(TestContext.getDriver());
 	}
