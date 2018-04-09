@@ -29,6 +29,9 @@ public class UploadFile extends SimulatorUtilities{
 	@Value("${linux.folder.path}")
 	private String folderPath;
 	
+	@Value("${linux.ipm_upload.path}")
+	private String ipmUploadPath;
+	
 public void createTransactionUploadFileMC(FileCreation fileCreation,String remoteDir) {
 
 		File file = new File(fileCreation.getFilename());
@@ -62,7 +65,7 @@ public void createTransactionUploadFileMC(FileCreation fileCreation,String remot
 	}
 	
 	public void uploadIpmFile(File fileName){
-		String remoteDir = folderPath+"IPM_INCOMING/input/";
+		String remoteDir = folderPath+ipmUploadPath;
 		linuxBox.upload(getTempDirectoryLocationForSimulatorResults() + "\\" + fileName, remoteDir);		
 	}
 }
