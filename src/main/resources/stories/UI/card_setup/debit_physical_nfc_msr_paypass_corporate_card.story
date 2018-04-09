@@ -3,20 +3,20 @@ Corporate EMV magnetic Stripe Pay-Pass debit card Setup
 Narrative:
 In order to provide to client easy-to-use payment method for e-commerce retail
 As an issuer
-I want to create a corporate MSR pay-pass debit card
+I want to create a corporate EMV pay-pass debit card
 
 Meta:
-@StoryName S224288
+@StoryName debit_paypass_nfc_emv
 
-Scenario: Set up Corporate MSR Pay-Pass debit card 
+Scenario: Set up Corporate EMV Pay-Pass debit card 
 Meta:
 @TestId TC398492
 Given user is logged in institution
-And device range for program with device plan for "debit" "Physical NFC Device - Mag Stripe Paypass" card
+And device range for program with device plan for "debit" "Physical NFC Device - EMV Paypass" card
 When user creates new device of debit type for new client
 Then device has "normal" status
 
-Scenario: Corporate MSR Pay-Pass debit card device production and authorization
+Scenario: Corporate EMV Pay-Pass debit card device production and authorization
 Meta:
 @TestId TC408317
 Given user is logged in institution
