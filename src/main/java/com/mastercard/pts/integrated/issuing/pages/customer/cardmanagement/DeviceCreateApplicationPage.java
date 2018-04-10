@@ -142,8 +142,24 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:stmtHardCopyReq:input:dropdowncomponent")
 	private MCWebElement statementPreferenceDDwn;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:creditLimit:input:inputAmountField")
 	private MCWebElement creditLimitTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:addonTitle:input:dropdowncomponent")
+	private MCWebElement addOnTitleOpt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:addonFirstName:input:inputCodeField")
+	private MCWebElement addOnFirstNameTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:addonLastName:input:inputCodeField")
+	private MCWebElement addOnLastNameTxt;
+	
+	@PageElement(findBy = FindBy.ID, valueToFind = "addonBirthDate")
+	private MCWebElement addOnBirthCountryTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:addonGender:input:dropdowncomponent")
+	private MCWebElement addOnGenderTxt;
 	
 	public void selectAppliedForProduct(String product) {
 		WebElementUtils.selectDropDownByVisibleText(appliedForProdutDDwn, product);
@@ -222,8 +238,8 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 
 			clickNextButton();
 
-			fillProfileAndAddressDetailsAndClickNext(device);
-
+			fillProfileAndAddressDetailsAndClickNext(device);			
+			
 			// skip wallet extra fields
 				clickFinishButton();
 
@@ -307,9 +323,14 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
 
 		fillProfile(device);
-		
-		clickNextButton();
 
+		if(System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT) || System.getProperty("env").equalsIgnoreCase("automation2") || System.getProperty("env").equalsIgnoreCase("stageSA") ){
+			if(device.getApplicationType().equalsIgnoreCase("Primary and Add-on [B]")){
+				fillAddOnProfileAndClickNext(device);
+			}else{
+				clickNextButton();
+			}
+		}
 		fillAddress(device);
 		
 			// skip employment details
@@ -323,6 +344,15 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			// skip device extra fields
 			clickNextButton();
 			clickNextButton();
+	}
+	private void fillAddOnProfileAndClickNext(Device device){
+		ClientDetails client = device.getClientDetails();
+		WebElementUtils.selectDropDownByVisibleText(addOnTitleOpt, client.getTitle());
+		WebElementUtils.enterText(addOnFirstNameTxt, client.getFirstName());
+		WebElementUtils.enterText(addOnLastNameTxt, client.getLastName());
+		WebElementUtils.selectDropDownByVisibleText(addOnGenderTxt, client.getGender());	
+		WebElementUtils.pickDate(addOnBirthCountryTxt, client.getBirthDate());
+		clickNextButton();
 	}
 
 	private void fillAddress(Device device) {
