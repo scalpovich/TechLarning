@@ -1,12 +1,33 @@
-{  
+{
+  "institute": [
+{
+   "code":"190525",
+   "abbreviation":"ISSAUTO",
    "association":"MASTERCARD",
-   "branch":"OfficeBranch2 [259]",
-   "card_packid_generation_template":"AUTOMATION [PAN042]",
-   "device_id_generation_template":"AUTOMATION [PAN022]",
-   "device_customer_type":"Individual",
-   "embossing_vendor":"V57602",
+   "branch":"OfficeBranch10985",
+   "cardPackIdGenerationTemplate":"PAN723",
+   "deviceIdGenerationTemplate":"PAN698",
+   "customerType":"Individual",
+   "embossingVendor":"V21550",
    "interchange":"MASTERCARD",
-   "issuer_bin":"tester@test.com",
-   "plastic_id":"AUT",
-   "picture_code":"AUT"
+   "issuerBin":"526113",
+   "plasticId":"100",
+   "pictureCode":"166"
+   },
+   
+  {
+   "code":"110000",
+   "abbreviation":"CANARA",
+   "association":"MASTERCARD",
+   "branch":"3333",
+   "cardPackIdGenerationTemplate":"PAN639",
+   "deviceIdGenerationTemplate":"PAN589",
+   "customerType":"Individual",
+   "embossingVendor":"V14170",
+   "interchange":"MASTERCARD",
+   "issuerBin":"589765",
+   "plasticId":"638",
+   "pictureCode":"548"
+   }
+   ]
 }
