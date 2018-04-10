@@ -8,6 +8,7 @@ I want to create a bulk card request and generate cards for or prepaid emv retai
 Meta:
 @StoryName S280665
 @SanityCards
+@UISanity
 
 Scenario: bulk card generation for prepaid emv retail travel multi currency card
 Given user is logged in institution

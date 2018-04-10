@@ -9,6 +9,7 @@ Meta:
 @StoryName p_msr_retail_gen_purpose
 @oldReferenceSheet_prepaid_msr
 @SanityCards
+@UISanity
 
 Scenario: Set up prepaid msr retail general purpose card
 Meta:
