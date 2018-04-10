@@ -40,9 +40,17 @@ public class VisaMoneyTransferSteps {
 		VisaMoneyTransfer vmt = VisaMoneyTransfer.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE2);
 		MiscUtils.reportToConsole("Device Number in VTS-CHP Steps - " + device.getDeviceNumber());
-		actualResult = visaMoneyTransferWorkflow.doVtsTransaction(vmt, device);
+		actualResult = visaMoneyTransferWorkflow.doVmtTransaction(vmt, device);
 	}
 
+	@When("VISA Offline CHP Transaction is performed")
+	public void whenVisaOfflineChpTransactionIsPerformed() {
+		VisaMoneyTransfer vmt = VisaMoneyTransfer.createWithProvider(provider);
+		Device device = context.get(ContextConstants.DEVICE2);
+		MiscUtils.reportToConsole("Device Number in VTS-CHP Steps - " + device.getDeviceNumber());
+		actualResult = visaMoneyTransferWorkflow.doVmtOfflineTransaction(vmt, device);
+	}
+	
 	@Then("Validate Response Message on CHP for VMT")
 	public void thenvalidateResponseMessageOnChp() {
 		assertThat(actualResult, containsString(STATUS_MESSAGE));

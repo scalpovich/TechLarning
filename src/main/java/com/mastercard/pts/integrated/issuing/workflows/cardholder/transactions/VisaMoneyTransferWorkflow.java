@@ -15,9 +15,16 @@ public class VisaMoneyTransferWorkflow extends AbstractBaseFlows {
 	@Autowired
 	private Navigator navigator;
 
-	public String doVtsTransaction(VisaMoneyTransfer vmt, Device device) {
+	public String doVmtTransaction(VisaMoneyTransfer vmt, Device device) {
 		VisaMoneyTransferPage page = navigator.navigateToPage(VisaMoneyTransferPage.class);
 		page.doTransaction(vmt, device);
+		page.confirmTransaction(vmt);
+		return page.verifyResponse();
+	}
+
+	public String doVmtOfflineTransaction(VisaMoneyTransfer vmt, Device device) {
+		VisaMoneyTransferPage page = navigator.navigateToPage(VisaMoneyTransferPage.class);
+		page.doOfflineTransaction(vmt, device);
 		page.confirmTransaction(vmt);
 		return page.verifyResponse();
 	}

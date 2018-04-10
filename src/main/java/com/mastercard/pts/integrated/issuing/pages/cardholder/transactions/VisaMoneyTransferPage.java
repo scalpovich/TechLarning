@@ -79,10 +79,19 @@ public class VisaMoneyTransferPage extends AbstractBasePage {
 	}
 
 	public void doTransaction(VisaMoneyTransfer vmt, Device device) {
-		// WebElementUtils.enterText(beneficiaryCardNumberTxt, device.getDeviceNumber());
-		WebElementUtils.enterText(beneficiaryCardNumberTxt, vmt.getBeneficiaryCardNumber());
+		WebElementUtils.enterText(beneficiaryCardNumberTxt, device.getDeviceNumber());
+		// WebElementUtils.enterText(beneficiaryCardNumberTxt, vmt.getBeneficiaryCardNumber());
 		WebElementUtils.enterText(transferAmountTxt, vmt.getTransferAmount());
 		WebElementUtils.selectDropDownByVisibleText(currencyOfTransferDDwn, vmt.getCurrencyOfTransfer());
+		WebElementUtils.selectRadioIfNotSelected(visaFastFundRealTimeRadioBtn);
+		clickSubmitButton();
+	}
+
+	public void doOfflineTransaction(VisaMoneyTransfer vmt, Device device) {
+		WebElementUtils.enterText(beneficiaryCardNumberTxt, device.getDeviceNumber());
+		WebElementUtils.enterText(transferAmountTxt, vmt.getTransferAmount());
+		WebElementUtils.selectDropDownByVisibleText(currencyOfTransferDDwn, vmt.getCurrencyOfTransfer());
+		WebElementUtils.selectRadioIfNotSelected(visaMoneyTransferOfflineRadioBtn);
 		clickSubmitButton();
 	}
 
