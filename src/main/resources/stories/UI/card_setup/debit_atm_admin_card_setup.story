@@ -8,6 +8,7 @@ I want to create a ATM Admin debit card for client
 Meta:
 @StoryName S224289
 @SanityCards
+@UISanity
 
 Scenario: Set up ATM Admin Debit card
 Meta:

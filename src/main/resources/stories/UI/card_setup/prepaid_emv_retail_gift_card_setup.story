@@ -8,7 +8,7 @@ I want to create a prepaid emv retail giftcard card for client
 Meta:
 @StoryName S203707
 @SanityCards
-
+@UISanity
 
 Scenario: Set up prepaid emv retail giftcard
 Meta:
