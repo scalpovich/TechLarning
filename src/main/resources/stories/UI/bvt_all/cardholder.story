@@ -105,13 +105,6 @@ When user is logged into cardholder portal successfully
 Then ReplaceDevice page of services tab is rendered correctly
 And user signs out from cardholder portal
 
-Scenario: UI verification - Cardholder Portal -  UnblockDevice, services tab
-Given user is on login page of cardholder portal
-And user logs in with valid credentials
-When user is logged into cardholder portal successfully
-Then UnblockDevice page of services tab is rendered correctly
-And user signs out from cardholder portal
-
 Scenario: UI verification - Cardholder Portal -  Home Page, virtualcard tab
 Given user is on login page of cardholder portal
 And user logs in with valid credentials
