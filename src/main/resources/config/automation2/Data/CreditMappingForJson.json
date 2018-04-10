@@ -28,6 +28,21 @@
    "issuerBin":"589765",
    "plasticId":"638",
    "pictureCode":"548"
+   },
+   
+   {
+   "code":"121212",
+   "abbreviation":"AUTO",
+   "association":"MASTERCARD",
+   "branch":"1000",
+   "cardPackIdGenerationTemplate":"PAN042",
+   "deviceIdGenerationTemplate":"PAN019",
+   "customerType":"Individual",
+   "embossingVendor":"AUTOB1",
+   "interchange":"MASTERCARD",
+   "issuerBin":"CREDIT",
+   "plasticId":"AUT",
+   "pictureCode":"AUT"
    }
    ]
 }

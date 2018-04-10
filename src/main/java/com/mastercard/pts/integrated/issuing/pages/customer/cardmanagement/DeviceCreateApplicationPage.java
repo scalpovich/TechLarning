@@ -343,8 +343,13 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 
 	private void fillProfile(Device device) {
 		Program program=context.get(ContextConstants.PROGRAM);
-		if (corporateClientCodeDDwn.isEnabled())
-			 WebElementUtils.selectDropDownByVisibleText(branchCodeDDwn, device.getBranchCode());
+		
+		if(device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)){
+			selectByVisibleText(branchCodeDDwn, device.getBranchCode());
+		}else{		
+			WebElementUtils.selectDropDownByVisibleText(branchCodeDDwn, device.getBranchCode());
+		}
+		if (corporateClientCodeDDwn.isEnabled())			
 			WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
 		ClientDetails client = device.getClientDetails();
 		WebElementUtils.selectDropDownByVisibleText(titleDDwn, client.getTitle());
