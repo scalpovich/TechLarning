@@ -105,6 +105,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
 
+	private static final String Device = null;
+
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
@@ -642,10 +644,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void waitAndSearchForRecordToExist() {
 		waitAndSearchForRecordToAppear();
-		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
-		Device device = context.get(ContextConstants.DEVICE);
-		device.setDeviceNumber(deviceNumberFetch.getText());
-		context.put(ContextConstants.DEVICE, device);
+		
 		selectFirstRecord();
 		clickProcessSelectedButton();
 	}
