@@ -50,7 +50,6 @@ public class ExcelDataLoader implements DataLoader {
 				Sheet sheet = workbook.getSheet(sheetName);
 				Map<String, String> data = ExcelUtils.readExcel(sheet);
 				return Optional.of(data);
-				//return Optional.of(Collections.unmodifiableMap(data));
 			} finally {
 				if (workbook != null) {
 					workbook.close();
