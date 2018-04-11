@@ -853,7 +853,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void clickIframeFinishButton() {
-		SimulatorUtilities.wait(500);
+		SimulatorUtilities.wait(900);
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec).until(WebElementUtils.visibilityOf(iframeFinishBtn));
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(iframeFinishBtn)).click();
 	}
@@ -963,6 +963,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		}
 
 		clickIframeNextButton();
+		SimulatorUtilities.wait(300);
 		clickIframeNextButton();
 
 		if (DeviceType.EMV_CARD.equals(devicePlan.getDeviceType()) || DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS.equals(devicePlan.getDeviceType())) {

@@ -9,6 +9,7 @@ Meta:
 @StoryName p_emv_corp_gift_bulk
 @oldReferenceSheet_S193810 
 @SanityCards
+@UISanity
 
 Scenario: bulk card generation for prepaid emv corporate gift card
 Meta:

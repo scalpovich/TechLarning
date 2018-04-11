@@ -9,6 +9,7 @@ Meta:
 @StoryName p_virt_retail_gift
 @oldReferenceSheet_S203707
 @SanityCards
+@UISanity
 
 Scenario: Set up prepaid virtual retail giftcard card
 Meta:

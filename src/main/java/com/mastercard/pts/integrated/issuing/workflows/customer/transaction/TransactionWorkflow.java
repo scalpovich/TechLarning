@@ -816,7 +816,12 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumLicenseSelectOperation("License profiles");
 		winiumDriver.findElementByName("License profiles").click();
 		winiumDriver.findElementByName("Select").click();
+		wait(2000);
+		if(winiumDriver.findElements(By.name("OK")).size()> 0){
+			winiumDriver.findElement(By.name("OK")).click();
+		}
 		wait(15000);
+		
 	}
 
 	public void selectLicenseAndConfigure(String licenseTypeToSelect, String licenseFor) {
@@ -832,6 +837,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			executeAutoITExe("ActivateLicenseProfiles.exe");
 			winiumLicenseSelectOperation(licenseTypeToSelect, licenseFor);
 			winiumClickOperation("Select");
+			wait(2000);
+			if(winiumDriver.findElements(By.name("OK")).size()> 0){
+				winiumDriver.findElement(By.name("OK")).click();
+			}
 			wait(20000);
 			executeAutoITExe("ActivateSelectServices.exe");
 			if (getLoadServicesScreen() > 0) {

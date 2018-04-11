@@ -582,7 +582,6 @@ public class ProgramSetupSteps {
 		devicePlan.setProductType(ProductType.fromShortName(productType));
 		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
 		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
-		devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
 		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
@@ -976,7 +975,12 @@ public class ProgramSetupSteps {
 
 	@When("User fills Device Range section for $type product")
 	public void whenUserFillsDeviceRangeSection(String type) {
-		DeviceRange deviceRange = DeviceRange.createWithProvider(dataProvider, provider, type);
+		DeviceRange deviceRange;
+		if (type.equalsIgnoreCase(ProductType.CREDIT)) {
+			deviceRange = DeviceRange.createWithProvider(dataProvider,provider, type);
+		} else {
+			deviceRange = DeviceRange.createWithProvider(dataProvider, type);
+		}
 		deviceRange.setProductType(ProductType.fromShortName(type));
 		deviceRange.setProgram(program.buildDescriptionAndCode());
 		deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());

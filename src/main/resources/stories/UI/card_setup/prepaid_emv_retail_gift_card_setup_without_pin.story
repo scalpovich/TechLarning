@@ -9,6 +9,7 @@ Meta:
 @StoryName S203707
 @oldReferenceSheet_S203707
 @SanityCards
+@UISanity
 
 Scenario: Set up prepaid emv retail giftcard card pinless
 Meta:
