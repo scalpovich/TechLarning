@@ -235,7 +235,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	private MCWebElement allowRenewalChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:renewalDeviceTech:input:dropdowncomponent")
-	private MCWebElement renwalDeviceTechnologyDdwn;
+	private MCWebElement renewalDeviceTechnologyDdwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:validityOnRenewalMonths:input:inputTextField")
 	private MCWebElement validityOnRenewalMonthsTxt;
@@ -1187,11 +1187,11 @@ public class DevicePlanPage extends AbstractBasePage {
 		allowRenewalChkBx.click();
 		if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
 		{
-			selectByVisibleText(renwalDeviceTechnologyDdwn, "Magnetic Stripe Card [1]" /*devicePlan.getDeviceType()*/);
+			selectByVisibleText(renewalDeviceTechnologyDdwn, devicePlan.getDeviceType());
 		}
 		else
 		{
-		WebElementUtils.selectDropDownByVisibleText(renwalDeviceTechnologyDdwn, devicePlan.getDeviceType());
+		WebElementUtils.selectDropDownByVisibleText(renewalDeviceTechnologyDdwn, devicePlan.getDeviceType());
 		}
 		WebElementUtils.enterText(validityOnRenewalMonthsTxt, devicePlan.getValidityOnRenewalMonths());
 		WebElementUtils.enterText(autoRenewalDaysTxt, devicePlan.getAutoRenewalDays());

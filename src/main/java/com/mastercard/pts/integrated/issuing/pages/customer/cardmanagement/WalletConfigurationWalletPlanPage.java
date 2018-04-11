@@ -158,12 +158,12 @@ private TestContext context;
 			selectProductType(productType);
 			if(walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
 			{
-			selectByVisibleText(programTypeDDwn, walletPlan.getProgramType());	
+						selectByVisibleText(programTypeDDwn,walletPlan.getProgramType());
 			}
 			else
 			{
-			selectProgramType(walletPlan.getProgramType());
-			}
+						selectProgramType(walletPlan.getProgramType());
+					}
 			selectCurrency(walletPlan.getCurrency());	
 			selectUsage(walletPlan.getUsage());
 			
