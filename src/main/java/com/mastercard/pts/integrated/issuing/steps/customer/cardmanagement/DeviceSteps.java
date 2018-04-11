@@ -143,11 +143,13 @@ public class DeviceSteps {
 		context.put(CreditConstants.APPLICATION, device);
 	}
 	
-	@Then("$device is created with $application as application type")
-	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceCreation(String type, String application) {
+	@Then("$device is created with $application as application type and application sub type as $applicationSubType")
+	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceCreation(String type, String application, String applicationSubType) {
 		Device device = Device.createWithProvider(provider);
 		device.setAppliedForProduct(ProductType.fromShortName(type));
-		device.setAccountType(application);
+		device.setApplicationType(application);
+		device.setSubApplicationType(applicationSubType);
+		
 		Device deviceTemp = Device.createWithProviderForOtherDetails(provider);
 		device.setOtherInfoDeliveryMode(deviceTemp.getOtherInfoDeliveryMode());
 		device.setOtherInfoEmailAlertRequired(deviceTemp.getOtherInfoEmailAlertRequired());
