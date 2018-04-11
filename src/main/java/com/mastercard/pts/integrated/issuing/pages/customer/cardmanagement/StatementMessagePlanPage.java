@@ -150,7 +150,7 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 		runWithinPopup("Add Statement Message Details", () -> {
 			WebElementUtils.enterText(messageLabelTxt, details.getMessageLabel());
 			WebElementUtils.enterText(messageTxt, details.getMessage());
-			if (productType.contains("Credit")) {
+			if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 				logger.info("branch :{}",details.getBranch());
 				selectByVisibleText(branchDDwn, details.getBranch());
 			} else {

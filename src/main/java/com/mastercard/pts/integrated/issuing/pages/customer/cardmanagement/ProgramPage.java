@@ -374,23 +374,17 @@ public class ProgramPage extends AbstractBasePage {
 		runWithinPopup("Add Program", () -> {
 			addProgram(program.getProgramCode());
 			addDescription(program.getDescription());
-			if(productType.equalsIgnoreCase(ProductType.CREDIT))
-			{
-			selectByVisibleText(interchangeDDwn, program.getInterchange());	
-			}
-			else
-			{
-			selectInterchange(program.getInterchange());
-			}
-			selectProduct(program.getProduct());
-			if(productType.equalsIgnoreCase(ProductType.CREDIT))
-			{
-			selectByVisibleText(programTypeDDwn, program.getProgramType());
-			}
-			else
-			{
-			selectProgramType(program.getProgramType());
-			}
+					if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
+						selectByVisibleText(interchangeDDwn,program.getInterchange());
+					} else {
+						selectInterchange(program.getInterchange());
+					}
+					selectProduct(program.getProduct());
+					if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
+						selectByVisibleText(programTypeDDwn,program.getProgramType());
+					} else {
+						selectProgramType(program.getProgramType());
+					}
 			selectBaseCurrency(program.getBaseCurrency());
 			program.setProgramCodeDevice(program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");

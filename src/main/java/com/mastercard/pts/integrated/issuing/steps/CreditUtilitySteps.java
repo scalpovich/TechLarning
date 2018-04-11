@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditMappingForExcel;
-import com.mastercard.pts.integrated.issuing.domain.CreditMappingForJson;
+import com.mastercard.pts.integrated.issuing.domain.CreditInstitutionData;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
@@ -35,34 +36,49 @@ public class CreditUtilitySteps {
 	@Autowired
 	private CreditMappingForExcel creditMappingForExcel;
 	
-	private CreditMappingForJson creditMappingForJson;
+	private CreditInstitutionData creditMappingForJson;
 	
 	 
 	@Given("setting json values in excel")
 	public void mappingJsonValuesInExcel() throws Exception
 	{
 		String institution=System.getProperty("institution");
-		Method[]methodsJson=CreditMappingForJson.class.getDeclaredMethods();
+		Method[]methodsJson=CreditInstitutionData.class.getDeclaredMethods();
 		Method[]methodsExcel=CreditMappingForExcel.class.getDeclaredMethods();
-		creditMappingForExcel=creditMappingForExcel.createWithProviderForRegression(keyValueProvider);
-		context.put(CreditConstants.EXCEL_VALUES,creditMappingForExcel);
-		if(StringUtils.isEmpty(institution))
-		{
-		creditMappingForJson =CreditMappingForJson.createWithProvider(provider,Institution.createWithProvider(provider).getCode(),Institution.createWithProvider(provider).getName());
-		}
-		else
-		{
-			institution=institution.replaceAll("\\s+","");
-			String[]institutionSplit=institution.split("\\[");
-			String institutionName=institutionSplit[0];
-			String institutionCode=institutionSplit[1].substring(0, institutionSplit[1].length()-1);
-			creditMappingForJson =CreditMappingForJson.createWithProvider(provider,institutionCode,institutionName);
-		}
+		contextForExcelAndJson(institution);
 	    context.put(CreditConstants.JSON_VALUES, creditMappingForJson);
 
 		Map<String,String>jsonMap=new LinkedHashMap<String, String>();
-        String updated_Value="";
          Map<String, Object> map = context.get(TestContext.KEY_STORY_DATA);
+		replacingValuesFromJsonToExcel(methodsJson, methodsExcel, jsonMap);
+		updatedExcelContext(jsonMap, map);
+		context.put(TestContext.KEY_STORY_DATA,map);
+		context.get(TestContext.KEY_STORY_DATA);
+	}
+
+
+	public void updatedExcelContext(Map<String, String> jsonMap,
+			Map<String, Object> map) {
+		String updated_Value;
+		for (Map.Entry<String, Object> entry : map.entrySet()) {
+			for(Map.Entry<String, String> entryJson:jsonMap.entrySet())
+			{
+	            
+
+			  if (entryJson.getKey().toUpperCase().contains(entry.getKey().replaceAll("_", ""))) {
+				   updated_Value=String.valueOf(entry.getValue()).replaceAll(".+", entryJson.getValue());
+					map.put(entry.getKey(), updated_Value);
+				}
+
+		}
+	}
+	}
+
+
+	public void replacingValuesFromJsonToExcel(Method[] methodsJson,
+			Method[] methodsExcel, Map<String, String> jsonMap)
+			throws IllegalAccessException, InvocationTargetException,
+			NoSuchMethodException {
          
 		for(int i=0;i<methodsJson.length;i++)
 		{
@@ -85,17 +101,22 @@ public class CreditUtilitySteps {
 				}
 			}	
 		}
-		for (Map.Entry<String, Object> entry : map.entrySet()) {
-			for(Map.Entry<String, String> entryJson:jsonMap.entrySet())
-			{
-	            
-			  if (entryJson.getKey().toUpperCase().contains(entry.getKey().replaceAll("_", ""))) {
-				   updated_Value=String.valueOf(entry.getValue()).replaceAll(".+", entryJson.getValue());
-					map.put(entry.getKey(), updated_Value);
-				}
-		}
 	}
-		context.put(TestContext.KEY_STORY_DATA,map);
-		context.get(TestContext.KEY_STORY_DATA);
+
+
+	public void contextForExcelAndJson(String institution) {
+		creditMappingForExcel=creditMappingForExcel.createWithProviderForRegression(keyValueProvider);
+		context.put(CreditConstants.EXCEL_VALUES,creditMappingForExcel);
+		if(StringUtils.isEmpty(institution))
+		{
+		creditMappingForJson =CreditInstitutionData.createWithProvider(provider,Institution.createWithProvider(provider).getCode());
+		}
+		else
+		{
+			institution=institution.replaceAll("\\s+","");
+			String[]institutionSplit=institution.split("\\[");
+			String institutionCode=institutionSplit[1].substring(0, institutionSplit[1].length()-1);
+			creditMappingForJson =CreditInstitutionData.createWithProvider(provider,institutionCode);
+		}
 	}
 }
