@@ -629,6 +629,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());		
 		Device device  = context.get(CreditConstants.APPLICATION);
 		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
+		
+		System.out.println("****"+ context.get(CreditConstants.DEVICE_NUMBER));
+		
 		selectFirstRecord();
 		clickProcessSelectedButton();
 	}

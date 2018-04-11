@@ -146,6 +146,9 @@ public class DeviceSteps {
 	@Then("$device is created with $application as application type and application sub type as $applicationSubType")
 	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceCreation(String type, String application, String applicationSubType) {
 		Device device = Device.createWithProvider(provider);
+		
+		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
+		
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		device.setApplicationType(application);
 		device.setSubApplicationType(applicationSubType);

@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.WebUtils;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
@@ -161,6 +162,9 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:addonGender:input:dropdowncomponent")
 	private MCWebElement addOnGenderTxt;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:existingDeviceNumber:input:inputTextField")
+	private MCWebElement existingDeviceTxt;
+	
 	public void selectAppliedForProduct(String product) {
 		WebElementUtils.selectDropDownByVisibleText(appliedForProdutDDwn, product);
 	}
@@ -300,13 +304,20 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
 		if(device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT))
 		{
-		selectByVisibleText(customerTypeDDwn, device.getCustomerType());
+			if(device.getApplicationType().equalsIgnoreCase("Supplementary Device [S]")){				
+				WebElementUtils.enterText(existingDeviceTxt, device.getDeviceNumber());
+			}else{
+				selectByVisibleText(customerTypeDDwn, device.getCustomerType());
+			}
 		}
 		else
 		{
 		WebElementUtils.selectDropDownByVisibleText(customerTypeDDwn, device.getCustomerType());
 		}
-		WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, device.getProgramCode());
+		if(!device.getApplicationType().equalsIgnoreCase("Supplementary Device [S]")){				
+			WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, device.getProgramCode());			
+		}
+		
 		clickNextButton();
 		if(device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT))
 		{
