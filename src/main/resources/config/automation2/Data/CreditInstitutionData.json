@@ -7,7 +7,7 @@
    "branch":"1000",
    "cardPackIdGenerationTemplate":"PAN042",
    "deviceIdGenerationTemplate":"PAN019",
-   "customerType":"Individual",
+   "customerType":"Corporate",
    "embossingVendor":"AUTOB1",
    "interchange":"MASTERCARD",
    "issuerBin":"CREDIT",

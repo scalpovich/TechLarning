@@ -390,8 +390,11 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		}else{		
 			WebElementUtils.selectDropDownByVisibleText(branchCodeDDwn, device.getBranchCode());
 		}
-		if (corporateClientCodeDDwn.isEnabled())			
+		if (corporateClientCodeDDwn.isEnabled()&& device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)) {
+			selectByVisibleText(corporateClientCodeDDwn,device.getCorporateClientCode());
+		} else {
 			WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
+		}
 		ClientDetails client = device.getClientDetails();
 		WebElementUtils.selectDropDownByVisibleText(titleDDwn, client.getTitle());
 		WebElementUtils.enterText(firstNameTxt, client.getFirstName());
