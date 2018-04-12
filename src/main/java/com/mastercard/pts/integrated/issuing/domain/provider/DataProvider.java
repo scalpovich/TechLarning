@@ -49,7 +49,7 @@ public interface DataProvider {
 	
 	<T> T getData(Class<T> typeToLoad, String key,String institutionCode, String... tags);
 	
-	default <T> T getDataBySimpleClassNameForInstitute(Class<T> typeToLoad,String key, String... tags) {
-		return getData(typeToLoad, typeToLoad.getSimpleName(),key, tags);
+	default <T> T getDataBySimpleClassNameForInstitute(Class<T> typeToLoad,String institutionCode, String... tags) {
+		return getData(typeToLoad, typeToLoad.getSimpleName(),institutionCode, tags);
 	}
 }
