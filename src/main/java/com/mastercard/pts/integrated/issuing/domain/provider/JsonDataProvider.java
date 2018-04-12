@@ -73,9 +73,9 @@ public class JsonDataProvider implements DataProvider {
 	}
 	
 	@Override
-	public <T> T getData(Class<T> typeToLoad, String key,String key1, String... tags) {
+	public <T> T getData(Class<T> typeToLoad, String key,String institutionCode, String... tags) {
 		Preconditions.checkNotNull(typeToLoad, "typeToLoad");
-		JsonNode node = loadNodeInstitute(typeToLoad.getSimpleName(), key,key1, tags);
+		JsonNode node = loadNodeInstitute(typeToLoad.getSimpleName(), key,institutionCode, tags);
 		try {
 			return mapper.treeToValue(node, typeToLoad);
 		} catch (JsonProcessingException e) {
@@ -108,7 +108,7 @@ public class JsonDataProvider implements DataProvider {
 		return node;
 	}
 	
-	private JsonNode loadNodeInstitute(String typeName,String key,String key1, String... tags) {
+	private JsonNode loadNodeInstitute(String typeName,String key,String institutionCode, String... tags) {
 		Preconditions.checkArgument(!Strings.isNullOrEmpty(key), "key is not provided");
 		List<String> keyStream = Stream.concat(Stream.of(key),
 				Arrays.stream(tags).map(tag -> String.format("%s.%s", key, tag)))
@@ -127,7 +127,7 @@ public class JsonDataProvider implements DataProvider {
 						.map(keyValue -> String.format(template, keyValue)));
 		
 		JsonNode node = pathStream
-				.<Function<JsonNode, JsonNode>>map(path -> target -> loadAndApplyData(target, path,key1))
+				.<Function<JsonNode, JsonNode>>map(path -> target -> loadAndApplyData(target, path,institutionCode))
 				.reduce(Function.identity(), Function::andThen)
 				.apply(null);
 		return node;
@@ -141,9 +141,9 @@ public class JsonDataProvider implements DataProvider {
 		}
 	}
 	
-	private JsonNode loadAndApplyData(JsonNode target, String path,String key) {
+	private JsonNode loadAndApplyData(JsonNode target, String path,String institutionCode) {
 		try {
-			return buildJsonNodeInstitute(target, path,key);
+			return buildJsonNodeInstitute(target, path,institutionCode);
 		} catch (Exception e) {
 			throw MiscUtils.propagate(e);
 		}
@@ -175,7 +175,7 @@ public class JsonDataProvider implements DataProvider {
 		}
 	}
 	
-	private JsonNode buildJsonNodeInstitute(JsonNode target, String path,String key)
+	private JsonNode buildJsonNodeInstitute(JsonNode target, String path,String institutionCode)
 			throws IOException, JsonPatchException, ParseException {
 		InputStream inputStream = getResource(path);
 		if (inputStream == null) {
@@ -186,7 +186,7 @@ public class JsonDataProvider implements DataProvider {
 		JsonNode nodeArray=null;
 		if (node.isArray()) {
 			for (JsonNode objNode : node) {
-				if (objNode.get("code").asText().equals(key)) {
+				if (objNode.get("code").asText().equals(institutionCode)) {
 					nodeArray=objNode;
 					return objNode;
 				}
