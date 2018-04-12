@@ -395,7 +395,11 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Authorization']")
 	private MCWebElement authorizationTab;
-
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:virtualDeviceCreditLimit:input:inputTextField")	
+	private MCWebElement virtualDeviceCreditLimitTxt;
+	
+	
 	public void AddDevicePlan() {
 		clickWhenClickable(AddDevicePlanBtn);
 		switchToAddDevicePlanFrame();
@@ -647,6 +651,14 @@ public class DevicePlanPage extends AbstractBasePage {
 		if (velocityTxt.isVisible()) {
 			if (velocityTxt.isEnabled())
 				enterValueinTextBox(velocityTxt, deviceplan.getVelocity());
+		}
+	}
+	
+	public void enterVirtualCreditLimit(DevicePlan devicePlan){
+		
+		if (virtualDeviceCreditLimitTxt.isVisible()) {
+			if (virtualDeviceCreditLimitTxt.isEnabled())
+				enterValueinTextBox(virtualDeviceCreditLimitTxt, devicePlan.getPerTransactionLimit());
 		}
 	}
 
@@ -1014,14 +1026,23 @@ public class DevicePlanPage extends AbstractBasePage {
 			clickIntTxnAllowedCheckBox();
 			
 		WebElementUtils.checkCheckbox(ecommAllowedChkBx, devicePlan.isEcommerceAllowed());
-		if (!devicePlan.getDeviceType().equals(DeviceType.STATIC_VIRTUAL_CARD)
-				&& "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
-			WebElementUtils.enterText(pinRetryLimitTxt, devicePlan.getPinRetryLimit());
-		}	
+	
+		if(!devicePlan.DeviceType.equalsIgnoreCase("Limited Validity Virtual Card [8]")){
+			if (!devicePlan.getDeviceType().equals(DeviceType.STATIC_VIRTUAL_CARD)
+					&& "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
+				WebElementUtils.enterText(pinRetryLimitTxt, devicePlan.getPinRetryLimit());
+			}
+		}		
 
 		clickIframeNextButton();
-		SimulatorUtilities.wait(300);
-		clickIframeNextButton();
+		
+		if(devicePlan.DeviceType.equalsIgnoreCase("Limited Validity Virtual Card [8]")){
+			fillVirtualDeviceInfo(devicePlan);
+			clickIframeNextButton();			
+		}else{
+			clickIframeNextButton();
+		}
+		
 
 		if (DeviceType.EMV_CARD.equals(devicePlan.getDeviceType())
 				|| DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS.equals(devicePlan.getDeviceType())) {
@@ -1045,46 +1066,60 @@ public class DevicePlanPage extends AbstractBasePage {
 		generateCVVChk.click();
 		generateCVV2Chk.click();
 		// filling date when flag is fixed
-		if ("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
-			if(devicePlan.getProductType().equalsIgnoreCase("Credit [C]"))
+		if(!devicePlan.DeviceType.equalsIgnoreCase("Limited Validity Virtual Card [8]")){
+			if ("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
+				if(devicePlan.getProductType().equalsIgnoreCase("Credit [C]"))
+				{
+					enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
+					String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
+					devicePlan.setExpiryDate(dateInYYMM);
+					logger.info("Expiry date for device = {}",devicePlan.getExpiryDate());				
+				}
+				else
+				{
+					enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
+					// making necessary changes so that this value can be set in the
+					// required format so that it can be used when a pinless card is
+					// used
+					logger.info("Validity On Initial Months = {} ", devicePlan.getValidityOnInitialMonths());
+					String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
+					devicePlan.setExpiryDate(dateInYYMM);
+				}
+			} else {
+				enterIframeValidityOnInitialMonthsTxt(devicePlan.getValidityOnInitialMonths());
+			}
+			enableIframeCardProductionChkbx();
+
+			if (iframeEmbossingVendorDdwn.isEnabled()&& devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
 			{
-				enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
-				String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
-				devicePlan.setExpiryDate(dateInYYMM);
-				logger.info("Expiry date for device = {}",devicePlan.getExpiryDate());
+			  selectByVisibleText(iframeEmbossingVendorDdwn, devicePlan.getEmbossingVendor());
 			}
 			else
 			{
-			enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
-			// making necessary changes so that this value can be set in the
-			// required format so that it can be used when a pinless card is
-			// used
-			logger.info("Validity On Initial Months = {} ", devicePlan.getValidityOnInitialMonths());
-			String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
-			devicePlan.setExpiryDate(dateInYYMM);
+			 selectIframeEmbossingVendorDdwn(devicePlan.getEmbossingVendor());
 			}
-		} else {
-			enterIframeValidityOnInitialMonthsTxt(devicePlan.getValidityOnInitialMonths());
-		}
-		enableIframeCardProductionChkbx();
-
-		if (iframeEmbossingVendorDdwn.isEnabled()&& devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
-		{
-		  selectByVisibleText(iframeEmbossingVendorDdwn, devicePlan.getEmbossingVendor());
-		}
-		else
-		{
-		 selectIframeEmbossingVendorDdwn(devicePlan.getEmbossingVendor());
-		}
-		if (devicePlan.getFillRenewalSection().equalsIgnoreCase(STATUS_YES))
-			fillRenewalSection(devicePlan);
-		if (devicePlan.getFillReplacementSection().equalsIgnoreCase(STATUS_YES))
-			fillReplacementSection(devicePlan);
-		if (!devicePlan.getDeviceType().equals(DeviceType.STATIC_VIRTUAL_CARD))
-			fillPinGenerationSection(devicePlan);
+			if (devicePlan.getFillRenewalSection().equalsIgnoreCase(STATUS_YES))
+				fillRenewalSection(devicePlan);
+			if (devicePlan.getFillReplacementSection().equalsIgnoreCase(STATUS_YES))
+				fillReplacementSection(devicePlan);
+			if (!devicePlan.getDeviceType().equals(DeviceType.STATIC_VIRTUAL_CARD))
+				fillPinGenerationSection(devicePlan);
+		}		
 		clickIframeNextButton();
 	}
-
+	
+	private void fillVirtualDeviceInfo(DevicePlan devicePlan){		
+		enterPerTransactionLimit(devicePlan);
+		enterTotalTransactionLimit(devicePlan);		
+		enterVelocity(devicePlan);		
+		enterValidity(devicePlan);
+		enterVirtualCreditLimit(devicePlan);
+		//WebElementUtils.enterText(C, "7000");
+		//WebElementUtils.enterText(totalTransactionLimitTxt, "7000");
+		//WebElementUtils.enterText(perTransactionLimitTxt, "7000");
+		
+					
+	}
 	private String getValueInYYMMFormatForExpiryDate(String dateVal) {
 		// for format of date to be passed is YYMM .Ex: Input is 10-2022..
 		// output should be 2210

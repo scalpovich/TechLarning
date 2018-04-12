@@ -13,6 +13,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Cred
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -68,6 +69,7 @@ TestContext context;
 		switchToIframe(VERIFY_FRAME);
 		clickWhenClickable(verifyBtn);
 		verifyOperationStatus();
+		SimulatorUtilities.wait(5000);
 		String applicationNumber=getCodeFromInfoMessage("Application Number");
 		return applicationNumber;
 	}
