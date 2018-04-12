@@ -122,6 +122,12 @@ public class ProgramSetupSteps {
 
 	private static final String INTERCHANGE = "INTERCHANGE";
 
+	private static final String PLASTIC_ID_FOR_DEVICE2 = "PLASTIC_ID_FOR_DEVICE2";
+
+	private static final String PICTURE_CODE_FOR_DEVICE2 = "PICTURE_CODE_FOR_DEVICE2";
+
+	private static final String EMBOSSING_VENDOR_FOR_DEVICE2 = "EMBOSSING_VENDOR_FOR_DEVICE2";
+
 	@When("prepaid $deviceType device is available with balance amount")
 	@Given("prepaid $deviceType device is available with balance amount")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
@@ -527,6 +533,9 @@ public class ProgramSetupSteps {
 		devicePlan.setCardPackIdGenerationTemplate(provider.getString(CARD_PACKID_GENERATION_TEMPLATE_FOR_DEVICE2));
 		devicePlan.setDeviceIdGenerationTemplate(provider.getString(DEVICE_ID_GENERATION_TEMPLATE_FOR_DEVICE2));
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		devicePlan.setPlasticId(provider.getString(PLASTIC_ID_FOR_DEVICE2));
+		devicePlan.setPictureCode(provider.getString(PICTURE_CODE_FOR_DEVICE2));
+		devicePlan.setEmbossingVendor(provider.getString(EMBOSSING_VENDOR_FOR_DEVICE2));
 		devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
@@ -977,7 +986,7 @@ public class ProgramSetupSteps {
 	public void whenUserFillsDeviceRangeSection(String type) {
 		DeviceRange deviceRange;
 		if (type.equalsIgnoreCase(ProductType.CREDIT)) {
-			deviceRange = DeviceRange.createWithProvider(dataProvider,provider, type);
+			deviceRange = DeviceRange.createWithProvider(dataProvider, provider, type);
 		} else {
 			deviceRange = DeviceRange.createWithProvider(dataProvider, type);
 		}

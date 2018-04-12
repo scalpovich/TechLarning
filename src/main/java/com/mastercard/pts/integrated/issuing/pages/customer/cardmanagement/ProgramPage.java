@@ -462,6 +462,7 @@ public class ProgramPage extends AbstractBasePage {
 
 		clickNextButton();
 		selectWalletPlanPlan1(program.getFirstWalletPlan());
+		SimulatorUtilities.wait(1000);
 		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
 		if (!productType.equalsIgnoreCase(ProductType.DEBIT)) {
 			selectOtherPlanStatementMessagePlan(program.getOtherPlanStatementMessagePlan());
