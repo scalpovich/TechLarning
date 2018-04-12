@@ -143,6 +143,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:creditLimit:input:inputAmountField")
 	private MCWebElement creditLimitTxt;
+  
+  	@PageElement(findBy = FindBy.NAME, valueToFind = "view:legalId1:input:inputCodeField")
+	private MCWebElement legalIDTxt;
 
 	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
@@ -257,6 +260,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		logger.info("Wallet aaded :[%s]", walletLists[0]);
 		return walletLists[0];
 	}
+  
+  	private void fillEmploymentDetails(Device device){
+		WebElementUtils.enterText(legalIDTxt, device.getLegalID());			
+	}
 
 	private void fillBatchDetails(Device device) {
 		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
@@ -292,13 +299,16 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 		fillProfile(device);
 		
-		//Validate only when environment is demo
+		//Do not Validate only when environment is Automation
 		if(!System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)){
 			clickNextButton();
 		}
 		
 		fillAddress(device);
 		// skip employment details
+      	if(System.getProperty("env").equalsIgnoreCase("Demo")|| System.getProperty("env").contains("stage")){
+		fillEmploymentDetails(device);		
+		}
 		clickNextButton();
 		// Bank Details applicable only for Credit type product
 		clickNextButton();
