@@ -1,4 +1,4 @@
-prepaid msr retail travel card visa money transfer
+prepaid msr retail gift card visa money transfer
 
 Narrative:
 In order to provide to client easy-to-use multi-purpose prepaid card
@@ -6,7 +6,7 @@ As an issuer
 I want to create an magnetic stripe prepaid card and perform visa money transfer request
 
 Meta:
-@StoryName p_visa_msr_retail_travel_mwmc
+@StoryName p_visa_msr_retail_gift
 
 Scenario: 01. Set up prepaid msr corporate general purpose card from another institute
 Given user is logged in non-default institution
@@ -32,10 +32,10 @@ When user activates device through helpdesk
 And add menus to access card holder portal
 And user sign out from customer portal
 
-Scenario: 03. CHP - VMT
+Scenario: 03. CHP - VMT Offline
 Given user is on login page of cardholder portal
 And cardholder signup with valid details
-When VISA CHP Transaction is performed
+When VISA Offline CHP Transaction is performed
 Then Validate Response Message on CHP for VMT
 And user signs out from cardholder portal
 Then user is logged in institution
