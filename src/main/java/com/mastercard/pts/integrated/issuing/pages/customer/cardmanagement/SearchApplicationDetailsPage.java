@@ -17,6 +17,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManag
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
@@ -97,6 +98,7 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		WebElementUtils.pickDate(toDate, LocalDate.now());
 		clickSearchButton();
 		searchUntilBatchNumberIsDisplayed();
+		SimulatorUtilities.wait(5000);
 		return batchNumberTxt.getText();
 		
 	}

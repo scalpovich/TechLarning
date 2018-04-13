@@ -17,4 +17,4 @@ Then MAS test results are verified
 
 Examples:
 |transaction|
-|RECURRING_PUR_TXN_PIN|
+|MSR_PREAUTH|
