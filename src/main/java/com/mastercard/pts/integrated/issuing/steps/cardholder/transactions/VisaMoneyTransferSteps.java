@@ -33,7 +33,7 @@ public class VisaMoneyTransferSteps {
 	private TestContext context;
 
 	private String actualResult = "Transaction not executed!!!";
-	private static final String STATUS_MESSAGE = "Success";
+	private static final String STATUS_MESSAGE = "transaction is successful";
 
 	@When("VISA CHP Transaction is performed")
 	public void whenVisaChpTransactionIsPerformed() {

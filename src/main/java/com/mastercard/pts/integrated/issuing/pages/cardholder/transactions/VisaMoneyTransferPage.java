@@ -66,7 +66,7 @@ public class VisaMoneyTransferPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'VISA Fast Fund (Real Time)')]/../input[@type='radio']")
 	private MCWebElement visaFastFundRealTimeRadioBtn;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'VISA Fast Fund (Real Time)')]/../input[@type='radio']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'VISA Money Transfer (Offline)')]/../input[@type='radio']")
 	private MCWebElement visaMoneyTransferOfflineRadioBtn;
 
 	public void verifyUiOperationStatus() {
@@ -104,7 +104,9 @@ public class VisaMoneyTransferPage extends AbstractBasePage {
 
 	public String verifyResponse() {
 		waitForElementVisible(responseLbl);
-		return responseLbl.getText();
+		String msg = responseLbl.getText();
+		logger.info("Response Message on UI - {}", msg);
+		return msg;
 	}
 
 	@Override
