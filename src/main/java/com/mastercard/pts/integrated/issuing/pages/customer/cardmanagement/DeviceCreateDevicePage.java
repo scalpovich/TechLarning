@@ -146,6 +146,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
   
   	@PageElement(findBy = FindBy.NAME, valueToFind = "view:legalId1:input:inputCodeField")
 	private MCWebElement legalIDTxt;
+  	
+  	@PageElement(findBy = FindBy.NAME, valueToFind = "view:applicantProf:input:dropdowncomponent")
+	private MCWebElement professionDDwn;  	
 
 	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
@@ -264,6 +267,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
   	private void fillEmploymentDetails(Device device){
 		WebElementUtils.enterText(legalIDTxt, device.getLegalID());			
 	}
+  	
+  	private void selectProfessionByIndex(int index) {
+  		WebElementUtils.selectDropDownByIndex(professionDDwn, index);
+  	}
 
 	private void fillBatchDetails(Device device) {
 		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
@@ -296,18 +303,18 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	}
 
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
-
 		fillProfile(device);
-		
-		//Do not Validate only when environment is Automation
-		if(!System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)){
+
+		// Do not Validate only when environment is Automation
+		if (!System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)) {
 			clickNextButton();
 		}
-		
+
 		fillAddress(device);
 		// skip employment details
-      	if(System.getProperty("env").equalsIgnoreCase("Demo")|| System.getProperty("env").contains("stage")){
-		fillEmploymentDetails(device);		
+		if (System.getProperty("env").equalsIgnoreCase("Demo") || System.getProperty("env").contains("stage")) {
+			fillEmploymentDetails(device);
+			selectProfessionByIndex(1);
 		}
 		clickNextButton();
 		// Bank Details applicable only for Credit type product
