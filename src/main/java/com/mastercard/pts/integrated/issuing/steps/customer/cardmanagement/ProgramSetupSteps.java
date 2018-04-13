@@ -117,8 +117,17 @@ public class ProgramSetupSteps {
 	private static final String CARD_PACKID_GENERATION_TEMPLATE_FOR_DEVICE2 = "CARD_PACKID_GENERATION_TEMPLATE_FOR_DEVICE2";
 
 	private static final String DEVICE_ID_GENERATION_TEMPLATE_FOR_DEVICE2 = "DEVICE_ID_GENERATION_TEMPLATE_FOR_DEVICE2";
+	
+	private static final String PLASTIC_ID_FOR_DEVICE2 = "PLASTIC_ID_FOR_DEVICE2";
+	
+	private static final String PICTURE_CODE_FOR_DEVICE2 = "PICTURE_CODE_FOR_DEVICE2";
 
 	private static final String ISSUER_BIN_FOR_DEVICE2 = "ISSUER_BIN_FOR_DEVICE2";
+	
+	private static final String EMBOSSING_VENDOR_FOR_DEVICE2 = "EMBOSSING_VENDOR_FOR_DEVICE2";
+	
+	
+
 
 	private static final String INTERCHANGE = "INTERCHANGE";
 
@@ -696,7 +705,7 @@ public class ProgramSetupSteps {
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
-
+		devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
@@ -717,6 +726,10 @@ public class ProgramSetupSteps {
 		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
 		devicePlan.setCardPackIdGenerationTemplate(provider.getString(CARD_PACKID_GENERATION_TEMPLATE_FOR_DEVICE2));
 		devicePlan.setDeviceIdGenerationTemplate(provider.getString(DEVICE_ID_GENERATION_TEMPLATE_FOR_DEVICE2));
+		devicePlan.setPlasticId(provider.getString(PLASTIC_ID_FOR_DEVICE2));
+		devicePlan.setPictureCode(provider.getString(PICTURE_CODE_FOR_DEVICE2));		
+		devicePlan.setEmbossingVendor(provider.getString(EMBOSSING_VENDOR_FOR_DEVICE2));
+		devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
@@ -783,7 +796,6 @@ public class ProgramSetupSteps {
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
-
 		// setting a flag through setter to figure out if the card is pinless
 		// card or not. This is used in TransactionSteps to set ExpiryDate
 		// incase of PinLess Card
@@ -811,7 +823,7 @@ public class ProgramSetupSteps {
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
-
+		devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
 		// setting a flag through setter to figure out if the card is pinless
 		// card or not. This is used in TransactionSteps to set ExpiryDate
 		// incase of PinLess Card
