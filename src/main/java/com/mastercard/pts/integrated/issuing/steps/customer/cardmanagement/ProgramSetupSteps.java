@@ -825,7 +825,6 @@ public class ProgramSetupSteps {
 		program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
 		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
 		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
-//		program.setInterchange(provider.getString(INTERCHANGE));
 
 		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID))
 			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
