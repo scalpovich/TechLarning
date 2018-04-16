@@ -23,13 +23,10 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_APPLICATION,
-		CardManagementNav.L3_BUSINESS_MANDATORY_FIELDS })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_APPLICATION, CardManagementNav.L3_BUSINESS_MANDATORY_FIELDS })
 public class ApplicationBusinessMandatoryFieldsPage extends AbstractBasePage {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(ApplicationBusinessMandatoryFieldsPage.class);
+	private static final Logger logger = LoggerFactory.getLogger(ApplicationBusinessMandatoryFieldsPage.class);
 
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -48,19 +45,19 @@ public class ApplicationBusinessMandatoryFieldsPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[text()='Customer Type']/following-sibling::td//select")
 	private MCWebElement customerTypeDDwnOnMainScreen;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "select[name^=programCode]")
 	private MCWebElement programCodeDDwn;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[name^=bmfmSearchPanel]")
 	private MCWebElement searchBtn;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[name^='childPanels:1:childdataPanel:inlineTable:container:dataList:0:colList:colHeaders:2:inputField:checkBoxComponent']")
 	private MCWebElement checkBoxOneChk;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "selectAllFields:checkBoxComponent")
 	private MCWebElement selectAllFieldsChkBx;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='TransScrollY']//table[@class='dataview']//tr")
 	private MCWebElement mandatoryFieldsTable;
 
@@ -68,57 +65,48 @@ public class ApplicationBusinessMandatoryFieldsPage extends AbstractBasePage {
 		logger.info("Program Setup > Application > Business Mandatory Fields");
 		verifySearchButton("Search");
 	}
-	
+
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(
-				WebElementUtils.visibilityOf(customerTypeDDwnOnMainScreen),
-				WebElementUtils.visibilityOf(productTypeDDwnOnMainScreen));
+		return Arrays.asList(WebElementUtils.visibilityOf(customerTypeDDwnOnMainScreen), WebElementUtils.visibilityOf(productTypeDDwnOnMainScreen));
 	}
-	
-	public void selectMandatoryFields(String lst)
-	{
+
+	public void selectMandatoryFields(String lst) {
 		int rowCount = driver().findElements(By.xpath("//div[@class='TransScrollY']//table[@class='dataview']//tr")).size();
-		if (rowCount > 0)
-		{
+		if (rowCount > 0) {
 			String[] fields = lst.trim().split(",");
-			for (int i = 0; i < fields.length ; i++)
-			{
-				for (int j = 2; j <= rowCount; j++)
-				{
-					if (driver().findElement(By.xpath("//div[@class='TransScrollY']//table[@class='dataview']//tr["+j+"]/td[1]")).getText().equalsIgnoreCase(fields[i].trim()))
-					{
-						driver().findElement(By.xpath("//div[@class='TransScrollY']//table[@class='dataview']//tr["+j+"]/td[3]//input")).click();
+			for (int i = 0; i < fields.length; i++) {
+				for (int j = 2; j <= rowCount; j++) {
+					if (driver().findElement(By.xpath("//div[@class='TransScrollY']//table[@class='dataview']//tr[" + j + "]/td[1]")).getText().equalsIgnoreCase(fields[i].trim())) {
+						driver().findElement(By.xpath("//div[@class='TransScrollY']//table[@class='dataview']//tr[" + j + "]/td[3]//input")).click();
 						break;
 					}
-						
+
 				}
 			}
 		}
 	}
 
 	public void addBusinessMandatoryFields(ApplicationBusinessMandatoryFields applicationBusinessMandatoryFields) {
-		logger.info("Add Business Mandatory Fields: {}",	applicationBusinessMandatoryFields);		
-		
-			clickAddNewButton();
-			runWithinPopup("Add Business Mandatory Fields", () -> {
-				WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, applicationBusinessMandatoryFields.getProductType());
-				SimulatorUtilities.wait(2000);
-				WebElementUtils.selectDropDownByValue(customerTypeDDwn, applicationBusinessMandatoryFields.getCustomerType());
-				SimulatorUtilities.wait(2000);
-				WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, applicationBusinessMandatoryFields.getProgramCode());
-				clickOnElementWhenClickable(searchBtn);
-				selectMandatoryFields(applicationBusinessMandatoryFields.getMandatoryFields());
-				clickSaveButton();
-				
-				verifyNoErrors();
-			});
-			verifyOperationStatus();
+		logger.info("Add Business Mandatory Fields: {}", applicationBusinessMandatoryFields);
+
+		clickAddNewButton();
+		runWithinPopup("Add Business Mandatory Fields", () -> {
+			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, applicationBusinessMandatoryFields.getProductType());
+			SimulatorUtilities.wait(2000);
+			WebElementUtils.selectDropDownByVisibleText(customerTypeDDwn, applicationBusinessMandatoryFields.getCustomerType());
+			SimulatorUtilities.wait(2000);
+			WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, applicationBusinessMandatoryFields.getProgramCode());
+			clickOnElementWhenClickable(searchBtn);
+			selectMandatoryFields(applicationBusinessMandatoryFields.getMandatoryFields());
+			clickSaveButton();
+			verifyNoErrors();
+		});
+		verifyOperationStatus();
 	}
 
 	public Optional<String> getLabelMessage(WebElement ele) {
-		return getFinder().getWebDriver().findElements((By) ele).stream()
-				.map(WebElement::getText).findFirst();
+		return getFinder().getWebDriver().findElements((By) ele).stream().map(WebElement::getText).findFirst();
 	}
 
 	private void clickOnElementWhenClickable(MCWebElement element) {
