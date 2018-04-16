@@ -8,6 +8,7 @@ I want to create virtual corporate gift card prepaid card for client
 Meta:
 @StoryName S247705
 @SanityCards
+@UISanity
 
 Scenario: Set up prepaid virtual corporate gift card
 Meta:

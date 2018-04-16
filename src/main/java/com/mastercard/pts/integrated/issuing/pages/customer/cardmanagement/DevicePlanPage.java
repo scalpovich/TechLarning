@@ -980,7 +980,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES)) {
 			selectAllcvccvv();
 			// as of now, we do not need CVV check for MDFS pin change transactions
-			if(!getStoryName().toLowerCase().contains("pin_change"))
+			//if(!getStoryName().toLowerCase().contains("pin_change"))
 			checkCvcCvv();
 		}			
 		checkExpiryDate();		
