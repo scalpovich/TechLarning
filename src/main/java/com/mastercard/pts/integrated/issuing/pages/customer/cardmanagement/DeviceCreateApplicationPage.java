@@ -304,7 +304,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
 		if(device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT))
 		{
-			if(device.getApplicationType().equalsIgnoreCase("Supplementary Device [S]")){				
+			if(device.getApplicationType().equalsIgnoreCase("Supplementary Device [S]")||device.getApplicationType().equalsIgnoreCase(" Add-on Device [A]")){				
 				WebElementUtils.enterText(existingDeviceTxt, device.getDeviceNumber());
 			}else{
 				selectByVisibleText(customerTypeDDwn, device.getCustomerType());
