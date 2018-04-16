@@ -409,7 +409,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public boolean verifyCurrencySetupDoneCorrectly(HelpdeskGeneral helpdeskGeneral, Device device){
 		logger.info("verify added currecy for device number: {}", device.getDeviceNumber());
 		int count = 0;
-		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
+		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, helpdeskGeneral.getProductType());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
 		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded

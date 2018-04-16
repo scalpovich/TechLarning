@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.EmbossingFile;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.EmbossingFileFlows;
 
 @Component
@@ -24,6 +25,7 @@ public class EmbossingFileSteps {
 		embossingfile.setEmbossTemplateType(file);
 		String EmbossingTemplate = "";
 		EmbossingTemplate = embossingtemplateflows.createEmbossingTemplate(embossingfile);
+		SimulatorUtilities.wait(5000);
 		Assert.assertNotNull(EmbossingTemplate);
 		embossingfile.setEmbossingFileTemplateName(EmbossingTemplate);
 	}
