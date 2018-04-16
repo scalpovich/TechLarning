@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for prepaid msr retail travel mwmc card 
 
 Meta:
-@StoryName p_msr_retail_travel_mwmc
+@StoryName p_msr_retail_travel_mwmc_MMSR
 @MMSR
 
 Scenario: Setup multi-currency prepaid msr retail travel card and perfomr refund without pin authorization

@@ -6,7 +6,7 @@ As an issuer
 I want to create a prepaid MSR corporate gift card and test various scenarios
 
 Meta:
-@StoryName p_msr_corp_gift
+@StoryName p_msr_corp_gift_MMSR
 @MMSR
 Scenario: Setup - prepaid MSR corporate gift card without PIN
 Given user is logged in institution
