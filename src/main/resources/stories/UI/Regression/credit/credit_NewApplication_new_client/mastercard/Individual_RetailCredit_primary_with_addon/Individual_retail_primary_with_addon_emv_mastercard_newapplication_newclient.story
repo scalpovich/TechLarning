@@ -5,7 +5,7 @@ I want to assert pages
 
 Meta:
 CreditRegression
-@StoryName CNANC_IRA_NFCPAYPASS
+@StoryName EMV_MC
 			 
 Scenario:User is able to add Approval Score,Risk analysis for Credit Device SetUp and creates a Credit Device Using New Application
 Meta:
