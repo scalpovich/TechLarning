@@ -8,6 +8,7 @@ I want to create a EMV Retail Debit debit card for client
 Meta:
 @StoryName S190640
 @SanityCards
+@UISanity
 
 Scenario: Set up debit msr retail debit card pinless
 Meta:

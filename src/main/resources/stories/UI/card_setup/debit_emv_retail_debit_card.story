@@ -8,6 +8,7 @@ I want to set up a program for debit emv retail debit card
 Meta:
 @StoryName S190640
 @SanityCards
+@UISanity
 
 Scenario: Set up program for debit emv retail debit card
 Meta:

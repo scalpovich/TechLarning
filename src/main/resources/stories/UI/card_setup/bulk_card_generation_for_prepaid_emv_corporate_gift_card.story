@@ -9,6 +9,7 @@ Meta:
 @StoryName p_emv_corp_gift_bulk
 @oldReferenceSheet_S193810 
 @SanityCards
+@UISanity
 
 Scenario: bulk card generation for prepaid emv corporate gift card
 Meta:
@@ -20,4 +21,4 @@ And processes created bulk device generation request for prepaid
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
-Then pin offset file is generated sucessfully for prepaid
+Then Pin Offset file batch was generated successfully

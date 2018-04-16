@@ -9,6 +9,7 @@ Meta:
 @StoryName d_emv_corp
 @oldReferenceSheet_S198220
 @SanityCards
+@UISanity
 
 Scenario: 01 Set up EMV Corporate debit card
 Meta:

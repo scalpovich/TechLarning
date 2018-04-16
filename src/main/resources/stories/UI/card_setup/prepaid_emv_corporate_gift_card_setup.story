@@ -9,6 +9,7 @@ Meta:
 @StoryName p_emv_corp_gift
 @oldReferenceSheet_S203707
 @SanityCards
+@UISanity
 
 Scenario: Set up prepaid emv corporate giftcard card
 Meta:

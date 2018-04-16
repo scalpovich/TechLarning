@@ -98,6 +98,8 @@ public class Device {
 	private String isTransactionPinless;
 	private String expiryFlag;	
 	private String creditLimit;
+  	private String legalID;
+
 	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -123,8 +125,9 @@ public class Device {
 		device.setConfirmNewTransPassword(provider.getString(CHP_NEW_PASSWORD));	
 		device.setProductType(provider.getString(PRODUCT_TYPE));
 		device.setTransactionDateType(provider.getString(DATE_TYPE));
+      	device.setLegalID(RandomStringUtils.randomAlphanumeric(9));	
 		device.setProgramCode(provider.getString(PROGRAM_CODE));
-		device.setDevicePlan1(provider.getString(DEVICE_PLAN));
+		device.setDevicePlan1(provider.getString(DEVICE_PLAN));      	
 		return device;
 	}
 	
@@ -615,5 +618,13 @@ public class Device {
 
 	public void setApplicationNumber(String applicationNumber) {
 		this.applicationNumber = applicationNumber;
+	}
+  	
+  	public String getLegalID() {
+		return legalID;
+	}
+
+	public void setLegalID(String legalID) {
+		this.legalID = legalID;
 	}
 }
