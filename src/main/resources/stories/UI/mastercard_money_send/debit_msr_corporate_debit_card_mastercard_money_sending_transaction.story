@@ -6,7 +6,7 @@ As an issuer
 I want to create an magnetic stripe debit card and perform mastercard money send request
 
 Meta:
-@StoryName d_emv_corp
+@StoryName d_msr_corp
 
 Scenario: Set up debit msr corporate travel card from another institute
 Meta:

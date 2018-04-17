@@ -267,7 +267,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void launchWiniumAndSimulator(String simulator) {
 		launchRequiredSimulatorSession(simulator); // to fetch required Simulator installed on the machine or read value from WhichSimulatorVersionToChoose.java
-													
 		closeSimulator(simulator);
 
 		try {
@@ -821,7 +820,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			winiumDriver.findElement(By.name("OK")).click();
 		}
 		wait(15000);
-		
 	}
 
 	public void selectLicenseAndConfigure(String licenseTypeToSelect, String licenseFor) {
@@ -1084,15 +1082,22 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void closeSimulator(String name) {
 		winiumDriver = null;
-		
-		if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_18)){
-			name = "MAS18";
+
+		if(name.equalsIgnoreCase("MAS")){
+			if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_18)){
+				name = "MAS18";
+			}
+			else if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_17)){
+				name = "MAS17";
+			}
 		}
-		else if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_17)){
-			name = "MAS17";
-		}
-		if (SimulatorConstantsData.MDFS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_17)){
-			name = "MDFS17";
+		else if(name.equalsIgnoreCase("MDFS")){
+			if (SimulatorConstantsData.MDFS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_18)){
+				name = "MDFS18";
+			}
+			else if (SimulatorConstantsData.MDFS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_17)){
+				name = "MDFS17";
+			}
 		}
 		if ("visa".equalsIgnoreCase(name)) {
 			disconnectAndCloseVts();
