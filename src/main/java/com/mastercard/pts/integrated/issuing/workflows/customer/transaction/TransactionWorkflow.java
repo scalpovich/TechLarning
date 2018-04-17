@@ -1519,10 +1519,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(5000);
 		executeAutoITExe("vtsVariableManagerLoadExcelTestDataFile.exe" + SEPERATOR + vtsTestGroupInputFilePath + "\"");
 		executeAutoITExe("VTSHandleVariablesManager.exe");
-		/*System.out.println(winiumDriver.findElements(By.name("File")).size());
-		winiumDriver.findElement(By.name("File")).click();
-		wait(2000);
-		winiumClickOperation("Exit");*/
 	}
 
 	private void loadVisaTestGroupTemplate() {
