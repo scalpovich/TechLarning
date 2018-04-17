@@ -1092,7 +1092,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			}
 		}
 		else if(name.equalsIgnoreCase("MDFS")){
-			if (SimulatorConstantsData.MDFS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_17)){
+			if (SimulatorConstantsData.MDFS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_18)){
+				name = "MDFS18";
+			}
+			else if (SimulatorConstantsData.MDFS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_17)){
 				name = "MDFS17";
 			}
 		}
