@@ -632,10 +632,10 @@ public class HelpDeskSteps {
 		
 		if(Integer.parseInt(context.get(CreditConstants.QUANTITY_REQUESTED))>1){
 			
-			List<WebElement> devices = context.get(CreditConstants.DEVICE_NUMBER);
+			List<String> devices = context.get(CreditConstants.DEVICE_NUMBER);
 		
-			for(WebElement ele : devices){
-				helpdeskgettersetter.setDeviceNumber(ele.getText());
+			for(String ele : devices){
+				helpdeskgettersetter.setDeviceNumber(ele);
 				actualStatus = helpdeskFlows.searchForNewApplication(helpdeskgettersetter);
 			}
 			

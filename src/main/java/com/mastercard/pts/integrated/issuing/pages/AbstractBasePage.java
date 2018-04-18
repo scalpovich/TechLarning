@@ -373,9 +373,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 		List<String> devices = new ArrayList<String>();
 		
 		for(int i = 1; i<=Integer.parseInt(count) ;i++){
-			clickWhenClickable(Element("//table[@class='dataview']/tbody/tr["+i+"]/td[7]"));
 			devices.add(Element("//table[@class='dataview']/tbody/tr["+i+"]/td[2]").getText());
-		}		
+		}
+		
+		for(String dev: devices){
+			clickWhenClickable(Element("//*[contains(text(),'"+dev+"')]/..//following-sibling::td/..//input"));
+		}
+		
 		context.put(CreditConstants.DEVICE_NUMBER,devices);
 	}
 
