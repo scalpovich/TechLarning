@@ -96,7 +96,7 @@ public class BatchSteps {
 		MiscUtils.reportToConsole("******** Pin Offset Start ***** " );
 		String[] values = null;
 		DevicePlan tempdevice = context.get(ContextConstants.DEVICE_PLAN);
-		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevice.getDevicePlanCode(), tempDirectory.toString(), "PIN");
+		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevice.getDevicePlanCode(), tempDirectory.toString(), "PIN_PROD");
 		Device device = context.get(ContextConstants.DEVICE);
 		try(Scanner scanner = new Scanner(batchFile)){
 			while(scanner.hasNext()){

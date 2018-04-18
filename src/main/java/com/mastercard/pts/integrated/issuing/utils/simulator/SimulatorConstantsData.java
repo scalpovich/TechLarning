@@ -34,7 +34,7 @@ public class SimulatorConstantsData {
 	// MAS & MDFS LICENSE SELECTION _______________________________________
 	public static final String SELECT_MAS_LICENSE = "Credit - Professional";
 	public static final String SELECT_MDFS_LICENSE = "Debit - Professional";
-	public static String MAS_LICENSE_TYPE = "MAS 18.Q2"; // need to modify this
+	public static String MAS_LICENSE_TYPE = "MAS 16.Q2"; // need to modify this
 	public static String MDFS_LICENSE_TYPE = "MAS 16.4"; // need to modify this
 	// _________________________________________________________________________
 
