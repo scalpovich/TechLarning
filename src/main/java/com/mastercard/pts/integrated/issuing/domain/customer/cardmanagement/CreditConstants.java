@@ -39,7 +39,12 @@ public class CreditConstants {
 	
 	public static final String JSON_VALUES="JSON_VALUES";
 	
+	public static final String DEVICE_NUMBER_ADDON="DEVICE_NUMBER_ADDON";
+	
+	public static final String QUANTITY_REQUESTED = "QUANTITY_REQUESTED";
+	
 	public static final String VENDOR_BRANCH="VENDOR_BRANCH";
+
 
 	private CreditConstants() {
 	}

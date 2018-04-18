@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -14,6 +15,7 @@ import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.junit.Assert;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
@@ -623,8 +626,21 @@ public class HelpDeskSteps {
 	@When("User search for new application on search screen for $productType and validates the status as $NORMAL")
 	public void thenUserSearchForApplicationOnSearchScreen(String productType, String status) {
 		helpdeskgettersetter.setProductType(ProductType.fromShortName(productType));
-
-		String actualStatus = helpdeskFlows.searchForNewApplication(helpdeskgettersetter);
+		String actualStatus = null;
+		
+		if(Integer.parseInt(context.get(CreditConstants.QUANTITY_REQUESTED))>1){
+			
+			List<WebElement> devices = context.get(CreditConstants.DEVICE_NUMBER);
+		
+			for(WebElement ele : devices){
+				helpdeskgettersetter.setDeviceNumber(ele.getText());
+				actualStatus = helpdeskFlows.searchForNewApplication(helpdeskgettersetter);
+			}
+			
+		}else{
+			actualStatus = helpdeskFlows.searchForNewApplication(helpdeskgettersetter);
+		}
+		
 		if (actualStatus.contains(status)) {
 			Assert.assertTrue("status of newly created device is normal ", true);
 		} else {

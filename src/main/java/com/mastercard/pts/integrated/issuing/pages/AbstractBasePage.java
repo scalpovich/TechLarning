@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import org.apache.bcel.generic.INEG;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
@@ -30,6 +31,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.server.handler.FindElements;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -139,6 +141,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody input[type='checkbox']")
 	private MCWebElement firstRowSelectLink;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody input[type='checkbox']")
+	private MCWebElements firstRowSelectLinks;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Next >']")
 	private MCWebElement nextBtn;
@@ -341,6 +346,17 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void selectFirstRecord() {
 		clickWhenClickable(firstRowSelectLink);
+	}
+	
+	protected void selectAllRecords(){
+		String count = context.get(CreditConstants.QUANTITY_REQUESTED);
+		List<String> devices = new ArrayList<String>();
+		
+		for(int i = 1; i<=Integer.parseInt(count) ;i++){
+			clickWhenClickable(Element("//table[@class='dataview']/tbody/tr["+i+"]/td[7]"));
+			devices.add(Element("//table[@class='dataview']/tbody/tr["+i+"]/td[2]").getText());
+		}		
+		context.put(CreditConstants.DEVICE_NUMBER,devices);
 	}
 
 	protected void clicksearchButtonElement() {
@@ -626,14 +642,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void waitAndSearchForRecordToExist() {
 		waitAndSearchForRecordToAppear();
-		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());		
-		Device device  = context.get(CreditConstants.APPLICATION);
-		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
-		
-		System.out.println("****"+ context.get(CreditConstants.DEVICE_NUMBER));
-		selectFirstRecord();
+		String count = context.get(CreditConstants.QUANTITY_REQUESTED);
+		if(Integer.parseInt(count) > 1){			
+			selectAllRecords();			
+		}else{
+			context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
+			selectFirstRecord();
+		}
 		clickProcessSelectedButton();
-	}
+	}	
 
 	protected void waitForBatchStatus() {
 		try {
@@ -1147,7 +1164,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void clickWhenClickable(WebElement element) {
-		waitForElementVisible(element);
+		SimulatorUtilities.wait(900);
+		waitForElementVisible(element);		
 		new WebDriverWait(driver(), TIMEOUT).until(ExpectedConditions.elementToBeClickable(element)).click();
 		waitForWicket(driver());
 	}
