@@ -2,8 +2,11 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Vendor;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -12,6 +15,7 @@ import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
@@ -22,6 +26,8 @@ public class VendorPage extends AbstractBasePage {
 
 	// ------------- Card Management > Institution Parameter Setup > Institution
 	// Currency [ISSS05]
+	@Autowired
+	TestContext context;
 
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement AddVendorBtn;
@@ -88,6 +94,9 @@ public class VendorPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
 	private MCWebElement CancelBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[contains(@name,'branchCode')]/option[text()!='Select One']")
+	private MCWebElements branchDDwnList; 
 
 	public void clickaddVenor() {
 		clickWhenClickable(AddVendorBtn);
@@ -122,6 +131,11 @@ public class VendorPage extends AbstractBasePage {
 
 	public void selectBranchCode(Vendor vendor) {
 		BranchDDwn.getSelect().selectByIndex(1);
+		context.put(CreditConstants.VENDOR_BRANCH,branchDDwnList.getElements().get(0).getText());
+		String branch=context.get(CreditConstants.VENDOR_BRANCH);
+		String[]branchCode=branch.split("\\[");
+		String branchCodeFirst=branchCode[1].substring(0, branchCode[1].length()-1);
+		vendor.setBranchCode(branchCodeFirst);
 	}
 
 	public void selectDeviceProductionCheckBox() {
