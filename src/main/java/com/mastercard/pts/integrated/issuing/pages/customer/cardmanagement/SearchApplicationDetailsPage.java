@@ -97,8 +97,8 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDate, LocalDate.now());
 		clickSearchButton();
-		searchUntilBatchNumberIsDisplayed();
 		SimulatorUtilities.wait(5000);
+		searchUntilBatchNumberIsDisplayed();		
 		return batchNumberTxt.getText();
 		
 	}
