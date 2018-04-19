@@ -197,7 +197,7 @@ public class AccountHeadMappingPage extends AbstractBasePage {
 	}
 
 	public void selectTransactionAsCardFees() {
-		SelectDropDownByText(this.transactionCode, cardFees);
+		selectDropDownByText(this.transactionCode, cardFees);
 	}
 
 	public void addDuplicateAccountHeadMapping() {
@@ -206,13 +206,13 @@ public class AccountHeadMappingPage extends AbstractBasePage {
 		waitForElementVisible(transactionCode);
 		String transactionCodeValue = MapUtils
 				.fnGetInputDataFromMap("Transaction Code");
-		SelectDropDownByText(this.transactionCode, transactionCodeValue);
+		selectDropDownByText(this.transactionCode, transactionCodeValue);
 		if (transactionCodeValue.toLowerCase().contains("card fees [21]")) {
 			CustomUtils.ThreadDotSleep(2000);
-			SelectDropDownByText(this.feeReasonCode,
+			selectDropDownByText(this.feeReasonCode,
 					MapUtils.fnGetInputDataFromMap("Fee Reason Code"));
 		}
-		SelectDropDownByText(this.accountHead,
+		selectDropDownByText(this.accountHead,
 				MapUtils.fnGetInputDataFromMap("Account Head"));
 		saveBtn.click();
 	}
@@ -224,7 +224,7 @@ public class AccountHeadMappingPage extends AbstractBasePage {
 	 * 
 	 */
 	public void searchAccountHeadOnAccountHeadMapping(String search) {
-		SelectDropDownByText(accountHeadSearch, search);
+		selectDropDownByText(accountHeadSearch, search);
 		searchBtn.click();
 	}
 
@@ -252,11 +252,11 @@ public class AccountHeadMappingPage extends AbstractBasePage {
 						.findElement(
 								By.name("searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")));
 		sel.selectByVisibleText(transactionCodeValue);
-		SelectDropDownByText(searchTransactionCode, transactionCodeValue);
+		selectDropDownByText(searchTransactionCode, transactionCodeValue);
 		if (transactionCodeValue.toLowerCase().contains("card fees"))
-			SelectDropDownByText(searchFeeReasonCode,
+			selectDropDownByText(searchFeeReasonCode,
 					MapUtils.fnGetInputDataFromMap("Fee Reason Code"));
-		SelectDropDownByText(searchAccountHead,
+		selectDropDownByText(searchAccountHead,
 				MapUtils.fnGetInputDataFromMap("Account Head"));
 		searchBtn.click();
 	}
@@ -405,7 +405,7 @@ public class AccountHeadMappingPage extends AbstractBasePage {
 								.findElement(
 										By.name("transactionCode:input:dropdowncomponent")));
 				select.selectByVisibleText(option);
-				SelectDropDownByText(this.accountHead, accountHead);
+				selectDropDownByText(this.accountHead, accountHead);
 				saveBtn.click();
 
 				if (!isElementPresent(getErrorMessageText())) {
@@ -423,9 +423,9 @@ public class AccountHeadMappingPage extends AbstractBasePage {
 
 	public void retryAddAccountHeadMappingCardFees(String accountHead) {
 		switchToAddAccountHeadMapping();
-		SelectDropDownByText(this.transactionCode, cardFees);
+		selectDropDownByText(this.transactionCode, cardFees);
 		MapUtils.fnSetInputDataToInputMap("Transaction Code", cardFees);
-		SelectDropDownByText(this.accountHead, accountHead);
+		selectDropDownByText(this.accountHead, accountHead);
 		MapUtils.fnSetInputDataToInputMap("Account Head", accountHead);
 		waitForElementVisible(feeReasonCode);
 		if (feeReasonCode.isEnabled()) {

@@ -127,7 +127,7 @@ public class SurchargePlanPage extends AbstractBasePage {
 	}
 
 	public void selectCurrency(SurchargePlan plan) {
-		SelectDropDownByText(currencyDDwn, plan.getCurrency());
+		selectDropDownByText(currencyDDwn, plan.getCurrency());
 	}
 
 	public void selectSurchargeSource(SurchargePlan plan) {
@@ -167,11 +167,11 @@ public class SurchargePlanPage extends AbstractBasePage {
 	}
 
 	public void selectInterchange(SurchargePlan plan) {
-		SelectDropDownByText(interchangeDDwn, plan.getInterchange());
+		selectDropDownByText(interchangeDDwn, plan.getInterchange());
 	}
 
 	public void selectMCG(SurchargePlan plan) {
-		SelectDropDownByText(mcgDDwn, plan.getMcg());
+		selectDropDownByText(mcgDDwn, plan.getMcg());
 	}
 
 	public void pickEffectiveDate(SurchargePlan plan) {

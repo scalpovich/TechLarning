@@ -67,11 +67,11 @@ public class BulkDeviceRequestPage extends AbstractBasePage {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		ClickButton(addBulkDeviceRequestBtn);
 		switchToIframe(Constants.ADD_BULK_DEVICE_REQUEST_FRAME);
-		SelectDropDownByText(ProductTypeDDwn, productType);
+		selectDropDownByText(ProductTypeDDwn, productType);
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		SelectDropDownByIndex(BranchDDwn, 1);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByText(ProgramTypeDDwn, program);
+		selectDropDownByText(ProgramTypeDDwn, program);
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		SelectDropDownByIndex(CorporateClientCodeDDwn, 1);
 		addWicketAjaxListeners(getFinder().getWebDriver());

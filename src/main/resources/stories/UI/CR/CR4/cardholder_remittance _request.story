@@ -1,9 +1,7 @@
-!-- auther: e076168
 Narrative:
 As a Cardhodler user
 I want to able to loing into customer portal 
 In order to create Remittance request
-
 
 Meta:
 @StoryName REMITTANCE_REQUEST

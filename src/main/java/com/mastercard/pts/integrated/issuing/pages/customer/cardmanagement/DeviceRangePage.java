@@ -323,7 +323,7 @@ public class DeviceRangePage extends AbstractBasePage {
 	public void configureDeviceranges(String prodType) {
 		ClickButton(AddDeviceRangeBtn);
 		switchToIframe(Constants.ADD_DEVICE_RANGE_FRAME);
-		SelectDropDownByText(ProductTypeDDwn, prodType);
+		selectDropDownByText(ProductTypeDDwn, prodType);
 		addWicketAjaxListeners(driver());
 		SelectDropDownByIndex(ProgramDDwn, 1);
 		addWicketAjaxListeners(driver());
