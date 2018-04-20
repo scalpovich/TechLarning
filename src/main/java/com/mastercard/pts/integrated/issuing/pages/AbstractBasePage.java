@@ -624,7 +624,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void waitAndSearchForRecordToExist() {
 		waitAndSearchForRecordToAppear();
-		Device device = new Device();
+		Device device = context.get(ContextConstants.DEVICE);
 		device.setDeviceNumber(deviceNumberFetch.getText());
 		context.put(ContextConstants.DEVICE, device);
 		selectFirstRecord();
