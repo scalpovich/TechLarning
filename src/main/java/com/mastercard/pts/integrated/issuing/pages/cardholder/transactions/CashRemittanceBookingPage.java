@@ -218,7 +218,6 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 		enterBeneficiaryEmailAddress(cardhlTran.getBeneficiaryEmailAddress());
 		enterBeneficiaryMobileNumber(cardhlTran.getBeneficiaryMobileNumber());
 		enterRemittanceAmount(cardhlTran.getBeneficiaryRemittanceAmount());
-//		enterRemittanceCurrency(cardhlTran.getBeneficiaryRemittanceCurrency());
 		return submitRemittanceRequst(cardhlTran);
 	}
 	
