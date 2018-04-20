@@ -39,5 +39,5 @@ When VISA CHP Transaction is performed
 Then Validate Response Message on CHP for VMT
 And user signs out from cardholder portal
 Then user is logged in institution
-Then search Visa Money Transfer authorization and verify 000-Successful status
+Then search RVMT - Sending/ Funding authorization and verify 000-Successful status
 And user sign out from customer portal
