@@ -25,7 +25,7 @@ Then user should be able to create new institute
 
 Scenario:2 New user creation prepaid
 Meta:
-@TCName TCInstituteCreation`
+@TCName TCInstituteCreationPR
 @testDataFileName testdata
 @sheetName Institute
 @PrepaidUserCreation
@@ -50,7 +50,7 @@ Then user should be able to create new institute
 
 Scenario:4 New user creation prepaid
 Meta:
-@TCName TCInstituteCreationPR
+@TCName TCInstituteCreationDC
 @testDataFileName testdata
 @sheetName Institute
 @DebitUserCreation
@@ -104,7 +104,7 @@ Meta:
 @DebitPrepaidUserCreation
 
 Given login to bank as a Bankadmin
-When user enters details to create new user
+When user enter details to create new user
 Then user should be able to create new user
 And user sign out from customer portal
 
