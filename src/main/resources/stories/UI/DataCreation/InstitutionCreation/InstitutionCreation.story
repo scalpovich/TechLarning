@@ -160,7 +160,7 @@ Scenario:13 New Institution creation All Prepaid Credit Debit
 
 Meta:
 @TCName TCInstituteCreationAll
-@testDataFileName testdata
+@testDataFileName Testdata
 @sheetName Institute
 @InstitutionCreationWithAll
 
