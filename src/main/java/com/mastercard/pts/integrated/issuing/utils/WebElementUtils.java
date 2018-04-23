@@ -331,7 +331,7 @@ public class WebElementUtils {
 
 	}
 
-	public static void selectRadioIfNotSelected(MCWebElement radioButton) {
+	public static void selectRadioBtn(MCWebElement radioButton) {
 		if (!radioButton.isSelected())
 			radioButton.click();
 	}

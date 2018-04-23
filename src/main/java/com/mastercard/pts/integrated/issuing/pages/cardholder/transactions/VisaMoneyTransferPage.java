@@ -82,7 +82,7 @@ public class VisaMoneyTransferPage extends AbstractBasePage {
 		WebElementUtils.enterText(beneficiaryCardNumberTxt, device.getDeviceNumber());
 		WebElementUtils.enterText(transferAmountTxt, vmt.getTransferAmount());
 		WebElementUtils.selectDropDownByVisibleText(currencyOfTransferDDwn, vmt.getCurrencyOfTransfer());
-		WebElementUtils.selectRadioIfNotSelected(visaFastFundRealTimeRadioBtn);
+		WebElementUtils.selectRadioBtn(visaFastFundRealTimeRadioBtn);
 		clickSubmitButton();
 	}
 
@@ -90,7 +90,7 @@ public class VisaMoneyTransferPage extends AbstractBasePage {
 		WebElementUtils.enterText(beneficiaryCardNumberTxt, device.getDeviceNumber());
 		WebElementUtils.enterText(transferAmountTxt, vmt.getTransferAmount());
 		WebElementUtils.selectDropDownByVisibleText(currencyOfTransferDDwn, vmt.getCurrencyOfTransfer());
-		WebElementUtils.selectRadioIfNotSelected(visaMoneyTransferOfflineRadioBtn);
+		WebElementUtils.selectRadioBtn(visaMoneyTransferOfflineRadioBtn);
 		clickSubmitButton();
 	}
 

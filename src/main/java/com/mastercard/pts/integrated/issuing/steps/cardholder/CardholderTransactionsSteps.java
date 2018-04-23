@@ -42,7 +42,7 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 	private CardHolderTransactions cardhlTran;
 	private static final String REMITTANCE_ERROR_MSG = "Error while processing your request. Please retry. OK";
 	private static final String REMITTANCE_SUCCESS_MSG = "Remittance request created";
-	private static final int lengthOfWalletNumber = 19;
+	private static final int LENGHT_OF_WALLET_NUMBER = 19;
 
 	@When("cardholder book the cash remittance")
 	public void cardholderBookCashRemittance() {
@@ -105,7 +105,7 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 		cardhlTran = CardHolderTransactions.cardHolderTransDataProvider(provider);
 		context.put(ContextConstants.CARDHOLDER, cardhlTran);
 		Device device = context.get(ContextConstants.DEVICE);
-		cardhlTran.setWalletToAmountTransfer(device.getNewWalletNumber().substring(lengthOfWalletNumber));
+		cardhlTran.setWalletToAmountTransfer(device.getNewWalletNumber().substring(LENGHT_OF_WALLET_NUMBER));
 		cardhlTran.setCardNumber(device.getDeviceNumber());
 		transactionFlow.openTransactionPage();
 		transactionFlow.selectWalletToWalletOption();
