@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -30,12 +31,38 @@ public class InstitutionLoadCurrencyPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=description]")
 	private MCWebElement description;
 	
+	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
+	private MCWebElement addLoadCurrencyBtn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "currencyCode:input:dropdowncomponent")
+	private MCWebElement selectCurrencyDdwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
+	private MCWebElement saveBtn;
+	
+	
 	
 
 	public void verifyUiOperationStatus() {
 		logger.info("Allowed Load Currency");
 		verifyUiOperation("Add Allowed Load Currency");
 	}
+	public void clickAddcurrency(){
+		clickWhenClickable(addLoadCurrencyBtn);
+		switchToAddLoadCurrency();
+	}
+	
+	public void addCurrencyDetails(String currency){
+		selectByVisibleText(selectCurrencyDdwn,currency);
+		waitForLoaderToDisappear();
+		clickWhenClickable(saveBtn);
+		
+	}
+	public void switchToAddLoadCurrency() {
+		addWicketAjaxListeners(driver());
+		switchToIframe(Constants.ADD_ALLOWED_LOAD_CURRENCY);
+	} 
+	
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

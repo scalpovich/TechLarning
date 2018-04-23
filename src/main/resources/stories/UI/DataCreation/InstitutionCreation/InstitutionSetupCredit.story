@@ -15,7 +15,8 @@ Meta:
 @TCName AmexInstituionSetup
 @sheetName S205014
 
-Given login to portal as existing bank as a Customeruser 
+Given login to portal as existing bank as a Customeruser
+When user creates Allowed Load Currency for INR
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
 When user creates a Network MemberShip for Mastercard
 When user creates a Transaction Registration
@@ -27,7 +28,7 @@ When user creates a Plastic Code
 When user creates Picture Code
 When user creates Device BIN for Mastercard for product Credit for BinType as Dual Message Type
 When user creates HSM Device Keys for Mastercard
-When user creates HSM ZPK Network Keys for Mastercard(DMS)
+When user creates HSM ZPK Network Keys for Mastercard(CIS)
 When user creates MDK keys for Mastercard
 When user creates MCG
 When user creates Dedupe Plan
@@ -101,7 +102,7 @@ When user creates a Plastic Code
 When user creates Picture Code
 When user creates Device BIN for Rupay for product Credit for BinType as Dual Message Type
 When user creates HSM Device Keys for Rupay
-When user creates HSM ZPK Network Keys for Rupay(DMS)
+When user creates HSM ZPK Network Keys for RPY
 When user creates MDK keys for Rupay
 When user creates MCG
 When user creates Dedupe Plan

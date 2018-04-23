@@ -17,6 +17,7 @@ Meta:
 
 
 Given login to portal as existing bank as a Customeruser
+When user creates Allowed Load Currency for INR
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
 When user creates a Network MemberShip for Mastercard
 When user creates a Transaction Registration
@@ -53,6 +54,7 @@ Meta:
 @TCName TC264306_Embossing File Generation
 @sheetName S205014
 Given login to portal as existing bank as a Customeruser
+When user creates Allowed Load Currency for INR
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
 When user creates a Network MemberShip for Visa
 When user creates a Transaction Registration
@@ -89,6 +91,7 @@ Meta:
 @TCName TC264306_Embossing File Generation
 @sheetName S205014
 Given login to portal as existing bank as a Customeruser
+When user creates Allowed Load Currency for INR
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
 When user creates a Network MemberShip for RUPAY
 When user creates a Transaction Registration

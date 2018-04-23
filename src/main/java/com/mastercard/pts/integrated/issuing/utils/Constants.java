@@ -433,5 +433,6 @@ public class Constants {
 	public static final String ENVIRONMENT = "automation";
 	public static final String COLUMN_NAME = "Status";
 	public static final int TABLE_ROW_NUM = 1;
+	public static final String ADD_ALLOWED_LOAD_CURRENCY = "Add Allowed Load Currency";
 
 }
