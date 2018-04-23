@@ -96,8 +96,7 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
 		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDate, LocalDate.now());
-		clickSearchButton();
-		SimulatorUtilities.wait(5000);
+		clickSearchButton();		
 		searchUntilBatchNumberIsDisplayed();		
 		return batchNumberTxt.getText();
 		
@@ -111,7 +110,7 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		try
 		{
 			if(!driver().findElement(By.xpath("//table[@class='dataview']//tr[@class!='headers']/td[5]/span")).isDisplayed())
-			{
+			{	SimulatorUtilities.wait(8000);
 				clickSearchButton();
 				waitForPageToLoad(driver());
 				searchUntilBatchNumberIsDisplayed();
