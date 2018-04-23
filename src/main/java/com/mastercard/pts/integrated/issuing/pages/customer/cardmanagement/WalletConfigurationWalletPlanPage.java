@@ -155,10 +155,10 @@ private TestContext context;
 			String productType = walletPlan.getProductType();
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
 			inputDescription(walletPlan.getDescription());
-			selectCurrency(walletPlan.getCurrency());
 			selectProductType(productType);
 			selectProgramType(walletPlan.getProgramType());
 			selectUsage(walletPlan.getUsage());
+			selectCurrency(walletPlan.getCurrency());
 
 			fillDetailsBasedOnCardType(walletPlan, productType);
 
