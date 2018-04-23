@@ -308,7 +308,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	private MCWebElement agentEmailTxt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "adaptiveEcommFlag:input:dropdowncomponent")
-	private MCWebElement adaptiveEcommFlagDwn;
+	private MCWebElement adaptiveEcommFlagDDwn;
 	
 	public static final String ATTRIBUTE_VALUE =  "value";
 
@@ -338,7 +338,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public void checkPrepaid() {
-		selectCheckBox(prepaidChkBx, "Prepaid");
+		WebElementUtils.checkCheckbox(prepaidChkBx, true);
 	}
 
 	public void selectInstitutionCurrency(InstitutionCreation institute) {
@@ -826,6 +826,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 			if (institutionType[0].equalsIgnoreCase(Constants.PREPAID)
 					|| institutionType[1].equalsIgnoreCase(Constants.PREPAID)) {
 				checkPrepaid();
+				
 			}
 			if (institutionType[0].equalsIgnoreCase(Constants.CREDIT)
 					|| institutionType[1].equalsIgnoreCase(Constants.CREDIT)) {
@@ -896,7 +897,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 	
 	public void selectACSVendor(InstitutionCreation institution) {
-		WebElementUtils.selectDropDownByVisibleText(adaptiveEcommFlagDwn, institution.getAdaptiveAuthentication());
+		WebElementUtils.selectDropDownByVisibleText(adaptiveEcommFlagDDwn, institution.getAdaptiveAuthentication());
 	}
 
 	public void enterNewInstitution(InstitutionCreation institution) {

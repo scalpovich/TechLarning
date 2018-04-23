@@ -20,7 +20,7 @@ Meta:
 @PrepaidInstitutionCreation
 
 Given login to bank as a Bankadmin
-When user enter details to create new Prepaid Institution
+When user enters details to create new Prepaid Institution
 Then user should be able to create new institute
 
 Scenario:2 New user creation prepaid
@@ -45,7 +45,7 @@ Meta:
 @DebitInstitutionCreation
 
 Given login to bank as a Bankadmin
-When user enter details to create new Debit Institution
+When user enters details to create new Debit Institution
 Then user should be able to create new institute
 
 Scenario:4 New user creation prepaid
@@ -69,7 +69,7 @@ Meta:
 @CreditInstitutionCreation
 
 Given login to bank as a Bankadmin
-When user enter details to create new Credit Institution
+When user enters details to create new Credit Institution
 Then user should be able to create new institute
 
 Scenario:6 New user creation credit
@@ -93,7 +93,7 @@ Meta:
 @DebitPrepaidInstitutionCreation
 
 Given login to bank as a Bankadmin
-When user enter details to create new Debit-Prepaid Institution
+When user enters details to create new Debit-Prepaid Institution
 Then user should be able to create new institute
 
 Scenario:8 New user creation Debit Prepaid
@@ -104,7 +104,7 @@ Meta:
 @DebitPrepaidUserCreation
 
 Given login to bank as a Bankadmin
-When user enter details to create new user
+When user enters details to create new user
 Then user should be able to create new user
 And user sign out from customer portal
 
@@ -117,7 +117,7 @@ Meta:
 @CreditPrepaidInstitutionCreation
 
 Given login to bank as a Bankadmin
-When user enter details to create new Credit-Prepaid Institution
+When user enters details to create new Credit-Prepaid Institution
 Then user should be able to create new institute
 
 Scenario:10 New user creation Credit Prepaid
@@ -141,7 +141,7 @@ Meta:
 @CreditDebitInstitutionCreation
 
 Given login to bank as a Bankadmin
-When user enter details to create new Credit-Debit Institution
+When user enters details to create new Credit-Debit Institution
 Then user should be able to create new institute
 
 Scenario:12 New user creation Debit Credit
@@ -165,7 +165,7 @@ Meta:
 @InstitutionCreationWithAll
 
 Given login to bank as a Bankadmin
-When user enter details to create new ALL Institution
+When user enters details to create new ALL Institution
 Then user should be able to create new institute
 
 
