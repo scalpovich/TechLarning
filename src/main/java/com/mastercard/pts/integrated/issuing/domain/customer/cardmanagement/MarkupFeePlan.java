@@ -1,11 +1,9 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
-
-	import org.springframework.stereotype.Component;
-
 	import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 	import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
-	@Component
+
+	
 	public class MarkupFeePlan{
 		
 		private String markupFeePlanCode;
@@ -16,14 +14,24 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 		private String interchangeTransaction;
 		private String onUsTransaction;
 		private String portalApiTransaction;
-		private String chargeMarkupFees;
 		private String sourceCurrency;
 		private String destinationCurrency;
 		private String currencySpecificRate;
 		private String chargMarkupFeeCheckbox;
+		private String chargeMarkupFee;
+		
+		public String getChargeMarkupFee() {
+			return chargeMarkupFee;
+		}
+
+		public void setChargeMarkupFee(String chargeMarkupFee) {
+			this.chargeMarkupFee = chargeMarkupFee;
+		}
+
 		private static final String MP_STATUS="MP_STATUS";
+		private static final String MP_DESCRIPTION="MP_DESCRIPTION";
 		private static final String MP_DEFAULT_RATE="MP_DEFAULT_RATE";
-		private static final String MP_CHARGE_MARKUP_FEE_CHECKBOX="MP_CHARGE_MARKUP_FEE_CHECKBOX";
+		private static final String MP_CHARGE_MARKUP_FEE="MP_CHARGE_MARKUP_FEE";
 		private static final String MP_CLUB_INTO_THE_TRANSACTION="MP_CLUB_INTO_THE_TRANSACTION";
 		private static final String MP_INTERCHANGE_TRANSACTION ="MP_INTERCHANGE_TRANSACTION";
 		private static final String MP_ON_US_TRANSACTION="MP_ON_US_TRANSACTION";
@@ -31,9 +39,6 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 		private static final String MP_SOURCE_CURRENCY="MP_SOURCE_CURRENCY";
 		private static final String MP_DESTINATION_CURRENCY="MP_DESTINATION_CURRENCY";
 		private static final String MP_CURRENCY_SPECIFIC_RATE="MP_CURRENCY_SPECIFIC_RATE";
-		private static final String MP_CHARGE_MARKUP_FEES="MP_CHARGE_MARKUP_FEES";
-		
-		
 		
 		public void setStatus(String status) {
 			this.status = status;
@@ -79,14 +84,6 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 			this.portalApiTransaction = postalApiTransaction;
 		}
 
-		public String getChargeMarkupFees() {
-			return chargeMarkupFees;
-		}
-
-		public void setChargeMarkupFees(String chargeMarkupFees) {
-			this.chargeMarkupFees = chargeMarkupFees;
-		}
-
 		public String getSourceCurrency() {
 			return sourceCurrency;
 		}
@@ -127,10 +124,6 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 			this.markupFeePlanCode = markupFeePlanCode;
 		}
 		
-		public static String getChargeMarkupFeeCheckbox() {
-			return MP_CHARGE_MARKUP_FEE_CHECKBOX;
-		}
-
 		public String getDescription() {
 			return description;
 		}
@@ -146,8 +139,9 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 		public static MarkupFeePlan createWithProvider(KeyValueProvider provider) {
 			MarkupFeePlan plan = new MarkupFeePlan();
 			plan.setStatus(provider.getString(MP_STATUS));
+			plan.setDescription(provider.getString(MP_DESCRIPTION));
 			plan.setDefaultRate(provider.getString(MP_DEFAULT_RATE));
-			plan.setChargMarkupFeeCheckbox(provider.getString(MP_CHARGE_MARKUP_FEE_CHECKBOX));
+			plan.setChargeMarkupFee(provider.getString(MP_CHARGE_MARKUP_FEE));
 			plan.setClubIntoTheTransaction(provider.getString(MP_CLUB_INTO_THE_TRANSACTION));
 			plan.setPostalApiTransaction(provider.getString(MP_PORTAL_API_TRANSACTION));
 			plan.setinterchangeTransaction(provider.getString(MP_INTERCHANGE_TRANSACTION));
@@ -155,7 +149,6 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 			plan.setSourceCurrency(provider.getString(MP_SOURCE_CURRENCY));
 			plan.setDestinationCurrency(provider.getString(MP_DESTINATION_CURRENCY));
 			plan.setCurrencySpecificRate(provider.getString(MP_CURRENCY_SPECIFIC_RATE));
-			plan.setChargeMarkupFees(provider.getString(MP_CHARGE_MARKUP_FEES));
 			plan.setMarkupFeePlanCode(CustomUtils.randomNumbers(4));
 			return plan;
 		}

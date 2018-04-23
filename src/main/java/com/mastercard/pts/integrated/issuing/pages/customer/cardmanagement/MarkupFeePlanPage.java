@@ -1,9 +1,8 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import org.springframework.stereotype.Component;
-
-
 import java.util.Arrays;
+
+
 
 
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -11,7 +10,11 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 
+
+
 import java.util.Collection;
+
+
 
 
 import org.openqa.selenium.WebElement;
@@ -21,12 +24,14 @@ import org.slf4j.LoggerFactory;
 
 
 
+
+import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MarkupFeePlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
-
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT,
@@ -43,7 +48,7 @@ public class MarkupFeePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=markupDescription]")
 	private MCWebElement markupDescriptionTxtBx;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:0:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.CLASS, valueToFind = "//select[@class='selectf']")
 	private MCWebElement status;
 	
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
@@ -98,7 +103,10 @@ public class MarkupFeePlanPage extends AbstractBasePage {
 	public void verifyUiOperationStatus() {
 		logger.info("Markup Fee Plan");
 		verifyUiOperation("Add Markup Fee Plan");
+		verifyResponseMessage();
+		;
 	}
+	
 	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
@@ -118,7 +126,7 @@ public class MarkupFeePlanPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(statusDdwn,plan.getStatus());
 			WebElementUtils.enterText(defaultRateTxtBx,plan.getDefaultRate());
 			
-			if(plan.getChargeMarkupFees().equalsIgnoreCase("true")){
+			if(plan.getChargeMarkupFee().equalsIgnoreCase("true")){
 				ClickCheckBox(chargeMarkUpFeeChkbx, true);
 				ClickCheckBox(clubIntoTransactionChkbx, true);
 				ClickCheckBox(interchangeTransactionsChkBx, true);
