@@ -77,7 +77,6 @@ public class CSVDataLoader implements DataLoader {
 				return Optional.of(record.toMap());
 			}
 		}
-
 		return Optional.empty();
 	}
 
