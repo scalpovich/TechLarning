@@ -84,7 +84,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectCurrency(String currency) {
-		WebElementUtils.selectDropDownByVisibleText(currencyDDwn, currency);
+		WebElementUtils.selectDDByVisibleText(currencyDDwn, currency);
 	}
 
 	public void selectProductType(String productType) {
@@ -92,11 +92,11 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectProgramType(String programType) {
-		WebElementUtils.selectDropDownByVisibleText(programTypeDDwn, programType);
+		WebElementUtils.selectDDByVisibleText(programTypeDDwn, programType);
 	}
 
 	public void selectUsage(String usage) {
-		WebElementUtils.selectDropDownByVisibleText(usageDDwn, usage);
+		WebElementUtils.selectDDByVisibleText(usageDDwn, usage);
 	}
 
 	public void selectCreditPlan(String creditPlan) {
@@ -150,7 +150,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	public void addWalletPlanData(WalletPlan walletPlan) {
 		logger.info("Create Wallet Plan: {}", walletPlan.getWalletPlanCode());
 		clickAddNewButton();
-
+		
 		runWithinPopup("Add Wallet Plan", () -> {
 			String productType = walletPlan.getProductType();
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
@@ -159,12 +159,11 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			waitForPageToLoad(driver());
 			selectProgramType(walletPlan.getProgramType());
 			waitForPageToLoad(driver());
+			SimulatorUtilities.wait(500);
 			selectCurrency(walletPlan.getCurrency());
-			waitForPageToLoad(driver());			
+			SimulatorUtilities.wait(500);
 			selectUsage(walletPlan.getUsage());
-
 			fillDetailsBasedOnCardType(walletPlan, productType);
-
 			clickNextButton(); // Click on next button
 			clickFinishButton(); // click on finish button
 		});
@@ -183,9 +182,11 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			selectProductType(productType);
 			waitForPageToLoad(driver());
 			selectProgramType(walletPlan.getProgramType());
-			waitForPageToLoad(driver());
+			//waitForPageToLoad(driver());
+			SimulatorUtilities.wait(500);
 			selectCurrency(walletPlan.getCurrency());
-			waitForPageToLoad(driver());
+			//waitForPageToLoad(driver());
+			SimulatorUtilities.wait(500);
 			selectUsage(walletPlan.getUsage());
 			waitForPageToLoad(driver());
 			fillDetailsBasedOnCarddType(walletPlan, productType);
