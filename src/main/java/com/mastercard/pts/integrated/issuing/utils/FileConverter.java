@@ -30,7 +30,7 @@ public class FileConverter {
 	private static final String CSV_EXTN = ".csv";
 	private static final String CONFIG_PATH = "./src/main/resources/config/";
 	
-	public String getCellValAsString(Cell cell) {
+	private String getCellValAsString(Cell cell) {
 		DataFormatter dataFormatter = new DataFormatter();
 		return dataFormatter.formatCellValue(cell);
 	}
@@ -138,7 +138,7 @@ public class FileConverter {
 
 	@Test
 	public void convertExcelToCsv() throws IOException, InvalidFormatException {
-		String[] listOfEnvs = { "demo", "automation", "automation2", "stage" };
+		String[] listOfEnvs = { "demo", "automation2", "stageSA" };
 		String[] dataFiles = { "Data/TestData.xls", /*"TestData/TestData.xlsx"*/ };		
 		for (String env : listOfEnvs) {
 			for (String dataFile : dataFiles) {
