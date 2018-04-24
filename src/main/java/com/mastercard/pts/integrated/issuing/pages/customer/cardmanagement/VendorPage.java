@@ -19,8 +19,7 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP, CardManagementNav.L2_VENDOR })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP, CardManagementNav.L2_VENDOR })
 public class VendorPage extends AbstractBasePage {
 	final Logger logger = LoggerFactory.getLogger(VendorPage.class);
 
@@ -39,7 +38,7 @@ public class VendorPage extends AbstractBasePage {
 	private MCWebElement VendorNameTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[contains(@name,'branchCode')]")
-	private MCWebElement BranchDDwn;
+	private MCWebElement branchDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "vendorType:input:dropdowncomponent")
 	private MCWebElement CategoryDDwn;
@@ -94,9 +93,9 @@ public class VendorPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
 	private MCWebElement CancelBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[contains(@name,'branchCode')]/option[text()!='Select One']")
-	private MCWebElements branchDDwnList; 
+	private MCWebElements branchDDwnList;
 
 	public void clickaddVenor() {
 		clickWhenClickable(AddVendorBtn);
@@ -130,12 +129,13 @@ public class VendorPage extends AbstractBasePage {
 	}
 
 	public void selectBranchCode(Vendor vendor) {
-		BranchDDwn.getSelect().selectByIndex(1);
-		context.put(CreditConstants.VENDOR_BRANCH,branchDDwnList.getElements().get(0).getText());
-		String branch=context.get(CreditConstants.VENDOR_BRANCH);
-		String[]branchCode=branch.split("\\[");
-		String branchCodeFirst=branchCode[1].substring(0, branchCode[1].length()-1);
-		vendor.setBranchCode(branchCodeFirst);
+		branchDDwn.getSelect().selectByIndex(1);
+		removeBrackets(branchDDwnList.getElements().get(0).getText());
+		vendor.setBranchCode(removeBrackets(branchDDwnList.getElements().get(0).getText().split("\\[")[1]));
+	}
+
+	private String removeBrackets(String text) {
+		return text.replace("]", "");
 	}
 
 	public void selectDeviceProductionCheckBox() {
