@@ -23,6 +23,7 @@ When processes device production batch for prepaid
 Then device has "normal" status
 Then user activates device through helpdesk
 Then user sign out from customer portal
+Then embossing file batch was generated in correct format
 
 Scenario: Perform MMSR-RetailGiftCard Authorization transaction
 Given connection to MAS is established
