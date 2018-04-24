@@ -218,7 +218,7 @@ public abstract class LinuxUtils {
 		scp.setProject( new Project() );
 		scp.setTrust( true );
 		scp.execute();	
-		Thread.sleep(30000); // long sleep as file permission cron job runs every minute
+		Thread.sleep(35000); // long sleep as file permission cron job runs every minute
 	}
 	
 	public static String[] getCardNumberAndExpiryDate(File filePath) {
