@@ -39,7 +39,7 @@
    "deviceIdGenerationTemplate":"PAN019",
    "customerType":"Individual",
    "embossingVendor":"AUTOB1",
-   "interchange":"MASTERCARD",
+   "interchange":"VISA",
    "issuerBin":"CREDIT",
    "plasticId":"AUT",
    "pictureCode":"AUT"

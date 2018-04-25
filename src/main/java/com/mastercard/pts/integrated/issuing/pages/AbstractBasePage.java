@@ -665,10 +665,21 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void waitAndSearchForRecordToExist() {
 		waitAndSearchForRecordToAppear();
-				selectFirstRecord();
-
+		selectFirstRecord();
 		clickProcessSelectedButton();
 	}	
+	
+	protected void waitAndSearchForRecordToExists() {
+		waitAndSearchForRecordToAppear();
+		String count = context.get(CreditConstants.QUANTITY_REQUESTED);
+		if(Integer.parseInt(count) > 1){			
+			selectAllRecords();			
+		}else{
+			context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
+			selectFirstRecord();
+		}
+		clickProcessSelectedButton();
+	}
 
 	protected void waitForBatchStatus() {
 		try {
