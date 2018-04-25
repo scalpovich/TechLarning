@@ -9,6 +9,7 @@ Meta:
 @StoryName p_emv_retail_general
 @oldReferenceSheet_S203707
 @SanityCards
+@UISanity
 
 Scenario: Set up prepaid emv retail general purpose card
 Meta:

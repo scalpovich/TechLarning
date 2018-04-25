@@ -26,15 +26,13 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1PROGRAM_SETUP,
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP,
 		CardManagementNav.L2_STATEMENT_MESSAGE_PLAN })
 public class StatementMessagePlanPage extends AbstractBasePage {
 
 	@Autowired
 	DatePicker date;
-	private static final Logger logger = LoggerFactory
-			.getLogger(StatementMessagePlanPage.class);
+	private static final Logger logger = LoggerFactory.getLogger(StatementMessagePlanPage.class);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=statMsgCode]")
 	private MCWebElement planCodeSearchTxt;
@@ -126,25 +124,22 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 	}
 
 	public void createStatementMessagePlan(StatementMessagePlan plan) {
-		logger.info("Create Statement Message Plan: {}",
-				plan.getStatementMessagePlanCode());
-		 	clickAddNewButton();
+		logger.info("Create Statement Message Plan: {}", plan.getStatementMessagePlanCode());
+		clickAddNewButton();
 
-		runWithinPopup(
-				"Add Statement Message Plan",
-				() -> {
-					WebElementUtils.enterText(planCodeTxt, plan.getStatementMessagePlanCode());
-					WebElementUtils.enterText(descriptionTxt, plan.getDescription());
-					WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, plan.getProductType());
-				
-					clickAddDetailsButton();
+		runWithinPopup("Add Statement Message Plan", () -> {
+			WebElementUtils.enterText(planCodeTxt, plan.getStatementMessagePlanCode());
+			WebElementUtils.enterText(descriptionTxt, plan.getDescription());
+			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, plan.getProductType());
 
-					plan.getStatementMessageDetails().forEach(details -> addDetails(details, plan.getProductType()));
+			clickAddDetailsButton();
 
-					clickSaveButton();
+			plan.getStatementMessageDetails().forEach(details -> addDetails(details, plan.getProductType()));
 
-					verifyNoErrors();
-				});
+			clickSaveButton();
+
+			verifyNoErrors();
+		});
 
 		verifyOperationStatus();
 	}
@@ -171,6 +166,7 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 
 		verifyOperationStatus();
 	}
+
 	public void clickaddStatementMessagePlan() {
 		clickWhenClickable(addStatementMessagePlanPage);
 		switchToAddStatementMessagePlanFrame();
@@ -220,7 +216,6 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 	}
 
 	public void clickaddStatementMessageDetails() {
-		switchToIframe(Constants.ADD_STATEMENT_MESSAGE_PLAN_FRAME);
 		clickWhenClickable(addSubDetails);
 	}
 
@@ -262,5 +257,6 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 		Scrolldown(save);
 		waitForElementVisible(save);
 		ClickButton(save);
+		waitForLoaderToDisappear();
 	}
 }

@@ -25,11 +25,13 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 
 	@Autowired
 	LoginPage lgnPage;
-	
+
 	@Autowired
 	private TestContext context;
 	
 	private static final String TAB_ADDRESS = "Address"; 
+
+	private static final String TAB_ADDRESS = "Address";
 
 	public void institutionCreation(InstitutionCreation institutionCreation) {
 
@@ -37,13 +39,14 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 		institute.clickAddBtn();
 		institute.provideInstitutionDetails(institutionCreation);
 		institute.provideInstitutionType(institutionCreation);
-		institute.provideGeneralDetails(institutionCreation);		
+		institute.provideGeneralDetails(institutionCreation);
 		institute.provideAdaptiveAuthentication();
 		institute.provideCustomCareDetails(institutionCreation);
 		institute.navigateToTab(TAB_ADDRESS);
 		institute.providePersonalDetailsAdressTab(institutionCreation);
 		institute.provideAddressDetails(institutionCreation);
 		institute.save();
+		waitForLoaderToDisappear();
 	}
 
 	public void checkSuccessfulInstitutionCreation(InstitutionCreation institutionCreation) {
@@ -51,14 +54,13 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 	}
 
 	public void selectNewlyCreatedInstitutionFlows() {
-		lgnPage.loginTo(MapUtils.fnGetInputDataFromMap("UserId"),
-				MapUtils.fnGetInputDataFromMap("Password"));
+		lgnPage.loginTo(MapUtils.fnGetInputDataFromMap("UserId"), MapUtils.fnGetInputDataFromMap("Password"));
 		selectInstitute();
 	}
-	public boolean isAdaptiveAuthenticationEnabledAndUserAbleToSelectACSVendor()
-	{
+
+	public boolean isAdaptiveAuthenticationEnabledAndUserAbleToSelectACSVendor() {
 		InstitutionPage page = navigator.navigateToPage(InstitutionPage.class);
-		InstitutionCreation institutioncreation=context.get("institutionData");
+		InstitutionCreation institutioncreation = context.get("institutionData");
 		page.enterInstitutionCode(institutioncreation);
 		clickSearchButton();
 		editFirstRecord();
@@ -79,21 +81,33 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 		institute.save();
 	}
 
+<<<<<<< HEAD
 	public void updateCustomerCareIntlVIP(
 			InstitutionCreation institutionCreation) {
+=======
+	public void updateCustomerCareIntlVIP(InstitutionCreation institutionCreation) {
+>>>>>>> release/Iteration14
 		institute = navigator.navigateToPage(InstitutionCreationPageNew.class);
 		institute.enterNewInstitution(institutionCreation);
 		institute.updateCustomerCareIntlVIP(institutionCreation);
 		institute.save();
 	}
+<<<<<<< HEAD
 	public boolean validateCustomerCareIntlVIP(InstitutionCreation institutionCreation){
+=======
+
+	public boolean validateCustomerCareIntlVIP(InstitutionCreation institutionCreation) {
+>>>>>>> release/Iteration14
 		institute = navigator.navigateToPage(InstitutionCreationPageNew.class);
 		institute.enterNewInstitution(institutionCreation);
 		boolean status = institute.validateCustomerCareIntlVIP(institutionCreation);
 		institute.cancel();
 		return status;
 	}
+<<<<<<< HEAD
 	
+=======
+>>>>>>> release/Iteration14
 
 	public String verifyInstitiueUpdate() {
 		return institute.getInstUpdateMessage();

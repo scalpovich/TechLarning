@@ -5,8 +5,8 @@ So that new device can be created for Debit
 
 
 Meta:
-@InstituteTestDebit
-
+@InstituteSetUpDebit
+@InstituionSetUpForAllType
 Scenario: Scenario1 - Institution parameter setup for Debit type/ Mastercard
 Meta:
 @Regression

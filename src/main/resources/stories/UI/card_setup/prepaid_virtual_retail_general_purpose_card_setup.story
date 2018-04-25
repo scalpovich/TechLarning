@@ -9,6 +9,7 @@ Meta:
 @StoryName p_virt_retail_general_purpose
 @oldReferenceSheet_S203707
 @SanityCards
+@UISanity
 
 Scenario: Set up prepaid virtual retail general purpose card
 Meta: 

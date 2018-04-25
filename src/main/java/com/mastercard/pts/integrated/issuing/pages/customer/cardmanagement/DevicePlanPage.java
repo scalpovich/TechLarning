@@ -2,7 +2,6 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.List;
-
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CardType;
 import com.mastercard.pts.integrated.issuing.domain.DeviceType;
@@ -861,7 +859,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	
 	public void selectIframeTransactionFeePlan(String transactionFeePlan) {
 		if (iframeTransactionFeePlanDdwn.isEnabled())
-			WebElementUtils.selectDropDownByVisibleText(iframeTransactionFeePlanDdwn,
+			WebElementUtils.selectDropDownByVisibleText(iframeTransactionFeePlanDdwn, 
 					transactionFeePlan);
 	}
 
@@ -883,7 +881,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void clickIframeFinishButton() {
-		SimulatorUtilities.wait(500);
+		SimulatorUtilities.wait(900);
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
 				.until(WebElementUtils.visibilityOf(iframeFinishBtn));
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
@@ -982,7 +980,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES)) {
 			selectAllcvccvv();
 			// as of now, we do not need CVV check for MDFS pin change transactions
-			if(!getStoryName().toLowerCase().contains("pin_change"))
+			//if(!getStoryName().toLowerCase().contains("pin_change"))
 			checkCvcCvv();
 		}			
 		checkExpiryDate();		
@@ -997,6 +995,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		}	
 
 		clickIframeNextButton();
+		SimulatorUtilities.wait(300);
 		clickIframeNextButton();
 
 		if (DeviceType.EMV_CARD.equals(devicePlan.getDeviceType())

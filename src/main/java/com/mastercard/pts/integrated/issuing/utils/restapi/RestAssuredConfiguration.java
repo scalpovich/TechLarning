@@ -21,14 +21,13 @@ public class RestAssuredConfiguration extends AbstractBaseSteps {
 	static final String STAGEENVIROMENT = "stage";
 	static final String KEYSTOREFILEPATH = "src\\main\\resources\\certs\\104181-stage-pdt-api-mi-mastercard-com-desktop.p12";
 	String baseUrl;
-	final Logger logger = LoggerFactory
-			.getLogger(RestAssuredConfiguration.class);
-	
+	final Logger logger = LoggerFactory.getLogger(RestAssuredConfiguration.class);
+
 	@Autowired
 	private TestContext context;
 
 	public String getbaseUrl() {
-		String apiName=context.get(ConstantData.API_NAME);
+		String apiName = context.get(ConstantData.API_NAME);
 		switch (apiName) {
 		case "WalletLink":
 			baseUrl = env.getProperty("api.base.uri_Wallet");
@@ -42,9 +41,11 @@ public class RestAssuredConfiguration extends AbstractBaseSteps {
 		case "Sample":
 			baseUrl = env.getProperty("api.base.uri_sample");
 			break;
+
 		case "Wibmo":
 			baseUrl = env.getProperty("api.base.uri_wibmo");
 			break;
+
 		default:
 			baseUrl = env.getProperty("api.base.uri_DeviceAPI");
 
@@ -64,12 +65,10 @@ public class RestAssuredConfiguration extends AbstractBaseSteps {
 				keyStore.load(keyStoreFile, "changeit".toCharArray());
 
 				org.apache.http.conn.ssl.SSLSocketFactory clientAuthFactory = new org.apache.http.conn.ssl.SSLSocketFactory(
-						keyStore,  env.getProperty("api.keyStorePassword"));
+						keyStore, env.getProperty("api.keyStorePassword"));
 
 				// set the config in rest assured
-				config = new SSLConfig().with()
-						.sslSocketFactory(clientAuthFactory).and()
-						.allowAllHostnames();
+				config = new SSLConfig().with().sslSocketFactory(clientAuthFactory).and().allowAllHostnames();
 
 				RestAssured.config = RestAssured.config().sslConfig(config);
 

@@ -8,6 +8,7 @@ I want to create a bulk card request and generate cards for prepaid emv retail g
 Meta:
 @StoryName S193810
 @SanityCards
+@UISanity
 
 Scenario: bulk card generation for prepaid emv retail gift card
 Meta:
@@ -19,4 +20,4 @@ And processes created bulk device generation request for prepaid
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
-Then pin offset file is generated sucessfully for prepaid
+Then Pin Offset file batch was generated successfully

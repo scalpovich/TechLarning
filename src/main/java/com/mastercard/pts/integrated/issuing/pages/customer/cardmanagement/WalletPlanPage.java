@@ -16,6 +16,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -124,6 +125,7 @@ public class WalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectProduct(DeviceCreation deviceCreation) {
+		SimulatorUtilities.wait(500);
 		selectByVisibleText(productTypeDDwn, deviceCreation.getProduct());
 	}
 
@@ -133,7 +135,8 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	public String enterWalletPlanCode(WalletPlan walletPlan) {
 		if (walletPlan.getWalletPlanCode().length() != 0) {
-			 logger.info(walletPlan.getWalletPlanCode());
+			logger.info(walletPlan.getWalletPlanCode());
+			waitForPageToLoad(driver());
 			enterValueinTextBox(walletPlancodeTxt, walletPlan.getWalletPlanCode());
 		} else {
 			enterValueinTextBox(walletPlancodeTxt, "WP" + CustomUtils.randomNumbers(4));
@@ -207,12 +210,12 @@ public class WalletPlanPage extends AbstractBasePage {
 		walletPlancode = enterWalletPlanCode(walletplan);
 		WalletPlanDesc = enterWalletPlanDescription(walletplan);
 		selectCurrency(walletplan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		selectProduct(devicecreation);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		waitForLoaderToDisappear();
 		selectProgramType(walletplan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		selectWalletUsage(walletplan);
 		enterDummyAccountNumber();
 		enterReservedAmount();
@@ -226,6 +229,7 @@ public class WalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectProgramType(WalletPlan walletplan) {
+		SimulatorUtilities.wait(500);
 		selectByVisibleText(programeTypeDDwn, walletplan.getProgramType());
 	}
 
@@ -237,6 +241,7 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	public void selectWalletUsage(WalletPlan walletplan) {
 		if (usageDDwn.isEnabled()) {
+			SimulatorUtilities.wait(500);
 			selectByVisibleText(usageDDwn, walletplan.getWalletPlanUsage());
 		}
 	}
@@ -326,19 +331,19 @@ public class WalletPlanPage extends AbstractBasePage {
 		walletPlancode = enterWalletPlanCode(walletplan);
 		walletPlanDesc = enterWalletPlanDescription(walletplan);
 		selectCurrency(walletplan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		selectProduct(walletplan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		waitForLoaderToDisappear();
+		CustomUtils.ThreadDotSleep(5000);
 		selectProgramType(walletplan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		selectWalletUsage(walletplan);
-		if(walletplan.getProductType().equalsIgnoreCase("credit"))
-		{
+		if (walletplan.getProductType().equalsIgnoreCase("credit")) {
 			selectCreditPlan();
 			selectBillingCycleCode();
 		}
-			
+
 		enterDummyAccountNumber();
 		enterReservedAmount();
 		return buildDescriptionAndCode(walletPlanDesc, walletPlancode);
@@ -348,11 +353,11 @@ public class WalletPlanPage extends AbstractBasePage {
 		enterWalletPlanCode(plan);
 		enterWalletPlanDescription(plan);
 		selectCurrency(plan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		selectProductType(plan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		selectProgramType(plan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		selectWalletUsage(plan);
 	}
 

@@ -37,7 +37,7 @@ public class BatchJobHistorySteps {
 		assertThat("Statement (Type) Not Downloaded", result[1], is("Statement Download [STATEMENT_DOWNLOAD]"));
 	}
 
-	@When("user check for the $productionbatch batch success status for $batchType batch")
+	@When("user checks for the $productionbatch batch success status for $batchType batch")
 	public void checkBatchStatus(@Named("productionbatch") String productionbatch,
 			@Named("batchType") String batchType) {
 		batchjobhistory.setBatchType(batchType);

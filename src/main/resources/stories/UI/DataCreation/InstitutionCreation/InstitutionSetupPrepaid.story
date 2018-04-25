@@ -5,7 +5,8 @@ So that new device can be created for Prepaid
 
 
 Meta:
-@InstituteTestPrepaid
+@InstituteSetUpPrepaid
+@InstituionSetUpForAllType
 
 Scenario: Scenario1 - Institution parameter setup for prepaid type/ Mastercard
 Meta:
@@ -46,6 +47,7 @@ When user creates Device Event Based Fee Plan for Prepaid
 When user creates Maintenance Wallet Fee Plan for Prepaid
 When user creates an Embossing File Template
 When user creates a Vendor of Category Personalization with Embossing template attached
+
 
 
 Scenario: Scenario2 - Institution parameter setup for prepaid type/Visa

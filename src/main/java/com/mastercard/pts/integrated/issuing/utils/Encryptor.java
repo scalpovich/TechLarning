@@ -20,8 +20,7 @@ public class Encryptor {
 
 	private static String encrypt(String text) {
 		try {
-			System.out.println(EncryptUtils.decrypt("bakWjTx+z+KRux09xkfnXQ=="));
-			return EncryptUtils.decrypt("bakWjTx+z+KRux09xkfnXQ==");
+			return EncryptUtils.encrypt(text);
 			
 		} catch (Exception e) {
 			logger.error("Fail to encrypt: " + e);

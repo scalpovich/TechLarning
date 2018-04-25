@@ -441,14 +441,13 @@ public class WalletPlan implements HasCodeAndDescription {
 		this.anotherCurrency = anotherCurrency;
 	}
 
-	public static WalletPlan walletplanDataprovider() {
-		WalletPlan walletplan = new WalletPlan();
-		walletplan.setWalletPlanCode(MapUtils.fnGetInputDataFromMap("WalletPlancode"));
-		walletplan.setDescription(MapUtils.fnGetInputDataFromMap("WalletPlanDescription"));
-		walletplan.setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
-		walletplan.setWalletPlanUsage(MapUtils.fnGetInputDataFromMap("WalletplanUsage"));
-		walletplan.setAnotherCurrency(MapUtils.fnGetInputDataFromMap("Currency1"));
-		return walletplan;
+	public void walletplanDataprovider() {
+		setWalletPlanCode(MapUtils.fnGetInputDataFromMap("WalletPlancode"));
+		setDescription(MapUtils.fnGetInputDataFromMap("WalletPlanDescription"));
+		setCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
+		setWalletPlanUsage(MapUtils.fnGetInputDataFromMap("WalletplanUsage"));
+		setAnotherCurrency(MapUtils.fnGetInputDataFromMap("Currency1"));
+
 	}
 
 	@Override

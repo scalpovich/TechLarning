@@ -18,6 +18,10 @@ public class DeviceCardPackTemplateSteps {
 	@Autowired
 	DeviceCardPackTemplateFlows devicecardpacktemplflows;
 
+	public String DEVICE_TEMPLATE = "Device Template";
+
+	public String CARD_PACK_TEMPLATE = "Card Pack ID Template";
+
 	public DeviceCardPackTemplate devicecardtemplate;
 
 	@When("user creates Template of type $Templatetype and of length $Templatelength")
@@ -26,10 +30,10 @@ public class DeviceCardPackTemplateSteps {
 		devicecardtemplate = DeviceCardPackTemplate.deviceCardPackTemplateDataProvider();
 		devicecreation.setTemplateType(Templatetype);
 		devicecreation.setLength(Templatelength);
-		if (Templatetype.contains("Device Template")) {
+		if (Templatetype.contains(DEVICE_TEMPLATE)) {
 			devicecardpacktemplflows.createDeviceTemplateCardPack(devicecreation, devicecardtemplate);
 		}
-		if (Templatetype.contains("Card Pack Id Template")) {
+		if (Templatetype.contains(CARD_PACK_TEMPLATE)) {
 			devicecardpacktemplflows.createCardPackTemplate(devicecreation, devicecardtemplate);
 		}
 	}
