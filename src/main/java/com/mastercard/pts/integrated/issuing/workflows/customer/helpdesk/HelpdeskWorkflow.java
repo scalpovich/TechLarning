@@ -160,7 +160,7 @@ public class HelpdeskWorkflow {
 		ResultSet set = connctionUtils.executeQueryForBIN(query);
 		try {
 	        set.next();
-	       return new String[]{ set.getString("PRODUCT_TYPE"),set.getString("DEVICE_NUMBER")};
+	       return new String[]{ set.getString("PRODUCT_TYPE"),set.getString("DEVICE_NUMBER"),set.getString("Default_Wallet_Number")};
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -169,7 +169,7 @@ public class HelpdeskWorkflow {
 	}
 	
 	public void validateRequiredFields(HelpdeskGeneral general){
-		helpDeskPage.validateRequiredFields();
+		helpDeskPage.validateRequiredFields(general);
 		helpDeskPage.validateMandatoryFields(3);
 	}
 }

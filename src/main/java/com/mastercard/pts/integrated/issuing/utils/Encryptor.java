@@ -15,11 +15,14 @@ public class Encryptor {
 
 	public static void main(String[] args) {
 		Arrays.stream(args).map(Encryptor::encrypt).forEach(logger::info);
+		encrypt("");
 	}
 
 	private static String encrypt(String text) {
 		try {
-			return EncryptUtils.encrypt(text);
+			System.out.println(EncryptUtils.decrypt("bakWjTx+z+KRux09xkfnXQ=="));
+			return EncryptUtils.decrypt("bakWjTx+z+KRux09xkfnXQ==");
+			
 		} catch (Exception e) {
 			logger.error("Fail to encrypt: " + e);
 			MiscUtils.propagate(e);

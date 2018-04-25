@@ -686,31 +686,40 @@ public class HelpDeskSteps {
 		}
 	}
 	
-	@When("user creates service request to change the registered mobile number")
-	public void ServiceRequestForChangeRegisteredMobileNumber() {
+	@When("user creates service request to change the registered mobile number [$serviceCode]")
+	public void ServiceRequestForChangeRegisteredMobileNumber(String serviceCode) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		String[] device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
 		helpdeskGeneral.setProductType(ProductType.fromShortName(device[0]));
 		helpdeskGeneral.setDeviceNumber(device[1]);
+		helpdeskGeneral.setServiceCode(serviceCode);
 		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.changeRegisteredMobileNo(helpdeskGeneral);
 	}
 	
-	@When("user creates service request to change the registered Email ID")
-	public void ServiceRequestForChangeRegisteredEmailID() {
+	@When("user creates service request to change the registered Email ID [$serviceCode]")
+	public void ServiceRequestForChangeRegisteredEmailID(String serviceCode) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		String[] device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
 		helpdeskGeneral.setProductType(ProductType.fromShortName(device[0]));
 		helpdeskGeneral.setDeviceNumber(device[1]);
+		helpdeskGeneral.setServiceCode(serviceCode);
 		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.changeRegisteredEmailID(helpdeskGeneral);
 	}
 	
-	@Then("user validates registered mobile number update screen with the required fields")
-	public void registeredMobileNumberUpdateScreenValidation() {
+	@Then("user validates registered mobile number SR [$serviceCode] update screen with the required fields")
+	public void registeredMobileNumberUpdateScreenValidation(String serviceCode) {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		String[] device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
+		helpdeskGeneral.setProductType(ProductType.fromShortName(device[0]));
+		helpdeskGeneral.setDeviceNumber(device[1]);
+		helpdeskGeneral.setDefaultWalletNumber(device[2]);
+		helpdeskGeneral.setServiceCode(serviceCode);
+		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
+		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.validateRequiredFields(helpdeskGeneral);
 	}
 }
