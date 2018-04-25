@@ -9,7 +9,7 @@ Meta:
 @StoryName d_msr_corp_ASI
 @MMSR
 
-Scenario: Set up program for debit emv retail debit card
+Scenario: Set up program for debit msr retail debit card
 Given user is logged in institution
 And device range for program with device plan for "debit" "magnetic stripe" card without pin
 When user creates new device of debit type for new client

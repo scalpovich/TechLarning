@@ -203,7 +203,7 @@ public abstract class LinuxUtils {
 
 	
 	public static void downloadFileViaScp(RemoteConnectionDetails connectiondetails, String remoteDir,
-			String localsource) throws JSchException, InterruptedException  {
+			String localsource) throws InterruptedException  {
 
 		Scp scp = new Scp();
 		String serverSSH = connectiondetails.getHostName();
