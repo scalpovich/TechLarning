@@ -209,6 +209,7 @@ public abstract class LinuxUtils {
 		String serverSSH = connectiondetails.getHostName();
 		String userSSH = connectiondetails.getUserName(); 
 		String pswdSSH = connectiondetails.getPassword();
+		Thread.sleep(60000);
 		logger.info("localsource "+localsource+" remoteDir: "+remoteDir+" ");
 		scp.setPort( connectiondetails.getPort() );			
 		scp.setRemoteFile(userSSH + ":" + pswdSSH + "@" + serverSSH + ":" + remoteDir);
@@ -217,7 +218,7 @@ public abstract class LinuxUtils {
 		scp.setProject( new Project() );
 		scp.setTrust( true );
 		scp.execute();	
-		Thread.sleep(60000); // long sleep as file permission cron job runs every minute
+		Thread.sleep(35000); // long sleep as file permission cron job runs every minute
 	}
 	
 	public static String[] getCardNumberAndExpiryDate(File filePath) {
