@@ -638,6 +638,7 @@ public class HelpDeskSteps {
 			}
 			
 		}else{
+			helpdeskgettersetter.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
 			actualStatus = helpdeskFlows.searchForNewApplication(helpdeskgettersetter);
 		}
 		

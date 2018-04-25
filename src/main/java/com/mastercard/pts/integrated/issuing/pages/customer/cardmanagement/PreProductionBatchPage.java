@@ -6,6 +6,8 @@ import java.util.Collection;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,7 +117,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
 		enterText(batchNumberTxt, batchNumber);
 		ClickButton(searchBtn);
-		SimulatorUtilities.wait(4000);
+		waitAndSearchForRecordToAppear();
 		getQuantityRequested();
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		ClickButton(processSelectedBtn);
@@ -124,7 +126,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 
 	}
 	
-	public void getQuantityRequested(){
+	public void getQuantityRequested(){		
 		context.put(CreditConstants.QUANTITY_REQUESTED, getCellTextByColumnName(1,"Quantity Requested")); 
 	}
 	

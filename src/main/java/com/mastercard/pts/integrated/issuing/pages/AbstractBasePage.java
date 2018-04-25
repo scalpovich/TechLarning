@@ -646,6 +646,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void waitAndSearchForRecordToExist() {
 		waitAndSearchForRecordToAppear();
+		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
+		selectFirstRecord();
+		clickProcessSelectedButton();
+	}	
+	
+	protected void waitAndSearchForRecordToExists() {
+		waitAndSearchForRecordToAppear();
 		String count = context.get(CreditConstants.QUANTITY_REQUESTED);
 		if(Integer.parseInt(count) > 1){			
 			selectAllRecords();			
@@ -654,7 +661,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			selectFirstRecord();
 		}
 		clickProcessSelectedButton();
-	}	
+	}
 
 	protected void waitForBatchStatus() {
 		try {

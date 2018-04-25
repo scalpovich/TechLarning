@@ -270,7 +270,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
         {
         	applicationNumber=true;
         }
-		//scolling "PageUp" is needed here as the Menu item is not visible
+		//scrolling "PageUp" is needed here as the Menu item is not visible
         return applicationNumber;
 		
 	}

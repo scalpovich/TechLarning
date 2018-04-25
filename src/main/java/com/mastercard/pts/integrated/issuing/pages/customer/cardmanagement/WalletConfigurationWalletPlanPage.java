@@ -154,8 +154,7 @@ private TestContext context;
 		runWithinPopup("Add Wallet Plan", () -> {
 			String productType = walletPlan.getProductType();
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
-			inputDescription(walletPlan.getDescription());				
-			selectCurrency(walletPlan.getCurrency());
+			inputDescription(walletPlan.getDescription());
 			selectProductType(productType);
 			if(walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
 			{
@@ -165,8 +164,9 @@ private TestContext context;
 			{
 			selectProgramType(walletPlan.getProgramType());
 			}
+			selectCurrency(walletPlan.getCurrency());	
 			selectUsage(walletPlan.getUsage());
-
+			
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			clickNextButton(); // Click on next button
 			clickFinishButton(); // click on finish button
