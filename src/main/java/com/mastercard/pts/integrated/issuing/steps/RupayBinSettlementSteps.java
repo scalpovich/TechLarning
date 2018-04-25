@@ -14,6 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.RuPaySettlementBIN;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.LoginPage;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.ReadTestDataFromExcel;
@@ -38,6 +41,14 @@ public class RupayBinSettlementSteps extends AbstractBaseFlows {
 
 	@Autowired
 	private RupayBinSettlementFlows rupaybinsettlementflow;
+
+	@Autowired
+	private KeyValueProvider provider;
+
+	private RuPaySettlementBIN ruPaySettlementBIN;
+
+	@Autowired
+	DeviceBin devicebin;
 
 	@Then("user should be able to assign multiple settlement bin for a participant id")
 	public void thenUserShouldBeAbleToAssignMultipleSettlementBinForAParticipantId() {
@@ -185,6 +196,18 @@ public class RupayBinSettlementSteps extends AbstractBaseFlows {
 	@Then("Settlement bin is mandatory field for all Products and Length of the field will be 6 digit alphanumeric with no special characters allowed")
 	public void thenSettlementBinIsMandatoryFieldForAllProductsAndLengthOfTheFieldWillBe6DigitAlphanumericWithNoSpecialCharactersAllowed() {
 		rupaybinsettlementflow.settlementIdMandatory();
+	}
+
+	@When("user adds the RuPay Settlement BIN")
+	public void addRuPaySettlementBIN() {
+		ruPaySettlementBIN = RuPaySettlementBIN.createWithProvider(provider);
+		rupaybinsettlementflow.addRuPaySettlementBINFlows(ruPaySettlementBIN,
+				devicebin);
+	}
+
+	@Then("verify that the RuPay Settlement BIN is added into the system")
+	public void verifyRuPaySettlementBINAdded() {
+		rupaybinsettlementflow.verifyRuPayBINAdded(ruPaySettlementBIN);
 	}
 
 	@Override
