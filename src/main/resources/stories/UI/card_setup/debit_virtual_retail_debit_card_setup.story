@@ -8,6 +8,7 @@ I want to create virtual retail debit card for client
 Meta:
 @StoryName S198219
 @SanityCards
+@UISanity
 
 Scenario: Set up debit virtual retail debit card
 Meta:

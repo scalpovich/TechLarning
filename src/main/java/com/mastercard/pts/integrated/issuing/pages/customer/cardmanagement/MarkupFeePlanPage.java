@@ -31,7 +31,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Mark
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
-import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT,
@@ -48,7 +48,7 @@ public class MarkupFeePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=markupDescription]")
 	private MCWebElement markupDescriptionTxtBx;
 
-	@PageElement(findBy = FindBy.CLASS, valueToFind = "//select[@class='selectf']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[@class='selectf']")
 	private MCWebElement status;
 	
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
@@ -134,7 +134,7 @@ public class MarkupFeePlanPage extends AbstractBasePage {
 				ClickCheckBox(portalApiTransactionChkBx, true);
 				clickSaveButton();
 				clickAddNewButton();
-				SimulatorUtilities.wait(6000);
+				
 				
 				runWithinPopup("Add Currency Specific Markup Rate",()->{
 					WebElementUtils.selectDropDownByVisibleText(sourceCurrencyTxtBx,plan.getSourceCurrency());

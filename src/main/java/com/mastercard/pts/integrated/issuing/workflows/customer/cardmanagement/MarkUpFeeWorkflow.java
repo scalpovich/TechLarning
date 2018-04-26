@@ -16,7 +16,6 @@ public class MarkUpFeeWorkflow {
 	public void addMarkUpPlan(MarkupFeePlan plan) {
 		MarkupFeePlanPage page = navigator.navigateToPage(MarkupFeePlanPage.class);
 		page.createMarkupFeePlanPage(plan);
-		//page.verifyRecord();
 	}
 }
 

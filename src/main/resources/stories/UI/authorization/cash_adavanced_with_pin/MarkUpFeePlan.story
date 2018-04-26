@@ -10,9 +10,9 @@ Meta:
 @oldReferenceSheet_S203707
 @CRCardsWithAuthorizationCashAdvancedWithClearing
 
-Scenario: Set up prepaid emv retail general purpose card
+Scenario: Set up markup fee plan
 Meta:
 @TestId TC398452
 Given user is logged in institution
-When user creates a mark up fee plan
+When user creates a mark up fee plan and verify it
 Then user sign out from customer portal

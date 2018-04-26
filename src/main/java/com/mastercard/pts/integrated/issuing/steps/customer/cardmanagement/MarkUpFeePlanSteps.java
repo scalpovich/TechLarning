@@ -17,7 +17,7 @@ public class MarkUpFeePlanSteps{
 	@Autowired
 	private MarkUpFeeWorkflow markUpFeeWorkflow;
 	
-	@When("user creates a mark up fee plan")
+	@When("user creates a mark up fee plan and verify it")
 	public void createMarkupFeePlan(){
 		MarkupFeePlan plan = MarkupFeePlan.createWithProvider(provider);
 		markUpFeeWorkflow.addMarkUpPlan(plan);

@@ -52,10 +52,9 @@ public class BatchSteps {
 		MiscUtils.reportToConsole("******** Embossing File Start ***** " );
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		try {
-			File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "Device");
+			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE");		
 			String[] fileData = LinuxUtils.getCardNumberAndExpiryDate(batchFile);
-			
-			
+			MiscUtils.reportToConsole("File Data : " + fileData);
 			Device device = context.get(ContextConstants.DEVICE);
 			if(device.getDeviceType1().toLowerCase().contains(ConstantData.MSR_CARD))
 			{
@@ -97,7 +96,7 @@ public class BatchSteps {
 		MiscUtils.reportToConsole("******** Pin Offset Start ***** " );
 		String[] values = null;
 		DevicePlan tempdevice = context.get(ContextConstants.DEVICE_PLAN);
-		File batchFile = linuxBox.downloadByLookUpForPartialFileName(tempdevice.getDevicePlanCode(), tempDirectory.toString(), "Pin");
+		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevice.getDevicePlanCode(), tempDirectory.toString(), "PIN_PROD");
 		Device device = context.get(ContextConstants.DEVICE);
 		try(Scanner scanner = new Scanner(batchFile)){
 			while(scanner.hasNext()){
@@ -106,8 +105,8 @@ public class BatchSteps {
 
 			device.setPinOffset(values[0]);
 			logger.info("Pin Offset :  {}" , values[0] );
-			scanner.close();
-			//			reanming file name as sometimes the embosing file name is also same
+			scanner.close();			
+			//renaming file name as sometimes the embosing file name is also same
 			MiscUtils.renamePinFile(batchFile.toString());
 			MiscUtils.reportToConsole("******** Pin Offset Completed ***** " );
 		}

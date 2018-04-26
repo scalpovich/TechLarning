@@ -9,7 +9,7 @@ public class SimulatorConstantsData {
 	public static final String KILL_MAS_PROCESS = "MSPMCW"; // same process for
 															// MAS & MDFS
 	public static final String KILL_MAS17_PROCESS = "MSPMCW1740"; // same
-																	// process
+	public static final String KILL_MAS18_PROCESS = "MSPMCW1820";																// process
 																	// for MAS &
 																	// MDFS
 	public static final String KILL_MCPS_PROCESS = "MCPS";
@@ -34,7 +34,7 @@ public class SimulatorConstantsData {
 	// MAS & MDFS LICENSE SELECTION _______________________________________
 	public static final String SELECT_MAS_LICENSE = "Credit - Professional";
 	public static final String SELECT_MDFS_LICENSE = "Debit - Professional";
-	public static String MAS_LICENSE_TYPE = "MAS 16.4"; // need to modify this
+	public static String MAS_LICENSE_TYPE = "MAS 16.Q2"; // need to modify this
 	public static String MDFS_LICENSE_TYPE = "MAS 16.4"; // need to modify this
 	// _________________________________________________________________________
 
