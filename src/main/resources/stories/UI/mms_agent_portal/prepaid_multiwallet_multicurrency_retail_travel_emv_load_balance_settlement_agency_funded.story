@@ -11,7 +11,7 @@ Meta:
 @CardCreation
 @InitialLoadAndLoad
 
-Scenario: Prepaid - Admin User - Assign Program to Agency
+Scenario: Prepaid EMV load money and perform MMS transaction through agent portal
 Given user is logged in non-default institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin for non-default institution
 When user creates new device of prepaid type for non-default institution

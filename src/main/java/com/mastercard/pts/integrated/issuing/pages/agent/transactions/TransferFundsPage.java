@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.agent.transactions;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.omg.CORBA.INVALID_TRANSACTION;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -81,6 +82,14 @@ public class TransferFundsPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "txnPassword")
 	private MCWebElement txnPasswordTxt;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'VISA Money Transfer (Offline)')]/preceding-sibling::input")
+	private MCWebElement vmtOfflineRadioBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'VISA Fast Fund (Real Time)')]/preceding-sibling::input")
+	private MCWebElement vmtRealTimeRadioBtn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "remarks")
+	private MCWebElement remarksTxt;
 	
 	public void verifyUiOperationStatus() {
 		logger.info("Transfer Funds");
@@ -103,12 +112,52 @@ public class TransferFundsPage extends AbstractBasePage {
 	
 	public String transferFund(TransferFunds transferDetails,Device device) {
 		
-		String transferDetail[]=transferDetails.getTransferDetails().split(":");		
 		if(transferDetails.getTransaferThrough().equalsIgnoreCase("mms"))
+		{
 			ClickButton(masterCardMoneySendHomeRBtn);
+			clickWhenClickable(continueBtn);
+			return masterCardMoneyTransafer(transferDetails, device);
+		}
+		if(transferDetails.getTransaferThrough().equalsIgnoreCase("vmt") ||  transferDetails.getTransaferThrough().equalsIgnoreCase("vmtr"))
+		{
+			ClickButton(visaMoneyTransferHomeRBtn);	
+			clickWhenClickable(continueBtn);
+			return visaMoneyTransfer(transferDetails, device);
+		}		
+	
+		return INVALID_TRANSACTION_MESSAGE+transferDetails.getTransaferThrough();
+	}
+	
+	public String visaMoneyTransfer(TransferFunds transferDetails,Device device)
+	{
+		if(transferDetails.getTransaferThrough().equalsIgnoreCase("vmt"))
+		{
+			ClickButton(vmtOfflineRadioBtn);
+		}
+		if(transferDetails.getTransaferThrough().equalsIgnoreCase("vmtr"))
+		{
+			ClickButton(vmtRealTimeRadioBtn);		
+		}
 		
-		ClickButton(masterCardMoneySendHomeRBtn);
-		clickWhenClickable(continueBtn);
+		String transferDetail[]=transferDetails.getTransferDetails().split(":");			
+		enterText(deviceNumberTxt, device.getDeviceNumber());
+		SimulatorUtilities.wait(100);	
+		clickWhenClickable(walletNumberDropDown);
+		SelectDropDownByValue(walletNumberDropDown, device.getWalletNumber());
+		enterText(toDeviceNumberTxt, device.getExistingDeviceNumber());		
+		enterText(transactionAmountTxt, transferDetail[0]);		
+		selectByVisibleText(selectedWalletCurrencyCodeDropDown, transferDetail[1]);
+		clickSubmitButton();
+		enterText(txnPasswordTxt, device.getNewTransPassword());
+		enterText(remarksTxt, transferDetail[3]);
+		clickConfirmButton();
+		return getSuccessMessage();		
+		
+	}
+	
+	public String masterCardMoneyTransafer(TransferFunds transferDetails,Device device){
+		
+		String transferDetail[]=transferDetails.getTransferDetails().split(":");			
 		enterText(deviceNumberTxt, device.getDeviceNumber());
 		SimulatorUtilities.wait(100);	
 		clickWhenClickable(walletNumberDropDown);
@@ -120,9 +169,9 @@ public class TransferFundsPage extends AbstractBasePage {
 		enterText(beneficiaryNameTxt, transferDetail[2]);		
 		enterText(memoTxt, transferDetail[3]);
 		clickSubmitButton();
-		enterText(txnPasswordTxt, device.getClientCode());
+		enterText(txnPasswordTxt, device.getNewTransPassword());
 		clickConfirmButton();
-		return null;		
+		return getSuccessMessage();		
 	}
 	
 	
