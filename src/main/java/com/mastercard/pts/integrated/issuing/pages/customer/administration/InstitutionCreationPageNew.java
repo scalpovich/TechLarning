@@ -20,6 +20,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -306,6 +307,9 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "agtMailId:input:inputTextField")
 	private MCWebElement agentEmailTxt;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "adaptiveEcommFlag:input:dropdowncomponent")
+	private MCWebElement adaptiveEcommFlagDDwn;
+	
 	public static final String ATTRIBUTE_VALUE =  "value";
 
 	/**
@@ -334,7 +338,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public void checkPrepaid() {
-		selectCheckBox(prepaidChkBx, "Prepaid");
+		WebElementUtils.checkCheckbox(prepaidChkBx, true);
 	}
 
 	public void selectInstitutionCurrency(InstitutionCreation institute) {
@@ -822,6 +826,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 			if (institutionType[0].equalsIgnoreCase(Constants.PREPAID)
 					|| institutionType[1].equalsIgnoreCase(Constants.PREPAID)) {
 				checkPrepaid();
+				
 			}
 			if (institutionType[0].equalsIgnoreCase(Constants.CREDIT)
 					|| institutionType[1].equalsIgnoreCase(Constants.CREDIT)) {
@@ -885,10 +890,14 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 		}
 	}
 
-	public void provideAdaptiveAuthentication() {
-		selectCheckBox(adaptiveEcommChkBx, "AdaptiveEcomm");
+	public void provideAdaptiveAuthentication(InstitutionCreation institution) {
+		selectACSVendor(institution);
 		selectCheckBox(mpinChkBx, "MPIN Enabled");
 		selectCheckBox(smsProvider, "SMS Service Provider");
+	}
+	
+	public void selectACSVendor(InstitutionCreation institution) {
+		WebElementUtils.selectDropDownByVisibleText(adaptiveEcommFlagDDwn, institution.getAdaptiveAuthentication());
 	}
 
 	public void enterNewInstitution(InstitutionCreation institution) {
