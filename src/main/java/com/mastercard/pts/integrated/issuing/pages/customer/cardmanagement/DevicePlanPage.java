@@ -362,6 +362,9 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:lvcPerTxnLimit:input:inputAmountField")
 	private MCWebElement perTranscLimitTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:virtualDeviceCreditLimit:input:inputTextField")
+	private MCWebElement virtualDeviceCrediLimitTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:lvcTotalTxnAmtLimit:input:inputAmountField")
 	private MCWebElement totalTranscLimitTxt;
@@ -632,7 +635,14 @@ public class DevicePlanPage extends AbstractBasePage {
 		logger.info("before third next button");
 		clickWhenClickable(nextBtn);
 	}
+	
+	public void enterVirtualDeviceCreditLimit(DevicePlan deviceplan){
 
+		if (virtualDeviceCrediLimitTxt.isVisible()) {
+			if (virtualDeviceCrediLimitTxt.isEnabled())
+				enterValueinTextBox(virtualDeviceCrediLimitTxt, deviceplan.getVirtualCreditCardLimit());
+		}
+	}
 	public void enterPerTransactionLimit(DevicePlan deviceplan) {
 		if (perTranscLimitTxt.isVisible()) {
 			if (perTranscLimitTxt.isEnabled())
@@ -1028,7 +1038,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		WebElementUtils.checkCheckbox(ecommAllowedChkBx, devicePlan.isEcommerceAllowed());
 	
 		if(!devicePlan.DeviceType.equalsIgnoreCase("Limited Validity Virtual Card [8]")){
-			if (!devicePlan.getDeviceType().equals(DeviceType.STATIC_VIRTUAL_CARD)
+			if (!devicePlan.getDeviceType().equals(DeviceType.VIRTUAL_CARD)
 					&& "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 				WebElementUtils.enterText(pinRetryLimitTxt, devicePlan.getPinRetryLimit());
 			}
@@ -1036,9 +1046,12 @@ public class DevicePlanPage extends AbstractBasePage {
 
 		clickIframeNextButton();
 		
-		if(devicePlan.DeviceType.equalsIgnoreCase("Limited Validity Virtual Card [8]")){
+		if(devicePlan.DeviceType.equalsIgnoreCase(DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD)){
 			fillVirtualDeviceInfo(devicePlan);
 			clickIframeNextButton();			
+		}else if(devicePlan.DeviceType.equalsIgnoreCase(DeviceType.VIRTUAL_CARD)){
+			fillVirtualDeviceCreditLimit(devicePlan);
+			clickIframeNextButton();
 		}else{
 			clickIframeNextButton();
 		}
@@ -1096,14 +1109,22 @@ public class DevicePlanPage extends AbstractBasePage {
 			}
 			else
 			{
-			 selectIframeEmbossingVendorDdwn(devicePlan.getEmbossingVendor());
+			 if(!devicePlan.getDeviceType().equalsIgnoreCase("Static Virtual Card [7]")){
+				 selectIframeEmbossingVendorDdwn(devicePlan.getEmbossingVendor());
+			 }
+			 
 			}
 			if (devicePlan.getFillRenewalSection().equalsIgnoreCase(STATUS_YES))
 				fillRenewalSection(devicePlan);
-			if (devicePlan.getFillReplacementSection().equalsIgnoreCase(STATUS_YES))
-				fillReplacementSection(devicePlan);
-			if (!devicePlan.getDeviceType().equals(DeviceType.STATIC_VIRTUAL_CARD))
-				fillPinGenerationSection(devicePlan);
+			if (devicePlan.getFillReplacementSection().equalsIgnoreCase(STATUS_YES)){
+				if(!devicePlan.getDeviceType().equalsIgnoreCase(DeviceType.VIRTUAL_CARD)){
+					fillReplacementSection(devicePlan);
+				}
+			}	
+			if (!devicePlan.getDeviceType().equals(DeviceType.VIRTUAL_CARD)){
+					fillPinGenerationSection(devicePlan);
+			}
+			
 		}		
 		clickIframeNextButton();
 	}
@@ -1113,13 +1134,14 @@ public class DevicePlanPage extends AbstractBasePage {
 		enterTotalTransactionLimit(devicePlan);		
 		enterVelocity(devicePlan);		
 		enterValidity(devicePlan);
-		enterVirtualCreditLimit(devicePlan);
-		//WebElementUtils.enterText(C, "7000");
-		//WebElementUtils.enterText(totalTransactionLimitTxt, "7000");
-		//WebElementUtils.enterText(perTransactionLimitTxt, "7000");
-		
-					
+		enterVirtualCreditLimit(devicePlan);	
 	}
+	
+	private void fillVirtualDeviceCreditLimit(DevicePlan devicePlan){
+		
+		enterVirtualDeviceCreditLimit(devicePlan);
+	}
+	
 	private String getValueInYYMMFormatForExpiryDate(String dateVal) {
 		// for format of date to be passed is YYMM .Ex: Input is 10-2022..
 		// output should be 2210
@@ -1164,8 +1186,8 @@ public class DevicePlanPage extends AbstractBasePage {
 	private void fillRenewalSection(DevicePlan devicePlan) {
 		allowRenewalChkBx.click();
 		if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
-		{
-			selectByVisibleText(renwalDeviceTechnologyDdwn, devicePlan.getDeviceType());
+		{	
+			selectByVisibleText(renwalDeviceTechnologyDdwn, "Magnetic Stripe Card [1]" /*devicePlan.getDeviceType()*/);
 		}
 		else
 		{
