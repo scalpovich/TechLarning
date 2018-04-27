@@ -336,7 +336,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		fillProfile(device);
 
 		if(System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT) || System.getProperty("env").equalsIgnoreCase("automation2") || System.getProperty("env").equalsIgnoreCase("stageSA") ){
-			if(device.getApplicationType().equalsIgnoreCase("Primary and Add-on [B]")){
+			if(device.getApplicationType().equalsIgnoreCase("Primary and Add-on Device [B]")){
 				fillAddOnProfileAndClickNext(device);
 			}else{
 				clickNextButton();

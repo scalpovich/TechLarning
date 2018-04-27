@@ -1039,7 +1039,7 @@ public class DevicePlanPage extends AbstractBasePage {
 
 		WebElementUtils.checkCheckbox(ecommAllowedChkBx, devicePlan.isEcommerceAllowed());
 	
-		if(!devicePlan.DeviceType.equalsIgnoreCase("Limited Validity Virtual Card [8]")){
+		if(!devicePlan.DeviceType.equalsIgnoreCase(DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD)){
 			if (!devicePlan.getDeviceType().equals(DeviceType.VIRTUAL_CARD)
 					&& "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 				WebElementUtils.enterText(pinRetryLimitTxt, devicePlan.getPinRetryLimit());
