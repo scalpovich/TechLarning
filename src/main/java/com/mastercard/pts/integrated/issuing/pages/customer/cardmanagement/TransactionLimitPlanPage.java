@@ -264,11 +264,15 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 		runWithinPopup("Add Transaction Limit Plan Detail",() -> {
 					selectIframeTransactionType(details.getIframeTransactionType());
 					 waitForWicket();
+					 waitForPageToLoad(driver());
 					selectIframeTransactionSource(details.getIframeTransactionSource());
 					 waitForWicket();
+					 waitForPageToLoad(driver());
 					selectIframeTransactionChannel(details.getIframeTransactionChannel());
 					 waitForWicket();
+					 waitForPageToLoad(driver());
 					selectIframeTransactionOrigin(details.getIframeTransactionOrigin());
+					 waitForPageToLoad(driver());
 					enterIframeFloorAmount(details.getIframeFloorAmount());
 					selectIframeFloorResponse(details.getIframeFloorResponse());
 					enterIframeCeilingAmount(details.getIframeCeilingAmount());

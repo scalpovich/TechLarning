@@ -523,6 +523,7 @@ public class ProgramSetupSteps {
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinForNonDefaultInstitution(
 			String deviceType) {
 		// composite step
+		//AA
 	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin for an interface")
