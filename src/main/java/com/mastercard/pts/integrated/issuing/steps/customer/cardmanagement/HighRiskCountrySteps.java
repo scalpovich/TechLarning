@@ -4,10 +4,8 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.HighRiskCountry;
 import com.mastercard.pts.integrated.issuing.steps.AbstractBaseSteps;
-import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.HighRiskCountryFlows;
 
 /**
@@ -18,11 +16,10 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.H
 
 @Component
 public class HighRiskCountrySteps extends AbstractBaseSteps {
-
     @Autowired
-    HighRiskCountryFlows highRiskCountryFlows;
+    private HighRiskCountryFlows highRiskCountryFlows;
     
-    HighRiskCountry highRiskCountry;
+   private HighRiskCountry highRiskCountry;
 
 	@When("user adds high risk country")
 	public void userAddsHighRiskCountry() {

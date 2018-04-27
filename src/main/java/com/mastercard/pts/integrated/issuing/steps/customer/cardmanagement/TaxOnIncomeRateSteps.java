@@ -4,10 +4,8 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.HighRiskCountry;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TaxOnIncomeRate;
 import com.mastercard.pts.integrated.issuing.steps.AbstractBaseSteps;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.HighRiskCountryFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.TaxOnIncomeRateFlows;
 
 /**
@@ -20,9 +18,9 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.T
 public class TaxOnIncomeRateSteps extends AbstractBaseSteps {
 
     @Autowired
-    TaxOnIncomeRateFlows taxOnIncomeRateFlows;
+    private TaxOnIncomeRateFlows taxOnIncomeRateFlows;
     
-    TaxOnIncomeRate taxOnIncomeRate;
+    private TaxOnIncomeRate taxOnIncomeRate;
 
 	@When("user adds tax on income rate")
 	public void userAddsTaxOnIncomeRate() {
