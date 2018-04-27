@@ -276,7 +276,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
 		clickWhenClickable(generateDeviceBatchBtn);
 		waitForWicket();
-		SimulatorUtilities.wait(30000);
+		SimulatorUtilities.wait(10000);
 		// fetching batch number and setting it for further use
 		device.setBatchNumber(batchNumberTxt.getText());
 		logger.info(" *********** Batch number *********** " + device.getBatchNumber());
@@ -312,7 +312,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 		fillAddress(device);
 		// skip employment details
-		if (System.getProperty("env").equalsIgnoreCase("Demo") || System.getProperty("env").contains("stage")) {
+		if (!System.getProperty("env").equalsIgnoreCase("Automation")) {
 			fillEmploymentDetails(device);
 			selectProfessionByIndex(1);
 		}

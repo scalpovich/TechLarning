@@ -23,6 +23,7 @@ When processes pre-production batch for debit
 When processes device production batch for debit
 Then device has "normal" status
 Then user activates device through helpdesk
+Then embossing file batch was generated in correct format
 And user sign out from customer portal
 
 
@@ -32,5 +33,5 @@ When perform an ASI_PAYMENT_WITH_AMOUNT MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
-And search Account Status authorization and verify 000-Successful status
+And search Account Status authorization and verify 085-Successful status
 And user sign out from customer portal

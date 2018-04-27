@@ -21,6 +21,7 @@ When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 Then device has "normal" status
 Then user activates device through helpdesk
+Then embossing file batch was generated in correct format
 Then user sign out from customer portal
 
 Scenario: Perform ASI_PAYMENT_WITH_AMOUNT Authorization transaction

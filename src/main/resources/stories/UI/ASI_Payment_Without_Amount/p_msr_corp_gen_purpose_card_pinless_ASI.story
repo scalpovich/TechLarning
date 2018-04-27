@@ -23,6 +23,7 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
+Then embossing file batch was generated in correct format
 Then user sign out from customer portal
 Given connection to MAS is established
 When perform an ASI_PAYMENT_WITHOUT_AMOUNT MAS transaction
