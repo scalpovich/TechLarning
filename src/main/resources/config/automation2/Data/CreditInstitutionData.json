@@ -10,10 +10,10 @@
    "customerType":"Corporate",
    "embossingVendor":"AUTOB1",
    "interchange":"MASTERCARD",
-   "issuerBin":"CREDIT",
+   "issuerBin":"489765",
    "plasticId":"AUT",
    "pictureCode":"AUT",
    "corporateClientCode":"12121218003000051"
-   } 
-   ]
+   }
+  ]
 }

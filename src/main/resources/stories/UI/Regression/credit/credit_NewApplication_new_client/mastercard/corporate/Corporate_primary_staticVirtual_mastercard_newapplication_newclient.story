@@ -1,14 +1,17 @@
+!-- author: e076177
 Narrative:
 In order to a create a Credit Device under customer portal cardmanagement tab
 As a user
 I want to assert pages
 
 Meta:
-@CreditRegression
-@StoryName credit_emv_retail					 
-Scenario:1 UI verification - user creates a Credit Device Using New Device Screen
+Credit
+Regression
+@StoryName credit_emv_corp					 
+Scenario:1 UI verification - Customer Portal - User is able to create a Corporate-Primary-msr Credit Device Using New Application
 Meta:
-@UserCreatesNewCreditDevice
+@creditDevice
+Given setting json values in excel
 Given user is logged in institution
 When User fills Dedupe Plan
 And User fills Statement Message Plan for credit product
@@ -18,9 +21,10 @@ And User fills Transaction Limit Plan for credit product
 And User fills Document Checklist Screen for credit product
 And User fills Device Joining and Membership Fee Plan for credit product
 And User fills Device Event Based Fee Plan for credit product
-And for EMV Card User fills Device Plan for credit product for Mastercard
+And for Static Virtual User fills Device Plan for credit product for Mastercard
 And User fills Billing Cycle
 And User fills Payment Priority
+And User fills Payment Bounce Reason
 And User fills Transaction Rule Plan
 And User fills Credit Plan
 And User fills Wallet Fee Plan for credit product
@@ -28,7 +32,12 @@ And User fills Wallet Plan for credit product
 And User fills MCC Rules for credit product
 And User fills Program section for credit product for Mastercard
 When User fills Device Range section for credit product
-Then credit device is created using new device screen for Individual and Primary Device and New Client and EMV Card
-Then credit processes pre-production batch using new Device
-Then credit processes deviceproduction batch using new Device
-Then User search for new device on search screen for credit and validates the status as NORMAL
+Then credit device is created for Corporate and Primary Device and New Client and Static Virtual
+When user verifies the credit application device
+When user approves the credit application device
+When user processes close batch for new Application for FileUpload
+When user processes deviceGeneration batch for new Application for FileUpload
+When user searches for created application
+When credit processes pre-production batch using new Application
+When credit processes deviceproduction batch using new Application
+Then User search for new application on search screen for credit and validates the status as NORMAL

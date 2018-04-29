@@ -46,6 +46,9 @@ public class CloseBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement ProcessSelected;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "saveAll")
+	private MCWebElement processAll;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]")
 	public MCWebElements allBatchNumberTxt;
 	
@@ -98,8 +101,8 @@ public class CloseBatchPage extends AbstractBasePage {
 	}
 	
 	public void processFirstBatch() {
-		clickWhenClickable(firstBatchNumberTxt);
-		ProcessSelected.click();
+		//clickWhenClickable(firstBatchNumberTxt);
+		processAll.click();
 		verifyOperationStatus();
 	}
 	

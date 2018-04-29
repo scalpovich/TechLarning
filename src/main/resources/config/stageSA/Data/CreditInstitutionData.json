@@ -1,0 +1,49 @@
+{
+  "institute": [
+   {
+   "code":"190525",
+   "abbreviation":"ISSAUTO",
+   "association":"MASTERCARD",
+   "branch":"10985",
+   "cardPackIdGenerationTemplate":"PAN723",
+   "deviceIdGenerationTemplate":"PAN698",
+   "customerType":"Individual",
+   "embossingVendor":"V21550",
+   "interchange":"MASTERCARD",
+   "issuerBin":"526113",
+   "plasticId":"100",
+   "pictureCode":"114",
+   "corporateClientCode":"19052518092000001"
+   },
+   {
+   "code":"666666",
+   "abbreviation":"PerfCredit",
+   "association":"MASTERCARD",
+   "branch":"21659",
+   "cardPackIdGenerationTemplate":"PAN756",
+   "deviceIdGenerationTemplate":"PAN755",
+   "customerType":"Individual",
+   "embossingVendor":"V17787",
+   "interchange":"MASTERCARD",
+   "issuerBin":"VISA BIN",
+   "plasticId":"531",
+   "pictureCode":"315",
+   "corporateClientCode":"12121218004000045"
+   },
+   {
+   "code":"110088",
+   "abbreviation":"AUTOBNK",
+   "association":"MASTERCARD",
+   "branch":"184",
+   "cardPackIdGenerationTemplate":"PAN743",
+   "deviceIdGenerationTemplate":"PAN678",
+   "customerType":"Corporate",
+   "embossingVendor":"V25157",
+   "interchange":"MASTERCARD",
+   "issuerBin":"470110",
+   "plasticId":"317",
+   "pictureCode":"705",
+   "corporateClientCode":"11008818116000015"
+   } 
+   ]
+}

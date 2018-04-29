@@ -70,6 +70,7 @@ public class Program implements HasCodeAndDescription {
 	private String firstWalletPlan;
 	private String secondWalletPlan;
 	private String devicePlanPlan1;
+	private String devicePlanPlan2;
 	private String otherPlanStatementMessagePlan;
 	private String otherPlanMarketingMessagePlan;
 	private String creditLimit;
@@ -778,6 +779,14 @@ public class Program implements HasCodeAndDescription {
 
 	public void setMarkUpFeePlan(String markUpFeePlan) {
 		this.markUpFeePlan = markUpFeePlan;
+	}
+
+	public String getDevicePlanPlan2() {
+		return devicePlanPlan2;
+	}
+
+	public void setDevicePlanPlan2(String devicePlanPlan2) {
+		this.devicePlanPlan2 = devicePlanPlan2;
 	}
 
 	@Override

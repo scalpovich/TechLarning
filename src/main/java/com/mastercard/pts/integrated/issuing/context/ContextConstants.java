@@ -37,6 +37,8 @@ public class ContextConstants {
 	public static final String TRANSACTION_FEE_PLAN = "TRANSACTION_FEE_PLAN";
 	
 	public static final String APPLICATION_TYPE = "APPLICATION_TYPE";
+	
+	public static final String DEVICE_PLAN_SUPPLEMENTARY = "DEVICE_PLAN_SUPPLEMENTARY";
 
 	private ContextConstants() {
 	}
