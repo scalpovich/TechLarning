@@ -125,8 +125,13 @@ public class DevicePlan implements HasCodeAndDescription {
 	private static final String DP_EMV_PLAN_PIN_CHANGE = "DP_EMV_PLAN_PIN_CHANGE";
 	private static final String DP_EMV_PLAN_PIN_UNBLOCK = "DP_EMV_PLAN_PIN_UNBLOCK";
 	private static final String DP_ALLOW_INTERNATIONAL_TRANSACTIONS = "DP_ALLOW_INTERNATIONAL_TRANSACTIONS";
+	private static final String TRANSACTION_FEE_PLAN = "TRANSACTION_FEE_PLAN";
 	private static final String DP_VIRTUAL_CREDIT_CARD_LIMIT = "VIRTUAL_CREDIT_CARD_LIMIT";
 	private static final String DP_PER_TRANSACTIO_LIMIT ="DP_PER_TRANSACTIO_LIMIT";
+	private static final String PER_TRANSACTION_LIMIT = "PER_TRANSACTION_LIMIT";
+	private static final String TOTAL_TRANSACTION_LIMIT = "TOTAL_TRANSACTION_LIMIT";
+	private static final String VELOCITY = "VELOCITY";
+	private static final String VALIDITY = "VALIDITY";
 	private static final String DP_TOTAL_TRANSACTION_LIMIT ="DP_TOTAL_TRANSACTION_LIMIT";
 	private static final String DP_VELOCITY ="DP_VELOCITY";
 	private static final String DP_VELIDITYDATE ="DP_VELIDITYDATE";
@@ -403,13 +408,16 @@ public class DevicePlan implements HasCodeAndDescription {
 		return plan;
 	}
 	
-	public String getVirtualCreditCardLimit(){
-		return virtualCreditCardLimit;
+	public static DevicePlan createProviderForCredit(KeyValueProvider provider) {
+		DevicePlan devicePlan = createWithProvider(provider);
+		devicePlan.setPerTransactionLimit(provider.getString(PER_TRANSACTION_LIMIT));
+		devicePlan.setTotalTransactionLimit(provider.getString(TOTAL_TRANSACTION_LIMIT));
+		devicePlan.setVelocity(provider.getString(VELOCITY));
+		devicePlan.setValidity(provider.getString(VALIDITY));
+		return devicePlan;
+		
 	}
-	
-	public void setVirtualCreditCardLimit(String virtualCreditCardLimit){
-		this.virtualCreditCardLimit = virtualCreditCardLimit;
-	}
+
 	public String getAllowInternationalTransaction() {
 		return allowInternationalTransaction;
 	}
@@ -1251,6 +1259,14 @@ public class DevicePlan implements HasCodeAndDescription {
 
 	public void setExpiryDateExcel(String expiryDateExcel) {
 		this.expiryDateExcel = expiryDateExcel;
+	}
+
+	public String getVirtualCreditCardLimit() {
+		return virtualCreditCardLimit;
+	}
+
+	public void setVirtualCreditCardLimit(String virtualCreditCardLimit) {
+		this.virtualCreditCardLimit = virtualCreditCardLimit;
 	}
 
 	public void devicePlanDataprovider() {

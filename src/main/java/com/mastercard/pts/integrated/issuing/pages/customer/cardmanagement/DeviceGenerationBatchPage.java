@@ -42,6 +42,9 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement processSelected;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "saveAll")
+	private MCWebElement processAll;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]")
 	private MCWebElements allBatchNumberTxt;
 	
@@ -97,8 +100,8 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	}
 	
 	public void processFirstBatch() {
-		clickWhenClickable(firstBatchNumberTxt);
-		processSelected.click();
+		//clickWhenClickable(firstBatchNumberTxt);
+		processAll.click();
 		verifyOperationStatus();
 	}
 	

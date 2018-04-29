@@ -3,7 +3,6 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SearchApplicationDetails;

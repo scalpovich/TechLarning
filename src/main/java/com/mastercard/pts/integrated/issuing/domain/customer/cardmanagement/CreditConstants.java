@@ -44,6 +44,12 @@ public class CreditConstants {
 	public static final String QUANTITY_REQUESTED = "QUANTITY_REQUESTED";
 	
 	public static final String VENDOR_BRANCH="VENDOR_BRANCH";
+	
+	public static final String PRIMARY_BATCH_NUMBER="PRIMARY_BATCH_NUMBER";
+	
+	public static final String EXISTING_DEVICE_NUMBER="EXISTING_DEVICE_NUMBER";
+	
+	public static final String SUPPLEMENTARY_DEVICE_NUMBER="SUPPLEMENTARY_DEVICE_NUMBER";
 
 
 	private CreditConstants() {

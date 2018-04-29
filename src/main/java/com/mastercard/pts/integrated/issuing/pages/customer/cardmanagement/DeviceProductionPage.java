@@ -204,6 +204,14 @@ public class DeviceProductionPage extends AbstractBasePage {
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 	}
+	
+	public void processDeviceProductionBatchNewDeviceSupplementary(DeviceProductionBatch batch) {
+		//Device device = context.get(ContextConstants.DEVICE);
+		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
+		WebElementUtils.enterText(batchNumberTxt, batchNumber);
+		waitAndSearchForRecordToExistForSupplementary();
+		verifyOperationStatus();
+	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

@@ -281,8 +281,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview tr.even a>img[alt='Delete Record'],table.dataview tr.odd a>img[alt='Delete Record']")
 	private MCWebElements deleteAddedRecordsIcon;
 
-	private String ERROR_XPATH = ".//div[@class='ketchup-error-container-alt']/ol/li";
-
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class='headers']/th//span")
+	private MCWebElements deviceProductionHeaders;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "processAll")
+	private MCWebElement processAll;
+	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
 		MCAnnotationProcessor.initializeSuper(this, finderProvider);
@@ -298,6 +303,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void clickProcessSelectedButton() {
 		clickWhenClickable(processSelectedBtn);
+	}
+	
+	protected void clickProcessAllButton() {
+		clickWhenClickable(processAll);
 	}
 
 	protected void clickNextButton() {
@@ -679,6 +688,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 			selectFirstRecord();
 		}
 		clickProcessSelectedButton();
+	}
+	
+	protected void waitAndSearchForRecordToExistForSupplementary() {
+		waitAndSearchForRecordToAppear();
+		deviceNumbersForSupplementary();
+		clickProcessAllButton();
 	}
 
 	protected void waitForBatchStatus() {
@@ -1686,23 +1701,32 @@ public abstract class AbstractBasePage extends AbstractPage {
 		Device device  = context.get(CreditConstants.APPLICATION);
 		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
 	}
-
-	public void searchEntity(String entityType) {
-		UserCreation userCreation = context.get(ContextConstants.USER);
-		if ("user".equalsIgnoreCase(entityType))
-			selectByVisibleText(entityTypeDdwn, ENTITY_TYPE_USER);
-		else if ("role".equalsIgnoreCase(entityType))
-			selectByVisibleText(entityTypeDdwn, ENTITY_TYPE_ROLE);
-		CustomUtils.ThreadDotSleep(900);
-		Select select = new Select(getFinder().getWebDriver().findElement(ENTITY_ID));
-		CustomUtils.ThreadDotSleep(500);
-		select.selectByVisibleText(userCreation.getUserName() + " [" + userCreation.getUserID() + "]");
-		ClickButton(searchBtn);
+	
+	public int deviceNumberIndex()
+	{  
+		int index=0;
+		for(int i=0;i<deviceProductionHeaders.getElements().size();i++)
+		{
+			if(deviceProductionHeaders.getElements().get(i).getText().equalsIgnoreCase("Device Number"))
+			{
+				index=i+1;
+			}
+		}
+		return index;
+	}
+	
+	public List<String>deviceNumbersForSupplementary()
+	{
+		List<String>allDeviceNumbers=new ArrayList<>();
+		List<WebElement>deviceNumbers=driver().findElements(By.xpath("//table[@class='dataview']//tr[@class!='headers']/td["+deviceNumberIndex()+"]/span"));
+		for(int i=0;i<deviceNumbers.size();i++)
+		{
+			allDeviceNumbers.add(deviceNumbers.get(i).getText());
+		}
+		context.put(CreditConstants.SUPPLEMENTARY_DEVICE_NUMBER, allDeviceNumbers);
+		return allDeviceNumbers;
 	}
 
-	public void selectTab(String tabName) {
-		getFinder().getWebDriver().findElement(By.xpath(String.format(PRIVILEGES_TABS, tabName))).click();
-	}
 
 	/**
 	 * Select institute from top drp dwn.

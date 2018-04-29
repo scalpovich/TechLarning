@@ -91,6 +91,9 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanCode1:input:dropdowncomponent")
 	private MCWebElement devicePlanPlan1DDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanCode2:input:dropdowncomponent")
+	private MCWebElement devicePlanPlan2DDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:statMsgCode:input:dropdowncomponent")
 	private MCWebElement otherPlanStatementMessagePlanDDwn;
@@ -351,6 +354,10 @@ public class ProgramPage extends AbstractBasePage {
 	public void selectDevicePlanPlan1DDwn(String devicePlanPlan1) {
 		WebElementUtils.selectDropDownByVisibleText(devicePlanPlan1DDwn, devicePlanPlan1);
 	}
+	
+	public void selectDevicePlanPlan2DDwn(String devicePlanPlan2) {
+		WebElementUtils.selectDropDownByVisibleText(devicePlanPlan2DDwn, devicePlanPlan2);
+	}
 
 	public void selectOtherPlanStatementMessagePlan(String otherPlanStatementMessagePlan) {
 		WebElementUtils.selectDropDownByVisibleText(otherPlanStatementMessagePlanDDwn, otherPlanStatementMessagePlan);
@@ -495,6 +502,10 @@ public class ProgramPage extends AbstractBasePage {
 		clickNextButton();
 		selectWalletPlanPlan1(program.getFirstWalletPlan());
 		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
+		if (productType.equalsIgnoreCase(ProductType.CREDIT))
+		{
+		selectDevicePlanPlan2DDwn(program.getDevicePlanPlan2());
+		}
 		if (!productType.equalsIgnoreCase(ProductType.DEBIT)) {
 			selectOtherPlanStatementMessagePlan(program.getOtherPlanStatementMessagePlan());
 			selectOtherPlanMarketingMessagePlan(program.getOtherPlanMarketingMessagePlan());

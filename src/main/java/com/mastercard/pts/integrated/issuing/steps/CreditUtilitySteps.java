@@ -45,12 +45,24 @@ public class CreditUtilitySteps {
 		String institution=System.getProperty("institution");
 		Method[]methodsJson=CreditInstitutionData.class.getDeclaredMethods();
 		Method[]methodsExcel=CreditMappingForExcel.class.getDeclaredMethods();
+		/** Step-1
+		 * creating context of excel and json for all the fields mention in CreditInstitutionData.json
+		 */
 		contextForExcelAndJson(institution);
 	    context.put(CreditConstants.JSON_VALUES, creditMappingForJson);
 
 		Map<String,String>jsonMap=new LinkedHashMap<String, String>();
+		/**Step-2
+		 * Getting the initial excel context which retrieves all the data of @Storyname
+		 */
          Map<String, Object> map = context.get(TestContext.KEY_STORY_DATA);
+         /**Step-3
+ 		 * Replacing excel context of Step-1 values with json context values
+ 		 */
 		replacingValuesFromJsonToExcel(methodsJson, methodsExcel, jsonMap);
+		 /**Step-4
+ 		 * Update the excel context of Step-2 with the replaced values and using it to run the entire scenario/Story
+ 		 */
 		updatedExcelContext(jsonMap, map);
 		context.put(TestContext.KEY_STORY_DATA,map);
 		context.get(TestContext.KEY_STORY_DATA);

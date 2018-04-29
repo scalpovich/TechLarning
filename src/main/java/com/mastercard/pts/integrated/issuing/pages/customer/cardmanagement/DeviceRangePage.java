@@ -428,10 +428,11 @@ public class DeviceRangePage extends AbstractBasePage {
 		logger.info("issuerBin :{}", deviceRange.getIssuerBin());
 		if (deviceRange.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			selectByVisibleText(issuerBinDDwn, deviceRange.getIssuerBin());
+			selectByVisibleText(branchDDwn, deviceRange.getBranch());
 		} else {
 			selectIssuerBin(deviceRange.getIssuerBin());
+			selectBranch(deviceRange.getBranch());
 		}
-		selectBranch(deviceRange.getBranch());
 		addBtn.click();
 		waitForWicket();
 	}
