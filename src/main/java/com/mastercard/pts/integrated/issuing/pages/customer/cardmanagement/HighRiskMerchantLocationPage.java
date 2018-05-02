@@ -1,7 +1,9 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -9,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.HighRiskMerchantLocation;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
@@ -43,30 +46,85 @@ public class HighRiskMerchantLocationPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#endDate")
 	private MCWebElement endDateDPkr;
-
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span.feedbackPanelINFO")
+	private MCWebElement feedbackPanel;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='merchantLocationId']")
+	private MCWebElement planCodeSearchTxtBx;
+	
+	private String ERROR_XPATH = ".//div[@class='ketchup-error-container-alt']/ol/li";
+	
 	public void verifyUiOperationStatus() {
 		logger.info("High Risk Merchant Location");
-		addHighRiskMerchantLocation();
 		verifyUiOperation("Add High Risk Merchant Location");
 	}
+	
+	private void addAcquireeId(){
+		enterText(acquirerId, TEXT);
+	}
+	
+	private void addMerchantId(){
+		enterText(merchantId, TEXT);
+	}
+	
+	private void addMerchantLocationDescription(){
+		enterText(merchantLocationDescription, TEXT);
+	}
+	
+	private void addMerchantLocationId(){
+		enterText(merchantLocationId, TEXT);
+	}
+	
+	private void addEffectiveDateDPkr(){
+		WebElementUtils.pickDate(effectiveDateDPkr, futureDate);
+	}
+	
+	private void addEndDateDPkr(){
+		WebElementUtils.pickDate(endDateDPkr, futureEndDate);
+	} 
 
-	public void addHighRiskMerchantLocation() {
+	public String addHighRiskMerchantLocation() {
+		try{
 		logger.info("Add High Risk Merchant Location");
 		clickAddNewButton();
 		runWithinPopup("High Risk Merchant Location", () -> {
-			addNewHighRiskMerchantLocation();
+			addAcquireeId();
+			addMerchantId();
+			addMerchantLocationDescription();
+			addMerchantLocationId();
+			addEffectiveDateDPkr();
+			addEndDateDPkr();
+			clickSaveButton();
 			verifyDuplicateAndClickCancel();
 		});
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return TEXT;
 	}
-
-	private void addNewHighRiskMerchantLocation() {
-		WebElementUtils.enterText(acquirerId, TEXT);
-		WebElementUtils.enterText(merchantId, TEXT);
-		WebElementUtils.enterText(merchantLocationDescription, TEXT);
-		WebElementUtils.enterText(merchantLocationId, TEXT);
-		WebElementUtils.pickDate(effectiveDateDPkr, futureDate);
-		WebElementUtils.pickDate(endDateDPkr, futureEndDate);
+	
+	public String getFeedbackText() {
+		return feedbackPanel.getText();
+	}
+	
+	public void enterMerchantLocationIdInSearchBox(HighRiskMerchantLocation plan) {
+		enterValueinTextBox(planCodeSearchTxtBx, plan.getMerchantLocationId());
+	}
+	
+	public Boolean isNoRecordsFoundInTableView() {
+		return isNoRecordsFoundInTable();
+	}
+	
+	public void saveWithoutMandatoryFields(){
+		clickAddNewButton();
+		switchToIframe("Add High Risk Merchant Location");
 		clickSaveButton();
+	}
+	
+	public List<WebElement> getErrors() {
+	    return Elements(ERROR_XPATH);
 	}
 
 	@Override

@@ -97,6 +97,8 @@ public class SurchargePlanPage extends AbstractBasePage {
 	private MCWebElement noRecordsCell;
 
 	private String surchargePlanDetailsIframeId = "_wicket_window_3";
+	
+	private int MCG_CODE_INDEX = 2;
 
 	public void verifyUiOperationStatus() {
 		LOGGER.info("Surcharge Plan");
@@ -171,7 +173,12 @@ public class SurchargePlanPage extends AbstractBasePage {
 	}
 
 	public void selectMCG(SurchargePlan plan) {
-		SelectDropDownByText(mcgDDwn, plan.getMcg());
+		try {
+			SelectDropDownByText(mcgDDwn, plan.getMcg());
+		} catch (Exception e) {
+			LOGGER.info("Not able to identify MCG plan populated from Excel Sheet");
+			SelectDropDownByIndex(mcgDDwn, MCG_CODE_INDEX);
+		}
 	}
 
 	public void pickEffectiveDate(SurchargePlan plan) {
@@ -223,4 +230,29 @@ public class SurchargePlanPage extends AbstractBasePage {
 	public Boolean isNoRecordsFoundInTableView() {
 		return isNoRecordsFoundInTable();
 	}
+	
+	public void createSurchargePlanWithDetails(SurchargePlan plan){
+		clickAddNewButton();
+		runWithinPopup(ADD_SURCHARGE_PLAN_FRAME, () -> {
+			enterSurchargePlanCode(plan);
+			enterDescription(plan);
+			selectCurrency(plan);
+			selectSurchargeSource(plan);
+			addDetails();	
+			clickAddNewButton();
+			});
+		switchToIframe(ADD_SURCHARGE_PLAN_DETAIL_FRAME);
+			selectInterchange(plan);
+			selectMCG(plan);
+			pickEffectiveDate(plan);
+			pickEndDate(plan);
+			enterFeeTransactionDescription(plan);
+			enterSurchargeRate(plan);
+			enterFixedSurchargeAmount(plan);
+			enterMinSurchargeAmount(plan);
+			enterMaxSurchargeAmount(plan);
+			save();
+		saveMain();
+	}
+	
 }

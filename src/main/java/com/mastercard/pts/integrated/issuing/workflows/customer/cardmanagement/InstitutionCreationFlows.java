@@ -31,8 +31,6 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 	
 	private static final String TAB_ADDRESS = "Address"; 
 
-	private static final String TAB_ADDRESS = "Address";
-
 	public void institutionCreation(InstitutionCreation institutionCreation) {
 
 		institute = navigator.navigateToPage(InstitutionCreationPageNew.class);
@@ -81,33 +79,20 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 		institute.save();
 	}
 
-<<<<<<< HEAD
-	public void updateCustomerCareIntlVIP(
-			InstitutionCreation institutionCreation) {
-=======
 	public void updateCustomerCareIntlVIP(InstitutionCreation institutionCreation) {
->>>>>>> release/Iteration14
 		institute = navigator.navigateToPage(InstitutionCreationPageNew.class);
 		institute.enterNewInstitution(institutionCreation);
 		institute.updateCustomerCareIntlVIP(institutionCreation);
 		institute.save();
 	}
-<<<<<<< HEAD
-	public boolean validateCustomerCareIntlVIP(InstitutionCreation institutionCreation){
-=======
 
 	public boolean validateCustomerCareIntlVIP(InstitutionCreation institutionCreation) {
->>>>>>> release/Iteration14
 		institute = navigator.navigateToPage(InstitutionCreationPageNew.class);
 		institute.enterNewInstitution(institutionCreation);
 		boolean status = institute.validateCustomerCareIntlVIP(institutionCreation);
 		institute.cancel();
 		return status;
 	}
-<<<<<<< HEAD
-	
-=======
->>>>>>> release/Iteration14
 
 	public String verifyInstitiueUpdate() {
 		return institute.getInstUpdateMessage();
