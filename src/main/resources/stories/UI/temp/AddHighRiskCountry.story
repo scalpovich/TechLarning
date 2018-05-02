@@ -8,13 +8,13 @@ So that I can automate High Risk Country creation
 Meta:
 @UI
 @all
-@StoryName InstitutionAndUserCreation
+@StoryName AddHighRiskCountry
 
 Scenario:add high risk country
 
 Meta:
-@TCName TC_Application_Upload_Prepaid
+@TCName TCInstituteCreationPR
 @testDataFileName testdata
-@sheetName Prepaid_Application_Upload 
-Given login to portal as existing bank as a Customeruser
-When user Adds CANADA [124] as High Risk Country
+@sheetName Institute 
+Given login to bank as a customerUser
+When user adds high risk country
