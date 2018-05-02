@@ -18,6 +18,7 @@ Meta:
 
 Given login to portal as existing bank as a Customeruser
 When user creates Allowed Load Currency for INR
+!-- When user creates Manual Alerts of EMV Card for product type credit 
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
 When user creates a Network MemberShip for Mastercard
 When user creates a Transaction Registration
@@ -32,6 +33,7 @@ When user creates HSM Device Keys for Mastercard
 When user creates HSM ZPK Network Keys for Mastercard(CIS)
 When user creates MDK keys for Mastercard
 When user creates MCG
+When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
 When user creates Dedupe Plan
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Mastercard
@@ -69,6 +71,7 @@ When user creates HSM Device Keys for Visa
 When user creates HSM ZPK Network Keys for Visa(SMS)
 When user creates MDK keys for Visa
 When user creates MCG
+When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
 When user creates Dedupe Plan
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Visa
@@ -106,6 +109,7 @@ When user creates HSM Device Keys for Rupay
 When user creates HSM ZPK Network Keys for RPY
 When user creates MDK keys for Rupay
 When user creates MCG
+When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
 When user creates Dedupe Plan
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Rupay

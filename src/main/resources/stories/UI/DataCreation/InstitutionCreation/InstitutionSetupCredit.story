@@ -31,6 +31,7 @@ When user creates HSM Device Keys for Mastercard
 When user creates HSM ZPK Network Keys for Mastercard(CIS)
 When user creates MDK keys for Mastercard
 When user creates MCG
+When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
 When user creates Dedupe Plan
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Mastercard
@@ -55,6 +56,7 @@ Meta:
 @sheetName S205014
 Given login to portal as existing bank as a Customeruser
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
+When user creates Allowed Load Currency for INR
 When user creates a Network MemberShip for Visa
 When user creates a Transaction Registration
 When user creates an Institution Currency with status as Active
@@ -68,6 +70,7 @@ When user creates HSM Device Keys for Visa
 When user creates HSM ZPK Network Keys for Visa(DMS)
 When user creates MDK keys for Visa
 When user creates MCG
+When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
 When user creates Dedupe Plan
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Visa
@@ -92,6 +95,7 @@ Meta:
 
 Given login to portal as existing bank as a Customeruser 
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
+When user creates Allowed Load Currency for INR
 When user creates a Network MemberShip for Rupay
 When user creates a Transaction Registration
 When user creates an Institution Currency with status as Active
@@ -105,6 +109,7 @@ When user creates HSM Device Keys for Rupay
 When user creates HSM ZPK Network Keys for RPY
 When user creates MDK keys for Rupay
 When user creates MCG
+When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
 When user creates Dedupe Plan
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Rupay
@@ -131,8 +136,9 @@ Meta:
 @sheetName S205014
 
 Given login to portal as existing bank as a Customeruser
-When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
+When user creates Allowed Load Currency for INR
 When user creates a Network MemberShip for Amex
+When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
 When user creates a Transaction Registration
 When user creates an Institution Currency with status as Active
 When user creates a Zonal Office
@@ -145,6 +151,7 @@ When user creates HSM Device Keys for Amex
 When user creates HSM ZPK Network Keys for Amex(DMS)
 When user creates MDK keys for Amex
 When user creates MCG
+When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
 When user creates Dedupe Plan
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Amex

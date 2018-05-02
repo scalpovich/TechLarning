@@ -31,6 +31,7 @@ When user creates HSM Device Keys for Mastercard
 When user creates HSM ZPK Network Keys for Mastercard(CIS)
 When user creates MDK keys for Mastercard
 When user creates MCG
+When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
 When user creates Dedupe Plan
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Mastercard
@@ -76,6 +77,7 @@ When user creates MDK keys for Visa
 When user creates MCG
 When user creates Dedupe Plan
 When user creates MCG
+When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
 When user creates Dedupe Plan
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Visa
@@ -118,6 +120,7 @@ When user creates HSM Device Keys for Rupay
 When user creates HSM ZPK Network Keys for RPY
 When user creates MDK keys for Rupay
 When user creates MCG
+When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
 When user creates Dedupe Plan
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Rupay
