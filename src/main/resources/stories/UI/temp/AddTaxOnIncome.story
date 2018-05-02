@@ -10,7 +10,7 @@ Meta:
 @all
 @StoryName AddTaxOnIncomeRate
 
-Scenario:add high risk country
+Scenario:add tax on income rate
 
 Meta:
 @TCName TCInstituteCreationPR
