@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for prepaid msr retail general purpose card
 
 Meta:
-@StoryName p_msr_retail_gen_purpose
+@StoryName p_msr_retail_gen_purpose_MMSR
 @MMSR
 
 Scenario: Set up prepaid msr retail general purpose card
@@ -22,6 +22,7 @@ When processes device production batch for prepaid
 Then device has "normal" status
 Then user activates device through helpdesk
 Then user sign out from customer portal
+Then embossing file batch was generated in correct format
 
 Scenario: Perform MMSR-RetailGeneralPurposeCard Authorization transaction
 Given connection to MAS is established

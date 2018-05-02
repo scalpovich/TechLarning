@@ -6,7 +6,7 @@ As an issuer
 I want to create a MSR Retail Debit debit card for client
 
 Meta:
-@StoryName d_msr_retail_ASI
+@StoryName d_emv_retail_ASI
 @MMSR
 
 Scenario: Set up debit msr retail debit card pinless

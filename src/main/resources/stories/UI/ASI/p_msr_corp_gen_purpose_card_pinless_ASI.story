@@ -24,6 +24,7 @@ When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
 Then user sign out from customer portal
+Then embossing file batch was generated in correct format
 Given connection to MAS is established
 When perform an ASI_MSR MAS transaction
 Then MAS test results are verified
