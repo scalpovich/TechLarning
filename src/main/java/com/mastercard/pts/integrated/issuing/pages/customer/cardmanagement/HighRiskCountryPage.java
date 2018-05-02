@@ -68,7 +68,7 @@ public class HighRiskCountryPage extends AbstractBasePage {
 		clickSaveButton();
 	}
 	
-	public void addHighRiskCountryNew(HighRiskCountry highRiskCountry) {
+	public void addNewHighRiskCountry(HighRiskCountry highRiskCountry) {
 		logger.info("Add High Risk Country");
 		deleteExistingRecord(highRiskCountry.getHighRiskCountry());
 		clickAddNewButton();

@@ -14,7 +14,7 @@ public class HighRiskCountryFlows {
 	private Navigator navigator;
 	public void addHighRiskCountry(HighRiskCountry highRiskCountry){
 		HighRiskCountryPage page = navigator.navigateToPage(HighRiskCountryPage.class);
-		page.addHighRiskCountryNew(highRiskCountry);
+		page.addNewHighRiskCountry(highRiskCountry);
 	}
 
 }
