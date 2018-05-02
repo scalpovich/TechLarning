@@ -4,11 +4,11 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.HighRiskCountry;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TaxOnIncomeRate;
 import com.mastercard.pts.integrated.issuing.steps.AbstractBaseSteps;
-import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.HighRiskCountryFlows;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.TaxOnIncomeRateFlows;
 
 /**
  * @author E076170
@@ -17,17 +17,17 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.H
  */
 
 @Component
-public class HighRiskCountrySteps extends AbstractBaseSteps {
+public class TaxOnIncomeRateSteps extends AbstractBaseSteps {
 
     @Autowired
-    HighRiskCountryFlows highRiskCountryFlows;
+    TaxOnIncomeRateFlows taxOnIncomeRateFlows;
     
-    HighRiskCountry highRiskCountry;
+    TaxOnIncomeRate taxOnIncomeRate;
 
-	@When("user adds high risk country")
-	public void userAddsHighRiskCountry() {
-		highRiskCountry=HighRiskCountry.getHighRiskCountryData();
-		highRiskCountryFlows.addHighRiskCountry(highRiskCountry);
+	@When("user adds tax on income rate")
+	public void userAddsTaxOnIncomeRate() {
+		taxOnIncomeRate=TaxOnIncomeRate.getTaxOnIncomeRateData();
+		taxOnIncomeRateFlows.addTaxOnIncomeRate(taxOnIncomeRate);
 	}
 
 }
