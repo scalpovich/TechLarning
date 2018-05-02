@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.HighRiskCountry;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
@@ -68,17 +69,17 @@ public class HighRiskCountryPage extends AbstractBasePage {
 		clickSaveButton();
 	}
 	
-	public void addAndVerifyHighRiskCountry() {
+	public void addHighRiskCountryNew(HighRiskCountry highRiskCountry) {
 		logger.info("Add High Risk Country");
-		deleteExistingRecord(context.get(ConstantData.HIGH_RISK_COUNTRY));
+		deleteExistingRecord(highRiskCountry.getHighRiskCountry());
 		clickAddNewButton();
 		runWithinPopup("High Risk Country", () -> {
-			addNewHighRiskCountryAndSave();
+			addNewHighRiskCountryAndSave(highRiskCountry.getHighRiskCountry());
 		});
 	}
 
-	private void addNewHighRiskCountryAndSave() {
-		selectByVisibleText(countryCodePopupDDwn, context.get(ConstantData.HIGH_RISK_COUNTRY));
+	private void addNewHighRiskCountryAndSave(String highRiskCountry) {
+		selectByVisibleText(countryCodePopupDDwn, highRiskCountry);
 		WebElementUtils.pickDate(effectiveDateDPkr, futureDate);
 		WebElementUtils.pickDate(endDateDPkr, futureEndDate);
 		clickSaveButton();
