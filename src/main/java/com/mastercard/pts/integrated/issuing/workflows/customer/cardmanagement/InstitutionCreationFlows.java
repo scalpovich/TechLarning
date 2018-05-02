@@ -35,7 +35,7 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 		institute.clickAddBtn();
 		institute.provideInstitutionDetails(institutionCreation);
 		institute.provideInstitutionType(institutionCreation);
-		institute.provideGeneralDetails(institutionCreation);	
+		institute.provideGeneralDetails(institutionCreation);
 		institute.provideAdaptiveAuthentication(institutionCreation);
 		institute.provideCustomCareDetails(institutionCreation);
 		institute.navigateToTab(TAB_ADDRESS);

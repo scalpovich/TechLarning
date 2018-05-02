@@ -20,4 +20,3 @@ And processes created bulk device generation request for prepaid
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
-Then Pin Offset file batch was generated successfully

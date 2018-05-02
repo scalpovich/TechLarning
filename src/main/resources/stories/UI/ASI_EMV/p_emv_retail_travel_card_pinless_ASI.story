@@ -1,4 +1,4 @@
-prepaid msr retail travel card card authorization PINLESS
+	prepaid msr retail travel card card authorization PINLESS
 
 Narrative:
 In order to check transactions on prepaid msr retail travel card 
@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for prepaid msr retail travel card 
 
 Meta:
-@StoryName p_msr_retail_travel_ASI
+@StoryName p_emv_retail_travel_ASI
 @ASI
 
 Scenario: Set up prepaid msr retail travel card

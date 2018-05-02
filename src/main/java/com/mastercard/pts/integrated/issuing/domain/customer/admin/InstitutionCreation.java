@@ -395,6 +395,7 @@ public class InstitutionCreation extends AbstractBasePage {
 		institute.setFinanacialStartMonth(MapUtils
 				.fnGetInputDataFromMap("Financial Start Month"));
 		institute.setSDNPlan(MapUtils.fnGetInputDataFromMap("SDN Plan"));
+		
 		institute.setAdaptiveAuthentication(MapUtils
 				.fnGetInputDataFromMap("AdaptiveEcomm"));
 		institute.setmPinEnabled(MapUtils

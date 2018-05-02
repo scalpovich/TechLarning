@@ -233,13 +233,13 @@ public class TransactionSteps {
 			transactionData.setDeKeyValuePairDynamic("052", device.getPinNumberForTransaction());
 		// data format is 12 digits hence leftpad with 0
 		transactionData.setDeKeyValuePairDynamic("004", StringUtils.leftPad(device.getTransactionAmount(), 12, "0"));
-		if (transactionWorkflow.isContains(transaction, "BALANCE_INQUIRY") || transactionWorkflow.isContains(transaction, "PIN_CHANGE")) {
+		if (transactionWorkflow.isContains(transaction, "BALANCE_INQUIRY") || transactionWorkflow.isContains(transaction, "PIN_CHANGE") || transactionWorkflow.isContains(transaction, "ASI_")) {
 			// this value is expected to be 0's for Balance Enquiry
 			transactionData.setDeKeyValuePairDynamic("004", "000000000000");
 		}
 
 		// changed ECOMMERCE to ECOM
-		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE")) {
+		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") || transactionWorkflow.isContains(transaction, "ASI_")||transactionWorkflow.isContains(transaction, "MMSR") ) {
 			// for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInuxbox
 			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); // Transaction currency code
 		}
@@ -337,12 +337,10 @@ public class TransactionSteps {
 			assertTrue("Transaction is succcessful!  - Expected Result : " + testResults, true);
 		} else if (testResults.contains("Validations Not OK")) {
 			assertFalse("Transaction failed!  -  Result : " + testResults, false);
-			transactionWorkflow.closeSimulator(tool);
 			throw new ValidationException("Transaction failed! -  Result : " + testResults);
 		} else {
 			logger.error("Test Results retrieved from Simulator :- ", testResults);
 			assertFalse("Transaction failed! ", false);
-			transactionWorkflow.closeSimulator(tool);
 			throw new ValidationException("Transaction failed!");
 		}
 	}

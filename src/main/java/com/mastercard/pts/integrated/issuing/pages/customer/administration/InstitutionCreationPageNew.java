@@ -20,6 +20,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -181,7 +182,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement saveBtn;
-
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
 	private MCWebElement cancelBtn;
 
@@ -267,8 +268,8 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	private MCWebElement collectPortalEmailIDTxt;
 
 	// Adaptive Authentication - RSA
-	@PageElement(findBy = FindBy.NAME, valueToFind = "adaptiveEcommFlag:input:dropdowncomponent")
-	private MCWebElement adaptiveEcommDdwn;
+	@PageElement(findBy = FindBy.NAME, valueToFind = "adaptiveEcommFlag:checkBoxComponent")
+	private MCWebElement adaptiveEcommChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mpinEnabled:checkBoxComponent")
 	private MCWebElement mpinChkBx;
@@ -305,7 +306,10 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "agtMailId:input:inputTextField")
 	private MCWebElement agentEmailTxt;
-
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "adaptiveEcommFlag:input:dropdowncomponent")
+	private MCWebElement adaptiveEcommFlagDDwn;
+	
 	public static final String ATTRIBUTE_VALUE =  "value";
 
 	/**
@@ -334,7 +338,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public void checkPrepaid() {
-		selectCheckBox(prepaidChkBx, "Prepaid");
+		WebElementUtils.checkCheckbox(prepaidChkBx, true);
 	}
 
 	public void selectInstitutionCurrency(InstitutionCreation institute) {
@@ -424,12 +428,12 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 	public boolean verifyCustCareIntl(InstitutionCreation institute) {
 		try{
-			waitForElementVisible(custCareIntDdwn);
-			return (custCareIntDdwn.getSelect().getFirstSelectedOption().getText()
-					.equalsIgnoreCase(institute.getCustomerCareIntlISDCode())
-					&& custCareIntNoTxtBx.getAttribute(ATTRIBUTE_VALUE).equalsIgnoreCase(
-							institute.getCustomerCareIntlNo()));
-		}
+		waitForElementVisible(custCareIntDdwn);
+		return (custCareIntDdwn.getSelect().getFirstSelectedOption().getText()
+				.equalsIgnoreCase(institute.getCustomerCareIntlISDCode())
+				&& custCareIntNoTxtBx.getAttribute(ATTRIBUTE_VALUE).equalsIgnoreCase(
+						institute.getCustomerCareIntlNo()));
+			}
 		catch(Exception e)
 		{
 			logg.error("Error in Verifying Customer Care International details",e);
@@ -440,10 +444,10 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 	public boolean verifyCustCareVIP(InstitutionCreation institute) {
 		try{
-			return (custCareVIPDdwn.getSelect().getFirstSelectedOption().getText()
-					.equalsIgnoreCase(institute.getCustomerCareVIPISDCode())
-					&& custCareVIPNoTxtBx.getAttribute(ATTRIBUTE_VALUE).equalsIgnoreCase(
-							institute.getCustomerCareVIPNo()));
+		return (custCareVIPDdwn.getSelect().getFirstSelectedOption().getText()
+				.equalsIgnoreCase(institute.getCustomerCareVIPISDCode())
+				&& custCareVIPNoTxtBx.getAttribute(ATTRIBUTE_VALUE).equalsIgnoreCase(
+						institute.getCustomerCareVIPNo()));
 		}
 		catch(Exception e)
 		{
@@ -648,12 +652,12 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 			if (institutionType[0].equalsIgnoreCase(Constants.PREPAID)
 					|| institutionType[1].equalsIgnoreCase(Constants.PREPAID)) {
 				createPrepaidInstitute(institution);
-			}
+				}
 
 			if (institutionType[0].equalsIgnoreCase(Constants.CREDIT)
 					|| institutionType[1].equalsIgnoreCase(Constants.CREDIT)) {
 				createCreditInstitute(institution);
-			}
+				}
 			if (institutionType[0].equalsIgnoreCase(Constants.DEBIT)
 					|| institutionType[1].equalsIgnoreCase(Constants.DEBIT)) {
 				enterAccountNumberLength(institution);
@@ -757,31 +761,31 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 	public void verifyNewInstituteCreationSuccess(InstitutionCreation instution) {
 		try{
-			if (!verifyErrorsOnInstitutePage()) {
-				SwitchToDefaultFrame();
-				enterNewInstitutionName(instution);
-				searchNewInstitution();
-				for (int l = 0; l < 21; l++) {
-					if (!waitForRow())
-						clickSearchButton();
-					else {
-						break;
-					}
+		if (!verifyErrorsOnInstitutePage()) {
+			SwitchToDefaultFrame();
+			enterNewInstitutionName(instution);
+			searchNewInstitution();
+			for (int l = 0; l < 21; l++) {
+				if (!waitForRow())
+					clickSearchButton();
+				else {
+					break;
 				}
-				for (MCWebElement element : resultTableRow.getElements()) {
-					Assert.assertTrue(element.getText().contains(
-							instution.getInstitutionName()));
-					Assert.assertTrue(element.getText().contains(
-							instution.getInstitutionCode()));
-				}
-				MapUtils.fnSetInputDataToInputMap("CreatedInstitution",
-						instution.getInstitutionName());
-				logg.info("Institution has been created successfully : {} "
-						+ buildDescriptionAndCode(instution.getInstitutionName(),
-								instution.getInstitutionCode()));
-			} else {
-				logg.error("Error in new intitution creation");
 			}
+			for (MCWebElement element : resultTableRow.getElements()) {
+				Assert.assertTrue(element.getText().contains(
+						instution.getInstitutionName()));
+				Assert.assertTrue(element.getText().contains(
+						instution.getInstitutionCode()));
+			}
+			MapUtils.fnSetInputDataToInputMap("CreatedInstitution",
+					instution.getInstitutionName());
+			logg.info("Institution has been created successfully : {} "
+					+ buildDescriptionAndCode(instution.getInstitutionName(),
+							instution.getInstitutionCode()));
+		} else {
+			logg.error("Error in new intitution creation");
+		}
 		}catch(Exception e)
 		{
 			logg.error("Error in new intitution creation"+ e);
@@ -798,7 +802,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 		waitForLoaderToDisappear();
 		SwitchToDefaultFrame();
 	}
-
+	
 	public void cancel() {
 		clickWhenClickable(cancelBtn);
 		SwitchToDefaultFrame();
@@ -822,6 +826,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 			if (institutionType[0].equalsIgnoreCase(Constants.PREPAID)
 					|| institutionType[1].equalsIgnoreCase(Constants.PREPAID)) {
 				checkPrepaid();
+				
 			}
 			if (institutionType[0].equalsIgnoreCase(Constants.CREDIT)
 					|| institutionType[1].equalsIgnoreCase(Constants.CREDIT)) {
@@ -886,7 +891,13 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public void provideAdaptiveAuthentication(InstitutionCreation institution) {
-		selectByVisibleText(adaptiveEcommDdwn,institution.getAdaptiveAuthentication());
+		selectACSVendor(institution);
+		selectCheckBox(mpinChkBx, "MPIN Enabled");
+		selectCheckBox(smsProvider, "SMS Service Provider");
+	}
+	
+	public void selectACSVendor(InstitutionCreation institution) {
+		WebElementUtils.selectDropDownByVisibleText(adaptiveEcommFlagDDwn, institution.getAdaptiveAuthentication());
 	}
 
 	public void enterNewInstitution(InstitutionCreation institution) {
