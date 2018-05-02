@@ -26,8 +26,8 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_WALLET_CONFIGURATION, CardManagementNav.L3_WALLET_PLAN })
 public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 
-	@Autowired
-	private TestContext context;
+@Autowired
+private TestContext context;
 
 	private static final Logger logger = LoggerFactory.getLogger(WalletConfigurationWalletPlanPage.class);
 
@@ -106,7 +106,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		}
 		else
 		{
-			WebElementUtils.selectDropDownByVisibleText(creditPlanDDwn, creditPlan);
+		WebElementUtils.selectDropDownByVisibleText(creditPlanDDwn, creditPlan);
 		}
 	}
 
@@ -117,8 +117,8 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		}
 		else
 		{
-			WebElementUtils.selectDropDownByVisibleText(billingCyleCodeDDwn,
-					billingCyleCode);
+		WebElementUtils.selectDropDownByVisibleText(billingCyleCodeDDwn,
+				billingCyleCode);
 		}
 	}
 
@@ -154,7 +154,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		runWithinPopup("Add Wallet Plan", () -> {
 			String productType = walletPlan.getProductType();
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
-			inputDescription(walletPlan.getDescription());			
+			inputDescription(walletPlan.getDescription());				
 			selectProductType(productType);
 			waitForPageToLoad(driver());
 			selectProgramType(walletPlan.getProgramType());
@@ -162,9 +162,8 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			selectCurrency(walletPlan.getCurrency());
 			waitForPageToLoad(driver());			
 			selectUsage(walletPlan.getUsage());
-
+			waitForPageToLoad(driver());
 			fillDetailsBasedOnCardType(walletPlan, productType);
-
 			clickNextButton(); // Click on next button
 			clickFinishButton(); // click on finish button
 		});
@@ -178,20 +177,17 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 
 		runWithinPopup("Add Wallet Plan", () -> {
 			String productType = walletPlan.getProductType();
+
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
 			inputDescription(walletPlan.getDescription());
-			selectProductType(productType);
-			waitForPageToLoad(driver());
-			selectProgramType(walletPlan.getProgramType());
-			waitForPageToLoad(driver());
 			selectCurrency(walletPlan.getCurrency());
-			waitForPageToLoad(driver());
+			selectProductType(productType);
+			selectProgramType(walletPlan.getProgramType());
 			selectUsage(walletPlan.getUsage());
-			waitForPageToLoad(driver());
 			fillDetailsBasedOnCarddType(walletPlan, productType);
 			clickNextButton(); // Click on next button
-			clickFinishButton(); // click on finish button
-		});
+				clickFinishButton(); // click on finish button
+			});
 		verifyOperationStatus();
 	}
 
@@ -199,7 +195,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 			selectCreditPlan(walletPlan.getCreditPlan());
 			selectBillingCyleCode(walletPlan.getBillingCyleCode());
-
+			
 		}
 		if (productType.equalsIgnoreCase(ProductType.DEBIT)) {
 			WebElementUtils.enterText(dummyAccountNumberTxt, walletPlan.getDummyAccountNumber());

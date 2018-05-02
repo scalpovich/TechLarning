@@ -6,7 +6,7 @@ As an issuer
 I want to create an magnetic stripe prepaid card pinless and perform various transaction
 
 Meta:
-@StoryName prepaid_msr_retail_gift_ASI
+@StoryName prepaid_emv_retail_gift_ASI
 @ASI
 Scenario: Set up prepaid msr retail gift card authorization pinless
 Given user is logged in institution

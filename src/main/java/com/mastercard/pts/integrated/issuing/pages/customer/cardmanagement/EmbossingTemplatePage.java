@@ -147,8 +147,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 		return publishErrorOnPage();
 	}
 
-	public void verifyEmbossingTemplateSuccess(EmbossingFile embossingFile) {
-		String EmbossingFileName = "EmbossingInputTemplate";
+	public void verifyEmbossingTemplateSuccess() {
 		if (!verifyErrorsOnEmbossingTemplatePage()) {
 			logger.info("Embossing Template Added Successfully");
 			SwitchToDefaultFrame();
@@ -164,12 +163,6 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 			switchToAddEmbossingTemplateFrame();
 			CustomUtils.ThreadDotSleep(3000);
 			clickSaveButton();
-			try {
-				editEmbossTemplate(MapUtils.fnGetInputDataFromMap("LegalType"), EmbossingFileName, embossingFile);
-			} catch (Exception e) {
-				e.printStackTrace();
-				log.error(e);
-			}
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(cancelBtn);

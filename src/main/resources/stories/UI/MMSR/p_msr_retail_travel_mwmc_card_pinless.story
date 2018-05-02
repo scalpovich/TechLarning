@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for prepaid msr retail travel mwmc card 
 
 Meta:
-@StoryName p_msr_retail_travel_mwmc
+@StoryName p_msr_retail_travel_mwmc_MMSR
 @MMSR
 
 Scenario: Setup multi-currency prepaid msr retail travel card and perfomr refund without pin authorization
@@ -28,6 +28,7 @@ When user performs adjustment transaction
 And user performs adjustment transaction for second wallet
 Then embossing file batch was generated in correct format
 Then user sign out from customer portal
+Then embossing file batch was generated in correct format
 
 Scenario: Perform MMSR-RetailTravelCardMWMC Authorization transaction
 Given connection to MAS is established

@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for EMV Corporate debit card
 
 Meta:
-@StoryName d_msr_corp_ASI
+@StoryName d_emv_corp_ASI
 @MMSR
 
 Scenario: Set up program for emv corporate debit card
