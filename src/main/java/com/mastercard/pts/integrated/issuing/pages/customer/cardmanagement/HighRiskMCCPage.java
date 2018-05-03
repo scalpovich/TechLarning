@@ -69,7 +69,7 @@ public class HighRiskMCCPage extends AbstractBasePage {
 	
 	public void addHighRiskMerchantCategoryCode(HighRiskMCC highRiskMCC) {
 		logger.info("Add High Risk MCC");
-		identifyAddedRecordinTableAndDelete(highRiskMCC.getMccCode());
+		deleteExistingRecord(highRiskMCC.getMccCode());
 		clickAddNewButton();
 		runWithinPopup("High Risk MCC", () -> {
 			addNewHighRiskMerchantCategoryCode(highRiskMCC.getMccCode());
