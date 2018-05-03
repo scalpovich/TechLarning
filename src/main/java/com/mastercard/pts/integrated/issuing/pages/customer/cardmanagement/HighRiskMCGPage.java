@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.HighRiskMCG;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -61,6 +62,15 @@ public class HighRiskMCGPage extends AbstractBasePage {
 		WebElementUtils.pickDate(effectiveDateDPkr, futureDate);
 		WebElementUtils.pickDate(endDateDPkr, futureDate);
 		clickSaveButton();
+	}
+	
+	public void addHighRiskMerchantCategoryGroup(HighRiskMCG highRiskMCG) {
+		logger.info("Add High Risk MCG");
+		clickAddNewButton();
+		runWithinPopup("High Risk MCG", () -> {
+			addNewHighRiskMCG();
+			verifyDuplicateAndClickCancel();
+		});
 	}
 
 	@Override
