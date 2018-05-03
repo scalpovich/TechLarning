@@ -722,7 +722,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.changeRegisteredEmailID(helpdeskGeneral);
 	}
 	
-	@Then("user validates registered mobile number SR [$serviceCode] update screen with the required fields")
+	@Then("user validates registered mobile number SR [$serviceCode] screen with the required fields")
 	public void registeredMobileNumberUpdateScreenValidation(String serviceCode) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		Optional<String[]> device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
