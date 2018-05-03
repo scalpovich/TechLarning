@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -152,7 +153,7 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.changeRegisteredMobileNo(general);
 	}
 	
-	public String[] getDeviceTypeAndNumber(String institutionSelector){	
+	public Optional<String[]> getDeviceTypeAndNumber(String institutionSelector){	
 		String institution = System.getProperty("institution");
 		if (institution != null && !institution.trim().isEmpty())
 			institutionSelector=institution;
@@ -160,11 +161,11 @@ public class HelpdeskWorkflow {
 		ResultSet set = connctionUtils.executeQueryForBIN(query);
 		try {
 	        set.next();
-	       return new String[]{ set.getString("PRODUCT_TYPE"),set.getString("DEVICE_NUMBER"),set.getString("Default_Wallet_Number")};
-		} catch (SQLException e) {
+	        return Optional.of(new String[]{ set.getString("PRODUCT_TYPE"),set.getString("DEVICE_NUMBER"),set.getString("Default_Wallet_Number")});
+		} catch (SQLException|NullPointerException e ) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+		   e.printStackTrace();
+			return Optional.empty();
 		}
 	}
 	

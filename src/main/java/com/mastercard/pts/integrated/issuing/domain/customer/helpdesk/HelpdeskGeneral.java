@@ -18,6 +18,7 @@ public class HelpdeskGeneral {
 	private static final String NEW_MOBILE_NO = "NEW_MOBILE_NO";
 	private static final String NEW_MOBILE_ISD = "NEW_MOBILE_ISD";
 	private static final String DEVICE_NUMBER = "DEVICE_NUMBER";
+	private static final String PRODUCT_TYPE = "PRODUCT_TYPE";
 	private String transactionNote;
 	private String initialLoadTxnDetails;
 	private String transactionDetails;
@@ -44,7 +45,7 @@ public class HelpdeskGeneral {
 		plan.setTransactionDetails(provider.getString(TRANSACTION_DETAILS));
 		plan.setInitialLoadTxnDetails(provider.getString(INITIAL_LOAD_TXN_DETAILS));
 		plan.setNotes(ConstantData.GENERIC_DESCRIPTION);
-		plan.setProductType(ProductType.PREPAID);
+		plan.setProductType(provider.getString(PRODUCT_TYPE));
 		plan.setNewEmailID(provider.getString(NEW_EMAIL_ID));
 		plan.setNewMobileNo(provider.getString(NEW_MOBILE_NO));
 		plan.setNewMobileISD(provider.getString(NEW_MOBILE_ISD));
