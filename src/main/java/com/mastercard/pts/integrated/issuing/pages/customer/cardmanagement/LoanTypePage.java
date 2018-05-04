@@ -7,8 +7,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanType;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -49,6 +51,9 @@ public class LoanTypePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cashLimitValidationFlag:checkBoxComponent")
 	private MCWebElement cashLimitChkBx;
 	
+	@Autowired
+	private TestContext context;
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Loan Type");
 		verifyUiOperation("Add Loan Type");
@@ -68,6 +73,7 @@ public class LoanTypePage extends AbstractBasePage {
 			selectCashLimitCheckBox();
 			clickSaveButton();
 		});
+		context.put("LOAN_TYPE_OBJECT", loanType);
 	}
 	
 	public void selectLoanType(String loanTypeItem){
