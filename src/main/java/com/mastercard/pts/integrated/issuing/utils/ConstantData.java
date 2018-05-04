@@ -1,3 +1,4 @@
+
 package com.mastercard.pts.integrated.issuing.utils;
 
 /**
@@ -62,6 +63,8 @@ public class ConstantData {
 	public static final String MSR_CARD = "magnetic stripe card";
 	public static final String DEBIT_DEVICE = "Debitdevice";
 	public static final String PREPAID_DEVICE = "Prepaiddevice";
+	
+	public static final String HIGH_RISK_COUNTRY = "HighRiskCountry";
 
 	private ConstantData() {
 	}

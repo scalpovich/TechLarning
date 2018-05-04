@@ -1615,14 +1615,28 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 		return false;
 	}
-
-	public void identifyAddedRecordinTableAndDelete(String parameter) {
-		for (int i = 0; i < firstElementOfTable.getElements().size(); i++) {
-			if (firstElementOfTable.getElements().get(i).getText().equals(parameter)) {
-				clickWhenClickable(deleteAddedRecordsIcon.getElements().get(i));
-			}
-		}
-	}
+	
+	public void identifyAddedRecordinTableAndDelete(String parameter)
+	   {
+		  for(int i=0;i<firstElementOfTable.getElements().size();i++)
+		  {
+			  if(firstElementOfTable.getElements().get(i).getText().equals(parameter))
+			  {
+				  clickWhenClickable(deleteAddedRecordsIcon.getElements().get(i));
+			  }
+		  }
+	   }
+	public void deleteExistingRecord(String parameter)
+	   {
+		  for(int i=0;i<firstElementOfTable.getElements().size();i++)
+		  {
+			  if(firstElementOfTable.getElements().get(i).getText().equals(parameter))
+			  {
+				  deleteAddedRecordsIcon.getElements().get(i).click();
+				  acceptPopup();
+			  }
+		  }
+	   }
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

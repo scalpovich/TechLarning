@@ -17,6 +17,6 @@ Meta:
 @sheetName Institute
 @PrepaidInstitutionCreation
 
-Given login to bank as a Bankadmin
+Given login to bank as a customerUser
 When user enters details to create new Prepaid Institution
 Then user should be able to create new institute
