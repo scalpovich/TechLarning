@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
+import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskPrivileges;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.AssignProductHelpdeskPrivilegesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.AssignServiceCodeHelpdeskPrivilegesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.UserGroupHelpdeskPrivilegesPage;
@@ -20,65 +22,67 @@ public class HelpdeskLevelPrivilegesWorkflow {
 	Navigator navigator;
 
 	public void provideHelpdeskLevelPrivilegesFlows(String subType,
-			String entityType) {
+			HelpdeskPrivileges helpdeskPreviliges, UserCreation userCreation) {
 		switch (subType) {
 		case "User Groups":
-			addUserToUserGroupFlows();
+			addUserToUserGroupFlows(helpdeskPreviliges, userCreation);
 			break;
 
 		case "Assign Product":
-			assignProductToUserFlows();
+			assignProductToUserFlows(helpdeskPreviliges);
 			break;
 
 		case "Assign Service Code":
-			assignServiceCodeToUserFlows();
+			assignServiceCodeToUserFlows(helpdeskPreviliges);
 			break;
 
 		default:
-			assignProductToUserFlows();
-			assignServiceCodeToUserFlows();
+			assignProductToUserFlows(helpdeskPreviliges);
+			assignServiceCodeToUserFlows(helpdeskPreviliges);
 			break;
 		}
 	}
 
-	public void addUserToUserGroupFlows() {
+	public void addUserToUserGroupFlows(HelpdeskPrivileges helpdeskPreviliges,
+			UserCreation userCreation) {
 		UserGroupHelpdeskPrivilegesPage userGroupHelpdeskPage;
 		userGroupHelpdeskPage = navigator
 				.navigateToPage(UserGroupHelpdeskPrivilegesPage.class);
 		userGroupHelpdeskPage.clickAddBtn();
 		userGroupHelpdeskPage.switchToAddUserGroupFrame();
-		userGroupHelpdeskPage.enterUserGroupDetails();
+		userGroupHelpdeskPage.enterUserGroupDetails(helpdeskPreviliges);
 		userGroupHelpdeskPage.clickOnSaveBtn();
 		CustomUtils.ThreadDotSleep(900);
 		userGroupHelpdeskPage.switchToDefaultWindow();
 		CustomUtils.ThreadDotSleep(900);
 		userGroupHelpdeskPage.clickOnEditUserGroup();
 		userGroupHelpdeskPage.switchToEditUserGroupFrame();
-		userGroupHelpdeskPage.selectUser();
+		userGroupHelpdeskPage.selectUser(userCreation);
 		userGroupHelpdeskPage.clickOnAddUserBtn();
 		userGroupHelpdeskPage.clickOnSaveBtn();
 		userGroupHelpdeskPage.switchToDefaultWindow();
 	}
 
-	public void assignProductToUserFlows() {
+	public void assignProductToUserFlows(HelpdeskPrivileges helpdeskPreviliges) {
 		AssignProductHelpdeskPrivilegesPage assignProductPage;
 		assignProductPage = navigator
 				.navigateToPage(AssignProductHelpdeskPrivilegesPage.class);
 		assignProductPage.clickAddBtn();
 		assignProductPage.switchToAssignProductFrame();
-		assignProductPage.selectUserFromDropdown();
+		assignProductPage.selectUserGroupFromDropdown(helpdeskPreviliges);
 		assignProductPage.selectProductAccesCheckbox();
 		assignProductPage.clickOnSaveBtn();
 		assignProductPage.switchToDefaultWindow();
 	}
 
-	public void assignServiceCodeToUserFlows() {
+	public void assignServiceCodeToUserFlows(
+			HelpdeskPrivileges helpdeskPreviliges) {
 		AssignServiceCodeHelpdeskPrivilegesPage assignServiceCodePage;
 		assignServiceCodePage = navigator
 				.navigateToPage(AssignServiceCodeHelpdeskPrivilegesPage.class);
 		assignServiceCodePage.clickAddBtn();
 		assignServiceCodePage.switchToAddServiceCodeFrame();
-		assignServiceCodePage.selectUsernameFromDropdown();
+		assignServiceCodePage.selectUsernameFromDropdown(helpdeskPreviliges);
 		assignServiceCodePage.selectAllServiceCode();
 		assignServiceCodePage.clickOnSaveBtn();
 		assignServiceCodePage.switchToDefaultWindow();

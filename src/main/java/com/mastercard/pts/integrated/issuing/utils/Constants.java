@@ -396,7 +396,7 @@ public class Constants {
 
 	public static final String ADD_CURRENCY_EXCHANGE_RATE_MAPPING_FRAME = "Add Currency Exchange Rates Mapping";
 
-	public static final String UPLOAD_FILE_PATH_EXCHANGE_RATE = "/home/dc-user/integrated/elt_bo/data/123456/CURRENCY_EXC_RATE_UPLOAD/INPUT";
+	public static final String UPLOAD_FILE_PATH_EXCHANGE_RATE = "/home/dc-user/integrated/elt_bo/data/121212/CURRENCY_EXC_RATE_UPLOAD/INPUT";
 
 	public static final String UPLOAD_FILE_PATH_EXCHANGE_RATE_MC = "/home/dc-user/integrated/elt_bo/data/123456/MASTER_CURR_EXC_RATE/INPUT";
 

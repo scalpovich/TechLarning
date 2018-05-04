@@ -212,7 +212,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		selectByVisibleText(batchTypeDdwn, processBatchesDomain.getBatchType());
 		CustomUtils.ThreadDotSleep(500);
 		selectByVisibleText(batchNameDdwn, processBatchesDomain.getBatchName());
-		CustomUtils.ThreadDotSleep(2000);
+		CustomUtils.ThreadDotSleep(5000);
 		WebElement uploadedFilename = getFinder().getWebDriver().findElement(By.xpath(elementXpath));
 		WebElement checkbox = getFinder().getWebDriver().findElement(By.xpath(selectXpath));
 
@@ -237,6 +237,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		// unless it is completed, refresh it - No of attempts: 5
 		for (int i = 0; i < 5; i++) {
 			if (processBatchStatusTxt.getText().equalsIgnoreCase("PENDING [0]") || processBatchStatusTxt.getText().equalsIgnoreCase("IN PROCESS [1]")) {
+				CustomUtils.ThreadDotSleep(6000);
 				ClickButton(closeBtn);
 				getFinder().getWebDriver().switchTo().defaultContent();
 				getFinder().getWebDriver().findElement(By.xpath(statusXpath)).click();

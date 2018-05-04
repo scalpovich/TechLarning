@@ -115,8 +115,8 @@ public class UserCreation{
 		
 	public static UserCreation getUserCreationData(){
 	UserCreation user= new UserCreation();
-	user.setUserID(CustomUtils.randomNumbers(6));
 	user.setUserName(MapUtils.fnGetInputDataFromMap("NewUserName")+ CustomUtils.randomString(3).toUpperCase());
+		user.setUserID("UserID" + CustomUtils.randomNumbers(3));
 	user.setRole(MapUtils.fnGetInputDataFromMap("Role"));
 	user.setLanguagePreference(MapUtils.fnGetInputDataFromMap("LanguagePreference"));
 	user.setTimeZone(MapUtils.fnGetInputDataFromMap("TimeZone"));

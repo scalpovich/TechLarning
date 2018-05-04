@@ -6,11 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskPrivileges;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.AdministrationNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
-import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -52,10 +52,10 @@ public class AssignServiceCodeHelpdeskPrivilegesPage extends AbstractBasePage {
 		switchToIframe(Constants.ADD_SERVICE_CODE);
 	}
 
-	public void selectUsernameFromDropdown() {
+	public void selectUsernameFromDropdown(HelpdeskPrivileges helpdeskPreviliges) {
 		selectByVisibleText(userGroupCodeDDwn,
-				MapUtils.fnGetInputDataFromMap("UserName") + "(User) ["
-						+ MapUtils.fnGetInputDataFromMap("User") + "]");
+				helpdeskPreviliges.getGroupName() + "(Group) ["
+						+ helpdeskPreviliges.getUserGroupID() + "]");
 	}
 
 	public void selectAllServiceCode() {

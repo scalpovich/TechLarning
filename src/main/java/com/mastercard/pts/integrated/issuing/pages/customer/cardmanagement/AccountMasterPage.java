@@ -169,7 +169,7 @@ public class AccountMasterPage extends AbstractBasePage {
 	public void addRandomAccountMaster() {
 		SelectDropDownByText(this.interchange,
 				MapUtils.fnGetInputDataFromMap("Interchange"));
-		CustomUtils.ThreadDotSleep(1000);
+		CustomUtils.ThreadDotSleep(500);
 		if (!MapUtils.fnGetInputDataFromMap("Program").equalsIgnoreCase("-")) {
 			waitForElementVisible(this.programCode);
 			List<String> programCodeList = CustomUtils

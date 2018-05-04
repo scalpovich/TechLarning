@@ -9,7 +9,6 @@ import java.awt.event.KeyEvent;
 import junit.framework.Assert;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -307,6 +306,9 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	private MCWebElement agentEmailTxt;
 	
 	public static final String ATTRIBUTE_VALUE =  "value";
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "adaptiveEcommFlag:input:dropdowncomponent")
+	private MCWebElement adaptiveECOMMDdwn;
 
 	/**
 	 * Click add button and switch to frame
@@ -631,6 +633,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 		enterInstitutionCode(instutionCreation);
 		enterInstitutionName(instutionCreation);
 		enterInstitutionAbbreviation(instutionCreation);
+		saveInstitution(instutionCreation);
 	}
 
 	public void provideGeneralDetails(InstitutionCreation institution) {
@@ -887,6 +890,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 	public void provideAdaptiveAuthentication() {
 		selectCheckBox(adaptiveEcommChkBx, "AdaptiveEcomm");
+		selectValueFromDropDown(adaptiveECOMMDdwn, "RSA [001]");
 		selectCheckBox(mpinChkBx, "MPIN Enabled");
 		selectCheckBox(smsProvider, "SMS Service Provider");
 	}
@@ -911,5 +915,12 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 	public String getInstUpdateMessage() {
 		return instituteUpdateMessage.getText();
+	}
+
+	public void saveInstitution(InstitutionCreation institution) {
+		MapUtils.fnSetInputDataToInputMap(
+				"InstitutionName",
+				institution.getInstitutionName() + "[ "
+						+ institution.getInstitutionCode() + "]");
 	}
 }

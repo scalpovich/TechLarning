@@ -33,14 +33,17 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
@@ -85,6 +88,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public static final String CONTACT_INFORMATION_EXPECTED = "Contact Information";
 
 	public static final String ACTUAL_RESULT_LABEL = " | Actual Result : ";
+
+	public static final String ENTITY_TYPE_USER = "User [U]";
+
+	public static final String ENTITY_TYPE_ROLE = "Role [R]";
+
+	public static final By ENTITY_ID = By
+			.name("searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent");
+
+	public static final String PRIVILEGES_TABS = "//a[contains(text(),'%s')]";
 
 	private static final Logger logger = LoggerFactory.getLogger(AbstractBasePage.class);
 
@@ -253,6 +265,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview tr.even a>img[alt='Delete Record'],table.dataview tr.odd a>img[alt='Delete Record']")
 	private MCWebElements deleteAddedRecordsIcon;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
+	private MCWebElement entityTypeDdwn;
 
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -1667,6 +1682,27 @@ public abstract class AbstractBasePage extends AbstractPage {
 			  }
 		  }
 	   }
+
+	public void searchEntity(String entityType) {
+		UserCreation userCreation = context.get(ContextConstants.USER);
+		if ("user".equalsIgnoreCase(entityType))
+			selectByVisibleText(entityTypeDdwn, ENTITY_TYPE_USER);
+		else if ("role".equalsIgnoreCase(entityType))
+			selectByVisibleText(entityTypeDdwn, ENTITY_TYPE_ROLE);
+		CustomUtils.ThreadDotSleep(900);
+		Select select = new Select(getFinder().getWebDriver().findElement(
+				ENTITY_ID));
+		CustomUtils.ThreadDotSleep(500);
+		select.selectByVisibleText(userCreation.getUserName() + " ["
+				+ userCreation.getUserID() + "]");
+		ClickButton(searchBtn);
+	}
+
+	public void selectTab(String tabName) {
+		getFinder().getWebDriver()
+				.findElement(By.xpath(String.format(PRIVILEGES_TABS, tabName)))
+				.click();
+	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

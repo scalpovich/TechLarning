@@ -74,6 +74,7 @@ public class InstitutionCreationSteps {
 	@Then("user should be able to create new user")
 	public void verifyUserCreationSuccess() {
 		userCreationFlows.userCreationSuccess(userCreation);
+		context.put(ContextConstants.USER, userCreation);
 	}
 
 	// Composite Step of Institution and User Creation

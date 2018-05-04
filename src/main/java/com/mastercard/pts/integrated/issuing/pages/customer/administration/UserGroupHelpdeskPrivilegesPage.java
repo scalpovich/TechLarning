@@ -4,12 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
+import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskPrivileges;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.AdministrationNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
-import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -73,12 +74,11 @@ public class UserGroupHelpdeskPrivilegesPage extends AbstractBasePage {
 		switchToIframe(Constants.EDIT_GROUPS);
 	}
 
-	public void enterUserGroupDetails() {
-		enterText(userGroupIDTxt, CustomUtils.randomAlphaNumeric(2)
-				.toUpperCase() + "0001");
-		enterText(groupNameTxt, "AutoUserGroup");
+	public void enterUserGroupDetails(HelpdeskPrivileges helpdeskPreviliges) {
+		enterText(userGroupIDTxt, helpdeskPreviliges.getUserGroupID());
+		enterText(groupNameTxt, helpdeskPreviliges.getGroupName());
 		ClickCheckBox(activateFlagChkBx, true);
-		enterText(emailIDTxt, "abc@abc.com");
+		enterText(emailIDTxt, helpdeskPreviliges.getEmailID());
 	}
 
 	public void clickOnSaveBtn() {
@@ -96,9 +96,9 @@ public class UserGroupHelpdeskPrivilegesPage extends AbstractBasePage {
 		CustomUtils.ThreadDotSleep(500);
 	}
 
-	public void selectUser() {
-		selectByVisibleText(usersDDwn, MapUtils.fnGetInputDataFromMap("User")
-				+ " [" + MapUtils.fnGetInputDataFromMap("User") + "]");
+	public void selectUser(UserCreation userCreation) {
+		selectByVisibleText(usersDDwn, userCreation.getUserName() + " ["
+				+ userCreation.getUserID() + "]");
 	}
 
 	public void clickOnAddUserBtn() {

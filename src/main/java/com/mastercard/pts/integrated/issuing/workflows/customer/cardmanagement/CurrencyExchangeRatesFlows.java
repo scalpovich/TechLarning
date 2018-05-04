@@ -9,6 +9,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Curr
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CurrencyExchangeRatesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 
 @Component
 public class CurrencyExchangeRatesFlows {
@@ -46,6 +47,7 @@ public class CurrencyExchangeRatesFlows {
 
 	public boolean verifyFileUploadFlows() {
 		navigator.navigateToPage(CurrencyExchangeRatesPage.class);
+		CustomUtils.ThreadDotSleep(500);
 		return currencyExchangeRatesPage.verifyCERFileUpload();
 	}
 

@@ -117,7 +117,7 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 	private static String tableHeaderElements = "//table[@class='dataview']//thead//th";
 
 	private static By currencyCodeDdwn = By
-			.name("toCurrencyCode:input:dropdowncomponent");
+			.name("searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent");
 
 	public void addCurrencyExchangeRate(
 			CurrencyExchangeRate currencyExchangeRateDomainPage) {
@@ -189,16 +189,14 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		HashMap<String, HashMap<String, String>> applicationUploadMap;
 		int totalCount = 0;
 		int trueEntries = 0;
-		String filePath = System.getProperty("user.dir")
-				+ "/src/main/resources/config/"
-				+ System.getProperty("environment") + "/TestData"
-				+ "/UploadFile.xlsx";
+		String filePath = "UploadFile";
 		applicationUploadMap = dataReader.fnReadEntireTestData(filePath,
 				"CERFileUpload", "Records");
 
 		for (int i = 0; i < applicationUploadMap.size(); i++) {
 			if (true == dataReader.iterateUploadDataFromExcelMap("Test Record "
 					+ (i + 1))) {
+				CustomUtils.ThreadDotSleep(500);
 				searchCurrencyExchangeRates(
 						FileCreation
 								.getUploadFileFromDatamap("Source Currency"),
@@ -291,7 +289,7 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 				currencyCodeDdwn));
 		select.selectByVisibleText(dCurrency);
 		selectByVisibleText(rateOriginSearchDdwn, rateOrigin);
-		if ("Bank [B]".equals(rateOrigin) && program != null)
+		if ("Bank [B]".equals(rateOrigin) && !program.equalsIgnoreCase(""))
 			selectByVisibleText(programSearchDdwn, program);
 		ClickButton(searchBtn);
 	}
@@ -314,8 +312,9 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		HashMap<String, String> hashMap = new HashMap<String, String>();
 		List<WebElement> elements = getImages(tableElements);
 		List<WebElement> headerElements = getImages(tableHeaderElements);
-
+		CustomUtils.ThreadDotSleep(500);
 		for (WebElement element : headerElements) {
+			CustomUtils.ThreadDotSleep(500);
 			String elementText = element.getText();
 			if ("Edit".equalsIgnoreCase(elementText)
 					|| "Delete".equalsIgnoreCase(elementText)) {
