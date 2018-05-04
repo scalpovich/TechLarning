@@ -889,8 +889,8 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public void provideAdaptiveAuthentication() {
-		selectCheckBox(adaptiveEcommChkBx, "AdaptiveEcomm");
-		selectValueFromDropDown(adaptiveECOMMDdwn, "RSA [001]");
+		selectValueFromDropDown(adaptiveECOMMDdwn,
+				MapUtils.fnGetInputDataFromMap("AdaptiveEcomm"));
 		selectCheckBox(mpinChkBx, "MPIN Enabled");
 		selectCheckBox(smsProvider, "SMS Service Provider");
 	}
