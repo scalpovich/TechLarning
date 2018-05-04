@@ -15,7 +15,6 @@ public class Encryptor {
 
 	public static void main(String[] args) {
 		Arrays.stream(args).map(Encryptor::encrypt).forEach(logger::info);
-		encrypt("");
 	}
 
 	private static String encrypt(String text) {
