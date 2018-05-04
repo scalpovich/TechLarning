@@ -106,7 +106,7 @@ public class LoanPlanPage extends AbstractBasePage {
 		runWithinPopup("Add Loan Plan", () -> {
 			enterText(loanPlanCodeTxt, loanPlan.getLoanPlanCode());
 			enterText(loanPlanDescriptionTxt, loanPlan.getLoanPlanDescription());
-			selectByVisibleText(loanTypeDDwn, loanTypedata.getLoanType());
+			selectByVisibleText(loanTypeDDwn, loanTypedata.getDescription());
 			selectCheckBox(defaultLoanPlanChckBx, "DefaultLoanPlan");
 			selectByVisibleText(programWalletPromotionDDwn, loanPlan.getProgramWalletPromotion());
 			SelectDropDownByIndex(programDDwn, 1);

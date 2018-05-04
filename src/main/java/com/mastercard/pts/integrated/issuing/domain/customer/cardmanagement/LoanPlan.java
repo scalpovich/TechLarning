@@ -151,7 +151,6 @@ public class LoanPlan {
 		LoanPlan loanPlan = new LoanPlan();
 		loanPlan.setLoanPlanCode(CustomUtils.randomNumbers(5));
 		loanPlan.setLoanPlanDescription(CustomUtils.randomString(10).toUpperCase());
-		loanPlan.setDefaultLoanPlan(MapUtils.fnGetInputDataFromMap("DefaultLoanPlan"));
 		loanPlan.setProgramWalletPromotion(MapUtils.fnGetInputDataFromMap("ProgramWalletPromotion"));
 		loanPlan.setNumberOfConcurrentLoan(CustomUtils.randomNumbers(2));
 		loanPlan.setMinimumLoanAmount(CustomUtils.randomNumbers(2));

@@ -5,10 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanPlan;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanType;
 import com.mastercard.pts.integrated.issuing.steps.AbstractBaseSteps;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoanPlanFlows;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoanTypeFlows;
 
 /**
  * @author E076170

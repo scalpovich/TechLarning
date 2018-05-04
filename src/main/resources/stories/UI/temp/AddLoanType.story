@@ -10,6 +10,8 @@ Meta:
 @all
 @StoryName addLoanType
 
+
+
 Scenario:add loan type
 
 Meta:
