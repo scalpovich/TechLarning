@@ -135,6 +135,8 @@ public class CardManagementNav {
 	public static final String L2_ROUTING = "ISSRM0";
 	public static final String L3_TRANSACTION_ROUTING = "ISSRM1";
 	public static final String L3_ACCOUNT_RANGE_ROUTING = "ISSRM2";
+	public static final String L3_CHANNEL_ROUTING = "ISSRM3";
+	
 
 	public static final String L2_LINKING_API_TO_INSTITUTION = "ISS026";
 

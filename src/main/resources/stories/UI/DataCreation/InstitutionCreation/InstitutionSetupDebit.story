@@ -17,6 +17,7 @@ Meta:
 
 
 Given login to portal as existing bank as a Customeruser
+When user creates channel Routing plan for POS channel and RACAL interface
 When user creates Allowed Load Currency for INR
 !-- When user creates Manual Alerts of EMV Card for product type credit 
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05

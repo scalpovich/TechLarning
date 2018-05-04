@@ -437,6 +437,7 @@ public class Constants {
 	public static final String ADD_MANUAL_ALERTS = "Add Manual Alert";
 	public static final String ADD_MANUAL_RECIPIENT = "Add Manual Recipient";
 	public static final String ADD_TRANSACTION_ROUTING = "Add Transaction Routing";
+	public static final String ADD_CHANNEL_ROUTING = "Add Channel Routing Plan";
 	
 
 }
