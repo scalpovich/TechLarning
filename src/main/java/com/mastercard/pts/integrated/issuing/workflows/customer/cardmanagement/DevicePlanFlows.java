@@ -31,6 +31,7 @@ public class DevicePlanFlows extends MenuFlows {
 		deviceplanpage.next();
 		deviceplanpage.provideAuthorizationDetails(deviceplan);
 		deviceplanpage.next();
+		deviceplanpage.selectChipType();
 		deviceplanpage.next();
 		deviceplanpage.Finish();
 		return devicePlanName;
