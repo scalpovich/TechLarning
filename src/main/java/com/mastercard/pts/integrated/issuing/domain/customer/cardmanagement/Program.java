@@ -130,6 +130,8 @@ public class Program implements HasCodeAndDescription {
 	public String WalletPlan2;
 
 	public String WalletPlan3;
+	private String applicationType;
+	private String subApplicationType;
 
 	public static Program createWithProvider(DataProvider dataProvider, KeyValueProvider provider) {
 		Program programObject = dataProvider.getDataBySimpleClassName(Program.class);
@@ -800,6 +802,22 @@ public class Program implements HasCodeAndDescription {
 
 	public void setDevicePlanPlan2(String devicePlanPlan2) {
 		this.devicePlanPlan2 = devicePlanPlan2;
+	}
+
+	public String getApplicationType() {
+		return applicationType;
+	}
+
+	public void setApplicationType(String applicationType) {
+		this.applicationType = applicationType;
+	}
+
+	public String getSubApplicationType() {
+		return subApplicationType;
+	}
+
+	public void setSubApplicationType(String subApplicationType) {
+		this.subApplicationType = subApplicationType;
 	}
 
 	@Override
