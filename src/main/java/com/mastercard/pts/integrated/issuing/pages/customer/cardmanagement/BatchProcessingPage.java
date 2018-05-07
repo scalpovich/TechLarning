@@ -201,7 +201,7 @@ public class BatchProcessingPage extends AbstractBasePage {
 			if (processBatchStatusTxt.getText().equalsIgnoreCase(BatchType.PENDING_STATUS)
 					|| processBatchStatusTxt.getText().equalsIgnoreCase(BatchType.INPROCESS_STATUS)) {
 				clickCloseBtn();
-				SwitchToDefaultFrame();
+				switchToDefaultFrame();
 
 				clickStatusLink();
 
@@ -261,17 +261,17 @@ public class BatchProcessingPage extends AbstractBasePage {
 	 * @param QuaterType
 	 */
 	public void runProcessBatch(String quaterType) {
-		SelectDropDownByText(batchTypeDDwn, MapUtils.fnGetInputDataFromMap("BatchType"));
+		selectDropDownByText(batchTypeDDwn, MapUtils.fnGetInputDataFromMap("BatchType"));
 		waitForElementVisible(batchNameDDwn);
 
-		SelectDropDownByText(batchNameDDwn, MapUtils.fnGetInputDataFromMap("BatchName"));
+		selectDropDownByText(batchNameDDwn, MapUtils.fnGetInputDataFromMap("BatchName"));
 		waitForElementVisible(batchQuater);
 
-		SelectDropDownByText(batchQuater, quaterType);
+		selectDropDownByText(batchQuater, quaterType);
 
-		SelectDropDownByText(batchYear, MapUtils.fnGetInputDataFromMap("BatchYear"));
+		selectDropDownByText(batchYear, MapUtils.fnGetInputDataFromMap("BatchYear"));
 
-		SelectDropDownByText(batchCurrencyCode, MapUtils.fnGetInputDataFromMap("BatchCurrency"));
+		selectDropDownByText(batchCurrencyCode, MapUtils.fnGetInputDataFromMap("BatchCurrency"));
 
 		ClickCheckBox(chkBxbatchregenerate, true);
 
@@ -310,7 +310,7 @@ public class BatchProcessingPage extends AbstractBasePage {
 		CustomUtils.ThreadDotSleep(2000);
 		logger.info("Status  -", statuslabelTxt);
 		closeBtn.click();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 
 	}
 
@@ -322,7 +322,7 @@ public class BatchProcessingPage extends AbstractBasePage {
 	public void downloadComplianceReport() {
 
 		waitForElementVisible(selectcomplianceReportDDwn);
-		SelectDropDownByText(selectcomplianceReportDDwn, MapUtils.fnGetInputDataFromMap("ComplianceReport"));
+		selectDropDownByText(selectcomplianceReportDDwn, MapUtils.fnGetInputDataFromMap("ComplianceReport"));
 
 		waitForElementVisible(btnGo);
 		btnGo.click();
@@ -330,14 +330,14 @@ public class BatchProcessingPage extends AbstractBasePage {
 		checkDropdownValue("ReportType", reportTypeDDwn);
 		checkDropdownValue("CurrencyOfInstitution", currencyDDwn);
 		waitForElementVisible(reportTypeDDwn);
-		SelectDropDownByText(yearDDwn, MapUtils.fnGetInputDataFromMap("ReportYear"));
-		SelectDropDownByText(quaterDDwn, MapUtils.fnGetInputDataFromMap("reportQuater"));
-		SelectDropDownByText(currencyDDwn, MapUtils.fnGetInputDataFromMap("ReportCurrency"));
-		SelectDropDownByText(reportTypeDDwn, MapUtils.fnGetInputDataFromMap("ReportFormat"));
-		SelectDropDownByText(yearDDwn, MapUtils.fnGetInputDataFromMap("ReportYear"));
-		SelectDropDownByText(quaterDDwn, MapUtils.fnGetInputDataFromMap("reportQuater"));
-		SelectDropDownByText(currencyDDwn, MapUtils.fnGetInputDataFromMap("ReportCurrency"));
-		SelectDropDownByText(reportTypeDDwn, MapUtils.fnGetInputDataFromMap("ReportFormat"));
+		selectDropDownByText(yearDDwn, MapUtils.fnGetInputDataFromMap("ReportYear"));
+		selectDropDownByText(quaterDDwn, MapUtils.fnGetInputDataFromMap("reportQuater"));
+		selectDropDownByText(currencyDDwn, MapUtils.fnGetInputDataFromMap("ReportCurrency"));
+		selectDropDownByText(reportTypeDDwn, MapUtils.fnGetInputDataFromMap("ReportFormat"));
+		selectDropDownByText(yearDDwn, MapUtils.fnGetInputDataFromMap("ReportYear"));
+		selectDropDownByText(quaterDDwn, MapUtils.fnGetInputDataFromMap("reportQuater"));
+		selectDropDownByText(currencyDDwn, MapUtils.fnGetInputDataFromMap("ReportCurrency"));
+		selectDropDownByText(reportTypeDDwn, MapUtils.fnGetInputDataFromMap("ReportFormat"));
 		waitForElementVisible(btngenerateRepor);
 		btngenerateRepor.click();
 

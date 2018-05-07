@@ -129,7 +129,7 @@ public class IssuerPublicKeyPage extends AbstractBasePage {
 	}
 
 	public void selectStatus(IssuerPublicKey ipk) {
-		SelectDropDownByText(statusDDwn, ipk.getStatus());
+		selectDropDownByText(statusDDwn, ipk.getStatus());
 	}
 	
 	@Override
@@ -144,11 +144,11 @@ public class IssuerPublicKeyPage extends AbstractBasePage {
 	public void verifyIpkSuccess() {
 		if (!verifyErrorsOnIpkPage()) {
 			logger.info("Ipk Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 
@@ -161,6 +161,6 @@ public class IssuerPublicKeyPage extends AbstractBasePage {
 		selectExpiryDate(ipk);
 		selectStatus(ipk);
 		clickSaveButton();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 }

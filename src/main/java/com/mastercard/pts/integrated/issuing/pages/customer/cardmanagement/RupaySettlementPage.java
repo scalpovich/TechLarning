@@ -417,21 +417,21 @@ public class RupaySettlementPage extends AbstractBasePage {
 
 		switch (Operation) {
 		case Constants.RETURN_MAKER_OPERATION:
-			SelectDropDownByText(RecordStatus, "Returned [RET]");
+			selectDropDownByText(RecordStatus, "Returned [RET]");
 			CustomUtils.ThreadDotSleep(2000);
 			break;
 		case Constants.APPROVE_MAKER_OPERATION:
-			SelectDropDownByText(RecordStatus, "Approved [APP]");
+			selectDropDownByText(RecordStatus, "Approved [APP]");
 			break;
 		case Constants.BOTH_PRIVILEGE_OPERATION:
-			SelectDropDownByText(RecordStatus, "Pending [SUB]");
+			selectDropDownByText(RecordStatus, "Pending [SUB]");
 			WebDriverWait wait = new WebDriverWait(getFinder().getWebDriver(), 20);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@id='recordBy']/select")));
-			SelectDropDownByText(RecordBy, "Self [SELF]");
+			selectDropDownByText(RecordBy, "Self [SELF]");
 			CustomUtils.ThreadDotSleep(2000);
 			break;
 		default:
-			SelectDropDownByText(RecordStatus, "Pending [SUB]");
+			selectDropDownByText(RecordStatus, "Pending [SUB]");
 			CustomUtils.ThreadDotSleep(2000);
 			break;
 		}
@@ -516,7 +516,7 @@ public class RupaySettlementPage extends AbstractBasePage {
 	public void editRecordMakerSide(String SettlementBin) {
 		final String s_id = SettlementBin;
 		waitForElementVisible(RecordStatus);
-		SelectDropDownByText(RecordStatus, "Returned [RET]");
+		selectDropDownByText(RecordStatus, "Returned [RET]");
 		CustomUtils.ThreadDotSleep(2000);
 		getSearchButton().click();
 		List<WebElement> mcws = getFinder().getWebDriver().findElements(By.xpath("//table[@class='dataview']//tr"));
@@ -535,7 +535,7 @@ public class RupaySettlementPage extends AbstractBasePage {
 	public void deleteRecord(String SettlementBin) {
 		final String s_id = SettlementBin;
 		waitForElementVisible(RecordStatus);
-		SelectDropDownByText(RecordStatus, "Production [PRO]");
+		selectDropDownByText(RecordStatus, "Production [PRO]");
 		CustomUtils.ThreadDotSleep(2000);
 		System.out.println("***** " + SettlementBin);
 		getSearchButton().click();
@@ -562,7 +562,7 @@ public class RupaySettlementPage extends AbstractBasePage {
 		waitForElementVisible(edit);
 		edit.click();
 		AddServiceCode_FrameSwitcher();
-		SelectDropDownByText(getrupayProductCodePopup(), MapUtils.fnGetInputDataFromMap("RupayProductCode2"));
+		selectDropDownByText(getrupayProductCodePopup(), MapUtils.fnGetInputDataFromMap("RupayProductCode2"));
 		getmakersNotePopup().sendKeys("updated and sent for approval");
 		getSubmitButtonPopup().click();
 		getFinder().getWebDriver().switchTo().defaultContent();

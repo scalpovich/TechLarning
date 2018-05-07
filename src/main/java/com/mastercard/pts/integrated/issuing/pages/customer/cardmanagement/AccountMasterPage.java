@@ -167,7 +167,7 @@ public class AccountMasterPage extends AbstractBasePage {
 	}
 
 	public void addRandomAccountMaster() {
-		SelectDropDownByText(this.interchange,
+		selectDropDownByText(this.interchange,
 				MapUtils.fnGetInputDataFromMap("Interchange"));
 		CustomUtils.ThreadDotSleep(1000);
 		if (!MapUtils.fnGetInputDataFromMap("Program").equalsIgnoreCase("-")) {
@@ -177,14 +177,14 @@ public class AccountMasterPage extends AbstractBasePage {
 			CustomUtils.ThreadDotSleep(2000);
 			waitForElementVisible(programCode);
 			if (programCodeList.size() > 0) {
-				SelectDropDownByText(this.programCode, programCodeList.get(1));
+				selectDropDownByText(this.programCode, programCodeList.get(1));
 				MapUtils.fnSetInputDataToInputMap("Program",
 						programCodeList.get(1));
 			} else {
 				logger.error("The chosen interchange does not have any Programs attached. Please chose another Interchange");
 			}
 		}
-		SelectDropDownByText(this.accountHead,
+		selectDropDownByText(this.accountHead,
 				MapUtils.fnGetInputDataFromMap("Account Head"));
 		enterText(this.description,
 				MapUtils.fnGetInputDataFromMap("Description"));
@@ -196,12 +196,12 @@ public class AccountMasterPage extends AbstractBasePage {
 	}
 
 	public void addDuplicateAccountMaster() {
-		SelectDropDownByText(this.interchange,
+		selectDropDownByText(this.interchange,
 				MapUtils.fnGetInputDataFromMap("Interchange"));
 		if (!MapUtils.fnGetInputDataFromMap("Program").equals("-"))
-			SelectDropDownByText(this.programCode,
+			selectDropDownByText(this.programCode,
 					MapUtils.fnGetInputDataFromMap("Program"));
-		SelectDropDownByText(this.accountHead,
+		selectDropDownByText(this.accountHead,
 				MapUtils.fnGetInputDataFromMap("Account Head"));
 		enterText(this.description,
 				MapUtils.fnGetInputDataFromMap("Description"));
@@ -234,7 +234,7 @@ public class AccountMasterPage extends AbstractBasePage {
 	 */
 	public void addProgramCodeToAccountMaster(String programCode) {
 		int programC = Integer.parseInt(programCode);
-		SelectDropDownByIndex(this.programCode, programC);
+		selectDropDownByIndex(this.programCode, programC);
 	}
 
 	/**
@@ -261,7 +261,7 @@ public class AccountMasterPage extends AbstractBasePage {
 				.getAllOptionsOfDropDown(this.interchange)) {
 			waitForElementVisible(this.interchange);
 			CustomUtils.ThreadDotSleep(300);
-			SelectDropDownByText(this.interchange, networkCode);
+			selectDropDownByText(this.interchange, networkCode);
 			waitForElementVisible(this.programCode);
 			List<String> dropdownList = CustomUtils
 					.getAllOptionsOfDropDown(this.programCode);
@@ -292,7 +292,7 @@ public class AccountMasterPage extends AbstractBasePage {
 	 * 
 	 */
 	public void searchAccountHeadOnAccountMaster(String search) {
-		SelectDropDownByText(accountHeadSearch, search);
+		selectDropDownByText(accountHeadSearch, search);
 		searchBtn.click();
 	}
 
@@ -405,15 +405,15 @@ public class AccountMasterPage extends AbstractBasePage {
 	}
 
 	public void searchAccountMaster() {
-		SelectDropDownByText(searchInterchange,
+		selectDropDownByText(searchInterchange,
 				MapUtils.fnGetInputDataFromMap("Interchange"));
-		SelectDropDownByText(searchAccountHead,
+		selectDropDownByText(searchAccountHead,
 				MapUtils.fnGetInputDataFromMap("Account Head"));
 		searchBtn.click();
 	}
 
 	public void searchDebitProgram() {
-		SelectDropDownByText(searchProductDdwn, "Debit [D]");
+		selectDropDownByText(searchProductDdwn, "Debit [D]");
 		searchProgramBtn.click();
 	}
 

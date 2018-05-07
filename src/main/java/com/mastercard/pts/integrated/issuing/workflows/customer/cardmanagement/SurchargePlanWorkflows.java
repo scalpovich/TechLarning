@@ -27,9 +27,9 @@ public class SurchargePlanWorkflows {
 	}
 
 	public void addSurchargePlanDetails(SurchargePlan plan) {
-		page.SwitchToDefaultFrame();
+		page.switchToDefaultFrame();
 		page.addSurchargePlanDetail();
-		page.SwitchToDefaultFrame();
+		page.switchToDefaultFrame();
 		page.switchToSurchargePlanDetailFrame();
 		page.selectInterchange(plan);
 		page.selectMCG(plan);
@@ -45,7 +45,7 @@ public class SurchargePlanWorkflows {
 	}
 	
 	public String getFeedbackText() {
-		page.SwitchToDefaultFrame();
+		page.switchToDefaultFrame();
 		
 		return page.getFeedbackText();
 	}

@@ -844,7 +844,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			logger.info("Element is visible");
 			return true;
 		} catch (Exception e) {
-			logger.error("Element is not visible :" + e.fillInStackTrace());
+			logger.error("Element is not visible :" + e.fillInStackTrace(), e);
 			return false;
 		}
 	}
@@ -858,6 +858,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			logger.info("Element is visible");
 
 		} catch (Exception e) {
+			log.info(e);
 			ispresent = false;
 			logger.error("Element is not visible :" + e.fillInStackTrace());
 		}
@@ -869,6 +870,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			getFinder().waitUntil(ExpectedConditions.visibilityOf((WebElement) ele));
 			return true;
 		} catch (Exception e) {
+			log.info(e);
 			return false;
 		}
 
@@ -883,6 +885,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 				ispresent = false;
 			}
 		} catch (Exception e) {
+			log.info(e);
 			ispresent = false;
 		}
 		return ispresent;
@@ -897,6 +900,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 				ispresent = false;
 			}
 		} catch (Exception e) {
+			log.info(e);
 			ispresent = false;
 		}
 		return ispresent;
@@ -909,7 +913,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			logger.info("Element is invisible");
 			return true;
 		} catch (Exception e) {
-			logger.error("Element is visible");
+			logger.error("Element is visible ", e);
 			return false;
 		}
 	}
@@ -931,7 +935,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			logger.info("Element is visible");
 			return true;
 		} catch (Exception e) {
-			logger.error("Element is not visible");
+			logger.error("Element is not visible", e);
 			return false;
 		}
 	}
@@ -984,13 +988,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 				jsText = (String) jse.executeScript("return $(arguments[0]).text();", WE);
 				unfound = false; // FOUND IT
 			} catch (StaleElementReferenceException ser) {
-				logger.info(EXCEPTION_MESSAGE, ser.getMessage());
+				logger.info(EXCEPTION_MESSAGE, ser.getMessage(), ser);
 				unfound = true;
 			} catch (NoSuchElementException nse) {
-				logger.info(EXCEPTION_MESSAGE, nse.getMessage());
+				logger.info(EXCEPTION_MESSAGE, nse.getMessage(), nse);
 				unfound = true;
 			} catch (Exception e) {
-				logger.info(EXCEPTION_MESSAGE, e.getMessage());
+				logger.info(EXCEPTION_MESSAGE, e.getMessage(), e);
 				logger.info("Unknown error.");
 			}
 		}
@@ -1042,6 +1046,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 				// builder.build().perform();
 
 			} catch (Exception e) {
+				log.info(e);
 				if (e.getMessage().contains("element is not attached")) {
 					breakIt = false;
 					logger.info("Recovering from StaleElementException");
@@ -1066,6 +1071,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 				builder.build().perform();
 
 			} catch (Exception e) {
+				log.info(e);
 				if (e.getMessage().contains("element is not attached")) {
 					breakIt = false;
 					logger.info("Recovering from StaleElementException");
@@ -1258,7 +1264,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		});
 	}
 
-	public void SwitchToDefaultFrame() {
+	public void switchToDefaultFrame() {
 		getFinder().getWebDriver().switchTo().defaultContent();
 	}
 
@@ -1275,25 +1281,19 @@ public abstract class AbstractBasePage extends AbstractPage {
 		// addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
-	public void SelectDropDownByText(MCWebElement element, String value) {
+	public void selectDropDownByText(MCWebElement element, String value) {
 		element.getSelect().selectByVisibleText(value);
-		// element.getSelect().selectByValue(value);
-		// addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
-	public void SelectDropDownByIndex(MCWebElement element, int value) {
+	public void selectDropDownByIndex(MCWebElement element, int value) {
 		if (element.isEnabled()) {
 			element.getSelect().selectByIndex(value);
-		} else {
-
 		}
-		// addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
 	public void ClickButton(MCWebElement BtnName) {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		BtnName.click();
-		// addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
 	public void ClickCheckBox(MCWebElement optionChkBox, boolean value) {
@@ -1534,7 +1534,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public String editingInnerFrameValue() {
 		clickWhenClickable(editRecord.getElements().get(editSize() - 1));
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe("Plan Detail");
 		WebElementUtils.enterText(innerDescriptionTxt, "");
 		WebElementUtils.enterText(innerDescriptionTxt, CustomUtils.randomNumbers(5));
@@ -1611,32 +1611,28 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 
 		} catch (Exception e) {
+			log.info(e);
 			e.getMessage();
 		}
 		return false;
 	}
-	
-	public void identifyAddedRecordinTableAndDelete(String parameter)
-	   {
-		  for(int i=0;i<firstElementOfTable.getElements().size();i++)
-		  {
-			  if(firstElementOfTable.getElements().get(i).getText().equals(parameter))
-			  {
-				  clickWhenClickable(deleteAddedRecordsIcon.getElements().get(i));
-			  }
-		  }
-	   }
-	public void deleteExistingRecord(String parameter)
-	   {
-		  for(int i=0;i<firstElementOfTable.getElements().size();i++)
-		  {
-			  if(firstElementOfTable.getElements().get(i).getText().equals(parameter))
-			  {
-				  deleteAddedRecordsIcon.getElements().get(i).click();
-				  acceptPopup();
-			  }
-		  }
-	   }
+
+	public void identifyAddedRecordinTableAndDelete(String parameter) {
+		for (int i = 0; i < firstElementOfTable.getElements().size(); i++) {
+			if (firstElementOfTable.getElements().get(i).getText().equals(parameter)) {
+				clickWhenClickable(deleteAddedRecordsIcon.getElements().get(i));
+			}
+		}
+	}
+
+	public void deleteExistingRecord(String parameter) {
+		for (int i = 0; i < firstElementOfTable.getElements().size(); i++) {
+			if (firstElementOfTable.getElements().get(i).getText().equals(parameter)) {
+				deleteAddedRecordsIcon.getElements().get(i).click();
+				acceptPopup();
+			}
+		}
+	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

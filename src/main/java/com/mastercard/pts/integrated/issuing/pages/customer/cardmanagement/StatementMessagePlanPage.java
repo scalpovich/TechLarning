@@ -207,11 +207,11 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 	public void verifyStatementPlanSuccess() {
 		if (!verifyErrorsOnStatementPlanPage()) {
 			logger.info("Vendor Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Vendor Addition");
 			clickWhenClickable(CancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 
@@ -220,7 +220,7 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 	}
 
 	public void switchToAddStatementMessageDetailsFrame() {
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe(Constants.ADD_STATEMENT_MESSAGE_DETAILS_FRAME);
 	}
 
@@ -245,14 +245,14 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 	}
 
 	public void addStatementMsgDetails(StatementMessagePlan stmnt) {
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe(Constants.ADD_STATEMENT_MESSAGE_DETAILS_FRAME);
 		selectEffectiveDate(stmnt);
 		selectEndDate(stmnt);
 		enterStatementMessageSubDetailsLabel();
 		enterStatementMessageSubDetailsMessage();
 		clickSaveButton();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToAddStatementMessagePlanFrame();
 		Scrolldown(save);
 		waitForElementVisible(save);

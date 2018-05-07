@@ -67,14 +67,14 @@ public class PreProductionBatchPage extends AbstractBasePage {
 
 	public void preproduction(String product, String batchNum) {
 		menuSubMenuPage.getPreProductionBatch().click();
-		SelectDropDownByText(productTypeDDwn, product);
+		selectDropDownByText(productTypeDDwn, product);
 		if (batchNum != null) {
 			enterText(batchNumberTxt, batchNum);
 		}
 		ClickButton(searchBtn);
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		ClickButton(processSelectedBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public void processPreProductionBatch(PreProductionBatch batch) {
@@ -90,7 +90,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	public void processPreProductionBatch1(PreProductionBatch batch) {
 
 		waitForLoaderToDisappear();
-		SelectDropDownByText(productTypeDDwn, batch.getProductType());
+		selectDropDownByText(productTypeDDwn, batch.getProductType());
 		CustomUtils.ThreadDotSleep(8000);
 		logger.info(batch.getJobID());
 		enterText(sourceJobIdTxt, batch.getJobID());
@@ -103,14 +103,14 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		ClickButton(processSelectedBtn);
 		verifyOperationStatus();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 
 	}
 
 	public void processPreProductionBatchNewApplication(PreProductionBatch batch) {
 
 		waitForLoaderToDisappear();
-		SelectDropDownByText(productTypeDDwn, batch.getProductType());
+		selectDropDownByText(productTypeDDwn, batch.getProductType());
 		CustomUtils.ThreadDotSleep(8000);
 		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
 		enterText(batchNumberTxt, batchNumber);
@@ -118,7 +118,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		ClickButton(processSelectedBtn);
 		verifyOperationStatus();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 
 	}
 
@@ -182,10 +182,10 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	public void verifyPreProductionRequestSuccess() {
 		if (!verifyErrorsOnPreProductionPage()) {
 			logger.info("Pre-Production batch succesful");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in batch");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 
@@ -198,7 +198,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	public void processPreProductionBatchNewDevice(PreProductionBatch batch) {
 
 		waitForLoaderToDisappear();
-		SelectDropDownByText(productTypeDDwn, batch.getProductType());
+		selectDropDownByText(productTypeDDwn, batch.getProductType());
 		CustomUtils.ThreadDotSleep(8000);
 		Device device = context.get(ContextConstants.DEVICE);
 		enterText(batchNumberTxt, device.getBatchNumber());
@@ -206,7 +206,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		ClickButton(processSelectedBtn);
 		verifyOperationStatus();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	@Override

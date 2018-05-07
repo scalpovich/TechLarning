@@ -65,7 +65,7 @@ public class BulkDeviceGenerationBatchPage extends AbstractBasePage {
 	public void addbulkdevicegenerationbatch(String product, String batchNum) {
 		menuSubMenuPage.getBulkDeviceGeneration().click();
 		// addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByText(productTypeDDwn, product);
+		selectDropDownByText(productTypeDDwn, product);
 		// addWicketAjaxListeners(getFinder().getWebDriver());
 		enterText(batchNumTxt, batchNum);
 		ClickButton(searchBtn);
@@ -73,7 +73,7 @@ public class BulkDeviceGenerationBatchPage extends AbstractBasePage {
 		ClickCheckBox(selectProcessChkBx, true);
 		// addWicketAjaxListeners(getFinder().getWebDriver());
 		ClickButton(processSelectedBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 
 	}
 
@@ -130,10 +130,10 @@ public class BulkDeviceGenerationBatchPage extends AbstractBasePage {
 	public void verifyBulkDeviceRequestSuccess() {
 		if (!verifyErrorsOnBulkDeviceGenerationPage()) {
 			logger.info("Bulk device generation batch succesful");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in batch");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 

@@ -150,7 +150,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 	public void verifyEmbossingTemplateSuccess() {
 		if (!verifyErrorsOnEmbossingTemplatePage()) {
 			logger.info("Embossing Template Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 			switchToAddEmbossingTemplateFrame();
 			clickAddSubdetails();
 			enterSequenceNoTxt();
@@ -158,7 +158,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 			clickSaveButton();
 			CustomUtils.ThreadDotSleep(3000);
 			waitForPageToLoad(getFinder().getWebDriver());
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 			addOrderFormatRecord();
 			switchToAddEmbossingTemplateFrame();
 			CustomUtils.ThreadDotSleep(3000);
@@ -166,13 +166,13 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 
 	public void clickAddSubdetails() {
 		clickWhenClickable(addSubDetailsBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToAddRecordFieldFormatFrame();
 	}
 
@@ -196,7 +196,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 	}
 
 	public void switchToAddOrderFieldFormatFrame() {
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe(Constants.ADD_ORDER_FIELD_FORMAT_FRAME);
 	}
 
@@ -226,7 +226,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		enterText(descriptionTxt, EmbossDesc);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByText(fileTypeDDwn, EmbossFileType);
+		selectDropDownByText(fileTypeDDwn, EmbossFileType);
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		CustomUtils.ThreadDotSleep(2000);
 		ClickButton(saveBtn);
@@ -240,19 +240,19 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 			logger.info("error pannel not present");
 			ClickButton(addSubDetailsBtn);
 			addWicketAjaxListeners(getFinder().getWebDriver());
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 			switchToIframe(Constants.ADD_RECORD_FIELD_FORMAT_FRAME);
 			addWicketAjaxListeners(getFinder().getWebDriver());
 			enterText(sequenceNoTxt, sequenceNo);
 			addWicketAjaxListeners(getFinder().getWebDriver());
-			SelectDropDownByText(fieldDDwn, EmbossingField);
+			selectDropDownByText(fieldDDwn, EmbossingField);
 			addWicketAjaxListeners(getFinder().getWebDriver());
 			ClickButton(saveBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 			addOrderFormatRecord();
 			flag = "Added";
 		}
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		return flag;
 	}
 
@@ -266,14 +266,14 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 		ClickCheckBox(headerChkBx, true);
 		ClickCheckBox(trailerChkBx, true);
 		addRecordFormatData(fieldDDwn, excelName, legalType);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public void addRecordFormatData(MCWebElement DrpDown, String filepath, String legalType)
 			throws InterruptedException {
 		HashMap<String, HashMap<String, String>> map = excelTestData.fnReadEntireTestData(filepath, "Sheet1", "Sr. No");
 		for (int i = 1; i < map.size(); i++) {
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 			switchToIframe(Constants.EDIT_EMBOSS_TEMPLATE_FRAME);
 			clickAddSubdetails();
 			excelTestData.dataProviderIterator(map, String.valueOf(i));
@@ -297,7 +297,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 				clickSaveButton();
 			}
 		}
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe(Constants.EDIT_EMBOSS_TEMPLATE_FRAME);
 		clickSaveButton();
 	}
@@ -317,7 +317,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 		selectField();
 		enterPriority();
 		clickSaveButton();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public void createPINOffsetTemplate(String PINfield, ExamplesTable pinTable, EmbossingFile embossingfile) {
@@ -325,22 +325,22 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 		addEmbossingGeneral(embossingfile);
 		clickAddSubdetails();
 		enterEmbossingFileCode(embossingfile);
-		SelectDropDownByText(fieldDDwn, PINfield);
+		selectDropDownByText(fieldDDwn, PINfield);
 		clickSaveButton();
 		addRecordPIN(fieldDDwn, pinTable);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		addOrderFormatRecord();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public void addRecordPIN(MCWebElement DrpDown, ExamplesTable pinTable) {
 		String DropDownValue = null;
 		for (int i = 0; i < pinTable.getRows().size(); i++) {
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 			switchToAddEmbossingTemplateFrame();
 			clickAddSubdetails();
 			DropDownValue = pinTable.getRow(i).get(pinTable.getHeaders().get(0));
-			SelectDropDownByText(DrpDown, DropDownValue);
+			selectDropDownByText(DrpDown, DropDownValue);
 			if (DropDownValue.equalsIgnoreCase(Constants.Delimiter_String)) {
 				enterValueinTextBox(fillerValueTxt, ":");
 				clickSaveButton();

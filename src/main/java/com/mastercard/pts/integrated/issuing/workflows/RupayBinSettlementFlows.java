@@ -72,7 +72,7 @@ public class RupayBinSettlementFlows extends AbstractBaseFlows {
 	public void getIntoRupaySettlementBin(String role) {
 		loginpage.login(MapUtils.fnGetInputDataFromMap(role), CustomUtils.RandomNumbers(4) + "");
 		// institute.getInstitution().click();
-		rupaysettlementpage.SelectDropDownByText(institute.getInstitution(),
+		rupaysettlementpage.selectDropDownByText(institute.getInstitution(),
 				MapUtils.fnGetInputDataFromMap("InstitutionName"));
 		institute.getConfirmButton().click();
 		;
@@ -98,9 +98,9 @@ public class RupayBinSettlementFlows extends AbstractBaseFlows {
 		String SettlementBin;
 		rupaysettlementpage.getAddRupaySettlementBinConfiguration().click();
 		rupaysettlementpage.AddServiceCode_FrameSwitcher();
-		rupaysettlementpage.SelectDropDownByText(rupaysettlementpage.getdeviceBinPopup(),
+		rupaysettlementpage.selectDropDownByText(rupaysettlementpage.getdeviceBinPopup(),
 				MapUtils.fnGetInputDataFromMap("DeviceBin"));
-		rupaysettlementpage.SelectDropDownByText(rupaysettlementpage.getrupayProductCodePopup(),
+		rupaysettlementpage.selectDropDownByText(rupaysettlementpage.getrupayProductCodePopup(),
 				MapUtils.fnGetInputDataFromMap("RupayProductCode"));
 		SettlementBin = MapUtils.fnGetInputDataFromMap("SettlementBin2");
 		rupaysettlementpage.getSettlementBinPopup().sendKeys(SettlementBin);
@@ -228,10 +228,10 @@ public class RupayBinSettlementFlows extends AbstractBaseFlows {
 		rupaysettlementpage.AddServiceCode_FrameSwitcher();
 		waitForElementVisible(rupaysettlementpage.getdeviceBinPopup());
 		// rupaysettlementpage.clickElement(rupaysettlementpage.getdeviceBinPopup());
-		rupaysettlementpage.SelectDropDownByIndex(rupaysettlementpage.getdeviceBinPopup(), devIndex);
+		rupaysettlementpage.selectDropDownByIndex(rupaysettlementpage.getdeviceBinPopup(), devIndex);
 		CustomUtils.ThreadDotSleep(200);
 		waitForElementVisible(rupaysettlementpage.getrupayProductCodePopup());
-		rupaysettlementpage.SelectDropDownByIndex(rupaysettlementpage.getrupayProductCodePopup(), rpIndex);
+		rupaysettlementpage.selectDropDownByIndex(rupaysettlementpage.getrupayProductCodePopup(), rpIndex);
 		CustomUtils.ThreadDotSleep(200);
 
 		rupaysettlementpage.getSettlementBinPopup().sendKeys(CustomUtils.RandomNumbers(6));
@@ -287,10 +287,10 @@ public class RupayBinSettlementFlows extends AbstractBaseFlows {
 		rupaysettlementpage.AddServiceCode_FrameSwitcher();
 		waitForElementVisible(rupaysettlementpage.getdeviceBinPopup());
 		// rupaysettlementpage.clickElement(rupaysettlementpage.getdeviceBinPopup());
-		rupaysettlementpage.SelectDropDownByIndex(rupaysettlementpage.getdeviceBinPopup(), devIndex);
+		rupaysettlementpage.selectDropDownByIndex(rupaysettlementpage.getdeviceBinPopup(), devIndex);
 		CustomUtils.ThreadDotSleep(200);
 		waitForElementVisible(rupaysettlementpage.getrupayProductCodePopup());
-		rupaysettlementpage.SelectDropDownByIndex(rupaysettlementpage.getrupayProductCodePopup(), rpIndex);
+		rupaysettlementpage.selectDropDownByIndex(rupaysettlementpage.getrupayProductCodePopup(), rpIndex);
 		CustomUtils.ThreadDotSleep(200);
 		rupaysettlementpage.getParticipantIdPopup().sendKeys(CustomUtils.RandomNumbers(11));
 
@@ -346,7 +346,7 @@ public class RupayBinSettlementFlows extends AbstractBaseFlows {
 		rupaysettlementpage.AddServiceCode_FrameSwitcher();
 		waitForElementVisible(rupaysettlementpage.getdeviceBinPopup());
 		// rupaysettlementpage.clickElement(rupaysettlementpage.getdeviceBinPopup());
-		rupaysettlementpage.SelectDropDownByIndex(rupaysettlementpage.getdeviceBinPopup(), devIndex);
+		rupaysettlementpage.selectDropDownByIndex(rupaysettlementpage.getdeviceBinPopup(), devIndex);
 		CustomUtils.ThreadDotSleep(200);
 		waitForElementVisible(rupaysettlementpage.getrupayProductCodePopup());
 		// rupaysettlementpage.SelectDropDownByIndex(rupaysettlementpage.getrupayProductCodePopup(),
@@ -409,7 +409,7 @@ public class RupayBinSettlementFlows extends AbstractBaseFlows {
 		// devIndex);
 		CustomUtils.ThreadDotSleep(200);
 		waitForElementVisible(rupaysettlementpage.getrupayProductCodePopup());
-		rupaysettlementpage.SelectDropDownByIndex(rupaysettlementpage.getrupayProductCodePopup(), rpIndex);
+		rupaysettlementpage.selectDropDownByIndex(rupaysettlementpage.getrupayProductCodePopup(), rpIndex);
 		CustomUtils.ThreadDotSleep(200);
 		rupaysettlementpage.getSettlementBinPopup().sendKeys(CustomUtils.RandomNumbers(6));
 		rupaysettlementpage.getParticipantIdPopup().sendKeys(CustomUtils.RandomNumbers(11));
@@ -428,11 +428,11 @@ public class RupayBinSettlementFlows extends AbstractBaseFlows {
 		CustomUtils.ThreadDotSleep(1000);
 		rupaysettlementpage.clickElement(rupaysettlementpage.getScreenLevel());
 		rupaysettlementpage.clickElement(rupaysettlementpage.getEntityType());
-		rupaysettlementpage.SelectDropDownByText(rupaysettlementpage.getEntityType(),
+		rupaysettlementpage.selectDropDownByText(rupaysettlementpage.getEntityType(),
 				MapUtils.fnGetInputDataFromMap("EntityType"));
 		CustomUtils.ThreadDotSleep(200);
 		rupaysettlementpage.clickElement(rupaysettlementpage.getEntityID());
-		rupaysettlementpage.SelectDropDownByText(rupaysettlementpage.getEntityID(),
+		rupaysettlementpage.selectDropDownByText(rupaysettlementpage.getEntityID(),
 				MapUtils.fnGetInputDataFromMap("EntityID"));
 		CustomUtils.ThreadDotSleep(200);
 		rupaysettlementpage.clickElement(rupaysettlementpage.getSearchButton());
@@ -517,10 +517,10 @@ public class RupayBinSettlementFlows extends AbstractBaseFlows {
 		rupaysettlementpage.AddServiceCode_FrameSwitcher();
 		waitForElementVisible(rupaysettlementpage.getdeviceBinPopup());
 		// rupaysettlementpage.clickElement(rupaysettlementpage.getdeviceBinPopup());
-		rupaysettlementpage.SelectDropDownByIndex(rupaysettlementpage.getdeviceBinPopup(), devIndex);
+		rupaysettlementpage.selectDropDownByIndex(rupaysettlementpage.getdeviceBinPopup(), devIndex);
 		CustomUtils.ThreadDotSleep(200);
 		waitForElementVisible(rupaysettlementpage.getrupayProductCodePopup());
-		rupaysettlementpage.SelectDropDownByIndex(rupaysettlementpage.getrupayProductCodePopup(), rpIndex);
+		rupaysettlementpage.selectDropDownByIndex(rupaysettlementpage.getrupayProductCodePopup(), rpIndex);
 		CustomUtils.ThreadDotSleep(200);
 		rupaysettlementpage.getSettlementBinPopup().sendKeys(CustomUtils.RandomNumbers(6));
 		rupaysettlementpage.getParticipantIdPopup().sendKeys(ParticipantId);
@@ -563,11 +563,11 @@ public class RupayBinSettlementFlows extends AbstractBaseFlows {
 		rupaysettlementpage.AddServiceCode_FrameSwitcher();
 		// waitForElementVisible(rupaysettlementpage.getDeviceBin());
 		rupaysettlementpage.clickElement(rupaysettlementpage.getDeviceBin());
-		rupaysettlementpage.SelectDropDownByText(rupaysettlementpage.getDeviceBin(),
+		rupaysettlementpage.selectDropDownByText(rupaysettlementpage.getDeviceBin(),
 				MapUtils.fnGetInputDataFromMap("DeviceBin"));
 		rupaysettlementpage.clickElement(rupaysettlementpage.getRupayProductCode());
 		// rupaysettlementpage.clickElement(rupaysettlementpage.getRupayProductCode());
-		rupaysettlementpage.SelectDropDownByText(rupaysettlementpage.getRupayProductCode(),
+		rupaysettlementpage.selectDropDownByText(rupaysettlementpage.getRupayProductCode(),
 				MapUtils.fnGetInputDataFromMap("RupayProductCode"));
 		rupaysettlementpage.getSettlementBin().sendKeys(CustomUtils.RandomNumbers(6));
 		rupaysettlementpage.getParticipantId().sendKeys(CustomUtils.RandomNumbers(11));
@@ -596,11 +596,11 @@ public class RupayBinSettlementFlows extends AbstractBaseFlows {
 		CustomUtils.ThreadDotSleep(1000);
 		rupaysettlementpage.clickElement(rupaysettlementpage.getScreenLevel());
 		rupaysettlementpage.clickElement(rupaysettlementpage.getEntityType());
-		rupaysettlementpage.SelectDropDownByText(rupaysettlementpage.getEntityType(),
+		rupaysettlementpage.selectDropDownByText(rupaysettlementpage.getEntityType(),
 				MapUtils.fnGetInputDataFromMap("EntityType"));
 		CustomUtils.ThreadDotSleep(200);
 		rupaysettlementpage.clickElement(rupaysettlementpage.getEntityID());
-		rupaysettlementpage.SelectDropDownByText(rupaysettlementpage.getEntityID(),
+		rupaysettlementpage.selectDropDownByText(rupaysettlementpage.getEntityID(),
 				MapUtils.fnGetInputDataFromMap("EntityID"));
 		CustomUtils.ThreadDotSleep(200);
 		rupaysettlementpage.clickElement(rupaysettlementpage.getSearchButton());
@@ -635,11 +635,11 @@ public class RupayBinSettlementFlows extends AbstractBaseFlows {
 		rupaysettlementpage.AddServiceCode_FrameSwitcher();
 		// waitForElementVisible(rupaysettlementpage.getDeviceBin());
 		rupaysettlementpage.clickElement(rupaysettlementpage.getDeviceBin());
-		rupaysettlementpage.SelectDropDownByText(rupaysettlementpage.getDeviceBin(),
+		rupaysettlementpage.selectDropDownByText(rupaysettlementpage.getDeviceBin(),
 				MapUtils.fnGetInputDataFromMap("DeviceBin"));
 		rupaysettlementpage.clickElement(rupaysettlementpage.getRupayProductCode());
 		// rupaysettlementpage.clickElement(rupaysettlementpage.getRupayProductCode());
-		rupaysettlementpage.SelectDropDownByText(rupaysettlementpage.getRupayProductCode(),
+		rupaysettlementpage.selectDropDownByText(rupaysettlementpage.getRupayProductCode(),
 				MapUtils.fnGetInputDataFromMap("RupayProductCode"));
 		rupaysettlementpage.getSettlementBin().sendKeys(CustomUtils.RandomNumbers(6));
 		rupaysettlementpage.getParticipantId().sendKeys(CustomUtils.RandomNumbers(11));

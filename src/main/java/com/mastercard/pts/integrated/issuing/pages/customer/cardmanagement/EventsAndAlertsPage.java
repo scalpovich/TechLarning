@@ -51,7 +51,7 @@ public class EventsAndAlertsPage extends AbstractBasePage {
 	private MCWebElement searchBtn;
 
 	public void searchEventForProductType(EventsAndAlerts eventAlerts) {
-		SelectDropDownByText(product, eventAlerts.getProductType());
+		selectDropDownByText(product, eventAlerts.getProductType());
 	}
 
 	public void clickSearchBtn() {

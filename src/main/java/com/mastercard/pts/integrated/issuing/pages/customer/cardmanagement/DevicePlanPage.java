@@ -441,11 +441,11 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectDeviceIDGenerationTemplate() {
-		SelectDropDownByIndex(iframeDeviceIDGenerationTemplateDdwn, 1);
+		selectDropDownByIndex(iframeDeviceIDGenerationTemplateDdwn, 1);
 	}
 
 	public void selectCardPackGenerationTemplate() {
-		SelectDropDownByIndex(iframeCardPackIDGenerationTemplateDdwn, 1);
+		selectDropDownByIndex(iframeCardPackIDGenerationTemplateDdwn, 1);
 	}
 
 	public void selectActivationMode(DevicePlan deviceplan) {
@@ -588,15 +588,15 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectEventBasedFeePlan() {
-		SelectDropDownByIndex(eventBasedFeePlanDDwn, 1);
+		selectDropDownByIndex(eventBasedFeePlanDDwn, 1);
 	}
 
 	public void selectJoiningMembershipFeePlan() {
-		SelectDropDownByIndex(membershipFeePlanDDwn, 1);
+		selectDropDownByIndex(membershipFeePlanDDwn, 1);
 	}
 
 	public void selectTransactionLimitPlan() {
-		SelectDropDownByIndex(transactionLimitPlanDDwn, 1);
+		selectDropDownByIndex(transactionLimitPlanDDwn, 1);
 	}
 
 	public void next() {
@@ -605,7 +605,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectAfterKYC() {
-		SelectDropDownByIndex(transactionSetDDwn, 1);
+		selectDropDownByIndex(transactionSetDDwn, 1);
 	}
 
 	public void clickEcomCheckBox() {
@@ -663,7 +663,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectChipType() {
-		SelectDropDownByIndex(chipTypeDDwn, 1);
+		selectDropDownByIndex(chipTypeDDwn, 1);
 	}
 
 	public void Finish() {
@@ -727,11 +727,11 @@ public class DevicePlanPage extends AbstractBasePage {
 	public void verifyNewDevicePlanSuccess() {
 		if (!verifyErrorsOnDevicePlanPage()) {
 			logger.info("Device Plan Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Device plan Addition");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 

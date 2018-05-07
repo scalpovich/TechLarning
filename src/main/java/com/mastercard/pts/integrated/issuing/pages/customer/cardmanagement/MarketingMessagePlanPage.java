@@ -206,7 +206,7 @@ public class MarketingMessagePlanPage extends AbstractBasePage {
 
 	public void clickSaveButton() {
 		clickWhenClickable(save);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public boolean verifyErrorsOnMarketingMessagePage() {
@@ -216,11 +216,11 @@ public class MarketingMessagePlanPage extends AbstractBasePage {
 	public void verifyNewVendorSuccess() {
 		if (!verifyErrorsOnMarketingMessagePage()) {
 			logger.info("Vendor Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Vendor Addition");
 			clickWhenClickable(CancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 
@@ -230,7 +230,7 @@ public class MarketingMessagePlanPage extends AbstractBasePage {
 	}
 
 	public void switchToAddMarketingMessageDetailsFrame() {
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe(Constants.ADD_MARKETING_MESSAGE_DETAILS_FRAME);
 	}
 
@@ -257,7 +257,7 @@ public class MarketingMessagePlanPage extends AbstractBasePage {
 		enterMarketingMessagePlanDetailsLabel();
 		enterMarketingMessagePlanDetailsDescription();
 		clickSaveButton();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToAddMarketingMessagePlanFrame();
 		Scrolldown(save);
 		waitForElementVisible(save);

@@ -349,19 +349,19 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 
 	public void selectDeviceType() {
 		waitForElementVisible(DeviceTypeDDwn);
-		SelectDropDownByIndex(DeviceTypeDDwn, 1);
+		selectDropDownByIndex(DeviceTypeDDwn, 1);
 
 	}
 
 	public void selectDevicePlan() {
 		waitForElementVisible(DevicePlanDDwn);
 		CustomUtils.ThreadDotSleep(1000);
-		SelectDropDownByIndex(DevicePlanDDwn, 1);
+		selectDropDownByIndex(DevicePlanDDwn, 1);
 	}
 
 	public void selectDevicePhotoIndicator() {
 		waitForElementVisible(photoIndicatorDDwn);
-		SelectDropDownByIndex(photoIndicatorDDwn, 1);
+		selectDropDownByIndex(photoIndicatorDDwn, 1);
 	}
 
 	/**

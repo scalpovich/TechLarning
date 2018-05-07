@@ -112,11 +112,11 @@ public class NetworkMembershipPage extends AbstractBasePage {
 	}
 
 	public void selectCutoverHours() {
-		SelectDropDownByIndex(CutoverHoursDDwn, 1);
+		selectDropDownByIndex(CutoverHoursDDwn, 1);
 	}
 
 	public void selectCutoverMinutes() {
-		SelectDropDownByIndex(CutoverMinsDDwn, 2);
+		selectDropDownByIndex(CutoverMinsDDwn, 2);
 	}
 
 	public void selectSettlementCurrency(NetworkMembership ntk) {
@@ -134,11 +134,11 @@ public class NetworkMembershipPage extends AbstractBasePage {
 	public void verifyNewNetworkSuccess() {
 		if (!verifyErrorsOnNetworkPage()) {
 			logger.info("Network membership Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in record Addition");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 
 		}
 	}

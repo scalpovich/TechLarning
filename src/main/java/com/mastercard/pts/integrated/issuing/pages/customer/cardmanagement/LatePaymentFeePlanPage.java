@@ -121,7 +121,7 @@ public class LatePaymentFeePlanPage extends AbstractBasePage {
 	    	clickWhenClickable(addDetailsBtn);
 	 		waitForElementVisible(addBtn);
 	 		clickWhenClickable(addBtn);
-	 		SwitchToDefaultFrame();
+	 		switchToDefaultFrame();
 	 		switchToIframe(ADD_LATE_PAYMENT_FEE_PLAN_DETAILS_FRAME);	
 	    }
 	    public void enterMinimumRangeAmount()
@@ -135,7 +135,7 @@ public class LatePaymentFeePlanPage extends AbstractBasePage {
 	    public void switchingBackToMainScreenAndSaveNewLatePaymentFeePlan()
 	    {
 	        clickWhenClickable(saveBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		    switchToIframe(ADD_LATE_PAYMENT_FEE_PLAN_FRAME);
 		    waitForLoaderToDisappear();
 		    waitForElementVisible(saveBtn);

@@ -145,7 +145,7 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 	}
 	
 	public void enterBeneficiaryStateName(String beneficiaryStateName){
-		SelectDropDownByText(selectedStateDDwn, beneficiaryStateName);
+		selectDropDownByText(selectedStateDDwn, beneficiaryStateName);
 	}
 	
 	public void enterBeneficiaryCityName(String cityName){
@@ -190,7 +190,7 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 	}
 	
 	public void enterRemittanceCurrency(String remittanceCurrency){
-		SelectDropDownByText(selectedTxnCurrencyDDwn, remittanceCurrency);
+		selectDropDownByText(selectedTxnCurrencyDDwn, remittanceCurrency);
 	}
 	
 	public String submitRemittanceRequst(CardHolderTransactions cardhlTran){

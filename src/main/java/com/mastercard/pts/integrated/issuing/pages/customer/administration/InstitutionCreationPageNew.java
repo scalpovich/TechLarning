@@ -762,7 +762,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	public void verifyNewInstituteCreationSuccess(InstitutionCreation instution) {
 		try{
 		if (!verifyErrorsOnInstitutePage()) {
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 			enterNewInstitutionName(instution);
 			searchNewInstitution();
 			for (int l = 0; l < 21; l++) {
@@ -800,12 +800,12 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	public void save() {
 		clickWhenClickable(saveBtn);
 		waitForLoaderToDisappear();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 	
 	public void cancel() {
 		clickWhenClickable(cancelBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public void provideInstitutionType(InstitutionCreation institution) {

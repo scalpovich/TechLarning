@@ -176,31 +176,31 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	public void selectCreditPlan() {
 		if (creditPlanDDwn.isEnabled()) {
-			SelectDropDownByIndex(creditPlanDDwn, FIRST_OPTION);
+			selectDropDownByIndex(creditPlanDDwn, FIRST_OPTION);
 		}
 	}
 
 	public void selectBillingCycleCode() {
 		if (billingCycleCodeDDwn.isEnabled()) {
-			SelectDropDownByIndex(billingCycleCodeDDwn, FIRST_OPTION);
+			selectDropDownByIndex(billingCycleCodeDDwn, FIRST_OPTION);
 		}
 	}
 
 	public void selectTransactionLimitPlan() {
 		if (transactionLimitPlanDDwn.isEnabled()) {
-			SelectDropDownByIndex(transactionLimitPlanDDwn, FIRST_OPTION);
+			selectDropDownByIndex(transactionLimitPlanDDwn, FIRST_OPTION);
 		}
 	}
 
 	public void selectSurchargePlan() {
 		if (surchargePlanDDwn.isEnabled()) {
-			SelectDropDownByIndex(surchargePlanDDwn, FIRST_OPTION);
+			selectDropDownByIndex(surchargePlanDDwn, FIRST_OPTION);
 		}
 	}
 
 	public void selectSurchargeWaiverPlan() {
 		if (surchargeWaiverPlanDDwn.isEnabled()) {
-			SelectDropDownByIndex(surchargeWaiverPlanDDwn, FIRST_OPTION);
+			selectDropDownByIndex(surchargeWaiverPlanDDwn, FIRST_OPTION);
 		}
 	}
 
@@ -224,7 +224,7 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	public void selectWalletFeePlan() {
 		if (walletFeePlanDDwn.isEnabled()) {
-			SelectDropDownByIndex(walletFeePlanDDwn, FIRST_OPTION);
+			selectDropDownByIndex(walletFeePlanDDwn, FIRST_OPTION);
 		}
 	}
 
@@ -268,13 +268,13 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	public void selectWhiteListedMCGPlan() {
 		if (whiteListedMCGPlanDDwn.isEnabled()) {
-			SelectDropDownByIndex(whiteListedMCGPlanDDwn, FIRST_OPTION);
+			selectDropDownByIndex(whiteListedMCGPlanDDwn, FIRST_OPTION);
 		}
 	}
 
 	public void selectWhiteListedMerchantPlan() {
 		if (whiteListedMerchantPlanDDwn.isEnabled()) {
-			SelectDropDownByIndex(whiteListedMerchantPlanDDwn, FIRST_OPTION);
+			selectDropDownByIndex(whiteListedMerchantPlanDDwn, FIRST_OPTION);
 		}
 	}
 
@@ -295,7 +295,7 @@ public class WalletPlanPage extends AbstractBasePage {
 	public void clickFinishButton() {
 		clickWhenClickable(finishBtn);
 		waitForWicket();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public boolean verifyErrorsOnWalletPlanPagePage() {
@@ -317,11 +317,11 @@ public class WalletPlanPage extends AbstractBasePage {
 	public void verifyWalletPlanSuccess() {
 		if (!verifyErrorsOnWalletPlanPagePage()) {
 			logger.info("Wallet Plan Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 

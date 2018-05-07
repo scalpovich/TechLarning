@@ -77,7 +77,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	public void deviceproduction(String prodType, String batchNum, String DeviceNumber) {
 		menuSubMenuPage.getDeviceProduction().click();
-		SelectDropDownByText(productTypeDDwn, prodType);
+		selectDropDownByText(productTypeDDwn, prodType);
 		if (batchNum != null) {
 			enterText(batchNumberTxt, batchNum);
 		}
@@ -174,10 +174,10 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public void verifyDeviceProductionRequestSuccess() {
 		if (!verifyErrorsOnDeviceProductionPage()) {
 			logger.info("Device-Production batch succesful");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in batch");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 

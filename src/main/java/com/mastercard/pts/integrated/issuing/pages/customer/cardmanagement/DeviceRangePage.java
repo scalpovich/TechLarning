@@ -226,7 +226,7 @@ public class DeviceRangePage extends AbstractBasePage {
 	}
 
 	public void selectBranch() {
-		SelectDropDownByIndex(BranchDDwn, 1);
+		selectDropDownByIndex(BranchDDwn, 1);
 		
 	}
 
@@ -263,28 +263,28 @@ public class DeviceRangePage extends AbstractBasePage {
 	public void selectEndPoint() {
 		if (EndpointDDwn.isEnabled()) {
 			waitForPageToLoad(driver());
-			SelectDropDownByIndex(EndpointDDwn, 1);
+			selectDropDownByIndex(EndpointDDwn, 1);
 		}
 	}
 
 	public void selectInterface() {
 		waitForPageToLoad(driver());
 		if (InterfaceDDwn.isEnabled()) {
-			SelectDropDownByIndex(InterfaceDDwn, 1);
+			selectDropDownByIndex(InterfaceDDwn, 1);
 		}
 	}
 
 	public void selectRoutingType() {
 		waitForPageToLoad(driver());
 		if (RoutingTypeDDwn.isEnabled()) {
-			SelectDropDownByIndex(RoutingTypeDDwn, 1);
+			selectDropDownByIndex(RoutingTypeDDwn, 1);
 		}
 	}
 
 	@Override
 	public void clickSaveButton() {
 		clickWhenClickable(SaveBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public boolean verifyErrorsOnDeviceRangePage() {
@@ -294,11 +294,11 @@ public class DeviceRangePage extends AbstractBasePage {
 	public void verifyDeviceRangeSuccess() {
 		if (!verifyErrorsOnDeviceRangePage()) {
 			logger.info("Device Range Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(CancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 
@@ -329,15 +329,15 @@ public class DeviceRangePage extends AbstractBasePage {
 	public void configureDeviceranges(String prodType) {
 		ClickButton(AddDeviceRangeBtn);
 		switchToIframe(Constants.ADD_DEVICE_RANGE_FRAME);
-		SelectDropDownByText(ProductTypeDDwn, prodType);
+		selectDropDownByText(ProductTypeDDwn, prodType);
 		addWicketAjaxListeners(driver());
-		SelectDropDownByIndex(ProgramDDwn, 1);
+		selectDropDownByIndex(ProgramDDwn, 1);
 		addWicketAjaxListeners(driver());
-		SelectDropDownByIndex(BranchDDwn, 1);
+		selectDropDownByIndex(BranchDDwn, 1);
 		addWicketAjaxListeners(driver());
-		SelectDropDownByIndex(DevicePlanCodeDDwn, 1);
+		selectDropDownByIndex(DevicePlanCodeDDwn, 1);
 		addWicketAjaxListeners(driver());
-		SelectDropDownByIndex(IssuerBINDDwn, 1);
+		selectDropDownByIndex(IssuerBINDDwn, 1);
 
 	}
 

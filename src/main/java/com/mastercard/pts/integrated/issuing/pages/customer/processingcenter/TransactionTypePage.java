@@ -52,7 +52,7 @@ public class TransactionTypePage extends AbstractBasePage {
 	private MCWebElement closeBtn;
 
 	public void listTransactiontypes(String interchange) {
-		SelectDropDownByText(interchangeTypeDDwn, interchange);
+		selectDropDownByText(interchangeTypeDDwn, interchange);
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		ClickButton(searchBtn);
 	}
@@ -81,7 +81,7 @@ public class TransactionTypePage extends AbstractBasePage {
 					+ "   and transaction code:- " + transactionTypeCode);
 			verifyOptionsSelected(transactionTypeCode);
 			ClickButton(closeBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 
 		}
 

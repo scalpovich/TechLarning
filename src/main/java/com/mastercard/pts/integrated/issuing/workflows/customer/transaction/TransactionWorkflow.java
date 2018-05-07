@@ -51,7 +51,6 @@ import com.mastercard.pts.integrated.issuing.pages.ValidationException;
 import com.mastercard.pts.integrated.issuing.pages.agent.settlement.InitiateSettlementPage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceApprovePage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceRequestPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.MarkupFeePlanPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReversalTransactionPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionSearchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -816,7 +815,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumDriver.findElementByName("License profiles").click();
 		winiumDriver.findElementByName("Select").click();
 		wait(2000);
-		if(winiumDriver.findElements(By.name("OK")).size()> 0){
+		if (winiumDriver.findElements(By.name("OK")).size() > 0) {
 			winiumDriver.findElement(By.name("OK")).click();
 		}
 		wait(15000);
@@ -836,7 +835,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			winiumLicenseSelectOperation(licenseTypeToSelect, licenseFor);
 			winiumClickOperation("Select");
 			wait(2000);
-			if(winiumDriver.findElements(By.name("OK")).size()> 0){
+			if (winiumDriver.findElements(By.name("OK")).size() > 0) {
 				winiumDriver.findElement(By.name("OK")).click();
 			}
 			wait(20000);
@@ -935,8 +934,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void configureBinRangeForMdfs(Transaction transactionData, String transactionName) {
 		String bin = transactionData.getCardNumber();
-		String issuerCurrencyCode = transactionData.getIssuerCurrencyCode(); // value from DE element 49																	
-		String cardHolderBillingCurrency = transactionData.getCardHolderBillingCurrency(); // value from DE element 61_13																				
+		String issuerCurrencyCode = transactionData.getIssuerCurrencyCode(); // value from DE element 49
+		String cardHolderBillingCurrency = transactionData.getCardHolderBillingCurrency(); // value from DE element 61_13
 		String binBinMinRange = bin.substring(0, 9) + "00";
 		String binMaxBinRange = bin.substring(0, 9) + "99";
 		try {
@@ -1083,19 +1082,16 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	public void closeSimulator(String name) {
 		winiumDriver = null;
 
-		if(name.equalsIgnoreCase("MAS")){
-			if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_18)){
+		if (name.equalsIgnoreCase("MAS")) {
+			if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_18)) {
 				name = "MAS18";
-			}
-			else if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_17)){
+			} else if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_17)) {
 				name = "MAS17";
 			}
-		}
-		else if(name.equalsIgnoreCase("MDFS")){
-			if (SimulatorConstantsData.MDFS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_18)){
+		} else if (name.equalsIgnoreCase("MDFS")) {
+			if (SimulatorConstantsData.MDFS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_18)) {
 				name = "MDFS18";
-			}
-			else if (SimulatorConstantsData.MDFS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_17)){
+			} else if (SimulatorConstantsData.MDFS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_17)) {
 				name = "MDFS17";
 			}
 		}
