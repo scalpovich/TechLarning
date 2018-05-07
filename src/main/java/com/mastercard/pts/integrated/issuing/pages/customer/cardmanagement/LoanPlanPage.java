@@ -7,10 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanType;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -106,6 +104,8 @@ public class LoanPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancellationFeeFixed:input:inputAmountField")
 	private MCWebElement cancellationFeeFixedTxt ;
 	
+	final int FIRST_RECORD=1;
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Loan Plan");
 		verifyUiOperation("Add Loan Plan");
@@ -159,7 +159,7 @@ public class LoanPlanPage extends AbstractBasePage {
 	}
 	
 	public void selectProgram(){
-		SelectDropDownByIndex(programDDwn, 1);
+		SelectDropDownByIndex(programDDwn, FIRST_RECORD);
 	}
 	
 	public void enterMaximumEligibleLoanFixedAmount(String maximumEligibleLoanFixedAmount){
@@ -214,7 +214,6 @@ public class LoanPlanPage extends AbstractBasePage {
     	enterText(cancellationFeeFixedTxt, cancellationAmount);
 	}
     
-	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(

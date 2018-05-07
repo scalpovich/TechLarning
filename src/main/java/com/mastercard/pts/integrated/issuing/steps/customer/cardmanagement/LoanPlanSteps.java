@@ -8,6 +8,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanType;
 import com.mastercard.pts.integrated.issuing.steps.AbstractBaseSteps;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoanPlanFlows;
 
 /**
@@ -29,7 +30,7 @@ public class LoanPlanSteps extends AbstractBaseSteps {
 	@When("user adds loan plan")
 	public void userAddsLoanplan() {
 		loanPlan=LoanPlan.getLoanPlanData();
-		LoanType loanTypedata=context.get("LOAN_TYPE_OBJECT");
+		LoanType loanTypedata=context.get(ConstantData.LOAN_TYPE_OBJECT);
 		loanPlanFlows.addLoanPlan(loanPlan,loanTypedata);
 	}
 
