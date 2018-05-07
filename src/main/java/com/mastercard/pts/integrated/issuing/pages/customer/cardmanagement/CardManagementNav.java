@@ -160,6 +160,7 @@ public class CardManagementNav {
 	public static final String L3_FEE_REASON = "ISW014";
 
 	public static final String L2_CURRENCY_BLACK_LIST_PLAN = "ISSP03";
+	public static final String L2_CURRENCY_PAYOUT_LIST_PLAN ="ISSP04";
 
 	public static final String L3_WHITE_LISTED_MERCHANT_PLAN = "WLWLM001";
 	public static final String L3_MCG_ADDITIONAL_HOLD_PLAN = "MCGHLD01";
