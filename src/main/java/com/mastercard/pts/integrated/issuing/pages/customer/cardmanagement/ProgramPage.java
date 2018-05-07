@@ -481,7 +481,10 @@ public class ProgramPage extends AbstractBasePage {
 		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
 		if (productType.equalsIgnoreCase(ProductType.CREDIT))
 		{
-		selectDevicePlanPlan2DDwn(program.getDevicePlanPlan2());
+			if(program.getApplicationType().equalsIgnoreCase("Supplementary")||program.getApplicationType().equalsIgnoreCase("Add-on Device") && program.getSubApplicationType().equalsIgnoreCase("Existing"))
+			{
+		      selectDevicePlanPlan2DDwn(program.getDevicePlanPlan2());
+			}
 		}
 		if (!productType.equalsIgnoreCase(ProductType.DEBIT)) {
 			selectOtherPlanStatementMessagePlan(program.getOtherPlanStatementMessagePlan());

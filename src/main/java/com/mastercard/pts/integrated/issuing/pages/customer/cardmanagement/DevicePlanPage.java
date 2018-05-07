@@ -988,9 +988,9 @@ public class DevicePlanPage extends AbstractBasePage {
 			
 					if (devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 						selectByVisibleText(iframeDeviceTypeDdwn,devicePlanDataObject.getDeviceType());
-						if (devicePlanDataObject.getDeviceType().contains("EMV Card")) {
+						if (devicePlanDataObject.getDeviceType().contains("EMV")) {
 							WebElementUtils.enterText(iframeServiceCodeTxt,EMV_SERVICE_CODE);
-						} else if (devicePlanDataObject.getDeviceType().contains("Magnetic Stripe Card")) {
+						} else if (devicePlanDataObject.getDeviceType().contains("Mag")) {
 							WebElementUtils.enterText(iframeServiceCodeTxt,MSR_SERVICE_CODE);
 						}
 						else
@@ -1062,7 +1062,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		WebElementUtils.checkCheckbox(ecommAllowedChkBx, devicePlan.isEcommerceAllowed());
 	
 		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-			if (!DeviceType.STATIC_VIRTUAL_CARD.contains(devicePlan.getDeviceType())|| !DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType()) && "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
+			if (DeviceType.MAGNETIC_STRIPE_CARD.contains(devicePlan.getDeviceType())&& DeviceType.EMV_CARD.contains(devicePlan.getDeviceType()) && "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 				WebElementUtils.enterText(pinRetryLimitTxt,devicePlan.getPinRetryLimit());
 			}
 		}
@@ -1162,7 +1162,7 @@ public class DevicePlanPage extends AbstractBasePage {
 			selectIframeEmbossingVendorDdwn(devicePlan.getEmbossingVendor());
 			 }
 		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-			if (!DeviceType.STATIC_VIRTUAL_CARD.contains(devicePlan.getDeviceType())&&!DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType())) {
+			if (DeviceType.EMV_CARD.contains(devicePlan.getDeviceType())|| DeviceType.MAGNETIC_STRIPE_CARD.contains(devicePlan.getDeviceType())) {
 				fillRenewalSection(devicePlan);
 				fillReplacementSection(devicePlan);
 				fillPinGenerationSection(devicePlan);

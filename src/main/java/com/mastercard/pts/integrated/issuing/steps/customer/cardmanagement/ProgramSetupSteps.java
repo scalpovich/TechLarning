@@ -907,8 +907,8 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.PROGRAM, program);
 	}
 	
-	@When("User fills Program $programType section for $type product for $interchange")
-	public void whenUserFillsProgramSection(String programType,String type,String interchange) {
+	@When("User $applicationType fills $subApplicationType Program $programType section for $type product for $interchange")
+	public void whenUserFillsProgramSection(String applicationType,String subApplicationType,String programType,String type,String interchange) {
 		program = Program.createWithProvider(dataProvider, provider);
 		program.setProduct(ProductType.fromShortName(type));
 		program.setInterchange(interchange);
@@ -918,8 +918,12 @@ public class ProgramSetupSteps {
 		}
 		program.setFirstWalletPlan(walletPlan.buildDescriptionAndCode());
 		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
+		program.setApplicationType(applicationType);
+		program.setSubApplicationType(subApplicationType);
+		if(program.getApplicationType().contains("Supplementary")||program.getApplicationType().contains("Add-on")&& program.getSubApplicationType().contains("Existing"))
+		{
 		program.setDevicePlanPlan2(devicePlanSupplementary.buildDescriptionAndCode());
-
+		}
 		program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
 		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
 		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
