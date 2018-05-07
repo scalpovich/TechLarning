@@ -15,6 +15,7 @@ public class LoanPlan {
 	private String programWalletPromotion  ;
 	private String loanPlanProgram  ;
 	private String loanPlanWalletPromotion  ;
+	private String maximumEligibleLoanFixedAmount  ;
 	private String numberOfConcurrentLoan  ;
 	private String minimumLoanAmount   ;
 	private String maximumLoanAmount  ;
@@ -23,7 +24,53 @@ public class LoanPlan {
 	private String minimumInterestRate   ;
 	private String maximumInterestRate  ;
 	private String maximumMoratoriumPeriod;
+	private String processingFixedFeeAmount ;
+	private String preclosureFixedFeeAmount;
+	private String cancellationFixedFeeAmount;
 	
+	
+	
+	public String getMaximumEligibleLoanFixedAmount() {
+		return maximumEligibleLoanFixedAmount;
+	}
+
+	public void setMaximumEligibleLoanFixedAmount(
+			String maximumEligibleLoanFixedAmount) {
+		this.maximumEligibleLoanFixedAmount = maximumEligibleLoanFixedAmount;
+	}
+
+	public String getProcessingFixedFeeAmount() {
+		return processingFixedFeeAmount;
+	}
+
+	public void setProcessingFixedFeeAmount(String processingFixedFeeAmount) {
+		this.processingFixedFeeAmount = processingFixedFeeAmount;
+	}
+
+	public String getPreclosureFixedFeeAmount() {
+		return preclosureFixedFeeAmount;
+	}
+
+	public void setPreclosureFixedFeeAmount(String preclosureFixedFeeAmount) {
+		this.preclosureFixedFeeAmount = preclosureFixedFeeAmount;
+	}
+
+	public String getCancellationFixedFeeAmount() {
+		return cancellationFixedFeeAmount;
+	}
+
+	public void setCancellationFixedFeeAmount(String cancellationFixedFeeAmount) {
+		this.cancellationFixedFeeAmount = cancellationFixedFeeAmount;
+	}
+
+	public LoanType getLoanTypeData() {
+		return loanTypeData;
+	}
+
+	public void setLoanTypeData(LoanType loanTypeData) {
+		this.loanTypeData = loanTypeData;
+	}
+
 	@Autowired
 	LoanType loanTypeData;
 	
@@ -152,6 +199,7 @@ public class LoanPlan {
 		loanPlan.setLoanPlanCode(CustomUtils.randomNumbers(5));
 		loanPlan.setLoanPlanDescription(CustomUtils.randomString(10).toUpperCase());
 		loanPlan.setProgramWalletPromotion(MapUtils.fnGetInputDataFromMap("ProgramWalletPromotion"));
+		loanPlan.setMaximumEligibleLoanFixedAmount(CustomUtils.randomNumbers(2));
 		loanPlan.setNumberOfConcurrentLoan(CustomUtils.randomNumbers(2));
 		loanPlan.setMinimumLoanAmount(CustomUtils.randomNumbers(2));
 		loanPlan.setMaximumLoanAmount(CustomUtils.randomNumbers(3));
@@ -160,6 +208,9 @@ public class LoanPlan {
 		loanPlan.setMinimumInterestRate(CustomUtils.randomNumbers(1));
 		loanPlan.setMaximumInterestRate(CustomUtils.randomNumbers(2));
 		loanPlan.setMaximumMoratoriumPeriod(CustomUtils.randomNumbers(1));
+		loanPlan.setProcessingFixedFeeAmount(CustomUtils.randomNumbers(2));
+		loanPlan.setPreclosureFixedFeeAmount(CustomUtils.randomNumbers(2));
+		loanPlan.setCancellationFixedFeeAmount(CustomUtils.randomNumbers(2));
 		return loanPlan;
 	}
 	

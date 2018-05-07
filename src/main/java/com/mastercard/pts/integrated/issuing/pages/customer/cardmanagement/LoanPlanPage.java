@@ -67,6 +67,9 @@ public class LoanPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "promoCode:input:dropdowncomponent")
 	private MCWebElement walletPromotionDDwn ;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "loanAmtFixed:input:inputAmountField")
+	private MCWebElement loanAmtFixedTxt;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "concurrentEmiNo:input:inputAmountField")
 	private MCWebElement numberOfConcurrentLoanTxt;
 	
@@ -91,6 +94,18 @@ public class LoanPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "maxMoratoriumPeriod:input:inputAmountField")
 	private MCWebElement maxMoratoriumPeriodTxt ;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//li[@id='loanFees']")
+	private MCWebElement feesTab ;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "procFeeFixed:input:inputAmountField")
+	private MCWebElement procFeeFixedTxt ;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "preclosureFeeFixed:input:inputAmountField")
+	private MCWebElement preclosureFeeFixedTxt ;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "cancellationFeeFixed:input:inputAmountField")
+	private MCWebElement cancellationFeeFixedTxt ;
+	
 	@Autowired
 	private TestContext context;
 	
@@ -104,23 +119,105 @@ public class LoanPlanPage extends AbstractBasePage {
 		LoanType loanTypedata=context.get("LOAN_TYPE_OBJECT");
 		clickAddNewButton();
 		runWithinPopup("Add Loan Plan", () -> {
-			enterText(loanPlanCodeTxt, loanPlan.getLoanPlanCode());
-			enterText(loanPlanDescriptionTxt, loanPlan.getLoanPlanDescription());
-			selectByVisibleText(loanTypeDDwn, loanTypedata.getDescription());
-			selectCheckBox(defaultLoanPlanChckBx, "DefaultLoanPlan");
-			selectByVisibleText(programWalletPromotionDDwn, loanPlan.getProgramWalletPromotion());
-			SelectDropDownByIndex(programDDwn, 1);
-			enterText(numberOfConcurrentLoanTxt, loanPlan.getNumberOfConcurrentLoan());
-			enterText(minimumLoanAmountTxt, loanPlan.getMinimumLoanAmount());
-			enterText(maximumLoanAmountTxt, loanPlan.getMaximumLoanAmount());
-			enterText(minimumNumberOfInstallmentTxt, loanPlan.getMinimumNumberOfInstallment());
-			enterText(maximumNumberOfInstallmentTxt, loanPlan.getMaximumNumberOfInstallment());
-			enterText(minInterestRateTxt, loanPlan.getMinimumInterestRate());
-			enterText(maxInterestRateTxt, loanPlan.getMaximumInterestRate());
-			enterText(maxMoratoriumPeriodTxt, loanPlan.getMaximumMoratoriumPeriod());
+			enterLoanPlanCode(loanPlan.getLoanPlanCode());
+			enterLoanPlanDescription(loanPlan.getLoanPlanDescription());
+			selectLoanType(loanTypedata.getDescription());
+			selectDefaultLoanType();
+			selectProgramWalletPromotion(loanPlan.getProgramWalletPromotion());
+			selectProgram();
+			enterMaximumEligibleLoanFixedAmount(loanPlan.getMaximumEligibleLoanFixedAmount());
+			enterNumberOfConcurrentLoan(loanPlan.getNumberOfConcurrentLoan());
+			enterMinimumLoanAmount(loanPlan.getMinimumLoanAmount());
+			enterMaximumLoanAmount(loanPlan.getMaximumLoanAmount());
+			enterMinimumNumberOfInstallment(loanPlan.getMinimumNumberOfInstallment());
+			enterMaximumNumberOfInstallment(loanPlan.getMaximumNumberOfInstallment());
+			enterMinimumInterestRate(loanPlan.getMinimumInterestRate());
+			enterMaximumInterestRate(loanPlan.getMaximumInterestRate());
+			enterMaximumMoratoriumPeriod( loanPlan.getMaximumMoratoriumPeriod());
+			navigateToFeesTab();
+			enterProcessingFixedFeeAmount(loanPlan.getProcessingFixedFeeAmount());
+			enterPreclosureFixedFeeAmount(loanPlan.getPreclosureFixedFeeAmount());
+			enterCancellationFixedFeeAmount(loanPlan.getCancellationFixedFeeAmount());
 			clickSaveButton();
 		});
 	}
+	
+	public void enterLoanPlanCode(String loadPlanCode){
+		enterText(loanPlanCodeTxt, loadPlanCode);
+	}
+	
+	public void enterLoanPlanDescription(String loadPlanDescription){
+		enterText(loanPlanDescriptionTxt, loadPlanDescription);
+	}
+	
+	public void selectLoanType(String loanTypeItem){
+		selectByVisibleText(loanTypeDDwn, loanTypeItem);
+	}
+	
+	public void selectDefaultLoanType(){
+		selectCheckBox(defaultLoanPlanChckBx, "DefaultLoanPlan");
+	}
+	
+	public void selectProgramWalletPromotion(String programWalletPromotionItem){
+		selectByVisibleText(programWalletPromotionDDwn, programWalletPromotionItem);
+	}
+	
+	public void selectProgram(){
+		SelectDropDownByIndex(programDDwn, 1);
+	}
+	
+	public void enterMaximumEligibleLoanFixedAmount(String maximumEligibleLoanFixedAmount){
+		enterText(loanAmtFixedTxt, maximumEligibleLoanFixedAmount);
+	}
+	
+	public void enterNumberOfConcurrentLoan(String numberOfConcurrentLoan){
+		enterText(numberOfConcurrentLoanTxt, numberOfConcurrentLoan);
+	}
+	
+	public void enterMinimumLoanAmount(String minimumLoanAmount){
+		enterText(minimumLoanAmountTxt, minimumLoanAmount);
+	}
+	
+	public void enterMaximumLoanAmount(String maximumLoanAmount){
+		enterText(maximumLoanAmountTxt, maximumLoanAmount);
+	}
+	
+	public void enterMinimumNumberOfInstallment(String minimumNumberOfInstallment){
+		enterText(minimumNumberOfInstallmentTxt, minimumNumberOfInstallment);
+	}
+	
+	public void enterMaximumNumberOfInstallment(String maximumNumberOfInstallment){
+		enterText(maximumNumberOfInstallmentTxt, maximumNumberOfInstallment);
+	}
+	
+	public void enterMinimumInterestRate(String minimumInterestRate){
+		enterText(minInterestRateTxt, minimumInterestRate);
+	}
+		
+	public void enterMaximumInterestRate(String maximumInterestRate){
+		enterText(maxInterestRateTxt, maximumInterestRate);
+	}
+	
+	public void enterMaximumMoratoriumPeriod(String maximumMoratoriumPeriod){
+		enterText(maxMoratoriumPeriodTxt, maximumMoratoriumPeriod);
+	}
+	
+	public void navigateToFeesTab(){
+		clickWhenClickable(feesTab);
+	}
+	
+	public void enterProcessingFixedFeeAmount(String processingAmount){
+		enterText(procFeeFixedTxt, processingAmount);
+	}
+	
+    public void enterPreclosureFixedFeeAmount(String preclosureAmount){
+    	enterText(preclosureFeeFixedTxt, preclosureAmount);
+	}
+    
+    public void enterCancellationFixedFeeAmount(String cancellationAmount){
+    	enterText(cancellationFeeFixedTxt, cancellationAmount);
+	}
+    
 	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
