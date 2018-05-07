@@ -148,7 +148,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 	}
 
 	public void verifyEmbossingTemplateSuccess(EmbossingFile embossingFile) {
-		String EmbossingFileName = "EmbossingInputTemplate";
+		String embossingFileName = "EmbossingInputTemplate";
 		if (!verifyErrorsOnEmbossingTemplatePage()) {
 			logger.info("Embossing Template Added Successfully");
 			SwitchToDefaultFrame();
@@ -165,9 +165,8 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 			CustomUtils.ThreadDotSleep(3000);
 			clickSaveButton();
 			try {
-				editEmbossTemplate(MapUtils.fnGetInputDataFromMap("LegalType"), EmbossingFileName, embossingFile);
+				editEmbossTemplate(MapUtils.fnGetInputDataFromMap("LegalType"), embossingFileName, embossingFile);
 			} catch (Exception e) {
-				e.printStackTrace();
 				log.error(e);
 			}
 		} else {
@@ -224,7 +223,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 	}
 
 	public String addembossingtemplate(String Embosscode, String EmbossDesc, String EmbossFileType, String sequenceNo,
-			String EmbossingField, String EmbossTempField, String priority) {
+			String EmbossingField, String priority) {
 		String flag = null;
 
 		retryUntilNoErrors(() -> menusubMenuPage.getEmbossingTemplate().click());
