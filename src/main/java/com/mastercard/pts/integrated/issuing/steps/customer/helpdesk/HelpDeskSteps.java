@@ -369,6 +369,7 @@ public class HelpDeskSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
+		device.setAppliedForProduct(ProductType.fromShortName(type));
 		String walletNumber = helpdeskWorkflow.getWalletNumber(device);
 		device.setWalletNumber(walletNumber);
 		context.put(ContextConstants.DEVICE, device);

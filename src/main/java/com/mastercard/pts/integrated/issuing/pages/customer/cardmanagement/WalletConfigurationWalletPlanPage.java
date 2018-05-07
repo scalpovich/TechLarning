@@ -92,7 +92,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectProgramType(String programType) {
-		WebElementUtils.selectDDByVisibleText(programTypeDDwn, programType);
+		WebElementUtils.selectDropDownByVisibleText(programTypeDDwn, programType);
 	}
 
 	public void selectUsage(String usage) {
@@ -150,19 +150,19 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	public void addWalletPlanData(WalletPlan walletPlan) {
 		logger.info("Create Wallet Plan: {}", walletPlan.getWalletPlanCode());
 		clickAddNewButton();
-		
+
 		runWithinPopup("Add Wallet Plan", () -> {
 			String productType = walletPlan.getProductType();
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
-			inputDescription(walletPlan.getDescription());			
+			inputDescription(walletPlan.getDescription());				
 			selectProductType(productType);
 			waitForPageToLoad(driver());
 			selectProgramType(walletPlan.getProgramType());
 			waitForPageToLoad(driver());
-			SimulatorUtilities.wait(500);
 			selectCurrency(walletPlan.getCurrency());
-			SimulatorUtilities.wait(500);
+			waitForPageToLoad(driver());			
 			selectUsage(walletPlan.getUsage());
+			waitForPageToLoad(driver());
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			clickNextButton(); // Click on next button
 			clickFinishButton(); // click on finish button
@@ -177,18 +177,13 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 
 		runWithinPopup("Add Wallet Plan", () -> {
 			String productType = walletPlan.getProductType();
+
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
 			inputDescription(walletPlan.getDescription());
 			selectProductType(productType);
-			waitForPageToLoad(driver());
 			selectProgramType(walletPlan.getProgramType());
-			//waitForPageToLoad(driver());
-			SimulatorUtilities.wait(500);
 			selectCurrency(walletPlan.getCurrency());
-			//waitForPageToLoad(driver());
-			SimulatorUtilities.wait(500);
 			selectUsage(walletPlan.getUsage());
-			waitForPageToLoad(driver());
 			fillDetailsBasedOnCarddType(walletPlan, productType);
 			clickNextButton(); // Click on next button
 			clickFinishButton(); // click on finish button

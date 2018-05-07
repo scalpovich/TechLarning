@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for EMV Corporate debit card
 
 Meta:
-@StoryName d_msr_corp_ASI
+@StoryName d_emv_corp_ASI
 @MMSR
 
 Scenario: Set up program for emv corporate debit card
@@ -24,7 +24,7 @@ When processes device production batch for debit
 Then device has "normal" status
 Then user activates device through helpdesk
 And user sign out from customer portal
-
+Then embossing file batch was generated in correct format
 
 Scenario: Perform MMSR-CORPORATE_DEBITCARD Authorization transaction
 Given connection to MAS is established

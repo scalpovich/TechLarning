@@ -15,6 +15,7 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Throwables;
@@ -51,6 +52,13 @@ public class FileCreation {
 	Vendor vendor;
 	@Autowired
 	HelpDeskGeneral helpDeskGeneral;
+	
+	@Value("${linux.application.upload.path}")
+	private String applicationUpload;
+	
+	@Value("${linux.folder.path}")
+	private String linuxFolderPath;
+	
 
 	@Autowired
 	private DataProvider provider;
@@ -412,8 +420,8 @@ public class FileCreation {
 		String FileName = "APPPR" + institutionCode + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
 		HashMap<String, HashMap<String, String>> applicationUploadMap;
 		File file = new File(FileName);
-		String remoteDir = Constants.APPLICATION_UPLOAD_PREPAID_FILE_PATH;
-		
+		String remoteDir = linuxFolderPath+applicationUpload;
+
 		applicationUploadMap = dataReader.dataProviderFileUpload("AllUploadTestData", "Prepaid Card File");
 		logger.info("applicationUploadMap = {} ", applicationUploadMap);
 		try (PrintWriter writer = new PrintWriter(file)) {
@@ -443,7 +451,7 @@ public class FileCreation {
 			writer.print("FT|" + createRecordNumber(9, totalRecords));
 		} catch (IOException e) {
 			logger.error("Fail to create page object: {}", e);
-			throw MiscUtils.propagate(e);	
+			throw MiscUtils.propagate(e);
 		}
 
 		linuxBox.upload(file.getPath(), remoteDir);
@@ -457,7 +465,7 @@ public class FileCreation {
 		HashMap<String, HashMap<String, String>> applicationUploadMap;
 		File file = new File(FileName);
 		String remoteDir = Constants.APPLICATION_UPLOAD_PREPAID_FILE_PATH;
-		
+
 		applicationUploadMap = dataReader.dataProviderFileUpload("AllUploadTestData", "Static Card File");
 		logger.info("applicationUploadMap = {} ", applicationUploadMap);
 		try (PrintWriter writer = new PrintWriter(file)) {
@@ -487,7 +495,7 @@ public class FileCreation {
 			writer.print("FT|" + createRecordNumber(9, totalRecords));
 		} catch (IOException e) {
 			logger.error("Fail to create page object: {}", e);
-			throw MiscUtils.propagate(e);	
+			throw MiscUtils.propagate(e);
 		}
 
 		linuxBox.upload(file.getPath(), remoteDir);
@@ -495,6 +503,7 @@ public class FileCreation {
 		logger.info(customerType);
 		return FileName;
 	}
+
 	public String createApplicationUploadFile(String institutionCode, String customerType, String cardType) throws Exception {
 		int totalRecords = 0;
 		String FileName = "";
