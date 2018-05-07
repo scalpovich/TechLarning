@@ -236,6 +236,30 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		performExecution(transaction);
 	}
 
+	/**
+	 * @author E079917
+	 * @param transaction : Type of transaction e.g recurring
+	 * @param transactionData : Card data 
+	 * @param sameCard : this operation need to be perform on same card or diffrent card
+	 */
+	public void importTransaction(String transaction, Transaction transactionData, Boolean sameCard, String transaction2) {
+		handleDialogs();
+		addBinRangeAndCurrencyDetailsBasedOnCardNumber(transactionData, transaction, sameCard);
+		if (!sameCard) {
+			importAndLoadCardProfile(transactionData.getCardProfile(), transaction);
+			if (isContains(transaction2, "emv")) {
+				activateMas(transaction);
+				performClickOperationOnImages("AUTOMATION CARD");
+				performRightClickOperation("AUTOMATION CARD_Selected");
+				wait(1000);
+				performClickOperation("Edit Node");
+				wait(4000);
+				fillEmvChipKeySetDetails();
+			}
+		}
+		importAndLoadTestCase(transactionData.getTestCase(), transaction);
+	}
+
 	public String getCurrencyToBeUsed(String currency) {
 		List<String> theList = Arrays.asList(currency.split(""));
 		String currencyTemp = "356";

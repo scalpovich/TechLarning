@@ -119,7 +119,33 @@ public class TransactionSteps {
 		performOperationOnSamecard(false);
 		givenOptimizedTransactionIsExecuted(temp);
 	}
-
+	
+	@When("Perform Reversal Transacation")
+	public void performReversalTransaction(){
+		
+		String transaction = "RECURRING_PUR_TXN";
+		String transaction2 = "RECURRING_PUR_TXN";
+		
+		String temp = transaction;
+		context.put(ConstantData.TRANSACTION_NAME, transaction);
+		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));
+		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
+			if (!transaction2.toLowerCase().contains("ecom"))
+				temp = transaction2 + "_PIN";
+		}
+		performOperationOnSamecard(false);
+		transactionWorkflow.browserMinimize(); // minimize browser
+		context.put(ConstantData.TRANSACTION_NAME, transaction);
+		Transaction transactionData = generateMasTestDataForTransaction(transaction);
+		transactionWorkflow.importTransaction(transaction, transactionData, sameCard, transaction2);
+		
+		//Second Transaction
+		performOperationOnSamecard(true);
+		givenOptimizedTransactionIsExecuted(temp);
+		
+	}
+	
+	
 	@When("perform an $transaction MAS transaction on the same card")
 	@Alias("a sample simulator \"$transaction\" is executed on the same card")
 	@Given("perform an $transaction MAS transaction on the same card")
@@ -239,7 +265,7 @@ public class TransactionSteps {
 		}
 
 		// changed ECOMMERCE to ECOM
-		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE")) {
+		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE")|| transactionWorkflow.isContains(transaction, "ASI_")) {
 			// for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInuxbox
 			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); // Transaction currency code
 		}
