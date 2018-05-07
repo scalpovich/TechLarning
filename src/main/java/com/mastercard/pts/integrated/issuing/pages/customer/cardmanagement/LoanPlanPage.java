@@ -106,17 +106,13 @@ public class LoanPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancellationFeeFixed:input:inputAmountField")
 	private MCWebElement cancellationFeeFixedTxt ;
 	
-	@Autowired
-	private TestContext context;
-	
 	public void verifyUiOperationStatus() {
 		logger.info("Loan Plan");
 		verifyUiOperation("Add Loan Plan");
 	}
 	
-	public void addLoanPlan(LoanPlan loanPlan){
+	public void addLoanPlan(LoanPlan loanPlan,LoanType loanTypedata){
 		logger.info("Add Loan Plan");
-		LoanType loanTypedata=context.get("LOAN_TYPE_OBJECT");
 		clickAddNewButton();
 		runWithinPopup("Add Loan Plan", () -> {
 			enterLoanPlanCode(loanPlan.getLoanPlanCode());

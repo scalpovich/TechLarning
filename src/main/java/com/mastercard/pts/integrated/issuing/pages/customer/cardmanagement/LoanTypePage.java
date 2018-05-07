@@ -62,11 +62,11 @@ public class LoanTypePage extends AbstractBasePage {
 	public void addLoanType(LoanType loanType){
 		logger.info("Add Loan Type");
 		if (!isNoRecordsFoundInTable()) {
-			deleteExistingRecord(loanType.getLoanType());
+			deleteExistingRecord(loanType.getAddLoanType());
 		}
 		clickAddNewButton();
 		runWithinPopup("Add Loan Type", () -> {
-			selectLoanType(loanType.getLoanType());
+			selectLoanType(loanType.getAddLoanType());
 			enterLoanTypeDescription(loanType.getDescription());
 			selectDraftNeededCheckBox();
 			selectCreditLimitCheckBox();

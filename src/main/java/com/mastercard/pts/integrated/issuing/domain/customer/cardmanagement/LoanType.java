@@ -8,18 +8,16 @@ import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 @Component
 public class LoanType {
 	
-	private String loanType;
+	private String addLoanType;
 	private String description ;
 	private String draftNeeded ;
-	private String creditLimit ;
-	private String cashLimit;
-	
-	public String getLoanType() {
-		return loanType;
+
+	public String getAddLoanType() {
+		return addLoanType;
 	}
 
-	public void setLoanType(String loanType) {
-		this.loanType = loanType;
+	public void setAddLoanType(String addLoanType) {
+		this.addLoanType = addLoanType;
 	}
 
 	public String getDescription() {
@@ -37,26 +35,10 @@ public class LoanType {
 	public void setDraftNeeded(String draftNeeded) {
 		this.draftNeeded = draftNeeded;
 	}
-
-	public String getCreditLimit() {
-		return creditLimit;
-	}
-
-	public void setCreditLimit(String creditLimit) {
-		this.creditLimit = creditLimit;
-	}
-
-	public String getCashLimit() {
-		return cashLimit;
-	}
-
-	public void setCashLimit(String cashLimit) {
-		this.cashLimit = cashLimit;
-	}
 	
 	public static LoanType getLoanTypeData() {
 		LoanType loanType = new LoanType();
-		loanType.setLoanType(MapUtils.fnGetInputDataFromMap("LoanType"));
+		loanType.setAddLoanType(MapUtils.fnGetInputDataFromMap("LoanType"));
 		loanType.setDescription(CustomUtils.randomString(10).toUpperCase());
 		return loanType;
 	}

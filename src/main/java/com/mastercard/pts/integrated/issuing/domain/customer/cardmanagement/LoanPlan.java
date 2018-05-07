@@ -62,17 +62,6 @@ public class LoanPlan {
 	public void setCancellationFixedFeeAmount(String cancellationFixedFeeAmount) {
 		this.cancellationFixedFeeAmount = cancellationFixedFeeAmount;
 	}
-
-	public LoanType getLoanTypeData() {
-		return loanTypeData;
-	}
-
-	public void setLoanTypeData(LoanType loanTypeData) {
-		this.loanTypeData = loanTypeData;
-	}
-
-	@Autowired
-	LoanType loanTypeData;
 	
 	public String getLoanPlanCode() {
 		return loanPlanCode;
