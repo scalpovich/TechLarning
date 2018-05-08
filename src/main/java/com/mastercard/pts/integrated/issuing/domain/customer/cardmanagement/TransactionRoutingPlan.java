@@ -2,41 +2,41 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 public class TransactionRoutingPlan  {
 
-	private String messageTypeDdwn;
-	private String transactionTypeDdwn;
-	private String routingCodeDdwn;
-	private String actionDdwn;
+	private String messageType;
+	private String transactionType;
+	private String routingCode;
+	private String action;
 	
 	public String getMessageTypeDdwn() {
-		return messageTypeDdwn;
+		return messageType;
 	}
 
 	public void setMessageTypeDdwn(String messageTypeDdwn) {
-		this.messageTypeDdwn = messageTypeDdwn;
+		this.messageType = messageTypeDdwn;
 	}
 
 	public String getTransactionTypeDdwn() {
-		return transactionTypeDdwn;
+		return transactionType;
 	}
 
 	public void setTransactionTypeDdwn(String transactionTypeDdwn) {
-		this.transactionTypeDdwn = transactionTypeDdwn;
+		this.transactionType = transactionTypeDdwn;
 	}
 
 	public String getRoutingCodeDdwn() {
-		return routingCodeDdwn;
+		return routingCode;
 	}
 
 	public void setRoutingCodeDdwn(String routingCodeDdwn) {
-		this.routingCodeDdwn = routingCodeDdwn;
+		this.routingCode = routingCodeDdwn;
 	}
 
 	public String getActionDdwn() {
-		return actionDdwn;
+		return action;
 	}
 
 	public void setActionDdwn(String actionDdwn) {
-		this.actionDdwn = actionDdwn;
+		this.action = actionDdwn;
 	}
 	
 }

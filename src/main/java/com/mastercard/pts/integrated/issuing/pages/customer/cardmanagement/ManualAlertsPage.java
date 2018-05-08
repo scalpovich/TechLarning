@@ -59,19 +59,20 @@ public class ManualAlertsPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchPanel:searchForm:searchDiv:rows:2:componentList:0:componentPanel:input:inputTextField")
 	private MCWebElement cbsClientIDTxt;
 
-	public void addManualRecipient(ManualAlerts manualAlert){
-		switchToIframe(Constants.ADD_MANUAL_RECIPIENT);
-		enterValueinTextBox(clientCodeTxt, manualAlert.getClientCode());
-		selectByVisibleText(programCodeDdwn, manualAlert.getProgramCodeDdwn());
-		enterValueinTextBox(firstNameTxt, manualAlert.getFirstNameTxt());
-		enterValueinTextBox(familyNameTxt, manualAlert.getFamilyNameTxt());
-		selectByVisibleText(deviceTypeDdwn, manualAlert.getDeviceTypeDdwn());
-		enterValueinTextBox(cbsClientIDTxt, manualAlert.getCbsClientIDTxt());		
-
-	}
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(ManualAlertsPage.class);
+	
+	public void addManualRecipient(ManualAlerts manualAlert){
+		switchToIframe(Constants.ADD_MANUAL_RECIPIENT);
+		enterValueinTextBox(clientCodeTxt, manualAlert.getClientCode());
+		selectByVisibleText(programCodeDdwn, manualAlert.getProgramCode());
+		enterValueinTextBox(firstNameTxt, manualAlert.getFirstName());
+		enterValueinTextBox(familyNameTxt, manualAlert.getFamilyName());
+		selectByVisibleText(deviceTypeDdwn, manualAlert.getDeviceType());
+		enterValueinTextBox(cbsClientIDTxt, manualAlert.getCbsClientID());		
+
+	}
 
 	public void verifyUiOperationStatus() {
 		logger.info("Manual Event");

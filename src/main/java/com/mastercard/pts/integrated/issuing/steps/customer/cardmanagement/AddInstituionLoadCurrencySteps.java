@@ -16,7 +16,7 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.A
  *
  */
 @Component
-public class AddInstituionLoadCurrencySteps extends AddInstituionLoadCurrencyFlows {
+public class AddInstituionLoadCurrencySteps {
 
 	@Autowired
 	AddInstituionLoadCurrencyFlows addinstituionloadcurrencyflow;

@@ -81,7 +81,6 @@ public class LinkingAPIToInstitutionPage extends AbstractBasePage {
 		verifyNewChannelRoutingSuccess();
 		
 	}
-	//name="serviceCodePalette:choices"
 	public void verifyNewChannelRoutingSuccess() {
 		if (!publishErrorOnPage()) {
 			logger.info("Record Added Successfully.");

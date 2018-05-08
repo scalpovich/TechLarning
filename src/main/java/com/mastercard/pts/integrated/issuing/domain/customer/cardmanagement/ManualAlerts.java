@@ -12,20 +12,61 @@ import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 public class ManualAlerts {
 	
 	private String clientCode;
-	private String programCodeDdwn;
-	private String firstNameTxt;
-	private String familyNameTxt;
-	private String deviceTypeDdwn;
-	private String cbsClientIDTxt;
+	private String programCode;
+	private String firstName;
+	private String familyName;
+	private String deviceType;
+	private String cbsClientID;
 	private String product;
 	private String eventCode;
 
-	public String getEventCode() {
-		return eventCode;
+	
+	public String getClientCode() {
+		return clientCode;
 	}
 
-	public void setEventCode(String eventCode) {
-		this.eventCode = eventCode;
+	public void setClientCode(String clientCode) {
+		this.clientCode = clientCode;
+	}
+
+	public String getProgramCode() {
+		return programCode;
+	}
+
+	public void setProgramCode(String programCode) {
+		this.programCode = programCode;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getFamilyName() {
+		return familyName;
+	}
+
+	public void setFamilyName(String familyName) {
+		this.familyName = familyName;
+	}
+
+	public String getDeviceType() {
+		return deviceType;
+	}
+
+	public void setDeviceType(String deviceType) {
+		this.deviceType = deviceType;
+	}
+
+	public String getCbsClientID() {
+		return cbsClientID;
+	}
+
+	public void setCbsClientID(String cbsClientID) {
+		this.cbsClientID = cbsClientID;
 	}
 
 	public String getProduct() {
@@ -36,69 +77,23 @@ public class ManualAlerts {
 		this.product = product;
 	}
 
-	public String getClientCode() {
-		return clientCode;
+	public String getEventCode() {
+		return eventCode;
 	}
 
-	public void setClientCode(String clientCode) {
-		this.clientCode = clientCode;
+	public void setEventCode(String eventCode) {
+		this.eventCode = eventCode;
 	}
 
-	public String getProgramCodeDdwn() {
-		return programCodeDdwn;
-	}
-
-	public void setProgramCodeDdwn(String programCodeDdwn) {
-		this.programCodeDdwn = programCodeDdwn;
-	}
-
-	public String getFirstNameTxt() {
-		return firstNameTxt;
-	}
-
-	public void setFirstNameTxt(String firstNameTxt) {
-		this.firstNameTxt = firstNameTxt;
-	}
-
-	public String getFamilyNameTxt() {
-		return familyNameTxt;
-	}
-
-	public void setFamilyNameTxt(String familyNameTxt) {
-		this.familyNameTxt = familyNameTxt;
-	}
-
-	public String getDeviceTypeDdwn() {
-		return deviceTypeDdwn;
-	}
-
-	public void setDeviceTypeDdwn(String deviceTypeDdwn) {
-		this.deviceTypeDdwn = deviceTypeDdwn;
-	}
-
-	public String getCbsClientIDTxt() {
-		return cbsClientIDTxt;
-	}
-
-	public void setCbsClientIDTxt(String cbsClientIDTxt) {
-		this.cbsClientIDTxt = cbsClientIDTxt;
-	}
-
-	
 	public static ManualAlerts manualAlertsDataProvider() {	
-		ManualAlerts alertpage= new ManualAlerts();
-		alertpage.setCbsClientIDTxt(MapUtils.fnGetInputDataFromMap("cbsclientIDTxt"));
-		alertpage.setClientCode(MapUtils.fnGetInputDataFromMap("clientCode"));
-		alertpage.setDeviceTypeDdwn(MapUtils.fnGetInputDataFromMap("deviceTypeDdwn"));
-		alertpage.setFamilyNameTxt(MapUtils.fnGetInputDataFromMap("familyNameTxt"));
-		alertpage.setFirstNameTxt(MapUtils.fnGetInputDataFromMap("firstNameTxt"));
-		alertpage.setProgramCodeDdwn(MapUtils.fnGetInputDataFromMap("programCodeDdwn"));
+		ManualAlerts alert= new ManualAlerts();
+		alert.setCbsClientID(MapUtils.fnGetInputDataFromMap("cbsclientIDTxt"));
+		alert.setClientCode(MapUtils.fnGetInputDataFromMap("clientCode"));
+		alert.setDeviceType(MapUtils.fnGetInputDataFromMap("deviceTypeDdwn"));
+		alert.setFamilyName(MapUtils.fnGetInputDataFromMap("familyNameTxt"));
+		alert.setFirstName(MapUtils.fnGetInputDataFromMap("firstNameTxt"));
+		alert.setProgramCode(MapUtils.fnGetInputDataFromMap("programCodeDdwn"));
 		
-		return new ManualAlerts();
-	}
-	
-	public static List<ManualAlerts> createWithProvider(DataProvider provider)
-	{
-		return provider.getData(new TypeReference<List<ManualAlerts>>() {}, "ManualAlerts");
+		return alert;
 	}
 }

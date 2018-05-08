@@ -16,7 +16,7 @@ public class EasyPayPlanRuleFlow {
 	@Autowired
 	private Navigator navigator;
 	@Autowired
-	EasyPayPlanRulePage easypayplanrule;
+	EasyPayPlanRulePage easyPayPlanRule;
 	public void adddetails(EasyPayPlanRule easypayplanrule) {
 		EasyPayPlanRulePage page = navigator.navigateToPage(EasyPayPlanRulePage.class);
 		page.addDetails(easypayplanrule);

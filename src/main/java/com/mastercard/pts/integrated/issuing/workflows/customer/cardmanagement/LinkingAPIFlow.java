@@ -3,7 +3,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LinkingAPIToInstituion;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ChannelRoutingPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.LinkingAPIToInstitutionPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 

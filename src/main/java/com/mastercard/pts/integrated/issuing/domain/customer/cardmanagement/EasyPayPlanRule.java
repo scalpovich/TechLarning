@@ -7,14 +7,14 @@ import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 @Component
 public class EasyPayPlanRule {
 
-	
+
 	public String planCode;
 	public String planDesc ;
 	public String ruleCode ; 
-	public String  comparisonOperator ;
+	public String comparisonOperator ;
 	public String ruleValue;
-	
-	   	public String getPlanCode() {
+
+	public String getPlanCode() {
 		return planCode;
 	}
 
@@ -54,7 +54,7 @@ public class EasyPayPlanRule {
 		this.ruleValue = ruleValue;
 	}
 
-		public static EasyPayPlanRule createDataProvider() {
+	public static EasyPayPlanRule createDataProvider() {
 		EasyPayPlanRule testdataobj= new EasyPayPlanRule();
 		testdataobj.setComparisonOperator(MapUtils.fnGetInputDataFromMap("comparisonOperator"));
 		testdataobj.setRuleCode(MapUtils.fnGetInputDataFromMap("ruleCode"));	

@@ -11,14 +11,14 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.A
 public class AggregateLoadLimitSteps  {
 
 	@Autowired
-	AggregateLoadLimit aggloadlimit;
+	AggregateLoadLimit aggLoadLimit;
 	@Autowired
-	AggregateLoadLimitFlow aggregateloadlimitflow; 
+	AggregateLoadLimitFlow aggregateLoadLimitFlow; 
 	
 	@When("user creates aggregate load limit plan")
 	public void userCreatesLinkingAPI() {
-		aggloadlimit=AggregateLoadLimit.createDataProvider();
-		aggregateloadlimitflow.addAggregateLimitPlan(aggloadlimit);
+		aggLoadLimit=AggregateLoadLimit.createDataProvider();
+		aggregateLoadLimitFlow.addAggregateLimitPlan(aggLoadLimit);
 
 	}	
 }

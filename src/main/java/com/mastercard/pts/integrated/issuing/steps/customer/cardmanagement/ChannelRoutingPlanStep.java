@@ -15,31 +15,30 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.C
 public class ChannelRoutingPlanStep  {
 
 	@Autowired
-	ChannelRoutingPlan channelrouting;
+	ChannelRoutingPlan channelRouting;
 	@Autowired
-	ChannelRoutingFlows  channelroutingflows;
+	ChannelRoutingFlows  channelRoutingFlows;
 	@Autowired
-	AccountRangeRoutingPlan accountrangeroutingplan;
+	AccountRangeRoutingPlan accountRangeRoutingPlan;
+	@Autowired
+	AccountRangeRoutingFlows  accountRangeRoutingFlows;
 	
-	@Autowired
-	AccountRangeRoutingFlows  accountrangeroutingflows;
-	
-	@When("user creates channel Routing plan for $POS channel and $RACAL interface")
-	public void userCreatesChannelRouting(@Named("channel") String channel,@Named("interface") String interfaceType) {
-		channelrouting=ChannelRoutingPlan.channelRoutingPlanDataProvider();
-		channelrouting.setChannel(channel);
-		channelrouting.setInterfaceName(interfaceType);
-		channelrouting.setPlanID(RandomStringUtils.randomNumeric(5));
-		channelrouting.setDescription(interfaceType);
-		channelroutingflows.addChannelRoutingPlan(channelrouting);
+	@When("user creates channel Routing plan for $channelName channel and $interfaceName interface")
+	public void userCreatesChannelRouting(@Named("channelName") String channel,@Named("interfaceName") String interfaceType) {
+		channelRouting=ChannelRoutingPlan.channelRoutingPlanDataProvider();
+		channelRouting.setChannel(channel);
+		channelRouting.setInterfaceName(interfaceType);
+		channelRouting.setPlanID(RandomStringUtils.randomNumeric(5));
+		channelRouting.setDescription(interfaceType);
+		channelRoutingFlows.addChannelRoutingPlan(channelRouting);
 	}
 	
 	
 	@When("user creates Acount Range Routing plan")
 	public void userCreatesChannelRouting() {
-		accountrangeroutingplan=AccountRangeRoutingPlan.channelRoutingPlanDataProvider();
-		accountrangeroutingplan.setChannelRoutingPlan(channelrouting.getPlanID());
-		accountrangeroutingflows.addChannelRoutingPlan(accountrangeroutingplan);
+		accountRangeRoutingPlan=AccountRangeRoutingPlan.channelRoutingPlanDataProvider();
+		accountRangeRoutingPlan.setChannelRoutingPlan(channelRouting.getPlanID());
+		accountRangeRoutingFlows.addChannelRoutingPlan(accountRangeRoutingPlan);
 	}
 	
 	

@@ -13,16 +13,16 @@ public class EasyPayPlanRuleStep  {
 	
 	
 	@Autowired
-	EasyPayPlanRule easypayplanrule;
+	EasyPayPlanRule easyPayPlanRule;
 	@Autowired
-	EasyPayPlanRuleFlow easypayplanflow;
+	EasyPayPlanRuleFlow easyPayPlanFlow;
 	
 	@When("user creates easy pay plan rule")	
 	public void easyPayPlanRuleFlow() {
-		easypayplanrule=EasyPayPlanRule.createDataProvider();
-		easypayplanrule.setPlanCode(RandomStringUtils.randomNumeric(4));
-		easypayplanrule.setPlanDesc(easypayplanrule.getRuleCode()+easypayplanrule.getPlanCode());
-		easypayplanflow.adddetails(easypayplanrule);
+		easyPayPlanRule=EasyPayPlanRule.createDataProvider();
+		easyPayPlanRule.setPlanCode(RandomStringUtils.randomNumeric(4));
+		easyPayPlanRule.setPlanDesc(easyPayPlanRule.getRuleCode()+easyPayPlanRule.getPlanCode());
+		easyPayPlanFlow.adddetails(easyPayPlanRule);
 
 	}
 	

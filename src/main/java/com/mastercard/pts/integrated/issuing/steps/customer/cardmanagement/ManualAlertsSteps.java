@@ -17,19 +17,19 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.M
  *
  */
 @Component
-public class ManualAlertsSteps extends ManualAlertsFlows {
+public class ManualAlertsSteps  {
 
 @Autowired
 	ManualAlertsFlows manualAlertFlows;
 @Autowired
-ManualAlerts alertpage;
+ManualAlerts manualalert;
 
 	@When("user creates Manual Alerts of $EMVCard for product type $credit")
 	public void whenUserCreatesAloudLoadCurrency(@Named("devicetype") String devicetype , @Named("Product") String product ) {
-		alertpage	= ManualAlerts.manualAlertsDataProvider();
-		alertpage.setProduct(product);
-		alertpage.setDeviceTypeDdwn(devicetype);
-		manualAlertFlows.addManualAlerts(alertpage);
+		manualalert	= ManualAlerts.manualAlertsDataProvider();
+		manualalert.setProduct(product);
+		manualalert.setDeviceType(devicetype);
+		manualAlertFlows.addManualAlerts(manualalert);
 		
 		
 	}

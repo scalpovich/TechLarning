@@ -12,10 +12,10 @@ public class ManualAlertsFlows {
 	@Autowired
 	Navigator navigator;
 
-	public void addManualAlerts(ManualAlerts alertpage) {
+	public void addManualAlerts(ManualAlerts alert) {
 		ManualAlertsPage page = navigator.navigateToPage(ManualAlertsPage.class);
 		page.clickAddcurrency();
-		page.addAlertDetails(alertpage);
+		page.addAlertDetails(alert);
 	}
 
 

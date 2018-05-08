@@ -40,7 +40,6 @@ When user creates channel Routing plan for Point Of Sale channel and CBS1 interf
 When user creates Acount Range Routing plan
 When user creates Allowed Load Currency for INR
 !-- When user creates Manual Alerts of EMV Card for product type credit 
-
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Mastercard
 When user creates Transaction Plan for Debit and transaction type Purchase/Auth Completion

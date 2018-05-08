@@ -11,15 +11,15 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.L
 public class LinkingAPIStep  {
  
 	@Autowired
-	LinkingAPIToInstituion linkingapitoinstituion;
+	LinkingAPIToInstituion linkingAPIToInstituion;
 	
 	@Autowired
 	LinkingAPIFlow  linkingAPIflow;
 	
 	@When("user creates linking API to Instituion")
 	public void userCreatesLinkingAPI() {
-		linkingapitoinstituion=LinkingAPIToInstituion.LinkingAPIInstituionDataProvider();
-		linkingAPIflow.addLinkingAPIDetails(linkingapitoinstituion);
+		linkingAPIToInstituion=LinkingAPIToInstituion.LinkingAPIInstituionDataProvider();
+		linkingAPIflow.addLinkingAPIDetails(linkingAPIToInstituion);
 
 	}
 	

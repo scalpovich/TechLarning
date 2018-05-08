@@ -47,7 +47,7 @@ public class InstitutionLoadCurrencyPage extends AbstractBasePage {
 		logger.info("Allowed Load Currency");
 		verifyUiOperation("Add Allowed Load Currency");
 	}
-	public void clickAddcurrency(){
+	public void clickAddCurrency(){
 		clickWhenClickable(addLoadCurrencyBtn);
 		switchToAddLoadCurrency();
 	}
