@@ -3,6 +3,8 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -175,7 +177,7 @@ public class SurchargePlanPage extends AbstractBasePage {
 	public void selectMCG(SurchargePlan plan) {
 		try {
 			SelectDropDownByText(mcgDDwn, plan.getMcg());
-		} catch (Exception e) {
+		} catch (WebDriverException | NullPointerException  e) {
 			LOGGER.info("Not able to identify MCG plan populated from Excel Sheet");
 			SelectDropDownByIndex(mcgDDwn, MCG_CODE_INDEX);
 		}

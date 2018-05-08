@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -99,8 +100,8 @@ public class HighRiskMerchantLocationPage extends AbstractBasePage {
 			verifyDuplicateAndClickCancel();
 		});
 		}
-		catch(Exception e){
-			e.printStackTrace();
+		catch(NullPointerException | WebDriverException e){
+			logger.error("Error in Risk Merchant Location",e);
 		}
 		return TEXT;
 	}

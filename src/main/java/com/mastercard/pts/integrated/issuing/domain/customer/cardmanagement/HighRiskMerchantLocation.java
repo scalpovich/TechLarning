@@ -6,11 +6,6 @@ import org.springframework.stereotype.Component;
 public class HighRiskMerchantLocation {
 
 	private String merchantLocationId;
-    
-	public static HighRiskMerchantLocation getSurchargePlanData() {
-		HighRiskMerchantLocation plan = new HighRiskMerchantLocation();		
-		return plan;
-	}
 	
 	public String getMerchantLocationId() {
 		return merchantLocationId;
