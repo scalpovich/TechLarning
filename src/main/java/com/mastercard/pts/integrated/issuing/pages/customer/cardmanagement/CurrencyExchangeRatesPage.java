@@ -273,9 +273,9 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		return false;
 	}
 
-	public void uploadCurrencyExchangeRateFile(String type) {
+	public void uploadCurrencyExchangeRateFile(String type, String filePath) {
 		try {
-			fileCreation.createCERUploadFileBank(type);
+			fileCreation.createCERUploadFileBank(type, filePath);
 		} catch (Exception e) {
 			logger.error("There is an error while CER file upload bank", e);
 		}
@@ -357,8 +357,9 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		return false;
 	}
 
-	public void uploadInvalidCurrencyExchangeRateFile(String isInvalid) {
-		fileCreation.createCERUploadFileBank(isInvalid);
+	public void uploadInvalidCurrencyExchangeRateFile(String isInvalid,
+			String filepath) {
+		fileCreation.createCERUploadFileBank(isInvalid, filepath);
 	}
 
 	public void verifyUiOperationStatus() {

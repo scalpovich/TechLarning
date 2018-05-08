@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.EventsAndAlerts;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.EventsAndAlertsPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ReadTestDataFromExcel;
@@ -22,5 +23,10 @@ public class EventAndAlertsFlows {
 		eventAlert = navigator.navigateToPage(EventsAndAlertsPage.class);
 		eventAlert.mapTemplates1(dataReader.dataProvider(
 				"EventAlertsTemplateMapping", "Event"));
+	}
+
+	public void addEventAndAlertFlows(EventsAndAlerts eventsAndAlerts) {
+		eventAlert = navigator.navigateToPage(EventsAndAlertsPage.class);
+		eventAlert.addEventAndAlerts(eventsAndAlerts);
 	}
 }

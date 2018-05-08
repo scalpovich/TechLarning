@@ -18,6 +18,9 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -53,6 +56,9 @@ public class FileCreation {
 
 	@Autowired
 	private DataProvider provider;
+
+	@Autowired
+	private TestContext context;
 
 	private static final String INSTITUTION_CODE = "INSTITUTION_CODE";
 
@@ -329,7 +335,15 @@ public class FileCreation {
 	}
 
 	public String createCERBankHeader(String date) {
-		return "HD" + "|" + MapUtils.fnGetInputDataFromMap("INSTITUTION_CODE") + "|" + date + "|" + "2.0";
+		InstitutionCreation institute;
+		if (context.get(ContextConstants.INSTITUTION) != null) {
+			institute = context.get(ContextConstants.INSTITUTION);
+			return "HD" + "|" + institute.getInstitutionCode() + "|" + date
+					+ "|" + "2.0";
+		} else
+			return "HD" + "|"
+					+ MapUtils.fnGetInputDataFromMap("INSTITUTION_CODE") + "|"
+					+ date + "|" + "2.0";
 	}
 
 	public String createCERMCRecord() {
@@ -343,18 +357,28 @@ public class FileCreation {
 	}
 
 	// Currency Exchange Rates File Upload: Bank
-	public String createCERUploadFileBank(String isInvalid) {
+	public String createCERUploadFileBank(String isInvalid, String filePath) {
 		int totalRecords = 0;
 		String date = "";
 		FileCreation fileCreation = new FileCreation();
 		HashMap<String, HashMap<String, String>> applicationUploadMap;
+		InstitutionCreation instituteCreation;
 
 		if ("back dated transactions".equalsIgnoreCase(isInvalid))
 			date = DateUtils.getDateddMMyyyy() + DateUtils.getTime();
 		else
 			date = nextDay(DateUtils.getDateddMMyyyy(), "Bank") + DateUtils.getTime();
 
-		filenameStatic = "CER" + MapUtils.fnGetInputDataFromMap("INSTITUTION_CODE") + DateUtils.getDate() + DateUtils.getTime() + getSequenceNumber() + ".DAT";
+		if (context.get(ContextConstants.INSTITUTION) != null) {
+			instituteCreation = context.get(ContextConstants.INSTITUTION);
+			filenameStatic = "CER" + instituteCreation.getInstitutionCode()
+					+ DateUtils.getDate() + DateUtils.getTime()
+					+ getSequenceNumber() + ".DAT";
+		} else
+			filenameStatic = "CER"
+					+ MapUtils.fnGetInputDataFromMap("INSTITUTION_CODE")
+					+ DateUtils.getDate() + DateUtils.getTime()
+					+ getSequenceNumber() + ".DAT";
 		fileCreation.setFilename(filenameStatic);
 		File file = new File(filenameStatic);
 
@@ -392,7 +416,7 @@ public class FileCreation {
 			throw Throwables.propagate(e);
 		}
 		logger.info("File Path: " + file.getPath());
-		linuxBox.upload(file.getPath(), Constants.UPLOAD_FILE_PATH_EXCHANGE_RATE);
+		linuxBox.upload(file.getPath(), filePath);
 		return filename;
 	}
 

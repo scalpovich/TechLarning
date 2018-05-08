@@ -1,9 +1,9 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
-import org.springframework.stereotype.Component;
 import java.util.List;
 
-import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 
@@ -39,8 +39,10 @@ public class NetworkMembership {
 	}
 	public static NetworkMembership NetworkMembershipDataProvider() {
 		NetworkMembership networkmembership = new NetworkMembership();
-		networkmembership.setPresentmentTimeLimitDays(MapUtils.fnGetInputDataFromMap("PresentTimeLimit"));
-		networkmembership.setSettlementCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
+		// networkmembership.setPresentmentTimeLimitDays(MapUtils.fnGetInputDataFromMap("PresentTimeLimit"));
+		networkmembership.setPresentmentTimeLimitDays("10");
+		// networkmembership.setSettlementCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
+		networkmembership.setSettlementCurrency("INR [356]");
 		return networkmembership;
 	}
 	public void setSettlementCurrency(String settlementCurrency) {

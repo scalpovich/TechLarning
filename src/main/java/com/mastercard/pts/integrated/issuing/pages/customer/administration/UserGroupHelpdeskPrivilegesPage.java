@@ -97,7 +97,7 @@ public class UserGroupHelpdeskPrivilegesPage extends AbstractBasePage {
 	}
 
 	public void selectUser(UserCreation userCreation) {
-		selectByVisibleText(usersDDwn, userCreation.getUserName() + " ["
+		selectByVisibleText(usersDDwn, userCreation.getUserID() + " ["
 				+ userCreation.getUserID() + "]");
 	}
 

@@ -37,8 +37,9 @@ public class CurrencyExchangeRatesFlows {
 				.verifyAddedCurrencyExchangeRate(currencyExchangeRateDomainPage);
 	}
 
-	public void uploadCurrencyExchangeFileFlows(String type) {
-		currencyExchangeRatesPage.uploadCurrencyExchangeRateFile(type);
+	public void uploadCurrencyExchangeFileFlows(String type, String filePath) {
+		currencyExchangeRatesPage
+				.uploadCurrencyExchangeRateFile(type, filePath);
 	}
 
 	public void navigateProcessBatchesScreenFlows() {
@@ -51,9 +52,10 @@ public class CurrencyExchangeRatesFlows {
 		return currencyExchangeRatesPage.verifyCERFileUpload();
 	}
 
-	public void uploadFileBankInvalidFileFlows(String isInvalid) {
+	public void uploadFileBankInvalidFileFlows(String isInvalid, String filePath) {
 		currencyExchangeRatesPage
-				.uploadInvalidCurrencyExchangeRateFile(isInvalid);
+.uploadInvalidCurrencyExchangeRateFile(
+				isInvalid, filePath);
 	}
 
 }

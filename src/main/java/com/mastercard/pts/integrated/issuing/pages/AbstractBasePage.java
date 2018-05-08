@@ -269,6 +269,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement entityTypeDdwn;
 
+	@PageElement(findBy = FindBy.ID, valueToFind = "institution_selection")
+	private MCWebElement instituteSelectionDrpDwn;
+
+	private String instituteSelectionVal = "//div[@id='institution_selector']//li/a[contains(text(),'%s')]";
+
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
 		MCAnnotationProcessor.initializeSuper(this, finderProvider);
@@ -1702,6 +1707,21 @@ public abstract class AbstractBasePage extends AbstractPage {
 		getFinder().getWebDriver()
 				.findElement(By.xpath(String.format(PRIVILEGES_TABS, tabName)))
 				.click();
+	}
+
+	/**
+	 * Select institute from top drp dwn.
+	 *
+	 * @param instituteName
+	 *            the institute name
+	 */
+	public void selectInstituteFromDrpDwn(String instituteName) {
+		instituteSelectionDrpDwn.click();
+		CustomUtils.ThreadDotSleep(500);
+		String ins = String.format(instituteSelectionVal, instituteName);
+		CustomUtils.ThreadDotSleep(500);
+		getFinder().getWebDriver().findElement(By.xpath(ins)).click();
+
 	}
 
 	@Override

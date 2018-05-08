@@ -238,15 +238,13 @@ public class LoginSteps extends AbstractBaseFlows {
 				.fnGetInputDataFromMap("Institution"));
 	}
 
-	@When("user selects the created institution from the institution dropdown")
+	@When("user select the created institution from the institution dropdown")
 	public void selectsInstitutionFromDropdown() {
 		InstitutionCreation institute = context
 				.get(ContextConstants.INSTITUTION);
-		customerPortalHomePage.selectInstitutionFromDropdown(institute
-				.getInstitutionName()
-				+ " ["
-				+ institute.getInstitutionCode()
-				+ "]");
+		selectInstituteFromDrpDwn(institute.getInstitutionName() + " ("
+				+ institute.getInstitutionCode() + ")");
+
 	}
 
 	@When("user logs in again with the new user")
@@ -254,6 +252,14 @@ public class LoginSteps extends AbstractBaseFlows {
 		UserCreation userCreation = context.get(ContextConstants.USER);
 		login(userCreation.getUserID(),
 				MapUtils.fnGetInputDataFromMap("Password"));
+	}
+
+	@When("the newly created institution is selected")
+	public void selectNewlyCreatedInstitution() {
+		InstitutionCreation institute = context
+				.get(ContextConstants.INSTITUTION);
+		loginFlows.selectNewInstitutionFlows(institute.getInstitutionName()
+				+ " [" + institute.getInstitutionCode() + "]");
 	}
 
 }

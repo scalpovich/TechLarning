@@ -144,10 +144,13 @@ public class CurrencyExchangeRatesSteps {
 				.fnGetInputDataFromMap("SELL_RATE"));
 		currencyExchangeRateDomainPage.setRateOrigin(currencyExchangeRatesPage
 				.getCode(MapUtils.fnGetInputDataFromMap(rateOrigin)));
+		currencyExchangeRateDomainPage.setUploadPathCER(MapUtils
+				.fnGetInputDataFromMap("UPLOAD_PATH_CER"));
 		if (!MapUtils.fnGetInputDataFromMap("Program").equalsIgnoreCase("-"))
 		currencyExchangeRateDomainPage.setProgram(MapUtils
 				.fnGetInputDataFromMap(program));
-		currencyExchangeRatesFlows.uploadCurrencyExchangeFileFlows(type);
+		currencyExchangeRatesFlows.uploadCurrencyExchangeFileFlows(type,
+				currencyExchangeRateDomainPage.getUploadPathCER());
 	}
 
 	/**
@@ -256,7 +259,8 @@ public class CurrencyExchangeRatesSteps {
 	@When("user uploads the $invalid_currency in CER file for bank")
 	public void uploadsInvalidCERFile(
 			@Named("invalid_currency") String isInvalid) {
-		currencyExchangeRatesFlows.uploadFileBankInvalidFileFlows(isInvalid);
+		currencyExchangeRatesFlows.uploadFileBankInvalidFileFlows(isInvalid,
+				currencyExchangeRateDomainPage.getUploadPathCER());
 	}
 
 }
