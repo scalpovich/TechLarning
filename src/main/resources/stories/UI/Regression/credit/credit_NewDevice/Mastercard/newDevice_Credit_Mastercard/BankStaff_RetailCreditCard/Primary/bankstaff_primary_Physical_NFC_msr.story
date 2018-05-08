@@ -6,7 +6,7 @@ I want to assert pages
 Meta:
 @CreditRegression
 @StoryName credit_emv_retail				 
-Scenario:1 UI verification - user creates a Credit Device Using New Device Screen
+Scenario:1 creation of mastercard_bankstaff_primary_Physical NFC Device - msr credit device
 Meta:
 @UserCreatesNewCreditDevice
 Given setting json values in excel

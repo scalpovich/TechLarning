@@ -6,7 +6,7 @@ I want to assert pages
 Meta:
 @CreditRegression
 @StoryName credit_emv_retail				 
-Scenario:1 UI verification - user creates a Credit Device Using New Device Screen
+Scenario:creation of visa_individual_primary_Physical NFC Device - Paypass credit device
 Meta:
 @UserCreatesNewCreditDevice
 Given setting json values in excel
@@ -19,7 +19,7 @@ And User fills Transaction Limit Plan for credit product
 And User fills Document Checklist Screen for credit product
 And User fills Device Joining and Membership Fee Plan for credit product
 And User fills Device Event Based Fee Plan for credit product
-And for Physical NFC Device - EMV Paypass User fills Device Plan for credit product for Visa
+And for Physical NFC Device - Paypass User fills Device Plan for credit product for Visa
 And User fills Billing Cycle
 And User fills Payment Priority
 And User fills Transaction Rule Plan
