@@ -1064,7 +1064,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		WebElementUtils.checkCheckbox(ecommAllowedChkBx, devicePlan.isEcommerceAllowed());
 	
 		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-			if (DeviceType.MAGNETIC_STRIPE_CARD.contains(devicePlan.getDeviceType())&& DeviceType.EMV_CARD.contains(devicePlan.getDeviceType()) && "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
+			if (DeviceType.MAGNETIC_STRIPE_CARD.contains(devicePlan.getDeviceType())|| DeviceType.EMV_CARD.contains(devicePlan.getDeviceType()) && "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 				WebElementUtils.enterText(pinRetryLimitTxt,devicePlan.getPinRetryLimit());
 			}
 		}
