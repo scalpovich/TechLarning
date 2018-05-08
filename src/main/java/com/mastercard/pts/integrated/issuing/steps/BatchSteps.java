@@ -25,9 +25,6 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 @Component
 public class BatchSteps {
 
-	/*private static final String DEFAULT_EMBOSSING_LINE = "(?<deviceNumber> {3}\\d{16}|\\d{19}):(?<expiryDate>\\d{4}):(?<serviceCode>\\d{3})(?<pvki>\\d)(?<pvv>\\d{4}| {4})"
-			+"\\?(?<cvv>\\d{3}| {3})(?<icv>\\d{3}| {3}):(?<cvv2>\\d{3}| {3})\\?(?<city>.{50})(?<state>.{50}):(?<country>.{50})(?<addressLine1>.{50})\\|(?<cardPackID>.{24}).*";
-*/
 	private static final String DEFAULT_TRAILER = "TR\\d{8}";
 
 	private static final String DEFAULT_HEADER = "[\\w ]{32}\\d{6}";
@@ -68,7 +65,6 @@ public class BatchSteps {
 			{
 				device.setDeviceNumber(fileData[0]);
 				device.setCvv2Data(fileData[2]);
-	//			device.setPvvData(fileData[3]);
 				device.setCvvData(fileData[3]);
 				device.setIcvvData(fileData[4]);		
 				device.setPvkiData(fileData[5]);				
@@ -83,7 +79,6 @@ public class BatchSteps {
 
 		} catch (Exception e) {
 			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
-			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
 			throw MiscUtils.propagate(e);
 		}
 	}
@@ -91,34 +86,33 @@ public class BatchSteps {
 	
 	@When("Pin Offset file batch was generated successfully")
 	@Then("Pin Offset file batch was generated successfully")
-	public void  getPinFileData()
-	{
-		MiscUtils.reportToConsole("******** Pin Offset Start ***** " );
+	public void getPinFileData() {
+		MiscUtils.reportToConsole("******** Pin Offset Start ***** ");
 		String[] values = null;
 		DevicePlan tempdevice = context.get(ContextConstants.DEVICE_PLAN);
-		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevice.getDevicePlanCode(), tempDirectory.toString(), "PIN_PROD");
+		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevice.getDevicePlanCode(),
+				tempDirectory.toString(), "PIN_PROD");
 		Device device = context.get(ContextConstants.DEVICE);
-		try(Scanner scanner = new Scanner(batchFile)){
-			while(scanner.hasNext()){
+		try (Scanner scanner = new Scanner(batchFile)) {
+			while (scanner.hasNext()) {
 				values = scanner.nextLine().split(">");
 			}
 
-			device.setPinOffset(values[0]);
-			logger.info("Pin Offset :  {}" , values[0] );
-			scanner.close();			
-			//renaming file name as sometimes the embosing file name is also same
+			if (values != null) {
+				device.setPinOffset(values[0]);
+				logger.info("Pin Offset :  {}", values[0]);
+			}
+			
+			// renaming file name as sometimes the embosing file name is also same
 			MiscUtils.renamePinFile(batchFile.toString());
-			MiscUtils.reportToConsole("******** Pin Offset Completed ***** " );
-		}
-		catch(NullPointerException | FileNotFoundException e)
-		{
-			if(e.getLocalizedMessage().contains("NullPointerException"))
-			{
+			MiscUtils.reportToConsole("******** Pin Offset Completed ***** ");
+		} catch (NullPointerException | FileNotFoundException e) {
+			MiscUtils.reportToConsole("getPinFileData Exception :  " + e.toString());
+			if (e.getLocalizedMessage().contains("NullPointerException")) {
 				device.setPinOffset("pin not retrieved");
 				MiscUtils.reportToConsole("Pin Offset :  " + "pin not retrieved");
 			}
-			MiscUtils.reportToConsole("getPinFileData Exception :  " + e.toString());
-			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
+			
 			throw MiscUtils.propagate(e);
 		}
 	}

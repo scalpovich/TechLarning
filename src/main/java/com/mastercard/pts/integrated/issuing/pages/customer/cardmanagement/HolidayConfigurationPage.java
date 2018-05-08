@@ -79,6 +79,14 @@ public class HolidayConfigurationPage extends AbstractBasePage {
 			verifyAlreadyExistsAndClickCancel();
 		});
 	}
+	public void addNewHolidayConfiguration(HolidayConfiguration hc) {
+		logger.info("Add holiday configuration");
+		clickAddNewButton();
+		runWithinPopup(ADD_HOLIDAY_MASTER, () -> {
+			addHoliday(hc);
+			verifyAlreadyExistsAndClickCancel();
+		});
+	}
 
 	private void addHoliday(HolidayConfiguration hc) {
 		WebElementUtils.pickDate(calendarDateDPkr, hc.getCalendarDate());
