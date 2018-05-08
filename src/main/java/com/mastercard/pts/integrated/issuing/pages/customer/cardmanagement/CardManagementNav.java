@@ -143,6 +143,7 @@ public class CardManagementNav {
 	public static final String L2_GATEWAY_CONFIGURATION = "ISSGC01";
 
 	public static final String L2_RUPAY_SETTLEMENT_BIN = "ISSS014";
+	public static final String L2_AGGREGATE_LOAD_LIMIT = "ISSS015";
 
 	public static final String L2_MARKUP_FEE_PLAN = "MRKFP001";
 

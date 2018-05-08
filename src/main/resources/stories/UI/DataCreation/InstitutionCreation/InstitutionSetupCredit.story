@@ -33,6 +33,14 @@ When user creates MDK keys for Mastercard
 When user creates MCG
 When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
 When user creates Dedupe Plan
+When user creates aggregate load limit plan
+When user creates easy pay plan rule
+When user creates aggregate load limit plan
+When user creates linking API to Instituion
+When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
+When user creates Acount Range Routing plan
+When user creates Allowed Load Currency for INR
+!-- When user creates Manual Alerts of EMV Card for product type credit 
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Mastercard
 When user creates Transaction Plan for Credit and transaction type Purchase/Auth Completion
@@ -72,6 +80,14 @@ When user creates MDK keys for Visa
 When user creates MCG
 When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
 When user creates Dedupe Plan
+When user creates aggregate load limit plan
+When user creates easy pay plan rule
+When user creates aggregate load limit plan
+When user creates linking API to Instituion
+When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
+When user creates Acount Range Routing plan
+When user creates Allowed Load Currency for INR
+!-- When user creates Manual Alerts of EMV Card for product type credit
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Visa
 When user creates Transaction Plan for Credit and transaction type Purchase/Auth Completion
@@ -111,6 +127,14 @@ When user creates MDK keys for Rupay
 When user creates MCG
 When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
 When user creates Dedupe Plan
+When user creates aggregate load limit plan
+When user creates easy pay plan rule
+When user creates aggregate load limit plan
+When user creates linking API to Instituion
+When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
+When user creates Acount Range Routing plan
+When user creates Allowed Load Currency for INR
+!-- When user creates Manual Alerts of EMV Card for product type credit 
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Rupay
 When user creates Transaction Plan for Credit and transaction type Purchase/Auth Completion
@@ -153,6 +177,14 @@ When user creates MDK keys for Amex
 When user creates MCG
 When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
 When user creates Dedupe Plan
+When user creates aggregate load limit plan
+When user creates easy pay plan rule
+When user creates aggregate load limit plan
+When user creates linking API to Instituion
+When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
+When user creates Acount Range Routing plan
+When user creates Allowed Load Currency for INR
+!-- When user creates Manual Alerts of EMV Card for product type credit 
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Amex
 When user creates Transaction Plan for Credit and transaction type Purchase/Auth Completion

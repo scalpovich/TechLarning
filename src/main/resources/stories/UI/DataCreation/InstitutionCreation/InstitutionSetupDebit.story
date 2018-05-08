@@ -15,11 +15,7 @@ Meta:
 @TCName TC264306_Embossing File Generation
 @sheetName S205014
 
-
 Given login to portal as existing bank as a Customeruser
-When user creates channel Routing plan for POS channel and RACAL interface
-When user creates Allowed Load Currency for INR
-!-- When user creates Manual Alerts of EMV Card for product type credit 
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
 When user creates a Network MemberShip for Mastercard
 When user creates a Transaction Registration
@@ -36,6 +32,15 @@ When user creates MDK keys for Mastercard
 When user creates MCG
 When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
 When user creates Dedupe Plan
+When user creates aggregate load limit plan
+When user creates easy pay plan rule
+When user creates aggregate load limit plan
+When user creates linking API to Instituion
+When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
+When user creates Acount Range Routing plan
+When user creates Allowed Load Currency for INR
+!-- When user creates Manual Alerts of EMV Card for product type credit 
+
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Mastercard
 When user creates Transaction Plan for Debit and transaction type Purchase/Auth Completion
@@ -74,6 +79,15 @@ When user creates MDK keys for Visa
 When user creates MCG
 When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
 When user creates Dedupe Plan
+When user creates aggregate load limit plan
+When user creates easy pay plan rule
+When user creates aggregate load limit plan
+When user creates linking API to Instituion
+When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
+When user creates Acount Range Routing plan
+When user creates Allowed Load Currency for INR
+!-- When user creates Manual Alerts of EMV Card for product type credit 
+
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Visa
 When user creates Transaction Plan for Debit and transaction type Purchase/Auth Completion
@@ -112,6 +126,14 @@ When user creates MDK keys for Rupay
 When user creates MCG
 When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
 When user creates Dedupe Plan
+When user creates aggregate load limit plan
+When user creates easy pay plan rule
+When user creates aggregate load limit plan
+When user creates linking API to Instituion
+When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
+When user creates Acount Range Routing plan
+When user creates Allowed Load Currency for INR
+!-- When user creates Manual Alerts of EMV Card for product type credit
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Rupay
 When user creates Transaction Plan for Debit and transaction type Purchase/Auth Completion

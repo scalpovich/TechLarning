@@ -9,8 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AccountRangeRoutingPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -32,6 +34,58 @@ public class AccountRangeRoutingPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=maxAccountRange]")
 	private MCWebElement maxAccountRange;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "minAccountRange:input:inputTextField")
+	private MCWebElement minAccountNumber;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "maxAccountRange:input:inputTextField")
+	private MCWebElement maxAccountNumber;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "componentName:input:dropdowncomponent")
+	private MCWebElement channelRoutingPlan;
+	
+	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
+	private MCWebElement addplanBtn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
+	private MCWebElement saveBtn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
+	private MCWebElement cancelBtn;
+
+	public void clickAddChannelRouting(){
+		clickWhenClickable(addplanBtn);
+		switchToWindow(Constants.ADD_ACCOUNT_ROUTING_PLAN);
+	}
+	
+	public void switchToWindow(String screenName) {
+		addWicketAjaxListeners(driver());
+		switchToIframe(screenName);
+	} 
+	public void addRoutingDetails(AccountRangeRoutingPlan accountrangeroutingplan){
+		clickAddChannelRouting();
+		 	enterText(minAccountNumber ,accountrangeroutingplan.getFromAccount());		
+			enterText(maxAccountRange, accountrangeroutingplan.getToAccount());
+			selectByVisibleText(channelRoutingPlan,accountrangeroutingplan.getChannelRoutingPlan());
+		 clickWhenClickable(saveBtn);
+		waitForLoaderToDisappear();	
+		SwitchToDefaultFrame();
+		verifyNewChannelRoutingSuccess();
+		
+	}
+	public void verifyNewChannelRoutingSuccess() {
+		if (!publishErrorOnPage()) {
+			logger.info("Record Added Successfully.");
+			SwitchToDefaultFrame();
+		} else {
+			logger.info("Error in record Addition");
+			clickWhenClickable(cancelBtn);
+			SwitchToDefaultFrame();
+
+		}
+	}
+	
+	
 	
 	public void verifyUiOperationStatus() {
 		logger.info("Account Range Routing");

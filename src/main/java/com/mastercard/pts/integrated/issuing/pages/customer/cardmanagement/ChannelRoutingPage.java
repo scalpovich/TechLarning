@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ChannelRoutingPlan;
@@ -20,7 +22,7 @@ public class ChannelRoutingPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:3:cols:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement channelDdwn;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = " tables:1:rows:4:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:4:cols:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement interfaceNameDdwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "planId:input:inputTextField")
@@ -35,38 +37,51 @@ public class ChannelRoutingPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement saveBtn;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
+	private MCWebElement cancelBtn;
+
+	
+	private static final Logger logger = LoggerFactory
+			.getLogger(SystemCodesPage.class);
+
 	
 	public void clickAddChannelRouting(){
 		clickWhenClickable(addplanBtn);
 		switchToWindow(Constants.ADD_CHANNEL_ROUTING);
 	}
 	
-	public void switchToWindow(String screenName) {
-		addWicketAjaxListeners(driver());
+	public void switchToWindow(String screenName) { 
+		SwitchToDefaultFrame();
 		switchToIframe(screenName);
 	} 
 	public void addRoutingDetails(ChannelRoutingPlan channelroutingplan){
+		clickAddChannelRouting();
 		enterText(planIDTxt, channelroutingplan.getPlanID());
 		enterText(descriptionTxt ,channelroutingplan.getDescription());
 		clickWhenClickable(saveBtn);
 		waitForLoaderToDisappear();	
 		clickWhenClickable(addplanBtn);
-		
+		switchToWindow(Constants.ADD_CHANNEL_ROUTING_DETAILS);
 		selectByVisibleText(channelDdwn,channelroutingplan.getChannel());
 		selectByVisibleText(interfaceNameDdwn,channelroutingplan.getInterfaceName());	 
 		clickWhenClickable(saveBtn);
+		switchToWindow(Constants.ADD_CHANNEL_ROUTING);
 		waitForLoaderToDisappear();	
 		clickWhenClickable(saveBtn);
+		verifyNewChannelRoutingSuccess();
 		
 	}
-		
-	 
-	/*Add Channel Routing Plan Detail
-
-	Channel - 
-	interface -
-	Add Channel Routing Plan
 	
-	*/
+	public void verifyNewChannelRoutingSuccess() {
+		if (!publishErrorOnPage()) {
+			logger.info("Record Added Successfully.");
+			SwitchToDefaultFrame();
+		} else {
+			logger.info("Error in record Addition");
+			clickWhenClickable(cancelBtn);
+			SwitchToDefaultFrame();
+
+		}
+	}
 	
 }
