@@ -223,7 +223,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 	}
 
 	public String addembossingtemplate(String Embosscode, String EmbossDesc, String EmbossFileType, String sequenceNo,
-			String EmbossingField, String priority) {
+			String EmbossingField) {
 		String flag = null;
 
 		retryUntilNoErrors(() -> menusubMenuPage.getEmbossingTemplate().click());
