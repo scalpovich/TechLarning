@@ -16,7 +16,6 @@ Meta:
 @TCName TC264306_Embossing File Generation
 @sheetName S205014
 Given login to portal as existing bank as a Customeruser
-When user creates Allowed Load Currency for INR
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
 When user creates a Network MemberShip for Mastercard
 When user creates a Transaction Registration
@@ -39,7 +38,7 @@ When user creates aggregate load limit plan
 When user creates linking API to Instituion
 When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
 When user creates Acount Range Routing plan
-When user creates Allowed Load Currency for INR
+When user creates Allowed Load Currency
 !-- When user creates Manual Alerts of EMV Card for product type credit 
 
 When user creates Saving account type
@@ -69,7 +68,6 @@ Meta:
 @TCName TC264306_Embossing File Generation
 @sheetName S205014
 Given login to portal as existing bank as a Customeruser
-When user creates Allowed Load Currency for INR
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
 When user creates a Network MemberShip for Visa
 When user creates a Transaction Registration
@@ -91,7 +89,7 @@ When user creates aggregate load limit plan
 When user creates linking API to Instituion
 When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
 When user creates Acount Range Routing plan
-When user creates Allowed Load Currency for INR
+When user creates Allowed Load Currency
 !-- When user creates Manual Alerts of EMV Card for product type credit 
 When user creates MCG
 When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
@@ -122,7 +120,6 @@ Meta:
 @TCName TC264306_Embossing File Generation
 @sheetName S205014
 Given login to portal as existing bank as a Customeruser
-When user creates Allowed Load Currency for INR
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
 When user creates a Network MemberShip for Rupay
 When user creates a Transaction Registration
@@ -145,7 +142,7 @@ When user creates aggregate load limit plan
 When user creates linking API to Instituion
 When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
 When user creates Acount Range Routing plan
-When user creates Allowed Load Currency for INR
+When user creates Allowed Load Currency
 !-- When user creates Manual Alerts of EMV Card for product type credit 
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Rupay

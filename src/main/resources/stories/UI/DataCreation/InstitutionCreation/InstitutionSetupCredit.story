@@ -16,7 +16,6 @@ Meta:
 @sheetName S205014
 
 Given login to portal as existing bank as a Customeruser
-When user creates Allowed Load Currency for INR
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
 When user creates a Network MemberShip for Mastercard
 When user creates a Transaction Registration
@@ -39,7 +38,7 @@ When user creates aggregate load limit plan
 When user creates linking API to Instituion
 When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
 When user creates Acount Range Routing plan
-When user creates Allowed Load Currency for INR
+When user creates Allowed Load Currency
 !-- When user creates Manual Alerts of EMV Card for product type credit 
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Mastercard
@@ -64,7 +63,6 @@ Meta:
 @sheetName S205014
 Given login to portal as existing bank as a Customeruser
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
-When user creates Allowed Load Currency for INR
 When user creates a Network MemberShip for Visa
 When user creates a Transaction Registration
 When user creates an Institution Currency with status as Active
@@ -86,7 +84,7 @@ When user creates aggregate load limit plan
 When user creates linking API to Instituion
 When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
 When user creates Acount Range Routing plan
-When user creates Allowed Load Currency for INR
+When user creates Allowed Load Currency
 !-- When user creates Manual Alerts of EMV Card for product type credit
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Visa
@@ -111,7 +109,6 @@ Meta:
 
 Given login to portal as existing bank as a Customeruser 
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
-When user creates Allowed Load Currency for INR
 When user creates a Network MemberShip for Rupay
 When user creates a Transaction Registration
 When user creates an Institution Currency with status as Active
@@ -133,7 +130,7 @@ When user creates aggregate load limit plan
 When user creates linking API to Instituion
 When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
 When user creates Acount Range Routing plan
-When user creates Allowed Load Currency for INR
+When user creates Allowed Load Currency
 !-- When user creates Manual Alerts of EMV Card for product type credit 
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Rupay
@@ -160,7 +157,6 @@ Meta:
 @sheetName S205014
 
 Given login to portal as existing bank as a Customeruser
-When user creates Allowed Load Currency for INR
 When user creates a Network MemberShip for Amex
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
 When user creates a Transaction Registration
@@ -183,7 +179,7 @@ When user creates aggregate load limit plan
 When user creates linking API to Instituion
 When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
 When user creates Acount Range Routing plan
-When user creates Allowed Load Currency for INR
+When user creates Allowed Load Currency
 !-- When user creates Manual Alerts of EMV Card for product type credit 
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Amex

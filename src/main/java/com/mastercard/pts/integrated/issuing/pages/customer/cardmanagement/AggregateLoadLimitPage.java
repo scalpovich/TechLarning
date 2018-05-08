@@ -78,10 +78,10 @@ public class AggregateLoadLimitPage extends AbstractBasePage {
 		 clickWhenClickable(saveBtn);
 		waitForLoaderToDisappear();	
 		SwitchToDefaultFrame();
-		verifyNewChannelRoutingSuccess();
+		verifySuccess();
 		
 	}	
-	public void verifyNewChannelRoutingSuccess() {
+	public void verifySuccess() {
 		if (!publishErrorOnPage()) {
 			logger.info("Record Added Successfully.");
 			SwitchToDefaultFrame();

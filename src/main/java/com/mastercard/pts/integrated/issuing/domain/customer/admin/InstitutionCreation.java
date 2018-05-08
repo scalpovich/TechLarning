@@ -371,7 +371,7 @@ public class InstitutionCreation extends AbstractBasePage {
 
 	public static InstitutionCreation getInstitutionData() {
 		InstitutionCreation institute = new InstitutionCreation();
-		if((MapUtils.fnGetInputDataFromMap("Padding")!=null)){
+		if(MapUtils.fnGetInputDataFromMap("Padding")!=null){
 			institute.setInstitutionCode(CustomUtils.RandomNumbers(6));
 			institute.setInstitutionName(MapUtils.fnGetInputDataFromMap("InstitutionName")+MapUtils.fnGetInputDataFromMap("Padding"));
 			institute.setInstitutionAbbrevation(MapUtils.fnGetInputDataFromMap("InstitutionName")+CustomUtils.RandomNumbers(Integer.parseInt(MapUtils.fnGetInputDataFromMap("Padding"))));

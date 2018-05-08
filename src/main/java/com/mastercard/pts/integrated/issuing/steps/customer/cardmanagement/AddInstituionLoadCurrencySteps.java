@@ -1,10 +1,10 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
-import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AddInstituionLoadCurrency;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.AddInstituionLoadCurrencyFlows;
 
 /**
@@ -20,13 +20,13 @@ public class AddInstituionLoadCurrencySteps {
 
 	@Autowired
 	AddInstituionLoadCurrencyFlows addinstituionloadcurrencyflow;
+	@Autowired
+	AddInstituionLoadCurrency addLoadCurrency;
 	
-	@When("user creates Allowed Load Currency for $INR")
-	public void whenUserCreatesAloudLoadCurrency(@Named("CurrencyCode") String currencyCode) {
-		addinstituionloadcurrencyflow.addInstituteLoadCurrency(currencyCode);
-		
-		
-		
+	@When("user creates Allowed Load Currency")
+	public void whenUserCreatesAloudLoadCurrency() {
+		addLoadCurrency=AddInstituionLoadCurrency.DataProvider();
+		addinstituionloadcurrencyflow.addMultipleCurrency(addLoadCurrency);
 	}
 	
 }
