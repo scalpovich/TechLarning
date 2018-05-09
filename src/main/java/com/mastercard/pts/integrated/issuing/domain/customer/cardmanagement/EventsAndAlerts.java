@@ -124,18 +124,17 @@ public class EventsAndAlerts {
 
 	public static EventsAndAlerts createWithProvider(KeyValueProvider provider) {
 		EventsAndAlerts eventAndAlert = new EventsAndAlerts();
-		eventAndAlert.setEventID(MapUtils.fnGetInputDataFromMap("EventID"));
-		eventAndAlert.setEventName(MapUtils.fnGetInputDataFromMap("EventName"));
+		eventAndAlert.setEventID("EventID" + CustomUtils.randomNumbers(2));
+		eventAndAlert.setEventName("EventName" + CustomUtils.randomNumbers(2));
 		eventAndAlert.setProductType(MapUtils
-				.fnGetInputDataFromMap("ProductType"));
+				.fnGetInputDataFromMap("EventProductType"));
 		eventAndAlert.setEmailRecipients(MapUtils
 				.fnGetInputDataFromMap("EmailRecipients"));
 		eventAndAlert.setsMSRecipients(MapUtils
 				.fnGetInputDataFromMap("SMSRecipients"));
 		eventAndAlert.setLetterRecipients(MapUtils
 				.fnGetInputDataFromMap("LetterRecipients"));
-		eventAndAlert.setTemplateID(MapUtils
-				.fnGetInputDataFromMap("TemplateID")
+		eventAndAlert.setTemplateID("Template"
 				+ CustomUtils.randomNumbers(2));
 		eventAndAlert.setLanguage(MapUtils.fnGetInputDataFromMap("Language"));
 		eventAndAlert.setEmailMessageBody(MapUtils

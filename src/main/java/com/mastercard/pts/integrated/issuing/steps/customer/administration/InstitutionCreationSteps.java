@@ -55,9 +55,6 @@ public class InstitutionCreationSteps {
 	public void verifyinstitutionCreationSucess() {
 		instituteCreationflows.checkSuccessfulInstitutionCreation(instutionCreation);
 		context.put(ContextConstants.INSTITUTION, instutionCreation);
-		logger.info("*******New Institution Created******* "
-				+ instutionCreation.getInstitutionName() + " "
-				+ instutionCreation.getInstitutionCode());
 	}
 
 	@When("user enter details to create new user")
@@ -78,8 +75,6 @@ public class InstitutionCreationSteps {
 	public void verifyUserCreationSuccess() {
 		userCreationFlows.userCreationSuccess(userCreation);
 		context.put(ContextConstants.USER, userCreation);
-		logger.info("*******New User Created******* "
-				+ userCreation.getUserName() + " " + userCreation.getUserID());
 	}
 
 	// Composite Step of Institution and User Creation

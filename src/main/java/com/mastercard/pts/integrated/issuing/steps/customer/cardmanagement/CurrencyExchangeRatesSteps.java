@@ -145,7 +145,7 @@ public class CurrencyExchangeRatesSteps {
 		currencyExchangeRateDomainPage.setRateOrigin(currencyExchangeRatesPage
 				.getCode(MapUtils.fnGetInputDataFromMap(rateOrigin)));
 		currencyExchangeRateDomainPage.setUploadPathCER(MapUtils
-				.fnGetInputDataFromMap("UPLOAD_PATH_CER"));
+				.fnGetInputDataFromMap("UPLOAD_PATH_CER") + "/INPUT");
 		if (!MapUtils.fnGetInputDataFromMap("Program").equalsIgnoreCase("-"))
 		currencyExchangeRateDomainPage.setProgram(MapUtils
 				.fnGetInputDataFromMap(program));

@@ -1,8 +1,8 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import java.util.HashMap;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.EventsAndAlerts;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -129,11 +130,14 @@ public class EventsAndAlertsPage extends AbstractBasePage {
 	public void addEventAndAlerts(EventsAndAlerts eventsAndAlerts) {
 		clickAddNewButton();
 		runWithinPopup(
-				"Edit Event",
+"Add Event",
 				() -> {
 			enterEventID(eventsAndAlerts.getEventID());
 			enterEventName(eventsAndAlerts.getEventName());
 			selectProduct(eventsAndAlerts.getProductType());
+			checkEmailAlert();
+			checkSMSAlert();
+			selectEmailRecipients(eventsAndAlerts.get)
 					clickAddDetailsButton();
 			addDetails(eventsAndAlerts);
 					WebElementUtils.scrollDown(driver(), 0, 250);
