@@ -7,11 +7,11 @@ import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 @Component
 public class AggregateLoadLimit {
 
-	public  String monthlyLimit;
-	public String monthlyVelocity;
-	public String yearlyLimit;
-	public String yearlyVelocity;
-	public String currencyCode;
+	private  String monthlyLimit;
+	private String monthlyVelocity;
+	private String yearlyLimit;
+	private String yearlyVelocity;
+	private String currencyCode;
 	   
 
 	public String getMonthlyLimit() {

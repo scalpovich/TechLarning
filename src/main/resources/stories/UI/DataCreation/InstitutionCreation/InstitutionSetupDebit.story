@@ -128,7 +128,7 @@ When user creates Dedupe Plan
 When user creates aggregate load limit plan
 When user creates easy pay plan rule
 When user creates aggregate load limit plan
-When user creates linking API to Institution
+When user creates linking API to InstitutionTL
 When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
 When user creates Acount Range Routing plan
 !-- When user creates Manual Alerts of EMV Card for product type credit

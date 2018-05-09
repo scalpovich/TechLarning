@@ -7,7 +7,7 @@ import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 @Component
 public class AddInstitutionLoadCurrency {
 
-	public String currency;
+	private String currency;
 	
 	public String getCurrency() {
 		return currency;

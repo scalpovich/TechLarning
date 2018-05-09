@@ -5,11 +5,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class ChannelRoutingPlan {
 
-	public String planID;
-	public String description;
-	public String channel;
-	public String interfaceName;
-	public String getPlanID() {
+	private String planID;
+	private String description;
+	private String channel;
+	private String interfaceName;
+	private String getPlanID() {
 		return planID;
 	}
 	public void setPlanID(String planID) {

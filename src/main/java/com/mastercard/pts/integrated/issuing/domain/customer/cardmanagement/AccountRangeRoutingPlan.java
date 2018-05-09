@@ -7,9 +7,9 @@ import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 @Component
 public class AccountRangeRoutingPlan {
 
-	public String fromAccount;
-	public String toAccount;
-	public String channelRoutingPlan;
+	private String fromAccount;
+	private String toAccount;
+	private String channelRoutingPlan;
 	
 	public String getFromAccount() {
 		return fromAccount;

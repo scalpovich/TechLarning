@@ -8,11 +8,11 @@ import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 public class EasyPayPlanRule {
 
 
-	public String planCode;
-	public String planDesc ;
-	public String ruleCode ; 
-	public String comparisonOperator ;
-	public String ruleValue;
+	private String planCode;
+	private String planDesc ;
+	private String ruleCode ; 
+	private String comparisonOperator ;
+	private String ruleValue;
 
 	public String getPlanCode() {
 		return planCode;

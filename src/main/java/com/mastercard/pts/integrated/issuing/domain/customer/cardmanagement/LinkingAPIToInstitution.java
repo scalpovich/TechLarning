@@ -7,9 +7,9 @@ import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 @Component
 public class LinkingAPIToInstitution {
 
-	public String productType;
-	public String userId;
-	 
+	private String productType;
+	private String userId;
+
 	public String getProductType() {
 		return productType;
 	}
