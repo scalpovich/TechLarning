@@ -7,7 +7,7 @@ node ('Saikat_VM') {
 	
 	stage 'Compile Code' {
 		def mvnHome = tool 'Maven'
-    	bat "${mvnHome}\bin\mvn clean compile"
+    	bat "${mvnHome}/bin/mvn clean compile"
 	}	
 		
 	stage 'Cleaning up'	{
