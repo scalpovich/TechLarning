@@ -14,9 +14,9 @@ public class AccountRangeRoutingFlows{
 	Navigator navigator;
 
 	 
-	public void addChannelRoutingPlan(AccountRangeRoutingPlan accountrangeroutingplan) {
+	public void addChannelRoutingPlan(AccountRangeRoutingPlan accountRangeRoutingPlan) {
 		AccountRangeRoutingPage page = navigator.navigateToPage(AccountRangeRoutingPage.class);
-		page.addRoutingDetails(accountrangeroutingplan);
+		page.addRoutingDetails(accountRangeRoutingPlan);
 		
 	}
 

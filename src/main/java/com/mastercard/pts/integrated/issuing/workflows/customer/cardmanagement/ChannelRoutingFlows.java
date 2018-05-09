@@ -14,9 +14,9 @@ public class ChannelRoutingFlows{
 	Navigator navigator;
 
 	 
-	public void addChannelRoutingPlan(ChannelRoutingPlan channelroutingplan) {
+	public void addChannelRoutingPlan(ChannelRoutingPlan channelRoutingPlan) {
 		ChannelRoutingPage page = navigator.navigateToPage(ChannelRoutingPage.class);
-		page.addRoutingDetails(channelroutingplan);
+		page.addRoutingDetails(channelRoutingPlan);
 		
 	}
 

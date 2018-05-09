@@ -6,13 +6,13 @@ So that new device can be created for Credit
 
 Meta:
 @InstituteSetUpCredit
-@InstituionSetUpForAllType
+@InstitutionSetUpForAllType
 Scenario: Scenario1 - Institution parameter setup for Credit type/ Mastercard
 Meta:
 @Regression
 @Smoke
 @CreditMastercard
-@TCName AmexInstituionSetup
+@TCName AmexInstitutionSetup
 @sheetName S205014
 
 Given login to portal as existing bank as a Customeruser
@@ -35,7 +35,7 @@ When user creates Dedupe Plan
 When user creates aggregate load limit plan
 When user creates easy pay plan rule
 When user creates aggregate load limit plan
-When user creates linking API to Instituion
+When user creates linking API to Institution
 When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
 When user creates Acount Range Routing plan
 When user creates Allowed Load Currency
@@ -59,7 +59,7 @@ Meta:
 @Regression
 @Smoke
 @CreditVisa
-@TCName AmexInstituionSetup
+@TCName AmexInstitutionSetup
 @sheetName S205014
 Given login to portal as existing bank as a Customeruser
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
@@ -81,7 +81,7 @@ When user creates Dedupe Plan
 When user creates aggregate load limit plan
 When user creates easy pay plan rule
 When user creates aggregate load limit plan
-When user creates linking API to Instituion
+When user creates linking API to Institution
 When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
 When user creates Acount Range Routing plan
 When user creates Allowed Load Currency
@@ -104,7 +104,7 @@ Meta:
 @Regression
 @Smoke
 @CreditRupay
-@TCName AmexInstituionSetup
+@TCName AmexInstitutionSetup
 @sheetName S205014
 
 Given login to portal as existing bank as a Customeruser 
@@ -127,7 +127,7 @@ When user creates Dedupe Plan
 When user creates aggregate load limit plan
 When user creates easy pay plan rule
 When user creates aggregate load limit plan
-When user creates linking API to Instituion
+When user creates linking API to Institution
 When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
 When user creates Acount Range Routing plan
 When user creates Allowed Load Currency
@@ -153,7 +153,7 @@ Meta:
 @Regression
 @Smoke
 @CreditAmex
-@TCName AmexInstituionSetup
+@TCName AmexInstitutionSetup
 @sheetName S205014
 
 Given login to portal as existing bank as a Customeruser
@@ -176,7 +176,7 @@ When user creates Dedupe Plan
 When user creates aggregate load limit plan
 When user creates easy pay plan rule
 When user creates aggregate load limit plan
-When user creates linking API to Instituion
+When user creates linking API to Institution
 When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
 When user creates Acount Range Routing plan
 When user creates Allowed Load Currency

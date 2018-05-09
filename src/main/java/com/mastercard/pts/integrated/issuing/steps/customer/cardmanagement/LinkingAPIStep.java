@@ -4,22 +4,22 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LinkingAPIToInstituion;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LinkingAPIToInstitution;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LinkingAPIFlow;
 
 @Component
 public class LinkingAPIStep  {
  
 	@Autowired
-	LinkingAPIToInstituion linkingAPIToInstituion;
+	LinkingAPIToInstitution linkingAPIToInstitution;
 	
 	@Autowired
 	LinkingAPIFlow  linkingAPIflow;
 	
-	@When("user creates linking API to Instituion")
+	@When("user creates linking API to Institution")
 	public void userCreatesLinkingAPI() {
-		linkingAPIToInstituion=LinkingAPIToInstituion.LinkingAPIInstituionDataProvider();
-		linkingAPIflow.addLinkingAPIDetails(linkingAPIToInstituion);
+		linkingAPIToInstitution=LinkingAPIToInstitution.linkingAPIInstitutionDataProvider();
+		linkingAPIflow.addLinkingAPIDetails(linkingAPIToInstitution);
 
 	}
 	

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
 @Component
-public class AddInstituionLoadCurrency {
+public class AddInstitutionLoadCurrency {
 
 	public String currency;
 	
@@ -17,10 +17,10 @@ public class AddInstituionLoadCurrency {
 		this.currency = currency;
 	}
 
-	public static AddInstituionLoadCurrency DataProvider() {
-		AddInstituionLoadCurrency instituionLoadCurrency= new AddInstituionLoadCurrency();
-		instituionLoadCurrency.setCurrency(MapUtils.fnGetInputDataFromMap("InstituionLoadCurrency"));
-		return  instituionLoadCurrency;
+	public static AddInstitutionLoadCurrency DataProvider() {
+		AddInstitutionLoadCurrency institutionLoadCurrency= new AddInstitutionLoadCurrency();
+		institutionLoadCurrency.setCurrency(MapUtils.fnGetInputDataFromMap("InstitutionLoadCurrency"));
+		return  institutionLoadCurrency;
 	}
 }
 

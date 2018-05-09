@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LinkingAPIToInstituion;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LinkingAPIToInstitution;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
@@ -25,15 +25,15 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
 		CardManagementNav.L2_LINKING_API_TO_INSTITUTION
-		})
+})
 
 public class LinkingAPIToInstitutionPage extends AbstractBasePage {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(LinkingAPIToInstitutionPage.class);
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement productType;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent")
 	private MCWebElement userId;
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
@@ -50,8 +50,8 @@ public class LinkingAPIToInstitutionPage extends AbstractBasePage {
 	private MCWebElement searchbtn;
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "button add")
 	private MCWebElement addbtn;
-	
-	
+
+
 	public void verifyUiOperationStatus() {
 		logger.info("Link API to institution");
 		verifyUiOperation("Add Link API to institution");
@@ -59,27 +59,23 @@ public class LinkingAPIToInstitutionPage extends AbstractBasePage {
 
 	public void clickAddLinkingAPI(){
 		clickWhenClickable(addplanBtn);
-		switchToWindow(Constants.ADD_LINK_API);
+		switchToIframe(Constants.ADD_LINK_API);
 	}
-	
-	public void switchToWindow(String screenName) {
-		addWicketAjaxListeners(driver());
-		switchToIframe(screenName);
-	} 
-	public void addLinkingDetails(LinkingAPIToInstituion linkingapitoinstituion){
+
+	public void addLinkingDetails(LinkingAPIToInstitution linkingAPIToInstitution){
 		clickAddLinkingAPI();
-		 selectByVisibleText(userIdDdwn,linkingapitoinstituion.getUserId());
-		 selectByVisibleText(productTypeDdwn,linkingapitoinstituion.getProductType());
-		 
-		 clickWhenClickable(searchbtn);
-		 selectAllServiceCode();
-		 
-		 clickWhenClickable(addbtn);
-		 clickWhenClickable(saveBtn);
+		selectByVisibleText(userIdDdwn,linkingAPIToInstitution.getUserId());
+		selectByVisibleText(productTypeDdwn,linkingAPIToInstitution.getProductType());
+
+		clickWhenClickable(searchbtn);
+		selectAllServiceCode();
+
+		clickWhenClickable(addbtn);
+		clickWhenClickable(saveBtn);
 		waitForLoaderToDisappear();	
 		SwitchToDefaultFrame();
 		verifyNewChannelRoutingSuccess();
-		
+
 	}
 	public void verifyNewChannelRoutingSuccess() {
 		if (!publishErrorOnPage()) {
@@ -93,7 +89,7 @@ public class LinkingAPIToInstitutionPage extends AbstractBasePage {
 		}
 	}
 	public void selectAllServiceCode() {
-			Select s = new Select(getFinder().getWebDriver().findElement(
+		Select s = new Select(getFinder().getWebDriver().findElement(
 				By.name("serviceCodePalette:choices")));
 		List<WebElement> lenght =s.getOptions();
 		for (int i = 0; i < lenght.size(); i++) {
@@ -101,7 +97,7 @@ public class LinkingAPIToInstitutionPage extends AbstractBasePage {
 		}
 
 	}
-		
+
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(

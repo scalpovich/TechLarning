@@ -9,7 +9,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Manu
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ManualAlertsFlows;
 
 /**
- * This class provides the step definitions for steps mentioned in the InstituionSetupCredit, InstituionSetupDebit ,InstituionSetupPrepaid story file
+ * This class provides the step definitions for steps mentioned in the InstitutionSetupCredit, InstitutionSetupDebit ,InstitutionSetupPrepaid story file
  */
 
 /**
@@ -19,19 +19,19 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.M
 @Component
 public class ManualAlertsSteps  {
 
-@Autowired
+	@Autowired
 	ManualAlertsFlows manualAlertFlows;
-@Autowired
-ManualAlerts manualalert;
+	@Autowired
+	ManualAlerts manualAlert;
 
-	@When("user creates Manual Alerts of $EMVCard for product type $credit")
-	public void whenUserCreatesAloudLoadCurrency(@Named("devicetype") String devicetype , @Named("Product") String product ) {
-		manualalert	= ManualAlerts.manualAlertsDataProvider();
-		manualalert.setProduct(product);
-		manualalert.setDeviceType(devicetype);
-		manualAlertFlows.addManualAlerts(manualalert);
-		
-		
+	@When("user creates Manual Alerts of $deviceType for product type $productType")
+	public void whenUserCreatesManualAlerts(@Named("devicetype") String devicetype , @Named("Product") String product ) {
+		manualAlert	= ManualAlerts.manualAlertsDataProvider();
+		manualAlert.setProduct(product);
+		manualAlert.setDeviceType(devicetype);
+		manualAlertFlows.addManualAlerts(manualAlert);
+
+
 	}
-	
+
 }

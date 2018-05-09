@@ -63,13 +63,10 @@ public class TransactionRoutingPage extends AbstractBasePage {
 	
 	public void clickAddcurrency(){
 		clickWhenClickable(addplanBtn);
-		switchToWindow(Constants.ADD_TRANSACTION_ROUTING);
+		switchToIframe(Constants.ADD_TRANSACTION_ROUTING);
 	}
 	
-	public void switchToWindow(String screenName) {
-		addWicketAjaxListeners(driver());
-		switchToIframe(screenName);
-	} 
+	
 	public void addRoutingDetails(TransactionRoutingPlan transRoutingPlan){
 		selectByVisibleText(messageTypeDdwn,transRoutingPlan.getMessageTypeDdwn());
 		selectByVisibleText(transactionTypeDdwn,transRoutingPlan.getTransactionTypeDdwn());	

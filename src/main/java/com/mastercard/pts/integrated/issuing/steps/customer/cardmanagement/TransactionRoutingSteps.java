@@ -9,7 +9,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Tran
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.TransactionRoutingFlows;
 
 /**
- * This class provides the step definitions for steps mentioned in the InstituionSetupCredit, InstituionSetupDebit ,InstituionSetupPrepaid story file
+ * This class provides the step definitions for steps mentioned in the InstitutionSetupCredit, InstitutionSetupDebit ,InstitutionSetupPrepaid story file
  */
 
 /**

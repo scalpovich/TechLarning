@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AddInstituionLoadCurrency;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AddInstitutionLoadCurrency;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
@@ -55,7 +55,7 @@ public class InstitutionLoadCurrencyPage extends AbstractBasePage {
 		switchToAddLoadCurrency();
 	}
 
-	public void addCurrencyDetails(AddInstituionLoadCurrency addLoadCurrency){
+	public void addCurrencyDetails(AddInstitutionLoadCurrency addLoadCurrency){
 		selectByVisibleText(selectCurrencyDdwn,addLoadCurrency.getCurrency());
 		waitForLoaderToDisappear();
 		clickWhenClickable(saveBtn);

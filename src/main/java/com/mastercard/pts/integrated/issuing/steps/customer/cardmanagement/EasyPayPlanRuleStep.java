@@ -18,7 +18,7 @@ public class EasyPayPlanRuleStep  {
 	EasyPayPlanRuleFlow easyPayPlanFlow;
 	
 	@When("user creates easy pay plan rule")	
-	public void easyPayPlanRuleFlow() {
+	public void createEasyPayPlanRule() {
 		easyPayPlanRule=EasyPayPlanRule.createDataProvider();
 		easyPayPlanRule.setPlanCode(RandomStringUtils.randomNumeric(4));
 		easyPayPlanRule.setPlanDesc(easyPayPlanRule.getRuleCode()+easyPayPlanRule.getPlanCode());

@@ -2,7 +2,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LinkingAPIToInstituion;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LinkingAPIToInstitution;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.LinkingAPIToInstitutionPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
@@ -14,9 +14,9 @@ public class LinkingAPIFlow{
 	Navigator navigator;
 
 	 
-	public void addLinkingAPIDetails(LinkingAPIToInstituion linkingapitoinstituion) {
+	public void addLinkingAPIDetails(LinkingAPIToInstitution linkinAPIToInstitution) {
 		LinkingAPIToInstitutionPage page = navigator.navigateToPage(LinkingAPIToInstitutionPage.class);
-		page.addLinkingDetails(linkingapitoinstituion);
+		page.addLinkingDetails(linkinAPIToInstitution);
 		
 	}
 

@@ -12,9 +12,9 @@ public class AggregateLoadLimitFlow{
  
 	@Autowired
 	Navigator navigator;
-	public void addAggregateLimitPlan(AggregateLoadLimit aggregatelimit) {
+	public void addAggregateLimitPlan(AggregateLoadLimit aggregateLimit) {
  		AggregateLoadLimitPage page = navigator.navigateToPage(AggregateLoadLimitPage.class);
-		page.addAggregateLoadDetails(aggregatelimit);
+		page.addAggregateLoadDetails(aggregateLimit);
 		
 	}
 

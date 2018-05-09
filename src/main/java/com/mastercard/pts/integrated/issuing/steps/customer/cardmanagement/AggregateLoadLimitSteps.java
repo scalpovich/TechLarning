@@ -16,7 +16,7 @@ public class AggregateLoadLimitSteps  {
 	AggregateLoadLimitFlow aggregateLoadLimitFlow; 
 	
 	@When("user creates aggregate load limit plan")
-	public void userCreatesLinkingAPI() {
+	public void userCreatesAggregateLoadLimit() {
 		aggLoadLimit=AggregateLoadLimit.createDataProvider();
 		aggregateLoadLimitFlow.addAggregateLimitPlan(aggLoadLimit);
 

@@ -17,9 +17,9 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
 		CardManagementNav.L2_AGGREGATE_LOAD_LIMIT
-		})
+})
 public class AggregateLoadLimitPage extends AbstractBasePage {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(AggregateLoadLimitPage.class);
 
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
@@ -31,7 +31,7 @@ public class AggregateLoadLimitPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
 	private MCWebElement cancelBtn;
 	@PageElement(findBy = FindBy.NAME, valueToFind = "planStartDate:input:dateTextField")
-	private MCWebElement planstartDate;
+	private MCWebElement planStartDate;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "planEndDate:input:dateTextField")
 	private MCWebElement plansEndDate;
@@ -46,40 +46,35 @@ public class AggregateLoadLimitPage extends AbstractBasePage {
 	private MCWebElement yearlyVelocityTxt;
 	@PageElement(findBy = FindBy.NAME, valueToFind = "currencyCode:input:dropdowncomponent")
 	private MCWebElement currencyCodeTxt;
-	
+
 	@PageElement(findBy = FindBy.ID, valueToFind = "planStartDate")
 	private MCWebElement startDateDPkr;
-	
+
 	@PageElement(findBy = FindBy.ID, valueToFind = "planEndDate")
 	private MCWebElement endDateDPkr;
-	
-	
+
+
 	public void clickAddChannelRouting(){
 		clickWhenClickable(addplanBtn);
-		switchToWindow(Constants.ADD_AGGREGAT_ELOAD_LIMIT);
+		switchToIframe(Constants.ADD_AGGREGAT_LOAD_LIMIT);
 	}
-	
-	public void switchToWindow(String screenName) {
-		addWicketAjaxListeners(driver());
-		switchToIframe(screenName);
-	} 
-	public void addAggregateLoadDetails(AggregateLoadLimit aggregatelimit){
+
+
+	public void addAggregateLoadDetails(AggregateLoadLimit aggregateLimit){
 		clickAddChannelRouting();
 		waitForElementVisible(startDateDPkr);
 		WebElementUtils.pickDate(startDateDPkr, futureDate);
 		waitForElementVisible(endDateDPkr);
 		WebElementUtils.pickDate(endDateDPkr, futureEndDate);
-		
-		 	enterText(monthlyLimitTxt ,aggregatelimit.getMonthlyLimit());		
-			enterText(monthlyVelocityTxt, aggregatelimit.getMonthlyVelocity());
-			enterText(yearlyLimitTxt ,aggregatelimit.getYearlyLimit());		
-			enterText(yearlyVelocityTxt, aggregatelimit.getYearlyVelocity());
-			selectByVisibleText(currencyCodeTxt,aggregatelimit.getCurrencyCode());
-		 clickWhenClickable(saveBtn);
+		enterText(monthlyLimitTxt ,aggregateLimit.getMonthlyLimit());		
+		enterText(monthlyVelocityTxt, aggregateLimit.getMonthlyVelocity());
+		enterText(yearlyLimitTxt ,aggregateLimit.getYearlyLimit());		
+		enterText(yearlyVelocityTxt, aggregateLimit.getYearlyVelocity());
+		selectByVisibleText(currencyCodeTxt,aggregateLimit.getCurrencyCode());
+		clickWhenClickable(saveBtn);
 		waitForLoaderToDisappear();	
 		SwitchToDefaultFrame();
 		verifySuccess();
-		
 	}	
 	public void verifySuccess() {
 		if (!publishErrorOnPage()) {
@@ -92,11 +87,11 @@ public class AggregateLoadLimitPage extends AbstractBasePage {
 
 		}
 	}
-	
+
 	public void verifyUiOperationStatus() {
 		logger.info("Account Range Routing");
 		verifyUiOperation("Add Account Range Routing");
 	}
-	
-	
+
+
 }

@@ -6,7 +6,7 @@ So that new device can be created for Debit
 
 Meta:
 @InstituteSetUpDebit
-@InstituionSetUpForAllType
+@InstitutionSetUpForAllType
 Scenario: Scenario1 - Institution parameter setup for Debit type/ Mastercard
 Meta:
 @Regression
@@ -17,6 +17,7 @@ Meta:
 
 Given login to portal as existing bank as a Customeruser
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
+When user creates Allowed Load Currency
 When user creates a Network MemberShip for Mastercard
 When user creates a Transaction Registration
 When user creates an Institution Currency with status as Active
@@ -35,7 +36,7 @@ When user creates Dedupe Plan
 When user creates aggregate load limit plan
 When user creates easy pay plan rule
 When user creates aggregate load limit plan
-When user creates linking API to Instituion
+When user creates linking API to Institution
 When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
 When user creates Acount Range Routing plan
 When user creates Allowed Load Currency
@@ -81,7 +82,7 @@ When user creates Dedupe Plan
 When user creates aggregate load limit plan
 When user creates easy pay plan rule
 When user creates aggregate load limit plan
-When user creates linking API to Instituion
+When user creates linking API to Institution
 When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
 When user creates Acount Range Routing plan
 !-- When user creates Manual Alerts of EMV Card for product type credit 
@@ -107,7 +108,7 @@ Meta:
 @TCName TC264306_Embossing File Generation
 @sheetName S205014
 Given login to portal as existing bank as a Customeruser
-When user creates Allowed Load Currency for INR
+When user creates Allowed Load Currency
 When user creates a Cutover profile with cutover hours as 00 and cutover minutes as 05
 When user creates a Network MemberShip for RUPAY
 When user creates a Transaction Registration
@@ -127,7 +128,7 @@ When user creates Dedupe Plan
 When user creates aggregate load limit plan
 When user creates easy pay plan rule
 When user creates aggregate load limit plan
-When user creates linking API to Instituion
+When user creates linking API to Institution
 When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
 When user creates Acount Range Routing plan
 !-- When user creates Manual Alerts of EMV Card for product type credit

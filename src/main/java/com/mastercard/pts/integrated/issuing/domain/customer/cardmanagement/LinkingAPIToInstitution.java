@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
 @Component
-public class LinkingAPIToInstituion {
+public class LinkingAPIToInstitution {
 
 	public String productType;
 	public String userId;
@@ -26,8 +26,8 @@ public class LinkingAPIToInstituion {
 		this.userId = userId;
 	}
 
-	public static LinkingAPIToInstituion LinkingAPIInstituionDataProvider() {
-		LinkingAPIToInstituion accountRange= new LinkingAPIToInstituion();
+	public static LinkingAPIToInstitution linkingAPIInstitutionDataProvider() {
+		LinkingAPIToInstitution accountRange= new LinkingAPIToInstitution();
 		accountRange.setProductType(MapUtils.fnGetInputDataFromMap("ProductType") );
 		accountRange.setUserId(MapUtils.fnGetInputDataFromMap("APILInkingUserID") );
 		return accountRange;

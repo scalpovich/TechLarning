@@ -15,11 +15,9 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 public class EasyPayPlanRuleFlow {
 	@Autowired
 	private Navigator navigator;
-	@Autowired
-	EasyPayPlanRulePage easyPayPlanRule;
-	public void adddetails(EasyPayPlanRule easypayplanrule) {
+	public void adddetails(EasyPayPlanRule easyPayPlanRule) {
 		EasyPayPlanRulePage page = navigator.navigateToPage(EasyPayPlanRulePage.class);
-		page.addDetails(easypayplanrule);
+		page.addDetails(easyPayPlanRule);
 		
 	}
 }

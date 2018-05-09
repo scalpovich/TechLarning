@@ -6,7 +6,7 @@ So that new device can be created for Prepaid
 
 Meta:
 @InstituteSetUpPrepaid
-@InstituionSetUpForAllType
+@InstitutionSetUpForAllType
 
 Scenario: Scenario1 - Institution parameter setup for prepaid type/ Mastercard
 Meta:
@@ -35,7 +35,7 @@ When user creates Dedupe Plan
 When user creates aggregate load limit plan
 When user creates easy pay plan rule
 When user creates aggregate load limit plan
-When user creates linking API to Instituion
+When user creates linking API to Institution
 When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
 When user creates Acount Range Routing plan
 When user creates Allowed Load Currency
@@ -86,7 +86,7 @@ When user creates Dedupe Plan
 When user creates aggregate load limit plan
 When user creates easy pay plan rule
 When user creates aggregate load limit plan
-When user creates linking API to Instituion
+When user creates linking API to Institution
 When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
 When user creates Acount Range Routing plan
 When user creates Allowed Load Currency
@@ -139,7 +139,7 @@ When user creates Dedupe Plan
 When user creates aggregate load limit plan
 When user creates easy pay plan rule
 When user creates aggregate load limit plan
-When user creates linking API to Instituion
+When user creates linking API to Institution
 When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
 When user creates Acount Range Routing plan
 When user creates Allowed Load Currency

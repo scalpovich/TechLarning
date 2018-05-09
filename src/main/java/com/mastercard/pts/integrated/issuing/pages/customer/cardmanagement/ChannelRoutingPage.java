@@ -18,10 +18,10 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L3_CHANNEL_ROUTING})
 public class ChannelRoutingPage extends AbstractBasePage {
 
-	 
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:3:cols:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement channelDdwn;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:4:cols:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement interfaceNameDdwn;
 
@@ -40,20 +40,15 @@ public class ChannelRoutingPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
 	private MCWebElement cancelBtn;
 
-	
+
 	private static final Logger logger = LoggerFactory
 			.getLogger(SystemCodesPage.class);
 
-	
+
 	public void clickAddChannelRouting(){
 		clickWhenClickable(addplanBtn);
-		switchToWindow(Constants.ADD_CHANNEL_ROUTING);
+		switchToIframe(Constants.ADD_CHANNEL_ROUTING);
 	}
-	
-	public void switchToWindow(String screenName) { 
-		SwitchToDefaultFrame();
-		switchToIframe(screenName);
-	} 
 	public void addRoutingDetails(ChannelRoutingPlan channelroutingplan){
 		clickAddChannelRouting();
 		enterText(planIDTxt, channelroutingplan.getPlanID());
@@ -61,17 +56,17 @@ public class ChannelRoutingPage extends AbstractBasePage {
 		clickWhenClickable(saveBtn);
 		waitForLoaderToDisappear();	
 		clickWhenClickable(addplanBtn);
-		switchToWindow(Constants.ADD_CHANNEL_ROUTING_DETAILS);
+		switchToIframe(Constants.ADD_CHANNEL_ROUTING_DETAILS);
 		selectByVisibleText(channelDdwn,channelroutingplan.getChannel());
 		selectByVisibleText(interfaceNameDdwn,channelroutingplan.getInterfaceName());	 
 		clickWhenClickable(saveBtn);
-		switchToWindow(Constants.ADD_CHANNEL_ROUTING);
+		switchToIframe(Constants.ADD_CHANNEL_ROUTING);
 		waitForLoaderToDisappear();	
 		clickWhenClickable(saveBtn);
 		verifyNewChannelRoutingSuccess();
-		
+
 	}
-	
+
 	public void verifyNewChannelRoutingSuccess() {
 		if (!publishErrorOnPage()) {
 			logger.info("Record Added Successfully.");
@@ -83,5 +78,5 @@ public class ChannelRoutingPage extends AbstractBasePage {
 
 		}
 	}
-	
+
 }

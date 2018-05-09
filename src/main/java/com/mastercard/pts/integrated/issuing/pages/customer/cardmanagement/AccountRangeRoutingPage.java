@@ -23,27 +23,27 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
 		CardManagementNav.L2_ROUTING,
 		CardManagementNav.L3_ACCOUNT_RANGE_ROUTING
-		})
+})
 
 public class AccountRangeRoutingPage extends AbstractBasePage {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(AccountRangeRoutingPage.class);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=minAccountRange]")
-	private MCWebElement minAccountRange;
-	
+	private MCWebElement minAccountRangeTxt;
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=maxAccountRange]")
-	private MCWebElement maxAccountRange;
-	
+	private MCWebElement maxAccountRangeTxt;
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "minAccountRange:input:inputTextField")
-	private MCWebElement minAccountNumber;
-	
+	private MCWebElement minAccountNumberTxt;
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "maxAccountRange:input:inputTextField")
-	private MCWebElement maxAccountNumber;
-	
+	private MCWebElement maxAccountNumberTxt;
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "componentName:input:dropdowncomponent")
-	private MCWebElement channelRoutingPlan;
-	
+	private MCWebElement channelRoutingPlanDdwn;
+
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addplanBtn;
 
@@ -55,23 +55,19 @@ public class AccountRangeRoutingPage extends AbstractBasePage {
 
 	public void clickAddChannelRouting(){
 		clickWhenClickable(addplanBtn);
-		switchToWindow(Constants.ADD_ACCOUNT_ROUTING_PLAN);
+		switchToIframe(Constants.ADD_ACCOUNT_ROUTING_PLAN);
 	}
-	
-	public void switchToWindow(String screenName) {
-		addWicketAjaxListeners(driver());
-		switchToIframe(screenName);
-	} 
-	public void addRoutingDetails(AccountRangeRoutingPlan accountrangeroutingplan){
+
+	public void addRoutingDetails(AccountRangeRoutingPlan accountRangeRoutingPlan){
 		clickAddChannelRouting();
-		 	enterText(minAccountNumber ,accountrangeroutingplan.getFromAccount());		
-			enterText(maxAccountRange, accountrangeroutingplan.getToAccount());
-			selectByVisibleText(channelRoutingPlan,accountrangeroutingplan.getChannelRoutingPlan());
-		 clickWhenClickable(saveBtn);
+		enterText(minAccountNumberTxt ,accountRangeRoutingPlan.getFromAccount());		
+		enterText(maxAccountRangeTxt, accountRangeRoutingPlan.getToAccount());
+		selectByVisibleText(channelRoutingPlanDdwn,accountRangeRoutingPlan.getChannelRoutingPlan());
+		clickWhenClickable(saveBtn);
 		waitForLoaderToDisappear();	
 		SwitchToDefaultFrame();
 		verifyNewChannelRoutingSuccess();
-		
+
 	}
 	public void verifyNewChannelRoutingSuccess() {
 		if (!publishErrorOnPage()) {
@@ -84,19 +80,19 @@ public class AccountRangeRoutingPage extends AbstractBasePage {
 
 		}
 	}
-	
-	
-	
+
+
+
 	public void verifyUiOperationStatus() {
 		logger.info("Account Range Routing");
 		verifyUiOperation("Add Account Range Routing");
 	}
-	
+
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(minAccountRange),
-				WebElementUtils.elementToBeClickable(maxAccountRange)
+				WebElementUtils.elementToBeClickable(minAccountRangeTxt),
+				WebElementUtils.elementToBeClickable(maxAccountRangeTxt)
 				);
 	}
 }

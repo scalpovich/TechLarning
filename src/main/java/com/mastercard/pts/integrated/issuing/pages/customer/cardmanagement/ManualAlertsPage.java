@@ -62,7 +62,7 @@ public class ManualAlertsPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(ManualAlertsPage.class);
-	
+
 	public void addManualRecipient(ManualAlerts manualAlert){
 		switchToIframe(Constants.ADD_MANUAL_RECIPIENT);
 		enterValueinTextBox(clientCodeTxt, manualAlert.getClientCode());
@@ -80,7 +80,7 @@ public class ManualAlertsPage extends AbstractBasePage {
 	}
 	public void clickAddcurrency(){
 		clickWhenClickable(addManualAlertBtn);
-		switchToWindow(Constants.ADD_MANUAL_ALERTS);
+		switchToIframe(Constants.ADD_MANUAL_ALERTS);
 	}
 	public void addAlertDetails(ManualAlerts alertpage){
 		selectByVisibleText(selectProductDdwn,alertpage.getProduct());
@@ -90,11 +90,6 @@ public class ManualAlertsPage extends AbstractBasePage {
 		waitForLoaderToDisappear();
 		clickWhenClickable(addManualAlertBtn);
 	}
-
-	public void switchToWindow(String screenName) {
-		addWicketAjaxListeners(driver());
-		switchToIframe(screenName);
-	} 
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

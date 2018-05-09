@@ -69,13 +69,8 @@ public class EasyPayPlanRulePage extends AbstractBasePage {
 	
 	public void clickAddDetails(){
 		clickWhenClickable(addplanBtn);
-		switchToWindow(Constants.ADD_EASY_PAY_PLAN_RULE);
+		switchToIframe(Constants.ADD_EASY_PAY_PLAN_RULE);
 	}
-	
-	public void switchToWindow(String screenName) {
-		SwitchToDefaultFrame();
-		switchToIframe(screenName);
-	} 
 	public void addDetails(EasyPayPlanRule easyplanrule){
 		clickAddDetails();
 	
@@ -84,7 +79,7 @@ public class EasyPayPlanRulePage extends AbstractBasePage {
 		clickWhenClickable(saveBtn);
 		waitForLoaderToDisappear();	
 		clickWhenClickable(addplanBtn);
-		switchToWindow(Constants.ADD_RULE);
+		switchToIframe(Constants.ADD_RULE);
 		selectByVisibleText(ruleCodeDdwn,easyplanrule.getRuleCode());
 		selectByVisibleText(comparisonOperatorDdwn,easyplanrule.getComparisonOperator());
 		if(isElementPresent(ruleValueDdwn))
@@ -93,7 +88,7 @@ public class EasyPayPlanRulePage extends AbstractBasePage {
 			enterText(ruleValueTxt ,easyplanrule.getRuleValue());
 		
 		clickWhenClickable(saveBtn);
-		switchToWindow(Constants.ADD_EASY_PAY_PLAN_RULE);
+		switchToIframe(Constants.ADD_EASY_PAY_PLAN_RULE);
 		waitForLoaderToDisappear();	
 		clickWhenClickable(saveBtn);
 		verifySuccessMessage();
