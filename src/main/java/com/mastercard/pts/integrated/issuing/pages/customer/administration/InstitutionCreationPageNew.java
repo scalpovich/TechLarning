@@ -19,6 +19,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -305,10 +306,10 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "agtMailId:input:inputTextField")
 	private MCWebElement agentEmailTxt;
 	
-	public static final String ATTRIBUTE_VALUE =  "value";
-
 	@PageElement(findBy = FindBy.NAME, valueToFind = "adaptiveEcommFlag:input:dropdowncomponent")
-	private MCWebElement adaptiveECOMMDdwn;
+	private MCWebElement adaptiveEcommFlagDDwn;
+	
+	public static final String ATTRIBUTE_VALUE =  "value";
 
 	/**
 	 * Click add button and switch to frame
@@ -336,7 +337,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public void checkPrepaid() {
-		selectCheckBox(prepaidChkBx, "Prepaid");
+		WebElementUtils.checkCheckbox(prepaidChkBx, true);
 	}
 
 	public void selectInstitutionCurrency(InstitutionCreation institute) {
@@ -888,11 +889,14 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 		}
 	}
 
-	public void provideAdaptiveAuthentication() {
-		selectValueFromDropDown(adaptiveECOMMDdwn,
-				MapUtils.fnGetInputDataFromMap("AdaptiveEcomm"));
+	public void provideAdaptiveAuthentication(InstitutionCreation institution) {
+		selectACSVendor(institution);
 		selectCheckBox(mpinChkBx, "MPIN Enabled");
 		selectCheckBox(smsProvider, "SMS Service Provider");
+	}
+	
+	public void selectACSVendor(InstitutionCreation institution) {
+		WebElementUtils.selectDropDownByVisibleText(adaptiveEcommFlagDDwn, institution.getAdaptiveAuthentication());
 	}
 
 	public void enterNewInstitution(InstitutionCreation institution) {

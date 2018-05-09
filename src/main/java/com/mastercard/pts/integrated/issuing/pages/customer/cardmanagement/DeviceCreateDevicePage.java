@@ -312,7 +312,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 		fillAddress(device);
 		// skip employment details
-		if (System.getProperty("env").equalsIgnoreCase("Demo") || System.getProperty("env").contains("stage")) {
+		if (!System.getProperty("env").equalsIgnoreCase("Automation")) {
 			fillEmploymentDetails(device);
 			selectProfessionByIndex(1);
 		}

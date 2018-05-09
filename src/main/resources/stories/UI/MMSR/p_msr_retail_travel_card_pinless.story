@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for prepaid msr retail travel card 
 
 Meta:
-@StoryName p_msr_retail_travel
+@StoryName p_msr_retail_travel_MMSR
 @MMSR
 
 Scenario: Set up prepaid msr retail travel card
@@ -24,6 +24,7 @@ When processes device production batch for prepaid
 Then device has "normal" status
 When user activates device through helpdesk
 Then user sign out from customer portal
+Then embossing file batch was generated in correct format
 
 Scenario: Perform MMSR-RetailTravelCard Authorization transaction
 Given connection to MAS is established
