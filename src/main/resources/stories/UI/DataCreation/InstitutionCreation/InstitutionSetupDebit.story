@@ -16,7 +16,6 @@ Meta:
 @sheetName S205014
 
 Given login to portal as existing bank as a Customeruser
-When user creates Allowed Load Currency
 When user creates a Transaction Registration
 When user creates an Institution Currency with status as Active
 When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
