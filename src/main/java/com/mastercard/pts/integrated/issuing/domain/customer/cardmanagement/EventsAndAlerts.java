@@ -139,7 +139,7 @@ public class EventsAndAlerts {
 		eventAndAlert.setLanguage(MapUtils.fnGetInputDataFromMap("Language"));
 		eventAndAlert.setEmailMessageBody(MapUtils
 				.fnGetInputDataFromMap("EmailMessageBody"));
-		eventAndAlert.setEmailMessageBody(MapUtils
+		eventAndAlert.setEmailSubject(MapUtils
 				.fnGetInputDataFromMap("EmailSubjectBody"));
 		eventAndAlert.setsMSMessageBody(MapUtils
 				.fnGetInputDataFromMap("SMSMessageBody"));

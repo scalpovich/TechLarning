@@ -137,7 +137,8 @@ public class EventsAndAlertsPage extends AbstractBasePage {
 			selectProduct(eventsAndAlerts.getProductType());
 			checkEmailAlert();
 			checkSMSAlert();
-			selectEmailRecipients(eventsAndAlerts.get)
+			selectEmailRecipients(eventsAndAlerts.getEmailRecipients());
+			selectSMSRecipients(eventsAndAlerts.getsMSRecipients());
 					clickAddDetailsButton();
 			addDetails(eventsAndAlerts);
 					WebElementUtils.scrollDown(driver(), 0, 250);
