@@ -16,7 +16,7 @@ Given user is logged in non-default institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin for non-default institution
 When user creates new device of prepaid type for non-default institution
 When User fills Program section for prepaid product
-When User fills Program section for debit product
+When User fills Program section for prepaid product
 Then device has "normal" status for non-default institution
 Then user sign out from customer portal
 Given user is logged in institution
@@ -90,10 +90,6 @@ And user sign out from agent portal
 And user is logged in institution
 And balance in helpdesk updated correctly for prepaid device
 And user sign out from customer portal
-When user is logged in agent portal as agency user
-When user initiates settlement for agency
-Then settlement is initiated successfully
-And user sign out from agent portal
 When user is logged in agent portal as agent user
 When user navigates to transfer funds page
 Then transfer funds page is loaded and master detail content title is Transfer Funds
