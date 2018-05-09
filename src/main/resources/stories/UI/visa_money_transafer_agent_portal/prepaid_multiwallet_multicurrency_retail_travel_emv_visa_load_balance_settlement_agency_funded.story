@@ -11,11 +11,6 @@ Meta:
 @CardCreation
 
 Scenario: Prepaid - EMAV  - VISA Money Transfer 
-Given user is logged in non-default institution
-And device range for program with device plan for "prepaid" "magnetic stripe" card without pin for non-default institution
-When user creates new device of prepaid type for non-default institution
-Then device has "normal" status for non-default institution
-Then user sign out from customer portal
 Given user is logged in institution
 And bulk card generation for prepaid emv is completed for an interface
 And user sign out from customer portal
@@ -87,6 +82,11 @@ And user sign out from agent portal
 And user is logged in institution
 And balance in helpdesk updated correctly for prepaid device
 And user sign out from customer portal
+Given user is logged in non-default institution
+And device range for program with device plan for "prepaid" "magnetic stripe" card without pin for non-default institution
+When user creates new device of prepaid type for non-default institution
+Then device has "normal" status for non-default institution
+Then user sign out from customer portal
 When user is logged in agent portal as agent user
 When user navigates to transfer funds page
 Then transfer funds page is loaded and master detail content title is Transfer Funds
