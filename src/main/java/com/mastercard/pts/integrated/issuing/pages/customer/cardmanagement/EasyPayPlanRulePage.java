@@ -79,6 +79,7 @@ public class EasyPayPlanRulePage extends AbstractBasePage {
 		clickWhenClickable(saveBtn);
 		waitForLoaderToDisappear();	
 		clickWhenClickable(addplanBtn);
+		SwitchToDefaultFrame();
 		switchToIframe(Constants.ADD_RULE);
 		selectByVisibleText(ruleCodeDdwn,easyplanrule.getRuleCode());
 		selectByVisibleText(comparisonOperatorDdwn,easyplanrule.getComparisonOperator());

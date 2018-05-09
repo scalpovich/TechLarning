@@ -56,6 +56,7 @@ public class ChannelRoutingPage extends AbstractBasePage {
 		clickWhenClickable(saveBtn);
 		waitForLoaderToDisappear();	
 		clickWhenClickable(addplanBtn);
+		SwitchToDefaultFrame();
 		switchToIframe(Constants.ADD_CHANNEL_ROUTING_DETAILS);
 		selectByVisibleText(channelDdwn,channelroutingplan.getChannel());
 		selectByVisibleText(interfaceNameDdwn,channelroutingplan.getInterfaceName());	 
