@@ -1,8 +1,10 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +54,7 @@ public class ReconciliationWorkFlow {
 		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
 		return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
 	}
-	
+
 	public List<String> verifyAuthReport(String fileName,String key) {
 		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
 		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
@@ -62,7 +64,7 @@ public class ReconciliationWorkFlow {
 		return getReportContent(fileName,key);
 		//return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
 	}
-
+	
 	public boolean verifyReportGenerationClearing() {
 		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
 		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
@@ -85,12 +87,20 @@ public class ReconciliationWorkFlow {
 		String downLoadPath = System.getProperty("user.home") + "\\Downloads";
 		File f = new File(downLoadPath);
 		File[] files = f.listFiles();
-
 		if (files != null)
 			for (int i = 0; i < files.length; i++) {
 				fileCount++;
 			}
 		return fileCount;
+	}
+
+	public String getFileName() {
+		String downLoadPath = System.getProperty("user.home") + "\\Downloads";
+		File f = new File(downLoadPath);
+		File[] files = f.listFiles();
+		Arrays.sort(files,LastModifiedFileComparator.LASTMODIFIED_REVERSE);
+		logger.info("Latest Downloaded File Name " + files[0].getName());
+		return files[0].getName();
 	}
 
 	public int waitForReportToDownLoad(int fileCountBeforeReportGeneration) {
@@ -108,23 +118,23 @@ public class ReconciliationWorkFlow {
 		}
 		return fileCountAfterDownload;
 	}
-	
+
 	public List<String> getReportContent(String fileName,String key) {
 		PDFUtils pdfutils=new PDFUtils();
 		List<String> records = pdfutils.getContentRow(PDFUtils.getuserDownloadPath() + "\\"+fileName, key);
 		for(int i=0;i<records.size();i++)
 		{
-		if (records != null)
-		    logger.info("Authorization data file content {} ", records.get(i));
+			if (records != null)
+				logger.info("Authorization data file content {} ", records.get(i));
 		}
 		return records;
 	}
 	public void deleteExistingAuthorizationFilesFromSystem(String authFileName)
 	{
-		 for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
-		        if (!file.isDirectory()&& file.getName().startsWith(ConstantData.AUTHORIZATION_REPORT_NAME))   	
-		        	file.delete();
-		    }
+		for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
+			if (!file.isDirectory()&& file.getName().startsWith(ConstantData.AUTHORIZATION_REPORT_NAME))   	
+				file.delete();
+		}
 	}
 
 }

@@ -142,6 +142,19 @@ public class AuthorizationSearchWorkflow {
 		for (int i = 0; i < reportContent.size(); i++) {
 			authFileData += reportContent.get(i) + " ";
 		}
+		boolean condition = authFileData.contains(context.get(ConstantData.AUTHORIZATION_CODE)) && authFileData.contains(device.getDeviceNumber()) 
+				&& authFileData.contains(context.get(ConstantData.TRANSACTION_AMOUNT));
+
+		assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
+	}
+	
+	
+	public void verifyReport(Device device) {
+		List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(reconciliationWorkFlow.getFileName(), context.get(ConstantData.AUTHORIZATION_CODE));
+		String authFileData = "";
+		for (int i = 0; i < reportContent.size(); i++) {
+			authFileData += reportContent.get(i) + " ";
+		}
 		boolean condition = authFileData.contains(context.get(ConstantData.AUTHORIZATION_CODE)) && authFileData.contains(device.getDeviceNumber())
 				&& authFileData.contains(context.get(ConstantData.TRANSACTION_AMOUNT));
 

@@ -12,6 +12,7 @@ import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Throwables;
@@ -23,6 +24,10 @@ public class PDFUtils {
 	private static final Logger logger = LoggerFactory.getLogger(PDFUtils.class);
 
 	DateUtils dateutils;
+	
+	@Value("${Customer.portal.user.name}")
+	private String customerPortalUser;
+	
 	public PDFUtils() {
 
 	}
@@ -96,7 +101,7 @@ public class PDFUtils {
 		PdfReader.unethicalreading = true;
 		PdfReader reader = null;
 		try {
-			reader = new PdfReader(src, (ConstantData.AUTHORIZATION_REPORT_FILE_KEY+dateutils.getDateDDMMFormat()).getBytes());
+			reader = new PdfReader(src, (customerPortalUser.substring(0, 3)+dateutils.getDateDDMMFormat()).getBytes());
 		}  catch (Exception e) {
 			logger.info("Document Exception {}", e);
 		}
