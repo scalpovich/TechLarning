@@ -128,7 +128,7 @@ When user creates Dedupe Plan
 When user creates aggregate load limit plan
 When user creates easy pay plan rule
 When user creates aggregate load limit plan
-When user creates linking API to InstitutionTL
+When user creates linking API to Institution
 When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
 When user creates Acount Range Routing plan
 !-- When user creates Manual Alerts of EMV Card for product type credit
@@ -144,3 +144,22 @@ When user creates Membership Fee plan for Debit
 When user creates Device Event Based Fee Plan for Debit
 When user creates an Embossing File Template
 When user creates a Vendor of Category Personalization with Embossing template attached
+
+
+
+
+Scenario: Scenario1 - Institution parameter setup for Debit type/ Rupay
+Meta:
+
+@ExecutionReport
+@TCName TC264306_Embossing File Generation
+@sheetName S205014
+When user creates aggregate load limit plan
+When user creates easy pay plan rule
+When user creates aggregate load limit plan
+When user creates linking API to Institution
+When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
+When user creates Acount Range Routing plan
+When user creates Allowed Load Currency
+!-- When user creates Manual Alerts of EMV Card for product type credit 
+When user creates Saving account type
