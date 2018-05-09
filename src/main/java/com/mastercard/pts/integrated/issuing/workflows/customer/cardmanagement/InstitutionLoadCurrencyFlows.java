@@ -12,7 +12,6 @@ public class InstitutionLoadCurrencyFlows {
 
 	@Autowired
 	Navigator navigator;
-	String currencyValue =null;
 	public void addInstituteLoadCurrency(AddInstitutionLoadCurrency addLoadCurrency) {
 		InstitutionLoadCurrencyPage page = navigator.navigateToPage(InstitutionLoadCurrencyPage.class);
 		page.clickAddCurrency();
@@ -24,7 +23,7 @@ public class InstitutionLoadCurrencyFlows {
 		String[] currency = value.split(":");
 		for (int i = 0; i < currency.length; i++)
 		{
-			currencyValue = currency[i].trim();
+			String currencyValue = currency[i].trim();
 			addLoadCurrency.setCurrency(currencyValue);
 			addInstituteLoadCurrency(addLoadCurrency);
 
