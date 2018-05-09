@@ -5,6 +5,8 @@ node ('Saikat_VM') {
 		checkout scm
 	
 	stage 'Compile Code'
-		sh 'mvn clean compile'
-	
+		bat 'mvn clean compile'
+		
+	stage 'Cleaning up'	
+		deleteDir()
 }
