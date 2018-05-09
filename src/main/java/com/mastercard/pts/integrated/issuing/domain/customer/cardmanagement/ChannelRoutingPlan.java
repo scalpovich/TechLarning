@@ -9,7 +9,8 @@ public class ChannelRoutingPlan {
 	private String description;
 	private String channel;
 	private String interfaceName;
-	private String getPlanID() {
+	
+	public String getPlanID() {
 		return planID;
 	}
 	public void setPlanID(String planID) {
