@@ -1,16 +1,16 @@
 echo 'Starting build...'
 node ('Saikat_VM') {
 	
-	stage 'Clone Repository' {
+	stage ('Clone Repository') {
 		checkout scm
 	}	
 	
-	stage 'Compile Code' {
+	stage ('Compile Code') {
 		def mvnHome = tool 'Maven'
     	bat "${mvnHome}/bin/mvn clean compile"
 	}	
 		
-	stage 'Cleaning up'	{
+	stage ('Cleaning up') {
 		deleteDir()
 	}	
 }
