@@ -135,7 +135,7 @@ public class CurrencyPayoutListPlanPage extends AbstractBasePage {
 			addDetails();
 			clickAddNewButton();
 		});
-		switchToIframeByIndex(ADD_CURRENCY_PLAN_DETAIL_FRAME);;
+		switchToIframeByIndex(ADD_CURRENCY_PLAN_DETAIL_FRAME_ID);
 		selectCurrencyCode(plan);
 		enterRefundToleranceUnit(plan);
 		pickEffectiveDate(plan);

@@ -23,6 +23,7 @@ public class CardManagementNav {
 	public static final String L2_WALLET_CONFIGURATION = "ISSW00";
 	public static final String L2_PROGRAM = "PRMG001";
 	public static final String L2_DEVICE_RANGE = "DVRNG001";
+	public static final String L2_CURRENCY_PAYOUT_LIST_PLAN = "ISSP04";
 
 	public static final String L3_WALLET_FEE_PLAN = "WLFEP001";
 	public static final String L3_WALLET_PLAN = "WALLP001";
@@ -135,12 +136,15 @@ public class CardManagementNav {
 	public static final String L2_ROUTING = "ISSRM0";
 	public static final String L3_TRANSACTION_ROUTING = "ISSRM1";
 	public static final String L3_ACCOUNT_RANGE_ROUTING = "ISSRM2";
+	public static final String L3_CHANNEL_ROUTING = "ISSRM3";
+	
 
 	public static final String L2_LINKING_API_TO_INSTITUTION = "ISS026";
 
 	public static final String L2_GATEWAY_CONFIGURATION = "ISSGC01";
 
 	public static final String L2_RUPAY_SETTLEMENT_BIN = "ISSS014";
+	public static final String L2_AGGREGATE_LOAD_LIMIT = "ISSS015";
 
 	public static final String L2_MARKUP_FEE_PLAN = "MRKFP001";
 
@@ -160,7 +164,6 @@ public class CardManagementNav {
 	public static final String L3_FEE_REASON = "ISW014";
 
 	public static final String L2_CURRENCY_BLACK_LIST_PLAN = "ISSP03";
-	public static final String L2_CURRENCY_PAYOUT_LIST_PLAN ="ISSP04";
 
 	public static final String L3_WHITE_LISTED_MERCHANT_PLAN = "WLWLM001";
 	public static final String L3_MCG_ADDITIONAL_HOLD_PLAN = "MCGHLD01";

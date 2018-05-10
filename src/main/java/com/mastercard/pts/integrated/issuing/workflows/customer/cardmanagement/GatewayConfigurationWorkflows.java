@@ -33,6 +33,6 @@ public class GatewayConfigurationWorkflows {
 	
 	public boolean isNoRecordsFoundInTableView(GatewayConfiguration plan) {
 		page.clickSearchButton();
-		return page.isNoRecordsFoundInTableView();
+		return page.isNoRecordsFoundInTable();
 	}
 }
