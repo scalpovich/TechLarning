@@ -19,9 +19,9 @@ public class HighRiskMerchantLocationWorkflow {
 
 	private HighRiskMerchantLocationPage page;
 
-	public String createhighRiskMerchantLocationWithDetails() {
+	public void createhighRiskMerchantLocationWithDetails(HighRiskMerchantLocation plan) {
 		page = navigator.navigateToPage(HighRiskMerchantLocationPage.class);
-		return page.addHighRiskMerchantLocation();
+	    page.addHighRiskMerchantLocation(plan);
 	}
 	
 	public String getFeedbackText() {
@@ -42,7 +42,7 @@ public class HighRiskMerchantLocationWorkflow {
 	}
 	
 	public List<WebElement> validateError(){
-	   return page.getErrors();
+	   return page.getValidationErrors();
 	}
 
 }

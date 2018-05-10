@@ -193,7 +193,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement mobileInpt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="udf23:input:dropdowncomponent")
-	private MCWebElement ISDCodeDdwn;
+	private MCWebElement isdCodeDdwn;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//ul[@class='feedbackPanel']/.//span")
 	private MCWebElement responseMessage;
@@ -320,11 +320,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return deliveryDate;
 	}
 		
-	public void clickGoButton(){
-//		new WebDriverWait(driver(), timeoutInSec)
-//		.until(WebElementUtils.elementToBeClickable(goBtn))
-//		.click();
-//		waitForWicket();
+	public void clickGoButton() {
 		clickWhenClickableDoNotWaitForWicket(goBtn);
 	}
 	
@@ -336,12 +332,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.enterText(notesTxt, notes);
 	}
 	
-	private void enterEmailID(HelpdeskGeneral general){
+	public void enterEmailID(HelpdeskGeneral general){
 		enterValueinTextBox(emailIDInpt,general.getNewEmailID());
 	}
 	
-	private void enterMobileNo(HelpdeskGeneral general){
-		SelectDropDownByValue(ISDCodeDdwn,general.getNewMobileISD());
+	public void enterMobileNo(HelpdeskGeneral general){
+		SelectDropDownByValue(isdCodeDdwn,general.getNewMobileISD());
 		enterValueinTextBox(mobileInpt,general.getNewMobileNo());
 	}
 	
@@ -851,17 +847,15 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return verifyFieldPresence(DEVICE_NUMBER)&&getTextFromPage(deviceNumber).equalsIgnoreCase(helpdeskGeneral.getDeviceNumber());
 	}
 	
-	private boolean verifyRequestDate(){
-		if(verifyFieldPresence(REQUEST_DATE)){
-		try{
-            LocalDate.parse(getTextFromPage(requestDate), DateTimeFormatter.ofPattern("dd/MM/uuuu kk:mm:ss"));
-            return true;
-		}
-		catch(DateTimeParseException e){
-			return false;
-		}
-		}
-		else
+	private boolean verifyRequestDate() {
+		if (verifyFieldPresence(REQUEST_DATE)) {
+			try {
+				LocalDate.parse(getTextFromPage(requestDate),DateTimeFormatter.ofPattern("dd/MM/uuuu kk:mm:ss"));
+				return true;
+			} catch (DateTimeParseException e) {
+				return false;
+			}
+		} else
 			return false;
 	}
 	

@@ -1,9 +1,10 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
-import junit.framework.Assert;
+
 
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -9,7 +9,7 @@ import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 
 public class CurrencyPayoutListPlan {
 
-	private static final String SP_CURRENCY = "Currency_Code";
+	private static final String CURRENCY = "Currency_Code";
 	private static final String EFFECTIVE_DATE = "Effective_Date";
 	private static final String END_DATE = "End_Date";
 	private static final String REFUND_TOLERANCE_UNIT = "Refund_Tolerance_Unit";
@@ -25,7 +25,7 @@ public class CurrencyPayoutListPlan {
 		CurrencyPayoutListPlan plan = new CurrencyPayoutListPlan();
 		plan.setCurrencyPayoutListplanCode(CustomUtils.randomAlphaNumeric(5).toUpperCase());
 		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);
-		plan.setCurrency(provider.getString(SP_CURRENCY));
+		plan.setCurrency(provider.getString(CURRENCY));
 		plan.setEffectiveDate(LocalDate.parse(provider.getString(EFFECTIVE_DATE),DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		plan.setEndDate(LocalDate.parse(provider.getString(END_DATE),DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		plan.setRefundToleranceUnit(provider.getString(REFUND_TOLERANCE_UNIT));

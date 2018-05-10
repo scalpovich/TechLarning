@@ -174,15 +174,11 @@ public class GatewayConfigurationPage extends AbstractBasePage {
 		return getMessageFromFeedbackPanel();
 	}
 
-	public Boolean isNoRecordsFoundInTableView() {
-		return isNoRecordsFoundInTable();
-	}
-
 	public void selectConfigurationFor(GatewayConfiguration plan) {
 		SelectDropDownByText(addConfigurationForDdwn, plan.getConfigurationFor());
 	}
 	
-	public void selectcopyToSelf(GatewayConfiguration plan) {
+	public void selectCopyToSelf(GatewayConfiguration plan) {
 		SelectDropDownByText(copyToSelfDdwn, plan.getConfigurationFor());
 	}
 	
@@ -226,7 +222,7 @@ public class GatewayConfigurationPage extends AbstractBasePage {
 		enterValueinTextBox(registrationUserNameTxtbx, plan.getRegistrationUserName());
 	}
 	
-	public void enterRepacementIdentifier(GatewayConfiguration plan) {
+	public void enterReplacementIdentifier(GatewayConfiguration plan) {
 		enterValueinTextBox(replacementIdentifierTxtbx, plan.getReplacementIdentifier());
 	}
 	
@@ -325,54 +321,54 @@ public class GatewayConfigurationPage extends AbstractBasePage {
 	public void createGatewayConfigurationwithESB(GatewayConfiguration plan) {
 		clickAddNewButton();
 		runWithinPopup(ADD_GATEWAY_CONFIGURATION_FRAME, () -> {
-		selectConfigurationFor(plan);
-        selectActive(plan);
-        selectEmailProtocol(plan);
-        enterSiteId(plan);
-        enterCampaignId(plan);
-        enterRegistrationUserName(plan);
-        enterRepacementIdentifier(plan);
-        selectGlobalOutputCheck(plan);
-        selectReporting(plan);
-        enterClientMessageID(plan);
-        enterFunctionalErrorEmail(plan);
-        selectcopyToSelf(plan);
-        enterContactPersonFirstName(plan);
-        enterCcontactPersonLastName(plan);
-        enterContactPersonEmail(plan);
-        enterContactPersonMobile(plan);
-        enterEmailSenderEmailId(plan);
-        enterEmailSenderName(plan);
-        enterReplyToEmail(plan);
-        enterReturnToEmail(plan);
-        enterEsbEndpointUrlEmail(plan);
-        enterConsumerId(plan);
-        enterShortCode(plan);
-        enterEsbTcpPort(plan);
-        enterEsbTcpIp(plan);
-        enterEsbEndpointUrlSms(plan);
-        clickSaveButton();
+			selectConfigurationFor(plan);
+			selectActive(plan);
+			selectEmailProtocol(plan);
+			enterSiteId(plan);
+			enterCampaignId(plan);
+			enterRegistrationUserName(plan);
+			enterReplacementIdentifier(plan);
+			selectGlobalOutputCheck(plan);
+			selectReporting(plan);
+			enterClientMessageID(plan);
+			enterFunctionalErrorEmail(plan);
+			selectCopyToSelf(plan);
+			enterContactPersonFirstName(plan);
+			enterCcontactPersonLastName(plan);
+			enterContactPersonEmail(plan);
+			enterContactPersonMobile(plan);
+			enterEmailSenderEmailId(plan);
+			enterEmailSenderName(plan);
+			enterReplyToEmail(plan);
+			enterReturnToEmail(plan);
+			enterEsbEndpointUrlEmail(plan);
+			enterConsumerId(plan);
+			enterShortCode(plan);
+			enterEsbTcpPort(plan);
+			enterEsbTcpIp(plan);
+			enterEsbEndpointUrlSms(plan);
+			clickSaveButton();
 		});
 	}
 
 	public void createGatewayConfigurationwithSMTP(GatewayConfiguration plan) {
 		clickAddNewButton();
 		runWithinPopup(ADD_GATEWAY_CONFIGURATION_FRAME, () -> {
-		selectConfigurationFor(plan);
-	     selectActive(plan);
-	     selectEmailProtocol(plan);
-	     selectSMTPIsCryptoVault(plan);
-	     enterSmtpHost(plan);
-	     enterSmtpPort(plan);
-	     selectsmtpIsDebug(plan);
-	     selectsmtpIsAuthDdwn(plan);
-	     enterSmtpUserName(plan);
-	     enterSmtpPassword(plan);
-	     enterSmtpSslFactory(plan);
-	     selectSmtpSslRequiredDdwn(plan);
-	     enterEmailSenderEmailIdSmtp(plan);
-	     enterEmailSenderNameSmtp(plan);
-	     clickSaveButton();
+			selectConfigurationFor(plan);
+			selectActive(plan);
+			selectEmailProtocol(plan);
+			selectSMTPIsCryptoVault(plan);
+			enterSmtpHost(plan);
+			enterSmtpPort(plan);
+			selectsmtpIsDebug(plan);
+			selectsmtpIsAuthDdwn(plan);
+			enterSmtpUserName(plan);
+			enterSmtpPassword(plan);
+			enterSmtpSslFactory(plan);
+			selectSmtpSslRequiredDdwn(plan);
+			enterEmailSenderEmailIdSmtp(plan);
+			enterEmailSenderNameSmtp(plan);
+			clickSaveButton();
 		});
 	}
 

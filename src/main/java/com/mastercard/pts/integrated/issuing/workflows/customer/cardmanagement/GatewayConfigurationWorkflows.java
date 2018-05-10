@@ -12,15 +12,19 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 public class GatewayConfigurationWorkflows {
 	@Autowired
 	private Navigator navigator;
+	
+	private String esb = "ESB [ESB]";
+	private String smtp = "SMTP [SMTP]";
 
 	private GatewayConfigurationPage page;
 
 	public void createGatewayConfigurationWithDetails(GatewayConfiguration plan) {
 		page = navigator.navigateToPage(GatewayConfigurationPage.class);
-		if(plan.getEmailProtocol().equals("ESB"))
-		page.createGatewayConfigurationwithESB(plan);
-		else if(plan.getEmailProtocol().equals("SMTP [SMTP]"))
-		page.createGatewayConfigurationwithSMTP(plan);	
+		if (plan.getEmailProtocol().equals(esb)) {
+			page.createGatewayConfigurationwithESB(plan);
+		} else if (plan.getEmailProtocol().equals(smtp)) {
+			page.createGatewayConfigurationwithSMTP(plan);
+		}
 	}
 
 	public String getFeedbackText() {
@@ -28,7 +32,6 @@ public class GatewayConfigurationWorkflows {
 	}
 	
 	public boolean isNoRecordsFoundInTableView(GatewayConfiguration plan) {
-		//page.enterPlanCodeInSearchBox(plan);
 		page.clickSearchButton();
 		return page.isNoRecordsFoundInTableView();
 	}

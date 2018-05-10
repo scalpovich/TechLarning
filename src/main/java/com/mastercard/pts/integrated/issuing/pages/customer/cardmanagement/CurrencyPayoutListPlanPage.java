@@ -22,7 +22,7 @@ public class CurrencyPayoutListPlanPage extends AbstractBasePage {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(CurrencyPayoutListPlanPage.class);
 	public static final String ADD_CURRENCY_PAYOUT_PLAN_FRAME = "Add Currency Payout Plan";
-	public static final int ADD_CURRENCY_PLAN_DETAIL_FRAME = 1;
+	public static final int ADD_CURRENCY_PLAN_DETAIL_FRAME_ID = 1;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "description:input:inputTextField")
 	private MCWebElement descriptionTxtBx;
@@ -40,7 +40,7 @@ public class CurrencyPayoutListPlanPage extends AbstractBasePage {
 	private MCWebElement fixedSurchargeAmtTxtBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "toleranceRefundUnit:input:inputTextField")
-	private MCWebElement refundTolerancUnitTxtBx;
+	private MCWebElement refundToleranceUnitTxtBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "currencyPayoutListPlanCode:input:inputTextField")
 	private MCWebElement planCodeTxtBx;
@@ -95,7 +95,7 @@ public class CurrencyPayoutListPlanPage extends AbstractBasePage {
 	}
 
 	public void enterRefundToleranceUnit(CurrencyPayoutListPlan plan) {
-		enterValueinTextBox(refundTolerancUnitTxtBx,
+		enterValueinTextBox(refundToleranceUnitTxtBx,
 				plan.getRefundToleranceUnit());
 	}
 

@@ -253,6 +253,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview tr.even a>img[alt='Delete Record'],table.dataview tr.odd a>img[alt='Delete Record']")
 	private MCWebElements deleteAddedRecordsIcon;
+	
+	private String ERROR_XPATH = ".//div[@class='ketchup-error-container-alt']/ol/li";
 
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -343,7 +345,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickWhenClickable(searchButtonElement);
 	}
 
-	protected Boolean isNoRecordsFoundInTable() {
+	public Boolean isNoRecordsFoundInTable() {
 		try {
 			return driver().findElement(By.cssSelector(".norecords")).isDisplayed();
 		} catch (NoSuchElementException e) {
@@ -1641,6 +1643,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 			  }
 		  }
 	   }
+	public List<WebElement> getValidationErrors() {
+	    return Elements(ERROR_XPATH);
+	}
+
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

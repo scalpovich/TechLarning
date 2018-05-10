@@ -1,9 +1,9 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
-import junit.framework.Assert;
 
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +23,7 @@ public class GatewayConfigurationSteps {
 	private GatewayConfiguration gatewayConfiguration;
 
 	@When("user creates gateway configuration with details")
-	public void createCurrencyPayoutListPlan() {
+	public void createGatewayConfigurationPlan() {
 		gatewayConfiguration = GatewayConfiguration
 				.getGatewayConfigurationData(provider);
 		gatewayConfigurationWorkflows
@@ -31,7 +31,7 @@ public class GatewayConfigurationSteps {
 	}
 
 	@Then("gateway configuration should get created successfully")
-	public void verifyCurrencyPayoutListPlan() {
+	public void verifyGatewayConfigurationPlan() {
 		Assert.assertEquals(ConstantData.RECORD_ADDED_SUCCESSFULLY,
 				gatewayConfigurationWorkflows.getFeedbackText());
 		Assert.assertFalse(gatewayConfigurationWorkflows

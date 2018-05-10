@@ -24,7 +24,7 @@ public class GatewayConfiguration {
 	private String configurationFor;
 	private String emailProtocol;
 	private String active;
-	private String SMTPIsCryptoVault;
+	private String smtpIsCryptoVault;
 	private String registrationUserName;
 	private String replacementIdentifier;
 	private String globalOutputCheck;
@@ -174,11 +174,11 @@ public class GatewayConfiguration {
 	}
 
 	public String getSMTPIsCryptoVault() {
-		return SMTPIsCryptoVault;
+		return smtpIsCryptoVault;
 	}
 
 	public void setSMTPIsCryptoVault(String sMTPIsCryptoVault) {
-		SMTPIsCryptoVault = sMTPIsCryptoVault;
+		smtpIsCryptoVault = sMTPIsCryptoVault;
 	}
 
 	public String getGlobalOutputCheck() {
