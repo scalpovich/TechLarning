@@ -22,7 +22,7 @@ public class TransactionRoutingSteps {
 	@Autowired
 	TransactionRoutingFlows transactionRoutingFlows;
 	
-	@When("user creates message $messagecode transaction routing plan for $BalanceInquiry with routing code $SMS and $Action action")
+	@When("user creates message $messagecode transaction routing plan for $transactionType with routing code $routingCode and $Action action")
 	public void whenUserCreatesTransactionRoutingPlan(@Named("messagecode") String messageType,@Named("transaction") String transactionType,@Named("RoutingCode") String routingCode,@Named("Action") String action) {
 		TransactionRoutingPlan transRoutingPlan= new TransactionRoutingPlan();
 		transRoutingPlan.setActionDdwn(action);

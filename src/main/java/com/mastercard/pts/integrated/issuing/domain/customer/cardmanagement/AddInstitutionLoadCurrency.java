@@ -17,7 +17,7 @@ public class AddInstitutionLoadCurrency {
 		this.currency = currency;
 	}
 
-	public static AddInstitutionLoadCurrency DataProvider() {
+	public static AddInstitutionLoadCurrency dataProvider() {
 		AddInstitutionLoadCurrency institutionLoadCurrency= new AddInstitutionLoadCurrency();
 		institutionLoadCurrency.setCurrency(MapUtils.fnGetInputDataFromMap("InstitutionLoadCurrency"));
 		return  institutionLoadCurrency;

@@ -25,7 +25,7 @@ public class AddInstitutionLoadCurrencySteps {
 	
 	@When("user creates Allowed Load Currency")
 	public void whenUserCreatesLoadCurrency() {
-		addLoadCurrency=AddInstitutionLoadCurrency.DataProvider();
+		addLoadCurrency=AddInstitutionLoadCurrency.dataProvider();
 		addInstitutionLoadCurrencyFlow.addMultipleCurrencies(addLoadCurrency);
 	}
 	

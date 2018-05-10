@@ -56,7 +56,7 @@ public class AggregateLoadLimitPage extends AbstractBasePage {
 
 	public void clickAddChannelRouting(){
 		clickWhenClickable(addplanBtn);
-		switchToIframe(Constants.ADD_AGGREGAT_LOAD_LIMIT);
+		switchToIframe(Constants.ADD_AGGREGATE_LOAD_LIMIT);
 	}
 
 

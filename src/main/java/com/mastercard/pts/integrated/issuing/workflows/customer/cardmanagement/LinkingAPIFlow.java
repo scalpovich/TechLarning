@@ -14,9 +14,9 @@ public class LinkingAPIFlow{
 	Navigator navigator;
 
 	 
-	public void addLinkingAPIDetails(LinkingAPIToInstitution linkinAPIToInstitution) {
+	public void addLinkingAPIDetails(LinkingAPIToInstitution linkingAPIToInstitution) {
 		LinkingAPIToInstitutionPage page = navigator.navigateToPage(LinkingAPIToInstitutionPage.class);
-		page.addLinkingDetails(linkinAPIToInstitution);
+		page.addLinkingDetails(linkingAPIToInstitution);
 		
 	}
 

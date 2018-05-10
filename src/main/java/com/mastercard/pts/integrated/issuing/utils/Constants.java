@@ -441,7 +441,7 @@ public class Constants {
 	public static final String ADD_CHANNEL_ROUTING_DETAILS = "Add Channel Routing Plan Detail";
 	public static final String ADD_ACCOUNT_ROUTING_PLAN = "Add Account Range Routing";
 	public static final String ADD_LINK_API = "Add Link API to institution";
-	public static final String ADD_AGGREGAT_LOAD_LIMIT = "Add Aggregate Load Limits";
+	public static final String ADD_AGGREGATE_LOAD_LIMIT = "Add Aggregate Load Limits";
 	public static final String ADD_EASY_PAY_PLAN_RULE= "Add Easy Pay Plan Rule";
 	public static final String ADD_RULE= "Add Rules";
 	
