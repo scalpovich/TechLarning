@@ -39,12 +39,14 @@ public class Device {
 	private static final String VALIDITY_ON_INITIAL_MONTHS = "VALIDITY_ON_INITIAL_MONTHS";
 	private static final String EXPIRY_FLAG = "EXPIRY_FLAG";
 	private static final String CREDIT_LIMIT = "CREDIT_LIMIT";
+	private static final String TRANSACTION_PASSWORD = "TRANSACTION_PASSWORD";
+	private static final String CURRENCY_OF_TRANSFER = "CURRENCY_OF_TRANSFER";
 	
 
 	private String currentTransPassword;
 	private String newTransPassword;
 	private String confirmNewTransPassword;
-
+	private String transactionPassword;
 	private String corporateClientCode;
 	private String appliedForProduct;
 	private String applicationType;
@@ -127,7 +129,9 @@ public class Device {
 		device.setTransactionDateType(provider.getString(DATE_TYPE));
       	device.setLegalID(RandomStringUtils.randomAlphanumeric(9));	
 		device.setProgramCode(provider.getString(PROGRAM_CODE));
-		device.setDevicePlan1(provider.getString(DEVICE_PLAN));      	
+		device.setDevicePlan1(provider.getString(DEVICE_PLAN));     
+		device.setTransactionPassword(provider.getString(TRANSACTION_PASSWORD));
+		device.setCurrency(provider.getString(CURRENCY_OF_TRANSFER));
 		return device;
 	}
 	
@@ -626,5 +630,13 @@ public class Device {
 
 	public void setLegalID(String legalID) {
 		this.legalID = legalID;
+	}
+	
+	public String getTransactionPassword() {
+		return transactionPassword;
+	}
+
+	public void setTransactionPassword(String transactionPassword) {
+		this.transactionPassword = transactionPassword;
 	}
 }
