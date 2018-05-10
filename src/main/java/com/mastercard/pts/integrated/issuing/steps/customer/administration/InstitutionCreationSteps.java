@@ -61,12 +61,15 @@ public class InstitutionCreationSteps {
 	public void createNewUser() {
 		logger.info("user should be able to create new user");
 		userCreation = UserCreation.getUserCreationData();
-		if (context.get(ContextConstants.INSTITUTION) != null) {
-			InstitutionCreation institute = context.get(ContextConstants.INSTITUTION);
-			userCreation.setInstitutionName(institute.getInstitutionAbbrevation());
+		InstitutionCreation institute = context
+				.get(ContextConstants.INSTITUTION);
+		if (!institute.getInstitutionAbbrevation().isEmpty()) {
+			userCreation.setInstitutionName(institute
+					.getInstitutionAbbrevation());
 		} else {
 			instutionCreation = InstitutionCreation.getInstitutionData();
-			userCreation.setInstitutionName(instutionCreation.getCreatedInstitution());
+			userCreation.setInstitutionName(instutionCreation
+					.getCreatedInstitution());
 		}
 		userCreationFlows.createUser(userCreation);
 	}
