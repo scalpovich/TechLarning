@@ -395,10 +395,13 @@ public class HelpDeskSteps {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
 		device.setAppliedForProduct(ProductType.fromShortName(type));
-		beforeLoadBalanceInformation = helpdeskWorkflow.getWalletBalanceInformation(device);	
-		String walletinfo [] = beforeLoadBalanceInformation.split(",");
-		walletinfo=walletinfo[1].split(":");
-		device.setWalletNumber(walletinfo[2]);
+		beforeLoadBalanceInformation = helpdeskWorkflow.getWalletBalanceInformation(device);			
+		String walletinfo [] = beforeLoadBalanceInformation.split(",");	
+		if(walletinfo.length > 1 )
+			{
+			walletinfo=walletinfo[1].split(":");
+			device.setWalletNumber(walletinfo[2]);
+			}
 		context.put(ContextConstants.DEVICE,device);
 	}
 
@@ -417,7 +420,7 @@ public class HelpDeskSteps {
 		 where walletinfo[2] contains wallet number and amount
 		*/	
 		String[] walletinfo = beforeLoadBalanceInformation.split(",");
-		walletinfo=walletinfo[1].split(":");
+		walletinfo=walletinfo[1].split(":");		
 		logger.info("Wallet Number : "+walletinfo[2]);
 		device.setWalletNumber(walletinfo[2]);
 		context.put(ContextConstants.DEVICE,device);

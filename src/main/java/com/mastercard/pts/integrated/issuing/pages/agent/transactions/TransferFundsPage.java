@@ -4,8 +4,11 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.omg.CORBA.INVALID_TRANSACTION;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +33,10 @@ public class TransferFundsPage extends AbstractBasePage {
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
+	private static final By INFO_MESSAGE_LOCATOR = By.className("SuccessMessageTxt");
+	
+	private static final String SUCCESS_MESSAGE = "Success message: {}";
+	
 	// main screen locators
 	@PageElement(findBy = FindBy.CSS, valueToFind = "div .Title")
 	private MCWebElement masterDetailContentTitle;
@@ -133,26 +140,43 @@ public class TransferFundsPage extends AbstractBasePage {
 		if(transferDetails.getTransaferThrough().equalsIgnoreCase("vmt"))
 		{
 			ClickButton(vmtOfflineRadioBtn);
-		}
-		if(transferDetails.getTransaferThrough().equalsIgnoreCase("vmtr"))
+		}else if(transferDetails.getTransaferThrough().equalsIgnoreCase("vmtr"))
 		{
 			ClickButton(vmtRealTimeRadioBtn);		
 		}
 		
 		String transferDetail[]=transferDetails.getTransferDetails().split(":");			
-		enterText(deviceNumberTxt, device.getDeviceNumber());
-		SimulatorUtilities.wait(100);	
+		enterText(deviceNumberTxt, device.getDeviceNumber());	
 		clickWhenClickable(walletNumberDropDown);
-		SelectDropDownByValue(walletNumberDropDown, device.getWalletNumber());
+		SimulatorUtilities.wait(100);			
+		logger.info("WalletNumber : - {}",resolveWalletNumber(device.getWalletNumber())+" ["+device.getCurrency()+"] ");		
+		selectByText(walletNumberDropDown, resolveWalletNumber(device.getWalletNumber())+" ["+device.getCurrency()+"] ");
+//		logger.info("Beneficiary Card Number:  : - {}",device.getExistingDeviceNumber());//		
+//		SelectDropDownByValue(walletNumberDropDown, device.getWalletNumber());
 		enterText(toDeviceNumberTxt, device.getExistingDeviceNumber());		
 		enterText(transactionAmountTxt, transferDetail[0]);		
-		selectByVisibleText(selectedWalletCurrencyCodeDropDown, transferDetail[1]);
+		selectByText(selectedWalletCurrencyCodeDropDown, transferDetail[1]);
 		clickSubmitButton();
 		enterText(txnPasswordTxt, device.getNewTransPassword());
 		enterText(remarksTxt, transferDetail[3]);
 		clickConfirmButton();
-		return getSuccessMessage();		
-		
+		return getSuccessMessage();				
+	}
+	
+	@Override
+	protected String getSuccessMessage() {
+		try {
+			WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec)
+					.until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
+			logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
+
+			return successMessageLbl.getText();
+
+		} catch (NoSuchElementException e) {
+			logger.info("No Status is updated");
+			logger.debug("Error", e);
+			return null;
+		}
 	}
 	
 	public String masterCardMoneyTransafer(TransferFunds transferDetails,Device device){
@@ -161,10 +185,12 @@ public class TransferFundsPage extends AbstractBasePage {
 		enterText(deviceNumberTxt, device.getDeviceNumber());
 		SimulatorUtilities.wait(100);	
 		clickWhenClickable(walletNumberDropDown);
-		SelectDropDownByValue(walletNumberDropDown, device.getWalletNumber());
+		logger.info("WalletNumber : - {}",resolveWalletNumber(device.getWalletNumber())+" ["+device.getCurrency()+"] ");		
+		selectByText(walletNumberDropDown, resolveWalletNumber(device.getWalletNumber())+" ["+device.getCurrency()+"] ");
+		//SelectDropDownByValue(walletNumberDropDown, device.getWalletNumber());
 		enterText(toDeviceNumberTxt, device.getExistingDeviceNumber());		
 		enterText(transactionAmountTxt, transferDetail[0]);		
-		selectByVisibleText(selectedWalletCurrencyCodeDropDown, transferDetail[1]);
+		selectByText(selectedWalletCurrencyCodeDropDown, transferDetail[1]);
 		enterText(beneficiaryContactNumberTxt,transferDetails.getContactNumber());
 		enterText(beneficiaryNameTxt, transferDetail[2]);		
 		enterText(memoTxt, transferDetail[3]);
@@ -172,8 +198,12 @@ public class TransferFundsPage extends AbstractBasePage {
 		enterText(txnPasswordTxt, device.getNewTransPassword());
 		clickConfirmButton();
 		return getSuccessMessage();		
+		
 	}
 	
-	
+	public String resolveWalletNumber(String walletNumber)
+	{
+		return  walletNumber.substring(0, 4) +"XXXXXXXXXXX" + walletNumber.substring(walletNumber.length()-4, walletNumber.length());
+	}
 	
 }
