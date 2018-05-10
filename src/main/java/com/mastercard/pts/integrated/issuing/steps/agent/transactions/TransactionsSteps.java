@@ -44,7 +44,7 @@ public class TransactionsSteps {
 		device = context.get(ContextConstants.DEVICE);
 		ctc = CardToCash.getProviderData(provider);
 		String[] txnDetails = ctc.getTransactionDetails().trim().split(":");
-		ctc.setRemittanceAmount(txnDetails[1].trim());
+		ctc.setRemittanceAmount(ctc.getRemittanceAmount());
 		ctc.setRemittanceCurrency(txnDetails[2].trim());
 		ctc.setBeneficiaryId(MiscUtils.randomNumber(6));
 		ctc.setBeneficiaryFirstName("FN"+MiscUtils.randomAlphabet(6).toLowerCase());
