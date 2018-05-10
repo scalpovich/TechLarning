@@ -6,15 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import com.google.common.base.Throwables;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
@@ -24,10 +21,10 @@ public class PDFUtils {
 	private static final Logger logger = LoggerFactory.getLogger(PDFUtils.class);
 
 	DateUtils dateutils;
-	
+
 	@Value("${Customer.portal.user.name}")
 	private String customerPortalUser;
-	
+
 	public PDFUtils() {
 
 	}
@@ -81,8 +78,9 @@ public class PDFUtils {
 			}
 			for (int j = 0; j < fullRow.length; j++) {
 				if (fullRow[j].contains(code)) {
+					programWiseContent.add(Arrays.toString(fullRow[j-3].split(" ")).trim());
+					programWiseContent.add(Arrays.toString(fullRow[j-2].split(" ")).trim());
 					programWiseContent.add(Arrays.toString(fullRow[j-1].split(" ")).trim());
-					programWiseContent.add(Arrays.toString(fullRow[j+1].split(" ")).trim());
 					programWiseContent.add(Arrays.toString(fullRow[j].split(" ")).trim());
 					break;
 				}
@@ -101,7 +99,7 @@ public class PDFUtils {
 		PdfReader.unethicalreading = true;
 		PdfReader reader = null;
 		try {
-			reader = new PdfReader(src, (customerPortalUser.substring(0, 3)+dateutils.getDateDDMMFormat()).getBytes());
+			reader = new PdfReader(src, ("ravi"+dateutils.getDateDDMMFormat()).getBytes()); //customerPortalUser.substring(0,1)
 		}  catch (Exception e) {
 			logger.info("Document Exception {}", e);
 		}

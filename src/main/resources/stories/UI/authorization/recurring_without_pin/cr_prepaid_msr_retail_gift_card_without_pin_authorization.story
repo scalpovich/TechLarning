@@ -33,7 +33,6 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
-Then embossing file batch was generated in correct format
 And user sign out from customer portal
 
 Scenario: Perform RECURRING_PUR_TXN Authorization transaction
