@@ -1,5 +1,5 @@
 echo 'Starting build...'
-node ('Saikat_VM') {
+node ('master') {
 	
 	stage ('Clone Repository') {
 		checkout scm
