@@ -330,8 +330,6 @@ public class WalletPlanPage extends AbstractBasePage {
 		String walletPlanDesc;
 		walletPlancode = enterWalletPlanCode(walletplan);
 		walletPlanDesc = enterWalletPlanDescription(walletplan);
-		selectCurrency(walletplan);
-		waitForPageToLoad(driver());
 		selectProduct(walletplan);
 		waitForPageToLoad(driver());
 		waitForLoaderToDisappear();
@@ -339,6 +337,8 @@ public class WalletPlanPage extends AbstractBasePage {
 		selectProgramType(walletplan);
 		waitForPageToLoad(driver());
 		selectWalletUsage(walletplan);
+		selectCurrency(walletplan);
+		waitForPageToLoad(driver());
 		if (walletplan.getProductType().equalsIgnoreCase("credit")) {
 			selectCreditPlan();
 			selectBillingCycleCode();
