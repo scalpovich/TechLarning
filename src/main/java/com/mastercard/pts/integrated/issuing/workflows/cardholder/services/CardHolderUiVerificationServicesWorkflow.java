@@ -11,14 +11,12 @@ import com.mastercard.pts.integrated.issuing.pages.cardholder.services.Internati
 import com.mastercard.pts.integrated.issuing.pages.cardholder.services.ReplaceDevicePage;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.services.UnblockDevicePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 
 @Workflow
 public class CardHolderUiVerificationServicesWorkflow {
 	@Autowired
 	private Navigator navigator;
-
-	String blockDevice = "Blocking the device";
-	String unblockDevice = "Unblocking the device";
 
 	public void verifyActivateDeactivateWalletPage() {
 		ActivateDeactivateWalletPage page = navigator.navigateToPage(ActivateDeactivateWalletPage.class);
@@ -57,14 +55,14 @@ public class CardHolderUiVerificationServicesWorkflow {
 
 	public void blockDevice() {
 		BlockDevicePage page = navigator.navigateToPage(BlockDevicePage.class);
-		page.enterCardBlockRemark(blockDevice);
+		page.enterCardBlockRemark(Constants.BLOCK_DEVICE);
 		page.confirmCardBlockRequest();
 	}
 
 	public void unblockDevice() {
 		UnblockDevicePage page = navigator
 				.navigateToPage(UnblockDevicePage.class);
-		page.enterCardUnblockRemerk(unblockDevice);
+		page.enterCardUnblockRemerk(Constants.UNBLOCK_DEVICE);
 		page.confirmUnblockCardRequestBtn();
 	}
 
