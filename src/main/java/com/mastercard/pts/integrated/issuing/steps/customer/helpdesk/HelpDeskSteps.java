@@ -398,9 +398,18 @@ public class HelpDeskSteps {
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		beforeLoadBalanceInformation = helpdeskWorkflow.getWalletBalanceInformation(device);	
 		String walletinfo [] = beforeLoadBalanceInformation.split(",");
+		if (walletinfo.length>1)
+		{
 		walletinfo=walletinfo[1].split(":");
 		device.setWalletNumber(walletinfo[2]);
 		context.put(ContextConstants.DEVICE,device);
+		}
+		else
+		{
+			walletinfo=walletinfo[0].split(":");
+			device.setWalletNumber(walletinfo[2]);
+			context.put(ContextConstants.DEVICE,device);
+		}
 	}
 
 	@When("balance in helpdesk updated correctly for $type device")

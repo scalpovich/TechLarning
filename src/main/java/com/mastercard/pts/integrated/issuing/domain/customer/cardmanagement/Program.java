@@ -133,7 +133,7 @@ public class Program implements HasCodeAndDescription {
 		programObject.setProgramCode(MiscUtils.generate6CharAlphaNumeric());
 		programObject.setDescription(ConstantData.GENERIC_DESCRIPTION);
 		programObject.setProgramType(provider.getString(PROGRAM_TYPE));
-		programObject.setMaximumBalanceWithoutKyc(RandomStringUtils.randomNumeric(4));
+		programObject.setMaximumBalanceWithoutKyc(RandomStringUtils.randomNumeric(5));
 		programObject.setNumberOfLoadsAllowedWithoutKyc(String.valueOf(RandomUtils.nextInt(1, 99)));
 		programObject.setCreditLimit(provider.getString(CREDIT_LIMIT));
 		programObject.setMaximumCreditLimit(provider.getString(PGM_CREDIT_LIMITS_MAX_CREDIT_LIMIT));
