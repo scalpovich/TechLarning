@@ -65,6 +65,7 @@ public class ConstantData {
 	public static final String PREPAID_DEVICE = "Prepaiddevice";
 	
 	public static final String HIGH_RISK_COUNTRY = "HighRiskCountry";
+	public static final String LOAN_TYPE_OBJECT = "LoanTypeObject";
 
 	private ConstantData() {
 	}
