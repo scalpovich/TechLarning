@@ -39,9 +39,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -59,7 +62,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@Autowired
 	CreditCardPlan creditCardPlans;
-	
+
 	@Autowired
 	TestContext context;
 
@@ -243,9 +246,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@type='submit' or @name='save']")
 	private MCWebElement saveOrDetailsOrSearchBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers' and @class!='navigation'][1]/td[2]/span")
 	private MCWebElement deviceNumberFetch;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview td:first-child>span>a>span")
+	private MCWebElements firstElementOfTable;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview tr.even a>img[alt='Delete Record'],table.dataview tr.odd a>img[alt='Delete Record']")
+	private MCWebElements deleteAddedRecordsIcon;
 
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -266,7 +275,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void clickNextButton() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
+		SimulatorUtilities.wait(500);
 		clickWhenClickable(nextBtn);
+		SimulatorUtilities.wait(500);
 		WebElementUtils.addWicketAjaxListeners(driver());
 	}
 
@@ -306,7 +317,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickWhenClickable(closeBtn);
 	}
 
-	protected void clickAddDetailsButton() {
+	public void clickAddDetailsButton() {
 		clickWhenClickable(addDetailsBtn);
 	}
 
@@ -439,7 +450,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected boolean waitForRow() {
 		try {
 			waitForWicket();
-			Thread.sleep(20000); // Pre-production batch and device production
+			Thread.sleep(30000); // Pre-production batch and device production
 									// batch takes little longer hence the wait
 			return driver().findElement(By.cssSelector(FIRST_ROW_SELECT)).isDisplayed();
 		} catch (NoSuchElementException | InterruptedException e) {
@@ -546,7 +557,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void clickWhenClickable(MCWebElement element) {
-		SimulatorUtilities.wait(900);
+		SimulatorUtilities.wait(4000);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
 		waitForWicket();
 	}
@@ -594,12 +605,14 @@ public abstract class AbstractBasePage extends AbstractPage {
 		WebElementUtils.waitForWicket(driver());
 	}
 
-	//created a re-usable method that could be used in waitAndSearchForRecordToExist() below
-		//the same code can be used in Authorization Search Page
+	// created a re-usable method that could be used in
+	// waitAndSearchForRecordToExist() below
+	// the same code can be used in Authorization Search Page
 	public void waitAndSearchForRecordToAppear() {
 		clickSearchButton();
-		// Pre-production batch and device production batch & Authorization Search page take little long to
-				// be completed, and do not appear in search result, hence a for loop
+		// Pre-production batch and device production batch & Authorization
+		// Search page take little long to
+		// be completed, and do not appear in search result, hence a for loop
 		for (int l = 0; l < 21; l++) {
 			if (!waitForRow())
 				clickSearchButton();
@@ -608,10 +621,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 		}
 	}
-	
+
 	protected void waitAndSearchForRecordToExist() {
 		waitAndSearchForRecordToAppear();
-        context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setDeviceNumber(deviceNumberFetch.getText());
+		context.put(ContextConstants.DEVICE, device);
 		selectFirstRecord();
 		clickProcessSelectedButton();
 	}
@@ -752,8 +767,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public void enterValueinTextBox(MCWebElement txtBoxElement, String value) {
 		waitForElementVisible(txtBoxElement);
-		if (value != null && !value.isEmpty()) {
-			enterText(txtBoxElement, value);
+		if (txtBoxElement.isEnabled()) {
+			if (value != null && !value.isEmpty()) {
+				enterText(txtBoxElement, value);
+			}
 		}
 	}
 
@@ -847,7 +864,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return ispresent;
 	}
 
-	public boolean waitforElemenet(MCWebElement ele) {
+	public boolean waitforElement(MCWebElement ele) {
 		try {
 			getFinder().waitUntil(ExpectedConditions.visibilityOf((WebElement) ele));
 			return true;
@@ -1276,7 +1293,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public void ClickButton(MCWebElement BtnName) {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		BtnName.click();
-		//addWicketAjaxListeners(getFinder().getWebDriver());
+		// addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
 	public void ClickCheckBox(MCWebElement optionChkBox, boolean value) {
@@ -1581,17 +1598,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 		frameSwitch.getElements();
 		return frameSwitch.getElements().size();
 	}
-	
+
 	public void clickSaveButtonWithOutWicket() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		clickWhenClickableDoNotWaitForWicket(saveBtn);
 	}
-	
+
 	public boolean errorMessagePresence() {
 		try {
-			if (driver()
-					.findElement(By.xpath("//*[@class='feedbackPanelERROR']"))
-					.isDisplayed()) {
+			if (driver().findElement(By.xpath("//*[@class='feedbackPanelERROR']")).isDisplayed()) {
 				return true;
 			}
 
@@ -1600,6 +1615,28 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 		return false;
 	}
+	
+	public void identifyAddedRecordinTableAndDelete(String parameter)
+	   {
+		  for(int i=0;i<firstElementOfTable.getElements().size();i++)
+		  {
+			  if(firstElementOfTable.getElements().get(i).getText().equals(parameter))
+			  {
+				  clickWhenClickable(deleteAddedRecordsIcon.getElements().get(i));
+			  }
+		  }
+	   }
+	public void deleteExistingRecord(String parameter)
+	   {
+		  for(int i=0;i<firstElementOfTable.getElements().size();i++)
+		  {
+			  if(firstElementOfTable.getElements().get(i).getText().equals(parameter))
+			  {
+				  deleteAddedRecordsIcon.getElements().get(i).click();
+				  acceptPopup();
+			  }
+		  }
+	   }
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

@@ -25,12 +25,17 @@ public class RolePage extends AbstractBasePage{
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(RolePage.class);
+	public static final String ROLE_STATUS="ACTIVE [ACT]";
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
 	private MCWebElement roleIdTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:0:componentPanel:input:dropdowncomponent")
+	private MCWebElement roleStatusDdwn;
 
 	public void verifyUiOperationStatus() {
 		logger.info("Role");
+		WebElementUtils.selectDropDownByVisibleText(roleStatusDdwn, ROLE_STATUS);
 		verifyUiOperation("Add Roles");
 	}
 

@@ -2,7 +2,6 @@ package com.mastercard.pts.integrated.issuing.domain.customer.admin;
 
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.VisaFeeCollection;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
@@ -11,6 +10,9 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 @Component
 public class InstitutionCreation extends AbstractBasePage {
+
+	public static final String CUSTOMER_CARE_INTL_NO = "CustCareIntl";
+	public static final String CUSTOMER_CARE_ISD_CODE = "CustCareSTD";
 
 	private String institutionCode;
 	private String institutionName;
@@ -49,8 +51,12 @@ public class InstitutionCreation extends AbstractBasePage {
 	private String ascVendor;
 	private String existingInstitutionCode;
 	private String authenticationFlg;
+	private String customerCareIntlISDCode;
+	private String customerCareIntlNo;
+	private String customerCareVIPISDCode;
+	private String customerCareVIPNo;
 	private String credentialMasking;
-	
+
 	public String getCredentialMasking() {
 		return credentialMasking;
 	}
@@ -81,8 +87,8 @@ public class InstitutionCreation extends AbstractBasePage {
 
 	public void setAgentPortalAdminName(String agentPortalAdminName) {
 		this.agentPortalAdminName = agentPortalAdminName;
-	}	
-	
+	}
+
 	public String getCollectPortalAdminID() {
 		return collectPortalAdminID;
 	}
@@ -255,8 +261,7 @@ public class InstitutionCreation extends AbstractBasePage {
 		return institutionReferenceCurrency;
 	}
 
-	public void setInstitutionReferenceCurrency(
-			String institutionReferenceCurrency) {
+	public void setInstitutionReferenceCurrency(String institutionReferenceCurrency) {
 		this.institutionReferenceCurrency = institutionReferenceCurrency;
 	}
 
@@ -307,7 +312,7 @@ public class InstitutionCreation extends AbstractBasePage {
 	public void setSDNPlan(String sDNPlan) {
 		this.sdnPlan = sDNPlan;
 	}
-	
+
 	public String getAdaptiveAuthentication() {
 		return adaptiveAuthentication;
 	}
@@ -332,13 +337,50 @@ public class InstitutionCreation extends AbstractBasePage {
 		this.smsServiceProvider = smsServiceProvider;
 	}
 
+	public String getCustomerCareIntlISDCode() {
+		return customerCareIntlISDCode;
+	}
+
+	public void setCustomerCareIntlISDCode(String customerCareIntlISDCode) {
+		this.customerCareIntlISDCode = customerCareIntlISDCode;
+	}
+
+	public String getCustomerCareIntlNo() {
+		return customerCareIntlNo;
+	}
+
+	public void setCustomerCareIntlNo(String customerCareIntlNo) {
+		this.customerCareIntlNo = customerCareIntlNo;
+	}
+
+	public String getCustomerCareVIPISDCode() {
+		return customerCareVIPISDCode;
+	}
+
+	public void setCustomerCareVIPISDCode(String customerCareVIPISDCode) {
+		this.customerCareVIPISDCode = customerCareVIPISDCode;
+	}
+
+	public String getCustomerCareVIPNo() {
+		return customerCareVIPNo;
+	}
+
+	public void setCustomerCareVIPNo(String customerCareVIPNo) {
+		this.customerCareVIPNo = customerCareVIPNo;
+	}
+
 	public static InstitutionCreation getInstitutionData() {
 		InstitutionCreation institute = new InstitutionCreation();
-		institute.setInstitutionCode(CustomUtils.RandomNumbers(6));
-		institute.setInstitutionName(MapUtils
-				.fnGetInputDataFromMap("InstitutionName")
-				+ CustomUtils.randomString(2).toUpperCase());
-		institute.setInstitutionAbbrevation(institute.getInstitutionName());
+		if(MapUtils.fnGetInputDataFromMap("Padding")!=null){
+			institute.setInstitutionCode(CustomUtils.RandomNumbers(6));
+			institute.setInstitutionName(MapUtils.fnGetInputDataFromMap("InstitutionName")+MapUtils.fnGetInputDataFromMap("Padding"));
+			institute.setInstitutionAbbrevation(MapUtils.fnGetInputDataFromMap("InstitutionName")+CustomUtils.RandomNumbers(Integer.parseInt(MapUtils.fnGetInputDataFromMap("Padding"))));
+			
+		}else{
+			institute.setInstitutionCode(MapUtils.fnGetInputDataFromMap("InstitutionCode"));
+			institute.setInstitutionName(MapUtils.fnGetInputDataFromMap("InstitutionName"));
+			institute.setInstitutionAbbrevation(MapUtils.fnGetInputDataFromMap("Abbrevation"));
+		}
 		institute.setInstitutionCurrency(MapUtils
 				.fnGetInputDataFromMap("Institution Currency"));
 		institute.setInstitutionReferenceCurrency(MapUtils
@@ -353,14 +395,15 @@ public class InstitutionCreation extends AbstractBasePage {
 		institute.setFinanacialStartMonth(MapUtils
 				.fnGetInputDataFromMap("Financial Start Month"));
 		institute.setSDNPlan(MapUtils.fnGetInputDataFromMap("SDN Plan"));
+		
 		institute.setAdaptiveAuthentication(MapUtils
-				.fnGetInputDataFromMap("Adaptive Authentication"));
+				.fnGetInputDataFromMap("AdaptiveEcomm"));
 		institute.setmPinEnabled(MapUtils
 				.fnGetInputDataFromMap("MPIN Enabled"));
 		institute.setSmsServiceProvider(MapUtils
 				.fnGetInputDataFromMap("SMS Service Provider"));
 		institute
-				.setContactName(MapUtils.fnGetInputDataFromMap("Contact Name"));
+		.setContactName(MapUtils.fnGetInputDataFromMap("Contact Name"));
 		institute.setEmailID(MapUtils.fnGetInputDataFromMap("Email Id"));
 		institute.setCustomerCareContactNumber(MapUtils
 				.fnGetInputDataFromMap("Customer Care Contact Numbers"));
@@ -386,7 +429,16 @@ public class InstitutionCreation extends AbstractBasePage {
 		institute.setAgentPortalAdminID(MiscUtils.generateRandomNumberAsString(6));
 		institute.setAgentPortalAdminName(MapUtils.fnGetInputDataFromMap("AgentPortalAdminName")+MiscUtils.generateRandomNumberAsString(5));					
 		institute.setAscVendor(MapUtils.fnGetInputDataFromMap("ASC_Vendor"));
-		institute.setExistingInstitutionCode(MapUtils.fnGetInputDataFromMap("ExistingInstitutionCode"));
+		institute.setExistingInstitutionCode(MapUtils
+				.fnGetInputDataFromMap("ExistingInstitutionCode"));
+		institute.setCustomerCareVIPNo(MapUtils
+				.fnGetInputDataFromMap(CUSTOMER_CARE_INTL_NO));
+		institute.setCustomerCareVIPISDCode(MapUtils
+				.fnGetInputDataFromMap(CUSTOMER_CARE_ISD_CODE));
+		institute.setCustomerCareIntlISDCode(MapUtils
+				.fnGetInputDataFromMap(CUSTOMER_CARE_ISD_CODE));
+		institute.setCustomerCareIntlNo(MapUtils
+				.fnGetInputDataFromMap(CUSTOMER_CARE_INTL_NO));
 		return institute;
 	}
 
@@ -405,6 +457,7 @@ public class InstitutionCreation extends AbstractBasePage {
 	public void setExistingInstitutionCode(String existingInstitutionCode) {
 		this.existingInstitutionCode = existingInstitutionCode;
 	}
+
 	public static InstitutionCreation createWithProvider(KeyValueProvider provider) {
 		InstitutionCreation institute = new InstitutionCreation();
 		institute.setExistingInstitutionCode(provider.getString("ExistingInstitutionCode"));
@@ -419,6 +472,5 @@ public class InstitutionCreation extends AbstractBasePage {
 	public void setAuthenticationFlg(String authenticationFlg) {
 		this.authenticationFlg = authenticationFlg;
 	}
-	
 
 }

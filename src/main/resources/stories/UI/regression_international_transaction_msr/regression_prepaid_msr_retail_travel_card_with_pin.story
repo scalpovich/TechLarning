@@ -29,7 +29,7 @@ When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 When processes pin generation batch for prepaid
 When user has wallet number information for prepaid device
-When user performs adjustment transaction with 10000 amount
+When user performs adjustment transaction with 50000 amount
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk

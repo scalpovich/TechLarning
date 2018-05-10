@@ -11,6 +11,7 @@ Meta:
 Scenario: Validate user Response's attribute
 Meta:
 @Scenario1
+@testapi
 
 Given user updates sample.json with below Attributes:
 |AttributesToUpdate|

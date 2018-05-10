@@ -28,11 +28,13 @@ import org.sikuli.script.FindFailed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import winium.elements.desktop.ComboBox;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.configuration.FinSimSimulator;
+import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
 import com.mastercard.pts.integrated.issuing.configuration.MasSimulator;
 import com.mastercard.pts.integrated.issuing.configuration.MdfsSimulator;
 import com.mastercard.pts.integrated.issuing.configuration.VtsSimulator;
@@ -49,6 +51,7 @@ import com.mastercard.pts.integrated.issuing.pages.ValidationException;
 import com.mastercard.pts.integrated.issuing.pages.agent.settlement.InitiateSettlementPage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceApprovePage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceRequestPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.MarkupFeePlanPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReversalTransactionPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionSearchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -100,6 +103,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private String vtsTestGroupInputFilePath = getResourceFolderPath().replace("\\\\", "\\") + SimulatorConstantsData.VISA_EXCEL_TEMPLATE_FILE_PATH;
 	private static final String RESULT_IDENTIFIER = "Refresh";
 	private static final String VISA_FAILURE_MESSAGE = "Visa Incomming Message for transaction did not come :: {}";
+	private static final String SIMULATOR_LICENSE_TYPE_17 = "17";
+	private static final String SIMULATOR_LICENSE_TYPE_18 = "18";
 
 	@Autowired
 	private WebDriverProvider webProvider;
@@ -129,6 +134,24 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	@Autowired
 	private VisaTestCaseNameKeyValuePair visaTestCaseNameKeyValuePair;
+
+	@Autowired
+	private LinuxBox linuxbox;
+
+	@Value("${linux.host.name}")
+	private String hostName;
+
+	@Value("${linux.port.number}")
+	private String number;
+
+	@Value("${linux.user.name}")
+	private String username;
+
+	@Value("${linux.folder.path}")
+	private String folderPath;
+
+	@Value("${linux.WinSCPTool.Path}")
+	private String winSCPPath;
 
 	public void initiateSettlementForAgency(String branchID, String programCode) {
 		ispage = navigator.navigateToPage(InitiateSettlementPage.class);
@@ -792,6 +815,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumLicenseSelectOperation("License profiles");
 		winiumDriver.findElementByName("License profiles").click();
 		winiumDriver.findElementByName("Select").click();
+		wait(2000);
+		if(winiumDriver.findElements(By.name("OK")).size()> 0){
+			winiumDriver.findElement(By.name("OK")).click();
+		}
 		wait(15000);
 	}
 
@@ -808,6 +835,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			executeAutoITExe("ActivateLicenseProfiles.exe");
 			winiumLicenseSelectOperation(licenseTypeToSelect, licenseFor);
 			winiumClickOperation("Select");
+			wait(2000);
+			if(winiumDriver.findElements(By.name("OK")).size()> 0){
+				winiumDriver.findElement(By.name("OK")).click();
+			}
 			wait(20000);
 			executeAutoITExe("ActivateSelectServices.exe");
 			if (getLoadServicesScreen() > 0) {
@@ -904,8 +935,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void configureBinRangeForMdfs(Transaction transactionData, String transactionName) {
 		String bin = transactionData.getCardNumber();
-		String issuerCurrencyCode = transactionData.getIssuerCurrencyCode(); // value from DE Element 49
-		String cardHolderBillingCurrency = transactionData.getCardHolderBillingCurrency(); // value from DE Element 61_13
+		String issuerCurrencyCode = transactionData.getIssuerCurrencyCode(); // value from DE element 49																	
+		String cardHolderBillingCurrency = transactionData.getCardHolderBillingCurrency(); // value from DE element 61_13																				
 		String binBinMinRange = bin.substring(0, 9) + "00";
 		String binMaxBinRange = bin.substring(0, 9) + "99";
 		try {
@@ -1051,10 +1082,23 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void closeSimulator(String name) {
 		winiumDriver = null;
-		if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains("17"))
-			name = "MAS17";
-		if (SimulatorConstantsData.MDFS_LICENSE_TYPE.contains("17"))
-			name = "MDFS17";
+
+		if(name.equalsIgnoreCase("MAS")){
+			if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_18)){
+				name = "MAS18";
+			}
+			else if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_17)){
+				name = "MAS17";
+			}
+		}
+		else if(name.equalsIgnoreCase("MDFS")){
+			if (SimulatorConstantsData.MDFS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_18)){
+				name = "MDFS18";
+			}
+			else if (SimulatorConstantsData.MDFS_LICENSE_TYPE.contains(SIMULATOR_LICENSE_TYPE_17)){
+				name = "MDFS17";
+			}
+		}
 		if ("visa".equalsIgnoreCase(name)) {
 			disconnectAndCloseVts();
 		}
@@ -1648,5 +1692,84 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	public String getARN(String deviceNumber, TransactionSearch ts) {
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
 		return page.searchTransactionWithDevice(deviceNumber, ts);
+	}
+
+	private DesktopOptions setWinSCPAsApplication() {
+		DesktopOptions options = new DesktopOptions();
+		MiscUtils.reportToConsole(ConstantData.MESSAGE_CONSTANT + winSCPPath);
+		options.setApplicationPath(winSCPPath);
+		return options;
+	}
+
+	private void startWiniumDriverWithApplication(DesktopOptions options) {
+		MiscUtils.killProcessFromTaskManager("WINIUM");
+		try {
+			String path = getResourceFolderPath() + SimulatorConstantsData.WINIUM_DRIVER_EXE_PATH.replace("\\", "\\\\");
+			Runtime.getRuntime().exec(path, null, new File(path.replace("Winium.Desktop.Driver.exe", "")));
+			wait(3000);
+			winiumDriver = new WiniumDriver(new URL("http://localhost:9999"), options);
+			wait(8000);
+		} catch (Exception e) {
+			logger.debug("Exception occurred while starting Winium", e);
+			MiscUtils.propagate(e);
+		}
+	}
+
+	public void launchWinSCP() {
+		browserMinimize();
+		startWiniumDriverWithApplication(setWinSCPAsApplication());
+	}
+
+	public void loginToWinSCP() {
+		try {
+			winiumClickOperation("Session");
+			wait(2000);
+			pressTab();
+			pressTab();
+			pressTab();
+			setText(hostName);
+			pressTab();
+			setText(number);
+			pressTab();
+			setText(username);
+			pressTab();
+			setText(linuxbox.getPassword());
+			winiumClickOperation("Login");
+			logger.info("User Logged Into WinSCP Application");
+		} catch (AWTException e) {
+			logger.error(e.getMessage());
+		}
+	}
+
+	public void setFolderPermisson(String fName) {
+		try {
+			String folderName = (folderPath + fName).substring((folderPath + fName).lastIndexOf("/") + 1);
+			Actions action = new Actions(winiumDriver);
+			wait(20000);
+			action.moveToElement(winiumDriver.findElement(By.name("Rights"))).moveByOffset(0, -30).doubleClick().build().perform();
+			wait(3000);
+			setText((folderPath + fName).replace(folderName, "")); // Folder Path
+			wait(2000);
+			winiumClickOperation("OK");
+			wait(2000);
+			winiumClickOperation(folderName); // Folder Name
+			pressF9Key();
+			wait(3000);
+			action.moveToElement(winiumDriver.findElement(By.name("Cancel"))).moveByOffset(0, -30).click().build().perform();
+			wait(3000);
+			action.moveToElement(winiumDriver.findElement(By.name("Cancel"))).moveByOffset(-20, -90).doubleClick().build().perform();
+			setText("0777");
+			wait(3000);
+			winiumClickOperation("OK");
+		} catch (AWTException e) {
+			logger.error(e.getMessage());
+		}
+	}
+
+	public void closeWinSCP() {
+		winiumClickOperation("Close");
+		wait(2000);
+		winiumClickOperation("OK");
+
 	}
 }

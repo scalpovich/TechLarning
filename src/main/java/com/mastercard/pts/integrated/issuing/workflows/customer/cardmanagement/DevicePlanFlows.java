@@ -27,7 +27,6 @@ public class DevicePlanFlows extends MenuFlows {
 		deviceplanpage.deviceNumberGeneration(deviceplan);
 		deviceplanpage.personalization(deviceplan);
 		waitForPageToLoad(getFinder().getWebDriver());
-		deviceplanpage.next();
 		deviceplanpage.transactionFeeAndLimitPlans();
 		deviceplanpage.next();
 		deviceplanpage.provideAuthorizationDetails(deviceplan);

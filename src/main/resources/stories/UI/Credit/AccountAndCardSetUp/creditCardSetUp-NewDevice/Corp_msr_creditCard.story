@@ -6,7 +6,8 @@ I want to assert pages
 
 Meta:
 @CreditRegression
-@StoryName credit_msr_corp					 
+@StoryName credit_msr_corp
+@msr_without_pin					 
 Scenario:1 UI verification - user creates a Credit Device Using New Device Screen
 Meta:
 @UserCreatesNewCreditDevice

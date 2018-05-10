@@ -2,7 +2,6 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.List;
-
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CardType;
 import com.mastercard.pts.integrated.issuing.domain.DeviceType;
@@ -169,6 +167,9 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:deviceMntFeePlanCodeCard1:input:dropdowncomponent")
 	private MCWebElement iframeBaseDeviceJoiningMemberShipPlanDdwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnFeePlanCode:input:dropdowncomponent")
+	private MCWebElement iframeTransactionFeePlanDdwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnLimitPlanCode:input:dropdowncomponent")
 	private MCWebElement iframeTransactionLimitPlanDdwn;
@@ -343,6 +344,9 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:deviceMntFeePlanCodeCard1:input:dropdowncomponent")
 	private MCWebElement membershipFeePlanDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnFeePlanCode:input:dropdowncomponent")
+	private MCWebElement iframeTransactionFee;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnLimitPlanCode:input:dropdowncomponent")
 	private MCWebElement transactionLimitPlanDDwn;
@@ -852,6 +856,12 @@ public class DevicePlanPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(iframeBaseDeviceJoiningMemberShipPlanDdwn,
 					deviceJoiningMemberShipPlan);
 	}
+	
+	public void selectIframeTransactionFeePlan(String transactionFeePlan) {
+		if (iframeTransactionFeePlanDdwn.isEnabled())
+			WebElementUtils.selectDropDownByVisibleText(iframeTransactionFeePlanDdwn, 
+					transactionFeePlan);
+	}
 
 	public void selectIframeTransactionLimitPlanDdwn(String transactionLimitPlan) {
 		if (iframeTransactionLimitPlanDdwn.isEnabled())
@@ -871,7 +881,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void clickIframeFinishButton() {
-		SimulatorUtilities.wait(500);
+		SimulatorUtilities.wait(900);
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
 				.until(WebElementUtils.visibilityOf(iframeFinishBtn));
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
@@ -970,12 +980,12 @@ public class DevicePlanPage extends AbstractBasePage {
 		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES)) {
 			selectAllcvccvv();
 			// as of now, we do not need CVV check for MDFS pin change transactions
-			if(!getStoryName().toLowerCase().contains("pin_change"))
+			//if(!getStoryName().toLowerCase().contains("pin_change"))
 			checkCvcCvv();
 		}			
 		checkExpiryDate();		
 		
-		if(devicePlan.getAllowInternationalTransaction().equalsIgnoreCase(STATUS_YES))
+		//if(devicePlan.getAllowInternationalTransaction().equalsIgnoreCase(STATUS_YES))
 			clickIntTxnAllowedCheckBox();
 			
 		WebElementUtils.checkCheckbox(ecommAllowedChkBx, devicePlan.isEcommerceAllowed());
@@ -985,6 +995,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		}	
 
 		clickIframeNextButton();
+		SimulatorUtilities.wait(300);
 		clickIframeNextButton();
 
 		if (DeviceType.EMV_CARD.equals(devicePlan.getDeviceType())
@@ -997,6 +1008,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	private void fillDevicePlanPage(DevicePlan devicePlan) {
 		selectIframeBaseDeviceEventBasedPlanDdwn(devicePlan.getBaseDeviceEventBasedPlan());
 		selectIframeBaseDeviceJoiningMemberShipPlanDdwn(devicePlan.getBaseDeviceJoiningMemberShipPlan());
+		selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
 		selectIframeTransactionLimitPlanDdwn(devicePlan.getTransactionLimitPlan());
 		clickIframeNextButton();
 	}

@@ -51,6 +51,12 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.Tran
 public class TransactionSteps {
 	private static final Logger logger = LoggerFactory.getLogger(TransactionSteps.class);
 
+	private static final String DEVICE_PRODUCTION_FOLDER = "DEVICE_PRODUCTION_FOLDER";
+	private static final String PIN_PRODUCTION_FOLDER = "PIN_PRODUCTION_FOLDER";
+	private static final String IPM_INCOMING = "IPM_INCOMING";
+	private static final String DEVICE_PRODUCTION = "device production";
+	private static final String PIN_PRODUCTION = "pin production";
+	private static final String IPMINCOMING = "ipm incoming";
 	private static Boolean sameCard = false;
 
 	@Autowired
@@ -98,10 +104,10 @@ public class TransactionSteps {
 	}
 
 	@When("perform an $transaction MAS transaction")
-	@Aliases(values={"a sample simulator \"$transaction\" is executed","user performs an $transaction MAS transaction"})
+	@Aliases(values = { "a sample simulator \"$transaction\" is executed", "user performs an $transaction MAS transaction" })
 	@Given("perform an $transaction MAS transaction")
 	public void givenTransactionIsExecuted(String transaction) {
-		
+
 		String temp = transaction;
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));
@@ -119,10 +125,10 @@ public class TransactionSteps {
 	@Given("perform an $transaction MAS transaction on the same card")
 	public void givenTransactionIsExecutedOnTheSameCard(String transaction) {
 		String temp = transaction;
-		//we need to use _PIN Profile from MAS test data template */
+		// we need to use _PIN Profile from MAS test data template */
 		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));
 		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
-			//ECOMM are pinless tranasactions */
+			// ECOMM are pinless tranasactions */
 			if (!transaction.toLowerCase().contains("ecom"))
 				temp = transaction + "_PIN";
 		}
@@ -164,21 +170,21 @@ public class TransactionSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		DevicePlan devicePlan = null;
 		// this line of code reads data from the "AuthorizationTransaction_DataDriven.xls" at \\Isser-automation-epam\src\main\resources\config\Data folder as the
-		 // "Transaction Templates" sheet has the template information
+		// "Transaction Templates" sheet has the template information
 		Transaction transactionData = transactionProvider.loadTransaction(transaction);
 
 		// when data is dynamically passed when scripts run from end-2-end
 		if (device != null) {
 			MiscUtils.reportToConsole("********** Fetching data from DeviceContect ********");
 			// _____________________FOR PINLESS CARD________________ device plan context is used to get Expiry Date incase of PinLess card
-			if(!Constants.DATA_DRIVEN_CARD_BOARDING.equalsIgnoreCase("YES")){
+			if (!Constants.DATA_DRIVEN_CARD_BOARDING.equalsIgnoreCase("YES")) {
 				devicePlan = context.get(ContextConstants.DEVICE_PLAN);
-				device.setServiceCode(devicePlan.getServiceCode());				
+				device.setServiceCode(devicePlan.getServiceCode());
 				if ("YES".equalsIgnoreCase(devicePlan.getIsPinLess())) {
 					device.setExpirationDate(devicePlan.getExpiryDate());
 					device.setPinNumberForTransaction("PINLESS");
 				}
-			}else{
+			} else {
 				if ("YES".equalsIgnoreCase(device.getIsPinRequired())) {
 					device.setExpirationDate(DateUtils.getDateInYYMM(device.getExpirationDate()));
 					device.setPinNumberForTransaction("PINLESS");
@@ -189,34 +195,34 @@ public class TransactionSteps {
 			// this line of code is temporary as this will only work for Single wallet currency for multi wallet, we may have to set other setter
 			// --> setIssuerCountryCode, setIssuerCurrencyCode, setCardHolderBillingCurrency
 			device.setCurrency(tempData.getCurrency());
-			
-			if(!Constants.DATA_DRIVEN_CARD_BOARDING.equalsIgnoreCase("YES")){
+
+			if (!Constants.DATA_DRIVEN_CARD_BOARDING.equalsIgnoreCase("YES")) {
 				if ("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
 					device.setExpirationDate(devicePlan.getExpiryDate());
 				}
-			}else{
+			} else {
 				if ("Fixed [F]".equalsIgnoreCase(device.getExpiryFlag())) {
 					device.setExpirationDate(device.getExpirationDate());
 				}
 			}
-			
-			//__________________CURRENCY VAL FROM EXCEL _________ This is a Single Wallet, Single Currency INDIA card */
+
+			// __________________CURRENCY VAL FROM EXCEL _________ This is a Single Wallet, Single Currency INDIA card */
 			settingValuesDynamicallyFromDeviceContext(device, transactionData);
-			//setting values of Card Data Element (Card Profile) which are placed in the "Transaction Templates" sheet
-			setCardDataDynamically(device, transactionData,transaction);
-			//setting values of Data Element which are placed in the "Transaction Templates" sheet
+			// setting values of Card Data Element (Card Profile) which are placed in the "Transaction Templates" sheet
+			setCardDataDynamically(device, transactionData, transaction);
+			// setting values of Data Element which are placed in the "Transaction Templates" sheet
 			setDeElementsDynamically(device, transactionData, transaction);
 
 		}
-		//else block for when scripts are running from excel - AuthorizationTransaction_DataDriven alone
+		// else block for when scripts are running from excel - AuthorizationTransaction_DataDriven alone
 		else {
 			transactionData.setIssuerCountryCode(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair().get("049")));
-			transactionData.setIssuerCurrencyCode(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair()	.get("049")));
+			transactionData.setIssuerCurrencyCode(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair().get("049")));
 			transactionData.setCardHolderBillingCurrency(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair().get("061.13")));
 		}
-		//creating & import card profile to temp location ex:C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413
+		// creating & import card profile to temp location ex:C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413
 		transactionData.setCardProfile(transactionFactory.createCsvCardProfile(transactionData));
-		 // creating & import testcase/transaction file to temp location ex: * C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413	
+		// creating & import testcase/transaction file to temp location ex: * C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413
 		transactionData.setTestCase(transactionFactory.createCsvTesCase(transactionData));
 		return transactionData;
 	}
@@ -227,21 +233,21 @@ public class TransactionSteps {
 			transactionData.setDeKeyValuePairDynamic("052", device.getPinNumberForTransaction());
 		// data format is 12 digits hence leftpad with 0
 		transactionData.setDeKeyValuePairDynamic("004", StringUtils.leftPad(device.getTransactionAmount(), 12, "0"));
-		if (transactionWorkflow.isContains(transaction, "BALANCE_INQUIRY") || transactionWorkflow.isContains(transaction, "PIN_CHANGE")) {
+		if (transactionWorkflow.isContains(transaction, "BALANCE_INQUIRY") || transactionWorkflow.isContains(transaction, "PIN_CHANGE") || transactionWorkflow.isContains(transaction, "ASI_")) {
 			// this value is expected to be 0's for Balance Enquiry
 			transactionData.setDeKeyValuePairDynamic("004", "000000000000");
 		}
 
 		// changed ECOMMERCE to ECOM
-		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE")) {
+		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") || transactionWorkflow.isContains(transaction, "ASI_")||transactionWorkflow.isContains(transaction, "MMSR") ) {
 			// for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInuxbox
 			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); // Transaction currency code
 		}
 		// This is a Single Wallet, Single Currency INDIA card
-//		transactionData.setDeKeyValuePairDynamic("049", device.getCurrency()); // Transaction currency  code
-//		transactionData.setDeKeyValuePairDynamic("050", device.getCurrency()); // Settlement currency  code 
-//		transactionData.setDeKeyValuePairDynamic("051", device.getCurrency()); // CardHolder billing currency  code
-//		transactionData.setDeKeyValuePairDynamic("061.13", device.getCurrency()); // POS country code
+		// transactionData.setDeKeyValuePairDynamic("049", device.getCurrency()); // Transaction currency code
+		// transactionData.setDeKeyValuePairDynamic("050", device.getCurrency()); // Settlement currency code
+		// transactionData.setDeKeyValuePairDynamic("051", device.getCurrency()); // CardHolder billing currency code
+		// transactionData.setDeKeyValuePairDynamic("061.13", device.getCurrency()); // POS country code
 	}
 
 	private void settingValuesDynamicallyFromDeviceContext(Device device, Transaction transactionData) {
@@ -261,12 +267,12 @@ public class TransactionSteps {
 		transactionData.setCardDataElementsDynamic("035.03", device.getExpirationDate());
 		transactionData.setCardDataElementsDynamic("045.02", device.getDeviceNumber());
 		transactionData.setCardDataElementsDynamic("045.06", device.getExpirationDate());
-		transactionData.setCardDataElementsDynamic("035.04", device.getServiceCode());				
-		if(transactionWorkflow.isContains(transaction, "EMV")) {
-			transactionData.setCardDataElementsDynamic("035.05", "000"+device.getIcvvData()); 
-		}else if(transactionWorkflow.isContains(transaction, "MSR")) {
-			transactionData.setCardDataElementsDynamic("035.05", "000"+device.getCvvData());
-		}		
+		transactionData.setCardDataElementsDynamic("035.04", device.getServiceCode());
+		if (transactionWorkflow.isContains(transaction, "EMV")) {
+			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getIcvvData());
+		} else if (transactionWorkflow.isContains(transaction, "MSR")) {
+			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getCvvData());
+		}
 	}
 
 	@Given("Auth file is provided for $iteration")
@@ -292,7 +298,7 @@ public class TransactionSteps {
 		String[] tempName = authFileName.split(".ath");
 		authFileName = tempName[tempName.length - 1] + ".ath";
 		assertNotNull("Auth fileName is not null", authFileName);
-		authFilePath = transactionWorkflow.getTempDirectoryLocationForSimulatorResults()+ "\\"+ authFileName;
+		authFilePath = transactionWorkflow.getTempDirectoryLocationForSimulatorResults() + "\\" + authFileName;
 		logger.info("authFilePath Path is ", authFilePath);
 	}
 
@@ -325,18 +331,16 @@ public class TransactionSteps {
 			testResults = transactionWorkflow.verifyTestResultsOnMdfs();
 		}
 		transactionWorkflow.browserMaximize(); // restoring browser after
-		
+
 		if (testResults.contains("Validations OK")) {
 			logger.info("Expected Result :- ", testResults);
-			assertTrue("Transaction is succcessful!  - Expected Result : "+ testResults, true);
+			assertTrue("Transaction is succcessful!  - Expected Result : " + testResults, true);
 		} else if (testResults.contains("Validations Not OK")) {
 			assertFalse("Transaction failed!  -  Result : " + testResults, false);
-			transactionWorkflow.closeSimulator(tool);
-			throw new ValidationException("Transaction failed! -  Result : "+ testResults);
+			throw new ValidationException("Transaction failed! -  Result : " + testResults);
 		} else {
 			logger.error("Test Results retrieved from Simulator :- ", testResults);
 			assertFalse("Transaction failed! ", false);
-			transactionWorkflow.closeSimulator(tool);
 			throw new ValidationException("Transaction failed!");
 		}
 	}
@@ -355,7 +359,7 @@ public class TransactionSteps {
 		Transaction transactionData = Transaction.generateFinSimPinTestData(device, finSimConfig, provider);
 
 		String pinNumber = transactionWorkflow.getPinNumber(transactionData);
-		logger.info("FINSim PIN Number generated : {} " , pinNumber);
+		logger.info("FINSim PIN Number generated : {} ", pinNumber);
 		device.setPinNumberForTransaction(pinNumber);
 	}
 
@@ -417,7 +421,7 @@ public class TransactionSteps {
 
 	@Then("load balance request is successful")
 	public void thenLoadBalanceRequestIsSuccessful() {
-		assertThat( "Load Balance Request Failed", transactionWorkflow.getLoadBalanceRequestSuccessMessage(), containsString("Load balance request forwarded for approval with request number :"));
+		assertThat("Load Balance Request Failed", transactionWorkflow.getLoadBalanceRequestSuccessMessage(), containsString("Load balance request forwarded for approval with request number :"));
 	}
 
 	@When("user performs load balance approve")
@@ -442,7 +446,7 @@ public class TransactionSteps {
 
 	@Then("settlement is initiated successfully")
 	public void thenSettlementIsInitiatedSuccesfully() {
-		assertThat( "Settlement Initiative Failed", transactionWorkflow.getSettlementInitiativeSuccessMessage(), containsString("Settlement initiated successfully and Settlement Referance No :"));
+		assertThat("Settlement Initiative Failed", transactionWorkflow.getSettlementInitiativeSuccessMessage(), containsString("Settlement initiated successfully and Settlement Referance No :"));
 	}
 
 	@When("perform an $transaction VISA transaction")
@@ -491,11 +495,25 @@ public class TransactionSteps {
 	@Then("ARN is retrieved from transaction search page")
 	public void arnIsRetrievedFromTransactionSearchPage() {
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
-	  // Device device = context.get(ContextConstants.DEVICE); // comenting hte line as Device context is not used
-		// String deviceNumber = device.getDeviceNumber();
-		String deviceNumber = "5877656209771912";
+		Device device = context.get(ContextConstants.DEVICE); // comenting hte line as Device context is not used
+		String deviceNumber = device.getDeviceNumber();
 		String arn = transactionWorkflow.getARN(deviceNumber, ts);
 		context.put(ConstantData.ARN_NUMBER, arn);
 		logger.info("ARN for device transactions = {} ", arn);
+	}
+	
+	//Win SCP step
+	@Given("user update folder permission through WinSCP for $type folder")
+	@When("user update folder permission through WinSCP for $type folder")
+	public void connectionToApplicationIsEstablished(String type){
+		transactionWorkflow.launchWinSCP();
+		transactionWorkflow.loginToWinSCP();
+		if(type.equalsIgnoreCase(DEVICE_PRODUCTION))
+			transactionWorkflow.setFolderPermisson(provider.getString(DEVICE_PRODUCTION_FOLDER));
+		else if(type.equalsIgnoreCase(PIN_PRODUCTION))
+			transactionWorkflow.setFolderPermisson(provider.getString(PIN_PRODUCTION_FOLDER));
+		else if(type.equalsIgnoreCase(IPMINCOMING))
+		transactionWorkflow.setFolderPermisson(provider.getString(IPM_INCOMING));
+		transactionWorkflow.closeWinSCP();
 	}
 }

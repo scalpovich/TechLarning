@@ -135,12 +135,15 @@ public class CardManagementNav {
 	public static final String L2_ROUTING = "ISSRM0";
 	public static final String L3_TRANSACTION_ROUTING = "ISSRM1";
 	public static final String L3_ACCOUNT_RANGE_ROUTING = "ISSRM2";
+	public static final String L3_CHANNEL_ROUTING = "ISSRM3";
+	
 
 	public static final String L2_LINKING_API_TO_INSTITUTION = "ISS026";
 
 	public static final String L2_GATEWAY_CONFIGURATION = "ISSGC01";
 
 	public static final String L2_RUPAY_SETTLEMENT_BIN = "ISSS014";
+	public static final String L2_AGGREGATE_LOAD_LIMIT = "ISSS015";
 
 	public static final String L2_MARKUP_FEE_PLAN = "MRKFP001";
 
@@ -349,7 +352,7 @@ public class CardManagementNav {
 	public static final String L2_DEVICE_ACTIVITY = "ISREV1";
 	public static final String L2_FINANCIAL_REPORTS = "ISRFR0";
 
-	public static final String L1_DE_DUPE_SDN_VERIFICATION = "ISAA0D";
+	public static final String L2_DE_DUPE_SDN_VERIFICATION = "ISAA0D";
 
 	private CardManagementNav() {
 	}

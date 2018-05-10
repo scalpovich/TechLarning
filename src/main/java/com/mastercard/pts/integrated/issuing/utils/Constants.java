@@ -17,6 +17,8 @@ public class Constants {
 	public static final String ADD_USER = "Add User";
 	public static final String ADD_LOYALTY_PROMOTION_MAPPING = "Add Loyalty Plan & Promotion Mapping";
 	public static final String EDIT_PROGRAM_FRAME = "Edit Program";
+
+	public static final String EDIT_DEVICE_RANGE_FRAME = "Edit Device Range";
 	public static String BATCH_NAME = "Device Production";
 
 	public static String EDIT_BATCH_DEFINITION = "Edit Batch Definition";
@@ -68,9 +70,9 @@ public class Constants {
 	public static String ADD_VENDOR_MASTER_FRAME = "Add Vendor Master";
 
 	public static String ADD_DEVICE_PLAN_FRAME = "Add Device Plan";
-	
+
 	public static String EDIT_DEVICE_PLAN_FRAME = "Edit Device BIN";
-	
+
 	public static String EDIT_DEVICE_PLAN = "Edit Device Plan";
 
 	public static String ADD_PROGRAM_FRAME = "Add Program";
@@ -132,6 +134,8 @@ public class Constants {
 	public static String VIEW_TRANSACTION_TYPE_FRAME = "View Transaction Type";
 
 	public static String ADD_ADD_INSTITUTION_FRAME = "Add Institution";
+	
+	public static final String EDIT_INSTITUTION_FRAME = "Edit Institution";
 
 	public static String ADD_ACCOUNT_MASTER_FRAME = "Add Account Master";
 
@@ -364,7 +368,7 @@ public class Constants {
 	public static final String UPLOAD_FILE_PATH = "/home/dc-user/integrated/elt_bo/data/102030/RUPAY_INCOMING";
 
 	public static final String APPLICATION_UPLOAD_PREPAID_FILE_PATH = "/home/dc-user/integrated/elt_bo/data/121212/input";
-	
+
 	public static final String APPLICATION_UPLOAD_CREDIT_FILE_PATH = "/home/dc-user/integrated/elt_bo/data/554466/INPUT";
 
 	public static final String GENERIC_DESCRIPTION = "AUTOMATION";
@@ -424,10 +428,26 @@ public class Constants {
 	public static final String MARKETING_PLAN = "Marketing Message Plan";
 	public static final String WAIVERPLAN_CODE_ERRMSG = "[A-Z 0-9] and underscore are allowed and must start and end with an alphanumeric character.";
 	public static final String WAIVERPLAN_DESC_ERRMSG = "[a-z A-Z 0-9], SPACES and special characters [.,&#:*()-] are allowed and must start with an alphanumeric.";
-	
+
 	public static String DATA_DRIVEN_CARD_BOARDING = "NO";
-	public static final String ENVIRONMENT ="demo";
+	public static final String ENVIRONMENT = "automation";
 	public static final String COLUMN_NAME = "Status";
 	public static final int TABLE_ROW_NUM = 1;
+	public static final String ADD_ALLOWED_LOAD_CURRENCY = "Add Allowed Load Currency";
+	public static final String ADD_MANUAL_ALERTS = "Add Manual Alert";
+	public static final String ADD_MANUAL_RECIPIENT = "Add Manual Recipient";
+	public static final String ADD_TRANSACTION_ROUTING = "Add Transaction Routing";
+	public static final String ADD_CHANNEL_ROUTING = "Add Channel Routing Plan";
+	public static final String ADD_CHANNEL_ROUTING_DETAILS = "Add Channel Routing Plan Detail";
+	public static final String ADD_ACCOUNT_ROUTING_PLAN = "Add Account Range Routing";
+	public static final String ADD_LINK_API = "Add Link API to institution";
+	public static final String ADD_AGGREGATE_LOAD_LIMIT = "Add Aggregate Load Limits";
+	public static final String ADD_EASY_PAY_PLAN_RULE= "Add Easy Pay Plan Rule";
+	public static final String ADD_RULE= "Add Rules";
+	
+	
+	
+	
+	
 
 }

@@ -29,10 +29,47 @@ public class TransactionFeeWaiverPlanPage extends AbstractBasePage {
 			.getLogger(TransactionFeeWaiverPlanPage.class);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=waiverPlanCode]")
-	private MCWebElement waiverPlanCode;
+	private MCWebElement waiverPlanCodeTxt;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=description]")
-	private MCWebElement description;
+	private MCWebElement descriptionTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "addR")
+	private MCWebElement addTransactionFeeWaiverPlanBtn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "txnFeeWaiverEffectiveDate:input:dateTextField")
+	private MCWebElement effectiveDateTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "txnFeeWaiverEndDate:input:dateTextField")
+	private MCWebElement endDateTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "txnFeeWaiverType:input:dropdowncomponent")
+	private MCWebElement feeTypeDDwn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "transactionCode:input:dropdowncomponent")
+	private MCWebElement transactionTypeDDwn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "networkCode:input:dropdowncomponent")
+	private MCWebElement transactionSourceDDwn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "transactionOrigin:input:dropdowncomponent")
+	private MCWebElement transactionOriginDDwn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "waiverCycle:input:dropdowncomponent")
+	private MCWebElement waiverFrequencyDDwn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "numberOfCycle:input:inputTextField")
+	private MCWebElement applicableForCyclesTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "cycleVelocity:input:inputTextField")
+	private MCWebElement transactionsWaivedPerCycleTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "cycleVelocity:input:inputTextField")
+	private MCWebElement clubTransactionOfAddOnCardsChk;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
+	private MCWebElement saveBtn;
+	
 	
 	public void verifyUiOperationStatus() {
 		logger.info("Transaction Fee Waiver Plan Master");
@@ -42,8 +79,8 @@ public class TransactionFeeWaiverPlanPage extends AbstractBasePage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(waiverPlanCode),
-				WebElementUtils.elementToBeClickable(description)
+				WebElementUtils.elementToBeClickable(waiverPlanCodeTxt),
+				WebElementUtils.elementToBeClickable(descriptionTxt)
 				);
 	}
 }

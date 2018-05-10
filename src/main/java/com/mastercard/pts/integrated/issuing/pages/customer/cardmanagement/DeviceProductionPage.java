@@ -15,7 +15,6 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
@@ -29,7 +28,8 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_OPERATION, CardManagementNav.L2_PROCESSING_BATCHES, CardManagementNav.L3_DEVICE_PRODUCTION_BATCH })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_OPERATION,
+		CardManagementNav.L2_PROCESSING_BATCHES, CardManagementNav.L3_DEVICE_PRODUCTION_BATCH })
 public class DeviceProductionPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(DeviceProductionPage.class);
 	@Autowired
@@ -114,12 +114,12 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	}
 
-	public void selectProduct(DeviceCreation deviceCreation) {
-		selectByVisibleText(productTypeDDwn, deviceCreation.getProduct());
+	public void selectProduct(BulkDeviceRequestbatch bulkdeviceGenBatch) {
+		selectByVisibleText(productTypeDDwn, bulkdeviceGenBatch.getProduct());
 	}
 
 	public void enterBatchNumber(BulkDeviceRequestbatch bulkdeviceGenBatch) {
-		enterValueinTextBox(batchNumberTxt, bulkdeviceGenBatch.getBatchNumber());
+		enterValueinTextBox(batchNumberTxt, bulkdeviceGenBatch.getBatchNumberForDeviceProduction());
 	}
 
 	public void enterDeviceNumber(BulkDeviceRequestbatch bulkdeviceGenBatch) {
@@ -135,11 +135,13 @@ public class DeviceProductionPage extends AbstractBasePage {
 	}
 
 	public void clickDeviceProductionChkBox(BulkDeviceRequestbatch bulkdeviceGenBatch) {
-		WebElement SelectProcessChkBx = getFinder().getWebDriver().findElement(
-				By.xpath("//td[contains(.,'" + bulkdeviceGenBatch.getBatchNumberForDeviceGeneration()
-						+ "')]/following::span/input[@name='dataPanel:BasicDataTable:datatable:body:rows:1:cells:7:cell:columnCheckBox']"));
-		waitForElementVisible(SelectProcessChkBx);
-		clickWhenClickable(SelectProcessChkBx);
+		// WebElement SelectProcessChkBx =
+		// getFinder().getWebDriver().findElement(By.xpath("//td[contains(.,'"
+		// + bulkdeviceGenBatch.getBatchNumberForDeviceGeneration()
+		// +
+		// "')]/following::span/input[@name='dataPanel:BasicDataTable:datatable:body:rows:1:cells:7:cell:columnCheckBox']"));
+		waitForElementVisible(deviceProductionBatchRecordChkBx);
+		clickWhenClickable(deviceProductionBatchRecordChkBx);
 	}
 
 	public void clickProcessSelectedBtn() {
@@ -150,8 +152,8 @@ public class DeviceProductionPage extends AbstractBasePage {
 		clickWhenClickable(processAllBtn);
 	}
 
-	public void searchDeviceProductionBatch(DeviceCreation deviceCreation, BulkDeviceRequestbatch bulkdeviceGenBatch) {
-		selectProduct(deviceCreation);
+	public void searchDeviceProductionBatch(BulkDeviceRequestbatch bulkdeviceGenBatch) {
+		selectProduct(bulkdeviceGenBatch);
 		enterBatchNumber(bulkdeviceGenBatch);
 		search();
 	}
@@ -186,8 +188,8 @@ public class DeviceProductionPage extends AbstractBasePage {
 	}
 
 	public String getDeviceNumber(BulkDeviceRequestbatch bulkdeviceGenBatch) {
-		WebElement SelectProcessChkBx = getFinder().getWebDriver().findElement(
-				By.xpath("//tr[1]//td[contains(.,'" + bulkdeviceGenBatch.getBatchNumberForDeviceGeneration() + "')]/preceding-sibling::td[3]"));
+		WebElement SelectProcessChkBx = getFinder().getWebDriver().findElement(By.xpath("//tr[1]//td[contains(.,'"
+				+ bulkdeviceGenBatch.getBatchNumberForDeviceGeneration() + "')]/preceding-sibling::td[3]"));
 		return SelectProcessChkBx.getText().substring(9);
 	}
 
@@ -210,5 +212,4 @@ public class DeviceProductionPage extends AbstractBasePage {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

@@ -140,7 +140,7 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		do {
 			statuslabelTxt = statusTxt.getText();
 			CustomUtils.ThreadDotSleep(2000);
-		} while (!(statuslabelTxt.trim().contains(statusString.trim())) && i++ < 50);
+		} while (!(statuslabelTxt.trim().contains(statusString.trim())) && i++ < 100);
 
 		logger.info("Status  -", statuslabelTxt);
 		Assert.assertEquals(statusString, statuslabelTxt);

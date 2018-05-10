@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class MarketingMessagePlan implements HasCodeAndDescription {
 	public void setMarketingMessagePlanCode(String marketingMessagePlanCode) {
 		this.marketingMessagePlanCode = marketingMessagePlanCode;
 	}
-
+	
 	public String getProductType() {
 		return productType;
 	}

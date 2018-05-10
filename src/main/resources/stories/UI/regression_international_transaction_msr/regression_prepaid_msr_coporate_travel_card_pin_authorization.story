@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for prepaid emv retail general purpose card
 
 Meta:
-@StoryName p_emv_corp_travel
+@StoryName p_msr_corp_travel
 @oldReferenceSheet_S203707
 @CRCardsWithAuthorizationRegression
 @AuthorizationRegression
@@ -29,7 +29,7 @@ Then device has "normal" status
 When user has wallet number information for debit device
 Then user sign out from customer portal
 Then user is logged in institution
-When user performs adjustment transaction with 10000 amount
+When user performs adjustment transaction with 50000 amount
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
