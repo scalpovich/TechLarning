@@ -9,7 +9,7 @@ Meta:
 @UI
 @all
 @StoryName InstitutionAndUserCreation
-@InstitutionAndUserCreation
+@InstitutionAndUserCreationForAll
 
 Scenario:1 New Institution creation prepaid
 
