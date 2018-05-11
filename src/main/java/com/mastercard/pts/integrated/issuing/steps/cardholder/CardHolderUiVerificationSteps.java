@@ -144,7 +144,6 @@ public class CardHolderUiVerificationSteps {
 	}
 
 	@When("user $blocks the device from cardholder portal")
-	@Then("user $blocks the device from cardholder portal")
 	public void blockDeviceCHP(String status) {
 		if ("blocks".equalsIgnoreCase(status))
 			cardHolderUiVerificationServicesWorkflow.blockDevice();
