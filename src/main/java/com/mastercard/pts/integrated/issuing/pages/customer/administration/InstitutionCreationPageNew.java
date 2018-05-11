@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.InstitutionLoadCurrencyPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.ProcessingCenterNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
@@ -198,6 +199,9 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.='Institution Name']/following::input[1]")
 	private MCWebElement searchInstitutionName;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.='Institution Code']/following::input[1]")
+	private MCWebElement searchInstitutionCode;
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Search']")
 	private MCWebElement searchBtn;
 
@@ -206,6 +210,9 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody//tr")
 	private MCWebElements resultTableRow;
+	
+	private static final Logger logger = LoggerFactory.getLogger(InstitutionLoadCurrencyPage.class);
+
 
 	private String tab = "//a[.='%s']";
 
@@ -357,6 +364,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public void selectTimeZone(InstitutionCreation institute) {
+		waitForElementVisible(timeZoneDrpDwn);
 		selectValueFromDropDown(timeZoneDrpDwn, institute.getTimeZone());
 	}
 
@@ -514,6 +522,10 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	public void enterNewInstitutionName(InstitutionCreation institute) {
 		enterValueinTextBox(searchInstitutionName,
 				institute.getInstitutionName());
+	}
+	public void enterNewInstitutionCode(InstitutionCreation institute) {
+		enterValueinTextBox(searchInstitutionCode,
+				institute.getInstitutionCode());
 	}
 
 	public void searchNewInstitution() {
@@ -800,7 +812,6 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	public void save() {
 		clickWhenClickable(saveBtn);
 		waitForLoaderToDisappear();
-		SwitchToDefaultFrame();
 	}
 	
 	public void cancel() {
@@ -920,5 +931,16 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 	public String getInstUpdateMessage() {
 		return instituteUpdateMessage.getText();
+	}
+	public void checkErrorOnPage() {
+		if (!publishErrorOnPage()) {
+			logger.info("Instituion Added Successfully.");
+			SwitchToDefaultFrame();
+		} else {
+			logger.info("Error in Instituion Creation");
+			clickWhenClickable(cancelBtn);
+			SwitchToDefaultFrame();
+		}
+
 	}
 }
