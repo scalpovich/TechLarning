@@ -233,6 +233,7 @@ public class UserPage extends AbstractBasePage{
 	public void save() {
 		clickWhenClickable(save);
 		SimulatorUtilities.wait(2000);
+		waitForLoaderToDisappear();
 	}
 	
 	public void verifyNewUserCreationSuccess(UserCreation userCreation) {

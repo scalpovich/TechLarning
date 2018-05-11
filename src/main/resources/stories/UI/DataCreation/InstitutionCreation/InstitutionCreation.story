@@ -45,6 +45,7 @@ Meta:
 @testDataFileName testdata
 @sheetName Institute
 @DebitInstitutionCreation
+@INCDebit
 
 Given login to bank as a Bankadmin
 When user enters details to create new Debit Institution
@@ -56,6 +57,7 @@ Meta:
 @testDataFileName testdata
 @sheetName Institute
 @DebitUserCreation
+@INCDebit
 
 Given login to bank as a Bankadmin
 When user enter details to create new user
