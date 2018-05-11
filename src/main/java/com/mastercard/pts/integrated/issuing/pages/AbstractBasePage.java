@@ -285,6 +285,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickWhenClickable(addNewBtn);
 	}
 
+
 	// used when there are more than 1 add buttons
 	protected void clickAddButtonVariant(MCWebElement element) {
 		WebElementUtils.scrollDown(driver(), 0, 250);
@@ -572,6 +573,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void verifyRecordMarkedForUpdationStatusSuccess() {
+		SimulatorUtilities.wait(4000);
 		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
 	}
@@ -1233,6 +1235,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameSelector));
 	}
 
+	public void switchToIframe(String caption, long timeout) {
+		WebDriverWait wait = new WebDriverWait(getFinder().getWebDriver(), timeout);
+		By frameSelector = By.xpath(String.format("//h3[contains(text(), '%s')]/ancestor::div//iframe[@class='wicket_modal']", caption));
+		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameSelector));
+	}
+	
 	public static void addWicketAjaxListeners(WebDriver driver) {
 		String javascript = "if (typeof tk  == 'undefined') {" + "tk = {activeAjaxCount: 0, ajaxCallsTried: 0, ajaxCallsCompleted: 0};"
 				+ "Wicket.Ajax.registerPreCallHandler(function(){tk.activeAjaxCount++;tk.ajaxCallsTried++;});"

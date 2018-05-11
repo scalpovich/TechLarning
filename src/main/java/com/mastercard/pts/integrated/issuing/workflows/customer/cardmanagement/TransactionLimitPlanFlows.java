@@ -15,6 +15,8 @@ public class TransactionLimitPlanFlows extends MenuFlows {
 	@Autowired
 	Navigator navigator;
 
+	TransactionLimitPlanPage page;
+	
 	public void createTransactionLimitPlan(DeviceCreation deviceCreation, TransactionLimitPlan transactionlimitplan) {
 		waitForElementVisible(menusubmenuPage.getCardManagement());
 		TransactionLimitPlanPage transactionLimitPlanPage = navigator.navigateToPage(TransactionLimitPlanPage.class);
@@ -24,7 +26,29 @@ public class TransactionLimitPlanFlows extends MenuFlows {
 		transactionLimitPlanPage.addTransactionLimitPlanDetails(transactionlimitplan);
 		transactionLimitPlanPage.switchToAddTransactionLimitPlanFrame();
 		transactionLimitPlanPage.clickSaveButton();
-
+	}
+	
+	
+	public void createTransactionLimitPlanWithoutDetails(TransactionLimitPlan transactionLimitPlan) {
+		TransactionLimitPlanPage page = navigator.navigateToPage(TransactionLimitPlanPage.class);
+		page.createTransactionLimitPlanWithoutDetails(transactionLimitPlan);
+		this.page=page;
+	}
+	
+	public void clickSave(){
+		page.clickSaveButton();
+	}
+	
+	public void addDetails(TransactionLimitPlan transactionLimitPlan) {
+		page.addEachDetail(transactionLimitPlan);
 	}
 
+
+	public void deletePlan(String name) {
+		TransactionLimitPlanPage page = navigator.navigateToPage(TransactionLimitPlanPage.class);
+		page.deletePlan(name);
+		
+	}
+	
+	
 }
