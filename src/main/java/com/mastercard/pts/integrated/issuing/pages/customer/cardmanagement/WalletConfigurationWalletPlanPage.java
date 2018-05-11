@@ -88,11 +88,11 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectProductType(String productType) {
-		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, productType);
+		WebElementUtils.selectDDByVisibleText(productTypeDDwn, productType);
 	}
 
 	public void selectProgramType(String programType) {
-		WebElementUtils.selectDropDownByVisibleText(programTypeDDwn, programType);
+		WebElementUtils.selectDDByVisibleText(programTypeDDwn, programType);
 	}
 
 	public void selectUsage(String usage) {

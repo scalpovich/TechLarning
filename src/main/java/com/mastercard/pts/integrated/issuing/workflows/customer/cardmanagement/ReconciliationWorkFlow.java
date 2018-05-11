@@ -55,14 +55,20 @@ public class ReconciliationWorkFlow {
 		return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
 	}
 
-	public List<String> verifyAuthReport(String fileName,String key) {
+	public List<String> verifyAuthReport(String fileName,String key,String username) {
 		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
 		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
 		deleteExistingAuthorizationFilesFromSystem(fileName);
 		page.generateTransactionAuthReport();
 		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
-		return getReportContent(fileName,key);
+		return getReportContent(fileName,key,username);
 		//return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
+	}
+	
+	public List<String> verifyReport(String key, String	username) {
+		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
+		page.generateTransactionAuthReport();
+		return getReportContent(getFileName(),key,username);
 	}
 	
 	public boolean verifyReportGenerationClearing() {
@@ -119,9 +125,9 @@ public class ReconciliationWorkFlow {
 		return fileCountAfterDownload;
 	}
 
-	public List<String> getReportContent(String fileName,String key) {
+	public List<String> getReportContent(String fileName,String key,String username) {
 		PDFUtils pdfutils=new PDFUtils();
-		List<String> records = pdfutils.getContentRow(PDFUtils.getuserDownloadPath() + "\\"+fileName, key);
+		List<String> records = pdfutils.getContentRow(PDFUtils.getuserDownloadPath() + "\\"+fileName, key, username);
 		for(int i=0;i<records.size();i++)
 		{
 			if (records != null)

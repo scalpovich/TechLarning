@@ -10,7 +10,6 @@ import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import com.google.common.base.Throwables;
 import com.itextpdf.text.pdf.PdfReader;
@@ -22,12 +21,6 @@ public class PDFUtils {
 
 	DateUtils dateutils;
 
-	@Value("${Customer.portal.user.name}")
-	private String customerPortalUser;
-
-	public PDFUtils() {
-
-	}
 	public static String getContent(String pdfPath, String key) {
 		String value = "";
 		String pageContent = "";
@@ -58,7 +51,7 @@ public class PDFUtils {
 		return value;
 	}
 
-	public List<String> getContentRow(String pdfPath, String code) {
+	public List<String> getContentRow(String pdfPath, String code, String username) {
 		String pageContent = "";
 		List<String> programWiseContent = new ArrayList<String>();
 		String[] fullRow = { "" };
@@ -66,7 +59,7 @@ public class PDFUtils {
 		try {
 			File file = new File(pdfPath);
 			file.getParentFile().mkdirs();
-			PdfReader pdfReader = manipulatePdf(pdfPath);
+			PdfReader pdfReader = manipulatePdf(pdfPath, username);
 			if (pdfReader != null)
 				pages = pdfReader.getNumberOfPages();
 			for (int i = 1; i <= pages; i++) {
@@ -94,12 +87,12 @@ public class PDFUtils {
 		return programWiseContent;
 	}
 
-	public PdfReader manipulatePdf(String src) {
+	public PdfReader manipulatePdf(String src, String username) {
 		dateutils=new DateUtils();
 		PdfReader.unethicalreading = true;
 		PdfReader reader = null;
 		try {
-			reader = new PdfReader(src, ("ravi"+dateutils.getDateDDMMFormat()).getBytes()); //customerPortalUser.substring(0,1)
+			reader = new PdfReader(src, (username.substring(0,4)+dateutils.getDateDDMMFormat()).getBytes());
 		}  catch (Exception e) {
 			logger.info("Document Exception {}", e);
 		}
