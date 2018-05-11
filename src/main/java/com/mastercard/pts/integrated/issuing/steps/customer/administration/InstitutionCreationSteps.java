@@ -63,9 +63,9 @@ public class InstitutionCreationSteps {
 		userCreation = UserCreation.getUserCreationData();
 		InstitutionCreation institute = context
 				.get(ContextConstants.INSTITUTION);
-		if (!institute.getInstitutionAbbrevation().isEmpty()) {
+		if (!institute.getInstitutionName().isEmpty()) {
 			userCreation.setInstitutionName(institute
-					.getInstitutionAbbrevation());
+					.getInstitutionName());
 		} else {
 			instutionCreation = InstitutionCreation.getInstitutionData();
 			userCreation.setInstitutionName(instutionCreation

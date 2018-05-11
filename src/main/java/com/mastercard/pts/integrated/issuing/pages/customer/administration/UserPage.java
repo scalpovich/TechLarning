@@ -212,7 +212,7 @@ public class UserPage extends AbstractBasePage{
 	}
 
 	public void assignDefaultInstituteToUser(UserCreation user) {
-		if(user.getInstitutionName().isEmpty()){
+		if(!user.getInstitutionName().isEmpty()){
 		clickWhenClickable(Element(defaultinstitution.replace("%s",
 				user.getInstitutionName())));
 	}

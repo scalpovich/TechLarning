@@ -370,11 +370,12 @@ public class InstitutionCreation extends AbstractBasePage {
 	}
 
 	public static InstitutionCreation getInstitutionData() {
+		String randomAlphabet=CustomUtils.randomString(Integer.parseInt(MapUtils.fnGetInputDataFromMap("Padding")));
 		InstitutionCreation institute = new InstitutionCreation();
 		if(MapUtils.fnGetInputDataFromMap("Padding")!=null){
 			institute.setInstitutionCode(CustomUtils.RandomNumbers(6));
-			institute.setInstitutionName(MapUtils.fnGetInputDataFromMap("InstitutionName")+CustomUtils.randomString(Integer.parseInt(MapUtils.fnGetInputDataFromMap("Padding"))));
-			institute.setInstitutionAbbrevation(MapUtils.fnGetInputDataFromMap("InstitutionName")+CustomUtils.RandomNumbers(Integer.parseInt(MapUtils.fnGetInputDataFromMap("Padding"))));
+			institute.setInstitutionName(MapUtils.fnGetInputDataFromMap("InstitutionName")+randomAlphabet);
+			institute.setInstitutionAbbrevation(MapUtils.fnGetInputDataFromMap("InstitutionName")+randomAlphabet);
 			
 		}else{
 			institute.setInstitutionCode(MapUtils.fnGetInputDataFromMap("InstitutionCode"));
