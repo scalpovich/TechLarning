@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CurrencyExchangeRate;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CurrencyExchangeRatesPage;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.CurrencyExchangeRatesFlows;
@@ -144,8 +145,13 @@ public class CurrencyExchangeRatesSteps {
 				.fnGetInputDataFromMap("SELL_RATE"));
 		currencyExchangeRateDomainPage.setRateOrigin(currencyExchangeRatesPage
 				.getCode(MapUtils.fnGetInputDataFromMap(rateOrigin)));
-		currencyExchangeRateDomainPage.setUploadPathCER(MapUtils
-				.fnGetInputDataFromMap("UPLOAD_PATH_CER") + "/INPUT");
+		if (System.getProperty("env").contains("stage"))
+			currencyExchangeRateDomainPage
+					.setUploadPathCER(Constants.UPLOAD_PATH_CURR_STAGE
+							+ "/INPUT");
+		else
+		currencyExchangeRateDomainPage
+				.setUploadPathCER(Constants.UPLOAD_PATH_CURR + "/INPUT");
 		if (!MapUtils.fnGetInputDataFromMap("Program").equalsIgnoreCase("-"))
 		currencyExchangeRateDomainPage.setProgram(MapUtils
 				.fnGetInputDataFromMap(program));

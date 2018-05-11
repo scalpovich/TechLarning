@@ -1,9 +1,10 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.admin;
 
+import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
-public class UserCreation{
+public class UserCreation implements HasCodeAndDescription {
 
 	private String userID;
 	private String userName;
@@ -132,4 +133,14 @@ public class UserCreation{
 	return user;	
 	}
 	
+	@Override
+	public String getCode() {
+		return userID;
+	}
+
+	@Override
+	public String getDescription() {
+		return userName;
+	}
+
 }

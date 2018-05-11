@@ -13,6 +13,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.navigation.Administr
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.pts.integrated.issuing.workflows.LoginFlows;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -45,14 +46,14 @@ public class ScreenLevelPrivilegesPage extends AbstractBaseFlows {
 		List<String> previligesTabsNameList;
 		navigator.navigateToPage(ScreenLevelPrivilegesPage.class);
 		searchEntity(entityType);
-		CustomUtils.ThreadDotSleep(1000);
+		SimulatorUtilities.wait(1000);
 		previligesTabsNameList = getNamesPreviligesTabs();
 		selectPreviligesCheckBoxes();
 		for (int i = 1; i < previligesTabsNameList.size(); i++) {
 			selectTab(previligesTabsNameList.get(i));
-			CustomUtils.ThreadDotSleep(500);
+			SimulatorUtilities.wait(500);
 			selectPreviligesCheckBoxes();
-			CustomUtils.ThreadDotSleep(200);
+			SimulatorUtilities.wait(200);
 		}
 		ClickButton(saveBtn);
 	}
@@ -78,7 +79,7 @@ public class ScreenLevelPrivilegesPage extends AbstractBaseFlows {
 		List<WebElement> previligesTabsList = getList(LIST_TAB_NAMES);
 		List<String> previligesTabsNameList = new ArrayList<String>();
 		for (WebElement element : previligesTabsList) {
-			CustomUtils.ThreadDotSleep(500);
+			SimulatorUtilities.wait(500);
 			previligesTabsNameList.add(element.getText());
 		}
 		return previligesTabsNameList;

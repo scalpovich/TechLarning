@@ -634,7 +634,6 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 		enterInstitutionCode(instutionCreation);
 		enterInstitutionName(instutionCreation);
 		enterInstitutionAbbreviation(instutionCreation);
-		saveInstitution(instutionCreation);
 	}
 
 	public void provideGeneralDetails(InstitutionCreation institution) {
@@ -921,10 +920,4 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 		return instituteUpdateMessage.getText();
 	}
 
-	public void saveInstitution(InstitutionCreation institution) {
-		MapUtils.fnSetInputDataToInputMap(
-				"InstitutionName",
-				institution.getInstitutionName() + "[ "
-						+ institution.getInstitutionCode() + "]");
-	}
 }

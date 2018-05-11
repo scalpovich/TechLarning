@@ -11,6 +11,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.administration.Assig
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.AssignServiceCodeHelpdeskPrivilegesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.UserGroupHelpdeskPrivilegesPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 
 @Component
@@ -21,18 +22,19 @@ public class HelpdeskLevelPrivilegesWorkflow {
 	@Autowired
 	Navigator navigator;
 
+
 	public void provideHelpdeskLevelPrivilegesFlows(String subType,
 			HelpdeskPrivileges helpdeskPreviliges, UserCreation userCreation) {
 		switch (subType) {
-		case "User Groups":
+		case Constants.USER_GROUPS:
 			addUserToUserGroupFlows(helpdeskPreviliges, userCreation);
 			break;
 
-		case "Assign Product":
+		case Constants.ASSIGNPRODUCT:
 			assignProductToUserFlows(helpdeskPreviliges);
 			break;
 
-		case "Assign Service Code":
+		case Constants.ASSIGN_SERVICE_CODE:
 			assignServiceCodeToUserFlows(helpdeskPreviliges);
 			break;
 

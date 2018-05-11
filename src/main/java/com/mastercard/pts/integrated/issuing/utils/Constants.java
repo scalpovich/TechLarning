@@ -432,4 +432,11 @@ public class Constants {
 	public static final String COLUMN_NAME = "Status";
 	public static final int TABLE_ROW_NUM = 1;
 
+	public static final String UPLOAD_PATH_CURR = "/home/dc-user/integrated/elt_bo/data/CURR_EXCHANGE_UPLOAD";
+	public static final String UPLOAD_PATH_CURR_STAGE = "/mptshome/STAGE2/integrated/elt_bo/data/CURR_EXCHANGE_UPLOAD";
+
+	public static final String USER_GROUPS = "User Groups";
+	public static final String ASSIGNPRODUCT = "Assign Product";
+	public static final String ASSIGN_SERVICE_CODE = "Assign Service Code";
+
 }

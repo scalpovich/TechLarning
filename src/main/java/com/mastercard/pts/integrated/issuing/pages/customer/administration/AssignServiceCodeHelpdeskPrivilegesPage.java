@@ -59,11 +59,6 @@ public class AssignServiceCodeHelpdeskPrivilegesPage extends AbstractBasePage {
 	}
 
 	public void selectAllServiceCode() {
-		// int size = selectServiceCodeMultiSelect.getSelect()
-		// .getAllSelectedOptions().size();
-		// for (int i = 0; i < size; i++) {
-		// selectServiceCodeMultiSelect.getSelect().selectByIndex(i);
-		// }
 		Select s = new Select(getFinder().getWebDriver().findElement(
 				By.name("planPalette:choices")));
 		int size = s.getOptions().size();

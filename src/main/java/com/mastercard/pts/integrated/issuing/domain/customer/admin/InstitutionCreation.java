@@ -383,7 +383,8 @@ public class InstitutionCreation extends AbstractBasePage {
 		institute.setClientNumberLength(MapUtils.fnGetInputDataFromMap("Client Number Length"));
 		institute.setFinanacialStartMonth(MapUtils.fnGetInputDataFromMap("Financial Start Month"));
 		institute.setSDNPlan(MapUtils.fnGetInputDataFromMap("SDN Plan"));
-		institute.setAdaptiveAuthentication(MapUtils.fnGetInputDataFromMap("Adaptive Authentication"));
+		institute.setAdaptiveAuthentication(MapUtils
+				.fnGetInputDataFromMap("AdaptiveEcomm"));
 		institute.setmPinEnabled(MapUtils.fnGetInputDataFromMap("MPIN Enabled"));
 		institute.setSmsServiceProvider(MapUtils.fnGetInputDataFromMap("SMS Service Provider"));
 		institute.setContactName(MapUtils.fnGetInputDataFromMap("Contact Name"));

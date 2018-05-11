@@ -48,7 +48,7 @@ public class BatchLevelPrivilegesSteps {
 		UserCreation userCreation = context.get(ContextConstants.USER);
 		batchlevelprevidge.setEntityType(entityType);
 		batchlevelprevFlow.setAllBatchLevelTabPriviledgesForUsers(userCreation
-				.getUserName() + " [" + userCreation.getUserID() + "]");
+				.buildDescriptionAndCode());
 	}
 
 }

@@ -5,20 +5,12 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.TestContext;
-import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.workflows.customer.administration.BatchDefinitionWorkflow;
 
 @Component
 public class BatchDefinitionSteps {
 	@Autowired
 	BatchDefinitionWorkflow batchDefinitionWorkflow;
-
-	@Autowired
-	private KeyValueProvider provider;
-
-	@Autowired
-	TestContext context;
 
 	/**
 	 * Step Definition for setting the batch definition for

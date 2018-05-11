@@ -210,9 +210,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		String elementXpath = String.format("//span[contains(text(),'%s')]", uploadedFileName);
 		String selectXpath = elementXpath + "//parent::td//following-sibling::td/input";
 		selectByVisibleText(batchTypeDdwn, processBatchesDomain.getBatchType());
-		CustomUtils.ThreadDotSleep(500);
+		SimulatorUtilities.wait(500);
 		selectByVisibleText(batchNameDdwn, processBatchesDomain.getBatchName());
-		CustomUtils.ThreadDotSleep(5000);
+		SimulatorUtilities.wait(4000);
 		WebElement uploadedFilename = getFinder().getWebDriver().findElement(By.xpath(elementXpath));
 		WebElement checkbox = getFinder().getWebDriver().findElement(By.xpath(selectXpath));
 
@@ -230,14 +230,14 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		String elementXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic);
 		Boolean isProcessed = false;
 		String statusXpath = elementXpath + "//parent::td//following-sibling::td/a";
-		CustomUtils.ThreadDotSleep(500);
+		SimulatorUtilities.wait(500);
 		getFinder().getWebDriver().findElement(By.xpath(statusXpath)).click();
 		switchToIframe(Constants.VIEW_BATCH_DETAILS);
 
 		// unless it is completed, refresh it - No of attempts: 5
 		for (int i = 0; i < 5; i++) {
 			if (processBatchStatusTxt.getText().equalsIgnoreCase("PENDING [0]") || processBatchStatusTxt.getText().equalsIgnoreCase("IN PROCESS [1]")) {
-				CustomUtils.ThreadDotSleep(6000);
+				SimulatorUtilities.wait(6000);
 				ClickButton(closeBtn);
 				getFinder().getWebDriver().switchTo().defaultContent();
 				getFinder().getWebDriver().findElement(By.xpath(statusXpath)).click();

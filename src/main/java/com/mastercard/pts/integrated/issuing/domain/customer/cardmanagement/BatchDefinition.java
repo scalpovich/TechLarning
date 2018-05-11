@@ -3,7 +3,7 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
-import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 
 @Component
 public class BatchDefinition implements HasCodeAndDescription {
@@ -65,13 +65,23 @@ public class BatchDefinition implements HasCodeAndDescription {
 
 	public static BatchDefinition createWithProvider() {
 		BatchDefinition batchDefinition = new BatchDefinition();
-		String uploadPath = "UPLOAD_PATH_CER";
-		batchDefinition.setInputFilePath(MapUtils
-				.fnGetInputDataFromMap(uploadPath) + "/INPUT");
-		batchDefinition.setProcessedFilePath(MapUtils
-				.fnGetInputDataFromMap(uploadPath) + "/PROC");
-		batchDefinition.setRejectedFilePath(MapUtils
-				.fnGetInputDataFromMap(uploadPath) + "/OUTPUT");
+		if (System.getProperty("env").contains("stage")) {
+			batchDefinition.setInputFilePath(Constants.UPLOAD_PATH_CURR_STAGE
+					+ "/INPUT");
+			batchDefinition
+					.setProcessedFilePath(Constants.UPLOAD_PATH_CURR_STAGE
+							+ "/PROC");
+			batchDefinition
+					.setRejectedFilePath(Constants.UPLOAD_PATH_CURR_STAGE
+							+ "/OUTPUT");
+		} else {
+			batchDefinition.setInputFilePath(Constants.UPLOAD_PATH_CURR
+					+ "/INPUT");
+		batchDefinition.setProcessedFilePath(Constants.UPLOAD_PATH_CURR
+				+ "/PROC");
+		batchDefinition.setRejectedFilePath(Constants.UPLOAD_PATH_CURR
+				+ "/OUTPUT");
+		}
 		return batchDefinition;
 	}
 
