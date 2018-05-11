@@ -371,13 +371,22 @@ public class InstitutionCreation extends AbstractBasePage {
 
 	public static InstitutionCreation getInstitutionData() {
 		InstitutionCreation institute = new InstitutionCreation();
-		institute.setInstitutionCode(CustomUtils.RandomNumbers(6));
-		institute.setInstitutionName(
-				MapUtils.fnGetInputDataFromMap("InstitutionName") + CustomUtils.randomString(2).toUpperCase());
-		institute.setInstitutionAbbrevation(institute.getInstitutionName());
-		institute.setInstitutionCurrency(MapUtils.fnGetInputDataFromMap("Institution Currency"));
-		institute.setInstitutionReferenceCurrency(MapUtils.fnGetInputDataFromMap("Reference Currency"));
-		institute.setDefaultLanguage(MapUtils.fnGetInputDataFromMap("Default Language"));
+		if(MapUtils.fnGetInputDataFromMap("Padding")!=null){
+			institute.setInstitutionCode(CustomUtils.RandomNumbers(6));
+			institute.setInstitutionName(MapUtils.fnGetInputDataFromMap("InstitutionName")+MapUtils.fnGetInputDataFromMap("Padding"));
+			institute.setInstitutionAbbrevation(MapUtils.fnGetInputDataFromMap("InstitutionName")+CustomUtils.RandomNumbers(Integer.parseInt(MapUtils.fnGetInputDataFromMap("Padding"))));
+			
+		}else{
+			institute.setInstitutionCode(MapUtils.fnGetInputDataFromMap("InstitutionCode"));
+			institute.setInstitutionName(MapUtils.fnGetInputDataFromMap("InstitutionName"));
+			institute.setInstitutionAbbrevation(MapUtils.fnGetInputDataFromMap("Abbrevation"));
+		}
+		institute.setInstitutionCurrency(MapUtils
+				.fnGetInputDataFromMap("Institution Currency"));
+		institute.setInstitutionReferenceCurrency(MapUtils
+				.fnGetInputDataFromMap("Reference Currency"));
+		institute.setDefaultLanguage(MapUtils
+				.fnGetInputDataFromMap("Default Language"));
 		institute.setTimeZone(MapUtils.fnGetInputDataFromMap("Time Zone"));
 		institute.setAccountNumberLength(MapUtils.fnGetInputDataFromMap("Account Number Length"));
 		institute.setClientNumberLength(MapUtils.fnGetInputDataFromMap("Client Number Length"));

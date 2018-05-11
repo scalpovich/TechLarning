@@ -43,7 +43,7 @@ public class InstitutionCreationSteps {
 	final Logger logger = LoggerFactory.getLogger(InstitutionCreationSteps.class);
 
 	@When("user enters details to create new $institutionType Institution")
-	public void createNewInstituion(@Named("Institutetype") String institutionType) {
+	public void createNewInstitution(@Named("Institutetype") String institutionType) {
 		logger.info("user should be able to create new Institution");
 		instutionCreation = InstitutionCreation.getInstitutionData();
 		instutionCreation.setInstitutionType(institutionType);
