@@ -11,6 +11,7 @@ import com.mastercard.pts.integrated.issuing.pages.cardholder.services.Internati
 import com.mastercard.pts.integrated.issuing.pages.cardholder.services.ReplaceDevicePage;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.services.UnblockDevicePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 
 @Workflow
 public class CardHolderUiVerificationServicesWorkflow {
@@ -50,6 +51,19 @@ public class CardHolderUiVerificationServicesWorkflow {
 	public void verifyUnblockDevicePage() {
 		UnblockDevicePage page = navigator.navigateToPage(UnblockDevicePage.class);
 		page.verifyUiOperationStatus();
+	}
+
+	public void blockDevice() {
+		BlockDevicePage page = navigator.navigateToPage(BlockDevicePage.class);
+		page.enterCardBlockRemark(Constants.BLOCK_DEVICE);
+		page.confirmCardBlockRequest();
+	}
+
+	public void unblockDevice() {
+		UnblockDevicePage page = navigator
+				.navigateToPage(UnblockDevicePage.class);
+		page.enterCardUnblockRemerk(Constants.UNBLOCK_DEVICE);
+		page.confirmUnblockCardRequestBtn();
 	}
 
 }
