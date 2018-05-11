@@ -17,7 +17,6 @@ public class CreditInstitutionData {
 	private String code;
 	private String abbreviation;
 	private String corporateClientCode;
-	private String testing;
 	
 	public String getAssociation() {
 		return association;
@@ -121,14 +120,6 @@ public class CreditInstitutionData {
 
 	public void setCorporateClientCode(String corporateClientCode) {
 		this.corporateClientCode = corporateClientCode;
-	}
-	
-	public String getTesting() {
-		return testing;
-	}
-
-	public void setTesting(String testing) {
-		this.testing = testing;
 	}
 
 	public static CreditInstitutionData createWithProvider(DataProvider provider,String key) {

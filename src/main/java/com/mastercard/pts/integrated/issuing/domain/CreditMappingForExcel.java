@@ -31,7 +31,6 @@ public class CreditMappingForExcel {
 	private String plasticId;
 	private String pictureCode;
 	private String corporateClientCode;
-	private String testing;
 	
 	public CreditMappingForExcel createWithProviderForRegression(KeyValueProvider provider/*,DataProvider dataprovider,String institution*/) {
 		CreditMappingForExcel creditMappingForExcelFromJson=new CreditMappingForExcel();
@@ -140,14 +139,6 @@ public class CreditMappingForExcel {
 		this.corporateClientCode = corporateClientCode;
 	}
 	
-
-	public String getTesting() {
-		return testing;
-	}
-
-	public void setTesting(String testing) {
-		this.testing = testing;
-	}
 
 	@Override
 	public String toString() {
