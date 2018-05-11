@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.domain;
 
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
@@ -30,8 +31,9 @@ public class CreditMappingForExcel {
 	private String plasticId;
 	private String pictureCode;
 	private String corporateClientCode;
+	private String testing;
 	
-	public CreditMappingForExcel createWithProviderForRegression(KeyValueProvider provider) {
+	public CreditMappingForExcel createWithProviderForRegression(KeyValueProvider provider,DataProvider dataprovider,String institution) {
 		CreditMappingForExcel creditMappingForExcelFromJson=new CreditMappingForExcel();
 		creditMappingForExcelFromJson.setBranch(provider.getString(BRANCH));
 		creditMappingForExcelFromJson.setAssociation(provider.getString(ASSOCIATION));
@@ -44,6 +46,7 @@ public class CreditMappingForExcel {
 		creditMappingForExcelFromJson.setPlasticId(provider.getString(PLASTIC_ID));
 		creditMappingForExcelFromJson.setPictureCode(provider.getString(PICTURE_CODE));
 		creditMappingForExcelFromJson.setCorporateClientCode(provider.getString(CORPORATE_CLIENT_CODE));
+		creditMappingForExcelFromJson.setTesting(CreditInstitutionData.createWithProvider(dataprovider, institution).getTesting());
 		return creditMappingForExcelFromJson;
 		
 	}
@@ -135,6 +138,15 @@ public class CreditMappingForExcel {
 
 	public void setCorporateClientCode(String corporateClientCode) {
 		this.corporateClientCode = corporateClientCode;
+	}
+	
+
+	public String getTesting() {
+		return testing;
+	}
+
+	public void setTesting(String testing) {
+		this.testing = testing;
 	}
 
 	@Override

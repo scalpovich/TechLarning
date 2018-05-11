@@ -40,7 +40,7 @@
    "customerType":"Corporate",
    "embossingVendor":"V25157",
    "interchange":"MASTERCARD",
-   "issuerBin":"470110",
+   "issuerBin":"537716",
    "plasticId":"317",
    "pictureCode":"705",
    "corporateClientCode":"11008818116000015"
@@ -74,6 +74,22 @@
    "plasticId":"121",
    "pictureCode":"602",
    "corporateClientCode":"00003518124000003"
-   }  
+   } 
+   ,
+     {
+   "code":"270635",
+   "abbreviation":"PREISSBN",
+   "association":"MASTERCARD",
+   "branch":"22179",
+   "cardPackIdGenerationTemplate":"PAN768",
+   "deviceIdGenerationTemplate":"PAN767",
+   "customerType":"Corporate",
+   "embossingVendor":"Aut011",
+   "interchange":"MASTERCARD",
+   "issuerBin":"575766",
+   "plasticId":"712",
+   "pictureCode":"316",
+   "corporateClientCode":"27063518131000001"
+   }   
    ]
 }

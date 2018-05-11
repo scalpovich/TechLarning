@@ -13,7 +13,8 @@
    "issuerBin":"489765",
    "plasticId":"AUT",
    "pictureCode":"AUT",
-   "corporateClientCode":"12121218003000051"
+   "corporateClientCode":"12121218003000051",
+   "testing":"abcc"
    }
   ]
 }
