@@ -33,7 +33,7 @@ public class CreditMappingForExcel {
 	private String corporateClientCode;
 	private String testing;
 	
-	public CreditMappingForExcel createWithProviderForRegression(KeyValueProvider provider,DataProvider dataprovider,String institution) {
+	public CreditMappingForExcel createWithProviderForRegression(KeyValueProvider provider/*,DataProvider dataprovider,String institution*/) {
 		CreditMappingForExcel creditMappingForExcelFromJson=new CreditMappingForExcel();
 		creditMappingForExcelFromJson.setBranch(provider.getString(BRANCH));
 		creditMappingForExcelFromJson.setAssociation(provider.getString(ASSOCIATION));
@@ -46,7 +46,7 @@ public class CreditMappingForExcel {
 		creditMappingForExcelFromJson.setPlasticId(provider.getString(PLASTIC_ID));
 		creditMappingForExcelFromJson.setPictureCode(provider.getString(PICTURE_CODE));
 		creditMappingForExcelFromJson.setCorporateClientCode(provider.getString(CORPORATE_CLIENT_CODE));
-		creditMappingForExcelFromJson.setTesting(CreditInstitutionData.createWithProvider(dataprovider, institution).getTesting());
+		//creditMappingForExcelFromJson.setTesting(CreditInstitutionData.createWithProvider(dataprovider, institution).getTesting());
 		return creditMappingForExcelFromJson;
 		
 	}
