@@ -64,13 +64,7 @@ public class ReconciliationWorkFlow {
 		return getReportContent(fileName,key,username);
 		//return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
 	}
-	
-	public List<String> verifyReport(String key, String	username) {
-		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
-		page.generateTransactionAuthReport();
-		return getReportContent(getFileName(),key,username);
-	}
-	
+		
 	public boolean verifyReportGenerationClearing() {
 		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
 		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
@@ -98,15 +92,6 @@ public class ReconciliationWorkFlow {
 				fileCount++;
 			}
 		return fileCount;
-	}
-
-	public String getFileName() {
-		String downLoadPath = System.getProperty("user.home") + "\\Downloads";
-		File f = new File(downLoadPath);
-		File[] files = f.listFiles();
-		Arrays.sort(files,LastModifiedFileComparator.LASTMODIFIED_REVERSE);
-		logger.info("Latest Downloaded File Name " + files[0].getName());
-		return files[0].getName();
 	}
 
 	public int waitForReportToDownLoad(int fileCountBeforeReportGeneration) {

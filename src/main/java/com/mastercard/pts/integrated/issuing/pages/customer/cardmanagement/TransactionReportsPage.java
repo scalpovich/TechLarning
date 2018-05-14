@@ -88,7 +88,7 @@ public class TransactionReportsPage extends AbstractBasePage {
 	private MCWebElement productTypeClearingReportDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:5:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
-	private MCWebElement dateType;
+	private MCWebElement dateTypeDDwn;
 
 	public String calelement = "//td[2]";
 
@@ -168,7 +168,7 @@ public class TransactionReportsPage extends AbstractBasePage {
 		clicksearchButtonElement();
 		if(reportType.equalsIgnoreCase(transactionDetailReport)){
 			WebElementUtils.selectDropDownByVisibleText(productTypeAuthReportDDwn, ALL);
-			WebElementUtils.selectDropDownByVisibleText(dateType, ALL);
+			WebElementUtils.selectDropDownByVisibleText(dateTypeDDwn, ALL);
 			WebElementUtils.selectDropDownByVisibleText(fileTypeAuthReportDDwn, provider.getString(FILE_TYPE_REPORT));
 		}
 		generateReportBtn.click();
