@@ -49,10 +49,10 @@ public class HighRiskMerchantLocationPage extends AbstractBasePage {
 	private MCWebElement endDateDPkr;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.feedbackPanelINFO")
-	private MCWebElement feedbackPanel;
+	private MCWebElement feedbackPanelLbl;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='merchantLocationId']")
-	private MCWebElement planCodeSearchTxtBx;
+	private MCWebElement planCodeSearchTxt;
 	
 	private String ERROR_XPATH = ".//div[@class='ketchup-error-container-alt']/ol/li";
 	
@@ -111,7 +111,7 @@ public class HighRiskMerchantLocationPage extends AbstractBasePage {
 	}
 	
 	public void enterMerchantLocationIdInSearchBox(HighRiskMerchantLocation plan) {
-		enterValueinTextBox(planCodeSearchTxtBx, plan.getMerchantLocationId());
+		enterValueinTextBox(planCodeSearchTxt, plan.getMerchantLocationId());
 	}
 	
 	public Boolean isNoRecordsFoundInTableView() {

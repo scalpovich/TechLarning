@@ -116,9 +116,9 @@ public class UserManagementSteps {
 	@Then("user is logged in institution")
 	public void givenUserIsLoggedInInstitution() {
 		Portal loginPortal = environment.getPortalByType(Portal.TYPE_CUSTOMER);
-		 Institution institution = Institution.createWithProvider(provider);
-		 userDefaultInstitution = institution.buildAbbreviationAndCode();
-		 context.put(USER_INSTITUTION_SELECTED, institution.getCode());
+		userDefaultInstitution = Institution.createWithProvider(provider).buildAbbreviationAndCode();
+		Institution institution = Institution.createWithProvider(provider);
+		context.put(USER_INSTITUTION_SELECTED, institution.getCode());
 		loginWorkflow.logInInstitution(loginPortal, userDefaultInstitution);
 	}
 
