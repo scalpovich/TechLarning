@@ -575,6 +575,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 	public void selectMethodToGenerateFile(String option)
 	{
+		waitForElementVisible(methodToGenerateFileDD);
 		WebElementUtils.selectDropDownByVisibleText(methodToGenerateFileDD, option);
 	}
 	public void selectBin(String option)
