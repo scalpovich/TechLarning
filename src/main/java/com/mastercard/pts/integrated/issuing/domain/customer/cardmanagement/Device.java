@@ -42,7 +42,7 @@ public class Device {
 	private static final String TRANSACTION_PASSWORD = "TRANSACTION_PASSWORD";
 	private static final String CURRENCY_OF_TRANSFER = "CURRENCY_OF_TRANSFER";
 	
-
+	private String currencyofTransfer;
 	private String currentTransPassword;
 	private String newTransPassword;
 	private String confirmNewTransPassword;
@@ -101,8 +101,9 @@ public class Device {
 	private String expiryFlag;	
 	private String creditLimit;
   	private String legalID;
+  	private String walletCurrency;
 
-	
+
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
 		device.setApplicationType(provider.getString(APPLICATION_TYPE));
@@ -130,8 +131,8 @@ public class Device {
       	device.setLegalID(RandomStringUtils.randomAlphanumeric(9));	
 		device.setProgramCode(provider.getString(PROGRAM_CODE));
 		device.setDevicePlan1(provider.getString(DEVICE_PLAN));     
-		device.setTransactionPassword(provider.getString(TRANSACTION_PASSWORD));
-		device.setCurrency(provider.getString(CURRENCY_OF_TRANSFER));
+		device.setTransactionPassword(provider.getString(TRANSACTION_PASSWORD));		
+		device.setCurrencyofTransfer(provider.getString(CURRENCY_OF_TRANSFER));
 		return device;
 	}
 	
@@ -157,6 +158,22 @@ public class Device {
 		device.setOtherInfoRegisterForDncr(provider.getString(ND_OTHERINFO_REGISTER_FOR_DCNR));
 		device.setOtherInfoSmsAlertRequired(provider.getString(ND_OTHERINFO_SMS_ALERT_REQUIRED));
 		return device;
+	}
+
+	public String getWalletCurrency() {
+		return walletCurrency;
+	}
+
+	public void setWalletCurrency(String walletCurrency) {
+		this.walletCurrency = walletCurrency;
+	}
+	
+	public String getCurrencyofTransfer() {
+		return currencyofTransfer;
+	}
+
+	public void setCurrencyofTransfer(String currencyofTransfer) {
+		this.currencyofTransfer = currencyofTransfer;
 	}
 
 	public String getExistingDeviceNumber() {

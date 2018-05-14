@@ -149,15 +149,15 @@ public class TransferFundsPage extends AbstractBasePage {
 		enterText(deviceNumberTxt, device.getDeviceNumber());	
 		clickWhenClickable(walletNumberDropDown);
 		SimulatorUtilities.wait(100);			
-		logger.info("WalletNumber : - {}",resolveWalletNumber(device.getWalletNumber())+" ["+device.getCurrency()+"] ");		
-		selectByText(walletNumberDropDown, resolveWalletNumber(device.getWalletNumber())+" ["+device.getCurrency()+"] ");
+		logger.info("WalletNumber : - {}",resolveWalletNumber(device.getWalletNumber())+" ["+device.getCurrencyofTransfer()+"] ");		
+		selectByText(walletNumberDropDown, resolveWalletNumber(device.getWalletNumber())+" ["+device.getCurrencyofTransfer()+"] ");
 //		logger.info("Beneficiary Card Number:  : - {}",device.getExistingDeviceNumber());//		
 //		SelectDropDownByValue(walletNumberDropDown, device.getWalletNumber());
 		enterText(toDeviceNumberTxt, device.getExistingDeviceNumber());		
 		enterText(transactionAmountTxt, transferDetail[0]);		
 		selectByText(selectedWalletCurrencyCodeDropDown, transferDetail[1]);
 		clickSubmitButton();
-		enterText(txnPasswordTxt, device.getNewTransPassword());
+		enterText(txnPasswordTxt, device.getTransactionPassword());
 		enterText(remarksTxt, transferDetail[3]);
 		clickConfirmButton();
 		return getSuccessMessage();				
@@ -185,8 +185,8 @@ public class TransferFundsPage extends AbstractBasePage {
 		enterText(deviceNumberTxt, device.getDeviceNumber());
 		SimulatorUtilities.wait(100);	
 		clickWhenClickable(walletNumberDropDown);
-		logger.info("WalletNumber : - {}",resolveWalletNumber(device.getWalletNumber())+" ["+device.getCurrency()+"] ");		
-		selectByText(walletNumberDropDown, resolveWalletNumber(device.getWalletNumber())+" ["+device.getCurrency()+"] ");
+		logger.info("WalletNumber : - {}",resolveWalletNumber(device.getWalletNumber())+" ["+device.getCurrencyofTransfer()+"] ");		
+		selectByText(walletNumberDropDown, resolveWalletNumber(device.getWalletNumber())+" ["+device.getCurrencyofTransfer()+"] ");
 		//SelectDropDownByValue(walletNumberDropDown, device.getWalletNumber());
 		enterText(toDeviceNumberTxt, device.getExistingDeviceNumber());		
 		enterText(transactionAmountTxt, transferDetail[0]);		
@@ -195,7 +195,7 @@ public class TransferFundsPage extends AbstractBasePage {
 		enterText(beneficiaryNameTxt, transferDetail[2]);		
 		enterText(memoTxt, transferDetail[3]);
 		clickSubmitButton();
-		enterText(txnPasswordTxt, device.getNewTransPassword());
+		enterText(txnPasswordTxt, device.getTransactionPassword());
 		clickConfirmButton();
 		return getSuccessMessage();		
 		
