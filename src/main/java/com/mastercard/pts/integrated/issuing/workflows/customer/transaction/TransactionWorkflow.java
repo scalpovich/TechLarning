@@ -205,7 +205,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(2000);
 			executeAutoITExe("ActivateEditSubfieldAndClickOK.exe");
 			wait(2000);
-			winiumClickOperation("Set Value");
+			winiumClickOperation(SET_VALUE);
 			winiumClickOperation(CLOSE);
 			winiumClickOperation("Save");
 			winiumClickOperation("OK");
@@ -520,7 +520,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			setText("");
 			setText("999684");
 			wait(2000);
-			winiumClickOperation("Set Value");
+			winiumClickOperation(SET_VALUE);
 			wait(2000);
 			winiumClickOperation(CLOSE);
 			wait(1000);
@@ -551,7 +551,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setText("");
 		setText(authCode.toString());
 		wait(2000);
-		winiumClickOperation("Set Value");
+		winiumClickOperation(SET_VALUE);
 		wait(2000);
 		winiumClickOperation(CLOSE);
 	}
@@ -568,7 +568,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumDriver.findElementByName(SELECT_DE_VALUE).click();
 		wait(2000);
 		winiumDriver.findElementByName(BILLING_CURRENCY_VALUE).click();
-		winiumClickOperation("Set Value");
+		winiumClickOperation(SET_VALUE);
 		wait(2000);
 		winiumClickOperation(CLOSE);
 	}
@@ -584,7 +584,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setText("");
 		setText(amount.toString());
 		wait(2000);
-		winiumClickOperation("Set Value");
+		winiumClickOperation(SET_VALUE);
 		wait(2000);
 		winiumClickOperation(CLOSE);
 	}
@@ -610,7 +610,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setText("");
 		setText(cardNumber);
 		wait(2000);
-		winiumClickOperation("Set Value");
+		winiumClickOperation(SET_VALUE);
 		wait(2000);
 		winiumClickOperation(CLOSE);
 	}
@@ -660,7 +660,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setText(rRN);
 		winiumClickOperation(OK);
 		wait(2000);
-		winiumClickOperation("Set Value");
+		winiumClickOperation(SET_VALUE);
 		String aRN = winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
 		wait(2000);
 		winiumClickOperation(CLOSE);
@@ -687,7 +687,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
 		setText("");
 		setText("999684");
-		winiumClickOperation("Set Value");
+		winiumClickOperation(SET_VALUE);
 		wait(1000);
 		winiumClickOperation(CLOSE);
 		activateMcps();
@@ -769,7 +769,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		setText(value);
 		winiumClickOperation("OK");
 		wait(2000);
-		winiumClickOperation("Set Value");
+		winiumClickOperation(SET_VALUE);
 		wait(2000);
 		winiumClickOperation(CLOSE);
 	}
@@ -1733,7 +1733,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			winiumClickOperation("Login");
 			logger.info("User Logged Into WinSCP Application");
 		} catch (AWTException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 		}
 	}
 
@@ -1758,7 +1758,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(3000);
 			winiumClickOperation("OK");
 		} catch (AWTException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 		}
 	}
 

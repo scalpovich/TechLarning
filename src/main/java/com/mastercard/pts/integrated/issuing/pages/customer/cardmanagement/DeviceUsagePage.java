@@ -1,8 +1,14 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 
+import java.util.Map;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -17,31 +23,62 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_SEARCH, CardManagementNav.L2_SEARCH_AUTHORIZATION,
-		CardManagementNav.L3_DEVICE_USAGE})
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_SEARCH, CardManagementNav.L2_SEARCH_AUTHORIZATION, CardManagementNav.L3_DEVICE_USAGE })
 public class DeviceUsagePage extends AbstractBasePage {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(DeviceUsagePage.class);
+	private static final Logger logger = LoggerFactory.getLogger(DeviceUsagePage.class);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=deviceNumber]")
 	private MCWebElement deviceNumber;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[@class='sectionHead']//span[text()='Daily Total']/../../following-sibling::tr[1]/td[@class='displayName']/span[contains(text(),'Debit Transaction Amount Utilized')]/../following-sibling::td//span[@class='labeltextr']")
+	private MCWebElement dailyDebitTransactionAmountUtilizedLbl;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[@class='sectionHead']//span[text()='Period Total']/../../following-sibling::tr[1]/td[@class='displayName']/span[contains(text(),'Debit Transaction Amount Utilized')]/../following-sibling::td//span[@class='labeltextr']")
+	private MCWebElement periodDebitTransactionAmountUtilizedLbl;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[@class='sectionHead']//span[text()='Yearly Total']/../../following-sibling::tr[1]/td[@class='displayName']/span[contains(text(),'Debit Transaction Amount Utilized')]/../following-sibling::td//span[@class='labeltextr']")
+	private MCWebElement yearlyDebitTransactionAmountUtilizedLbl;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Device Transaction Usage']")
+	private MCWebElement devicetransactionUsageTabLink;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview")
+	private MCWebElement dataTable;
 
 	public void verifyUiOperationStatus() {
 		logger.info("Device Usage");
 		verifySearchButton("Search");
 	}
-	
-	public void searchDevice(String cardNumber){
+
+	public List<String> getDeviceTotalTransactionUsage(String cardNumber) {
 		WebElementUtils.enterText(deviceNumber, cardNumber);
 		searchButtonElement.click();
+		List<String> deviceUsageDetails = new ArrayList<>();
+		viewFirstRecord();
+		runWithinPopup("View Device Usage", () -> {
+			deviceUsageDetails.add(dailyDebitTransactionAmountUtilizedLbl.getText());
+			deviceUsageDetails.add(periodDebitTransactionAmountUtilizedLbl.getText());
+			deviceUsageDetails.add(yearlyDebitTransactionAmountUtilizedLbl.getText());
+			devicetransactionUsageTabLink.click();
+//			Map<String, String> deviceTransactionUsage = new HashMap<String, String>();
+//			List<MCWebElement> allHeaders = dataTable.inputs(By.tagName("th")).getElements();
+//			List<MCWebElement> allData = dataTable.inputs(By.tagName("td")).getElements();
+//			for (int i = 0; i < allHeaders.size(); i++) {
+//				deviceTransactionUsage.put(allHeaders.get(i).getText(), allData.get(i).getText());
+//			}
+
+			deviceUsageDetails.add(getCellTextByColumnName(1, "Daily Amount Utilized"));
+			deviceUsageDetails.add(getCellTextByColumnName(1, "Periodic Amount Utilized"));
+			deviceUsageDetails.add(getCellTextByColumnName(1, "Yearly Amount Utilized"));
+			WebElementUtils.scrollDown(driver(), 250, 350);
+			clickCloseButton();
+		});
+		return deviceUsageDetails;
 	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(deviceNumber)
-				);
+		return Arrays.asList(WebElementUtils.elementToBeClickable(deviceNumber));
 	}
 }

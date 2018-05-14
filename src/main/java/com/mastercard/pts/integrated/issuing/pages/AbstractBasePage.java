@@ -285,7 +285,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickWhenClickable(addNewBtn);
 	}
 
-
 	// used when there are more than 1 add buttons
 	protected void clickAddButtonVariant(MCWebElement element) {
 		WebElementUtils.scrollDown(driver(), 0, 250);
@@ -1240,7 +1239,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		By frameSelector = By.xpath(String.format("//h3[contains(text(), '%s')]/ancestor::div//iframe[@class='wicket_modal']", caption));
 		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameSelector));
 	}
-	
+
 	public static void addWicketAjaxListeners(WebDriver driver) {
 		String javascript = "if (typeof tk  == 'undefined') {" + "tk = {activeAjaxCount: 0, ajaxCallsTried: 0, ajaxCallsCompleted: 0};"
 				+ "Wicket.Ajax.registerPreCallHandler(function(){tk.activeAjaxCount++;tk.ajaxCallsTried++;});"
@@ -1312,8 +1311,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	public List<WebElement> getAllOptionsOfDropdown(MCWebElement element) {
-		List<WebElement> dropDownOptions = element.getSelect().getOptions();
-		return dropDownOptions;
+		return element.getSelect().getOptions();
 	}
 
 	public static boolean hasClass(WebElement element, String cssClass) {

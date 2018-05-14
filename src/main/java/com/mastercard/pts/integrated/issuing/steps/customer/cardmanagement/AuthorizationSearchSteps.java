@@ -4,7 +4,6 @@ import static org.junit.Assert.assertThat;
 
 import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Then;
-import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
