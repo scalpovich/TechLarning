@@ -51,7 +51,7 @@ Given login to bank as a Bankadmin
 When user enters details to create new Debit Institution
 Then user should be able to create new institute
 
-Scenario:4 New user creation prepaid
+Scenario:4 New user creation Debit
 Meta:
 @TCName TCInstituteCreationDC
 @testDataFileName testdata
