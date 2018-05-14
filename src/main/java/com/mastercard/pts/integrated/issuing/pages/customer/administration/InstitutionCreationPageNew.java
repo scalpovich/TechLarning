@@ -90,7 +90,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	private MCWebElement defaulLanguageDrpDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "zoneCode:input:dropdowncomponent")
-	private MCWebElement timeZoneDrpDwn;
+	private MCWebElement timeZoneDdwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "zipMandatoryFlag:checkBoxComponent")
 	private MCWebElement domesticPcodeMandChkBx;
@@ -201,7 +201,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	private MCWebElement searchInstitutionName;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.='Institution Code']/following::input[1]")
-	private MCWebElement searchInstitutionCode;
+	private MCWebElement searchInstitutionCodeTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Search']")
 	private MCWebElement searchBtn;
@@ -368,8 +368,8 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public void selectTimeZone(InstitutionCreation institute) {
-		waitForElementVisible(timeZoneDrpDwn);
-		selectValueFromDropDown(timeZoneDrpDwn, institute.getTimeZone());
+		waitForElementVisible(timeZoneDdwn);
+		selectValueFromDropDown(timeZoneDdwn, institute.getTimeZone());
 	}
 
 	public boolean checkAgentPortalSupport() {
@@ -528,7 +528,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 				institute.getInstitutionName());
 	}
 	public void enterNewInstitutionCode(InstitutionCreation institute) {
-		enterValueinTextBox(searchInstitutionCode,
+		enterValueinTextBox(searchInstitutionCodeTxt,
 				institute.getInstitutionCode());
 	}
 

@@ -18,7 +18,6 @@ Meta:
 @testDataFileName testdata
 @sheetName Institute
 @PrepaidInstitutionCreation
-@INCTest
 
 Given login to bank as a Bankadmin
 When user enters details to create new Prepaid Institution
@@ -30,7 +29,6 @@ Meta:
 @testDataFileName testdata
 @sheetName Institute
 @PrepaidUserCreation
-@INCTest
 
 Given login to bank as a Bankadmin
 When user enter details to create new user
@@ -45,7 +43,6 @@ Meta:
 @testDataFileName testdata
 @sheetName Institute
 @DebitInstitutionCreation
-@INCDebit
 
 Given login to bank as a Bankadmin
 When user enters details to create new Debit Institution
@@ -57,7 +54,6 @@ Meta:
 @testDataFileName testdata
 @sheetName Institute
 @DebitUserCreation
-@INCDebit
 
 Given login to bank as a Bankadmin
 When user enter details to create new user
@@ -71,7 +67,6 @@ Meta:
 @testDataFileName testdata
 @sheetName Institute
 @CreditInstitutionCreation
-@INCCredit
 
 Given login to bank as a Bankadmin
 When user enters details to create new Credit Institution
@@ -83,7 +78,6 @@ Meta:
 @testDataFileName testdata
 @sheetName Institute
 @CreditUserCreation
-@INCCredit
 
 Given login to bank as a Bankadmin
 When user enter details to create new user
@@ -97,7 +91,6 @@ Meta:
 @testDataFileName testdata
 @sheetName Institute
 @DebitPrepaidInstitutionCreation
-@INCDebPre
 Given login to bank as a Bankadmin
 When user enters details to create new Debit-Prepaid Institution
 Then user should be able to create new institute
@@ -108,7 +101,6 @@ Meta:
 @testDataFileName testdata
 @sheetName Institute
 @DebitPrepaidUserCreation
-@INCDebPre
 Given login to bank as a Bankadmin
 When user enter details to create new user
 Then user should be able to create new user
@@ -169,7 +161,6 @@ Meta:
 @testDataFileName Testdata
 @sheetName Institute
 @InstitutionCreationWithAll
-@CrePreDeb
 
 Given login to bank as a Bankadmin
 When user enters details to create new ALL Institution
@@ -182,7 +173,6 @@ Meta:
 @testDataFileName testdata
 @sheetName Institute
 @UserCreationWithAll
-@CrePreDeb
 Given login to bank as a Bankadmin
 When user enter details to create new user
 Then user should be able to create new user
