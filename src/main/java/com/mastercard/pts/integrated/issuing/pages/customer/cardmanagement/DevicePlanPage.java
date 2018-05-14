@@ -929,9 +929,10 @@ public class DevicePlanPage extends AbstractBasePage {
 		enterValueinTextBox(devicePlanCode, devicePlanDataObject.getDevicePlanCode());
 		clickSearchButton();
 		editFirstRecord();				
-		runWithinPopup("Edit Device Plan", () -> {	
+		runWithinPopup("Edit Device Plan", () -> {			
+			WebElementUtils.elementToBeClickable(authorizationTab);
 			clickWhenClickable(authorizationTab);
-			SimulatorUtilities.wait(900);
+			SimulatorUtilities.wait(3000);
 			checkCvcCvv(false);
 			clickSaveButton();
 		});
