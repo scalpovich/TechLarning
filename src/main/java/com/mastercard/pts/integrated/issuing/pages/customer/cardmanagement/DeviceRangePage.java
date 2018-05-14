@@ -79,9 +79,9 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#activeFlag select")
 	private MCWebElement statusDDwn;
+	
 	@Autowired
 	Program program;
-
 	@Autowired
 	DevicePlan deviceplan;
 

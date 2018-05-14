@@ -205,8 +205,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 		verifyOperationStatus();
 	}
 	
-	public void processDeviceProductionBatchNewDeviceSupplementary(DeviceProductionBatch batch) {
-		//Device device = context.get(ContextConstants.DEVICE);
+	public void processDeviceProductionBatchNewDeviceSupplementary(DeviceProductionBatch batch) {		
 		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
 		WebElementUtils.enterText(batchNumberTxt, batchNumber);
 		waitAndSearchForRecordToExistForSupplementary();
