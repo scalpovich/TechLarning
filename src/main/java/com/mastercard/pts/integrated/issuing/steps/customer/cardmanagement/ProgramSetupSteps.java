@@ -366,7 +366,7 @@ public class ProgramSetupSteps {
 			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
 			 "When User fills Document Checklist Screen for prepaid product",
 			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for prepaid product transaction limit plan", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" product transaction limit plan", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
 			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product" })
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidLimitPlan(String deviceType) {
 		// composite step
@@ -535,21 +535,6 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 	
-	@When("User fills Device Plan for $type product transaction limit plan")
-	public void whenUserFillsDevicePlanTransactionLimitPlan(String type) {
-		setPinRequiredToFalse();
-		devicePlan = DevicePlan.createWithProvider(provider);
-		devicePlan.setProductType(ProductType.fromShortName(type));
-		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
-		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
-		devicePlan.setTransactionLimitPlan(context.get(ContextConstants.TX_LIMIT_PLAN_CODE));
-		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
-		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
-		devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
-		programSetupWorkflow.createDevicePlan(devicePlan);
-		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
-	}
-
 	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card with no pin for non-default institution")
 	public void whenUserFillsDevicePlanWithNoPinforNonDefaultInstitution(String productType, String deviceType) {
 		setPinRequiredToFalse();
@@ -616,6 +601,25 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
+	
+	@When("User fills Device Plan for $productType $deviceType product transaction limit plan")
+	public void whenUserFillsDevicePlanTransactionLimitPlan(String productType, String deviceType) {
+		setPinRequiredToFalse();
+		devicePlan = DevicePlan.createWithProvider(provider);
+		devicePlan.setProductType(ProductType.fromShortName(productType));
+		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
+		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+		devicePlan.setTransactionLimitPlan(context.get(ContextConstants.TX_LIMIT_PLAN_CODE));
+		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
+		if ("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
+			devicePlan.setIsPinLess("YES");
+		programSetupWorkflow.createDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+
 
 	// refactored and created a new method that could be used in Device Plan to
 	// read test data from device context and/or testdata
