@@ -5,20 +5,21 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionLimitPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionLimitPlanDetails;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramSetupWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.TransactionLimitPlanFlows;
 
 @Component
 public class TransactionLimitPlanSteps {
 
-	private static final String description = "Automation Limit Plan ";
-
-	private static final String transactionLimitPlanCode = "_TLP";
+	private static final String DESCRIPTION = "Automation Limit Plan ";
 
 	@Autowired
 	DeviceCreation deviceCreation;
@@ -33,6 +34,9 @@ public class TransactionLimitPlanSteps {
 
 	@Autowired
 	private ProgramSetupWorkflow programSetupWorkflow;
+	
+	@Autowired
+	private TestContext context;
 
 	@When("user creates Transaction Limit Plan for $product and plan type as $plan")
 	public void whenUserCreatesTransactionLimitPlanForPrepaidAndPlanTypeAsDeviceWalletPromotionEntityPlan(@Named("product") String product, @Named("plan") String plan) {
@@ -45,9 +49,13 @@ public class TransactionLimitPlanSteps {
 	@When("User fills Transaction Limit Plan for $type product without details")
 	public void whenUserFillsTransactionLimitPlan(String type) {
 		transactionLimitPlan = TransactionLimitPlan.createWithProvider(provider);
-		transactionLimitPlan.setDescription(description + ProductType.fromShortName(type).toString().subSequence(0, 3));
+		String description=DESCRIPTION + ProductType.fromShortName(type).subSequence(0, 3);
+		transactionLimitPlan.setDescription(description);
 		transactionLimitPlan.setIframeproductType(ProductType.fromShortName(type));
-		transactionLimitPlan.setTransactionLimitPlanCode(ProductType.fromShortName(type).subSequence(0, 3).toString().toUpperCase() + transactionLimitPlanCode);
+		String randomValue = MiscUtils.generate6CharAlphaNumeric();
+		transactionLimitPlan.setTransactionLimitPlanCode(randomValue);
+		String code = String.format("%s [%s]", description, randomValue);
+		context.put(ContextConstants.TX_LIMIT_PLAN_CODE, code);
 		transactionLimitPlanFlows.createTransactionLimitPlanWithoutDetails(transactionLimitPlan);
 	}
 

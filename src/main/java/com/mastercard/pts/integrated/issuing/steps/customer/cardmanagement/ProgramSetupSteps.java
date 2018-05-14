@@ -76,8 +76,6 @@ public class ProgramSetupSteps {
 
 	private DeviceEventBasedFeePlan deviceEventBasedFeePlan;
 
-	private TransactionFeePlan transactionFee;
-
 	private CreditCardTransactionRulePlan transactionRulePlanTestDataObject;
 
 	private CreditCardPaymentPriority paymentPrioritytestDataObject;
@@ -362,6 +360,17 @@ public class ProgramSetupSteps {
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPin(String deviceType) {
 		// composite step
 	}
+	
+	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" with limit plan")
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			 "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for prepaid product transaction limit plan", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product" })
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidLimitPlan(String deviceType) {
+		// composite step
+	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin without dedupe")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
@@ -519,6 +528,21 @@ public class ProgramSetupSteps {
 		 * deviceTemplate.buildDescriptionAndCode());
 		 */
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
+		programSetupWorkflow.createDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+	
+	@When("User fills Device Plan for $type product transaction limit plan")
+	public void whenUserFillsDevicePlanTransactionLimitPlan(String type) {
+		setPinRequiredToFalse();
+		devicePlan = DevicePlan.createWithProvider(provider);
+		devicePlan.setProductType(ProductType.fromShortName(type));
+		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+		devicePlan.setTransactionLimitPlan(context.get(ContextConstants.TX_LIMIT_PLAN_CODE));
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));

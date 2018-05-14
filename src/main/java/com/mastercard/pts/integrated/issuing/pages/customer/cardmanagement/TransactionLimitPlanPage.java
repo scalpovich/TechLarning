@@ -17,7 +17,6 @@ import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManag
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
-import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionLimitPlanDetails;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -260,7 +259,6 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 	public void createTransactionLimitPlanWithoutDetails(TransactionLimitPlan transactionLimitPlanDataObject) {
 		logger.info("Create Transaction Limit Plan: {}", transactionLimitPlanDataObject.getTransactionLimitPlanCode());
 		clickAddNewButton();
-
 		runWithinPopup("Add Transaction Limit Plan", () -> {
 			enterIframeTransactionLimitPlanCode(transactionLimitPlanDataObject.getTransactionLimitPlanCode());
 			enterIframeDescription(transactionLimitPlanDataObject.getDescription());
@@ -270,14 +268,12 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 			WebElementUtils.enterText(periodicityNumberTxt, "9");
 			WebElementUtils.selectDropDownByIndex(iframeStartMonthForYearlyLimitsDDwn, 1);
 			clickAddDetailsButton();
-
 		});
-		// verifyOperationStatus();
 	}
 
 	public void addEachDetail(TransactionLimitPlan transactionLimitPlanDataObject) {
 		try {
-			switchToIframe(Constants.ADD_TRANSACTION_LIMIT_PLAN_FRAME, 10);
+			switchToIframe(Constants.ADD_TRANSACTION_LIMIT_PLAN_FRAME, 1);
 		} catch (TimeoutException te) {
 			logger.debug(te.getMessage(), te);
 		}
@@ -287,7 +283,6 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 	}
 
 	private void addDetails(TransactionLimitPlanDetails details, String productType) {
-
 		runWithinPopup("Add Transaction Limit Plan Detail", () -> {
 			selectIframeTransactionType(details.getIframeTransactionType());
 			waitForWicket();
@@ -300,20 +295,19 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 			selectIframeFloorResponse(details.getIframeFloorResponse());
 			enterIframeCeilingAmount(details.getIframeCeilingAmount());
 			selectIframeCeilingResponse(details.getIframeCeilingResponse());
-			if (productType.equalsIgnoreCase(ProductType.DEBIT)) {
-				enterIframeStandInAmount(details.getIframeCeilingAmount());
-				selectIframeStandInResponse(details.getIframeCeilingResponse());
-			}
 			enterIframeDailyAmount(details.getIframeDailyAmount());
 			selectIframeDailyResponse(details.getIframeDailyResponse());
 			enterDailyVelocity(details.getLimitDailyVelocity());
 			enterPeriodicAmt(details.getLimitPeriodicAmount());
 			enterPeriodicVel(details.getLimitPeriodicVelocity());
-			enterYearlyAmt(details.getLimitYearlyAmount());
-			enterYearlyVel(details.getLimitYearlyVelocity());
+			enterYearlyData(details);
 			clickSaveButton();
 		});
-		// verifyRecordMarkedForUpdationStatusSuccess();
+	}
+
+	private void enterYearlyData(TransactionLimitPlanDetails details) {
+		enterYearlyAmt(details.getLimitYearlyAmount());
+		enterYearlyVel(details.getLimitYearlyVelocity());
 	}
 
 	private void enterYearlyVel(String limitYearlyVelocity) {

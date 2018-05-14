@@ -36,9 +36,9 @@ public class MiscUtils {
 		return Integer.parseInt(RandomStringUtils.randomNumeric(number));
 	}
 
-	public static boolean renamePinFile(String A) {
-		File oldfile =new File(A);
-		File newfile =new File(A +"_PinFile");
+	public static boolean renamePinFile(String fileName) {
+		File oldfile =new File(fileName);
+		File newfile =new File(fileName +"_PinFile");
 		return oldfile.renameTo(newfile);
 	}
 
