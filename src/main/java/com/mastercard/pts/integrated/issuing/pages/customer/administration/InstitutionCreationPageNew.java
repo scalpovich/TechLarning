@@ -337,10 +337,12 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public void checkDebit() {
+		waitforElement(debitChkBX);
 		selectCheckBox(debitChkBX, "Debit");
 	}
 
 	public void checkCredit() {
+		waitforElement(creditChkBx);
 		selectCheckBox(creditChkBx, "Credit");
 	}
 
