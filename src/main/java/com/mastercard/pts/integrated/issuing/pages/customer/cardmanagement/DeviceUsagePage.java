@@ -32,6 +32,11 @@ public class DeviceUsagePage extends AbstractBasePage {
 		logger.info("Device Usage");
 		verifySearchButton("Search");
 	}
+	
+	public void searchDevice(String cardNumber){
+		WebElementUtils.enterText(deviceNumber, cardNumber);
+		searchButtonElement.click();
+	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
