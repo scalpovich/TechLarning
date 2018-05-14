@@ -53,12 +53,11 @@ public class MCCRulePlanPage extends AbstractBasePage {
 		runWithinPopup("Add MCC Rule Plan", () -> {
 			WebElementUtils.enterText(planCodeTxt, plan.getMccRulePlanCode());
 			descriptionTxt.click();
-			SimulatorUtilities.wait(500);
+			SimulatorUtilities.wait(600);
 			WebElementUtils.enterText(descriptionTxt, plan.getDescription());
 			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, plan.getProductType());
 			WebElementUtils.scrollDown(driver(),0,250);
 			clickSaveButton();
-
 			verifyNoErrors();
 		});
 
