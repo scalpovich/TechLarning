@@ -9,7 +9,7 @@ Meta:
 @StoryName prepaid_rgpc_manual_auth
 @CRCardsWithAuthorization
 
-Scenario: Set up emv prepaid card
+Scenario: Set up emv retail general purpose prepaid card
 Meta:
 @TestId TC407061
 Given user is logged in institution
@@ -17,20 +17,20 @@ And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
 Then device has "normal" status
 
-Scenario: emv prepaid card device production
+Scenario: emv retail general purpose prepaid card device production
 Meta:
 @TestId TC408234
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
-When user has wallet number information for debit device
+When user has wallet number information for prepaid device
 When user performs adjustment transaction
-When user has current wallet balance amount information for debit device
+When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 And user activates device through helpdesk
 
-Scenario: emv prepaid card authorization
+Scenario: emv retail general purpose prepaid card authorization
 Meta:
 @TestId TC408235
 Given user is logged in institution

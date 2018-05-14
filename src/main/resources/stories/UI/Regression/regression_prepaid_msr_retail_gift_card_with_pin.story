@@ -1,4 +1,4 @@
-prepaid msr retail general purpose card authorization
+prepaid msr retail gifr card authorization
 
 Narrative:
 In order to provide to client easy-to-use multi-purpose prepaid card
@@ -12,13 +12,13 @@ Meta:
 @AuthorizationRegressionGroup3
 @MSRWithPin
 
-Scenario: Set up prepaid msr retail gift card
+Scenario: Set up prepaid msr retail gifr card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
 Then user sign out from customer portal
 
-Scenario: prepaid msr retail gift card device production
+Scenario: prepaid msr retail gifr card device production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid

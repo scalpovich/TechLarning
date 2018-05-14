@@ -1,4 +1,4 @@
-ECOMM_PURCHASE transaction on prepaid emv retail travel card authorization
+ECOMM_PURCHASE transaction on prepaid emv corp travel card authorization
 
 Narrative:
 In order to check transactions on prepaid emv retail general purpose card

@@ -1,9 +1,9 @@
-prepaid emv retail travel card authorization
+prepaid emv corporate travel card authorization
 
 Narrative:
-In order to check transactions on prepaid emv retail general purpose card
+In order to check transactions on prepaid emv corporate travel card
 As an issuer
-I want to authorize transactions for prepaid emv retail general purpose card
+I want to authorize transactions for prepaid emv corporate travel card
 
 Meta:
 @StoryName p_emv_corp_travel

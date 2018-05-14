@@ -1,7 +1,7 @@
 MDFS Pin Change on prepaid emv corporate travel card authorization
 
 Narrative:
-In order to check transactions on prepaid emv retail general purpose card
+In order to check transactions on prepaid emv corporate travel card
 As an issuer
 I want to authorize Pin Change transactions for prepaid emv retail general purpose card
 

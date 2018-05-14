@@ -21,7 +21,7 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 And user sign out from customer portal
 
-Scenario: prepaid emv retail general purpose card device production
+Scenario: prepaid emv retail giftcard device production
 Meta:
 @TestId TC408068
 Given user is logged in institution

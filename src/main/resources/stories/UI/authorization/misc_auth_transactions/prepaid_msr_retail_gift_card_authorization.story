@@ -1,4 +1,4 @@
-prepaid msr retail general purpose card authorization
+prepaid msr retail gift card authorization
 
 Narrative:
 In order to provide to client easy-to-use multi-purpose prepaid card
@@ -10,7 +10,7 @@ Meta:
 @oldReferenceSheet_prepaid_msr
 @SanityCardsWithAuthorization
 
-Scenario: Set up prepaid msr retail general purpose card
+Scenario: Set up prepaid msr retail gift card
 Meta:
 @TestId TC406658
 Given user is logged in institution

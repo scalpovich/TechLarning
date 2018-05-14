@@ -6,7 +6,7 @@ As an issuer
 I want to create an magnetic stripe prepaid card pinless and perform refund transaction
 
 Meta:
-@StoryName p_emv_retail_gift
+@StoryName p_msr_retail_gift
 @oldReferenceSheet_prepaid_msr
 @SanityCardsPinlessWithAuthorization
 

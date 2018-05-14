@@ -1,4 +1,4 @@
-debit msr retail debit card authorization PINLESS
+debit msr retail debit card recurring internation transactions
 
 Narrative:
 In order to check transactions on debit msr retail debit card pinless

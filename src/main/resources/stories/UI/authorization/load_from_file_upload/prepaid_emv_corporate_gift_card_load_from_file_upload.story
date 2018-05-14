@@ -17,7 +17,7 @@ And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
 Then device has "normal" status
 
-Scenario: prepaid emv corporate prepaid card device production
+Scenario: prepaid emv corporate gift card device production
 Meta:
 @TestId 
 Given user is logged in institution

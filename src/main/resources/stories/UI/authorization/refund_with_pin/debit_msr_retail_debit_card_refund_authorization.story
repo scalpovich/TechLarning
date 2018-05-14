@@ -17,7 +17,7 @@ Given user is logged in institution
 And device range for program with device plan for "debit" "magnetic stripe" card
 When user creates new device of debit type for new client
 
-Scenario: debit msr corporate debit card device production
+Scenario: debit msr retail debit card device production
 Meta:
 @TestId TC408068
 Given user is logged in institution

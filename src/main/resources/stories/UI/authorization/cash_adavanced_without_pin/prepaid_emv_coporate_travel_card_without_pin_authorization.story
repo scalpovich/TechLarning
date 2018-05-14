@@ -1,9 +1,9 @@
-prepaid emv retail travel card authorization
+prepaid emv corp travel card authorization
 
 Narrative:
-In order to check transactions on prepaid emv retail general purpose card
+In order to check transactions on prepaid emv corp travel card
 As an issuer
-I want to authorize transactions for prepaid emv retail general purpose card
+I want to authorize transactions for prepaid emv corp travel card
 
 Meta:
 @StoryName p_emv_corp_travel
@@ -18,7 +18,7 @@ And device range for program with device plan for "prepaid" "emv" card without p
 When user creates new device of prepaid type for new client
 
 
-Scenario: prepaidemv corporate travel card device production
+Scenario: prepaid emv corporate travel card device production
 Meta:
 @TestId TC408068
 Given user is logged in institution
