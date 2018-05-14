@@ -101,8 +101,8 @@ public class CloseBatchPage extends AbstractBasePage {
 	}
 	
 	public void processFirstBatch() {
-		//clickWhenClickable(firstBatchNumberTxt);
-		processAll.click();
+		clickWhenClickable(firstBatchNumberTxt);
+		ProcessSelected.click();
 		verifyOperationStatus();
 	}
 	

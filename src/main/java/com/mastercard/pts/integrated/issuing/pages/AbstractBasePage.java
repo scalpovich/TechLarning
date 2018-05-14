@@ -382,7 +382,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 		List<String> devices = new ArrayList<String>();
 		
 		for(int i = 1; i<=Integer.parseInt(count) ;i++){
-			devices.add(Element("//table[@class='dataview']/tbody/tr["+i+"]/td[2]").getText());
+			String path = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th/a/span[contains(text(), 'Device Number')]/../../preceding-sibling::th)+1]", i);
+			devices.add(Element(path).getText());
 		}
 		
 		for(String dev: devices){

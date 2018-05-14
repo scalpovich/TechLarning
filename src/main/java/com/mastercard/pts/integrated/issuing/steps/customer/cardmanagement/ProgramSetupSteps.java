@@ -512,15 +512,7 @@ public class ProgramSetupSteps {
 
 	@When("User fills Device Plan for $type product")
 	public void whenUserFillsDevicePlan(String type) {
-		devicePlan = DevicePlan.createWithProviderForCredit(provider);
-		
-		/*devicePlan.setPerTransactionLimit("7000");
-		devicePlan.setTotalTransactionLimit("7000");
-		devicePlan.setVelocity("5");
-		devicePlan.setValidity("021515");
-		devicePlan.setVirtualCreditCardLimit("7000");*/
-		
-		
+		devicePlan = DevicePlan.createWithProviderForCredit(provider);		
 		devicePlan.setProductType(ProductType.fromShortName(type));
 		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
 		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
