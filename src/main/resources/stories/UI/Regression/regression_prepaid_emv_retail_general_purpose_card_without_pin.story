@@ -24,7 +24,7 @@ When processes device production batch for prepaid
 Then user sign out from customer portal
 Then user is logged in institution
 Then device has "normal" status
-When user has wallet number information for debit device
+When user has wallet number information for prepaid device
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
