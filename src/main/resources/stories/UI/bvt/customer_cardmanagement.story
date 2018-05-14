@@ -565,7 +565,7 @@ Meta:
 @TestId TC378985
 Given user is logged in institution
 When user is at the home tab
-Then DeviceUsageClass.java page of card management tab is rendered correctly
+Then DeviceUsageClass page of card management tab is rendered correctly
 And user signs out from customer portal
 
 Scenario: UI verification - Customer Portal -  DocumentChecklist, card management tab
