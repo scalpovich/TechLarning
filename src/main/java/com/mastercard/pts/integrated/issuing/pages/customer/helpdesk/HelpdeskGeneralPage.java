@@ -51,8 +51,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String NOT_REGISTERED = "notregistered";
 	private static final String NOTE_WALLET_FUND_TRANSFER = "Notes for Wallet to Wallet transfer";
 	private static final String SERV_CODE_TRANSACTION_PASSWORD = "250";
-	private static final String CHANGE_REGISTERED_EMAIL_ID="105 - Change Registered Email Id Request";
-	private static final String CHANGE_REGISTERED_MOBILE_NO="103 - Change Registered Mobile Number Request";
+	private static final String CHANGE_REGISTERED_EMAIL_ID="Change Registered Email Id Request";
+	private static final String CHANGE_REGISTERED_MOBILE_NO="Change Registered Mobile Number Request";
 	private static final String SERV_CODE_LOGIN_PASSWORD = 	"459";	
 	private static final String LABEL_LOGIN_PASSWORD = "459 - Reset Cardholder Login Password";
 	private static final String LABEL_TRANSACTION_PASSWORD = "250 - Reset Cardholder Transaction Password";
@@ -301,7 +301,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	public void selectServiceCodeByValue(String serviceCode){
 		WebElementUtils.selectDropDownByValue(serviceCodeDdwn, serviceCode);
-	}	
+	}
+	
+	public void selectServiceCodeByText(String serviceText){
+		selectByVisibleText(serviceCodeDdwn, serviceText);
+	}
 	public void storeActivationDate(){
 		activationDate = new WebDriverWait(driver(), timeoutInSec)
 		.until(WebElementUtils.visibilityOf(activationDateTxt)).getText();
@@ -903,7 +907,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public boolean changeRegisteredEmailID(HelpdeskGeneral general) {
 		logger.info("change Registered Email ID");
 		
-		selectServiceCodeByValue(general.getServiceCode());
+		selectServiceCodeByText(CHANGE_REGISTERED_EMAIL_ID);
 		clickGoButton();
 		runWithinPopup(CHANGE_REGISTERED_EMAIL_ID, () -> {			
 			enterEmailID(general);
@@ -926,10 +930,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public boolean changeRegisteredMobileNo(HelpdeskGeneral general) { 
 		logger.info("change Registered Mobile No");
 
-		selectServiceCodeByValue(general.getServiceCode());
+		selectServiceCodeByText(CHANGE_REGISTERED_MOBILE_NO);
 		clickGoButton();
-		runWithinPopup(
-				CHANGE_REGISTERED_MOBILE_NO,
+		runWithinPopup(CHANGE_REGISTERED_MOBILE_NO,
 				() -> {
 					enterMobileNo(general);
 					enterNotes("Servic_Request for registered Mobile No");
@@ -952,7 +955,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public boolean validateRequiredFields(HelpdeskGeneral general){
 		logger.info("Validate required fields in change Registered Email ID Screen");
 		
-		selectServiceCodeByValue(general.getServiceCode());
+		selectServiceCodeByText(CHANGE_REGISTERED_EMAIL_ID);
 		clickGoButton();
 		runWithinPopup(CHANGE_REGISTERED_EMAIL_ID, () -> {	
 			verifyCallReferenceNo();

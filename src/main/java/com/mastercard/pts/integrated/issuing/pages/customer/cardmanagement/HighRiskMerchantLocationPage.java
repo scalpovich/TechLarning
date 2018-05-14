@@ -107,7 +107,7 @@ public class HighRiskMerchantLocationPage extends AbstractBasePage {
 	}
 	
 	public String getFeedbackText() {
-		return feedbackPanel.getText();
+		return feedbackPanelLbl.getText();
 	}
 	
 	public void enterMerchantLocationIdInSearchBox(HighRiskMerchantLocation plan) {

@@ -9,5 +9,5 @@ Meta:
 	
 Scenario: Raise service request
 Given user is logged in institution
-When user creates service request to change the registered Email ID [105]
+When user creates service request to change the registered Email ID
 Then user sign out from customer portal
