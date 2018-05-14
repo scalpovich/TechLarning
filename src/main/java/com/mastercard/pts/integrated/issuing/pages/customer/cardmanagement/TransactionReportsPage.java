@@ -129,8 +129,7 @@ public class TransactionReportsPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(transactionOriginDDwn, BOTH);
 		WebElementUtils.selectDropDownByVisibleText(deviceTypeDDwn, ALL);
 		WebElementUtils.selectDropDownByVisibleText(programNameAuthReportDDwn, ALL);
-		//WebElementUtils.selectDropDownByVisibleText(fileTypeAuthReportDDwn, provider.getString(FILE_TYPE_REPORT));
-		WebElementUtils.selectDropDownByVisibleText(fileTypeAuthReportDDwn, "PDF Format [pdf]");
+		WebElementUtils.selectDropDownByVisibleText(fileTypeAuthReportDDwn, provider.getString(FILE_TYPE_REPORT));
 		generateReportBtn.click();
 		CustomUtils.ThreadDotSleep(20000);
 	}
