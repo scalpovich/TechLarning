@@ -9,6 +9,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 
 @Workflow
 public class HelpdeskWorkflow {
@@ -107,6 +108,11 @@ public class HelpdeskWorkflow {
 	public String getWalletBalanceInformation(Device device) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		return helpDeskPage.getWalletBalanceInformation(device);
+	}
+	
+	public String getWalletBalanceInformationForRemittance(Device device, CardToCash ctc) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		return helpDeskPage.getWaalletBalanceInformationForRemittance(device, ctc);
 	}
 
 	public boolean verifyBalanceUpdatedCorreclty(String beforeLoadBalanceInformation, String transactionDetailsFromExcel, String afterLoadBalanceInformation) {

@@ -14,12 +14,15 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.CharMatcher;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
+import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -61,8 +64,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private String[] values;
 	private String walletBalanceInformation;
 	public  boolean serviceStatus = false;
-	
-	
+
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 	
@@ -527,6 +529,33 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		return walletBalanceInformation;
 	}
+
+	public String getWaalletBalanceInformationForRemittance(Device device, CardToCash ctc)
+	{
+		logger.info("Get Wallet Balance Information for Device: {}", device.getDeviceNumber());
+		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
+		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
+		clickSearchButton();
+		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
+		editDeviceLink.click();
+		clickWalletDetailsTab();
+		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
+		int rowCount = driver().findElements(By.xpath("//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr")).size();
+		DecimalFormat dec = new DecimalFormat("#0.00");
+		for (int j = 1; j <= rowCount; j++)
+		{
+			if (j == 1)
+			{
+				logger.info("Current Available Balance {} Settled Debit {} ",getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"),getCellTextByColumnNameInEmbeddedTab(j, "Settled Debit"));
+				Double balance= Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance")) + Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Settled Debit")) - Double.parseDouble(ctc.getRemittanceAmount());			
+				logger.info("Current Available Balance + Settled Debit : "+dec.format(balance));
+				walletBalanceInformation = getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency")+":"+dec.format(balance)+":"+getCellTextByColumnNameInEmbeddedTab(j, "WALLET_NUMBER");
+			}
+	}
+		clickEndCall();
+		return walletBalanceInformation;
+
+	}
 	
 	public boolean verifyBalanceUpdatedCorreclty(String beforeLoadBalanceInformation, String transactionDetailsFromExcel, String afterLoadBalanceInformation){
 		logger.info("Verify Wallet Balance Information for Device is added correctly");
@@ -558,7 +587,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return (count == transactionData.length) ? true : false;
 	}
 	
-	public boolean verifyBalanceDeductedCorreclty(String beforeLoadBalanceInformation, String transactionDetailsFromExcel, String afterLoadBalanceInformation){
+	public boolean verifyBalanceDeductedCorreclty(String beforeLoadBalanceInformation, String transactionDetailsFromExcel, String afterLoadBalanceInformation ){
 		logger.info("Verify Wallet Balance Information for Device after Transaction Deduction");
 
 		String[] beforeLoadBalanceData = beforeLoadBalanceInformation.trim().split(",");
@@ -576,12 +605,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				String[] afterLoadBalanceDataValues = afterLoadBalanceData[j].trim().split(":");
 					if (currencyName.equalsIgnoreCase(beforeLoadBalanceDataValues[0]))
 					{
-						BigDecimal calculatedBalance = new BigDecimal(beforeLoadBalanceDataValues[1]).subtract(new BigDecimal(transactionDataValues[1]));
-						if (calculatedBalance.equals(new BigDecimal(afterLoadBalanceDataValues[1])))
+				       	BigDecimal calculatedBalance = new BigDecimal(afterLoadBalanceDataValues[1]);
+						if (calculatedBalance.equals(new BigDecimal(transactionDataValues[1])))
 						{
 							count++;
 							break;
-						}
+					    }
 					}
 			}
 		}
