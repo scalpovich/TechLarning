@@ -185,7 +185,7 @@ public abstract class LinuxUtils {
 	}
 
 	public static void upload(RemoteConnectionDetails connectiondetails, String localsource,
-			String remoteDir) throws JSchException, InterruptedException  {
+			String remoteDir) throws InterruptedException  {
 
 		Scp scp = new Scp();
 		int portSSH = connectiondetails.getPort();

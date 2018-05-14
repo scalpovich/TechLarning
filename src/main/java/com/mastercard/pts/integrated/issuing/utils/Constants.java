@@ -433,5 +433,20 @@ public class Constants {
 	public static final String ENVIRONMENT = "automation";
 	public static final String COLUMN_NAME = "Status";
 	public static final int TABLE_ROW_NUM = 1;
+	public static final String ADD_ALLOWED_LOAD_CURRENCY = "Add Allowed Load Currency";
+	public static final String ADD_MANUAL_ALERTS = "Add Manual Alert";
+	public static final String ADD_MANUAL_RECIPIENT = "Add Manual Recipient";
+	public static final String ADD_TRANSACTION_ROUTING = "Add Transaction Routing";
+	public static final String ADD_CHANNEL_ROUTING = "Add Channel Routing Plan";
+	public static final String ADD_CHANNEL_ROUTING_DETAILS = "Add Channel Routing Plan Detail";
+	public static final String ADD_ACCOUNT_ROUTING_PLAN = "Add Account Range Routing";
+	public static final String ADD_LINK_API = "Add Link API to institution";
+	public static final String ADD_AGGREGATE_LOAD_LIMIT = "Add Aggregate Load Limits";
+	public static final String ADD_EASY_PAY_PLAN_RULE= "Add Easy Pay Plan Rule";
+	public static final String ADD_RULE= "Add Rules";
+	
+	public static final String BLOCK_DEVICE = "Blocking the device";
+	public static final String UNBLOCK_DEVICE = "Unblocking the device";
+	
 
 }
