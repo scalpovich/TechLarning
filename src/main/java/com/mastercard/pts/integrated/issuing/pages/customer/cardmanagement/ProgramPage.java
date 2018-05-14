@@ -21,6 +21,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -223,7 +224,7 @@ public class ProgramPage extends AbstractBasePage {
 	private MCWebElement markupFeePlanDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:currencyPayoutListPlanCode:input:dropdowncomponent")
-	private MCWebElement PayoutCurrencyPlanDDwn;
+	private MCWebElement payoutCurrencyPlanDDwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:cashLimitCycleIndicatior:input:dropdowncomponent")
 	private MCWebElement CashLimitResetDDwn;
@@ -359,9 +360,10 @@ public class ProgramPage extends AbstractBasePage {
 	}
 	
 	public void selectPayoutCurrencyPlan(String payoutCurrencyPlan) {
-		System.out.println("payoutCurrencyPlan::"+payoutCurrencyPlan);
-		if (PayoutCurrencyPlanDDwn.isEnabled())
-			WebElementUtils.selectDropDownByVisibleText(PayoutCurrencyPlanDDwn, payoutCurrencyPlan);
+		if (payoutCurrencyPlanDDwn.isEnabled())
+		{
+			WebElementUtils.selectDropDownByVisibleText(payoutCurrencyPlanDDwn, payoutCurrencyPlan);
+		}
 	}
 
 	public void addProgramData(Program program, String productType) {
@@ -379,8 +381,10 @@ public class ProgramPage extends AbstractBasePage {
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
-				if ("demo".equalsIgnoreCase(getEnv()))
+				if (Constants.ENV_DEMO.equalsIgnoreCase(MiscUtils.getEnvironment()))
+				{
 					selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
+				}
 				selectRefundInCurrency(program.getRefundInCurrency());
 				selectWalletToWalletTransferType(program.getWalletToWalletTransferType());
 				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
@@ -411,8 +415,10 @@ public class ProgramPage extends AbstractBasePage {
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
-				if ("demo".equalsIgnoreCase(getEnv()))
+				if (Constants.ENV_DEMO.equalsIgnoreCase(MiscUtils.getEnvironment()))
+				{
 					selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
+				}
 				selectRefundInCurrency(program.getRefundInCurrency());
 				selectWalletToWalletTransferType(program.getWalletToWalletTransferType());
 				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
@@ -443,8 +449,10 @@ public class ProgramPage extends AbstractBasePage {
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
-				if ("demo".equalsIgnoreCase(getEnv()))
+				if (Constants.ENV_DEMO.equalsIgnoreCase(MiscUtils.getEnvironment()))
+				{
 					selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
+				}
 				selectRefundInCurrency(program.getRefundInCurrency());
 				selectWalletToWalletTransferType(program.getWalletToWalletTransferType());
 				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
@@ -822,12 +830,6 @@ public class ProgramPage extends AbstractBasePage {
 		switchToIframe(Constants.EDIT_PROGRAM_FRAME);
 	}
 	
-	public String getEnv() {
-		String env = System.getProperty("env").toString();
-		logger.info("System.getProperty ENV :: {} ", env);
-		return env;
-	}
-
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(programSearchTxt));

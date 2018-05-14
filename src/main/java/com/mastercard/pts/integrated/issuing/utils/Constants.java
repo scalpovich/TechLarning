@@ -446,8 +446,8 @@ public class Constants {
 	public static final String ADD_RULE= "Add Rules";
 	
 	
-	
-	
+	public static final String ENV_DEMO = "demo";
+	public static final String ENV_STAGESA = "stageSA";
 	
 
 }
