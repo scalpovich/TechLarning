@@ -991,13 +991,13 @@ public class DevicePlanPage extends AbstractBasePage {
 					if (devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 						selectByVisibleText(iframeDeviceTypeDdwn,devicePlanDataObject.getDeviceType());
 						if (devicePlanDataObject.getDeviceType().contains("EMV")) {
-							WebElementUtils.enterText(iframeServiceCodeTxt,EMV_SERVICE_CODE);
+							WebElementUtils.enterText(iframeServiceCodeTxt,Constants.EMV_SERVICE_CODE);
 						} else if (devicePlanDataObject.getDeviceType().contains("Mag")) {
-							WebElementUtils.enterText(iframeServiceCodeTxt,MSR_SERVICE_CODE);
+							WebElementUtils.enterText(iframeServiceCodeTxt,Constants.MSR_SERVICE_CODE);
 						}
 						else
 						{
-							WebElementUtils.enterText(iframeServiceCodeTxt,MSR_SERVICE_CODE);
+							WebElementUtils.enterText(iframeServiceCodeTxt,Constants.MSR_SERVICE_CODE);
 						}
 					} else {
 						selectIframeDeviceType(devicePlanDataObject.getDeviceType());
