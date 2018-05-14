@@ -222,6 +222,9 @@ public class ProgramPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:markupFeePlanCode:input:dropdowncomponent")
 	private MCWebElement markupFeePlanDDwn;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:currencyPayoutListPlanCode:input:dropdowncomponent")
+	private MCWebElement PayoutCurrencyPlanDDwn;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:cashLimitCycleIndicatior:input:dropdowncomponent")
 	private MCWebElement CashLimitResetDDwn;
 
@@ -354,6 +357,12 @@ public class ProgramPage extends AbstractBasePage {
 	public void selectOtherPlanMarketingMessagePlan(String otherPlanMarketingMessagePlan) {
 		WebElementUtils.selectDropDownByVisibleText(otherPlanMarketingMessagePlanDDwn, otherPlanMarketingMessagePlan);
 	}
+	
+	public void selectPayoutCurrencyPlan(String payoutCurrencyPlan) {
+		System.out.println("payoutCurrencyPlan::"+payoutCurrencyPlan);
+		if (PayoutCurrencyPlanDDwn.isEnabled())
+			WebElementUtils.selectDropDownByVisibleText(PayoutCurrencyPlanDDwn, payoutCurrencyPlan);
+	}
 
 	public void addProgramData(Program program, String productType) {
 		logger.info("Add Program: {}", program.getProgramCode());
@@ -370,6 +379,8 @@ public class ProgramPage extends AbstractBasePage {
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
+				if ("demo".equalsIgnoreCase(getEnv()))
+					selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
 				selectRefundInCurrency(program.getRefundInCurrency());
 				selectWalletToWalletTransferType(program.getWalletToWalletTransferType());
 				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
@@ -400,6 +411,8 @@ public class ProgramPage extends AbstractBasePage {
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
+				if ("demo".equalsIgnoreCase(getEnv()))
+					selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
 				selectRefundInCurrency(program.getRefundInCurrency());
 				selectWalletToWalletTransferType(program.getWalletToWalletTransferType());
 				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
@@ -430,6 +443,8 @@ public class ProgramPage extends AbstractBasePage {
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
+				if ("demo".equalsIgnoreCase(getEnv()))
+					selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
 				selectRefundInCurrency(program.getRefundInCurrency());
 				selectWalletToWalletTransferType(program.getWalletToWalletTransferType());
 				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
@@ -805,6 +820,12 @@ public class ProgramPage extends AbstractBasePage {
 
 	public void switchToEditProgramframe() {
 		switchToIframe(Constants.EDIT_PROGRAM_FRAME);
+	}
+	
+	public String getEnv() {
+		String env = System.getProperty("env").toString();
+		logger.info("System.getProperty ENV :: {} ", env);
+		return env;
 	}
 
 	@Override
