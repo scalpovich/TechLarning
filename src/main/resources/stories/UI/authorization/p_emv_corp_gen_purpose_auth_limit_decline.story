@@ -47,11 +47,11 @@ Then MAS test results are verified
 
 Scenario: Transaction EMV_PURCHASE - Overlimit
 When perform an EMV_PURCHASE MAS transaction
-Then MAS test results are verified
+Then MAS test results are verified for code "61" Not OK
 And MAS simulator is closed
 
 Scenario: Assert Authorization Search and Device Usage
 Given user is logged in institution
-Then search Purchase authorization and verify Successful status
+Then search Purchase authorization and verify Exceeds Amount Limit status
 And user searches device on device usage screen and performs assertions on device tool usage and device transaction usage tabs
 And user sign out from customer portal

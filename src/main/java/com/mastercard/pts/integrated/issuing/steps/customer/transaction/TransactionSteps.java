@@ -344,6 +344,29 @@ public class TransactionSteps {
 			throw new ValidationException("Transaction failed!");
 		}
 	}
+	
+	@Then("$tool test results are verified for code $code Not OK")
+	public void thenTestResultsAreReportedForCode(String tool, String code) {
+		String testResults;
+		if (!"mdfs".contains(tool.toLowerCase())) {
+			testResults = transactionWorkflow.verifyTestResults();
+		} else {
+			testResults = transactionWorkflow.verifyTestResultsOnMdfs();
+		}
+		transactionWorkflow.browserMaximize(); // restoring browser after
+		logger.info("Expected Result :- ", testResults);
+
+		if (testResults.contains("Validations OK")) {
+			assertFalse("Transaction failed!  -  Result : " + testResults, false);
+			throw new ValidationException("Transaction failed! -  Result : " + testResults);
+
+		} else if (testResults.contains("Validations Not OK") && testResults.contains(code)) {
+			assertTrue("Transaction is succcessful!  - Expected Result : " + testResults, true);
+		} else {
+			assertFalse("Transaction failed! Code or status is incorrect!", false);
+			throw new ValidationException("Transaction failed!");
+		}
+	}
 
 	@When("connection to $simulator is established")
 	@Then("connection to $simulator is established")
