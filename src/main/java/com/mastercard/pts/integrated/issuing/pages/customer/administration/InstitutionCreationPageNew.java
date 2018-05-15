@@ -340,6 +340,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	public void checkDebit() {
 		waitforElement(debitChkBX);
 		selectCheckBox(debitChkBX, "Debit");
+		SimulatorUtilities.wait(2000);
 	}
 
 	public void checkCredit() {
@@ -350,6 +351,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 	public void checkPrepaid() {
 		WebElementUtils.checkCheckbox(prepaidChkBx, true);
+		SimulatorUtilities.wait(2000);
 	}
 
 	public void selectInstitutionCurrency(InstitutionCreation institute) {
