@@ -77,6 +77,22 @@
    "corporateClientCode":"11000016321000014"
    },
    {
+   "code":"121212",
+   "abbreviation":"AUTO",
+   "association":"MASTERCARD [02]",
+   "branch":"OfficeBranch2 [259]",
+   "cardPackIdGenerationTemplate":"AUTOMATION [PAN042]",
+   "deviceIdGenerationTemplate":"AUTOMATION [PAN022]",
+   "customerType":"Individual [0]",
+   "embossingVendor":"AUTOMATION PERS BUREAU [AUTOB1]",
+   "interchange":"MASTERCARD [02]",
+   "issuerBin":"automation credit card [589765]",
+   "plasticId":"AUTOMATION PLASTIC CODE [AUT]",
+   "pictureCode":"AUTOMATION PICTURE CODE [AUT]",
+   "corporateClientCode":"Credit [12121218004000045]",
+   "provider":"json"
+   },
+   {
    "code":"000035",
    "abbreviation":"LBP",
    "association":"MASTERCARD",
