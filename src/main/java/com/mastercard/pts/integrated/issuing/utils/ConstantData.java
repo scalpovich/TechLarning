@@ -15,6 +15,7 @@ public class ConstantData {
 	public static final String SUCCESS_MESSAGE = "Record Added Successfully";
 	public static final String RECORD_EXISTS = "Record already exists";
 	public static final String RECORD_ADDED_SUCCESSFULLY = "Record Added Successfully.";
+	public static final String RECORD_PROCESSED_SUCCESSFULLY = "Request processed succesfully.";
 	public static final String FIELD_ALREADY_EXISTS = "Field already exists";
 	public static final String GENERIC_ALREADY_EXISTS = "already exists";
 	public static final String SAME_TRANSACTION_EXISTS = "Information with same Transaction Rule Plan Code already exists.";

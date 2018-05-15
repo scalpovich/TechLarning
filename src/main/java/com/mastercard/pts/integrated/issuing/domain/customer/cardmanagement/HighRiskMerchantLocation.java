@@ -23,7 +23,6 @@ public class HighRiskMerchantLocation {
 		plan.setMerchantLocationDescription(ConstantData.GENERIC_DESCRIPTION);
 		return plan;
 	}
-		
 	public String getMerchantLocationId() {
 		return merchantLocationId;
 	}

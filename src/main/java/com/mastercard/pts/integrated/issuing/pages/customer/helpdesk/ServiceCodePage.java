@@ -30,7 +30,7 @@ public class ServiceCodePage extends AbstractBasePage{
 	private MCWebElement serviceCodeTxt;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "td#description>span>span")
-	private MCWebElement description;
+	private MCWebElement descriptionTxt;
 	
 	
 
@@ -42,7 +42,7 @@ public class ServiceCodePage extends AbstractBasePage{
 	public String getServiceCodeDescription(String serviceCode){
 		enterText(serviceCodeTxt,serviceCode);
 		editFirstRecord();
-		return getTextFromPage(description);
+		return getTextFromPage(descriptionTxt);
 	}
 
 	@Override

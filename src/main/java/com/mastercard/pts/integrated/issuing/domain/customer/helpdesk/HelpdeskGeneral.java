@@ -45,7 +45,11 @@ public class HelpdeskGeneral {
 		plan.setTransactionDetails(provider.getString(TRANSACTION_DETAILS));
 		plan.setInitialLoadTxnDetails(provider.getString(INITIAL_LOAD_TXN_DETAILS));
 		plan.setNotes(ConstantData.GENERIC_DESCRIPTION);
-		plan.setProductType(provider.getString(PRODUCT_TYPE));
+		if (provider.getString(PRODUCT_TYPE).equals(ProductType.CREDIT)) {
+			plan.setProductType(provider.getString(PRODUCT_TYPE));
+		} else {
+			plan.setProductType(ProductType.PREPAID);
+		}
 		plan.setNewEmailID(provider.getString(NEW_EMAIL_ID));
 		plan.setNewMobileNo(provider.getString(NEW_MOBILE_NO));
 		plan.setNewMobileISD(provider.getString(NEW_MOBILE_ISD));

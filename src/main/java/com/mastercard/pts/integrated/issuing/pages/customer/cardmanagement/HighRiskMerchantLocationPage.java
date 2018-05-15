@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -46,10 +47,10 @@ public class HighRiskMerchantLocationPage extends AbstractBasePage {
 	private MCWebElement endDateDPkr;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.feedbackPanelINFO")
-	private MCWebElement feedbackPanel;
+	private MCWebElement feedbackPanelLbl;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='merchantLocationId']")
-	private MCWebElement planCodeSearchTxtBx;
+	private MCWebElement planCodeSearchTxt;
 	
 	public void verifyUiOperationStatus() {
 		logger.info("High Risk Merchant Location");
@@ -81,7 +82,6 @@ public class HighRiskMerchantLocationPage extends AbstractBasePage {
 	} 
 
 	public void addHighRiskMerchantLocation(HighRiskMerchantLocation plan) {
-		try{
 		logger.info("Add High Risk Merchant Location");
 		clickAddNewButton();
 		runWithinPopup("High Risk Merchant Location", () -> {
@@ -94,18 +94,14 @@ public class HighRiskMerchantLocationPage extends AbstractBasePage {
 			clickSaveButton();
 			verifyDuplicateAndClickCancel();
 		});
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
 	}
 	
 	public String getFeedbackText() {
-		return feedbackPanel.getText();
+		return feedbackPanelLbl.getText();
 	}
 	
 	public void enterMerchantLocationIdInSearchBox(HighRiskMerchantLocation plan) {
-		enterValueinTextBox(planCodeSearchTxtBx, plan.getMerchantLocationId());
+		enterValueinTextBox(planCodeSearchTxt, plan.getMerchantLocationId());
 	}
 	
 	public Boolean isNoRecordsFoundInTableView() {

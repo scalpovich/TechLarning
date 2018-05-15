@@ -694,36 +694,34 @@ public class HelpDeskSteps {
 		}
 	}
 	
-	@When("user creates service request to change the registered mobile number [$serviceCode]")
-	public void serviceRequestForChangeRegisteredMobileNumber(String serviceCode) {
+	@When("user creates service request to change the registered mobile number")
+	public void changeRegisteredMobileNumber() {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		Optional<String[]> device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
 		if(device.isPresent()){
 		helpdeskGeneral.setProductType(ProductType.fromShortName(device.get()[0]));
 		helpdeskGeneral.setDeviceNumber(device.get()[1]);
 		}
-		helpdeskGeneral.setServiceCode(serviceCode);
 		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.changeRegisteredMobileNo(helpdeskGeneral);
 	}
-	
-	@When("user creates service request to change the registered Email ID [$serviceCode]")
-	public void serviceRequestForChangeRegisteredEmailID(String serviceCode) {
+
+	@When("user creates service request to change the registered Email ID")
+	public void changeRegisteredEmailID() {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		Optional<String[]> device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
 		if(device.isPresent()){
 		helpdeskGeneral.setProductType(ProductType.fromShortName(device.get()[0]));
 		helpdeskGeneral.setDeviceNumber(device.get()[1]);
 		}
-		helpdeskGeneral.setServiceCode(serviceCode);
 		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.changeRegisteredEmailID(helpdeskGeneral);
 	}
 	
-	@Then("user validates registered mobile number SR [$serviceCode] screen with the required fields")
-	public void registeredMobileNumberUpdateScreenValidation(String serviceCode) {
+	@Then("user validates registered mobile number SR screen with the required fields")
+	public void registeredMobileNumberUpdateScreenValidation() {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		Optional<String[]> device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
 		if(device.isPresent()){
@@ -731,7 +729,6 @@ public class HelpDeskSteps {
 		helpdeskGeneral.setDeviceNumber(device.get()[1]);
 		helpdeskGeneral.setDefaultWalletNumber(device.get()[2]);
 		}
-		helpdeskGeneral.setServiceCode(serviceCode);
 		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.validateRequiredFields(helpdeskGeneral);
