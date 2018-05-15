@@ -458,6 +458,18 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		});
 	}
 	
+	public void submitAndVerifyBaseIIBatch() {
+		ClickButton(submitBtn);
+		ClickButton(statusBtn);
+		runWithinPopup("View Batch Details", () -> {
+			logger.info("Retrieving batch status");
+			waitForBatchStatus();
+			batchStatus = batchStatusTxt.getText();
+			WebElementUtils.scrollDown(driver(), 0, 350);
+			ClickButton(closeBtn);
+		});
+	}
+	
 	public void getVisaOutGoingFileName() {	
 		WebElement fileNameLbl = getFinder().getWebDriver().findElement(By.xpath("//*[@id='outputFileName']//span[@class='labeltextf'] "));
 		context.put(ConstantData.VISA_OUT_GOING_FILE_NAME, fileNameLbl.getText());
@@ -557,12 +569,13 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		selectBatchName(batch.getBatchName());
 		selectMethodToGenerateFile(batch.getMethodToGenerateFile());
 	    selectBin(device.getDeviceNumber().substring(0, 6));
-		submitAndVerifyBatch();
+		submitAndVerifyBaseIIBatch();
 		getVisaOutGoingFileName();
 		return batchStatus;
 	}
 	public void selectMethodToGenerateFile(String option)
 	{
+		waitForElementVisible(methodToGenerateFileDD);
 		WebElementUtils.selectDropDownByVisibleText(methodToGenerateFileDD, option);
 	}
 	public void selectBin(String option)

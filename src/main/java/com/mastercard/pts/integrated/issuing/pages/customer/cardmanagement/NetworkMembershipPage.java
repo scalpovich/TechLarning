@@ -54,10 +54,10 @@ public class NetworkMembershipPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addNetworkMembershipBtn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:1:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:1:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement InterchangeDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:1:cols:nextCol:colspanMarkup:inputField:input:inputTextField")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:1:cols:colspanMarkup:inputField:input:inputTextField")
 	private MCWebElement PresentmentTimeLimitTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:2:cols:colspanMarkup:inputField:input:dropdowncomponent")
