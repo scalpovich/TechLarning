@@ -15,7 +15,7 @@ When user creates new device of prepaid type for new client
 Then device has "normal" status
 And user sign out from customer portal
 
-Scenario: Device production - prepaid msr general purpose card
+Scenario: Device production - prepaid msr corporate general purpose card
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid

@@ -1,4 +1,4 @@
-MDFS Pin Change on prepaid msr retail general purpose card 
+MDFS Pin Change on prepaid msr retail travel card 
 
 Narrative:
 In order to check transactions on prepaid msr retail travel card 

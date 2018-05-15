@@ -11,6 +11,7 @@ Meta:
 @CR1
 @CardCreation
 @remittance
+@SanitySuite
 
 Scenario: Prepaid - Admin User - Assign Program to Agency
 

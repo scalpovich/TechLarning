@@ -1,4 +1,4 @@
-ECOMM_PURCHASE transaction on prepaid msr retail general purpose card authorization
+ECOMM_PURCHASE transaction on prepaid msr retail travel card authorization
 
 Narrative:
 In order to check transactions on prepaid msr retail travel card 

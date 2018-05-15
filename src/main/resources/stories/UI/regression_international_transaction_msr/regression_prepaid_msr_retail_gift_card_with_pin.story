@@ -10,7 +10,8 @@ Meta:
 @oldReferenceSheet_prepaid_msr
 @AuthorizationRegression
 @AuthorizationRegressionGroup3
-@MSRWithPin
+@MSRWithPinIntTrx
+@InternationalTrx
 
 Scenario: Set up prepaid msr retail gift card
 Given user is logged in institution

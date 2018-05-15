@@ -1,9 +1,9 @@
 regression prepaid emv corporate travel card authorization
 
 Narrative:
-In order to check transactions on prepaid emv retail general purpose card
+In order to check transactions on prepaid emv corporate travel card
 As an issuer
-I want to authorize transactions for prepaid emv retail general purpose card
+I want to authorize transactions for prepaid emv corporate travel card
 
 Meta:
 @StoryName p_emv_corp_travel
@@ -18,14 +18,14 @@ Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
 
-Scenario: prepaidemv corporate travel card device production
+Scenario: prepaid emv corporate travel card device production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 When processes pin generation batch for prepaid
 Then device has "normal" status
-When user has wallet number information for debit device
+When user has wallet number information for prepaid device
 Then user sign out from customer portal
 Then user is logged in institution
 When user performs adjustment transaction
