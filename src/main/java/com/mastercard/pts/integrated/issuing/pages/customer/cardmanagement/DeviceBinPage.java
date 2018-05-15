@@ -221,13 +221,13 @@ public class DeviceBinPage extends AbstractBasePage {
 	public void editDeviceBin(String issuerBIN, String fieldUpdated,
 			String updatedValue) {
 		waitForElementVisible(addDeviceBinBtn);
-		WebElement EditRupayNtkBtn = getFinder()
+		WebElement editRupayNtkBtn = getFinder()
 				.getWebDriver()
 				.findElement(
 						By.xpath("//td[contains(.,'"
 								+ issuerBIN
 								+ "')]/following::td[2]/span/a/img[@alt='Edit Record']"));
-		EditRupayNtkBtn.click();
+		editRupayNtkBtn.click();
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		switchToIframe(Constants.EDIT_DEVICE_PLAN_FRAME);
 

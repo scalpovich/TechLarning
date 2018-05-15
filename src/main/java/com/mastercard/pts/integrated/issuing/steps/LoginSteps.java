@@ -239,7 +239,7 @@ public class LoginSteps extends AbstractBaseFlows {
 	}
 
 	@When("user select the created institution from the institution dropdown")
-	public void selectsInstitutionFromDropdown() {
+	public void reselectsInstitution() {
 		InstitutionCreation institute = context
 				.get(ContextConstants.INSTITUTION);
 		selectInstituteFromDrpDwn(institute.getInstitutionName() + " ("

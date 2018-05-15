@@ -3,8 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.administration;
 import java.util.Arrays;
 import java.util.Collection;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;

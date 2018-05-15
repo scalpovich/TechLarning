@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
-import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskPrivileges;
+import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskPriviliges;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.AssignProductHelpdeskPrivilegesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.AssignServiceCodeHelpdeskPrivilegesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.UserGroupHelpdeskPrivilegesPage;
@@ -24,7 +24,7 @@ public class HelpdeskLevelPrivilegesWorkflow {
 
 
 	public void provideHelpdeskLevelPrivilegesFlows(String subType,
-			HelpdeskPrivileges helpdeskPreviliges, UserCreation userCreation) {
+			HelpdeskPriviliges helpdeskPreviliges, UserCreation userCreation) {
 		switch (subType) {
 		case Constants.USER_GROUPS:
 			addUserToUserGroupFlows(helpdeskPreviliges, userCreation);
@@ -45,7 +45,7 @@ public class HelpdeskLevelPrivilegesWorkflow {
 		}
 	}
 
-	public void addUserToUserGroupFlows(HelpdeskPrivileges helpdeskPreviliges,
+	public void addUserToUserGroupFlows(HelpdeskPriviliges helpdeskPreviliges,
 			UserCreation userCreation) {
 		UserGroupHelpdeskPrivilegesPage userGroupHelpdeskPage;
 		userGroupHelpdeskPage = navigator
@@ -65,7 +65,7 @@ public class HelpdeskLevelPrivilegesWorkflow {
 		userGroupHelpdeskPage.switchToDefaultWindow();
 	}
 
-	public void assignProductToUserFlows(HelpdeskPrivileges helpdeskPreviliges) {
+	public void assignProductToUserFlows(HelpdeskPriviliges helpdeskPreviliges) {
 		AssignProductHelpdeskPrivilegesPage assignProductPage;
 		assignProductPage = navigator
 				.navigateToPage(AssignProductHelpdeskPrivilegesPage.class);
@@ -78,7 +78,7 @@ public class HelpdeskLevelPrivilegesWorkflow {
 	}
 
 	public void assignServiceCodeToUserFlows(
-			HelpdeskPrivileges helpdeskPreviliges) {
+			HelpdeskPriviliges helpdeskPreviliges) {
 		AssignServiceCodeHelpdeskPrivilegesPage assignServiceCodePage;
 		assignServiceCodePage = navigator
 				.navigateToPage(AssignServiceCodeHelpdeskPrivilegesPage.class);

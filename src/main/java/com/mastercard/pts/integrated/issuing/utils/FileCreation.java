@@ -382,11 +382,12 @@ public class FileCreation {
 			filenameStatic = "CER" + instituteCreation.getInstitutionCode()
 					+ DateUtils.getDate() + DateUtils.getTime()
 					+ getSequenceNumber() + ".DAT";
-		} else
+		} else {
 			filenameStatic = "CER"
 					+ MapUtils.fnGetInputDataFromMap("INSTITUTION_CODE")
 					+ DateUtils.getDate() + DateUtils.getTime()
 					+ getSequenceNumber() + ".DAT";
+		}
 		fileCreation.setFilename(filenameStatic);
 		File file = new File(filenameStatic);
 

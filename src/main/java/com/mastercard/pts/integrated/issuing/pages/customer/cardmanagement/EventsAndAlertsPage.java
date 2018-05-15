@@ -129,9 +129,7 @@ public class EventsAndAlertsPage extends AbstractBasePage {
 	
 	public void addEventAndAlerts(EventsAndAlerts eventsAndAlerts) {
 		clickAddNewButton();
-		runWithinPopup(
-"Add Event",
-				() -> {
+		runWithinPopup("Add Event", () -> {
 			enterEventID(eventsAndAlerts.getEventID());
 			enterEventName(eventsAndAlerts.getEventName());
 			selectProduct(eventsAndAlerts.getProductType());
@@ -139,12 +137,12 @@ public class EventsAndAlertsPage extends AbstractBasePage {
 			checkSMSAlert();
 			selectEmailRecipients(eventsAndAlerts.getEmailRecipients());
 			selectSMSRecipients(eventsAndAlerts.getsMSRecipients());
-					clickAddDetailsButton();
+			clickAddDetailsButton();
 			addDetails(eventsAndAlerts);
-					WebElementUtils.scrollDown(driver(), 0, 250);
-					clickSaveButton();
-				});
-		
+			WebElementUtils.scrollDown(driver(), 0, 250);
+			clickSaveButton();
+		});
+
 	}
 
 	public void enterEventID(String eventID) {

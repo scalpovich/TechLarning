@@ -145,16 +145,18 @@ public class CurrencyExchangeRatesSteps {
 				.fnGetInputDataFromMap("SELL_RATE"));
 		currencyExchangeRateDomainPage.setRateOrigin(currencyExchangeRatesPage
 				.getCode(MapUtils.fnGetInputDataFromMap(rateOrigin)));
-		if (System.getProperty("env").contains("stage"))
+		if (System.getProperty("env").contains("stage")) {
 			currencyExchangeRateDomainPage
 					.setUploadPathCER(Constants.UPLOAD_PATH_CURR_STAGE
 							+ "/INPUT");
-		else
-		currencyExchangeRateDomainPage
-				.setUploadPathCER(Constants.UPLOAD_PATH_CURR + "/INPUT");
-		if (!MapUtils.fnGetInputDataFromMap("Program").equalsIgnoreCase("-"))
-		currencyExchangeRateDomainPage.setProgram(MapUtils
-				.fnGetInputDataFromMap(program));
+		} else {
+			currencyExchangeRateDomainPage
+					.setUploadPathCER(Constants.UPLOAD_PATH_CURR + "/INPUT");
+		}
+		if (!MapUtils.fnGetInputDataFromMap("Program").equalsIgnoreCase("-")) {
+			currencyExchangeRateDomainPage.setProgram(MapUtils
+					.fnGetInputDataFromMap(program));
+		}
 		currencyExchangeRatesFlows.uploadCurrencyExchangeFileFlows(type,
 				currencyExchangeRateDomainPage.getUploadPathCER());
 	}

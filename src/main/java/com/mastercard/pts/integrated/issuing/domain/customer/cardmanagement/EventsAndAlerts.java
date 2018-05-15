@@ -18,7 +18,7 @@ public class EventsAndAlerts {
 	private String eventType;
 
 	private String emailRecipients;
-	private String sMSRecipients;
+	private String smsRecipients;
 	private String letterRecipients;
 	private String language;
 	private String emailSubject;
@@ -67,11 +67,11 @@ public class EventsAndAlerts {
 	}
 
 	public String getsMSRecipients() {
-		return sMSRecipients;
+		return smsRecipients;
 	}
 
 	public void setsMSRecipients(String sMSRecipients) {
-		this.sMSRecipients = sMSRecipients;
+		this.smsRecipients = sMSRecipients;
 	}
 
 	public String getLetterRecipients() {

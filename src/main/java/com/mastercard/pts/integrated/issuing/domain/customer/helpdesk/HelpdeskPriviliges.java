@@ -3,7 +3,7 @@ package com.mastercard.pts.integrated.issuing.domain.customer.helpdesk;
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 
-public class HelpdeskPrivileges implements HasCodeAndDescription {
+public class HelpdeskPriviliges implements HasCodeAndDescription {
 
 	private static final String USER_GROUP_ID = "USER_GROUP_ID";
 	private static final String GROUP_NAME = "GROUP_NAME";
@@ -46,11 +46,10 @@ public class HelpdeskPrivileges implements HasCodeAndDescription {
 		this.userGroup = userGroup;
 	}
 
-	public static HelpdeskPrivileges createWithProvider(
+	public static HelpdeskPriviliges createWithProvider(
 			KeyValueProvider provider) {
-		HelpdeskPrivileges helpdeskPrivileges = new HelpdeskPrivileges();
-		helpdeskPrivileges
-.setUserGroupID(provider.getString(USER_GROUP_ID));
+		HelpdeskPriviliges helpdeskPrivileges = new HelpdeskPriviliges();
+		helpdeskPrivileges.setUserGroupID(provider.getString(USER_GROUP_ID));
 		helpdeskPrivileges.setGroupName(provider.getString(GROUP_NAME));
 		helpdeskPrivileges.setEmailID(provider.getString(EMAIL_ID));
 		return helpdeskPrivileges;

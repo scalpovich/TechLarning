@@ -20,9 +20,9 @@ public class BatchDefinitionSteps {
 	 * file
 	 * <p>
 	 */
-	@When("user sets the $upload batch definiton for the $CER upload file")
-	public void setBatchDefinition(@Named("upload") String batchType,
-			@Named("CER") String batchID) {
+	@When("user sets the $batchType batch definiton for the $batchName upload file")
+	public void setBatchDefinition(@Named("batchType") String batchType,
+			@Named("batchName") String batchID) {
 		batchDefinitionWorkflow.setBatchDefinitionFlows(batchType, batchID);
 	}
 }

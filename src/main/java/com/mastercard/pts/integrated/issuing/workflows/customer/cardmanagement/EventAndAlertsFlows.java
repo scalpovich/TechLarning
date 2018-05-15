@@ -11,7 +11,7 @@ import com.mastercard.pts.integrated.issuing.utils.ReadTestDataFromExcel;
 @Component
 public class EventAndAlertsFlows {
 
-	private EventsAndAlertsPage eventAlert;
+	private EventsAndAlertsPage eventAlertPage;
 
 	@Autowired
 	private Navigator navigator;
@@ -20,13 +20,13 @@ public class EventAndAlertsFlows {
 	private ReadTestDataFromExcel dataReader;
 
 	public void templateMapping() {
-		eventAlert = navigator.navigateToPage(EventsAndAlertsPage.class);
-		eventAlert.mapTemplates1(dataReader.dataProvider(
+		eventAlertPage = navigator.navigateToPage(EventsAndAlertsPage.class);
+		eventAlertPage.mapTemplates1(dataReader.dataProvider(
 				"EventAlertsTemplateMapping", "Event"));
 	}
 
 	public void addEventAndAlertFlows(EventsAndAlerts eventsAndAlerts) {
-		eventAlert = navigator.navigateToPage(EventsAndAlertsPage.class);
-		eventAlert.addEventAndAlerts(eventsAndAlerts);
+		eventAlertPage = navigator.navigateToPage(EventsAndAlertsPage.class);
+		eventAlertPage.addEventAndAlerts(eventsAndAlerts);
 	}
 }

@@ -289,7 +289,7 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 				currencyCodeDdwn));
 		select.selectByVisibleText(dCurrency);
 		selectByVisibleText(rateOriginSearchDdwn, rateOrigin);
-		if ("Bank [B]".equals(rateOrigin) && !program.equalsIgnoreCase(""))
+		if ("Bank [B]".equals(rateOrigin) && !program.isEmpty())
 			selectByVisibleText(programSearchDdwn, program);
 		ClickButton(searchBtn);
 	}

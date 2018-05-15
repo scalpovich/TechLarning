@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
-import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskPrivileges;
+import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskPriviliges;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.AdministrationNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -74,11 +74,11 @@ public class UserGroupHelpdeskPrivilegesPage extends AbstractBasePage {
 		switchToIframe(Constants.EDIT_GROUPS);
 	}
 
-	public void enterUserGroupDetails(HelpdeskPrivileges helpdeskPreviliges) {
-		enterText(userGroupIDTxt, helpdeskPreviliges.getUserGroupID());
-		enterText(groupNameTxt, helpdeskPreviliges.getGroupName());
+	public void enterUserGroupDetails(HelpdeskPriviliges helpdeskPriviliges) {
+		enterText(userGroupIDTxt, helpdeskPriviliges.getUserGroupID());
+		enterText(groupNameTxt, helpdeskPriviliges.getGroupName());
 		ClickCheckBox(activateFlagChkBx, true);
-		enterText(emailIDTxt, helpdeskPreviliges.getEmailID());
+		enterText(emailIDTxt, helpdeskPriviliges.getEmailID());
 	}
 
 	public void clickOnSaveBtn() {

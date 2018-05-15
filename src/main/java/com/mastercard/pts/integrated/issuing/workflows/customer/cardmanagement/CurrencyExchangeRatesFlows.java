@@ -53,8 +53,7 @@ public class CurrencyExchangeRatesFlows {
 	}
 
 	public void uploadFileBankInvalidFileFlows(String isInvalid, String filePath) {
-		currencyExchangeRatesPage
-.uploadInvalidCurrencyExchangeRateFile(
+		currencyExchangeRatesPage.uploadInvalidCurrencyExchangeRateFile(
 				isInvalid, filePath);
 	}
 
