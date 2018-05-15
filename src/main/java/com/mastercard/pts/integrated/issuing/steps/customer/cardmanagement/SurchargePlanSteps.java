@@ -33,15 +33,4 @@ public class SurchargePlanSteps {
 		Assert.assertEquals(ConstantData.RECORD_ADDED_SUCCESSFULLY, surchargePlanWorkflows.getFeedbackText());
 		Assert.assertFalse(surchargePlanWorkflows.isNoRecordsFoundInTableView(surchargePlan));
 	}
-	
-	@When("user does not fill mandatory fields") 
-	public void addDetailKeepingMandatoryFieldsBlank() {
-		
-	}
-	
-	@Then("appropriate validation should be triggered") 
-	public void appropriateValidationCheck() {
-		
-	}
-
 }

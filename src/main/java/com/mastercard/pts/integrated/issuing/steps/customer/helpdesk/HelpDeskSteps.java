@@ -706,7 +706,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.changeRegisteredMobileNo(helpdeskGeneral);
 	}
-	
+
 	@When("user creates service request to change the registered Email ID")
 	public void ServiceRequestForChangeRegisteredEmailID() {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);

@@ -21,7 +21,7 @@ public class ConstantData {
 	public static final String SAME_TRANSACTION_EXISTS = "Information with same Transaction Rule Plan Code already exists.";
 	public static final String SAME_CREDIT_PLAN_EXISTS = "Information with same Credit Plan Code already exists.";
 	public static final String GENERIC_DESCRIPTION = "AUTOMATION";
-	public static final String FIELD_VALIDATION_ERROR = "This field is required.";
+	public static final String REQUIRED_FIELD_VALIDATION_MESSAGE = "This field is required.";
 	public static final String TRANSACTION_UPLOAD_FILE_PATH = "/home/dc-user/integrated/elt_bo/data/TRANSACTION_UPLOAD/INPUT";
 	public static final String IPM_UPLOAD_FILE_PATH = "/mptshome/STAGE2/integrated/elt_bo/data/AUTOMATION_1/IPM_INCOMING/input"; // "/home/dc-user/integrated/elt_bo/data/IPM_INCOMING/INPUT"
 																																	// "/mptshome/STAGE2/integrated/elt_bo/data/IPM_INCOMING/input"

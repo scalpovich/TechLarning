@@ -193,7 +193,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement mobileInptTxt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="udf23:input:dropdowncomponent")
-	private MCWebElement ISDCodeDdwn;
+	private MCWebElement isdCodeDdwn;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//ul[@class='feedbackPanel']/.//span")
 	private MCWebElement responseMessage;
@@ -324,7 +324,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return deliveryDate;
 	}
 		
-	public void clickGoButton(){
+
+	public void clickGoButton() {
 		clickWhenClickableDoNotWaitForWicket(goBtn);
 	}
 	
@@ -341,7 +342,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	private void enterMobileNo(HelpdeskGeneral general){
-		SelectDropDownByValue(ISDCodeDdwn,general.getNewMobileISD());
+		SelectDropDownByValue(isdCodeDdwn,general.getNewMobileISD());
 		enterValueinTextBox(mobileInptTxt,general.getNewMobileNo());
 	}
 	
@@ -851,17 +852,17 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return verifyFieldPresence(DEVICE_NUMBER)&&getTextFromPage(deviceNumberLbl).equalsIgnoreCase(helpdeskGeneral.getDeviceNumber());
 	}
 	
-	private boolean verifyRequestDate(){
-		if(verifyFieldPresence(REQUEST_DATE)){
-		try{
-            LocalDate.parse(getTextFromPage(requestDateLbl), DateTimeFormatter.ofPattern("dd/MM/uuuu kk:mm:ss"));
-            return true;
-		}
-		catch(DateTimeParseException e){
-			return false;
-		}
-		}
-		else
+
+	private boolean verifyRequestDate() {
+		if (verifyFieldPresence(REQUEST_DATE)) {
+			try {
+				LocalDate.parse(getTextFromPage(requestDateLbl),
+						DateTimeFormatter.ofPattern("dd/MM/uuuu kk:mm:ss"));
+				return true;
+			} catch (DateTimeParseException e) {
+				return false;
+			}
+		} else
 			return false;
 	}
 	

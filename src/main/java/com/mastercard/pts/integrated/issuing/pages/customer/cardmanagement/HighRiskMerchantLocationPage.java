@@ -27,8 +27,6 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class HighRiskMerchantLocationPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(HighRiskMerchantLocationPage.class);
-	
-	public static final String TEXT = "123"+CustomUtils.randomAlphaNumeric(2);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=acquirerId]")
 	private MCWebElement acquirerId;
@@ -54,48 +52,46 @@ public class HighRiskMerchantLocationPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='merchantLocationId']")
 	private MCWebElement planCodeSearchTxt;
 	
-	private String ERROR_XPATH = ".//div[@class='ketchup-error-container-alt']/ol/li";
-	
 	public void verifyUiOperationStatus() {
 		logger.info("High Risk Merchant Location");
 		verifyUiOperation("Add High Risk Merchant Location");
 	}
 	
-	private void addAcquireeId(){
-		enterText(acquirerId, TEXT);
+	public void addAcquireeId(HighRiskMerchantLocation plan){
+		enterText(acquirerId, plan.getAcquireeId());
 	}
 	
-	private void addMerchantId(){
-		enterText(merchantId, TEXT);
+	public void addMerchantId(HighRiskMerchantLocation plan){
+		enterText(merchantId, plan.getMerchantId());
 	}
 	
-	private void addMerchantLocationDescription(){
-		enterText(merchantLocationDescription, TEXT);
+	public void addMerchantLocationDescription(HighRiskMerchantLocation plan){
+		enterText(merchantLocationDescription, plan.getMerchantLocationDescription());
 	}
 	
-	private void addMerchantLocationId(){
-		enterText(merchantLocationId, TEXT);
+	public void addMerchantLocationId(HighRiskMerchantLocation plan){
+		enterText(merchantLocationId, plan.getMerchantLocationId());
 	}
 	
-	private void addEffectiveDateDPkr(){
+	public void addEffectiveDate(){
 		WebElementUtils.pickDate(effectiveDateDPkr, futureDate);
 	}
 	
-	private void addEndDateDPkr(){
+	private void addEndDate(){
 		WebElementUtils.pickDate(endDateDPkr, futureEndDate);
 	} 
 
-	public String addHighRiskMerchantLocation() {
+	public void addHighRiskMerchantLocation(HighRiskMerchantLocation plan) {
 		try{
 		logger.info("Add High Risk Merchant Location");
 		clickAddNewButton();
 		runWithinPopup("High Risk Merchant Location", () -> {
-			addAcquireeId();
-			addMerchantId();
-			addMerchantLocationDescription();
-			addMerchantLocationId();
-			addEffectiveDateDPkr();
-			addEndDateDPkr();
+			addAcquireeId(plan);
+			addMerchantId(plan);
+			addMerchantLocationDescription(plan);
+			addMerchantLocationId(plan);
+			addEffectiveDate();
+			addEndDate();
 			clickSaveButton();
 			verifyDuplicateAndClickCancel();
 		});
@@ -103,7 +99,6 @@ public class HighRiskMerchantLocationPage extends AbstractBasePage {
 		catch(NullPointerException | WebDriverException e){
 			logger.error("Error in Risk Merchant Location",e);
 		}
-		return TEXT;
 	}
 	
 	public String getFeedbackText() {
@@ -124,10 +119,6 @@ public class HighRiskMerchantLocationPage extends AbstractBasePage {
 		clickSaveButton();
 	}
 	
-	public List<WebElement> getErrors() {
-	    return Elements(ERROR_XPATH);
-	}
-
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(acquirerId), WebElementUtils.elementToBeClickable(merchantId),
