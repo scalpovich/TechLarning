@@ -82,7 +82,6 @@ public class HighRiskMerchantLocationPage extends AbstractBasePage {
 	} 
 
 	public void addHighRiskMerchantLocation(HighRiskMerchantLocation plan) {
-		try{
 		logger.info("Add High Risk Merchant Location");
 		clickAddNewButton();
 		runWithinPopup("High Risk Merchant Location", () -> {
@@ -95,10 +94,6 @@ public class HighRiskMerchantLocationPage extends AbstractBasePage {
 			clickSaveButton();
 			verifyDuplicateAndClickCancel();
 		});
-		}
-		catch(NullPointerException | WebDriverException e){
-			logger.error("Error in Risk Merchant Location",e);
-		}
 	}
 	
 	public String getFeedbackText() {

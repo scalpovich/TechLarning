@@ -337,11 +337,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.enterText(notesTxt, notes);
 	}
 	
-	private void enterEmailID(HelpdeskGeneral general){
+	public void enterEmailID(HelpdeskGeneral general){
 		enterValueinTextBox(emailIDInptTxt,general.getNewEmailID());
 	}
 	
-	private void enterMobileNo(HelpdeskGeneral general){
+	public void enterMobileNo(HelpdeskGeneral general){
 		SelectDropDownByValue(isdCodeDdwn,general.getNewMobileISD());
 		enterValueinTextBox(mobileInptTxt,general.getNewMobileNo());
 	}
@@ -825,11 +825,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return getTextFromPage(responseMessage);
 	}
 
-	private List<String> errorMessage(){		
+	public List<String> errorMessage(){		
 		return getListOfElements(ERROR_MESSAGE_XPATH);
 	}
 	
-	private boolean verifyFieldPresence(String field){
+	public boolean verifyFieldPresence(String field){
 		try{
 		Element(String.format(".//form[@id='id1a4']//table[@class='modelFormClass'][1]//*[text() [contains(.,'%s:')]]",field));
 			return true;
@@ -839,21 +839,21 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		}
 	}
 	
-	private boolean verifyCallReferenceNo(){
+	public boolean verifyCallReferenceNo(){
 		return verifyFieldPresence(CALL_REFERENCE_NUMBER)&&StringUtils.isNumeric(getTextFromPage(callReferenceNumberLbl));
 		
 	}
 	
-	private boolean verifyServiceDescription(HelpdeskGeneral helpdeskGeneral){
+	public boolean verifyServiceDescription(HelpdeskGeneral helpdeskGeneral){
 		return verifyFieldPresence(SERVICE_DESCRIPTION)&&getTextFromPage(serviceDescriptionLbl).equalsIgnoreCase(String.format(helpdeskGeneral.getServiceDescription()+" [%s]",helpdeskGeneral.getServiceCode()));
 	}
 	
-	private boolean verifyDeviceNumber(HelpdeskGeneral helpdeskGeneral){
+	public boolean verifyDeviceNumber(HelpdeskGeneral helpdeskGeneral){
 		return verifyFieldPresence(DEVICE_NUMBER)&&getTextFromPage(deviceNumberLbl).equalsIgnoreCase(helpdeskGeneral.getDeviceNumber());
 	}
 	
 
-	private boolean verifyRequestDate() {
+	public boolean verifyRequestDate() {
 		if (verifyFieldPresence(REQUEST_DATE)) {
 			try {
 				LocalDate.parse(getTextFromPage(requestDateLbl),
@@ -866,15 +866,15 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			return false;
 	}
 	
-	private boolean verifyLoggedBy(){
+	public boolean verifyLoggedBy(){
 		return verifyFieldPresence(LOGGED_BY); 
 	}
 	
-	private boolean verifyWalletNumber(HelpdeskGeneral general){
+	public boolean verifyWalletNumber(HelpdeskGeneral general){
 		return verifyFieldPresence(WALLET_NUMBER)&&getTextFromPage(walletNumberLbl).equalsIgnoreCase(general.getDefaultWalletNumber());
 	}
 	
-	private boolean verifyClosureDate(){
+	public boolean verifyClosureDate(){
 		if(verifyFieldPresence(CLOSURE_DATE)){
 			try{
 	            LocalDate.parse(getTextFromPage(closureDateLbl), DateTimeFormatter.ofPattern("dd/MM/uuuu kk:mm:ss"));
@@ -888,15 +888,15 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				return false;
 	}
 	
-	private boolean verifyClosedBy(){
+	public boolean verifyClosedBy(){
 		return verifyFieldPresence(LOGGED_BY);
 	}
 	
-	private boolean verifyEstimatedClosurePeriod(){
+	public  boolean verifyEstimatedClosurePeriod(){
 		return verifyFieldPresence(CLOSURE_PERIOD);
 	}
 	
-	private boolean verifyPriorityRequest(){
+	public boolean verifyPriorityRequest(){
 		if (verifyFieldPresence(PRIORITY_REQUEST)){
 		ClickCheckBox(priorityRequestChkBx,true);
 		return true;

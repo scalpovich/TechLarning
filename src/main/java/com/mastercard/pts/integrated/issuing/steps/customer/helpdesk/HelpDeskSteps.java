@@ -695,7 +695,7 @@ public class HelpDeskSteps {
 	}
 	
 	@When("user creates service request to change the registered mobile number")
-	public void ServiceRequestForChangeRegisteredMobileNumber() {
+	public void changeRegisteredMobileNumber() {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		Optional<String[]> device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
 		if(device.isPresent()){
@@ -708,7 +708,7 @@ public class HelpDeskSteps {
 	}
 
 	@When("user creates service request to change the registered Email ID")
-	public void ServiceRequestForChangeRegisteredEmailID() {
+	public void changeRegisteredEmailID() {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		Optional<String[]> device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
 		if(device.isPresent()){
