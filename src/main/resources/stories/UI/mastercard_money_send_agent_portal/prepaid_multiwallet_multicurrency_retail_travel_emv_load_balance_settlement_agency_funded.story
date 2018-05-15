@@ -15,8 +15,6 @@ Scenario: Prepaid EMV load money and perform MMS transaction through agent porta
 Given user is logged in non-default institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin for non-default institution
 When user creates new device of prepaid type for non-default institution
-When User fills Program section for prepaid product
-When User fills Program section for prepaid product
 Then device has "normal" status for non-default institution
 Then user sign out from customer portal
 Given user is logged in institution
