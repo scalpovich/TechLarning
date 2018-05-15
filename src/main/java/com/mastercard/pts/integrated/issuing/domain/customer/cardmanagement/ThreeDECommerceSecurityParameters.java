@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
 
 public class ThreeDECommerceSecurityParameters {
@@ -46,10 +47,10 @@ public class ThreeDECommerceSecurityParameters {
 		this.deviceRangeTo = deviceRangeTo;
 	}	
 	
-	public static ThreeDECommerceSecurityParameters getThreeDECommerceSecurityData(KeyValueProvider provider) {
+	public static ThreeDECommerceSecurityParameters getThreeDECommerceSecurityData() {
 		ThreeDECommerceSecurityParameters threeDECommerceSecurity = new ThreeDECommerceSecurityParameters();
-		threeDECommerceSecurity.seteCommerceSecurityInterchange(provider.getString("3D_SECURE_TNX_INTERCHANGE"));
-		threeDECommerceSecurity.setValidateCAVVAAV(provider.getString("VALIDATE_CAVV_AVV"));
+		threeDECommerceSecurity.seteCommerceSecurityInterchange(MapUtils.fnGetInputDataFromMap("3D_SECURE_TNX_INTERCHANGE"));
+		threeDECommerceSecurity.setValidateCAVVAAV(MapUtils.fnGetInputDataFromMap("VALIDATE_CAVV_AVV"));
 		return threeDECommerceSecurity;
 	}
 

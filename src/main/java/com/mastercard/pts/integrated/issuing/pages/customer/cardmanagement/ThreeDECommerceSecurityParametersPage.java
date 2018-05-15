@@ -42,13 +42,13 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "validateCavvAav:input:dropdowncomponent")
 	private MCWebElement validateCAVVAAVDDwn;
 	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "minCardRange:input:inputTextField")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "minCardRange:input:inputTextField")
 	private MCWebElement addMinCardRangeTxt;
 
-	@PageElement(findBy = FindBy.CSS, valueToFind = "maxCardRange:input:inputTextField")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "maxCardRange:input:inputTextField")
 	private MCWebElement addMaxCardRangeTxt;
 	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "decWithoutCavvAavMc:checkBoxComponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "decWithoutCavvAavMc:checkBoxComponent")
 	private MCWebElement declineAllTransactionsWithoutCAVVAAVChkBx;
 	
 	
@@ -62,14 +62,15 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 		selectSearchInterchange(eCommerceSecurityParameters.geteCommerceSecurityInterchange());
 		clickSearchButton();
 		clickAddNewButton();
-		
-		selectThreeDECommerceInterchange(eCommerceSecurityParameters.geteCommerceSecurityInterchange());
-		selectValidateCAVVAVV(eCommerceSecurityParameters.getValidateCAVVAAV());
-		enterDeviceRangeFrom(eCommerceSecurityParameters.getDeviceRangeFrom());
-		enterDeviceRangeTo(eCommerceSecurityParameters.getDeviceRangeTo());
-		selectDeclineAllTransactionsWithoutCAVVAAVCheck();
-		clickSaveButton();
-		
+		runWithinPopup("Add 3D E-Commerce Security", () -> {
+			selectThreeDECommerceInterchange(eCommerceSecurityParameters.geteCommerceSecurityInterchange());
+			selectValidateCAVVAVV(eCommerceSecurityParameters.getValidateCAVVAAV());
+			enterDeviceRangeFrom(eCommerceSecurityParameters.getDeviceRangeFrom());
+			enterDeviceRangeTo(eCommerceSecurityParameters.getDeviceRangeTo());
+			selectDeclineAllTransactionsWithoutCAVVAAVCheck();
+			clickSaveButton();
+			verifyDuplicateBinAndClickCancel();
+		});	
 	}
 	
 	public void selectSearchInterchange(String interchangeToSearch){
@@ -95,6 +96,14 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 	public void selectDeclineAllTransactionsWithoutCAVVAAVCheck()
 	{
 		ClickCheckBox(declineAllTransactionsWithoutCAVVAAVChkBx, true);
+	}
+	
+	protected void verifyDuplicateBinAndClickCancel() {
+		String message = getMessageFromFeedbackPanel();
+		if (message != null
+				&& (message.contains("Overlapping High Device/Wallet and Low Device/Wallet Range"))) {
+			clickCancelButton();
+		}
 	}
 	
 	@Override
