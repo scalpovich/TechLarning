@@ -6,8 +6,10 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
@@ -39,6 +41,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDeskFlows;
@@ -689,5 +692,48 @@ public class HelpDeskSteps {
 				helpdeskWorkflow.resetCardholderTranPassword(clientID);
 			}
 		}
+	}
+	
+	@When("user creates service request to change the registered mobile number [$serviceCode]")
+	public void serviceRequestForChangeRegisteredMobileNumber(String serviceCode) {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		Optional<String[]> device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
+		if(device.isPresent()){
+		helpdeskGeneral.setProductType(ProductType.fromShortName(device.get()[0]));
+		helpdeskGeneral.setDeviceNumber(device.get()[1]);
+		}
+		helpdeskGeneral.setServiceCode(serviceCode);
+		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.changeRegisteredMobileNo(helpdeskGeneral);
+	}
+	
+	@When("user creates service request to change the registered Email ID [$serviceCode]")
+	public void serviceRequestForChangeRegisteredEmailID(String serviceCode) {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		Optional<String[]> device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
+		if(device.isPresent()){
+		helpdeskGeneral.setProductType(ProductType.fromShortName(device.get()[0]));
+		helpdeskGeneral.setDeviceNumber(device.get()[1]);
+		}
+		helpdeskGeneral.setServiceCode(serviceCode);
+		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.changeRegisteredEmailID(helpdeskGeneral);
+	}
+	
+	@Then("user validates registered mobile number SR [$serviceCode] screen with the required fields")
+	public void registeredMobileNumberUpdateScreenValidation(String serviceCode) {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		Optional<String[]> device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
+		if(device.isPresent()){
+		helpdeskGeneral.setProductType(ProductType.fromShortName(device.get()[0]));
+		helpdeskGeneral.setDeviceNumber(device.get()[1]);
+		helpdeskGeneral.setDefaultWalletNumber(device.get()[2]);
+		}
+		helpdeskGeneral.setServiceCode(serviceCode);
+		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.validateRequiredFields(helpdeskGeneral);
 	}
 }
