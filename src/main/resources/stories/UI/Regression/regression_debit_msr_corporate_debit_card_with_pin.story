@@ -1,9 +1,9 @@
 debit msr corporate debit card withPin
 
 Narrative:
-In order to check transactions on debit emv corporate debit card
+In order to check transactions on debit msr corporate debit card
 As an issuer
-I want to authorize transactions for debit emv corporate debit card
+I want to authorize transactions for debit msr corporate debit card
 
 Meta:
 @StoryName d_msr_corp

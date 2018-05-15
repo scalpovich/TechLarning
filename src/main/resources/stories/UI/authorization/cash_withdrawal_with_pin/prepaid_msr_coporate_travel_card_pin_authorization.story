@@ -1,9 +1,9 @@
 prepaid msr corp travel card authorization
 
 Narrative:
-In order to check transactions on prepaid emv corp travel card
+In order to check transactions on prepaid msr corp travel card
 As an issuer
-I want to authorize transactions for prepaid emv corp travel card
+I want to authorize transactions for prepaid msr corp travel card
 
 Meta:
 @StoryName p_msr_corp_travel

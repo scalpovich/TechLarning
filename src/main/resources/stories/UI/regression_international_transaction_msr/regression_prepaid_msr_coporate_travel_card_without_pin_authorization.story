@@ -1,7 +1,7 @@
 regression prepaid msr corporate travel card authorization PINLESS
 
 Narrative:
-In order to check transactions on prepaid msr corporate general travel card
+In order to check transactions on prepaid msr corporate travel card
 As an issuer
 I want to authorize transactions for prepaid msr corporate travel card
 

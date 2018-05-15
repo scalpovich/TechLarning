@@ -1,9 +1,9 @@
 ECOMM_PURCHASE transaction on prepaid emv corp general purpose card authorization
 
 Narrative:
-In order to check transactions on prepaid corp retail general purpose card
+In order to check transactions on prepaid corp general purpose card
 As an issuer
-I want to authorize transactions for prepaid corp retail general purpose card
+I want to authorize transactions for prepaid corp general purpose card
 
 Meta:
 @StoryName p_emv_corporate_general

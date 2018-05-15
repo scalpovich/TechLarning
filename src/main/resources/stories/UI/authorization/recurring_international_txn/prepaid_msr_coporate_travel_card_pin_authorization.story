@@ -1,4 +1,4 @@
-prepaid msr corporate travel card recurring internation transactions
+prepaid msr corporate travel card recurring international transactions
 
 Narrative:
 In order to check transactions on prepaid msr corporate travel card
@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for prepaid msr corporate travel card
 
 Meta:
-@StoryName p_emv_corp_travel
+@StoryName p_msr_corp_travel
 @oldReferenceSheet_S203707
 @CRCardsWithAuthorizationCashAdvancedWithClearing
 

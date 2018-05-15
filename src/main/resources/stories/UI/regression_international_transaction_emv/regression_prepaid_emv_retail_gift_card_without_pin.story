@@ -1,4 +1,4 @@
-prepaid emv gift card authorization PINLESS
+prepaid emv retail gift card authorization PINLESS
 
 Narrative:
 In order to check transactions on prepaid emv retail gift card

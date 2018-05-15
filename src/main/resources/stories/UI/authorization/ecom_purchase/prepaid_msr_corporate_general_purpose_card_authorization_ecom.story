@@ -1,16 +1,16 @@
 ECOMM_PURCHASE transaction on prepaid msr corp general purpose card authorization
 
 Narrative:
-In order to check transactions on prepaid msr retail general purpose card
+In order to check transactions on prepaid msr corp general purpose card
 As an issuer
-I want to authorize transactions for prepaid msr retail general purpose card
+I want to authorize transactions for prepaid msr corp general purpose card
 
 Meta:
 @StoryName prepaid_cgc_load_from_file
 @oldReferenceSheet_S203707
 @ECOM_PURCHASE
 
-Scenario: ECOMM_PURCHASE transaction on prepaid msr retail general purpose card
+Scenario: ECOMM_PURCHASE transaction on prepaid msr corp general purpose card
 Meta:
 @TestId TC398452
 Given user is logged in institution

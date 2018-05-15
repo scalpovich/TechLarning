@@ -1,12 +1,11 @@
-prepaid emv retail general purpose card authorization
-
+prepaid msr corporate general purpose card recurring international transaction
 Narrative:
 In order to check transactions on prepaid msr corp general purpose card
 As an issuer
 I want to authorize transactions for prepaid msr corp general purpose card
 
 Meta:
-@StoryName p_emv_corporate_general
+@StoryName p_msr_corp_general_purpose
 @oldReferenceSheet_S203707
 @CRCardsWithAuthorizationCashAdvancedWithClearing
 

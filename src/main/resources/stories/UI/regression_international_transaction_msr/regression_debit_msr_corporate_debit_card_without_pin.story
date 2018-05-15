@@ -1,7 +1,7 @@
 debit msr corporate debit card withoutPin
 
 Narrative:
-In order to check transactions on debit magnetic stripe corporate card
+In order to check transactions on debit magnetic stripe corporate debit card
 As an issuer
 I want to authorize transactions for debit magnetic stripe corporate debit card
 

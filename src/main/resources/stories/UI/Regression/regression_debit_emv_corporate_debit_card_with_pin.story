@@ -19,7 +19,7 @@ When user has wallet number information for debit device
 When user performs adjustment transaction
 When user has current wallet balance amount information for debit device
 
-Scenario: debit emv rcorporate debit card device production
+Scenario: debit emv corporate debit card device production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for debit

@@ -9,7 +9,7 @@ Meta:
 @StoryName prepaid_rgpc_manual_auth
 @CRCardsWithAuthorization
 
-Scenario: Set up emv retail general purpose prepaid card
+Scenario: Set up emv corporate general purpose prepaid card
 Meta:
 @TestId TC407061
 Given user is logged in institution
@@ -17,7 +17,7 @@ And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
 Then device has "normal" status
 
-Scenario: emv retail general purpose prepaid card device production
+Scenario: emv corporate general purpose prepaid card device production
 Meta:
 @TestId TC408234
 Given user is logged in institution
