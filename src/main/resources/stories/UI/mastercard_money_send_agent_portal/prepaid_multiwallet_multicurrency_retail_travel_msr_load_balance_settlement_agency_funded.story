@@ -88,9 +88,6 @@ And user sign out from agent portal
 And user is logged in institution
 And balance in helpdesk updated correctly for prepaid device
 And user sign out from customer portal
-Given user is logged in agent portal as agency user
-When user initiates settlement for agency
-Then settlement is initiated successfully
 When user is logged in agent portal as agent user
 When user navigates to transfer funds page
 Then transfer funds page is loaded and master detail content title is Transfer Funds

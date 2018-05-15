@@ -196,7 +196,10 @@ And user is logged in institution
 And balance in helpdesk updated correctly for prepaid device
 And user sign out from customer portal
 
-Scenario: Agency Settlement - Funded Agent
-Given user is logged in agent portal as agency user
-When user initiates settlement for agency
-Then settlement is initiated successfully
+Scenario: MMS transaction through agent portal
+When user is logged in agent portal as agent user
+When user navigates to transfer funds page
+Then transfer funds page is loaded and master detail content title is Transfer Funds
+And TransferFunds page of transactions tab is rendered correctly
+Then user transfer fund through MMS using agent portal
+And user sign out from agent portal
