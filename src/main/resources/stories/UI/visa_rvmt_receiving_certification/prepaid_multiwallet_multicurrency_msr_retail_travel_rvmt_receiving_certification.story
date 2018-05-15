@@ -8,6 +8,7 @@ I want to perform RVMT Receiving through vts
 Meta:
 @StoryName MWMC_MSR_RTC_LOAD_ACTV_VTS_NPIN
 @visa_rvmt_receiving
+@SanitySuite
 
 Scenario: Set up prepaid mwmc retail travel msr pinless card and perform Visa RVMT Receiving Certification
 Meta:

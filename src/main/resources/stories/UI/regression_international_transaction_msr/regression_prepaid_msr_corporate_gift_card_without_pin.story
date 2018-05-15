@@ -9,7 +9,8 @@ Meta:
 @StoryName p_msr_corp_gift
 @AuthorizationRegression
 @AuthorizationRegressionGroup2
-@MSRWithoutPin
+@MSRWithoutPinIntTrx
+@InternationalTrx
 
 Scenario: Setup - prepaid MSR corporate gift card without PIN
 Given user is logged in institution

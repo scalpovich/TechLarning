@@ -9,7 +9,7 @@ Meta:
 @StoryName prepaid_cgpr_manual_auth
 @CRCardsWithAuthorization
 
-Scenario: Set up msr prepaid card
+Scenario: Set up corporate general purpose msr prepaid card
 Meta:
 @TestId TC407061
 Given user is logged in institution
@@ -17,20 +17,20 @@ And device range for program with device plan for "prepaid" "magnetic stripe" ca
 When user creates new device of prepaid type for new client
 Then device has "normal" status
 
-Scenario: msr prepaid card device production
+Scenario: corporate general purpose msr prepaid card device production
 Meta:
 @TestId TC408234
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
-When user has wallet number information for debit device
+When user has wallet number information for prepaid device
 When user performs adjustment transaction
-When user has current wallet balance amount information for debit device
+When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 And user activates device through helpdesk
 
-Scenario: msr prepaid card authorization
+Scenario: corporate general purpose msr prepaid card authorization
 Meta:
 @TestId TC408235
 Given user is logged in institution

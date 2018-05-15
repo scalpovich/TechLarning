@@ -8,6 +8,7 @@ I want to authorize transactions for debit msr retail debit card pinless
 Meta:
 @StoryName d_msr_retail
 @CRCardsWithAuthorizationCashAdvancedWithClearing
+@SanitySuite
 
 Scenario: Setup - debit msr retail debit card
 Given user is logged in institution

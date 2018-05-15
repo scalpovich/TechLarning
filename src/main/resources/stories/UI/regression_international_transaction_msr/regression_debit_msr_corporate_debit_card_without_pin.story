@@ -1,16 +1,17 @@
 debit msr corporate debit card withoutPin
 
 Narrative:
-In order to check transactions on debit magnetic stripe retail card
+In order to check transactions on debit magnetic stripe corporate debit card
 As an issuer
-I want to authorize transactions for debit magnetic stripe retail debit card
+I want to authorize transactions for debit magnetic stripe corporate debit card
 
 Meta:
 @StoryName d_msr_corp
 @SanityCardsWithAuthorization
-@MSRWithoutPin
+@MSRWithoutPinIntTrx
+@InternationalTrx
 
-Scenario: Set up program for debit magnetic stripe retail debit card
+Scenario: Set up program for debit magnetic stripe corporate debit card
 Given user is logged in institution
 And device range for program with device plan for "debit" "magnetic stripe" card without pin
 When user creates new device of debit type for new client
@@ -20,7 +21,7 @@ When user performs adjustment transaction with 10000 amount
 When user has current wallet balance amount information for debit device
 And user sign out from customer portal
 
-Scenario: debit emv retail debit card device production
+Scenario: debit emv corporate debit card device production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for debit

@@ -1,4 +1,4 @@
-ECOMM_PURCHASE transaction on prepaid emv corporate gift card authorization
+ECOMM_PURCHASE transaction on prepaid msr corporate gift card authorization
 
 Narrative:
 In order to provide a corporate client various transactions

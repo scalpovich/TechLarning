@@ -1,7 +1,7 @@
 prepaid msr retail gift card pinless authorization
 
 Narrative:
-In order to provide to client easy-to-use multi-purpose prepaid card pinless
+In order to provide to client retail gift card prepaid card pinless
 As an issuer
 I want to create an magnetic stripe prepaid card pinless and perform various transaction
 

@@ -119,7 +119,6 @@ public class InstitutionCreationSteps {
 		boolean acsEnable = context.get("authenticationOptionsFlg");
 		Assert.assertTrue("Error in configuring two factor authentication options", acsEnable);
 		Assert.assertTrue("Error in configuring two factor authentication options", RecoredUpdated);
-
 	}
 
 	@When("user adds the Customer Care International and VIP Number while creating new $institutionType Institute")
