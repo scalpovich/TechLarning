@@ -145,7 +145,7 @@ public class CurrencyExchangeRatesSteps {
 				.fnGetInputDataFromMap("SELL_RATE"));
 		currencyExchangeRateDomainPage.setRateOrigin(currencyExchangeRatesPage
 				.getCode(MapUtils.fnGetInputDataFromMap(rateOrigin)));
-		if (System.getProperty("env").contains("stage")) {
+		if (System.getProperty(Constants.ENV).contains(Constants.ENV_STAGESA)) {
 			currencyExchangeRateDomainPage
 					.setUploadPathCER(Constants.UPLOAD_PATH_CURR_STAGE
 							+ "/INPUT");

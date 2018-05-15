@@ -14,8 +14,6 @@ public class BatchDefinition implements HasCodeAndDescription {
 	private String rejectedFilePath;
 	private String processedFilePath;
 	private String batchDetails;
-	private static final String ENV = "env";
-	private static final String ENV_NAME = "stage";
 
 	public String getInputFilePath() {
 		return inputFilePath;
@@ -67,7 +65,7 @@ public class BatchDefinition implements HasCodeAndDescription {
 
 	public static BatchDefinition createWithProvider() {
 		BatchDefinition batchDefinition = new BatchDefinition();
-		if (System.getProperty(ENV).contains(ENV_NAME)) {
+		if (System.getProperty(Constants.ENV).contains(Constants.ENV_STAGESA)) {
 			setFilePaths(batchDefinition, Constants.UPLOAD_PATH_CURR_STAGE);
 		} else {
 			setFilePaths(batchDefinition, Constants.UPLOAD_PATH_CURR);

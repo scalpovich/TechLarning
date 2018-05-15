@@ -457,4 +457,6 @@ public class Constants {
 	public static final String ASSIGNPRODUCT = "Assign Product";
 	public static final String ASSIGN_SERVICE_CODE = "Assign Service Code";
 
+	public static final String ENV = "env";
+
 }

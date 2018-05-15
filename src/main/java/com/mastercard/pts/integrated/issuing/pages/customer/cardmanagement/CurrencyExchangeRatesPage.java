@@ -24,12 +24,12 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.ReadTestDataFromExcel;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -60,7 +60,7 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement rateOriginSearchDdwn;
-@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:1:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:1:componentPanel:input:dropdowncomponent")
 	private MCWebElement programSearchDdwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:searchButtonPanel:buttonCol:searchButton")
@@ -129,7 +129,7 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		waitForElementVisible(sourceCurrencyDdwn);
 		selectByVisibleText(sourceCurrencyDdwn,
 				currencyExchangeRateDomainPage.getSourceCurrency());
-		CustomUtils.ThreadDotSleep(500);
+		SimulatorUtilities.wait(500);
 		Select select = new Select(getFinder().getWebDriver().findElement(
 				currencyCodeDdwn));
 		select.selectByVisibleText(currencyExchangeRateDomainPage
@@ -171,7 +171,7 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		ClickButton(saveBtn);
 
 		getFinder().getWebDriver().switchTo().defaultContent();
-		CustomUtils.ThreadDotSleep(500);
+		SimulatorUtilities.wait(500);
 	}
 
 	public boolean verifyAddedCurrencyExchangeRate(
@@ -196,7 +196,7 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		for (int i = 0; i < applicationUploadMap.size(); i++) {
 			if (true == dataReader.iterateUploadDataFromExcelMap("Test Record "
 					+ (i + 1))) {
-				CustomUtils.ThreadDotSleep(500);
+				SimulatorUtilities.wait(500);
 				searchCurrencyExchangeRates(
 						FileCreation
 								.getUploadFileFromDatamap("Source Currency"),
@@ -263,7 +263,7 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		Iterator<String> setItr = hashMap.keySet().iterator();
 		while (setItr.hasNext()) {
 			String key = setItr.next();
-			CustomUtils.ThreadDotSleep(250);
+			SimulatorUtilities.wait(250);
 			if (hashMap.get(key).equals(MapUtils.fnGetInputDataFromMap(key))) {
 				count++;
 			}
@@ -284,7 +284,7 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 	public void searchCurrencyExchangeRates(String sCurrency, String dCurrency,
 			String rateOrigin, String program) {
 		selectByVisibleText(sourceCurrencySearchDdwn, sCurrency);
-		CustomUtils.ThreadDotSleep(500);
+		SimulatorUtilities.wait(500);
 		Select select = new Select(getFinder().getWebDriver().findElement(
 				currencyCodeDdwn));
 		select.selectByVisibleText(dCurrency);
@@ -312,9 +312,9 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		HashMap<String, String> hashMap = new HashMap<String, String>();
 		List<WebElement> elements = getImages(tableElements);
 		List<WebElement> headerElements = getImages(tableHeaderElements);
-		CustomUtils.ThreadDotSleep(500);
+		SimulatorUtilities.wait(500);
 		for (WebElement element : headerElements) {
-			CustomUtils.ThreadDotSleep(500);
+			SimulatorUtilities.wait(500);
 			String elementText = element.getText();
 			if ("Edit".equalsIgnoreCase(elementText)
 					|| "Delete".equalsIgnoreCase(elementText)) {
@@ -346,7 +346,7 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		Iterator<String> setItr = hashMap.keySet().iterator();
 		while (setItr.hasNext()) {
 			String key = setItr.next();
-			CustomUtils.ThreadDotSleep(250);
+			SimulatorUtilities.wait(250);
 			if (hashMap.get(key).equals(
 					FileCreation.getUploadFileFromDatamap(key))) {
 				count++;

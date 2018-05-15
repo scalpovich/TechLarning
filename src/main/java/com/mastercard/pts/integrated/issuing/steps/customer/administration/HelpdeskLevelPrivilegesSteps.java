@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
-import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskPriviliges;
+import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskPrivileges;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.workflows.customer.administration.HelpdeskLevelPrivilegesWorkflow;
 
@@ -20,7 +20,7 @@ public class HelpdeskLevelPrivilegesSteps {
 	@Autowired
 	private KeyValueProvider provider;
 
-	HelpdeskPriviliges helpdeskPreviliges;
+	HelpdeskPrivileges helpdeskPreviliges;
 
 	@Autowired
 	TestContext context;
@@ -30,7 +30,7 @@ public class HelpdeskLevelPrivilegesSteps {
 			@Named("Assign_Service_Code") String subType,
 			@Named("user") String entityType) {
 		UserCreation userCreation = context.get(ContextConstants.USER);
-		helpdeskPreviliges = HelpdeskPriviliges.createWithProvider(provider);
+		helpdeskPreviliges = HelpdeskPrivileges.createWithProvider(provider);
 		helpdeskLevelPrivilegesFlows.provideHelpdeskLevelPrivilegesFlows(
 				subType, helpdeskPreviliges, userCreation);
 	}
