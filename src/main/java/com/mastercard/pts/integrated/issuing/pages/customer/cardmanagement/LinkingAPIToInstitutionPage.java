@@ -68,18 +68,18 @@ public class LinkingAPIToInstitutionPage extends AbstractBasePage {
 		selectByVisibleText(productTypeDdwn,linkingAPIToInstitution.getProductType());
 		clickWhenClickable(searchbtn);
 		if(!publishErrorOnPage()){
-		selectAllServiceCode();
-		clickWhenClickable(addbtn);
-		clickWhenClickable(saveBtn);
-		waitForLoaderToDisappear();	
-		SwitchToDefaultFrame();
-		verifyNewChannelRoutingSuccess();
+			selectAllServiceCode();
+			clickWhenClickable(addbtn);
+			clickWhenClickable(saveBtn);
+			waitForLoaderToDisappear();	
+			SwitchToDefaultFrame();
+			verifyNewChannelRoutingSuccess();
 		}else {
 			logger.info("Error in record Addition");
 			clickWhenClickable(cancelBtn);
 			SwitchToDefaultFrame();
 		}
-		
+
 
 	}
 	public void verifyNewChannelRoutingSuccess() {
