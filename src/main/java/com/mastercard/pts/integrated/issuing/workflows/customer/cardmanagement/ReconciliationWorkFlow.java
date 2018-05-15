@@ -1,10 +1,7 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
-
-import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

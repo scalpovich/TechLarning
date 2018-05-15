@@ -259,7 +259,7 @@ public class FileUtils {
 		sc.close();
 	}
 	
-	public static String getLastestDownlodedFileName() {
+	public static String getLatestDownlodedFileName() {
 		String downLoadPath = System.getProperty("user.home") + "\\Downloads";
 		File f = new File(downLoadPath);
 		File[] files = f.listFiles();
