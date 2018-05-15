@@ -44,9 +44,10 @@ Scenario: Transaction EMV_PURCHASE
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
-And user is logged in institution
-And search Purchase authorization and verify Successful status
-Then user searches device on device usage screen and performs assertions on device tool usage and device transaction usage tabs
-!-- When User deleted PRE_TLP plan
-And user sign out from customer portal
 And MAS simulator is closed
+
+Scenario: Assert Authorization Search and Device Usage
+Given user is logged in institution
+Then search Purchase authorization and verify Successful status
+And user searches device on device usage screen and performs assertions on device tool usage and device transaction usage tabs
+And user sign out from customer portal
