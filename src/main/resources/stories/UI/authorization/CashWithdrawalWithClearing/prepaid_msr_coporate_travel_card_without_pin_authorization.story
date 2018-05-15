@@ -9,6 +9,7 @@ Meta:
 @StoryName p_msr_corp_travel
 @oldReferenceSheet_S203707
 @CRCardsWithAuthorizationCashWithdrawalWithClearing
+@SanitySuite
 
 Scenario: Set up prepaid msr corporate travel card
 Meta:

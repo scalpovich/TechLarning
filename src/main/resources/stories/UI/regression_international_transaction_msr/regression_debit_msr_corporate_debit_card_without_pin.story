@@ -8,7 +8,8 @@ I want to authorize transactions for debit magnetic stripe corporate debit card
 Meta:
 @StoryName d_msr_corp
 @SanityCardsWithAuthorization
-@MSRWithoutPin
+@MSRWithoutPinIntTrx
+@InternationalTrx
 
 Scenario: Set up program for debit magnetic stripe corporate debit card
 Given user is logged in institution

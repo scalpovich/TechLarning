@@ -9,7 +9,8 @@ Meta:
 @StoryName S203707
 @AuthorizationRegression
 @AuthorizationRegressionGroup1
-@EMVWithoutPin
+@EMVWithoutPinIntTrx
+@InternationalTrx
 
 Scenario: Set up prepaid emv retail gift card
 Given user is logged in institution

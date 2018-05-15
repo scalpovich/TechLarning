@@ -9,7 +9,8 @@ Meta:
 @StoryName p_msr_retail_travel
 @AuthorizationRegression
 @AuthorizationRegressionGroup1
-@MSRWithPin
+@MSRWithPinIntTrx
+@InternationalTrx
 
 Scenario: Set up prepaid msr retail travel card
 Meta:

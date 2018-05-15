@@ -11,7 +11,8 @@ Meta:
 @CRCardsWithAuthorizationRegression
 @AuthorizationRegression
 @AuthorizationRegressionGroup3
-@MSRWithoutPin
+@MSRWithoutPinIntTrx
+@InternationalTrx
 
 Scenario: Set up prepaid msr corporate travel card
 Given user is logged in institution

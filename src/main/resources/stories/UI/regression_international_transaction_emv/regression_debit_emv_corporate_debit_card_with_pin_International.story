@@ -8,7 +8,8 @@ I want to authorize transactions for emv corporate debit card
 Meta:
 @StoryName d_emv_corp
 @SanityCardsWithAuthorization
-@EMVWithPin
+@EMVWithPinIntTrx
+@InternationalTrx
 
 Scenario: Set up program for debit emv corporate debit card
 Given user is logged in institution

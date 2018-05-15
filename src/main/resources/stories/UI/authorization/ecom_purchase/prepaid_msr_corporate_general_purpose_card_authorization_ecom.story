@@ -9,6 +9,7 @@ Meta:
 @StoryName prepaid_cgc_load_from_file
 @oldReferenceSheet_S203707
 @ECOM_PURCHASE
+@SanitySuite	
 
 Scenario: ECOMM_PURCHASE transaction on prepaid msr corp general purpose card
 Meta:

@@ -9,7 +9,8 @@ Meta:
 @StoryName p_emv_retail_travel
 @AuthorizationRegression
 @AuthorizationRegressionGroup1
-@EMVWithPin
+@EMVWithPinIntTrx
+@InternationalTrx
 
 Scenario: Set up prepaid emv retail travel card
 Given user is logged in institution

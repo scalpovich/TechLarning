@@ -11,7 +11,8 @@ Meta:
 @CRCardsWithAuthorizationRegression
 @AuthorizationRegression
 @AuthorizationRegressionGroup3
-@EMVWithoutPin
+@EMVWithoutPinIntTrx
+@InternationalTrx
 
 Scenario: Set up prepaid emv corporate travel card
 Given user is logged in institution

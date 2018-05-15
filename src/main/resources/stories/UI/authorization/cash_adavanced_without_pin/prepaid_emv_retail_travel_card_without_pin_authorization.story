@@ -9,6 +9,7 @@ Meta:
 @StoryName p_emv_retail_travel
 @oldReferenceSheet_S203707
 @CRCardsWithAuthorizationCashAdvancedWithClearing
+@SanitySuite
 
 Scenario: Set up prepaid emv retail travel card
 Meta:
