@@ -124,8 +124,8 @@ public class EventsAndAlerts {
 
 	public static EventsAndAlerts createWithProvider(KeyValueProvider provider) {
 		EventsAndAlerts eventAndAlert = new EventsAndAlerts();
-		eventAndAlert.setEventID("EventID" + CustomUtils.randomNumbers(2));
-		eventAndAlert.setEventName("EventName" + CustomUtils.randomNumbers(2));
+		eventAndAlert.setEventID("EventID" + CustomUtils.randomNumbers(3));
+		eventAndAlert.setEventName("EventName" + CustomUtils.randomNumbers(3));
 		eventAndAlert.setProductType(MapUtils
 				.fnGetInputDataFromMap("EventProductType"));
 		eventAndAlert.setEmailRecipients(MapUtils

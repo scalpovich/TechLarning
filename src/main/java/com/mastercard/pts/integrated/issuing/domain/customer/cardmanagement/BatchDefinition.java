@@ -14,6 +14,8 @@ public class BatchDefinition implements HasCodeAndDescription {
 	private String rejectedFilePath;
 	private String processedFilePath;
 	private String batchDetails;
+	private static final String ENV = "env";
+	private static final String ENV_NAME = "stage";
 
 	public String getInputFilePath() {
 		return inputFilePath;
@@ -65,24 +67,19 @@ public class BatchDefinition implements HasCodeAndDescription {
 
 	public static BatchDefinition createWithProvider() {
 		BatchDefinition batchDefinition = new BatchDefinition();
-		if (System.getProperty("env").contains("stage")) {
-			batchDefinition.setInputFilePath(Constants.UPLOAD_PATH_CURR_STAGE
-					+ "/INPUT");
-			batchDefinition
-					.setProcessedFilePath(Constants.UPLOAD_PATH_CURR_STAGE
-							+ "/PROC");
-			batchDefinition
-					.setRejectedFilePath(Constants.UPLOAD_PATH_CURR_STAGE
-							+ "/OUTPUT");
+		if (System.getProperty(ENV).contains(ENV_NAME)) {
+			setFilePaths(batchDefinition, Constants.UPLOAD_PATH_CURR_STAGE);
 		} else {
-			batchDefinition.setInputFilePath(Constants.UPLOAD_PATH_CURR
-					+ "/INPUT");
-		batchDefinition.setProcessedFilePath(Constants.UPLOAD_PATH_CURR
-				+ "/PROC");
-		batchDefinition.setRejectedFilePath(Constants.UPLOAD_PATH_CURR
-				+ "/OUTPUT");
+			setFilePaths(batchDefinition, Constants.UPLOAD_PATH_CURR);
 		}
 		return batchDefinition;
+	}
+
+	public static void setFilePaths(BatchDefinition batchDefinition,
+			String uploadPath) {
+		batchDefinition.setInputFilePath(uploadPath + "/INPUT");
+		batchDefinition.setProcessedFilePath(uploadPath + "/PROC");
+		batchDefinition.setRejectedFilePath(uploadPath + "/OUTPUT");
 	}
 
 	@Override
