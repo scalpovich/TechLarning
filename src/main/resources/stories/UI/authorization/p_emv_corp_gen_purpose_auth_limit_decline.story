@@ -44,6 +44,8 @@ Scenario: Transaction EMV_PURCHASE
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
+
+Scenario: Transaction EMV_PURCHASE - Overlimit
 When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
