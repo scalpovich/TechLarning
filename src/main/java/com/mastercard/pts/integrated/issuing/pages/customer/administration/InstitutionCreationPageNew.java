@@ -372,6 +372,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	public void selectTimeZone(InstitutionCreation institute) {
 		waitForElementVisible(timeZoneDdwn);
 		selectValueFromDropDown(timeZoneDdwn, institute.getTimeZone());
+		SimulatorUtilities.wait(1000);
 	}
 
 	public boolean checkAgentPortalSupport() {
