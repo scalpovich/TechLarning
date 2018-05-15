@@ -23,6 +23,7 @@ public class CardManagementNav {
 	public static final String L2_WALLET_CONFIGURATION = "ISSW00";
 	public static final String L2_PROGRAM = "PRMG001";
 	public static final String L2_DEVICE_RANGE = "DVRNG001";
+	public static final String L2_CURRENCY_PAYOUT_LIST_PLAN = "ISSP04";
 
 	public static final String L3_WALLET_FEE_PLAN = "WLFEP001";
 	public static final String L3_WALLET_PLAN = "WALLP001";

@@ -1,23 +1,23 @@
-prepaid emv retail general purpose card authorization
+prepaid emv corp general purpose card authorization
 
 Narrative:
-In order to check transactions on prepaid emv retail general purpose card
+In order to check transactions on prepaid emv corp general purpose card
 As an issuer
-I want to authorize transactions for prepaid emv retail general purpose card
+I want to authorize transactions for prepaid emv corp general purpose card
 
 Meta:
 @StoryName p_emv_corp_general_purpose
 @oldReferenceSheet_S203707
 @CRCardsWithAuthorizationCashWithdrawalWithClearing
 
-Scenario: Set up prepaid emv retail general purpose card
+Scenario: Set up prepaid emv corp general purpose card
 Meta:
 @TestId TC398452
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client
 
-Scenario: prepaid emv retail general purpose card device production
+Scenario: prepaid emv emv corp general purpose card device production
 Meta:
 @TestId TC408068
 Given user is logged in institution

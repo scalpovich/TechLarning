@@ -7,6 +7,7 @@ I want to create an magnetic stripe prepaid card and perform visa money transfer
 
 Meta:
 @StoryName p_visa_msr_retail_gift
+@SanitySuite
 
 Scenario: Set up prepaid msr retail gift card from another institute
 Meta:

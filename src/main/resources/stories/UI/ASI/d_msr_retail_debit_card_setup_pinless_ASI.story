@@ -7,7 +7,8 @@ I want to create a MSR Retail Debit debit card for client
 
 Meta:
 @StoryName d_msr_retail_ASI
-@MMSR
+@ASI
+@SanitySuite
 
 Scenario: Set up debit msr retail debit card pinless
 Given user is logged in institution

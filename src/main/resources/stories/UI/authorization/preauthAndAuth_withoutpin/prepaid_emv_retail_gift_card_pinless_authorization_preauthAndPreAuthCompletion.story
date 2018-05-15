@@ -3,7 +3,7 @@ prepaid EMV retail gift card authorization PINLESS
 Narrative:
 In order to provide to client easy-to-use multi-purpose prepaid card pinless
 As an issuer
-I want to create an magnetic stripe prepaid card pinless and perform various transaction
+I want to create an emv prepaid card pinless and perform various transaction
 
 Meta:
 @StoryName p_emv_retail_gift

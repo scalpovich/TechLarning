@@ -9,7 +9,7 @@ Meta:
 @StoryName p_emv_retail_travel_mwmc
 @EMVWithoutPin
 
-Scenario: Setup multi-currency prepaid emv retail travel card and perfomr cash advanced  without pin authorization
+Scenario: Setup multi-currency prepaid emv retail travel mwmc card and perfomr cash advanced  without pin authorization
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client

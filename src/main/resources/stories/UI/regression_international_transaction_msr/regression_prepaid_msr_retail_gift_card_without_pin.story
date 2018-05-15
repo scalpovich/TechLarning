@@ -10,7 +10,8 @@ Meta:
 @oldReferenceSheet_prepaid_msr
 @AuthorizationRegression
 @AuthorizationRegressionGroup3
-@MSRWithoutPin
+@MSRWithoutPinIntTrx
+@InternationalTrx
 
 Scenario: Set up prepaid msr retail gift card authorization pinless
 Given user is logged in institution

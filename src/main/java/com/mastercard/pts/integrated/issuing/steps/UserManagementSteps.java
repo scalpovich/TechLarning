@@ -36,6 +36,8 @@ import org.apache.commons.lang.RandomStringUtils;
 public class UserManagementSteps {
 
 	public static final String KEY_USER_INSTRITUTIONS = "USER_INSTRITUTIONS";
+	
+	public static final String USER_INSTITUTION_SELECTED = "USER_INSTITUTION_SELECTED";
 
 	private static final String INCORRECT_PASSCODE = "incorrect";
 
@@ -115,6 +117,8 @@ public class UserManagementSteps {
 	public void givenUserIsLoggedInInstitution() {
 		Portal loginPortal = environment.getPortalByType(Portal.TYPE_CUSTOMER);
 		userDefaultInstitution = Institution.createWithProvider(provider).buildAbbreviationAndCode();
+		Institution institution = Institution.createWithProvider(provider);
+		context.put(USER_INSTITUTION_SELECTED, institution.getCode());
 		loginWorkflow.logInInstitution(loginPortal, userDefaultInstitution);
 	}
 
