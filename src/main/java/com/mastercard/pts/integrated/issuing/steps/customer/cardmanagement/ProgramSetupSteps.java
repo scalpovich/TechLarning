@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.CreditInstitutionData;
 import com.mastercard.pts.integrated.issuing.domain.DeviceType;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.ProgramType;
@@ -1101,9 +1102,13 @@ public class ProgramSetupSteps {
 	@When("User fills Device Range section for $type product")
 	public void whenUserFillsDeviceRangeSection(String type) {
 		DeviceRange deviceRange;
-		if (type.equalsIgnoreCase(ProductType.CREDIT)) {
+		CreditInstitutionData creditMappingForJson=context.get(CreditConstants.JSON_VALUES);
+		String jsonResult=creditMappingForJson.getProvider();
+		if (jsonResult.equalsIgnoreCase("json"))
+		{
 			deviceRange = DeviceRange.createWithProvider(dataProvider,provider, type);
-		} else {
+		}
+			 else {
 			deviceRange = DeviceRange.createWithProvider(dataProvider, type);
 		}
 		deviceRange.setProductType(ProductType.fromShortName(type));

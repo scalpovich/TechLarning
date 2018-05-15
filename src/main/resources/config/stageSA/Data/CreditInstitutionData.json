@@ -46,6 +46,22 @@
    "corporateClientCode":"11008818116000015"
    },
    {
+   "code":"270635",
+   "abbreviation":"PREISSBN",
+   "association":"MASTERCARD [02]",
+   "branch":"OfficeBranch [184]",
+   "cardPackIdGenerationTemplate":"CardPackID [PAN768]",
+   "deviceIdGenerationTemplate":"Device Temp [PAN767]",
+   "customerType":"Primary [01]",
+   "embossingVendor":"AUTOMATION PERS BUREAU [AUTOB1]",
+   "interchange":"MASTERCARD [02]",
+   "issuerBin":"Mastercard Prepaid [514786]",
+   "plasticId":"Plastic code [712]",
+   "pictureCode":"Picture code [316]",
+   "corporateClientCode":"Prepaid Corporate Client [27063518131000003]",
+   "provider":"json"
+   },
+   {
    "code":"110000",
    "abbreviation":"CANARA",
    "association":"MASTERCARD",
@@ -60,7 +76,7 @@
    "pictureCode":"647",
    "corporateClientCode":"11000016321000014"
    },
-     {
+   {
    "code":"000035",
    "abbreviation":"LBP",
    "association":"MASTERCARD",

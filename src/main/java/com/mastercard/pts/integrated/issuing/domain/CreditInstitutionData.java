@@ -17,6 +17,7 @@ public class CreditInstitutionData {
 	private String code;
 	private String abbreviation;
 	private String corporateClientCode;
+	private String provider;
 	
 	
 	public String getAssociation() {
@@ -26,7 +27,14 @@ public class CreditInstitutionData {
 	public void setAssociation(String association) {
 		this.association = association;
 	}
+	public String getProvider() {
+		return provider;
+	}
 
+	public void setProvider(String provider) {
+		this.provider = provider;
+	}
+ 
 	public String getBranch() {
 		return branch;
 	}
