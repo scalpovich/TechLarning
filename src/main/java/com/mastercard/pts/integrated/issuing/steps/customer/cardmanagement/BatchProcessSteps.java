@@ -219,8 +219,8 @@ public class BatchProcessSteps {
 	@Then("user validate downloaded DAT file")
 	public void validateDownloadedFile() {
 		String partialFileName = context.get(ConstantData.VISA_OUT_GOING_FILE_NAME);
-		File batchFile = linuxBox.downloadByLookUpForPartialFileName(partialFileName, tempDirectory.toString(), ConstantData.VISA_BASEII_LINUX_DIRECTORY);
-			Assert.assertTrue("Transaction Data Does not match ",batchProcessWorkflow.validateVisaOutGoingFile(batchFile));
+		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(), ConstantData.VISA_BASEII_LINUX_DIRECTORY);
+		Assert.assertTrue("Transaction Data Does not match ",batchProcessWorkflow.validateVisaOutGoingFile(batchFile));
 
 	}
 }
