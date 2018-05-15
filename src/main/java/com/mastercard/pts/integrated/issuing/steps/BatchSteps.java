@@ -21,6 +21,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
 @Component
 public class BatchSteps {
@@ -104,6 +105,7 @@ public class BatchSteps {
 			}
 			
 			// renaming file name as sometimes the embosing file name is also same
+			scanner.close();
 			MiscUtils.renamePinFile(batchFile.toString());
 			MiscUtils.reportToConsole("******** Pin Offset Completed ***** ");
 		} catch (NullPointerException | FileNotFoundException e) {
