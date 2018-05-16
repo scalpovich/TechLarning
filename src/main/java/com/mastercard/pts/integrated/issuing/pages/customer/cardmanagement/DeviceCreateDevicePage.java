@@ -269,6 +269,8 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, device.getDeviceNumber());
 		}
 		logger.info("DeviceNumber: {}",device.getDeviceNumber());
+		context.put(ContextConstants.DEVICE, device);
+		
 	}
 
 	public String getWalletsId(String wallets) {

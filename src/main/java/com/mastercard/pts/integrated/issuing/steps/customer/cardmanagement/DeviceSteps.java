@@ -212,6 +212,7 @@ public class DeviceSteps {
 		{
 		sdnUncheckProgram(program.getProgramCode());
 		}*/
+	
 	}
 	
 	@Then("$type device is created using new Application screen for $customerType and $applicationType and $subApplicationType and $deviceType")
