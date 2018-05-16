@@ -5,9 +5,6 @@ import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
-import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AccountRangeRoutingPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ChannelRoutingPlan;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.AccountRangeRoutingFlows;
@@ -24,10 +21,7 @@ public class ChannelRoutingPlanStep  {
 	AccountRangeRoutingPlan accountRangeRoutingPlan;
 	@Autowired
 	AccountRangeRoutingFlows  accountRangeRoutingFlows;
-	@Autowired
-	private TestContext context;
-	private final String channelNamePlan = "CBS1 [CBS1]" ;
-	private final String channelName = "CBS1" ;
+
 
 	@When("user creates channel Routing plan for $channelName channel and $interfaceName interface")
 	public void userCreatesChannelRouting(@Named("channelName") String channel,@Named("interfaceName") String interfaceType) {
@@ -46,16 +40,5 @@ public class ChannelRoutingPlanStep  {
 		accountRangeRoutingPlan.setChannelRoutingPlan(channelRouting.getPlanID());
 		accountRangeRoutingFlows.addChannelRoutingPlan(accountRangeRoutingPlan);
 	}
-
-	@When("user creates Acount Range Routing for $channelName channel")
-	public void userCreatesChannelRoutingForUserDefineChannel(String channelName) {
-		accountRangeRoutingPlan=AccountRangeRoutingPlan.channelRoutingPlanDataProvider(context.get(ContextConstants.DEVICE));
-		if(channelName.equals(this.channelName)){
-			accountRangeRoutingPlan.setChannelRoutingPlan(channelNamePlan);
-		}
-		accountRangeRoutingFlows.addChannelRoutingPlan(accountRangeRoutingPlan);
-	}
-
-
 
 }

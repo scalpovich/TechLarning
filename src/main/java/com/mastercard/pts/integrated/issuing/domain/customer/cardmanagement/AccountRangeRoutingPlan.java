@@ -41,13 +41,6 @@ public class AccountRangeRoutingPlan {
 		accountRange.setToAccount(MapUtils.fnGetInputDataFromMap("AccountRangeTo"));		
 		return  accountRange;
 	}
-	
-	public static AccountRangeRoutingPlan channelRoutingPlanDataProvider(Device device){
-		AccountRangeRoutingPlan accountRange= new AccountRangeRoutingPlan();
-		accountRange.setFromAccount(device.getWalletNumber().substring(0, 9)+ "00");
-		accountRange.setToAccount(device.getWalletNumber().substring(0, 9)  + "99");
-		return  accountRange;
-	}
 }
 
 
