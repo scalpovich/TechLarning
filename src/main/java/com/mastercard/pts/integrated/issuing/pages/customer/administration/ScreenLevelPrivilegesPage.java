@@ -43,23 +43,22 @@ public class ScreenLevelPrivilegesPage extends AbstractBaseFlows {
 	public static final String LIST_TAB_NAMES = "//ul[@class='tabs']/li/a";
 
 	public void assignScreenLevelPrivileges(String entityType) {
-		List<String> previligesTabsNameList;
+		List<String> privilegesTabsNameList;
 		navigator.navigateToPage(ScreenLevelPrivilegesPage.class);
 		searchEntity(entityType);
 		SimulatorUtilities.wait(1000);
-		previligesTabsNameList = getNamesPreviligesTabs();
-		selectPreviligesCheckBoxes();
-		for (int i = 1; i < previligesTabsNameList.size(); i++) {
-			selectTab(previligesTabsNameList.get(i));
+		privilegesTabsNameList = getNamesPrivilegesTabs();
+		selectPrevilegesCheckBoxes();
+		for (int i = 1; i < privilegesTabsNameList.size(); i++) {
+			selectTab(privilegesTabsNameList.get(i));
 			SimulatorUtilities.wait(500);
-			selectPreviligesCheckBoxes();
+			selectPrevilegesCheckBoxes();
 			SimulatorUtilities.wait(200);
 		}
 		ClickButton(saveBtn);
 	}
 
-
-	public void selectPreviligesCheckBoxes() {
+	public void selectPrevilegesCheckBoxes() {
 		List<WebElement> listOfWebElements = getList(PRIVILEGES_CHECKBOX);
 		CustomUtils.ThreadDotSleep(200);
 		int count = 0;
@@ -75,13 +74,13 @@ public class ScreenLevelPrivilegesPage extends AbstractBaseFlows {
 		}
 	}
 
-	public List<String> getNamesPreviligesTabs() {
-		List<WebElement> previligesTabsList = getList(LIST_TAB_NAMES);
-		List<String> previligesTabsNameList = new ArrayList<String>();
-		for (WebElement element : previligesTabsList) {
+	public List<String> getNamesPrivilegesTabs() {
+		List<WebElement> privilegesTabsList = getList(LIST_TAB_NAMES);
+		List<String> privilegesTabsNameList = new ArrayList<String>();
+		for (WebElement element : privilegesTabsList) {
 			SimulatorUtilities.wait(500);
-			previligesTabsNameList.add(element.getText());
+			privilegesTabsNameList.add(element.getText());
 		}
-		return previligesTabsNameList;
+		return privilegesTabsNameList;
 	}
 }

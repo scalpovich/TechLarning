@@ -43,30 +43,30 @@ public class ReportLevelPrivilegesPage extends AbstractBaseFlows {
 	public static final String LIST_TAB_NAMES = "//ul[@class='tabs']/li/a";
 
 	public void assignReportLevelPrivileges(String entityType) {
-		List<String> previligesTabsNameList;
+		List<String> previlegesTabsNameList;
 		navigator.navigateToPage(ReportLevelPrivilegesPage.class);
 		searchEntity(entityType);
-		previligesTabsNameList = getNamesPriviligesTabs();
-		selectReportLevelPriviligesCheckBoxes();
-		for (int i = 1; i < previligesTabsNameList.size(); i++) {
-			selectTab(previligesTabsNameList.get(i));
+		previlegesTabsNameList = getNamesPrivilegesTabs();
+		selectReportLevelPrivilegesCheckBoxes();
+		for (int i = 1; i < previlegesTabsNameList.size(); i++) {
+			selectTab(previlegesTabsNameList.get(i));
 			CustomUtils.ThreadDotSleep(500);
-			selectReportLevelPriviligesCheckBoxes();
+			selectReportLevelPrivilegesCheckBoxes();
 			CustomUtils.ThreadDotSleep(200);
 		}
 		ClickButton(saveBtn);
 	}
 
-	public void selectReportLevelPriviligesCheckBoxes() {
+	public void selectReportLevelPrivilegesCheckBoxes() {
 		Element(PRIVILEGES_CHECKBOX_REPORT).click();
 	}
 
-	public List<String> getNamesPriviligesTabs() {
-		List<WebElement> previligesTabsList = getList(LIST_TAB_NAMES);
-		List<String> previligesTabsNameList = new ArrayList<String>();
-		for (WebElement element : previligesTabsList)
-			previligesTabsNameList.add(element.getText());
-		return previligesTabsNameList;
+	public List<String> getNamesPrivilegesTabs() {
+		List<WebElement> previlegesTabsList = getList(LIST_TAB_NAMES);
+		List<String> previlegesTabsNameList = new ArrayList<String>();
+		for (WebElement element : previlegesTabsList)
+			previlegesTabsNameList.add(element.getText());
+		return previlegesTabsNameList;
 	}
 
 }
