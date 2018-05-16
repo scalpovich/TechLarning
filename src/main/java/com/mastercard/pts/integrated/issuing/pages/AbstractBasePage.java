@@ -42,9 +42,7 @@ import org.springframework.beans.factory.annotation.Value;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -255,6 +253,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview tr.even a>img[alt='Delete Record'],table.dataview tr.odd a>img[alt='Delete Record']")
 	private MCWebElements deleteAddedRecordsIcon;
+	
+	private String ERROR_XPATH = ".//div[@class='ketchup-error-container-alt']/ol/li";
 
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -278,6 +278,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		SimulatorUtilities.wait(500);
 		clickWhenClickable(nextBtn);
 		SimulatorUtilities.wait(500);
+		WebElementUtils.addWicketAjaxListeners(driver());
 	}
 
 	protected void clickAddNewButton() {
@@ -344,7 +345,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickWhenClickable(searchButtonElement);
 	}
 
-	protected Boolean isNoRecordsFoundInTable() {
+	public Boolean isNoRecordsFoundInTable() {
 		try {
 			return driver().findElement(By.cssSelector(".norecords")).isDisplayed();
 		} catch (NoSuchElementException e) {
@@ -1225,6 +1226,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 		By frameSelector = By.xpath(String.format("//h3[contains(text(), '%s')]/ancestor::div//iframe[@class='wicket_modal']", caption));
 		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameSelector));
 	}
+	
+	// Switch to a frame by specificying the index in WebPage.
+	public void switchToIframeByIndex(int frameIndex) {
+		WebDriverWait wait = new WebDriverWait(getFinder().getWebDriver(), 80);
+		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameIndex));
+	}
 
 	public static void addWicketAjaxListeners(WebDriver driver) {
 		String javascript = "if (typeof tk  == 'undefined') {" + "tk = {activeAjaxCount: 0, ajaxCallsTried: 0, ajaxCallsCompleted: 0};"
@@ -1636,6 +1643,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 			  }
 		  }
 	   }
+	public List<WebElement> getValidationErrors() {
+	    return Elements(ERROR_XPATH);
+	}
+
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

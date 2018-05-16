@@ -1,4 +1,4 @@
-prepaid corporate general purpose msr manual authorization
+prepaid retail general purpose msr manual authorization
 
 Narrative:
 In order to provide to client easy-to-use payment method for e-commerce retail
@@ -9,7 +9,7 @@ Meta:
 @StoryName prepaid_rgpc_manual_auth
 @CRCardsWithAuthorization
 
-Scenario: Set up msr prepaid card
+Scenario: Set up msr retail general purpose prepaid card
 Meta:
 @TestId TC407061
 Given user is logged in institution
@@ -17,7 +17,7 @@ And device range for program with device plan for "prepaid" "magnetic stripe" ca
 When user creates new device of prepaid type for new client
 Then device has "normal" status
 
-Scenario: msr prepaid card device production
+Scenario: msr retail general purpose prepaid card device production
 Meta:
 @TestId TC408234
 Given user is logged in institution
@@ -30,7 +30,7 @@ When user has current wallet balance amount information for debit device
 Then device has "normal" status
 And user activates device through helpdesk
 
-Scenario: msr prepaid card authorization
+Scenario: msr retail general purpose prepaid card authorization
 Meta:
 @TestId TC408235
 Given user is logged in institution

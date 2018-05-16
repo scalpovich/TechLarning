@@ -1,23 +1,24 @@
-prepaid emv retail travel card authorization PINLESS
+prepaid emv retail gift card authorization PINLESS
 
 Narrative:
-In order to check transactions on prepaid emv retail general purpose card
+In order to check transactions on prepaid emv retail gift card
 As an issuer
-I want to authorize transactions for prepaid emv retail general purpose card
+I want to authorize transactions for prepaid emv retail gift card
 
 Meta:
-@StoryName p_emv_retail_travel
+@StoryName S203707
 @AuthorizationRegression
 @AuthorizationRegressionGroup1
-@EMVWithoutPin
+@EMVWithoutPinIntTrx
+@InternationalTrx
 
-Scenario: Set up prepaid emv retail travel card
+Scenario: Set up prepaid emv retail gift card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client
 Then user sign out from customer portal
 
-Scenario: prepaid emv retail travel card device production
+Scenario: prepaid emv retail gift card device production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid

@@ -1,4 +1,4 @@
-debit emv corporate debit card authorization
+debit emv corporate debit card preAuth & Auth authorization
 
 Narrative:
 In order to check transactions on debit emv corporate debit card
@@ -9,7 +9,7 @@ Meta:
 @StoryName d_emv_corp
 @authdebit
 
-Scenario: Transaction - corporate emv corporate general purpose card with pin - EMV_PREAUTH  and EMV_COMPLETION Authorization transaction 
+Scenario: Transaction - corporate emv corporate debit card with pin - EMV_PREAUTH  and EMV_COMPLETION Authorization transaction 
 Given user is logged in institution
 And device range for program with device plan for "debit" "emv" card
 When user creates new device of debit type for new client

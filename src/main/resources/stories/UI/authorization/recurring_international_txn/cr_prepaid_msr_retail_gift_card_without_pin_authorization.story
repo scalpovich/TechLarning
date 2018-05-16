@@ -1,4 +1,4 @@
-prepaid msr retail gift card pinless authorization
+prepaid msr retail gift card pinless recurring international transactions
 
 Narrative:
 In order to provide to client easy-to-use multi-purpose prepaid card pinless

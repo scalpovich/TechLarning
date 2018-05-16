@@ -1,4 +1,4 @@
-prepaid msr retail travel card card authorization PINLESS
+prepaid msr retail travel card authorization PINLESS
 
 Narrative:
 In order to check transactions on prepaid msr retail travel card 
