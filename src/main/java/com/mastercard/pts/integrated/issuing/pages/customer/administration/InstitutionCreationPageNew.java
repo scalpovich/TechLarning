@@ -9,7 +9,6 @@ import java.awt.event.KeyEvent;
 import junit.framework.Assert;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -826,7 +825,6 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 			if (institutionType[0].equalsIgnoreCase(Constants.PREPAID)
 					|| institutionType[1].equalsIgnoreCase(Constants.PREPAID)) {
 				checkPrepaid();
-				
 			}
 			if (institutionType[0].equalsIgnoreCase(Constants.CREDIT)
 					|| institutionType[1].equalsIgnoreCase(Constants.CREDIT)) {
@@ -921,4 +919,5 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	public String getInstUpdateMessage() {
 		return instituteUpdateMessage.getText();
 	}
+
 }

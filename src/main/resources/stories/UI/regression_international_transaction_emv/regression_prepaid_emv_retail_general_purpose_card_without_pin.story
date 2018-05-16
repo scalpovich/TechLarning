@@ -8,7 +8,8 @@ I want to authorize transactions for prepaid emv retail general purpose card
 Meta:
 @StoryName p_emv_retail_general
 @CRCardsPinlessWithAuthorization
-@EMVWithoutPin
+@EMVWithoutPinIntTrx
+@InternationalTrx
 
 Scenario: Set up prepaid emv retail general purpose card
 Given user is logged in institution
@@ -24,7 +25,7 @@ When processes device production batch for prepaid
 Then user sign out from customer portal
 Then user is logged in institution
 Then device has "normal" status
-When user has wallet number information for debit device
+When user has wallet number information for prepaid device
 When user performs adjustment transaction with 10000 amount
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status

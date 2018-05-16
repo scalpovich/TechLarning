@@ -55,7 +55,9 @@ public class Program implements HasCodeAndDescription {
 	private static final String REFERENCE_CURRENCY = "REFERENCE_CURRENCY";
 	private static final String CREDIT_LIMIT = "CREDIT_LIMIT";
 	private static final String MARK_UP_FEE_PLAN = "MARK_UP_FEE_PLAN";
+	private static final String PAYOUT_CURRENCY_PLAN = "PAYOUT_CURRENCY_PLAN";
 
+	private String payoutCurrencyPlan;
 	private String walletToWalletTransferType;
 	private String refundInCurrency;
 	private String programCodeDevice;
@@ -148,6 +150,7 @@ public class Program implements HasCodeAndDescription {
 		programObject.setReferenceCurrency(provider.getString(REFERENCE_CURRENCY));
 		programObject.setWalletToWalletTransferType(provider.getString(WALLET_TO_WALLET_TRANSFER_TYPE));
 		programObject.setMarkUpFeePlan(provider.getString(MARK_UP_FEE_PLAN));
+		programObject.setPayoutCurrencyPlan(provider.getString(PAYOUT_CURRENCY_PLAN));
 		return programObject;
 	}
 
@@ -171,6 +174,7 @@ public class Program implements HasCodeAndDescription {
 		programObject.setReferenceCurrency(provider.getString(REFERENCE_CURRENCY));
 		programObject.setWalletToWalletTransferType(provider.getString(WALLET_TO_WALLET_TRANSFER_TYPE));
 		programObject.setMarkUpFeePlan(provider.getString(MARK_UP_FEE_PLAN));
+		programObject.setPayoutCurrencyPlan(provider.getString(PAYOUT_CURRENCY_PLAN));
 		return programObject;
 	}
 
@@ -210,6 +214,7 @@ public class Program implements HasCodeAndDescription {
 		programObject.setResetLimitsAddonLimitReset(provider.getString(PGM_RESET_LIMITS_ADDON_LIMIT_RESET));
 		programObject.setEventsSelectAll(provider.getString(PGM_EVENTS_SELECT_ALL));
 		programObject.setMarkUpFeePlan(provider.getString(MARK_UP_FEE_PLAN));
+		programObject.setPayoutCurrencyPlan(provider.getString(PAYOUT_CURRENCY_PLAN));
 		return programObject;
 	}
 
@@ -779,6 +784,14 @@ public class Program implements HasCodeAndDescription {
 
 	public void setMarkUpFeePlan(String markUpFeePlan) {
 		this.markUpFeePlan = markUpFeePlan;
+	}
+	
+	public String getPayoutCurrencyPlan() {
+		return payoutCurrencyPlan;
+	}
+
+	public void setPayoutCurrencyPlan(String payoutCurrencyPlan) {
+		this.payoutCurrencyPlan = payoutCurrencyPlan;
 	}
 
 	@Override

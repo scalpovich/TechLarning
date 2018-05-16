@@ -371,19 +371,34 @@ public class InstitutionCreation extends AbstractBasePage {
 
 	public static InstitutionCreation getInstitutionData() {
 		InstitutionCreation institute = new InstitutionCreation();
-		institute.setInstitutionCode(CustomUtils.RandomNumbers(6));
-		institute.setInstitutionName(
-				MapUtils.fnGetInputDataFromMap("InstitutionName") + CustomUtils.randomString(2).toUpperCase());
-		institute.setInstitutionAbbrevation(institute.getInstitutionName());
-		institute.setInstitutionCurrency(MapUtils.fnGetInputDataFromMap("Institution Currency"));
-		institute.setInstitutionReferenceCurrency(MapUtils.fnGetInputDataFromMap("Reference Currency"));
-		institute.setDefaultLanguage(MapUtils.fnGetInputDataFromMap("Default Language"));
+		if(MapUtils.fnGetInputDataFromMap("Padding")!=null){
+			String randomAlphabet = CustomUtils.randomString(Integer
+.parseInt(MapUtils
+									.fnGetInputDataFromMap("Padding")))
+					.toUpperCase();
+			institute.setInstitutionCode(CustomUtils.RandomNumbers(6));
+			institute.setInstitutionName(MapUtils.fnGetInputDataFromMap("InstitutionName")+randomAlphabet);
+			institute.setInstitutionAbbrevation(MapUtils
+					.fnGetInputDataFromMap("Abbrevation") + randomAlphabet);
+			CustomUtils.RandomAlphabet();
+		}else{
+			institute.setInstitutionCode(MapUtils.fnGetInputDataFromMap("InstitutionCode"));
+			institute.setInstitutionName(MapUtils.fnGetInputDataFromMap("InstitutionName"));
+			institute.setInstitutionAbbrevation(MapUtils.fnGetInputDataFromMap("Abbrevation"));
+		}
+		institute.setInstitutionCurrency(MapUtils
+				.fnGetInputDataFromMap("Institution Currency"));
+		institute.setInstitutionReferenceCurrency(MapUtils
+				.fnGetInputDataFromMap("Reference Currency"));
+		institute.setDefaultLanguage(MapUtils
+				.fnGetInputDataFromMap("Default Language"));
 		institute.setTimeZone(MapUtils.fnGetInputDataFromMap("Time Zone"));
 		institute.setAccountNumberLength(MapUtils.fnGetInputDataFromMap("Account Number Length"));
 		institute.setClientNumberLength(MapUtils.fnGetInputDataFromMap("Client Number Length"));
 		institute.setFinanacialStartMonth(MapUtils.fnGetInputDataFromMap("Financial Start Month"));
 		institute.setSDNPlan(MapUtils.fnGetInputDataFromMap("SDN Plan"));
-		institute.setAdaptiveAuthentication(MapUtils.fnGetInputDataFromMap("AdaptiveEcomm"));
+		institute.setAdaptiveAuthentication(MapUtils
+				.fnGetInputDataFromMap("AdaptiveEcomm"));
 		institute.setmPinEnabled(MapUtils.fnGetInputDataFromMap("MPIN Enabled"));
 		institute.setSmsServiceProvider(MapUtils.fnGetInputDataFromMap("SMS Service Provider"));
 		institute.setContactName(MapUtils.fnGetInputDataFromMap("Contact Name"));

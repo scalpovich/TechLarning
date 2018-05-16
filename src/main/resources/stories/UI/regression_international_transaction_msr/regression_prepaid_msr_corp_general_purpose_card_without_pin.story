@@ -9,7 +9,8 @@ Meta:
 @StoryName p_msr_corp_general_purpose
 @AuthorizationRegression
 @AuthorizationRegressionGroup2
-@MSRWithoutPin
+@MSRWithoutPinIntTrx
+@InternationalTrx
 
 Scenario: prepaid msr corporate general purpose card
 Given user is logged in institution

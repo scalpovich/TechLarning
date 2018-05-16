@@ -1,4 +1,4 @@
-ECOMM_PURCHASE transaction on prepaid msr retail general purpose card authorization
+ECOMM_PURCHASE transaction on prepaid msr retail gift card authorization
 
 Narrative:
 In order to provide to client easy-to-use multi-purpose prepaid card
@@ -11,7 +11,7 @@ Meta:
 @SanityCardsWithAuthorization
 @ECOM_PURCHASE
 
-Scenario: ECOMM_PURCHASE transaction on prepaid msr retail general purpose card
+Scenario: ECOMM_PURCHASE transaction on prepaid msr retail gift card
 Meta:
 @TestId TC406658
 Given user is logged in institution

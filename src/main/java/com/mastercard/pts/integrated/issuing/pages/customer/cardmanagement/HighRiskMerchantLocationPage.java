@@ -1,14 +1,18 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.HighRiskMerchantLocation;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
@@ -23,8 +27,6 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class HighRiskMerchantLocationPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(HighRiskMerchantLocationPage.class);
-	
-	public static final String TEXT = "123"+CustomUtils.randomAlphaNumeric(2);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=acquirerId]")
 	private MCWebElement acquirerId;
@@ -43,32 +45,75 @@ public class HighRiskMerchantLocationPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#endDate")
 	private MCWebElement endDateDPkr;
-
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span.feedbackPanelINFO")
+	private MCWebElement feedbackPanelLbl;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='merchantLocationId']")
+	private MCWebElement planCodeSearchTxt;
+	
 	public void verifyUiOperationStatus() {
 		logger.info("High Risk Merchant Location");
-		addHighRiskMerchantLocation();
 		verifyUiOperation("Add High Risk Merchant Location");
 	}
+	
+	public void addAcquireeId(HighRiskMerchantLocation plan){
+		enterText(acquirerId, plan.getAcquireeId());
+	}
+	
+	public void addMerchantId(HighRiskMerchantLocation plan){
+		enterText(merchantId, plan.getMerchantId());
+	}
+	
+	public void addMerchantLocationDescription(HighRiskMerchantLocation plan){
+		enterText(merchantLocationDescription, plan.getMerchantLocationDescription());
+	}
+	
+	public void addMerchantLocationId(HighRiskMerchantLocation plan){
+		enterText(merchantLocationId, plan.getMerchantLocationId());
+	}
+	
+	public void addEffectiveDate(){
+		WebElementUtils.pickDate(effectiveDateDPkr, futureDate);
+	}
+	
+	private void addEndDate(){
+		WebElementUtils.pickDate(endDateDPkr, futureEndDate);
+	} 
 
-	public void addHighRiskMerchantLocation() {
+	public void addHighRiskMerchantLocation(HighRiskMerchantLocation plan) {
 		logger.info("Add High Risk Merchant Location");
 		clickAddNewButton();
 		runWithinPopup("High Risk Merchant Location", () -> {
-			addNewHighRiskMerchantLocation();
+			addAcquireeId(plan);
+			addMerchantId(plan);
+			addMerchantLocationDescription(plan);
+			addMerchantLocationId(plan);
+			addEffectiveDate();
+			addEndDate();
+			clickSaveButton();
 			verifyDuplicateAndClickCancel();
 		});
 	}
-
-	private void addNewHighRiskMerchantLocation() {
-		WebElementUtils.enterText(acquirerId, TEXT);
-		WebElementUtils.enterText(merchantId, TEXT);
-		WebElementUtils.enterText(merchantLocationDescription, TEXT);
-		WebElementUtils.enterText(merchantLocationId, TEXT);
-		WebElementUtils.pickDate(effectiveDateDPkr, futureDate);
-		WebElementUtils.pickDate(endDateDPkr, futureEndDate);
+	
+	public String getFeedbackText() {
+		return feedbackPanelLbl.getText();
+	}
+	
+	public void enterMerchantLocationIdInSearchBox(HighRiskMerchantLocation plan) {
+		enterValueinTextBox(planCodeSearchTxt, plan.getMerchantLocationId());
+	}
+	
+	public Boolean isNoRecordsFoundInTableView() {
+		return isNoRecordsFoundInTable();
+	}
+	
+	public void saveWithoutMandatoryFields(){
+		clickAddNewButton();
+		switchToIframe("Add High Risk Merchant Location");
 		clickSaveButton();
 	}
-
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(acquirerId), WebElementUtils.elementToBeClickable(merchantId),

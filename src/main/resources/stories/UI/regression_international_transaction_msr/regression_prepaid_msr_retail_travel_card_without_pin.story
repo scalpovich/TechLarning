@@ -9,7 +9,8 @@ Meta:
 @StoryName p_msr_retail_travel
 @AuthorizationRegression
 @AuthorizationRegressionGroup1
-@MSRWithoutPin
+@MSRWithoutPinIntTrx
+@InternationalTrx
 
 Scenario: Set up prepaid msr retail travel card
 Given user is logged in institution
@@ -24,7 +25,7 @@ And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 When user has wallet number information for prepaid device
-When user performs adjustment transaction with 50000 amount
+When user performs adjustment transaction with 300000 amount
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
