@@ -347,8 +347,10 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public void checkPrepaid() {
-		WebElementUtils.checkCheckbox(prepaidChkBx, true);
 		SimulatorUtilities.wait(2000);
+		selectCheckBox(prepaidChkBx, "Prepaid");
+		SimulatorUtilities.wait(4000);
+		
 	}
 
 	public void selectInstitutionCurrency(InstitutionCreation institute) {
