@@ -20,7 +20,7 @@ public class HelpdeskLevelPrivilegesSteps {
 	@Autowired
 	private KeyValueProvider provider;
 
-	HelpdeskPrivileges helpdeskPrevileges;
+	HelpdeskPrivileges helpdeskPrivileges;
 
 	@Autowired
 	TestContext context;
@@ -30,8 +30,8 @@ public class HelpdeskLevelPrivilegesSteps {
 			@Named("Assign_Service_Code") String subType,
 			@Named("user") String entityType) {
 		UserCreation userCreation = context.get(ContextConstants.USER);
-		helpdeskPrevileges = HelpdeskPrivileges.createWithProvider(provider);
+		helpdeskPrivileges = HelpdeskPrivileges.createWithProvider(provider);
 		helpdeskLevelPrivilegesFlows.provideHelpdeskLevelPrivilegesFlows(
-				subType, helpdeskPrevileges, userCreation);
+				subType, helpdeskPrivileges, userCreation);
 	}
 }
