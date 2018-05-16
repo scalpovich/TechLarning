@@ -40,8 +40,10 @@ public class NetworkMembership {
 	}
 	public static NetworkMembership NetworkMembershipDataProvider() {
 		NetworkMembership networkmembership = new NetworkMembership();
-		networkmembership.setPresentmentTimeLimitDays(MapUtils.fnGetInputDataFromMap("PresentTimeLimit"));
-		networkmembership.setSettlementCurrency(MapUtils.fnGetInputDataFromMap("BaseCurrency"));
+		networkmembership.setPresentmentTimeLimitDays(MapUtils
+				.fnGetInputDataFromMap("PresentTimeLimit"));
+		networkmembership.setSettlementCurrency(MapUtils
+				.fnGetInputDataFromMap("BaseCurrency"));
 		return networkmembership;
 	}
 	public void setSettlementCurrency(String settlementCurrency) {

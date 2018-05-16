@@ -4,11 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskPrivileges;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.AdministrationNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
-import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -56,10 +56,11 @@ public class AssignProductHelpdeskPrivilegesPage extends AbstractBasePage {
 		switchToIframe(Constants.ASSIGN_PRODUCT);
 	}
 
-	public void selectUserFromDropdown() {
+	public void selectUserGroupFromDropdown(
+			HelpdeskPrivileges helpdeskPrivileges) {
 		selectByVisibleText(userGroupCodeDDwn,
-				MapUtils.fnGetInputDataFromMap("UserName") + "(User) ["
-						+ MapUtils.fnGetInputDataFromMap("User") + "]");
+				helpdeskPrivileges.getGroupName() + "(Group) ["
+						+ helpdeskPrivileges.getUserGroupID() + "]");
 	}
 
 	public void selectProductAccesCheckbox() {

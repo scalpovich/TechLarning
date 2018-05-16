@@ -9,6 +9,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Curr
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CurrencyExchangeRatesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 
 @Component
 public class CurrencyExchangeRatesFlows {
@@ -36,8 +37,9 @@ public class CurrencyExchangeRatesFlows {
 				.verifyAddedCurrencyExchangeRate(currencyExchangeRateDomainPage);
 	}
 
-	public void uploadCurrencyExchangeFileFlows(String type) {
-		currencyExchangeRatesPage.uploadCurrencyExchangeRateFile(type);
+	public void uploadCurrencyExchangeFileFlows(String type, String filePath) {
+		currencyExchangeRatesPage
+				.uploadCurrencyExchangeRateFile(type, filePath);
 	}
 
 	public void navigateProcessBatchesScreenFlows() {
@@ -46,12 +48,13 @@ public class CurrencyExchangeRatesFlows {
 
 	public boolean verifyFileUploadFlows() {
 		navigator.navigateToPage(CurrencyExchangeRatesPage.class);
+		CustomUtils.ThreadDotSleep(500);
 		return currencyExchangeRatesPage.verifyCERFileUpload();
 	}
 
-	public void uploadFileBankInvalidFileFlows(String isInvalid) {
-		currencyExchangeRatesPage
-				.uploadInvalidCurrencyExchangeRateFile(isInvalid);
+	public void uploadFileBankInvalidFileFlows(String isInvalid, String filePath) {
+		currencyExchangeRatesPage.uploadInvalidCurrencyExchangeRateFile(
+				isInvalid, filePath);
 	}
 
 }

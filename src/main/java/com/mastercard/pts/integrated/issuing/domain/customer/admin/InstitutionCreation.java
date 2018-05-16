@@ -372,10 +372,15 @@ public class InstitutionCreation extends AbstractBasePage {
 	public static InstitutionCreation getInstitutionData() {
 		InstitutionCreation institute = new InstitutionCreation();
 		if(MapUtils.fnGetInputDataFromMap("Padding")!=null){
+			String randomAlphabet = CustomUtils.randomString(Integer
+.parseInt(MapUtils
+									.fnGetInputDataFromMap("Padding")))
+					.toUpperCase();
 			institute.setInstitutionCode(CustomUtils.RandomNumbers(6));
-			institute.setInstitutionName(MapUtils.fnGetInputDataFromMap("InstitutionName")+MapUtils.fnGetInputDataFromMap("Padding"));
-			institute.setInstitutionAbbrevation(MapUtils.fnGetInputDataFromMap("InstitutionName")+CustomUtils.RandomNumbers(Integer.parseInt(MapUtils.fnGetInputDataFromMap("Padding"))));
-			
+			institute.setInstitutionName(MapUtils.fnGetInputDataFromMap("InstitutionName")+randomAlphabet);
+			institute.setInstitutionAbbrevation(MapUtils
+					.fnGetInputDataFromMap("Abbrevation") + randomAlphabet);
+			CustomUtils.RandomAlphabet();
 		}else{
 			institute.setInstitutionCode(MapUtils.fnGetInputDataFromMap("InstitutionCode"));
 			institute.setInstitutionName(MapUtils.fnGetInputDataFromMap("InstitutionName"));
@@ -388,46 +393,34 @@ public class InstitutionCreation extends AbstractBasePage {
 		institute.setDefaultLanguage(MapUtils
 				.fnGetInputDataFromMap("Default Language"));
 		institute.setTimeZone(MapUtils.fnGetInputDataFromMap("Time Zone"));
-		institute.setAccountNumberLength(MapUtils
-				.fnGetInputDataFromMap("Account Number Length"));
-		institute.setClientNumberLength(MapUtils
-				.fnGetInputDataFromMap("Client Number Length"));
-		institute.setFinanacialStartMonth(MapUtils
-				.fnGetInputDataFromMap("Financial Start Month"));
+		institute.setAccountNumberLength(MapUtils.fnGetInputDataFromMap("Account Number Length"));
+		institute.setClientNumberLength(MapUtils.fnGetInputDataFromMap("Client Number Length"));
+		institute.setFinanacialStartMonth(MapUtils.fnGetInputDataFromMap("Financial Start Month"));
 		institute.setSDNPlan(MapUtils.fnGetInputDataFromMap("SDN Plan"));
-		
 		institute.setAdaptiveAuthentication(MapUtils
 				.fnGetInputDataFromMap("AdaptiveEcomm"));
-		institute.setmPinEnabled(MapUtils
-				.fnGetInputDataFromMap("MPIN Enabled"));
-		institute.setSmsServiceProvider(MapUtils
-				.fnGetInputDataFromMap("SMS Service Provider"));
-		institute
-		.setContactName(MapUtils.fnGetInputDataFromMap("Contact Name"));
+		institute.setmPinEnabled(MapUtils.fnGetInputDataFromMap("MPIN Enabled"));
+		institute.setSmsServiceProvider(MapUtils.fnGetInputDataFromMap("SMS Service Provider"));
+		institute.setContactName(MapUtils.fnGetInputDataFromMap("Contact Name"));
 		institute.setEmailID(MapUtils.fnGetInputDataFromMap("Email Id"));
-		institute.setCustomerCareContactNumber(MapUtils
-				.fnGetInputDataFromMap("Customer Care Contact Numbers"));
-		institute.setCustomerCareFax(MapUtils
-				.fnGetInputDataFromMap("Customer Care Fax"));
+		institute.setCustomerCareContactNumber(MapUtils.fnGetInputDataFromMap("Customer Care Contact Numbers"));
+		institute.setCustomerCareFax(MapUtils.fnGetInputDataFromMap("Customer Care Fax"));
 		institute.setPhoneNumb(CustomUtils.RandomNumbers(10));
-		institute.setMobileCountryCode(MapUtils
-				.fnGetInputDataFromMap("Mobile No Country Code"));
+		institute.setMobileCountryCode(MapUtils.fnGetInputDataFromMap("Mobile No Country Code"));
 		institute.setMobilenumber(MapUtils.fnGetInputDataFromMap("Mobile No"));
-		institute.setAddressLine1(MapUtils
-				.fnGetInputDataFromMap("Address Line1"));
-		institute.setAddressLine2(MapUtils
-				.fnGetInputDataFromMap("Address Line2"));
-		institute.setAddressLine3(MapUtils
-				.fnGetInputDataFromMap("Address Line3"));
-		institute.setAddressLine4(MapUtils
-				.fnGetInputDataFromMap("Address Line4"));
+		institute.setAddressLine1(MapUtils.fnGetInputDataFromMap("Address Line1"));
+		institute.setAddressLine2(MapUtils.fnGetInputDataFromMap("Address Line2"));
+		institute.setAddressLine3(MapUtils.fnGetInputDataFromMap("Address Line3"));
+		institute.setAddressLine4(MapUtils.fnGetInputDataFromMap("Address Line4"));
 		institute.setCountry(MapUtils.fnGetInputDataFromMap("Country"));
 		institute.setPostalCode(MapUtils.fnGetInputDataFromMap("Postal Code"));
 		institute.setCreatedInstitution(MapUtils.fnGetInputDataFromMap("CreatedInstitution"));
 		institute.setCollectPortalAdminID(MiscUtils.generateRandomNumberAsString(6));
-		institute.setCollectPortalAdminName(MapUtils.fnGetInputDataFromMap("CollectPortalAdminName")+MiscUtils.generateRandomNumberAsString(5));
+		institute.setCollectPortalAdminName(
+				MapUtils.fnGetInputDataFromMap("CollectPortalAdminName") + MiscUtils.generateRandomNumberAsString(5));
 		institute.setAgentPortalAdminID(MiscUtils.generateRandomNumberAsString(6));
-		institute.setAgentPortalAdminName(MapUtils.fnGetInputDataFromMap("AgentPortalAdminName")+MiscUtils.generateRandomNumberAsString(5));					
+		institute.setAgentPortalAdminName(
+				MapUtils.fnGetInputDataFromMap("AgentPortalAdminName") + MiscUtils.generateRandomNumberAsString(5));
 		institute.setAscVendor(MapUtils.fnGetInputDataFromMap("ASC_Vendor"));
 		institute.setExistingInstitutionCode(MapUtils
 				.fnGetInputDataFromMap("ExistingInstitutionCode"));

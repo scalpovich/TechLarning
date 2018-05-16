@@ -1,7 +1,5 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,8 +26,8 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 
 	@Autowired
 	private TestContext context;
-	
-	private static final String TAB_ADDRESS = "Address"; 
+
+	private static final String TAB_ADDRESS = "Address";
 
 	public void institutionCreation(InstitutionCreation institutionCreation) {
 
