@@ -45,10 +45,10 @@ public class CurrencyExchangeRatesMappingPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addNewCurrencyExRates;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "transactionSource:input:dropdowncomponent")
 	private MCWebElement transactionSourceDdwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "rateOrigin:input:dropdowncomponent")
 	private MCWebElement rateOriginDdwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "productCode:input:dropdowncomponent")
@@ -117,7 +117,6 @@ public class CurrencyExchangeRatesMappingPage extends AbstractBasePage {
 
 	public boolean isErrorMessagePresent() {
 		boolean isMessageSeen = false;
-		// /CustomUtils.ThreadDotSleep(1000);
 		waitForElementVisible(getFinder().getWebDriver().findElement(
 				feedbackError));
 
@@ -155,9 +154,8 @@ public class CurrencyExchangeRatesMappingPage extends AbstractBasePage {
 	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(transactionSourceDdwn),
-				WebElementUtils.elementToBeClickable(rateOriginDdwn)
-				);
+		return Arrays.asList(WebElementUtils
+				.elementToBeClickable(transactionSourceSearchDdwn),
+				WebElementUtils.elementToBeClickable(rateOriginSearchDdwn));
 	}
 }

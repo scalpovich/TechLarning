@@ -17,6 +17,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
@@ -169,7 +170,7 @@ public class AccountMasterPage extends AbstractBasePage {
 	public void addRandomAccountMaster() {
 		SelectDropDownByText(this.interchange,
 				MapUtils.fnGetInputDataFromMap("Interchange"));
-		CustomUtils.ThreadDotSleep(1000);
+		SimulatorUtilities.wait(500);
 		if (!MapUtils.fnGetInputDataFromMap("Program").equalsIgnoreCase("-")) {
 			waitForElementVisible(this.programCode);
 			List<String> programCodeList = CustomUtils

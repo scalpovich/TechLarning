@@ -21,6 +21,15 @@ public class CurrencyExchangeRate {
 	private String effectiveTimeMI;
 	private String toleranceLoadUnit;
 	private String toleranceRefundUnit;
+	private String uploadPathCER;
+
+	public String getUploadPathCER() {
+		return uploadPathCER;
+	}
+
+	public void setUploadPathCER(String uploadPathCER) {
+		this.uploadPathCER = uploadPathCER;
+	}
 
 	public String getSourceCurrency() {
 		return sourceCurrency;
