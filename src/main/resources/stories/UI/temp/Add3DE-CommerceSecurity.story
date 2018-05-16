@@ -19,7 +19,7 @@ Meta:
 Given login to bank as a customerUser
 When user adds 3D ecommerce security parameters for prepaid
 
-Scenario:add 3d e-commerce security parameters for prepaid
+Scenario:add 3d e-commerce security parameters for debit
 
 Meta:
 @TCName TCInstituteCreationPR
@@ -28,7 +28,7 @@ Meta:
 Given login to bank as a customerUser
 When user adds 3D ecommerce security parameters for debit
 
-Scenario:add 3d e-commerce security parameters for prepaid
+Scenario:add 3d e-commerce security parameters for credit
 
 Meta:
 @TCName TCInstituteCreationPR
