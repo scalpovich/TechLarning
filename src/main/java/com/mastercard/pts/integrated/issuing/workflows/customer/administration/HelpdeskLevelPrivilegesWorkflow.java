@@ -22,7 +22,6 @@ public class HelpdeskLevelPrivilegesWorkflow {
 	@Autowired
 	Navigator navigator;
 
-
 	public void provideHelpdeskLevelPrivilegesFlows(String subType,
 			HelpdeskPrivileges helpdeskPrevileges, UserCreation userCreation) {
 		switch (subType) {
@@ -45,14 +44,14 @@ public class HelpdeskLevelPrivilegesWorkflow {
 		}
 	}
 
-	public void addUserToUserGroupFlows(HelpdeskPrivileges helpdeskPrevileges,
+	public void addUserToUserGroupFlows(HelpdeskPrivileges helpdeskPrivileges,
 			UserCreation userCreation) {
 		UserGroupHelpdeskPrivilegesPage userGroupHelpdeskPage;
 		userGroupHelpdeskPage = navigator
 				.navigateToPage(UserGroupHelpdeskPrivilegesPage.class);
 		userGroupHelpdeskPage.clickAddBtn();
 		userGroupHelpdeskPage.switchToAddUserGroupFrame();
-		userGroupHelpdeskPage.enterUserGroupDetails(helpdeskPrevileges);
+		userGroupHelpdeskPage.enterUserGroupDetails(helpdeskPrivileges);
 		userGroupHelpdeskPage.clickOnSaveBtn();
 		CustomUtils.ThreadDotSleep(900);
 		userGroupHelpdeskPage.switchToDefaultWindow();
@@ -65,26 +64,26 @@ public class HelpdeskLevelPrivilegesWorkflow {
 		userGroupHelpdeskPage.switchToDefaultWindow();
 	}
 
-	public void assignProductToUserFlows(HelpdeskPrivileges helpdeskPrevileges) {
+	public void assignProductToUserFlows(HelpdeskPrivileges helpdeskPrivileges) {
 		AssignProductHelpdeskPrivilegesPage assignProductPage;
 		assignProductPage = navigator
 				.navigateToPage(AssignProductHelpdeskPrivilegesPage.class);
 		assignProductPage.clickAddBtn();
 		assignProductPage.switchToAssignProductFrame();
-		assignProductPage.selectUserGroupFromDropdown(helpdeskPrevileges);
+		assignProductPage.selectUserGroupFromDropdown(helpdeskPrivileges);
 		assignProductPage.selectProductAccesCheckbox();
 		assignProductPage.clickOnSaveBtn();
 		assignProductPage.switchToDefaultWindow();
 	}
 
 	public void assignServiceCodeToUserFlows(
-			HelpdeskPrivileges helpdeskPrevileges) {
+			HelpdeskPrivileges helpdeskPrivileges) {
 		AssignServiceCodeHelpdeskPrivilegesPage assignServiceCodePage;
 		assignServiceCodePage = navigator
 				.navigateToPage(AssignServiceCodeHelpdeskPrivilegesPage.class);
 		assignServiceCodePage.clickAddBtn();
 		assignServiceCodePage.switchToAddServiceCodeFrame();
-		assignServiceCodePage.selectUsernameFromDropdown(helpdeskPrevileges);
+		assignServiceCodePage.selectUsernameFromDropdown(helpdeskPrivileges);
 		assignServiceCodePage.selectAllServiceCode();
 		assignServiceCodePage.clickOnSaveBtn();
 		assignServiceCodePage.switchToDefaultWindow();

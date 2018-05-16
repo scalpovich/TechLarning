@@ -57,10 +57,10 @@ public class AssignProductHelpdeskPrivilegesPage extends AbstractBasePage {
 	}
 
 	public void selectUserGroupFromDropdown(
-			HelpdeskPrivileges HelpdeskPrivileges) {
+			HelpdeskPrivileges helpdeskPrivileges) {
 		selectByVisibleText(userGroupCodeDDwn,
-				HelpdeskPrivileges.getGroupName() + "(Group) ["
-						+ HelpdeskPrivileges.getUserGroupID() + "]");
+				helpdeskPrivileges.getGroupName() + "(Group) ["
+						+ helpdeskPrivileges.getUserGroupID() + "]");
 	}
 
 	public void selectProductAccesCheckbox() {
