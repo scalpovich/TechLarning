@@ -357,16 +357,20 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	public void selectInstitutionCurrency(InstitutionCreation institute) {
 		selectValueFromDropDown(institutionCurrency,
 				institute.getInstitutionCurrency());
+		SimulatorUtilities.wait(2000);
 	}
 
 	public void selectInstitutionReferenceCurrency(InstitutionCreation institute) {
+		SimulatorUtilities.wait(2000);
 		selectValueFromDropDown(institutionReferenceCurrency,
 				institute.getInstitutionReferenceCurrency());
+		SimulatorUtilities.wait(2000);
 	}
 
 	public void selectDefaultlanguage(InstitutionCreation institute) {
 		selectValueFromDropDown(defaulLanguageDrpDwn,
 				institute.getDefaultLanguage());
+		SimulatorUtilities.wait(2000);
 	}
 
 	public void selectTimeZone(InstitutionCreation institute) {
@@ -376,6 +380,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public boolean checkAgentPortalSupport() {
+		SimulatorUtilities.wait(2000);
 		return selectCheckBox(agentPortalSupportChkBx, "Agent Portal Support");
 	}
 

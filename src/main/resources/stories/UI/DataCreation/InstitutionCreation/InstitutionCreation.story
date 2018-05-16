@@ -18,6 +18,7 @@ Meta:
 @testDataFileName testdata
 @sheetName Institute
 @PrepaidInstitutionCreation
+@scenario12
 
 Given login to bank as a Bankadmin
 When user enters details to create new Prepaid Institution
@@ -29,6 +30,7 @@ Meta:
 @testDataFileName testdata
 @sheetName Institute
 @PrepaidUserCreation
+@scenario12
 
 Given login to bank as a Bankadmin
 When user enter details to create new user
