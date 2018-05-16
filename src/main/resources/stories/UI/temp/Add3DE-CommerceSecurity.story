@@ -1,9 +1,9 @@
 Add 3D E-Commerce Security Parameters
 
 Narrative:
-In order to provide a corporate client various transactions
+In order to make 3 d secure transaction
 As an issuer
-I want to create a prepaid emv corporate general purpose card and test various transactions
+I want to create 3d e-commerce security parameters setup
 
 Meta:
 @UI
