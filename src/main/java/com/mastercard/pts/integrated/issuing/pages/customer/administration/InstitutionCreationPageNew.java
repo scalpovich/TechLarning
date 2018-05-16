@@ -212,9 +212,6 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody//tr")
 	private MCWebElements resultTableRow;
 	
-	private static final Logger logger = LoggerFactory.getLogger(InstitutionLoadCurrencyPage.class);
-
-
 	private String tab = "//a[.='%s']";
 
 	private String activeTab = "//li[@class='activetb']/a";
@@ -946,10 +943,10 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 	public void checkErrorOnPage() {
 		if (!publishErrorOnPage()) {
-			logger.info("Instituion Added Successfully.");
+			logg.info("Instituion Added Successfully.");
 			SwitchToDefaultFrame();
 		} else {
-			logger.info("Error in Instituion Creation");
+			logg.info("Error in Instituion Creation");
 			clickWhenClickable(cancelBtn);
 			SwitchToDefaultFrame();
 		}
