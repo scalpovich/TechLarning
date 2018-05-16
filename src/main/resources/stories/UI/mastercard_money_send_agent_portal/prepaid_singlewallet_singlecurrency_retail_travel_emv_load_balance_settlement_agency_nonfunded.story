@@ -115,7 +115,7 @@ And user sign out from customer portal
 
 
 Scenario: MMS transaction through agent portal
-When user is logged in agent portal as agent user
+When user is logged in agent portal as nonfundedagent user
 When user navigates to transfer funds page
 Then transfer funds page is loaded and master detail content title is Transfer Funds
 And TransferFunds page of transactions tab is rendered correctly
