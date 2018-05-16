@@ -8,7 +8,7 @@ I want to create 3d e-commerce security parameters setup
 Meta:
 @UI
 @all
-@StoryName AddThreeDSecureParametere
+@StoryName AddThreeDSecureParameters
 
 Scenario:add 3d e-commerce security parameters for prepaid
 
