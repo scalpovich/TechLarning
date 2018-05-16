@@ -50,7 +50,7 @@ public class ThreeDECommerceSecurityParameters {
 	public static ThreeDECommerceSecurityParameters getThreeDECommerceSecurityData() {
 		ThreeDECommerceSecurityParameters threeDECommerceSecurity = new ThreeDECommerceSecurityParameters();
 		threeDECommerceSecurity.seteCommerceSecurityInterchange(MapUtils.fnGetInputDataFromMap("3D_SECURE_TNX_INTERCHANGE"));
-		threeDECommerceSecurity.setValidateCAVVAAV(MapUtils.fnGetInputDataFromMap("VALIDATE_CAVV_AVV"));
+		threeDECommerceSecurity.setValidateCAVVAAV(MapUtils.fnGetInputDataFromMap("VALIDATE_CAVV_AAV"));
 		return threeDECommerceSecurity;
 	}
 

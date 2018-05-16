@@ -4,11 +4,9 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ThreeDECommerceSecurityParameters;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
-import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ThreeDECommerceSecurityParametersFlows;
 
@@ -19,12 +17,7 @@ public class ThreeDEcommerceSecurityParametersSteps {
 	private ThreeDECommerceSecurityParametersFlows threeDECommerceSecurityParametersFlows;
 	
 	@Autowired
-	KeyValueProvider provider;
-	@Autowired
 	DataProvider jsonProvider;
-	
-	@Autowired
-	private TestContext context;
 	
 	@When("user adds 3D ecommerce security parameters for $type")
 	public void add3DEcommerceSecurityParameters(String type) {

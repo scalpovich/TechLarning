@@ -1025,7 +1025,6 @@ public class ProgramSetupSteps {
 		deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
 
 		programSetupWorkflow.createDeviceRange(deviceRange);
-		context.put("Device_Range_Data", deviceRange);
 		
 	}
 

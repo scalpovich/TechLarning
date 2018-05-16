@@ -99,9 +99,7 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 	}
 	
 	protected void verifyDuplicateBinAndClickCancel() {
-		String message = getMessageFromFeedbackPanel();
-		if (message != null
-				&& (message.contains("Overlapping High Device/Wallet and Low Device/Wallet Range"))) {
+		if (getMessageFromFeedbackPanel().contains("Overlapping High Device/Wallet and Low Device/Wallet Range")) {
 			clickCancelButton();
 		}
 	}
