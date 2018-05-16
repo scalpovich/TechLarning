@@ -1,9 +1,9 @@
 debit emv corporate debit card withoutPin
 
 Narrative:
-In order to check transactions on debit emv retail card
+In order to check transactions on debit emv corporate card
 As an issuer
-I want to authorize transactions for debit emv retail debit card
+I want to authorize transactions for emv corporate debit card
 
 Meta:
 @StoryName d_emv_corp
