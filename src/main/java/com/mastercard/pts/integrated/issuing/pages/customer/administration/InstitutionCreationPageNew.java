@@ -9,17 +9,20 @@ import java.awt.event.KeyEvent;
 import junit.framework.Assert;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.InstitutionLoadCurrencyPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.ProcessingCenterNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -87,7 +90,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	private MCWebElement defaulLanguageDrpDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "zoneCode:input:dropdowncomponent")
-	private MCWebElement timeZoneDrpDwn;
+	private MCWebElement timeZoneDdwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "zipMandatoryFlag:checkBoxComponent")
 	private MCWebElement domesticPcodeMandChkBx;
@@ -197,6 +200,9 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.='Institution Name']/following::input[1]")
 	private MCWebElement searchInstitutionName;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.='Institution Code']/following::input[1]")
+	private MCWebElement searchInstitutionCodeTxt;
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Search']")
 	private MCWebElement searchBtn;
 
@@ -205,7 +211,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody//tr")
 	private MCWebElements resultTableRow;
-
+	
 	private String tab = "//a[.='%s']";
 
 	private String activeTab = "//li[@class='activetb']/a";
@@ -329,37 +335,51 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	}
 
 	public void checkDebit() {
+		waitforElement(debitChkBX);
 		selectCheckBox(debitChkBX, "Debit");
+		SimulatorUtilities.wait(2000);
 	}
 
 	public void checkCredit() {
+		SimulatorUtilities.wait(2000);
 		selectCheckBox(creditChkBx, "Credit");
+		SimulatorUtilities.wait(2000);
 	}
 
 	public void checkPrepaid() {
-		WebElementUtils.checkCheckbox(prepaidChkBx, true);
+		SimulatorUtilities.wait(2000);
+		selectCheckBox(prepaidChkBx, "Prepaid");
+		SimulatorUtilities.wait(4000);
+		
 	}
 
 	public void selectInstitutionCurrency(InstitutionCreation institute) {
 		selectValueFromDropDown(institutionCurrency,
 				institute.getInstitutionCurrency());
+		SimulatorUtilities.wait(2000);
 	}
 
 	public void selectInstitutionReferenceCurrency(InstitutionCreation institute) {
+		SimulatorUtilities.wait(2000);
 		selectValueFromDropDown(institutionReferenceCurrency,
 				institute.getInstitutionReferenceCurrency());
+		SimulatorUtilities.wait(2000);
 	}
 
 	public void selectDefaultlanguage(InstitutionCreation institute) {
 		selectValueFromDropDown(defaulLanguageDrpDwn,
 				institute.getDefaultLanguage());
+		SimulatorUtilities.wait(2000);
 	}
 
 	public void selectTimeZone(InstitutionCreation institute) {
-		selectValueFromDropDown(timeZoneDrpDwn, institute.getTimeZone());
+		waitForElementVisible(timeZoneDdwn);
+		selectValueFromDropDown(timeZoneDdwn, institute.getTimeZone());
+		SimulatorUtilities.wait(1000);
 	}
 
 	public boolean checkAgentPortalSupport() {
+		SimulatorUtilities.wait(2000);
 		return selectCheckBox(agentPortalSupportChkBx, "Agent Portal Support");
 	}
 
@@ -513,6 +533,10 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	public void enterNewInstitutionName(InstitutionCreation institute) {
 		enterValueinTextBox(searchInstitutionName,
 				institute.getInstitutionName());
+	}
+	public void enterNewInstitutionCode(InstitutionCreation institute) {
+		enterValueinTextBox(searchInstitutionCodeTxt,
+				institute.getInstitutionCode());
 	}
 
 	public void searchNewInstitution() {
@@ -799,7 +823,6 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	public void save() {
 		clickWhenClickable(saveBtn);
 		waitForLoaderToDisappear();
-		SwitchToDefaultFrame();
 	}
 	
 	public void cancel() {
@@ -825,6 +848,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 			if (institutionType[0].equalsIgnoreCase(Constants.PREPAID)
 					|| institutionType[1].equalsIgnoreCase(Constants.PREPAID)) {
 				checkPrepaid();
+				
 			}
 			if (institutionType[0].equalsIgnoreCase(Constants.CREDIT)
 					|| institutionType[1].equalsIgnoreCase(Constants.CREDIT)) {
@@ -919,5 +943,15 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	public String getInstUpdateMessage() {
 		return instituteUpdateMessage.getText();
 	}
+	public void checkErrorOnPage() {
+		if (!publishErrorOnPage()) {
+			logg.info("Instituion Added Successfully.");
+			SwitchToDefaultFrame();
+		} else {
+			logg.info("Error in Instituion Creation");
+			clickWhenClickable(cancelBtn);
+			SwitchToDefaultFrame();
+		}
 
+	}
 }

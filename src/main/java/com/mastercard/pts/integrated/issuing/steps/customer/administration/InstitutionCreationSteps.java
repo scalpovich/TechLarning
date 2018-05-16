@@ -66,7 +66,8 @@ public class InstitutionCreationSteps {
 			userCreation.setInstitutionName(institute.getInstitutionAbbrevation());
 		} else {
 			instutionCreation = InstitutionCreation.getInstitutionData();
-			userCreation.setInstitutionName(instutionCreation.getCreatedInstitution());
+			userCreation.setInstitutionName(instutionCreation
+					.getCreatedInstitution());
 		}
 		userCreationFlows.createUser(userCreation);
 	}

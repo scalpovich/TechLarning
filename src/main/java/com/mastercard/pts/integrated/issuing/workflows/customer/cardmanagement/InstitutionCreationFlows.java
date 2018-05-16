@@ -43,6 +43,7 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 		institute.provideAddressDetails(institutionCreation);
 		institute.save();
 		waitForLoaderToDisappear();
+		institute.checkErrorOnPage();		
 	}
 
 	public void checkSuccessfulInstitutionCreation(InstitutionCreation institutionCreation) {

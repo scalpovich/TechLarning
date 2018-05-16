@@ -196,7 +196,7 @@ public class UserPage extends AbstractBasePage{
 	}
 
 	public void assignInstituteToUser(UserCreation user) {
-		if(user.getSavedInstituteInXL().isEmpty()){
+		if(!user.getInstitutionName().isEmpty()){
 		Scrolldown(Element(institutionAssignedToUser.replace("%s",
 				user.getInstitutionName())));
 		clickWhenClickable(Element(institutionAssignedToUser.replace("%s",
@@ -211,7 +211,7 @@ public class UserPage extends AbstractBasePage{
 	}
 
 	public void assignDefaultInstituteToUser(UserCreation user) {
-		if(user.getSavedInstituteInXL().isEmpty()){
+		if(!user.getInstitutionName().isEmpty()){
 		clickWhenClickable(Element(defaultinstitution.replace("%s",
 				user.getInstitutionName())));
 	}
@@ -232,6 +232,7 @@ public class UserPage extends AbstractBasePage{
 	public void save() {
 		clickWhenClickable(save);
 		SimulatorUtilities.wait(2000);
+		waitForLoaderToDisappear();
 	}
 	
 	public void verifyNewUserCreationSuccess(UserCreation userCreation) {
