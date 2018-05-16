@@ -377,15 +377,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			logger.debug(ERROR_MESSAGE, e);
 			return false;
 		}
-	protected Boolean isNoRecordsFoundInTable() {
-		try {
-			return driver().findElement(By.cssSelector(".norecords")).isDisplayed();
-		} catch (NoSuchElementException e) {
-			logger.debug(ERROR_MESSAGE, e);
-			return false;
-		}
 	}
-
 	protected Boolean isDeleteColumnPresent() {
 		try {
 			return driver().findElement(
