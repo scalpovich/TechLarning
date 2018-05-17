@@ -401,18 +401,9 @@ public class HelpDeskSteps {
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		beforeLoadBalanceInformation = helpdeskWorkflow.getWalletBalanceInformation(device);			
 		String walletinfo [] = beforeLoadBalanceInformation.split(",");	
-		if(walletinfo.length > 1 )
-			{
-			walletinfo=walletinfo[1].split(":");
-			logger.info("Wallet Number : "+walletinfo[2]);
-			device.setWalletNumber(walletinfo[2]);
-			}else
-			{
-				walletinfo=walletinfo[0].split(":");		
-				logger.info("Wallet Number : "+walletinfo[2]);
-				device.setWalletNumber(walletinfo[2]);	
-			}
-		
+		walletinfo=walletinfo[0].split(":");		
+		logger.info("Wallet Number : "+walletinfo[2]);
+		device.setWalletNumber(walletinfo[2]);	
 		context.put(ContextConstants.DEVICE,device);
 	}
 
@@ -431,19 +422,10 @@ public class HelpDeskSteps {
 		 where walletinfo[2] contains wallet number and amount
 		*/	
 		logger.info("beforeLoadBalanceInformation : "+beforeLoadBalanceInformation);
-		String[] walletinfo = beforeLoadBalanceInformation.split(",");
-		if(walletinfo.length > 1 )
-		{	
-			walletinfo=walletinfo[0].split(":");		
-			logger.info("Wallet Number : "+walletinfo[2]);
-			device.setWalletNumber(walletinfo[2]);			
-		}else
-		{
-			walletinfo=walletinfo[0].split(":");		
-			logger.info("Wallet Number : "+walletinfo[2]);
-			device.setWalletNumber(walletinfo[2]);	
-		}
-		
+		String[] walletinfo = beforeLoadBalanceInformation.split(",");		
+		walletinfo=walletinfo[0].split(":");		
+		logger.info("Wallet Number : "+walletinfo[2]);
+		device.setWalletNumber(walletinfo[2]);	
 		context.put(ContextConstants.DEVICE,device);
 	}
 
