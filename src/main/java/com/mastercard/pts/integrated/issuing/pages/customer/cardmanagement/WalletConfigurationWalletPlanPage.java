@@ -84,19 +84,19 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectCurrency(String currency) {
-		WebElementUtils.selectDropDownByVisibleText(currencyDDwn, currency);
+		WebElementUtils.selectDDByVisibleText(currencyDDwn, currency);
 	}
 
 	public void selectProductType(String productType) {
-		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, productType);
+		WebElementUtils.selectDDByVisibleText(productTypeDDwn, productType);
 	}
 
 	public void selectProgramType(String programType) {
-		WebElementUtils.selectDropDownByVisibleText(programTypeDDwn, programType);
+		WebElementUtils.selectDDByVisibleText(programTypeDDwn, programType);
 	}
 
 	public void selectUsage(String usage) {
-		WebElementUtils.selectDropDownByVisibleText(usageDDwn, usage);
+		WebElementUtils.selectDDByVisibleText(usageDDwn, usage);
 	}
 
 	public void selectCreditPlan(String creditPlan) {

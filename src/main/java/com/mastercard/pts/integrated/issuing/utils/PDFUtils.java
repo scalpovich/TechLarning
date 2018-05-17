@@ -6,14 +6,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.google.common.base.Throwables;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
@@ -23,9 +20,7 @@ public class PDFUtils {
 	private static final Logger logger = LoggerFactory.getLogger(PDFUtils.class);
 
 	DateUtils dateutils;
-	public PDFUtils() {
 
-	}
 	public static String getContent(String pdfPath, String key) {
 		String value = "";
 		String pageContent = "";
@@ -56,7 +51,7 @@ public class PDFUtils {
 		return value;
 	}
 
-	public List<String> getContentRow(String pdfPath, String code) {
+	public List<String> getContentRow(String pdfPath, String code, String username) {
 		String pageContent = "";
 		List<String> programWiseContent = new ArrayList<String>();
 		String[] fullRow = { "" };
@@ -64,7 +59,7 @@ public class PDFUtils {
 		try {
 			File file = new File(pdfPath);
 			file.getParentFile().mkdirs();
-			PdfReader pdfReader = manipulatePdf(pdfPath);
+			PdfReader pdfReader = manipulatePdf(pdfPath, username);
 			if (pdfReader != null)
 				pages = pdfReader.getNumberOfPages();
 			for (int i = 1; i <= pages; i++) {
@@ -76,8 +71,9 @@ public class PDFUtils {
 			}
 			for (int j = 0; j < fullRow.length; j++) {
 				if (fullRow[j].contains(code)) {
+					programWiseContent.add(Arrays.toString(fullRow[j-3].split(" ")).trim());
+					programWiseContent.add(Arrays.toString(fullRow[j-2].split(" ")).trim());
 					programWiseContent.add(Arrays.toString(fullRow[j-1].split(" ")).trim());
-					programWiseContent.add(Arrays.toString(fullRow[j+1].split(" ")).trim());
 					programWiseContent.add(Arrays.toString(fullRow[j].split(" ")).trim());
 					break;
 				}
@@ -91,12 +87,12 @@ public class PDFUtils {
 		return programWiseContent;
 	}
 
-	public PdfReader manipulatePdf(String src) {
+	public PdfReader manipulatePdf(String src, String username) {
 		dateutils=new DateUtils();
 		PdfReader.unethicalreading = true;
 		PdfReader reader = null;
 		try {
-			reader = new PdfReader(src, (ConstantData.AUTHORIZATION_REPORT_FILE_KEY+dateutils.getDateDDMMFormat()).getBytes());
+			reader = new PdfReader(src, (username.substring(0,4)+dateutils.getDateDDMMFormat()).getBytes());
 		}  catch (Exception e) {
 			logger.info("Document Exception {}", e);
 		}
