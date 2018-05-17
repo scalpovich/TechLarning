@@ -15,21 +15,21 @@ public class MCGLimitPlanWorkflows {
 
 	private MCGLimitPlanPage page;
 
-	public void createMCGLimitPlanWithDetails(MCGLimitPlan plan) {
+	public MCGLimitPlan createMCGLimitPlanWithDetails(MCGLimitPlan plan) {
 		page = navigator.navigateToPage(MCGLimitPlanPage.class);
-		page.createMCGLimitPlanWithDetails(plan);
+		return page.createMCGLimitPlanWithDetails(plan);
 	}
 
 	public String getFeedbackText() {
 		page.SwitchToDefaultFrame();
 		
-		return page.getFeedbackText();
+		return page.getMessageFromFeedbackPanel();
 	}
 	
 	public boolean isNoRecordsFoundInTableView(MCGLimitPlan plan) {
 		page.enterPlanCodeInSearchBox(plan);
 		page.clickSearchButton();
 		
-		return page.isNoRecordsFoundInTableView();
+		return page.isNoRecordsFoundInTable();
 	}
 }

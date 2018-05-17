@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCG;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.MCGPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.workflows.MenuFlows;
@@ -13,18 +14,20 @@ public class MCGFlows extends MenuFlows {
 	@Autowired
 	Navigator navigator;
 
-	public String addMCG() {
+	public void addMCG(MCG plan) {
 		MCGPage mcgpage = navigator.navigateToPage(MCGPage.class);
-		mcgpage.clickaddMCG();
-		String MCG = mcgpage.addMCGDetails();
+		mcgpage.addMCGDetails(plan);
 		mcgpage.verifyNewMCGSuccess();
-		return MCG;
 	}
 	
-	public String addNewMCG() {
+	public void addNewMCG(MCG plan) {
 		MCGPage mcgpage = navigator.navigateToPage(MCGPage.class);
-		mcgpage.clickaddMCG();		
-		return mcgpage.addMCGDetails();
+		mcgpage.addMCGDetails(plan);
+	}
+	
+	public void addMCGwithMCC(MCG plan){
+		MCGPage mcgpage = navigator.navigateToPage(MCGPage.class);
+		mcgpage.addMCGwithMCCDetails(plan);
 	}
 
 }

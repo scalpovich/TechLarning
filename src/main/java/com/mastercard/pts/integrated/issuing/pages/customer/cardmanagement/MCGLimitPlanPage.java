@@ -3,7 +3,6 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.apache.log4j.DailyRollingFileAppender;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCGLimitPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -145,9 +145,11 @@ public class MCGLimitPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "periodicVelIntResp:input:dropdowncomponent")
 	private MCWebElement periodicVelocityInternationalResponseDdwn;
 
-		
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
+	private MCWebElement planCodeSearchTxt;		
 	
 	private static final String FRAME_ADD_MCG_LIMIT_PLAN = "Add MCG Limit Plan";
+	private static final String FRAME_ADD_MCG_LIMIT_PLAN_DETAILS = "Add MCG Limit Plan Details";
 	
 	public void verifyUiOperationStatus() {
 		logger.info("MCG Limit Plan");
@@ -163,154 +165,183 @@ public class MCGLimitPlanPage extends AbstractBasePage {
 				);
 	}
 	
-	public void addMcgLimitPlanCode(MCGLimitPlan plan){
-		enterValueinTextBox(addMcgLimitPlanCodeTxt, plan.get);
+	public void enterMcgLimitPlanCode(MCGLimitPlan plan){
+		enterValueinTextBox(addMcgLimitPlanCodeTxt, plan.getMcgLimitPlanCode());
 	}
 	
-	public void addDescription(MCGLimitPlan plan){
-		enterValueinTextBox(addDescriptionTxt, plan.get);
+	public void enterDescription(MCGLimitPlan plan){
+		enterValueinTextBox(addDescriptionTxt, plan.getDescription());
 	}
 	
 	public void addProductType(MCGLimitPlan plan){
-		enterValueinTextBox(addProductTypeDdwn, plan.get);
+		enterValueinTextBox(addProductTypeDdwn, plan.getProductType());
 	}
 	
 	public void selectEffectiveDate(MCGLimitPlan plan){
-		WebElementUtils.pickDate(effectiveDatePkr, date);
+		WebElementUtils.pickDate(effectiveDatePkr, plan.getEffectiveDate());
 	}
 	
 	public void selectEndDate(MCGLimitPlan plan){
-		WebElementUtils.pickDate(endDatePkr, date);
+		WebElementUtils.pickDate(endDatePkr, plan.getEndDate());
 	}	
 	
 	public void selectPeriod(MCGLimitPlan plan){
-		selectByVisibleText(periodDdwn, optionName);
+		selectByVisibleText(periodDdwn, plan.getPeriod());
 	}
 	
 	public void enterPeriodNumber(MCGLimitPlan plan){
-		enterValueinTextBox(periodNumberTxt, value);
+		enterValueinTextBox(periodNumberTxt, plan.getPeriodNumber());
 	}
 	
 	public void selectMcgCode(MCGLimitPlan plan){
-		selectByVisibleText(mcgCodeDdwn,optionName);
+		selectByVisibleText(mcgCodeDdwn,plan.getMcgCode());
 	}
 	
 	public void enterFromMomthOnBook(MCGLimitPlan plan){
-		enterValueinTextBox(fromMonthOnBookTxt, value);
+		enterValueinTextBox(fromMonthOnBookTxt, plan.getFromMonthOnBook());
 	}
 	
 	public void enterToMomthOnBook(MCGLimitPlan plan){
-		enterValueinTextBox(toMonthOnBookTxt, value);
+		enterValueinTextBox(toMonthOnBookTxt, plan.getToMonthOnBook());
 	}
 	
 	public void enterPerTransactionAmount(MCGLimitPlan plan){
-		enterValueinTextBox(perTransactionAmountTxt, value);
+		enterValueinTextBox(perTransactionAmountTxt, plan.getPerTransactionAmount());
 	}
 	
 	public void selectPerTransactionResponse(MCGLimitPlan plan){
-		selectByVisibleText(perTransactionResponseDdwn, optionName);
+		selectByVisibleText(perTransactionResponseDdwn, plan.getPerTransactionResponse());
 	}
 	
 	public void enterperTransactionPercentageOFCreditLimit(MCGLimitPlan plan){
-		enterValueinTextBox(perTransactionPercentageOfCreditLimitTxt, value);
+		enterValueinTextBox(perTransactionPercentageOfCreditLimitTxt, plan.getPerTransactionPercentageOfCreditLimit());
 	}
 	
 	public void enterDailyAmount(MCGLimitPlan plan){
-		enterValueinTextBox(dailyAmountTxt, value);
+		enterValueinTextBox(dailyAmountTxt, plan.getDailyAmount());
 	}
 	
 	public void selectDailyResponse(MCGLimitPlan plan){
-		selectByVisibleText(dailyAmountResponseDdwn, optionName);
+		selectByVisibleText(dailyAmountResponseDdwn, plan.getDailyResponse());
 	}
 	
 	public void enterDailyVelocity(MCGLimitPlan plan){
-		enterValueinTextBox(dailyVelocityTxt, optionName);
+		enterValueinTextBox(dailyVelocityTxt, plan.getDailyVelocity());
 	}
 	
-	public void enterDailyVelocityResponse(MCGLimitPlan plan){
-		selectByVisibleText(dailyVelocityResponseDdwn, optionName);
+	public void selectDailyVelocityResponse(MCGLimitPlan plan){
+		selectByVisibleText(dailyVelocityResponseDdwn, plan.getDailyVelocityResponse());
 	}
 	
 	public void enterDailyPercentageOfCreditLimit(MCGLimitPlan plan){
-		enterValueinTextBox(dailyPercentageOfCreditLimitTxt, value);
+		enterValueinTextBox(dailyPercentageOfCreditLimitTxt, plan.getDailyPercentageOfCreditLimit());
 	}
 	
 	public void enterPeriodicAmount(MCGLimitPlan plan){
-		enterValueinTextBox(periodicAmountTxt, value);
+		enterValueinTextBox(periodicAmountTxt, plan.getPeriodicAmount());
 	}
 	
 	public void selectPeriodicResponse(MCGLimitPlan plan){
-		selectByVisibleText(periodicAmountResponseDdwn, optionName);
+		selectByVisibleText(periodicAmountResponseDdwn, plan.getPeriodicResponse());
 	}
 	
 	public void enterPeriodicVelocity(MCGLimitPlan plan){
-		enterValueinTextBox(periodicVelocityTxt, optionName);
+		enterValueinTextBox(periodicVelocityTxt, plan.getPeriodicVelocity());
 	}
 	
 	public void enterPeriodicVelocityResponse(MCGLimitPlan plan){
-		selectByVisibleText(periodicVelocityResponseDdwn, optionName);
+		selectByVisibleText(periodicVelocityResponseDdwn, plan.getPeriodicVelocityResponse());
 	}
 	
 	public void enterPeriodicPercentageOfCreditLimit(MCGLimitPlan plan){
-		enterValueinTextBox(periodicPercentageOfCreditLimitTxt, value);
+		enterValueinTextBox(periodicPercentageOfCreditLimitTxt, plan.getPeriodicPercentageOfCreditLimit());
 	}
 	
 	public void enterPerTransactionInternationalAmount(MCGLimitPlan plan){
-		enterValueinTextBox(perTransactionInternationalAmountTxt, value);
+		enterValueinTextBox(perTransactionInternationalAmountTxt, plan.getPerTransactionInternationalAmount());
 	}
 	
 	public void selectPerTransactionInternationalResponse(MCGLimitPlan plan){
-		selectByVisibleText(perTransactionInternationalResponseDdwn, optionName);
+		selectByVisibleText(perTransactionInternationalResponseDdwn, plan.getPerTransactionInternationalResponse());
 	}
 	
 	public void enterperTransactionInternationalPercentageOFCreditLimit(MCGLimitPlan plan){
-		enterValueinTextBox(perTransactionInternationalPercentageOfCreditLimitTxt, value);
+		enterValueinTextBox(perTransactionInternationalPercentageOfCreditLimitTxt, plan.getPerTransactionPercentageOfCreditLimitInternational());
 	}
 	
 	public void enterDailyAmountInternational(MCGLimitPlan plan){
-		enterValueinTextBox(dailyAmountInternationalTxt, value);
+		enterValueinTextBox(dailyAmountInternationalTxt, plan.getDailyAmountInternational());
 	}
 	
 	public void selectDailyInternationalResponse(MCGLimitPlan plan){
-		selectByVisibleText(dailyAmountInternationalResponseDdwn, optionName);
+		selectByVisibleText(dailyAmountInternationalResponseDdwn, plan.getDailyResponseInternational());
 	}
 	
 	public void enterDailyVelocityInternational(MCGLimitPlan plan){
-		enterValueinTextBox(dailyVelocityInternationalTxt, optionName);
+		enterValueinTextBox(dailyVelocityInternationalTxt, plan.getDailyVelocityInternational());
 	}
 	
 	public void enterDailyVelocityInternationalResponse(MCGLimitPlan plan){
-		selectByVisibleText(dailyVelocityInternationalResponseDdwn, optionName);
+		selectByVisibleText(dailyVelocityInternationalResponseDdwn, plan.getDailyVelocityResponseInternational());
 	}
 	
 	public void enterDailyPercentageOfCreditLimitInternational(MCGLimitPlan plan){
-		enterValueinTextBox(dailyPercentageOfCreditLimitInternationalTxt, value);
+		enterValueinTextBox(dailyPercentageOfCreditLimitInternationalTxt, plan.getDailyPercentageOfCreditLimitInternational());
 	}
 	
 	public void enterPeriodicAmountInternational(MCGLimitPlan plan){
-		enterValueinTextBox(periodicAmountInternationalTxt, value);
+		enterValueinTextBox(periodicAmountInternationalTxt, plan.getPeriodicAmountInternational());
 	}
 	
 	public void selectPeriodicInternationalResponse(MCGLimitPlan plan){
-		selectByVisibleText(periodicAmountInternationalResponseDdwn, optionName);
+		selectByVisibleText(periodicAmountInternationalResponseDdwn, plan.getPeriodicResponseInternational());
 	}
 	
 	public void enterPeriodicVelocityInternational(MCGLimitPlan plan){
-		enterValueinTextBox(periodicVelocityInternationalTxt, optionName);
+		enterValueinTextBox(periodicVelocityInternationalTxt, plan.getPeriodicVelocityInternational());
 	}
 	
 	public void enterPeriodicVelocityInternationalResponse(MCGLimitPlan plan){
-		selectByVisibleText(periodicVelocityInternationalResponseDdwn, optionName);
+		selectByVisibleText(periodicVelocityInternationalResponseDdwn, plan.getPeriodicVelocityResponseInternational());
 	}
 	
 	public void enterPeriodicPercentageOfCreditLimitInternational(MCGLimitPlan plan){
-		enterValueinTextBox(periodicPercentageOfCreditLimitInternationalTxt, value);
+		enterValueinTextBox(periodicPercentageOfCreditLimitInternationalTxt, plan.getPeriodicPercentageOfCreditLimitInternational());
 	}
 
-	public void addMCGLimitPlan(){
+	public MCGLimitPlan createMCGLimitPlanWithDetails(MCGLimitPlan plan){
 		clickAddNewButton();
 		runWithinPopup(FRAME_ADD_MCG_LIMIT_PLAN, () -> {
-
+			enterMcgLimitPlanCode(plan);
+			enterDescription(plan);
+			addProductType(plan);
+            clickAddDetailsButton();
+            if(publishErrorOnPage()){
+            	plan.setMcgLimitPlanCode(CustomUtils.randomAlphaNumeric(5).toUpperCase());
+            	enterMcgLimitPlanCode(plan);
+            	clickAddDetailsButton();
+            }
+            clickAddNewButton();
 		});
+		runWithinPopup(FRAME_ADD_MCG_LIMIT_PLAN_DETAILS, () -> {
+			selectEffectiveDate(plan);
+			selectEndDate(plan);
+			selectMcgCode(plan);
+			enterFromMomthOnBook(plan);
+			enterToMomthOnBook(plan);
+			enterDailyAmount(plan);
+			selectDailyResponse(plan);
+			enterDailyVelocity(plan);
+			selectDailyVelocityResponse(plan);
+		});
+		return plan;
 	}
+	
+	public void enterPlanCodeInSearchBox(MCGLimitPlan plan) {
+		enterValueinTextBox(planCodeSearchTxt,
+				plan.getMcgLimitPlanCode());
+	}
+	
+	
+
 }

@@ -1,20 +1,18 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
+import java.time.LocalDate;
+
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 
 public class MCGLimitPlan {
 
-	private static final String MCG_LIMIT_PLAN_CODE = "MCG_LIMIT_PLAN_CODE";
-	private static final String PRODUCT_TYPE = "PRODUCT_TYPE";
-	private static final String EFFECTIVE_DATE = "EFFECTIVE_DATE";
-	private static final String END_DATE = "END_DATE";
 	private static final String PERIOD = "PERIOD";
 	private static final String PERIOD_NUMBER = "PERIOD_NUMBER";
 	private static final String MCG_CODE = "MCG_CODE";
-	private static final String FROM_MONTH_ON_BOOK = "FROM_MONTH_ON_BOOK";
-	private static final String TO_MONTH_ON_BOOK = "TO_MONTH_ON_BOOK";
+	private static final String FROM_MONTH_ON_BOOK = "0";
+	private static final String TO_MONTH_ON_BOOK = "12";
 	private static final String PER_TRANSACTION_AMOUNT = "PER_TRANSACTION_AMOUNT";
 	private static final String PER_TRANSACTION_RESPONSE = "PER_TRANSACTION_RESPONSE";
 	private static final String PER_TRANSACTION_PERCENTAGE_OF_CREDIT_LIMIT = "PER_TRANSACTION_PERCENTAGE_OF_CREDIT_LIMIT";
@@ -46,8 +44,8 @@ public class MCGLimitPlan {
 	private String mcgLimitPlanCode;
 	private String description;
 	private String productType;
-	private String effectiveDate;
-	private String endDate;
+	private LocalDate effectiveDate;
+	private LocalDate endDate;
 	private String period;
 	private String periodNumber;
 	private String mcgCode;
@@ -83,9 +81,17 @@ public class MCGLimitPlan {
 	public static MCGLimitPlan getMCGLimitPlanData(KeyValueProvider provider) {
 		MCGLimitPlan plan = new MCGLimitPlan();
 		String random = CustomUtils.randomAlphaNumeric(5).toUpperCase();
-		plan.setMcgLimitPlanCode(provider.getString(MCG_LIMIT_PLAN_CODE));
+		plan.setMcgLimitPlanCode(provider.getString(random));
 		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);
-		plan.setProductType(provider.getString(PRODUCT_TYPE));
+		plan.setMcgCode(provider.getString(MCG_CODE));
+		plan.setFromMonthOnBook(FROM_MONTH_ON_BOOK);
+		plan.setEffectiveDate(LocalDate.now().plusDays(1));
+		plan.setEndDate(LocalDate.now().plusDays(100));
+		plan.setToMonthOnBook(TO_MONTH_ON_BOOK);
+		plan.setDailyAmount(provider.getString(DAILY_AMOUNT));
+		plan.setDailyAmount(provider.getString(DAILY_RESPONSE));
+		plan.setDailyVelocity(provider.getString(DAILY_VELOCITY));
+		plan.setDailyVelocityResponse(provider.getString(DAILY_VELOCITY_RESPONSE));
 		return plan;
 	}
 
@@ -113,19 +119,19 @@ public class MCGLimitPlan {
 		this.productType = productType;
 	}
 
-	public String getEffectiveDate() {
+	public LocalDate getEffectiveDate() {
 		return effectiveDate;
 	}
 
-	public void setEffectiveDate(String effectiveDate) {
+	public void setEffectiveDate(LocalDate effectiveDate) {
 		this.effectiveDate = effectiveDate;
 	}
 
-	public String getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(String endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 

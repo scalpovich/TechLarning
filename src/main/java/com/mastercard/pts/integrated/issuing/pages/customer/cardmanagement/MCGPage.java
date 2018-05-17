@@ -8,11 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCG;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -23,46 +23,61 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class MCGPage extends AbstractBasePage {
 	final Logger logger = LoggerFactory.getLogger(MCGPage.class);
 
-	// ------------- Card Management > Institution Parameter Setup > Institution
-	// Currency [ISSS05]
-
-	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
-	private MCWebElement addMCG;
-
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mcgHeadPanel:mcgCode:input:inputTextField")
-	private MCWebElement MCGCode;
+	private MCWebElement mcgCodeTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mcgHeadPanel:description:input:inputTextField")
-	private MCWebElement Description;
+	private MCWebElement descriptionTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElement save;
+	private MCWebElement saveBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
-	private MCWebElement CancelBtn;
-
-	public void clickaddMCG() {
-		clickWhenClickable(addMCG);
-		switchToAddMCGFrame();
-	}
+	private MCWebElement cancelBtn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "mccSearchPanel:mccFrom:input:inputTextField")
+	private MCWebElement mccFromTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "mccSearchPanel:mccFrom:input:inputTextField")
+	private MCWebElement mccToTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "mccSearchPanel:mccName:input:inputTextField")
+	private MCWebElement mccNameTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "mccSearchPanel:mastercardMcg:input:dropdowncomponent")
+	private MCWebElement mastercardMcgDdwn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview input.chkField")
+	private MCWebElement mccSelectChkBx;
+	
+	private static final String FRAME_ADD_MCG = "Add MCG";
 
 	public void switchToAddMCGFrame() {
 		switchToIframe(Constants.ADD_MCG_FRAME);
 	}
 
-	public String enterMCGCode() {
-		enterValueinTextBox(MCGCode, CustomUtils.randomNumbers(3));
-		return MCGCode.getAttribute("value");
-
+	public void enterMCGCode(MCG plan) {
+		enterValueinTextBox(mcgCodeTxt, plan.getMCG());
 	}
 
-	public String enterMCGDescription() {
-		enterValueinTextBox(Description, "MCG Additional auth hold plan");
-		return Description.getAttribute("value");
+	public void enterMCGDescription(MCG plan) {
+		enterValueinTextBox(descriptionTxt, plan.getDescription());
 	}
-
-	public void clickSaveButton() {
-		clickWhenClickable(save);
+	
+	public void enterMCCFrom(MCG plan) {
+		enterValueinTextBox(mccFromTxt,plan.getMccFrom());
+	}
+	
+	public void enterMCCTo(MCG plan) {
+		enterValueinTextBox(mccToTxt,plan.getMccTo());
+	}
+	
+	public void enterMCCName(MCG plan) {
+		enterValueinTextBox(mccNameTxt,plan.getMccName());
+	}
+	
+	public void selectMCCCode() {
+		clickWhenClickable(mccSelectChkBx);
 	}
 
 	public boolean verifyErrorsOnMCGPage() {
@@ -75,20 +90,31 @@ public class MCGPage extends AbstractBasePage {
 			SwitchToDefaultFrame();
 		} else {
 			logger.info("Error in Vendor Addition");
-			clickWhenClickable(CancelBtn);
+			clickWhenClickable(cancelBtn);
 			SwitchToDefaultFrame();
 		}
 	}
 
-	public String addMCGDetails() {
-		String mcgCode;
-		String Description;
-		mcgCode = enterMCGCode();
-		Description = enterMCGDescription();
+	public void addMCGDetails(MCG plan) {
+		clickAddNewButton();
+		enterMCGCode(plan);
+		enterMCGDescription(plan);
 		clickSaveButton();
-		return Description + " " + "[" + mcgCode + "]";
 	}
-
+	
+	public void addMCGwithMCCDetails(MCG plan) {
+		clickAddNewButton();
+		runWithinPopup(FRAME_ADD_MCG,() -> {
+			enterMCGCode(plan);
+		    enterMCGDescription(plan);
+		    enterMCCFrom(plan);
+		    enterMCCTo(plan);
+		    clickSearchButton();
+		    selectMCCCode();
+			clickSaveButton(); 
+		});
+	}
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return null;

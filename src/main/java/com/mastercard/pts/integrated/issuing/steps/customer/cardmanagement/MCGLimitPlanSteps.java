@@ -7,6 +7,8 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCGLimitPlan;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
@@ -20,6 +22,8 @@ public class MCGLimitPlanSteps {
 	MCGLimitPlanWorkflows mcgLimitPlanWorkflows;
 	@Autowired
 	KeyValueProvider provider;
+	@Autowired
+	private TestContext context;
 	
 	private MCGLimitPlan mcgLimitPlan;
 
@@ -27,12 +31,13 @@ public class MCGLimitPlanSteps {
 	public void createSurchargePlan(String productType) {
 		mcgLimitPlan = MCGLimitPlan.getMCGLimitPlanData(provider);
 		mcgLimitPlan.setProductType(ProductType.fromShortName(productType));
-		mcgLimitPlanWorkflows.createMCGLimitPlanWithDetails(mcgLimitPlan);
+		mcgLimitPlan = mcgLimitPlanWorkflows.createMCGLimitPlanWithDetails(mcgLimitPlan);
+		Assert.assertEquals(ConstantData.RECORD_ADDED_SUCCESSFULLY, mcgLimitPlanWorkflows.getFeedbackText());
+		context.put(ContextConstants.MCG_LIMIT_PLAN, mcgLimitPlan);
 	}
 
 	@Then("MCG limit plan should get created successfully")
 	public void verifySurchargePlan() {
-		Assert.assertEquals(ConstantData.RECORD_ADDED_SUCCESSFULLY, mcgLimitPlanWorkflows.getFeedbackText());
 		Assert.assertFalse(mcgLimitPlanWorkflows.isNoRecordsFoundInTableView(mcgLimitPlan));
 	}
 

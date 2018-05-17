@@ -122,9 +122,6 @@ public class CurrencyPayoutListPlanPage extends AbstractBasePage {
 		return feedbackPanel.getText();
 	}
 
-	public Boolean isNoRecordsFoundInTableView() {
-		return isNoRecordsFoundInTable();
-	}
 
 	public void createCurrencyPayoutListPlanWithDetails(
 			CurrencyPayoutListPlan plan) {

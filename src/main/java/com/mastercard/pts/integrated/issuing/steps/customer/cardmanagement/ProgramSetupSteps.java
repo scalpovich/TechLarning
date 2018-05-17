@@ -899,8 +899,8 @@ public class ProgramSetupSteps {
 	@When("user fills Merchant Category Group")
 	public void fillsCreatesMCG() {
 		context.put(ContextConstants.MCG, mcg);
-		String msg = mcgflows.addNewMCG();
-		mcg.setMCG(msg);
+		mcg = MCG.getMCGDetails(provider);
+		mcgflows.addNewMCG(mcg);
 	}
 
 	@When("create wallet Plan for \"$type\" product and program \"$programtype\" with usage \"$usageType\"")
