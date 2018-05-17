@@ -26,7 +26,7 @@ public class AdjustmentTransactionDetails{
 		transactionDetails.setTransactionDate(LocalDate.now().minusDays(1));
 		transactionDetails.setTransactionDateHours("00");
 		transactionDetails.setTransactionDateMinutes("00");
-		transactionDetails.setAdjustmentAmount("500");
+		transactionDetails.setAdjustmentAmount("50000");
 		return transactionDetails;
 	}
 	
