@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.CreditInstitutionData;
+import com.mastercard.pts.integrated.issuing.domain.CreditMappingForExcel;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
@@ -426,6 +428,32 @@ public class DeviceRangePage extends AbstractBasePage {
 		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		logger.info("ProductType : {}", devicePlan.getProductType());
 		logger.info("issuerBin :{}", deviceRange.getIssuerBin());
+		CreditInstitutionData valuesInJsonNotInExcel=context.get(CreditConstants.JSON_VALUES);
+		program=context.get(ContextConstants.PROGRAM);
+		if(program.getProduct().toUpperCase().contains(ProductType.PREPAID.toUpperCase()) && program.getInterchange().toUpperCase().contains("MASTERCARD"))
+		{
+			deviceRange.setIssuerBin(valuesInJsonNotInExcel.getMastercardPrepaidIssuerBin());
+		}
+		else if(program.getProduct().toUpperCase().contains(ProductType.DEBIT.toUpperCase()) && program.getInterchange().toUpperCase().contains("MASTERCARD"))
+		{
+			deviceRange.setIssuerBin(valuesInJsonNotInExcel.getMastercardDebitIssuerBin());
+		}
+		else if(program.getProduct().toUpperCase().contains(ProductType.CREDIT.toUpperCase()) && program.getInterchange().toUpperCase().contains("MASTERCARD"))
+		{
+			deviceRange.setIssuerBin(valuesInJsonNotInExcel.getMastercardCreditIssuerBin());
+		}
+		else if(program.getProduct().toUpperCase().contains(ProductType.PREPAID.toUpperCase()) && program.getInterchange().toUpperCase().contains("VISA"))
+		{
+			deviceRange.setIssuerBin(valuesInJsonNotInExcel.getMastercardPrepaidIssuerBin());
+		}
+		else if(program.getProduct().toUpperCase().contains(ProductType.DEBIT.toUpperCase()) && program.getInterchange().toUpperCase().contains("VISA"))
+		{
+			deviceRange.setIssuerBin(valuesInJsonNotInExcel.getMastercardDebitIssuerBin());
+		}
+		else if(program.getProduct().toUpperCase().contains(ProductType.CREDIT.toUpperCase()) && program.getInterchange().toUpperCase().contains("VISA"))
+		{
+			deviceRange.setIssuerBin(valuesInJsonNotInExcel.getMastercardCreditIssuerBin());
+		}
 		if (deviceRange.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			selectByVisibleText(issuerBinDDwn, deviceRange.getIssuerBin());
 			selectByVisibleText(branchDDwn, deviceRange.getBranch());

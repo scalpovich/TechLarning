@@ -1,4 +1,4 @@
-package com.mastercard.pts.integrated.issuing.domain;
+/*package com.mastercard.pts.integrated.issuing.domain;
 
 
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
@@ -125,3 +125,4 @@ public class CreditMappingForJson {
 		return MiscUtils.toString(this);
 	}
 }
+*/
