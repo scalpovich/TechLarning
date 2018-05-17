@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.RuPaySettlementBIN;
-
 import com.mastercard.pts.integrated.issuing.domain.provider.DataLoader;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.pts.integrated.issuing.workflows.RupayBinSettlementFlows;
@@ -32,19 +32,26 @@ public class RupayBinSettlementSteps extends AbstractBaseFlows {
 
 	@Autowired
 	@Qualifier("defaultDataLoader")
-	public DataLoader dataLoader;
+	private DataLoader dataLoader;
 
 	@Autowired
 	private RupayBinSettlementFlows rupaybinsettlementflow;
+
+	@Autowired
+	private KeyValueProvider provider;
+
 	private RuPaySettlementBIN ruPaySettlementBIN;
 
 	@Autowired
 	DeviceBin devicebin;
+
 	@Given("new menu option is available at institution level-rupay rettlement bin")
 	public void newMenuOptionIsAvailableAtInstitutionLevelRupaySettlementBin(
 			@Named("TCName") String tcName,
 			@Named("sheetName") String sheetName) {
 		dataLoader.updateTestContextWithTestData(sheetName, tcName);
+
+
 	}
 
 	@When("user tries to configure the settlement bin")
@@ -52,17 +59,23 @@ public class RupayBinSettlementSteps extends AbstractBaseFlows {
 		rupaybinsettlementflow.setPrivileges();
 		rupaybinsettlementflow.getIntoPrivileges();
 		rupaybinsettlementflow.binConfigureWithSameParticipantId();
+
+	}
+
 	@When("the privileges are assigned to the user for this screen")
 	public void whenThePrivilegesAreAssignedToTheUserForThisScreen() {
 		rupaybinsettlementflow.setPrivileges();
 		rupaybinsettlementflow.getIntoPrivileges();
+
 	}
 
 	@Given("that a new menu option should be available at Institution level-Rupay Settlement Bin")
 	public void s(@Named("TCName") String tcName,
 			@Named("sheetName") String sheetName) {
 		dataLoader.updateTestContextWithTestData(sheetName, tcName);
+
 		CustomUtils.ThreadDotSleep(1000);
+
 	}
 
 	@Then("the user should be able to access the new screen 			 ")
@@ -73,6 +86,7 @@ public class RupayBinSettlementSteps extends AbstractBaseFlows {
 	@Then("the user should not be able to access the new screen")
 	public void thenTheUserShouldNotBeAbleToAccessTheNewScreen() {
 		rupaybinsettlementflow.binConfigurationWithUser();
+
 	}
 
 	@When("the privileges are not assigned to the user for this screen")
@@ -83,6 +97,7 @@ public class RupayBinSettlementSteps extends AbstractBaseFlows {
 	@Then("delete will be allowed without any constraint")
 	public void thenDeleteWillBeAllowedWithoutAnyConstraint() {
 		rupaybinsettlementflow.deleteSettlementBin();
+
 	}
 
 	@When("the user tries to configure the settlement bin")
@@ -90,13 +105,16 @@ public class RupayBinSettlementSteps extends AbstractBaseFlows {
 		rupaybinsettlementflow.setPrivileges();
 		rupaybinsettlementflow.getIntoPrivileges();
 		rupaybinsettlementflow.configureSettlementBin();
+
 	}
 
 	@Given("that a new menu option is available at Institution level-Rupay Settlement Bin")
 	public void givenThatANewMenuOptionIsAvailableAtInstitutionLevelRupaySettlementBin(
 			@Named("TCName") String tcName,
 			@Named("sheetName") String sheetName) {
+
 		dataLoader.updateTestContextWithTestData(sheetName, tcName);
+
 		CustomUtils.ThreadDotSleep(1000);
 	}
 
