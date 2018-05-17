@@ -1,22 +1,22 @@
 debit msr corporate debit card withoutPin
 
 Narrative:
-In order to check transactions on debit MSR retail card
+In order to check transactions on debit corporate card
 As an issuer
-I want to authorize transactions for debit MSR retail debit card
+I want to authorize transactions for debit MSR corporate card
 
 Meta:
 @StoryName d_msr_corp_ASI
 @MMSR
 
-Scenario: Set up program for debit msr retail debit card
+Scenario: Set up program for debit corporate debit card
 Given user is logged in institution
 And device range for program with device plan for "debit" "magnetic stripe" card without pin
 When user creates new device of debit type for new client
 Then device has "normal" status
 And user sign out from customer portal
 
-Scenario: debit msr retail debit card device production
+Scenario: debit msr corporate debit card device production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for debit
