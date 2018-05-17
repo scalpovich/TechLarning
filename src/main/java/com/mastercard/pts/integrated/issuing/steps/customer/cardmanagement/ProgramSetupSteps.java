@@ -1025,6 +1025,7 @@ public class ProgramSetupSteps {
 		deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
 
 		programSetupWorkflow.createDeviceRange(deviceRange);
+		
 	}
 
 	@When("User fills Device Range section for $type product for non-default institution")
