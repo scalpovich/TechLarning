@@ -13,7 +13,6 @@ import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
-import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.collect.administration.AdministrationHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.AuthorizationSearchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -30,9 +29,6 @@ public class AuthorizationSearchWorkflow {
 
 	@Autowired
 	private ReconciliationWorkFlow reconciliationWorkFlow;
-
-	@Autowired
-	KeyValueProvider provider;
 
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 

@@ -1,17 +1,22 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.AbstractCardManagementPage;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceUsage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceUsagePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
@@ -28,17 +33,57 @@ public class DeviceUsageWorklow extends MenuFlows {
 
 	private static final Logger logger = LoggerFactory.getLogger(DeviceUsageWorklow.class);
 
+	private static final String TOTAL = "total";
 
-	public void deviceUsageVerification(String cardNumber) {
+	private static final String TRANSACTION = "transaction";
+
+	public void deviceUsageVerification(String cardNumber, String tab, DeviceUsage deviceUsage) {
 		DeviceUsagePage page = navigator.navigateToPage(DeviceUsagePage.class);
-		List<String> list = page.getDeviceTotalTransactionUsage(cardNumber);
-		String expectedResult = context.get(ConstantData.TRANSACTION_AMOUNT);
-		// String expectedResult = "9.00";
+		List<String> list = new ArrayList<String>();
 
-		for (String actualResult : list) {
-			logger.info("Actual Result :: {}", actualResult);
-			logger.info("Expected Result :: {}", expectedResult);
-			assertThat(actualResult, is(expectedResult));
+		if (tab.equalsIgnoreCase(TRANSACTION)) {
+			list.clear();
+			list = page.getDeviceTransactionUsage(cardNumber);
+			String expectedResult = context.get(ConstantData.TRANSACTION_AMOUNT);
+			// String expectedResult = "10.00";
+			for (String actualResult : list) {
+				logger.info("Actual Result TRANSACTION :: {}", actualResult);
+				logger.info("Expected Result TRANSACTION :: {}", expectedResult);
+				assertThat(actualResult, is(expectedResult));
+			}
+		} else if (tab.equalsIgnoreCase(TOTAL)) {
+			Map<String, String> actualResult = new HashMap<String, String>();
+			actualResult = page.getDeviceTotalUsage(cardNumber);
+
+			try {
+				@SuppressWarnings("unchecked")
+				Map<String, String> expectedResult = BeanUtils.describe(deviceUsage);
+				logger.info("Actual Result TOTAL :: {}", actualResult);
+				logger.info("Expected Result TOTAL :: {}", expectedResult);
+				assertValues(actualResult, expectedResult);
+
+			} catch (IllegalAccessException e) {
+				logger.error(e.getMessage());
+			} catch (InvocationTargetException e) {
+				logger.error(e.getMessage());
+			} catch (NoSuchMethodException e) {
+				logger.error(e.getMessage());
+			}
+		}
+	}
+
+	private void assertValues(Map<String, String> actualResult, Map<String, String> expectedResult) {
+		for (Map.Entry<String, String> expectedEntry : expectedResult.entrySet()) {
+			String key = expectedEntry.getKey();
+			if (!expectedEntry.getValue().isEmpty() && !key.equalsIgnoreCase("class")) {
+				String exp = expectedEntry.getValue();
+				String act = actualResult.get(key);
+				assertTrue(String.format("%s value for field %s is NOT present on tab as expected. Actual Value is %s", exp, key, act), exp.contains(act));
+				logger.info("{} value for field {} is present on tab as expected", expectedEntry.getValue(), expectedEntry.getKey());
+			} else {
+				logger.info("Value is null or key is class for key {}", key);
+			}
+
 		}
 	}
 }

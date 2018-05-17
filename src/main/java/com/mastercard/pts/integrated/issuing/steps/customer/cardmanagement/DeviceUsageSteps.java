@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceUsage;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceUsageWorklow;
 
 @Component
@@ -18,10 +20,14 @@ public class DeviceUsageSteps {
 	@Autowired
 	private DeviceUsageWorklow deviceUsageWorkflow;
 
-	@Then("user searches device on device usage screen and performs assertions on device tool usage and device transaction usage tabs")
-	public void whenUserSearchesDeviceOnDeviceUsageScreen() {
+	@Autowired
+	private KeyValueProvider provider;
+
+	@Then("user searches device on device usage screen and performs assertions on device $tab usage")
+	public void whenUserSearchesDeviceOnDeviceUsageScreen(String tab) {
 		Device device = context.get(ContextConstants.DEVICE);
-//		deviceUsageWorkflow.deviceUsageVerification("5887651326558415");
-		deviceUsageWorkflow.deviceUsageVerification(device.getDeviceNumber());
-		}
+		DeviceUsage deviceUsage = DeviceUsage.createWithProvider(provider);
+		// deviceUsageWorkflow.deviceUsageVerification("5887651326558415", tab, deviceUsage);
+		deviceUsageWorkflow.deviceUsageVerification(device.getDeviceNumber(), tab, deviceUsage);
+	}
 }
