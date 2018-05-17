@@ -23,7 +23,7 @@ When user has current wallet balance amount information for prepaid device
 Then a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
-When user has wallet number information for debit device
+When user has wallet number information for prepaid device
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status

@@ -64,6 +64,8 @@ public class UserManagementSteps {
 	private static final String NON_FUNDED_AGENT = "nonfundedagent";
 
 	private static final String USER_INSTITUTION_NON_DEFAULT = "USER_INSTITUTION_NON_DEFAULT";
+	
+	private static final String USERNAME = "USERNAME";
 
 	@Autowired
 	private AppEnvironment environment;
@@ -120,6 +122,7 @@ public class UserManagementSteps {
 		Institution institution = Institution.createWithProvider(provider);
 		context.put(USER_INSTITUTION_SELECTED, institution.getCode());
 		loginWorkflow.logInInstitution(loginPortal, userDefaultInstitution);
+		context.put(USERNAME, loginPortal.getUserName());
 	}
 
 	@Given("user is logged in non-default institution")
