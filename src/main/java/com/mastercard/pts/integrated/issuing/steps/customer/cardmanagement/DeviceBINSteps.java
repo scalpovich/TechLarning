@@ -27,15 +27,20 @@ public class DeviceBINSteps {
 	TestContext context;
 
 	@When("user creates Device BIN for $network for product $productType for BinType as $BinType")
-	public void whenUserCreatesDeviceBINForMastercard(@Named("network") String network, @Named("productType") String productType, @Named("BinType") String BinType) {
+	public void whenUserCreatesDeviceBINForMastercard(
+			@Named("network") String network,
+			@Named("productType") String productType,
+			@Named("BinType") String BinType) {
 
-		devicebin.devicebinDataProvider();
+		devicebin.devicebinDataProvider(network, productType);
 		devicebin.setInterchange(network);
 		devicecreation.setProduct(productType);
 		devicebin.setBinType(BinType);
-		String IssuerBIN = deviceBinFlows.addDeviceBIN(devicebin, devicecreation);
-		context.put(ContextConstants.DEVICE_BIN, IssuerBIN);
-		context.put(CreditConstants.DEVICE_BIN, IssuerBIN);
-		devicebin.setIssuerBin(IssuerBIN);
+		String issuerBIN = deviceBinFlows.addDeviceBIN(devicebin,
+				devicecreation);
+		context.put(ContextConstants.DEVICE_BIN, issuerBIN);
+		context.put(CreditConstants.DEVICE_BIN, issuerBIN);
+		devicebin.setIssuerBin(issuerBIN);
+		devicebin.setCode(issuerBIN);
 	}
 }

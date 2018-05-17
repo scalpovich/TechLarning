@@ -73,8 +73,16 @@ public class AggregateLoadLimitPage extends AbstractBasePage {
 		selectByVisibleText(currencyCodeTxt,aggregateLimit.getCurrencyCode());
 		clickWhenClickable(saveBtn);
 		waitForLoaderToDisappear();	
-		SwitchToDefaultFrame();
-		verifySuccess();
+		if (!publishErrorOnPage()) {			
+			SwitchToDefaultFrame();
+			verifySuccess();
+		} else {
+			logger.info("Error in record Addition");
+			clickWhenClickable(cancelBtn);
+			SwitchToDefaultFrame();
+
+		}
+		
 	}	
 	public void verifySuccess() {
 		if (!publishErrorOnPage()) {
