@@ -65,6 +65,17 @@ public class AccountRangeRoutingPage extends AbstractBasePage {
 		selectByVisibleText(channelRoutingPlanDdwn,accountRangeRoutingPlan.getChannelRoutingPlan());
 		clickWhenClickable(saveBtn);
 		waitForLoaderToDisappear();	
+		if (!publishErrorOnPage()) {			
+			SwitchToDefaultFrame();
+			verifyNewChannelRoutingSuccess();
+		} else {
+			logger.info("Error in record Addition");
+			clickWhenClickable(cancelBtn);
+			SwitchToDefaultFrame();
+
+		}
+		
+		
 		SwitchToDefaultFrame();
 		verifyNewChannelRoutingSuccess();
 
