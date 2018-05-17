@@ -121,6 +121,10 @@ public class CustomerPortalHomePage extends AbstractBasePage {
 
 	}
 
+	public void selectInstitutionFromDropdown(String institutionName) {
+		institutionValue.getSelect().selectByVisibleText(institutionName);
+	}
+
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return null;

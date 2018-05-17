@@ -4,11 +4,15 @@ import org.openqa.selenium.Alert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.RuPaySettlementBIN;
 import com.mastercard.pts.integrated.issuing.pages.AdminstrationPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.InstitutionSelectionPage;
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.InstitutionSelectionPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.LoginPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.RupaySettlementBINPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.RupaySettlementPage;
+import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -26,6 +30,12 @@ public class RupayBinSettlementFlows extends AbstractBaseFlows {
 	@Autowired
 	InstitutionSelectionPage institute;
 	String SettlementBin;
+
+	@Autowired
+	Navigator navigator;
+
+	@Autowired
+	RupaySettlementBINPage ruPaySettlementBINPage;
 
 	public void deleteRecordOnProduction() {
 		getIntoRupaySettlementBin("Maker");
@@ -645,6 +655,19 @@ public class RupayBinSettlementFlows extends AbstractBaseFlows {
 		rupaysettlementpage.getParticipantId().sendKeys(CustomUtils.RandomNumbers(11));
 		CustomUtils.ThreadDotSleep(1000);
 		rupaysettlementpage.ClickButton(rupaysettlementpage.getSaveButtonDeviceBin());
+	}
+
+	public void addRuPaySettlementBINFlows(
+			RuPaySettlementBIN ruPaySettlementBIN, DeviceBin devicebin) {
+		navigator.navigateToPage(RupaySettlementBINPage.class);
+		ruPaySettlementBINPage.addRuPaySettlementBIN(ruPaySettlementBIN,
+				devicebin);
+	}
+
+	public void verifyRuPayBINAdded(RuPaySettlementBIN ruPaySettlementBIN) {
+		ruPaySettlementBINPage
+				.verifyRuPaySettlementBINAdded(ruPaySettlementBIN);
+
 	}
 
 }

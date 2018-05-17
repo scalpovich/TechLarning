@@ -24,12 +24,12 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.ReadTestDataFromExcel;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -60,7 +60,7 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement rateOriginSearchDdwn;
-@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:1:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:1:componentPanel:input:dropdowncomponent")
 	private MCWebElement programSearchDdwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:searchButtonPanel:buttonCol:searchButton")
@@ -117,7 +117,7 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 	private static String tableHeaderElements = "//table[@class='dataview']//thead//th";
 
 	private static By currencyCodeDdwn = By
-			.name("toCurrencyCode:input:dropdowncomponent");
+			.name("searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent");
 
 	public void addCurrencyExchangeRate(
 			CurrencyExchangeRate currencyExchangeRateDomainPage) {
@@ -129,7 +129,7 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		waitForElementVisible(sourceCurrencyDdwn);
 		selectByVisibleText(sourceCurrencyDdwn,
 				currencyExchangeRateDomainPage.getSourceCurrency());
-		CustomUtils.ThreadDotSleep(500);
+		SimulatorUtilities.wait(500);
 		Select select = new Select(getFinder().getWebDriver().findElement(
 				currencyCodeDdwn));
 		select.selectByVisibleText(currencyExchangeRateDomainPage
@@ -171,7 +171,7 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		ClickButton(saveBtn);
 
 		getFinder().getWebDriver().switchTo().defaultContent();
-		CustomUtils.ThreadDotSleep(500);
+		SimulatorUtilities.wait(500);
 	}
 
 	public boolean verifyAddedCurrencyExchangeRate(
@@ -189,16 +189,14 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		HashMap<String, HashMap<String, String>> applicationUploadMap;
 		int totalCount = 0;
 		int trueEntries = 0;
-		String filePath = System.getProperty("user.dir")
-				+ "/src/main/resources/config/"
-				+ System.getProperty("environment") + "/TestData"
-				+ "/UploadFile.xlsx";
+		String filePath = "UploadFile";
 		applicationUploadMap = dataReader.fnReadEntireTestData(filePath,
 				"CERFileUpload", "Records");
 
 		for (int i = 0; i < applicationUploadMap.size(); i++) {
 			if (true == dataReader.iterateUploadDataFromExcelMap("Test Record "
 					+ (i + 1))) {
+				SimulatorUtilities.wait(500);
 				searchCurrencyExchangeRates(
 						FileCreation
 								.getUploadFileFromDatamap("Source Currency"),
@@ -265,7 +263,7 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		Iterator<String> setItr = hashMap.keySet().iterator();
 		while (setItr.hasNext()) {
 			String key = setItr.next();
-			CustomUtils.ThreadDotSleep(250);
+			SimulatorUtilities.wait(250);
 			if (hashMap.get(key).equals(MapUtils.fnGetInputDataFromMap(key))) {
 				count++;
 			}
@@ -275,9 +273,9 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		return false;
 	}
 
-	public void uploadCurrencyExchangeRateFile(String type) {
+	public void uploadCurrencyExchangeRateFile(String type, String filePath) {
 		try {
-			fileCreation.createCERUploadFileBank(type);
+			fileCreation.createCERUploadFileBank(type, filePath);
 		} catch (Exception e) {
 			logger.error("There is an error while CER file upload bank", e);
 		}
@@ -286,12 +284,12 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 	public void searchCurrencyExchangeRates(String sCurrency, String dCurrency,
 			String rateOrigin, String program) {
 		selectByVisibleText(sourceCurrencySearchDdwn, sCurrency);
-		CustomUtils.ThreadDotSleep(500);
+		SimulatorUtilities.wait(500);
 		Select select = new Select(getFinder().getWebDriver().findElement(
 				currencyCodeDdwn));
 		select.selectByVisibleText(dCurrency);
 		selectByVisibleText(rateOriginSearchDdwn, rateOrigin);
-		if ("Bank [B]".equals(rateOrigin) && program != null)
+		if ("Bank [B]".equals(rateOrigin) && !program.isEmpty())
 			selectByVisibleText(programSearchDdwn, program);
 		ClickButton(searchBtn);
 	}
@@ -314,8 +312,9 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		HashMap<String, String> hashMap = new HashMap<String, String>();
 		List<WebElement> elements = getImages(tableElements);
 		List<WebElement> headerElements = getImages(tableHeaderElements);
-
+		SimulatorUtilities.wait(500);
 		for (WebElement element : headerElements) {
+			SimulatorUtilities.wait(500);
 			String elementText = element.getText();
 			if ("Edit".equalsIgnoreCase(elementText)
 					|| "Delete".equalsIgnoreCase(elementText)) {
@@ -347,7 +346,7 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		Iterator<String> setItr = hashMap.keySet().iterator();
 		while (setItr.hasNext()) {
 			String key = setItr.next();
-			CustomUtils.ThreadDotSleep(250);
+			SimulatorUtilities.wait(250);
 			if (hashMap.get(key).equals(
 					FileCreation.getUploadFileFromDatamap(key))) {
 				count++;
@@ -358,8 +357,9 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		return false;
 	}
 
-	public void uploadInvalidCurrencyExchangeRateFile(String isInvalid) {
-		fileCreation.createCERUploadFileBank(isInvalid);
+	public void uploadInvalidCurrencyExchangeRateFile(String isInvalid,
+			String filepath) {
+		fileCreation.createCERUploadFileBank(isInvalid, filepath);
 	}
 
 	public void verifyUiOperationStatus() {

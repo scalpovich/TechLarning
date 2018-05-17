@@ -67,6 +67,8 @@ public class ConstantData {
 	
 	public static final String HIGH_RISK_COUNTRY = "HighRiskCountry";
 	public static final String LOAN_TYPE_OBJECT = "LoanTypeObject";
+	public static final String START_RANGE_DIGITS = "0000000000";
+	public static final String END_RANGE_DIGITS = "9999999999";
 
 	private ConstantData() {
 	}

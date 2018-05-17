@@ -396,8 +396,6 @@ public class Constants {
 
 	public static final String ADD_CURRENCY_EXCHANGE_RATE_MAPPING_FRAME = "Add Currency Exchange Rates Mapping";
 
-	public static final String UPLOAD_FILE_PATH_EXCHANGE_RATE = "/home/dc-user/integrated/elt_bo/data/123456/CURRENCY_EXC_RATE_UPLOAD/INPUT";
-
 	public static final String UPLOAD_FILE_PATH_EXCHANGE_RATE_MC = "/home/dc-user/integrated/elt_bo/data/123456/MASTER_CURR_EXC_RATE/INPUT";
 
 	public static final String VIEW_BATCH_DETAILS = "View Batch Details";
@@ -451,5 +449,14 @@ public class Constants {
 	public static final String BLOCK_DEVICE = "Blocking the device";
 	public static final String UNBLOCK_DEVICE = "Unblocking the device";
 	
+
+	public static final String UPLOAD_PATH_CURR = "/home/dc-user/integrated/elt_bo/data/CURR_EXCHANGE_UPLOAD";
+	public static final String UPLOAD_PATH_CURR_STAGE = "/mptshome/STAGE2/integrated/elt_bo/data/CURR_EXCHANGE_UPLOAD";
+
+	public static final String USER_GROUPS = "User Groups";
+	public static final String ASSIGNPRODUCT = "Assign Product";
+	public static final String ASSIGN_SERVICE_CODE = "Assign Service Code";
+
+	public static final String ENV = "env";
 
 }

@@ -23,10 +23,10 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
 		CardManagementNav.L2_ROUTING,
 		CardManagementNav.L3_ACCOUNT_RANGE_ROUTING
-})
+		})
 
 public class AccountRangeRoutingPage extends AbstractBasePage {
-
+	
 	private static final Logger logger = LoggerFactory.getLogger(AccountRangeRoutingPage.class);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=minAccountRange]")
@@ -65,6 +65,17 @@ public class AccountRangeRoutingPage extends AbstractBasePage {
 		selectByVisibleText(channelRoutingPlanDdwn,accountRangeRoutingPlan.getChannelRoutingPlan());
 		clickWhenClickable(saveBtn);
 		waitForLoaderToDisappear();	
+		if (!publishErrorOnPage()) {			
+			SwitchToDefaultFrame();
+			verifyNewChannelRoutingSuccess();
+		} else {
+			logger.info("Error in record Addition");
+			clickWhenClickable(cancelBtn);
+			SwitchToDefaultFrame();
+
+		}
+		
+		
 		SwitchToDefaultFrame();
 		verifyNewChannelRoutingSuccess();
 
@@ -87,7 +98,7 @@ public class AccountRangeRoutingPage extends AbstractBasePage {
 		logger.info("Account Range Routing");
 		verifyUiOperation("Add Account Range Routing");
 	}
-
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
