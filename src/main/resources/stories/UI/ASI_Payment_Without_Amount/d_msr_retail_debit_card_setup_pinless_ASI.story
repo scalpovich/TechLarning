@@ -3,7 +3,7 @@ debit msr retail debit card pinless MMSR Transaction
 Narrative:
 In order to provide to client easy-to-use payment method for e-commerce retail
 As an issuer
-I want to create a MSR Retail Debit debit card for client
+I want to create a MSR Retail Debit card for client
 
 Meta:
 @StoryName d_msr_retail_ASI

@@ -932,7 +932,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		runWithinPopup("Edit Device Plan", () -> {			
 			WebElementUtils.elementToBeClickable(authorizationTab);
 			clickWhenClickable(authorizationTab);
-			SimulatorUtilities.wait(3000);
+			WebElementUtils.elementToBeClickable(cvccCvvChkBx);
 			checkCvcCvv(false);
 			clickSaveButton();
 		});

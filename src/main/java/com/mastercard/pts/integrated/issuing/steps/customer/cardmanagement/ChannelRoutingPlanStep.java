@@ -24,13 +24,11 @@ public class ChannelRoutingPlanStep  {
 	AccountRangeRoutingPlan accountRangeRoutingPlan;
 	@Autowired
 	AccountRangeRoutingFlows  accountRangeRoutingFlows;
-	
 	@Autowired
 	private TestContext context;
-	
 	private final String channelNamePlan = "CBS1 [CBS1]" ;
 	private final String channelName = "CBS1" ;
-
+	
 
 	@When("user creates channel Routing plan for $channelName channel and $interfaceName interface")
 	public void userCreatesChannelRouting(@Named("channelName") String channel,@Named("interfaceName") String interfaceType) {
@@ -58,5 +56,4 @@ public class ChannelRoutingPlanStep  {
 		}
 		accountRangeRoutingFlows.addChannelRoutingPlan(accountRangeRoutingPlan);
 	}
-
 }
