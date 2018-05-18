@@ -1,3 +1,4 @@
+
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ThreeDECommerceSecurityParameters;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -33,12 +35,75 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=maxCardRange]")
 	private MCWebElement maxCardRange;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "networkCode:input:dropdowncomponent")
+	private MCWebElement addInterchangeDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "validateCavvAav:input:dropdowncomponent")
+	private MCWebElement validateCAVVAAVDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "minCardRange:input:inputTextField")
+	private MCWebElement addMinCardRangeTxt;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "maxCardRange:input:inputTextField")
+	private MCWebElement addMaxCardRangeTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "decWithoutCavvAavMc:checkBoxComponent")
+	private MCWebElement declineAllTransactionsWithoutCAVVAAVChkBx;
+	
+	
 
 	public void verifyUiOperationStatus() {
 		logger.info("3D E-Commerce Security Parameters");
 		verifySearchButton("Search");
 	}
-
+	public void add3DECommerceSecurityParameters(ThreeDECommerceSecurityParameters eCommerceSecurityParameters) {
+		logger.info("Add 3D E-Commerce Security Parameters");
+		selectSearchInterchange(eCommerceSecurityParameters.geteCommerceSecurityInterchange());
+		clickSearchButton();
+		clickAddNewButton();
+		runWithinPopup("Add 3D E-Commerce Security", () -> {
+			selectThreeDECommerceInterchange(eCommerceSecurityParameters.geteCommerceSecurityInterchange());
+			selectValidateCAVVAVV(eCommerceSecurityParameters.getValidateCAVVAAV());
+			enterDeviceRangeFrom(eCommerceSecurityParameters.getDeviceRangeFrom());
+			enterDeviceRangeTo(eCommerceSecurityParameters.getDeviceRangeTo());
+			selectDeclineAllTransactionsWithoutCAVVAAVCheck();
+			clickSaveButton();
+			verifyDuplicateBinAndClickCancel();
+		});	
+	}
+	
+	public void selectSearchInterchange(String interchangeToSearch){
+		selectByVisibleText(interchange, interchangeToSearch);
+	}
+	
+	public void selectThreeDECommerceInterchange(String interchangeToAdd){
+		selectByVisibleText(addInterchangeDDwn, interchangeToAdd);	
+	}
+	
+	public void selectValidateCAVVAVV(String validateCAVVAVV){
+		selectByVisibleText(validateCAVVAAVDDwn, validateCAVVAVV);	
+	}
+	
+	public void enterDeviceRangeFrom(String deviceRangeFrom){
+		enterText(addMinCardRangeTxt, deviceRangeFrom);
+	}
+	
+	public void enterDeviceRangeTo(String deviceRangeTo){
+		enterText(addMaxCardRangeTxt, deviceRangeTo);
+	}
+	
+	public void selectDeclineAllTransactionsWithoutCAVVAAVCheck()
+	{
+		ClickCheckBox(declineAllTransactionsWithoutCAVVAAVChkBx, true);
+	}
+	
+	protected void verifyDuplicateBinAndClickCancel() {
+		if (getMessageFromFeedbackPanel().contains("Overlapping High Device/Wallet and Low Device/Wallet Range")) {
+			clickCancelButton();
+		}
+	}
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(interchange),

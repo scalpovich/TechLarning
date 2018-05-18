@@ -7,7 +7,8 @@ I want to create a MSR Retail Debit debit card for client
 
 Meta:
 @StoryName d_msr_retail_ASI
-@MMSR
+@ASI
+@SanitySuite
 
 Scenario: Set up debit msr retail debit card pinless
 Given user is logged in institution
@@ -23,6 +24,7 @@ When processes device production batch for debit
 Then device has "normal" status
 Then user activates device through helpdesk
 And user sign out from customer portal
+Then embossing file batch was generated in correct format
 
 Scenario: Perform MMSR-RetailDebit Card Authorization transaction
 Given connection to MAS is established

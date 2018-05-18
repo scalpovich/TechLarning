@@ -7,7 +7,8 @@ I want to authorize transactions for prepaid msr retail travel mwmc card
 
 Meta:
 @StoryName p_msr_retail_travel_mwmc
-@MSRWithPin
+@MSRWithPinIntTrx
+@InternationalTrx
 
 Scenario: Setup multi-currency prepaid msr retail travel card and perfomr refund pin authorization
 Given user is logged in institution
@@ -25,7 +26,7 @@ Then device has "normal" status
 When user activates device through helpdesk
 And user setup device currency through helpdesk
 Then currency setup for prepaid device is done correctly and updated in wallet details tab
-When user performs adjustment transaction with 10000 amount
+When user performs adjustment transaction with 300000 amount
 And user performs adjustment transaction for second wallet
 And user sign out from customer portal
 

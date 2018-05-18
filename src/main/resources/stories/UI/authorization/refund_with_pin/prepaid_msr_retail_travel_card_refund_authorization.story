@@ -1,9 +1,9 @@
-prepaid msr retail general purpose card authorization
+prepaid msr retail travel card authorization
 
 Narrative:
-In order to check transactions on prepaid msr retail general purpose card 
+In order to check transactions on prepaid msr retail travel card 
 As an issuer
-I want to authorize transactions for prepaid msr retail general purpose card 
+I want to authorize transactions for prepaid msr retail travel card 
 
 Meta:
 @StoryName p_msr_retail_travel
@@ -18,7 +18,7 @@ Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
 
-Scenario: prepaid msr corporate gift card device production
+Scenario: prepaid msr retail travel card device production
 Meta:
 @TestId TC408068
 Given user is logged in institution

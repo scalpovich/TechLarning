@@ -15,6 +15,8 @@ import com.mastercard.pts.integrated.issuing.configuration.Portal;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.LoginCardholder;
+import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
+import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceCreateDevicePage;
@@ -232,7 +234,32 @@ public class LoginSteps extends AbstractBaseFlows {
 
 	@When("user selects the newly created institution")
 	public void selectsInstitution() {
-		customerPortalHomePage.selectInstitution(MapUtils.fnGetInputDataFromMap("Institution"));
+		customerPortalHomePage.selectInstitution(MapUtils
+				.fnGetInputDataFromMap("Institution"));
+	}
+
+	@When("user select the created institution from the institution dropdown")
+	public void reselectsInstitution() {
+		InstitutionCreation institute = context
+				.get(ContextConstants.INSTITUTION);
+		selectInstituteFromDrpDwn(institute.getInstitutionName() + " ("
+				+ institute.getInstitutionCode() + ")");
+
+	}
+
+	@When("user logs in again with the new user")
+	public void newUserLogsIn() {
+		UserCreation userCreation = context.get(ContextConstants.USER);
+		login(userCreation.getUserID(),
+				MapUtils.fnGetInputDataFromMap("Password"));
+	}
+
+	@When("the newly created institution is selected")
+	public void selectNewlyCreatedInstitution() {
+		InstitutionCreation institute = context
+				.get(ContextConstants.INSTITUTION);
+		loginFlows.selectNewInstitutionFlows(institute.getInstitutionName()
+				+ " [" + institute.getInstitutionCode() + "]");
 	}
 
 }

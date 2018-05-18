@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
@@ -15,10 +14,14 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -51,9 +54,19 @@ public class FileCreation {
 	Vendor vendor;
 	@Autowired
 	HelpDeskGeneral helpDeskGeneral;
+	
+	@Value("${linux.application.upload.path}")
+	private String applicationUpload;
+	
+	@Value("${linux.folder.path}")
+	private String linuxFolderPath;
+	
 
 	@Autowired
 	private DataProvider provider;
+
+	@Autowired
+	private TestContext context;
 
 	private static final String INSTITUTION_CODE = "INSTITUTION_CODE";
 
@@ -330,7 +343,15 @@ public class FileCreation {
 	}
 
 	public String createCERBankHeader(String date) {
-		return "HD" + "|" + MapUtils.fnGetInputDataFromMap("INSTITUTION_CODE") + "|" + date + "|" + "2.0";
+		InstitutionCreation institute;
+		if (context.get(ContextConstants.INSTITUTION) != null) {
+			institute = context.get(ContextConstants.INSTITUTION);
+			return "HD" + "|" + institute.getInstitutionCode() + "|" + date
+					+ "|" + "2.0";
+		} else
+			return "HD" + "|"
+					+ MapUtils.fnGetInputDataFromMap("INSTITUTION_CODE") + "|"
+					+ date + "|" + "2.0";
 	}
 
 	public String createCERMCRecord() {
@@ -344,18 +365,29 @@ public class FileCreation {
 	}
 
 	// Currency Exchange Rates File Upload: Bank
-	public String createCERUploadFileBank(String isInvalid) {
+	public String createCERUploadFileBank(String isInvalid, String filePath) {
 		int totalRecords = 0;
 		String date = "";
 		FileCreation fileCreation = new FileCreation();
 		HashMap<String, HashMap<String, String>> applicationUploadMap;
+		InstitutionCreation instituteCreation;
 
 		if ("back dated transactions".equalsIgnoreCase(isInvalid))
 			date = DateUtils.getDateddMMyyyy() + DateUtils.getTime();
 		else
 			date = nextDay(DateUtils.getDateddMMyyyy(), "Bank") + DateUtils.getTime();
 
-		filenameStatic = "CER" + MapUtils.fnGetInputDataFromMap("INSTITUTION_CODE") + DateUtils.getDate() + DateUtils.getTime() + getSequenceNumber() + ".DAT";
+		if (context.get(ContextConstants.INSTITUTION) != null) {
+			instituteCreation = context.get(ContextConstants.INSTITUTION);
+			filenameStatic = "CER" + instituteCreation.getInstitutionCode()
+					+ DateUtils.getDate() + DateUtils.getTime()
+					+ getSequenceNumber() + ".DAT";
+		} else {
+			filenameStatic = "CER"
+					+ MapUtils.fnGetInputDataFromMap("INSTITUTION_CODE")
+					+ DateUtils.getDate() + DateUtils.getTime()
+					+ getSequenceNumber() + ".DAT";
+		}
 		fileCreation.setFilename(filenameStatic);
 		File file = new File(filenameStatic);
 
@@ -393,7 +425,7 @@ public class FileCreation {
 			throw Throwables.propagate(e);
 		}
 		logger.info("File Path: " + file.getPath());
-		linuxBox.upload(file.getPath(), Constants.UPLOAD_FILE_PATH_EXCHANGE_RATE);
+		linuxBox.upload(file.getPath(), filePath);
 		return filename;
 	}
 
@@ -412,8 +444,8 @@ public class FileCreation {
 		String FileName = "APPPR" + institutionCode + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
 		HashMap<String, HashMap<String, String>> applicationUploadMap;
 		File file = new File(FileName);
-		String remoteDir = Constants.APPLICATION_UPLOAD_PREPAID_FILE_PATH;
-		
+		String remoteDir = linuxFolderPath+applicationUpload;
+
 		applicationUploadMap = dataReader.dataProviderFileUpload("AllUploadTestData", "Prepaid Card File");
 		logger.info("applicationUploadMap = {} ", applicationUploadMap);
 		try (PrintWriter writer = new PrintWriter(file)) {
@@ -443,7 +475,7 @@ public class FileCreation {
 			writer.print("FT|" + createRecordNumber(9, totalRecords));
 		} catch (IOException e) {
 			logger.error("Fail to create page object: {}", e);
-			throw MiscUtils.propagate(e);	
+			throw MiscUtils.propagate(e);
 		}
 
 		linuxBox.upload(file.getPath(), remoteDir);
@@ -457,7 +489,7 @@ public class FileCreation {
 		HashMap<String, HashMap<String, String>> applicationUploadMap;
 		File file = new File(FileName);
 		String remoteDir = Constants.APPLICATION_UPLOAD_PREPAID_FILE_PATH;
-		
+
 		applicationUploadMap = dataReader.dataProviderFileUpload("AllUploadTestData", "Static Card File");
 		logger.info("applicationUploadMap = {} ", applicationUploadMap);
 		try (PrintWriter writer = new PrintWriter(file)) {
@@ -487,7 +519,7 @@ public class FileCreation {
 			writer.print("FT|" + createRecordNumber(9, totalRecords));
 		} catch (IOException e) {
 			logger.error("Fail to create page object: {}", e);
-			throw MiscUtils.propagate(e);	
+			throw MiscUtils.propagate(e);
 		}
 
 		linuxBox.upload(file.getPath(), remoteDir);
@@ -495,6 +527,7 @@ public class FileCreation {
 		logger.info(customerType);
 		return FileName;
 	}
+
 	public String createApplicationUploadFile(String institutionCode, String customerType, String cardType) throws Exception {
 		int totalRecords = 0;
 		String FileName = "";

@@ -1,4 +1,4 @@
-MDFS Pin Change on prepaid msr retail general purpose card
+MDFS Pin Change on prepaid msr retail gift card
 
 Narrative:
 In order to provide to client easy-to-use multi-purpose prepaid card

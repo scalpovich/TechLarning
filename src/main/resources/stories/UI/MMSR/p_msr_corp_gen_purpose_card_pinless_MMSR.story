@@ -6,7 +6,7 @@ As an issuer
 I want to create a prepaid emv corporate general purpose card and test various transactions
 
 Meta:
-@StoryName p_msr_corp_general_purpose
+@StoryName p_msr_corp_general_purpose_MMSR
 @MSSR
 
 Scenario: Transaction - prepaid msr corporate general purpose card - MMSR Authorization transaction
@@ -24,6 +24,7 @@ When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
 Then user sign out from customer portal
+Then embossing file batch was generated in correct format
 Given connection to MAS is established
 When perform an MMSR MAS transaction
 Then MAS test results are verified

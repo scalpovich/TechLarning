@@ -28,10 +28,21 @@ public class ServiceCodePage extends AbstractBasePage{
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
 	private MCWebElement serviceCodeTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "td#description>span>span")
+	private MCWebElement descriptionTxt;
+	
+	
 
 	public void verifyUiOperationStatus() {
 		logger.info("Service Code");
 		verifyUiOperation("Add Service Code");
+	}
+	
+	public String getServiceCodeDescription(String serviceCode){
+		enterText(serviceCodeTxt,serviceCode);
+		editFirstRecord();
+		return getTextFromPage(descriptionTxt);
 	}
 
 	@Override

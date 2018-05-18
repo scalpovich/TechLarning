@@ -36,13 +36,14 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 		institute.provideInstitutionDetails(institutionCreation);
 		institute.provideInstitutionType(institutionCreation);
 		institute.provideGeneralDetails(institutionCreation);
-		institute.provideAdaptiveAuthentication();
+		institute.provideAdaptiveAuthentication(institutionCreation);
 		institute.provideCustomCareDetails(institutionCreation);
 		institute.navigateToTab(TAB_ADDRESS);
 		institute.providePersonalDetailsAdressTab(institutionCreation);
 		institute.provideAddressDetails(institutionCreation);
 		institute.save();
 		waitForLoaderToDisappear();
+		institute.checkErrorOnPage();		
 	}
 
 	public void checkSuccessfulInstitutionCreation(InstitutionCreation institutionCreation) {

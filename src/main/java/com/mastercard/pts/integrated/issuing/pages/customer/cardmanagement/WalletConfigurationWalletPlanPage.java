@@ -84,19 +84,19 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectCurrency(String currency) {
-		WebElementUtils.selectDropDownByVisibleText(currencyDDwn, currency);
+		WebElementUtils.selectDDByVisibleText(currencyDDwn, currency);
 	}
 
 	public void selectProductType(String productType) {
-		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, productType);
+		WebElementUtils.selectDDByVisibleText(productTypeDDwn, productType);
 	}
 
 	public void selectProgramType(String programType) {
-		WebElementUtils.selectDropDownByVisibleText(programTypeDDwn, programType);
+		WebElementUtils.selectDDByVisibleText(programTypeDDwn, programType);
 	}
 
 	public void selectUsage(String usage) {
-		WebElementUtils.selectDropDownByVisibleText(usageDDwn, usage);
+		WebElementUtils.selectDDByVisibleText(usageDDwn, usage);
 	}
 
 	public void selectCreditPlan(String creditPlan) {
@@ -154,7 +154,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		runWithinPopup("Add Wallet Plan", () -> {
 			String productType = walletPlan.getProductType();
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
-			inputDescription(walletPlan.getDescription());			
+			inputDescription(walletPlan.getDescription());				
 			selectProductType(productType);
 			waitForPageToLoad(driver());
 			selectProgramType(walletPlan.getProgramType());
@@ -162,9 +162,8 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			selectCurrency(walletPlan.getCurrency());
 			waitForPageToLoad(driver());			
 			selectUsage(walletPlan.getUsage());
-
+			waitForPageToLoad(driver());
 			fillDetailsBasedOnCardType(walletPlan, productType);
-
 			clickNextButton(); // Click on next button
 			clickFinishButton(); // click on finish button
 		});
@@ -179,16 +178,16 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		runWithinPopup("Add Wallet Plan", () -> {
 			String productType = walletPlan.getProductType();
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
-			inputDescription(walletPlan.getDescription());
+			inputDescription(walletPlan.getDescription());				
 			selectProductType(productType);
 			waitForPageToLoad(driver());
 			selectProgramType(walletPlan.getProgramType());
 			waitForPageToLoad(driver());
 			selectCurrency(walletPlan.getCurrency());
-			waitForPageToLoad(driver());
+			waitForPageToLoad(driver());			
 			selectUsage(walletPlan.getUsage());
 			waitForPageToLoad(driver());
-			fillDetailsBasedOnCarddType(walletPlan, productType);
+			fillDetailsBasedOnCardType(walletPlan, productType);
 			clickNextButton(); // Click on next button
 			clickFinishButton(); // click on finish button
 		});

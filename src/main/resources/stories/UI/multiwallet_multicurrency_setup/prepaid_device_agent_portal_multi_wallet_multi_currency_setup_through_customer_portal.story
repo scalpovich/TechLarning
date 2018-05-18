@@ -9,6 +9,7 @@ Meta:
 @StoryName PREPAID_MULTIWAL_MULTICUR_AGENT
 @CR1
 @CardCreation
+@SanitySuite
 
 Scenario: Prepaid - Admin User - Assign Program to Agency
 Given user is logged in institution

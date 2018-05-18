@@ -1,15 +1,15 @@
-Prepaid authorisation: Load from file Upload and portals for prepaid emv retail gift card
+Prepaid authorisation: Load from file Upload and portals for prepaid emv corp travel card
 
 Narrative:
 In order to provide to client easy-to-use payment method for e-commerce retail
 As an issuer
-I want to Upload transactions from a file for prepaid emv retail gift card
+I want to Upload transactions from a file for prepaid emv corp travel card
 
 Meta:
 @StoryName prepaid_ctc_load_from_file
 @CRCardsWithAuthorization
 
-Scenario: Set up prepaid emv retail gift card
+Scenario: Set up prepaid emv corp travel card
 Meta:
 @TestId
 Given user is logged in institution
@@ -17,7 +17,7 @@ And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
 Then device has "normal" status
 
-Scenario: prepaid emv retail prepaid card device production
+Scenario: prepaid emv corp travel card device production
 Meta:
 @TestId 
 Given user is logged in institution

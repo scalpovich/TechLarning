@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.junit.Assert;
@@ -240,6 +241,21 @@ public class AccountHeadSteps extends AccountHeadFlows {
 	public void the_user_saves_the_Account_Head_for_further_use() {
 		logger.info("Saving the Account Head for further use");
 		savesAccountHeadFlow();
+
+	}
+
+	/**
+	 * Step Definition for navigating and adding a new Account Head
+	 * <p>
+	 * StoryFile usage : When the user navigates and adds account head to the
+	 * system
+	 * <p>
+	 */
+	@When("the user navigates and adds account head to the system")
+	@Composite(steps = { "When user navigates to Account Head screen",
+			"When user adds account head in the system",
+			"When the user saves the Account Head for further use" })
+	public void whenUserAddsNewAccountHead() {
 
 	}
 

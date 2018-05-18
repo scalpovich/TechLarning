@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import net.serenitybdd.core.annotations.findby.By;
+
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebElement;
@@ -14,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -25,14 +26,14 @@ import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
-import net.serenitybdd.core.annotations.findby.By;
-
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
+		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP,
 		CardManagementNav.L2_DEVICEBIN })
 public class DeviceBinPage extends AbstractBasePage {
 
-	private static final Logger logger = LoggerFactory.getLogger(DeviceBinPage.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(DeviceBinPage.class);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=issuerBin]")
 	private MCWebElement issuerBin;
@@ -63,7 +64,7 @@ public class DeviceBinPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='proxyIca']")
 	private MCWebElement proxyIcaTxt;
-@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
+	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addDeviceBinBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "networkCode:input:dropdowncomponent")
@@ -129,15 +130,20 @@ public class DeviceBinPage extends AbstractBasePage {
 
 	public String enterIssuerBIN(DeviceBin DeviceBin) {
 		if (DeviceBin.getInterchange().contains("Mastercard")) {
-			enterValueinTextBox(IssuerBINTxt, "5" + CustomUtils.RandomNumbers(5));
+			enterValueinTextBox(IssuerBINTxt,
+					"5" + CustomUtils.RandomNumbers(5));
 		} else if (DeviceBin.getInterchange().contains("Visa")) {
-			enterValueinTextBox(IssuerBINTxt, "4" + CustomUtils.RandomNumbers(5));
+			enterValueinTextBox(IssuerBINTxt,
+					"4" + CustomUtils.RandomNumbers(5));
 		} else if (DeviceBin.getInterchange().contains("Rupay")) {
-			enterValueinTextBox(IssuerBINTxt, "6" + CustomUtils.RandomNumbers(5));
+			enterValueinTextBox(IssuerBINTxt,
+					"6" + CustomUtils.RandomNumbers(5));
 		} else if (DeviceBin.getInterchange().contains("Amex")) {
-			enterValueinTextBox(IssuerBINTxt, "37" + CustomUtils.RandomNumbers(4));
-		}else {
-			enterValueinTextBox(IssuerBINTxt, "2" + CustomUtils.RandomNumbers(5));
+			enterValueinTextBox(IssuerBINTxt,
+					"37" + CustomUtils.RandomNumbers(4));
+		} else {
+			enterValueinTextBox(IssuerBINTxt,
+					"2" + CustomUtils.RandomNumbers(5));
 		}
 		return IssuerBINTxt.getAttribute("value");
 	}
@@ -171,7 +177,7 @@ public class DeviceBinPage extends AbstractBasePage {
 	}
 
 	public String enterRemarks(DeviceBin DeviceBin) {
-		enterValueinTextBox(RemarkTxt, DeviceBin.getRemarks());
+		enterValueinTextBox(RemarkTxt, DeviceBin.getDescription());
 		return RemarkTxt.getAttribute("value");
 	}
 
@@ -194,7 +200,8 @@ public class DeviceBinPage extends AbstractBasePage {
 		}
 	}
 
-	public String addDeviceBinDetails(DeviceBin DeviceBin, DeviceCreation devicecreation) {
+	public String addDeviceBinDetails(DeviceBin DeviceBin,
+			DeviceCreation devicecreation) {
 		String BIN;
 		String Remarks;
 		selectNetwork(DeviceBin);
@@ -211,11 +218,16 @@ public class DeviceBinPage extends AbstractBasePage {
 		return BIN;
 	}
 
-	public void editDeviceBin(String issuerBIN, String fieldUpdated, String updatedValue) {
+	public void editDeviceBin(String issuerBIN, String fieldUpdated,
+			String updatedValue) {
 		waitForElementVisible(addDeviceBinBtn);
-		WebElement EditRupayNtkBtn = getFinder().getWebDriver().findElement(
-				By.xpath("//td[contains(.,'" + issuerBIN + "')]/following::td[2]/span/a/img[@alt='Edit Record']"));
-		EditRupayNtkBtn.click();
+		WebElement editRupayNtkBtn = getFinder()
+				.getWebDriver()
+				.findElement(
+						By.xpath("//td[contains(.,'"
+								+ issuerBIN
+								+ "')]/following::td[2]/span/a/img[@alt='Edit Record']"));
+		editRupayNtkBtn.click();
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		switchToIframe(Constants.EDIT_DEVICE_PLAN_FRAME);
 
@@ -230,25 +242,30 @@ public class DeviceBinPage extends AbstractBasePage {
 	}
 
 	public void deleteDeviceBin() {
-		// System.out.println("//table[@class='dataview']/tbody/tr[" + i +
-		// "]/td[3]");
 
-		List<WebElement> Bins = getFinder().getWebDriver()
-				.findElements(By.xpath("//table[@class='dataview']/tbody/tr"));
+		List<WebElement> Bins = getFinder().getWebDriver().findElements(
+				By.xpath("//table[@class='dataview']/tbody/tr"));
 		int i = Bins.size();
-		String issuerBIN = getFinder().getWebDriver()
-				.findElement(By.xpath("//table[@class='dataview']/tbody/tr[" + i + "]/td[3]")).getText();
-		System.out.println("//table[@class='dataview']/tbody/tr[" + i + "]/td[3]");
-		getFinder().getWebDriver()
-				.findElement(By.xpath(
-						"//td[contains(.,'" + issuerBIN + "')]/following::td[3]/span/a/img[@alt='Delete Record']"))
+		String issuerBIN = getFinder()
+				.getWebDriver()
+				.findElement(
+						By.xpath("//table[@class='dataview']/tbody/tr[" + i
+								+ "]/td[3]")).getText();
+		getFinder()
+				.getWebDriver()
+				.findElement(
+						By.xpath("//td[contains(.,'"
+								+ issuerBIN
+								+ "')]/following::td[3]/span/a/img[@alt='Delete Record']"))
 				.click();
 		Alert alert = getFinder().getWebDriver().switchTo().alert();
 		alert.accept();
-		Assert.assertEquals(ErrorDevicedelete.getText(), Constants.Record_Cannot_Be_deleted);
+		Assert.assertEquals(ErrorDevicedelete.getText(),
+				Constants.Record_Cannot_Be_deleted);
 	}
 
-	public void deviceBinValidation(String interchangeType, String productType, String binType, String remark) {
+	public void deviceBinValidation(String interchangeType, String productType,
+			String binType, String remark) {
 		ClickButton(addDeviceBinBtn);
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		switchToIframe(Constants.ADD_DEVICE_BIN_FRAME);
@@ -272,6 +289,7 @@ public class DeviceBinPage extends AbstractBasePage {
 		ClickButton(CancelBtn);
 
 	}
+
 	public void verifyUiOperationStatus() {
 		logger.info("Device BIN");
 		verifyUiOperation("Add Device BIN");
@@ -280,8 +298,7 @@ public class DeviceBinPage extends AbstractBasePage {
 	public void addDeviceBin(List<DeviceBin> dbList) {
 		dbList.forEach(db -> {
 			performSearchOperationOnMainScreen(db);
-			if(isNoRecordsFoundInTable())
-			{
+			if (isNoRecordsFoundInTable()) {
 				logger.info("create Devcie bin : {}", db.toString());
 				clickAddNewButton();
 				runWithinPopup("Add Device BIN", () -> {
@@ -294,25 +311,28 @@ public class DeviceBinPage extends AbstractBasePage {
 	}
 
 	private void addBin(DeviceBin db) {
-		WebElementUtils.selectDropDownByVisibleText(interchangeDwn, db.getInterchange());
-		WebElementUtils.selectDropDownByVisibleText(productTypeDwn, db.getProductType());
-		WebElementUtils.selectDropDownByVisibleText(binTypeDwn, db.getBinType());
+		WebElementUtils.selectDropDownByVisibleText(interchangeDwn,
+				db.getInterchange());
+		WebElementUtils.selectDropDownByVisibleText(productTypeDwn,
+				db.getProductType());
+		WebElementUtils
+				.selectDropDownByVisibleText(binTypeDwn, db.getBinType());
 		WebElementUtils.enterText(issuerBinTxt, db.getIssuerBin());
-		WebElementUtils.enterText(remarksTxt, db.getRemarks());
+		WebElementUtils.enterText(remarksTxt, db.getDescription());
 		WebElementUtils.enterText(processorIcaTxt, db.getIssuerBin());
 		WebElementUtils.enterText(issuerIcaTxt, db.getIssuerBin());
 		WebElementUtils.enterText(proxyIcaTxt, db.getIssuerBin());
 		clickSaveButton();
 	}
 
-	private void performSearchOperationOnMainScreen(DeviceBin db)
-	{
+	private void performSearchOperationOnMainScreen(DeviceBin db) {
 		WebElementUtils.enterText(issuerBin, db.getIssuerBin());
 		clickSearchButton();
 	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.elementToBeClickable(issuerBin), WebElementUtils.elementToBeClickable(interchange));
+		return Arrays.asList(WebElementUtils.elementToBeClickable(issuerBin),
+				WebElementUtils.elementToBeClickable(interchange));
 	}
 }

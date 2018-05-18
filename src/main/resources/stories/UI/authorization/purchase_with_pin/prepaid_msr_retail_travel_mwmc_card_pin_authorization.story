@@ -1,4 +1,4 @@
-prepaid msr retail general purpose card authorization PINLESS
+prepaid msr retail travel card mwmc authorization PINLESS
 
 Narrative:
 In order to check transactions on prepaid msr retail travel mwmc card 
