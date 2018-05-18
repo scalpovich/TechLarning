@@ -102,6 +102,7 @@ public class AuthorizationTransactionFactory {
 	
 	private Entry<String, String> generateDynamicElement(Entry<String, String> entry) {
 		String randNum = RandomStringUtils.randomNumeric(12);
+		context.put(ConstantData.RRNUMBER, randNum);
 		if ("037".equals(entry.getKey())) {
 			//Lokesh - uncommenting this code as TRANSACTION NAME is set in context at all level of execution
 			if(context.get(ConstantData.TRANSACTION_NAME).toString().contains("PREAUTH"))

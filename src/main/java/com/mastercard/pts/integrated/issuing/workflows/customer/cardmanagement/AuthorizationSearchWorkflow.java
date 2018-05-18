@@ -145,7 +145,7 @@ public class AuthorizationSearchWorkflow {
 			authFileData += reportContent.get(i) + " ";
 		}
 		boolean condition = authFileData.contains(context.get(ConstantData.AUTHORIZATION_CODE)) && authFileData.contains(device.getDeviceNumber()) 
-				&& authFileData.contains(context.get(ConstantData.TRANSACTION_AMOUNT));
+				&& authFileData.contains(context.get(ConstantData.TRANSACTION_AMOUNT)) && authFileData.contains(context.get(ConstantData.RRNUMBER));
 		assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
 	}
 

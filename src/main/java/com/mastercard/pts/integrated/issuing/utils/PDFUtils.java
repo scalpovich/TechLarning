@@ -6,20 +6,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.google.common.base.Throwables;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 
 @Component
 public class PDFUtils {
 	private static final Logger logger = LoggerFactory.getLogger(PDFUtils.class);
 
 	DateUtils dateutils;
+	
+	@Autowired
+	private TestContext context;
 
 	public static String getContent(String pdfPath, String key) {
 		String value = "";
@@ -56,6 +63,8 @@ public class PDFUtils {
 		List<String> programWiseContent = new ArrayList<String>();
 		String[] fullRow = { "" };
 		int pages = 0;
+		String rrn = context.get(ConstantData.RRNUMBER);
+		System.out.println(rrn + context.get(ConstantData.AUTHORIZATION_CODE)+ context.get("USERNAME"));
 		try {
 			File file = new File(pdfPath);
 			file.getParentFile().mkdirs();
@@ -64,7 +73,7 @@ public class PDFUtils {
 				pages = pdfReader.getNumberOfPages();
 			for (int i = 1; i <= pages; i++) {
 				pageContent = PdfTextExtractor.getTextFromPage(pdfReader, i);
-				if (pageContent.contains(code)) {
+				if (pageContent.contains(code) && pageContent.contains(rrn)) {
 					fullRow = pageContent.split("\n");
 					break;
 				}
