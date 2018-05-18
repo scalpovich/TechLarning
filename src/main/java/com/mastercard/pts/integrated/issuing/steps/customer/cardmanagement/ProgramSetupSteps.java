@@ -383,7 +383,6 @@ public class ProgramSetupSteps {
 			"When User fills Device Range section for prepaid product for non-default institution" })
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinForNonDefaultInstitution(String deviceType) {
 		// composite step
-		//AA
 	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin for an interface")

@@ -190,7 +190,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			waitForPageToLoad(driver());
 			selectUsage(walletPlan.getUsage());
 			waitForPageToLoad(driver());
-			fillDetailsBasedOnCarddType(walletPlan, productType);
+			fillDetailsBasedOnCardType(walletPlan, productType);
 			clickNextButton(); // Click on next button
 			clickFinishButton(); // click on finish button
 		});

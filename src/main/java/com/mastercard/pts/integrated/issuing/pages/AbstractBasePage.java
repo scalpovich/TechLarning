@@ -108,7 +108,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
 	
-	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid trannsaction type - ";
+	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid transaction type - ";
 
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
