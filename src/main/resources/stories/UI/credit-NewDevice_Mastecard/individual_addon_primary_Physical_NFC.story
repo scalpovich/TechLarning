@@ -5,11 +5,11 @@ I want to assert pages
 
 Meta:
 @CreditRegression
-@StoryName credit_emv_retail				 
+@StoryName credit_emv_retail
+@Individual			 
 Scenario:creation of mastercard_individual_addon_primary_Physical NFC Card credit device
 Meta:
 @UserCreatesNewCreditDevice
-@Individual
 Given setting json values in excel
 Given user is logged in institution
 When User fills Dedupe Plan

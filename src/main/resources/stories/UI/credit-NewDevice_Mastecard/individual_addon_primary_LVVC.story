@@ -5,11 +5,13 @@ I want to assert pages
 
 Meta:
 @CreditRegression
-@StoryName credit_emv_retail				 
+@StoryName credit_emv_retail
+@Individual
+			 
 Scenario:creation of mastercard_individual_addon_primary_LVVC Card credit device
 Meta:
 @UserCreatesNewCreditDevice
-@Individual
+
 Given setting json values in excel
 Given user is logged in institution
 When User fills Dedupe Plan
@@ -28,7 +30,7 @@ And User fills Credit Plan
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
 And User fills MCC Rules for credit product
-And User Add-on Device fills New Program Retail Credit Card section for credit product for Mastercard
+And User Add-on Device fills	 New Program Retail Credit Card section for credit product for Mastercard
 When for Add-on Device and New Client user fills Device Range section for credit product
 Then credit device is created using new device screen for Individual and Primary Device and New Client and Limited Validity Virtual Card
 Then credit device is created using new device screen for Individual and Add-on Device and New Client and Limited Validity Virtual Card
