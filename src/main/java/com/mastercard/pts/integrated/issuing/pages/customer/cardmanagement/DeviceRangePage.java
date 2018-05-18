@@ -155,7 +155,7 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:3:buttonPanel:buttonCol:searchButton")
 	private MCWebElement searchbtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[contains(@name,'branchCode')]/option[text()!='Select One']")
 	private MCWebElements branchDDwnList; 
 
@@ -227,7 +227,7 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	public void selectBranch() {
 		SelectDropDownByIndex(BranchDDwn, 1);
-		
+
 	}
 
 	public void clickAddButton() {
@@ -432,7 +432,9 @@ public class DeviceRangePage extends AbstractBasePage {
 		if (ProductType.DEBIT.equalsIgnoreCase(deviceRange.getProductType())) {
 			WebElementUtils.selectDropDownByVisibleText(endPointModeDDwn, deviceRange.getEndPointMode());
 			WebElementUtils.selectDropDownByVisibleText(routingTypeDDwn, deviceRange.getRoutingType());
-			WebElementUtils.selectDropDownByVisibleText(interfaceNameDDwn, deviceRange.getInterfaceName());
+			if(deviceRange.getRoutingType().equalsIgnoreCase("Device Range Based [D]")){
+				WebElementUtils.selectDropDownByVisibleText(interfaceNameDDwn, deviceRange.getInterfaceName());
+			}
 		}
 	}
 
