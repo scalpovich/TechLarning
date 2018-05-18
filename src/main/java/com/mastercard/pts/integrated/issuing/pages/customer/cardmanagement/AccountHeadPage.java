@@ -147,7 +147,7 @@ public class AccountHeadPage extends AbstractBasePage {
 		enterText(this.accountCode, accountCode);
 		enterText(this.accountHead,
 				MapUtils.fnGetInputDataFromMap("Account Head"));
-		SelectDropDownByText(this.status,
+		selectDropDownByText(this.status,
 				MapUtils.fnGetInputDataFromMap("Status"));
 		saveBtn.click();
 		MapUtils.fnSetInputDataToInputMap("Account Code", accountCode);
@@ -160,7 +160,7 @@ public class AccountHeadPage extends AbstractBasePage {
 		switchToAddAccountHeadFrame();
 		enterText(this.accountCode, accountCode);
 		enterText(this.accountHead, accountHead);
-		SelectDropDownByText(this.status, status);
+		selectDropDownByText(this.status, status);
 		saveBtn.click();
 
 	}
@@ -198,7 +198,7 @@ public class AccountHeadPage extends AbstractBasePage {
 		switchToAddAccountHeadFrame();
 		enterText(accountCode, suspenseAccountCode);
 		enterText(accountHead, MapUtils.fnGetInputDataFromMap("Account Head"));
-		SelectDropDownByText(status, MapUtils.fnGetInputDataFromMap("Status"));
+		selectDropDownByText(status, MapUtils.fnGetInputDataFromMap("Status"));
 		saveBtn.click();
 		getFinder().getWebDriver().switchTo().defaultContent();
 	}
@@ -241,7 +241,7 @@ public class AccountHeadPage extends AbstractBasePage {
 
 			switchToIframe(Constants.EDIT_ACCOUNT_HEAD_FRAME);
 			waitForElementVisible(this.status);
-			SelectDropDownByText(this.status, status);
+			selectDropDownByText(this.status, status);
 			waitForElementVisible(saveBtn);
 			saveBtn.click();
 		} else {

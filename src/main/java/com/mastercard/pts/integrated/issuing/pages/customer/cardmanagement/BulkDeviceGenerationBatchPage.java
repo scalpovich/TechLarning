@@ -65,7 +65,7 @@ public class BulkDeviceGenerationBatchPage extends AbstractBasePage {
 	public void addbulkdevicegenerationbatch(String product, String batchNum) {
 		menuSubMenuPage.getBulkDeviceGeneration().click();
 		// addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByText(productTypeDDwn, product);
+		selectDropDownByText(productTypeDDwn, product);
 		// addWicketAjaxListeners(getFinder().getWebDriver());
 		enterText(batchNumTxt, batchNum);
 		ClickButton(searchBtn);

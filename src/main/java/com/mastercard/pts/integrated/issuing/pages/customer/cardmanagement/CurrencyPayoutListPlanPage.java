@@ -75,7 +75,7 @@ public class CurrencyPayoutListPlanPage extends AbstractBasePage {
 	}
 
 	public void selectCurrency(SurchargePlan plan) {
-		SelectDropDownByText(currencyDDwn, plan.getCurrency());
+		selectDropDownByText(currencyDDwn, plan.getCurrency());
 	}
 
 	public void addDetails() {
@@ -91,7 +91,7 @@ public class CurrencyPayoutListPlanPage extends AbstractBasePage {
 	}
 
 	public void selectCurrencyCode(CurrencyPayoutListPlan plan) {
-		SelectDropDownByText(currencyCodeDdwn, plan.getCurrency());
+		selectDropDownByText(currencyCodeDdwn, plan.getCurrency());
 	}
 
 	public void enterRefundToleranceUnit(CurrencyPayoutListPlan plan) {
