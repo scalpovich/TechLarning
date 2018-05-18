@@ -159,7 +159,7 @@ public class LoanPlanPage extends AbstractBasePage {
 	}
 	
 	public void selectProgram(){
-		SelectDropDownByIndex(programDDwn, FIRST_RECORD);
+		selectDropDownByIndex(programDDwn, FIRST_RECORD);
 	}
 	
 	public void enterMaximumEligibleLoanFixedAmount(String maximumEligibleLoanFixedAmount){

@@ -58,7 +58,7 @@ public class SearchPanelHelpdesk extends AbstractBasePage {
 
 	public void searchDevice(String productType, String deviceNumber) {
 		waitForElementVisible(this.productType);
-		SelectDropDownByText(this.productType, productType);
+		selectDropDownByText(this.productType, productType);
 		waitForElementVisible(this.deviceNumber);
 		enterText(this.deviceNumber, deviceNumber);
 		waitForElementVisible(searchBtn);

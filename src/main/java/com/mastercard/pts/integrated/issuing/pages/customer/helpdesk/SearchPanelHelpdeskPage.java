@@ -62,7 +62,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 
 	public void searchDevice(String productType, String deviceNumber) {
 		waitForElementVisible(this.productType);
-		SelectDropDownByText(this.productType, productType);
+		selectDropDownByText(this.productType, productType);
 		waitForElementVisible(this.deviceNumber);
 		enterText(this.deviceNumber, deviceNumber);
 		waitForElementVisible(searchBtn);
@@ -81,7 +81,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 
 	public String searchDeviceUsingName(String productType, String name) {
 		waitForElementVisible(this.productType);
-		SelectDropDownByText(this.productType, productType);
+		selectDropDownByText(this.productType, productType);
 		enterText(this.firstNameInput, String.valueOf(name));
 		waitForElementVisible(searchBtn);
 		searchBtn.click();
@@ -90,7 +90,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 
 	public String searchNewDevice(String productType, String deviceNumber) {
 		waitForElementVisible(this.productType);
-		SelectDropDownByText(this.productType, productType);
+		selectDropDownByText(this.productType, productType);
 		waitForElementVisible(this.deviceNumber);
 		enterText(this.deviceNumber, deviceNumber);
 		waitForElementVisible(searchBtn);

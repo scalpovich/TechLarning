@@ -274,20 +274,20 @@ public class NewDevicePage extends AbstractCardManagementPage {
 	public void selectPhotoIndicator() {
 		waitForElementVisible(photoIndicatorDDwn);
 		CustomUtils.ThreadDotSleep(1000);
-		SelectDropDownByIndex(photoIndicatorDDwn, 1);
+		selectDropDownByIndex(photoIndicatorDDwn, 1);
 	}
 
 	public void selectCorporateClientCode() {
 		waitForElementVisible(CorporateClientCodeDDwn);
 		CustomUtils.ThreadDotSleep(1000);
 		if (CorporateClientCodeDDwn.isEnabled())
-			SelectDropDownByIndex(CorporateClientCodeDDwn, 1);
+			selectDropDownByIndex(CorporateClientCodeDDwn, 1);
 	}
 
 	public void selectBranch() {
 		waitForElementVisible(BranchCodeDDwn);
 		CustomUtils.ThreadDotSleep(1000);
-		SelectDropDownByIndex(BranchCodeDDwn, 1);
+		selectDropDownByIndex(BranchCodeDDwn, 1);
 	}
 
 	public void selectTitle(NewDevice newDevice) {
@@ -347,7 +347,7 @@ public class NewDevicePage extends AbstractCardManagementPage {
 	public void selectAccounType() {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		if (AccountTypeDDwn.isEnabled()) {
-			SelectDropDownByIndex(AccountTypeDDwn, 1);
+			selectDropDownByIndex(AccountTypeDDwn, 1);
 		}
 	}
 
@@ -416,7 +416,7 @@ public class NewDevicePage extends AbstractCardManagementPage {
 
 	public void selectLegalType() {
 
-		SelectDropDownByIndex(LegalTypeDDwn, 1);
+		selectDropDownByIndex(LegalTypeDDwn, 1);
 	}
 
 	public void enterLegalID() {
