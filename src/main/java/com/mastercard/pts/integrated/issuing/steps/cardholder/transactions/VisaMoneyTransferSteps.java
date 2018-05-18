@@ -14,14 +14,10 @@ import com.mastercard.pts.integrated.issuing.domain.cardholder.transactions.Visa
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
-import com.mastercard.pts.integrated.issuing.workflows.cardholder.transactions.MastercardMoneySendWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.cardholder.transactions.VisaMoneyTransferWorkflow;
 
 @Component
 public class VisaMoneyTransferSteps {
-
-	@Autowired
-	private MastercardMoneySendWorkflow mastercardMoneySendWorkflow;
 
 	@Autowired
 	private VisaMoneyTransferWorkflow visaMoneyTransferWorkflow;
