@@ -69,7 +69,7 @@ public class LoginSteps extends AbstractBaseFlows {
 
 	@Given("login with chp")
 	public void loginInCardholder() {
-		//getFinder().getWebDriver().manage().deleteAllCookies();
+		getFinder().getWebDriver().manage().deleteAllCookies();
 		getFinder().getWebDriver().get(
 				"http://ech-10-168-129-135.mastercard.int:25003/integratedIssuing-cardholderPortal/WebPages/Login.jsp");
 		Device device = context.get(ContextConstants.DEVICE);

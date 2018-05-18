@@ -123,7 +123,7 @@ public class LoginPage extends AbstractBasePage {
 	}
 
 	public void loadAppURL() {
-		//getFinder().getWebDriver().manage().deleteAllCookies();
+		getFinder().getWebDriver().manage().deleteAllCookies();
 		getFinder().getWebDriver().get(MapUtils.fnGetInputDataFromMap("AppURL"));
 		if (!(driver().findElements(By.xpath("//div[@class = 'error-btn']")).isEmpty())) {
 			backToLoginPageTxt.click();
@@ -256,7 +256,7 @@ public class LoginPage extends AbstractBasePage {
 
 	public void clickLogout() {
 		signOut.click();
-		//getFinder().getWebDriver().manage().deleteAllCookies();
+		getFinder().getWebDriver().manage().deleteAllCookies();
 
 	}
 
