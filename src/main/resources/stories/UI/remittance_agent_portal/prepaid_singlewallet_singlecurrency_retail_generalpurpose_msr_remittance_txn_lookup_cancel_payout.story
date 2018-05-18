@@ -100,7 +100,7 @@ And user performs remittance card to cash cancellation
 And remittance card to cash cancellation is successful
 And user sign out from agent portal
 And user is logged in institution
-Then balance in helpdesk not changed for prepaid device
+Then balance in helpdesk for remittance not changed for prepaid device
 And user sign out from customer portal
 
 Scenario: Agent - Remittance Transaction - Lookup - Payout - Funded Agent

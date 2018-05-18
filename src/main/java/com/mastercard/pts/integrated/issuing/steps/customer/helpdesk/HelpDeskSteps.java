@@ -455,8 +455,8 @@ public class HelpDeskSteps {
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		assertTrue(helpdeskWorkflow.verifyBalanceNotChanged(beforeLoadBalanceInformation, helpdeskWorkflow.getWalletBalanceInformation(device)));
 	}
-	@Then("balance in helpdesk for remittance not changed not changed for $type device")
-	@When("balance in helpdesk for remittance not changed not changed for $type device")
+	@Then("balance in helpdesk for remittance not changed for $type device")
+	@When("balance in helpdesk for remittance not changed for $type device")
 	public void thenBalanceInHelpDeskNotChangedForRemittance(String type) {
 		Device device = context.get(ContextConstants.DEVICE);
 		ctc=context.get(ContextConstants.REMITTANCE);
