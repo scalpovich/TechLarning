@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
 import java.io.File;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionReports;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionReportsPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -52,13 +54,13 @@ public class ReconciliationWorkFlow {
 		return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
 	}
 
-	public List<String> verifyAuthReport(String fileName,String key,String username) {
+	public List<String> verifyAuthReport(String fileName,TransactionReports tansactionReports) {
 		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
 		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
 		deleteExistingAuthorizationFilesFromSystem(fileName);
 		page.generateTransactionAuthReport();
 		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
-		return getReportContent(fileName,key,username);
+		return getReportContent(fileName,tansactionReports);
 		//return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
 	}
 		
@@ -107,9 +109,9 @@ public class ReconciliationWorkFlow {
 		return fileCountAfterDownload;
 	}
 
-	public List<String> getReportContent(String fileName,String key,String username) {
+	public List<String> getReportContent(String fileName,TransactionReports tansactionReports) {
 		PDFUtils pdfutils=new PDFUtils();
-		List<String> records = pdfutils.getContentRow(PDFUtils.getuserDownloadPath() + "\\"+fileName, key, username);
+		List<String> records = pdfutils.getContentRow(PDFUtils.getuserDownloadPath() + "\\"+fileName, tansactionReports);
 		for(int i=0;i<records.size();i++)
 		{
 			if (records != null)

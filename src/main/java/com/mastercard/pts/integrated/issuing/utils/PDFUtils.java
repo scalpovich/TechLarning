@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import com.google.common.base.Throwables;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
-import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionReports;
 
 @Component
 public class PDFUtils {
@@ -58,17 +58,17 @@ public class PDFUtils {
 		return value;
 	}
 
-	public List<String> getContentRow(String pdfPath, String code, String username) {
+	public List<String> getContentRow(String pdfPath, TransactionReports tansactionReports) {
 		String pageContent = "";
 		List<String> programWiseContent = new ArrayList<String>();
 		String[] fullRow = { "" };
 		int pages = 0;
-		String rrn = context.get(ConstantData.RRNUMBER);
-		System.out.println(rrn + context.get(ConstantData.AUTHORIZATION_CODE)+ context.get("USERNAME"));
+		String rrn = tansactionReports.getRrnNumber();
+		String code = tansactionReports.getAuthrizationCode(); 
 		try {
 			File file = new File(pdfPath);
 			file.getParentFile().mkdirs();
-			PdfReader pdfReader = manipulatePdf(pdfPath, username);
+			PdfReader pdfReader = manipulatePdf(pdfPath, tansactionReports.getUsername());
 			if (pdfReader != null)
 				pages = pdfReader.getNumberOfPages();
 			for (int i = 1; i <= pages; i++) {
