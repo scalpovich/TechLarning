@@ -3,12 +3,6 @@
  */
 package com.mastercard.pts.integrated.issuing.steps.cardholder;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.contains;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.slf4j.Logger;
@@ -42,7 +36,7 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 	private CardHolderTransactions cardhlTran;
 	private static final String REMITTANCE_ERROR_MSG = "Error while processing your request. Please retry. OK";
 	private static final String REMITTANCE_SUCCESS_MSG = "Remittance request created";
-	private static final int LENGHT_OF_WALLET_NUMBER = 19;
+	private static final int LENGTH_OF_WALLET_NUMBER = 19;
 
 	@When("cardholder book the cash remittance")
 	public void cardholderBookCashRemittance() {
@@ -105,7 +99,7 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 		cardhlTran = CardHolderTransactions.cardHolderTransDataProvider(provider);
 		context.put(ContextConstants.CARDHOLDER, cardhlTran);
 		Device device = context.get(ContextConstants.DEVICE);
-		cardhlTran.setWalletToAmountTransfer(device.getNewWalletNumber().substring(LENGHT_OF_WALLET_NUMBER));
+		cardhlTran.setWalletToAmountTransfer(device.getNewWalletNumber().substring(LENGTH_OF_WALLET_NUMBER));
 		cardhlTran.setCardNumber(device.getDeviceNumber());
 		transactionFlow.openTransactionPage();
 		transactionFlow.selectWalletToWalletOption();
