@@ -311,11 +311,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		}
 
 		fillAddress(device);
-		// skip employment details
-		if (!System.getProperty("env").equalsIgnoreCase("Automation")) {
-			fillEmploymentDetails(device);
-			selectProfessionByIndex(1);
-		}
+		
+		fillEmploymentDetails(device);
+		selectProfessionByIndex(1);
+		
 		clickNextButton();
 		// Bank Details applicable only for Credit type product
 		clickNextButton();
