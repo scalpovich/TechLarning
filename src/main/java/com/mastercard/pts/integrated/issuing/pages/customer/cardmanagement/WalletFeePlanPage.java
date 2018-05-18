@@ -143,7 +143,7 @@ public class WalletFeePlanPage extends AbstractBasePage {
 	}
 
 	public void selectMemberFeePosting() {
-		SelectDropDownByIndex(membershipFeePostingDDwn, 1);
+		selectDropDownByIndex(membershipFeePostingDDwn, 1);
 	}
 
 	public void enterWaiverCycle(WalletFeePlan walletfeeplan) {

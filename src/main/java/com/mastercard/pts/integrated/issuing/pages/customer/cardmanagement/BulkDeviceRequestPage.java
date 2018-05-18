@@ -69,13 +69,13 @@ public class BulkDeviceRequestPage extends AbstractBasePage {
 		switchToIframe(Constants.ADD_BULK_DEVICE_REQUEST_FRAME);
 		selectDropDownByText(ProductTypeDDwn, productType);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByIndex(BranchDDwn, 1);
+		selectDropDownByIndex(BranchDDwn, 1);
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		selectDropDownByText(ProgramTypeDDwn, program);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByIndex(CorporateClientCodeDDwn, 1);
+		selectDropDownByIndex(CorporateClientCodeDDwn, 1);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByIndex(DevicePlanDDwn, 1);
+		selectDropDownByIndex(DevicePlanDDwn, 1);
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		enterText(QuantityRequestedTxt, quantityReq);
 		ClickButton(SaveBtn);
@@ -107,7 +107,7 @@ public class BulkDeviceRequestPage extends AbstractBasePage {
 
 	public void selectBranch() {
 		waitForElementVisible(BranchDDwn);
-		SelectDropDownByIndex(BranchDDwn, 1);
+		selectDropDownByIndex(BranchDDwn, 1);
 	}
 
 	public void selectProgram(BulkDeviceRequestbatch bulkdeviceGenBatch) {
@@ -117,7 +117,7 @@ public class BulkDeviceRequestPage extends AbstractBasePage {
 
 	public void selectCorporateClientCode() {
 		waitForElementVisible(CorporateClientCodeDDwn);
-		SelectDropDownByIndex(CorporateClientCodeDDwn, 1);
+		selectDropDownByIndex(CorporateClientCodeDDwn, 1);
 	}
 
 	public void selectDevicePlan(BulkDeviceRequestbatch bulkdeviceGenBatch) {

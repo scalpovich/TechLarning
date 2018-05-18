@@ -1300,13 +1300,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 		// addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
-	public void SelectDropDownByText(MCWebElement element, String value) {
+	public void selectDropDownByText(MCWebElement element, String value) {
 		element.getSelect().selectByVisibleText(value);
 		// element.getSelect().selectByValue(value);
 		// addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
-	public void SelectDropDownByIndex(MCWebElement element, int value) {
+	public void selectDropDownByIndex(MCWebElement element, int value) {
 		if (element.isEnabled()) {
 			element.getSelect().selectByIndex(value);
 		} else {

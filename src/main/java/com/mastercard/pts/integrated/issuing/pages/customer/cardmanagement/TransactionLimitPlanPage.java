@@ -320,19 +320,19 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 
 	public void selectTransactionSource() {
 		waitForElementVisible(TransactionSourceDDwn);
-		SelectDropDownByIndex(TransactionSourceDDwn, 1);
+		selectDropDownByIndex(TransactionSourceDDwn, 1);
 		waitForLoaderToDisappear();
 	}
 
 	public void selectTransactionChannel() {
 		waitForElementVisible(TransactionChannelDDwn);
-		SelectDropDownByIndex(TransactionChannelDDwn, 1);
+		selectDropDownByIndex(TransactionChannelDDwn, 1);
 		waitForLoaderToDisappear();
 	}
 
 	public void selectTransactionOrigin() {
 		waitForElementVisible(TransactionOriginDDwn);
-		SelectDropDownByIndex(TransactionOriginDDwn, 1);
+		selectDropDownByIndex(TransactionOriginDDwn, 1);
 		waitForLoaderToDisappear();
 	}
 

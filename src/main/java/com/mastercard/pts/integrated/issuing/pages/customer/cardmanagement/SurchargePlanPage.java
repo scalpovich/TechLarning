@@ -127,7 +127,7 @@ public class SurchargePlanPage extends AbstractBasePage {
 	}
 
 	public void selectCurrency(SurchargePlan plan) {
-		SelectDropDownByText(currencyDDwn, plan.getCurrency());
+		selectDropDownByText(currencyDDwn, plan.getCurrency());
 	}
 
 	public void selectSurchargeSource(SurchargePlan plan) {
@@ -167,15 +167,15 @@ public class SurchargePlanPage extends AbstractBasePage {
 	}
 
 	public void selectInterchange(SurchargePlan plan) {
-		SelectDropDownByText(interchangeDDwn, plan.getInterchange());
+		selectDropDownByText(interchangeDDwn, plan.getInterchange());
 	}
 
 	public void selectMCG(SurchargePlan plan) {
 		try {
-			SelectDropDownByText(mcgDDwn, plan.getMcg());
+			selectDropDownByText(mcgDDwn, plan.getMcg());
 		} catch (WebDriverException | NullPointerException e) {
 			LOGGER.error("Not able to identify MCG plan populated from Excel Sheet");
-			SelectDropDownByIndex(mcgDDwn, MCG_CODE_INDEX);
+			selectDropDownByIndex(mcgDDwn, MCG_CODE_INDEX);
 		}
 	}
 

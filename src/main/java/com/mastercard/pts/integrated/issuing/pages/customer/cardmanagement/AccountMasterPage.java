@@ -235,7 +235,7 @@ public class AccountMasterPage extends AbstractBasePage {
 	 */
 	public void addProgramCodeToAccountMaster(String programCode) {
 		int programC = Integer.parseInt(programCode);
-		SelectDropDownByIndex(this.programCode, programC);
+		selectDropDownByIndex(this.programCode, programC);
 	}
 
 	/**

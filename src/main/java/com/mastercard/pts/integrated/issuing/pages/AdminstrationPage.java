@@ -93,7 +93,7 @@ public class AdminstrationPage extends AbstractBasePage {
 		 * ".//*[@id='batchId']/select")));
 		 */
 		// getBatchId().click();
-		SelectDropDownByIndex(getBatchId(), 10);
+		selectDropDownByIndex(getBatchId(), 10);
 
 	}
 

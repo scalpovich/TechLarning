@@ -238,10 +238,10 @@ public class RupayBinSettlementFlows extends AbstractBaseFlows {
 		rupaysettlementpage.AddServiceCode_FrameSwitcher();
 		waitForElementVisible(rupaysettlementpage.getdeviceBinPopup());
 		// rupaysettlementpage.clickElement(rupaysettlementpage.getdeviceBinPopup());
-		rupaysettlementpage.SelectDropDownByIndex(rupaysettlementpage.getdeviceBinPopup(), devIndex);
+		rupaysettlementpage.selectDropDownByIndex(rupaysettlementpage.getdeviceBinPopup(), devIndex);
 		CustomUtils.ThreadDotSleep(200);
 		waitForElementVisible(rupaysettlementpage.getrupayProductCodePopup());
-		rupaysettlementpage.SelectDropDownByIndex(rupaysettlementpage.getrupayProductCodePopup(), rpIndex);
+		rupaysettlementpage.selectDropDownByIndex(rupaysettlementpage.getrupayProductCodePopup(), rpIndex);
 		CustomUtils.ThreadDotSleep(200);
 
 		rupaysettlementpage.getSettlementBinPopup().sendKeys(CustomUtils.RandomNumbers(6));
@@ -297,10 +297,10 @@ public class RupayBinSettlementFlows extends AbstractBaseFlows {
 		rupaysettlementpage.AddServiceCode_FrameSwitcher();
 		waitForElementVisible(rupaysettlementpage.getdeviceBinPopup());
 		// rupaysettlementpage.clickElement(rupaysettlementpage.getdeviceBinPopup());
-		rupaysettlementpage.SelectDropDownByIndex(rupaysettlementpage.getdeviceBinPopup(), devIndex);
+		rupaysettlementpage.selectDropDownByIndex(rupaysettlementpage.getdeviceBinPopup(), devIndex);
 		CustomUtils.ThreadDotSleep(200);
 		waitForElementVisible(rupaysettlementpage.getrupayProductCodePopup());
-		rupaysettlementpage.SelectDropDownByIndex(rupaysettlementpage.getrupayProductCodePopup(), rpIndex);
+		rupaysettlementpage.selectDropDownByIndex(rupaysettlementpage.getrupayProductCodePopup(), rpIndex);
 		CustomUtils.ThreadDotSleep(200);
 		rupaysettlementpage.getParticipantIdPopup().sendKeys(CustomUtils.RandomNumbers(11));
 
@@ -356,7 +356,7 @@ public class RupayBinSettlementFlows extends AbstractBaseFlows {
 		rupaysettlementpage.AddServiceCode_FrameSwitcher();
 		waitForElementVisible(rupaysettlementpage.getdeviceBinPopup());
 		// rupaysettlementpage.clickElement(rupaysettlementpage.getdeviceBinPopup());
-		rupaysettlementpage.SelectDropDownByIndex(rupaysettlementpage.getdeviceBinPopup(), devIndex);
+		rupaysettlementpage.selectDropDownByIndex(rupaysettlementpage.getdeviceBinPopup(), devIndex);
 		CustomUtils.ThreadDotSleep(200);
 		waitForElementVisible(rupaysettlementpage.getrupayProductCodePopup());
 		// rupaysettlementpage.SelectDropDownByIndex(rupaysettlementpage.getrupayProductCodePopup(),
@@ -419,7 +419,7 @@ public class RupayBinSettlementFlows extends AbstractBaseFlows {
 		// devIndex);
 		CustomUtils.ThreadDotSleep(200);
 		waitForElementVisible(rupaysettlementpage.getrupayProductCodePopup());
-		rupaysettlementpage.SelectDropDownByIndex(rupaysettlementpage.getrupayProductCodePopup(), rpIndex);
+		rupaysettlementpage.selectDropDownByIndex(rupaysettlementpage.getrupayProductCodePopup(), rpIndex);
 		CustomUtils.ThreadDotSleep(200);
 		rupaysettlementpage.getSettlementBinPopup().sendKeys(CustomUtils.RandomNumbers(6));
 		rupaysettlementpage.getParticipantIdPopup().sendKeys(CustomUtils.RandomNumbers(11));
@@ -527,10 +527,10 @@ public class RupayBinSettlementFlows extends AbstractBaseFlows {
 		rupaysettlementpage.AddServiceCode_FrameSwitcher();
 		waitForElementVisible(rupaysettlementpage.getdeviceBinPopup());
 		// rupaysettlementpage.clickElement(rupaysettlementpage.getdeviceBinPopup());
-		rupaysettlementpage.SelectDropDownByIndex(rupaysettlementpage.getdeviceBinPopup(), devIndex);
+		rupaysettlementpage.selectDropDownByIndex(rupaysettlementpage.getdeviceBinPopup(), devIndex);
 		CustomUtils.ThreadDotSleep(200);
 		waitForElementVisible(rupaysettlementpage.getrupayProductCodePopup());
-		rupaysettlementpage.SelectDropDownByIndex(rupaysettlementpage.getrupayProductCodePopup(), rpIndex);
+		rupaysettlementpage.selectDropDownByIndex(rupaysettlementpage.getrupayProductCodePopup(), rpIndex);
 		CustomUtils.ThreadDotSleep(200);
 		rupaysettlementpage.getSettlementBinPopup().sendKeys(CustomUtils.RandomNumbers(6));
 		rupaysettlementpage.getParticipantIdPopup().sendKeys(ParticipantId);

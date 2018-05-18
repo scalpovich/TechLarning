@@ -74,7 +74,7 @@ public class VisaMoneyTransferPage extends AbstractBasePage {
 		verifyTitleCardHolderPortal("VISA MONEY TRANSFER");
 	}
 
-	public boolean verifyCardAndAmount() {
+	public boolean getCardAndAmount() {
 		return walletNumberLbl.getText().length() > 0 && deviceNumberLbl.getText().length() > 0 && transferAmountTxt.getText().length() > 0;
 	}
 
@@ -100,7 +100,7 @@ public class VisaMoneyTransferPage extends AbstractBasePage {
 		clickConfirmButton();
 	}
 
-	public String verifyResponse() {
+	public String getResponse() {
 		waitForElementVisible(responseLbl);
 		String msg = responseLbl.getText();
 		logger.info("Response Message on UI - {}", msg);
