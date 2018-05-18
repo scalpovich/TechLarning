@@ -138,7 +138,7 @@ public class FileConverter {
 
 	@Test
 	public void convertExcelToCsv() throws IOException, InvalidFormatException {
-		String[] listOfEnvs = { "demo", "automation2", "stageSA" };
+		String[] listOfEnvs = { "demo", "automation", "automation2", "stageSA" };
 		String[] dataFiles = { "Data/TestData.xls", /*"TestData/TestData.xlsx"*/ };		
 		for (String env : listOfEnvs) {
 			for (String dataFile : dataFiles) {
