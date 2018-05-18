@@ -28,7 +28,7 @@ Then embossing file batch was generated in correct format
 
 Scenario: Perform MMSR-CORPORATE_DEBITCARD Authorization transaction
 Given connection to MAS is established
-When perform an ASI_EMV	 MAS transaction
+When perform an ASI_EMV MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
