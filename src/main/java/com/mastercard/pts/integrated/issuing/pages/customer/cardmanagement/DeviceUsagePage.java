@@ -3,12 +3,10 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -50,19 +48,19 @@ public class DeviceUsagePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "ul.tabs li a[href*='tab3']")
 	private MCWebElement walletMCGUsageSubMenu;
 	
-	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tr.headers th:nth-of-type(1) span")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "//tr[@class='headers']//span[contains(text(),'MCG Code')]")
 	private MCWebElement mcgCodeLbl;
 	
-	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tr.headers th:nth-of-type(2) span")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "//tr[@class='headers']//th//span[contains(text(),'Daily Amount Domestic Utilized')]")
 	private MCWebElement dailyAmountDomesticUtilizedLbl;
 	
-	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tr.headers th:nth-of-type(3) span")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "//tr[@class='headers']//th/span[contains(text(),'Daily Velocity Domestic Utilized')]")
 	private MCWebElement dailyVelocityDomesticUtilizedLbl;
 	
-	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tr.headers th:nth-of-type(4) span")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "//tr[@class='headers']//th//span[contains(text(),'Daily Amount Intenational Utilized')]")
 	private MCWebElement dailyAmountIntenationalUtilizedLbl;
 	
-	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tr.headers th:nth-of-type(5) span")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "//tr[@class='headers']//th//span[contains(text(),'Daily Velocity Intenational Utilized')]")
 	private MCWebElement dailyVelocityIntenationalUtilizedLbl;
 	
 	private String FRAME_VIEW_DEVICE_USAGE = "View Device Usage";
@@ -81,8 +79,6 @@ public class DeviceUsagePage extends AbstractBasePage {
 	}
 	
 	public Optional<Map<String,String>> getWalletMCGUsageData(){
-		List<WebElement> lit = Elements1(By.cssSelector(".dataview tr.headers th:nth-of-type(3) span"));
-		System.out.println("eknkwjbbkdajsbams_++++++"+lit.size());
 		return null;
 	}
 
