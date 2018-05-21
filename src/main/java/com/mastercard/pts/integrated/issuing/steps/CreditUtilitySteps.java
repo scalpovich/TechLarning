@@ -63,6 +63,7 @@ public class CreditUtilitySteps {
 		Map<String,String>jsonMap=new LinkedHashMap<String, String>();
         String updated_Value="";
          Map<String, Object> map = context.get(TestContext.KEY_STORY_DATA);
+         
 		for(int i=0;i<methodsJson.length;i++)
 		{
 			String valueExcel="";
@@ -88,12 +89,10 @@ public class CreditUtilitySteps {
 			for(Map.Entry<String, String> entryJson:jsonMap.entrySet())
 			{
 	            
-
 			  if (entryJson.getKey().toUpperCase().contains(entry.getKey().replaceAll("_", ""))) {
 				   updated_Value=String.valueOf(entry.getValue()).replaceAll(".+", entryJson.getValue());
 					map.put(entry.getKey(), updated_Value);
 				}
-
 		}
 	}
 		context.put(TestContext.KEY_STORY_DATA,map);
