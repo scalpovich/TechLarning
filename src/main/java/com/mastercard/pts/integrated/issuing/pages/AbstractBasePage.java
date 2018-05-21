@@ -297,7 +297,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		SimulatorUtilities.wait(500);
 		clickWhenClickable(nextBtn);
 		SimulatorUtilities.wait(500);
-		WebElementUtils.addWicketAjaxListeners(driver());
+		//WebElementUtils.addWicketAjaxListeners(driver());
 	}
 
 	protected void clickAddNewButton() {
@@ -957,7 +957,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public boolean waitForLoaderToDisappear() {
 		try {
-			WebDriverWait waitForElement = new WebDriverWait(getFinder().getWebDriver(), 50, ELEMENT_WAIT_MAX);
+			WebDriverWait waitForElement = new WebDriverWait(getFinder().getWebDriver(), 60, ELEMENT_WAIT_MAX);
 			waitForElement.until(ExpectedConditions.not(ExpectedConditions.visibilityOf(Element("//img[contains(@src,'loading')]"))));
 			logger.info("Loader is present");
 			return true;

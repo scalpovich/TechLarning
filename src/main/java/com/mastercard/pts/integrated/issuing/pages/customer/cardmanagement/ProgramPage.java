@@ -501,6 +501,7 @@ public class ProgramPage extends AbstractBasePage {
 		}
 		//waitForLoaderToDisappear();
 		clickNextButton();
+		SimulatorUtilities.wait(3000);
 		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 			fillDataForCreditCard(program);
 		}

@@ -11,7 +11,6 @@ import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Throwables;
@@ -25,9 +24,6 @@ public class PDFUtils {
 
 	DateUtils dateutils;
 	
-	@Autowired
-	private TestContext context;
-
 	public static String getContent(String pdfPath, String key) {
 		String value = "";
 		String pageContent = "";
