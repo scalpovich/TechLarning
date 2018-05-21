@@ -8,7 +8,6 @@ I want to authorize transactions for prepaid emv retail general purpose card
 Meta:
 @StoryName p_emv_corp_general_purpose
 @oldReferenceSheet_S203707
-@CRCardsWithAuthorizationCashAdvancedWithClearing
 
 Scenario: Set up prepaid emv retail general purpose card
 Meta:
@@ -30,6 +29,7 @@ Then device has "normal" status
 When user has wallet number information for debit device
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
+Then embossing file batch was generated in correct format
 Then device has "normal" status
 Then user activates device through helpdesk
 Then user sign out from customer portal
