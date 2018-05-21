@@ -10,7 +10,12 @@
    "customerType":"Corporate",
    "embossingVendor":"AUTOB1",
    "interchange":"MASTERCARD",
-   "issuerBin":"489765",
+   "mastercardPrepaidIssuerBin":"532560",
+   "mastercardDebitIssuerBin":"543870",
+   "mastercardCreditIssuerBin":"589765",
+   "visaPrepaidIssuerBin":"443823",
+   "visaDebitIssuerBin":"418233",
+   "visaCreditIssuerBin":"489765",
    "plasticId":"AUT",
    "pictureCode":"AUT",
    "corporateClientCode":"12121218003000051"
