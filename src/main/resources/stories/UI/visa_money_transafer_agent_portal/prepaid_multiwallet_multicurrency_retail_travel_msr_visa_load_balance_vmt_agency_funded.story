@@ -1,23 +1,22 @@
-Prepiad: Funded Agent : Initial Load - Load - Reload - Settlement - Preclearing - EOD - Program Balance Reports
+Prepiad: Funded Agent : prepaid multiwallet multicurrency retail travel msr visa load balance and vmt 
 
 Narrative:
 In order to do prepaid load
 As an Agency User
-I want to do Initial Load - Load - Reload through agent portal visa interface
+I want to do Initial Load - Load - Reload through agent portal visa interface and transfer funds
 
 Meta:
-@StoryName MWMC_EMV_V_RTLTRVL_AGNC_FUND
+@StoryName MWMC_MSR_V_RTLTRVL_AGNC_FUND
 @CR1
 @CardCreation
-
-Scenario: Prepaid - EMAV  - VISA Money Transfer 
+Scenario: prepaid multiwallet multicurrency retail travel msr visa load balance and vmt agency funded
 Given user is logged in non-default institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin for non-default institution
 When user creates new device of prepaid type for non-default institution
 Then device has "normal" status for non-default institution
 Then user sign out from customer portal
 Given user is logged in institution
-And bulk card generation for prepaid emv is completed for an interface
+And bulk card generation for prepaid magnetic stripe is completed for an interface
 And user sign out from customer portal
 And user is logged in agent portal as admin user
 When user fills information to assign program to agency and submits form
@@ -93,3 +92,4 @@ Then transfer funds page is loaded and master detail content title is Transfer F
 And TransferFunds page of transactions tab is rendered correctly
 Then user transfer fund through VMT using agent portal
 And user sign out from agent portal
+

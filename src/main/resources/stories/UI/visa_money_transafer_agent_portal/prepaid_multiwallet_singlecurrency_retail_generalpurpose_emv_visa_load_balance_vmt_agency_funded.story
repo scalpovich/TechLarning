@@ -1,4 +1,4 @@
-Prepiad: Funded Agent : Initial Load - Load - Reload - Settlement - Preclearing - EOD - Program Balance Reports
+Prepiad: Funded Agent : prepaid multiwallet singlecurrency retail generalpurpose emv visa load balance and vmt on agency funded
 
 Narrative:
 In order to do prepaid load
@@ -10,7 +10,7 @@ Meta:
 @CR1
 @CardCreation
 
-Scenario: Prepaid - Admin User - Assign Program to Agency
+Scenario: prepaid multiwallet singlecurrency retail generalpurpose emv visa load balance and vmt on agency funded
 Given user is logged in non-default institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin for non-default institution
 When user creates new device of prepaid type for non-default institution
