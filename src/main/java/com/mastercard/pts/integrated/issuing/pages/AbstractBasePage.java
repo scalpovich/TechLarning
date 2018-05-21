@@ -673,10 +673,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void waitAndSearchForRecordToExist() {
 		waitAndSearchForRecordToAppear();
-<<<<<<< HEAD
-=======
-		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
->>>>>>> FR scenarios in progress-Fixed score etc
 		selectFirstRecord();
 		clickProcessSelectedButton();
 		
