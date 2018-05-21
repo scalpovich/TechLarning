@@ -154,7 +154,7 @@ public class CreditUtilitySteps {
 		if(StringUtils.isEmpty(institution))
 		{
 		creditMappingForJson =CreditInstitutionData.createWithProvider(provider,Institution.createWithProvider(provider).getCode());
-		creditMappingForExcel=creditMappingForExcel.createWithProviderForRegression(keyValueProvider,provider,Institution.createWithProvider(provider).getCode());
+		creditMappingForExcel=creditMappingForExcel.createWithProviderForRegression(keyValueProvider);
 		context.put(CreditConstants.EXCEL_VALUES,creditMappingForExcel);
 		}
 		else
@@ -163,7 +163,7 @@ public class CreditUtilitySteps {
 			String[]institutionSplit=institution.split("\\[");
 			String institutionCode=institutionSplit[1].substring(0, institutionSplit[1].length()-1);
 			creditMappingForJson =CreditInstitutionData.createWithProvider(provider,institutionCode);
-			creditMappingForExcel=creditMappingForExcel.createWithProviderForRegression(keyValueProvider,provider,institutionCode);
+			creditMappingForExcel=creditMappingForExcel.createWithProviderForRegression(keyValueProvider);
 			context.put(CreditConstants.EXCEL_VALUES,creditMappingForExcel);
 		}
 	}

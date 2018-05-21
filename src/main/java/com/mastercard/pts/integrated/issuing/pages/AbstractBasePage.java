@@ -281,6 +281,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview tr.even a>img[alt='Delete Record'],table.dataview tr.odd a>img[alt='Delete Record']")
 	private MCWebElements deleteAddedRecordsIcon;
 
+	private String ERROR_XPATH = ".//div[@class='ketchup-error-container-alt']/ol/li";
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class='headers']/th//span")
 	private MCWebElements deviceProductionHeaders;
@@ -1727,7 +1728,23 @@ public abstract class AbstractBasePage extends AbstractPage {
 		context.put(CreditConstants.SUPPLEMENTARY_DEVICE_NUMBER, allDeviceNumbers);
 		return allDeviceNumbers;
 	}
+	
+	public void searchEntity(String entityType) {
+		UserCreation userCreation = context.get(ContextConstants.USER);
+		if ("user".equalsIgnoreCase(entityType))
+			selectByVisibleText(entityTypeDdwn, ENTITY_TYPE_USER);
+		else if ("role".equalsIgnoreCase(entityType))
+			selectByVisibleText(entityTypeDdwn, ENTITY_TYPE_ROLE);
+		CustomUtils.ThreadDotSleep(900);
+		Select select = new Select(getFinder().getWebDriver().findElement(ENTITY_ID));
+		CustomUtils.ThreadDotSleep(500);
+		select.selectByVisibleText(userCreation.getUserName() + " [" + userCreation.getUserID() + "]");
+		ClickButton(searchBtn);
+	}
 
+	public void selectTab(String tabName) {
+		getFinder().getWebDriver().findElement(By.xpath(String.format(PRIVILEGES_TABS, tabName))).click();
+	}
 
 	/**
 	 * Select institute from top drp dwn.

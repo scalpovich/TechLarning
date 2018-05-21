@@ -1188,6 +1188,7 @@ public class DevicePlanPage extends AbstractBasePage {
 			
 		}		
 		clickIframeNextButton();
+		}
 		
 	}
 	
