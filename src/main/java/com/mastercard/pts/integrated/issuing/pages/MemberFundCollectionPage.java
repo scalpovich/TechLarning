@@ -38,13 +38,13 @@ public class MemberFundCollectionPage extends AbstractBasePage {
 					retryUntilNoErrors(() -> ClickButton(addMemberFundCollection));
 					addWicketAjaxListeners(getFinder().getWebDriver());
 					switchToIframe(Constants.ADD_MEMBER_FUND_FRAME);
-					SelectDropDownByIndex(transactionCodeDDwn, i);
+					selectDropDownByIndex(transactionCodeDDwn, i);
 					addWicketAjaxListeners(getFinder().getWebDriver());
 					enterText(arnTxt, ARN[k]);
 					addWicketAjaxListeners(getFinder().getWebDriver());
 					transactionAmountTxt.click();
 					addWicketAjaxListeners(getFinder().getWebDriver());
-					SelectDropDownByIndex(messageReasonCodeDDwn, j);
+					selectDropDownByIndex(messageReasonCodeDDwn, j);
 					addWicketAjaxListeners(getFinder().getWebDriver());
 					ClickButton(saveBtn);
 					SwitchToDefaultFrame();

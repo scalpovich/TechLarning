@@ -141,7 +141,7 @@ public class DocumentChecklistPage extends AbstractBasePage {
 
 	public void addDocChecklistDetails() {
 		clickAddDocCheckListSubDetails();
-		SelectDropDownByIndex(DocumentNameTxtrbtn, 1);
+		selectDropDownByIndex(DocumentNameTxtrbtn, 1);
 		ClickCheckBox(SelectedDocumentMandatoryrbtn, true);
 		clickSaveButton();
 		SwitchToDefaultFrame();

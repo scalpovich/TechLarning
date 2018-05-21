@@ -627,7 +627,7 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	public void selectWalletToWalletTransfer() {
-		SelectDropDownByIndex(WalletToWalletTransferType, 1);
+		selectDropDownByIndex(WalletToWalletTransferType, 1);
 	}
 
 	public void selectReferenceCurrency(Program program) {
@@ -637,7 +637,7 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	public void selectCalendarStartMonth() {
-		SelectDropDownByIndex(CalendarStartMonthDDwn, 1);
+		selectDropDownByIndex(CalendarStartMonthDDwn, 1);
 	}
 
 	public void enterMaximumBalanceWithoutKYC(Program program) {
@@ -683,7 +683,7 @@ public class ProgramPage extends AbstractBasePage {
 			if (MapUtils.fnGetInputDataFromMap("WalletPlan3") != null) {
 				selectByVisibleText(WalletPlan3DDwn, MapUtils.fnGetInputDataFromMap("WalletPlan3"));
 			} else {
-				SelectDropDownByIndex(WalletPlan3DDwn, 3);
+				selectDropDownByIndex(WalletPlan3DDwn, 3);
 			}
 		}
 	}
@@ -701,12 +701,12 @@ public class ProgramPage extends AbstractBasePage {
 
 	public void selectStatementMessagePlan() {
 		waitForElementVisible(StatementMessagePlanDDwn);
-		SelectDropDownByIndex(StatementMessagePlanDDwn, 1);
+		selectDropDownByIndex(StatementMessagePlanDDwn, 1);
 	}
 
 	public void selectMarketingMessagePlan() {
 		waitForElementVisible(MarketingMessagePlanDDwn);
-		SelectDropDownByIndex(MarketingMessagePlanDDwn, 1);
+		selectDropDownByIndex(MarketingMessagePlanDDwn, 1);
 	}
 
 	@Override

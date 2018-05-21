@@ -84,7 +84,7 @@ public class AdminstrationPage extends AbstractBasePage {
 
 	public void selectBatchType_Id(String BatchType, String BatchId) {
 		waitForElementVisible(getBatchType());
-		SelectDropDownByText(getBatchType(), BatchType);
+		selectDropDownByText(getBatchType(), BatchType);
 		waitForElementVisible(getBatchId());
 		/*
 		 * WebDriverWait wait = new
@@ -93,7 +93,7 @@ public class AdminstrationPage extends AbstractBasePage {
 		 * ".//*[@id='batchId']/select")));
 		 */
 		// getBatchId().click();
-		SelectDropDownByIndex(getBatchId(), 10);
+		selectDropDownByIndex(getBatchId(), 10);
 
 	}
 
