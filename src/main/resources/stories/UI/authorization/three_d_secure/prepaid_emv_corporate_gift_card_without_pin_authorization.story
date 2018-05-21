@@ -1,0 +1,44 @@
+3d secure prepaid emv corporate giftcard card
+
+Narrative:
+In order to provide to client easy-to-use payment method for e-commerce retail
+As an issuer
+I want to create a prepaid emv corporate giftcard card for client
+
+Meta:
+@StoryName p_emv_corp_gift
+@oldReferenceSheet_S203707
+
+Scenario: Set up prepaid emv corporate giftcard card
+Meta:
+@TestId 
+Given user is logged in institution
+And device range for program with device plan for "prepaid" "emv" card without pin
+When user creates new device of prepaid type for new client
+Then device has "normal" status
+
+Scenario: prepaid emv corporate giftcard card device production
+Meta:
+@TestId TC408068
+Given user is logged in institution
+And a new device was created
+When processes pre-production batch for prepaid
+When processes device production batch for prepaid
+Then user sign out from customer portal
+Then user is logged in institution
+Then device has "normal" status
+When user has wallet number information for debit device
+When user performs adjustment transaction
+When user has current wallet balance amount information for prepaid device
+Then embossing file batch was generated in correct format
+Then device has "normal" status
+Then user activates device through helpdesk
+Then user sign out from customer portal
+
+
+Scenario: Perform 3D_SECURE_CAVV Authorization transaction
+Meta:
+@TestId 
+Given connection to MAS is established
+When perform an 3D_SECURE_CAVV MAS transaction
+Then MAS test results are verified
