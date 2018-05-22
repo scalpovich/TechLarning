@@ -401,11 +401,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="view:virtualDeviceCreditLimit:input:inputTextField")	
 	private MCWebElement virtualDeviceCreditLimitTxt;
-	
-	private static final String EMV_SERVICE_CODE="201";
-	private static final String MSR_SERVICE_CODE="101";
-	
-	
+		
 	
 	public void AddDevicePlan() {
 		clickWhenClickable(AddDevicePlanBtn);
