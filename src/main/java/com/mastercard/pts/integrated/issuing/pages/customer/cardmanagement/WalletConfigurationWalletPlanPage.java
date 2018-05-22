@@ -137,13 +137,15 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	@Override
 	public void clickNextButton() {
 		SimulatorUtilities.wait(400);
-		nextBtn.click();
+		clickWhenClickable(nextBtn);
+		//nextBtn.click();
 	}
 
 	@Override
 	public void clickFinishButton() {
 		SimulatorUtilities.wait(900);
-		finishBtn.click();
+		clickWhenClickable(finishBtn);
+		//finishBtn.click();
 	}
 
 	// Method to fill data in Add Wallet Plan Data
