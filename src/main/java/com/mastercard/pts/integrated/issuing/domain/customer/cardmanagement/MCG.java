@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 @Component
 public class MCG {
@@ -76,6 +77,9 @@ public class MCG {
 	public void setMCGCode(String mCGCode) {
 		this.mCGCode = mCGCode;
 	}
-
-
+     
+	@Override
+	public String toString() {
+		return MiscUtils.toString(this);
+	}
 }

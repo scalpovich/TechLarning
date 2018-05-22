@@ -13,21 +13,29 @@ public class MCGFlows extends MenuFlows {
 
 	@Autowired
 	Navigator navigator;
+	
+	private MCGPage page;
 
 	public void addMCG(MCG plan) {
-		MCGPage mcgpage = navigator.navigateToPage(MCGPage.class);
-		mcgpage.addMCGDetails(plan);
-		mcgpage.verifyNewMCGSuccess();
+		page = navigator.navigateToPage(MCGPage.class);
+		page.addMCGDetails(plan);
+		page.verifyNewMCGSuccess();
 	}
 	
 	public void addNewMCG(MCG plan) {
-		MCGPage mcgpage = navigator.navigateToPage(MCGPage.class);
-		mcgpage.addMCGDetails(plan);
+	    page = navigator.navigateToPage(MCGPage.class);
+		page.addMCGDetails(plan);
 	}
 	
 	public void addMCGwithMCC(MCG plan){
-		MCGPage mcgpage = navigator.navigateToPage(MCGPage.class);
-		mcgpage.addMCGwithMCCDetails(plan);
+		page = navigator.navigateToPage(MCGPage.class);
+		page.addMCGwithMCCDetails(plan);
+	}
+	
+	public String getFeedbackText() {
+		page.SwitchToDefaultFrame();
+		
+		return page.getMessageFromFeedbackPanel();
 	}
 
 }

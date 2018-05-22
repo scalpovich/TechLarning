@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 public class MCGLimitPlan {
 
@@ -81,7 +82,7 @@ public class MCGLimitPlan {
 	public static MCGLimitPlan getMCGLimitPlanData(KeyValueProvider provider) {
 		MCGLimitPlan plan = new MCGLimitPlan();
 		String random = CustomUtils.randomAlphaNumeric(5).toUpperCase();
-		plan.setMcgLimitPlanCode(provider.getString(random));
+		plan.setMcgLimitPlanCode(random);
 		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);
 		plan.setMcgCode(provider.getString(MCG_CODE));
 		plan.setFromMonthOnBook(FROM_MONTH_ON_BOOK);
@@ -89,7 +90,7 @@ public class MCGLimitPlan {
 		plan.setEndDate(LocalDate.now().plusDays(100));
 		plan.setToMonthOnBook(TO_MONTH_ON_BOOK);
 		plan.setDailyAmount(provider.getString(DAILY_AMOUNT));
-		plan.setDailyAmount(provider.getString(DAILY_RESPONSE));
+		plan.setDailyResponse(provider.getString(DAILY_RESPONSE));
 		plan.setDailyVelocity(provider.getString(DAILY_VELOCITY));
 		plan.setDailyVelocityResponse(provider.getString(DAILY_VELOCITY_RESPONSE));
 		return plan;
@@ -394,6 +395,11 @@ public class MCGLimitPlan {
 	public void setPeriodicPercentageOfCreditLimitInternational(
 			String periodicPercentageOfCreditLimitInternational) {
 		this.periodicPercentageOfCreditLimitInternational = periodicPercentageOfCreditLimitInternational;
+	}
+	
+	@Override
+	public String toString() {
+		return MiscUtils.toString(this);
 	}
 
 }

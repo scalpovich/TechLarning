@@ -13,6 +13,7 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -38,7 +39,7 @@ public class MCGPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mccSearchPanel:mccFrom:input:inputTextField")
 	private MCWebElement mccFromTxt;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "mccSearchPanel:mccFrom:input:inputTextField")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "mccSearchPanel:mccTo:input:inputTextField")
 	private MCWebElement mccToTxt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mccSearchPanel:mccName:input:inputTextField")
@@ -57,7 +58,7 @@ public class MCGPage extends AbstractBasePage {
 	}
 
 	public void enterMCGCode(MCG plan) {
-		enterValueinTextBox(mcgCodeTxt, plan.getMCG());
+		enterValueinTextBox(mcgCodeTxt, plan.getMCGCode());
 	}
 
 	public void enterMCGDescription(MCG plan) {
@@ -111,7 +112,12 @@ public class MCGPage extends AbstractBasePage {
 		    enterMCCTo(plan);
 		    clickSearchButton();
 		    selectMCCCode();
-			clickSaveButton(); 
+			clickSaveButton();
+			if(publishErrorOnPage()){
+            	plan.setMCGCode(CustomUtils.randomNumbers(3));
+            	enterMCGCode(plan);
+            	clickSaveButton();
+            }
 		});
 	}
 	

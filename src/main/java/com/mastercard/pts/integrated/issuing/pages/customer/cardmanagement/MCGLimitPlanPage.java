@@ -46,10 +46,10 @@ public class MCGLimitPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "productType:input:dropdowncomponent")
 	private MCWebElement addProductTypeDdwn;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "effectiveDate:input:dateTextField")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "td#effectiveDate")
 	private MCWebElement effectiveDatePkr;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "endDate:input:dateTextField")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "td#effectiveDate + td + td")
 	private MCWebElement endDatePkr;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mcgAuthPeriod:input:dropdowncomponent")
@@ -174,7 +174,7 @@ public class MCGLimitPlanPage extends AbstractBasePage {
 	}
 	
 	public void addProductType(MCGLimitPlan plan){
-		enterValueinTextBox(addProductTypeDdwn, plan.getProductType());
+		selectByVisibleText(addProductTypeDdwn, plan.getProductType());
 	}
 	
 	public void selectEffectiveDate(MCGLimitPlan plan){
@@ -333,7 +333,11 @@ public class MCGLimitPlanPage extends AbstractBasePage {
 			selectDailyResponse(plan);
 			enterDailyVelocity(plan);
 			selectDailyVelocityResponse(plan);
+			clickSaveButton();
 		});
+		switchToIframe(FRAME_ADD_MCG_LIMIT_PLAN);
+		clickSaveButton();
+		SwitchToDefaultFrame();
 		return plan;
 	}
 	

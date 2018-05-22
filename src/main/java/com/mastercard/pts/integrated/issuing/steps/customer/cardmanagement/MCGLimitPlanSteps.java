@@ -31,6 +31,7 @@ public class MCGLimitPlanSteps {
 	public void createSurchargePlan(String productType) {
 		mcgLimitPlan = MCGLimitPlan.getMCGLimitPlanData(provider);
 		mcgLimitPlan.setProductType(ProductType.fromShortName(productType));
+		mcgLimitPlan.setMcgCode(context.get(ContextConstants.MCG));
 		mcgLimitPlan = mcgLimitPlanWorkflows.createMCGLimitPlanWithDetails(mcgLimitPlan);
 		Assert.assertEquals(ConstantData.RECORD_ADDED_SUCCESSFULLY, mcgLimitPlanWorkflows.getFeedbackText());
 		context.put(ContextConstants.MCG_LIMIT_PLAN, mcgLimitPlan.getMcgLimitPlanCode());

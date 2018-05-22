@@ -8,14 +8,7 @@ Meta:
 @CreditRegression
 @MCGLimitPlan
 @Author Nitin Kumar
-@StoryName Surcharge_Plan
-
-Scenario: Scenario1 - Defining MCG Limit Plan
-
-Given user is logged in institution
-When Device Usage
-!-- When user creates MCG limit plan with details for Prepaid
-!-- Then MCG limit plan should get created successfully
+@StoryName MCG_LIMIT
 
 Scenario: Set up corporate general purpose msr prepaid card
 Meta:
@@ -33,8 +26,14 @@ Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
-When user has wallet number information for prepaid device
-When user performs adjustment transaction
-When user has current wallet balance amount information for prepaid device
-Then device has "normal" status
 And user activates device through helpdesk
+
+Scenario: Define MCG Limit Plan
+
+Meta:
+@MCGLimitPlan1
+Given user is logged in institution
+When user creates MCG with MCC
+When user creates MCG limit plan with details for Prepaid
+When User fills Wallet Plan for prepaid product
+
