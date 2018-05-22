@@ -78,6 +78,8 @@ public class DeviceRangePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#activeFlag select")
 	private MCWebElement statusDDwn;
 
+	private final String DEVICE_ROUTING = "Device Range Based [D]";
+	
 	@Autowired
 	DevicePlan deviceplan;
 
@@ -432,7 +434,7 @@ public class DeviceRangePage extends AbstractBasePage {
 		if (ProductType.DEBIT.equalsIgnoreCase(deviceRange.getProductType())) {
 			WebElementUtils.selectDropDownByVisibleText(endPointModeDDwn, deviceRange.getEndPointMode());
 			WebElementUtils.selectDropDownByVisibleText(routingTypeDDwn, deviceRange.getRoutingType());
-			if(deviceRange.getRoutingType().equalsIgnoreCase("Device Range Based [D]")){
+			if(deviceRange.getRoutingType().equalsIgnoreCase(DEVICE_ROUTING)){
 				WebElementUtils.selectDropDownByVisibleText(interfaceNameDDwn, deviceRange.getInterfaceName());
 			}
 		}

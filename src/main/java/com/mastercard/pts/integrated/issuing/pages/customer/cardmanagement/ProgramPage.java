@@ -395,6 +395,7 @@ public class ProgramPage extends AbstractBasePage {
 			selectCalendarStartMonth(program.getCalendarStartMonth());
 			fillExtraSections(program, productType);
 			clickNextButton();
+			SimulatorUtilities.wait(4000);
 			clickFinishButton();
 		});
 		verifyOperationStatus();
@@ -499,7 +500,8 @@ public class ProgramPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByOptionalVisibleText(markupFeePlanDDwn, program.getMarkUpFeePlan());
 			WebElementUtils.selectDropDownByOptionalVisibleText(stmtPlanCodeDDwn, program.getPrepaidStatementPlan());
 		}
-		waitForLoaderToDisappear();
+		//waitForLoaderToDisappear();
+		SimulatorUtilities.wait(4000);
 		clickNextButton();
 		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 			fillDataForCreditCard(program);
@@ -653,7 +655,7 @@ public class ProgramPage extends AbstractBasePage {
 	@Override
 	public void clickNextButton() {
 		ClickButton(NEXTBtn);
-		waitForWicket();
+		//waitForWicket();
 		SimulatorUtilities.wait(2000);
 	}
 
