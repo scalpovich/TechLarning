@@ -11,30 +11,25 @@ Meta:
 
 
 Scenario: Set up prepaid msr corporate travel card
-Meta:
-@TestId TC398452
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client
-When user updates cvccvv as uncheck on device plan
 Then user sign out from customer portal
 
 Scenario: prepaid msr corporate travel card device production
-Meta:
-@TestId TC408068
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 Then device has "normal" status
-When user has wallet number information for debit device
+When user has wallet number information for prepaid device
 Then user sign out from customer portal
 Then user is logged in institution
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
-Then embossing file batch was generated in correct format
 Then device has "normal" status
 Then user activates device through helpdesk
+Then embossing file batch was generated in correct format
 Then user sign out from customer portal
 
 

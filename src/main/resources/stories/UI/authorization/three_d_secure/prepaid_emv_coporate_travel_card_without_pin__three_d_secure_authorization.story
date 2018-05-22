@@ -10,16 +10,12 @@ Meta:
 @oldReferenceSheet_S203707
 
 Scenario: Set up prepaid emv corporate travel card
-Meta:
-@TestId TC398452
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client
-
+Then user sign out from customer portal
 
 Scenario: prepaidemv corporate travel card device production
-Meta:
-@TestId TC408068
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
@@ -30,11 +26,10 @@ Then user sign out from customer portal
 Then user is logged in institution
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
-Then embossing file batch was generated in correct format
 Then device has "normal" status
 Then user activates device through helpdesk
+Then embossing file batch was generated in correct format
 Then user sign out from customer portal
-
 
 Scenario: Perform 3D_SECURE_CAVV Authorization transaction
 Meta:
