@@ -239,7 +239,7 @@ public class TransactionSteps {
 		}
 
 		// changed ECOMMERCE to ECOM
-		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") || transactionWorkflow.isContains(transaction, "ASI_")||transactionWorkflow.isContains(transaction, "MMSR") ) {
+		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") || transactionWorkflow.isContains(transaction, "ASI_") || transactionWorkflow.isContains(transaction, "MMSR")) {
 			// for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInuxbox
 			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); // Transaction currency code
 		}
@@ -344,9 +344,9 @@ public class TransactionSteps {
 			throw new ValidationException("Transaction failed!");
 		}
 	}
-	
-	@Then("$tool test results are verified for code $code Not OK")
-	public void thenTestResultsAreReportedForCode(String tool, String code) {
+
+	@Then("$tool test results are verified with code $code Not OK")
+	public void thenTestResultsAreVerifiedForCodeNotOK(String tool, String code) {
 		String testResults;
 		if (!"mdfs".contains(tool.toLowerCase())) {
 			testResults = transactionWorkflow.verifyTestResults();
@@ -524,19 +524,19 @@ public class TransactionSteps {
 		context.put(ConstantData.ARN_NUMBER, arn);
 		logger.info("ARN for device transactions = {} ", arn);
 	}
-	
-	//Win SCP step
+
+	// Win SCP step
 	@Given("user update folder permission through WinSCP for $type folder")
 	@When("user update folder permission through WinSCP for $type folder")
-	public void connectionToApplicationIsEstablished(String type){
+	public void connectionToApplicationIsEstablished(String type) {
 		transactionWorkflow.launchWinSCP();
 		transactionWorkflow.loginToWinSCP();
-		if(type.equalsIgnoreCase(DEVICE_PRODUCTION))
+		if (type.equalsIgnoreCase(DEVICE_PRODUCTION))
 			transactionWorkflow.setFolderPermisson(provider.getString(DEVICE_PRODUCTION_FOLDER));
-		else if(type.equalsIgnoreCase(PIN_PRODUCTION))
+		else if (type.equalsIgnoreCase(PIN_PRODUCTION))
 			transactionWorkflow.setFolderPermisson(provider.getString(PIN_PRODUCTION_FOLDER));
-		else if(type.equalsIgnoreCase(IPMINCOMING))
-		transactionWorkflow.setFolderPermisson(provider.getString(IPM_INCOMING));
+		else if (type.equalsIgnoreCase(IPMINCOMING))
+			transactionWorkflow.setFolderPermisson(provider.getString(IPM_INCOMING));
 		transactionWorkflow.closeWinSCP();
 	}
 }

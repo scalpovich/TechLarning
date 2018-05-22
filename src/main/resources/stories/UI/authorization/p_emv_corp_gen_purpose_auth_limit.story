@@ -49,5 +49,6 @@ And MAS simulator is closed
 Scenario: Assert Authorization Search and Device Usage
 Given user is logged in institution
 Then search Purchase authorization and verify Successful status
-And user searches device on device usage screen and performs assertions on device tool usage and device transaction usage tabs
+Then user searches device on device usage screen and performs assertions on device total usage
+And user searches device on device usage screen and performs assertions on device transaction usage
 And user sign out from customer portal

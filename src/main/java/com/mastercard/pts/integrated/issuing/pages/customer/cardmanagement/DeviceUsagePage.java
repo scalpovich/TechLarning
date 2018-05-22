@@ -95,7 +95,7 @@ public class DeviceUsagePage extends AbstractBasePage {
 	public Map<String, String> getDeviceTotalUsage(String cardNumber) {
 		WebElementUtils.enterText(deviceNumber, cardNumber);
 		searchButtonElement.click();
-		Map<String, String> deviceUsageDetails = new HashMap<String, String>();
+		Map<String, String> deviceUsageDetails = new HashMap<>();
 		viewFirstRecord();
 		runWithinPopup("View Device Usage", () -> {
 			deviceUsageDetails.put("dailyDebitVelocity", dailyDebitTransactionVelocityUtilizedLbl.getText());
