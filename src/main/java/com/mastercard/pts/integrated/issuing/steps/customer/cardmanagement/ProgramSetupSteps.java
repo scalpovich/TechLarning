@@ -759,6 +759,7 @@ public class ProgramSetupSteps {
 	public void whenUserFillsWalletPlan(String type) {
 		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
 		walletPlan.setProductType(ProductType.fromShortName(type));
+		walletPlan.setMcgLimitPlan(context.get(ContextConstants.MCG_LIMIT_PLAN));
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			walletPlan.setCreditPlan(context.get(CreditConstants.CREDIT_PLAN));
 			walletPlan.setBillingCyleCode(context.get(CreditConstants.BILLING_CYCLE));

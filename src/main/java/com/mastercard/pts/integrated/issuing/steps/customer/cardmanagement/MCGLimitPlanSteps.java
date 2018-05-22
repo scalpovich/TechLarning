@@ -33,7 +33,7 @@ public class MCGLimitPlanSteps {
 		mcgLimitPlan.setProductType(ProductType.fromShortName(productType));
 		mcgLimitPlan = mcgLimitPlanWorkflows.createMCGLimitPlanWithDetails(mcgLimitPlan);
 		Assert.assertEquals(ConstantData.RECORD_ADDED_SUCCESSFULLY, mcgLimitPlanWorkflows.getFeedbackText());
-		context.put(ContextConstants.MCG_LIMIT_PLAN, mcgLimitPlan);
+		context.put(ContextConstants.MCG_LIMIT_PLAN, mcgLimitPlan.getMcgLimitPlanCode());
 	}
 
 	@Then("MCG limit plan should get created successfully")

@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -48,22 +49,13 @@ public class DeviceUsagePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "ul.tabs li a[href*='tab3']")
 	private MCWebElement walletMCGUsageSubMenu;
 	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "//tr[@class='headers']//span[contains(text(),'MCG Code')]")
-	private MCWebElement mcgCodeLbl;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "//tr[@class='headers']//th//span[contains(text(),'Daily Amount Domestic Utilized')]")
-	private MCWebElement dailyAmountDomesticUtilizedLbl;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "//tr[@class='headers']//th/span[contains(text(),'Daily Velocity Domestic Utilized')]")
-	private MCWebElement dailyVelocityDomesticUtilizedLbl;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "//tr[@class='headers']//th//span[contains(text(),'Daily Amount Intenational Utilized')]")
-	private MCWebElement dailyAmountIntenationalUtilizedLbl;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "//tr[@class='headers']//th//span[contains(text(),'Daily Velocity Intenational Utilized')]")
-	private MCWebElement dailyVelocityIntenationalUtilizedLbl;
-	
-	private String FRAME_VIEW_DEVICE_USAGE = "View Device Usage";
+	private static final String FRAME_VIEW_DEVICE_USAGE = "View Device Usage";
+	private static final String FRAME_VIEW_WALLET_USAGE = "View Wallet Usage";
+	private static final String MCG_CODE = "MCG Code";
+	private static final String DAILY_AMOUNT_DOMESTIC_UTILIZED = "Daily Amount Domestic Utilized";
+	private static final String DAILY_VELOCLITY_DOMESTIC_UTILIZED = "Daily Velocity Domestic Utilized";
+	private static final String DAILY_AMOUNT_INTERNATIONAL_UTILIZED = "Daily Amount Intenational Utilized";
+	private static final String DAILY_VELOCLITY_INTERNATIONAL_UTILIZED = "Daily Velocity Intenational Utilized";
 
 	public void verifyUiOperationStatus() {
 		logger.info("Device Usage");
@@ -79,7 +71,14 @@ public class DeviceUsagePage extends AbstractBasePage {
 	}
 	
 	public Optional<Map<String,String>> getWalletMCGUsageData(){
-		return null;
+		Map<String,String> map = new HashMap<>();
+		map.put(MCG_CODE, getCellTextByColumnName(1,MCG_CODE));
+		map.put(DAILY_AMOUNT_DOMESTIC_UTILIZED,getCellTextByColumnName(1,DAILY_AMOUNT_DOMESTIC_UTILIZED));
+		map.put(DAILY_VELOCLITY_DOMESTIC_UTILIZED, getCellTextByColumnName(1,DAILY_VELOCLITY_DOMESTIC_UTILIZED));
+		map.put(DAILY_AMOUNT_INTERNATIONAL_UTILIZED,getCellTextByColumnName(1, DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
+		map.put(DAILY_VELOCLITY_INTERNATIONAL_UTILIZED,getCellTextByColumnName(1,DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
+		
+		return Optional.of(map);
 	}
 
 	public List<String> getDeviceTotalTransactionUsage(String cardNumber) {
@@ -108,14 +107,14 @@ public class DeviceUsagePage extends AbstractBasePage {
 		return deviceUsageDetails;
 	}
 	
-	public List<String> getWalletMCGUsage(DeviceUsage detail){
+	public Map<String,String> getWalletMCGUsage(DeviceUsage detail){
 		enterDeviceNumber(detail);
 		clickSearchButton();
 		viewFirstRecord();
 		runWithinPopup(FRAME_VIEW_DEVICE_USAGE, () ->{
 			viewFirstRecord();	
 			});
-		runWithinPopup("View Wallet Usage", () ->{
+		runWithinPopup(FRAME_VIEW_WALLET_USAGE, () ->{
 		navigateToWalletMCGUsage();
 		getWalletMCGUsageData();
 		});

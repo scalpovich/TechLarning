@@ -74,6 +74,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String firstWallet;
 	private String secondWallet;
 	private String whiteMcgCode;
+	private String mcgLimitPlan;
 
 	public String getWhiteMcgCode() {
 		return whiteMcgCode;
@@ -145,6 +146,14 @@ public class WalletPlan implements HasCodeAndDescription {
 
 	public void setWalletFeePlan(String walletFeePlan) {
 		this.walletFeePlan = walletFeePlan;
+	}
+
+	public String getMcgLimitPlan() {
+		return mcgLimitPlan;
+	}
+
+	public void setMcgLimitPlan(String mcgLimitPlan) {
+		this.mcgLimitPlan = mcgLimitPlan;
 	}
 
 	private static void setGenericData(WalletPlan plan) {

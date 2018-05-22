@@ -72,6 +72,9 @@ private TestContext context;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:billingCycleCode:input:dropdowncomponent")
 	private MCWebElement billingCyleCodeDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:mcgLimitPlan:input:dropdowncomponent")
+	private MCWebElement mcgLimitPlanDDwn;
 
 	private int reservedAmount = 0; // MiscUtils.randomNumber(5);
 
@@ -97,6 +100,10 @@ private TestContext context;
 
 	public void selectUsage(String usage) {
 		WebElementUtils.selectDropDownByVisibleText(usageDDwn, usage);
+	}
+	
+	public void selectMCGLimitPlan(String mcgLimitPlan) {
+		selectByVisibleText(mcgLimitPlanDDwn, mcgLimitPlan);
 	}
 
 	public void selectCreditPlan(String creditPlan) {
@@ -187,6 +194,8 @@ private TestContext context;
 			selectCurrency(walletPlan.getCurrency());
 			waitForPageToLoad(driver());			
 			selectUsage(walletPlan.getUsage());
+			waitForPageToLoad(driver());
+			selectMCGLimitPlan(walletPlan.getMcgLimitPlan());
 			waitForPageToLoad(driver());
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			clickNextButton(); // Click on next button
