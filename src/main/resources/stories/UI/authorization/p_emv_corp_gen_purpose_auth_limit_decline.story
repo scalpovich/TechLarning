@@ -47,7 +47,7 @@ Then MAS test results are verified
 
 Scenario: Device Usage Assertion
 Given user is logged in institution
-When user is at the home tab
+Then search Purchase authorization and verify Successful status
 Then user searches device on device usage screen and performs assertions on device transaction usage
 And user signs out from customer portal
 

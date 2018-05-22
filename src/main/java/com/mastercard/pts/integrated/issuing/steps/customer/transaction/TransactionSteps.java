@@ -354,17 +354,17 @@ public class TransactionSteps {
 			testResults = transactionWorkflow.verifyTestResultsOnMdfs();
 		}
 		transactionWorkflow.browserMaximize(); // restoring browser after
-		logger.info("Expected Result :- ", testResults);
+		logger.info("Expected Result :- {}", testResults);
+		logger.info("Code :- {}", code);
 
 		if (testResults.contains("Validations OK")) {
 			assertFalse("Transaction failed!  -  Result : " + testResults, false);
 			throw new ValidationException("Transaction failed! -  Result : " + testResults);
-
 		} else if (testResults.contains("Validations Not OK") && testResults.contains(code)) {
 			assertTrue("Transaction is succcessful!  - Expected Result : " + testResults, true);
 		} else {
 			assertFalse("Transaction failed! Code or status is incorrect!", false);
-			throw new ValidationException("Transaction failed!");
+			throw new ValidationException("Transaction failed! Code or Description does not Match!");
 		}
 	}
 
