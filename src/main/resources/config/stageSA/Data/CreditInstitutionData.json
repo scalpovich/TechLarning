@@ -65,7 +65,7 @@
    "abbreviation":"CANARA",
    "association":"MASTERCARD",
    "branch":"100",
-   "cardPackIdGenerationTemplate":"PAN645",
+   "cardPackIdGenerationTemplate":"PAN004",
    "deviceIdGenerationTemplate":"PAN644",
    "customerType":"Corporate",
    "embossingVendor":"CVC05",
