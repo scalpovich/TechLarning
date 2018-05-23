@@ -1161,7 +1161,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public void selectByVisibleText(MCWebElement ele, String optionName) {
 		String optionVisbleText = "";
-		//waitUntilSelectOptionsPopulated(ele);
+		waitUntilSelectOptionsPopulated(ele);
 		List<WebElement> selectedOptions = ele.getSelect().getOptions();
 		for (WebElement element : selectedOptions) {
 			if (element.getText().toUpperCase().contains(optionName.toUpperCase())) {
