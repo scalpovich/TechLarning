@@ -1,16 +1,16 @@
-Title: Debit MSR corporate card without Pin
+Title: Debit msr retail debit card authorization PINLESS
 
 Narrative:
-In order to check transactions on debit MSR corporate debit
+In order to check transactions on debit msr retail debit card pinless
 As an issuer
-I want to authorize transactions for debit MSR corporate debit
+I want to authorize transactions for debit msr retail debit card pinless
 
 Meta:
-@StoryName d_msr_corp_accountRouting
-@SanityCardsWithAuthorization
-@accountBaseRouting
+@StoryName d_msr_retail
+@CRCardsWithAuthorizationCashAdvancedWithClearing
+@SanitySuite
 
-Scenario: Set up program for debit MSR corporate debit
+Scenario: Set up program for debit MSR retail debit
 Given user is logged in institution
 When User fills Dedupe Plan
 When User fills MCC Rules for debit product
@@ -48,11 +48,13 @@ When perform an MSR_PREAUTH MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth authorization and verify 000-Successful status
+Then validate auth report
 And user sign out from customer portal
 When perform an MSR_COMPLETION MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth Completion authorization and verify 000-Successful status
+Then validate auth report
 And user sign out from customer portal
 
 Scenario: Perform MSR_PURCHASE Authorization transaction
@@ -60,6 +62,7 @@ When perform an MSR_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
+Then validate auth report
 And user sign out from customer portal
 
 Scenario: Perform MSR_PURCHASE_WITH_CASHBACK Authorization transaction
@@ -67,6 +70,7 @@ When perform an MSR_PURCHASE_WITH_CASHBACK MAS transaction on the same card
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase with Cash back authorization and verify 000-Successful status
+Then validate auth report
 And user sign out from customer portal
 
 Scenario: Perform ECOMM_PURCHASE Authorization transaction
@@ -74,6 +78,7 @@ When perform an ECOMM_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
 Then user is logged in institution
 Then search E-Commerce Transaction authorization and verify 000-Successful status
+Then validate auth report
 And user sign out from customer portal
 
 Scenario: Perform MSR_POS_BALANCE_INQUIRY Authorization transaction
@@ -81,6 +86,7 @@ When perform an MSR_POS_BALANCE_INQUIRY MAS transaction on the same card
 Then MAS test results are verified
 Then user is logged in institution
 Then search Balance Inquiry authorization and verify 000-Successful status
+Then validate auth report
 And user sign out from customer portal
 
 Scenario: Perform MSR_REFUND Authorization transaction
@@ -88,6 +94,7 @@ When perform an MSR_REFUND MAS transaction on the same card
 Then MAS test results are verified
 Then user is logged in institution
 Then search Refund authorization and verify 000-Successful status
+Then validate auth report
 And user sign out from customer portal
 
 Scenario: Perform INT_MSR_CASH_ADVANCE Authorization transaction
@@ -99,4 +106,5 @@ Then MAS test results are verified
 When MAS simulator is closed
 Then user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
+Then validate auth report
 And user sign out from customer portal
