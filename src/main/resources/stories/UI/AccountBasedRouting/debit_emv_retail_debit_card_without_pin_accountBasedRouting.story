@@ -7,7 +7,7 @@ I want to authorize transactions for debit EMV retail debit card pinless
 
 Meta:
 @StoryName d_emv_retail_accountRouting
-@CRCardsWithAuthorizationCashAdvancedWithClearing
+@accountBaseRouting
 
 Scenario: Set up program for debit EMV retail debit
 Given user is logged in institution

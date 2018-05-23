@@ -7,8 +7,7 @@ I want to authorize transactions for debit emv corporate debit card
 
 Meta:
 @StoryName d_emv_corp_accountRouting
-@SanityCardsWithAuthorization
-@EMVWithoutPin
+@accountBaseRouting
 
 Scenario: Set up program for debit EMV corporate debit
 Given user is logged in institution

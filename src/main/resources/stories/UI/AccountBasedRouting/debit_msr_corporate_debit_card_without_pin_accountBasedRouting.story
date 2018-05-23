@@ -7,7 +7,6 @@ I want to authorize transactions for debit MSR corporate debit
 
 Meta:
 @StoryName d_msr_corp_accountRouting
-@SanityCardsWithAuthorization
 @accountBaseRouting
 
 Scenario: Set up program for debit MSR corporate debit
