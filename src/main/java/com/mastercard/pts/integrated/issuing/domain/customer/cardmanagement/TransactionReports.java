@@ -38,8 +38,4 @@ public class TransactionReports {
 	public void setRrnNumber(String rrnNumber) {
 		this.rrnNumber = rrnNumber;
 	}
-
-	public TransactionReports() {
-		// TODO Auto-generated constructor stub
-	}
 }
