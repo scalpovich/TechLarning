@@ -499,9 +499,8 @@ public class ProgramPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByOptionalVisibleText(markupFeePlanDDwn, program.getMarkUpFeePlan());
 			WebElementUtils.selectDropDownByOptionalVisibleText(stmtPlanCodeDDwn, program.getPrepaidStatementPlan());
 		}
-		//waitForLoaderToDisappear();
+		waitForLoaderToDisappear();
 		clickNextButton();
-		SimulatorUtilities.wait(3000);
 		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 			fillDataForCreditCard(program);
 		}
@@ -712,6 +711,7 @@ public class ProgramPage extends AbstractBasePage {
 
 	@Override
 	public void clickFinishButton() {
+		waitForElementVisible(FinishBtn);
 		clickWhenClickable(FinishBtn);
 		SwitchToDefaultFrame();
 	}

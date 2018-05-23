@@ -104,6 +104,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public static final LocalDate futureEndDate = LocalDate.now().plusDays(150);
 
 	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
+	
+	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid transaction type - ";
 
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -297,7 +299,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		SimulatorUtilities.wait(500);
 		clickWhenClickable(nextBtn);
 		SimulatorUtilities.wait(500);
-		//WebElementUtils.addWicketAjaxListeners(driver());
+		WebElementUtils.addWicketAjaxListeners(driver());
 	}
 
 	protected void clickAddNewButton() {
@@ -643,9 +645,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected void waitAndSearchForRecordToExist() {
 		waitAndSearchForRecordToAppear();
 		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
-		Device device = context.get(ContextConstants.DEVICE);
-		device.setDeviceNumber(deviceNumberFetch.getText());
-		context.put(ContextConstants.DEVICE, device);
 		selectFirstRecord();
 		clickProcessSelectedButton();
 	}
@@ -957,7 +956,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public boolean waitForLoaderToDisappear() {
 		try {
-			WebDriverWait waitForElement = new WebDriverWait(getFinder().getWebDriver(), 60, ELEMENT_WAIT_MAX);
+			WebDriverWait waitForElement = new WebDriverWait(getFinder().getWebDriver(), 50, ELEMENT_WAIT_MAX);
 			waitForElement.until(ExpectedConditions.not(ExpectedConditions.visibilityOf(Element("//img[contains(@src,'loading')]"))));
 			logger.info("Loader is present");
 			return true;

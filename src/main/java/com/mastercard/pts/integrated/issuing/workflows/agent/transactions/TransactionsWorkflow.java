@@ -186,7 +186,7 @@ public class TransactionsWorkflow {
 	
 	public String transferFund(TransferFunds transferDetails,Device device)
 	{
-		tfpage.transferFund(transferDetails,device);
-		return null;
+		return tfpage.transferFund(transferDetails,device);
+		
 	}
 }
