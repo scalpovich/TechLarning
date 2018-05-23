@@ -13,7 +13,6 @@ Scenario: Setup - debit msr retail debit card
 Given user is logged in institution
 And device range for program with device plan for "debit" "magnetic stripe" card without pin
 When user creates new device of debit type for new client
-When user updates cvccvv as uncheck on device plan
 Then user sign out from customer portal
 
 Scenario: Device production - debit msr retail debit card
@@ -26,13 +25,14 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for debit device
 Then device has "normal" status
 When user activates device through helpdesk
+Then embossing file batch was generated in correct format
 Then user sign out from customer portal
 
-Scenario: Perform RECURRING_PUR_TXN Authorization transaction
+Scenario: Perform MSR_RECURRING_PUR_TXN Authorization transaction
 Meta:
 @TestId 
 Given connection to MAS is established
-When perform an RECURRING_PUR_TXN MAS transaction
+When perform an MSR_RECURRING_PUR_TXN MAS transaction
 Then MAS test results are verified
 
 

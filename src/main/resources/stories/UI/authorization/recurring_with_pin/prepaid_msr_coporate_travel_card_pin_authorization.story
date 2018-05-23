@@ -17,7 +17,6 @@ Meta:
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
-When user updates cvccvv as uncheck on device plan
 Then user sign out from customer portal
 
 Scenario: prepaid msr corporate travel card device production
@@ -49,11 +48,11 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform RECURRING_PUR_TXN_PIN Authorization transaction
+Scenario: Perform MSR_RECURRING_PUR_TXN Authorization transaction
 Meta:
 @TestId 
 Given connection to MAS is established
-When perform an RECURRING_PUR_TXN MAS transaction
+When perform an MSR_RECURRING_PUR_TXN MAS transaction
 Then MAS test results are verified
 
 Scenario: Generate Auth File for Clearing

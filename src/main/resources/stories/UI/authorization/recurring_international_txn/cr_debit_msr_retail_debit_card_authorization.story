@@ -13,7 +13,6 @@ Scenario: Setup - debit msr retail debit card
 Given user is logged in institution
 And device range for program with device plan for "debit" "magnetic stripe" card
 When user creates new device of debit type for new client
-When user updates cvccvv as uncheck on device plan
 Then user sign out from customer portal
 
 Scenario: Device production - debit msr retail debit card
@@ -38,11 +37,11 @@ Then embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform INT_RECURRING_PUR_TXN_PIN Authorization transaction
+Scenario: Perform INT_MSR_RECURRING_PUR_TXN Authorization transaction
 Meta:
 @TestId 
 Given connection to MAS is established
-When perform an INT_RECURRING_PUR_TXN MAS transaction
+When perform an INT_MSR_RECURRING_PUR_TXN MAS transaction
 Then MAS test results are verified
 
 

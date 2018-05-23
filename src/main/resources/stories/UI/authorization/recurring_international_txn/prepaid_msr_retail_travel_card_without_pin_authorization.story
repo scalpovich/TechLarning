@@ -16,7 +16,6 @@ Meta:
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client
-When user updates cvccvv as uncheck on device plan
 Then user sign out from customer portal
 
 Scenario: prepaid msr retail travel card device production
@@ -34,14 +33,15 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
+When embossing file batch was generated in correct format
 Then user sign out from customer portal
 
 
-Scenario: Perform INT_RECURRING_PUR_TXN Authorization transaction
+Scenario: Perform INT_MSR_RECURRING_PUR_TXN Authorization transaction
 Meta:
 @TestId 
 Given connection to MAS is established
-When perform an INT_RECURRING_PUR_TXN MAS transaction
+When perform an INT_MSR_RECURRING_PUR_TXN MAS transaction
 Then MAS test results are verified
 
 Scenario: Generate Auth File for Clearing
@@ -78,4 +78,3 @@ When transaction status is "Matching Pending"
 When "Matching" batch for prepaid is successful
 Then transaction status is "Presentment Matched with authorization"
 Then user sign out from customer portal
-
