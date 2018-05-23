@@ -305,4 +305,9 @@ public class AbstractBaseFlows extends AbstractBasePage {
 		login.loginTo(uName, pwd);
 	}
 
+	public void selectInstitute(String institute) {
+		institutionSelectionPage.selectInstitution(institute);
+		institutionSelectionPage.clickConfirm();
+	}
+
 }

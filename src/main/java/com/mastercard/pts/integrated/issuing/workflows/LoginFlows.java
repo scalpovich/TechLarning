@@ -77,4 +77,7 @@ public class LoginFlows extends AbstractBaseFlows {
 		
 	}
 
+	public void selectNewInstitutionFlows(String institute) {
+		selectInstitute(institute);
+	}
 }

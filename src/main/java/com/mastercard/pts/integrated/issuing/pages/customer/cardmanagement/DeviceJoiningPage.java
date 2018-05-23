@@ -157,11 +157,11 @@ public class DeviceJoiningPage extends AbstractBasePage {
 	}
 
 	public void selectPostIssuanceFeeOn() {
-		SelectDropDownByIndex(PostIssuanceFeeOnDDwn, 1);
+		selectDropDownByIndex(PostIssuanceFeeOnDDwn, 1);
 	}
 
 	public void selectPeriodicFrequency() {
-		SelectDropDownByIndex(PeriodicFrequencyDDwn, 1);
+		selectDropDownByIndex(PeriodicFrequencyDDwn, 1);
 	}
 
 	public void enterWaiverPeriod(DeviceJoiningMembershipFeePlan deviceJoiningPlan) {

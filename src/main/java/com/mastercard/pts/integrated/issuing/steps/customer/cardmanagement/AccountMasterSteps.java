@@ -1,6 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
-import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.junit.Assert;
@@ -153,10 +153,17 @@ public class AccountMasterSteps extends AbstractBaseFlows {
 		sessionExpiryloginInAgain();
 	}
 
-	// there is a Account Head available in the system
-	@Given("there is a Account Head available in the system")
-	public void account_head_available() {
-		logger.info("Adding a new Account Head as a pre-requisite");
+	/**
+	 * Step Definition for navigating and adding a new Account Master
+	 * <p>
+	 * StoryFile usage : When the user navigates and adds account master to the
+	 * system
+	 * <p>
+	 */
+	@When("the user navigates and adds account master to the system")
+	@Composite(steps = { "When user navigates to Account Master screen",
+			"When user creates a new account master without Program Code" })
+	public void whenUserAddsNewAccountMaster() {
 
 	}
 

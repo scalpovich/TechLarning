@@ -30,6 +30,6 @@ public class CurrencyPayoutListFlows {
 		page.enterPlanCodeInSearchBox(plan);
 		page.clickSearchButton();
 		
-		return page.isNoRecordsFoundInTable();
+		return page.isNoRecordsFoundInTableView();
 	}
 }

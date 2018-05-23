@@ -26,8 +26,8 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_WALLET_CONFIGURATION, CardManagementNav.L3_WALLET_PLAN })
 public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 
-@Autowired
-private TestContext context;
+	@Autowired
+	private TestContext context;
 
 	private static final Logger logger = LoggerFactory.getLogger(WalletConfigurationWalletPlanPage.class);
 
@@ -87,19 +87,19 @@ private TestContext context;
 	}
 
 	public void selectCurrency(String currency) {
-		WebElementUtils.selectDropDownByVisibleText(currencyDDwn, currency);
+		WebElementUtils.selectDDByVisibleText(currencyDDwn, currency);
 	}
 
 	public void selectProductType(String productType) {
-		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, productType);
+		WebElementUtils.selectDDByVisibleText(productTypeDDwn, productType);
 	}
 
 	public void selectProgramType(String programType) {
-		WebElementUtils.selectDropDownByVisibleText(programTypeDDwn, programType);
+		WebElementUtils.selectDDByVisibleText(programTypeDDwn, programType);
 	}
 
 	public void selectUsage(String usage) {
-		WebElementUtils.selectDropDownByVisibleText(usageDDwn, usage);
+		WebElementUtils.selectDDByVisibleText(usageDDwn, usage);
 	}
 	
 	public void selectMCGLimitPlan(String mcgLimitPlan) {
@@ -113,7 +113,7 @@ private TestContext context;
 		}
 		else
 		{
-		WebElementUtils.selectDropDownByVisibleText(creditPlanDDwn, creditPlan);
+			WebElementUtils.selectDropDownByVisibleText(creditPlanDDwn, creditPlan);
 		}
 	}
 
@@ -124,8 +124,8 @@ private TestContext context;
 		}
 		else
 		{
-		WebElementUtils.selectDropDownByVisibleText(billingCyleCodeDDwn,
-				billingCyleCode);
+			WebElementUtils.selectDropDownByVisibleText(billingCyleCodeDDwn,
+					billingCyleCode);
 		}
 	}
 
@@ -184,7 +184,6 @@ private TestContext context;
 
 		runWithinPopup("Add Wallet Plan", () -> {
 			String productType = walletPlan.getProductType();
-
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
 			inputDescription(walletPlan.getDescription());				
 			selectProductType(productType);
@@ -199,8 +198,8 @@ private TestContext context;
 			waitForPageToLoad(driver());
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			clickNextButton(); // Click on next button
-				clickFinishButton(); // click on finish button
-			});
+			clickFinishButton(); // click on finish button
+		});
 		verifyOperationStatus();
 	}
 
@@ -208,7 +207,7 @@ private TestContext context;
 		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 			selectCreditPlan(walletPlan.getCreditPlan());
 			selectBillingCyleCode(walletPlan.getBillingCyleCode());
-			
+
 		}
 		if (productType.equalsIgnoreCase(ProductType.DEBIT)) {
 			WebElementUtils.enterText(dummyAccountNumberTxt, walletPlan.getDummyAccountNumber());
