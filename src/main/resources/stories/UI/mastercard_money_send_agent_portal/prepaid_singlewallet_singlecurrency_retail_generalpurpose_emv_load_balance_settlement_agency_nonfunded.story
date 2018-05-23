@@ -6,7 +6,7 @@ As an Agent User
 I want to do Initial Load - Load - Reload through agent portal
 
 Meta:
-@StoryName SWSC_MSR_RTLGFT_AGNC_NONFUND
+@StoryName SWSC_EMV_RTLGP_AGNC_NONFUND
 @CR1
 @CardCreation
 @InitialLoadAndLoad
@@ -14,7 +14,7 @@ Meta:
 Scenario: Prepaid - Admin User - Assign Program to Agency
 
 Given user is logged in institution
-And bulk card generation for prepaid magnetic stripe is completed
+And bulk card generation for prepaid emv is completed
 And user sign out from customer portal
 And user is logged in agent portal as admin user
 When user fills information to assign program to agency and submits form
@@ -112,3 +112,12 @@ And user sign out from agent portal
 And user is logged in institution
 And balance in helpdesk updated correctly for prepaid device
 And user sign out from customer portal
+
+
+Scenario: MMS transaction through agent portal
+When user is logged in agent portal as nonfundedagent user
+When user navigates to transfer funds page
+Then transfer funds page is loaded and master detail content title is Transfer Funds
+And TransferFunds page of transactions tab is rendered correctly
+Then user transfer fund through MMS using agent portal
+And user sign out from agent portal

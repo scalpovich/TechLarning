@@ -104,6 +104,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public static final LocalDate futureEndDate = LocalDate.now().plusDays(150);
 
 	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
+	
+	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid transaction type - ";
 
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -643,9 +645,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected void waitAndSearchForRecordToExist() {
 		waitAndSearchForRecordToAppear();
 		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
-		Device device = context.get(ContextConstants.DEVICE);
-		device.setDeviceNumber(deviceNumberFetch.getText());
-		context.put(ContextConstants.DEVICE, device);
 		selectFirstRecord();
 		clickProcessSelectedButton();
 	}

@@ -154,16 +154,19 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		runWithinPopup("Add Wallet Plan", () -> {
 			String productType = walletPlan.getProductType();
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
-			inputDescription(walletPlan.getDescription());				
+			waitForPageToLoad(driver());
+			inputDescription(walletPlan.getDescription());
+			waitForPageToLoad(driver());
 			selectProductType(productType);
 			waitForPageToLoad(driver());
 			selectProgramType(walletPlan.getProgramType());
 			waitForPageToLoad(driver());
 			selectCurrency(walletPlan.getCurrency());
-			waitForPageToLoad(driver());			
-			selectUsage(walletPlan.getUsage());
 			waitForPageToLoad(driver());
+			selectUsage(walletPlan.getUsage());
+
 			fillDetailsBasedOnCardType(walletPlan, productType);
+
 			clickNextButton(); // Click on next button
 			clickFinishButton(); // click on finish button
 		});
@@ -178,13 +181,13 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		runWithinPopup("Add Wallet Plan", () -> {
 			String productType = walletPlan.getProductType();
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
-			inputDescription(walletPlan.getDescription());				
+			inputDescription(walletPlan.getDescription());
 			selectProductType(productType);
 			waitForPageToLoad(driver());
 			selectProgramType(walletPlan.getProgramType());
 			waitForPageToLoad(driver());
 			selectCurrency(walletPlan.getCurrency());
-			waitForPageToLoad(driver());			
+			waitForPageToLoad(driver());
 			selectUsage(walletPlan.getUsage());
 			waitForPageToLoad(driver());
 			fillDetailsBasedOnCardType(walletPlan, productType);
