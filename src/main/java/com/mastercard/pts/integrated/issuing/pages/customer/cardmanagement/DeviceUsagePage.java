@@ -51,11 +51,11 @@ public class DeviceUsagePage extends AbstractBasePage {
 	
 	private static final String FRAME_VIEW_DEVICE_USAGE = "View Device Usage";
 	private static final String FRAME_VIEW_WALLET_USAGE = "View Wallet Usage";
-	private static final String MCG_CODE = "MCG Code";
-	private static final String DAILY_AMOUNT_DOMESTIC_UTILIZED = "Daily Amount Domestic Utilized";
-	private static final String DAILY_VELOCLITY_DOMESTIC_UTILIZED = "Daily Velocity Domestic Utilized";
-	private static final String DAILY_AMOUNT_INTERNATIONAL_UTILIZED = "Daily Amount Intenational Utilized";
-	private static final String DAILY_VELOCLITY_INTERNATIONAL_UTILIZED = "Daily Velocity Intenational Utilized";
+	public static final String MCG_CODE = "MCG Code";
+	public static final String DAILY_AMOUNT_DOMESTIC_UTILIZED = "Daily Amount Domestic Utilized";
+	public static final String DAILY_VELOCLITY_DOMESTIC_UTILIZED = "Daily Velocity Domestic Utilized";
+	public static final String DAILY_AMOUNT_INTERNATIONAL_UTILIZED = "Daily Amount Intenational Utilized";
+	public static final String DAILY_VELOCLITY_INTERNATIONAL_UTILIZED = "Daily Velocity Intenational Utilized";
 
 	public void verifyUiOperationStatus() {
 		logger.info("Device Usage");
@@ -63,7 +63,7 @@ public class DeviceUsagePage extends AbstractBasePage {
 	}
 	
 	public void enterDeviceNumber(DeviceUsage detail){
-		enterValueinTextBox(deviceNumber,"5877653734294114");
+		enterValueinTextBox(deviceNumber,"5887651630829213");
 	}
 	
 	public void navigateToWalletMCGUsage(){
@@ -107,19 +107,16 @@ public class DeviceUsagePage extends AbstractBasePage {
 		return deviceUsageDetails;
 	}
 	
-	public Map<String,String> getWalletMCGUsage(DeviceUsage detail){
+	public Optional<Map<String,String>> getWalletMCGUsage(DeviceUsage detail){
 		enterDeviceNumber(detail);
 		clickSearchButton();
 		viewFirstRecord();
-		runWithinPopup(FRAME_VIEW_DEVICE_USAGE, () ->{
-			viewFirstRecord();	
-			});
-		runWithinPopup(FRAME_VIEW_WALLET_USAGE, () ->{
+		runWithinPopup(FRAME_VIEW_DEVICE_USAGE, () ->viewFirstRecord());
+		switchToIframe(FRAME_VIEW_WALLET_USAGE);
 		navigateToWalletMCGUsage();
-		getWalletMCGUsageData();
-		});
-
-		return null;
+		Optional<Map<String,String>> data = getWalletMCGUsageData();
+		SwitchToDefaultFrame();
+		return data;
 	}
 
 	@Override

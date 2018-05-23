@@ -4,6 +4,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,9 +42,9 @@ public class DeviceUsageWorklow extends MenuFlows {
 		}
 	}
 	
-	public void getWalletMCGUsage(){
+	public Optional<Map<String,String>> getWalletMCGUsage(){
 		DeviceUsage detail = null;
 		DeviceUsagePage page = navigator.navigateToPage(DeviceUsagePage.class);
-		page.getWalletMCGUsage(detail);
+		return page.getWalletMCGUsage(detail);
 	}
 }

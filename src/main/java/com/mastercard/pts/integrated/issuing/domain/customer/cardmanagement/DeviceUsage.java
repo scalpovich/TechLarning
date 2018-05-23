@@ -3,57 +3,46 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
-import com.mastercard.pts.integrated.issuing.utils.ConstantData;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 
 @Component
 public class DeviceUsage {
 
-	private String merchantLocationId;
-	private String merchantLocationDescription;
-	private String merchantId;
-	private String acquireeId;
+	private String transactionAmount;
+	private String walletMCGCode;
+	private String velocity;
+	
+	private static final String TRANSACTION_AMOUNT = "TRANSACTION_AMOUNT";
 	
 	public static DeviceUsage getDeviceUsageDetails(KeyValueProvider provider){
 		DeviceUsage plan = new DeviceUsage();
-		String random =  CustomUtils.randomNumbers(5);
-		plan.setMerchantLocationId(random);
-		plan.setAcquireeId(random);
-		plan.setMerchantId(random);
-		plan.setMerchantLocationDescription(ConstantData.GENERIC_DESCRIPTION);
+		plan.setTransactionAmount(provider.getString(TRANSACTION_AMOUNT));
 		return plan;
 	}
-	public String getMerchantLocationId() {
-		return merchantLocationId;
+
+	public String getTransactionAmount() {
+		return transactionAmount;
 	}
 
-	public void setMerchantLocationId(String merchantLocationId) {
-		this.merchantLocationId = merchantLocationId;
+	public void setTransactionAmount(String transactionAmount) {
+		this.transactionAmount = transactionAmount;
 	}
 
-	public String getMerchantLocationDescription() {
-		return merchantLocationDescription;
+	public String getWalletMCGCode() {
+		return walletMCGCode;
 	}
 
-	public void setMerchantLocationDescription(String merchantLocationDescription) {
-		this.merchantLocationDescription = merchantLocationDescription;
+	public void setWalletMCGCode(String walletMCGCode) {
+		this.walletMCGCode = walletMCGCode;
 	}
 
-	public String getMerchantId() {
-		return merchantId;
+	public String getVelocity() {
+		return velocity;
 	}
 
-	public void setMerchantId(String merchantId) {
-		this.merchantId = merchantId;
+	public void setVelocity(String velocity) {
+		this.velocity = velocity;
 	}
-
-	public String getAcquireeId() {
-		return acquireeId;
-	}
-
-	public void setAcquireeId(String acquireeId) {
-		this.acquireeId = acquireeId;
-	}
-
+	
+	
 
 }

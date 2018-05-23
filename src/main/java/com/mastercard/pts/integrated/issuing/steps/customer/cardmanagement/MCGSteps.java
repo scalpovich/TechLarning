@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import junit.framework.Assert;
 
+import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,7 +35,7 @@ public class MCGSteps {
 		mcgflows.addMCG(mcg);
 	}
 	
-	@When("user creates MCG with MCC")	
+	@Given("user creates MCG with MCC")	
 	public void whenUserCreatesMCGwithMCC() {
 		mcg = MCG.getMCGDetails(provider);
 	    mcgflows.addMCGwithMCC(mcg);

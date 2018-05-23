@@ -170,6 +170,8 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			waitForPageToLoad(driver());			
 			selectUsage(walletPlan.getUsage());
 			waitForPageToLoad(driver());
+			selectMCGLimitPlan(walletPlan.getMcgLimitPlan());
+			waitForPageToLoad(driver());
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			clickNextButton(); // Click on next button
 			clickFinishButton(); // click on finish button

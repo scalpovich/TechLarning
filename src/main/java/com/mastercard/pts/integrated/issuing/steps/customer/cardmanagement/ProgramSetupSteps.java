@@ -31,6 +31,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCCRulePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCG;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCGLimitPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MarketingMessageDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MarketingMessagePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PrepaidStatementPlan;
@@ -111,6 +112,8 @@ public class ProgramSetupSteps {
 	private MCCRulePlan mccRulePlan;
 
 	private PrepaidStatementPlan prepaidStatementPlan;
+	
+	private MCGLimitPlan mcgLimitPlan;
 
 	private static final String CARD_PACKID_GENERATION_TEMPLATE_FOR_DEVICE2 = "CARD_PACKID_GENERATION_TEMPLATE_FOR_DEVICE2";
 
@@ -740,7 +743,8 @@ public class ProgramSetupSteps {
 	public void whenUserFillsWalletPlan(String type) {
 		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
 		walletPlan.setProductType(ProductType.fromShortName(type));
-		walletPlan.setMcgLimitPlan(context.get(ContextConstants.MCG_LIMIT_PLAN));
+		mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
+		walletPlan.setMcgLimitPlan(mcgLimitPlan.getMcgLimitPlanCode());
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			walletPlan.setCreditPlan(context.get(CreditConstants.CREDIT_PLAN));
 			walletPlan.setBillingCyleCode(context.get(CreditConstants.BILLING_CYCLE));
