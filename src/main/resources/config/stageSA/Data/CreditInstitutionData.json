@@ -120,6 +120,47 @@
    "plasticId":"712",
    "pictureCode":"316",
    "corporateClientCode":"27063518131000001"
+   },
+   {
+   "code":"562220",
+   "abbreviation":"LANDBANKISS",
+   "association":"MASTERCARD",
+   "branch":"81463",
+   "cardPackIdGenerationTemplate":"PAN770",
+   "deviceIdGenerationTemplate":"PAN769",
+   "customerType":"Corporate",
+   "embossingVendor":"VENDOR",
+   "interchange":"MASTERCARD",
+   "mastercardPrepaidIssuerBin":"533214",
+   "mastercardDebitIssuerBin":"578624",
+   "mastercardCreditIssuerBin":"587072",
+   "visaPrepaidIssuerBin":"443823",
+   "visaDebitIssuerBin":"418233",
+   "visaCreditIssuerBin":"470386",
+   "plasticId":"567",
+   "pictureCode":"779",
+   "corporateClientCode":"12121218003000051"
+   }
+   ,
+   {
+   "code":"806383",
+   "abbreviation":"LANDBANKMIG",
+   "association":"MASTERCARD",
+   "branch":"15407",
+   "cardPackIdGenerationTemplate":"PAN772",
+   "deviceIdGenerationTemplate":"PAN771",
+   "customerType":"Corporate",
+   "embossingVendor":"VENDOR",
+   "interchange":"MASTERCARD",
+   "mastercardPrepaidIssuerBin":"558201",
+   "mastercardDebitIssuerBin":"520575",
+   "mastercardCreditIssuerBin":"561253",
+   "visaPrepaidIssuerBin":"443823",
+   "visaDebitIssuerBin":"418233",
+   "visaCreditIssuerBin":"470386",
+   "plasticId":"759",
+   "pictureCode":"394",
+   "corporateClientCode":"12121218003000051"
    }
    ]
 }

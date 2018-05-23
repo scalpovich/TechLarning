@@ -493,7 +493,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void verifyOperationStatus() {
-		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
+		WebElement successMessageLbl = new WebDriverWait(driver(), 1000).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
 	}
 
@@ -1161,7 +1161,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public void selectByVisibleText(MCWebElement ele, String optionName) {
 		String optionVisbleText = "";
-		waitUntilSelectOptionsPopulated(ele);
+		//waitUntilSelectOptionsPopulated(ele);
 		List<WebElement> selectedOptions = ele.getSelect().getOptions();
 		for (WebElement element : selectedOptions) {
 			if (element.getText().toUpperCase().contains(optionName.toUpperCase())) {
