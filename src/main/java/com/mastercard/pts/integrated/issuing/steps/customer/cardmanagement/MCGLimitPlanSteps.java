@@ -35,7 +35,6 @@ public class MCGLimitPlanSteps {
 		mcgLimitPlan = mcgLimitPlanWorkflows.createMCGLimitPlanWithDetails(mcgLimitPlan);
 		Assert.assertEquals(ConstantData.RECORD_ADDED_SUCCESSFULLY, mcgLimitPlanWorkflows.getFeedbackText());
 		context.put(ContextConstants.MCG_LIMIT_PLAN, mcgLimitPlan);
-		context.put(ContextConstants.DEVICE,"5887651630829213");
 	}
 
 	@Then("MCG limit plan should get created successfully")
