@@ -17,11 +17,11 @@ public class MCGLimitPlan {
 	private static final String PER_TRANSACTION_AMOUNT = "PER_TRANSACTION_AMOUNT";
 	private static final String PER_TRANSACTION_RESPONSE = "PER_TRANSACTION_RESPONSE";
 	private static final String PER_TRANSACTION_PERCENTAGE_OF_CREDIT_LIMIT = "PER_TRANSACTION_PERCENTAGE_OF_CREDIT_LIMIT";
-	private static final String DAILY_AMOUNT = "DAILY_AMOUNT";
-	private static final String DAILY_RESPONSE = "DAILY_RESPONSE";
+	private static final String MCG_DAILY_AMOUNT = "MCG_DAILY_AMOUNT";
+	private static final String MCG_DAILY_RESPONSE = "MCG_DAILY_RESPONSE";
 	private static final String DAILY_PERCENTAGE_OF_CREDIT_LIMIT = "DAILY_PERCENTAGE_OF_CREDIT_LIMIT";
-	private static final String DAILY_VELOCITY = "DAILY_VELOCITY";
-	private static final String DAILY_VELOCITY_RESPONSE = "DAILY_VELOCITY_RESPONSE";
+	private static final String MCG_DAILY_VELOCITY = "MCG_DAILY_VELOCITY";
+	private static final String MCG_DAILY_VELOCITY_RESPONSE = "MCG_DAILY_VELOCITY_RESPONSE";
 	private static final String PERIODIC_AMOUNT = "PERIODIC_AMOUNT";
 	private static final String PERIODIC_RESPONSE = "PERIODIC_RESPONSE";
 	private static final String PERIODIC_PERCENTAGE_OF_CREDIT_LIMIT = "PERIODIC_PERCENTAGE_OF_CREDIT_LIMIT";
@@ -89,10 +89,10 @@ public class MCGLimitPlan {
 		plan.setEffectiveDate(LocalDate.now().plusDays(1));
 		plan.setEndDate(LocalDate.now().plusDays(100));
 		plan.setToMonthOnBook(TO_MONTH_ON_BOOK);
-		plan.setDailyAmount(provider.getString(DAILY_AMOUNT));
-		plan.setDailyResponse(provider.getString(DAILY_RESPONSE));
-		plan.setDailyVelocity(provider.getString(DAILY_VELOCITY));
-		plan.setDailyVelocityResponse(provider.getString(DAILY_VELOCITY_RESPONSE));
+		plan.setDailyAmount(provider.getString(MCG_DAILY_AMOUNT));
+		plan.setDailyResponse(provider.getString(MCG_DAILY_RESPONSE));
+		plan.setDailyVelocity(provider.getString(MCG_DAILY_VELOCITY));
+		plan.setDailyVelocityResponse(provider.getString(MCG_DAILY_VELOCITY_RESPONSE));
 		return plan;
 	}
 

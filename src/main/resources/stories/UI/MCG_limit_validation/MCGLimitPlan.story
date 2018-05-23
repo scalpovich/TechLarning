@@ -1,8 +1,7 @@
 Narrative:
-In order to achieve something
-As a user
-I want to create surcharge plan
-So that initial data setup is ready
+In order to check mcg limit plan on prepaid emv card
+As an issuer
+I want to authorize transactions for EMV prepaid card
 
 Meta:
 @CreditRegression
@@ -27,7 +26,7 @@ Then user activates device through helpdesk
 Then user sign out from customer portal
 Then embossing file batch was generated in correct format
 
-Scenario: Perform ASI_EMV-RetailGeneralPurposeCard Authorization transaction
+Scenario: Perform EMV-RetailGeneralPurposeCard Purchase transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
