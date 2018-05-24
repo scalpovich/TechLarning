@@ -711,6 +711,7 @@ public class ProgramPage extends AbstractBasePage {
 
 	@Override
 	public void clickFinishButton() {
+		waitForElementVisible(FinishBtn);
 		clickWhenClickable(FinishBtn);
 		SwitchToDefaultFrame();
 	}
