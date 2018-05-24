@@ -2,9 +2,7 @@ package com.mastercard.pts.integrated.issuing.utils;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -12,14 +10,11 @@ import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +23,7 @@ import com.mastercard.pts.integrated.issuing.domain.CSVData;
 public class FileConverter {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileConverter.class);
 	private static final String CSV_EXTN = ".csv";
-	private static final String CONFIG_PATH = "./src/main/resources/config/";
+	public static final String CONFIG_PATH = "./src/main/resources/config/";
 	
 	private String getCellValAsString(Cell cell) {
 		DataFormatter dataFormatter = new DataFormatter();
@@ -42,7 +37,7 @@ public class FileConverter {
 		return (dir.getAbsolutePath() + File.separatorChar + sheet.getSheetName() + CSV_EXTN);
 	}
 
-	private void convertXlsToCsv(Workbook wb, String env) {
+	public void convertXlsToCsv(Workbook wb, String env) {
 		for (int i = 0; i < wb.getNumberOfSheets(); i++) {
 			LOGGER.info("sheetNo -> {} sheetName -> {}", i + 1, wb.getSheetAt(i).getSheetName());
 			Sheet sheet = wb.getSheetAt(i);
@@ -53,7 +48,7 @@ public class FileConverter {
 		LOGGER.info("*** Total {} sheets converted for '{}' environment ***", wb.getNumberOfSheets(), env);
 	}
 
-	private void convertXlsxToCsv(Workbook wb, String env) {
+	public void convertXlsxToCsv(Workbook wb, String env) {
 		for (int i = 0; i < wb.getNumberOfSheets(); i++) {
 			LOGGER.info("sheetNo -> {} sheetName -> {}", i + 1, wb.getSheetAt(i).getSheetName());
 			Sheet sheet = wb.getSheetAt(i);
@@ -134,25 +129,6 @@ public class FileConverter {
 				LOGGER.error("IOException occurred while printing row in CSV file -> {}", row);
 			}
 		});
-	}
-
-	@Test
-	public void convertExcelToCsv() throws IOException, InvalidFormatException {
-		String[] listOfEnvs = { "demo", "automation", "automation2", "stageSA" };
-		String[] dataFiles = { "Data/TestData.xls", /*"TestData/TestData.xlsx"*/ };		
-		for (String env : listOfEnvs) {
-			for (String dataFile : dataFiles) {
-				try (InputStream in = new FileInputStream(
-						String.format("%s%s/%s", CONFIG_PATH, env, dataFile));
-						Workbook wb = WorkbookFactory.create(in)) {
-					if (dataFile.endsWith(".xls")) {
-						convertXlsToCsv(wb, env);
-					} else {
-						convertXlsxToCsv(wb, env);
-					}
-				}
-			}
-		}
 	}
 
 }
