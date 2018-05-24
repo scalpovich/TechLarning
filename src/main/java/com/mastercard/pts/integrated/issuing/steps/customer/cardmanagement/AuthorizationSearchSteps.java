@@ -2,6 +2,9 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import static org.junit.Assert.assertThat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Then;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,17 @@ public class AuthorizationSearchSteps {
 	public void thenUserSearchDeviceNumerWithTodaysDate(String type, String state) {
 		Device device = context.get(ContextConstants.DEVICE);
 		authorizationSearchWorkflow.verifyAuthTransactionSearch(type, state, device.getDeviceNumber());
+	}
+
+	@Then("assert $response response with $code AuthDecline Code and $description as description")
+	public void thenAssertStateOnAuthSearchScreen(String response, String code, String description) {
+		List<String> authStatus = new ArrayList<>();
+		authStatus.add(response);
+		authStatus.add(code);
+		authStatus.add(description);
+		Device device = context.get(ContextConstants.DEVICE);
+//		authorizationSearchWorkflow.verifyStateAuthSearch(device.getDeviceNumber(), authStatus);
+		authorizationSearchWorkflow.verifyStateAuthSearch("5887650126940716", authStatus);
 	}
 
 	@Then("verify transaction currency as $tcurrency and billing currency as $bcurrency on auth search")

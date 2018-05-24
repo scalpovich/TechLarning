@@ -1,6 +1,6 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -144,4 +144,9 @@ public class AuthorizationSearchWorkflow {
 		assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
 	}
 
+	public void verifyStateAuthSearch(String deviceNumber, List<String> authStatus) {
+		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
+		List<String> actualAuthStatus = page.verifyState(deviceNumber);
+		assertTrue(String.format("Response, Auth Code and Auth Description does not match. Expecting %s. Actual %s", authStatus, actualAuthStatus), actualAuthStatus.containsAll(authStatus));
+	}
 }

@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -152,6 +154,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	@Value("${linux.WinSCPTool.Path}")
 	private String winSCPPath;
 
+	public WiniumDriver getWiniumDriver() {
+		return winiumDriver;
+	}
+
 	public void initiateSettlementForAgency(String branchID, String programCode) {
 		ispage = navigator.navigateToPage(InitiateSettlementPage.class);
 		ispage.initiateSettlementForAgency(branchID, programCode);
@@ -277,9 +283,13 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		if (simulator.toUpperCase().contains("FINSIM")) {
 			launchAndConnectToFinSim();
 		} else if (simulator.toUpperCase().contains("MAS")) {
+			SimulatorUtilities.takeScreenShot(winiumDriver, simulator + new Object() {
+			}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 			selectLicenseAndConfigure(SimulatorConstantsData.SELECT_MAS_LICENSE, SimulatorConstantsData.MAS_LICENSE_TYPE);
 			wait(4000);
 			connect2IPSHostModeAndConfigureIP("MAS");
+			SimulatorUtilities.takeScreenShot(winiumDriver, new Object() {
+			}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 		} else if (simulator.toUpperCase().contains("MCPS")) {
 			launchAndConnectToMCPS();
 		} else if (simulator.toUpperCase().contains("MDFS")) {
@@ -290,6 +300,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		} else if (simulator.toUpperCase().contains("VISA")) {
 			connectAndStartVtsCommunication();
 		}
+
+		SimulatorUtilities.takeScreenShot(winiumDriver, simulator + new Object() {
+		}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 	}
 
 	public void startWiniumDriverWithSimulator(String serviceName) {
@@ -299,9 +312,15 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			Runtime.getRuntime().exec(path, null, new File(path.replace("Winium.Desktop.Driver.exe", "")));
 			wait(3000);
 			winiumDriver = new WiniumDriver(new URL("http://localhost:9999"), options);
+			SimulatorUtilities.takeScreenShot(winiumDriver, new Object() {
+			}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 			wait(8000);
+			SimulatorUtilities.takeScreenShot(winiumDriver, new Object() {
+			}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 		} catch (Exception e) {
 			logger.debug("Exception occurred while starting Winium", e);
+			SimulatorUtilities.takeScreenShot(winiumDriver, new Object() {
+			}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 			throw MiscUtils.propagate(e);
 		}
 	}
@@ -863,6 +882,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			configureTestOptionsHostAndIP(tool);
 			reconnect2IpsHostTestMode(tool);
 		} catch (FindFailed e) {
+			SimulatorUtilities.takeScreenShot(winiumDriver, new Object() {
+			}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 			throw MiscUtils.propagate(e);
 		}
 	}
@@ -879,12 +900,20 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void reconnect2IpsHostTestMode(String tool) {
 		clickTestMode(tool);
+		SimulatorUtilities.takeScreenShot(winiumDriver, new Object() {
+		}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 		reSelectLicense(tool);
 		wait(10000);
+		SimulatorUtilities.takeScreenShot(winiumDriver, new Object() {
+		}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 		while (getWindowButtonCount() > 0) {
 			winiumClickOperation("OK");
+			SimulatorUtilities.takeScreenShot(winiumDriver, new Object() {
+			}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 			selectLicense(tool);
 			wait(5000);
+			SimulatorUtilities.takeScreenShot(winiumDriver, new Object() {
+			}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 		}
 	}
 
@@ -906,6 +935,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(15000);
 		waitForExepectedCondition("CONNECTED");
 		wait(15000);
+		SimulatorUtilities.takeScreenShot(winiumDriver, new Object() {
+		}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 	}
 
 	private void connect2IpsHostTestModeOnMdfs() throws FindFailed {
@@ -1080,6 +1111,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public void closeSimulator(String name) {
+		if (winiumDriver != null)
+			SimulatorUtilities.takeScreenShot(winiumDriver, new Object() {
+			}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 		winiumDriver = null;
 
 		if (name.equalsIgnoreCase("MAS")) {
@@ -1105,12 +1139,20 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private void configureTestOptionsHostAndIP(String tool) {
 		try {
 			clickTestOptions(tool);
+			SimulatorUtilities.takeScreenShot(winiumDriver, new Object() {
+			}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 			String ipAdd = simulator.getIpAddress();
 			String[] ip = ipAdd.split("\\.");
 			winiumClickOperation("TCP/IP");
+			SimulatorUtilities.takeScreenShot(winiumDriver, new Object() {
+			}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 			setMasIp(ip);
+			SimulatorUtilities.takeScreenShot(winiumDriver, new Object() {
+			}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 		} catch (Exception e) {
 			logger.debug(ConstantData.EXCEPTION, e);
+			SimulatorUtilities.takeScreenShot(winiumDriver, new Object() {
+			}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 			MiscUtils.propagate(e);
 		}
 	}
@@ -1287,10 +1329,14 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private void selectLicense() {
+		SimulatorUtilities.takeScreenShot(winiumDriver, new Object() {
+		}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 		WebElement dd = winiumDriver.findElementById("comboBox1");
 		ComboBox box = new ComboBox(dd);
 		box.expand();
 		dd.findElement(By.name("IPS Host Testing")).click();
+		SimulatorUtilities.takeScreenShot(winiumDriver, new Object() {
+		}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 	}
 
 	private void selectLicense(String tool) {
@@ -1385,14 +1431,19 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public void clickTestMode(String tool) {
-		if (!isContains(tool, "mdfs"))
+		if (!isContains(tool, "mdfs")) {
+			SimulatorUtilities.takeScreenShot(winiumDriver, new Object() {
+			}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 			executeAutoITExe(CLICK_TEST_MODE + SEPERATOR + SimulatorConstantsData.MAS_PARENT_HANDLE + "\"");
-		else
+			SimulatorUtilities.takeScreenShot(winiumDriver, new Object() {
+			}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
+		} else
 			clickTestModeOnMdfs();
 	}
 
 	public void clickTestModeOnMdfs() {
 		executeAutoITExe(CLICK_TEST_MODE + SEPERATOR + SimulatorConstantsData.MDFS_PARENT_HANDLE + "\"");
+		SimulatorUtilities.takeScreenShot(winiumDriver, new Object() {}.getClass().getEnclosingMethod().getName() + "_" +new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 	}
 
 	public void clickTestPreparations(String tool) {

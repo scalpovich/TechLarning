@@ -43,7 +43,8 @@ public class DeviceUsageWorklow extends MenuFlows {
 		if (tab.equalsIgnoreCase(TRANSACTION)) {
 			list.clear();
 			list = page.getDeviceTransactionUsage(cardNumber);
-			String expectedResult = context.get(ConstantData.TRANSACTION_AMOUNT);
+//			String expectedResult = context.get(ConstantData.TRANSACTION_AMOUNT);
+			String expectedResult = "10.00";
 			for (String actualResult : list) {
 				logger.info("Actual Result TRANSACTION :: {}", actualResult);
 				logger.info("Expected Result TRANSACTION :: {}", expectedResult);
