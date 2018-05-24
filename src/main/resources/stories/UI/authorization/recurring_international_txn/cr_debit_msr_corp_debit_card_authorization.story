@@ -7,7 +7,7 @@ I want to create a msr Corporate debit card for client
 
 Meta:
 @StoryName d_msr_corp
-@CRCardsWithAuthorizationCashAdvancedWithClearing
+@RecurringWithPin_INT
 
 Scenario: Setup - debit msr corp debit card
 Given user is logged in institution

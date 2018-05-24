@@ -299,7 +299,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		SimulatorUtilities.wait(500);
 		clickWhenClickable(nextBtn);
 		SimulatorUtilities.wait(500);
-		WebElementUtils.addWicketAjaxListeners(driver());
+		//WebElementUtils.addWicketAjaxListeners(driver());
 	}
 
 	protected void clickAddNewButton() {

@@ -7,8 +7,7 @@ I want to create an magnetic stripe prepaid card pinless and perform various tra
 
 Meta:
 @StoryName prepaid_msr_retail_gift
-@oldReferenceSheet_prepaid_msr
-@CRCardsWithAuthorizationCashAdvancedWithClearing
+@RecurringWithoutPin
 
 Scenario: Set up prepaid msr retail gift card authorization pinless
 Meta:

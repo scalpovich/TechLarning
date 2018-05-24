@@ -7,8 +7,7 @@ I want to authorize transactions for prepaid msr retail general purpose card
 
 Meta:
 @StoryName p_msr_retail_gen_purpose
-@oldReferenceSheet_prepaid_msr
-@CRCardsWithAuthorizationCashAdvancedWithClearing
+@RecurringWithPin_INT
 
 Scenario: Set up prepaid msr retail general purpose card
 Meta:

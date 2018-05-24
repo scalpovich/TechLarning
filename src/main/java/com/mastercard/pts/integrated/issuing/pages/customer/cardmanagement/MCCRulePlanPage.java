@@ -51,7 +51,7 @@ public class MCCRulePlanPage extends AbstractBasePage {
 		clickAddNewButton();
 	
 		runWithinPopup("Add MCC Rule Plan", () -> {
-			waitForPageToLoad(driver());
+		//	waitForPageToLoad(driver());
 			WebElementUtils.elementToBeClickable(planCodeTxt);
 			WebElementUtils.enterText(planCodeTxt, plan.getMccRulePlanCode());
 			WebElementUtils.elementToBeClickable(descriptionTxt);

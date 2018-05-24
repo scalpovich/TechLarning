@@ -7,8 +7,7 @@ I want to authorize transactions for prepaid msr corp travel card card
 
 Meta:
 @StoryName p_msr_corp_travel
-@oldReferenceSheet_S203707
-@CRCardsWithAuthorizationCashAdvancedWithClearing
+@RecurringWithPin
 
 
 Scenario: Set up prepaid msr corporate travel card

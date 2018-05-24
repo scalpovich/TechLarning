@@ -7,8 +7,7 @@ I want to authorize transactions for prepaid msr retail travel card
 
 Meta:
 @StoryName p_msr_retail_travel
-@oldReferenceSheet_prepaid_msr
-@CRCardsWithAuthorizationCashAdvancedWithClearing
+@RecurringWithoutPin_INT
 
 Scenario: Set up prepaid msr retail travel card
 Meta:
