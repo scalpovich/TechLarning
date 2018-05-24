@@ -444,15 +444,15 @@ public class DeviceRangePage extends AbstractBasePage {
 		}
 		else if(program.getProduct().toUpperCase().contains(ProductType.PREPAID.toUpperCase()) && program.getInterchange().toUpperCase().contains("VISA"))
 		{
-			deviceRange.setIssuerBin(valuesInJsonNotInExcel.getMastercardPrepaidIssuerBin());
+			deviceRange.setIssuerBin(valuesInJsonNotInExcel.getVisaPrepaidIssuerBin());
 		}
 		else if(program.getProduct().toUpperCase().contains(ProductType.DEBIT.toUpperCase()) && program.getInterchange().toUpperCase().contains("VISA"))
 		{
-			deviceRange.setIssuerBin(valuesInJsonNotInExcel.getMastercardDebitIssuerBin());
+			deviceRange.setIssuerBin(valuesInJsonNotInExcel.getVisaDebitIssuerBin());
 		}
 		else if(program.getProduct().toUpperCase().contains(ProductType.CREDIT.toUpperCase()) && program.getInterchange().toUpperCase().contains("VISA"))
 		{
-			deviceRange.setIssuerBin(valuesInJsonNotInExcel.getMastercardCreditIssuerBin());
+			deviceRange.setIssuerBin(valuesInJsonNotInExcel.getVisaCreditIssuerBin());
 		}
 		if (deviceRange.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			selectByVisibleText(issuerBinDDwn, deviceRange.getIssuerBin());
