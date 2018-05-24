@@ -1,0 +1,2 @@
+TCName,AppURL,InstitutionName,institute,ReportName,Operation,UserID,ScreenName,FileType,ReportGenerationMode,UserId,Password
+TC_validate_Audit_Report,https://stage.sa.eis.customer.mastercard.com/mpts/eis/app,AUTOBNK [110088],110088,Audit Report,MODIFY,ravindra1,INSTITUTION,PDF Format [pdf],Online [O],ravindra1,1122
