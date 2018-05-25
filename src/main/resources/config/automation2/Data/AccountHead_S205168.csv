@@ -1,0 +1,4 @@
+TCName,InstitutionName,Account Code,Account Head,Status,ModifiedAccountHead,ErrorMessage
+TC01_AccountHead,COSDEBIT [123456],99,New Account Head 99,Active [A],Modified Account Head,Information with same Account Head already exists.
+TC02_AccountHead,COSDEBIT [123456],30," Account Head 30",Active [A],,Suspense A/C Status cannot be set to 'Inactive'.
+TC03_AccountHead,COSDEBIT [123456],30," Account Head 30",Active [A],,Information with same Account Head already exists.

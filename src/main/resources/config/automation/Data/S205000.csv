@@ -1,0 +1,5 @@
+TCName,InstitutionName,InterchangeType,ProductType,PresentTimeLimit,BaseCurrency,NetworkDescription,TransactionType,UserName,CutOverHours,CutOverMins
+TC264485_Adding Rupay Bank Network Configuration,BNK [000000],Rupay [06],Debit [D],50,INR [356],Rupayupdated,,,,
+TC264211_Rupay Interchange Card Type options validation,VST [102030],Rupay [06],Debit [D],50,INR [356],Rupayupdated,,,05 [05],08 [08]
+TC265498_RPY008 -- ATM Online Transaction Set in SMS Mode -- Transaction Registration at Processor Level,BNK [000000],Rupay [06],Debit [D],,,,,,,
+TC265538_RPY009 -- ATM Online Transaction Set in SMS Mode -- Transaction Registration at Institution Level_select and enable or disable transactions at institute level,VST [102030],Rupay [06],Debit [D],,,,Balance Inquiry,,,

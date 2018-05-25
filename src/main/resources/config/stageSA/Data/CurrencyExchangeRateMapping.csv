@@ -1,0 +1,2 @@
+TCName,AppURL,UserId,Password,InstitutionName,Transaction Source,Rate Origin,Program,Transaction Type,Rate Type,RateTypeValues
+TC_AddCurrencyExchangeRatesMapping,http://10.168.129.89:25003/integratedIssuing-customerPortal/mpts/app/Login?0,abhijeet,abc,COSTEST [123456],System [S],Bank [B],CORPORATE TRAVEL CARD MULTI CURRENCY [P00005],Balance Refund [32],Buy,Buy

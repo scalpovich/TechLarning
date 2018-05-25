@@ -1,36 +1,36 @@
 package com.mastercard.pts.integrated.issuing.utils;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class TestContext {
 	public String data;
-	private HashMap<String, String> currentStoryTestData;
-	private HashMap<String, String> iteratedTestData;
-	private HashMap<String, String> applicationUploadData;
+	private Map<String, String> currentStoryTestData;
+	private Map<String, String> iteratedTestData;
+	private Map<String, String> applicationUploadData;
 
 	public void fnSetCurrentStoryTestData(
-			HashMap<String, String> currentStoryTestData) {
+			Map<String, String> currentStoryTestData) {
 		this.currentStoryTestData = currentStoryTestData;
 	}
 
-	public HashMap<String, String> fnGetCurrentStoryTestData() {
+	public Map<String, String> fnGetCurrentStoryTestData() {
 		return currentStoryTestData;
 	}
 
-	public HashMap<String, String> getIteratedTestData() {
+	public Map<String, String> getIteratedTestData() {
 		return iteratedTestData;
 	}
 
-	public void setIteratedTestData(HashMap<String, String> iteratedTestData) {
+	public void setIteratedTestData(Map<String, String> iteratedTestData) {
 		this.iteratedTestData = iteratedTestData;
 	}
 
-	public HashMap<String, String> getApplicationUploadData() {
+	public Map<String, String> getApplicationUploadData() {
 		return applicationUploadData;
 	}
 
 	public void setApplicationUploadData(
-			HashMap<String, String> applicationUploadData) {
+			Map<String, String> applicationUploadData) {
 		this.applicationUploadData = applicationUploadData;
 	}
 	
