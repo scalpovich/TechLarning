@@ -266,7 +266,7 @@ public class GeneralPage extends AbstractBasePage {
 		switchToIframe(Constants.EMAIL_SMS_ACTIVE_DEACTIVE);
 		if (status.equalsIgnoreCase(activeStatus)) {
 			waitForElementVisible(this.Operation_EmailAlertDdwn);
-			SelectDropDownByText(this.Operation_EmailAlertDdwn, activate);
+			selectDropDownByText(this.Operation_EmailAlertDdwn, activate);
 			if (type.equalsIgnoreCase(emailType)) {
 				emailAlertsCheckBox.click();
 			} else if (type.equalsIgnoreCase(smsType)) {
@@ -274,7 +274,7 @@ public class GeneralPage extends AbstractBasePage {
 			}
 		} else if (status.equalsIgnoreCase(deactiveStatus)) {
 			waitForElementVisible(this.Operation_EmailAlertDdwn);
-			SelectDropDownByText(this.Operation_EmailAlertDdwn, deactivate);
+			selectDropDownByText(this.Operation_EmailAlertDdwn, deactivate);
 			if (type.equalsIgnoreCase(emailType)) {
 				emailAlertsCheckBox.click();
 			} else if (type.equalsIgnoreCase(smsType)) {
@@ -287,7 +287,7 @@ public class GeneralPage extends AbstractBasePage {
 	public void selectServiceCode(String servicecode) {
 		waitForElementVisible(this.serviceCodeDDwn);
 		List<String> aa = CustomUtils.getAllOptionsOfDropDown(this.serviceCodeDDwn);
-		SelectDropDownByText(this.serviceCodeDDwn, servicecode);
+		selectDropDownByText(this.serviceCodeDDwn, servicecode);
 		CustomUtils.ThreadDotSleep(5000);
 		// waitForElementVisible(serviceCodeGoBtn);
 		Scrolldown(serviceCodeGoBtn);
@@ -297,11 +297,11 @@ public class GeneralPage extends AbstractBasePage {
 
 	public void addOnCardRequest(EventAndAlerts eventAndAlerts) {
 		switchToIframe(Constants.ADD_ON_CARD);
-		SelectDropDownByText(this.title, eventAndAlerts.getTitle());
+		selectDropDownByText(this.title, eventAndAlerts.getTitle());
 		enterText(firstName, eventAndAlerts.getFirstName());
 		enterText(embName, eventAndAlerts.getEmbossedName());
 		enterText(familyName, eventAndAlerts.getFamilyName());
-		SelectDropDownByText(this.relation, eventAndAlerts.getRelation());
+		selectDropDownByText(this.relation, eventAndAlerts.getRelation());
 		addNotes(helpdeskgettersetter.getNoteText());
 	}
 
@@ -310,7 +310,7 @@ public class GeneralPage extends AbstractBasePage {
 		enterText(changeRequestAddressLine1, changeAddressRequest.getAddressLine1());
 		enterText(changeRequestAddressLine2, changeAddressRequest.getAddressLine2());
 		CustomUtils.ThreadDotSleep(500);
-		SelectDropDownByText(this.changeRequestCountryDdwn, changeAddressRequest.getCountry());
+		selectDropDownByText(this.changeRequestCountryDdwn, changeAddressRequest.getCountry());
 		CustomUtils.ThreadDotSleep(500);
 		enterText(changeRequestZipCode, changeAddressRequest.getZipCode());
 		CustomUtils.ThreadDotSleep(500);
@@ -366,7 +366,7 @@ public class GeneralPage extends AbstractBasePage {
 	public void selectReasonForStopListing(String iFrameName, String reason) {
 
 		waitForElementVisible(SelectReason(iFrameName));
-		SelectDropDownByText(reasonDDwn, reason);
+		selectDropDownByText(reasonDDwn, reason);
 
 	}
 
@@ -382,8 +382,8 @@ public class GeneralPage extends AbstractBasePage {
 	}
 
 	public void activateDeactivateEComm(String status, String notes, String type) {
-		SelectDropDownByText(internationalOperationDDwn, status);
-		SelectDropDownByText(internationalActivatioTypeDDwn, type);
+		selectDropDownByText(internationalOperationDDwn, status);
+		selectDropDownByText(internationalActivatioTypeDDwn, type);
 
 		if (status.equalsIgnoreCase("activate")) {
 

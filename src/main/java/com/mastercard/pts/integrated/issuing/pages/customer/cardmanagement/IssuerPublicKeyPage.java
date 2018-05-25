@@ -129,7 +129,7 @@ public class IssuerPublicKeyPage extends AbstractBasePage {
 	}
 
 	public void selectStatus(IssuerPublicKey ipk) {
-		SelectDropDownByText(statusDDwn, ipk.getStatus());
+		selectDropDownByText(statusDDwn, ipk.getStatus());
 	}
 	
 	@Override
