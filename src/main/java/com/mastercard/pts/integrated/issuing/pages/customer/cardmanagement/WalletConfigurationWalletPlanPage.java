@@ -158,16 +158,17 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			selectProductType(productType);
 			waitForPageToLoad(driver());
 			selectProgramType(walletPlan.getProgramType());
-			waitForPageToLoad(driver());
+			SimulatorUtilities.wait(4000);
 			selectCurrency(walletPlan.getCurrency());
-			waitForPageToLoad(driver());			
+			SimulatorUtilities.wait(1000);			
 			selectUsage(walletPlan.getUsage());
-			waitForPageToLoad(driver());
+			SimulatorUtilities.wait(1000);
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			clickNextButton(); // Click on next button
 			clickFinishButton(); // click on finish button
 		});
 		verifyOperationStatus();
+		
 	}
 
 	// Method to fill data in Add Wallet Plan Data
@@ -182,11 +183,11 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			selectProductType(productType);
 			waitForPageToLoad(driver());
 			selectProgramType(walletPlan.getProgramType());
-			waitForPageToLoad(driver());
+			SimulatorUtilities.wait(4000);
 			selectCurrency(walletPlan.getCurrency());
-			waitForPageToLoad(driver());			
+			SimulatorUtilities.wait(1000);			
 			selectUsage(walletPlan.getUsage());
-			waitForPageToLoad(driver());
+			SimulatorUtilities.wait(1000);
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			clickNextButton(); // Click on next button
 			clickFinishButton(); // click on finish button
