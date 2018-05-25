@@ -7,24 +7,29 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 @Component
 public class DeviceUsage {
 
-	private String transactionAmount;
+	private String nextTransactionAmount;
 	private String walletMCGCode;
-	private String velocity;
+	private int velocity;
+	private String deviceNumber;
 	
-	private static final String TRANSACTION_AMOUNT = "TRANSACTION_AMOUNT";
+	private static final String NEXT_TRANSACTION_AMOUNT = "NEXT_TRANSACTION_AMOUNT";
 	
 	public static DeviceUsage getDeviceUsageDetails(KeyValueProvider provider){
 		DeviceUsage plan = new DeviceUsage();
-		plan.setTransactionAmount(provider.getString(TRANSACTION_AMOUNT));
+		plan.setTransactionAmount(provider.getString(NEXT_TRANSACTION_AMOUNT));
 		return plan;
 	}
-
-	public String getTransactionAmount() {
-		return transactionAmount;
+	
+	public DeviceUsage(){
+		this.velocity = 1;
 	}
 
-	public void setTransactionAmount(String transactionAmount) {
-		this.transactionAmount = transactionAmount;
+	public String getNextTransactionAmount() {
+		return nextTransactionAmount;
+	}
+
+	public void setTransactionAmount(String nextTransactionAmount) {
+		this.nextTransactionAmount = nextTransactionAmount;
 	}
 
 	public String getWalletMCGCode() {
@@ -36,13 +41,19 @@ public class DeviceUsage {
 	}
 
 	public String getVelocity() {
-		return velocity;
+		return String.valueOf(velocity);
 	}
 
-	public void setVelocity(String velocity) {
-		this.velocity = velocity;
+	public void setVelocity() {
+		++velocity;
 	}
-	
-	
+
+	public String getDeviceNumber() {
+		return deviceNumber;
+	}
+
+	public void setDeviceNumber(String deviceNumber) {
+		this.deviceNumber = deviceNumber;
+	}
 
 }

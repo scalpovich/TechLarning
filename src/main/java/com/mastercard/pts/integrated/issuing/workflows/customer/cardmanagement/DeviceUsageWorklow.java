@@ -27,12 +27,14 @@ public class DeviceUsageWorklow extends MenuFlows {
 
 	@Autowired
 	private TestContext context;
+	
+	DeviceUsagePage page;
 
 	private static final Logger logger = LoggerFactory.getLogger(DeviceUsageWorklow.class);
 
 
 	public void deviceUsageVerification(String cardNumber) {
-		DeviceUsagePage page = navigator.navigateToPage(DeviceUsagePage.class);
+	    page = navigator.navigateToPage(DeviceUsagePage.class);
 		List<String> list = page.getDeviceTotalTransactionUsage(cardNumber);
 		String expectedResult = context.get(ConstantData.TRANSACTION_AMOUNT);
 		for (String actualResult : list) {
@@ -42,9 +44,8 @@ public class DeviceUsageWorklow extends MenuFlows {
 		}
 	}
 	
-	public Optional<Map<String,String>> getWalletMCGUsage(){
-		DeviceUsage detail = null;
-		DeviceUsagePage page = navigator.navigateToPage(DeviceUsagePage.class);
-		return page.getWalletMCGUsage(detail);
+	public Optional<Map<String,String>> getWalletMCGUsage(DeviceUsage deviceUsage){
+		page = navigator.navigateToPage(DeviceUsagePage.class);
+		return page.getWalletMCGUsage(deviceUsage);
 	}
 }

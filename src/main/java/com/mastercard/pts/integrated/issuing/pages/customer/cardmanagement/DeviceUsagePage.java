@@ -63,7 +63,7 @@ public class DeviceUsagePage extends AbstractBasePage {
 	}
 	
 	public void enterDeviceNumber(DeviceUsage detail){
-		enterValueinTextBox(deviceNumber,"5887651630829213");
+		enterValueinTextBox(deviceNumber,detail.getDeviceNumber());
 	}
 	
 	public void navigateToWalletMCGUsage(){
@@ -114,9 +114,7 @@ public class DeviceUsagePage extends AbstractBasePage {
 		runWithinPopup(FRAME_VIEW_DEVICE_USAGE, () ->viewFirstRecord());
 		switchToIframe(FRAME_VIEW_WALLET_USAGE);
 		navigateToWalletMCGUsage();
-		Optional<Map<String,String>> data = getWalletMCGUsageData();
-		SwitchToDefaultFrame();
-		return data;
+		return getWalletMCGUsageData();
 	}
 
 	@Override

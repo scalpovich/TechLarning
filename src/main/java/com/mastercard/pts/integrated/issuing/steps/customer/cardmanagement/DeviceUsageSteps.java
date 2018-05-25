@@ -32,6 +32,9 @@ public class DeviceUsageSteps {
 	private MCGLimitPlan mcgLimitPlan;
 	
     private DeviceUsage deviceUsage;
+    
+    private Device device;
+    
 
 	@Then("user searches device on device usage screen and performs assertions on device tool usage and device transaction usage tabs")
 	public void whenUserSearchesDeviceOnDeviceUsageScreen() {
@@ -42,16 +45,24 @@ public class DeviceUsageSteps {
 	@Then("verify the MCG Limit in Device Usage Screen")
 	public void userDeviceUsage(){
 		mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
+		device = context.get(ContextConstants.DEVICE);
 		deviceUsage = DeviceUsage.getDeviceUsageDetails(provider);
-		deviceUsage.setVelocity("1");
-		Optional<Map<String,String>> data = deviceUsageWorkflow.getWalletMCGUsage();
+		deviceUsage.setDeviceNumber(device.getDeviceNumber());
+		Optional<Map<String,String>> data = deviceUsageWorkflow.getWalletMCGUsage(deviceUsage);
+		
 		if(data.isPresent()){
 		Assert.assertEquals(mcgLimitPlan.getMcgCode(),data.get().get(DeviceUsagePage.MCG_CODE));
-		Assert.assertEquals(deviceUsage.getTransactionAmount(),data.get().get(DeviceUsagePage.DAILY_AMOUNT_DOMESTIC_UTILIZED));
+		Assert.assertEquals(device.getTransactionAmount(),data.get().get(DeviceUsagePage.DAILY_AMOUNT_DOMESTIC_UTILIZED));
 		Assert.assertEquals(deviceUsage.getVelocity(),data.get().get(DeviceUsagePage.DAILY_VELOCLITY_DOMESTIC_UTILIZED));
 		}
 		else
 			Assert.assertTrue("No Transaction was recored under MCG usuage", data.isPresent());
+		
+		if(device.getTransactionAmount()!=deviceUsage.getNextTransactionAmount()){
+			device.setTransactionAmount(deviceUsage.getNextTransactionAmount());
+			deviceUsage.setVelocity();
+			context.put(ContextConstants.DEVICE, device);
+		}
 	}
 	
 }

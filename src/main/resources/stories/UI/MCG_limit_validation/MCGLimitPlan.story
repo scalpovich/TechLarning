@@ -26,7 +26,7 @@ Then user activates device through helpdesk
 Then user sign out from customer portal
 Then embossing file batch was generated in correct format
 
-Scenario: Perform EMV-RetailGeneralPurposeCard Purchase transaction
+Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 1st transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
@@ -35,4 +35,13 @@ And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 Then verify the MCG Limit in Device Usage Screen
+
+Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 2nd transaction
+Given connection to MAS is established
+When perform an EMV_PURCHASE MAS transaction
+Then MAS test results are verified
+And MAS simulator is closed
+And user is logged in institution
+And search Purchase authorization and verify 000-Successful status
+And user sign out from customer portal
 
