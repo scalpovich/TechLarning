@@ -1,2 +1,2 @@
-Currency_Code,Effective_Date,End_Date,Refund_Tolerance_Unit
-INR [356],10/06/2018,10/06/2020,4
+Currency_Code,Effective_Date,End_Date,Refund_Tolerance_Unit,INTERCHANGE
+INR [356],10/06/2018,10/06/2020,4,MASTERCARD [02]

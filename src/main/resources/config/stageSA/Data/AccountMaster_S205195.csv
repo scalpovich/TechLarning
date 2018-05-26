@@ -1,3 +1,3 @@
-TCName,InstitutionName,Account Code,Account Head,Status,ErrorMessage
-TC01_SuspenseAccount,COSDEBIT [123456],0,Suspense Account,Active [A],Suspense A/C Status cannot be set to 'Inactive'.
-TC02_SuspenseAccount,COSDEBIT [123456],0,Suspense,Active [A],Suspense A/C Status cannot be set to 'Inactive'.
+TCName,InstitutionName,Account Code,Account Head,Status,ErrorMessage,INTERCHANGE
+TC01_SuspenseAccount,COSDEBIT [123456],0,Suspense Account,Active [A],Suspense A/C Status cannot be set to 'Inactive'.,MASTERCARD [02]
+TC02_SuspenseAccount,COSDEBIT [123456],0,Suspense,Active [A],Suspense A/C Status cannot be set to 'Inactive'.,MASTERCARD [02]

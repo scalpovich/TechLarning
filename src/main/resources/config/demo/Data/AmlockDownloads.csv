@@ -1,8 +1,8 @@
-TCName,AppURL,UserId,Password,InstitutionName,Program
-TC417600_Additional field for Customer Master Download file,http://ech-10-168-128-210.mastercard.int:25003/integratedIssuing-customerPortal/mpts/app/Login?0,Rohan,abc,CENTAURUS [554466],Prepaid Program [PP01]
-TC417601_Additional field for Acount Master Download file,http://ech-10-168-128-210.mastercard.int:25003/integratedIssuing-customerPortal/mpts/app/Login?0,Rohan,abc,CENTAURUS [554466],Prepaid Program [PP01]
-TC417602_Additional field for Transaction Master Download file,http://ech-10-168-128-210.mastercard.int:25003/integratedIssuing-customerPortal/mpts/app/Login?0,Rohan,abc,CENTAURUS [554466],Prepaid Program [PP01]
-TC417604_Additional field for Customer Account Relations Download file,http://ech-10-168-128-210.mastercard.int:25003/integratedIssuing-customerPortal/mpts/app/Login?1,Rohan,abc,CENTAURUS [554466],Prepaid Program [PP01]
-TC417605_Additional field for Account Status Audit Download file,http://ech-10-168-128-210.mastercard.int:25003/integratedIssuing-customerPortal/mpts/app/Login?2,Rohan,abc,CENTAURUS [554466],Prepaid Program [PP01]
-TC417606_Additional field for Transaction Type Master Download file,http://ech-10-168-128-210.mastercard.int:25003/integratedIssuing-customerPortal/mpts/app/Login?3,Rohan,abc,CENTAURUS [554466],Prepaid Program [PP01]
-TC417607_Additional field for Employee Master User Download file,http://ech-10-168-128-210.mastercard.int:25003/integratedIssuing-customerPortal/mpts/app/Login?4,Rohan,abc,CENTAURUS [554466],Prepaid Program [PP01]
+TCName,AppURL,UserId,Password,InstitutionName,Program,INTERCHANGE
+TC417600_Additional field for Customer Master Download file,http://ech-10-168-128-210.mastercard.int:25003/integratedIssuing-customerPortal/mpts/app/Login?0,Rohan,abc,CENTAURUS [554466],Prepaid Program [PP01],MASTERCARD [02]
+TC417601_Additional field for Acount Master Download file,http://ech-10-168-128-210.mastercard.int:25003/integratedIssuing-customerPortal/mpts/app/Login?0,Rohan,abc,CENTAURUS [554466],Prepaid Program [PP01],MASTERCARD [02]
+TC417602_Additional field for Transaction Master Download file,http://ech-10-168-128-210.mastercard.int:25003/integratedIssuing-customerPortal/mpts/app/Login?0,Rohan,abc,CENTAURUS [554466],Prepaid Program [PP01],MASTERCARD [02]
+TC417604_Additional field for Customer Account Relations Download file,http://ech-10-168-128-210.mastercard.int:25003/integratedIssuing-customerPortal/mpts/app/Login?1,Rohan,abc,CENTAURUS [554466],Prepaid Program [PP01],MASTERCARD [02]
+TC417605_Additional field for Account Status Audit Download file,http://ech-10-168-128-210.mastercard.int:25003/integratedIssuing-customerPortal/mpts/app/Login?2,Rohan,abc,CENTAURUS [554466],Prepaid Program [PP01],MASTERCARD [02]
+TC417606_Additional field for Transaction Type Master Download file,http://ech-10-168-128-210.mastercard.int:25003/integratedIssuing-customerPortal/mpts/app/Login?3,Rohan,abc,CENTAURUS [554466],Prepaid Program [PP01],MASTERCARD [02]
+TC417607_Additional field for Employee Master User Download file,http://ech-10-168-128-210.mastercard.int:25003/integratedIssuing-customerPortal/mpts/app/Login?4,Rohan,abc,CENTAURUS [554466],Prepaid Program [PP01],MASTERCARD [02]

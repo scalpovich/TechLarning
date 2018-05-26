@@ -1,2 +1,2 @@
-TCName,AppURL,UserId,Password,InstitutionName,Source Currency,Destination Currency,Rate Origin,BuyRate,SellRate,MidRate,Program,Date Create,Effective Date & Time
-TC_AddCurrencyExchangeRates,http://ech-10-168-128-210.mastercard.int:25003/integratedIssuing-customerPortal/mpts/app/Login?0,abhijeet,abc,COSTEST [123456],AFN [971],BHD [048],Bank [B],0.055,0.059,0.057,,,08/08/2017 12:57:00
+TCName,AppURL,UserId,Password,InstitutionName,Source Currency,Destination Currency,Rate Origin,BuyRate,SellRate,MidRate,Program,Date Create,Effective Date & Time,INTERCHANGE
+TC_AddCurrencyExchangeRates,http://ech-10-168-128-210.mastercard.int:25003/integratedIssuing-customerPortal/mpts/app/Login?0,abhijeet,abc,COSTEST [123456],AFN [971],BHD [048],Bank [B],0.055,0.059,0.057,,,08/08/2017 12:57:00,MASTERCARD [02]

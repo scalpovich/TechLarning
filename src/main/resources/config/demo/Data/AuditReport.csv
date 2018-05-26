@@ -1,2 +1,2 @@
-TCName,AppURL,InstitutionName,institute,ReportName,Operation,UserID,ScreenName,FileType,ReportGenerationMode,UserId,Password
-TC_validate_Audit_Report,http://ech-10-168-131-92.mastercard.int:25003/integratedIssuing-customerPortal/mpts/app/Login,AUTO [121212],121212,Audit Report,MODIFY,AU01,PROGRAM,PDF Format [pdf],Online [O],Auto001,8520
+TCName,AppURL,InstitutionName,institute,ReportName,Operation,UserID,ScreenName,FileType,ReportGenerationMode,UserId,Password,INTERCHANGE
+TC_validate_Audit_Report,http://ech-10-168-131-92.mastercard.int:25003/integratedIssuing-customerPortal/mpts/app/Login,AUTO [121212],121212,Audit Report,MODIFY,AU01,PROGRAM,PDF Format [pdf],Online [O],Auto001,8520,MASTERCARD [02]
