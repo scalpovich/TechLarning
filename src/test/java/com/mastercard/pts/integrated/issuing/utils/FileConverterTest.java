@@ -72,9 +72,11 @@ public class FileConverterTest {
 	}
 
 	private File[] findAllCsvDataFilesIn(String environment) {
-		File[] csvFiles = new File(FileConverter.CONFIG_PATH + environment + File.separatorChar + "Data")
+		final String DATA_FOLDER = "Data";
+		final String CSV_EXTN = ".csv";
+		File[] csvFiles = new File(FileConverter.CONFIG_PATH + environment + File.separatorChar + DATA_FOLDER)
 				.listFiles((dir, name) -> {
-					return name.toLowerCase().endsWith(".csv");
+					return name.toLowerCase().endsWith(CSV_EXTN);
 				});
 
 		return csvFiles;
