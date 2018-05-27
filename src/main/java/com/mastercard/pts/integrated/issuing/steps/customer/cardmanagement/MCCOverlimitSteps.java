@@ -10,7 +10,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.MCCOverLimitFlows;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 @Component
 public class MCCOverlimitSteps {
