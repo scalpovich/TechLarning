@@ -312,7 +312,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(4000);
 			connect2IPSHostModeAndConfigureIP("MAS");
 			captureSaveScreenShot(methodName);
-			selectLicenseAndConfigure(SimulatorConstantsData.SELECT_MAS_LICENSE, SimulatorConstantsData.MAS_LICENSE_TYPE);
 		} else if (simulator.toUpperCase().contains("MCPS")) {
 			launchAndConnectToMCPS();
 		} else if (simulator.toUpperCase().contains("MDFS")) {
