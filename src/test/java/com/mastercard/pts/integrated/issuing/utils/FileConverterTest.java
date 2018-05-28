@@ -40,7 +40,7 @@ public class FileConverterTest {
 		}
 	}
 
-//	@Ignore
+	@Ignore
 	@Test
 	public void addNewColumnToAllCsv() {
 		final String COLUMN_TO_ADD = "INTERCHANGE";
