@@ -1,2 +1,2 @@
-API_NAME,service,sessionId,timeStamp,issuerSessionId,selectedAliasId,purchaseAttributes>purchaseMerchantName,purchaseAttributes>purchaseAmount,purchaseAttributes>purchaseCurrency,otpValue,version
-Wibmo,ECOM_CLIENT,`6126787543124440,2018-02-15T14:15:59.222Z,GET_ISSUER_SESSION_ID,2,Merchant Name123,444,USD,111222,1
+API_NAME,service,sessionId,timeStamp,issuerSessionId,selectedAliasId,purchaseAttributes>purchaseMerchantName,purchaseAttributes>purchaseAmount,purchaseAttributes>purchaseCurrency,otpValue,version,INTERCHANGE
+Wibmo,ECOM_CLIENT,`6126787543124440,2018-02-15T14:15:59.222Z,GET_ISSUER_SESSION_ID,2,Merchant Name123,444,USD,111222,1,MASTERCARD [02]

@@ -1,3 +1,3 @@
-TCName,UserId,Password,InstitutionName,INSTITUTION_CODE,CER_SEQUENCE,Rate Origin,Source Currency,Destination Currency,BUY_RATE,MID_RATE,SELL_RATE,Program,Date Create,Effective Date & Time
-TC_UploadCERBank,abhijeet,abc,COSTEST [123456],123456,00,Bank [B],INR [356],THB [764],0.50,0.52,0.54,,,
-TC_UploadCERMastercard,abhijeet,abc,COSTEST [123456],123456,00,Bank [B],INR [356],THB [764],0.50,0.52,0.54,,,
+TCName,UserId,Password,InstitutionName,INSTITUTION_CODE,CER_SEQUENCE,Rate Origin,Source Currency,Destination Currency,BUY_RATE,MID_RATE,SELL_RATE,Program,Date Create,Effective Date & Time,INTERCHANGE
+TC_UploadCERBank,abhijeet,abc,COSTEST [123456],123456,00,Bank [B],INR [356],THB [764],0.50,0.52,0.54,,,,MASTERCARD [02]
+TC_UploadCERMastercard,abhijeet,abc,COSTEST [123456],123456,00,Bank [B],INR [356],THB [764],0.50,0.52,0.54,,,,MASTERCARD [02]
