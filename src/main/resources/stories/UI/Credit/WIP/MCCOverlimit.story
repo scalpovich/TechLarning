@@ -6,7 +6,7 @@ I want to verify the functionality
 
 Meta:
 @StoryName MCCOverlimit
-@sssssssssssssss				 
+@MCCOverlimit			 
 
 Scenario:1 UI verification - Customer Portal - User is able to add MCC Overlimit
 Meta:
