@@ -2,6 +2,5 @@ target
 .settings
 .classpath
 .project
-*.log
+debug.log
 /bin/
-/target/
