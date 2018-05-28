@@ -24,7 +24,7 @@ public class FileConverterTest {
 	@Ignore
 	@Test
 	public void convertExcelToCsv() throws IOException, InvalidFormatException {
-		String[] dataFiles = { "TestData/TestData.xlsx", /* "Data/TestData.xls" */ };
+		String[] dataFiles = { "TestData/TestData.xlsx", "Data/TestData.xls" };
 		for (String env : listOfEnvs) {
 			for (String dataFile : dataFiles) {
 				try (InputStream in = new FileInputStream(
@@ -40,7 +40,7 @@ public class FileConverterTest {
 		}
 	}
 
-	@Ignore
+//	@Ignore
 	@Test
 	public void addNewColumnToAllCsv() {
 		final String COLUMN_TO_ADD = "INTERCHANGE";
@@ -51,7 +51,7 @@ public class FileConverterTest {
 				try {
 					List<String> lines = Files.readAllLines(Paths.get(csvFile.getAbsolutePath()));
 					String header = lines.get(0);
-					if (!header.contains(COLUMN_TO_ADD)) {
+					if (!isItemPresent(header.split(DELIMITER), COLUMN_TO_ADD)) {
 						List<String> data = new ArrayList<>();
 						header = header + DELIMITER + COLUMN_TO_ADD;
 						data.add(header);
@@ -88,7 +88,7 @@ public class FileConverterTest {
 		final String[] VISA_PART_FILENAMES = { "_v_", "vts", "visa" };
 
 		String val = MC;
-		if (fileNameMatches(VISA_PART_FILENAMES, fileName)) {
+		if (isItemPresent(VISA_PART_FILENAMES, fileName)) {
 			val = VISA;
 		}
 		return val;
@@ -105,7 +105,7 @@ public class FileConverterTest {
 		}
 	}
 
-	private boolean fileNameMatches(String[] array, String item) {
+	private boolean isItemPresent(String[] array, String item) {
 		for (String search : array) {
 			if (item.contains(search)) {
 				return true;
