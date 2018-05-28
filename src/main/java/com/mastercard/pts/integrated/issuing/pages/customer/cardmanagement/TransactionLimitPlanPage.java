@@ -301,7 +301,7 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 			enterPeriodicAmt(details.getLimitPeriodicAmount());
 			enterPeriodicVel(details.getLimitPeriodicVelocity());
 			enterYearlyData(details);
-			clickSaveButton();
+			clickWhenClickable(saveBtn);
 		});
 	}
 
