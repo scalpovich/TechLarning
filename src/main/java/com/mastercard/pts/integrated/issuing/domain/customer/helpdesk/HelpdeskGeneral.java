@@ -45,7 +45,7 @@ public class HelpdeskGeneral {
 		plan.setTransactionDetails(provider.getString(TRANSACTION_DETAILS));
 		plan.setInitialLoadTxnDetails(provider.getString(INITIAL_LOAD_TXN_DETAILS));
 		plan.setNotes(ConstantData.GENERIC_DESCRIPTION);
-		if (provider.getString(PRODUCT_TYPE).equals(ProductType.CREDIT)) {
+		if(provider.getString(PRODUCT_TYPE)!=null&&provider.getString(PRODUCT_TYPE).equals(ProductType.CREDIT)) {
 			plan.setProductType(provider.getString(PRODUCT_TYPE));
 		} else {
 			plan.setProductType(ProductType.PREPAID);
