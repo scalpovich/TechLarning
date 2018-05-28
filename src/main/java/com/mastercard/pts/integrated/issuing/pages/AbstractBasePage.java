@@ -299,7 +299,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void clickAddNewButton() {
-		clickWhenClickable(addNewBtn);
+		clickWhenClickableDoNotWaitForWicket(addNewBtn);
 	}
 
 	// used when there are more than 1 add buttons
