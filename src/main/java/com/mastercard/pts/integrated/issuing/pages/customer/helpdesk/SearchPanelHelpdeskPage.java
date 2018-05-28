@@ -48,7 +48,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:5:componentList:1:componentPanel:input:inputTextField")
 	private MCWebElement CBSClientID;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:6:buttonPanel:buttonCol:searchButton")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:searchButtonPanel:buttonCol:searchButton")
 	private MCWebElement searchBtn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = ".//*[@alt='Edit Record']")
@@ -62,7 +62,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 
 	public void searchDevice(String productType, String deviceNumber) {
 		waitForElementVisible(this.productType);
-		SelectDropDownByText(this.productType, productType);
+		selectDropDownByText(this.productType, productType);
 		waitForElementVisible(this.deviceNumber);
 		enterText(this.deviceNumber, deviceNumber);
 		waitForElementVisible(searchBtn);
@@ -81,7 +81,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 
 	public String searchDeviceUsingName(String productType, String name) {
 		waitForElementVisible(this.productType);
-		SelectDropDownByText(this.productType, productType);
+		selectDropDownByText(this.productType, productType);
 		enterText(this.firstNameInput, String.valueOf(name));
 		waitForElementVisible(searchBtn);
 		searchBtn.click();
@@ -90,11 +90,11 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 
 	public String searchNewDevice(String productType, String deviceNumber) {
 		waitForElementVisible(this.productType);
-		SelectDropDownByText(this.productType, productType);
+		selectDropDownByText(this.productType, productType);
 		waitForElementVisible(this.deviceNumber);
 		enterText(this.deviceNumber, deviceNumber);
 		waitForElementVisible(searchBtn);
 		searchBtn.click();
-		return getCellTextByColumnName(Constants.TABLE_ROW_NUM,Constants.COLUMN_NAME);
+		return getCellTextByColumnName(Constants.TABLE_ROW_NUM, Constants.COLUMN_NAME);
 	}
 }

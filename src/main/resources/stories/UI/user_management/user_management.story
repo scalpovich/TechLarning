@@ -29,7 +29,7 @@ Then user is logged into agent portal successfully
 And user sign out from agent portal
 
 Examples:
-{metaByRow=true}
+!-- {metaByRow=true}
 |Meta:           | type   |
 |@TestId TC406081| admin  |
 |@TestId TC411892| agency |
@@ -86,7 +86,7 @@ When user logs in with incorrect password as <type> user
 Then user sees message that user name or password is incorrect on agent portal
 
 Examples:
-{metaByRow=true}
+!-- {metaByRow=true}
 |Meta:           | type   |
 |@TestId TC406088| admin  |
 |@TestId TC411897| agency |

@@ -21,7 +21,7 @@ public class EmbossingFileFlows extends MenuFlows {
 		embossingtemplatepage.clickAddEmbossingTemplate();
 		String embossingTemplate = embossingtemplatepage.addEmbossingGeneral(embossingfile);
 		waitForLoaderToDisappear();
-		embossingtemplatepage.verifyEmbossingTemplateSuccess();
+		embossingtemplatepage.verifyEmbossingTemplateSuccess(embossingfile);
 		return embossingTemplate;
 	}
 

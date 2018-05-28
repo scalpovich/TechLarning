@@ -9,7 +9,7 @@ Meta:
 @StoryName d_emv_corp
 @authdebit
 
-Scenario: Transaction - corporate emv corporate general purpose card without pin - EMV_PREAUTH  and EMV_COMPLETION Authorization transaction 
+Scenario: Transaction - corporate emv emv corporate debit card without pin - EMV_PREAUTH  and EMV_COMPLETION Authorization transaction 
 Given user is logged in institution
 And device range for program with device plan for "debit" "emv" card without pin
 When user creates new device of debit type for new client

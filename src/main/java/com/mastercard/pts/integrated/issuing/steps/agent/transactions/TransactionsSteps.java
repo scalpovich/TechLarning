@@ -26,6 +26,7 @@ public class TransactionsSteps {
 	private static final String REMITTANCE_TRANSACTION_MESSAGE = "Your transaction is successful. Your Remittance Reference Number is:";
 	private static final String REMITTANCE_CANCELLATION_MESSAGE = "Your transaction is successful.";
 	private static final String REMITTANCE_PAYOUT_MESSAGE = "Your transaction is successful.";
+	private static final String SUCCESS_MESSAGE_EXPECTED = "Your transaction is successful. Reference Number is :";
 	
 	private CardToCash ctc;
 	private Device device;
@@ -235,7 +236,8 @@ public class TransactionsSteps {
 		transferDetails.setTransferThrough(transferThrough);
 		device.setExistingDeviceNumber(destinationDevice.getDeviceNumber());
 		context.put(ContextConstants.DEVICE_NUMBER,device.getDeviceNumber());	
-		transactionsWorkflow.transferFund(transferDetails,device);			
+		assertThat(FAILED_MESSAGE_INFO, transactionsWorkflow.transferFund(transferDetails,device), containsString(SUCCESS_MESSAGE_EXPECTED));
+					
 	}
 	
 

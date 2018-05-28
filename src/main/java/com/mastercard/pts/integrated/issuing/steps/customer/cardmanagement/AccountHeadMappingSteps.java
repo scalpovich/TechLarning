@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.junit.Assert;
@@ -231,6 +232,20 @@ public class AccountHeadMappingSteps extends AccountHeadMappingFlows {
 	public void user_adds_an_Account_Head_Mapping_for_Card_Fee_transactions() {
 		logger.info("User adds an Account Head Mapping for card fee transactions");
 		addAccountHeadMappingCardFee();
+	}
+
+	/**
+	 * Step Definition for navigating and adding a new Account Head Mapping
+	 * <p>
+	 * StoryFile usage : When the user navigates and adds account head mapping
+	 * to the system
+	 * <p>
+	 */
+	@When("the user navigates and adds account head mapping to the system")
+	@Composite(steps = { "When user navigates to Account Head Mapping screen",
+			"When user adds an Account Head Mapping" })
+	public void whenUserAddsNewAccountHeadMapping() {
+
 	}
 
 }

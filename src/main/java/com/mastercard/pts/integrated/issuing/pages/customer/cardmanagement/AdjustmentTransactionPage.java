@@ -91,6 +91,7 @@ public class AdjustmentTransactionPage extends AbstractBasePage {
 			AdjustmentTransactionDetails transactionDetails) {
 		logger.info("Add Adjustment Transaction Details: {}",
 				transactionDetails.getDeviceNumber());
+		SimulatorUtilities.wait(200);
 		clickAddNewButton();
 		runWithinPopup("Add Adjustment Transaction Details", () -> {
 			WebElementUtils.enterText(deviceNumberTxt, transactionDetails.getDeviceNumber());

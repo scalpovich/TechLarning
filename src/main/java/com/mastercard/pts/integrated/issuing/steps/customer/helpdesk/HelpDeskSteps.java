@@ -6,8 +6,10 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
@@ -40,6 +42,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDeskFlows;
@@ -414,6 +417,7 @@ public class HelpDeskSteps {
 		}
 	}
 
+
 	@When("balance in helpdesk updated correctly for $type device")
 	@Then("balance in helpdesk updated correctly for $type device")
 	public void thenBalanceInHelpDeskUpdatedCorrectly(String type) {
@@ -428,10 +432,11 @@ public class HelpDeskSteps {
 		walletinfo[1] contains card-number and currency
 		 where walletinfo[2] contains wallet number and amount
 		*/	
-		String[] walletinfo = beforeLoadBalanceInformation.split(",");
-		walletinfo=walletinfo[1].split(":");
+		logger.info("beforeLoadBalanceInformation : "+beforeLoadBalanceInformation);
+		String[] walletinfo = beforeLoadBalanceInformation.split(",");		
+		walletinfo=walletinfo[0].split(":");		
 		logger.info("Wallet Number : "+walletinfo[2]);
-		device.setWalletNumber(walletinfo[2]);
+		device.setWalletNumber(walletinfo[2]);	
 		context.put(ContextConstants.DEVICE,device);
 	}
 
@@ -445,6 +450,17 @@ public class HelpDeskSteps {
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		assertTrue(helpdeskWorkflow.verifyBalanceDeductedCorreclty(beforeLoadBalanceInformation, helpdeskGeneral.getTransactionDetails(), helpdeskWorkflow.getWalletBalanceInformationForRemittance(device,ctc)));
 	}
+	
+	@Then("balance in helpdesk for remittance not changed for $type device")
+	@When("balance in helpdesk for remittance not changed for $type device")
+	public void thenBalanceInHelpDeskNotChangedForRemittance(String type) {
+		Device device = context.get(ContextConstants.DEVICE);
+		ctc = context.get(ContextConstants.REMITTANCE);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+		assertTrue(helpdeskWorkflow.verifyBalanceNotChanged(beforeLoadBalanceInformation, helpdeskWorkflow.getWalletBalanceInformationForRemittance(device, ctc)));
+	}
 
 	@When("balance in helpdesk not changed for $type device")
 	@Then("balance in helpdesk not changed for $type device")
@@ -455,16 +471,7 @@ public class HelpDeskSteps {
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		assertTrue(helpdeskWorkflow.verifyBalanceNotChanged(beforeLoadBalanceInformation, helpdeskWorkflow.getWalletBalanceInformation(device)));
 	}
-	@Then("balance in helpdesk for remittance not changed for $type device")
-	@When("balance in helpdesk for remittance not changed for $type device")
-	public void thenBalanceInHelpDeskNotChangedForRemittance(String type) {
-		Device device = context.get(ContextConstants.DEVICE);
-		ctc=context.get(ContextConstants.REMITTANCE);
-		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
-		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
-		device.setAppliedForProduct(ProductType.fromShortName(type));
-		assertTrue(helpdeskWorkflow.verifyBalanceNotChanged(beforeLoadBalanceInformation, helpdeskWorkflow.getWalletBalanceInformationForRemittance(device,ctc)));
-	}
+
 	@When("initial load balance in helpdesk updated correctly for $type device")
 	@Then("initial load balance in helpdesk updated correctly for $type device")
 	public void thenInitialLoadBalanceInHelpDeskUpdatedCorrectly(String type) {
@@ -710,5 +717,45 @@ public class HelpDeskSteps {
 				helpdeskWorkflow.resetCardholderTranPassword(clientID);
 			}
 		}
+	}
+	
+	@When("user creates service request to change the registered mobile number")
+	public void changeRegisteredMobileNumber() {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		Optional<String[]> device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
+		if(device.isPresent()){
+		helpdeskGeneral.setProductType(ProductType.fromShortName(device.get()[0]));
+		helpdeskGeneral.setDeviceNumber(device.get()[1]);
+		}
+		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.changeRegisteredMobileNo(helpdeskGeneral);
+	}
+
+	@When("user creates service request to change the registered Email ID")
+	public void changeRegisteredEmailID() {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		Optional<String[]> device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
+		if(device.isPresent()){
+		helpdeskGeneral.setProductType(ProductType.fromShortName(device.get()[0]));
+		helpdeskGeneral.setDeviceNumber(device.get()[1]);
+		}
+		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.changeRegisteredEmailID(helpdeskGeneral);
+	}
+	
+	@Then("user validates registered mobile number SR screen with the required fields")
+	public void registeredMobileNumberUpdateScreenValidation() {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		Optional<String[]> device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
+		if(device.isPresent()){
+		helpdeskGeneral.setProductType(ProductType.fromShortName(device.get()[0]));
+		helpdeskGeneral.setDeviceNumber(device.get()[1]);
+		helpdeskGeneral.setDefaultWalletNumber(device.get()[2]);
+		}
+		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.validateRequiredFields(helpdeskGeneral);
 	}
 }

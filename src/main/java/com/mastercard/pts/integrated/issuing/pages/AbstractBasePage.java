@@ -33,6 +33,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,9 +43,9 @@ import org.springframework.beans.factory.annotation.Value;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -88,6 +89,14 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public static final String ACTUAL_RESULT_LABEL = " | Actual Result : ";
 
+	public static final String ENTITY_TYPE_USER = "User [U]";
+
+	public static final String ENTITY_TYPE_ROLE = "Role [R]";
+
+	public static final By ENTITY_ID = By.name("searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent");
+
+	public static final String PRIVILEGES_TABS = "//a[contains(text(),'%s')]";
+
 	private static final Logger logger = LoggerFactory.getLogger(AbstractBasePage.class);
 
 	public static final LocalDate futureDate = LocalDate.now().plusDays(100);
@@ -95,6 +104,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public static final LocalDate futureEndDate = LocalDate.now().plusDays(150);
 
 	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
+	
+	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid transaction type - ";
 
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -250,11 +261,21 @@ public abstract class AbstractBasePage extends AbstractPage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers' and @class!='navigation'][1]/td[2]/span")
 	private MCWebElement deviceNumberFetch;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
+	private MCWebElement entityTypeDdwn;
+
+	@PageElement(findBy = FindBy.ID, valueToFind = "institution_selection")
+	private MCWebElement instituteSelectionDrpDwn;
+
+	private String instituteSelectionVal = "//div[@id='institution_selector']//li/a[contains(text(),'%s')]";
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview td:first-child>span>a>span")
 	private MCWebElements firstElementOfTable;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview tr.even a>img[alt='Delete Record'],table.dataview tr.odd a>img[alt='Delete Record']")
 	private MCWebElements deleteAddedRecordsIcon;
+
+	private String ERROR_XPATH = ".//div[@class='ketchup-error-container-alt']/ol/li";
 
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -345,7 +366,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickWhenClickable(searchButtonElement);
 	}
 
-	protected Boolean isNoRecordsFoundInTable() {
+	public Boolean isNoRecordsFoundInTable() {
 		try {
 			return driver().findElement(By.cssSelector(".norecords")).isDisplayed();
 		} catch (NoSuchElementException e) {
@@ -521,7 +542,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	/**
 	 * Verify already exists and click cancel
-	 * 
 	 * @return true if error exists otherwise false
 	 */
 	protected boolean verifyAlreadyExistsAndClickCancel() {
@@ -1225,6 +1245,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameSelector));
 	}
 
+	// Switch to a frame by specificying the index in WebPage.
+	public void switchToIframeByIndex(int frameIndex) {
+		WebDriverWait wait = new WebDriverWait(getFinder().getWebDriver(), 80);
+		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameIndex));
+	}
+
 	public static void addWicketAjaxListeners(WebDriver driver) {
 		String javascript = "if (typeof tk  == 'undefined') {" + "tk = {activeAjaxCount: 0, ajaxCallsTried: 0, ajaxCallsCompleted: 0};"
 				+ "Wicket.Ajax.registerPreCallHandler(function(){tk.activeAjaxCount++;tk.ajaxCallsTried++;});"
@@ -1273,13 +1299,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 		// addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
-	public void SelectDropDownByText(MCWebElement element, String value) {
+	public void selectDropDownByText(MCWebElement element, String value) {
 		element.getSelect().selectByVisibleText(value);
 		// element.getSelect().selectByValue(value);
 		// addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
-	public void SelectDropDownByIndex(MCWebElement element, int value) {
+	public void selectDropDownByIndex(MCWebElement element, int value) {
 		if (element.isEnabled()) {
 			element.getSelect().selectByIndex(value);
 		} else {
@@ -1613,28 +1639,59 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 		return false;
 	}
-	
-	public void identifyAddedRecordinTableAndDelete(String parameter)
-	   {
-		  for(int i=0;i<firstElementOfTable.getElements().size();i++)
-		  {
-			  if(firstElementOfTable.getElements().get(i).getText().equals(parameter))
-			  {
-				  clickWhenClickable(deleteAddedRecordsIcon.getElements().get(i));
-			  }
-		  }
-	   }
-	public void deleteExistingRecord(String parameter)
-	   {
-		  for(int i=0;i<firstElementOfTable.getElements().size();i++)
-		  {
-			  if(firstElementOfTable.getElements().get(i).getText().equals(parameter))
-			  {
-				  deleteAddedRecordsIcon.getElements().get(i).click();
-				  acceptPopup();
-			  }
-		  }
-	   }
+
+	public void identifyAddedRecordinTableAndDelete(String parameter) {
+		for (int i = 0; i < firstElementOfTable.getElements().size(); i++) {
+			if (firstElementOfTable.getElements().get(i).getText().equals(parameter)) {
+				clickWhenClickable(deleteAddedRecordsIcon.getElements().get(i));
+			}
+		}
+	}
+
+	public void searchEntity(String entityType) {
+		UserCreation userCreation = context.get(ContextConstants.USER);
+		if ("user".equalsIgnoreCase(entityType))
+			selectByVisibleText(entityTypeDdwn, ENTITY_TYPE_USER);
+		else if ("role".equalsIgnoreCase(entityType))
+			selectByVisibleText(entityTypeDdwn, ENTITY_TYPE_ROLE);
+		CustomUtils.ThreadDotSleep(900);
+		Select select = new Select(getFinder().getWebDriver().findElement(ENTITY_ID));
+		CustomUtils.ThreadDotSleep(500);
+		select.selectByVisibleText(userCreation.getUserName() + " [" + userCreation.getUserID() + "]");
+		ClickButton(searchBtn);
+	}
+
+	public void selectTab(String tabName) {
+		getFinder().getWebDriver().findElement(By.xpath(String.format(PRIVILEGES_TABS, tabName))).click();
+	}
+
+	/**
+	 * Select institute from top drp dwn.
+	 *
+	 * @param instituteName
+	 *            the institute name
+	 */
+	public void selectInstituteFromDrpDwn(String instituteName) {
+		instituteSelectionDrpDwn.click();
+		CustomUtils.ThreadDotSleep(500);
+		String ins = String.format(instituteSelectionVal, instituteName);
+		CustomUtils.ThreadDotSleep(500);
+		getFinder().getWebDriver().findElement(By.xpath(ins)).click();
+
+	}
+
+	public void deleteExistingRecord(String parameter) {
+		for (int i = 0; i < firstElementOfTable.getElements().size(); i++) {
+			if (firstElementOfTable.getElements().get(i).getText().equals(parameter)) {
+				deleteAddedRecordsIcon.getElements().get(i).click();
+				acceptPopup();
+			}
+		}
+	}
+
+	public List<WebElement> getValidationErrors() {
+		return Elements(ERROR_XPATH);
+	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

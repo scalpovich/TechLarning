@@ -67,5 +67,7 @@ Meta:
 Given user is on login page of cardholder portal
 And user logs in with valid credentials
 When user is logged into cardholder portal successfully
+And user blocks the device from cardholder portal
 Then UnblockDevice page of services tab is rendered correctly
-And user signs out from cardholder portal
+When user unblocks the device from cardholder portal
+Then user signs out from cardholder portal

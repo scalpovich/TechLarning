@@ -36,6 +36,8 @@ import org.apache.commons.lang.RandomStringUtils;
 public class UserManagementSteps {
 
 	public static final String KEY_USER_INSTRITUTIONS = "USER_INSTRITUTIONS";
+	
+	public static final String USER_INSTITUTION_SELECTED = "USER_INSTITUTION_SELECTED";
 
 	private static final String INCORRECT_PASSCODE = "incorrect";
 
@@ -62,6 +64,8 @@ public class UserManagementSteps {
 	private static final String NON_FUNDED_AGENT = "nonfundedagent";
 
 	private static final String USER_INSTITUTION_NON_DEFAULT = "USER_INSTITUTION_NON_DEFAULT";
+	
+	private static final String USERNAME = "USERNAME";
 
 	@Autowired
 	private AppEnvironment environment;
@@ -115,7 +119,10 @@ public class UserManagementSteps {
 	public void givenUserIsLoggedInInstitution() {
 		Portal loginPortal = environment.getPortalByType(Portal.TYPE_CUSTOMER);
 		userDefaultInstitution = Institution.createWithProvider(provider).buildAbbreviationAndCode();
+		Institution institution = Institution.createWithProvider(provider);
+		context.put(USER_INSTITUTION_SELECTED, institution.getCode());
 		loginWorkflow.logInInstitution(loginPortal, userDefaultInstitution);
+		context.put(USERNAME, loginPortal.getUserName());
 	}
 
 	@Given("user is logged in non-default institution")
