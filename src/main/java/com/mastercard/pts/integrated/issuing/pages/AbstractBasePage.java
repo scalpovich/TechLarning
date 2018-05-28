@@ -104,9 +104,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public static final LocalDate futureEndDate = LocalDate.now().plusDays(150);
 
 	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
+	
+	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid transaction type - ";
 
-	private static final String Device = null;
-
+    private static final String Device = null;
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
@@ -493,7 +494,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void verifyOperationStatus() {
-		WebElement successMessageLbl = new WebDriverWait(driver(), 1000).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
+		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
 	}
 

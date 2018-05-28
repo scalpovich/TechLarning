@@ -1270,9 +1270,10 @@ public class DevicePlanPage extends AbstractBasePage {
 		WebElementUtils.enterText(replacementNoOfDaysTxt, devicePlan.getReplacementNoOfDays());
 		WebElementUtils.enterText(validityOnReplacementMonthsTxt, devicePlan.getValidityOnReplacementMonths());
 		allowInstanceDeviceReplaceChkBx.click();
-		if (devicePlan.getReplacementDeviceTechnology() != "")
+		if (!devicePlan.getReplacementDeviceTechnology().isEmpty()) {
 			WebElementUtils.selectDropDownByVisibleText(replacementDeviceTechnologyDdwn,
 					devicePlan.getReplacementDeviceTechnology());
+		}
 	}
 
 	public void fillVirtualDeviceDetails(DevicePlan devicePlan) {
