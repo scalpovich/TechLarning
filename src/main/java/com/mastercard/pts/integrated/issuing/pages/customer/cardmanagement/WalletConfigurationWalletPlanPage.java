@@ -165,8 +165,11 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			else
 			{
 						selectProgramType(walletPlan.getProgramType());
+						waitForPageToLoad(driver());
+						SimulatorUtilities.wait(500);
 					}
-			selectCurrency(walletPlan.getCurrency());	
+			selectCurrency(walletPlan.getCurrency());
+			waitForPageToLoad(driver());
 			selectUsage(walletPlan.getUsage());
 			
 			fillDetailsBasedOnCardType(walletPlan, productType);

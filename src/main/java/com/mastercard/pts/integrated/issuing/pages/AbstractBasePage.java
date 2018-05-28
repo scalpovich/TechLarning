@@ -608,7 +608,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected void clickWhenClickable(MCWebElement element) {
 		SimulatorUtilities.wait(4000);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
-		waitForWicket();
+		//waitForWicket();
 	}
 
 	protected void clickWhenClickableDoNotWaitForWicket(MCWebElement element) {
@@ -1312,7 +1312,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			JavascriptExecutor js = (JavascriptExecutor) driver;
 			pageLoadStatus = (String) js.executeScript("return document.readyState");
 
-			addWicketAjaxListeners(driver);
+			 // addWicketAjaxListeners(driver);
 
 		} while (!pageLoadStatus.equals("complete"));
 
