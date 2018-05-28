@@ -45,7 +45,7 @@ Meta:
 When Auth file is generated after transaction
 When MAS simulator is closed
 Then user is logged in institution
-Then search Purchase with Cash back authorization and verify 000-Successful status
+Then search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
