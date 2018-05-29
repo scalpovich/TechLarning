@@ -129,7 +129,34 @@ public class DeviceCardPackTemplate {
 	public String Length4;
 	public String Length5;
 	public String Field6;
+	public String Lengh12;
+	public String firstCustomValue12;
+	public String secondCustomValue12;
+	
+	public String getLengh12() {
+		return Lengh12;
+	}
 
+	public void setLengh12(String Lengh12) {
+		this.Lengh12 = Lengh12;
+	}
+	
+	public String getfirstCustomValue12() {
+		return firstCustomValue12;
+	}
+
+	public void setfirstCustomValue12(String firstCustomValue12) {
+		this.firstCustomValue12 = firstCustomValue12;
+	}
+	
+	public String getsecondCustomValue12() {
+		return firstCustomValue12;
+	}
+
+	public void setsecondCustomValue12(String secondCustomValue12) {
+		this.secondCustomValue12 = secondCustomValue12;
+	}
+	
 	public String getField6() {
 		return Field6;
 	}
@@ -151,6 +178,9 @@ public class DeviceCardPackTemplate {
 		devicecardpacktemplate.setField5(MapUtils.fnGetInputDataFromMap("Field5"));
 		devicecardpacktemplate.setLength5(MapUtils.fnGetInputDataFromMap("Length5"));
 		devicecardpacktemplate.setField6(MapUtils.fnGetInputDataFromMap("Field6"));
+		devicecardpacktemplate.setLengh12(MapUtils.fnGetInputDataFromMap("Lengh12"));
+		devicecardpacktemplate.setfirstCustomValue12(MapUtils.fnGetInputDataFromMap("FirstCustomValue12"));
+		devicecardpacktemplate.setsecondCustomValue12(MapUtils.fnGetInputDataFromMap("SecondCustomValue12"));
 		return devicecardpacktemplate;
 	}
 

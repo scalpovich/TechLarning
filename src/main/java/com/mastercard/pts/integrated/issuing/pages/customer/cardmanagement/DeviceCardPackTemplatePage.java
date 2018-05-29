@@ -14,6 +14,7 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -68,6 +69,18 @@ public class DeviceCardPackTemplatePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mainContainer:trnsTypeDescLen5:input:inputTextField")
 	private MCWebElement length5Txt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "mainContainer:trnsTypeDescChkDgt:input:dropdowncomponent")
+	private MCWebElement field12DDwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "mainContainer:trnsTypeDescLenChkDgt:input:inputTextField")
+	private MCWebElement length12Txt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "mainContainer:trnsTypeChkDgtCstValue:input:inputTextField")
+	private MCWebElement firstCustom12Txt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "mainContainer:trnsTypeChkDgtCstValue1:input:inputTextField")
+	private MCWebElement SecondCustom12Txt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "buttonContainer:submitTemplate")
 	private MCWebElement submitBtn;
@@ -172,6 +185,24 @@ public class DeviceCardPackTemplatePage extends AbstractBasePage {
 		selectField1(devicetemplate);
 		selectField2(devicetemplate);
 
+	}
+	
+	public void createTemplates(DeviceCreation devicecreation,DeviceCardPackTemplate devicetemplate){
+		clickWhenClickable(addDeviceCardPackTemplateBtn);
+		runWithinPopup("Add Device, Priority Pass ID, Card Pack ID Template", ()->{
+			
+			selectByVisibleText(templateTypeDDwn, devicecreation.getTemplateType());
+			enterText(descriptionTxt, CustomUtils.randomString(10));
+			enterText(templateLengthTxt,devicecreation.getLength());			
+			selectByVisibleText(field1DDwn,devicetemplate.getField1());
+			enterValueinTextBox(length1Txt,devicetemplate.getLength1());			
+			enterValueinTextBox(length12Txt, devicetemplate.getLengh12());			
+			clickInRect(firstCustom12Txt);
+			enterValueinTextBox(firstCustom12Txt,devicetemplate.getfirstCustomValue12());
+			enterValueinTextBox(SecondCustom12Txt,devicetemplate.getsecondCustomValue12());			
+			clickWhenClickable(submitBtn);
+			clickWhenClickable(saveBtn);			
+		});
 	}
 
 	@Override

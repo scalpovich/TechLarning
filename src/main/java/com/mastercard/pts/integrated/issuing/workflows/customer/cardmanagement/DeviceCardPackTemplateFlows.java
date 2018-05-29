@@ -38,5 +38,10 @@ public class DeviceCardPackTemplateFlows extends MenuFlows {
 		devicecardpacktemplatepage.clickSaveButton();
 		devicecardpacktemplatepage.verifyNewVendorSuccess();
 	}
+	
+	public void createTemplate(DeviceCreation deviceCreation, DeviceCardPackTemplate deviceTemplate){
+		DeviceCardPackTemplatePage devicecardpacktemplatepage = navigator.navigateToPage(DeviceCardPackTemplatePage.class);
+		devicecardpacktemplatepage.createTemplates(deviceCreation,deviceTemplate);		
+	}
 
 }
