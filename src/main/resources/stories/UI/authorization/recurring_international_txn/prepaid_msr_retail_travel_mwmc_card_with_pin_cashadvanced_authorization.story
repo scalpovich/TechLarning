@@ -23,7 +23,7 @@ Then device has "normal" status
 When user activates device through helpdesk
 And user setup device currency through helpdesk
 Then currency setup for prepaid device is done correctly and updated in wallet details tab
-When user performs adjustment transaction with 300000 amount
+When user performs adjustment transaction
 And user performs adjustment transaction for second wallet
 And user sign out from customer portal
 
