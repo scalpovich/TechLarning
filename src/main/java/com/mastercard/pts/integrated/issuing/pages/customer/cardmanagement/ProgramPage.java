@@ -395,6 +395,7 @@ public class ProgramPage extends AbstractBasePage {
 			selectCalendarStartMonth(program.getCalendarStartMonth());
 			fillExtraSections(program, productType);
 			clickNextButton();
+			SimulatorUtilities.wait(3000);
 			clickFinishButton();
 		});
 		verifyOperationStatus();
