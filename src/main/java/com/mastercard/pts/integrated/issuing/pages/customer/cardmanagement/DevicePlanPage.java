@@ -1073,6 +1073,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		}	
 		}
 		clickIframeNextButton();
+		clickIframeNextButton();
 		SimulatorUtilities.wait(300);
 		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			if (DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType())) {
