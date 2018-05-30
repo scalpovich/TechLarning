@@ -1070,6 +1070,7 @@ public class DevicePlanPage extends AbstractBasePage {
 			WebElementUtils.enterText(acceptableBelowATCRangeTxt, devicePlan.getEmvBelowATCRange());
 			WebElementUtils.enterText(acceptableAboveATCRangeTxt, devicePlan.getEmvAboveATCRange());
 			allowFallBackChkBx.click();
+			atcFlagChkBx.click();
 		}
 	}
 
