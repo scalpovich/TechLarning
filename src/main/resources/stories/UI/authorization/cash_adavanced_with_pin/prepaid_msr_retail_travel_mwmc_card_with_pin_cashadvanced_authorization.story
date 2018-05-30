@@ -12,8 +12,11 @@ Scenario: Setup multi-currency prepaid msr retail travel card and perfomr refund
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
-When user updates cvccvv as uncheck on device plan
 And a new device was created
+And user sign out from customer portal
+
+Scenario: Device Production
+Given user is logged in institution
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 When processes pin generation batch for prepaid

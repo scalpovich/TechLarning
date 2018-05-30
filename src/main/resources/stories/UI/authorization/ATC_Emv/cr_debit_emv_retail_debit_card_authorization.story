@@ -42,11 +42,6 @@ Meta:
 Given connection to MAS is established
 When perform an EMV_CASH_ADVANCE MAS transaction
 Then MAS test results are verified
-
-Scenario: Generate Auth File for Clearing
-Meta:
-@TestId 
-When Auth file is generated after transaction
 When MAS simulator is closed
 Then user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
