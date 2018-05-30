@@ -20,11 +20,12 @@ And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 When processes pin generation batch for prepaid
-When user has wallet number information for prepaid device
-When user performs adjustment transaction
-When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
+And user setup device currency through helpdesk
+Then currency setup for prepaid device is done correctly and updated in wallet details tab
+When user performs adjustment transaction with 500 amount
+And user performs adjustment transaction for second wallet
 And user sign out from customer portal
 
 Scenario: Pin Generation 
