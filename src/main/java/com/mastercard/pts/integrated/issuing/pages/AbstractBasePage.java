@@ -287,6 +287,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "processAll")
 	private MCWebElement processAll;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='feedbackPanelERROR']")
+	private MCWebElement errorMsgPresence;
+	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
 		MCAnnotationProcessor.initializeSuper(this, finderProvider);
@@ -576,8 +579,16 @@ public abstract class AbstractBasePage extends AbstractPage {
 	 */
 	protected boolean verifyAlreadyExistsAndClickCancel() {
 		String message = getMessageFromFeedbackPanel();
-		if (message != null && message.contains("already exists")) {
+		if (message != null && message.contains("already exist")) {
 			clickCancelButton();
+			return true;
+		}
+		return false;
+	}
+	
+	protected boolean verifyAlreadyExists() {
+		String message = getMessageFromFeedbackPanel();
+		if (message != null && message.contains("already exist")) {
 			return true;
 		}
 		return false;
@@ -1679,7 +1690,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public boolean errorMessagePresence() {
 		try {
-			if (driver().findElement(By.xpath("//*[@class='feedbackPanelERROR']")).isDisplayed()) {
+			if (errorMsgPresence.isVisible()) {
 				return true;
 			}
 

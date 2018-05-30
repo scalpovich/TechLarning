@@ -43,6 +43,7 @@ public class CreditCardTransactionRulePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=planName]")
 	private MCWebElement descriptionTxt;
 
+	private int counter=0;
 	public void verifyUiOperationStatus() {
 		logger.info("Credit Card Transaction Rule Plan");
 		verifySearchButton("Search");
@@ -80,18 +81,17 @@ public class CreditCardTransactionRulePlanPage extends AbstractBasePage {
 					context.put(CreditConstants.TRANSACTION_RULE, creditCardTransactionRulePlan.buildDescriptionAndCode());
 					clickAddDetailsButton();
 
-					if (!verifyAlreadyExistsAndClickCancel()) {
+					if (!verifyAlreadyExists()) {
 						clickSaveButton();
+						creditCardPlan.setErrorStatus(false);
+					}
+					else
+					{
 						errorMessagePresence();
 						creditCardPlan.setErrorStatus(errorMessagePresence());
-						canceled.set(verifyAlreadyExistsAndClickCancel());
-						//canceled.set(true);
+						canceled.set(verifyAlreadyExistsAndClickCancel());	
 					}
 				});
-		
-		if (!canceled.get()) {
-			verifyOperationStatus();
-		}
 		
 		return creditCardPlan.getErrorStatus();
 	}
@@ -106,12 +106,16 @@ public class CreditCardTransactionRulePlanPage extends AbstractBasePage {
 		private void checkDuplicacyOfTransactionPlanCode(CreditCardTransactionRulePlan creditCardTransactionRulePlan) {
 		if(!isNoRecordsFoundInTable())
 		{
+			counter+=1;
+			if(counter<2)
+			{
 			 creditCardTransactionRulePlan.setTransactionRulePlanCode(MiscUtils
 					.generateRandomNumberBetween2Number(100, 999));
 			 logger.info("transactionRulePlanCode: {}",creditCardTransactionRulePlan.getTransactionRulePlanCode());
 			 performSearchOperationOnMainScreen(creditCardTransactionRulePlan);
 			 waitForPageToLoad(getFinder().getWebDriver());
 			 checkDuplicacyOfTransactionPlanCode(creditCardTransactionRulePlan);
+			}
 		}
 	}
 
