@@ -47,7 +47,7 @@ When Auth file is generated after transaction
 When MAS simulator is closed
 Then user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
-Then verify transaction currency as INR and billing currency as USD on auth search
+Then verify transaction currency as INR [356] and billing currency as USD [840] on auth search
 Then user sign out from customer portal
 
 
