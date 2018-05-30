@@ -13,6 +13,9 @@ Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
 And user sign out from customer portal
+
+
+Scenario: Device Production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid

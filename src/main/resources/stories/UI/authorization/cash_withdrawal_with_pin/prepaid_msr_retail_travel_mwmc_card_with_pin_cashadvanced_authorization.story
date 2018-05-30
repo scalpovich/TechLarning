@@ -13,6 +13,8 @@ Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
 And user sign out from customer portal
+
+Scenario: Device Production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
@@ -24,7 +26,7 @@ Then device has "normal" status
 When user activates device through helpdesk
 And user setup device currency through helpdesk
 Then currency setup for prepaid device is done correctly and updated in wallet details tab
-When user performs adjustment transaction
+When user performs adjustment transaction with 500 amount
 And user performs adjustment transaction for second wallet
 And user sign out from customer portal
 
