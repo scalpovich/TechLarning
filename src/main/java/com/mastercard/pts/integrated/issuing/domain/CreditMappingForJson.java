@@ -1,4 +1,4 @@
-package com.mastercard.pts.integrated.issuing.domain;
+/*package com.mastercard.pts.integrated.issuing.domain;
 
 
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
@@ -50,6 +50,7 @@ public class CreditMappingForJson {
 	public void setInterchange(String interchange) {
 		this.interchange = interchange;
 	}
+	
 	public String getCardPackIdGenerationTemplate() {
 		return cardPackIdGenerationTemplate;
 	}
@@ -124,3 +125,4 @@ public class CreditMappingForJson {
 		return MiscUtils.toString(this);
 	}
 }
+*/

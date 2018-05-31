@@ -22,6 +22,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -226,6 +227,9 @@ public class ProgramPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:markupFeePlanCode:input:dropdowncomponent")
 	private MCWebElement markupFeePlanDDwn;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:currencyPayoutListPlanCode:input:dropdowncomponent")
+	private MCWebElement payoutCurrencyPlanDDwn;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:cashLimitCycleIndicatior:input:dropdowncomponent")
 	private MCWebElement CashLimitResetDDwn;
 
@@ -362,6 +366,13 @@ public class ProgramPage extends AbstractBasePage {
 	public void selectOtherPlanMarketingMessagePlan(String otherPlanMarketingMessagePlan) {
 		WebElementUtils.selectDropDownByVisibleText(otherPlanMarketingMessagePlanDDwn, otherPlanMarketingMessagePlan);
 	}
+	
+	public void selectPayoutCurrencyPlan(String payoutCurrencyPlan) {
+		if (payoutCurrencyPlanDDwn.isEnabled())
+		{
+			WebElementUtils.selectDropDownByVisibleText(payoutCurrencyPlanDDwn, payoutCurrencyPlan);
+		}
+	}
 
 	public void addProgramData(Program program, String productType) {
 		logger.info("Add Program: {}", program.getProgramCode());
@@ -386,6 +397,10 @@ public class ProgramPage extends AbstractBasePage {
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
+				if (Constants.ENV_DEMO.equalsIgnoreCase(MiscUtils.getEnvironment()))
+				{
+					selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
+				}
 				selectRefundInCurrency(program.getRefundInCurrency());
 				selectWalletToWalletTransferType(program.getWalletToWalletTransferType());
 				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
@@ -416,6 +431,10 @@ public class ProgramPage extends AbstractBasePage {
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
+				if (Constants.ENV_DEMO.equalsIgnoreCase(MiscUtils.getEnvironment()))
+				{
+					selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
+				}
 				selectRefundInCurrency(program.getRefundInCurrency());
 				selectWalletToWalletTransferType(program.getWalletToWalletTransferType());
 				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
@@ -446,6 +465,10 @@ public class ProgramPage extends AbstractBasePage {
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
+				if (Constants.ENV_DEMO.equalsIgnoreCase(MiscUtils.getEnvironment()))
+				{
+					selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
+				}
 				selectRefundInCurrency(program.getRefundInCurrency());
 				selectWalletToWalletTransferType(program.getWalletToWalletTransferType());
 				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
@@ -481,7 +504,7 @@ public class ProgramPage extends AbstractBasePage {
 		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
 		if (productType.equalsIgnoreCase(ProductType.CREDIT))
 		{
-			if(program.getApplicationType().equalsIgnoreCase("Supplementary")||program.getApplicationType().equalsIgnoreCase("Add-on Device") && program.getSubApplicationType().equalsIgnoreCase("Existing"))
+			if(program.getApplicationType().contains("Supplementary")||program.getApplicationType().contains("Add-on") && program.getSubApplicationType().contains("Existing"))
 			{
 		      selectDevicePlanPlan2DDwn(program.getDevicePlanPlan2());
 			}
@@ -627,7 +650,7 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	public void selectWalletToWalletTransfer() {
-		SelectDropDownByIndex(WalletToWalletTransferType, 1);
+		selectDropDownByIndex(WalletToWalletTransferType, 1);
 	}
 
 	public void selectReferenceCurrency(Program program) {
@@ -637,7 +660,7 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	public void selectCalendarStartMonth() {
-		SelectDropDownByIndex(CalendarStartMonthDDwn, 1);
+		selectDropDownByIndex(CalendarStartMonthDDwn, 1);
 	}
 
 	public void enterMaximumBalanceWithoutKYC(Program program) {
@@ -683,7 +706,7 @@ public class ProgramPage extends AbstractBasePage {
 			if (MapUtils.fnGetInputDataFromMap("WalletPlan3") != null) {
 				selectByVisibleText(WalletPlan3DDwn, MapUtils.fnGetInputDataFromMap("WalletPlan3"));
 			} else {
-				SelectDropDownByIndex(WalletPlan3DDwn, 3);
+				selectDropDownByIndex(WalletPlan3DDwn, 3);
 			}
 		}
 	}
@@ -701,16 +724,17 @@ public class ProgramPage extends AbstractBasePage {
 
 	public void selectStatementMessagePlan() {
 		waitForElementVisible(StatementMessagePlanDDwn);
-		SelectDropDownByIndex(StatementMessagePlanDDwn, 1);
+		selectDropDownByIndex(StatementMessagePlanDDwn, 1);
 	}
 
 	public void selectMarketingMessagePlan() {
 		waitForElementVisible(MarketingMessagePlanDDwn);
-		SelectDropDownByIndex(MarketingMessagePlanDDwn, 1);
+		selectDropDownByIndex(MarketingMessagePlanDDwn, 1);
 	}
 
 	@Override
 	public void clickFinishButton() {
+		waitForElementVisible(FinishBtn);
 		clickWhenClickable(FinishBtn);
 		SwitchToDefaultFrame();
 	}
@@ -829,7 +853,7 @@ public class ProgramPage extends AbstractBasePage {
 	public void switchToEditProgramframe() {
 		switchToIframe(Constants.EDIT_PROGRAM_FRAME);
 	}
-
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(programSearchTxt));

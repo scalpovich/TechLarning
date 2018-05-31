@@ -11,25 +11,15 @@
    "embossingVendor":"AUTOB1",
    "interchange":"MASTERCARD",
    "issuerBin":"599101",
-   "plasticId":"AUT",
-   "pictureCode":"AUT",
-   "corporateClientCode":"12121218004000045"
-   },
-   {
-   "code":"875587",
-   "abbreviation":"AUTHREG",
-   "association":"MASTERCARD",
-   "branch":"1000",
-   "cardPackIdGenerationTemplate":"PAN174",
-   "deviceIdGenerationTemplate":"PAN172",
-   "customerType":"Individual",
-   "embossingVendor":"AUTOB1",
-   "interchange":"MASTERCARD",
-   "issuerBin":"599101",
+   "mastercardPrepaidIssuerBin":"505077",
+   "mastercardDebitIssuerBin":"572804",
+   "mastercardCreditIssuerBin":"599101",
+   "visaPrepaidIssuerBin":"453210",
+   "visaDebitIssuerBin":"443210",
+   "visaCreditIssuerBin":"450477",
    "plasticId":"AUT",
    "pictureCode":"AUT",
    "corporateClientCode":"12121218004000045"
    }
-   
    ]
 }

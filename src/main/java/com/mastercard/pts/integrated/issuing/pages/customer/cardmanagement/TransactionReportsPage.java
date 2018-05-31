@@ -87,7 +87,12 @@ public class TransactionReportsPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:2:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement productTypeClearingReportDDwn;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:5:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
+	private MCWebElement dateTypeDDwn;
+
 	public String calelement = "//td[2]";
+
+	private final String transactionDetailReport = "Transaction Detail Report";
 
 	@Autowired
 	DatePicker date;
@@ -126,7 +131,7 @@ public class TransactionReportsPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(programNameAuthReportDDwn, ALL);
 		WebElementUtils.selectDropDownByVisibleText(fileTypeAuthReportDDwn, provider.getString(FILE_TYPE_REPORT));
 		generateReportBtn.click();
-		CustomUtils.ThreadDotSleep(10000);
+		CustomUtils.ThreadDotSleep(20000);
 	}
 
 	public void generateTransactionClearingReport() {
@@ -157,5 +162,18 @@ public class TransactionReportsPage extends AbstractBasePage {
 		date.setDateCalendar2(DateUtils.getDateinDDMMYYYY(), calelement);
 		waitForPageToLoad(getFinder().getWebDriver());
 	}
+
+	public void generateReport(String reportType){
+		WebElementUtils.selectDropDownByVisibleText(selectReportDDwn, reportType);
+		clicksearchButtonElement();
+		if(reportType.equalsIgnoreCase(transactionDetailReport)){
+			WebElementUtils.selectDropDownByVisibleText(productTypeAuthReportDDwn, ALL);
+			WebElementUtils.selectDropDownByVisibleText(dateTypeDDwn, ALL);
+			WebElementUtils.selectDropDownByVisibleText(fileTypeAuthReportDDwn, provider.getString(FILE_TYPE_REPORT));
+		}
+		generateReportBtn.click();
+		SimulatorUtilities.wait(10000);
+	}
+
 
 }

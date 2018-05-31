@@ -83,7 +83,7 @@ public class PrepaidMessagePlanPage extends AbstractBasePage {
 	}
 
 	public void selectPeriod() {
-		SelectDropDownByIndex(PeriodDDwn, 1);
+		selectDropDownByIndex(PeriodDDwn, 1);
 	}
 
 	public String addPrepaidStatementPlanDetails() {

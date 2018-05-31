@@ -55,7 +55,7 @@ public class DevicePlanSteps {
 
 	@When("user wants to mandatory field validations on add device plan page")
 	public void errorValidationStepforaddDevicePlan() {
-		deviceplanflows.validateErrormsg(deviceplan);
+		deviceplanflows.validateErrormsg();
 	}
 
 	@Given("User fills general details for $interchange for $cardType $productType card,choose activation $activationMode and delivery mode $deliveryMode")

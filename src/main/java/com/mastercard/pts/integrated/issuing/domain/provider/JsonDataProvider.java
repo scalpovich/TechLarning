@@ -108,7 +108,7 @@ public class JsonDataProvider implements DataProvider {
 		return node;
 	}
 	
-	private JsonNode loadNodeInstitute(String typeName,String key,String institutionCode, String... tags) {
+	private JsonNode loadNodeInstitute(String typeName,String key,String institutionCode,String... tags) {
 		Preconditions.checkArgument(!Strings.isNullOrEmpty(key), "key is not provided");
 		List<String> keyStream = Stream.concat(Stream.of(key),
 				Arrays.stream(tags).map(tag -> String.format("%s.%s", key, tag)))

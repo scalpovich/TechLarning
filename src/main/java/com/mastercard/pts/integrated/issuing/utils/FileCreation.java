@@ -6,10 +6,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -20,6 +20,9 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -63,47 +66,22 @@ public class FileCreation {
 	@Autowired
 	private DataProvider provider;
 
+	@Autowired
+	private TestContext context;
+
 	private static final String INSTITUTION_CODE = "INSTITUTION_CODE";
-
-	// private static final String INSTITUTION_CODE = "102060";
-
 	private static final String BILLING_AMOUNT = "BILLING_AMOUNT";
-
 	private static final String BILLING_CURRENCY = "BILLING_CURRENCY";
-
 	private static final String TRANSACTION_AMOUNT = "TRANSACTION_AMOUNT";
-
 	private static final String TRANSACTION_CURRENCY = "TRANSACTION_CURRENCY";
-
 	private static final String TRANSACTION_CODE = "TRANSACTION_CODE";
-
-	// Currency Exchange Rates
-	private static final String CER_SEQUENCE = "CER_SEQUENCE";
-
-	private static final String RATE_ORIGIN = "RATE_ORIGIN";
-
-	private static final String SOURCE_CURRENCY = "SOURCE_CURRENCY";
-
-	private static final String DEST_CURRENCY = "DEST_CURRENCY";
-
-	private static final String BUY_RATE = "BUY_RATE";
-
-	private static final String MID_RATE = "SOURCE_CURRENCY";
-
-	private static final String SELL_RATE = "DEST_CURRENCY";
-
-	private static final String UPLOAD_FILENAME = "UploadFile";
-	private static final String corporateClientCode = "12121217222000002";
-	private static final String corporateClientCodeCredit = "12121218004000045";
+	private static final String UPLOAD_FILENAME = "UploadFile";	
+	private static final String CORPORATE_CLIENT_CODE = "12121217222000002";
 
 	private String filename;
-
 	private String header;
-
 	private String footer;
-
 	private String transactionLine;
-
 	public static String filenameStatic;
 
 	public String getFilename() {
@@ -170,7 +148,6 @@ public class FileCreation {
 
 	public String createCERFileMC() {
 		FileCreation fileCreation = new FileCreation();
-		HashMap<String, HashMap<String, String>> applicationUploadMap;
 		String date = nextDay(DateUtils.getDateddMMyyyy(), "Mastercard");
 		String time = DateUtils.getTime();
 
@@ -178,13 +155,12 @@ public class FileCreation {
 		fileCreation.setFilename(filenameStatic);
 		File file = new File(filenameStatic);
 
-		applicationUploadMap = dataReader.fnReadEntireTestData(UPLOAD_FILENAME, "CERFileUploadMC", "Records");
+		dataReader.fnReadEntireTestData(UPLOAD_FILENAME, "CERFileUploadMC", "Records");
 
 		try (PrintWriter writer = new PrintWriter(file)) {
 			writer.println(createCERMCHeader(date, time));
-			// applicationUploadMap.size()
 			for (int i = 0; i <= 1; i++) {
-				if (true == dataReader.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
+				if (dataReader.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
 					writer.println(createCERMCRecord());
 				}
 			}
@@ -233,9 +209,9 @@ public class FileCreation {
 	}
 
 	public static String getUploadFileFromDatamap(String strKey) {
-		HashMap<String, String> storyTestData = ThreadLocalWorker.getTestContext().getApplicationUploadData();
+		Map<String, String> storyTestData = ThreadLocalWorker.getTestContext().getApplicationUploadData();
 		if (!storyTestData.containsKey(strKey)) {
-			logger.info("Unable to read test data for the Key :" + strKey);
+			logger.info("Unable to read test data for the Key : {}", strKey);
 			return null;
 		} else {
 			return storyTestData.get(strKey);
@@ -245,7 +221,7 @@ public class FileCreation {
 	public String appendZeros(int number) {
 		String str = "";
 		if (number > 0 && number < 10)
-			str = "0" + String.valueOf(number);
+			str = "0" + number;
 		else
 			str = String.valueOf(number);
 		return str;
@@ -305,7 +281,7 @@ public class FileCreation {
 		else if (number < 99)
 			number += 1;
 		if (number >= 1 && number < 10)
-			sequenceNumber = "0" + String.valueOf(number);
+			sequenceNumber = "0" + number;
 		else if (number >= 10)
 			sequenceNumber = String.valueOf(number);
 		MapUtils.fnSetInputDataToInputMap("CER_SEQUENCE", sequenceNumber);
@@ -338,7 +314,15 @@ public class FileCreation {
 	}
 
 	public String createCERBankHeader(String date) {
-		return "HD" + "|" + MapUtils.fnGetInputDataFromMap("INSTITUTION_CODE") + "|" + date + "|" + "2.0";
+		InstitutionCreation institute;
+		if (context.get(ContextConstants.INSTITUTION) != null) {
+			institute = context.get(ContextConstants.INSTITUTION);
+			return "HD" + "|" + institute.getInstitutionCode() + "|" + date
+					+ "|" + "2.0";
+		} else
+			return "HD" + "|"
+					+ MapUtils.fnGetInputDataFromMap("INSTITUTION_CODE") + "|"
+					+ date + "|" + "2.0";
 	}
 
 	public String createCERMCRecord() {
@@ -352,18 +336,29 @@ public class FileCreation {
 	}
 
 	// Currency Exchange Rates File Upload: Bank
-	public String createCERUploadFileBank(String isInvalid) {
+	public String createCERUploadFileBank(String isInvalid, String filePath) {
 		int totalRecords = 0;
 		String date = "";
 		FileCreation fileCreation = new FileCreation();
 		HashMap<String, HashMap<String, String>> applicationUploadMap;
+		InstitutionCreation instituteCreation;
 
 		if ("back dated transactions".equalsIgnoreCase(isInvalid))
 			date = DateUtils.getDateddMMyyyy() + DateUtils.getTime();
 		else
 			date = nextDay(DateUtils.getDateddMMyyyy(), "Bank") + DateUtils.getTime();
 
-		filenameStatic = "CER" + MapUtils.fnGetInputDataFromMap("INSTITUTION_CODE") + DateUtils.getDate() + DateUtils.getTime() + getSequenceNumber() + ".DAT";
+		if (context.get(ContextConstants.INSTITUTION) != null) {
+			instituteCreation = context.get(ContextConstants.INSTITUTION);
+			filenameStatic = "CER" + instituteCreation.getInstitutionCode()
+					+ DateUtils.getDate() + DateUtils.getTime()
+					+ getSequenceNumber() + ".DAT";
+		} else {
+			filenameStatic = "CER"
+					+ MapUtils.fnGetInputDataFromMap("INSTITUTION_CODE")
+					+ DateUtils.getDate() + DateUtils.getTime()
+					+ getSequenceNumber() + ".DAT";
+		}
 		fileCreation.setFilename(filenameStatic);
 		File file = new File(filenameStatic);
 
@@ -376,13 +371,13 @@ public class FileCreation {
 			writer.println(createCERBankHeader(date));
 			if ("bank".equalsIgnoreCase(isInvalid)) {
 				for (int i = 0; i < applicationUploadMap.size(); i++) {
-					if (true == dataReader.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
+					if (dataReader.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
 						writer.println(createCERBankRecord(date));
 						totalRecords++;
 					}
 				}
 			} else {
-				if (true == dataReader.iterateUploadDataFromExcelMap(isInvalid)) {
+				if (dataReader.iterateUploadDataFromExcelMap(isInvalid)) {
 					writer.println(createCERBankRecord(date));
 					totalRecords++;
 				} else {
@@ -401,11 +396,11 @@ public class FileCreation {
 			throw Throwables.propagate(e);
 		}
 		logger.info("File Path: " + file.getPath());
-		linuxBox.upload(file.getPath(), Constants.UPLOAD_FILE_PATH_EXCHANGE_RATE);
+		linuxBox.upload(file.getPath(), filePath);
 		return filename;
 	}
 
-	public List<String> getUploadedValues;
+	private List<String> getUploadedValues;
 
 	public List<String> getGetUploadedValues() {
 		return getUploadedValues;
@@ -417,9 +412,9 @@ public class FileCreation {
 
 	public String createApplicationUploadForFile(String institutionCode, String customerType) throws FileNotFoundException {
 		int totalRecords = 0;
-		String FileName = "APPPR" + institutionCode + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
+		String fileName = "APPPR" + institutionCode + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
 		HashMap<String, HashMap<String, String>> applicationUploadMap;
-		File file = new File(FileName);
+		File file = new File(fileName);
 		String remoteDir = linuxFolderPath+applicationUpload;
 
 		applicationUploadMap = dataReader.dataProviderFileUpload("AllUploadTestData", "Prepaid Card File");
@@ -428,7 +423,7 @@ public class FileCreation {
 			writer.println("HD|" + institutionCode + "|" + DateUtils.getDateTimeDDMMYYYYHHMMSS() + "|" + "2.0");
 
 			for (int i = 0; i < applicationUploadMap.size(); i++) {
-				if (true == dataReader.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
+				if (dataReader.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
 					String name = CustomUtils.randomString(9).toUpperCase();
 					helpDeskGeneral.setFirstName(name);
 					if (customerType.equals("Individual")) {
@@ -437,7 +432,7 @@ public class FileCreation {
 								.replace("%K%", CustomUtils.RandomNumbers(10)).replace("%X%", CustomUtils.randomAlphaNumeric(5) + "@" + CustomUtils.randomAlphaNumeric(4) + ".com"));
 					} else if (customerType.equals("Corporate")) {
 						writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", institutionCode).replace("%t%", "1").replace("%P%", program.getProgramCode())
-								.replace("%D%", deviceplan.getDevicePlanCode()).replace("%b%", vendor.getBranchCode()).replace("%Z%", corporateClientCode).replace("%N%", name));
+								.replace("%D%", deviceplan.getDevicePlanCode()).replace("%b%", vendor.getBranchCode()).replace("%Z%", CORPORATE_CLIENT_CODE).replace("%N%", name));
 					} else if (customerType.equals("Bank Staff")) {
 						writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", institutionCode).replace("%t%", "2").replace("%P%", program.getProgramCode())
 								.replace("%D%", deviceplan.getDevicePlanCode()).replace("%b%", vendor.getBranchCode()).replace("%Z%", "").replace("%N%", name));
@@ -456,14 +451,14 @@ public class FileCreation {
 
 		linuxBox.upload(file.getPath(), remoteDir);
 		logger.info("File Path = {} --> Name = {}", file.getPath(), file.getAbsolutePath());
-		return FileName;
+		return fileName;
 	}
 
 	public String createApplicationUploadForFileStaticVirtualCard(String institutionCode, String customerType) throws FileNotFoundException {
 		int totalRecords = 0;
-		String FileName = "APPPR" + institutionCode + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
+		String fileName = "APPPR" + institutionCode + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
 		HashMap<String, HashMap<String, String>> applicationUploadMap;
-		File file = new File(FileName);
+		File file = new File(fileName);
 		String remoteDir = Constants.APPLICATION_UPLOAD_PREPAID_FILE_PATH;
 
 		applicationUploadMap = dataReader.dataProviderFileUpload("AllUploadTestData", "Static Card File");
@@ -472,7 +467,7 @@ public class FileCreation {
 			writer.println("HD|" + institutionCode + "|" + DateUtils.getDateTimeDDMMYYYYHHMMSS() + "|" + "2.0");
 
 			for (int i = 0; i < applicationUploadMap.size(); i++) {
-				if (true == dataReader.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
+				if (dataReader.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
 					String name = CustomUtils.randomString(9).toUpperCase();
 					helpDeskGeneral.setFirstName(name);
 					if (customerType.equals("Individual")) {
@@ -481,7 +476,7 @@ public class FileCreation {
 								.replace("%K%", CustomUtils.RandomNumbers(10)).replace("%X%", CustomUtils.randomAlphaNumeric(5) + "@" + CustomUtils.randomAlphaNumeric(4) + ".com"));
 					} else if (customerType.equals("Corporate")) {
 						writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", institutionCode).replace("%t%", "1").replace("%P%", program.getProgramCode())
-								.replace("%D%", deviceplan.getDevicePlanCode()).replace("%b%", vendor.getBranchCode()).replace("%Z%", corporateClientCode).replace("%N%", name));
+								.replace("%D%", deviceplan.getDevicePlanCode()).replace("%b%", vendor.getBranchCode()).replace("%Z%", CORPORATE_CLIENT_CODE).replace("%N%", name));
 					} else if (customerType.equals("Bank Staff")) {
 						writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", institutionCode).replace("%t%", "2").replace("%P%", program.getProgramCode())
 								.replace("%D%", deviceplan.getDevicePlanCode()).replace("%b%", vendor.getBranchCode()).replace("%Z%", "").replace("%N%", name));
@@ -501,12 +496,12 @@ public class FileCreation {
 		linuxBox.upload(file.getPath(), remoteDir);
 		logger.info("File Path = {} --> Name = {}", file.getPath(), file.getAbsolutePath());
 		logger.info(customerType);
-		return FileName;
+		return fileName;
 	}
 
 	public String createApplicationUploadFile(String institutionCode, String customerType, String cardType) throws Exception {
 		int totalRecords = 0;
-		String FileName = "";
+		String fileName = "";
 		String remoteDir = "";
 		String deviceType = "";
 		if (cardType.equalsIgnoreCase("prepaid")) {
@@ -523,34 +518,34 @@ public class FileCreation {
 		for (int k = 0; k < listOfFiles.length; k++) {
 
 			if (listOfFiles[k].getName().startsWith("APP")) {
-				FileName = listOfFiles[k].getName();
-				String name = readingFirstLineOfDatFileToRetrieveName(FileName);
+				fileName = listOfFiles[k].getName();
+				String name = readingFirstLineOfDatFileToRetrieveName(fileName);
 				helpDeskGeneral.setFirstName(name);
-				logger.info("Already existing fileName in workspace: {}", FileName);
+				logger.info("Already existing fileName in workspace: {}", fileName);
 			}
 		}
-		if (FileName.contains("APP")) {
-			linuxBox.upload(FileName, remoteDir);
+		if (fileName.contains("APP")) {
+			linuxBox.upload(fileName, remoteDir);
 		} else {
 			if (cardType.equalsIgnoreCase("prepaid")) {
-				FileName = "APPPR" + INSTITUTION_CODE + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
+				fileName = "APPPR" + INSTITUTION_CODE + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
 			} else if (cardType.equalsIgnoreCase("credit")) {
-				FileName = "APPCR" + INSTITUTION_CODE + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
+				fileName = "APPCR" + INSTITUTION_CODE + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
 			}
 			HashMap<String, HashMap<String, String>> applicationUploadMap = new HashMap<>();
-			File file = new File(FileName);
+			File file = new File(fileName);
 			if (cardType.equalsIgnoreCase("prepaid")) {
 				applicationUploadMap = dataReader.dataProviderFileUpload("AllUploadTestData", "Prepaid Card File");
 			} else if (cardType.equalsIgnoreCase("credit")) {
 				applicationUploadMap = dataReader.dataProviderFileUpload("AllUploadTestData", "Credit Card File");
 			}
-			logger.info("applicationUploadMap" + applicationUploadMap);
+			logger.info("applicationUploadMap: {}", applicationUploadMap);
 			try (PrintWriter writer = new PrintWriter(file)) {
 				writer.println("HD|" + INSTITUTION_CODE + "|" + DateUtils.getDateTimeDDMMYYYYHHMMSS() + "|" + "2.0");
 				String name = CustomUtils.randomString(9).toUpperCase();
 				helpDeskGeneral.setFirstName(name);
 				for (int i = 0; i < applicationUploadMap.size(); i++) {
-					if (true == dataReader.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
+					if (dataReader.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
 
 						if (deviceplan.getDeviceType().contains("Static Virtual")) {
 							deviceType = "7";
@@ -592,35 +587,30 @@ public class FileCreation {
 
 		}
 
-		return FileName;
+		return fileName;
 	}
 
-	public String retrieveFieldUploadFile(String FieldName) {
+	public String retrieveFieldUploadFile() {
 		return filename;
-
 	}
 
 	public String readingFirstLineOfDatFileToRetrieveName(String name) throws IOException {
-		String Name = "";
-		BufferedReader br = null;
+		String aName = "";
 		int counter = 0;
-		try {
-			br = new BufferedReader(new FileReader(System.getProperty("user.dir") + "\\" + name));
+		try (BufferedReader br = new BufferedReader(new FileReader(System.getProperty("user.dir") + "\\" + name))) {			
 			String contentLine;
 			while ((contentLine = br.readLine()) != null) {
 				counter++;
 				if (counter == 2) {
 					String lineRead = contentLine;
 					String[] lineExcludingDelimiters = lineRead.split("\\|");
-					Name = lineExcludingDelimiters[40];
+					aName = lineExcludingDelimiters[40];
 				}
-
 			}
 		} catch (IOException e) {
-			br.close();
 			e.printStackTrace();
 		}
-		return Name;
+		return aName;
 
 	}
 }

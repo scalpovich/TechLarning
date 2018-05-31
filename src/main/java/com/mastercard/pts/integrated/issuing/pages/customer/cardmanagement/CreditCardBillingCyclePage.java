@@ -97,8 +97,15 @@ public class CreditCardBillingCyclePage extends AbstractBasePage {
 			WebElementUtils.enterText(recordsPerBatchForProcessingTxt,
 					creditCardBillingCycle.getRecordsPerBatchForProcessing());
 			clickSaveButton();
-			creditCardPlan.setErrorStatus(errorMessagePresence());
-			canceled.set(verifyAlreadyExistsAndClickCancel());
+			if(verifyAlreadyExists())
+			{
+				creditCardPlan.setErrorStatus(errorMessagePresence());
+				canceled.set(verifyAlreadyExistsAndClickCancel());
+			}
+			else
+			{
+				creditCardPlan.setErrorStatus(false);
+			}
 		});
 		// dont vereify status of Operation when duplicate exists
 		if (!canceled.get()) {

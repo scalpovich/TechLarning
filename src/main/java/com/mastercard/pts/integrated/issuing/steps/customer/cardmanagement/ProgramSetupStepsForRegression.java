@@ -271,7 +271,6 @@ public class ProgramSetupStepsForRegression {
 		deviceRange.setProductType(ProductType.fromShortName(type));
 		deviceRange.setProgram(program.buildDescriptionAndCode());
 		deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
-
 		programSetupWorkflow.createDeviceRange(deviceRange);
 	}
 

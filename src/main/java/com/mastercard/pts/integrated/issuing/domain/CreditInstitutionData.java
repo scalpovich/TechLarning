@@ -11,14 +11,17 @@ public class CreditInstitutionData {
 	private String customerType;
 	private String embossingVendor;
     private String interchange;
-    private String issuerBin;
 	private String plasticId;
 	private String pictureCode;
 	private String code;
 	private String abbreviation;
 	private String corporateClientCode;
-	private String provider;
-	
+	private String mastercardPrepaidIssuerBin;
+	private String mastercardDebitIssuerBin;
+	private String mastercardCreditIssuerBin;
+	private String visaPrepaidIssuerBin;
+	private String visaDebitIssuerBin;
+	private String visaCreditIssuerBin;
 	
 	public String getAssociation() {
 		return association;
@@ -27,14 +30,7 @@ public class CreditInstitutionData {
 	public void setAssociation(String association) {
 		this.association = association;
 	}
-	public String getProvider() {
-		return provider;
-	}
 
-	public void setProvider(String provider) {
-		this.provider = provider;
-	}
- 
 	public String getBranch() {
 		return branch;
 	}
@@ -83,14 +79,6 @@ public class CreditInstitutionData {
 		this.embossingVendor = embossingVendor;
 	}
 
-	public String getIssuerBin() {
-		return issuerBin;
-	}
-
-	public void setIssuerBin(String issuerBin) {
-		this.issuerBin = issuerBin;
-	}
-
 	public String getPlasticId() {
 		return plasticId;
 	}
@@ -131,9 +119,58 @@ public class CreditInstitutionData {
 		this.corporateClientCode = corporateClientCode;
 	}
 
-	public static CreditInstitutionData createWithProvider(DataProvider provider,String key) {
-         return  provider.getDataBySimpleClassNameForInstitute(CreditInstitutionData.class, key);
+	public String getMastercardPrepaidIssuerBin() {
+		return mastercardPrepaidIssuerBin;
 	}
+
+	public void setMastercardPrepaidIssuerBin(String mastercardPrepaidIssuerBin) {
+		this.mastercardPrepaidIssuerBin = mastercardPrepaidIssuerBin;
+	}
+
+	public String getMastercardDebitIssuerBin() {
+		return mastercardDebitIssuerBin;
+	}
+
+	public void setMastercardDebitIssuerBin(String mastercardDebitIssuerBin) {
+		this.mastercardDebitIssuerBin = mastercardDebitIssuerBin;
+	}
+
+	public String getMastercardCreditIssuerBin() {
+		return mastercardCreditIssuerBin;
+	}
+
+	public void setMastercardCreditIssuerBin(String mastercardCreditIssuerBin) {
+		this.mastercardCreditIssuerBin = mastercardCreditIssuerBin;
+	}
+
+	public String getVisaPrepaidIssuerBin() {
+		return visaPrepaidIssuerBin;
+	}
+
+	public void setVisaPrepaidIssuerBin(String visaPrepaidIssuerBin) {
+		this.visaPrepaidIssuerBin = visaPrepaidIssuerBin;
+	}
+
+	public String getVisaDebitIssuerBin() {
+		return visaDebitIssuerBin;
+	}
+
+	public void setVisaDebitIssuerBin(String visaDebitIssuerBin) {
+		this.visaDebitIssuerBin = visaDebitIssuerBin;
+	}
+
+	public String getVisaCreditIssuerBin() {
+		return visaCreditIssuerBin;
+	}
+
+	public void setVisaCreditIssuerBin(String visaCreditIssuerBin) {
+		this.visaCreditIssuerBin = visaCreditIssuerBin;
+	}
+
+	public static CreditInstitutionData createWithProvider(DataProvider provider,String institutionCode) {
+         return  provider.getDataBySimpleClassNameForInstitute(CreditInstitutionData.class, institutionCode);
+	}
+	
 	
 	@Override
 	public String toString() {

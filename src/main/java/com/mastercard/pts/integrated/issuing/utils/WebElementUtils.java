@@ -108,7 +108,7 @@ public class WebElementUtils {
 	@SuppressWarnings("deprecation")
 	public static void selectDropDownByVisibleText(MCWebElement element, String visibleText) {
 		retryUntilNoErrors(() -> new Select(asWebElement(element)).selectByVisibleText(visibleText));
-		SimulatorUtilities.wait(2000);
+		SimulatorUtilities.wait(1000);
 		//waitForWicket(TestContext.getDriver());
 	}
 
@@ -330,5 +330,10 @@ public class WebElementUtils {
 	public static void scrollToElement(WebDriver driver, WebElement element) {
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
 
+	}
+
+	public static void selectRadioBtn(MCWebElement radioButton) {
+		if (!radioButton.isSelected())
+			radioButton.click();
 	}
 }

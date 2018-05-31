@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.domain;
 
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
@@ -30,6 +31,12 @@ public class CreditMappingForExcel {
 	private String plasticId;
 	private String pictureCode;
 	private String corporateClientCode;
+	private String mastercardPrepaidIssuerBin;
+	private String mastercardDebitIssuerBin;
+	private String mastercardCreditIssuerBin;
+	private String visaPrepaidIssuerBin;
+	private String visaDebitIssuerBin;
+	private String visaCreditIssuerBin;
 	
 	public CreditMappingForExcel createWithProviderForRegression(KeyValueProvider provider) {
 		CreditMappingForExcel creditMappingForExcelFromJson=new CreditMappingForExcel();
@@ -44,6 +51,12 @@ public class CreditMappingForExcel {
 		creditMappingForExcelFromJson.setPlasticId(provider.getString(PLASTIC_ID));
 		creditMappingForExcelFromJson.setPictureCode(provider.getString(PICTURE_CODE));
 		creditMappingForExcelFromJson.setCorporateClientCode(provider.getString(CORPORATE_CLIENT_CODE));
+		creditMappingForExcelFromJson.setMastercardPrepaidIssuerBin("");
+		creditMappingForExcelFromJson.setMastercardDebitIssuerBin("");
+		creditMappingForExcelFromJson.setMastercardCreditIssuerBin("");
+		creditMappingForExcelFromJson.setVisaPrepaidIssuerBin("");
+		creditMappingForExcelFromJson.setVisaDebitIssuerBin("");
+		creditMappingForExcelFromJson.setVisaCreditIssuerBin("");
 		return creditMappingForExcelFromJson;
 		
 	}
@@ -135,6 +148,54 @@ public class CreditMappingForExcel {
 
 	public void setCorporateClientCode(String corporateClientCode) {
 		this.corporateClientCode = corporateClientCode;
+	}
+
+	public String getMastercardPrepaidIssuerBin() {
+		return mastercardPrepaidIssuerBin;
+	}
+
+	public void setMastercardPrepaidIssuerBin(String mastercardPrepaidIssuerBin) {
+		this.mastercardPrepaidIssuerBin = mastercardPrepaidIssuerBin;
+	}
+
+	public String getMastercardDebitIssuerBin() {
+		return mastercardDebitIssuerBin;
+	}
+
+	public void setMastercardDebitIssuerBin(String mastercardDebitIssuerBin) {
+		this.mastercardDebitIssuerBin = mastercardDebitIssuerBin;
+	}
+
+	public String getMastercardCreditIssuerBin() {
+		return mastercardCreditIssuerBin;
+	}
+
+	public void setMastercardCreditIssuerBin(String mastercardCreditIssuerBin) {
+		this.mastercardCreditIssuerBin = mastercardCreditIssuerBin;
+	}
+
+	public String getVisaPrepaidIssuerBin() {
+		return visaPrepaidIssuerBin;
+	}
+
+	public void setVisaPrepaidIssuerBin(String visaPrepaidIssuerBin) {
+		this.visaPrepaidIssuerBin = visaPrepaidIssuerBin;
+	}
+
+	public String getVisaDebitIssuerBin() {
+		return visaDebitIssuerBin;
+	}
+
+	public void setVisaDebitIssuerBin(String visaDebitIssuerBin) {
+		this.visaDebitIssuerBin = visaDebitIssuerBin;
+	}
+
+	public String getVisaCreditIssuerBin() {
+		return visaCreditIssuerBin;
+	}
+
+	public void setVisaCreditIssuerBin(String visaCreditIssuerBin) {
+		this.visaCreditIssuerBin = visaCreditIssuerBin;
 	}
 
 	@Override

@@ -1,9 +1,9 @@
-prepaid msr retail general purpose card authorization
+prepaid msr retail travel card authorization
 
 Narrative:
-In order to check transactions on prepaid msr retail general purpose card 
+In order to check transactions on prepaid msr retail travel card 
 As an issuer
-I want to authorize transactions for prepaid msr retail general purpose card 
+I want to authorize transactions for prepaid msr retail travel card 
 
 Meta:
 @StoryName p_emv_retail_travel
@@ -27,7 +27,7 @@ And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 Then device has "normal" status
-When user has wallet number information for debit device
+When user has wallet number information for prepaid device
 Then user sign out from customer portal
 Then user is logged in institution
 When user performs adjustment transaction

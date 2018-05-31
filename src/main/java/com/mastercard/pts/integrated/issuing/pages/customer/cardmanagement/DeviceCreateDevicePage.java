@@ -270,7 +270,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		}
 		logger.info("DeviceNumber: {}",device.getDeviceNumber());
 		context.put(ContextConstants.DEVICE, device);
-		
 	}
 
 	public String getWalletsId(String wallets) {
@@ -370,7 +369,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	}
 
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
-		if(device.getApplicationType().contains("Supplementary")||device.getApplicationType().contains("Add-on Device")/*&& device.getSubApplicationType().contains("Existing")*/)
+		if(device.getApplicationType().contains("Supplementary")||device.getApplicationType().contains("Add-on Device")&& device.getSubApplicationType().contains("Existing"))
 		{
 			if(!System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)){
 				clickNextButton();
@@ -398,10 +397,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		}
 
 		fillAddress(device);
-		// skip employment details
+		
 		if (!System.getProperty("env").equalsIgnoreCase("Automation")) {
-			fillEmploymentDetails(device);
-			selectProfessionByIndex(1);
+		fillEmploymentDetails(device);
+		selectProfessionByIndex(1);
 		}
 		clickNextButton();
 		// Bank Details applicable only for Credit type product

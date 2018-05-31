@@ -8,9 +8,7 @@ I want to create an magnetic stripe prepaid card and perform visa money transfer
 Meta:
 @StoryName p_visa_msr_corp_general_purpose
 
-Scenario: Set up prepaid msr corporate general purpose card from another institute
-Meta:
-@TestId TC398484
+Scenario: Set up prepaid msr corporate general purpose card for VMT transaction
 Given user is logged in non-default institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin for non-default institution
 When user creates new device of prepaid type for non-default institution

@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -81,7 +82,7 @@ public class CreditCardCreditPlanPage extends AbstractBasePage {
 		logger.info("Credit Card Credit Plan Page");
 		verifySearchButton("Search");
 	}
-
+	private int counter=0;
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(creditPlanCodeTxt),
@@ -99,6 +100,7 @@ public class CreditCardCreditPlanPage extends AbstractBasePage {
 		checkDuplicacyOfCreditPlanCode(creditCardCreditPlan);
 		
         clickAddNewButton();
+        AtomicBoolean canceled = new AtomicBoolean(false);
 		// Add Document Checklist section
 		runWithinPopup("Add Credit Plan", () -> {
 			WebElementUtils.enterText(creditPlanCodeTxt, creditCardCreditPlan.getCreditPlanCode());
@@ -130,26 +132,40 @@ public class CreditCardCreditPlanPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(paymentPriorityPlanDDwn, creditCardCreditPlan.getPaymentPriorityPlan());
 			}
 			WebElementUtils.enterText(allowedPercentageTxt, creditCardCreditPlan.getAllowedPercentage());
-			clickSaveButtonWithOutWicket();
-			errorMessagePresence();
-			creditCardPlan.setErrorStatus(errorMessagePresence());
-			if(errorMessagePresence()){
+			clickSaveButton();
+			
+			if(verifyAlreadyExists())
+			{
+				errorMessagePresence();
+				creditCardPlan.setErrorStatus(errorMessagePresence());
+				canceled.set(verifyAlreadyExistsAndClickCancel());	
+			}
+			else
+			{
+				creditCardPlan.setErrorStatus(false);
+			}
+			/*if(errorMessagePresence()){
 			clickCancelButton();
 			waitForPageToLoad(driver());
-			}
+			}*/
 		});
-		verifyOperationStatus();
+		if (!canceled.get()) {
+			verifyOperationStatus();
+		}
 		return creditCardPlan.getErrorStatus();
 	}
 
 	private void checkDuplicacyOfCreditPlanCode(CreditCardCreditPlan creditCardCreditPlan) {
-		if(!isNoRecordsFoundInTable())
-		{
-			 creditCardCreditPlan.setCreditPlanCode(MiscUtils.generateRandomNumberBetween2Number(100, 999));
-			 logger.info("creditPlanCode: {}",creditCardCreditPlan.getCreditPlanCode());
-			 performSearchOperationOnMainScreen(creditCardCreditPlan);
-			 waitForPageToLoad(getFinder().getWebDriver());
-			 checkDuplicacyOfCreditPlanCode(creditCardCreditPlan);
+		
+		if (!isNoRecordsFoundInTable()) {
+			counter += 1;
+			if (counter < 2) {
+				creditCardCreditPlan.setCreditPlanCode(MiscUtils.generateRandomNumberBetween2Number(100, 999));
+				logger.info("creditPlanCode: {}",creditCardCreditPlan.getCreditPlanCode());
+				performSearchOperationOnMainScreen(creditCardCreditPlan);
+				waitForPageToLoad(getFinder().getWebDriver());
+				checkDuplicacyOfCreditPlanCode(creditCardCreditPlan);
+			}
 		}
 	}
 

@@ -1,9 +1,9 @@
-prepaid emv corporate general purpose card authorization PINLESS
+prepaid msr corporate general purpose card authorization PINLESS
 
 Narrative:
 In order to provide a corporate client various transactions
 As an issuer
-I want to create a prepaid emv corporate general purpose card and test various transactions
+I want to create a prepaid msr corporate general purpose card and test various transactions
 
 Meta:
 @StoryName p_msr_corp_general_purpose_ASI
@@ -23,6 +23,7 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
+Then embossing file batch was generated in correct format
 Then user sign out from customer portal
 Given connection to MAS is established
 When perform an ASI_PAYMENT_WITHOUT_AMOUNT MAS transaction

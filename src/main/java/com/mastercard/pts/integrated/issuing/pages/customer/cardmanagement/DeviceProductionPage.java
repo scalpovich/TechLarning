@@ -76,7 +76,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	public void deviceproduction(String prodType, String batchNum, String DeviceNumber) {
 		menuSubMenuPage.getDeviceProduction().click();
-		SelectDropDownByText(productTypeDDwn, prodType);
+		selectDropDownByText(productTypeDDwn, prodType);
 		if (batchNum != null) {
 			enterText(batchNumberTxt, batchNum);
 		}
@@ -206,15 +206,14 @@ public class DeviceProductionPage extends AbstractBasePage {
 		verifyOperationStatus();
 	}
 	
-	public void processPinGenerationBatchNewDeviceSupplementary(PinGenerationBatch batch) {
-		//Device device = context.get(ContextConstants.DEVICE);
+	public void processDeviceProductionBatchNewDeviceSupplementary(DeviceProductionBatch batch) {		
 		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
 		WebElementUtils.enterText(batchNumberTxt, batchNumber);
 		waitAndSearchForRecordToExistForSupplementary();
 		verifyOperationStatus();
 	}
 	
-	public void processDeviceProductionBatchNewDeviceSupplementary(DeviceProductionBatch batch) {
+	public void processPinGenerationBatchNewDeviceSupplementary(PinGenerationBatch batch) {
 		//Device device = context.get(ContextConstants.DEVICE);
 		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
 		WebElementUtils.enterText(batchNumberTxt, batchNumber);

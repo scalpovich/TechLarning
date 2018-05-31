@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CurrencyExchangeRate;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CurrencyExchangeRatesPage;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.CurrencyExchangeRatesFlows;
@@ -144,10 +145,20 @@ public class CurrencyExchangeRatesSteps {
 				.fnGetInputDataFromMap("SELL_RATE"));
 		currencyExchangeRateDomainPage.setRateOrigin(currencyExchangeRatesPage
 				.getCode(MapUtils.fnGetInputDataFromMap(rateOrigin)));
-		if (MapUtils.fnGetInputDataFromMap(program) != null)
-			currencyExchangeRateDomainPage.setProgram(currencyExchangeRatesPage
-					.getCode(MapUtils.fnGetInputDataFromMap(program)));
-		currencyExchangeRatesFlows.uploadCurrencyExchangeFileFlows(type);
+		if (System.getProperty(Constants.ENV).contains(Constants.ENV_STAGESA)) {
+			currencyExchangeRateDomainPage
+					.setUploadPathCER(Constants.UPLOAD_PATH_CURR_STAGE
+							+ "/INPUT");
+		} else {
+			currencyExchangeRateDomainPage
+					.setUploadPathCER(Constants.UPLOAD_PATH_CURR + "/INPUT");
+		}
+		if (!MapUtils.fnGetInputDataFromMap("Program").equalsIgnoreCase("-")) {
+			currencyExchangeRateDomainPage.setProgram(MapUtils
+					.fnGetInputDataFromMap(program));
+		}
+		currencyExchangeRatesFlows.uploadCurrencyExchangeFileFlows(type,
+				currencyExchangeRateDomainPage.getUploadPathCER());
 	}
 
 	/**
@@ -191,7 +202,6 @@ public class CurrencyExchangeRatesSteps {
 		Assert.assertTrue(processBatchesFlows
 				.verifyFileProcessFlows(processBatchesDomainPage));
 		Assert.assertTrue(currencyExchangeRatesFlows.verifyFileUploadFlows());
-		abstractBaseFlows.sessionExpiryloginInAgain();
 	}
 
 	/**
@@ -257,7 +267,8 @@ public class CurrencyExchangeRatesSteps {
 	@When("user uploads the $invalid_currency in CER file for bank")
 	public void uploadsInvalidCERFile(
 			@Named("invalid_currency") String isInvalid) {
-		currencyExchangeRatesFlows.uploadFileBankInvalidFileFlows(isInvalid);
+		currencyExchangeRatesFlows.uploadFileBankInvalidFileFlows(isInvalid,
+				currencyExchangeRateDomainPage.getUploadPathCER());
 	}
 
 }

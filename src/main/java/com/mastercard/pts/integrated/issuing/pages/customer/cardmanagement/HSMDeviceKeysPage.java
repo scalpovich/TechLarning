@@ -184,7 +184,7 @@ public class HSMDeviceKeysPage extends AbstractBasePage {
 	public void selectGenerationMethod(HSMDeviceKeys hsmKeys) {
 		waitforElement(cvv3ExistsChkBx);
 		waitForElementVisible(generationMethodDDwn);
-		SelectDropDownByText(generationMethodDDwn, hsmKeys.getGenerationMethodDDwn());
+		selectDropDownByText(generationMethodDDwn, hsmKeys.getGenerationMethodDDwn());
 	}
 
 	public void fillDecimalization(HSMDeviceKeys hsmKeys) { 
@@ -263,7 +263,7 @@ public class HSMDeviceKeysPage extends AbstractBasePage {
 	}
 	public void selectComponentType(HSMDeviceKeys hsmKeys) { 
 		waitForElementVisible(componentTypeDDwn);
-		SelectDropDownByText(componentTypeDDwn, hsmKeys.getcomponentType());
+		selectDropDownByText(componentTypeDDwn, hsmKeys.getcomponentType());
 	}
 	
 	public void fillCVKACryptogram(HSMDeviceKeys hsmKeys) {

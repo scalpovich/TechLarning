@@ -70,7 +70,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 
 	public void preproduction(String product, String batchNum) {
 		menuSubMenuPage.getPreProductionBatch().click();
-		SelectDropDownByText(productTypeDDwn, product);
+		selectDropDownByText(productTypeDDwn, product);
 		if (batchNum != null) {
 			enterText(batchNumberTxt, batchNum);
 		}
@@ -93,7 +93,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	public void processPreProductionBatch1(PreProductionBatch batch) {
 
 		waitForLoaderToDisappear();
-		SelectDropDownByText(productTypeDDwn, batch.getProductType());
+		selectDropDownByText(productTypeDDwn, batch.getProductType());
 		CustomUtils.ThreadDotSleep(8000);
 		logger.info(batch.getJobID());
 		enterText(sourceJobIdTxt, batch.getJobID());
@@ -113,7 +113,8 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	public void processPreProductionBatchNewApplication(PreProductionBatch batch) {
 
 		waitForLoaderToDisappear();
-		SelectDropDownByText(productTypeDDwn, batch.getProductType());
+		selectDropDownByText(productTypeDDwn, batch.getProductType());
+		CustomUtils.ThreadDotSleep(8000);
 		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
 		enterText(batchNumberTxt, batchNumber);
 		ClickButton(searchBtn);
@@ -206,7 +207,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	public void processPreProductionBatchNewDevice(PreProductionBatch batch) {
 
 		waitForLoaderToDisappear();
-		SelectDropDownByText(productTypeDDwn, batch.getProductType());
+		selectDropDownByText(productTypeDDwn, batch.getProductType());
 		CustomUtils.ThreadDotSleep(8000);
 		//Device device = context.get(ContextConstants.DEVICE);
 		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);

@@ -258,5 +258,14 @@ public class FileUtils {
 		}
 		sc.close();
 	}
+	
+	public static String getLatestDownlodedFileName() {
+		String downLoadPath = System.getProperty("user.home") + "\\Downloads";
+		File f = new File(downLoadPath);
+		File[] files = f.listFiles();
+		Arrays.sort(files,LastModifiedFileComparator.LASTMODIFIED_REVERSE);
+		logger.info("Latest Downloaded File Name " + files[0].getName());
+		return files[0].getName();
+	}
 }
 

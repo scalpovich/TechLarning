@@ -108,8 +108,8 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 	public void searchUntilBatchNumberIsDisplayed()
 	{
 		try
-		{
-			if(!driver().findElement(By.xpath("//table[@class='dataview']//tr[@class!='headers']/td[5]/span")).isDisplayed())
+		{	String path = String.format("//table[@class='dataview']/..//td[count(//th[.//*[text()='%S']]/preceding-sibling::th)+1]", "Device Batch Number");
+			if(!driver().findElement(By.xpath(path)).isDisplayed())
 			{	SimulatorUtilities.wait(8000);
 				clickSearchButton();
 				waitForPageToLoad(driver());

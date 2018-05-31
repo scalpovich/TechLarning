@@ -397,7 +397,6 @@ public class Constants {
 	public static final String ADD_CURRENCY_EXCHANGE_RATE_MAPPING_FRAME = "Add Currency Exchange Rates Mapping";
 
 	public static final String UPLOAD_FILE_PATH_EXCHANGE_RATE = "/home/dc-user/integrated/elt_bo/data/123456/CURRENCY_EXC_RATE_UPLOAD/INPUT";
-
 	public static final String UPLOAD_FILE_PATH_EXCHANGE_RATE_MC = "/home/dc-user/integrated/elt_bo/data/123456/MASTER_CURR_EXC_RATE/INPUT";
 
 	public static final String VIEW_BATCH_DETAILS = "View Batch Details";
@@ -428,10 +427,40 @@ public class Constants {
 	public static final String MARKETING_PLAN = "Marketing Message Plan";
 	public static final String WAIVERPLAN_CODE_ERRMSG = "[A-Z 0-9] and underscore are allowed and must start and end with an alphanumeric character.";
 	public static final String WAIVERPLAN_DESC_ERRMSG = "[a-z A-Z 0-9], SPACES and special characters [.,&#:*()-] are allowed and must start with an alphanumeric.";
-
+	public static final String KEY_TCNAME = "TCName";
 	public static String DATA_DRIVEN_CARD_BOARDING = "NO";
 	public static final String ENVIRONMENT = "automation";
 	public static final String COLUMN_NAME = "Status";
 	public static final int TABLE_ROW_NUM = 1;
+	public static final String ADD_ALLOWED_LOAD_CURRENCY = "Add Allowed Load Currency";
+	public static final String ADD_MANUAL_ALERTS = "Add Manual Alert";
+	public static final String ADD_MANUAL_RECIPIENT = "Add Manual Recipient";
+	public static final String ADD_TRANSACTION_ROUTING = "Add Transaction Routing";
+	public static final String ADD_CHANNEL_ROUTING = "Add Channel Routing Plan";
+	public static final String ADD_CHANNEL_ROUTING_DETAILS = "Add Channel Routing Plan Detail";
+	public static final String ADD_ACCOUNT_ROUTING_PLAN = "Add Account Range Routing";
+	public static final String ADD_LINK_API = "Add Link API to institution";
+	public static final String ADD_AGGREGATE_LOAD_LIMIT = "Add Aggregate Load Limits";
+	public static final String ADD_EASY_PAY_PLAN_RULE= "Add Easy Pay Plan Rule";
+	public static final String ADD_RULE= "Add Rules";
+	
+	public static final String ENV_DEMO = "demo";
+	public static final String ENV_STAGESA = "stageSA";
+
+	public static final String BLOCK_DEVICE = "Blocking the device";
+	public static final String UNBLOCK_DEVICE = "Unblocking the device";
+	
+
+	public static final String UPLOAD_PATH_CURR = "/home/dc-user/integrated/elt_bo/data/CURR_EXCHANGE_UPLOAD";
+	public static final String UPLOAD_PATH_CURR_STAGE = "/mptshome/STAGE2/integrated/elt_bo/data/CURR_EXCHANGE_UPLOAD";
+
+	public static final String USER_GROUPS = "User Groups";
+	public static final String ASSIGNPRODUCT = "Assign Product";
+	public static final String ASSIGN_SERVICE_CODE = "Assign Service Code";
+
+	public static final String ENV = "env";
+	public static final String MSR_SERVICE_CODE="101";
+	public static final String EMV_SERVICE_CODE="201";
+	
 
 }

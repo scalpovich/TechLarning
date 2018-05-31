@@ -1,15 +1,15 @@
-Prepaid authorisation: Load from file Upload and portals for prepaid msr corporate gift card
+Prepaid authorisation: Load from file Upload and portals for prepaid msr corporate travel card
 
 Narrative:
 In order to provide to client easy-to-use payment method for e-commerce retail
 As an issuer
-I want to Upload transactions from a file for prepaid msr corporate gift card
+I want to Upload transactions from a file for prepaid msr corporate travel card
 
 Meta:
 @StoryName prepaid_ctc_load_from_file
 @CRCardsWithAuthorization
 
-Scenario: Set up prepaid msr corporate gift card
+Scenario: Set up prepaid msr corporate travel card
 Meta:
 @TestId
 Given user is logged in institution
