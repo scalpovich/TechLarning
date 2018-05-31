@@ -588,6 +588,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 	
 	protected boolean verifyAlreadyExists() {
+		SimulatorUtilities.wait(3000);
 		String message = getMessageFromFeedbackPanel();
 		if (message != null && message.contains("already exist")) {
 			return true;
