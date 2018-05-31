@@ -1,20 +1,14 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
-import com.mastercard.pts.integrated.issuing.context.TestContext;
-import com.mastercard.pts.integrated.issuing.domain.CreditMappingForExcel;
-import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;
+
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 public class DeviceRange {
-    @Autowired
-	
-    static TestContext context;
+    
 	private static final int BIN_RANGE_SIZE = 10;
 	private static final String	ISSUER_BIN	 = 	"ISSUER_BIN";
 	private static final String	BRANCH	 = 	"BRANCH";

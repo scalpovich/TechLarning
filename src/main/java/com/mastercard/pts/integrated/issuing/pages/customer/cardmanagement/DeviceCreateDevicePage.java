@@ -269,6 +269,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, device.getDeviceNumber());
 		}
 		logger.info("DeviceNumber: {}",device.getDeviceNumber());
+		context.put(ContextConstants.DEVICE, device);
 	}
 
 	public String getWalletsId(String wallets) {
@@ -389,7 +390,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		else
 		{
 		fillProfile(device);
-
+        SimulatorUtilities.wait(3000);
 		// Do not Validate only when environment is Automation
 		if (!System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)) {
 			clickNextButton();

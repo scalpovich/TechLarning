@@ -127,14 +127,14 @@ public class DevicePlan implements HasCodeAndDescription {
 	private static final String DP_ALLOW_INTERNATIONAL_TRANSACTIONS = "DP_ALLOW_INTERNATIONAL_TRANSACTIONS";
 	private static final String TRANSACTION_FEE_PLAN = "TRANSACTION_FEE_PLAN";
 	private static final String DP_VIRTUAL_CREDIT_CARD_LIMIT = "VIRTUAL_CREDIT_CARD_LIMIT";
-	private static final String DP_PER_TRANSACTIO_LIMIT ="DP_PER_TRANSACTIO_LIMIT";
+	private static final String DP_PER_TRANSACTION_LIMIT ="DP_PER_TRANSACTION_LIMIT";
 	private static final String PER_TRANSACTION_LIMIT = "PER_TRANSACTION_LIMIT";
 	private static final String TOTAL_TRANSACTION_LIMIT = "TOTAL_TRANSACTION_LIMIT";
 	private static final String VELOCITY = "VELOCITY";
 	private static final String VALIDITY = "VALIDITY";
 	private static final String DP_TOTAL_TRANSACTION_LIMIT ="DP_TOTAL_TRANSACTION_LIMIT";
 	private static final String DP_VELOCITY ="DP_VELOCITY";
-	private static final String DP_VELIDITYDATE ="DP_VELIDITYDATE";
+	private static final String DP_VALIDITYDATE ="DP_VALIDITYDATE";
 	private static final String DP_ALLOW_OVERRIDING_LIMITS = "DP_ALLOW_OVERRIDING_LIMITS";	
 	
 	
@@ -305,10 +305,10 @@ public class DevicePlan implements HasCodeAndDescription {
 	public static DevicePlan createWithProviderForCredit(KeyValueProvider provider){
 
 		DevicePlan deviceplan = createWithProvider(provider);
-		deviceplan.setPerTransactionLimit(provider.getString(DP_PER_TRANSACTIO_LIMIT));
+		deviceplan.setPerTransactionLimit(provider.getString(DP_PER_TRANSACTION_LIMIT));
 		deviceplan.setTotalTransactionLimit(provider.getString(DP_TOTAL_TRANSACTION_LIMIT));
 		deviceplan.setVelocity(provider.getString(DP_VELOCITY));
-		deviceplan.setValidity("021515");
+		deviceplan.setValidity(DP_VALIDITYDATE);
 		deviceplan.setVirtualCreditCardLimit(provider.getString(DP_VIRTUAL_CREDIT_CARD_LIMIT));
 		
 		

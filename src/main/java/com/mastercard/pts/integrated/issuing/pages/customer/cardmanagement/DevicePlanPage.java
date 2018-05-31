@@ -1143,11 +1143,9 @@ public class DevicePlanPage extends AbstractBasePage {
 				enterIframeValidityOnInitialMonthsTxt(devicePlan.getValidityOnInitialMonths());
 			}
 		
-		if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT) )
+		if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT) && DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType()))
 		{
-			if (!DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType())) {
-				enableIframeCardProductionChkbx();
-			}
+		logger.info("Skipping anable of card production check box");
 		}
 		else
 		{
@@ -1220,12 +1218,15 @@ public class DevicePlanPage extends AbstractBasePage {
 		selectIframeChipTypeDdwnDdwn(devicePlan.getChipType());
 		}
 		if (devicePlan.getFillEMVPlan().equalsIgnoreCase(STATUS_YES)) {
-			atcFlagChkBx.click();
+			clickWhenClickable(atcFlagChkBx);
+			//atcFlagChkBx.click();
 			WebElementUtils.selectDropDownByVisibleText(emvPlanResponseDdwn, devicePlan.getEmvPlanResponse());
 			WebElementUtils.enterText(acceptableBelowATCRangeTxt, devicePlan.getEmvBelowATCRange());
 			WebElementUtils.enterText(acceptableAboveATCRangeTxt, devicePlan.getEmvAboveATCRange());
-			allowFallBackChkBx.click();
-			atcFlagChkBx.click();
+			clickWhenClickable(allowFallBackChkBx);
+			clickWhenClickable(atcFlagChkBx);
+			//allowFallBackChkBx.click();
+			//atcFlagChkBx.click();
 		}
 	}
 

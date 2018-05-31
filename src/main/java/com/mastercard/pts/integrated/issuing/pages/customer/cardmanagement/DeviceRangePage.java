@@ -16,11 +16,9 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditInstitutionData;
-import com.mastercard.pts.integrated.issuing.domain.CreditMappingForExcel;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -430,29 +428,37 @@ public class DeviceRangePage extends AbstractBasePage {
 		logger.info("issuerBin :{}", deviceRange.getIssuerBin());
 		CreditInstitutionData valuesInJsonNotInExcel=context.get(CreditConstants.JSON_VALUES);
 		program=context.get(ContextConstants.PROGRAM);
-		if(program.getProduct().toUpperCase().contains(ProductType.PREPAID.toUpperCase()) && program.getInterchange().toUpperCase().contains("MASTERCARD"))
+		if(program.getInterchange().toUpperCase().contains("MASTERCARD"))
 		{
-			deviceRange.setIssuerBin(valuesInJsonNotInExcel.getMastercardPrepaidIssuerBin());
+			if (program.getProduct().toUpperCase()
+					.contains(ProductType.PREPAID.toUpperCase())) {
+				deviceRange.setIssuerBin(valuesInJsonNotInExcel
+						.getMastercardPrepaidIssuerBin());
+			} else if (program.getProduct().toUpperCase()
+					.contains(ProductType.DEBIT.toUpperCase())) {
+				deviceRange.setIssuerBin(valuesInJsonNotInExcel
+						.getMastercardDebitIssuerBin());
+			} else if (program.getProduct().toUpperCase()
+					.contains(ProductType.CREDIT.toUpperCase())) {
+				deviceRange.setIssuerBin(valuesInJsonNotInExcel
+						.getMastercardCreditIssuerBin());
+			}
 		}
-		else if(program.getProduct().toUpperCase().contains(ProductType.DEBIT.toUpperCase()) && program.getInterchange().toUpperCase().contains("MASTERCARD"))
+		else if(program.getInterchange().toUpperCase().contains("VISA"))
 		{
-			deviceRange.setIssuerBin(valuesInJsonNotInExcel.getMastercardDebitIssuerBin());
-		}
-		else if(program.getProduct().toUpperCase().contains(ProductType.CREDIT.toUpperCase()) && program.getInterchange().toUpperCase().contains("MASTERCARD"))
-		{
-			deviceRange.setIssuerBin(valuesInJsonNotInExcel.getMastercardCreditIssuerBin());
-		}
-		else if(program.getProduct().toUpperCase().contains(ProductType.PREPAID.toUpperCase()) && program.getInterchange().toUpperCase().contains("VISA"))
-		{
-			deviceRange.setIssuerBin(valuesInJsonNotInExcel.getVisaPrepaidIssuerBin());
-		}
-		else if(program.getProduct().toUpperCase().contains(ProductType.DEBIT.toUpperCase()) && program.getInterchange().toUpperCase().contains("VISA"))
-		{
-			deviceRange.setIssuerBin(valuesInJsonNotInExcel.getVisaDebitIssuerBin());
-		}
-		else if(program.getProduct().toUpperCase().contains(ProductType.CREDIT.toUpperCase()) && program.getInterchange().toUpperCase().contains("VISA"))
-		{
-			deviceRange.setIssuerBin(valuesInJsonNotInExcel.getVisaCreditIssuerBin());
+			if (program.getProduct().toUpperCase()
+					.contains(ProductType.PREPAID.toUpperCase())) {
+				deviceRange.setIssuerBin(valuesInJsonNotInExcel
+						.getVisaPrepaidIssuerBin());
+			} else if (program.getProduct().toUpperCase()
+					.contains(ProductType.DEBIT.toUpperCase())) {
+				deviceRange.setIssuerBin(valuesInJsonNotInExcel
+						.getVisaDebitIssuerBin());
+			} else if (program.getProduct().toUpperCase()
+					.contains(ProductType.CREDIT.toUpperCase())) {
+				deviceRange.setIssuerBin(valuesInJsonNotInExcel
+						.getVisaCreditIssuerBin());
+			}
 		}
 		if (deviceRange.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			selectByVisibleText(issuerBinDDwn, deviceRange.getIssuerBin());

@@ -19,6 +19,7 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -72,6 +73,7 @@ public class CreditCardTransactionRulePlanPage extends AbstractBasePage {
 		// Add Document Checklist section
 		runWithinPopup("Add Transaction Rules Plan",
 				() -> {
+					SimulatorUtilities.wait(3000);
 					WebElementUtils.enterText(transactionRulePlanCodeTxt,
 							creditCardTransactionRulePlan
 									.getTransactionRulePlanCode());
@@ -80,7 +82,7 @@ public class CreditCardTransactionRulePlanPage extends AbstractBasePage {
 					logger.info("TransactionRulePlanCodeAndDescription : {}",creditCardTransactionRulePlan.buildDescriptionAndCode());
 					context.put(CreditConstants.TRANSACTION_RULE, creditCardTransactionRulePlan.buildDescriptionAndCode());
 					clickAddDetailsButton();
-
+					SimulatorUtilities.wait(4000);
 					if (!verifyAlreadyExists()) {
 						clickSaveButton();
 						creditCardPlan.setErrorStatus(false);
