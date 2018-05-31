@@ -403,8 +403,7 @@ public class ProgramPage extends AbstractBasePage {
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
-				if (Constants.ENV_DEMO.equalsIgnoreCase(MiscUtils.getEnvironment()))
-				{
+				if (!MiscUtils.getEnvironment().contains(Constants.ENVIRONMENT)) {
 					selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
 				}
 				selectRefundInCurrency(program.getRefundInCurrency());
@@ -442,8 +441,7 @@ public class ProgramPage extends AbstractBasePage {
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
-				if (Constants.ENV_DEMO.equalsIgnoreCase(MiscUtils.getEnvironment()))
-				{
+				if (!MiscUtils.getEnvironment().contains(Constants.ENVIRONMENT)) {
 					selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
 				}
 				selectRefundInCurrency(program.getRefundInCurrency());
@@ -476,8 +474,7 @@ public class ProgramPage extends AbstractBasePage {
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
-				if (Constants.ENV_DEMO.equalsIgnoreCase(MiscUtils.getEnvironment()))
-				{
+				if (!MiscUtils.getEnvironment().contains(Constants.ENVIRONMENT)) {
 					selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
 				}
 				selectRefundInCurrency(program.getRefundInCurrency());
