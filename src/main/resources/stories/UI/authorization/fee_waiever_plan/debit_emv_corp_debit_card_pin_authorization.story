@@ -38,13 +38,10 @@ Scenario: Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
-
-Scenario: Generate Auth File for Clearing
-When Auth file is generated after transaction
 When MAS simulator is closed
 And user is logged in institution
-And search Purchase authorization and verify Successful status
+Then search Purchase authorization and verify 000-Successful status
 Then verify fixed transaction fee applied on purchase transaction
 And user sign out from customer portal
-And MAS simulator is closed
+
 
