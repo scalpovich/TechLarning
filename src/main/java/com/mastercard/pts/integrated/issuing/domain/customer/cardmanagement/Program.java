@@ -821,30 +821,6 @@ public class Program implements HasCodeAndDescription {
 		this.subApplicationType = subApplicationType;
 	}
 
-	public String getDevicePlanPlan2() {
-		return devicePlanPlan2;
-	}
-
-	public void setDevicePlanPlan2(String devicePlanPlan2) {
-		this.devicePlanPlan2 = devicePlanPlan2;
-	}
-
-	public String getApplicationType() {
-		return applicationType;
-	}
-
-	public void setApplicationType(String applicationType) {
-		this.applicationType = applicationType;
-	}
-
-	public String getSubApplicationType() {
-		return subApplicationType;
-	}
-
-	public void setSubApplicationType(String subApplicationType) {
-		this.subApplicationType = subApplicationType;
-	}
-
 	@Override
 	public String toString() {
 		return MiscUtils.toString(this);
