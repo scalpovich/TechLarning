@@ -44,7 +44,7 @@ Then FINSim simulator is closed
 
 Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
 Meta:
-@TestId
+@TestId 
 Given connection to MAS is established
 When perform an EMV_CASH_ADVANCE MAS transaction
 Then MAS test results are verified
