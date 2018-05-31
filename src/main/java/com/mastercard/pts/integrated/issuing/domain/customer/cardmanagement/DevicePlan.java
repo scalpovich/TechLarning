@@ -27,6 +27,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	private static final String EXPIRY_FLAG = "EXPIRY_FLAG";
 	private static final String VALIDITY_ON_INITIAL_MONTHS = "VALIDITY_ON_INITIAL_MONTHS";
 	private static final String TRANSACTION_LIMIT_PLAN = "TRANSACTION_LIMIT_PLAN";
+	private static final String TRANSACTION_FEE_WAIVER_PLAN="TRANSACTION_FEE_WAIVER_PLAN";
 	private static final String CHIP_TYPE = "CHIP_TYPE";
 	private static final String PIN_RETRY_LIMIT = "PIN_RETRY_LIMIT";
 	private static final String PIN_LENGTH = "PIN_LENGTH";
@@ -127,6 +128,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	private static final String DP_ALLOW_INTERNATIONAL_TRANSACTIONS = "DP_ALLOW_INTERNATIONAL_TRANSACTIONS";
 	private static final String TRANSACTION_FEE_PLAN = "TRANSACTION_FEE_PLAN";
 
+	public String transactionFeeWaiverPlan;
 	public String association;
 	public String DeviceType;
 	public String ServiceCode;
@@ -272,7 +274,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setPinLength(provider.getString(PIN_LENGTH));
 		plan.setPinGenerationOption(provider.getString(PIN_GENERATION_OPTION));
 		plan.setPinDataTransmission(provider.getString(PIN_DATA_TRANSMISSION));
-
+		plan.setTransactionFeeWaiverPlan(provider.getString(TRANSACTION_FEE_WAIVER_PLAN));
 		plan.setTransactionLimitPlan(provider.getString(TRANSACTION_LIMIT_PLAN));
 		plan.setChipType(provider.getString(CHIP_TYPE));
 		plan.setEcommerceAllowed(true);
@@ -290,6 +292,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		return plan;
 	}
 
+	
 	public static DevicePlan createWithProviderForRegression(KeyValueProvider provider) {
 		DevicePlan plan = new DevicePlan();
 		plan.setDevicePlanCode(MiscUtils.generate8CharAlphaNumeric());
@@ -1034,6 +1037,15 @@ public class DevicePlan implements HasCodeAndDescription {
 	public void setTransactionLimitPlan(String transactionLimitPlan) {
 		this.transactionLimitPlan = transactionLimitPlan;
 	}
+	
+	public String getTransactionFeeWaiverPlan() {
+		return transactionFeeWaiverPlan;
+	}
+	
+	public void setTransactionFeeWaiverPlan(String transactionFeeWaiverPlan) {
+		this.transactionFeeWaiverPlan = transactionFeeWaiverPlan;
+	}
+	
 
 	public String getAfterKYC() {
 		return afterKYC;

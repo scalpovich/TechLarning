@@ -3,15 +3,18 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeeWaiverPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -21,7 +24,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L1_PROGRAM_SETUP,
 		CardManagementNav.L2_DEVICE_CONFIGURATION,
 		CardManagementNav.L3_TRANSACTION_FEE_WAIVER_PLAN
-		})
+})
 
 public class TransactionFeeWaiverPlanPage extends AbstractBasePage {
 
@@ -30,50 +33,51 @@ public class TransactionFeeWaiverPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=waiverPlanCode]")
 	private MCWebElement waiverPlanCodeTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=description]")
 	private MCWebElement descriptionTxt;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "addR")
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "addR")
 	private MCWebElement addTransactionFeeWaiverPlanBtn;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "txnFeeWaiverEffectiveDate:input:dateTextField")
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='txnFeeWaiverEffectiveDate']/..")
 	private MCWebElement effectiveDateTxt;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "txnFeeWaiverEndDate:input:dateTextField")
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='txnFeeWaiverEndDate']/..")
 	private MCWebElement endDateTxt;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "txnFeeWaiverType:input:dropdowncomponent")
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "txnFeeWaiverType:input:dropdowncomponent")
 	private MCWebElement feeTypeDDwn;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "transactionCode:input:dropdowncomponent")
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "transactionCode:input:dropdowncomponent")
 	private MCWebElement transactionTypeDDwn;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "networkCode:input:dropdowncomponent")
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "networkCode:input:dropdowncomponent")
 	private MCWebElement transactionSourceDDwn;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "transactionOrigin:input:dropdowncomponent")
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "transactionOrigin:input:dropdowncomponent")
 	private MCWebElement transactionOriginDDwn;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "waiverCycle:input:dropdowncomponent")
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "waiverCycle:input:dropdowncomponent")
 	private MCWebElement waiverFrequencyDDwn;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "numberOfCycle:input:inputTextField")
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "numberOfCycle:input:inputTextField")
 	private MCWebElement applicableForCyclesTxt;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "cycleVelocity:input:inputTextField")
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "cycleVelocity:input:inputTextField")
 	private MCWebElement transactionsWaivedPerCycleTxt;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "cycleVelocity:input:inputTextField")
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "cycleVelocity:input:inputTextField")
 	private MCWebElement clubTransactionOfAddOnCardsChk;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement saveBtn;
-	
-	
+
+
 	public void verifyUiOperationStatus() {
 		logger.info("Transaction Fee Waiver Plan Master");
 		verifyUiOperation("Add Transaction Fee Waiver Plan Master");
+
 	}
 
 	@Override
@@ -83,4 +87,91 @@ public class TransactionFeeWaiverPlanPage extends AbstractBasePage {
 				WebElementUtils.elementToBeClickable(descriptionTxt)
 				);
 	}
+
+	public void addTransactionFeeWaiverPlanMasterDetail(TransactionFeeWaiverPlan plan) {
+		logger.info("Create transaction Fee Waiver Plan Master: {}", plan.getTransactionFeeWaiverPlanCode());
+		clickAddNewButton();
+		runWithinPopup("Add Transaction Fee Waiver Plan Master", () -> {
+			WebElementUtils.enterText(waiverPlanCodeTxt,plan.getTransactionFeeWaiverPlanCode());
+			WebElementUtils.enterText(descriptionTxt,Constants.GENERIC_DESCRIPTION);
+			clickAddDetailsButton();
+			addTransactionFeeWaiverPlanDetails(plan);
+			clickSaveButton();	
+		});
+	}
+
+	public void addTransactionFeeWaiverPlanMasterDetail(TransactionFeeWaiverPlan plan, String trasType) {
+
+		String[] source = plan.getTransactionSource().trim().split(":");
+		String[] type = plan.getTransactionType().trim().split(":");
+		logger.info("Create transaction Fee Waiver Plan Master: {}", plan.getTransactionFeeWaiverPlanCode());
+		SimulatorUtilities.wait(2000);
+		clickAddNewButton();
+		runWithinPopup("Add Transaction Fee Waiver Plan Master", () -> {
+			WebElementUtils.enterText(waiverPlanCodeTxt,plan.getTransactionFeeWaiverPlanCode());
+			WebElementUtils.enterText(descriptionTxt,Constants.GENERIC_DESCRIPTION);
+			clickAddDetailsButton();
+			for(String t : type){
+				for (String value:source) {
+					addTransactionFeeWaiverPlanDetails(plan,t,value);
+				}
+				//clickSaveButton();
+			}
+			clickSaveButton();
+		});
+	}
+
+
+	public void addTransactionFeeWaiverPlanDetails(TransactionFeeWaiverPlan plan){
+		clickAddNewButton();
+		runWithinPopup("Add Transaction Fee Waiver Plan Details", () -> {
+			WebElementUtils.pickDate(effectiveDateTxt, plan.getEffectiveDate());
+			WebElementUtils.pickDate(endDateTxt, plan.getEndDate());
+			WebElementUtils.selectDropDownByVisibleText(feeTypeDDwn,plan.getFeeType());
+			WebElementUtils.selectDropDownByVisibleText(transactionTypeDDwn,plan.getTransactionType());
+			WebElementUtils.selectDropDownByVisibleText(transactionSourceDDwn,plan.getTransactionSource());
+			WebElementUtils.selectDropDownByVisibleText(transactionOriginDDwn,plan.getTransactionOrigin());
+			WebElementUtils.selectDropDownByVisibleText(waiverFrequencyDDwn,plan.getWaiverFrequency());
+			WebElementUtils.enterText(applicableForCyclesTxt,plan.getApplicableForCycles());
+			WebElementUtils.enterText(transactionsWaivedPerCycleTxt,plan.getTransactionsWaivedPerCycle());
+			ClickCheckBox(clubTransactionOfAddOnCardsChk, true);
+			clickSaveButton();
+			verifyNoErrors();
+		});
+		verifyOperationStatus();	
+	}
+
+	public void addTransactionFeeWaiverPlanDetails(TransactionFeeWaiverPlan plan, String trasactionType, String transactionSource){
+		SimulatorUtilities.wait(2000);
+		clickAddNewButton();
+		runWithinPopup("Add Transaction Fee Waiver Plan Details", () -> {
+			WebElementUtils.pickDate(effectiveDateTxt, plan.getEffectiveDate());
+			WebElementUtils.pickDate(endDateTxt, plan.getEndDate());
+			WebElementUtils.selectDropDownByVisibleText(feeTypeDDwn,plan.getFeeType());
+			WebElementUtils.selectDropDownByVisibleText(transactionTypeDDwn,trasactionType);
+			WebElementUtils.selectDropDownByVisibleText(transactionSourceDDwn,transactionSource);
+			WebElementUtils.selectDropDownByVisibleText(transactionOriginDDwn,plan.getTransactionOrigin());
+			WebElementUtils.selectDropDownByVisibleText(waiverFrequencyDDwn,plan.getWaiverFrequency());
+			WebElementUtils.enterText(applicableForCyclesTxt,plan.getApplicableForCycles());
+			WebElementUtils.enterText(transactionsWaivedPerCycleTxt,plan.getTransactionsWaivedPerCycle());
+			ClickCheckBox(clubTransactionOfAddOnCardsChk, true);
+			clickSaveButton();
+			verifyNoErrors();
+		});
+		verifyOperationStatus();	
+	}
+	
+	public void setupTransactionTypeForSources(TransactionFeeWaiverPlan plan) {
+		addTransactionFeeWaiverPlanMasterDetail(plan,"test");
+	}  
+
 }
+
+
+
+
+
+
+
+
+

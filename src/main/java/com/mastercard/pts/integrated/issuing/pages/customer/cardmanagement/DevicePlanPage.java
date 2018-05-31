@@ -170,6 +170,9 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnFeePlanCode:input:dropdowncomponent")
 	private MCWebElement iframeTransactionFeePlanDdwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnFeeWaiverPlanCode:input:dropdowncomponent")
+	private MCWebElement iframeTransactionFeeWaiverPlanDdwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnLimitPlanCode:input:dropdowncomponent")
 	private MCWebElement iframeTransactionLimitPlanDdwn;
@@ -862,6 +865,11 @@ public class DevicePlanPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(iframeTransactionFeePlanDdwn, 
 					transactionFeePlan);
 	}
+	
+	public void selectIframeTransactionFeeWaiverPlan(String transactionFeeWaiverPlan) {
+			WebElementUtils.selectDropDownByVisibleText(iframeTransactionFeeWaiverPlanDdwn, 
+					transactionFeeWaiverPlan);
+	}
 
 	public void selectIframeTransactionLimitPlanDdwn(String transactionLimitPlan) {
 		if (iframeTransactionLimitPlanDdwn.isEnabled())
@@ -1012,6 +1020,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		selectIframeBaseDeviceJoiningMemberShipPlanDdwn(devicePlan.getBaseDeviceJoiningMemberShipPlan());
 		selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
 		selectIframeTransactionLimitPlanDdwn(devicePlan.getTransactionLimitPlan());
+		selectIframeTransactionFeeWaiverPlan(devicePlan.getTransactionFeeWaiverPlan());
 		clickIframeNextButton();
 	}
 
