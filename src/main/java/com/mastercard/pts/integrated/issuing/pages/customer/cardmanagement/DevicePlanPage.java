@@ -1220,7 +1220,8 @@ public class DevicePlanPage extends AbstractBasePage {
 		selectIframeChipTypeDdwnDdwn(devicePlan.getChipType());
 		}
 		if (devicePlan.getFillEMVPlan().equalsIgnoreCase(STATUS_YES)) {
-			atcFlagChkBx.click();
+			clickWhenClickable(atcFlagChkBx);
+			//atcFlagChkBx.click();
 			WebElementUtils.selectDropDownByVisibleText(emvPlanResponseDdwn, devicePlan.getEmvPlanResponse());
 			WebElementUtils.enterText(acceptableBelowATCRangeTxt, devicePlan.getEmvBelowATCRange());
 			WebElementUtils.enterText(acceptableAboveATCRangeTxt, devicePlan.getEmvAboveATCRange());

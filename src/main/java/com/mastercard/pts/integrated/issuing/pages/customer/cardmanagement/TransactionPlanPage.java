@@ -3,12 +3,14 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionPlan;
@@ -18,6 +20,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -145,6 +148,7 @@ public class TransactionPlanPage extends AbstractBasePage {
 		runWithinPopup(
 				"Add Transaction Plan",
 				() -> {
+					SimulatorUtilities.wait(2000);
 					WebElementUtils.enterText(planCodeTxt, plan.getTransactionPlanCode());
 					WebElementUtils.enterText(transactionSetDescTxt, plan.getDescription());
 					WebElementUtils.selectDropDownByVisibleText( productTypeDDwn, plan.getProductType());
