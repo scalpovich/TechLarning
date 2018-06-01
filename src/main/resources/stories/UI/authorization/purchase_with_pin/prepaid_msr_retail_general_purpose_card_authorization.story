@@ -21,10 +21,10 @@ Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
+When processes pin generation batch for prepaid
 When user has wallet number information for prepaid device
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
-When processes pin generation batch for prepaid
 Then device has "normal" status
 When user activates device through helpdesk
 And user sign out from customer portal

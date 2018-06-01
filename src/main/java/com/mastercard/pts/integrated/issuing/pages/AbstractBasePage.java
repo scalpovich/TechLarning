@@ -291,6 +291,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void clickProcessSelectedButton() {
+		WebElementUtils.elementToBeClickable(processSelectedBtn);
 		clickWhenClickable(processSelectedBtn);
 	}
 
