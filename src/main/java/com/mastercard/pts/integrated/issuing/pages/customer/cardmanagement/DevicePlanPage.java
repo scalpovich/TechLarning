@@ -988,7 +988,7 @@ public class DevicePlanPage extends AbstractBasePage {
 			}
 			
 					if (devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-						SimulatorUtilities.wait(2000);
+						SimulatorUtilities.wait(5000);
 						selectByVisibleText(iframeDeviceTypeDdwn,devicePlanDataObject.getDeviceType());
 						if (devicePlanDataObject.getDeviceType().contains("EMV")) {
 							WebElementUtils.enterText(iframeServiceCodeTxt,Constants.EMV_SERVICE_CODE);
