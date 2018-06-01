@@ -141,7 +141,7 @@ public class TransactionFeeWaiverPlan {
 		plan.setTransactionFeeWaiverPlanCode(CustomUtils.randomNumbers(4));
 		plan.setDescription(Constants.GENERIC_DESCRIPTION);
 		plan.setEffectiveDate(LocalDate.now().plusDays(1));
-		plan.setEndDate(plan.getEffectiveDate().plusDays(5));
+		plan.setEndDate(plan.getEffectiveDate().plusDays(60));
 		plan.setFeeType(provider.getString(TFWP_FEE_TYPE));
 		plan.setTransactionType(provider.getString(TFWP_TRANSACTION_TYPE));
 		plan.setTransactionSource(provider.getString(TFWP_TRANSACTION_SOURCE));

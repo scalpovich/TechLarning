@@ -10,7 +10,7 @@ Meta:
 
 Scenario: Transaction - prepaid emv corp gen purpose card - EMV_PURCHASE Authorization transaction
 Given user is logged in institution
-And device range for program with device plan for "debit" "emv" card
+And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
 And user sign out from customer portal
 
