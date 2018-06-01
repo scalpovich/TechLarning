@@ -326,13 +326,15 @@ public class WalletPlanPage extends AbstractBasePage {
 		String walletPlanDesc;
 		walletPlancode = enterWalletPlanCode(walletplan);
 		walletPlanDesc = enterWalletPlanDescription(walletplan);
-		selectCurrency(walletplan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForWicket(driver());
+		//waitForPageToLoad(getFinder().getWebDriver());
 		selectProduct(walletplan);
-		waitForPageToLoad(getFinder().getWebDriver());
-		waitForLoaderToDisappear();
+		/*waitForPageToLoad(getFinder().getWebDriver());
+		waitForLoaderToDisappear();*/
+		waitForWicket(driver());
 		selectProgramType(walletplan);
-		waitForPageToLoad(getFinder().getWebDriver());
+	/*	waitForPageToLoad(getFinder().getWebDriver());*/
+		selectCurrency(walletplan);
 		selectWalletUsage(walletplan);
 		if(walletplan.getProductType().equalsIgnoreCase("credit"))
 		{

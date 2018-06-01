@@ -1,9 +1,9 @@
 {  
-   "name":"APB",
-   "code":"720010",
+   "name":"AUTOBNK",
+   "code":"110088",
    "codeCredit":"110000",
    "abbreviation":"CANARA",
-   "prepaidLinuxUploadPath" : "/mptshome/STAGE2/integrated/elt_bo/data/APB/input",
+   "prepaidLinuxUploadPath" : "/mptshome/STAGE2/integrated/elt_bo/data/AUTOMATION_1/APPLICATION_UPD_PREPAID/input",
    "creditLinuxUploadPath" : "/mptshome/STAGE2/integrated/elt_bo/data/AUTOMATION_1/APPLICATION_UPD_CREDIT/input",
     "corporateClientCodePrepaid" :"12121217222000002",
    "corporateClientCodeCredit" :"11000016321000014",
