@@ -20,7 +20,7 @@ And User fills Document Checklist Screen for credit product
 And User fills Device Joining and Membership Fee Plan for credit product
 And User fills Device Event Based Fee Plan for credit product
 And for EMV Card User fills Device Plan for credit product for Visa
-And for Physical NFC Device - Paypass User fills Supplementary Device Plan for credit product for Visa
+And for NFC Device - Paypass User fills Supplementary Device Plan for credit product for Visa
 And User fills Billing Cycle
 And User fills Payment Priority
 And User fills Transaction Rule Plan
