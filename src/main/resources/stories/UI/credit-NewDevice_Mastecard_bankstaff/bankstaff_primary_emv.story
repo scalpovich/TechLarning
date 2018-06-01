@@ -8,7 +8,7 @@ Meta:
 @StoryName credit_emv_retail				 
 Scenario:creation of mastercard_bankstaff_primary_emv credit device
 Meta:
-@UserCreatesNewCreditDevice
+@TestId TC550111
 Given setting json values in excel
 Given user is logged in institution
 When User fills Dedupe Plan

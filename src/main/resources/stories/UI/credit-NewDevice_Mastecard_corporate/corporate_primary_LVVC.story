@@ -8,6 +8,7 @@ Meta:
 @StoryName credit_emv_retail				 
 Scenario:creation of mastercard_corporate_primary_Limited Validity Virtual Card credit device
 Meta:
+@TestId TC565834
 @UserCreatesNewCreditDevice
 Given setting json values in excel
 Given user is logged in institution
