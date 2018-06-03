@@ -6,7 +6,7 @@ So that new device can be created for Prepaid
 
 Meta:
 @InstituteSetUpPrepaid
-@InstituionSetUpForAllType
+@InstitutionSetUpForAllType
 
 Scenario: Scenario1 - Institution parameter setup for prepaid type/ Mastercard
 Meta:
@@ -30,7 +30,17 @@ When user creates HSM Device Keys for Mastercard
 When user creates HSM ZPK Network Keys for Mastercard(CIS)
 When user creates MDK keys for Mastercard
 When user creates MCG
+When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
 When user creates Dedupe Plan
+When user creates aggregate load limit plan
+When user creates easy pay plan rule
+When user creates aggregate load limit plan
+When user creates linking API to Institution
+When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
+When user creates Acount Range Routing plan
+When user creates Allowed Load Currency
+!-- When user creates Manual Alerts of EMV Card for product type credit 
+
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Mastercard
 When user creates a Statement Message Plan for Prepaid
@@ -47,6 +57,7 @@ When user creates Device Event Based Fee Plan for Prepaid
 When user creates Maintenance Wallet Fee Plan for Prepaid
 When user creates an Embossing File Template
 When user creates a Vendor of Category Personalization with Embossing template attached
+
 
 
 Scenario: Scenario2 - Institution parameter setup for prepaid type/Visa
@@ -72,7 +83,16 @@ When user creates HSM ZPK Network Keys for Visa(SMS)
 When user creates MDK keys for Visa
 When user creates MCG
 When user creates Dedupe Plan
+When user creates aggregate load limit plan
+When user creates easy pay plan rule
+When user creates aggregate load limit plan
+When user creates linking API to Institution
+When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
+When user creates Acount Range Routing plan
+When user creates Allowed Load Currency
+!-- When user creates Manual Alerts of EMV Card for product type credit 
 When user creates MCG
+When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
 When user creates Dedupe Plan
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Visa
@@ -114,7 +134,16 @@ When user creates HSM Device Keys for Rupay
 When user creates HSM ZPK Network Keys for RPY
 When user creates MDK keys for Rupay
 When user creates MCG
+When user creates message 1100 transaction routing plan for Balance Inquiry with routing code SMS and Send to destination action
 When user creates Dedupe Plan
+When user creates aggregate load limit plan
+When user creates easy pay plan rule
+When user creates aggregate load limit plan
+When user creates linking API to Institution
+When user creates channel Routing plan for Point Of Sale channel and CBS1 interface
+When user creates Acount Range Routing plan
+When user creates Allowed Load Currency
+!-- When user creates Manual Alerts of EMV Card for product type credit 
 When user creates Saving account type
 When user creates IPKCertificationInformation for interchange Rupay
 When user creates a Statement Message Plan for Prepaid

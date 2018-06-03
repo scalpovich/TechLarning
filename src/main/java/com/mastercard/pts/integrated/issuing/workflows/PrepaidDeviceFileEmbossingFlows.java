@@ -84,11 +84,6 @@ public class PrepaidDeviceFileEmbossingFlows extends MenuFlows {
 
 	}
 
-	public void editEmbossingTemplate(String excelName) throws InterruptedException {
-		clickMenuSubOption(menuSubMenuPage.getInstitutionParameterSetup(), menuSubMenuPage.getEmbossingParameters());
-		embossingTemplatePage.editEmbossTemplate(MapUtils.fnGetInputDataFromMap("LegalType"), excelName);
-	}
-
 	public void RunBulkDeviceGenBatch() {
 		menuSubMenuPage.clickMenuSubOption(menuSubMenuPage.getOperation(), menuSubMenuPage.getProcessingBatches());
 		menuSubMenuPage.getBulkDeviceGeneration().click();

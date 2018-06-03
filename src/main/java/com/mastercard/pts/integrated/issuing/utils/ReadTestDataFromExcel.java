@@ -25,7 +25,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+/**
+ * @deprecated to be replaced by {@link com.mastercard.pts.integrated.issuing.utils.ExcelUtils}
+ */
 @Component
+//@Deprecated
 public class ReadTestDataFromExcel {
 
 	final Logger logger = LoggerFactory.getLogger(ReadTestDataFromExcel.class);
@@ -35,7 +39,7 @@ public class ReadTestDataFromExcel {
 	@Value("${test.data.file}")
 	private String file;
 
-	public File testDataFile(String testDataFileName) {
+	private File testDataFile(String testDataFileName) {
 		File testDataFile = null;
 		try {
 			testDataFile = new File(System.getProperty("user.dir")
@@ -223,15 +227,6 @@ public class ReadTestDataFromExcel {
 		return entireTestData;
 	}
 
-	public void fnSetCurrentStoryTestData(String strStoryName) {
-
-		HashMap<String, String> currentStoryTestData = this.entireTestData.get(strStoryName);
-		if (currentStoryTestData == null) {
-			Assert.fail("Unable to read entire test data");
-		}
-		ThreadLocalWorker.getTestContext().fnSetCurrentStoryTestData(currentStoryTestData);
-	}
-
 	public void iterateDataFromExcelMap(String recordKey) {
 		HashMap<String, String> iteratedTestData = this.entireTestData.get(recordKey);
 		if (iteratedTestData == null) {
@@ -250,7 +245,7 @@ public class ReadTestDataFromExcel {
 		ThreadLocalWorker.getTestContext().setIteratedTestData(currentStoryTestData);
 	}
 
-	public static void csvToXLSX() {
+	private static void csvToXLSX() {
 		try {
 			String csvFileAddress = "C:\\GIT\\VirgoStellar\\EmbossingPINandPriorityPassFileTemplate1807201713330666.csv"; // csv
 			// file

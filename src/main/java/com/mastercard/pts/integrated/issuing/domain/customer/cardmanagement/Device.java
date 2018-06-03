@@ -39,12 +39,14 @@ public class Device {
 	private static final String VALIDITY_ON_INITIAL_MONTHS = "VALIDITY_ON_INITIAL_MONTHS";
 	private static final String EXPIRY_FLAG = "EXPIRY_FLAG";
 	private static final String CREDIT_LIMIT = "CREDIT_LIMIT";
+	private static final String TRANSACTION_PASSWORD = "TRANSACTION_PASSWORD";
+	private static final String CURRENCY_OF_TRANSFER = "CURRENCY_OF_TRANSFER";
 	
-
+	private String currencyofTransfer;
 	private String currentTransPassword;
 	private String newTransPassword;
 	private String confirmNewTransPassword;
-
+	private String transactionPassword;
 	private String corporateClientCode;
 	private String appliedForProduct;
 	private String applicationType;
@@ -98,7 +100,10 @@ public class Device {
 	private String isTransactionPinless;
 	private String expiryFlag;	
 	private String creditLimit;
-	
+  	private String legalID;
+  	private String walletCurrency;
+
+
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
 		device.setApplicationType(provider.getString(APPLICATION_TYPE));
@@ -123,8 +128,11 @@ public class Device {
 		device.setConfirmNewTransPassword(provider.getString(CHP_NEW_PASSWORD));	
 		device.setProductType(provider.getString(PRODUCT_TYPE));
 		device.setTransactionDateType(provider.getString(DATE_TYPE));
+      	device.setLegalID(RandomStringUtils.randomAlphanumeric(9));	
 		device.setProgramCode(provider.getString(PROGRAM_CODE));
-		device.setDevicePlan1(provider.getString(DEVICE_PLAN));
+		device.setDevicePlan1(provider.getString(DEVICE_PLAN));     
+		device.setTransactionPassword(provider.getString(TRANSACTION_PASSWORD));		
+		device.setCurrencyofTransfer(provider.getString(CURRENCY_OF_TRANSFER));
 		return device;
 	}
 	
@@ -150,6 +158,22 @@ public class Device {
 		device.setOtherInfoRegisterForDncr(provider.getString(ND_OTHERINFO_REGISTER_FOR_DCNR));
 		device.setOtherInfoSmsAlertRequired(provider.getString(ND_OTHERINFO_SMS_ALERT_REQUIRED));
 		return device;
+	}
+
+	public String getWalletCurrency() {
+		return walletCurrency;
+	}
+
+	public void setWalletCurrency(String walletCurrency) {
+		this.walletCurrency = walletCurrency;
+	}
+	
+	public String getCurrencyofTransfer() {
+		return currencyofTransfer;
+	}
+
+	public void setCurrencyofTransfer(String currencyofTransfer) {
+		this.currencyofTransfer = currencyofTransfer;
 	}
 
 	public String getExistingDeviceNumber() {
@@ -615,5 +639,21 @@ public class Device {
 
 	public void setApplicationNumber(String applicationNumber) {
 		this.applicationNumber = applicationNumber;
+	}
+  	
+  	public String getLegalID() {
+		return legalID;
+	}
+
+	public void setLegalID(String legalID) {
+		this.legalID = legalID;
+	}
+	
+	public String getTransactionPassword() {
+		return transactionPassword;
+	}
+
+	public void setTransactionPassword(String transactionPassword) {
+		this.transactionPassword = transactionPassword;
 	}
 }

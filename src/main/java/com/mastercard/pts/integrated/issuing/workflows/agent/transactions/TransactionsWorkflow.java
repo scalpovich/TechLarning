@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
+import com.mastercard.pts.integrated.issuing.domain.agent.transactions.TransferFunds;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.BalanceEnquiryPage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.BalanceRefundApprovePage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.BalanceRefundRequestPage;
@@ -36,6 +38,8 @@ public class TransactionsWorkflow {
 	private TransferFundsPage tfpage;
 	private TransactionsViewChargesPage vcpage;
 
+	@Autowired
+	private KeyValueProvider provider;
 	
 	@Autowired
 	private Navigator navigator;
@@ -178,5 +182,11 @@ public class TransactionsWorkflow {
 
 	public String getViewChargesMasterDetailContentTitleText() {
 		return vcpage.getMasterDetailContentTitleText();
+	}
+	
+	public String transferFund(TransferFunds transferDetails,Device device)
+	{
+		return tfpage.transferFund(transferDetails,device);
+		
 	}
 }

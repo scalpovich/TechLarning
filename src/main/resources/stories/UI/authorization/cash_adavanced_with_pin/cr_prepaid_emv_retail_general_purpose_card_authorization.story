@@ -27,6 +27,8 @@ Meta:
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
+And user sign out from customer portal
+When user is logged in institution
 When processes device production batch for prepaid
 When processes pin generation batch for prepaid
 Then device has "normal" status

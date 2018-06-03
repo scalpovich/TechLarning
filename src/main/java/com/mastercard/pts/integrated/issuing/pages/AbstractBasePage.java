@@ -33,15 +33,19 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -59,7 +63,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@Autowired
 	CreditCardPlan creditCardPlans;
-	
+
 	@Autowired
 	TestContext context;
 
@@ -86,6 +90,14 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public static final String ACTUAL_RESULT_LABEL = " | Actual Result : ";
 
+	public static final String ENTITY_TYPE_USER = "User [U]";
+
+	public static final String ENTITY_TYPE_ROLE = "Role [R]";
+
+	public static final By ENTITY_ID = By.name("searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent");
+
+	public static final String PRIVILEGES_TABS = "//a[contains(text(),'%s')]";
+
 	private static final Logger logger = LoggerFactory.getLogger(AbstractBasePage.class);
 
 	public static final LocalDate futureDate = LocalDate.now().plusDays(100);
@@ -93,6 +105,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public static final LocalDate futureEndDate = LocalDate.now().plusDays(150);
 
 	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
+	
+	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid transaction type - ";
 
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -244,15 +258,25 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@type='submit' or @name='save']")
 	private MCWebElement saveOrDetailsOrSearchBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers' and @class!='navigation'][1]/td[2]/span")
 	private MCWebElement deviceNumberFetch;
-	
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
+	private MCWebElement entityTypeDdwn;
+
+	@PageElement(findBy = FindBy.ID, valueToFind = "institution_selection")
+	private MCWebElement instituteSelectionDrpDwn;
+
+	private String instituteSelectionVal = "//div[@id='institution_selector']//li/a[contains(text(),'%s')]";
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview td:first-child>span>a>span")
 	private MCWebElements firstElementOfTable;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview tr.even a>img[alt='Delete Record'],table.dataview tr.odd a>img[alt='Delete Record']")
 	private MCWebElements deleteAddedRecordsIcon;
+
+	private String ERROR_XPATH = ".//div[@class='ketchup-error-container-alt']/ol/li";
 
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -273,7 +297,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void clickNextButton() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
+		SimulatorUtilities.wait(500);
 		clickWhenClickable(nextBtn);
+		SimulatorUtilities.wait(500);
 		WebElementUtils.addWicketAjaxListeners(driver());
 	}
 
@@ -341,7 +367,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickWhenClickable(searchButtonElement);
 	}
 
-	protected Boolean isNoRecordsFoundInTable() {
+	public Boolean isNoRecordsFoundInTable() {
 		try {
 			return driver().findElement(By.cssSelector(".norecords")).isDisplayed();
 		} catch (NoSuchElementException e) {
@@ -446,7 +472,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected boolean waitForRow() {
 		try {
 			waitForWicket();
-			Thread.sleep(20000); // Pre-production batch and device production
+			Thread.sleep(30000); // Pre-production batch and device production
 									// batch takes little longer hence the wait
 			return driver().findElement(By.cssSelector(FIRST_ROW_SELECT)).isDisplayed();
 		} catch (NoSuchElementException | InterruptedException e) {
@@ -517,13 +543,20 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	/**
 	 * Verify already exists and click cancel
-	 * 
 	 * @return true if error exists otherwise false
 	 */
 	protected boolean verifyAlreadyExistsAndClickCancel() {
 		String message = getMessageFromFeedbackPanel();
 		if (message != null && message.contains("already exists")) {
 			clickCancelButton();
+			return true;
+		}
+		return false;
+	}
+	
+	protected boolean verifyAlreadyExists() {
+		String message = getMessageFromFeedbackPanel();
+		if (message != null && message.contains("already exist")) {
 			return true;
 		}
 		return false;
@@ -553,9 +586,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void clickWhenClickable(MCWebElement element) {
-		SimulatorUtilities.wait(2000);
+		SimulatorUtilities.wait(4000);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
-		waitForWicket();
+		//waitForWicket();
 	}
 
 	protected void clickWhenClickableDoNotWaitForWicket(MCWebElement element) {
@@ -601,12 +634,14 @@ public abstract class AbstractBasePage extends AbstractPage {
 		WebElementUtils.waitForWicket(driver());
 	}
 
-	//created a re-usable method that could be used in waitAndSearchForRecordToExist() below
-		//the same code can be used in Authorization Search Page
+	// created a re-usable method that could be used in
+	// waitAndSearchForRecordToExist() below
+	// the same code can be used in Authorization Search Page
 	public void waitAndSearchForRecordToAppear() {
 		clickSearchButton();
-		// Pre-production batch and device production batch & Authorization Search page take little long to
-				// be completed, and do not appear in search result, hence a for loop
+		// Pre-production batch and device production batch & Authorization
+		// Search page take little long to
+		// be completed, and do not appear in search result, hence a for loop
 		for (int l = 0; l < 21; l++) {
 			if (!waitForRow())
 				clickSearchButton();
@@ -639,10 +674,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 			return false;
 		}
 	}
-	
+
 	protected void waitAndSearchForRecordToExist() {
 		waitAndSearchForRecordToAppear();
-        context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
+		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
 		selectFirstRecord();
 		clickProcessSelectedButton();
 	}
@@ -783,8 +818,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public void enterValueinTextBox(MCWebElement txtBoxElement, String value) {
 		waitForElementVisible(txtBoxElement);
-		if (value != null && !value.isEmpty()) {
-			enterText(txtBoxElement, value);
+		if (txtBoxElement.isEnabled()) {
+			if (value != null && !value.isEmpty()) {
+				enterText(txtBoxElement, value);
+			}
 		}
 	}
 
@@ -1242,6 +1279,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameSelector));
 	}
 
+	// Switch to a frame by specificying the index in WebPage.
+	public void switchToIframeByIndex(int frameIndex) {
+		WebDriverWait wait = new WebDriverWait(getFinder().getWebDriver(), 80);
+		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameIndex));
+	}
+
 	public static void addWicketAjaxListeners(WebDriver driver) {
 		String javascript = "if (typeof tk  == 'undefined') {" + "tk = {activeAjaxCount: 0, ajaxCallsTried: 0, ajaxCallsCompleted: 0};"
 				+ "Wicket.Ajax.registerPreCallHandler(function(){tk.activeAjaxCount++;tk.ajaxCallsTried++;});"
@@ -1290,13 +1333,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 		// addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
-	public void SelectDropDownByText(MCWebElement element, String value) {
+	public void selectDropDownByText(MCWebElement element, String value) {
 		element.getSelect().selectByVisibleText(value);
 		// element.getSelect().selectByValue(value);
 		// addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
-	public void SelectDropDownByIndex(MCWebElement element, int value) {
+	public void selectDropDownByIndex(MCWebElement element, int value) {
 		if (element.isEnabled()) {
 			element.getSelect().selectByIndex(value);
 		} else {
@@ -1308,7 +1351,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public void ClickButton(MCWebElement BtnName) {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		BtnName.click();
-		//addWicketAjaxListeners(getFinder().getWebDriver());
+		// addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
 	public void ClickCheckBox(MCWebElement optionChkBox, boolean value) {
@@ -1613,17 +1656,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 		frameSwitch.getElements();
 		return frameSwitch.getElements().size();
 	}
-	
+
 	public void clickSaveButtonWithOutWicket() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		clickWhenClickableDoNotWaitForWicket(saveBtn);
 	}
-	
+
 	public boolean errorMessagePresence() {
 		try {
-			if (driver()
-					.findElement(By.xpath("//*[@class='feedbackPanelERROR']"))
-					.isDisplayed()) {
+			if (driver().findElement(By.xpath("//*[@class='feedbackPanelERROR']")).isDisplayed()) {
 				return true;
 			}
 
@@ -1632,21 +1673,59 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 		return false;
 	}
+
+	public void identifyAddedRecordinTableAndDelete(String parameter) {
+		for (int i = 0; i < firstElementOfTable.getElements().size(); i++) {
+			if (firstElementOfTable.getElements().get(i).getText().equals(parameter)) {
+				clickWhenClickable(deleteAddedRecordsIcon.getElements().get(i));
+			}
+		}
+	}
 	
-	public void identifyAddedRecordinTableAndDelete(String parameter)
-	   {
-		  for(int i=0;i<firstElementOfTable.getElements().size();i++)
-		  {
-			  if(firstElementOfTable.getElements().get(i).getText().equals(parameter))
-			  {
-				  clickWhenClickable(deleteAddedRecordsIcon.getElements().get(i));
-			  }
-		  }
-	   }
-	
-	public void clickSearchButtonWithoutWicket()
-	{
-		clickWhenClickableDoNotWaitForWicket(searchBtn);
+
+	public void searchEntity(String entityType) {
+		UserCreation userCreation = context.get(ContextConstants.USER);
+		if ("user".equalsIgnoreCase(entityType))
+			selectByVisibleText(entityTypeDdwn, ENTITY_TYPE_USER);
+		else if ("role".equalsIgnoreCase(entityType))
+			selectByVisibleText(entityTypeDdwn, ENTITY_TYPE_ROLE);
+		CustomUtils.ThreadDotSleep(900);
+		Select select = new Select(getFinder().getWebDriver().findElement(ENTITY_ID));
+		CustomUtils.ThreadDotSleep(500);
+		select.selectByVisibleText(userCreation.getUserName() + " [" + userCreation.getUserID() + "]");
+		ClickButton(searchBtn);
+	}
+
+	public void selectTab(String tabName) {
+		getFinder().getWebDriver().findElement(By.xpath(String.format(PRIVILEGES_TABS, tabName))).click();
+	}
+
+	/**
+	 * Select institute from top drp dwn.
+	 *
+	 * @param instituteName
+	 *            the institute name
+	 */
+	public void selectInstituteFromDrpDwn(String instituteName) {
+		instituteSelectionDrpDwn.click();
+		CustomUtils.ThreadDotSleep(500);
+		String ins = String.format(instituteSelectionVal, instituteName);
+		CustomUtils.ThreadDotSleep(500);
+		getFinder().getWebDriver().findElement(By.xpath(ins)).click();
+
+	}
+
+	public void deleteExistingRecord(String parameter) {
+		for (int i = 0; i < firstElementOfTable.getElements().size(); i++) {
+			if (firstElementOfTable.getElements().get(i).getText().equals(parameter)) {
+				deleteAddedRecordsIcon.getElements().get(i).click();
+				acceptPopup();
+			}
+		}
+	}
+
+	public List<WebElement> getValidationErrors() {
+		return Elements(ERROR_XPATH);
 	}
 
 	@Override

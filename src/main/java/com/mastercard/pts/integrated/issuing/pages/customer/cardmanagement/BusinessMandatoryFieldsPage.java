@@ -172,7 +172,7 @@ public class BusinessMandatoryFieldsPage extends AbstractBasePage {
 		clickWhenClickable(addSubDetailsBtn);
 		SwitchToDefaultFrame();
 		switchToIframe(Constants.ADD_BUSINESS_MANDATORY_DETAILS_FRAME);
-		SelectDropDownByIndex(FieldNameDDwn, 1);
+		selectDropDownByIndex(FieldNameDDwn, 1);
 		clickSaveButton();
 	}
 	public void verifyUiOperationStatus() {

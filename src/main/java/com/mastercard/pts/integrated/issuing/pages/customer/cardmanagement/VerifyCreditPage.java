@@ -111,7 +111,7 @@ TestContext context;
 			WebElementUtils.enterText(lastNameTxt, helpDeskGeneral.getLastName());
 			WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
 			WebElementUtils.pickDate(toDatePicker, LocalDate.now());
-			clickSearchButtonWithoutWicket();
+			clickSearchButton();
 			waitForPageToLoad(driver());
 			allApplicationNumbers.add(applicationNumberFileUploadTxt.getText());
 			clickWhenClickable(editImg);

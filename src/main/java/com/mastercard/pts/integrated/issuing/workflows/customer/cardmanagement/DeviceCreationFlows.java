@@ -110,16 +110,7 @@ public class DeviceCreationFlows extends MenuFlows {
 		clickMenuSubOption(menuSubMenuPage.getInstitutionParameterSetup(), menuSubMenuPage.getEmbossingParameters());
 		embossingTemplatePage.addembossingtemplate(MapUtils.fnGetInputDataFromMap("Embosscode"),
 				MapUtils.fnGetInputDataFromMap("EmbossDesc"), MapUtils.fnGetInputDataFromMap("EmbossFileType"),
-				MapUtils.fnGetInputDataFromMap("sequenceNo"), MapUtils.fnGetInputDataFromMap("EmbossingField"),
-				MapUtils.fnGetInputDataFromMap("EmbossTempField"), MapUtils.fnGetInputDataFromMap("Priority"));
-
-	}
-
-	public void addNewDevice() {
-		waitForElementVisible(menusubmenuPage.getCardManagement());
-		clickMenuSubOption(menuSubMenuPage.getActivity(), menuSubMenuPage.getDeviceMenu());
-		menuSubMenuPage.getNewDevice().click();
-		newDevicePage.createNewDevice();
+				MapUtils.fnGetInputDataFromMap("sequenceNo"), MapUtils.fnGetInputDataFromMap("EmbossingField"));
 
 	}
 

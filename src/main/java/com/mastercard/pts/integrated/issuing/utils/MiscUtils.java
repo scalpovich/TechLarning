@@ -82,7 +82,9 @@ public class MiscUtils {
 				temptaskName = SimulatorConstantsData.KILL_MAS_PROCESS;
 			}  else if ("MAS17".equalsIgnoreCase(taskName) || ("MDFS17".equalsIgnoreCase(taskName))) {
 				temptaskName = SimulatorConstantsData.KILL_MAS17_PROCESS;
-			} 
+			} else if("MAS18".equalsIgnoreCase(taskName) || ("MDFS18".equalsIgnoreCase(taskName))){
+				temptaskName = SimulatorConstantsData.KILL_MAS18_PROCESS;
+			}
 			command = "taskkill /F /IM " + temptaskName + ".exe";
 			Runtime.getRuntime().exec(command).waitFor(10, TimeUnit.SECONDS);
 		} catch (Exception e) {
@@ -176,5 +178,10 @@ public class MiscUtils {
 
 	public static String toString(Object object) {
 		return ReflectionToStringBuilder.toString(object, ToStringStyle.MULTI_LINE_STYLE);
+	}
+	
+	public static String getEnvironment() {
+		String env = System.getProperty("env").toString();
+		return env;
 	}
 }

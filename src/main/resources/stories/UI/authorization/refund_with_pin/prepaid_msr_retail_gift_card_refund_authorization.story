@@ -1,4 +1,4 @@
-prepaid msr retail general purpose card authorization
+prepaid msr retail gift card authorization
 
 Narrative:
 In order to provide to client easy-to-use multi-purpose prepaid card

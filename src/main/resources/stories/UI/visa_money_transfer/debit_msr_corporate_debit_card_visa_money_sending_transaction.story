@@ -8,7 +8,8 @@ I want to create an magnetic stripe debit card and perform visa money transfer r
 Meta:
 @StoryName d_visa_emv_corp
 
-Scenario: Set up debit msr corporate travel card from another institute
+
+Scenario: Set up debit msr corporate debit card from another institute
 Meta:
 @TestId TC398484
 Given user is logged in non-default institution

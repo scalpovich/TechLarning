@@ -1,9 +1,9 @@
 regression prepaid emv corporate travel card authorization PINLESS
 
 Narrative:
-In order to check transactions on prepaid emv retail general purpose card
+In order to check transactions on prepaid emv corporate debit card
 As an issuer
-I want to authorize transactions for prepaid emv retail general purpose card
+I want to authorize transactions for prepaid emv corporate debit card
 
 Meta:
 @StoryName p_emv_corp_travel
@@ -11,7 +11,8 @@ Meta:
 @CRCardsWithAuthorizationRegression
 @AuthorizationRegression
 @AuthorizationRegressionGroup3
-@EMVWithoutPin
+@EMVWithoutPinIntTrx
+@InternationalTrx
 
 Scenario: Set up prepaid emv corporate travel card
 Given user is logged in institution
@@ -19,16 +20,16 @@ And device range for program with device plan for "prepaid" "emv" card without p
 When user creates new device of prepaid type for new client
 Then user sign out from customer portal
 
-Scenario: prepaidemv corporate travel card device production
+Scenario: prepaid emv corporate travel card device production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 Then device has "normal" status
-When user has wallet number information for debit device
+When user has wallet number information for prepaid device
 Then user sign out from customer portal
 Then user is logged in institution
-When user performs adjustment transaction with 10000 amount
+When user performs adjustment transaction with 300000 amount
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk

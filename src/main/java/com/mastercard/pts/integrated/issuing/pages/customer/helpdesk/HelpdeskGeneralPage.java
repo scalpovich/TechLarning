@@ -1,12 +1,19 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.helpdesk;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.server.handler.FindChildElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -17,11 +24,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.CharMatcher;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -42,12 +51,23 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String NOT_REGISTERED = "notregistered";
 	private static final String NOTE_WALLET_FUND_TRANSFER = "Notes for Wallet to Wallet transfer";
 	private static final String SERV_CODE_TRANSACTION_PASSWORD = "250";
-	private static final String SERV_CODE_LOGIN_PASSWORD = "459";	
+	private static final String CHANGE_REGISTERED_EMAIL_ID="Change Registered Email Id Request";
+	private static final String CHANGE_REGISTERED_MOBILE_NO="Change Registered Mobile Number Request";
+	private static final String SERV_CODE_LOGIN_PASSWORD = 	"459";	
 	private static final String LABEL_LOGIN_PASSWORD = "459 - Reset Cardholder Login Password";
 	private static final String LABEL_TRANSACTION_PASSWORD = "250 - Reset Cardholder Transaction Password";
+	private static final String ERROR_MESSAGE_XPATH="//div[@class='ketchup-error-container-alt']//li";
+	private static final String CALL_REFERENCE_NUMBER = "Call Reference Number:";
+	private static final String SERVICE_DESCRIPTION = "Service Description:";
+	private static final String DEVICE_NUMBER = "Device Number:";
+	private static final String REQUEST_DATE =  "Request Date:";
+	private static final String CLOSURE_DATE = "Closure Date:";
+	private static final String LOGGED_BY =  "Logged By:";
+	private static final String CLOSED_BY =  "Closed By:";
+	private static final String CLOSURE_PERIOD = "Estimated Closure Period(Days:HH:MM):";
+	private static final String PRIORITY_REQUEST = "Priority Request:";
 	
-	
-	private static String service_request_status = "Request processed successfully";
+	private static String ERROR_MESSAGE = "This field is required.";
 	
 	private static final Logger logger = LoggerFactory.getLogger(HelpdeskGeneralPage.class);
 	private String activeDeviceNumber;
@@ -166,8 +186,47 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind="searchDiv:rows:3:componentList:0:componentPanel:input:inputTextField")
 	private MCWebElement clientIDInpt;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind="udf21:input:inputTextField")
+	private MCWebElement emailIDInptTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="udf24:input:inputTextField")
+	private MCWebElement mobileInptTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="udf23:input:dropdowncomponent")
+	private MCWebElement isdCodeDdwn;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//ul[@class='feedbackPanel']/.//span")
 	private MCWebElement responseMessage;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind="span#callReferenceNumber>span")
+	private MCWebElement callReferenceNumberLbl;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind="span#serviceCode>span")
+	private MCWebElement serviceDescriptionLbl;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind="span#cardNumberID>span")
+	private MCWebElement deviceNumberLbl;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind="span#requestDate>span>span")
+	private MCWebElement requestDateLbl;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind="span#crAccountNbr>span")
+	private MCWebElement walletNumberLbl;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind="span#userCreate>span")
+	private MCWebElement loggedByLbl;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind="span#actualClosureDate>span>span")
+	private MCWebElement closureDateLbl;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind="span#closedBy>span")
+	private MCWebElement closedByLbl;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind="span#estimatedClosurePeriod>span")
+	private MCWebElement closurePeriodLbl;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind="span#priorityRequest>input")
+	private MCWebElement priorityRequestChkBx;
 	
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
 	
@@ -242,7 +301,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	public void selectServiceCodeByValue(String serviceCode){
 		WebElementUtils.selectDropDownByValue(serviceCodeDdwn, serviceCode);
-	}	
+	}
+	
+	public void selectServiceCodeByText(String serviceText){
+		selectByVisibleText(serviceCodeDdwn, serviceText);
+	}
 	public void storeActivationDate(){
 		activationDate = new WebDriverWait(driver(), timeoutInSec)
 		.until(WebElementUtils.visibilityOf(activationDateTxt)).getText();
@@ -261,11 +324,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return deliveryDate;
 	}
 		
-	public void clickGoButton(){
-		new WebDriverWait(driver(), timeoutInSec)
-		.until(WebElementUtils.elementToBeClickable(goBtn))
-		.click();
-		waitForWicket();
+
+	public void clickGoButton() {
+		clickWhenClickableDoNotWaitForWicket(goBtn);
 	}
 	
 	public void clickCustomerCareEditLink(){
@@ -274,6 +335,24 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	public void enterNotes(String notes){
 		WebElementUtils.enterText(notesTxt, notes);
+	}
+	
+	public void enterEmailID(HelpdeskGeneral general){
+		enterValueinTextBox(emailIDInptTxt,general.getNewEmailID());
+	}
+	
+	public void enterMobileNo(HelpdeskGeneral general){
+		SelectDropDownByValue(isdCodeDdwn,general.getNewMobileISD());
+		enterValueinTextBox(mobileInptTxt,general.getNewMobileNo());
+	}
+	
+	public boolean validateMandatoryFields(int mandatoryFields){
+		clickSaveButton();
+		clickSaveButton();
+		if(errorMessage().size()== mandatoryFields && errorMessage().get(mandatoryFields-1).equalsIgnoreCase(ERROR_MESSAGE))
+			return true;
+		else
+			return false;
 	}
 
 	public String activationMessage(){
@@ -504,12 +583,23 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickWalletDetailsTab();
 		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
 		int rowCount = driver().findElements(By.xpath("//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr")).size();
+		DecimalFormat dec = new DecimalFormat("#0.00");
 		for (int j = 1; j <= rowCount; j++)
 				{
 					if (j == 1)
-						walletBalanceInformation = getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency")+":"+getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance")+":"+getCellTextByColumnNameInEmbeddedTab(j, "WALLET_NUMBER");
-					else
-						walletBalanceInformation = walletBalanceInformation+","+getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency")+":"+getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance")+":"+getCellTextByColumnNameInEmbeddedTab(j, "WALLET_NUMBER");
+					{
+						logger.info("Current Available Balance {} Settled Debit {} ",getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"),getCellTextByColumnNameInEmbeddedTab(j, "Settled Debit"));
+						Double balance= Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance")) + Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Settled Debit"));			
+						logger.info("Current Available Balance + Settled Debit : "+dec.format(balance));
+						walletBalanceInformation = getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency")+":"+dec.format(balance)+":"+getCellTextByColumnNameInEmbeddedTab(j, "WALLET_NUMBER");
+						
+					}else
+					{	
+						logger.info("Current Available Balance {} Settled Debit {} ",getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"),getCellTextByColumnNameInEmbeddedTab(j, "Settled Debit"));
+						Double balance= Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance")) + Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Settled Debit"));
+						logger.info("Current Available Balance + Settled Debit : "+dec.format(balance));
+						walletBalanceInformation = walletBalanceInformation+","+getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency")+":"+dec.format(balance)+":"+getCellTextByColumnNameInEmbeddedTab(j, "WALLET_NUMBER");				
+					}
 				}
 		clickEndCall();
 		return walletBalanceInformation;
@@ -694,7 +784,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			enterNotes("Servic_Request for " + clientID);
 			clickSaveButton();
 
-			if(verifyServiceRequestStatus().contains(service_request_status)){
+			if(verifyServiceRequestStatus().contains(ConstantData.RECORD_PROCESSED_SUCCESSFULLY)){
 				logger.info("Reset Login password service request is completed for {}", clientID);
 				clickOKButtonPopup();
 				serviceStatus = true;
@@ -717,7 +807,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			enterNotes("Servic_Request for " + clientID);
 			clickSaveButton();
 			
-			if(verifyServiceRequestStatus().contains(service_request_status)){
+			if(verifyServiceRequestStatus().contains(ConstantData.RECORD_PROCESSED_SUCCESSFULLY)){
 				logger.info("Reset Transaction password service request is completed for {}", clientID);
 				clickOKButtonPopup();
 				serviceStatus = true;
@@ -734,4 +824,153 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public String verifyServiceRequestStatus(){		
 		return getTextFromPage(responseMessage);
 	}
+
+	public List<String> errorMessage(){		
+		return getListOfElements(ERROR_MESSAGE_XPATH);
+	}
+	
+	public boolean verifyFieldPresence(String field){
+		try{
+		Element(String.format(".//form[@id='id1a4']//table[@class='modelFormClass'][1]//*[text() [contains(.,'%s:')]]",field));
+			return true;
+		}
+		catch(NoSuchElementException e){
+			return false;
+		}
+	}
+	
+	public boolean verifyCallReferenceNo(){
+		return verifyFieldPresence(CALL_REFERENCE_NUMBER)&&StringUtils.isNumeric(getTextFromPage(callReferenceNumberLbl));
+		
+	}
+	
+	public boolean verifyServiceDescription(HelpdeskGeneral helpdeskGeneral){
+		return verifyFieldPresence(SERVICE_DESCRIPTION)&&getTextFromPage(serviceDescriptionLbl).equalsIgnoreCase(String.format(helpdeskGeneral.getServiceDescription()+" [%s]",helpdeskGeneral.getServiceCode()));
+	}
+	
+	public boolean verifyDeviceNumber(HelpdeskGeneral helpdeskGeneral){
+		return verifyFieldPresence(DEVICE_NUMBER)&&getTextFromPage(deviceNumberLbl).equalsIgnoreCase(helpdeskGeneral.getDeviceNumber());
+	}
+	
+
+	public boolean verifyRequestDate() {
+		if (verifyFieldPresence(REQUEST_DATE)) {
+			try {
+				LocalDate.parse(getTextFromPage(requestDateLbl),
+						DateTimeFormatter.ofPattern("dd/MM/uuuu kk:mm:ss"));
+				return true;
+			} catch (DateTimeParseException e) {
+				return false;
+			}
+		} else
+			return false;
+	}
+	
+	public boolean verifyLoggedBy(){
+		return verifyFieldPresence(LOGGED_BY); 
+	}
+	
+	public boolean verifyWalletNumber(HelpdeskGeneral general){
+		return verifyFieldPresence(WALLET_NUMBER)&&getTextFromPage(walletNumberLbl).equalsIgnoreCase(general.getDefaultWalletNumber());
+	}
+	
+	public boolean verifyClosureDate(){
+		if(verifyFieldPresence(CLOSURE_DATE)){
+			try{
+	            LocalDate.parse(getTextFromPage(closureDateLbl), DateTimeFormatter.ofPattern("dd/MM/uuuu kk:mm:ss"));
+	            return true;
+			}
+			catch(DateTimeParseException e){
+				return false;
+			}
+			}
+			else
+				return false;
+	}
+	
+	public boolean verifyClosedBy(){
+		return verifyFieldPresence(LOGGED_BY);
+	}
+	
+	public  boolean verifyEstimatedClosurePeriod(){
+		return verifyFieldPresence(CLOSURE_PERIOD);
+	}
+	
+	public boolean verifyPriorityRequest(){
+		if (verifyFieldPresence(PRIORITY_REQUEST)){
+		ClickCheckBox(priorityRequestChkBx,true);
+		return true;
+		}
+		else
+		return false;		
+	}
+	
+	public boolean changeRegisteredEmailID(HelpdeskGeneral general) {
+		logger.info("change Registered Email ID");
+		
+		selectServiceCodeByText(CHANGE_REGISTERED_EMAIL_ID);
+		clickGoButton();
+		runWithinPopup(CHANGE_REGISTERED_EMAIL_ID, () -> {			
+			enterEmailID(general);
+			enterNotes("Servic_Request for registered email ID" );
+			clickSaveButton();
+			
+			if(verifyServiceRequestStatus().contains(ConstantData.RECORD_PROCESSED_SUCCESSFULLY)){
+				logger.info("Registered Email ID service request processed successfully");
+				clickOKButtonPopup();
+				serviceStatus = true;
+			}else{
+				logger.info("Registered Email ID service request rejected");
+				clickCancelButtonPopup();
+			}
+		});
+		clickEndCall();
+		return serviceStatus;
+	}
+	
+	public boolean changeRegisteredMobileNo(HelpdeskGeneral general) { 
+		logger.info("change Registered Mobile No");
+
+		selectServiceCodeByText(CHANGE_REGISTERED_MOBILE_NO);
+		clickGoButton();
+		runWithinPopup(CHANGE_REGISTERED_MOBILE_NO,
+				() -> {
+					enterMobileNo(general);
+					enterNotes("Servic_Request for registered Mobile No");
+					clickSaveButton();
+
+					if (verifyServiceRequestStatus().contains(
+							ConstantData.RECORD_PROCESSED_SUCCESSFULLY)) {
+						logger.info("Registered Mobile No service request processed successfully");
+						clickOKButtonPopup();
+						serviceStatus = true;
+					} else {
+						logger.info("Registered Mobile No service request rejected");
+						clickCancelButtonPopup();
+					}
+				});
+		clickEndCall();
+		return serviceStatus;
+	}
+	
+	public boolean validateRequiredFields(HelpdeskGeneral general){
+		logger.info("Validate required fields in change Registered Email ID Screen");
+		
+		selectServiceCodeByText(CHANGE_REGISTERED_EMAIL_ID);
+		clickGoButton();
+		runWithinPopup(CHANGE_REGISTERED_EMAIL_ID, () -> {	
+			verifyCallReferenceNo();
+			verifyServiceDescription(general);
+			verifyDeviceNumber(general);
+			verifyRequestDate();
+			verifyLoggedBy();
+			verifyWalletNumber(general);
+			verifyClosureDate();
+			verifyClosedBy();
+			verifyEstimatedClosurePeriod();
+			verifyPriorityRequest();
+		});
+		return true;
+	}
+	
 }

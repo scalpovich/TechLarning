@@ -13,24 +13,23 @@ public class NewDeviceFlows extends MenuFlows {
 
 	@Autowired
 	Navigator navigator;
-	@Autowired
-	NewDevice newDevice;
 
-	public String createNewDevicePrepaid() {
+	public String createNewDevicePrepaid(NewDevice newDevice) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
 		NewDevicePage newDevicepage = navigator.navigateToPage(NewDevicePage.class);
-		
+
 		newDevicepage.clickAddnewDevice();
 		newDevicepage.switchToAddNewDeviceFrame();
-		newDevicepage.selectAppliedForProduct();
-		newDevicepage.selectAppliedType();
-		newDevicepage.selectApplicationSubType();
+		newDevicepage.selectAppliedForProduct(newDevice);
+		newDevicepage.selectAppliedType(newDevice);
+		newDevicepage.selectApplicationSubType(newDevice);
 		newDevicepage.clickNextButton();
-		newDevicepage.GenerateBatchFrame();
-		newDevicepage.GeneralInformationFrame();
-		newDevicepage.DeviceInformationScreen();
-		newDevicepage.ProfileScreen();
-		newDevicepage.AddressScreen();
+		newDevicepage.GenerateBatchFrame(newDevice);
+		newDevicepage.GeneralInformationFrame(newDevice);
+		newDevicepage.DeviceInformationScreen(newDevice);
+		newDevicepage.ProfileScreen(newDevice);
+		newDevicepage.clickNextButton();
+		newDevicepage.AddressScreen(newDevice);
 		newDevicepage.OccupationDetailsScreen();
 		newDevicepage.clickNextButton();
 		newDevicepage.clickNextButton();

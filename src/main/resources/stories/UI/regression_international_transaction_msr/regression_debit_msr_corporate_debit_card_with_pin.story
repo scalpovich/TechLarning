@@ -1,18 +1,19 @@
 debit msr corporate debit card withPin
 
 Narrative:
-In order to check transactions on debit emv retail card
+In order to check transactions on debit magnetic stripe corporate debit card
 As an issuer
-I want to authorize transactions for debit emv retail debit card
+I want to authorize transactions for debit magnetic stripe corporate debit card
 
 Meta:
 @StoryName d_msr_corp
 @SanityCardsWithAuthorization
-@MSRWithPin
+@MSRWithPinIntTrx
+@InternationalTrx
 
-Scenario: Set up program for debit emv retail debit card
+Scenario: Set up program for debit magnetic stripe corporate debit card
 Given user is logged in institution
-And device range for program with device plan for "debit" "emv" card
+And device range for program with device plan for "debit" "magnetic stripe" card
 When user creates new device of debit type for new client
 Then device has "normal" status
 When user has wallet number information for debit device

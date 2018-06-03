@@ -11,7 +11,9 @@ public class TransactionsNav {
 	public static final String L1_CANCEL_REMITTANCE_BOOKING = "CancelInstantMoneyOrder";
 	
 	public static final String L1_MASTER_CARD_MONEY_SEND = "MasterCardMoneySend";
-
+	
+	public static final String L1_VISA_MONEY_TRANSFER = "VisaMoneyTransfer";
+	
 	private TransactionsNav() {
 	}
 }

@@ -32,6 +32,7 @@ import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
@@ -87,9 +88,10 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	@Autowired
 	DeviceBin issuerbin;
-	
+
 	@Autowired
 	TestContext context;
+
 	// ------------- Card Management > Institution Parameter Setup > Institution
 	// Currency [ISSS05]
 
@@ -101,6 +103,9 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "CardRangeContainer:productCode:input:dropdowncomponent")
 	private MCWebElement ProgramDDwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent")
+	private MCWebElement searchScreenProgramDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "CardRangeContainer:devicePlanCode:input:dropdowncomponent")
 	private MCWebElement DevicePlanCodeDDwn;
@@ -147,6 +152,18 @@ public class DeviceRangePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "CardRangeDetailContainer:cancel")
 	private MCWebElement CancelBtn;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "CardRangeDetailContainer:adaptiveEcommFlag:checkBoxComponent")
+	private MCWebElement adaptiveAuthChkBx;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td//span//img[@alt='Edit Record']")
+	private MCWebElement editDevicerange;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:3:buttonPanel:buttonCol:searchButton")
+	private MCWebElement searchbtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[contains(@name,'branchCode')]/option[text()!='Select One']")
+	private MCWebElements branchDDwnList; 
+
 	int i = 0;
 
 	public void clickAddDeviceRange() {
@@ -154,53 +171,68 @@ public class DeviceRangePage extends AbstractBasePage {
 		switchToAddDeviceRangeFrame();
 	}
 
+	public void searchDeviceRangeAndEdit(String prog) {
+		selectByVisibleText(searchScreenProgramDDwn, prog);
+		clickWhenClickable(searchbtn);
+		waitForElementVisible(editDevicerange);
+		Scrolldown(editDevicerange);
+		clickWhenClickableDoNotWaitForWicket(editDevicerange);
+		CustomUtils.ThreadDotSleep(2000);
+		switchToEditDeviceRangeframe();
+
+	}
+
+	public void switchToEditDeviceRangeframe() {
+		switchToIframe(Constants.EDIT_DEVICE_RANGE_FRAME);
+	}
+
 	public void switchToAddDeviceRangeFrame() {
 		switchToIframe(Constants.ADD_DEVICE_RANGE_FRAME);
 	}
 
-	public void selectProduct(DeviceCreation deviceCreation) {
+	public void selectProduct(DeviceBin issuerbin) {
 		waitForElementVisible(ProductTypeDDwn);
-		selectByVisibleText(ProductTypeDDwn, deviceCreation.getProduct());
+		selectByVisibleText(ProductTypeDDwn, issuerbin.getProductType());
 	}
 
-	public void selectProgram() {
+	public void selectProgram(DeviceBin issuerbin) {
 		waitForElementVisible(ProgramDDwn);
 		if (!MapUtils.fnGetInputDataFromMap("Program").isEmpty()) {
 			selectByVisibleText(ProgramDDwn, MapUtils.fnGetInputDataFromMap("Program"));
 		} else {
-			logger.info("Program :{}",program.getProgram());
-			selectByVisibleText(ProgramDDwn, program.getProgram());
+			selectByVisibleText(ProgramDDwn, issuerbin.getProgram());
 		}
 
 	}
 
-	public void selectDevicePlan() {
+	public void selectDevicePlan(DeviceBin issuerbin) {
 		waitForElementVisible(DevicePlanCodeDDwn);
 		if (!MapUtils.fnGetInputDataFromMap("DevicePlan").isEmpty()) {
 			selectByVisibleText(DevicePlanCodeDDwn, MapUtils.fnGetInputDataFromMap("DevicePlan"));
 		} else {
-			selectByVisibleText(DevicePlanCodeDDwn, program.getDevicePlanProgram());
+			selectByVisibleText(DevicePlanCodeDDwn, issuerbin.getDeviceplan());
 		}
 	}
 
-	public void selectIssuerBIN() {
+	public void selectIssuerBIN(DeviceBin issuerbin) {
 		waitForElementVisible(IssuerBINDDwn);
 		if (!MapUtils.fnGetInputDataFromMap("DMSIssuerBIN").isEmpty()) {
 			selectByVisibleText(IssuerBINDDwn, MapUtils.fnGetInputDataFromMap("DMSIssuerBIN"));
+
 		} else if (!MapUtils.fnGetInputDataFromMap("SMSIssuerBIN").isEmpty()) {
-			selectByVisibleText(IssuerBINDDwn,
-					MapUtils.fnGetInputDataFromMap("SMSIssuerBIN"));
-		}
-		if (issuerbin.getBinType().contains("Dual")) {
-			selectByVisibleText(IssuerBINDDwn, issuerbin.getIssuerBin());
+			selectByVisibleText(IssuerBINDDwn, MapUtils.fnGetInputDataFromMap("SMSIssuerBIN"));
 		} else {
 			IssuerBINDDwn.getSelect().selectByIndex(1);
+		}
+		if (issuerbin.getBinType() != null && issuerbin.getBinType().contains("Dual")) {
+			selectByVisibleText(IssuerBINDDwn, issuerbin.getIssuerBin());
 		}
 
 	}
 
 	public void selectBranch() {
-		SelectDropDownByIndex(BranchDDwn, 1);
+		selectDropDownByIndex(BranchDDwn, 1);
+		
 	}
 	
 	public void selectBranchUpload() {
@@ -239,19 +271,22 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	public void selectEndPoint() {
 		if (EndpointDDwn.isEnabled()) {
-			SelectDropDownByIndex(EndpointDDwn, 1);
+			waitForPageToLoad(driver());
+			selectDropDownByIndex(EndpointDDwn, 1);
 		}
 	}
 
 	public void selectInterface() {
+		waitForPageToLoad(driver());
 		if (InterfaceDDwn.isEnabled()) {
-			SelectDropDownByIndex(InterfaceDDwn, 1);
+			selectDropDownByIndex(InterfaceDDwn, 1);
 		}
 	}
 
 	public void selectRoutingType() {
+		waitForPageToLoad(driver());
 		if (RoutingTypeDDwn.isEnabled()) {
-			SelectDropDownByIndex(RoutingTypeDDwn, 1);
+			selectDropDownByIndex(RoutingTypeDDwn, 1);
 		}
 	}
 
@@ -276,23 +311,23 @@ public class DeviceRangePage extends AbstractBasePage {
 		}
 	}
 
-	public void addDeviceRange(DeviceCreation devicecreation) {
-		selectProduct(devicecreation);
-		selectProgram();
-		selectDevicePlan();
-		selectIssuerBIN();
+	public void addDeviceRange(DeviceBin issuerbin) {
+		selectProduct(issuerbin);
+		selectProgram(issuerbin);
+		selectDevicePlan(issuerbin);
+		selectIssuerBIN(issuerbin);
 		selectBranch();
 		clickAddButton();
 	}
 	
-	public void addDeviceRangeUpload(DeviceCreation devicecreation) {
+	/*public void addDeviceRangeUpload(DeviceCreation devicecreation) {
 		selectProduct(devicecreation);
 		selectProgram();
 		selectDevicePlan();
 		selectIssuerBIN();
 		selectBranchUpload();
 		clickAddButton();
-	}
+	}*/
 
 	public void addDeviceRangeDetails() {
 		enterFromDeviceNo();
@@ -301,8 +336,8 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	public void selectDebitInerface() {
 		selectEndPoint();
-		selectInterface();
 		selectRoutingType();
+		selectInterface();
 	}
 
 	public void Information() {
@@ -312,15 +347,15 @@ public class DeviceRangePage extends AbstractBasePage {
 	public void configureDeviceranges(String prodType) {
 		ClickButton(AddDeviceRangeBtn);
 		switchToIframe(Constants.ADD_DEVICE_RANGE_FRAME);
-		SelectDropDownByText(ProductTypeDDwn, prodType);
-		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByIndex(ProgramDDwn, 1);
-		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByIndex(BranchDDwn, 1);
-		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByIndex(DevicePlanCodeDDwn, 1);
-		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByIndex(IssuerBINDDwn, 1);
+		selectDropDownByText(ProductTypeDDwn, prodType);
+		addWicketAjaxListeners(driver());
+		selectDropDownByIndex(ProgramDDwn, 1);
+		addWicketAjaxListeners(driver());
+		selectDropDownByIndex(BranchDDwn, 1);
+		addWicketAjaxListeners(driver());
+		selectDropDownByIndex(DevicePlanCodeDDwn, 1);
+		addWicketAjaxListeners(driver());
+		selectDropDownByIndex(IssuerBINDDwn, 1);
 
 	}
 
@@ -340,23 +375,6 @@ public class DeviceRangePage extends AbstractBasePage {
 				Assert.fail("Interchange is not present");
 
 			}
-
-			// List<Map<String, String>> aSAS = interchangeTable.getRows().get;
-
-			// String interchangedropDown =
-			// InterchangeDDwn.getSelect().getOptions().get(i).getText();
-			// aSAS.contains(DropDownValue);
-
-			//
-			//
-			// for (WebElement we : interchangedropDown) {
-			// match = false;
-			// if (we.getText().equals(DropDownValue)) {
-			// match = true;
-			// }
-			//
-			// }
-			// Assert.assertTrue(aSAS.contains(DropDownValue));
 
 		}
 
@@ -419,9 +437,9 @@ public class DeviceRangePage extends AbstractBasePage {
 		selectProductType(deviceRange.getProductType());
 		selectProgram(deviceRange.getProgram());
 		selectDevicePlanCode(deviceRange.getDevicePlanCode());
-		DevicePlan devicePlan=context.get(ContextConstants.DEVICE_PLAN);
-		logger.info("ProductType : {}",devicePlan.getProductType());
-		logger.info("issuerBin :{}",deviceRange.getIssuerBin());
+		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		logger.info("ProductType : {}", devicePlan.getProductType());
+		logger.info("issuerBin :{}", deviceRange.getIssuerBin());
 		selectIssuerBin(deviceRange.getIssuerBin());
 		selectBranch(deviceRange.getBranch());
 		addBtn.click();
@@ -434,6 +452,16 @@ public class DeviceRangePage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(routingTypeDDwn, deviceRange.getRoutingType());
 			WebElementUtils.selectDropDownByVisibleText(interfaceNameDDwn, deviceRange.getInterfaceName());
 		}
+	}
+
+	public boolean clickAdaptiveAuthChkBox() {
+		boolean enabled = false;
+		enabled = adaptiveAuthChkBx.isEnabled();
+		if (enabled) {
+			clickWhenClickable(adaptiveAuthChkBx);
+		}
+		clickWhenClickable(SaveBtn);
+		return enabled;
 	}
 
 	public void verifyUiOperationStatus() {

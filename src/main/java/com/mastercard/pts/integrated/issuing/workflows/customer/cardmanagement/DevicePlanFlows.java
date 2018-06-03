@@ -28,12 +28,12 @@ public class DevicePlanFlows extends MenuFlows {
 		deviceplanpage.deviceNumberGeneration(deviceplan);
 		deviceplanpage.personalization(deviceplan);
 		waitForPageToLoad(getFinder().getWebDriver());
-		deviceplanpage.next();
 		deviceplanpage.transactionFeeAndLimitPlans();
 		deviceplanpage.next();
 		deviceplanpage.provideAuthorizationDetails(deviceplan);
 		deviceplanpage.next();
 		deviceplanpage.next();
+		deviceplanpage.selectChipType();
 		deviceplanpage.Finish();
 		return devicePlanName;
 	}
@@ -53,11 +53,13 @@ public class DevicePlanFlows extends MenuFlows {
 		deviceplanpage.next();
 		deviceplanpage.fillVirtualDeviceDetails(deviceplan);
 		deviceplanpage.next();
+		deviceplanpage.next();
+		deviceplanpage.selectChipType();
 		deviceplanpage.Finish();
 		return devicePlanName;
 	}
 
-	public void validateErrormsg(DevicePlan deviceplan) {
+	public void validateErrormsg() {
 		String errorPanelXpath = "//div[@class='ketchup-error-container-alt']";
 		DevicePlanPage deviceplanpage = navigator.navigateToPage(DevicePlanPage.class);
 		deviceplanpage.AddDevicePlan();
@@ -66,159 +68,4 @@ public class DevicePlanFlows extends MenuFlows {
 		errorValidator.doFieldValidation(MandatoryFeildValdiation.class, deviceplanpage.nextBtn);
 	}
 
-	/*
-	 * public String createDevicePlan(DeviceCreation deviceCreation) {
-	 * waitForElementVisible(menuSubMenuPage.getCardManagement());
-	 * DevicePlanPage deviceplanpage =
-	 * navigator.navigateToPage(DevicePlanPage.class);
-	 * deviceplanpage.clickAddDevicePlan();
-	 * deviceplanpage.switchToAddDevicePlanFrame(); String deviceplancode =
-	 * deviceplanpage.enterDevicePlanCode(); String Description =
-	 * deviceplanpage.enterDescription();
-	 * deviceplanpage.selectAssociation(deviceCreation);
-	 * deviceplanpage.selectproduct(deviceCreation);
-	 * deviceplanpage.selectDeviceType(deviceCreation);
-	 * deviceplanpage.enterServiceCode();
-	 * deviceplanpage.selectDeviceIDGenerationTemplate();
-	 * deviceplanpage.selectCardPackGenerationTemplate();
-	 * deviceplanpage.selectActivationMode(); deviceplanpage.selectExpiryDate();
-	 * deviceplanpage.selectDeliveryMode(); deviceplanpage.selectPlasticId();
-	 * deviceplanpage.selectPictureCode();
-	 * deviceplanpage.selectEmbossingVendor(); deviceplanpage.enterCustomCode();
-	 * deviceplanpage.clickNextButton();
-	 * deviceplanpage.selectEventBasedFeePlan();
-	 * deviceplanpage.selectMembershipFeePlan();
-	 * deviceplanpage.selectTransactionLimitPlan();
-	 * deviceplanpage.clickNext2Button(); deviceplanpage.selectAfterKYC();
-	 * deviceplanpage.clickNext3Button(); deviceplanpage.clickNext4Button();
-	 * deviceplanpage.clickFinishButton(); return Description + " " + "[" +
-	 * deviceplancode + "]"; }
-	 * 
-	 * public String createDevicePlanEmvType(DeviceCreation deviceCreation) {
-	 * waitForElementVisible(menuSubMenuPage.getCardManagement());
-	 * DevicePlanPage deviceplanpage =
-	 * navigator.navigateToPage(DevicePlanPage.class);
-	 * deviceplanpage.clickAddDevicePlan();
-	 * deviceplanpage.switchToAddDevicePlanFrame(); String deviceplancode =
-	 * deviceplanpage.enterDevicePlanCode(); String Description =
-	 * deviceplanpage.enterDescription();
-	 * deviceplanpage.selectAssociation(deviceCreation);
-	 * deviceplanpage.selectproduct(deviceCreation);
-	 * deviceplanpage.selectDeviceType(deviceCreation);
-	 * deviceplanpage.enterServiceCode();
-	 * deviceplanpage.selectDeviceIDGenerationTemplate();
-	 * deviceplanpage.selectCardPackGenerationTemplate();
-	 * deviceplanpage.selectActivationMode(); deviceplanpage.selectExpiryDate();
-	 * deviceplanpage.selectDeliveryMode(); deviceplanpage.selectPlasticId();
-	 * deviceplanpage.selectPictureCode();
-	 * deviceplanpage.selectEmbossingVendor(); deviceplanpage.enterCustomCode();
-	 * deviceplanpage.clickNextButton();
-	 * deviceplanpage.selectEventBasedFeePlan();
-	 * deviceplanpage.selectMembershipFeePlan();
-	 * deviceplanpage.selectTransactionLimitPlan();
-	 * deviceplanpage.clickNext2Button(); deviceplanpage.selectAfterKYC();
-	 * deviceplanpage.clickNext3Button(); deviceplanpage.clickNext4Button();
-	 * deviceplanpage.selectChipType(); deviceplanpage.clickFinishButton();
-	 * return Description + " " + "[" + deviceplancode + "]"; }
-	 * 
-	 * public String createDevicePlanStaticVirtual(DeviceCreation
-	 * deviceCreation) {
-	 * waitForElementVisible(menuSubMenuPage.getCardManagement());
-	 * DevicePlanPage deviceplanpage =
-	 * navigator.navigateToPage(DevicePlanPage.class);
-	 * deviceplanpage.clickAddDevicePlan();
-	 * deviceplanpage.switchToAddDevicePlanFrame(); String deviceplancode =
-	 * deviceplanpage.enterDevicePlanCode(); String Description =
-	 * deviceplanpage.enterDescription();
-	 * deviceplanpage.selectAssociation(deviceCreation);
-	 * deviceplanpage.selectproduct(deviceCreation);
-	 * deviceplanpage.selectDeviceType(deviceCreation);
-	 * deviceplanpage.enterServiceCode();
-	 * deviceplanpage.selectDeviceIDGenerationTemplate();
-	 * deviceplanpage.selectCardPackGenerationTemplate();
-	 * deviceplanpage.selectActivationMode(); deviceplanpage.selectExpiryDate();
-	 * deviceplanpage.clickNextButton();
-	 * deviceplanpage.selectEventBasedFeePlan();
-	 * deviceplanpage.selectMembershipFeePlan();
-	 * deviceplanpage.selectTransactionLimitPlan();
-	 * deviceplanpage.clickNext2Button(); deviceplanpage.selectAfterKYC();
-	 * deviceplanpage.clickEcomCheckBox(); deviceplanpage.clickNext3Button();
-	 * deviceplanpage.clickNext4Button(); deviceplanpage.clickFinishButton();
-	 * return Description + " " + "[" + deviceplancode + "]"; }
-	 * 
-	 * public String createDevicePlanLimitedValidity(DeviceCreation
-	 * deviceCreation) {
-	 * waitForElementVisible(menuSubMenuPage.getCardManagement());
-	 * DevicePlanPage deviceplanpage =
-	 * navigator.navigateToPage(DevicePlanPage.class);
-	 * deviceplanpage.clickAddDevicePlan();
-	 * deviceplanpage.switchToAddDevicePlanFrame(); String deviceplancode =
-	 * deviceplanpage.enterDevicePlanCode(); String Description =
-	 * deviceplanpage.enterDescription();
-	 * deviceplanpage.selectAssociation(deviceCreation);
-	 * deviceplanpage.selectproduct(deviceCreation);
-	 * deviceplanpage.selectDeviceType(deviceCreation);
-	 * deviceplanpage.enterServiceCode();
-	 * deviceplanpage.selectDeviceIDGenerationTemplate();
-	 * deviceplanpage.selectCardPackGenerationTemplate();
-	 * deviceplanpage.clickNextButton();
-	 * deviceplanpage.selectEventBasedFeePlan();
-	 * deviceplanpage.selectMembershipFeePlan();
-	 * deviceplanpage.selectTransactionLimitPlan();
-	 * deviceplanpage.clickNext2Button(); deviceplanpage.selectAfterKYC();
-	 * deviceplanpage.clickEcomCheckBox(); deviceplanpage.clickNext3Button();
-	 * deviceplanpage.enterPerTransactionLimit(deviceCreation);
-	 * deviceplanpage.enterTotalTransactionLimit();
-	 * deviceplanpage.enterValidity(deviceCreation);
-	 * deviceplanpage.enterVelocity(deviceCreation);
-	 * deviceplanpage.clickNext4Button(); deviceplanpage.clickFinishButton();
-	 * return Description + " " + "[" + deviceplancode + "]"; }
-	 * 
-	 * public String createDevicePlanMobile(DeviceCreation deviceCreation) {
-	 * waitForElementVisible(menuSubMenuPage.getCardManagement());
-	 * DevicePlanPage deviceplanpage =
-	 * navigator.navigateToPage(DevicePlanPage.class);
-	 * deviceplanpage.clickAddDevicePlan();
-	 * deviceplanpage.switchToAddDevicePlanFrame(); String deviceplancode =
-	 * deviceplanpage.enterDevicePlanCode(); String Description =
-	 * deviceplanpage.enterDescription();
-	 * deviceplanpage.selectAssociation(deviceCreation);
-	 * deviceplanpage.selectproduct(deviceCreation);
-	 * deviceplanpage.selectDeviceType(deviceCreation);
-	 * deviceplanpage.selectDeviceIDGenerationTemplate();
-	 * deviceplanpage.selectCardPackGenerationTemplate();
-	 * deviceplanpage.selectActivationMode(); deviceplanpage.clickNextButton();
-	 * deviceplanpage.selectEventBasedFeePlan();
-	 * deviceplanpage.selectMembershipFeePlan();
-	 * deviceplanpage.selectTransactionLimitPlan();
-	 * deviceplanpage.clickNext2Button(); deviceplanpage.selectAfterKYC();
-	 * deviceplanpage.clickNext3Button(); deviceplanpage.clickNext4Button();
-	 * deviceplanpage.clickFinishButton(); return Description + " " + "[" +
-	 * deviceplancode + "]";
-	 * 
-	 * }
-	 * 
-	 * public String createDevicePlanATMAdmin(DeviceCreation deviceCreation) {
-	 * waitForElementVisible(menuSubMenuPage.getCardManagement());
-	 * DevicePlanPage deviceplanpage =
-	 * navigator.navigateToPage(DevicePlanPage.class);
-	 * deviceplanpage.clickAddDevicePlan();
-	 * deviceplanpage.switchToAddDevicePlanFrame(); String deviceplancode =
-	 * deviceplanpage.enterDevicePlanCode(); String Description =
-	 * deviceplanpage.enterDescription();
-	 * deviceplanpage.selectAssociation(deviceCreation);
-	 * deviceplanpage.selectproduct(deviceCreation);
-	 * deviceplanpage.selectDeviceType(deviceCreation);
-	 * deviceplanpage.enterServiceCode();
-	 * deviceplanpage.selectDeviceIDGenerationTemplate();
-	 * deviceplanpage.selectCardPackGenerationTemplate();
-	 * deviceplanpage.selectActivationMode(); deviceplanpage.selectExpiryDate();
-	 * deviceplanpage.selectDeliveryMode(); deviceplanpage.selectPlasticId();
-	 * deviceplanpage.selectPictureCode();
-	 * deviceplanpage.selectEmbossingVendor(); deviceplanpage.enterCustomCode();
-	 * deviceplanpage.clickNextButton(); deviceplanpage.clickNext2Button();
-	 * deviceplanpage.clickNext3Button(); deviceplanpage.clickNext4Button();
-	 * deviceplanpage.clickFinishButton(); return Description + " " + "[" +
-	 * deviceplancode + "]"; }
-	 */
 }

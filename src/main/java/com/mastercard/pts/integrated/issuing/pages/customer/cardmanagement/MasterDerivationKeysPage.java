@@ -130,12 +130,12 @@ public class MasterDerivationKeysPage extends AbstractBasePage {
 
 	public void selectStatus(MasterDerivationKeys mdkKeys) {
 		waitforElement(statusInputDDwn);
-		SelectDropDownByText(statusInputDDwn, mdkKeys.getStatus());
+		selectDropDownByText(statusInputDDwn, mdkKeys.getStatus());
 	}
 
 	public void selectKeyType(MasterDerivationKeys mdkKeys) { 
 		waitforElement(keyTypeDDwn);
-		SelectDropDownByText(keyTypeDDwn, mdkKeys.getKeyType());
+		selectDropDownByText(keyTypeDDwn, mdkKeys.getKeyType());
 	}
 
 	public void fillMDKEncryptedUnderLMK(MasterDerivationKeys mdkKeys) {

@@ -9,7 +9,8 @@ Meta:
 @StoryName S203707
 @AuthorizationRegression
 @AuthorizationRegressionGroup3
-@EMVWithPin
+@EMVWithPinIntTrx
+@InternationalTrx
 
 Scenario: Set up prepaid emv retail giftcard card
 Given user is logged in institution
@@ -24,7 +25,7 @@ When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 When processes pin generation batch for prepaid
 Then device has "normal" status
-When user has wallet number information for debit device
+When user has wallet number information for prepaid device
 When user performs adjustment transaction with 10000 amount
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status

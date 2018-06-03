@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.DeviceType;
 //import com.mastercard.pts.integrated.issuing.domain.CardType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
@@ -41,7 +42,7 @@ public class DevicePlanSteps {
 		deviceplan.devicePlanDataprovider();
 		deviceplan.setAssociation(association);
 		deviceplan.setProductType(productType);
-		deviceplan.setDeviceType(cardType);
+		deviceplan.setDeviceType(DeviceType.fromShortName(cardType));
 		deviceplan.setEmbossiongVendor(vendor.getNewVendor());
 		deviceplan.setActivationMode(activationMode);
 		String devicePlan = "";
@@ -54,7 +55,7 @@ public class DevicePlanSteps {
 
 	@When("user wants to mandatory field validations on add device plan page")
 	public void errorValidationStepforaddDevicePlan() {
-		deviceplanflows.validateErrormsg(deviceplan);
+		deviceplanflows.validateErrormsg();
 	}
 
 	@Given("User fills general details for $interchange for $cardType $productType card,choose activation $activationMode and delivery mode $deliveryMode")

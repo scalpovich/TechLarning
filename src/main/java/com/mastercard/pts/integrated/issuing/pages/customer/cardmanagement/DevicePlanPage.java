@@ -2,7 +2,6 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.List;
-
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CardType;
 import com.mastercard.pts.integrated.issuing.domain.DeviceType;
@@ -169,7 +167,7 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:deviceMntFeePlanCodeCard1:input:dropdowncomponent")
 	private MCWebElement iframeBaseDeviceJoiningMemberShipPlanDdwn;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnFeePlanCode:input:dropdowncomponent")
 	private MCWebElement iframeTransactionFeePlanDdwn;
 
@@ -346,7 +344,7 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:deviceMntFeePlanCodeCard1:input:dropdowncomponent")
 	private MCWebElement membershipFeePlanDDwn;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnFeePlanCode:input:dropdowncomponent")
 	private MCWebElement iframeTransactionFee;
 
@@ -388,10 +386,10 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:issueDevicePair:checkBoxComponent")
 	private MCWebElement issuePairDevicesChkBx;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:intTxnAllowed:checkBoxComponent")
 	private MCWebElement intTxnAllowedChkBx;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=devicePlanCode]")
 	private MCWebElement devicePlanCode;
 
@@ -443,11 +441,11 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectDeviceIDGenerationTemplate() {
-		SelectDropDownByIndex(iframeDeviceIDGenerationTemplateDdwn, 1);
+		selectDropDownByIndex(iframeDeviceIDGenerationTemplateDdwn, 1);
 	}
 
 	public void selectCardPackGenerationTemplate() {
-		SelectDropDownByIndex(iframeCardPackIDGenerationTemplateDdwn, 1);
+		selectDropDownByIndex(iframeCardPackIDGenerationTemplateDdwn, 1);
 	}
 
 	public void selectActivationMode(DevicePlan deviceplan) {
@@ -468,10 +466,10 @@ public class DevicePlanPage extends AbstractBasePage {
 		}
 	}
 
-    public void selectDeliveryMode(DevicePlan deviceplan) {
+	public void selectDeliveryMode(DevicePlan deviceplan) {
 		if (!CardType.STATIC_VIRTUAL.contains(deviceplan.getDeviceType())
-		 && !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) 
-		 && !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
+				&& !CardType.LIMITED_VALIDITY.contains(deviceplan.getDeviceType()) 
+				&& !CardType.MOBILE.contains(deviceplan.getDeviceType())) {
 			Assert.assertTrue("delivery Mode dropdown is enabled", deliveryModeDDwn.isEnabled());
 			selectByVisibleText(deliveryModeDDwn, deviceplan.getDeliveryMode());
 		} else {
@@ -590,15 +588,15 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectEventBasedFeePlan() {
-		SelectDropDownByIndex(eventBasedFeePlanDDwn, 1);
+		selectDropDownByIndex(eventBasedFeePlanDDwn, 1);
 	}
 
 	public void selectJoiningMembershipFeePlan() {
-		SelectDropDownByIndex(membershipFeePlanDDwn, 1);
+		selectDropDownByIndex(membershipFeePlanDDwn, 1);
 	}
 
 	public void selectTransactionLimitPlan() {
-		SelectDropDownByIndex(transactionLimitPlanDDwn, 1);
+		selectDropDownByIndex(transactionLimitPlanDDwn, 1);
 	}
 
 	public void next() {
@@ -607,17 +605,17 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectAfterKYC() {
-		SelectDropDownByIndex(transactionSetDDwn, 1);
+		selectDropDownByIndex(transactionSetDDwn, 1);
 	}
 
 	public void clickEcomCheckBox() {
 		ClickCheckBox(ecomChkBx, true);
 	}
-	
+
 	public void clickIntTxnAllowedCheckBox() {
 		ClickCheckBox(intTxnAllowedChkBx, true);
 	}
-	
+
 	public void clickGenerateCvv() {
 		ClickCheckBox(generateCvvChkBx, true);
 	}
@@ -665,7 +663,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectChipType() {
-		SelectDropDownByIndex(chipTypeDDwn, 1);
+		selectDropDownByIndex(chipTypeDDwn, 1);
 	}
 
 	public void Finish() {
@@ -858,10 +856,10 @@ public class DevicePlanPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(iframeBaseDeviceJoiningMemberShipPlanDdwn,
 					deviceJoiningMemberShipPlan);
 	}
-	
+
 	public void selectIframeTransactionFeePlan(String transactionFeePlan) {
 		if (iframeTransactionFeePlanDdwn.isEnabled())
-			WebElementUtils.selectDropDownByVisibleText(iframeTransactionFeePlanDdwn,
+			WebElementUtils.selectDropDownByVisibleText(iframeTransactionFeePlanDdwn, 
 					transactionFeePlan);
 	}
 
@@ -875,6 +873,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectIframeBeforeKYCDdwn(String kycType) {
+      	WebElementUtils.elementToBeClickable(iframeBeforeKYCDdwn);
 		WebElementUtils.selectDropDownByVisibleText(iframeBeforeKYCDdwn, kycType);
 	}
 
@@ -883,11 +882,11 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void clickIframeFinishButton() {
-		SimulatorUtilities.wait(500);
+		SimulatorUtilities.wait(900);
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
-				.until(WebElementUtils.visibilityOf(iframeFinishBtn));
+		.until(WebElementUtils.visibilityOf(iframeFinishBtn));
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
-				.until(WebElementUtils.elementToBeClickable(iframeFinishBtn)).click();
+		.until(WebElementUtils.elementToBeClickable(iframeFinishBtn)).click();
 	}
 
 	public void clickIframeNextButton() {
@@ -895,7 +894,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		SimulatorUtilities.wait(500);
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec).until(WebElementUtils.visibilityOf(iframeNextBtn));
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
-				.until(WebElementUtils.elementToBeClickable(iframeNextBtn)).click();
+		.until(WebElementUtils.elementToBeClickable(iframeNextBtn)).click();
 	}
 
 	public void selectAllcavv() {
@@ -914,8 +913,8 @@ public class DevicePlanPage extends AbstractBasePage {
 		expiryDateChkBx.click();
 	}
 
-	public void checkCvcCvv() {
-		cvccCvvChkBx.click();
+	public void checkCvcCvv(boolean status) {
+		ClickCheckBox(cvccCvvChkBx, status);
 	}
 
 	public void clickIframeDialogCloseX() {
@@ -931,15 +930,17 @@ public class DevicePlanPage extends AbstractBasePage {
 		enterValueinTextBox(devicePlanCode, devicePlanDataObject.getDevicePlanCode());
 		clickSearchButton();
 		editFirstRecord();				
-		runWithinPopup("Edit Device Plan", () -> {	
-			clickWhenClickable(authorizationTab);				
-			checkCvcCvv();
+		runWithinPopup("Edit Device Plan", () -> {			
+			WebElementUtils.elementToBeClickable(authorizationTab);
+			clickWhenClickable(authorizationTab);
+			WebElementUtils.elementToBeClickable(cvccCvvChkBx);
+			checkCvcCvv(false);
 			clickSaveButton();
 		});
 
 		verifyOperationStatus();
 	}
-	
+
 	public void createDevicePlan(DevicePlan devicePlanDataObject) {
 		logger.info("Create Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
 		clickAddNewButton();
@@ -970,7 +971,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		cvvCvv2PinGenerationSelectionScreen(devicePlan);
 
 		fillDevicePlanPage(devicePlan);
-
+		
 		selectIframeBeforeKYCDdwn(devicePlan.getBeforeKYC());
 		selectIframeAfterKYCDdwn(devicePlan.getAfterKYC());
 		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES))
@@ -982,14 +983,14 @@ public class DevicePlanPage extends AbstractBasePage {
 		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES)) {
 			selectAllcvccvv();
 			// as of now, we do not need CVV check for MDFS pin change transactions
-			if(!getStoryName().toLowerCase().contains("pin_change"))
-			checkCvcCvv();
+			//if(!getStoryName().toLowerCase().contains("pin_change"))
+			checkCvcCvv(true);
 		}			
 		checkExpiryDate();		
-		
+
 		//if(devicePlan.getAllowInternationalTransaction().equalsIgnoreCase(STATUS_YES))
-			clickIntTxnAllowedCheckBox();
-			
+		clickIntTxnAllowedCheckBox();
+
 		WebElementUtils.checkCheckbox(ecommAllowedChkBx, devicePlan.isEcommerceAllowed());
 		if (!devicePlan.getDeviceType().equals(DeviceType.STATIC_VIRTUAL_CARD)
 				&& "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
@@ -997,6 +998,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		}	
 
 		clickIframeNextButton();
+		SimulatorUtilities.wait(300);
 		clickIframeNextButton();
 
 		if (DeviceType.EMV_CARD.equals(devicePlan.getDeviceType())
@@ -1028,13 +1030,13 @@ public class DevicePlanPage extends AbstractBasePage {
 			}
 			else
 			{
-			enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
-			// making necessary changes so that this value can be set in the
-			// required format so that it can be used when a pinless card is
-			// used
-			logger.info("Validity On Initial Months = {} ", devicePlan.getValidityOnInitialMonths());
-			String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
-			devicePlan.setExpiryDate(dateInYYMM);
+				enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
+				// making necessary changes so that this value can be set in the
+				// required format so that it can be used when a pinless card is
+				// used
+				logger.info("Validity On Initial Months = {} ", devicePlan.getValidityOnInitialMonths());
+				String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
+				devicePlan.setExpiryDate(dateInYYMM);
 			}
 		} else {
 			enterIframeValidityOnInitialMonthsTxt(devicePlan.getValidityOnInitialMonths());
@@ -1100,9 +1102,10 @@ public class DevicePlanPage extends AbstractBasePage {
 		WebElementUtils.enterText(replacementNoOfDaysTxt, devicePlan.getReplacementNoOfDays());
 		WebElementUtils.enterText(validityOnReplacementMonthsTxt, devicePlan.getValidityOnReplacementMonths());
 		allowInstanceDeviceReplaceChkBx.click();
-		if (devicePlan.getReplacementDeviceTechnology() != "")
+		if (!devicePlan.getReplacementDeviceTechnology().isEmpty()) {
 			WebElementUtils.selectDropDownByVisibleText(replacementDeviceTechnologyDdwn,
 					devicePlan.getReplacementDeviceTechnology());
+		}
 	}
 
 	public void fillVirtualDeviceDetails(DevicePlan devicePlan) {
@@ -1111,11 +1114,5 @@ public class DevicePlanPage extends AbstractBasePage {
 		enterVelocity(devicePlan);
 		enterValidity(devicePlan);
 	}
-	
-	private String getStoryName()
-	{
-		String name = System.getProperty("storyName").toString();
-		logger.info("System.getStoryName  : "+name);
-		return name;
-	}
+
 }

@@ -1,4 +1,4 @@
-prepaid msr retail travel card card authorization PINLESS
+	prepaid msr retail travel card card authorization PINLESS
 
 Narrative:
 In order to check transactions on prepaid msr retail travel card 
@@ -6,7 +6,7 @@ As an issuer
 I want to authorize transactions for prepaid msr retail travel card 
 
 Meta:
-@StoryName p_msr_retail_travel_ASI
+@StoryName p_emv_retail_travel_ASI
 @ASI
 
 Scenario: Set up prepaid msr retail travel card
@@ -24,6 +24,7 @@ When processes device production batch for prepaid
 Then device has "normal" status
 When user activates device through helpdesk
 Then user sign out from customer portal
+Then embossing file batch was generated in correct format
 
 Scenario: Perform MMSR-RetailTravelCard Authorization transaction
 Given connection to MAS is established

@@ -1,7 +1,5 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,11 +23,11 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 
 	@Autowired
 	LoginPage lgnPage;
-	
+
 	@Autowired
 	private TestContext context;
-	
-	private static final String TAB_ADDRESS = "Address"; 
+
+	private static final String TAB_ADDRESS = "Address";
 
 	public void institutionCreation(InstitutionCreation institutionCreation) {
 
@@ -37,14 +35,15 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 		institute.clickAddBtn();
 		institute.provideInstitutionDetails(institutionCreation);
 		institute.provideInstitutionType(institutionCreation);
-		institute.provideGeneralDetails(institutionCreation);		
-		institute.provideAdaptiveAuthentication();
+		institute.provideGeneralDetails(institutionCreation);
+		institute.provideAdaptiveAuthentication(institutionCreation);
 		institute.provideCustomCareDetails(institutionCreation);
 		institute.navigateToTab(TAB_ADDRESS);
 		institute.providePersonalDetailsAdressTab(institutionCreation);
 		institute.provideAddressDetails(institutionCreation);
 		institute.save();
 		waitForLoaderToDisappear();
+		institute.checkErrorOnPage();		
 	}
 
 	public void checkSuccessfulInstitutionCreation(InstitutionCreation institutionCreation) {
@@ -52,14 +51,13 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 	}
 
 	public void selectNewlyCreatedInstitutionFlows() {
-		lgnPage.loginTo(MapUtils.fnGetInputDataFromMap("UserId"),
-				MapUtils.fnGetInputDataFromMap("Password"));
+		lgnPage.loginTo(MapUtils.fnGetInputDataFromMap("UserId"), MapUtils.fnGetInputDataFromMap("Password"));
 		selectInstitute();
 	}
-	public boolean isAdaptiveAuthenticationEnabledAndUserAbleToSelectACSVendor()
-	{
+
+	public boolean isAdaptiveAuthenticationEnabledAndUserAbleToSelectACSVendor() {
 		InstitutionPage page = navigator.navigateToPage(InstitutionPage.class);
-		InstitutionCreation institutioncreation=context.get("institutionData");
+		InstitutionCreation institutioncreation = context.get("institutionData");
 		page.enterInstitutionCode(institutioncreation);
 		clickSearchButton();
 		editFirstRecord();
@@ -80,21 +78,20 @@ public class InstitutionCreationFlows extends AbstractBaseFlows {
 		institute.save();
 	}
 
-	public void updateCustomerCareIntlVIP(
-			InstitutionCreation institutionCreation) {
+	public void updateCustomerCareIntlVIP(InstitutionCreation institutionCreation) {
 		institute = navigator.navigateToPage(InstitutionCreationPageNew.class);
 		institute.enterNewInstitution(institutionCreation);
 		institute.updateCustomerCareIntlVIP(institutionCreation);
 		institute.save();
 	}
-	public boolean validateCustomerCareIntlVIP(InstitutionCreation institutionCreation){
+
+	public boolean validateCustomerCareIntlVIP(InstitutionCreation institutionCreation) {
 		institute = navigator.navigateToPage(InstitutionCreationPageNew.class);
 		institute.enterNewInstitution(institutionCreation);
 		boolean status = institute.validateCustomerCareIntlVIP(institutionCreation);
 		institute.cancel();
 		return status;
 	}
-	
 
 	public String verifyInstitiueUpdate() {
 		return institute.getInstUpdateMessage();

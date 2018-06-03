@@ -20,15 +20,15 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP, CardManagementNav.L2_VENDOR })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP, CardManagementNav.L2_VENDOR })
 public class VendorPage extends AbstractBasePage {
 	final Logger logger = LoggerFactory.getLogger(VendorPage.class);
 
 	// ------------- Card Management > Institution Parameter Setup > Institution
 	// Currency [ISSS05]
-    @Autowired
-    TestContext context;
+	@Autowired
+	TestContext context;
+
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement AddVendorBtn;
 
@@ -39,7 +39,7 @@ public class VendorPage extends AbstractBasePage {
 	private MCWebElement VendorNameTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[contains(@name,'branchCode')]")
-	private MCWebElement BranchDDwn;
+	private MCWebElement branchDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "vendorType:input:dropdowncomponent")
 	private MCWebElement CategoryDDwn;
@@ -105,7 +105,8 @@ public class VendorPage extends AbstractBasePage {
 	private MCWebElement priorityPassProductionCheckBox;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[contains(@name,'branchCode')]/option[text()!='Select One']")
-	private MCWebElements BranchDDwnList;
+	private MCWebElements branchDDwnList;
+
 
 	public void clickaddVenor() {
 		clickWhenClickable(AddVendorBtn);
@@ -116,14 +117,21 @@ public class VendorPage extends AbstractBasePage {
 		switchToIframe(Constants.ADD_VENDOR_MASTER_FRAME);
 	}
 
-	public String enterVendorCode() {
-		enterValueinTextBox(VendorCodeTxt, "V" + CustomUtils.randomNumbers(5));
-		// enterValueinTextBox(VendorCodeTxt, "Aut011");
+	public String enterVendorCode(Vendor vendor) {
+		if (vendor.getVendorCode().length() != 0) {
+			enterValueinTextBox(VendorCodeTxt, vendor.getVendorCode());
+		} else {
+			enterValueinTextBox(VendorCodeTxt, "V" + CustomUtils.randomNumbers(5));
+		}
 		return VendorCodeTxt.getAttribute("value");
 	}
 
-	public String enterVendorName() {
-		enterValueinTextBox(VendorNameTxt, "HDFCVendor" + CustomUtils.randomNumbers(1));
+	public String enterVendorName(Vendor vendor) {
+		if (vendor.getVendorName().length() != 0) {
+			enterValueinTextBox(VendorNameTxt, vendor.getVendorName());
+		} else {
+			enterValueinTextBox(VendorNameTxt, "HDFCVendor" + CustomUtils.randomNumbers(1));
+		}
 		return VendorNameTxt.getAttribute("value");
 	}
 
@@ -132,8 +140,13 @@ public class VendorPage extends AbstractBasePage {
 	}
 
 	public void selectBranchCode(Vendor vendor) {
-		BranchDDwn.getSelect().selectByIndex(1);
-		context.put(CreditConstants.VENDOR_BRANCH,BranchDDwnList.getElements().get(0).getText() );
+		branchDDwn.getSelect().selectByIndex(1);
+		removeBrackets(branchDDwnList.getElements().get(0).getText());
+		vendor.setBranchCode(removeBrackets(branchDDwnList.getElements().get(0).getText().split("\\[")[1]));
+	}
+
+	private String removeBrackets(String text) {
+		return text.replace("]", "");
 	}
 
 	public void selectDeviceProductionCheckBox() {
@@ -200,8 +213,8 @@ public class VendorPage extends AbstractBasePage {
 	public String addVendorDetails(Vendor vendor) {
 		String vendorcode;
 		String vendorName;
-		vendorcode = enterVendorCode();
-		vendorName = enterVendorName();
+		vendorcode = enterVendorCode(vendor);
+		vendorName = enterVendorName(vendor);
 		selectVendorCategory(vendor);
 		selectBranchCode(vendor);
 		return buildDescriptionAndCode(vendorName, vendorcode);

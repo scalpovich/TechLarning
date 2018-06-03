@@ -8,6 +8,7 @@ I want to load and activate the card through vts
 Meta:
 @StoryName SWSC_EMV_CGC_LOAD_ACTV_VTS_PIN
 @CRCardsWithAuthorization
+@SanitySuite
 
 Scenario: Set up prepaid swsc emv corporate gift card
 Meta:

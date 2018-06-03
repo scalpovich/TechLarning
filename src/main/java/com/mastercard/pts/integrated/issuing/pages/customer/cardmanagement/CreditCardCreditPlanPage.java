@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -18,6 +19,7 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -77,6 +79,8 @@ public class CreditCardCreditPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='feedbackPanelERROR']")
 	private MCWebElement errorMsgLbl;
 
+	private int counter=0;
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Credit Card Credit Plan Page");
 		verifySearchButton("Search");
@@ -99,6 +103,7 @@ public class CreditCardCreditPlanPage extends AbstractBasePage {
 		checkDuplicacyOfCreditPlanCode(creditCardCreditPlan);
 		
         clickAddNewButton();
+        AtomicBoolean canceled = new AtomicBoolean(false);
 		// Add Document Checklist section
 		runWithinPopup("Add Credit Plan", () -> {
 			WebElementUtils.enterText(creditPlanCodeTxt, creditCardCreditPlan.getCreditPlanCode());
@@ -130,12 +135,17 @@ public class CreditCardCreditPlanPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(paymentPriorityPlanDDwn, creditCardCreditPlan.getPaymentPriorityPlan());
 			}
 			WebElementUtils.enterText(allowedPercentageTxt, creditCardCreditPlan.getAllowedPercentage());
-			clickSaveButtonWithOutWicket();
-			errorMessagePresence();
-			creditCardPlan.setErrorStatus(errorMessagePresence());
-			if(errorMessagePresence()){
-			clickCancelButton();
-			waitForPageToLoad(driver());
+			clickSaveButton();
+			SimulatorUtilities.wait(4000);
+			if(verifyAlreadyExists())
+			{
+				errorMessagePresence();
+				creditCardPlan.setErrorStatus(errorMessagePresence());
+				canceled.set(verifyAlreadyExistsAndClickCancel());	
+			}
+			else
+			{
+				creditCardPlan.setErrorStatus(false);
 			}
 		});
 		verifyOperationStatus();
@@ -143,13 +153,15 @@ public class CreditCardCreditPlanPage extends AbstractBasePage {
 	}
 
 	private void checkDuplicacyOfCreditPlanCode(CreditCardCreditPlan creditCardCreditPlan) {
-		if(!isNoRecordsFoundInTable())
-		{
-			 creditCardCreditPlan.setCreditPlanCode(MiscUtils.generateRandomNumberBetween2Number(100, 999));
-			 logger.info("creditPlanCode: {}",creditCardCreditPlan.getCreditPlanCode());
-			 performSearchOperationOnMainScreen(creditCardCreditPlan);
-			 waitForPageToLoad(getFinder().getWebDriver());
-			 checkDuplicacyOfCreditPlanCode(creditCardCreditPlan);
+		if (!isNoRecordsFoundInTable()) {
+			counter += 1;
+			if (counter < 2) {
+				creditCardCreditPlan.setCreditPlanCode(MiscUtils.generateRandomNumberBetween2Number(100, 999));
+				logger.info("creditPlanCode: {}",creditCardCreditPlan.getCreditPlanCode());
+				performSearchOperationOnMainScreen(creditCardCreditPlan);
+				waitForPageToLoad(getFinder().getWebDriver());
+				checkDuplicacyOfCreditPlanCode(creditCardCreditPlan);
+			}
 		}
 	}
 

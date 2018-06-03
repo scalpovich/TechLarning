@@ -7,11 +7,10 @@ So that Prepaid customer can get onboarded Corporate General purpose single wall
 Scenario: Verify system allows onboarding for new prepaid customer through fileUpload if file already exists - Retail Credit Card single wallet using application upload funcationality
 Meta:
 @CR
-@TCName TC_Application_Upload_Credit
-@sheetName Prepaid_Application_Upload
+@StoryName credit_emv_retail
 @FileUpload
 
-Given login to portal as existing bank as a Customeruser
+Given user is logged in institution
 When user creates Application Upload Credit batch file and upload it on server for Individual for credit
 When user verifies the credit application device for fileUpload
 When user approves the credit application device for fileUpload

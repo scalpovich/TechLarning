@@ -125,6 +125,7 @@ public class WalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectProduct(DeviceCreation deviceCreation) {
+		SimulatorUtilities.wait(500);
 		selectByVisibleText(productTypeDDwn, deviceCreation.getProduct());
 	}
 
@@ -134,7 +135,8 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	public String enterWalletPlanCode(WalletPlan walletPlan) {
 		if (walletPlan.getWalletPlanCode().length() != 0) {
-			 logger.info(walletPlan.getWalletPlanCode());
+			logger.info(walletPlan.getWalletPlanCode());
+			waitForPageToLoad(driver());
 			enterValueinTextBox(walletPlancodeTxt, walletPlan.getWalletPlanCode());
 		} else {
 			enterValueinTextBox(walletPlancodeTxt, "WP" + CustomUtils.randomNumbers(4));
@@ -174,31 +176,31 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	public void selectCreditPlan() {
 		if (creditPlanDDwn.isEnabled()) {
-			SelectDropDownByIndex(creditPlanDDwn, FIRST_OPTION);
+			selectDropDownByIndex(creditPlanDDwn, FIRST_OPTION);
 		}
 	}
 
 	public void selectBillingCycleCode() {
 		if (billingCycleCodeDDwn.isEnabled()) {
-			SelectDropDownByIndex(billingCycleCodeDDwn, FIRST_OPTION);
+			selectDropDownByIndex(billingCycleCodeDDwn, FIRST_OPTION);
 		}
 	}
 
 	public void selectTransactionLimitPlan() {
 		if (transactionLimitPlanDDwn.isEnabled()) {
-			SelectDropDownByIndex(transactionLimitPlanDDwn, FIRST_OPTION);
+			selectDropDownByIndex(transactionLimitPlanDDwn, FIRST_OPTION);
 		}
 	}
 
 	public void selectSurchargePlan() {
 		if (surchargePlanDDwn.isEnabled()) {
-			SelectDropDownByIndex(surchargePlanDDwn, FIRST_OPTION);
+			selectDropDownByIndex(surchargePlanDDwn, FIRST_OPTION);
 		}
 	}
 
 	public void selectSurchargeWaiverPlan() {
 		if (surchargeWaiverPlanDDwn.isEnabled()) {
-			SelectDropDownByIndex(surchargeWaiverPlanDDwn, FIRST_OPTION);
+			selectDropDownByIndex(surchargeWaiverPlanDDwn, FIRST_OPTION);
 		}
 	}
 
@@ -208,12 +210,12 @@ public class WalletPlanPage extends AbstractBasePage {
 		walletPlancode = enterWalletPlanCode(walletplan);
 		WalletPlanDesc = enterWalletPlanDescription(walletplan);
 		selectCurrency(walletplan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		selectProduct(devicecreation);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		waitForLoaderToDisappear();
 		selectProgramType(walletplan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		selectWalletUsage(walletplan);
 		enterDummyAccountNumber();
 		enterReservedAmount();
@@ -222,11 +224,12 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	public void selectWalletFeePlan() {
 		if (walletFeePlanDDwn.isEnabled()) {
-			SelectDropDownByIndex(walletFeePlanDDwn, FIRST_OPTION);
+			selectDropDownByIndex(walletFeePlanDDwn, FIRST_OPTION);
 		}
 	}
 
 	public void selectProgramType(WalletPlan walletplan) {
+		SimulatorUtilities.wait(500);
 		selectByVisibleText(programeTypeDDwn, walletplan.getProgramType());
 	}
 
@@ -238,6 +241,7 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	public void selectWalletUsage(WalletPlan walletplan) {
 		if (usageDDwn.isEnabled()) {
+			SimulatorUtilities.wait(500);
 			selectByVisibleText(usageDDwn, walletplan.getWalletPlanUsage());
 		}
 	}
@@ -264,13 +268,13 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	public void selectWhiteListedMCGPlan() {
 		if (whiteListedMCGPlanDDwn.isEnabled()) {
-			SelectDropDownByIndex(whiteListedMCGPlanDDwn, FIRST_OPTION);
+			selectDropDownByIndex(whiteListedMCGPlanDDwn, FIRST_OPTION);
 		}
 	}
 
 	public void selectWhiteListedMerchantPlan() {
 		if (whiteListedMerchantPlanDDwn.isEnabled()) {
-			SelectDropDownByIndex(whiteListedMerchantPlanDDwn, FIRST_OPTION);
+			selectDropDownByIndex(whiteListedMerchantPlanDDwn, FIRST_OPTION);
 		}
 	}
 
@@ -341,7 +345,7 @@ public class WalletPlanPage extends AbstractBasePage {
 			selectCreditPlan();
 			selectBillingCycleCode();
 		}
-			
+
 		enterDummyAccountNumber();
 		enterReservedAmount();
 		return buildDescriptionAndCode(walletPlanDesc, walletPlancode);
@@ -351,11 +355,11 @@ public class WalletPlanPage extends AbstractBasePage {
 		enterWalletPlanCode(plan);
 		enterWalletPlanDescription(plan);
 		selectCurrency(plan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		selectProductType(plan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		selectProgramType(plan);
-		waitForPageToLoad(getFinder().getWebDriver());
+		waitForPageToLoad(driver());
 		selectWalletUsage(plan);
 	}
 

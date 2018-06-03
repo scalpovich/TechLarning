@@ -60,7 +60,7 @@ public class ProgramSteps {
 			@Named("programType") String programType) {
 		program.ProgramDataProvider();
 		program.setInterchange(interchange);
-		devicecreation.setProduct(product);
+		program.setProduct(ProductType.fromShortName(product));
 		program.setProgramType(programType);
 		program.setWalletType(walletType);
 		program.setWalletPlan1(walletplan.getOpenloopWalletPlan());
@@ -69,37 +69,34 @@ public class ProgramSteps {
 		program.setWalletPlan2(context.get(ContextConstants.CLOSED_WALLET));
 		program.setDevicePlanProgram(deviceplan.getDevicePlan());
 		context.put(ContextConstants.PROGRAM, program);
-		// program.setDevicePlanProgram(deviceplan.getDescription() + " " + "["
-		// + deviceplan.getDevicePlan() + "]");
 		String Program = "";
 		if (product.contains(ProductType.Prepaid) && programType.contains(ProgramType.CORPORATE_GIFT_CARD)
 				|| programType.contains(ProgramType.RETAIL_GENERAL_PURPOSE_CARD)
 				|| programType.contains(ProgramType.CORPORATE_GENERAL_PURPOSE_CARD)) {
-			Program = programflows.createprogramPrepaid(devicecreation, program, newLoyaltyPlan.getLoyaltyPlan());
-			// sDNUncheckProgram(Program);
+			Program = programflows.createprogramPrepaid(program, newLoyaltyPlan.getLoyaltyPlan());
+
 		}
 
 		if (product.contains(ProductType.Prepaid)
 				&& programType.contains(ProgramType.CORPORATE_TRAVEL_SINGLECURRENCY_CARD)
 				|| programType.contains(ProgramType.RETAIL_TRAVEL_SINGLECURRENCY_CARD)
 				|| programType.contains(ProgramType.RETAIL_GIFT_CARD)) {
-			Program = programflows.createprogramPrepaid(devicecreation, program, newLoyaltyPlan.getLoyaltyPlan());
-			// sDNUncheckProgram(Program);
+			Program = programflows.createprogramPrepaid(program, newLoyaltyPlan.getLoyaltyPlan());
+
 		}
 
 		if (product.contains(ProductType.Debit)) {
-			Program = programflows.createProgramDebit(devicecreation, program);
+			Program = programflows.createProgramDebit(program);
 		}
 
 		if (product.contains(ProductType.Prepaid)
 				&& programType.contains(ProgramType.CORPORATE_TRAVEL_MULTICURRENCY_CARD)
 				|| programType.contains(ProgramType.RETAIL_TRAVEL_MULTICURRENCY_CARD)) {
-			Program = programflows.createProgramPrepaidMultiCurrency(devicecreation, program);
-			// sDNUncheckProgram(Program);
+			Program = programflows.createProgramPrepaidMultiCurrency(program);
+
 		}
 		if (product.contains(ProductType.Credit)) {
-			Program = programflows.createprogramCredit(devicecreation, program);
-			sDNUncheckProgram(Program);
+			Program = programflows.createprogramCredit(program);
 		}
 		Assert.assertNotNull(Program);
 		program.setProgram(Program);
@@ -119,31 +116,29 @@ public class ProgramSteps {
 		program.setWalletPlan1(context.get(ContextConstants.OPEN_WALLET));
 		program.setWalletPlan2(context.get(ContextConstants.CLOSED_WALLET));
 		program.setDevicePlanProgram(deviceplan.getDevicePlan());
-		// program.setDevicePlanProgram(deviceplan.getDescription() + " " + "["
-		// + deviceplan.getDevicePlan() + "]");
 		if (product.contains("Prepaid") && programType.contains("Corporate Travel card - Single currency")
 				|| programType.contains("Retail Travel card - Single currency")
 				|| programType.contains("Corporate General Purpose")) {
-			Program = programflows.createprogramPrepaid(devicecreation, program, newLoyaltyPlan.getLoyaltyPlan());
+			Program = programflows.createprogramPrepaid(program, newLoyaltyPlan.getLoyaltyPlan());
 		}
 
 		if (product.contains("Prepaid") && programType.contains("Corporate Gift Card")
 				|| programType.contains("Retail General Purpose")) {
-			Program = programflows.createprogramPrepaid(devicecreation, program, newLoyaltyPlan.getLoyaltyPlan());
+			Program = programflows.createprogramPrepaid(program, newLoyaltyPlan.getLoyaltyPlan());
 		}
 
 		if (product.contains("Prepaid") && programType.contains("Corporate General Purpose - Multi Wallet")
 				|| programType.contains("Retail General Purpose - Multi Wallet")) {
-			Program = programflows.createProgramPrepaidMultiCurrency(devicecreation, program);
+			Program = programflows.createProgramPrepaidMultiCurrency(program);
 		}
 
 		if (product.contains("Debit")) {
-			Program = programflows.createProgramDebit(devicecreation, program);
+			Program = programflows.createProgramDebit(program);
 		}
 
 		if (product.contains("Prepaid") && programType.contains("Corporate Travel card - Multi currency")
 				|| programType.contains("Retail Travel card - Multi currency")) {
-			Program = programflows.createProgramPrepaidMultiCurrency(devicecreation, program);
+			Program = programflows.createProgramPrepaidMultiCurrency(program);
 		}
 		program.setProgramCode(Program);
 		context.put(ContextConstants.PROGRAM, program);
@@ -160,5 +155,21 @@ public class ProgramSteps {
 	@Then("Program should get created")
 	public void VerifyProgramSuccess() {
 		programflows.VerifyProgramSuccess();
+	}
+
+	@When("user edits the program")
+	public void editProgram() {
+		programflows.editProgram(program.getProgramCode());
+	}
+
+	@When("Adaptive Authentication CheckBox should be $enabled")
+	@Then("Adaptive Authentication CheckBox should be $enabled")
+	public void verifyAdaptiveAuthenticationCheckBox(@Named("enabled") String enabled) {
+		if (enabled.equalsIgnoreCase("Enabled")) {
+			programflows.checkAdaptiveAuthenticationEnabled(program.getProgramCode());
+		}
+		if (enabled.equalsIgnoreCase("Disabled")) {
+			programflows.checkAdaptiveAuthenticationDisabled(program.getProgramCode());
+		}
 	}
 }

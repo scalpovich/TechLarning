@@ -9,7 +9,8 @@ Meta:
 @StoryName p_emv_corp_gift
 @AuthorizationRegression
 @AuthorizationRegressionGroup2
-@EMVWithPin
+@EMVWithPinIntTrx
+@InternationalTrx
 
 Scenario: Setup - prepaid emv corporate gift card with PIN
 Given user is logged in institution

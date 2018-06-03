@@ -56,7 +56,7 @@ public class InstitutionCreation extends AbstractBasePage {
 	private String customerCareVIPISDCode;
 	private String customerCareVIPNo;
 	private String credentialMasking;
-	
+
 	public String getCredentialMasking() {
 		return credentialMasking;
 	}
@@ -87,8 +87,8 @@ public class InstitutionCreation extends AbstractBasePage {
 
 	public void setAgentPortalAdminName(String agentPortalAdminName) {
 		this.agentPortalAdminName = agentPortalAdminName;
-	}	
-	
+	}
+
 	public String getCollectPortalAdminID() {
 		return collectPortalAdminID;
 	}
@@ -261,8 +261,7 @@ public class InstitutionCreation extends AbstractBasePage {
 		return institutionReferenceCurrency;
 	}
 
-	public void setInstitutionReferenceCurrency(
-			String institutionReferenceCurrency) {
+	public void setInstitutionReferenceCurrency(String institutionReferenceCurrency) {
 		this.institutionReferenceCurrency = institutionReferenceCurrency;
 	}
 
@@ -313,7 +312,7 @@ public class InstitutionCreation extends AbstractBasePage {
 	public void setSDNPlan(String sDNPlan) {
 		this.sdnPlan = sDNPlan;
 	}
-	
+
 	public String getAdaptiveAuthentication() {
 		return adaptiveAuthentication;
 	}
@@ -371,12 +370,18 @@ public class InstitutionCreation extends AbstractBasePage {
 	}
 
 	public static InstitutionCreation getInstitutionData() {
+		String randomAlphabet=CustomUtils.randomString(Integer.parseInt(MapUtils.fnGetInputDataFromMap("Padding")));
 		InstitutionCreation institute = new InstitutionCreation();
-		institute.setInstitutionCode(CustomUtils.RandomNumbers(6));
-		institute.setInstitutionName(MapUtils
-				.fnGetInputDataFromMap("InstitutionName")
-				+ CustomUtils.randomString(2).toUpperCase());
-		institute.setInstitutionAbbrevation(institute.getInstitutionName());
+		if(MapUtils.fnGetInputDataFromMap("Padding")!=null){
+			institute.setInstitutionCode(CustomUtils.RandomNumbers(6));
+			institute.setInstitutionName(MapUtils.fnGetInputDataFromMap("InstitutionName")+randomAlphabet);
+			institute.setInstitutionAbbrevation(MapUtils.fnGetInputDataFromMap("InstitutionName")+randomAlphabet);
+			
+		}else{
+			institute.setInstitutionCode(MapUtils.fnGetInputDataFromMap("InstitutionCode"));
+			institute.setInstitutionName(MapUtils.fnGetInputDataFromMap("InstitutionName"));
+			institute.setInstitutionAbbrevation(MapUtils.fnGetInputDataFromMap("Abbrevation"));
+		}
 		institute.setInstitutionCurrency(MapUtils
 				.fnGetInputDataFromMap("Institution Currency"));
 		institute.setInstitutionReferenceCurrency(MapUtils
@@ -391,14 +396,15 @@ public class InstitutionCreation extends AbstractBasePage {
 		institute.setFinanacialStartMonth(MapUtils
 				.fnGetInputDataFromMap("Financial Start Month"));
 		institute.setSDNPlan(MapUtils.fnGetInputDataFromMap("SDN Plan"));
+		
 		institute.setAdaptiveAuthentication(MapUtils
-				.fnGetInputDataFromMap("Adaptive Authentication"));
+				.fnGetInputDataFromMap("AdaptiveEcomm"));
 		institute.setmPinEnabled(MapUtils
 				.fnGetInputDataFromMap("MPIN Enabled"));
 		institute.setSmsServiceProvider(MapUtils
 				.fnGetInputDataFromMap("SMS Service Provider"));
 		institute
-				.setContactName(MapUtils.fnGetInputDataFromMap("Contact Name"));
+		.setContactName(MapUtils.fnGetInputDataFromMap("Contact Name"));
 		institute.setEmailID(MapUtils.fnGetInputDataFromMap("Email Id"));
 		institute.setCustomerCareContactNumber(MapUtils
 				.fnGetInputDataFromMap("Customer Care Contact Numbers"));
@@ -452,6 +458,7 @@ public class InstitutionCreation extends AbstractBasePage {
 	public void setExistingInstitutionCode(String existingInstitutionCode) {
 		this.existingInstitutionCode = existingInstitutionCode;
 	}
+
 	public static InstitutionCreation createWithProvider(KeyValueProvider provider) {
 		InstitutionCreation institute = new InstitutionCreation();
 		institute.setExistingInstitutionCode(provider.getString("ExistingInstitutionCode"));
@@ -466,6 +473,5 @@ public class InstitutionCreation extends AbstractBasePage {
 	public void setAuthenticationFlg(String authenticationFlg) {
 		this.authenticationFlg = authenticationFlg;
 	}
-	
 
 }

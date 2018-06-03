@@ -26,9 +26,9 @@ And User fills Payment Bounce Reason
 And User fills Transaction Rule Plan
 And User fills Credit Plan
 And User fills Wallet Fee Plan for credit product
-And User fills Wallet Plan for credit product
+And User fills Wallet Plan for credit product and program Retail Credit Card [9]
 And User fills MCC Rules for credit product
-And User fills Program section for credit product
+And User fills Program section for credit product and program Retail Credit Card [9]
 !-- And user navigates to Approval Score Page and add a approvalScore
 !-- And User adds a Risk Analysis Rule Plan by entering valid values
 When User fills Device Range section for credit product

@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.configuration.AppEnvironment;
 import com.mastercard.pts.integrated.issuing.configuration.Portal;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BatchLevelPriviledge;
 import com.mastercard.pts.integrated.issuing.workflows.LoginFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.administration.BatchLevelPrivilegesWorkflow;
@@ -26,6 +29,9 @@ public class BatchLevelPrivilegesSteps {
 	@Autowired
 	private BatchLevelPrivilegesWorkflow batchlevelprevFlow;
 
+	@Autowired
+	TestContext context;
+
 	@Given("$adminUser provides privilege to $applicationuser to process batches")
 	public void setBatchProcessPrelivedge(String adminUser,
 			String applicationUser) {
@@ -39,8 +45,10 @@ public class BatchLevelPrivilegesSteps {
 
 	@When("admin provides batch level privileges for the the newly created $user")
 	public void assignBatchLevelPrivileges(String entityType) {
-		batchlevelprevidge.setEntityType("User");
-		batchlevelprevFlow.setAllBatchLevelTabPriviledgesForUsers(entityType);
+		UserCreation userCreation = context.get(ContextConstants.USER);
+		batchlevelprevidge.setEntityType(entityType);
+		batchlevelprevFlow.setAllBatchLevelTabPriviledgesForUsers(userCreation
+				.buildDescriptionAndCode());
 	}
 
 }

@@ -14,6 +14,7 @@ import org.openqa.selenium.WebDriver.Timeouts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -41,41 +42,40 @@ public class TestHooks {
 	private long scriptWaitTimeout;
 
 	@Autowired
+	@Qualifier("defaultDataLoader")
 	private DataLoader dataLoader;
 
 	@BeforeStory
 	public void initStoryContext(@Named("StoryName") String storyName) {
-		testContext.initStoryContext(storyName);	
+		testContext.initStoryContext(storyName);
 		Optional<Map<String, String>> data = dataLoader.loadData(storyName);
 		if (data.isPresent()) {
-			testContext.put(TestContext.KEY_STORY_DATA, data.get());			
+			testContext.put(TestContext.KEY_STORY_DATA, data.get());
 		} else {
-			logger.info("There is no data set for story {}", storyName);
+			logger.warn("There is no data set for story: {}", storyName);
 		}
-}
+	}
 
 	@BeforeScenario
 	public void initTimeouts() {
-	    if(System.getProperty("storyType")==null){
-		Timeouts timeouts = driverProvider.get().manage().timeouts();
-		timeouts.implicitlyWait(imlicitWaitTimeout, TimeUnit.MILLISECONDS);
-		timeouts.pageLoadTimeout(pageWaitTimeout, TimeUnit.SECONDS);
-		timeouts.setScriptTimeout(scriptWaitTimeout, TimeUnit.SECONDS);
-		testContext.put("DRIVER", driverProvider.get());
-	    }
-	    else{
-	    	logger.info("driverProvider not required for API  story");
-	    }
+		if (System.getProperty("storyType") == null) {
+			Timeouts timeouts = driverProvider.get().manage().timeouts();
+			timeouts.implicitlyWait(imlicitWaitTimeout, TimeUnit.MILLISECONDS);
+			timeouts.pageLoadTimeout(pageWaitTimeout, TimeUnit.SECONDS);
+			timeouts.setScriptTimeout(scriptWaitTimeout, TimeUnit.SECONDS);
+			testContext.put("DRIVER", driverProvider.get());
+		} else {
+			logger.info("driverProvider not required for API  story");
+		}
 	}
 
 	@AfterScenario
 	public void clearCookies() {
-		if(System.getProperty("storyType")==null){
-		driverProvider.get().manage().deleteAllCookies();
+		if (System.getProperty("storyType") == null) {
+			driverProvider.get().manage().deleteAllCookies();
+		} else {
+			logger.info("driverProvider no required for API  story");
 		}
-		else{
-	    	logger.info("driverProvider no required for API  story");
-	    }
 	}
 
 	@AfterStory

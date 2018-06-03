@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -22,6 +21,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -219,10 +219,13 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#stmtPlanCode select")
 	private MCWebElement stmtPlanCodeDDwn;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:markupFeePlanCode:input:dropdowncomponent")
 	private MCWebElement markupFeePlanDDwn;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:currencyPayoutListPlanCode:input:dropdowncomponent")
+	private MCWebElement payoutCurrencyPlanDDwn;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:cashLimitCycleIndicatior:input:dropdowncomponent")
 	private MCWebElement CashLimitResetDDwn;
 
@@ -266,6 +269,9 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:allowFtOutOnClosedUsage:checkBoxComponent")
 	private MCWebElement sendCheckBx;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "adaptiveEcommFlag:checkBoxComponent")
+	private MCWebElement adaptiveAuthenticationCheckBx;
 
 	public void addProgram(String programCode) {
 		WebElementUtils.enterText(programTxt, programCode);
@@ -352,6 +358,13 @@ public class ProgramPage extends AbstractBasePage {
 	public void selectOtherPlanMarketingMessagePlan(String otherPlanMarketingMessagePlan) {
 		WebElementUtils.selectDropDownByVisibleText(otherPlanMarketingMessagePlanDDwn, otherPlanMarketingMessagePlan);
 	}
+	
+	public void selectPayoutCurrencyPlan(String payoutCurrencyPlan) {
+		if (payoutCurrencyPlanDDwn.isEnabled())
+		{
+			WebElementUtils.selectDropDownByVisibleText(payoutCurrencyPlanDDwn, payoutCurrencyPlan);
+		}
+	}
 
 	public void addProgramData(Program program, String productType) {
 		logger.info("Add Program: {}", program.getProgramCode());
@@ -368,6 +381,10 @@ public class ProgramPage extends AbstractBasePage {
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
+				if (Constants.ENV_DEMO.equalsIgnoreCase(MiscUtils.getEnvironment()))
+				{
+					selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
+				}
 				selectRefundInCurrency(program.getRefundInCurrency());
 				selectWalletToWalletTransferType(program.getWalletToWalletTransferType());
 				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
@@ -398,6 +415,10 @@ public class ProgramPage extends AbstractBasePage {
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
+				if (Constants.ENV_DEMO.equalsIgnoreCase(MiscUtils.getEnvironment()))
+				{
+					selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
+				}
 				selectRefundInCurrency(program.getRefundInCurrency());
 				selectWalletToWalletTransferType(program.getWalletToWalletTransferType());
 				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
@@ -428,6 +449,10 @@ public class ProgramPage extends AbstractBasePage {
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
+				if (Constants.ENV_DEMO.equalsIgnoreCase(MiscUtils.getEnvironment()))
+				{
+					selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
+				}
 				selectRefundInCurrency(program.getRefundInCurrency());
 				selectWalletToWalletTransferType(program.getWalletToWalletTransferType());
 				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
@@ -524,7 +549,7 @@ public class ProgramPage extends AbstractBasePage {
 		WebElementUtils.enterText(cashLimitAmountTxt, program.getCashLimitAmount());
 		WebElementUtils.selectDropDownByVisibleText(cashLimitResetDDwn, program.getCashLimitReset());
 		WebElementUtils.selectDropDownByVisibleText(addOnLimitResetDDwn, program.getAddOnLimitReset());
-		//CustomUtils.ThreadDotSleep(10000);
+		// CustomUtils.ThreadDotSleep(10000);
 	}
 
 	public void verifyUiOperationStatus() {
@@ -566,8 +591,8 @@ public class ProgramPage extends AbstractBasePage {
 		selectByVisibleText(InterchangeDDwn, program.getInterchange());
 	}
 
-	public void selectProduct(DeviceCreation deviceCreation) {
-		selectByVisibleText(ProductDDwn, deviceCreation.getProduct());
+	public void selectProduct(Program program) {
+		selectByVisibleText(ProductDDwn, program.getProduct());
 	}
 
 	public void selectRefundinCurrency(Program program) {
@@ -586,9 +611,8 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	public void selectCurrencyConversionBy(Program program) {
-		if(CurrencyConversionByDDwn.isEnabled())
-		{
-		selectByVisibleText(CurrencyConversionByDDwn, program.getCurrencyConversionBy());
+		if (CurrencyConversionByDDwn.isEnabled()) {
+			selectByVisibleText(CurrencyConversionByDDwn, program.getCurrencyConversionBy());
 		}
 
 	}
@@ -603,7 +627,7 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	public void selectWalletToWalletTransfer() {
-		SelectDropDownByIndex(WalletToWalletTransferType, 1);
+		selectDropDownByIndex(WalletToWalletTransferType, 1);
 	}
 
 	public void selectReferenceCurrency(Program program) {
@@ -613,7 +637,7 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	public void selectCalendarStartMonth() {
-		SelectDropDownByIndex(CalendarStartMonthDDwn, 1);
+		selectDropDownByIndex(CalendarStartMonthDDwn, 1);
 	}
 
 	public void enterMaximumBalanceWithoutKYC(Program program) {
@@ -637,8 +661,8 @@ public class ProgramPage extends AbstractBasePage {
 		if (MapUtils.fnGetInputDataFromMap("WalletPlan") != null) {
 			selectByVisibleText(WalletPlan1DDwn, MapUtils.fnGetInputDataFromMap("WalletPlan"));
 		} else {
-			Program programContext=context.get(ContextConstants.PROGRAM);
-			selectByVisibleText(WalletPlan1DDwn, /*program.getWalletPlan1()*/programContext.getWalletPlan1());
+			Program programContext = context.get(ContextConstants.PROGRAM);
+			selectByVisibleText(WalletPlan1DDwn, /* program.getWalletPlan1() */programContext.getWalletPlan1());
 		}
 	}
 
@@ -659,7 +683,7 @@ public class ProgramPage extends AbstractBasePage {
 			if (MapUtils.fnGetInputDataFromMap("WalletPlan3") != null) {
 				selectByVisibleText(WalletPlan3DDwn, MapUtils.fnGetInputDataFromMap("WalletPlan3"));
 			} else {
-				SelectDropDownByIndex(WalletPlan3DDwn, 3);
+				selectDropDownByIndex(WalletPlan3DDwn, 3);
 			}
 		}
 	}
@@ -677,16 +701,17 @@ public class ProgramPage extends AbstractBasePage {
 
 	public void selectStatementMessagePlan() {
 		waitForElementVisible(StatementMessagePlanDDwn);
-		SelectDropDownByIndex(StatementMessagePlanDDwn, 1);
+		selectDropDownByIndex(StatementMessagePlanDDwn, 1);
 	}
 
 	public void selectMarketingMessagePlan() {
 		waitForElementVisible(MarketingMessagePlanDDwn);
-		SelectDropDownByIndex(MarketingMessagePlanDDwn, 1);
+		selectDropDownByIndex(MarketingMessagePlanDDwn, 1);
 	}
 
 	@Override
 	public void clickFinishButton() {
+		waitForElementVisible(FinishBtn);
 		clickWhenClickable(FinishBtn);
 		SwitchToDefaultFrame();
 	}
@@ -707,14 +732,32 @@ public class ProgramPage extends AbstractBasePage {
 		}
 	}
 
-	public String addProgramGeneral(DeviceCreation devicecreation, Program program) {
+	public void editProgram(String prog) {
+		enterValueinTextBox(enterProgram, prog);
+		clickWhenClickable(search);
+		waitForElementVisible(editProgram);
+		Scrolldown(editProgram);
+		clickWhenClickableDoNotWaitForWicket(editProgram);
+		switchToEditProgramframe();
+	}
+
+	public boolean adaptiveAuthenticationChkBox() {
+		boolean flag = false;
+		flag = adaptiveAuthenticationCheckBx.isEnabled();
+		if (flag == true)
+			clickWhenClickable(adaptiveAuthenticationCheckBx);
+		clickWhenClickable(save);
+		return flag;
+	}
+
+	public String addProgramGeneral(Program program) {
 		String programCode;
 		String ProgramDescription;
 		programCode = enterProgramCode(program);
 		program.setProgramCode(programCode);
 		ProgramDescription = enterProgramDescription(program);
 		selectInterchange(program);
-		selectProduct(devicecreation);
+		selectProduct(program);
 		selectProgramType(program);
 		selectBaseCurrency(program);
 		selectCurrencyConversionBy(program);
@@ -722,14 +765,14 @@ public class ProgramPage extends AbstractBasePage {
 		return buildDescriptionAndCode(ProgramDescription, programCode);
 	}
 
-	public String addProgramGeneralMultiCurrency(DeviceCreation devicecreation, Program program) {
+	public String addProgramGeneralMultiCurrency(Program program) {
 		String programCode;
 		String ProgramDescription;
 		programCode = enterProgramCode(program);
 		program.setProgramCode(programCode);
 		ProgramDescription = enterProgramDescription(program);
 		selectInterchange(program);
-		selectProduct(devicecreation);
+		selectProduct(program);
 		selectProgramType(program);
 		selectBaseCurrency(program);
 		enterNoOfCurrencyAllowed();
@@ -788,9 +831,10 @@ public class ProgramPage extends AbstractBasePage {
 	public void switchToEditProgramframe() {
 		switchToIframe(Constants.EDIT_PROGRAM_FRAME);
 	}
-
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(programSearchTxt));
+
 	}
 }

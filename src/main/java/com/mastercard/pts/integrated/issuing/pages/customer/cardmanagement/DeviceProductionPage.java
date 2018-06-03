@@ -79,7 +79,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	public void deviceproduction(String prodType, String batchNum, String DeviceNumber) {
 		menuSubMenuPage.getDeviceProduction().click();
-		SelectDropDownByText(productTypeDDwn, prodType);
+		selectDropDownByText(productTypeDDwn, prodType);
 		if (batchNum != null) {
 			enterText(batchNumberTxt, batchNum);
 		}
@@ -129,15 +129,14 @@ public class DeviceProductionPage extends AbstractBasePage {
 			clickWhenClickable(processAllBtn);
 			verifyOperationStatus();
 		//}
+}
 
-	}
-
-	public void selectProduct(DeviceCreation deviceCreation) {
-		selectByVisibleText(productTypeDDwn, deviceCreation.getProduct());
+	public void selectProduct(BulkDeviceRequestbatch bulkdeviceGenBatch) {
+		selectByVisibleText(productTypeDDwn, bulkdeviceGenBatch.getProduct());
 	}
 
 	public void enterBatchNumber(BulkDeviceRequestbatch bulkdeviceGenBatch) {
-		enterValueinTextBox(batchNumberTxt, bulkdeviceGenBatch.getBatchNumber());
+		enterValueinTextBox(batchNumberTxt, bulkdeviceGenBatch.getBatchNumberForDeviceProduction());
 	}
 
 	public void enterDeviceNumber(BulkDeviceRequestbatch bulkdeviceGenBatch) {
@@ -153,11 +152,13 @@ public class DeviceProductionPage extends AbstractBasePage {
 	}
 
 	public void clickDeviceProductionChkBox(BulkDeviceRequestbatch bulkdeviceGenBatch) {
-		WebElement SelectProcessChkBx = getFinder().getWebDriver().findElement(By.xpath("//td[contains(.,'"
-				+ bulkdeviceGenBatch.getBatchNumberForDeviceGeneration()
-						+ "')]/following::span/input[@name='dataPanel:BasicDataTable:datatable:body:rows:1:cells:7:cell:columnCheckBox']"));
-		waitForElementVisible(SelectProcessChkBx);
-		clickWhenClickable(SelectProcessChkBx);
+		// WebElement SelectProcessChkBx =
+		// getFinder().getWebDriver().findElement(By.xpath("//td[contains(.,'"
+		// + bulkdeviceGenBatch.getBatchNumberForDeviceGeneration()
+		// +
+		// "')]/following::span/input[@name='dataPanel:BasicDataTable:datatable:body:rows:1:cells:7:cell:columnCheckBox']"));
+		waitForElementVisible(deviceProductionBatchRecordChkBx);
+		clickWhenClickable(deviceProductionBatchRecordChkBx);
 	}
 
 	public void clickProcessSelectedBtn() {
@@ -168,8 +169,8 @@ public class DeviceProductionPage extends AbstractBasePage {
 		clickWhenClickable(processAllBtn);
 	}
 
-	public void searchDeviceProductionBatch(DeviceCreation deviceCreation, BulkDeviceRequestbatch bulkdeviceGenBatch) {
-		selectProduct(deviceCreation);
+	public void searchDeviceProductionBatch(BulkDeviceRequestbatch bulkdeviceGenBatch) {
+		selectProduct(bulkdeviceGenBatch);
 		enterBatchNumber(bulkdeviceGenBatch);
 		search();
 	}
@@ -228,5 +229,4 @@ public class DeviceProductionPage extends AbstractBasePage {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

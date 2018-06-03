@@ -3,7 +3,6 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.UserPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;

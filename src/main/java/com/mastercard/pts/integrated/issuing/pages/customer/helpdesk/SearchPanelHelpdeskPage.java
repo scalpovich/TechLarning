@@ -62,7 +62,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:5:componentList:1:componentPanel:input:inputTextField")
 	private MCWebElement CBSClientID;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:6:buttonPanel:buttonCol:searchButton")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:searchButtonPanel:buttonCol:searchButton")
 	private MCWebElement searchBtn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = ".//*[@alt='Edit Record']")
@@ -91,7 +91,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 
 	public void searchDevice(String productType, String deviceNumber) {
 		waitForElementVisible(this.productType);
-		SelectDropDownByText(this.productType, productType);
+		selectDropDownByText(this.productType, productType);
 		waitForElementVisible(this.deviceNumber);
 		enterText(this.deviceNumber, deviceNumber);
 		waitForElementVisible(searchBtn);
@@ -110,7 +110,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 
 	public String searchDeviceUsingName(String productType, String name) {
 		waitForElementVisible(this.productType);
-		SelectDropDownByText(this.productType, productType);
+		selectDropDownByText(this.productType, productType);
 		enterText(this.firstNameInput, String.valueOf(name));
 		waitForElementVisible(searchBtn);
 		searchBtn.click();
@@ -119,25 +119,25 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 
 	public String searchNewDevice(String productType, String deviceNumber) {
 		waitForElementVisible(this.productType);
-		SelectDropDownByText(this.productType, productType);
+		selectDropDownByText(this.productType, productType);
 		waitForElementVisible(this.deviceNumber);
 		enterText(this.deviceNumber, deviceNumber);
 		waitForElementVisible(searchBtn);
 		searchBtn.click();
-		return getCellTextByColumnName(Constants.TABLE_ROW_NUM,Constants.COLUMN_NAME);
+		return getCellTextByColumnName(Constants.TABLE_ROW_NUM, Constants.COLUMN_NAME);
 	}
 	
 	public void normalStatusCheckFileUploadInBulk(String productType,Map<String, Object>mapFileUpload) {
 		int counter=0;
 		waitForElementVisible(this.productType);
-		SelectDropDownByText(this.productType, productType);
+		selectDropDownByText(this.productType, productType);
 		for (Map.Entry<String, Object> entry : mapFileUpload.entrySet()) {
 			counter++;
 			HelpDeskGeneral helpDeskGeneral=(HelpDeskGeneral) entry.getValue();
 			WebElementUtils.enterText(firstNameUpload,helpDeskGeneral.getFirstName());
 			WebElementUtils.enterText(lastNameUpload,helpDeskGeneral.getLastName());
 			WebElementUtils.enterText(mobileNumberUpload,helpDeskGeneral.getMobileNumber());
-			clickSearchButtonWithoutWicket();
+			clickSearchButton();
 			waitForPageToLoad(driver());
 			assertThat(STATUS_DEVICE_NOT_NORMAL, normalStatusCredit.getText(), equalTo(UPLOAD_EXPECTED_STATUS));
 			logger.info("Device Number :" +"  "+counter+"   "+ "-" +" "+ deviceNumberTxt.getText());

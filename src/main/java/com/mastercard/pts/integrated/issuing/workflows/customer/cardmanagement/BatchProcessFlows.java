@@ -70,11 +70,14 @@ public class BatchProcessFlows extends MenuFlows {
 		String absoluteDestPath = null;
 
 		try {
-			Session session = LinuxUtils.connectSession(env.getProperty("unix.server.username"), env.getProperty("unix.server.ip"), env.getProperty("unix.server.password"), 2222);
+			Session session = LinuxUtils.connectSession(env.getProperty("unix.server.username"),
+					env.getProperty("unix.server.ip"), env.getProperty("unix.server.password"), 2222);
 
-			absoluteDestPath = System.getProperty("user.dir") + env.getProperty("unix.server.relativepath") + processBatches.getGeneratedFilename();
+			absoluteDestPath = System.getProperty("user.dir") + env.getProperty("unix.server.relativepath")
+					+ processBatches.getGeneratedFilename();
 
-			LinuxUtils.copyFilesfromServer(session, env.getProperty("unix.server.copycommand"), env.getProperty("unix.localmachine.relativepath") + processBatches.getGeneratedFilename(),
+			LinuxUtils.copyFilesfromServer(session, env.getProperty("unix.server.copycommand"),
+					env.getProperty("unix.localmachine.relativepath") + processBatches.getGeneratedFilename(),
 					absoluteDestPath);
 			Assert.assertTrue(true);
 		} catch (IOException | JSchException e) {

@@ -1,17 +1,18 @@
 regression prepaid msr corporate travel card authorization PINLESS
 
 Narrative:
-In order to check transactions on prepaid emv retail general purpose card
+In order to check transactions on prepaid msr corporate travel card
 As an issuer
-I want to authorize transactions for prepaid emv retail general purpose card
+I want to authorize transactions for prepaid msr corporate travel card
 
 Meta:
-@StoryName p_emv_corp_travel
+@StoryName p_msr_corp_travel
 @oldReferenceSheet_S203707
 @CRCardsWithAuthorizationRegression
 @AuthorizationRegression
 @AuthorizationRegressionGroup3
-@MSRWithoutPin
+@MSRWithoutPinIntTrx
+@InternationalTrx
 
 Scenario: Set up prepaid msr corporate travel card
 Given user is logged in institution
@@ -28,7 +29,7 @@ Then device has "normal" status
 When user has wallet number information for prepaid device
 Then user sign out from customer portal
 Then user is logged in institution
-When user performs adjustment transaction with 10000 amount
+When user performs adjustment transaction with 300000 amount
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk

@@ -4,10 +4,10 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.configuration.AppEnvironment;
@@ -15,14 +15,14 @@ import com.mastercard.pts.integrated.issuing.configuration.Portal;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.LoginCardholder;
+import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
+import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
-import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.domain.provider.DataLoader;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceCreateDevicePage;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
-import com.mastercard.pts.integrated.issuing.utils.ReadTestDataFromExcel;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.pts.integrated.issuing.workflows.LoginFlows;
 import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
@@ -31,7 +31,7 @@ import com.mastercard.pts.integrated.issuing.workflows.QMRReportFlows;
 
 @Component
 public class LoginSteps extends AbstractBaseFlows {
-	final Logger logger = LoggerFactory.getLogger(LoginSteps.class);
+	private static final Logger LOGR = LoggerFactory.getLogger(LoginSteps.class);
 
 	@Autowired
 	LoginFlows loginFlows;
@@ -41,48 +41,45 @@ public class LoginSteps extends AbstractBaseFlows {
 
 	@Autowired
 	public QMRReportFlows qmrReportFlows;
-	
+
 	@Autowired
 	private LoginWorkflow loginWorkflow;
 	
-	@Autowired
-	private ReadTestDataFromExcel excelTestData;
 
 	@Autowired
 	public AppEnvironment appEnvironment;
 
 	@Autowired
-	public LoginFlows loginflows;
 	
-	@Autowired
 	public DeviceCreateDevicePage deviceCreationPage;
-	
+
 	@Autowired
 	private TestContext context;
-	
-	@Autowired
-	private KeyValueProvider provider;
 
 	@Autowired
 	public UserManagementSteps user;
-	
+
+	@Autowired
+	@Qualifier("defaultDataLoader")
+	public DataLoader dataLoader;
+
 	public LoginCardholder loginCardHolderProvider;
-	
-	
+
 	@Given("login with chp")
-	public void loginInCardholder(){			
+	public void loginInCardholder() {
 		getFinder().getWebDriver().manage().deleteAllCookies();
-		getFinder().getWebDriver().get("http://ech-10-168-129-135.mastercard.int:25003/integratedIssuing-cardholderPortal/WebPages/Login.jsp");
+		getFinder().getWebDriver().get(
+				"http://ech-10-168-129-135.mastercard.int:25003/integratedIssuing-cardholderPortal/WebPages/Login.jsp");
 		Device device = context.get(ContextConstants.DEVICE);
-		loginCardholder(device.getClientCode(),device.getClientCode());
+		loginCardholder(device.getClientCode(), device.getClientCode());
 		switchToWindowCHP();
 		CustomUtils.ThreadDotSleep(1100);
 	}
 
 	@Given("login to customer portal as newuser")
-	public void LoginForNewUser() {
+	public void loginForNewUser() {
 		Portal userPortal = appEnvironment.getPortalByType(Portal.TYPE_CUSTOMER);
-		loginflows.LoginWithNewUser(userPortal);
+		loginFlows.LoginWithNewUser(userPortal);
 
 	}
 
@@ -91,16 +88,9 @@ public class LoginSteps extends AbstractBaseFlows {
 	 * excel sheet
 	 */
 	@Given("login to portal as existing bank as a $user")
-	public void reloginforPrepaid(@Named("TCName") String strStoryName, @Named("sheetName") String strSheetName,
+	public void reloginforPrepaid(@Named("TCName") String tcName, @Named("sheetName") String sheetName,
 			@Named("user") String userType) {
-		String f = "TestData";
-		logger.info("Reading entire test data");
-		excelTestData.fnReadEntireTestData(f, strSheetName, "TCName");
-		if (excelTestData == null) {
-			Assert.fail("Unable to read entire test data");
-		} else {
-			excelTestData.fnSetCurrentStoryTestData(strStoryName);
-		}
+		dataLoader.updateTestContextWithTestData(sheetName, tcName);
 		login(MapUtils.fnGetInputDataFromMap("UserId"), MapUtils.fnGetInputDataFromMap("Password"));
 		CustomUtils.ThreadDotSleep(1100);
 		selectInstitute();
@@ -119,18 +109,8 @@ public class LoginSteps extends AbstractBaseFlows {
 	}
 
 	@Given("read test data for scenario")
-	public void readScenarioDataSheet(@Named("TCName") String strStoryName, @Named("sheetName") String strSheetName) {
-		String f = "TestData";
-
-		logger.info("Reading entire test data");
-
-		excelTestData.fnReadEntireTestData(f, strSheetName, "TCName");
-
-		if (excelTestData == null) {
-			Assert.fail("Unable to read entire test data");
-		} else {
-			excelTestData.fnSetCurrentStoryTestData(strStoryName);
-		}
+	public void readScenarioDataSheet(@Named("TCName") String tcName, @Named("sheetName") String sheetName) {
+		dataLoader.updateTestContextWithTestData(sheetName, tcName);
 	}
 
 	@Given("open cardholder application")
@@ -146,16 +126,15 @@ public class LoginSteps extends AbstractBaseFlows {
 				loginCardHolderProvider.getSecondSequrityAnsw());
 
 	}
-	
+
 	@Given("cardholder signup with valid details")
 	@Then("cardholder signup with valid details")
-	public void cardHolderSignUp(){
+	public void cardHolderSignUp() {
 		Device device = context.get(ContextConstants.DEVICE);
 		loginWorkflow.login(device.getClientCode(), device.getClientCode());
-		loginFlows.signUpCardHolderPortal(device.getClientCode(),device.getNewTransPassword());
+		loginFlows.signUpCardHolderPortal(device.getClientCode(), device.getNewTransPassword());
 		switchToNewWindow();
 	}
-	
 
 	@Then("switch to new window")
 	public void switchToNewWindow() {
@@ -163,19 +142,11 @@ public class LoginSteps extends AbstractBaseFlows {
 	}
 
 	@Given("login to bank as a $user")
-	public void Login(@Named("TCName") String strStoryName, @Named("sheetName") String strSheetName,
+	public void login(@Named("TCName") String tcName, @Named("sheetName") String sheetName,
 			@Named("testDataFileName") String testDataFileName, @Named("user") String userType) {
-		logger.info("Reading entire test data");
-		if (testDataFileName != "") {
-			excelTestData.fnReadEntireTestData(testDataFileName, strSheetName, "TCName");
-			if (excelTestData == null) {
-				Assert.fail("Test Data not found for " + strStoryName + "in File:" + testDataFileName);
-			} else {
-				excelTestData.fnSetCurrentStoryTestData(strStoryName);
-			}
-		}
-		
-		if(userType.contains("Bank"))
+		LOGR.info("Reading entire test data");
+		dataLoader.updateTestContextWithTestData(sheetName, tcName);
+		if (userType.contains("Bank"))
 			user.givenUserIsLoggedInCustomerPortal();
 		else
 			user.givenUserIsLoggedInInstitution();
@@ -228,7 +199,32 @@ public class LoginSteps extends AbstractBaseFlows {
 
 	@When("user selects the newly created institution")
 	public void selectsInstitution() {
-		customerPortalHomePage.selectInstitution(MapUtils.fnGetInputDataFromMap("Institution"));
+		customerPortalHomePage.selectInstitution(MapUtils
+				.fnGetInputDataFromMap("Institution"));
+	}
+
+	@When("user select the created institution from the institution dropdown")
+	public void reselectsInstitution() {
+		InstitutionCreation institute = context
+				.get(ContextConstants.INSTITUTION);
+		selectInstituteFromDrpDwn(institute.getInstitutionName() + " ("
+				+ institute.getInstitutionCode() + ")");
+
+	}
+
+	@When("user logs in again with the new user")
+	public void newUserLogsIn() {
+		UserCreation userCreation = context.get(ContextConstants.USER);
+		login(userCreation.getUserID(),
+				MapUtils.fnGetInputDataFromMap("Password"));
+	}
+
+	@When("the newly created institution is selected")
+	public void selectNewlyCreatedInstitution() {
+		InstitutionCreation institute = context
+				.get(ContextConstants.INSTITUTION);
+		loginFlows.selectNewInstitutionFlows(institute.getInstitutionName()
+				+ " [" + institute.getInstitutionCode() + "]");
 	}
 
 }

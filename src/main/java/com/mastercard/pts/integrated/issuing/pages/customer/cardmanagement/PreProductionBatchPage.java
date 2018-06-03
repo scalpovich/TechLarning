@@ -70,7 +70,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 
 	public void preproduction(String product, String batchNum) {
 		menuSubMenuPage.getPreProductionBatch().click();
-		SelectDropDownByText(productTypeDDwn, product);
+		selectDropDownByText(productTypeDDwn, product);
 		if (batchNum != null) {
 			enterText(batchNumberTxt, batchNum);
 		}
@@ -93,7 +93,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	public void processPreProductionBatch1(PreProductionBatch batch) {
 
 		waitForLoaderToDisappear();
-		SelectDropDownByText(productTypeDDwn, batch.getProductType());
+		selectDropDownByText(productTypeDDwn, batch.getProductType());
 		CustomUtils.ThreadDotSleep(8000);
 		logger.info(batch.getJobID());
 		enterText(sourceJobIdTxt, batch.getJobID());
@@ -113,7 +113,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	public void processPreProductionBatchNewApplication(PreProductionBatch batch) {
 
 		waitForLoaderToDisappear();
-		SelectDropDownByText(productTypeDDwn, batch.getProductType());
+		selectDropDownByText(productTypeDDwn, batch.getProductType());
 		CustomUtils.ThreadDotSleep(8000);
 		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
 		enterText(batchNumberTxt, batchNumber);
@@ -124,13 +124,13 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		SwitchToDefaultFrame();
 
 	}
-	
+
 	public void processPreProductionBatchNewApplicationForFileUpload(PreProductionBatch batch) {
         List<String>batchNumbers=context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
         /*for(int i=0;i<batchNumbers.size();i++)
         {*/
 		waitForLoaderToDisappear();
-		SelectDropDownByText(productTypeDDwn, batch.getProductType());
+		selectDropDownByText(productTypeDDwn, batch.getProductType());
 		SimulatorUtilities.wait(8000);
 		enterText(batchNumberTxt, batchNumbers.get(0));
 		ClickButton(searchBtn);
@@ -147,8 +147,8 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		verifySearchButton("Search");
 	}
 
-	public void selectProduct(DeviceCreation deviceCreation) {
-		selectByText(productTypeDDwn, deviceCreation.getProduct());
+	public void selectProduct(BulkDeviceRequestbatch bulkdeviceGenBatch) {
+		selectByText(productTypeDDwn, bulkdeviceGenBatch.getProduct());
 	}
 
 	public void enterBatchNumber(BulkDeviceRequestbatch bulkdeviceGenBatch) {
@@ -183,8 +183,9 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		clickWhenClickable(processSelectedBtn);
 	}
 
-	public void searchBulkPreProductionBatch(DeviceCreation deviceCreation, BulkDeviceRequestbatch bulkdeviceGenBatch) {
-		selectProduct(deviceCreation);
+	public void searchBulkPreProductionBatch(BulkDeviceRequestbatch bulkdeviceGenBatch) {
+		selectProduct(bulkdeviceGenBatch);
+		enterBatchNumber(bulkdeviceGenBatch);
 		enterSourceJobId(bulkdeviceGenBatch);
 		search();
 	}
@@ -213,20 +214,20 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		return strOutputMessage.replaceAll("[^\\d]", "").trim();
 
 	}
-	
-	 public void processPreProductionBatchNewDevice(PreProductionBatch batch) {
 
-			waitForLoaderToDisappear();
-       SelectDropDownByText(productTypeDDwn, batch.getProductType());
-        CustomUtils.ThreadDotSleep(8000);
-        Device device=context.get(ContextConstants.DEVICE);
-			enterText(batchNumberTxt,device.getBatchNumber() );
-			ClickButton(searchBtn);
-			ClickCheckBox(preProductionBatchRecordChkBx, true);
-			ClickButton(processSelectedBtn);
-			verifyOperationStatus();
-			SwitchToDefaultFrame();
-	 }
+	public void processPreProductionBatchNewDevice(PreProductionBatch batch) {
+
+		waitForLoaderToDisappear();
+		selectDropDownByText(productTypeDDwn, batch.getProductType());
+		CustomUtils.ThreadDotSleep(8000);
+		Device device = context.get(ContextConstants.DEVICE);
+		enterText(batchNumberTxt, device.getBatchNumber());
+		ClickButton(searchBtn);
+		ClickCheckBox(preProductionBatchRecordChkBx, true);
+		ClickButton(processSelectedBtn);
+		verifyOperationStatus();
+		SwitchToDefaultFrame();
+	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
