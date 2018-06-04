@@ -1011,7 +1011,9 @@ public class DevicePlanPage extends AbstractBasePage {
 	private void fillDevicePlanPage(DevicePlan devicePlan) {
 		selectIframeBaseDeviceEventBasedPlanDdwn(devicePlan.getBaseDeviceEventBasedPlan());
 		selectIframeBaseDeviceJoiningMemberShipPlanDdwn(devicePlan.getBaseDeviceJoiningMemberShipPlan());
-		selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
+		if (!devicePlan.getProductType().contains(ProductType.CREDIT)) {
+			selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
+		}
 		selectIframeTransactionLimitPlanDdwn(devicePlan.getTransactionLimitPlan());
 		clickIframeNextButton();
 	}

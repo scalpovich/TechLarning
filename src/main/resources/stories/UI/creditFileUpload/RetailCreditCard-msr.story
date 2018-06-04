@@ -3,13 +3,10 @@ Narrative:
 As a(n)  Customer portal user 
 I want to onborad credit customer using application upload 
 So that credit customer can get onboarded Corporate credit Card single wallet and use device for transaction
-
-Scenario: Verify system allows onboarding for new credit customer - Retail credit Card single wallet using application upload funcationality
 Meta:
-@CR
-@Scenario1_Retail_credit_Card_Single_wallet 
 @StoryName credit_msr_retail
 @FileUpload
+Scenario: Verify system allows onboarding for new credit customer - Retail credit Card single wallet using application upload funcationality
 
 Given user is logged in institution
 When User fills Statement Message Plan for credit product
