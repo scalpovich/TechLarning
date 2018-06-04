@@ -1025,11 +1025,11 @@ public class DevicePlanPage extends AbstractBasePage {
 		if ("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
 			if(devicePlan.getProductType().equalsIgnoreCase("Credit [C]"))
 			{
-				enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
 				if(devicePlan.getValidityOnInitialMonths().equals("Oct-22"))
 				{
 					devicePlan.setValidateonInitialMonths("10-2022");
 				}
+				enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
 				String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
 				devicePlan.setExpiryDate(dateInYYMM);
 				logger.info("Expiry date for device = {}",devicePlan.getExpiryDate());
