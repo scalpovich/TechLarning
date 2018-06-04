@@ -10,7 +10,6 @@ Meta:
 Scenario:creation of mastercard_individual_addon_primary_EMV Card credit device
 Meta:
 @UserCreatesNewCreditDevice
-
 Given setting json values in excel
 Given user is logged in institution
 When User fills Dedupe Plan
