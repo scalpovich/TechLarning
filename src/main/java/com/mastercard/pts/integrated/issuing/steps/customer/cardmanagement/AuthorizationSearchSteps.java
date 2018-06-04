@@ -46,6 +46,14 @@ public class AuthorizationSearchSteps {
 		assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),
 				Matchers.hasItems(txnFeePlan.getfixedTxnFees(), txnFeePlan.getFixedRateFee(), txnFeePlan.getBillingAmount()));
 	}
+	
+	@Then("verify fixed transaction fee applied on purchase transaction waived off")
+	public void veriyFixedTransactionFeePurchaseTransaction(){
+		Device device = context.get(ContextConstants.DEVICE);
+		TransactionFeePlan txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
+		assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),
+				Matchers.hasItems(txnFeePlan.getfixedTxnFees()));
+	}
 
 	@Then("verify rate transaction fee applied on purchase transaction")
 	public void verifyRateTransactiOnFeeonPurchaseTransaction() {
