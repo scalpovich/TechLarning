@@ -513,6 +513,8 @@ public class FileCreation {
 	}
 	public String createApplicationUploadFile(String INSTITUTION_CODE, String customerType, String cardType) throws Exception {
 		DeviceRange deviceRange=context.get(ContextConstants.DEVICE_RANGE);
+		DevicePlan devicePlan=context.get(ContextConstants.DEVICE_PLAN);
+		Program program=context.get(ContextConstants.PROGRAM);
 		String branch=deviceRange.getBranch();
 		String branchCode=branch.substring(branch.indexOf("["), branch.length()-1);
 		int totalRecords = 0;
