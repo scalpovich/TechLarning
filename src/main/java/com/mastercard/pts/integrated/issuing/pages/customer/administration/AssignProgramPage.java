@@ -20,7 +20,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class AssignProgramPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(AssignProductPage.class);
+			.getLogger(AssignProgramPage.class);
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "programCode:input:dropdowncomponent")
 	private MCWebElement programDDwn;
