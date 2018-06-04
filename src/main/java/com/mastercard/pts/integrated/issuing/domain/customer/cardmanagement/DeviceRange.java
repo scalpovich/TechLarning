@@ -56,6 +56,7 @@ public class DeviceRange {
 		range.setToDeviceNumber(deviceRange[1]);
 		range.setIssuerBin(provider.getString(ISSUER_BIN));
 		range.setBranch(provider.getString(BRANCH));
+		
 		return range;
 	}
 	

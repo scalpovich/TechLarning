@@ -27,6 +27,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StatementMessageDetails;
@@ -73,9 +74,6 @@ public class FileCreation {
 
 	@Autowired
 	private TestContext context;
-	
-	@Autowired
-	StatementMessageDetails statementMessageDetails;
 
 	private static final String INSTITUTION_CODE = "INSTITUTION_CODE";
 	private static final String BILLING_AMOUNT = "BILLING_AMOUNT";
@@ -514,7 +512,8 @@ public class FileCreation {
 		return fileName;
 	}
 	public String createApplicationUploadFile(String INSTITUTION_CODE, String customerType, String cardType) throws Exception {
-		String branch=statementMessageDetails.getBranch();
+		DeviceRange deviceRange=context.get(ContextConstants.DEVICE_RANGE);
+		String branch=deviceRange.getBranch();
 		String branchCode=branch.substring(branch.indexOf("["), branch.length()-1);
 		int totalRecords = 0;
 		String FileName = "";

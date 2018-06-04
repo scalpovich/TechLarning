@@ -1018,6 +1018,7 @@ public class ProgramSetupSteps {
 		DeviceRange deviceRange;
 		if (ProductType.CREDIT.toLowerCase().contains(type)) {
 			deviceRange = DeviceRange.createWithProvider(dataProvider, provider, type);
+			context.put(ContextConstants.DEVICE_RANGE, deviceRange);
 		} else {
 			deviceRange = DeviceRange.createWithProvider(dataProvider, type);
 		}
