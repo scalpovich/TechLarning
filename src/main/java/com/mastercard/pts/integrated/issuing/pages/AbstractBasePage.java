@@ -1283,7 +1283,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		});
 	}
 
-	public void SwitchToDefaultFrame() {
+	public void switchToDefaultFrame() {
 		getFinder().getWebDriver().switchTo().defaultContent();
 	}
 
@@ -1549,7 +1549,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public String editingInnerFrameValue() {
 		clickWhenClickable(editRecord.getElements().get(editSize() - 1));
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe("Plan Detail");
 		WebElementUtils.enterText(innerDescriptionTxt, "");
 		WebElementUtils.enterText(innerDescriptionTxt, CustomUtils.randomNumbers(5));

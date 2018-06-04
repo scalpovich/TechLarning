@@ -273,7 +273,7 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 
 	public void addEachDetail(TransactionLimitPlan transactionLimitPlanDataObject) {
 		try {
-			switchToIframe(Constants.ADD_TRANSACTION_LIMIT_PLAN_FRAME, 1);
+			switchToIframe(Constants.ADD_TRANSACTION_LIMIT_PLAN_FRAME);
 		} catch (TimeoutException te) {
 			logger.debug(te.getMessage(), te);
 		}

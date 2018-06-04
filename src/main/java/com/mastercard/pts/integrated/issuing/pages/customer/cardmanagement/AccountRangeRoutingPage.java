@@ -66,28 +66,28 @@ public class AccountRangeRoutingPage extends AbstractBasePage {
 		clickWhenClickable(saveBtn);
 		waitForLoaderToDisappear();	
 		if (!publishErrorOnPage()) {			
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 			verifyNewChannelRoutingSuccess();
 		} else {
 			logger.info("Error in record Addition");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 
 		}
 		
 		
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		verifyNewChannelRoutingSuccess();
 
 	}
 	public void verifyNewChannelRoutingSuccess() {
 		if (!publishErrorOnPage()) {
 			logger.info("Record Added Successfully.");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in record Addition");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 
 		}
 	}
