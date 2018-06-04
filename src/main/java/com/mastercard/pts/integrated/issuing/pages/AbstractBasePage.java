@@ -960,7 +960,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			logger.info("Loader is present");
 			return true;
 		} catch (Exception e) {
-			logger.error("Loader is not present : {} ", e);
+			logger.error("Loader is not present ");
 			return false;
 		}
 	}
