@@ -11,17 +11,19 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.administration.A
 
 @Component
 public class AssignProgramStep {
-	
+
 	@Autowired
 	AssignProgramWorkflow assignProgramWorkflow;
-	
+
 	@Autowired
 	private TestContext context;
-	
+
 
 	@When("user assign service code to program")
 	public void assignServiceCodeToProgram(){
-		Program	program = context.get(ContextConstants.PROGRAM);
-		assignProgramWorkflow.assignServiceCodeToProgram(program);
+		if(System.getProperty("env").equalsIgnoreCase("stageSA")){
+			Program	program = context.get(ContextConstants.PROGRAM);
+			assignProgramWorkflow.assignServiceCodeToProgram(program);
+		}
 	}
 }
