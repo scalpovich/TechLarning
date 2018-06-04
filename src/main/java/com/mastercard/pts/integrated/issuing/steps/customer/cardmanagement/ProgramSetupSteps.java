@@ -831,6 +831,27 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.PROGRAM, program);
 	}
 
+	@When("User fills Program section for $type product for FileUpload")
+	public void whenUserFillsProgramSectionForFileUpload(String type) {
+		program = Program.createWithProvider(dataProvider, provider);
+		program.setProduct(ProductType.fromShortName(type));
+		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
+			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
+			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+		}
+		program.setFirstWalletPlan(walletPlan.buildDescriptionAndCode());
+		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
+
+		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
+		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
+
+		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID))
+			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+
+		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
+		context.put(ContextConstants.PROGRAM, program);
+	}
+	
 	@When("User fills Program section for $type product and program $programType")
 	public void userFillsProgramSection(String type, String programType) {
 		program = Program.createWithProvider(dataProvider, provider);

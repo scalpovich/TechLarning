@@ -25,7 +25,7 @@ And User fills Credit Plan
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product
 And User fills MCC Rules for credit product
-And User fills Program section for credit product
+And User fills Program section for credit product for FileUpload
 When User fills Device Range section for credit product
 When user creates Application Upload Credit batch file and upload it on server for Corporate for credit
 When user verifies the credit application device for fileUpload
