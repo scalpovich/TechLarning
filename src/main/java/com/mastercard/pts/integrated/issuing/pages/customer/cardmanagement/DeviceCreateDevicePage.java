@@ -15,7 +15,9 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.SubApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Address;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
@@ -338,7 +340,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		SimulatorUtilities.wait(500);
 		if(device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT))
 		{
-		if(device.getApplicationType().contains("Supplementary")||device.getApplicationType().contains("Add-on Device")/*&& device.getSubApplicationType().contains("Existing")*/)
+		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)/*&& device.getSubApplicationType().contains("Existing")*/)
 		{
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
 		}
@@ -369,7 +371,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	}
 
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
-		if(device.getApplicationType().contains("Supplementary")||device.getApplicationType().contains("Add-on Device")&& device.getSubApplicationType().contains("Existing"))
+		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT))
 		{
 			if(!System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)){
 				clickNextButton();
@@ -398,10 +400,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 		fillAddress(device);
 		
-		if (!System.getProperty("env").equalsIgnoreCase("Automation")) {
 		fillEmploymentDetails(device);
 		selectProfessionByIndex(1);
-		}
+		
 		clickNextButton();
 		// Bank Details applicable only for Credit type product
 		clickNextButton();
