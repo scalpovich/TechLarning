@@ -3,7 +3,7 @@ debit msr retail debit card pinless MMSR Transaction
 Narrative:
 In order to provide to client easy-to-use payment method for e-commerce retail
 As an issuer
-I want to create a MSR Retail Debit debit card for client
+I want to create a MSR Retail Debit card for client
 
 Meta:
 @StoryName d_msr_retail_ASI
@@ -22,6 +22,7 @@ When processes pre-production batch for debit
 When processes device production batch for debit
 Then device has "normal" status
 Then user activates device through helpdesk
+Then embossing file batch was generated in correct format
 And user sign out from customer portal
 
 Scenario: Perform ASI_PAYMENT_WITHOUT_AMOUNT Authorization transaction
@@ -30,5 +31,5 @@ When perform an ASI_PAYMENT_WITHOUT_AMOUNT MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
-And search Account Status authorization and verify 000-Successful status
+And search Account Status authorization and verify 085-Successful status
 And user sign out from customer portal

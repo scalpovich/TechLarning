@@ -17,35 +17,11 @@ public class SurchargePlanWorkflows {
 
 	public void createSurchargePlanWithDetails(SurchargePlan plan) {
 		page = navigator.navigateToPage(SurchargePlanPage.class);
-		page.addSurchargePlan();
-		page.enterSurchargePlanCode(plan);
-		page.enterDescription(plan);
-		page.selectCurrency(plan);
-		page.selectSurchargeSource(plan);
-		page.addDetails();
-		addSurchargePlanDetails(plan);
+		page.createSurchargePlanWithDetails(plan);
 	}
 
-	public void addSurchargePlanDetails(SurchargePlan plan) {
-		page.switchToDefaultFrame();
-		page.addSurchargePlanDetail();
-		page.switchToDefaultFrame();
-		page.switchToSurchargePlanDetailFrame();
-		page.selectInterchange(plan);
-		page.selectMCG(plan);
-		page.pickEffectiveDate(plan);
-		page.pickEndDate(plan);
-		page.enterFeeTransactionDescription(plan);
-		page.enterSurchargeRate(plan);
-		page.enterFixedSurchargeAmount(plan);
-		page.enterMinSurchargeAmount(plan);
-		page.enterMaxSurchargeAmount(plan);
-		page.save();
-		page.saveMain();
-	}
-	
 	public String getFeedbackText() {
-		page.switchToDefaultFrame();
+		page.SwitchToDefaultFrame();
 		
 		return page.getFeedbackText();
 	}

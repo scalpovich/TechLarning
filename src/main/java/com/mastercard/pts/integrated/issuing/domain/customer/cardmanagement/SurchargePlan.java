@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
@@ -10,8 +11,8 @@ public class SurchargePlan {
 	private static final String SP_SURCHARGE_SOURCE = "Surcharge Source";
 	private static final String SPD_INTERCHANGE = "Interchange";
 	private static final String SPD_MCG = "MCG";
-	private static final String SPD_EFFECTIVE_DATE = "Effective Date";
-	private static final String SPD_END_DATE = "End Date";
+	private static final String EFFECTIVE_DATE = "Effective Date";
+	private static final String END_DATE = "End Date";
 	private static final String SPD_FEE_TRANSAC_DESC = "Fee Transaction Description";
 	private static final String SPD_SURCHARGE_RATE = "Surcharge Rate(%)";
 	private static final String SPD_FIXED_SURCHARGE_AMT = "Fixed Surcharge Amount";
@@ -32,21 +33,21 @@ public class SurchargePlan {
 	private String minSurchargeAmt;
 	private String maxSurchargeAmt;
 
-	public static SurchargePlan getSurchargePlanData() {
+	public static SurchargePlan getSurchargePlanData(KeyValueProvider provider) {
 		SurchargePlan plan = new SurchargePlan();
 		plan.setSurchargePlanCode(CustomUtils.randomAlphaNumeric(5).toUpperCase());
-		plan.setDescription(MapUtils.fnGetInputDataFromMap(SP_DESCRIPTION));
-		plan.setCurrency(MapUtils.fnGetInputDataFromMap(SP_CURRENCY));
-		plan.setSurchargeSource(MapUtils.fnGetInputDataFromMap(SP_SURCHARGE_SOURCE));
-		plan.setInterchange(MapUtils.fnGetInputDataFromMap(SPD_INTERCHANGE));
-		plan.setMcg(MapUtils.fnGetInputDataFromMap(SPD_MCG));
-		plan.setEffectiveDate(MapUtils.fnGetInputDataFromMap(SPD_EFFECTIVE_DATE));
-		plan.setEndDate(MapUtils.fnGetInputDataFromMap(SPD_END_DATE));
-		plan.setFeeTransactionDesc(MapUtils.fnGetInputDataFromMap(SPD_FEE_TRANSAC_DESC));
-		plan.setSurchargeRate(MapUtils.fnGetInputDataFromMap(SPD_SURCHARGE_RATE));
-		plan.setFixedSurchargeAmt(MapUtils.fnGetInputDataFromMap(SPD_FIXED_SURCHARGE_AMT));
-		plan.setMinSurchargeAmt(MapUtils.fnGetInputDataFromMap(SPD_MIN_SURCHARGE_AMT));
-		plan.setMaxSurchargeAmt(MapUtils.fnGetInputDataFromMap(SPD_MAX_SURCHARGE_AMT));
+		plan.setDescription(provider.getString(SP_DESCRIPTION));
+		plan.setCurrency(provider.getString(SP_CURRENCY));
+		plan.setSurchargeSource(provider.getString(SP_SURCHARGE_SOURCE));
+		plan.setInterchange(provider.getString(SPD_INTERCHANGE));
+		plan.setMcg(provider.getString(SPD_MCG));
+		plan.setEffectiveDate(provider.getString(EFFECTIVE_DATE));
+		plan.setEndDate(provider.getString(END_DATE));
+		plan.setFeeTransactionDesc(provider.getString(SPD_FEE_TRANSAC_DESC));
+		plan.setSurchargeRate(provider.getString(SPD_SURCHARGE_RATE));
+		plan.setFixedSurchargeAmt(provider.getString(SPD_FIXED_SURCHARGE_AMT));
+		plan.setMinSurchargeAmt(provider.getString(SPD_MIN_SURCHARGE_AMT));
+		plan.setMaxSurchargeAmt(provider.getString(SPD_MAX_SURCHARGE_AMT));
 		
 		return plan;
 	}

@@ -9,7 +9,8 @@ Meta:
 @StoryName p_msr_retail_gen_purpose
 @oldReferenceSheet_S203707
 @CRCardsWithAuthorization
-@MSRWithPin
+@MSRWithPinIntTrx
+@InternationalTrx
 
 Scenario: Set up prepaid msr retail general purpose card
 Given user is logged in institution

@@ -29,6 +29,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.seleniumhq.selenium.fluent.FluentWebElement;
 
 import com.google.common.collect.Iterators;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementFinder.ByNativeXPath;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -104,9 +105,11 @@ public class WebElementUtils {
 		retryUntilNoErrors(() -> new Select(asWebElement(element)).selectByIndex(value));
 	}
 
+	@SuppressWarnings("deprecation")
 	public static void selectDropDownByVisibleText(MCWebElement element, String visibleText) {
 		retryUntilNoErrors(() -> new Select(asWebElement(element)).selectByVisibleText(visibleText));
-		SimulatorUtilities.wait(2000);
+		SimulatorUtilities.wait(1000);
+		//waitForWicket(TestContext.getDriver());
 	}
 
 	public static void selectDDByVisibleText(MCWebElement element, String visibleText) {
@@ -154,7 +157,7 @@ public class WebElementUtils {
 		try {
 			switchToDefaultContent(driver);
 			new WebDriverWait(driver, timeoutInSec).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator));
-//			addWicketAjaxListeners(driver);
+			// addWicketAjaxListeners(driver);
 			action.run();
 		} finally {
 			if (currentFrame == null) {
@@ -327,5 +330,10 @@ public class WebElementUtils {
 	public static void scrollToElement(WebDriver driver, WebElement element) {
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
 
+	}
+
+	public static void selectRadioBtn(MCWebElement radioButton) {
+		if (!radioButton.isSelected())
+			radioButton.click();
 	}
 }

@@ -18,6 +18,7 @@ Meta:
 @testDataFileName testdata
 @sheetName Institute
 @PrepaidInstitutionCreation
+@scenario12
 
 Given login to bank as a Bankadmin
 When user enters details to create new Prepaid Institution
@@ -29,6 +30,7 @@ Meta:
 @testDataFileName testdata
 @sheetName Institute
 @PrepaidUserCreation
+@scenario12
 
 Given login to bank as a Bankadmin
 When user enter details to create new user
@@ -48,7 +50,7 @@ Given login to bank as a Bankadmin
 When user enters details to create new Debit Institution
 Then user should be able to create new institute
 
-Scenario:4 New user creation prepaid
+Scenario:4 New user creation Debit
 Meta:
 @TCName TCInstituteCreationDC
 @testDataFileName testdata
@@ -91,7 +93,6 @@ Meta:
 @testDataFileName testdata
 @sheetName Institute
 @DebitPrepaidInstitutionCreation
-
 Given login to bank as a Bankadmin
 When user enters details to create new Debit-Prepaid Institution
 Then user should be able to create new institute
@@ -102,7 +103,6 @@ Meta:
 @testDataFileName testdata
 @sheetName Institute
 @DebitPrepaidUserCreation
-
 Given login to bank as a Bankadmin
 When user enter details to create new user
 Then user should be able to create new user
@@ -160,7 +160,7 @@ Scenario:13 New Institution creation All Prepaid Credit Debit
 
 Meta:
 @TCName TCInstituteCreationAll
-@testDataFileName testdata
+@testDataFileName Testdata
 @sheetName Institute
 @InstitutionCreationWithAll
 
@@ -175,7 +175,6 @@ Meta:
 @testDataFileName testdata
 @sheetName Institute
 @UserCreationWithAll
-
 Given login to bank as a Bankadmin
 When user enter details to create new user
 Then user should be able to create new user

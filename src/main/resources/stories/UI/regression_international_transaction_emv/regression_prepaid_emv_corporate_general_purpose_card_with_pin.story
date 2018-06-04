@@ -9,7 +9,8 @@ Meta:
 @StoryName p_emv_corp_general_purpose
 @AuthorizationRegression
 @AuthorizationRegressionGroup2
-@EMVWithPin
+@EMVWithPinIntTrx
+@InternationalTrx
 
 Scenario: Setup - prepaid emv corporate general purpose card
 Given user is logged in institution

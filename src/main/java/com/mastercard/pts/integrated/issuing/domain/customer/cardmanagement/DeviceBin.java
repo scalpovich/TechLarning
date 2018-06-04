@@ -5,19 +5,20 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 
 @Component
-public class DeviceBin {
+public class DeviceBin implements HasCodeAndDescription {
 
 	private String interchange;
 	private String productType;
 	private String issuerBin;
 	private String binType;
-	private String remarks;
 	private String program;
 	private String deviceplan;
+	private String issuerBinCode;
+	private String description;
 
 	public String getProgram() {
 		return program;
@@ -35,13 +36,14 @@ public class DeviceBin {
 		this.deviceplan = deviceplan;
 	}
 
-	public DeviceBin(String interchange, String productType, String issuerBin, String binType, String remarks) {
+	public DeviceBin(String interchange, String productType, String issuerBin,
+			String binType, String remarks) {
 		super();
 		this.interchange = interchange;
 		this.productType = productType;
 		this.issuerBin = issuerBin;
 		this.binType = binType;
-		this.remarks = remarks;
+		this.description = remarks;
 	}
 
 	public DeviceBin() {
@@ -80,16 +82,8 @@ public class DeviceBin {
 		this.binType = binType;
 	}
 
-	public String getRemarks() {
-		return remarks;
-	}
-
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
-	}
-
-	public void devicebinDataProvider() {
-		setRemarks(CustomUtils.randomAlphaNumeric(5));
+	public void devicebinDataProvider(String network, String productType) {
+		setDescription(network + " " + productType);
 
 	}
 
@@ -98,4 +92,21 @@ public class DeviceBin {
 		}, "DeviceBin");
 	}
 
+	@Override
+	public String getCode() {
+		return issuerBinCode;
+	}
+
+	public void setCode(String issuerBinCode) {
+		this.issuerBinCode = issuerBinCode;
+	}
+
+	@Override
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }

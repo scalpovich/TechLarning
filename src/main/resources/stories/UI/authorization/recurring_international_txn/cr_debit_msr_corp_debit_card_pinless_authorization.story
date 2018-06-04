@@ -1,4 +1,4 @@
-debit msr corporate card setup
+debit msr corporate card recurring international transactions
 
 Narrative:
 In order to provide to client easy-to-use payment method for e-commerce retail

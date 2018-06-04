@@ -1,8 +1,8 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import java.util.HashMap;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.EventsAndAlerts;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -50,6 +51,48 @@ public class EventsAndAlertsPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Search']")
 	private MCWebElement searchBtn;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "eventCode:input:inputTextField")
+	private MCWebElement txtEventID;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "eventDescription:input:inputTextField")
+	private MCWebElement txtEventName;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "eventProduct:input:dropdowncomponent")
+	private MCWebElement productDdwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "emailFlag:checkBoxComponent")
+	private MCWebElement chkBxEmailAlert;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "smsFlag:checkBoxComponent")
+	private MCWebElement chkBxSMSAlert;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "letterFlag:checkBoxComponent")
+	private MCWebElement chkBxLetterAlert;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "emailRecipients:multiChoice")
+	private MCWebElement mutliEmailRecipients;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "smsRecipients:multiChoice")
+	private MCWebElement mutliSMSRecipients;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "letterRecipients:multiChoice")
+	private MCWebElement mutliLetterRecipients;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "communicationLanguage:input:dropdowncomponent")
+	private MCWebElement languageDdwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "emailSubjectData:input:textAreaComponent")
+	private MCWebElement txtEmailSubject;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "emailBodyData:input:textAreaComponent")
+	private MCWebElement txtEmailMessageBody;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "smsBodyData:input:textAreaComponent")
+	private MCWebElement txtSMSMessageBody;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "emailTemplateId:input:inputTextField")
+	private MCWebElement txtTemplateID;
+
 	public void searchEventForProductType(EventsAndAlerts eventAlerts) {
 		selectDropDownByText(product, eventAlerts.getProductType());
 	}
@@ -84,6 +127,98 @@ public class EventsAndAlertsPage extends AbstractBasePage {
 		verifyUiOperation("Add Event");
 	}
 	
+	public void addEventAndAlerts(EventsAndAlerts eventsAndAlerts) {
+		clickAddNewButton();
+		runWithinPopup("Add Event", () -> {
+			enterEventID(eventsAndAlerts.getEventID());
+			enterEventName(eventsAndAlerts.getEventName());
+			selectProduct(eventsAndAlerts.getProductType());
+			checkEmailAlert();
+			checkSMSAlert();
+			selectEmailRecipients(eventsAndAlerts.getEmailRecipients());
+			selectSMSRecipients(eventsAndAlerts.getsMSRecipients());
+			clickAddDetailsButton();
+			addDetails(eventsAndAlerts);
+			WebElementUtils.scrollDown(driver(), 0, 250);
+			clickSaveButton();
+		});
+
+	}
+
+	public void enterEventID(String eventID) {
+		enterText(txtEventID, eventID);
+	}
+
+	public void enterEventName(String eventName) {
+		enterText(txtEventName, eventName);
+	}
+
+	public void selectProduct(String product) {
+		selectByVisibleText(productDdwn, product);
+	}
+
+	public void checkEmailAlert() {
+		if (chkBxEmailAlert.isEnabled())
+			ClickCheckBox(chkBxEmailAlert, true);
+
+	}
+
+	public void checkSMSAlert() {
+		if (chkBxSMSAlert.isEnabled())
+			ClickCheckBox(chkBxSMSAlert, true);
+
+	}
+
+	public void checkLetterAlert() {
+		if (chkBxLetterAlert.isEnabled())
+			ClickCheckBox(chkBxLetterAlert, true);
+	}
+
+	public void selectEmailRecipients(String emailRecipient) {
+		selectByVisibleText(mutliEmailRecipients, emailRecipient);
+	}
+
+	public void selectSMSRecipients(String SMSRecipient) {
+		selectByVisibleText(mutliSMSRecipients, SMSRecipient);
+	}
+
+	public void selectLetterRecipients(String letterRecipient) {
+		selectByVisibleText(mutliLetterRecipients, letterRecipient);
+	}
+
+	public void selectLanguage(String language) {
+		selectByVisibleText(languageDdwn, language);
+	}
+
+	public void enterEmailSubject(String emailSubject) {
+		enterText(txtEmailSubject, emailSubject);
+	}
+
+	public void enterEmailMessageBody(String messageBody) {
+		enterText(txtEmailMessageBody, messageBody);
+	}
+
+	public void enterSMSBody(String sMSBody) {
+		enterText(txtSMSMessageBody, sMSBody);
+	}
+
+	public void enterTemplateID(String templateID) {
+		enterText(txtTemplateID, templateID);
+	}
+
+	public void addDetails(EventsAndAlerts eventsAndAlerts) {
+		clickAddNewButton();
+		runWithinPopup("Add Event Rules",
+				() -> {
+			enterTemplateID(eventsAndAlerts.getTemplateID());
+			selectLanguage(eventsAndAlerts.getLanguage());
+			enterEmailSubject(eventsAndAlerts.getEmailSubject());
+			enterEmailMessageBody(eventsAndAlerts.getEmailMessageBody());
+			enterSMSBody(eventsAndAlerts.getsMSMessageBody());
+					clickSaveButton();
+				});
+	}
+
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(

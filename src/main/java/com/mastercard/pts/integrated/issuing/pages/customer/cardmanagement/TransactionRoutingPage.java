@@ -9,8 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionRoutingPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -35,12 +37,47 @@ public class TransactionRoutingPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement transactionType;
+	
+	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
+	private MCWebElement addplanBtn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "svrMsg:input:dropdowncomponent")
+	private MCWebElement messageTypeDdwn;	
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "svrProcessingCod:input:dropdowncomponent")
+	private MCWebElement transactionTypeDdwn;	
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "svrRoutingCode:input:dropdowncomponent")
+	private MCWebElement routingCodeDdwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "svrServiceState:input:dropdowncomponent")
+	private MCWebElement actionDdwn;	
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
+	private MCWebElement saveBtn;
 
 	public void verifyUiOperationStatus() {
 		logger.info("Transaction Routing");
 		verifyUiOperation("Add Transaction Routing");
 	}
 	
+	public void clickAddcurrency(){
+		clickWhenClickable(addplanBtn);
+		switchToIframe(Constants.ADD_TRANSACTION_ROUTING);
+	}
+	
+	
+	public void addRoutingDetails(TransactionRoutingPlan transRoutingPlan){
+		selectByVisibleText(messageTypeDdwn,transRoutingPlan.getMessageTypeDdwn());
+		selectByVisibleText(transactionTypeDdwn,transRoutingPlan.getTransactionTypeDdwn());	
+		selectByVisibleText(routingCodeDdwn,transRoutingPlan.getRoutingCodeDdwn());
+		selectByVisibleText(actionDdwn,transRoutingPlan.getActionDdwn());
+		clickWhenClickable(saveBtn);
+		waitForLoaderToDisappear();
+		
+		
+	}
+			
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(

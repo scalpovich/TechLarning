@@ -192,5 +192,11 @@ public class DeviceRange {
 		return devicerange;
 
 	}
+	
+	public String getIssuerBinCode(String issuerBin){
+		issuerBin =issuerBin.substring(issuerBin.indexOf("[") + 1);
+		issuerBin = issuerBin.substring(0, issuerBin.indexOf("]"));
+		return issuerBin;
+	}
 
 }

@@ -8,6 +8,7 @@ I want to authorize Pin Change transactions for debit emv retail debit card
 Meta:
 @StoryName d_emv_corp
 @emvpinchange
+@SanitySuite
 
 Scenario: Set up program for debit emv corporate card and perform Pin Change operation
 Given user is logged in institution

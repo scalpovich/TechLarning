@@ -26,7 +26,7 @@ public class DataCreationSteps extends AbstractBaseFlows {
 	final Logger logger = LoggerFactory.getLogger(DataCreationSteps.class);
 
 	@Then("user should be able to create new Institution")
-	public void createNewInstituion() {
+	public void createNewInstitution() {
 		logger.info("user should be able to create new Institution");
 		dataCreationFlows.createInstitution();
 

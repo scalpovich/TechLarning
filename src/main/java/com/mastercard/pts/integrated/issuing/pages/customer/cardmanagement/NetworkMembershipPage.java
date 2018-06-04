@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import net.thucydides.core.annotations.findby.By;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -22,8 +24,6 @@ import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
-
-import net.thucydides.core.annotations.findby.By;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
@@ -54,10 +54,10 @@ public class NetworkMembershipPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addNetworkMembershipBtn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:1:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:1:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement InterchangeDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:1:cols:nextCol:colspanMarkup:inputField:input:inputTextField")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:1:cols:colspanMarkup:inputField:input:inputTextField")
 	private MCWebElement PresentmentTimeLimitTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:2:cols:colspanMarkup:inputField:input:dropdowncomponent")
@@ -120,7 +120,7 @@ public class NetworkMembershipPage extends AbstractBasePage {
 	}
 
 	public void selectSettlementCurrency(NetworkMembership ntk) {
-		selectByVisibleText(SettlementCurrencyDDwn, ntk.getPresentmentTimeLimitDays());
+		selectByVisibleText(SettlementCurrencyDDwn, ntk.getsettlementCurrency());
 	}
 
 	public void clickSaveBtn() {

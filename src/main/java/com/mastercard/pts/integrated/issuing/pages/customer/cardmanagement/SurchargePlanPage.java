@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -20,9 +21,7 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP, CardManagementNav.L2_SURCHARGE_PLAN })
-
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_INSTITUTION_PARAMETER_SETUP, CardManagementNav.L2_SURCHARGE_PLAN })
 public class SurchargePlanPage extends AbstractBasePage {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SurchargePlanPage.class);
@@ -86,17 +85,19 @@ public class SurchargePlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement saveBtn;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.feedbackPanelINFO")
 	private MCWebElement feedbackPanel;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='surchargeFeePlanCode']")
 	private MCWebElement planCodeSearchTxtBx;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "td.norecords-td span.norecords")
 	private MCWebElement noRecordsCell;
 
 	private String surchargePlanDetailsIframeId = "_wicket_window_3";
+
+	private int MCG_CODE_INDEX = 2;
 
 	public void verifyUiOperationStatus() {
 		LOGGER.info("Surcharge Plan");
@@ -105,15 +106,14 @@ public class SurchargePlanPage extends AbstractBasePage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.elementToBeClickable(surchargePlanCodeTxtBx),
-				WebElementUtils.elementToBeClickable(descriptionTxtBx));
+		return Arrays.asList(WebElementUtils.elementToBeClickable(surchargePlanCodeTxtBx), WebElementUtils.elementToBeClickable(descriptionTxtBx));
 	}
 
 	public void addSurchargePlan() {
 		ClickButton(addBtn);
 		switchToSurchargePlanFrame();
 	}
-	
+
 	public void switchToSurchargePlanFrame() {
 		switchToIframe(ADD_SURCHARGE_PLAN_FRAME);
 	}
@@ -171,7 +171,12 @@ public class SurchargePlanPage extends AbstractBasePage {
 	}
 
 	public void selectMCG(SurchargePlan plan) {
-		selectDropDownByText(mcgDDwn, plan.getMcg());
+		try {
+			selectDropDownByText(mcgDDwn, plan.getMcg());
+		} catch (WebDriverException | NullPointerException e) {
+			LOGGER.error("Not able to identify MCG plan populated from Excel Sheet");
+			selectDropDownByIndex(mcgDDwn, MCG_CODE_INDEX);
+		}
 	}
 
 	public void pickEffectiveDate(SurchargePlan plan) {
@@ -205,22 +210,47 @@ public class SurchargePlanPage extends AbstractBasePage {
 	public void save() {
 		ClickButton(saveBtn);
 	}
-		
+
 	public void enterPlanCodeInSearchBox(SurchargePlan plan) {
 		enterValueinTextBox(planCodeSearchTxtBx, plan.getSurchargePlanCode());
 	}
-	
+
 	public void saveMain() {
-		switchToDefaultFrame();
+		SwitchToDefaultFrame();
 		switchToSurchargePlanFrame();
 		ClickButton(saveBtn);
 	}
-	
+
 	public String getFeedbackText() {
 		return feedbackPanel.getText();
 	}
-	
+
 	public Boolean isNoRecordsFoundInTableView() {
 		return isNoRecordsFoundInTable();
 	}
+
+	public void createSurchargePlanWithDetails(SurchargePlan plan) {
+		clickAddNewButton();
+		runWithinPopup(ADD_SURCHARGE_PLAN_FRAME, () -> {
+			enterSurchargePlanCode(plan);
+			enterDescription(plan);
+			selectCurrency(plan);
+			selectSurchargeSource(plan);
+			addDetails();
+			clickAddNewButton();
+		});
+		switchToIframe(ADD_SURCHARGE_PLAN_DETAIL_FRAME);
+		selectInterchange(plan);
+		selectMCG(plan);
+		pickEffectiveDate(plan);
+		pickEndDate(plan);
+		enterFeeTransactionDescription(plan);
+		enterSurchargeRate(plan);
+		enterFixedSurchargeAmount(plan);
+		enterMinSurchargeAmount(plan);
+		enterMaxSurchargeAmount(plan);
+		save();
+		saveMain();
+	}
+
 }

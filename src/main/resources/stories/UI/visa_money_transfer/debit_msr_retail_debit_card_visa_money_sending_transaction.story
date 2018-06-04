@@ -7,6 +7,7 @@ I want to create an magnetic stripe debit card and perform visa money transfer r
 
 Meta:
 @StoryName d_visa_msr_retail
+@SanitySuite
 
 Scenario: Set up debit msr retail gift card from another institute
 Meta:

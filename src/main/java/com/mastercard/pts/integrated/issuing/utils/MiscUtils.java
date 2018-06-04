@@ -179,4 +179,9 @@ public class MiscUtils {
 	public static String toString(Object object) {
 		return ReflectionToStringBuilder.toString(object, ToStringStyle.MULTI_LINE_STYLE);
 	}
+	
+	public static String getEnvironment() {
+		String env = System.getProperty("env").toString();
+		return env;
+	}
 }

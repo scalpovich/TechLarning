@@ -33,6 +33,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,9 +43,9 @@ import org.springframework.beans.factory.annotation.Value;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -88,6 +89,14 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public static final String ACTUAL_RESULT_LABEL = " | Actual Result : ";
 
+	public static final String ENTITY_TYPE_USER = "User [U]";
+
+	public static final String ENTITY_TYPE_ROLE = "Role [R]";
+
+	public static final By ENTITY_ID = By.name("searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent");
+
+	public static final String PRIVILEGES_TABS = "//a[contains(text(),'%s')]";
+
 	private static final Logger logger = LoggerFactory.getLogger(AbstractBasePage.class);
 
 	public static final LocalDate futureDate = LocalDate.now().plusDays(100);
@@ -95,6 +104,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public static final LocalDate futureEndDate = LocalDate.now().plusDays(150);
 
 	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
+
+	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid transaction type - ";
 
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -250,11 +261,21 @@ public abstract class AbstractBasePage extends AbstractPage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers' and @class!='navigation'][1]/td[2]/span")
 	private MCWebElement deviceNumberFetch;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
+	private MCWebElement entityTypeDdwn;
+
+	@PageElement(findBy = FindBy.ID, valueToFind = "institution_selection")
+	private MCWebElement instituteSelectionDrpDwn;
+
+	private String instituteSelectionVal = "//div[@id='institution_selector']//li/a[contains(text(),'%s')]";
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview td:first-child>span>a>span")
 	private MCWebElements firstElementOfTable;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview tr.even a>img[alt='Delete Record'],table.dataview tr.odd a>img[alt='Delete Record']")
 	private MCWebElements deleteAddedRecordsIcon;
+
+	private String ERROR_XPATH = ".//div[@class='ketchup-error-container-alt']/ol/li";
 
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -345,7 +366,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickWhenClickable(searchButtonElement);
 	}
 
-	protected Boolean isNoRecordsFoundInTable() {
+	public Boolean isNoRecordsFoundInTable() {
 		try {
 			return driver().findElement(By.cssSelector(".norecords")).isDisplayed();
 		} catch (NoSuchElementException e) {
@@ -572,7 +593,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void verifyRecordMarkedForUpdationStatusSuccess() {
-		SimulatorUtilities.wait(4000);
 		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
 	}
@@ -625,9 +645,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void waitAndSearchForRecordToExist() {
 		waitAndSearchForRecordToAppear();
-		Device device = context.get(ContextConstants.DEVICE);
-		device.setDeviceNumber(deviceNumberFetch.getText());
-		context.put(ContextConstants.DEVICE, device);
+		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
 		selectFirstRecord();
 		clickProcessSelectedButton();
 	}
@@ -845,7 +863,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			logger.info("Element is visible");
 			return true;
 		} catch (Exception e) {
-			logger.error("Element is not visible :" + e.fillInStackTrace(), e);
+			logger.error("Element is not visible :" + e.fillInStackTrace());
 			return false;
 		}
 	}
@@ -859,7 +877,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 			logger.info("Element is visible");
 
 		} catch (Exception e) {
-			log.info(e);
 			ispresent = false;
 			logger.error("Element is not visible :" + e.fillInStackTrace());
 		}
@@ -871,7 +888,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 			getFinder().waitUntil(ExpectedConditions.visibilityOf((WebElement) ele));
 			return true;
 		} catch (Exception e) {
-			log.info(e);
 			return false;
 		}
 
@@ -886,7 +902,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 				ispresent = false;
 			}
 		} catch (Exception e) {
-			log.info(e);
 			ispresent = false;
 		}
 		return ispresent;
@@ -901,7 +916,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 				ispresent = false;
 			}
 		} catch (Exception e) {
-			log.info(e);
 			ispresent = false;
 		}
 		return ispresent;
@@ -914,7 +928,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			logger.info("Element is invisible");
 			return true;
 		} catch (Exception e) {
-			logger.error("Element is visible ", e);
+			logger.error("Element is visible");
 			return false;
 		}
 	}
@@ -936,7 +950,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			logger.info("Element is visible");
 			return true;
 		} catch (Exception e) {
-			logger.error("Element is not visible", e);
+			logger.error("Element is not visible");
 			return false;
 		}
 	}
@@ -989,13 +1003,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 				jsText = (String) jse.executeScript("return $(arguments[0]).text();", WE);
 				unfound = false; // FOUND IT
 			} catch (StaleElementReferenceException ser) {
-				logger.info(EXCEPTION_MESSAGE, ser.getMessage(), ser);
+				logger.info(EXCEPTION_MESSAGE, ser.getMessage());
 				unfound = true;
 			} catch (NoSuchElementException nse) {
-				logger.info(EXCEPTION_MESSAGE, nse.getMessage(), nse);
+				logger.info(EXCEPTION_MESSAGE, nse.getMessage());
 				unfound = true;
 			} catch (Exception e) {
-				logger.info(EXCEPTION_MESSAGE, e.getMessage(), e);
+				logger.info(EXCEPTION_MESSAGE, e.getMessage());
 				logger.info("Unknown error.");
 			}
 		}
@@ -1047,7 +1061,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 				// builder.build().perform();
 
 			} catch (Exception e) {
-				log.info(e);
 				if (e.getMessage().contains("element is not attached")) {
 					breakIt = false;
 					logger.info("Recovering from StaleElementException");
@@ -1072,7 +1085,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 				builder.build().perform();
 
 			} catch (Exception e) {
-				log.info(e);
 				if (e.getMessage().contains("element is not attached")) {
 					breakIt = false;
 					logger.info("Recovering from StaleElementException");
@@ -1234,10 +1246,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameSelector));
 	}
 
-	public void switchToIframe(String caption, long timeout) {
-		WebDriverWait wait = new WebDriverWait(getFinder().getWebDriver(), timeout);
-		By frameSelector = By.xpath(String.format("//h3[contains(text(), '%s')]/ancestor::div//iframe[@class='wicket_modal']", caption));
-		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameSelector));
+	// Switch to a frame by specificying the index in WebPage.
+	public void switchToIframeByIndex(int frameIndex) {
+		WebDriverWait wait = new WebDriverWait(getFinder().getWebDriver(), 80);
+		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameIndex));
 	}
 
 	public static void addWicketAjaxListeners(WebDriver driver) {
@@ -1271,21 +1283,17 @@ public abstract class AbstractBasePage extends AbstractPage {
 		});
 	}
 
-	public void switchToDefaultFrame() {
+	public void SwitchToDefaultFrame() {
 		getFinder().getWebDriver().switchTo().defaultContent();
 	}
 
 	public void enterText(MCWebElement field, String fieldValue) {
 		waitForElementVisible(field);
 		field.sendKeys(fieldValue);
-		// addWicketAjaxListeners(getFinder().getWebDriver());
-		// CustomUtils.ThreadDotSleep(2000);
 	}
 
 	public void SelectDropDownByValue(MCWebElement element, String value) {
-		// element.getSelect().selectByVisibleText(value);
 		element.getSelect().selectByValue(value);
-		// addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
 	public void selectDropDownByText(MCWebElement element, String value) {
@@ -1311,7 +1319,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	public List<WebElement> getAllOptionsOfDropdown(MCWebElement element) {
-		return element.getSelect().getOptions();
+		List<WebElement> dropDownOptions = element.getSelect().getOptions();
+		return dropDownOptions;
 	}
 
 	public static boolean hasClass(WebElement element, String cssClass) {
@@ -1540,7 +1549,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public String editingInnerFrameValue() {
 		clickWhenClickable(editRecord.getElements().get(editSize() - 1));
-		switchToDefaultFrame();
+		SwitchToDefaultFrame();
 		switchToIframe("Plan Detail");
 		WebElementUtils.enterText(innerDescriptionTxt, "");
 		WebElementUtils.enterText(innerDescriptionTxt, CustomUtils.randomNumbers(5));
@@ -1617,7 +1626,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 
 		} catch (Exception e) {
-			log.info(e);
 			e.getMessage();
 		}
 		return false;
@@ -1631,6 +1639,38 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 	}
 
+	public void searchEntity(String entityType) {
+		UserCreation userCreation = context.get(ContextConstants.USER);
+		if ("user".equalsIgnoreCase(entityType))
+			selectByVisibleText(entityTypeDdwn, ENTITY_TYPE_USER);
+		else if ("role".equalsIgnoreCase(entityType))
+			selectByVisibleText(entityTypeDdwn, ENTITY_TYPE_ROLE);
+		CustomUtils.ThreadDotSleep(900);
+		Select select = new Select(getFinder().getWebDriver().findElement(ENTITY_ID));
+		CustomUtils.ThreadDotSleep(500);
+		select.selectByVisibleText(userCreation.getUserName() + " [" + userCreation.getUserID() + "]");
+		ClickButton(searchBtn);
+	}
+
+	public void selectTab(String tabName) {
+		getFinder().getWebDriver().findElement(By.xpath(String.format(PRIVILEGES_TABS, tabName))).click();
+	}
+
+	/**
+	 * Select institute from top drp dwn.
+	 *
+	 * @param instituteName
+	 *            the institute name
+	 */
+	public void selectInstituteFromDrpDwn(String instituteName) {
+		instituteSelectionDrpDwn.click();
+		CustomUtils.ThreadDotSleep(500);
+		String ins = String.format(instituteSelectionVal, instituteName);
+		CustomUtils.ThreadDotSleep(500);
+		getFinder().getWebDriver().findElement(By.xpath(ins)).click();
+
+	}
+
 	public void deleteExistingRecord(String parameter) {
 		for (int i = 0; i < firstElementOfTable.getElements().size(); i++) {
 			if (firstElementOfTable.getElements().get(i).getText().equals(parameter)) {
@@ -1638,6 +1678,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 				acceptPopup();
 			}
 		}
+	}
+
+	public List<WebElement> getValidationErrors() {
+		return Elements(ERROR_XPATH);
 	}
 
 	@Override

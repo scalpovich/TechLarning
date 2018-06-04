@@ -7,7 +7,6 @@ I want to authorize transactions for prepaid msr retail travel card
 
 Meta:
 @StoryName p_msr_retail_travel_mc
-@MSRWithoutPin
 
 Scenario: Set up prepaid msr retail travel card
 Given user is logged in institution
@@ -22,7 +21,7 @@ And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 When user has wallet number information for prepaid device
-When user performs adjustment transaction with 10000 amount
+When user performs adjustment transaction with 300000 amount
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk

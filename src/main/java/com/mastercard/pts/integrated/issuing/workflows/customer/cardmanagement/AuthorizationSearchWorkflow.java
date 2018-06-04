@@ -34,6 +34,8 @@ public class AuthorizationSearchWorkflow {
 
 	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
 
+	private static final String USERNAME = "USERNAME";
+
 	public void verifyAuthTransactionSearch(String type, String state, String deviceNumber) {
 		String varType = type;
 		// state value sent from stroy file is different from what appears on
@@ -133,14 +135,13 @@ public class AuthorizationSearchWorkflow {
 	}
 
 	public void verifyAuthTransactionSearchReport(Device device) {
-		List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME, context.get(ConstantData.AUTHORIZATION_CODE));
+		List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME, context.get(ConstantData.AUTHORIZATION_CODE),context.get(USERNAME));
 		String authFileData = "";
 		for (int i = 0; i < reportContent.size(); i++) {
 			authFileData += reportContent.get(i) + " ";
 		}
-		boolean condition = authFileData.contains(context.get(ConstantData.AUTHORIZATION_CODE)) && authFileData.contains(device.getDeviceNumber())
+		boolean condition = authFileData.contains(context.get(ConstantData.AUTHORIZATION_CODE)) && authFileData.contains(device.getDeviceNumber()) 
 				&& authFileData.contains(context.get(ConstantData.TRANSACTION_AMOUNT));
-
 		assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
 	}
 
