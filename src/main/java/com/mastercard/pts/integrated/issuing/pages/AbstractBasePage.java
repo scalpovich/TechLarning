@@ -488,6 +488,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void runWithinPopup(String caption, Runnable action) {
+		SimulatorUtilities.wait(3000);
 		By frameSelector = By.xpath(String.format("//h3[contains(text(), '%s')]/ancestor::div//iframe", caption));
 		WebElementUtils.runWithinFrame(driver(), timeoutInSec, frameSelector, action);
 	}
