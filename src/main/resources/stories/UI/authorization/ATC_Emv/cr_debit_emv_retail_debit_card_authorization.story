@@ -36,40 +36,44 @@ Then embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
+Scenario: Perform EMV_PURCHASE Authorization transaction 1
 Meta:
 @TestId 
 Given connection to MAS is established
-When perform an EMV_CASH_ADVANCE MAS transaction
+When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
-When MAS simulator is closed
 Then user is logged in institution
-Then search Cash Advance authorization and verify 000-Successful status
+Then search Purchase authorization and verify 000-Successful status
+When user note down ATC counter on device usage screen
 Then user sign out from customer portal
 
-Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
-Meta:
-@TestId 
-Given connection to MCPS is established
-When Auth file is generated
-When Auth file is loaded into MCPS and processed
-Then NOT file is successfully generated
-When MCPS simulator is closed
 
-Scenario: Upload ipm file from customer portal and process it
+Scenario: Perform EMV_PURCHASE Authorization transaction 2
 Meta:
 @TestId 
-Given user is logged in institution
-When User uploads the NOT file
-When user processes batch for debit
+When perform an EMV_PURCHASE MAS transaction on the same card
+Then MAS test results are verified
+Then user is logged in institution
+Then search Purchase authorization and verify 000-Successful status
+When verify ATC counter getting updated at device usage screen
 Then user sign out from customer portal
 
-Scenario: Matching & Posting to Cardholders account
+Scenario: Perform EMV_PURCHASE Authorization transaction 3
 Meta:
 @TestId 
-Given user is logged in institution
-When transaction status is "Matching Pending"
-When "Matching" batch for debit is successful
-Then transaction status is "Presentment Matched with authorization"
+When perform an EMV_PURCHASE MAS transaction on the same card
+Then MAS test results are verified
+Then user is logged in institution
+Then search Purchase authorization and verify 000-Successful status
+When verify ATC counter getting updated at device usage screen
 Then user sign out from customer portal
 
+Scenario: Perform EMV_PURCHASE Authorization transaction 3
+Meta:
+@TestId 
+When perform an EMV_PURCHASE MAS transaction on the same card
+Then MAS test results are verified
+Then user is logged in institution
+Then search Purchase authorization and verify 000-Successful status
+When verify ATC counter getting updated at device usage screen
+Then user sign out from customer portal

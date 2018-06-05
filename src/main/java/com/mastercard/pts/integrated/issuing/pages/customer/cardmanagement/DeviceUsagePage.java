@@ -33,6 +33,9 @@ public class DeviceUsagePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Device Transaction Usage']")
 	private MCWebElement devicetransactionUsageTabLink;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.//*[text()='Application Transaction Counter :']]/following-sibling::td[1]/span")
+	private MCWebElement applicationTransactionCounter;
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Device Usage");
 		verifySearchButton("Search");
@@ -52,7 +55,8 @@ public class DeviceUsagePage extends AbstractBasePage {
 		viewFirstRecord();
 		runWithinPopup("View Device Usage", () -> {
 			devicetransactionUsageTabLink.click();
-			atcDetails.add(getCellTextByColumnName(1, "Application Transaction Counter"));
+			logger.info("Application Transaction Counter : " + applicationTransactionCounter.getText());		
+			atcDetails.add(applicationTransactionCounter.getText());
 			WebElementUtils.scrollDown(driver(), 250, 350);
 			clickCloseButton();
 		});
