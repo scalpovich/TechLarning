@@ -17,7 +17,7 @@ And device range for program with device plan for "debit" "emv" card
 When user creates new device of debit type for new client
 Then device has "normal" status
 When user has wallet number information for debit device
-When user performs adjustment transaction with 10000 amount
+When user performs adjustment transaction with 300000 amount
 When user has current wallet balance amount information for debit device
 
 Scenario: debit emv corporate debit card device production
