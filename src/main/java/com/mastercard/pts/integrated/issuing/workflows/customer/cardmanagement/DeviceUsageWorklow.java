@@ -43,8 +43,7 @@ public class DeviceUsageWorklow extends MenuFlows {
 		if (tab.equalsIgnoreCase(TRANSACTION)) {
 			list.clear();
 			list = page.getDeviceTransactionUsage(cardNumber);
-//			String expectedResult = context.get(ConstantData.TRANSACTION_AMOUNT);
-			String expectedResult = "10.00";
+			String expectedResult = context.get(ConstantData.TRANSACTION_AMOUNT);
 			for (String actualResult : list) {
 				logger.info("Actual Result TRANSACTION :: {}", actualResult);
 				logger.info("Expected Result TRANSACTION :: {}", expectedResult);
@@ -58,7 +57,6 @@ public class DeviceUsageWorklow extends MenuFlows {
 				logger.info("Actual Result TOTAL :: {}", actualResult);
 				logger.info("Expected Result TOTAL :: {}", expectedResult);
 				assertValues(actualResult, expectedResult);
-
 			} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
 				logger.error(e.getMessage(), e);
 			}

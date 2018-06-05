@@ -27,7 +27,6 @@ public class DeviceUsageSteps {
 	public void whenUserSearchesDeviceOnDeviceUsageScreen(String tab) {
 		Device device = context.get(ContextConstants.DEVICE);
 		DeviceUsage deviceUsage = DeviceUsage.createWithProvider(provider);
-		deviceUsageWorkflow.deviceUsageVerification("5887650126940716", tab, deviceUsage);
-//		deviceUsageWorkflow.deviceUsageVerification(device.getDeviceNumber(), tab, deviceUsage);
+		deviceUsageWorkflow.deviceUsageVerification(device.getDeviceNumber(), tab, deviceUsage);
 	}
 }
