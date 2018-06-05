@@ -318,7 +318,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		SimulatorUtilities.wait(500);
 		clickWhenClickable(nextBtn);
 		SimulatorUtilities.wait(500);
-		WebElementUtils.addWicketAjaxListeners(driver());
 	}
 
 	protected void clickAddNewButton() {
@@ -1021,7 +1020,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			logger.info("Loader is present");
 			return true;
 		} catch (Exception e) {
-			logger.error("Loader is not present : {} ", e);
+			logger.error("Loader is not present ");
 			return false;
 		}
 	}
