@@ -1,7 +1,9 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -27,6 +29,9 @@ public class DeviceUsagePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=deviceNumber]")
 	private MCWebElement deviceNumber;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Device Transaction Usage']")
+	private MCWebElement devicetransactionUsageTabLink;
 
 	public void verifyUiOperationStatus() {
 		logger.info("Device Usage");
@@ -38,5 +43,19 @@ public class DeviceUsagePage extends AbstractBasePage {
 		return Arrays.asList(
 				WebElementUtils.elementToBeClickable(deviceNumber)
 				);
+	}
+	
+	public List<String> getApplicationTransactionCounter (String cardNumber) {
+		WebElementUtils.enterText(deviceNumber, cardNumber);
+		searchButtonElement.click();
+		List<String> atcDetails = new ArrayList<>();
+		viewFirstRecord();
+		runWithinPopup("View Device Usage", () -> {
+			devicetransactionUsageTabLink.click();
+			atcDetails.add(getCellTextByColumnName(1, "Application Transaction Counter"));
+			WebElementUtils.scrollDown(driver(), 250, 350);
+			clickCloseButton();
+		});
+		return atcDetails;
 	}
 }
