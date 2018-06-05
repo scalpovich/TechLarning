@@ -41,7 +41,7 @@ Then MAS test results are verified
 When MAS simulator is closed
 And user is logged in institution
 Then search Purchase with Cash back authorization and verify 000-Successful status
-Then verify fixed transaction fee applied on purchase transaction waived off
+Then verify fixed transaction fee applied on purchase transaction
 And user sign out from customer portal
 
 
