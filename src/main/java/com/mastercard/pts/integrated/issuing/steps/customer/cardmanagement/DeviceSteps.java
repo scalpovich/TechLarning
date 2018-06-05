@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.SubApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
@@ -196,7 +198,7 @@ public class DeviceSteps {
 
 		Program program = context.get(ContextConstants.PROGRAM);
 		device.setProgramCode(program.buildDescriptionAndCode());
-		if(device.getApplicationType().contains("Supplementary")||device.getApplicationType().contains("Add-on Device")&& device.getSubApplicationType().contains("Existing"))
+		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT))
 		{
 			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
 			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
@@ -208,10 +210,6 @@ public class DeviceSteps {
 		}
 
 		deviceWorkflow.createDevice(device);
-		/*if(applicationType.contains("Primary"))
-		{
-		sdnUncheckProgram(program.getProgramCode());
-		}*/
 	}
 	
 	@Then("$type device is created using new Application screen for $customerType and $applicationType and $subApplicationType and $deviceType")

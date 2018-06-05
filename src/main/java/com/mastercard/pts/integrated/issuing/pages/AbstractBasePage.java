@@ -151,7 +151,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private MCWebElement firstRowSelectLink;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody input[type='checkbox']")
-	private MCWebElements firstRowSelectLinks;
+	private MCWebElements firstRowSelectLinksCheckBox;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Next >']")
 	private MCWebElement nextBtn;
@@ -290,6 +290,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='feedbackPanelERROR']")
 	private MCWebElement errorMsgPresence;
 	
+	private static final String DeviceNumber="Device Number";
+	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
 		MCAnnotationProcessor.initializeSuper(this, finderProvider);
@@ -392,7 +394,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			clickWhenClickable(Element("//*[contains(text(),'"+dev+"')]/..//following-sibling::td/..//input"));
 		}
 		
-		context.put(CreditConstants.DEVICE_NUMBER,devices);
+		context.put(CreditConstants.DEVICE_NUMBERS,devices);
 	}
 
 	protected void clicksearchButtonElement() {
@@ -620,7 +622,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected void clickWhenClickable(MCWebElement element) {
 		SimulatorUtilities.wait(4000);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
-		//waitForWicket();
 	}
 
 	protected void clickWhenClickableDoNotWaitForWicket(MCWebElement element) {
@@ -1324,8 +1325,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 			JavascriptExecutor js = (JavascriptExecutor) driver;
 			pageLoadStatus = (String) js.executeScript("return document.readyState");
 
-			 // addWicketAjaxListeners(driver);
-
 		} while (!pageLoadStatus.equals("complete"));
 
 		logger.info("Page Loaded.");
@@ -1714,12 +1713,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
 	}
 	
-	public int deviceNumberIndex()
+	public int getDeviceNumberIndex()
 	{  
 		int index=0;
 		for(int i=0;i<deviceProductionHeaders.getElements().size();i++)
 		{
-			if(deviceProductionHeaders.getElements().get(i).getText().equalsIgnoreCase("Device Number"))
+			if(deviceProductionHeaders.getElements().get(i).getText().equalsIgnoreCase(DeviceNumber))
 			{
 				index=i+1;
 			}
@@ -1727,10 +1726,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return index;
 	}
 	
-	public List<String>deviceNumbersForSupplementary()
+	public List<String> deviceNumbersForSupplementary()
 	{
-		List<String>allDeviceNumbers=new ArrayList<>();
-		List<WebElement>deviceNumbers=driver().findElements(By.xpath("//table[@class='dataview']//tr[@class!='headers']/td["+deviceNumberIndex()+"]/span"));
+		List<String> allDeviceNumbers=new ArrayList<>();
+		List<WebElement>deviceNumbers=driver().findElements(By.xpath("//table[@class='dataview']//tr[@class!='headers']/td["+getDeviceNumberIndex()+"]/span"));
 		for(int i=0;i<deviceNumbers.size();i++)
 		{
 			allDeviceNumbers.add(deviceNumbers.get(i).getText());

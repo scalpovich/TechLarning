@@ -100,7 +100,6 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	}
 	
 	public void processFirstBatch() {
-		//clickWhenClickable(firstBatchNumberTxt);
 		processAll.click();
 		verifyOperationStatus();
 	}

@@ -264,9 +264,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		device.setWalletNumber(getCodeFromInfoMessage("wallet"));
 		// device.setWalletNumber(getWalletsId(getWalletsFromPage()));
 		device.setDeviceNumber(getCodeFromInfoMessage("device(s)"));
-		logger.info("clientCode applicationType subApplicationType: {} {} {}",device.getClientCode(),device.getApplicationType(),device.getSubApplicationType());
+		logger.info("clientCode: {}, applicationType: {}, subApplicationType: {}",device.getClientCode(),device.getApplicationType(),device.getSubApplicationType());
 		logger.info("WalletNumber: {}",device.getWalletNumber());
-		if(device.getApplicationType().contains("Primary"))
+		if(device.getApplicationType().contains(ApplicationType.PRIMARY_DEVICE))
 		{
 		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, device.getDeviceNumber());
 		}
@@ -292,7 +292,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private void fillBatchDetails(Device device) {
 		if(device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT))
 		{
-			if(device.getApplicationType().contains("Primary"))
+			if(device.getApplicationType().contains(ApplicationType.PRIMARY_DEVICE))
 			{
 				WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
 				clickWhenClickable(generateDeviceBatchBtn);
@@ -312,10 +312,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
 		clickWhenClickable(generateDeviceBatchBtn);
 		waitForWicket();
-		SimulatorUtilities.wait(30000);
+		SimulatorUtilities.wait(10000);
 		}
 		
-		// fetching batch number and setting it for further use
 		device.setBatchNumber(batchNumberTxt.getText());
 		logger.info(" *********** Batch number *********** " + device.getBatchNumber());
 		clickNextButton();
@@ -440,7 +439,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 				selectByVisibleText(corporateClientCodeDDwn,device.getCorporateClientCode());	
 			}
 		} else {
+			if(corporateClientCodeDDwn.isEnabled())
+			{
 			WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
+			}
 		}
 		ClientDetails client = device.getClientDetails();
 		WebElementUtils.selectDropDownByVisibleText(titleDDwn, client.getTitle());
