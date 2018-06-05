@@ -873,6 +873,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectIframeBeforeKYCDdwn(String kycType) {
+      	WebElementUtils.elementToBeClickable(iframeBeforeKYCDdwn);
 		WebElementUtils.selectDropDownByVisibleText(iframeBeforeKYCDdwn, kycType);
 	}
 
@@ -970,7 +971,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		cvvCvv2PinGenerationSelectionScreen(devicePlan);
 
 		fillDevicePlanPage(devicePlan);
-
+		
 		selectIframeBeforeKYCDdwn(devicePlan.getBeforeKYC());
 		selectIframeAfterKYCDdwn(devicePlan.getAfterKYC());
 		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES))
@@ -1101,9 +1102,10 @@ public class DevicePlanPage extends AbstractBasePage {
 		WebElementUtils.enterText(replacementNoOfDaysTxt, devicePlan.getReplacementNoOfDays());
 		WebElementUtils.enterText(validityOnReplacementMonthsTxt, devicePlan.getValidityOnReplacementMonths());
 		allowInstanceDeviceReplaceChkBx.click();
-		if (devicePlan.getReplacementDeviceTechnology() != "")
+		if (!devicePlan.getReplacementDeviceTechnology().isEmpty()) {
 			WebElementUtils.selectDropDownByVisibleText(replacementDeviceTechnologyDdwn,
 					devicePlan.getReplacementDeviceTechnology());
+		}
 	}
 
 	public void fillVirtualDeviceDetails(DevicePlan devicePlan) {
@@ -1113,10 +1115,4 @@ public class DevicePlanPage extends AbstractBasePage {
 		enterValidity(devicePlan);
 	}
 
-	private String getStoryName()
-	{
-		String name = System.getProperty("storyName").toString();
-		logger.info("System.getStoryName  : "+name);
-		return name;
-	}
 }
