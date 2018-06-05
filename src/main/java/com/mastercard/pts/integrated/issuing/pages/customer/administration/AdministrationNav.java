@@ -26,6 +26,8 @@ public class AdministrationNav {
 	
 	public static final String L3_ASSIGN_PRODUCT = "HLPAPR";
 	
+	public static final String L3_ASSIGN_PROGRAM = "HLPSRV";
+	
 	public static final String L3_ASSIGN_SERVICE_CODE = "HLPASR";
 	
 	public static final String L2_PRIVILEGES = "SYRP00";

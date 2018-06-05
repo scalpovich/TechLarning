@@ -1,0 +1,2 @@
+TCName,InstitutionName,NetworkCode,ProgramCode,AccountHead,Branch,AccountNumber,ReportCode,Description,INTERCHANGE
+TC01_AccountHeadMapping,COSDEBIT [123456],VISA [01],0,Account Head [54],BRANCH [100000],1888887,55554,Default Description,MASTERCARD [02]

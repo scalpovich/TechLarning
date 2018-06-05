@@ -1,25 +1,23 @@
 package com.mastercard.pts.integrated.issuing.steps;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.RuPaySettlementBIN;
+import com.mastercard.pts.integrated.issuing.domain.provider.DataLoader;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
-import com.mastercard.pts.integrated.issuing.pages.customer.administration.LoginPage;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
-import com.mastercard.pts.integrated.issuing.utils.ReadTestDataFromExcel;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.pts.integrated.issuing.workflows.RupayBinSettlementFlows;
 
@@ -31,13 +29,10 @@ import com.mastercard.pts.integrated.issuing.workflows.RupayBinSettlementFlows;
 
 @Component
 public class RupayBinSettlementSteps extends AbstractBaseFlows {
-	final Logger logger = LoggerFactory
-			.getLogger(RupayBinSettlementSteps.class);
-	@Autowired
-	LoginPage loginpage;
 
 	@Autowired
-	private ReadTestDataFromExcel excelTestData;
+	@Qualifier("defaultDataLoader")
+	private DataLoader dataLoader;
 
 	@Autowired
 	private RupayBinSettlementFlows rupaybinsettlementflow;
@@ -52,21 +47,15 @@ public class RupayBinSettlementSteps extends AbstractBaseFlows {
 
 	@Given("new menu option is available at institution level-rupay rettlement bin")
 	public void newMenuOptionIsAvailableAtInstitutionLevelRupaySettlementBin(
-			@Named("TCName") String strStoryName,
-			@Named("sheetName") String strSheetName) {
-		String f = null;
-		excelTestData.fnReadEntireTestData(f, strSheetName, "TCName");
+			@Named("TCName") String tcName,
+			@Named("sheetName") String sheetName) {
+		dataLoader.updateTestContextWithTestData(sheetName, tcName);
 
-		if (excelTestData == null) {
-			Assert.fail("Unable to read entire test data");
-		} else {
-			excelTestData.fnSetCurrentStoryTestData(strStoryName);
-		}
 
 	}
 
 	@When("user tries to configure the settlement bin")
-	public void whenUserTriesToConfigureTheSettlementBin() throws Throwable {
+	public void whenUserTriesToConfigureTheSettlementBin() {
 		rupaybinsettlementflow.setPrivileges();
 		rupaybinsettlementflow.getIntoPrivileges();
 		rupaybinsettlementflow.binConfigureWithSameParticipantId();
@@ -81,16 +70,10 @@ public class RupayBinSettlementSteps extends AbstractBaseFlows {
 	}
 
 	@Given("that a new menu option should be available at Institution level-Rupay Settlement Bin")
-	public void s(@Named("TCName") String strStoryName,
-			@Named("sheetName") String strSheetName) {
-		String f = null;
-		excelTestData.fnReadEntireTestData(f, strSheetName, "TCName");
+	public void s(@Named("TCName") String tcName,
+			@Named("sheetName") String sheetName) {
+		dataLoader.updateTestContextWithTestData(sheetName, tcName);
 
-		if (excelTestData == null) {
-			Assert.fail("Unable to read entire test data");
-		} else {
-			excelTestData.fnSetCurrentStoryTestData(strStoryName);
-		}
 		CustomUtils.ThreadDotSleep(1000);
 
 	}
@@ -118,7 +101,7 @@ public class RupayBinSettlementSteps extends AbstractBaseFlows {
 	}
 
 	@When("the user tries to configure the settlement bin")
-	public void whenTheUserTriesToConfigureTheSettlementBin() throws Throwable {
+	public void whenTheUserTriesToConfigureTheSettlementBin() {
 		rupaybinsettlementflow.setPrivileges();
 		rupaybinsettlementflow.getIntoPrivileges();
 		rupaybinsettlementflow.configureSettlementBin();
@@ -127,17 +110,11 @@ public class RupayBinSettlementSteps extends AbstractBaseFlows {
 
 	@Given("that a new menu option is available at Institution level-Rupay Settlement Bin")
 	public void givenThatANewMenuOptionIsAvailableAtInstitutionLevelRupaySettlementBin(
-			@Named("TCName") String strStoryName,
-			@Named("sheetName") String strSheetName) {
+			@Named("TCName") String tcName,
+			@Named("sheetName") String sheetName) {
 
-		String f = null;
-		excelTestData.fnReadEntireTestData(f, strSheetName, "TCName");
+		dataLoader.updateTestContextWithTestData(sheetName, tcName);
 
-		if (excelTestData == null) {
-			Assert.fail("Unable to read entire test data");
-		} else {
-			excelTestData.fnSetCurrentStoryTestData(strStoryName);
-		}
 		CustomUtils.ThreadDotSleep(1000);
 	}
 
@@ -171,7 +148,7 @@ public class RupayBinSettlementSteps extends AbstractBaseFlows {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return null;
+		return Collections.emptyList();
 	}
 
 }
