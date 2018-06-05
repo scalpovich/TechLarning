@@ -548,7 +548,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	 */
 	protected boolean verifyAlreadyExistsAndClickCancel() {
 		String message = getMessageFromFeedbackPanel();
-		if (message != null && message.contains("already exists")) {
+		if (message != null && message.contains("already exist")) {
 			clickCancelButton();
 			return true;
 		}

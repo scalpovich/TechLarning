@@ -46,7 +46,7 @@ public class WalletFeePlan {
 
 	public static WalletFeePlan createWithProvider(KeyValueProvider provider) {
 		WalletFeePlan plan = new WalletFeePlan();
-		plan.setWalletFeePlanCode("AUT" + RandomStringUtils.randomNumeric(4));
+		plan.setWalletFeePlanCode("AU" + RandomStringUtils.randomNumeric(5));
 		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);
 		plan.setCurrency(provider.getString(KEY_CURRENCY));
 		return plan;
