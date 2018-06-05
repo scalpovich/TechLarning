@@ -45,7 +45,6 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -299,7 +298,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		SimulatorUtilities.wait(500);
 		clickWhenClickable(nextBtn);
 		SimulatorUtilities.wait(500);
-		WebElementUtils.addWicketAjaxListeners(driver());
 	}
 
 	protected void clickAddNewButton() {
@@ -962,7 +960,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			logger.info("Loader is present");
 			return true;
 		} catch (Exception e) {
-			logger.error("Loader is not present : {} ", e);
+			logger.error("Loader is not present ");
 			return false;
 		}
 	}
@@ -1330,12 +1328,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public WebElement Element(String loc) {
 		return driver().findElement(By.xpath(loc));
-
 	}
 
 	public List<WebElement> Elements(String loc) {
 		return driver().findElements(By.xpath(loc));
-
 	}
 
 	public WebElement getChildElement(WebElement element, String Childlocator) {
@@ -1343,7 +1339,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	public Set<String> pageErrorValidator() {
-
 		String errorMessage;
 		String elementName;
 		if (iselementPresent(Elements(ERRORPANEL))) {

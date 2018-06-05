@@ -44,7 +44,6 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
-import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKeyValuePair;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
 
@@ -519,14 +518,13 @@ public class TransactionSteps {
 	@Then("ARN is retrieved from transaction search page")
 	public void arnIsRetrievedFromTransactionSearchPage() {
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
-		Device device = context.get(ContextConstants.DEVICE); // comenting hte line as Device context is not used
+		Device device = context.get(ContextConstants.DEVICE);
 		String deviceNumber = device.getDeviceNumber();
 		String arn = transactionWorkflow.getARN(deviceNumber, ts);
 		context.put(ConstantData.ARN_NUMBER, arn);
 		logger.info("ARN for device transactions = {} ", arn);
 	}
 
-	// Win SCP step
 	@Given("user update folder permission through WinSCP for $type folder")
 	@When("user update folder permission through WinSCP for $type folder")
 	public void connectionToApplicationIsEstablished(String type) {

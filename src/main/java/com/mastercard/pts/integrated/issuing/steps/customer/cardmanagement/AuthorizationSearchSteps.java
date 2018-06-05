@@ -42,8 +42,7 @@ public class AuthorizationSearchSteps {
 		authStatus.add(code);
 		authStatus.add(description);
 		Device device = context.get(ContextConstants.DEVICE);
-//		authorizationSearchWorkflow.verifyStateAuthSearch(device.getDeviceNumber(), authStatus);
-		authorizationSearchWorkflow.verifyStateAuthSearch("5887650126940716", authStatus);
+		authorizationSearchWorkflow.verifyStateAuthSearch(device.getDeviceNumber(), authStatus);
 	}
 
 	@Then("verify transaction currency as $tcurrency and billing currency as $bcurrency on auth search")
