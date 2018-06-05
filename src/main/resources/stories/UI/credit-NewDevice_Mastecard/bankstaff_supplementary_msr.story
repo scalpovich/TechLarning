@@ -5,7 +5,7 @@ I want to assert pages
 
 Meta:
 @CreditRegression
-@StoryName credit_emv_retail				 
+@StoryName credit_msr_retail				 
 Scenario:creation of mastercard_bankstaff_supplementary_msr credit device
 Meta:
 @UserCreatesNewCreditDevice
