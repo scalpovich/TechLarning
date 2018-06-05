@@ -577,9 +577,9 @@ public class FileCreation {
 				for (int i = 0; i < applicationUploadMap.size(); i++) {
 							if (true == dataReader.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
 
-						if (deviceplan.getDeviceType().contains("Static Virtual")) {
+						if (devicePlan.getDeviceType().contains("Static Virtual")) {
 							deviceType = "7";
-						} else if (deviceplan.getDeviceType().contains("Magnetic")) {
+						} else if (devicePlan.getDeviceType().contains("Magnetic")) {
 							deviceType = "1";
 						}
 						if (customerType.equals("Individual")) {
@@ -589,7 +589,7 @@ public class FileCreation {
 											.replace("%F%", "FORM"+CustomUtils.randomAlphaNumeric(6))
 											.replace("%t%", "0")
 											.replace("%P%", program.getProgramCode())
-											.replace("%D%", deviceplan.getDevicePlanCode())
+											.replace("%D%", devicePlan.getDevicePlanCode())
 											.replace("%b%", branchCode)
 											.replace("%Z%", "")
 											.replace("%N%", CustomUtils.randomString(9).toUpperCase())
@@ -603,7 +603,7 @@ public class FileCreation {
 											.replace("%F%", "FORM"+CustomUtils.randomAlphaNumeric(6))
 											.replace("%t%", "1")
 											.replace("%P%", program.getProgramCode())
-											.replace("%D%", deviceplan.getDevicePlanCode())
+											.replace("%D%", devicePlan.getDevicePlanCode())
 											.replace("%b%",branchCode)
 											.replace("%Z%",  Institution.createWithProvider(provider).getCorporateClientCodePrepaid())
 											.replace("%N%", CustomUtils.randomString(9).toUpperCase())
@@ -619,7 +619,7 @@ public class FileCreation {
 											.replace("%F%", "FORM"+CustomUtils.randomAlphaNumeric(6))
 											.replace("%t%", "1")
 											.replace("%P%", program.getProgramCode())
-											.replace("%D%", deviceplan.getDevicePlanCode())
+											.replace("%D%", devicePlan.getDevicePlanCode())
 											.replace("%b%",branchCode)
 											.replace("%Z%", Institution.createWithProvider(provider).getCorporateClientCodeCredit())
 											.replace("%N%", CustomUtils.randomString(9).toUpperCase())
@@ -634,7 +634,7 @@ public class FileCreation {
 											.replace("%F%", "FORM"+CustomUtils.randomAlphaNumeric(6))
 											.replace("%t%", "2")
 											.replace("%P%", program.getProgramCode())
-											.replace("%D%", deviceplan.getDevicePlanCode())
+											.replace("%D%", devicePlan.getDevicePlanCode())
 											.replace("%b%", branchCode)
 											.replace("%Z%", "")
 											.replace("%N%", CustomUtils.randomString(9).toUpperCase())
