@@ -561,7 +561,7 @@ public class ProgramSetupSteps {
 	}
 	
 	@When("for $deviceType User fills without pin Device Plan for $type product for $interchange")
-	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeWithoutPin(String deviceType,String type,String interchange,String pin) {
+	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeWithoutPin(String deviceType,String type,String interchange) {
 		setPinRequiredToFalse();
 		devicePlan = DevicePlan.createProviderForCredit(provider);
 		devicePlan.setProductType(ProductType.fromShortName(type));
