@@ -10,8 +10,8 @@ Meta:
 
 Scenario: Set up prepaid emv retail general purpose card with MCG Limit Plan
 Given user is logged in institution
-And user creates MCG with MCC
-And user creates MCG limit plan with details for Prepaid
+!-- And user creates MCG with MCC
+!-- And user creates MCG limit plan with details for Prepaid
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client
 
