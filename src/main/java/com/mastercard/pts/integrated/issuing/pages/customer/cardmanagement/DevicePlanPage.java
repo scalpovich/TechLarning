@@ -873,7 +873,10 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectIframeBeforeKYCDdwn(String kycType) {
+      	WebElementUtils.elementToBeClickable(iframeBeforeKYCDdwn);
+      	if (iframeBeforeKYCDdwn.isEnabled()){
 		WebElementUtils.selectDropDownByVisibleText(iframeBeforeKYCDdwn, kycType);
+		}
 	}
 
 	public void selectIframeChipTypeDdwnDdwn(String chipType) {
@@ -970,7 +973,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		cvvCvv2PinGenerationSelectionScreen(devicePlan);
 
 		fillDevicePlanPage(devicePlan);
-
+		
 		selectIframeBeforeKYCDdwn(devicePlan.getBeforeKYC());
 		selectIframeAfterKYCDdwn(devicePlan.getAfterKYC());
 		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES))
