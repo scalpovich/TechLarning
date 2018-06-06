@@ -1,6 +1,8 @@
 package com.mastercard.pts.integrated.issuing.utils;
 
 import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +19,7 @@ public class MapUtils {
 	}
 
 	public static String fnGetInputDataFromMap(String strKey) {
-		HashMap<String, String> storyTestData = ThreadLocalWorker
+		Map<String, String> storyTestData = ThreadLocalWorker
 				.getTestContext().fnGetCurrentStoryTestData();
 		if (!storyTestData.containsKey(strKey)) {
 			logger.info("Unable to read test data for the Key :" + strKey);
@@ -29,7 +31,7 @@ public class MapUtils {
 	}
 	
 	public static String getIterativeDataFromDatamap(String strKey) {
-		HashMap<String, String> storyTestData = ThreadLocalWorker
+		Map<String, String> storyTestData = ThreadLocalWorker
 				.getTestContext().getIteratedTestData();
 		if (!storyTestData.containsKey(strKey)) {
 			logger.info("Unable to read test data for the Key :" + strKey);
@@ -40,13 +42,13 @@ public class MapUtils {
 	}
 
 	public static boolean fnIsKeyExists(String strKey) {
-		HashMap<String, String> storyTestData = ThreadLocalWorker
+		Map<String, String> storyTestData = ThreadLocalWorker
 				.getTestContext().fnGetCurrentStoryTestData();
 		return storyTestData.containsKey(strKey);
 	}
 
 	public static void fnSetInputDataToInputMap(String strkey, String strValue) {
-		HashMap<String, String> storyTestData = ThreadLocalWorker
+		Map<String, String> storyTestData = ThreadLocalWorker
 				.getTestContext().fnGetCurrentStoryTestData();
 		if(storyTestData != null){
 			logger.info("Data is here");

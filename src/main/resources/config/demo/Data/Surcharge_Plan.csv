@@ -1,0 +1,2 @@
+Surcharge Plan Code,Description,Currency,Surcharge Source,Interchange,MCG,Fee Transaction Description,Surcharge Rate(%),Fixed Surcharge Amount,Minimum Surcharge Amount,Maximum Surcharge Amount,Effective Date,End Date,INTERCHANGE
+TESTA1,Testing,USD [840],System Calculated,MASTERCARD [02],MCG CODE 1 [538],Testing,0.01,0,0,0,December/16/2018,December/16/2019,MASTERCARD [02]

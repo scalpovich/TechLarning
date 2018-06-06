@@ -2,21 +2,20 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.SftpException;
-import com.mastercard.pts.integrated.issuing.pages.customer.administration.LoginPage;
-import com.mastercard.pts.integrated.issuing.utils.ReadTestDataFromExcel;
+import com.mastercard.pts.integrated.issuing.domain.provider.DataLoader;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.pts.integrated.issuing.workflows.PrepaidDeviceFileEmbossingFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceCreationFlows;
@@ -25,10 +24,8 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.D
 public class EmbossingFileGenerationSteps extends AbstractBaseFlows {
 
 	@Autowired
-	LoginPage loginpage;
-
-	@Autowired
-	private ReadTestDataFromExcel excelTestData;
+	@Qualifier("defaultDataLoader")
+	public DataLoader dataLoader;
 
 	@Autowired
 	PrepaidDeviceFileEmbossingFlows prepaidDeviceFlows;
@@ -38,37 +35,15 @@ public class EmbossingFileGenerationSteps extends AbstractBaseFlows {
 
 	@Given("Customer portal user has access to generate and execute embossing files")
 	public void givenCustomerPortalUserHasAccessToGenerateAndExecuteEmbossingFiles(
-			@Named("TCName") String strStoryName,
-			@Named("sheetName") String strSheetName) {
-		String f = null;
-		excelTestData.fnReadEntireTestData(f, strSheetName, "TCName");
-
-		if (excelTestData == null) {
-			Assert.fail("Unable to read entire test data");
-		} else {
-			excelTestData.fnSetCurrentStoryTestData(strStoryName);
-		}
-		System.out.println("In the given");
+			@Named("TCName") String tcName,
+			@Named("sheetName") String sheetName) {
+		dataLoader.updateTestContextWithTestData(sheetName, tcName);
 	}
 
 	@Then("embossing file generated for must be as per the configuration done defined in the embossing file template and must be encrypted")
 	public void thenEmbosingFileGeneratedForMustBeAsPerTheConfigurationDoneDefinedInTheEmbossingFileTemplateAndMustBeEncrypted()
-			throws JSchException, IOException, SftpException {
+			throws JSchException, IOException {
 		prepaidDeviceFlows.readGPGEncryptedEmbossedFile();
-	}
-
-	@When("the customer portal user executes the batch for producing magnetic stripe device and encryption flag is enabled")
-	public void whenTheCustomerPortalUserExecutesTheBatchForProducingMagneticStripeDeviceAndEncryptionFlagIsEnabled() {
-	}
-
-	@Given("Customer portal user has access to generate and execute embossing files  ")
-	public void givenCstomerPortalUserHasAccessToGenerateAndExecuteEmbossingFiles() {
-
-	}
-
-	@When(" the customer portal user executes the batch for producing EMV device and encryption flag is enabled  ")
-	public void whenTheCustomerPortalUserExecutesTheBatchForProducingEMVDeviceAndEncryptionFlagIsEnabled() {
-
 	}
 
 	@When("the encrytion flag is enabled")
@@ -78,6 +53,6 @@ public class EmbossingFileGenerationSteps extends AbstractBaseFlows {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return null;
+		return Collections.emptyList();
 	}
 }

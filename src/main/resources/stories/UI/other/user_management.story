@@ -29,7 +29,7 @@ Then user is logged into agent portal successfully
 And user sign out from agent portal
 
 Examples:
-{metaByRow=true}
+!-- {metaByRow=true}
 |Meta:           | type   |
 |@TestId TC406081| admin  |
 |@TestId TC411892| agency |
