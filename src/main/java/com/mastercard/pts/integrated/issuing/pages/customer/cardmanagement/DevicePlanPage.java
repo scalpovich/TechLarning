@@ -874,7 +874,9 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	public void selectIframeBeforeKYCDdwn(String kycType) {
       	WebElementUtils.elementToBeClickable(iframeBeforeKYCDdwn);
+      	if (iframeBeforeKYCDdwn.isEnabled()){
 		WebElementUtils.selectDropDownByVisibleText(iframeBeforeKYCDdwn, kycType);
+		}
 	}
 
 	public void selectIframeChipTypeDdwnDdwn(String chipType) {
