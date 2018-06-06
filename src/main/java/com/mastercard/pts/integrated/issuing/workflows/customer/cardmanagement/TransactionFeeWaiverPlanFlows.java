@@ -13,11 +13,6 @@ public class TransactionFeeWaiverPlanFlows {
 	@Autowired
 	Navigator navigator;
 	
-//	public void addTransactionFeeWaiverPlan(TransactionFeeWaiverPlan plan){
-//		TransactionFeeWaiverPlanPage page=navigator.navigateToPage(TransactionFeeWaiverPlanPage.class);
-//		page.addTransactionFeeWaiverPlanMasterDetail(plan);
-//		}
-	
 public void addTransactionFeeWaiverPlanForMultipleType(TransactionFeeWaiverPlan plan){
 	TransactionFeeWaiverPlanPage page=navigator.navigateToPage(TransactionFeeWaiverPlanPage.class);
 	page.setupTransactionTypeForSources(plan);

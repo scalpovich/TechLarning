@@ -867,7 +867,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 	
 	public void selectIframeTransactionFeeWaiverPlan(String transactionFeeWaiverPlan) {
-			WebElementUtils.selectDropDownByVisibleText(iframeTransactionFeeWaiverPlanDdwn, 
+		WebElementUtils.selectDropDownByVisibleText(iframeTransactionFeeWaiverPlanDdwn, 
 					transactionFeeWaiverPlan);
 	}
 

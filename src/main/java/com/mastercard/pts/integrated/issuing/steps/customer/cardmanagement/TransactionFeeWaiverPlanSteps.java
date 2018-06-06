@@ -21,13 +21,6 @@ public class TransactionFeeWaiverPlanSteps {
 		TransactionFeeWaiverPlan plan=TransactionFeeWaiverPlan.createWithProvider(provider);
 		transactionFeeWaiverPlanFlows.addTransactionFeeWaiverPlanForMultipleType(plan);
 	}
-	
-	
-	
-//	@Then("verify transaction waiver fee")
-//	public void verifyTransactionFeeWaiverPlan(){
-//		
-//	}
 }
 
 	

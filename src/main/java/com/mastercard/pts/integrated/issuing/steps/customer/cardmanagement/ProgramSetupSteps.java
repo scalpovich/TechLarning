@@ -39,6 +39,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Prog
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StatementMessageDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StatementMessagePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeeWaiverPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionLimitPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionLimitPlanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionPlan;
@@ -50,6 +51,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.MCGFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramSetupWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.TransactionFeeWaiverPlanFlows;
 
 @Component
 public class ProgramSetupSteps {
@@ -59,6 +61,9 @@ public class ProgramSetupSteps {
 
 	@Autowired
 	private ProgramSetupWorkflow programSetupWorkflow;
+	
+	@Autowired
+	private TransactionFeeWaiverPlanFlows transactionFeeWaiverPlanFlows;
 
 	@Autowired
 	private KeyValueProvider provider;
@@ -99,6 +104,8 @@ public class ProgramSetupSteps {
 	private CreditCardBillingCycle creditCardBillingCycle;
 
 	private DevicePlan devicePlan;
+	
+	private TransactionFeeWaiverPlan transactionFeeWaiverPlan;
 
 	private Program program;
 
@@ -526,7 +533,10 @@ public class ProgramSetupSteps {
 		devicePlan.setTransactionFeeWaiverPlan(provider.getString(TRANSACTION_FEE_WAIVER_PLAN));
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		
 		programSetupWorkflow.createDevicePlan(devicePlan);
+		transactionFeeWaiverPlanFlows.addTransactionFeeWaiverPlanForMultipleType(transactionFeeWaiverPlan);
+		
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 
