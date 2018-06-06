@@ -381,20 +381,24 @@ public class ProgramPage extends AbstractBasePage {
 		clickAddNewButton();
 
 		runWithinPopup("Add Program", () -> {
-			addProgram(program.getProgramCode());
+			addProgram(program.getProgramCode());          	
 			addDescription(program.getDescription());
 					if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 						selectByVisibleText(interchangeDDwn,program.getInterchange());
 					} else {
+					     SimulatorUtilities.wait(2000);
 						selectInterchange(program.getInterchange());
 					}
+						SimulatorUtilities.wait(2000);
 					selectProduct(program.getProduct());
 					if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 						selectByVisibleText(programTypeDDwn,program.getProgramType());
 					} else {
+						SimulatorUtilities.wait(2000);
 						selectProgramType(program.getProgramType());
 					}
-			selectBaseCurrency(program.getBaseCurrency());
+						SimulatorUtilities.wait(2000);
+			      selectBaseCurrency(program.getBaseCurrency());
 			program.setProgramCodeDevice(program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
@@ -425,10 +429,15 @@ public class ProgramPage extends AbstractBasePage {
 		runWithinPopup("Add Program", () -> {
 			addProgram(program.getProgramCode());
 			addDescription(program.getDescription());
+          	SimulatorUtilities.wait(2000);
 			selectInterchange(program.getInterchange());
+          	SimulatorUtilities.wait(2000);
 			selectProduct(program.getProduct());
+          	SimulatorUtilities.wait(2000);
 			selectProgramType(program.getProgramType());
+          	SimulatorUtilities.wait(2000);
 			selectBaseCurrency(program.getBaseCurrency());
+          	SimulatorUtilities.wait(2000);
 			program.setProgramCodeDevice(program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
