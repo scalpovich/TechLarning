@@ -154,15 +154,15 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		runWithinPopup("Add Wallet Plan", () -> {
 			String productType = walletPlan.getProductType();
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
-			waitForPageToLoad(driver());
+			SimulatorUtilities.wait(2000);
 			inputDescription(walletPlan.getDescription());
-			waitForPageToLoad(driver());
+			SimulatorUtilities.wait(2000);
 			selectProductType(productType);
-			waitForPageToLoad(driver());
+			SimulatorUtilities.wait(2000);
 			selectProgramType(walletPlan.getProgramType());
-			waitForPageToLoad(driver());
+			SimulatorUtilities.wait(2000);
 			selectCurrency(walletPlan.getCurrency());
-			waitForPageToLoad(driver());
+			SimulatorUtilities.wait(2000);
 			selectUsage(walletPlan.getUsage());
 
 			fillDetailsBasedOnCardType(walletPlan, productType);
@@ -183,13 +183,13 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
 			inputDescription(walletPlan.getDescription());
 			selectProductType(productType);
-			waitForPageToLoad(driver());
+			SimulatorUtilities.wait(2000);
 			selectProgramType(walletPlan.getProgramType());
-			waitForPageToLoad(driver());
+			SimulatorUtilities.wait(2000);
 			selectCurrency(walletPlan.getCurrency());
-			waitForPageToLoad(driver());
+			SimulatorUtilities.wait(2000);
 			selectUsage(walletPlan.getUsage());
-			waitForPageToLoad(driver());
+			SimulatorUtilities.wait(2000);
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			clickNextButton(); // Click on next button
 			clickFinishButton(); // click on finish button
