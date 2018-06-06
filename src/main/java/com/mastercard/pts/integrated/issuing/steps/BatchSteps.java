@@ -48,17 +48,16 @@ public class BatchSteps {
 	public void  embossingFileWasGeneratedSuccessfully() {
 		MiscUtils.reportToConsole("******** Embossing File Start ***** " );
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		Device device = context.get(ContextConstants.DEVICE);
 		try {
 			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE");		
 			String[] fileData = LinuxUtils.getCardNumberAndExpiryDate(batchFile);
 			MiscUtils.reportToConsole("File Data : " + fileData);
-			Device device = context.get(ContextConstants.DEVICE);
 			if(device.getDeviceType1().toLowerCase().contains(ConstantData.MSR_CARD))
 			{
 				device.setDeviceNumber(fileData[0]);
 				device.setCvv2Data(fileData[2]);
 				device.setCvvData(fileData[3]);
-				
 				logger.info("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3]);
 			}
 			else
@@ -76,13 +75,12 @@ public class BatchSteps {
 			logger.info("Expiration Data :  {} ", tempDate );
 			MiscUtils.reportToConsole("Expiration Data :  " + tempDate );
 			MiscUtils.reportToConsole("******** Embossing File Completed ***** " );
-
 		} catch (Exception e) {
 			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
 			throw MiscUtils.propagate(e);
 		}
-	}
-	
+
+	}	
 	
 	@When("Pin Offset file batch was generated successfully")
 	@Then("Pin Offset file batch was generated successfully")
