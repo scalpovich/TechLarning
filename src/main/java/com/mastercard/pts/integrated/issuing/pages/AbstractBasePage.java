@@ -1263,7 +1263,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			JavascriptExecutor js = (JavascriptExecutor) driver;
 			pageLoadStatus = (String) js.executeScript("return document.readyState");
 
-			addWicketAjaxListeners(driver);
+			//addWicketAjaxListeners(driver);
 
 		} while (!pageLoadStatus.equals("complete"));
 
