@@ -84,19 +84,19 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectCurrency(String currency) {
-		WebElementUtils.selectDDByVisibleText(currencyDDwn, currency);
+		WebElementUtils.selectDropDownByVisibleText(currencyDDwn, currency);
 	}
 
 	public void selectProductType(String productType) {
-		WebElementUtils.selectDDByVisibleText(productTypeDDwn, productType);
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, productType);
 	}
 
 	public void selectProgramType(String programType) {
-		WebElementUtils.selectDDByVisibleText(programTypeDDwn, programType);
+		WebElementUtils.selectDropDownByVisibleText(programTypeDDwn, programType);
 	}
 
 	public void selectUsage(String usage) {
-		WebElementUtils.selectDDByVisibleText(usageDDwn, usage);
+		WebElementUtils.selectDropDownByVisibleText(usageDDwn, usage);
 	}
 
 	public void selectCreditPlan(String creditPlan) {
@@ -137,13 +137,13 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	@Override
 	public void clickNextButton() {
 		SimulatorUtilities.wait(400);
-		nextBtn.click();
+		clickWhenClickable(nextBtn);
 	}
 
 	@Override
 	public void clickFinishButton() {
 		SimulatorUtilities.wait(900);
-		finishBtn.click();
+		clickWhenClickable(finishBtn);
 	}
 
 	// Method to fill data in Add Wallet Plan Data
@@ -154,17 +154,28 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		runWithinPopup("Add Wallet Plan", () -> {
 			String productType = walletPlan.getProductType();
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
-			SimulatorUtilities.wait(2000);
+            waitForPageToLoad(driver());
 			inputDescription(walletPlan.getDescription());
+            waitForPageToLoad(driver());
 			SimulatorUtilities.wait(2000);
 			selectProductType(productType);
-			SimulatorUtilities.wait(2000);
-			selectProgramType(walletPlan.getProgramType());
-			SimulatorUtilities.wait(2000);
+			if(walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
+			{
+						selectByVisibleText(programTypeDDwn,walletPlan.getProgramType());
+			}
+			else
+			{            
+			            SimulatorUtilities.wait(2000);
+						selectProgramType(walletPlan.getProgramType());
+						waitForPageToLoad(driver());
+						SimulatorUtilities.wait(2000);
+					}
 			selectCurrency(walletPlan.getCurrency());
-			SimulatorUtilities.wait(2000);
+			waitForPageToLoad(driver());
+				SimulatorUtilities.wait(2000);
 			selectUsage(walletPlan.getUsage());
-
+				SimulatorUtilities.wait(2000);
+			
 			fillDetailsBasedOnCardType(walletPlan, productType);
 
 			clickNextButton(); // Click on next button
@@ -183,13 +194,13 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
 			inputDescription(walletPlan.getDescription());
 			selectProductType(productType);
-			SimulatorUtilities.wait(2000);
+			waitForPageToLoad(driver());
 			selectProgramType(walletPlan.getProgramType());
-			SimulatorUtilities.wait(2000);
+			waitForPageToLoad(driver());
 			selectCurrency(walletPlan.getCurrency());
-			SimulatorUtilities.wait(2000);
+			waitForPageToLoad(driver());
 			selectUsage(walletPlan.getUsage());
-			SimulatorUtilities.wait(2000);
+			waitForPageToLoad(driver());
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			clickNextButton(); // Click on next button
 			clickFinishButton(); // click on finish button

@@ -35,8 +35,14 @@ public class ContextConstants {
 	public static final String DEVICE_BIN = "DEVICE_BIN";
 	
 	public static final String TRANSACTION_FEE_PLAN = "TRANSACTION_FEE_PLAN";
+	
+	public static final String APPLICATION_TYPE = "APPLICATION_TYPE";
+	
+	public static final String DEVICE_PLAN_SUPPLEMENTARY = "DEVICE_PLAN_SUPPLEMENTARY";
 
 	public static final String USER = "USER";
+	
+	public static final String DEVICE_SUPPLEMENTARY_ADDON_EXISTING = "DEVICE_SUPPLEMENTARY_ADDON_EXISTING";
 
 	private ContextConstants() {
 	}

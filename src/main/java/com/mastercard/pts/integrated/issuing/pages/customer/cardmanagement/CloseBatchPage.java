@@ -41,10 +41,13 @@ public class CloseBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview-div")
 	private MCWebElement batchNoColumn;
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[2]/div[4]/div[2]/div[2]/form[1]/div[2]/div[4]/table/tbody/tr/td[10]/span/input")
-	private MCWebElement CloseBatchRecord;
+	private MCWebElement closeBatchRecord;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElement ProcessSelected;
+	private MCWebElement processSelected;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "saveAll")
+	private MCWebElement processAll;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]")
 	public MCWebElements allBatchNumberTxt;
@@ -57,9 +60,9 @@ public class CloseBatchPage extends AbstractBasePage {
 
 	public void closebatch() {
 		waitForLoaderToDisappear();
-		CloseBatchRecord.click();
+		closeBatchRecord.click();
 		CustomUtils.ThreadDotSleep(1000);
-		ProcessSelected.click();
+		processSelected.click();
 		CustomUtils.ThreadDotSleep(1000);
 	}
 
@@ -92,14 +95,14 @@ public class CloseBatchPage extends AbstractBasePage {
 	{
 		String checkBox="//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcess()+1+"]/td[10]/span/input";
 		clickWhenClickable(driver().findElement(By.xpath(checkBox)));
-		ProcessSelected.click();
+		processSelected.click();
 		verifyOperationStatus();
 		
 	}
 	
 	public void processFirstBatch() {
 		clickWhenClickable(firstBatchNumberTxt);
-		ProcessSelected.click();
+		processSelected.click();
 		verifyOperationStatus();
 	}
 	

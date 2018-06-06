@@ -13,7 +13,10 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.SubApplicationType;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -90,6 +93,9 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanCode1:input:dropdowncomponent")
 	private MCWebElement devicePlanPlan1DDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanCode2:input:dropdowncomponent")
+	private MCWebElement devicePlanPlan2DDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:statMsgCode:input:dropdowncomponent")
 	private MCWebElement otherPlanStatementMessagePlanDDwn;
@@ -350,6 +356,10 @@ public class ProgramPage extends AbstractBasePage {
 	public void selectDevicePlanPlan1DDwn(String devicePlanPlan1) {
 		WebElementUtils.selectDropDownByVisibleText(devicePlanPlan1DDwn, devicePlanPlan1);
 	}
+	
+	public void selectDevicePlanPlan2DDwn(String devicePlanPlan2) {
+		WebElementUtils.selectDropDownByVisibleText(devicePlanPlan2DDwn, devicePlanPlan2);
+	}
 
 	public void selectOtherPlanStatementMessagePlan(String otherPlanStatementMessagePlan) {
 		WebElementUtils.selectDropDownByVisibleText(otherPlanStatementMessagePlanDDwn, otherPlanStatementMessagePlan);
@@ -373,15 +383,22 @@ public class ProgramPage extends AbstractBasePage {
 		runWithinPopup("Add Program", () -> {
 			addProgram(program.getProgramCode());          	
 			addDescription(program.getDescription());
-			SimulatorUtilities.wait(2000);
-          	selectInterchange(program.getInterchange());
-          	SimulatorUtilities.wait(2000);
-			selectProduct(program.getProduct());
-         	SimulatorUtilities.wait(2000);
-			selectProgramType(program.getProgramType());
-          	SimulatorUtilities.wait(2000);
-			selectBaseCurrency(program.getBaseCurrency());
-          	SimulatorUtilities.wait(2000);
+					if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
+						selectByVisibleText(interchangeDDwn,program.getInterchange());
+					} else {
+					     SimulatorUtilities.wait(2000);
+						selectInterchange(program.getInterchange());
+					}
+						SimulatorUtilities.wait(2000);
+					selectProduct(program.getProduct());
+					if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
+						selectByVisibleText(programTypeDDwn,program.getProgramType());
+					} else {
+						SimulatorUtilities.wait(2000);
+						selectProgramType(program.getProgramType());
+					}
+						SimulatorUtilities.wait(2000);
+			      selectBaseCurrency(program.getBaseCurrency());
 			program.setProgramCodeDevice(program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
@@ -496,6 +513,13 @@ public class ProgramPage extends AbstractBasePage {
 		clickNextButton();
 		selectWalletPlanPlan1(program.getFirstWalletPlan());
 		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
+		if (productType.equalsIgnoreCase(ProductType.CREDIT))
+		{
+			if(program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && program.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT))
+			{
+		      selectDevicePlanPlan2DDwn(program.getDevicePlanPlan2());
+			}
+		}
 		if (!productType.equalsIgnoreCase(ProductType.DEBIT)) {
 			selectOtherPlanStatementMessagePlan(program.getOtherPlanStatementMessagePlan());
 			selectOtherPlanMarketingMessagePlan(program.getOtherPlanMarketingMessagePlan());
