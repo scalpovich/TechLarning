@@ -271,7 +271,12 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, device.getDeviceNumber());
 		}
 		logger.info("DeviceNumber: {}",device.getDeviceNumber());
-		context.put(ContextConstants.DEVICE, device);
+		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)
+				&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)) {
+			context.put(ContextConstants.DEVICE_SUPPLEMENTARY_ADDON_EXISTING,device);
+		} else {
+			context.put(ContextConstants.DEVICE, device);
+		}
 	}
 
 	public String getWalletsId(String wallets) {

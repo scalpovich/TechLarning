@@ -1064,7 +1064,10 @@ public class DevicePlanPage extends AbstractBasePage {
 	
 		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			if (DeviceType.MAGNETIC_STRIPE_CARD.contains(devicePlan.getDeviceType())|| DeviceType.EMV_CARD.contains(devicePlan.getDeviceType()) && "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
+				if(pinRetryLimitTxt.isEnabled())
+				{
 				WebElementUtils.enterText(pinRetryLimitTxt,devicePlan.getPinRetryLimit());
+				}
 			}
 		}
 		else
