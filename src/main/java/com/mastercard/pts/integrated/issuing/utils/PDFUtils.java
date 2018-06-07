@@ -54,17 +54,17 @@ public class PDFUtils {
 		return value;
 	}
 
-	public List<String> getContentRow(String pdfPath, TransactionReports tansactionReports) {
+	public List<String> getContentRow(String pdfPath, TransactionReports transactionReports) {
 		String pageContent = "";
 		List<String> programWiseContent = new ArrayList<String>();
 		String[] fullRow = { "" };
 		int pages = 0;
-		String rrn = tansactionReports.getRrnNumber();
-		String code = tansactionReports.getAuthrizationCode(); 
+		String rrn = transactionReports.getRrnNumber();
+		String code = transactionReports.getAuthorizationCode(); 
 		try {
 			File file = new File(pdfPath);
 			file.getParentFile().mkdirs();
-			PdfReader pdfReader = manipulatePdf(pdfPath, tansactionReports.getUsername());
+			PdfReader pdfReader = manipulatePdf(pdfPath, transactionReports.getUsername());
 			if (pdfReader != null)
 				pages = pdfReader.getNumberOfPages();
 			for (int i = 1; i <= pages; i++) {

@@ -142,9 +142,9 @@ public class AuthorizationSearchWorkflow {
 	public void verifyAuthTransactionSearchReport(Device device) {
 		
 		TransactionReports transactionReport = new TransactionReports();
-		transactionReport.setAuthrizationCode(context.get(ConstantData.AUTHORIZATION_CODE));
+		transactionReport.setAuthorizationCode(context.get(ConstantData.AUTHORIZATION_CODE));
 		transactionReport.setDeviceNumber(device.getDeviceNumber());
-		transactionReport.setRrnNumber(context.get(ConstantData.RRNUMBER));
+		transactionReport.setRrnNumber(context.get(ConstantData.RRN_NUMBER));
 		transactionReport.setUsername(context.get(USERNAME));
 		
 		List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME,transactionReport);
@@ -154,7 +154,7 @@ public class AuthorizationSearchWorkflow {
 		}
 		
 		boolean condition = authFileData.contains(context.get(ConstantData.AUTHORIZATION_CODE)) && authFileData.contains(device.getDeviceNumber()) 
-				&& authFileData.contains(context.get(ConstantData.TRANSACTION_AMOUNT)) && authFileData.contains(context.get(ConstantData.RRNUMBER));
+				&& authFileData.contains(context.get(ConstantData.TRANSACTION_AMOUNT)) && authFileData.contains(context.get(ConstantData.RRN_NUMBER));
 		assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
 	}
 

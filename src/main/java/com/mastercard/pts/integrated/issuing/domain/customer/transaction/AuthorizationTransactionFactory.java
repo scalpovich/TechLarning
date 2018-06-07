@@ -113,8 +113,8 @@ public class AuthorizationTransactionFactory {
 				randNum=context.get("DATAELEMENT_037");
 			}
 			entry.setValue(randNum);
-			context.put(ConstantData.RRNUMBER, randNum);
-			MiscUtils.reportToConsole("Set value of RRN : " + context.get(ConstantData.RRNUMBER));
+			context.put(ConstantData.RRN_NUMBER, randNum);
+			MiscUtils.reportToConsole("Set value of RRN : " + context.get(ConstantData.RRN_NUMBER));
 			MiscUtils.reportToConsole("RRN Number for transaction : " + randNum);
 		}
 		return entry;

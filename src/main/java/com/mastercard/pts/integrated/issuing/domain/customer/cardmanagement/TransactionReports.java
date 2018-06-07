@@ -2,7 +2,7 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 public class TransactionReports {
 
-	private String authrizationCode;
+	private String authorizationCode;
 	private String deviceNumber;
 	private String rrnNumber;
 	private String username;
@@ -15,12 +15,12 @@ public class TransactionReports {
 		this.username = username;
 	}
 
-	public String getAuthrizationCode() {
-		return authrizationCode;
+	public String getAuthorizationCode() {
+		return authorizationCode;
 	}
 
-	public void setAuthrizationCode(String authrizationCode) {
-		this.authrizationCode = authrizationCode;
+	public void setAuthorizationCode(String authorizationCode) {
+		this.authorizationCode = authorizationCode;
 	}
 
 	public String getDeviceNumber() {
