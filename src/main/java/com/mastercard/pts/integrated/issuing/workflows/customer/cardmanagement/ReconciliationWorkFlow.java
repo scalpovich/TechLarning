@@ -54,13 +54,13 @@ public class ReconciliationWorkFlow {
 		return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
 	}
 
-	public List<String> verifyAuthReport(String fileName,TransactionReports tansactionReports) {
+	public List<String> verifyAuthReport(String fileName,TransactionReports transactionReports) {
 		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
 		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
 		deleteExistingAuthorizationFilesFromSystem(fileName);
 		page.generateTransactionAuthReport();
 		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
-		return getReportContent(fileName,tansactionReports);
+		return getReportContent(fileName,transactionReports);
 		//return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
 	}
 		
@@ -109,9 +109,9 @@ public class ReconciliationWorkFlow {
 		return fileCountAfterDownload;
 	}
 
-	public List<String> getReportContent(String fileName,TransactionReports tansactionReports) {
+	public List<String> getReportContent(String fileName,TransactionReports transactionReports) {
 		PDFUtils pdfutils=new PDFUtils();
-		List<String> records = pdfutils.getContentRow(PDFUtils.getuserDownloadPath() + "\\"+fileName, tansactionReports);
+		List<String> records = pdfutils.getContentRow(PDFUtils.getuserDownloadPath() + "\\"+fileName, transactionReports);
 		for(int i=0;i<records.size();i++)
 		{
 			if (records != null)
