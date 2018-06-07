@@ -27,8 +27,20 @@ public class VariableScorePage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory
 			.getLogger(VariableScorePage.class);
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
-	private MCWebElement program;
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#prodCode select")
+	private MCWebElement programDdwn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#columnCode select")
+	private MCWebElement fieldNameDdwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "rangedStartValue:input:inputTextField")
+	private MCWebElement rangeStartValueTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "rangedEndValue:input:inputTextField")
+	private MCWebElement rangeEndValueTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "score:input:inputTextField")
+	private MCWebElement scoreTxt;
 
 	public void verifyUiOperationStatus() {
 		logger.info("Variable Score");
@@ -37,6 +49,6 @@ public class VariableScorePage extends AbstractBasePage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.elementToBeClickable(program));
+		return Arrays.asList(WebElementUtils.elementToBeClickable(programDdwn));
 	}
 }

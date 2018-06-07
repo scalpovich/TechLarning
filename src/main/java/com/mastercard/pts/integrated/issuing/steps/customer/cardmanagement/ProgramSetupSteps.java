@@ -97,6 +97,8 @@ public class ProgramSetupSteps {
 	private CreditCardBillingCycle creditCardBillingCycle;
 
 	private DevicePlan devicePlan;
+	
+	private DevicePlan devicePlanSupplementary;
 
 	private Program program;
 
@@ -510,7 +512,7 @@ public class ProgramSetupSteps {
 
 	@When("User fills Device Plan for $type product")
 	public void whenUserFillsDevicePlan(String type) {
-		devicePlan = DevicePlan.createWithProvider(provider);
+		devicePlan = DevicePlan.createWithProviderForCredit(provider);		
 		devicePlan.setProductType(ProductType.fromShortName(type));
 		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
 		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
@@ -525,6 +527,87 @@ public class ProgramSetupSteps {
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+	
+	@When("User fills Device Plan for $type product for $interchange")
+	public void whenUserFillsDevicePlanForInterchange(String type,String interchange) {
+		devicePlan = DevicePlan.createWithProvider(provider);
+		devicePlan.setProductType(ProductType.fromShortName(type));
+		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+		devicePlan.setAssociation(interchange);
+		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+
+		programSetupWorkflow.createDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+	
+	@When("for $deviceType User fills Device Plan for $type product for $interchange")
+	public void whenUserFillsDevicePlanForInterchangeAndDeviceType(String deviceType,String type,String interchange) {
+		devicePlan = DevicePlan.createProviderForCredit(provider);
+		devicePlan.setProductType(ProductType.fromShortName(type));
+		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+		devicePlan.setAssociation(interchange);
+		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setDeviceType(deviceType);
+
+		programSetupWorkflow.createDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+	
+	@When("for $deviceType User fills without pin Device Plan for $type product for $interchange")
+	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeWithoutPin(String deviceType,String type,String interchange) {
+		setPinRequiredToFalse();
+		devicePlan = DevicePlan.createProviderForCredit(provider);
+		devicePlan.setProductType(ProductType.fromShortName(type));
+		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+		devicePlan.setAssociation(interchange);
+		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setDeviceType(deviceType);
+
+		programSetupWorkflow.createDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+	
+	@When("for $deviceType User fills Supplementary Device Plan for $type product for $interchange")
+	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeForSupplementary(String deviceType,String type,String interchange) {
+		devicePlanSupplementary = DevicePlan.createProviderForCredit(provider);
+		devicePlanSupplementary.setProductType(ProductType.fromShortName(type));
+		devicePlanSupplementary.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setAssociation(interchange);
+		devicePlanSupplementary.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setDeviceType(deviceType);
+
+		programSetupWorkflow.createDevicePlan(devicePlanSupplementary);
+		context.put(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY, devicePlanSupplementary);
+	}
+	
+	@When("for $deviceType User fills without pin Supplementary Device Plan for $type product for $interchange")
+	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeForSupplementaryWithoutPin(String deviceType,String type,String interchange) {
+		setPinRequiredToFalse();
+		devicePlanSupplementary = DevicePlan.createProviderForCredit(provider);
+		devicePlanSupplementary.setProductType(ProductType.fromShortName(type));
+		devicePlanSupplementary.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setAssociation(interchange);
+		devicePlanSupplementary.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setDeviceType(deviceType);
+
+		programSetupWorkflow.createDevicePlan(devicePlanSupplementary);
+		context.put(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY, devicePlanSupplementary);
 	}
 
 	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card with no pin for non-default institution")
@@ -830,6 +913,35 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
 	}
+	
+	@When("User $applicationType fills $subApplicationType Program $programType section for $type product for $interchange")
+	public void whenUserFillsProgramSection(String applicationType,String subApplicationType,String programType,String type,String interchange) {
+		program = Program.createWithProvider(dataProvider, provider);
+		program.setProduct(ProductType.fromShortName(type));
+		program.setInterchange(interchange);
+		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
+			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
+			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+		}
+		program.setFirstWalletPlan(walletPlan.buildDescriptionAndCode());
+		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
+		program.setApplicationType(applicationType);
+		program.setSubApplicationType(subApplicationType);
+		if(program.getApplicationType().contains("Supplementary")||program.getApplicationType().contains("Add-on")&& program.getSubApplicationType().contains("Existing"))
+		{
+		program.setDevicePlanPlan2(devicePlanSupplementary.buildDescriptionAndCode());
+		}
+		program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
+		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
+		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
+		program.setProgramType(programType);
+
+		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID))
+			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+
+		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
+		context.put(ContextConstants.PROGRAM, program);
+	}
 
 	@When("User fills Program section for $type product and program $programType")
 	public void userFillsProgramSection(String type, String programType) {
@@ -996,13 +1108,40 @@ public class ProgramSetupSteps {
 	public void whenUserFillsDeviceRangeSection(String type) {
 		DeviceRange deviceRange;
 		if (type.equalsIgnoreCase(ProductType.CREDIT)) {
-			deviceRange = DeviceRange.createWithProvider(dataProvider, provider, type);
+			deviceRange = DeviceRange.createWithProvider(dataProvider,provider, type);
 		} else {
 			deviceRange = DeviceRange.createWithProvider(dataProvider, type);
 		}
 		deviceRange.setProductType(ProductType.fromShortName(type));
 		deviceRange.setProgram(program.buildDescriptionAndCode());
 		deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
+
+		programSetupWorkflow.createDeviceRange(deviceRange);
+	}
+	
+	@When("for $applicationType and $subApplicationType user fills Device Range section for $type product")
+	public void whenUserFillsDeviceRangeSectionforSupplementaryAndAddonExistingClient(String applicationType,String subApplicationType,String type) {
+		DeviceRange deviceRange;
+			if(ProductType.CREDIT.toUpperCase().contains(type.toUpperCase())) {
+			deviceRange = DeviceRange.createWithProvider(dataProvider,provider, type);
+			if(applicationType.contains("Supplementary")||applicationType.contains("Add-on")&& subApplicationType.contains("Existing"))
+			{
+				deviceRange.setProductType(ProductType.fromShortName(type));
+				deviceRange.setProgram(program.buildDescriptionAndCode());
+				deviceRange.setDevicePlanCode(devicePlanSupplementary.buildDescriptionAndCode());	
+			}
+			else
+			{
+				deviceRange.setProductType(ProductType.fromShortName(type));
+				deviceRange.setProgram(program.buildDescriptionAndCode());
+				deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
+			}
+		} else {
+			deviceRange = DeviceRange.createWithProvider(dataProvider, type);
+			deviceRange.setProductType(ProductType.fromShortName(type));
+			deviceRange.setProgram(program.buildDescriptionAndCode());
+			deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
+		}
 
 		programSetupWorkflow.createDeviceRange(deviceRange);
 	}
