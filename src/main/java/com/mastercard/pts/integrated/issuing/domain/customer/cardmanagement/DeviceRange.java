@@ -8,7 +8,7 @@ import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 public class DeviceRange {
-
+    
 	private static final int BIN_RANGE_SIZE = 10;
 	private static final String	ISSUER_BIN	 = 	"ISSUER_BIN";
 	private static final String	BRANCH	 = 	"BRANCH";
