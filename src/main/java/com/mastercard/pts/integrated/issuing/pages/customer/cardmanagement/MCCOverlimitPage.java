@@ -54,12 +54,12 @@ public class MCCOverlimitPage extends AbstractBasePage {
 		clickAddNewButton();
 		runWithinPopup("Add MCC Overlimit", () -> {
 			WebElementUtils.selectDDByVisibleText(walletPlanDdwn, mccOverlimit.getWalletPlan());
-			WebElementUtils.selectDDByVisibleText(currencyDdwn, mccOverlimit.getCurrency());
-			WebElementUtils.enterText(mccSearchCriteriaFromTxt, mccOverlimit.getMerchantCategoryCode());
-			WebElementUtils.enterText(mccSearchCriteriaToTxt, mccOverlimit.getMerchantCategoryCode());
+			WebElementUtils.selectDropDownByIndex(currencyDdwn, 1);
+			enterText(mccSearchCriteriaFromTxt, mccOverlimit.getMerchantCategoryCode());
+			enterText(mccSearchCriteriaToTxt, mccOverlimit.getMerchantCategoryCode());
 			clickSearchButton();
-			WebElementUtils.enterText(overlimitFixedAmount, mccOverlimit.getOverlimitFixedAmount());
-			WebElementUtils.enterText(overlimitPercentage, mccOverlimit.getOverlimitPercentage());
+			enterText(overlimitFixedAmount, mccOverlimit.getOverlimitFixedAmount());
+			enterText(overlimitPercentage, mccOverlimit.getOverlimitPercentage());
 			clickSaveButton();
 		});
 	}
