@@ -135,7 +135,7 @@ public class ProgramSetupSteps {
 			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
 			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
 			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
-			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product",
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product","When user assigns service code to program",
 			"When user creates a bulk device production request for prepaid", "When processes created bulk device generation request for prepaid", "When processes pre-production batch for prepaid",
 			"When processes device production batch for prepaid", "When processes pin generation batch for prepaid", "When user sign out from customer portal",
 			"When user is logged in agent portal as admin user", "When user fills information to assign program to agency and submits form", "When user sign out from agent portal",
