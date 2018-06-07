@@ -23,7 +23,7 @@ public class StopListDeviceSteps extends AbstractBaseSteps {
 	@Autowired
 	private KeyValueProvider keyProvider;
 
-	@When("user stoplists a card from stop list device screen")
+	@When("user stoplists a card from stoplist device screen")
 	public void userStoplistsCard() {
 		StopListDevice stopListDevice=StopListDevice.createWithProvider(keyProvider);
 		stopListDeviceWorkFlow.addStopLlistDevice(stopListDevice);

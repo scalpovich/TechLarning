@@ -62,7 +62,7 @@ public class StopListDevicePage extends AbstractBasePage {
 		Device device=context.get(ContextConstants.DEVICE);
 		clickAddNewButton();
 		runWithinPopup("Add Stop List Device", ()->{
-			enterDeviceNumber("5887653444876018");
+			enterDeviceNumber(device.getDeviceNumber());
 		    ClickButton(searchStopListBtn);
 		    selectReasonCode(stopListDevice.getStopListReason());
 		    enterStopListDescription(stopListDevice.getStopListReasonDescription());
@@ -75,7 +75,7 @@ public class StopListDevicePage extends AbstractBasePage {
 	}
 	
 	public void selectReasonCode(String reasonCode){
-		WebElementUtils.selectDDByVisibleText(reasonCodeDDwn, reasonCode);
+		selectByVisibleText(reasonCodeDDwn, reasonCode);
 	}
 	
 	public void enterStopListDescription(String description){

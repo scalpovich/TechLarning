@@ -899,6 +899,8 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectIframeBeforeKYCDdwn(String kycType) {
+		SimulatorUtilities.wait(5000);
+      	WebElementUtils.elementToBeClickable(iframeBeforeKYCDdwn);
 		if (iframeBeforeKYCDdwn.isEnabled()) {
 			WebElementUtils.selectDropDownByVisibleText(iframeBeforeKYCDdwn,kycType);
 		}
