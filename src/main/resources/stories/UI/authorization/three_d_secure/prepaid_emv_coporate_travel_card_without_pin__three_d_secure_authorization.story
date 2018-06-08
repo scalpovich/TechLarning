@@ -31,9 +31,11 @@ Then user activates device through helpdesk
 Then embossing file batch was generated in correct format
 Then user sign out from customer portal
 
-Scenario: Perform 3D_SECURE_CAVV Authorization transaction
-Meta:
-@TestId 
-Given connection to MAS is established
+Scenario: perform 3D_SECURE_CAVV authorization on corporate msr card
+When connection to MAS is established
 When perform an 3D_SECURE_CAVV MAS transaction
 Then MAS test results are verified
+When MAS simulator is closed
+Then user is logged in institution
+Then search E-Commerce Transaction authorization and verify 000-Successful status
+And user sign out from customer portal
