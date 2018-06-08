@@ -16,7 +16,8 @@ Meta:
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
-
+Then device has "normal" status
+And user sign out from customer portal
 
 Scenario: prepaidemv corporate travel card device production
 Meta:
@@ -24,28 +25,24 @@ Meta:
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
-Then user sign out from customer portal
-When user is logged in institution
 When processes device production batch for prepaid
 When processes pin generation batch for prepaid
-Then device has "normal" status
 When user has wallet number information for prepaid device
-Then user sign out from customer portal
-Then user is logged in institution
-When user performs adjustment transaction
+When user performs adjustment transaction with 50000 amount
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
-Then user activates device through helpdesk
-Then user sign out from customer portal
+When user activates device through helpdesk
+And user sign out from customer portal
+
 
 Scenario: Pin Generation 
 Meta:
 @TestId 
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
-When embossing file batch was generated in correct format
+Then embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
-When FINSim simulator is closed
+Then FINSim simulator is closed
 
 Scenario: Perform EMV_PURCHASE Authorization transaction 1
 Meta:
