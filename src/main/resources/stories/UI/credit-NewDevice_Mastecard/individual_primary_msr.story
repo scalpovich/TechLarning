@@ -44,17 +44,8 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-
-Scenario: Perform MSR_REFUND Authorization transaction
-Given connection to MAS is established
-When perform an MSR_REFUND MAS transaction
-Then MAS test results are verified
-Then user is logged in institution
-Then search Refund authorization and verify 000-Successful status
-Then validate auth report
-And user sign out from customer portal
-
 Scenario: Perform ASI_MSR Authorization transaction on Individual Primary MSR Card
+Given connection to MAS is established
 When perform an ASI_MSR MAS transaction
 Then MAS test results are verified
 And user is logged in institution
