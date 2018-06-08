@@ -510,7 +510,17 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.activateDevice(helpdeskGeneral);
 	}
-
+	
+	@Then("user activates credit limit change request")
+	@Given("user activates credit limit change request")
+	@When("user activates credit limit change request")
+	public void whenUserActivatesCreditLimitChangeRequestThroughHelpdesk() {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.activateCreditLimitChangeRequest(helpdeskGeneral);
+	}
+	
+	
 	@Given("user setup device currency through helpdesk")
 	@When("user setup device currency through helpdesk")
 	public void whenUserSetupDeviceCurrencyThroughHelpDesk() {

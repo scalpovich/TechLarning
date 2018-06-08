@@ -73,6 +73,14 @@ public class HelpdeskWorkflow {
 	public void activateDevice(HelpdeskGeneral helpdeskGeneral) {
 		helpDeskPage.activateDevice(helpdeskGeneral);
 	}
+	
+	public void activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
+		helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
+	}
+	
+	public void creditLimitChange(HelpdeskGeneral helpdeskGeneral){
+		helpDeskPage.activateDevice(helpdeskGeneral);
+	}
 
 	public void setupDeviceCurrency(HelpdeskGeneral helpdeskGeneral) {
 		helpDeskPage.setupDeviceCurrency(helpdeskGeneral);

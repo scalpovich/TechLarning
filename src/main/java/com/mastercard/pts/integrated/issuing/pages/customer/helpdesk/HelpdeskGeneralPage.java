@@ -111,6 +111,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "memo1:input:textAreaComponent")
 	private MCWebElement notesTxt;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "udf6:input:dropdowncomponent")
+	private MCWebElement selectType;
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Save']")
 	private MCWebElement saveBtn;
 	
@@ -337,6 +340,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.enterText(notesTxt, notes);
 	}
 	
+	public void selectType(String type){
+		WebElementUtils.selectDropDownByVisibleText(selectType, type);
+	}
+	
 	public void enterEmailID(HelpdeskGeneral general){
 		enterValueinTextBox(emailIDInptTxt,general.getNewEmailID());
 	}
@@ -441,6 +448,20 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickOKButtonPopup();			
 		});
 		//There is a delay in page rendering
+		SimulatorUtilities.wait(5000);
+		clickEndCall();
+	}
+	
+	public void activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
+		logger.info("credit limit change request: {}",helpdeskGeneral.getCardPackId());
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		clickGoButton();
+		runWithinPopup("226-Credit limit Change Request", ()->{
+			enterNotes(helpdeskGeneral.getNotes());
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();
+		});
 		SimulatorUtilities.wait(5000);
 		clickEndCall();
 	}
