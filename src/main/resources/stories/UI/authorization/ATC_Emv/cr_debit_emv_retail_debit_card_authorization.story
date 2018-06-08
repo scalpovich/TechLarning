@@ -78,3 +78,4 @@ Then user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
 When verify ATC counter getting updated at device usage screen
 Then user sign out from customer portal
+When MAS simulator is closed
