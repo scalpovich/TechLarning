@@ -72,6 +72,7 @@ public class Program implements HasCodeAndDescription {
 	private String firstWalletPlan;
 	private String secondWalletPlan;
 	private String devicePlanPlan1;
+	private String devicePlanPlan2;
 	private String otherPlanStatementMessagePlan;
 	private String otherPlanMarketingMessagePlan;
 	private String creditLimit;
@@ -129,6 +130,8 @@ public class Program implements HasCodeAndDescription {
 	public String WalletPlan2;
 
 	public String WalletPlan3;
+	private String applicationType;
+	private String subApplicationType;
 
 	public static Program createWithProvider(DataProvider dataProvider, KeyValueProvider provider) {
 		Program programObject = dataProvider.getDataBySimpleClassName(Program.class);
@@ -150,7 +153,7 @@ public class Program implements HasCodeAndDescription {
 		programObject.setReferenceCurrency(provider.getString(REFERENCE_CURRENCY));
 		programObject.setWalletToWalletTransferType(provider.getString(WALLET_TO_WALLET_TRANSFER_TYPE));
 		programObject.setMarkUpFeePlan(provider.getString(MARK_UP_FEE_PLAN));
-		programObject.setPayoutCurrencyPlan(provider.getString(PAYOUT_CURRENCY_PLAN));
+		programObject.setPayoutCurrencyPlan("Auto Payout [AUTOPAY]");
 		return programObject;
 	}
 
@@ -174,7 +177,7 @@ public class Program implements HasCodeAndDescription {
 		programObject.setReferenceCurrency(provider.getString(REFERENCE_CURRENCY));
 		programObject.setWalletToWalletTransferType(provider.getString(WALLET_TO_WALLET_TRANSFER_TYPE));
 		programObject.setMarkUpFeePlan(provider.getString(MARK_UP_FEE_PLAN));
-		programObject.setPayoutCurrencyPlan(provider.getString(PAYOUT_CURRENCY_PLAN));
+		programObject.setPayoutCurrencyPlan("Auto Payout [AUTOPAY]");
 		return programObject;
 	}
 
@@ -214,7 +217,7 @@ public class Program implements HasCodeAndDescription {
 		programObject.setResetLimitsAddonLimitReset(provider.getString(PGM_RESET_LIMITS_ADDON_LIMIT_RESET));
 		programObject.setEventsSelectAll(provider.getString(PGM_EVENTS_SELECT_ALL));
 		programObject.setMarkUpFeePlan(provider.getString(MARK_UP_FEE_PLAN));
-		programObject.setPayoutCurrencyPlan(provider.getString(PAYOUT_CURRENCY_PLAN));
+		programObject.setPayoutCurrencyPlan("Auto Payout [AUTOPAY]");
 		return programObject;
 	}
 
@@ -792,6 +795,30 @@ public class Program implements HasCodeAndDescription {
 
 	public void setPayoutCurrencyPlan(String payoutCurrencyPlan) {
 		this.payoutCurrencyPlan = payoutCurrencyPlan;
+	}
+
+	public String getDevicePlanPlan2() {
+		return devicePlanPlan2;
+	}
+
+	public void setDevicePlanPlan2(String devicePlanPlan2) {
+		this.devicePlanPlan2 = devicePlanPlan2;
+	}
+
+	public String getApplicationType() {
+		return applicationType;
+	}
+
+	public void setApplicationType(String applicationType) {
+		this.applicationType = applicationType;
+	}
+
+	public String getSubApplicationType() {
+		return subApplicationType;
+	}
+
+	public void setSubApplicationType(String subApplicationType) {
+		this.subApplicationType = subApplicationType;
 	}
 
 	@Override

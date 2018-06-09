@@ -46,7 +46,7 @@ public class WalletFeePlan {
 
 	public static WalletFeePlan createWithProvider(KeyValueProvider provider) {
 		WalletFeePlan plan = new WalletFeePlan();
-		plan.setWalletFeePlanCode("AU" + RandomStringUtils.randomNumeric(5));
+		plan.setWalletFeePlanCode("A" + RandomStringUtils.randomNumeric(6));
 		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);
 		plan.setCurrency(provider.getString(KEY_CURRENCY));
 		return plan;
@@ -54,7 +54,7 @@ public class WalletFeePlan {
 	
 	public static WalletFeePlan createWithProviderForRegression(KeyValueProvider provider) {
 		WalletFeePlan plan = new WalletFeePlan();
-		plan.setWalletFeePlanCode("AUT" + RandomStringUtils.randomNumeric(4));
+		plan.setWalletFeePlanCode("A" + RandomStringUtils.randomNumeric(6));
 		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);
 		plan.setCurrency(provider.getString(WFP_CURRENCY));
 		plan.setInactivityFeesChargeFees(provider.getString(WFP_INACTIVITYFEES_CHARGE_FEES));

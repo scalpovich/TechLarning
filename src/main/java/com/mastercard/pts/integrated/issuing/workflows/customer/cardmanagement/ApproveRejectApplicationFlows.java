@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ApproveRejectPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
 @Component
 public class ApproveRejectApplicationFlows {
@@ -18,6 +19,7 @@ public class ApproveRejectApplicationFlows {
 		approveRejectPage.selectFromAndToDate();
 		approveRejectPage.clickEditImageForTheRecordDisplayed();
 		approveRejectPage.approveButtonClick();
+		SimulatorUtilities.wait(5000);
 		String message=approveRejectPage.getApplicationNumber();
 		return message;
 	}

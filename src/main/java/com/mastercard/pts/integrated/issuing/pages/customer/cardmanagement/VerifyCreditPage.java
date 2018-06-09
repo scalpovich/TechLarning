@@ -96,6 +96,7 @@ TestContext context;
 		context.put(CreditConstants.BATCH_NUMBER_FILEUPLOAD, batchNumberTxt.getText());
 		clickWhenClickable(verifyBtn);
 		verifyOperationStatus();
+		SimulatorUtilities.wait(5000);
 		String applicationNumber=getCodeFromInfoMessage("Application Number");
 		return applicationNumber;
 	}
@@ -130,6 +131,5 @@ TestContext context;
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 }

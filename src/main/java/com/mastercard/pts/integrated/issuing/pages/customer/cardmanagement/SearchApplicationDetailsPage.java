@@ -19,6 +19,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManag
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
@@ -97,7 +98,7 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
 		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDate, LocalDate.now());
-		clickSearchButton();
+		clickSearchButton();		
 		waitAndSearchForApplicationBatchNumberToAppear();
 		return batchNumberTxt.getText();
 		
@@ -109,9 +110,9 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 	public void searchUntilBatchNumberIsDisplayed()
 	{
 		try
-		{
-			if(!driver().findElement(By.xpath("//table[@class='dataview']//tr[@class!='headers']/td[5]/span")).isDisplayed())
-			{
+		{	String path = String.format("//table[@class='dataview']/..//td[count(//th[.//*[text()='%S']]/preceding-sibling::th)+1]", "Device Batch Number");
+			if(!driver().findElement(By.xpath(path)).isDisplayed())
+			{	SimulatorUtilities.wait(8000);
 				clickSearchButton();
 				waitForPageToLoad(driver());
 				searchUntilBatchNumberIsDisplayed();
@@ -121,6 +122,8 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 	public void searchNewApplication(SearchApplicationDetails search){
 		enterFirstName(search);

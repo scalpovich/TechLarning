@@ -44,6 +44,9 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement processSelected;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "saveAll")
+	private MCWebElement processAll;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]")
 	private MCWebElements allBatchNumberTxt;
 	
@@ -51,11 +54,7 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	private MCWebElements allRowsTxt;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Device Generation']")
-	private MCWebElement deviceGenerationLink;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "saveAll")
-	private MCWebElement processAllTxt;
-	
+	private MCWebElement deviceGenerationLink;	
 	
 	public List<String> allBatchNumberRetrieval()
 	{
@@ -87,7 +86,7 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 		checkWhetherRecordPersists();
 		String checkBox="//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcess()+1+"]/td[8]/span/input";
 		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(checkBox)));
-		processSelected.click();
+		clickWhenClickable(processSelected);
 		verifyOperationStatus();
 		
 	}
@@ -97,6 +96,18 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 			clickWhenClickable(deviceGenerationLink);
 			checkWhetherRecordPersists();
 		}
+	}
+	
+	public void processFirstBatch() {
+		processAll.click();
+		verifyOperationStatus();
+	}
+	
+	public void processAllClick()
+	{
+		SimulatorUtilities.wait(8000);
+		clickWhenClickable(deviceGenerationLink);
+		clickWhenClickable(processAll);
 	}
 	
 	public int identifyBatchNumberToProcessForFileUpload()
@@ -123,13 +134,6 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 		processSelected.click();
 		verifyOperationStatus();
 		
-	}
-	
-	public void processAllClick()
-	{
-		SimulatorUtilities.wait(8000);
-		clickWhenClickable(deviceGenerationLink);
-		clickWhenClickable(processAllTxt);
 	}
 	
     @Override

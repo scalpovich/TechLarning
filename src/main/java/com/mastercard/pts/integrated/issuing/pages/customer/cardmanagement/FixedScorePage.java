@@ -27,8 +27,17 @@ public class FixedScorePage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory
 			.getLogger(FixedScorePage.class);
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
-	private MCWebElement program;
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#prodCode select")
+	private MCWebElement programDdwn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#columnCode select")
+	private MCWebElement fieldNameDdwn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#columnValue select")
+	private MCWebElement fieldValueDdwn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#score input")
+	private MCWebElement scoreTxt;
 
 	public void verifyUiOperationStatus() {
 		logger.info("Fixed Score");
@@ -38,6 +47,6 @@ public class FixedScorePage extends AbstractBasePage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(program));
+				WebElementUtils.elementToBeClickable(programDdwn));
 	}
 }

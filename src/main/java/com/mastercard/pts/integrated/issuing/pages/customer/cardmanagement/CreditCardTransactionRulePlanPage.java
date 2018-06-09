@@ -74,6 +74,7 @@ public class CreditCardTransactionRulePlanPage extends AbstractBasePage {
 		// Add Document Checklist section
 		runWithinPopup("Add Transaction Rules Plan",
 				() -> {
+					SimulatorUtilities.wait(3000);
 					WebElementUtils.enterText(transactionRulePlanCodeTxt,
 							creditCardTransactionRulePlan
 									.getTransactionRulePlanCode());
@@ -82,7 +83,6 @@ public class CreditCardTransactionRulePlanPage extends AbstractBasePage {
 					logger.info("TransactionRulePlanCodeAndDescription : {}",creditCardTransactionRulePlan.buildDescriptionAndCode());
 					context.put(CreditConstants.TRANSACTION_RULE, creditCardTransactionRulePlan.buildDescriptionAndCode());
 					clickAddDetailsButton();
-
 					SimulatorUtilities.wait(4000);
 					if (!verifyAlreadyExists()) {
 						clickSaveButton();
@@ -109,17 +109,17 @@ public class CreditCardTransactionRulePlanPage extends AbstractBasePage {
 		private void checkDuplicacyOfTransactionPlanCode(CreditCardTransactionRulePlan creditCardTransactionRulePlan) {
 			if(!isNoRecordsFoundInTable())
 			{
-				counter+=1;
-				if(counter<2)
-				{
+			counter+=1;
+			if(counter<2)
+			{
 				 creditCardTransactionRulePlan.setTransactionRulePlanCode(MiscUtils
 						.generateRandomNumberBetween2Number(100, 999));
 				 logger.info("transactionRulePlanCode: {}",creditCardTransactionRulePlan.getTransactionRulePlanCode());
 				 performSearchOperationOnMainScreen(creditCardTransactionRulePlan);
 				 waitForPageToLoad(getFinder().getWebDriver());
 				 checkDuplicacyOfTransactionPlanCode(creditCardTransactionRulePlan);
-				}
-			}
+		}
+	}
 	}
 
 }

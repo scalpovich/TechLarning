@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.CreditInstitutionData;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
@@ -80,9 +81,9 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#activeFlag select")
 	private MCWebElement statusDDwn;
+	
 	@Autowired
 	Program program;
-
 	@Autowired
 	DevicePlan deviceplan;
 
@@ -235,9 +236,6 @@ public class DeviceRangePage extends AbstractBasePage {
 		
 	}
 	
-	public void selectBranchUpload() {
-		WebElementUtils.selectDropDownByVisibleText(BranchDDwn,context.get(CreditConstants.VENDOR_BRANCH));
-	}
 
 	public void clickAddButton() {
 		clickWhenClickable(AddTxt);
@@ -440,8 +438,47 @@ public class DeviceRangePage extends AbstractBasePage {
 		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		logger.info("ProductType : {}", devicePlan.getProductType());
 		logger.info("issuerBin :{}", deviceRange.getIssuerBin());
-		selectIssuerBin(deviceRange.getIssuerBin());
-		selectBranch(deviceRange.getBranch());
+		CreditInstitutionData valuesInJsonNotInExcel=context.get(CreditConstants.JSON_VALUES);
+		program=context.get(ContextConstants.PROGRAM);
+		if (deviceRange.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
+			if (program.getInterchange().toUpperCase().contains("MASTERCARD")) {
+				if (program.getProduct().toUpperCase()
+						.contains(ProductType.PREPAID.toUpperCase())) {
+					deviceRange.setIssuerBin(valuesInJsonNotInExcel
+							.getMastercardPrepaidIssuerBin());
+				} else if (program.getProduct().toUpperCase()
+						.contains(ProductType.DEBIT.toUpperCase())) {
+					deviceRange.setIssuerBin(valuesInJsonNotInExcel
+							.getMastercardDebitIssuerBin());
+				} else if (program.getProduct().toUpperCase()
+						.contains(ProductType.CREDIT.toUpperCase())) {
+					deviceRange.setIssuerBin(valuesInJsonNotInExcel
+							.getMastercardCreditIssuerBin());
+				}
+			} else if (program.getInterchange().toUpperCase().contains("VISA")) {
+				if (program.getProduct().toUpperCase()
+						.contains(ProductType.PREPAID.toUpperCase())) {
+					deviceRange.setIssuerBin(valuesInJsonNotInExcel
+							.getVisaPrepaidIssuerBin());
+				} else if (program.getProduct().toUpperCase()
+						.contains(ProductType.DEBIT.toUpperCase())) {
+					deviceRange.setIssuerBin(valuesInJsonNotInExcel
+							.getVisaDebitIssuerBin());
+				} else if (program.getProduct().toUpperCase()
+						.contains(ProductType.CREDIT.toUpperCase())) {
+					deviceRange.setIssuerBin(valuesInJsonNotInExcel
+							.getVisaCreditIssuerBin());
+				}
+			}
+
+			selectByVisibleText(issuerBinDDwn, deviceRange.getIssuerBin());
+			selectByVisibleText(branchDDwn, deviceRange.getBranch());
+		}
+
+		else {
+			selectIssuerBin(deviceRange.getIssuerBin());
+			selectBranch(deviceRange.getBranch());
+		}
 		addBtn.click();
 		waitForWicket();
 	}

@@ -6,21 +6,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
 import com.google.common.base.Throwables;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionReports;
 
 @Component
 public class PDFUtils {
 	private static final Logger logger = LoggerFactory.getLogger(PDFUtils.class);
 
 	DateUtils dateutils;
-
+	
 	public static String getContent(String pdfPath, String key) {
 		String value = "";
 		String pageContent = "";
@@ -51,20 +54,22 @@ public class PDFUtils {
 		return value;
 	}
 
-	public List<String> getContentRow(String pdfPath, String code, String username) {
+	public List<String> getContentRow(String pdfPath, TransactionReports transactionReports) {
 		String pageContent = "";
 		List<String> programWiseContent = new ArrayList<String>();
 		String[] fullRow = { "" };
 		int pages = 0;
+		String rrn = transactionReports.getRrnNumber();
+		String code = transactionReports.getAuthorizationCode(); 
 		try {
 			File file = new File(pdfPath);
 			file.getParentFile().mkdirs();
-			PdfReader pdfReader = manipulatePdf(pdfPath, username);
+			PdfReader pdfReader = manipulatePdf(pdfPath, transactionReports.getUsername());
 			if (pdfReader != null)
 				pages = pdfReader.getNumberOfPages();
 			for (int i = 1; i <= pages; i++) {
 				pageContent = PdfTextExtractor.getTextFromPage(pdfReader, i);
-				if (pageContent.contains(code)) {
+				if (pageContent.contains(code) && pageContent.contains(rrn)) {
 					fullRow = pageContent.split("\n");
 					break;
 				}

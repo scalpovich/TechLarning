@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CloseBatchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
 @Component
 public class CloseBatchFlows {
@@ -22,6 +23,7 @@ public class CloseBatchFlows {
 	{
 		closeBatchPage=navigator.navigateToPage(CloseBatchPage.class);
 		closeBatchPage.allBatchNumberRetrieval();
+		SimulatorUtilities.wait(5000);
 		closeBatchPage.identifyBatchNumberToProcess();
 		closeBatchPage.processAppropriateBatchForApplication();
 	}

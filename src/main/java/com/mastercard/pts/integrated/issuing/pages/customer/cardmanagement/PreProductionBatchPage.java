@@ -7,6 +7,8 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,28 +120,17 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
 		enterText(batchNumberTxt, batchNumber);
 		ClickButton(searchBtn);
+		waitAndSearchForRecordToAppear();
+		setQuantityRequested();
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		ClickButton(processSelectedBtn);
 		verifyOperationStatus();
 		SwitchToDefaultFrame();
 
 	}
-
-	public void processPreProductionBatchNewApplicationForFileUpload(PreProductionBatch batch) {
-        List<String>batchNumbers=context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
-        /*for(int i=0;i<batchNumbers.size();i++)
-        {*/
-		waitForLoaderToDisappear();
-		selectDropDownByText(productTypeDDwn, batch.getProductType());
-		SimulatorUtilities.wait(8000);
-		enterText(batchNumberTxt, batchNumbers.get(0));
-		ClickButton(searchBtn);
-		ClickCheckBox(preProductionBatchRecordChkBx, true);
-		ClickButton(processSelectedBtn);
-		verifyOperationStatus();
-		SwitchToDefaultFrame();
-        //}
-
+	
+	public void setQuantityRequested(){		
+		context.put(CreditConstants.QUANTITY_REQUESTED, getCellTextByColumnName(1,"Quantity Requested")); 
 	}
 	
 	public void verifyUiOperationStatus() {
@@ -220,13 +211,30 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		waitForLoaderToDisappear();
 		selectDropDownByText(productTypeDDwn, batch.getProductType());
 		CustomUtils.ThreadDotSleep(8000);
-		Device device = context.get(ContextConstants.DEVICE);
-		enterText(batchNumberTxt, device.getBatchNumber());
+		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
+		enterText(batchNumberTxt, batchNumber);
 		ClickButton(searchBtn);
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		ClickButton(processSelectedBtn);
 		verifyOperationStatus();
 		SwitchToDefaultFrame();
+	}
+	
+		public void processPreProductionBatchNewApplicationForFileUpload(PreProductionBatch batch) {
+        List<String>batchNumbers=context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
+        /*for(int i=0;i<batchNumbers.size();i++)
+        {*/
+		waitForLoaderToDisappear();
+		selectDropDownByText(productTypeDDwn, batch.getProductType());
+		SimulatorUtilities.wait(8000);
+		enterText(batchNumberTxt, batchNumbers.get(0));
+		ClickButton(searchBtn);
+		ClickCheckBox(preProductionBatchRecordChkBx, true);
+		ClickButton(processSelectedBtn);
+		verifyOperationStatus();
+		SwitchToDefaultFrame();
+        //}
+
 	}
 
 	@Override

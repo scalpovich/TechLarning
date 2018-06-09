@@ -79,13 +79,12 @@ public class CreditCardCreditPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='feedbackPanelERROR']")
 	private MCWebElement errorMsgLbl;
 
-	private int counter=0;
 	
 	public void verifyUiOperationStatus() {
 		logger.info("Credit Card Credit Plan Page");
 		verifySearchButton("Search");
 	}
-
+	private int counter=0;
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(creditPlanCodeTxt),
@@ -147,12 +146,19 @@ public class CreditCardCreditPlanPage extends AbstractBasePage {
 			{
 				creditCardPlan.setErrorStatus(false);
 			}
+			/*if(errorMessagePresence()){
+			clickCancelButton();
+			waitForPageToLoad(driver());
+			}*/
 		});
-		verifyOperationStatus();
+		if (!canceled.get()) {
+			verifyOperationStatus();
+		}
 		return creditCardPlan.getErrorStatus();
 	}
 
 	private void checkDuplicacyOfCreditPlanCode(CreditCardCreditPlan creditCardCreditPlan) {
+		
 		if (!isNoRecordsFoundInTable()) {
 			counter += 1;
 			if (counter < 2) {

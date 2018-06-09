@@ -41,17 +41,22 @@ public class CloseBatchPage extends AbstractBasePage {
 	protected  static final Logger logger = LoggerFactory.getLogger(CloseBatchPage.class);
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview-div")
 	private MCWebElement batchNoColumn;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[2]/div[4]/div[2]/div[2]/form[1]/div[2]/div[4]/table/tbody/tr/td[10]/span/input")
-	private MCWebElement CloseBatchRecord;
+	private MCWebElement closeBatchRecord;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElement ProcessSelected;
+	private MCWebElement processSelected;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "saveAll")
 	private MCWebElement processAll;
 	
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]")
 	public MCWebElements allBatchNumberTxt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[1]/td[10]/span/input")
+	public MCWebElement firstBatchNumberTxt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElements allRowsTxt;
@@ -61,9 +66,9 @@ public class CloseBatchPage extends AbstractBasePage {
 
 	public void closebatch() {
 		waitForLoaderToDisappear();
-		CloseBatchRecord.click();
+		closeBatchRecord.click();
 		CustomUtils.ThreadDotSleep(1000);
-		ProcessSelected.click();
+		processSelected.click();
 		CustomUtils.ThreadDotSleep(1000);
 	}
 
@@ -96,49 +101,15 @@ public class CloseBatchPage extends AbstractBasePage {
 	{
 		String checkBox="//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcess()+1+"]/td[10]/span/input";
 		clickWhenClickable(driver().findElement(By.xpath(checkBox)));
-		ProcessSelected.click();
+		clickWhenClickable(processSelected);
 		verifyOperationStatus();
 		
 	}
 	
-	public int identifyBatchNumberToProcessForFileUpload()
-	{
-		int i;
-		String batchNumber=context.get(CreditConstants.BATCH_NUMBER_FILEUPLOAD);
-		logger.info("BatchNumber_Application:{}",batchNumber);
-		for(i=0;i<allBatchNumberRetrieval().size();i++)
-		{
-			if(allBatchNumberRetrieval().get(i).equals(batchNumber.trim()))
-			{
-				logger.info("batchNumber: {}",allBatchNumberRetrieval().get(i));
-				break;
-			}
-		}
-		return i;
-	}
-	
-	public void processAppropriateBatchForApplicationForFileUpload()
-	{
-		String checkBox="//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcessForFileUpload()+1+"]/td[10]/span/input";
-		clickWhenClickable(driver().findElement(By.xpath(checkBox)));
-		ProcessSelected.click();
-			try {
-				if (driver()
-						.findElement(By.xpath("//h3[text()= 'Confirmation Message']/ancestor::div//iframe"))
-						.isDisplayed()) {
-					switchToIframe("Confirmation Message");
-					clickWhenClickable(yesBtn);
-					verifyOperationStatus();
-				}
-				else
-					
-				{
-					verifyOperationStatus();
-				}
-
-			} catch (Exception e) {
-				e.getMessage();
-			}
+	public void processFirstBatch() {
+		clickWhenClickable(firstBatchNumberTxt);
+		clickWhenClickable(processSelected);
+		verifyOperationStatus();
 		
 	}
 	
@@ -162,6 +133,47 @@ public class CloseBatchPage extends AbstractBasePage {
 		} catch (Exception e) {
 			e.getMessage();
 		}
+	}
+	
+		public int identifyBatchNumberToProcessForFileUpload()
+	{
+		int i;
+		String batchNumber=context.get(CreditConstants.BATCH_NUMBER_FILEUPLOAD);
+		logger.info("BatchNumber_Application:{}",batchNumber);
+		for(i=0;i<allBatchNumberRetrieval().size();i++)
+		{
+			if(allBatchNumberRetrieval().get(i).equals(batchNumber.trim()))
+			{
+				logger.info("batchNumber: {}",allBatchNumberRetrieval().get(i));
+				break;
+			}
+		}
+		return i;
+	}
+	
+	public void processAppropriateBatchForApplicationForFileUpload()
+	{
+		String checkBox="//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcessForFileUpload()+1+"]/td[10]/span/input";
+		clickWhenClickable(driver().findElement(By.xpath(checkBox)));
+		clickWhenClickable(processSelected);
+			try {
+				if (driver()
+						.findElement(By.xpath("//h3[text()= 'Confirmation Message']/ancestor::div//iframe"))
+						.isDisplayed()) {
+					switchToIframe("Confirmation Message");
+					clickWhenClickable(yesBtn);
+					verifyOperationStatus();
+				}
+				else
+					
+				{
+					verifyOperationStatus();
+				}
+
+			} catch (Exception e) {
+				e.getMessage();
+			}
+		
 	}
 	
     @Override

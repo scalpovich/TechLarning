@@ -131,15 +131,15 @@ public class CreditCardPaymentPriorityPage extends AbstractBasePage {
 		
 			clickSaveButton();
 			SimulatorUtilities.wait(4000);
-			 if (verifyAlreadyExists()) {
-				    errorMessagePresence();
-				 	creditCardPlans.setErrorStatus(errorMessagePresence());
-					canceled.set(verifyAlreadyExistsAndClickCancel());
-			 }
-			 else
-			 {
-				 creditCardPlans.setErrorStatus(false);
-			 }
+		 if (verifyAlreadyExists()) {
+			errorMessagePresence();
+			creditCardPlans.setErrorStatus(errorMessagePresence());
+			canceled.set(verifyAlreadyExistsAndClickCancel());
+		 }
+		 else
+		 {
+			 creditCardPlans.setErrorStatus(false);
+		 }
 		});
 		if (!canceled.get()) {
 			verifyOperationStatus();
