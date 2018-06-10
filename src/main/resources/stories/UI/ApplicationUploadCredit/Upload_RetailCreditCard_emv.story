@@ -9,23 +9,24 @@ Meta:
 @FileUpload
 Scenario: Verify system allows onboarding for new credit customer - Retail credit Card single wallet using application upload funcationality
 Given user is logged in institution
-When User fills Statement Message Plan for credit product
+When User fills Dedupe Plan
+And User fills Statement Message Plan for credit product
 And User fills Marketing Message Plan for credit product
 And User fills Transaction Plan for credit product
 And User fills Transaction Limit Plan for credit product
 And User fills Document Checklist Screen for credit product
 And User fills Device Joining and Membership Fee Plan for credit product
 And User fills Device Event Based Fee Plan for credit product
-And User fills Device Plan for credit product
+And for EMV Card User fills without pin Device Plan for credit product for Visa
 And User fills Billing Cycle
 And User fills Payment Priority
 And User fills Transaction Rule Plan
 And User fills Credit Plan
 And User fills Wallet Fee Plan for credit product
-And User fills Wallet Plan for credit product
+And User fills Wallet Plan for credit product and program Retail Credit Card
 And User fills MCC Rules for credit product
-And User fills Program section for credit product for FileUpload
-When User fills Device Range section for credit product
+And User Primary Device fills New Program Retail Credit Card section for credit product for Visa
+When for Primary Device and New Client user fills Device Range section for credit product
 When user creates Application Upload Credit batch file and upload it on server for Individual for credit
 When user verifies the credit application device for fileUpload
 When user approves the credit application device for fileUpload
