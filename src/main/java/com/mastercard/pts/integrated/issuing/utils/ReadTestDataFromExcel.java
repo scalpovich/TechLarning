@@ -29,7 +29,6 @@ import org.springframework.stereotype.Component;
  * @deprecated to be replaced by {@link com.mastercard.pts.integrated.issuing.utils.ExcelUtils}
  */
 @Component
-//@Deprecated
 public class ReadTestDataFromExcel {
 
 	final Logger logger = LoggerFactory.getLogger(ReadTestDataFromExcel.class);
