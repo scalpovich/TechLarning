@@ -1197,19 +1197,26 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.PROGRAM, program);
 	}
 	
-	@When("User fills Program section for $type product for FileUpload")
-	public void whenUserFillsProgramSectionForFileUpload(String type) {
+	@When("User $applicationType fills $subApplicationType Program $programType section without dedupe for $type product for $interchange")
+	public void whenUserFillsProgramSectionWithoutDedupe(String applicationType,String subApplicationType,String programType,String type,String interchange) {
 		program = Program.createWithProvider(dataProvider, provider);
 		program.setProduct(ProductType.fromShortName(type));
+		program.setInterchange(interchange);
 		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
 			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
 			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
 		}
 		program.setFirstWalletPlan(walletPlan.buildDescriptionAndCode());
 		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
-
+		program.setApplicationType(applicationType);
+		program.setSubApplicationType(subApplicationType);
+		if(program.getApplicationType().contains("Supplementary")||program.getApplicationType().contains("Add-on")&& program.getSubApplicationType().contains("Existing"))
+		{
+		program.setDevicePlanPlan2(devicePlanSupplementary.buildDescriptionAndCode());
+		}
 		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
 		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
+		program.setProgramType(programType);
 
 		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID))
 			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
