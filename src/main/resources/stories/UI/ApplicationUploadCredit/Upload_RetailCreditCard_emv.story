@@ -8,8 +8,8 @@ Meta:
 @StoryName credit_emv_retail
 @FileUpload
 Scenario: Verify system allows onboarding for new credit customer - Retail credit Card single wallet using application upload funcationality
-Given user is logged in institution
-When User fills Dedupe Plan
+Given setting json values in excel
+When user is logged in institution
 And User fills Statement Message Plan for credit product
 And User fills Marketing Message Plan for credit product
 And User fills Transaction Plan for credit product
