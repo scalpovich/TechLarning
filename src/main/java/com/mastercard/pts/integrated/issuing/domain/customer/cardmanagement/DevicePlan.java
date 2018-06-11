@@ -126,7 +126,14 @@ public class DevicePlan implements HasCodeAndDescription {
 	private static final String DP_EMV_PLAN_PIN_UNBLOCK = "DP_EMV_PLAN_PIN_UNBLOCK";
 	private static final String DP_ALLOW_INTERNATIONAL_TRANSACTIONS = "DP_ALLOW_INTERNATIONAL_TRANSACTIONS";
 	private static final String TRANSACTION_FEE_PLAN = "TRANSACTION_FEE_PLAN";
-
+	private static final String DP_VIRTUAL_CREDIT_CARD_LIMIT = "VIRTUAL_CREDIT_CARD_LIMIT";
+	private static final String DP_PER_TRANSACTION_LIMIT ="DP_PER_TRANSACTION_LIMIT";
+	private static final String DP_TOTAL_TRANSACTION_LIMIT ="DP_TOTAL_TRANSACTION_LIMIT";
+	private static final String DP_VELOCITY ="DP_VELOCITY";
+	private static final String DP_VALIDITYDATE ="DP_VALIDITYDATE";
+	private static final String DP_ALLOW_OVERRIDING_LIMITS = "DP_ALLOW_OVERRIDING_LIMITS";	
+	
+	
 	public String association;
 	public String DeviceType;
 	public String ServiceCode;
@@ -238,6 +245,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	private String expiryDateExcel;
 	private String allowInternationalTransaction;
 	private String transactionFeePlan;
+	private String virtualCreditCardLimit;
 
 	public static DevicePlan createWithProvider(KeyValueProvider provider) {
 		DevicePlan plan = new DevicePlan();
@@ -289,7 +297,20 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
 		return plan;
 	}
+	
+	public static DevicePlan createWithProviderForCredit(KeyValueProvider provider){
 
+		DevicePlan deviceplan = createWithProvider(provider);
+		deviceplan.setPerTransactionLimit(provider.getString(DP_PER_TRANSACTION_LIMIT));
+		deviceplan.setTotalTransactionLimit(provider.getString(DP_TOTAL_TRANSACTION_LIMIT));
+		deviceplan.setVelocity(provider.getString(DP_VELOCITY));
+		deviceplan.setValidity(DP_VALIDITYDATE);
+		deviceplan.setVirtualCreditCardLimit(provider.getString(DP_VIRTUAL_CREDIT_CARD_LIMIT));
+		
+		
+		return deviceplan;
+		
+	}
 	public static DevicePlan createWithProviderForRegression(KeyValueProvider provider) {
 		DevicePlan plan = new DevicePlan();
 		plan.setDevicePlanCode(MiscUtils.generate8CharAlphaNumeric());
@@ -381,6 +402,16 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setAllowInternationalTransaction(provider.getString(DP_ALLOW_INTERNATIONAL_TRANSACTIONS));		
 		plan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
 		return plan;
+	}
+	
+	public static DevicePlan createProviderForCredit(KeyValueProvider provider) {
+		DevicePlan devicePlan = createWithProvider(provider);
+		devicePlan.setPerTransactionLimit(provider.getString(DP_PER_TRANSACTION_LIMIT));
+		devicePlan.setTotalTransactionLimit(provider.getString(DP_TOTAL_TRANSACTION_LIMIT));
+		devicePlan.setVelocity(provider.getString(DP_VELOCITY));
+		devicePlan.setValidity(provider.getString(DP_VALIDITYDATE));
+		return devicePlan;
+		
 	}
 
 	public String getAllowInternationalTransaction() {
@@ -1224,6 +1255,14 @@ public class DevicePlan implements HasCodeAndDescription {
 
 	public void setExpiryDateExcel(String expiryDateExcel) {
 		this.expiryDateExcel = expiryDateExcel;
+	}
+
+	public String getVirtualCreditCardLimit() {
+		return virtualCreditCardLimit;
+	}
+
+	public void setVirtualCreditCardLimit(String virtualCreditCardLimit) {
+		this.virtualCreditCardLimit = virtualCreditCardLimit;
 	}
 
 	public void devicePlanDataprovider() {

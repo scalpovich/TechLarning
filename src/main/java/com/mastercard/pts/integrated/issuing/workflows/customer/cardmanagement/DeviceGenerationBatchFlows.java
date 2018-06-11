@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceGenerationBatchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
 @Component
 public class DeviceGenerationBatchFlows {
@@ -22,6 +23,7 @@ public class DeviceGenerationBatchFlows {
 	{
 		deviceGenerationBatchPage=navigator.navigateToPage(DeviceGenerationBatchPage.class);
 		deviceGenerationBatchPage.allBatchNumberRetrieval();
+		SimulatorUtilities.wait(5000);
 		deviceGenerationBatchPage.identifyBatchNumberToProcess();
 		deviceGenerationBatchPage.processAppropriateBatchForApplication();
 	}

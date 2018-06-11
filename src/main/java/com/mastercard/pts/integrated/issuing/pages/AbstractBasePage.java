@@ -45,6 +45,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -103,9 +104,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public static final LocalDate futureEndDate = LocalDate.now().plusDays(150);
 
 	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
-
+	
 	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid transaction type - ";
 
+    private static final String Device = null;
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
@@ -147,6 +149,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody input[type='checkbox']")
 	private MCWebElement firstRowSelectLink;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody input[type='checkbox']")
+	private MCWebElements firstRowSelectLinksCheckBox;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Next >']")
 	private MCWebElement nextBtn;
@@ -275,7 +280,18 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private MCWebElements deleteAddedRecordsIcon;
 
 	private String ERROR_XPATH = ".//div[@class='ketchup-error-container-alt']/ol/li";
-
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class='headers']/th//span")
+	private MCWebElements deviceProductionHeaders;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "processAll")
+	private MCWebElement processAll;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='feedbackPanelERROR']")
+	private MCWebElement errorMsgPresence;
+	
+	private static final String DeviceNumber="Device Number";
+	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
 		MCAnnotationProcessor.initializeSuper(this, finderProvider);
@@ -291,6 +307,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void clickProcessSelectedButton() {
 		clickWhenClickable(processSelectedBtn);
+	}
+	
+	protected void clickProcessAllButton() {
+		clickWhenClickable(processAll);
 	}
 
 	protected void clickNextButton() {
@@ -358,6 +378,22 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void selectFirstRecord() {
 		clickWhenClickable(firstRowSelectLink);
+	}
+	
+	protected void selectAllRecords(){
+		String count = context.get(CreditConstants.QUANTITY_REQUESTED);
+		List<String> devices = new ArrayList<String>();
+		
+		for(int i = 1; i<=Integer.parseInt(count) ;i++){
+			String path = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th/a/span[contains(text(), 'Device Number')]/../../preceding-sibling::th)+1]", i);
+			devices.add(Element(path).getText());
+		}
+		
+		for(String dev: devices){
+			clickWhenClickable(Element("//*[contains(text(),'"+dev+"')]/..//following-sibling::td/..//input"));
+		}
+		
+		context.put(CreditConstants.DEVICE_NUMBERS,devices);
 	}
 
 	protected void clicksearchButtonElement() {
@@ -452,6 +488,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void runWithinPopup(String caption, Runnable action) {
+		SimulatorUtilities.wait(3000);
 		By frameSelector = By.xpath(String.format("//h3[contains(text(), '%s')]/ancestor::div//iframe", caption));
 		WebElementUtils.runWithinFrame(driver(), timeoutInSec, frameSelector, action);
 	}
@@ -540,13 +577,20 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	/**
 	 * Verify already exists and click cancel
-	 * 
 	 * @return true if error exists otherwise false
 	 */
 	protected boolean verifyAlreadyExistsAndClickCancel() {
 		String message = getMessageFromFeedbackPanel();
-		if (message != null && message.contains("already exists")) {
+		if (message != null && message.contains("already exist")) {
 			clickCancelButton();
+			return true;
+		}
+		return false;
+	}
+	
+	protected boolean verifyAlreadyExists() {
+		String message = getMessageFromFeedbackPanel();
+		if (message != null && message.contains("already exist")) {
 			return true;
 		}
 		return false;
@@ -578,7 +622,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected void clickWhenClickable(MCWebElement element) {
 		SimulatorUtilities.wait(4000);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
-		waitForWicket();
 	}
 
 	protected void clickWhenClickableDoNotWaitForWicket(MCWebElement element) {
@@ -643,9 +686,27 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void waitAndSearchForRecordToExist() {
 		waitAndSearchForRecordToAppear();
-		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
 		selectFirstRecord();
 		clickProcessSelectedButton();
+		
+	}	
+	
+	protected void waitAndSearchForRecordToExists() {
+		waitAndSearchForRecordToAppear();
+		String count = context.get(CreditConstants.QUANTITY_REQUESTED);
+		if(Integer.parseInt(count) > 1){			
+			selectAllRecords();			
+		}else{
+			context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
+			selectFirstRecord();
+		}
+		clickProcessSelectedButton();
+	}
+	
+	protected void waitAndSearchForRecordToExistForSupplementary() {
+		waitAndSearchForRecordToAppear();
+		deviceNumbersForSupplementary();
+		clickProcessAllButton();
 	}
 
 	protected void waitForBatchStatus() {
@@ -1160,7 +1221,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void clickWhenClickable(WebElement element) {
-		waitForElementVisible(element);
+		SimulatorUtilities.wait(900);
+		waitForElementVisible(element);		
 		new WebDriverWait(driver(), TIMEOUT).until(ExpectedConditions.elementToBeClickable(element)).click();
 		waitForWicket(driver());
 	}
@@ -1263,8 +1325,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 			JavascriptExecutor js = (JavascriptExecutor) driver;
 			pageLoadStatus = (String) js.executeScript("return document.readyState");
 
-			addWicketAjaxListeners(driver);
-
 		} while (!pageLoadStatus.equals("complete"));
 
 		logger.info("Page Loaded.");
@@ -1288,25 +1348,35 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public void enterText(MCWebElement field, String fieldValue) {
 		waitForElementVisible(field);
 		field.sendKeys(fieldValue);
+		// addWicketAjaxListeners(getFinder().getWebDriver());
+		// CustomUtils.ThreadDotSleep(2000);
 	}
 
 	public void SelectDropDownByValue(MCWebElement element, String value) {
+		// element.getSelect().selectByVisibleText(value);
 		element.getSelect().selectByValue(value);
+		// addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
 	public void selectDropDownByText(MCWebElement element, String value) {
 		element.getSelect().selectByVisibleText(value);
+		// element.getSelect().selectByValue(value);
+		// addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
 	public void selectDropDownByIndex(MCWebElement element, int value) {
 		if (element.isEnabled()) {
 			element.getSelect().selectByIndex(value);
+		} else {
+
 		}
+		// addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
 	public void ClickButton(MCWebElement BtnName) {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		BtnName.click();
+		// addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
 	public void ClickCheckBox(MCWebElement optionChkBox, boolean value) {
@@ -1328,10 +1398,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public WebElement Element(String loc) {
 		return driver().findElement(By.xpath(loc));
+
 	}
 
 	public List<WebElement> Elements(String loc) {
 		return driver().findElements(By.xpath(loc));
+
 	}
 
 	public WebElement getChildElement(WebElement element, String Childlocator) {
@@ -1339,6 +1411,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	public Set<String> pageErrorValidator() {
+
 		String errorMessage;
 		String elementName;
 		if (iselementPresent(Elements(ERRORPANEL))) {
@@ -1616,7 +1689,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public boolean errorMessagePresence() {
 		try {
-			if (driver().findElement(By.xpath("//*[@class='feedbackPanelERROR']")).isDisplayed()) {
+			if (errorMsgPresence.isVisible()) {
 				return true;
 			}
 
@@ -1633,7 +1706,38 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 		}
 	}
-
+	
+	private void deviceNumberContextDeviceProduction() {
+		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());		
+		Device device  = context.get(CreditConstants.APPLICATION);
+		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
+	}
+	
+	public int getDeviceNumberIndex()
+	{  
+		int index=0;
+		for(int i=0;i<deviceProductionHeaders.getElements().size();i++)
+		{
+			if(deviceProductionHeaders.getElements().get(i).getText().equalsIgnoreCase(DeviceNumber))
+			{
+				index=i+1;
+			}
+		}
+		return index;
+	}
+	
+	public List<String> deviceNumbersForSupplementary()
+	{
+		List<String> allDeviceNumbers=new ArrayList<>();
+		List<WebElement>deviceNumbers=driver().findElements(By.xpath("//table[@class='dataview']//tr[@class!='headers']/td["+getDeviceNumberIndex()+"]/span"));
+		for(int i=0;i<deviceNumbers.size();i++)
+		{
+			allDeviceNumbers.add(deviceNumbers.get(i).getText());
+		}
+		context.put(CreditConstants.SUPPLEMENTARY_DEVICE_NUMBER, allDeviceNumbers);
+		return allDeviceNumbers;
+	}
+	
 	public void searchEntity(String entityType) {
 		UserCreation userCreation = context.get(ContextConstants.USER);
 		if ("user".equalsIgnoreCase(entityType))
