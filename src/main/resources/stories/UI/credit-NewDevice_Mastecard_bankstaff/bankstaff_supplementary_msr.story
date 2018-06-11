@@ -35,16 +35,22 @@ Then credit device is created using new device screen for Individual and Primary
 Then credit device is created using new device screen for Individual and Supplementary Device and Existing and Magnetic Stripe Card
 Then credit processes pre-production batch using new Device
 Then credit processes deviceproduction batch using new Device for Supplementary
+When new Application processes pin generation batch for credit
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 When User select secondary card for transaction
-Then embossing file batch was generated in correct format
 Then user sign out from customer portal
 
+Scenario: Pin Generation
+Given connection to FINSim is established
+When Pin Offset file batch was generated successfully
+When PIN is retrieved successfully with data from Pin Offset File
+When embossing file batch was generated in correct format
+Then FINSim simulator is closed
 
-Scenario: Perform RECURRING_PUR_TXN_PIN Authorization transaction
+
+Scenario: Perform RECURRING_PUR_TXN Authorization transaction
 Meta:
 @TestId 
 Given connection to MAS is established
 When perform an RECURRING_PUR_TXN MAS transaction
 Then MAS test results are verified
-
