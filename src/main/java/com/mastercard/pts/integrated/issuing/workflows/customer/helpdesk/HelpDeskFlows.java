@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -148,17 +150,15 @@ public class HelpDeskFlows extends AbstractBasePage {
 	}
 	public String searchForNewDevice(HelpDeskGeneral helpdeskgettersetter) {
 		generalPage = navigator.navigateToPage(GeneralPage.class);
-		Device device=context.get(ContextConstants.DEVICE);
-        String status=searchpanelhelpdesk.searchNewDevice(helpdeskgettersetter.getProductType(),device.getDeviceNumber());
+        String status=searchpanelhelpdesk.searchNewDevice(helpdeskgettersetter.getProductType(),helpdeskgettersetter.getDeviceNumber());
 		searchpanelhelpdesk.clickSearchBtn();
 		return status;
 	}
 	
 	public String searchForNewApplication(HelpDeskGeneral helpdeskgettersetter) {
+		
 		generalPage = navigator.navigateToPage(GeneralPage.class);
-		Device device=context.get(CreditConstants.APPLICATION);
-        String status=searchpanelhelpdesk.searchNewDevice(helpdeskgettersetter.getProductType(),device.getDeviceNumber());
-		searchpanelhelpdesk.clickSearchBtn();
+		String status = searchpanelhelpdesk.searchNewDevice(helpdeskgettersetter.getProductType(),helpdeskgettersetter.getDeviceNumber());
 		return status;
 	}
 

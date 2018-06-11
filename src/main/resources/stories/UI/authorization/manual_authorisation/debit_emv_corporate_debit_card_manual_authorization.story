@@ -37,4 +37,3 @@ And a new device was created
 When user raises an authorization request
 Then status of request is "approved"
 And search Purchase authorization and verify Successful status
-Then validate auth report

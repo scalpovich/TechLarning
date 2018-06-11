@@ -37,7 +37,6 @@ When perform an MSR_PREAUTH MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth authorization and verify 000-Successful status
-Then validate auth report
 And user sign out from customer portal
 When perform an MSR_COMPLETION MAS transaction
 Then MAS test results are verified
