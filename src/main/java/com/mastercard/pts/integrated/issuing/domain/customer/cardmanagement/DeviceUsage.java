@@ -147,5 +147,4 @@ public class DeviceUsage {
 		deviceUsage.setYearlyDebitVelocity(provider.getString(YEARLY_DEBIT_VELOCITY));
 		return deviceUsage;
 	}
-
 }
