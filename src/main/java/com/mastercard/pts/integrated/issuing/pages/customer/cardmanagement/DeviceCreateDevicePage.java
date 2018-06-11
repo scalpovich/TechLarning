@@ -15,7 +15,9 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.SubApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Address;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
@@ -262,14 +264,19 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		device.setWalletNumber(getCodeFromInfoMessage("wallet"));
 		// device.setWalletNumber(getWalletsId(getWalletsFromPage()));
 		device.setDeviceNumber(getCodeFromInfoMessage("device(s)"));
-		logger.info("clientCode applicationType subApplicationType: {} {} {}",device.getClientCode(),device.getApplicationType(),device.getSubApplicationType());
+		logger.info("clientCode: {}, applicationType: {}, subApplicationType: {}",device.getClientCode(),device.getApplicationType(),device.getSubApplicationType());
 		logger.info("WalletNumber: {}",device.getWalletNumber());
-		if(device.getApplicationType().contains("Primary"))
+		if(device.getApplicationType().contains(ApplicationType.PRIMARY_DEVICE))
 		{
 		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, device.getDeviceNumber());
 		}
 		logger.info("DeviceNumber: {}",device.getDeviceNumber());
-		context.put(ContextConstants.DEVICE, device);
+		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)
+				&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)) {
+			context.put(ContextConstants.DEVICE_SUPPLEMENTARY_ADDON_EXISTING,device);
+		} else {
+			context.put(ContextConstants.DEVICE, device);
+		}
 	}
 
 	public String getWalletsId(String wallets) {
@@ -290,7 +297,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private void fillBatchDetails(Device device) {
 		if(device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT))
 		{
-			if(device.getApplicationType().contains("Primary"))
+			if(device.getApplicationType().contains(ApplicationType.PRIMARY_DEVICE))
 			{
 				WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
 				clickWhenClickable(generateDeviceBatchBtn);
@@ -310,10 +317,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
 		clickWhenClickable(generateDeviceBatchBtn);
 		waitForWicket();
-		SimulatorUtilities.wait(30000);
+		SimulatorUtilities.wait(10000);
 		}
 		
-		// fetching batch number and setting it for further use
 		device.setBatchNumber(batchNumberTxt.getText());
 		logger.info(" *********** Batch number *********** " + device.getBatchNumber());
 		clickNextButton();
@@ -338,7 +344,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		SimulatorUtilities.wait(500);
 		if(device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT))
 		{
-		if(device.getApplicationType().contains("Supplementary")||device.getApplicationType().contains("Add-on Device")/*&& device.getSubApplicationType().contains("Existing")*/)
+		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)/*&& device.getSubApplicationType().contains("Existing")*/)
 		{
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
 		}
@@ -369,7 +375,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	}
 
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
-		if(device.getApplicationType().contains("Supplementary")||device.getApplicationType().contains("Add-on Device")&& device.getSubApplicationType().contains("Existing"))
+		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT))
 		{
 			if(!System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)){
 				clickNextButton();
@@ -390,7 +396,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		else
 		{
 		fillProfile(device);
-
+        SimulatorUtilities.wait(3000);
 		// Do not Validate only when environment is Automation
 		if (!System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)) {
 			clickNextButton();
@@ -398,10 +404,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 		fillAddress(device);
 		
-		if (!System.getProperty("env").equalsIgnoreCase("Automation")) {
 		fillEmploymentDetails(device);
 		selectProfessionByIndex(1);
-		}
+		
 		clickNextButton();
 		// Bank Details applicable only for Credit type product
 		clickNextButton();
@@ -439,7 +444,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 				selectByVisibleText(corporateClientCodeDDwn,device.getCorporateClientCode());	
 			}
 		} else {
+			if(corporateClientCodeDDwn.isEnabled())
+			{
 			WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
+			}
 		}
 		ClientDetails client = device.getClientDetails();
 		WebElementUtils.selectDropDownByVisibleText(titleDDwn, client.getTitle());

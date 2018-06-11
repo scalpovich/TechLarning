@@ -129,8 +129,7 @@ public class CreditCardPaymentPriorityPage extends AbstractBasePage {
 			WebElementUtils.enterText(interestTxt, creditCardPaymentPriority.getInterest());
 		
 			clickSaveButton();
-			SimulatorUtilities.wait(3000);
-			
+			SimulatorUtilities.wait(4000);
 		 if (verifyAlreadyExists()) {
 			    errorMessagePresence();
 			 	creditCardPlans.setErrorStatus(errorMessagePresence());

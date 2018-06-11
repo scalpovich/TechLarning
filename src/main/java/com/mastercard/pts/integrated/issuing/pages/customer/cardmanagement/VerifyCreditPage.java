@@ -73,11 +73,5 @@ TestContext context;
 		String applicationNumber=getCodeFromInfoMessage("Application Number");
 		return applicationNumber;
 	}
-	@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 }

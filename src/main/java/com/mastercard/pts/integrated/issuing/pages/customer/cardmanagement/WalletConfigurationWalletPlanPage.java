@@ -138,14 +138,12 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	public void clickNextButton() {
 		SimulatorUtilities.wait(400);
 		clickWhenClickable(nextBtn);
-		//nextBtn.click();
 	}
 
 	@Override
 	public void clickFinishButton() {
 		SimulatorUtilities.wait(900);
 		clickWhenClickable(finishBtn);
-		//finishBtn.click();
 	}
 
 	// Method to fill data in Add Wallet Plan Data
@@ -159,20 +157,24 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
             waitForPageToLoad(driver());
 			inputDescription(walletPlan.getDescription());
             waitForPageToLoad(driver());
+			SimulatorUtilities.wait(2000);
 			selectProductType(productType);
 			if(walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
 			{
 						selectByVisibleText(programTypeDDwn,walletPlan.getProgramType());
 			}
 			else
-			{
+			{            
+			            SimulatorUtilities.wait(2000);
 						selectProgramType(walletPlan.getProgramType());
 						waitForPageToLoad(driver());
-						SimulatorUtilities.wait(500);
+						SimulatorUtilities.wait(2000);
 					}
 			selectCurrency(walletPlan.getCurrency());
 			waitForPageToLoad(driver());
+				SimulatorUtilities.wait(2000);
 			selectUsage(walletPlan.getUsage());
+				SimulatorUtilities.wait(2000);
 			
 			fillDetailsBasedOnCardType(walletPlan, productType);
 

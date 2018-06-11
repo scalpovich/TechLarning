@@ -135,7 +135,7 @@ public class ProgramSetupSteps {
 			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
 			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
 			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
-			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product",
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product","When user assigns service code to program",
 			"When user creates a bulk device production request for prepaid", "When processes created bulk device generation request for prepaid", "When processes pre-production batch for prepaid",
 			"When processes device production batch for prepaid", "When processes pin generation batch for prepaid", "When user sign out from customer portal",
 			"When user is logged in agent portal as admin user", "When user fills information to assign program to agency and submits form", "When user sign out from agent portal",
@@ -280,7 +280,7 @@ public class ProgramSetupSteps {
 			"When User fills Transaction Limit Plan for debit product", "When User fills Document Checklist Screen for debit product",
 			"When User fills Device Joining and Membership Fee Plan for debit product", "When User fills Device Event Based Fee Plan for debit product",
 			"When User fills Device Plan for \"debit\" \"<deviceType>\" card", "When User fills Wallet Plan for debit product", "When User fills Program section for debit product",
-			"When User fills Business Mandatory Fields Screen for debit product", "When User fills Device Range section for debit product" })
+			"When User fills Business Mandatory Fields Screen for debit product", "When User fills Device Range section for debit product", "When user assigns service code to program" })
 	public void givenDeviceRangeForDebitProgramWithDevicePlan(String deviceType) {
 		// composite step
 	}
@@ -299,7 +299,7 @@ public class ProgramSetupSteps {
 			"When User fills Transaction Limit Plan for debit product", "When User fills Document Checklist Screen for debit product",
 			"When User fills Device Joining and Membership Fee Plan for debit product", "When User fills Device Event Based Fee Plan for debit product",
 			"When User fills Device Plan for \"debit\" \"<deviceType>\" card with no pin", "When User fills Wallet Plan for debit product", "When User fills Program section for debit product",
-			"When User fills Business Mandatory Fields Screen for debit product", "When User fills Device Range section for debit product" })
+			"When User fills Business Mandatory Fields Screen for debit product", "When User fills Device Range section for debit product" , "When user assigns service code to program"})
 	public void givenDeviceRangeForDebitProgramWithDevicePlanWithOutPin(String deviceType) {
 		// composite step
 	}
@@ -310,7 +310,7 @@ public class ProgramSetupSteps {
 			"When User fills Device Joining and Membership Fee Plan for debit product", "When User fills Device Event Based Fee Plan for debit product",
 			"When User fills Device Plan for \"debit\" \"<deviceType>\" card with no pin for an interface", "When User fills Wallet Plan for debit product",
 			"When User fills Program section for debit product for an interface", "When User fills Business Mandatory Fields Screen for debit product",
-			"When User fills Device Range section for debit product for an interface" })
+			"When User fills Device Range section for debit product for an interface" , "When user assigns service code to program"})
 	public void givenDeviceRangeForDebitProgramWithDevicePlanWithOutPinForSpecificInterface(String deviceType) {
 		// composite step
 	}
@@ -321,7 +321,7 @@ public class ProgramSetupSteps {
 			"When User fills Device Joining and Membership Fee Plan for debit product", "When User fills Device Event Based Fee Plan for debit product",
 			"When User fills Device Plan for \"debit\" \"<deviceType>\" card with no pin for non-default institution", "When User fills Wallet Plan for debit product",
 			"When User fills Program section for debit product", "When User fills Business Mandatory Fields Screen for debit product",
-			"When User fills Device Range section for debit product for non-default institution" })
+			"When User fills Device Range section for debit product for non-default institution" , "When user assigns service code to program"})
 	public void givenDeviceRangeForProgramWithDevicePlanforDebitWithoutPinForNonDefaultInstitution(String deviceType) {
 		// composite step
 	}
@@ -354,7 +354,7 @@ public class ProgramSetupSteps {
 			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
 			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
 			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
-			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product" })
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product" , "When user assigns service code to program"})
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPin(String deviceType) {
 		// composite step
 	}
@@ -364,7 +364,7 @@ public class ProgramSetupSteps {
 			"When User fills MCC Rules for prepaid product", "When User fills Transaction Plan for prepaid product", "When User fills Transaction Limit Plan for prepaid product",
 			"When User fills Document Checklist Screen for prepaid product", "When User fills Device Joining and Membership Fee Plan for prepaid product",
 			"When User fills Device Event Based Fee Plan for prepaid product", "When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin",
-			"When User fills Wallet Plan for prepaid product", "When User fills Program section using newApplication for prepaid product", "When User fills Device Range section for prepaid product" })
+			"When User fills Wallet Plan for prepaid product", "When User fills Program section using newApplication for prepaid product", "When User fills Device Range section for prepaid product" , "When user assigns service code to program"})
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinWithoutDedupe(String deviceType) {
 		// composite step
 	}
@@ -376,7 +376,7 @@ public class ProgramSetupSteps {
 			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
 			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin for non-default institution", "When User fills Wallet Plan for prepaid product",
 			"When User fills Program section for prepaid product", "When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product for non-default institution" })
+			"When User fills Device Range section for prepaid product for non-default institution" , "When user assigns service code to program"})
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinForNonDefaultInstitution(String deviceType) {
 		// composite step
 	}
@@ -388,7 +388,7 @@ public class ProgramSetupSteps {
 			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
 			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin for non-default institution", "When User fills Wallet Plan for prepaid product",
 			"When User fills Program section for prepaid product for an interface", "When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product for non-default institution" })
+			"When User fills Device Range section for prepaid product for non-default institution" , "When user assigns service code to program"})
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinForNonDefaultInstitutionForInterface(String deviceType) {
 		// composite step for interface
 	}
@@ -400,7 +400,7 @@ public class ProgramSetupSteps {
 			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
 			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin", "When User fills Wallet Plan for prepaid product",
 			"When User fills Program section for prepaid product for an interface", "When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product for an interface" })
+			"When User fills Device Range section for prepaid product for an interface" , "When user assigns service code to program"})
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinForAnInterface(String deviceType) {
 		// composite step
 	}
@@ -412,7 +412,7 @@ public class ProgramSetupSteps {
 			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
 			"When User fills Device Plan for  \"prepaid\" \"<deviceType>\" along with \"Manual\" activation mode for card with no pin", "When User fills Wallet Plan for prepaid product",
 			"When User fills Program section for prepaid product for an interface", "When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product for an interface" })
+			"When User fills Device Range section for prepaid product for an interface", "When user assigns service code to program" })
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidAlongWithActivationCodeWithoutPinForAnInterface(String deviceType) {
 		// composite step
 	}
@@ -424,7 +424,7 @@ public class ProgramSetupSteps {
 			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
 			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" along with \"Load\" activation mode for card", "When User fills Wallet Plan for prepaid product",
 			"When User fills Program section for prepaid product for an interface", "When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product for an interface" })
+			"When User fills Device Range section for prepaid product for an interface", "When user assigns service code to program" })
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidAlongWithActivationCodeWithPinForAnInterface(String deviceType) {
 		// composite step
 	}
@@ -436,7 +436,7 @@ public class ProgramSetupSteps {
 			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
 			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin for an interface", "When User fills Wallet Plan for prepaid product",
 			"When User fills Program section for prepaid product for an interface", "When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product for an interface" })
+			"When User fills Device Range section for prepaid product for an interface", "When user assigns service code to program" })
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinForSpecificInterface(String deviceType) {
 		// composite step
 	}
@@ -448,7 +448,7 @@ public class ProgramSetupSteps {
 			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
 			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Wallet Plan for prepaid product",
 			"When User fills Program section for prepaid product for an interface", "When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product for an interface" })
+			"When User fills Device Range section for prepaid product for an interface" , "When user assigns service code to program"})
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidForAnInterface(String deviceType) {
 		// composite step
 	}
@@ -459,7 +459,7 @@ public class ProgramSetupSteps {
 			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
 			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
 			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
-			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product" })
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product" , "When user assigns service code to program"})
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaid(String deviceType) {
 		// composite step
 	}
@@ -469,7 +469,7 @@ public class ProgramSetupSteps {
 			"When User fills MCC Rules for prepaid product", "When User fills Transaction Plan for prepaid product", "When User fills Transaction Limit Plan for prepaid product",
 			"When User fills Document Checklist Screen for prepaid product", "When User fills Device Joining and Membership Fee Plan for prepaid product",
 			"When User fills Device Event Based Fee Plan for prepaid product", "When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Wallet Plan for prepaid product",
-			"When User fills Program section using newApplication for prepaid product", "When User fills Device Range section for prepaid product" })
+			"When User fills Program section using newApplication for prepaid product", "When User fills Device Range section for prepaid product", "When user assigns service code to program" })
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutDedupe(String deviceType) {
 		// composite step
 	}
@@ -560,8 +560,42 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 	
+	@When("for $deviceType User fills without pin Device Plan for $type product for $interchange")
+	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeWithoutPin(String deviceType,String type,String interchange) {
+		setPinRequiredToFalse();
+		devicePlan = DevicePlan.createProviderForCredit(provider);
+		devicePlan.setProductType(ProductType.fromShortName(type));
+		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+		devicePlan.setAssociation(interchange);
+		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setDeviceType(deviceType);
+
+		programSetupWorkflow.createDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+	
 	@When("for $deviceType User fills Supplementary Device Plan for $type product for $interchange")
 	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeForSupplementary(String deviceType,String type,String interchange) {
+		devicePlanSupplementary = DevicePlan.createProviderForCredit(provider);
+		devicePlanSupplementary.setProductType(ProductType.fromShortName(type));
+		devicePlanSupplementary.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setAssociation(interchange);
+		devicePlanSupplementary.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setDeviceType(deviceType);
+
+		programSetupWorkflow.createDevicePlan(devicePlanSupplementary);
+		context.put(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY, devicePlanSupplementary);
+	}
+	
+	@When("for $deviceType User fills without pin Supplementary Device Plan for $type product for $interchange")
+	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeForSupplementaryWithoutPin(String deviceType,String type,String interchange) {
+		setPinRequiredToFalse();
 		devicePlanSupplementary = DevicePlan.createProviderForCredit(provider);
 		devicePlanSupplementary.setProductType(ProductType.fromShortName(type));
 		devicePlanSupplementary.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());

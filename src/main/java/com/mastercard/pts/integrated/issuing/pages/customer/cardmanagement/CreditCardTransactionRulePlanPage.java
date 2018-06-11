@@ -82,8 +82,7 @@ public class CreditCardTransactionRulePlanPage extends AbstractBasePage {
 					logger.info("TransactionRulePlanCodeAndDescription : {}",creditCardTransactionRulePlan.buildDescriptionAndCode());
 					context.put(CreditConstants.TRANSACTION_RULE, creditCardTransactionRulePlan.buildDescriptionAndCode());
 					clickAddDetailsButton();
-					SimulatorUtilities.wait(3000);
-
+					SimulatorUtilities.wait(4000);
 					if (!verifyAlreadyExists()) {
 						clickSaveButton();
 						creditCardPlan.setErrorStatus(false);

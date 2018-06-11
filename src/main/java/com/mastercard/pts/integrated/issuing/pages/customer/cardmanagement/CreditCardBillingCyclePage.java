@@ -98,7 +98,7 @@ public class CreditCardBillingCyclePage extends AbstractBasePage {
 			WebElementUtils.enterText(recordsPerBatchForProcessingTxt,
 					creditCardBillingCycle.getRecordsPerBatchForProcessing());
 			clickSaveButton();
-			SimulatorUtilities.wait(3000);
+			SimulatorUtilities.wait(4000);
 			if(verifyAlreadyExists())
 			{
 				creditCardPlan.setErrorStatus(errorMessagePresence());

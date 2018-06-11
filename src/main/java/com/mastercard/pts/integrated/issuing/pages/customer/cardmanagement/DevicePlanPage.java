@@ -899,9 +899,8 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectIframeBeforeKYCDdwn(String kycType) {
-		if(iframeBeforeKYCDdwn.isEnabled())
-		{
-		WebElementUtils.selectDropDownByVisibleText(iframeBeforeKYCDdwn, kycType);
+		if (iframeBeforeKYCDdwn.isEnabled()) {
+			WebElementUtils.selectDropDownByVisibleText(iframeBeforeKYCDdwn,kycType);
 		}
 	}
 
@@ -988,6 +987,7 @@ public class DevicePlanPage extends AbstractBasePage {
 			}
 			
 					if (devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
+						SimulatorUtilities.wait(2000);
 						selectByVisibleText(iframeDeviceTypeDdwn,devicePlanDataObject.getDeviceType());
 						if (devicePlanDataObject.getDeviceType().contains("EMV")) {
 							WebElementUtils.enterText(iframeServiceCodeTxt,Constants.EMV_SERVICE_CODE);
@@ -1040,7 +1040,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		cvvCvv2PinGenerationSelectionScreen(devicePlan);
 
 		fillDevicePlanPage(devicePlan);
-
+		
 		selectIframeBeforeKYCDdwn(devicePlan.getBeforeKYC());
 		selectIframeAfterKYCDdwn(devicePlan.getAfterKYC());
 		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES))
@@ -1064,12 +1064,15 @@ public class DevicePlanPage extends AbstractBasePage {
 	
 		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			if (DeviceType.MAGNETIC_STRIPE_CARD.contains(devicePlan.getDeviceType())|| DeviceType.EMV_CARD.contains(devicePlan.getDeviceType()) && "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
+				if(pinRetryLimitTxt.isEnabled())
+				{
 				WebElementUtils.enterText(pinRetryLimitTxt,devicePlan.getPinRetryLimit());
+				}
 			}
 		}
 		else
 		{
-		if (!devicePlan.getDeviceType().equals(DeviceType.STATIC_VIRTUAL_CARD)&& "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
+		if (!devicePlan.getDeviceType().contains(DeviceType.STATIC_VIRTUAL_CARD)&& "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 			WebElementUtils.enterText(pinRetryLimitTxt, devicePlan.getPinRetryLimit());
 		}	
 		}
@@ -1093,9 +1096,9 @@ public class DevicePlanPage extends AbstractBasePage {
 		}
 			else
 			{
-			if (DeviceType.EMV_CARD.equals(devicePlan.getDeviceType())
+			if (DeviceType.EMV_CARD.contains(devicePlan.getDeviceType())
 					|| DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS
-							.equals(devicePlan.getDeviceType())) {
+							.contains(devicePlan.getDeviceType())) {
 				forEmvOrNfc(devicePlan);
 			}
 		}
@@ -1143,11 +1146,9 @@ public class DevicePlanPage extends AbstractBasePage {
 				enterIframeValidityOnInitialMonthsTxt(devicePlan.getValidityOnInitialMonths());
 			}
 		
-		if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT) )
+		if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT) && DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType()))
 		{
-			if (!DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType())) {
-				enableIframeCardProductionChkbx();
-			}
+		logger.info("Skipping anable of card production check box");
 		}
 		else
 		{
@@ -1174,11 +1175,11 @@ public class DevicePlanPage extends AbstractBasePage {
 				fillRenewalSection(devicePlan);
 		
 			if (devicePlan.getFillReplacementSection().equalsIgnoreCase(STATUS_YES)){
-				if(!devicePlan.getDeviceType().equalsIgnoreCase(DeviceType.VIRTUAL_CARD)){
+				if(!devicePlan.getDeviceType().contains(DeviceType.VIRTUAL_CARD)){
 					fillReplacementSection(devicePlan);
 				}
 			}	
-			if (!devicePlan.getDeviceType().equals(DeviceType.VIRTUAL_CARD)){
+			if (!devicePlan.getDeviceType().contains(DeviceType.VIRTUAL_CARD)){
 					fillPinGenerationSection(devicePlan);
 			}
 			
@@ -1225,8 +1226,10 @@ public class DevicePlanPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(emvPlanResponseDdwn, devicePlan.getEmvPlanResponse());
 			WebElementUtils.enterText(acceptableBelowATCRangeTxt, devicePlan.getEmvBelowATCRange());
 			WebElementUtils.enterText(acceptableAboveATCRangeTxt, devicePlan.getEmvAboveATCRange());
-			allowFallBackChkBx.click();
-			atcFlagChkBx.click();
+			clickWhenClickable(allowFallBackChkBx);
+			clickWhenClickable(atcFlagChkBx);
+			//allowFallBackChkBx.click();
+			//atcFlagChkBx.click();
 		}
 	}
 

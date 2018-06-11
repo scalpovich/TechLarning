@@ -13,7 +13,9 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.SubApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -379,26 +381,29 @@ public class ProgramPage extends AbstractBasePage {
 		clickAddNewButton();
 
 		runWithinPopup("Add Program", () -> {
-			addProgram(program.getProgramCode());
+			addProgram(program.getProgramCode());          	
 			addDescription(program.getDescription());
 					if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 						selectByVisibleText(interchangeDDwn,program.getInterchange());
 					} else {
+					     SimulatorUtilities.wait(2000);
 						selectInterchange(program.getInterchange());
 					}
+						SimulatorUtilities.wait(2000);
 					selectProduct(program.getProduct());
 					if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 						selectByVisibleText(programTypeDDwn,program.getProgramType());
 					} else {
+						SimulatorUtilities.wait(2000);
 						selectProgramType(program.getProgramType());
 					}
-			selectBaseCurrency(program.getBaseCurrency());
+						SimulatorUtilities.wait(2000);
+			      selectBaseCurrency(program.getBaseCurrency());
 			program.setProgramCodeDevice(program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
-				if (Constants.ENV_DEMO.equalsIgnoreCase(MiscUtils.getEnvironment()))
-				{
+				if (!MiscUtils.getEnvironment().contains(Constants.ENVIRONMENT)) {
 					selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
 				}
 				selectRefundInCurrency(program.getRefundInCurrency());
@@ -423,16 +428,20 @@ public class ProgramPage extends AbstractBasePage {
 		runWithinPopup("Add Program", () -> {
 			addProgram(program.getProgramCode());
 			addDescription(program.getDescription());
+          	SimulatorUtilities.wait(2000);
 			selectInterchange(program.getInterchange());
+          	SimulatorUtilities.wait(2000);
 			selectProduct(program.getProduct());
+          	SimulatorUtilities.wait(2000);
 			selectProgramType(program.getProgramType());
+          	SimulatorUtilities.wait(2000);
 			selectBaseCurrency(program.getBaseCurrency());
+          	SimulatorUtilities.wait(2000);
 			program.setProgramCodeDevice(program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
-				if (Constants.ENV_DEMO.equalsIgnoreCase(MiscUtils.getEnvironment()))
-				{
+				if (!MiscUtils.getEnvironment().contains(Constants.ENVIRONMENT)) {
 					selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
 				}
 				selectRefundInCurrency(program.getRefundInCurrency());
@@ -465,8 +474,7 @@ public class ProgramPage extends AbstractBasePage {
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
-				if (Constants.ENV_DEMO.equalsIgnoreCase(MiscUtils.getEnvironment()))
-				{
+				if (!MiscUtils.getEnvironment().contains(Constants.ENVIRONMENT)) {
 					selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
 				}
 				selectRefundInCurrency(program.getRefundInCurrency());
@@ -504,7 +512,7 @@ public class ProgramPage extends AbstractBasePage {
 		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
 		if (productType.equalsIgnoreCase(ProductType.CREDIT))
 		{
-			if(program.getApplicationType().contains("Supplementary")||program.getApplicationType().contains("Add-on") && program.getSubApplicationType().contains("Existing"))
+			if(program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && program.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT))
 			{
 		      selectDevicePlanPlan2DDwn(program.getDevicePlanPlan2());
 			}

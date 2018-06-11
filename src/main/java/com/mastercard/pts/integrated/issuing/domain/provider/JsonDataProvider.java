@@ -176,7 +176,7 @@ public class JsonDataProvider implements DataProvider {
 	}
 	
 	private JsonNode buildJsonNodeInstitute(JsonNode target, String path,String institutionCode)
-			throws IOException, JsonPatchException, ParseException {
+			throws Exception {
 		InputStream inputStream = getResource(path);
 		if (inputStream == null) {
 			return target;

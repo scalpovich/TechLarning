@@ -119,7 +119,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		enterText(batchNumberTxt, batchNumber);
 		ClickButton(searchBtn);
 		waitAndSearchForRecordToAppear();
-		getQuantityRequested();
+		setQuantityRequested();
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		ClickButton(processSelectedBtn);
 		verifyOperationStatus();
@@ -127,7 +127,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 
 	}
 	
-	public void getQuantityRequested(){		
+	public void setQuantityRequested(){		
 		context.put(CreditConstants.QUANTITY_REQUESTED, getCellTextByColumnName(1,"Quantity Requested")); 
 	}
 	
@@ -209,7 +209,6 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		waitForLoaderToDisappear();
 		selectDropDownByText(productTypeDDwn, batch.getProductType());
 		CustomUtils.ThreadDotSleep(8000);
-		//Device device = context.get(ContextConstants.DEVICE);
 		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
 		enterText(batchNumberTxt, batchNumber);
 		ClickButton(searchBtn);

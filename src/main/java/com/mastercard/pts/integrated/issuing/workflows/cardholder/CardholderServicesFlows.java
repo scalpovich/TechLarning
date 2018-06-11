@@ -69,11 +69,9 @@ public class CardholderServicesFlows  extends AbstractBaseFlows{
 	
 	
 	public boolean verifyCardReplacementServiceConfirmationMsg(String confirmationMsg){	
-		if(replaceDevicePage.getReplacementRequestConfirmationMsg().contains(confirmationMsg)){
-			return true;			
-		}else{			
-			return false;
-		}	
+		
+	return replaceDevicePage.getReplacementRequestConfirmationMsg().contains(confirmationMsg);			
+	
 	}
 	
 	public void blockSelectedCard(String blockCardRemark){

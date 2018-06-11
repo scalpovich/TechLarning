@@ -109,7 +109,7 @@
    "cardPackIdGenerationTemplate":"PAN768",
    "deviceIdGenerationTemplate":"PAN767",
    "customerType":"Corporate",
-   "embossingVendor":"Aut011",
+   "embossingVendor":"AUTOB1",
    "interchange":"MASTERCARD",
    "mastercardPrepaidIssuerBin":"514786",
    "mastercardDebitIssuerBin":"532076",

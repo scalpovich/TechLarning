@@ -33,6 +33,8 @@ public class CreditConstants {
 	
 	public static final String DEVICE_BIN="DEVICE_BIN";
 	
+	public static final String DEVICE_NUMBERS="DEVICE_NUMBERS";
+	
 	public static final String DEVICE_NUMBER="DEVICE_NUMBER";
 	
 	public static final String EXCEL_VALUES="EXCEL_VALUES";
