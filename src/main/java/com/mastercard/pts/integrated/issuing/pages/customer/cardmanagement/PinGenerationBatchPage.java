@@ -48,6 +48,9 @@ public class PinGenerationBatchPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:3:componentList:0:componentPanel:input:inputTextField")
 	private MCWebElement referenceNumberTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "processAll")
+	private MCWebElement processAllBtn;
 
 	public String processPinGenerationBatch(PinGenerationBatch batch) {
 		logger.info("Pin Generation Batch: {}", batch.getBatchNumber());
@@ -74,6 +77,14 @@ public class PinGenerationBatchPage extends AbstractBasePage {
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 }
+		
+		public void processPinProductionBatchNewDeviceCredit(PinGenerationBatch batch) {
+			String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
+			WebElementUtils.enterText(batchNumberTxt, batchNumber);
+			waitAndSearchForRecordToExist();
+			clickWhenClickable(processAllBtn);
+			verifyOperationStatus();
+	}
 
 	public void verifyUiOperationStatus() {
 		logger.info("Pin Generation Batch");
