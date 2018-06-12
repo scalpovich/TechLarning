@@ -524,7 +524,7 @@ public class FileCreation {
 			branchCode = branch;
 		}
 		int totalRecords = 0;
-		String FileName = "";
+		String fileName = "";
 		String remoteDir = "";
 		String deviceType = "";
 		if(cardType.equalsIgnoreCase("prepaid"))
@@ -543,29 +543,28 @@ public class FileCreation {
 		for (int k = 0; k < listOfFiles.length; k++) {
 
 			if (listOfFiles[k].getName().startsWith("APP")) {
-				FileName = listOfFiles[k].getName();
-				countLines(FileName);
-				readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(FileName,cardType);
-				//helpDeskGeneral.setFirstName(name);
-				logger.info("Already existing fileName in workspace: {}", FileName);
-				context.put(CreditConstants.FILEUPLOAD_IN_BULK, readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(FileName, cardType));
+				fileName = listOfFiles[k].getName();
+				countLines(fileName);
+				readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(fileName,cardType);
+				logger.info("Already existing fileName in workspace: {}", fileName);
+				context.put(CreditConstants.FILEUPLOAD_IN_BULK, readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(fileName, cardType));
 			}
 		}
-		if (FileName.contains("APP")) {
-			linuxBox.upload(FileName, remoteDir);
+		if (fileName.contains("APP")) {
+			linuxBox.upload(fileName, remoteDir);
 		}
 			       else
 			       {
                              if(cardType.equalsIgnoreCase("prepaid"))
                              {
-                                FileName = "APPPR" + INSTITUTION_CODE+ DateUtils.getDateTimeDDMMYYHHMMSS()+ MiscUtils.generateRandomNumberAsString(6) + ".DAT";
+                            	 fileName = "APPPR" + INSTITUTION_CODE+ DateUtils.getDateTimeDDMMYYHHMMSS()+ MiscUtils.generateRandomNumberAsString(6) + ".DAT";
                              }
                              else if(cardType.equalsIgnoreCase("credit"))
                              {
-                                FileName = "APPCR" + INSTITUTION_CODE+ DateUtils.getDateTimeDDMMYYHHMMSS()+ MiscUtils.generateRandomNumberAsString(6) + ".DAT";
+                            	 fileName = "APPCR" + INSTITUTION_CODE+ DateUtils.getDateTimeDDMMYYHHMMSS()+ MiscUtils.generateRandomNumberAsString(6) + ".DAT";
 			}
 			HashMap<String, HashMap<String, String>> applicationUploadMap = new HashMap<>();
-			File file = new File(FileName);
+			File file = new File(fileName);
 			if (cardType.equalsIgnoreCase("prepaid")) {
 				applicationUploadMap = dataReader.dataProviderFileUpload("AllUploadTestData", "Prepaid Card File");
 			} else if (cardType.equalsIgnoreCase("credit")) {
@@ -679,13 +678,13 @@ public class FileCreation {
 				throw Throwables.propagate(e);
 			}
 			System.out.println(file.getPath());
-					readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(FileName,cardType);
-					context.put(CreditConstants.FILEUPLOAD_IN_BULK, readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(FileName, cardType));
+					readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(fileName,cardType);
+					context.put(CreditConstants.FILEUPLOAD_IN_BULK, readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(fileName, cardType));
 			linuxBox.upload(file.getPath(), remoteDir);
 
 		}
 
-		return FileName;
+		return fileName;
 	}
 
 	public String retrieveFieldUploadFile(String FieldName) {
