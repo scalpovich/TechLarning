@@ -71,13 +71,21 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='tab_content']//span[contains(text(),'Markup Fee')]/../following-sibling::td//span[@class='labeltextr']")
 	private MCWebElement markupFeeTax;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='tab_content']//span[contains(text(),'Transaction Currency :')]/following-sibling::span//span[@class='labelselectf']")
 	private MCWebElement sourceCurrency;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='tab_content']//span[contains(text(),'Billing Currency :')]/following-sibling::span//span[@class='labelselectf']")
 	private MCWebElement billingCurrency;
-	
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='modelFormClass']//span[contains(text(),'Response')]/../following-sibling::td/span/span")
+	private MCWebElement responseLbl;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='modelFormClass']//span[contains(text(),'Auth Decline Description')]/../following-sibling::td/span/span")
+	private MCWebElement authDeclineDescriptionLbl;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='modelFormClass']//span[contains(text(),'Auth Decline Code')]/../following-sibling::td[1]/span/span")
+	private MCWebElement authDeclineCodeLbl;
 
 	public void verifyUiOperationStatus() {
 		logger.info("Authorization Search");
@@ -147,4 +155,19 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 				WebElementUtils.elementToBeClickable(invalid), WebElementUtils.elementToBeClickable(branchRefNumber));
 	}
 
+	public List<String> verifyState(String deviceNumber) {
+		List<String> fieldsForAssertion = new ArrayList<>();
+		inputDeviceNumber(deviceNumber);
+		inputFromDate(LocalDate.now().minusDays(1));
+		inputToDate(LocalDate.now());
+		clickSearchButton();
+		viewFirstRecord();
+		runWithinPopup("View Authorization", () -> {
+			fieldsForAssertion.add(responseLbl.getText());
+			fieldsForAssertion.add(authDeclineCodeLbl.getText());
+			fieldsForAssertion.add(authDeclineDescriptionLbl.getText());
+			clickCloseButton();
+		});
+		return fieldsForAssertion;
+	}
 }

@@ -77,7 +77,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		ClickButton(searchBtn);
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		ClickButton(processSelectedBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public void processPreProductionBatch(PreProductionBatch batch) {
@@ -106,7 +106,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		ClickButton(processSelectedBtn);
 		verifyOperationStatus();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 
 	}
 
@@ -123,7 +123,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		ClickButton(processSelectedBtn);
 		verifyOperationStatus();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 
 	}
 	
@@ -191,10 +191,10 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	public void verifyPreProductionRequestSuccess() {
 		if (!verifyErrorsOnPreProductionPage()) {
 			logger.info("Pre-Production batch succesful");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in batch");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 
@@ -215,7 +215,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		ClickButton(processSelectedBtn);
 		verifyOperationStatus();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	@Override
