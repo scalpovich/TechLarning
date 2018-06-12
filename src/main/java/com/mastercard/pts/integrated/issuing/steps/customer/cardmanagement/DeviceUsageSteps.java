@@ -42,7 +42,7 @@ public class DeviceUsageSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		String  atc = deviceUsageWorkflow.getApplicationTransactionCounterDeviceUsage(device.getDeviceNumber()).get(0);
 		Logger.info("Application Transaction Counter : {} ",atc);
-		boolean condition = atc.equals("2");
+		boolean condition = atc.equals("1");
 		assertTrue(FAILED_MESSAGE_INFO, condition);		
 		context.put(ATC, atc);	
 		
