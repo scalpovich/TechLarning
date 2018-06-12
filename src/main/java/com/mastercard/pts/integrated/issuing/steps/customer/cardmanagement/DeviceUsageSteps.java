@@ -9,7 +9,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceUsage;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceUsageWorklow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceUsageWorkflow;
 
 @Component
 public class DeviceUsageSteps {
@@ -18,7 +18,7 @@ public class DeviceUsageSteps {
 	private TestContext context;
 
 	@Autowired
-	private DeviceUsageWorklow deviceUsageWorkflow;
+	private DeviceUsageWorkflow deviceUsageWorkflow;
 
 	@Autowired
 	private KeyValueProvider provider;

@@ -239,7 +239,8 @@ public class TransactionSteps {
 		}
 
 		// changed ECOMMERCE to ECOM
-		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") || transactionWorkflow.isContains(transaction, "ASI_")||transactionWorkflow.isContains(transaction, "MMSR")|| transactionWorkflow.isContains(transaction, ConstantData.THREE_D_SECURE_TRANSACTION)) {
+		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") || transactionWorkflow.isContains(transaction, "ASI_") || transactionWorkflow.isContains(transaction, "MMSR")
+				|| transactionWorkflow.isContains(transaction, ConstantData.THREE_D_SECURE_TRANSACTION)) {
 			// for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInuxbox
 			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); // Transaction currency code
 		}
@@ -350,8 +351,11 @@ public class TransactionSteps {
 		String testResults;
 		if (!"mdfs".contains(tool.toLowerCase())) {
 			testResults = transactionWorkflow.verifyTestResults();
-		} else {
+		} else if ("mdfs".contains(tool.toLowerCase())) {
 			testResults = transactionWorkflow.verifyTestResultsOnMdfs();
+		} else {
+			testResults = "Unsupported tool type!";
+			throw new ValidationException(testResults);
 		}
 		transactionWorkflow.browserMaximize(); // restoring browser after
 		logger.info("Expected Result :- {}", testResults);
@@ -367,7 +371,7 @@ public class TransactionSteps {
 			throw new ValidationException("Transaction failed! Code or Description does not Match!");
 		}
 	}
-	
+
 	@When("connection to $simulator is established")
 	@Then("connection to $simulator is established")
 	@Given("connection to $simulator is established")

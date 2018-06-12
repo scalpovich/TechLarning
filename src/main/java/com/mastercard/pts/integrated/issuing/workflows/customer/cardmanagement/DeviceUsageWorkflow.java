@@ -22,7 +22,7 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.MenuFlows;
 
 @Workflow
-public class DeviceUsageWorklow extends MenuFlows {
+public class DeviceUsageWorkflow extends MenuFlows {
 
 	@Autowired
 	private Navigator navigator;
@@ -30,7 +30,7 @@ public class DeviceUsageWorklow extends MenuFlows {
 	@Autowired
 	private TestContext context;
 
-	private static final Logger logger = LoggerFactory.getLogger(DeviceUsageWorklow.class);
+	private static final Logger logger = LoggerFactory.getLogger(DeviceUsageWorkflow.class);
 
 	private static final String TOTAL = "total";
 

@@ -330,7 +330,7 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 		WebElementUtils.enterText(dailyVelocityTxt, limitDailyVelocity);
 	}
 
-	public void clickaAddTransactionLimitPlan() {
+	public void clickAddTransactionLimitPlan() {
 		clickWhenClickable(addTransactionLimitPlanBtn);
 		switchToAddTransactionLimitPlanFrame();
 	}

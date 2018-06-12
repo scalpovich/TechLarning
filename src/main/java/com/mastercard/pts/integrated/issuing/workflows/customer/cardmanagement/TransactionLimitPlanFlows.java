@@ -20,7 +20,7 @@ public class TransactionLimitPlanFlows extends MenuFlows {
 	public void createTransactionLimitPlan(DeviceCreation deviceCreation, TransactionLimitPlan transactionlimitplan) {
 		waitForElementVisible(menusubmenuPage.getCardManagement());
 		TransactionLimitPlanPage transactionLimitPlanPage = navigator.navigateToPage(TransactionLimitPlanPage.class);
-		transactionLimitPlanPage.clickaAddTransactionLimitPlan();
+		transactionLimitPlanPage.clickAddTransactionLimitPlan();
 		transactionLimitPlanPage.addTransactionLimitPlan(deviceCreation, transactionlimitplan);
 		transactionLimitPlanPage.clickaddTransactionLimitDetails();
 		transactionLimitPlanPage.addTransactionLimitPlanDetails(transactionlimitplan);
