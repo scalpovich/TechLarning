@@ -442,32 +442,20 @@ public class DeviceRangePage extends AbstractBasePage {
 		program=context.get(ContextConstants.PROGRAM);
 		if (deviceRange.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			if (program.getInterchange().toUpperCase().contains("MASTERCARD")) {
-				if (program.getProduct().toUpperCase()
-						.contains(ProductType.PREPAID.toUpperCase())) {
-					deviceRange.setIssuerBin(valuesInJsonNotInExcel
-							.getMastercardPrepaidIssuerBin());
-				} else if (program.getProduct().toUpperCase()
-						.contains(ProductType.DEBIT.toUpperCase())) {
-					deviceRange.setIssuerBin(valuesInJsonNotInExcel
-							.getMastercardDebitIssuerBin());
-				} else if (program.getProduct().toUpperCase()
-						.contains(ProductType.CREDIT.toUpperCase())) {
-					deviceRange.setIssuerBin(valuesInJsonNotInExcel
-							.getMastercardCreditIssuerBin());
+				if (program.getProduct().toUpperCase().contains(ProductType.PREPAID.toUpperCase())) {
+					deviceRange.setIssuerBin(valuesInJsonNotInExcel.getMastercardPrepaidIssuerBin());
+				} else if (program.getProduct().toUpperCase().contains(ProductType.DEBIT.toUpperCase())) {
+					deviceRange.setIssuerBin(valuesInJsonNotInExcel.getMastercardDebitIssuerBin());
+				} else if (program.getProduct().toUpperCase().contains(ProductType.CREDIT.toUpperCase())) {
+					deviceRange.setIssuerBin(valuesInJsonNotInExcel.getMastercardCreditIssuerBin());
 				}
 			} else if (program.getInterchange().toUpperCase().contains("VISA")) {
-				if (program.getProduct().toUpperCase()
-						.contains(ProductType.PREPAID.toUpperCase())) {
-					deviceRange.setIssuerBin(valuesInJsonNotInExcel
-							.getVisaPrepaidIssuerBin());
-				} else if (program.getProduct().toUpperCase()
-						.contains(ProductType.DEBIT.toUpperCase())) {
-					deviceRange.setIssuerBin(valuesInJsonNotInExcel
-							.getVisaDebitIssuerBin());
-				} else if (program.getProduct().toUpperCase()
-						.contains(ProductType.CREDIT.toUpperCase())) {
-					deviceRange.setIssuerBin(valuesInJsonNotInExcel
-							.getVisaCreditIssuerBin());
+				if (program.getProduct().toUpperCase().contains(ProductType.PREPAID.toUpperCase())) {
+					deviceRange.setIssuerBin(valuesInJsonNotInExcel.getVisaPrepaidIssuerBin());
+				} else if (program.getProduct().toUpperCase().contains(ProductType.DEBIT.toUpperCase())) {
+					deviceRange.setIssuerBin(valuesInJsonNotInExcel.getVisaDebitIssuerBin());
+				} else if (program.getProduct().toUpperCase().contains(ProductType.CREDIT.toUpperCase())) {
+					deviceRange.setIssuerBin(valuesInJsonNotInExcel.getVisaCreditIssuerBin());
 				}
 			}
 
