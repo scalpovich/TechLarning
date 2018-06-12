@@ -349,7 +349,7 @@ public class TransactionSteps {
 	@Then("$tool test results are verified with code $code Not OK")
 	public void thenTestResultsAreVerifiedForCodeNotOK(String tool, String code) {
 		String testResults;
-		if (!"mdfs".contains(tool.toLowerCase())) {
+		if ("mas".contains(tool.toLowerCase())) {
 			testResults = transactionWorkflow.verifyTestResults();
 		} else if ("mdfs".contains(tool.toLowerCase())) {
 			testResults = transactionWorkflow.verifyTestResultsOnMdfs();
