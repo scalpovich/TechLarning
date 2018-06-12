@@ -147,6 +147,11 @@ public class BatchProcessFlows extends MenuFlows {
 		deviceProductionPage = navigator.navigateToPage(DeviceProductionPage.class);
 		deviceProductionPage.processDeviceProductionBatchForAllForFileUpload(batch);
 	}
+	
+	public void processPinProductionBatchAllForFileUpload(PinGenerationBatch batch) {
+		PinGenerationBatchPage page = navigator.navigateToPage(PinGenerationBatchPage.class);
+		page.processPinProductionBatchForAllForFileUpload(batch);
+	}
 
 	public void processDeviceProductionBatchNewDevice(DeviceProductionBatch batch) {
 		deviceProductionPage = navigator.navigateToPage(DeviceProductionPage.class);

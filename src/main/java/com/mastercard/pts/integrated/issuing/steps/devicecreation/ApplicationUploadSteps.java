@@ -192,4 +192,12 @@ public class ApplicationUploadSteps {
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processDeviceProductionBatchAllForFileUpload(batch);
 	}
+	
+	@Then("All processes $type pin production batch for fileUpload in Bulk")
+	@When("All processes $type pin production batch for fileUpload in Bulk")
+	public void whenProcessesPinProductionBatchForAllForFileUpload(String type) {
+		PinGenerationBatch batch = new PinGenerationBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processPinProductionBatchAllForFileUpload(batch);
+	}
 }

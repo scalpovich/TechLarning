@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -14,6 +15,7 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -84,6 +86,17 @@ public class PinGenerationBatchPage extends AbstractBasePage {
 			waitAndSearchForRecordToExist();
 			clickWhenClickable(processAllBtn);
 			verifyOperationStatus();
+	}
+		
+		public void processPinProductionBatchForAllForFileUpload(
+				PinGenerationBatch batch) {
+			    List<String> batchNumbers = context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
+				waitForLoaderToDisappear();
+				WebElementUtils.selectDropDownByVisibleText(productTypeDDwn,batch.getProductType());
+				WebElementUtils.enterText(batchNumberTxt, batchNumbers.get(0));
+				waitAndSearchForRecordToExist();
+				clickWhenClickable(processAllBtn);
+				verifyOperationStatus();
 	}
 
 	public void verifyUiOperationStatus() {

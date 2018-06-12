@@ -118,7 +118,6 @@ public class DeviceProductionPage extends AbstractBasePage {
 			DeviceProductionBatch batch) {
 		List<String> batchNumbers = context
 				.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
-		//for (int i = 0; i < batchNumbers.size(); i++) {
 			waitForLoaderToDisappear();
 			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn,
 					batch.getProductType());
@@ -126,7 +125,6 @@ public class DeviceProductionPage extends AbstractBasePage {
 			waitAndSearchForRecordToExist();
 			clickWhenClickable(processAllBtn);
 			verifyOperationStatus();
-		//}
 }
 
 	public void selectProduct(BulkDeviceRequestbatch bulkdeviceGenBatch) {
