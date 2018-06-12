@@ -3,7 +3,7 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 
 public class TransactionLimitPlanDetails {
-	
+
 	private static final String TRANSACTION_TYPE = "TRANSACTION_TYPE";
 	private static final String TRANSACTION_SOURCE = "TRANSACTION_SOURCE";
 	private static final String TRANSACTION_CHANNEL = "TRANSACTION_CHANNEL";
@@ -16,18 +16,16 @@ public class TransactionLimitPlanDetails {
 	private static final String STAND_IN_RESPONSE = "STAND_IN_RESPONSE";
 	private static final String DAILY_AMOUNT = "DAILY_AMOUNT";
 	private static final String DAILY_RESPONSE = "DAILY_RESPONSE";
-	
-	private static final String DAILY_VELOCITY	 = 	"DAILY_VELOCITY";
-	private static final String DAILY_VELOCITY_RESPONSE	 = 	"DAILY_VELOCITY_RESPONSE";
-	private static final String PERIODIC_AMOUNT	 = 	"PERIODIC_AMOUNT";
-	private static final String PERIODIC_AMOUNT_RESPONSE	 = 	"PERIODIC_AMOUNT_RESPONSE";
-	private static final String PERIODIC_VELOCITY	 = 	"PERIODIC_VELOCITY";
-	private static final String	PERIODIC_VELOCITY_RESPONSE	 = 	"PERIODIC_VELOCITY_RESPONSE";
-	private static final String	YEARLY_AMOUNT	 = 	"YEARLY_AMOUNT";
-	private static final String	YEARLY_AMOUNT_RESPONSE	 = 	"YEARLY_AMOUNT_RESPONSE";
-	private static final String YEARLY_VELOCITY	 = 	"YEARLY_VELOCITY";
-	private static final String YEARLY_VELOCITY_RESPONSE	 = 	"YEARLY_VELOCITY_RESPONSE";
-
+	private static final String DAILY_VELOCITY = "DAILY_VELOCITY";
+	private static final String DAILY_VELOCITY_RESPONSE = "DAILY_VELOCITY_RESPONSE";
+	private static final String PERIODIC_AMOUNT = "PERIODIC_AMOUNT";
+	private static final String PERIODIC_AMOUNT_RESPONSE = "PERIODIC_AMOUNT_RESPONSE";
+	private static final String PERIODIC_VELOCITY = "PERIODIC_VELOCITY";
+	private static final String PERIODIC_VELOCITY_RESPONSE = "PERIODIC_VELOCITY_RESPONSE";
+	private static final String YEARLY_AMOUNT = "YEARLY_AMOUNT";
+	private static final String YEARLY_AMOUNT_RESPONSE = "YEARLY_AMOUNT_RESPONSE";
+	private static final String YEARLY_VELOCITY = "YEARLY_VELOCITY";
+	private static final String YEARLY_VELOCITY_RESPONSE = "YEARLY_VELOCITY_RESPONSE";
 
 	private String iframeTransactionType;
 	private String iframeTransactionSource;
@@ -41,7 +39,6 @@ public class TransactionLimitPlanDetails {
 	private String iframeStandInResponse;
 	private String iframeDailyAmount;
 	private String iframeDailyResponse;
-	
 	private String limitDailyVelocity;
 	private String limitDailyVelocityResponse;
 	private String limitPeriodicAmount;
@@ -52,7 +49,7 @@ public class TransactionLimitPlanDetails {
 	private String limitYearlyAmountResponse;
 	private String limitYearlyVelocity;
 	private String limitYearlyVelocityResponse;
-	
+
 	public String getLimitDailyVelocity() {
 		return limitDailyVelocity;
 	}
@@ -97,8 +94,7 @@ public class TransactionLimitPlanDetails {
 		return limitPeriodicVelocityResponse;
 	}
 
-	public void setLimitPeriodicVelocityResponse(
-			String limitPeriodicVelocityResponse) {
+	public void setLimitPeriodicVelocityResponse(String limitPeriodicVelocityResponse) {
 		this.limitPeriodicVelocityResponse = limitPeriodicVelocityResponse;
 	}
 
@@ -153,7 +149,7 @@ public class TransactionLimitPlanDetails {
 	public String getIframeTransactionType() {
 		return iframeTransactionType;
 	}
-	
+
 	public String getIframeStandInAmount() {
 		return iframeStandInAmount;
 	}
@@ -173,50 +169,63 @@ public class TransactionLimitPlanDetails {
 	public void setIframeTransactionType(String iframeTransactionType) {
 		this.iframeTransactionType = iframeTransactionType;
 	}
+
 	public String getIframeTransactionSource() {
 		return iframeTransactionSource;
 	}
+
 	public void setIframeTransactionSource(String iframeTransactionSource) {
 		this.iframeTransactionSource = iframeTransactionSource;
 	}
+
 	public String getIframeTransactionChannel() {
 		return iframeTransactionChannel;
 	}
+
 	public void setIframeTransactionChannel(String iframeTransactionChannel) {
 		this.iframeTransactionChannel = iframeTransactionChannel;
 	}
+
 	public String getIframeTransactionOrigin() {
 		return iframeTransactionOrigin;
 	}
+
 	public void setIframeTransactionOrigin(String iframeTransactionOrigin) {
 		this.iframeTransactionOrigin = iframeTransactionOrigin;
 	}
+
 	public String getIframeFloorAmount() {
 		return iframeFloorAmount;
 	}
+
 	public void setIframeFloorAmount(String iframeFloorAmount) {
 		this.iframeFloorAmount = iframeFloorAmount;
 	}
+
 	public String getIframeFloorResponse() {
 		return iframeFloorResponse;
 	}
+
 	public void setIframeFloorResponse(String iframeFloorResponse) {
 		this.iframeFloorResponse = iframeFloorResponse;
 	}
+
 	public String getIframeCeilingAmount() {
 		return iframeCeilingAmount;
 	}
+
 	public void setIframeCeilingAmount(String iframeCeilingAmount) {
 		this.iframeCeilingAmount = iframeCeilingAmount;
 	}
+
 	public String getIframeCeilingResponse() {
 		return iframeCeilingResponse;
 	}
+
 	public void setIframeCeilingResponse(String iframeCeilingResponse) {
 		this.iframeCeilingResponse = iframeCeilingResponse;
 	}
-	
-	
+
 	public static TransactionLimitPlanDetails createWithProvider(KeyValueProvider provider) {
 		TransactionLimitPlanDetails plan = new TransactionLimitPlanDetails();
 		plan.setIframeTransactionType(provider.getString(TRANSACTION_TYPE));
@@ -231,9 +240,19 @@ public class TransactionLimitPlanDetails {
 		plan.setIframeStandInResponse(provider.getString(STAND_IN_RESPONSE));
 		plan.setIframeDailyAmount(provider.getString(DAILY_AMOUNT));
 		plan.setIframeDailyResponse(provider.getString(DAILY_RESPONSE));
+		plan.setLimitDailyVelocity(provider.getString(DAILY_VELOCITY));
+		plan.setLimitDailyVelocityResponse(provider.getString(DAILY_VELOCITY_RESPONSE));
+		plan.setLimitPeriodicAmount(provider.getString(PERIODIC_AMOUNT));
+		plan.setLimitPeriodicAmountResponse(provider.getString(PERIODIC_AMOUNT_RESPONSE));
+		plan.setLimitPeriodicVelocity(provider.getString(PERIODIC_VELOCITY));
+		plan.setLimitPeriodicVelocityResponse(provider.getString(PERIODIC_VELOCITY_RESPONSE));
+		plan.setLimitYearlyAmount(provider.getString(YEARLY_AMOUNT));
+		plan.setLimitYearlyAmountResponse(provider.getString(YEARLY_AMOUNT_RESPONSE));
+		plan.setLimitYearlyVelocity(provider.getString(YEARLY_VELOCITY));
+		plan.setLimitYearlyVelocityResponse(provider.getString(YEARLY_VELOCITY_RESPONSE));
 		return plan;
 	}
-	
+
 	public static TransactionLimitPlanDetails createWithProviderForLimits(KeyValueProvider provider) {
 		TransactionLimitPlanDetails plan = new TransactionLimitPlanDetails();
 		plan.setIframeDailyAmount(provider.getString(DAILY_AMOUNT));
@@ -250,19 +269,12 @@ public class TransactionLimitPlanDetails {
 		plan.setLimitYearlyVelocityResponse(provider.getString(YEARLY_VELOCITY_RESPONSE));
 		return plan;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "TransactionLimitPlanDetails [iframeTransactionType="
-				+ iframeTransactionType + ", iframeTransactionSource="
-				+ iframeTransactionSource + ", iframeTransactionChannel="
-				+ iframeTransactionChannel + ", iframeTransactionOrigin="
-				+ iframeTransactionOrigin + ", iframeFloorAmount="
-				+ iframeFloorAmount + ", iframeFloorResponse="
-				+ iframeFloorResponse + ", iframeCeilingAmount="
-				+ iframeCeilingAmount + ", iframeCeilingResponse="
-				+ iframeCeilingResponse + ", iframeStandInAmount="
-				+ iframeStandInAmount + ", iframeStandInResponse="
+		return "TransactionLimitPlanDetails [iframeTransactionType=" + iframeTransactionType + ", iframeTransactionSource=" + iframeTransactionSource + ", iframeTransactionChannel="
+				+ iframeTransactionChannel + ", iframeTransactionOrigin=" + iframeTransactionOrigin + ", iframeFloorAmount=" + iframeFloorAmount + ", iframeFloorResponse=" + iframeFloorResponse
+				+ ", iframeCeilingAmount=" + iframeCeilingAmount + ", iframeCeilingResponse=" + iframeCeilingResponse + ", iframeStandInAmount=" + iframeStandInAmount + ", iframeStandInResponse="
 				+ iframeStandInResponse + "]";
 	}
 }

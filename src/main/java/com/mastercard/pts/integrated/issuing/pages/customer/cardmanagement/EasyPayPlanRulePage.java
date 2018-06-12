@@ -79,7 +79,7 @@ public class EasyPayPlanRulePage extends AbstractBasePage {
 		clickWhenClickable(saveBtn);
 		waitForLoaderToDisappear();	
 		clickWhenClickable(addplanBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe(Constants.ADD_RULE);
 		selectByVisibleText(ruleCodeDdwn,easyplanrule.getRuleCode());
 		selectByVisibleText(comparisonOperatorDdwn,easyplanrule.getComparisonOperator());
@@ -99,11 +99,11 @@ public class EasyPayPlanRulePage extends AbstractBasePage {
 	public void verifySuccessMessage() {
 		if (!publishErrorOnPage()) {
 			logger.info("Record Added Successfully.");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in record Addition");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 	

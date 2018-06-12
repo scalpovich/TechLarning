@@ -3,8 +3,6 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;

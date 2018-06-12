@@ -17,6 +17,10 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.codehaus.plexus.util.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.winium.WiniumDriver;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
@@ -33,49 +37,67 @@ public class SimulatorUtilities {
 	private static final Logger logger = LoggerFactory.getLogger(SimulatorUtilities.class);
 	private static Screen screen = new Screen();
 	private static int numberOfTabs = 1;
+	private static int counter = 0;
 	private static final String SELECTED_IMAGE = "_Selected";
 	private static final String SIKULI_MESSAGE = "***** Sikuli click operation is performed on : ";
 	private static final String SIKULI_DOUBLECLICK_MESSAGE = "***** Sikuli double click operation is performed on : ";
 	private static final String SETTEXT_OPERATION = "***** SetText operation is performed. Text set to : ";
-	
-    private FileInputStream fis = null;
-    private FileOutputStream fos = null;
-    private XSSFWorkbook workbook = null;
-    private XSSFSheet sheet = null;
-    private XSSFRow row = null;
-    private XSSFCell cell = null;
 
-    public void setCellData(String xlFilePath, String sheetName, String colName, String value) {
-      try {
-        fis = new FileInputStream(xlFilePath);
-   		workbook = new XSSFWorkbook(fis);
-        int colNum = -1;
-        sheet  = workbook.getSheet(sheetName);
-        row = sheet.getRow(0);
-        for (int i = 0; i < row.getLastCellNum(); i++) {
-            if (row.getCell(i).getStringCellValue().trim().contains(colName)) {
-                 colNum = i;
-                 break;
-                }
-            }
-        sheet.autoSizeColumn(colNum);
-        row = sheet.getRow(1);
-        if(row==null)
-        	row = sheet.createRow(1);
-        cell = row.getCell(colNum);
-        if(cell == null)
-            cell = row.createCell(colNum);
-        cell.setCellValue(value);
-        fis.close();
-        fos = new FileOutputStream(xlFilePath);
-        workbook.write(fos);
-        fos.close();
-        }
-        catch (Exception ex) {
-            logger.info("Exception "+ ex);
-        }
-    }
-	
+	private FileInputStream fis = null;
+	private FileOutputStream fos = null;
+	private XSSFWorkbook workbook = null;
+	private XSSFSheet sheet = null;
+	private XSSFRow row = null;
+	private XSSFCell cell = null;
+
+	public static void takeScreenShot(WiniumDriver winiumDriver, String fileName) {
+		try {
+			String file = String.format("%3d", ++counter) + "_" + fileName;
+			String dir = "target/Simulator_Screenshots/";
+			String fileType = ".PNG";
+			logger.info("ScreenShot File Name :: {}", file);
+			logger.info("Capturing Simulator Screenshot");
+			File fileObject = new File(dir);
+			if (!fileObject.exists())
+				fileObject.mkdirs();
+			fileObject = new File(dir + file + fileType);
+			FileUtils.copyFile(winiumDriver.getScreenshotAs(OutputType.FILE), fileObject);
+			logger.info("Captured Simulator Screenshot Successfully");
+		} catch (WebDriverException | IOException e) {
+			logger.error(e.getMessage(), e);
+		}
+	}
+
+	public void setCellData(String xlFilePath, String sheetName, String colName, String value) {
+		try {
+			fis = new FileInputStream(xlFilePath);
+			workbook = new XSSFWorkbook(fis);
+			int colNum = -1;
+			sheet = workbook.getSheet(sheetName);
+			row = sheet.getRow(0);
+			for (int i = 0; i < row.getLastCellNum(); i++) {
+				if (row.getCell(i).getStringCellValue().trim().contains(colName)) {
+					colNum = i;
+					break;
+				}
+			}
+			sheet.autoSizeColumn(colNum);
+			row = sheet.getRow(1);
+			if (row == null)
+				row = sheet.createRow(1);
+			cell = row.getCell(colNum);
+			if (cell == null)
+				cell = row.createCell(colNum);
+			cell.setCellValue(value);
+			fis.close();
+			fos = new FileOutputStream(xlFilePath);
+			workbook.write(fos);
+			fos.close();
+		} catch (Exception ex) {
+			logger.info("Exception " + ex);
+		}
+	}
+
 	public void pressTab() {
 		pressTab(numberOfTabs);
 	}
@@ -83,7 +105,7 @@ public class SimulatorUtilities {
 	public void pressTab(int numberOfTabs) {
 		robotOperation("tab", numberOfTabs);
 	}
-	
+
 	public void pressShiftTab() {
 		pressShiftTab(numberOfTabs);
 	}
@@ -127,8 +149,8 @@ public class SimulatorUtilities {
 	public void pressLeftArrow(int numberOfTabs) {
 		robotOperation("tabLeft", numberOfTabs);
 	}
-	
-	public void pressF9Key(){
+
+	public void pressF9Key() {
 		robotOperation("pressF9Key", numberOfTabs);
 	}
 
@@ -214,7 +236,7 @@ public class SimulatorUtilities {
 		case "pressDelete":
 			robot.keyPress(KeyEvent.VK_DELETE);
 			break;
-		case "pressF9Key" :
+		case "pressF9Key":
 			robot.keyPress(KeyEvent.VK_F9);
 			robot.keyPress(KeyEvent.VK_F9);
 			break;
@@ -264,15 +286,13 @@ public class SimulatorUtilities {
 			String path = getResourceFolderPath() + SimulatorConstantsData.AUTOIT_EXE_PATH.replace("\\", "\\\\");
 			String psExecPath = getResourceFolderPath() + SimulatorConstantsData.PSEXEC_EXE_PATH.replace("\\", "\\\\");
 			String commandToExecute;
-			logger.info("********* AutoIt Exe being executed :  " +  fileName);
-                                    
-            //for remote/Jenkins/command Line -  AutoIT execution.. enable the below 2 lines and comment the other 2 lines
-            commandToExecute = " cmd /c " + psExecPath + " "+ path + fileName;
-           MiscUtils.reportToConsole("********* commandToExecute  :  " +  commandToExecute);
-            executeCommand(fileName, commandToExecute);
-		}
-		catch(Exception e)
-		{
+			logger.info("********* AutoIt Exe being executed :  " + fileName);
+
+			// for remote/Jenkins/command Line - AutoIT execution.. enable the below 2 lines and comment the other 2 lines
+			commandToExecute = " cmd /c " + psExecPath + " " + path + fileName;
+			MiscUtils.reportToConsole("********* commandToExecute  :  " + commandToExecute);
+			executeCommand(fileName, commandToExecute);
+		} catch (Exception e) {
 			logger.debug(ConstantData.EXCEPTION + e);
 			MiscUtils.propagate(e);
 		}
@@ -287,6 +307,7 @@ public class SimulatorUtilities {
 			wait(2000);
 		}
 		wait(2000);
+		
 	}
 
 	public Boolean isNotNullAndEmpty(String varible) {
@@ -319,9 +340,8 @@ public class SimulatorUtilities {
 		performRightClick(getImageForSelectedItem(nameOfSnapshot));
 	}
 
-	public void performClickOperation(String nameOfSnapshot)
-	{	
-		logger.info(SIKULI_MESSAGE +  nameOfSnapshot);
+	public void performClickOperation(String nameOfSnapshot) {
+		logger.info(SIKULI_MESSAGE + nameOfSnapshot);
 		performActionClick(getImageOfItem(nameOfSnapshot));
 		wait(1000);
 	}
@@ -332,33 +352,31 @@ public class SimulatorUtilities {
 		wait(1000);
 	}
 
-	public void performDoubleClickOperation(String nameOfSnapshot)
-	{	
-		logger.info(SIKULI_DOUBLECLICK_MESSAGE +  nameOfSnapshot);
-		performActionDoubleClick(getImageOfItem(nameOfSnapshot) );
+	public void performDoubleClickOperation(String nameOfSnapshot) {
+		logger.info(SIKULI_DOUBLECLICK_MESSAGE + nameOfSnapshot);
+		performActionDoubleClick(getImageOfItem(nameOfSnapshot));
 		wait(1000);
 	}
 
 	public void performClickOperationOnImages(String nameOfSnapshot) {
 		String imagesName = nameOfSnapshot + SELECTED_IMAGE;
-		logger.info(SIKULI_MESSAGE  +  nameOfSnapshot);
-		performActionClickOnImages(getImageOfItem(nameOfSnapshot), getImageOfItem(imagesName) );
+		logger.info(SIKULI_MESSAGE + nameOfSnapshot);
+		performActionClickOnImages(getImageOfItem(nameOfSnapshot), getImageOfItem(imagesName));
 		wait(1000);
 	}
 
 	public void performDoubleClickOperationOnImages(String nameOfSnapshot) {
 		String imagesNameTemp = nameOfSnapshot + SELECTED_IMAGE;
-		logger.info(SIKULI_DOUBLECLICK_MESSAGE +  nameOfSnapshot);
-		performActionDoubleClickOnImages(getImageOfItem(nameOfSnapshot), getImageOfItem(imagesNameTemp) );
+		logger.info(SIKULI_DOUBLECLICK_MESSAGE + nameOfSnapshot);
+		performActionDoubleClickOnImages(getImageOfItem(nameOfSnapshot), getImageOfItem(imagesNameTemp));
 		wait(1000);
 	}
 
 	private void performRightClick(Pattern nameOfSnapshot) {
 		try {
 			screen.rightClick(nameOfSnapshot);
-		}
-		catch(Exception e)	{
-			logger.debug(ConstantData.SIKUKI_EXCEPTION  + nameOfSnapshot);
+		} catch (Exception e) {
+			logger.debug(ConstantData.SIKUKI_EXCEPTION + nameOfSnapshot);
 			MiscUtils.propagate(e);
 		}
 	}
@@ -366,9 +384,7 @@ public class SimulatorUtilities {
 	private void performActionClick(Pattern selectParent) {
 		try {
 			screen.click(selectParent);
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			logger.debug(ConstantData.SIKUKI_EXCEPTION + e);
 			MiscUtils.propagate(e);
 		}
@@ -380,10 +396,8 @@ public class SimulatorUtilities {
 			while (it.hasNext()) {
 				logger.info("The match is ", it.next().click());
 			}
-		}
-		catch(Exception e)
-		{
-			logger.debug(ConstantData.SIKUKI_EXCEPTION  + e);
+		} catch (Exception e) {
+			logger.debug(ConstantData.SIKUKI_EXCEPTION + e);
 			MiscUtils.propagate(e);
 		}
 	}
@@ -391,10 +405,8 @@ public class SimulatorUtilities {
 	private void performActionDoubleClick(Pattern selectParent) {
 		try {
 			screen.doubleClick(selectParent);
-		}
-		catch(Exception e)
-		{
-			logger.debug(ConstantData.SIKUKI_EXCEPTION  + e);
+		} catch (Exception e) {
+			logger.debug(ConstantData.SIKUKI_EXCEPTION + e);
 			MiscUtils.propagate(e);
 		}
 	}
@@ -406,9 +418,7 @@ public class SimulatorUtilities {
 			} else {
 				screen.click(selectParent1);
 			}
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			logger.debug(ConstantData.SIKUKI_EXCEPTION + e);
 			MiscUtils.propagate(e);
 		}
@@ -439,14 +449,10 @@ public class SimulatorUtilities {
 		}
 	}
 
-	public Boolean isImagePresent(String screenName)
-	{
-		try
-		{
-			return screen.exists(getImageOfItem(screenName))!=null;
-		}
-		catch(Exception e)
-		{
+	public Boolean isImagePresent(String screenName) {
+		try {
+			return screen.exists(getImageOfItem(screenName)) != null;
+		} catch (Exception e) {
 			logger.debug(ConstantData.SIKUKI_EXCEPTION + screenName);
 			logger.error(e.getMessage());
 			return false;
@@ -463,9 +469,7 @@ public class SimulatorUtilities {
 				logger.info("Check areImagesPresent in Simululator Utilities");
 				return false;
 			}
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			logger.debug(ConstantData.SIKUKI_EXCEPTION + screenName);
 			return false;
 		}
@@ -492,9 +496,7 @@ public class SimulatorUtilities {
 
 		try {
 			return new Pattern(objectName).similar(0.75F);
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			logger.debug(ConstantData.SIKUKI_EXCEPTION + nameOfSnapshot);
 			return null;
 		}
@@ -545,10 +547,9 @@ public class SimulatorUtilities {
 		String content;
 		try {
 			content = FileCreation.getFileContents(filePath);
-			return content.replaceAll("\\D+",""); // gets only numbers
-		}		
-		catch(Exception e)	{
-			logger.debug(ConstantData.EXCEPTION  + e);
+			return content.replaceAll("\\D+", ""); // gets only numbers
+		} catch (Exception e) {
+			logger.debug(ConstantData.EXCEPTION + e);
 			MiscUtils.propagate(e);
 			return null;
 		}
