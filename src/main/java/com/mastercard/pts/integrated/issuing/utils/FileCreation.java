@@ -511,6 +511,7 @@ public class FileCreation {
 		logger.info(customerType);
 		return fileName;
 	}
+	
 	public String createApplicationUploadFile(String INSTITUTION_CODE, String customerType, String cardType) throws Exception {
 		DeviceRange deviceRange=context.get(ContextConstants.DEVICE_RANGE);
 		DevicePlan devicePlan=context.get(ContextConstants.DEVICE_PLAN);
@@ -541,7 +542,8 @@ public class FileCreation {
 		logger.info("Length Of all Files:{}", listOfFiles.length);
 
 		for (int k = 0; k < listOfFiles.length; k++) {
-
+			
+             //This will check if already existing credit or prepaid file is present in workspace,if yes that file will be uploaded
 			if (listOfFiles[k].getName().startsWith("APP")) {
 				fileName = listOfFiles[k].getName();
 				countLines(fileName);
