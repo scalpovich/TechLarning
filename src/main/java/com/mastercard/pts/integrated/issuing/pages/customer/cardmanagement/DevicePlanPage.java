@@ -899,7 +899,6 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectIframeBeforeKYCDdwn(String kycType) {
-		WebElementUtils.elementToBeClickable(iframeBeforeKYCDdwn);
 		if (iframeBeforeKYCDdwn.isEnabled()) {
 			WebElementUtils.selectDropDownByVisibleText(iframeBeforeKYCDdwn,kycType);
 		}
@@ -995,7 +994,7 @@ public class DevicePlanPage extends AbstractBasePage {
 							devicePlanDataObject.setServiceCode(Constants.EMV_SERVICE_CODE);
 						} else if (devicePlanDataObject.getDeviceType().contains("Mag")) {
 							WebElementUtils.enterText(iframeServiceCodeTxt,Constants.MSR_SERVICE_CODE);
-							devicePlanDataObject.setServiceCode(Constants.MSR_SERVICE_CODE);
+							devicePlanDataObject.setServiceCode(Constants.MSR_SERVICE_CODE );
 						}
 						else
 						{
@@ -1067,12 +1066,15 @@ public class DevicePlanPage extends AbstractBasePage {
 	
 		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			if (DeviceType.MAGNETIC_STRIPE_CARD.contains(devicePlan.getDeviceType())|| DeviceType.EMV_CARD.contains(devicePlan.getDeviceType()) && "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
+				if(pinRetryLimitTxt.isEnabled())
+				{
 				WebElementUtils.enterText(pinRetryLimitTxt,devicePlan.getPinRetryLimit());
+				}
 			}
 		}
 		else
 		{
-		if (!devicePlan.getDeviceType().equals(DeviceType.STATIC_VIRTUAL_CARD)&& "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
+		if (!devicePlan.getDeviceType().contains(DeviceType.STATIC_VIRTUAL_CARD)&& "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 			WebElementUtils.enterText(pinRetryLimitTxt, devicePlan.getPinRetryLimit());
 		}	
 		}
@@ -1096,9 +1098,9 @@ public class DevicePlanPage extends AbstractBasePage {
 		}
 			else
 			{
-			if (DeviceType.EMV_CARD.equals(devicePlan.getDeviceType())
+			if (DeviceType.EMV_CARD.contains(devicePlan.getDeviceType())
 					|| DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS
-							.equals(devicePlan.getDeviceType())) {
+							.contains(devicePlan.getDeviceType())) {
 				forEmvOrNfc(devicePlan);
 			}
 		}
@@ -1175,11 +1177,11 @@ public class DevicePlanPage extends AbstractBasePage {
 				fillRenewalSection(devicePlan);
 		
 			if (devicePlan.getFillReplacementSection().equalsIgnoreCase(STATUS_YES)){
-				if(!devicePlan.getDeviceType().equalsIgnoreCase(DeviceType.VIRTUAL_CARD)){
+				if(!devicePlan.getDeviceType().contains(DeviceType.VIRTUAL_CARD)){
 					fillReplacementSection(devicePlan);
 				}
 			}	
-			if (!devicePlan.getDeviceType().equals(DeviceType.VIRTUAL_CARD)){
+			if (!devicePlan.getDeviceType().contains(DeviceType.VIRTUAL_CARD)){
 					fillPinGenerationSection(devicePlan);
 			}
 			

@@ -331,8 +331,10 @@ public class DeviceSteps {
 		DevicePlan deviceplan2 = context.get(ContextConstants.DEVICE_PLAN);
 		System.out.println("Device Plan " + deviceplan2.getDevicePlanCode());
 
+		Device device = context.get(ContextConstants.DEVICE_SUPPLEMENTARY_ADDON_EXISTING);
 
 		context.put(ContextConstants.DEVICE_PLAN, deviceplan1);
+		context.put(ContextConstants.DEVICE, device);
 	}
 
 }

@@ -135,7 +135,7 @@ public class ProgramSetupSteps {
 			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
 			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
 			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
-			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product",
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product","When user assigns service code to program",
 			"When user creates a bulk device production request for prepaid", "When processes created bulk device generation request for prepaid", "When processes pre-production batch for prepaid",
 			"When processes device production batch for prepaid", "When processes pin generation batch for prepaid", "When user sign out from customer portal",
 			"When user is logged in agent portal as admin user", "When user fills information to assign program to agency and submits form", "When user sign out from agent portal",
@@ -560,8 +560,42 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 	
+	@When("for $deviceType User fills without pin Device Plan for $type product for $interchange")
+	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeWithoutPin(String deviceType,String type,String interchange) {
+		setPinRequiredToFalse();
+		devicePlan = DevicePlan.createProviderForCredit(provider);
+		devicePlan.setProductType(ProductType.fromShortName(type));
+		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+		devicePlan.setAssociation(interchange);
+		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setDeviceType(deviceType);
+
+		programSetupWorkflow.createDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+	
 	@When("for $deviceType User fills Supplementary Device Plan for $type product for $interchange")
 	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeForSupplementary(String deviceType,String type,String interchange) {
+		devicePlanSupplementary = DevicePlan.createProviderForCredit(provider);
+		devicePlanSupplementary.setProductType(ProductType.fromShortName(type));
+		devicePlanSupplementary.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setAssociation(interchange);
+		devicePlanSupplementary.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setDeviceType(deviceType);
+
+		programSetupWorkflow.createDevicePlan(devicePlanSupplementary);
+		context.put(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY, devicePlanSupplementary);
+	}
+	
+	@When("for $deviceType User fills without pin Supplementary Device Plan for $type product for $interchange")
+	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeForSupplementaryWithoutPin(String deviceType,String type,String interchange) {
+		setPinRequiredToFalse();
 		devicePlanSupplementary = DevicePlan.createProviderForCredit(provider);
 		devicePlanSupplementary.setProductType(ProductType.fromShortName(type));
 		devicePlanSupplementary.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
@@ -1073,7 +1107,7 @@ public class ProgramSetupSteps {
 	@When("User fills Device Range section for $type product")
 	public void whenUserFillsDeviceRangeSection(String type) {
 		DeviceRange deviceRange;
-		if (type.equalsIgnoreCase(ProductType.CREDIT)) {
+		if(ProductType.CREDIT.toUpperCase().contains(type.toUpperCase())) {
 			deviceRange = DeviceRange.createWithProvider(dataProvider,provider, type);
 		} else {
 			deviceRange = DeviceRange.createWithProvider(dataProvider, type);
