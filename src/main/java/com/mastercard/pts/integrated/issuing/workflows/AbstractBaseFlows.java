@@ -75,7 +75,7 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.administration.C
 
 public class AbstractBaseFlows extends AbstractBasePage {
 
-	final Logger logger = LoggerFactory.getLogger(AbstractBaseFlows.class);
+	private final Logger logger = LoggerFactory.getLogger(AbstractBaseFlows.class);
 
 	@Autowired
 	public ProcessingCenterPage processingCenterPage;

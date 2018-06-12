@@ -359,6 +359,17 @@ public class ProgramSetupSteps {
 		// composite step
 	}
 
+	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" with limit plan")
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			 "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for prepaid emv product transaction limit plan", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product" })
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidLimitPlan(String deviceType) {
+		// composite step
+	}
+	
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin without dedupe")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
 			"When User fills MCC Rules for prepaid product", "When User fills Transaction Plan for prepaid product", "When User fills Transaction Limit Plan for prepaid product",
@@ -676,6 +687,25 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 
+	@When("User fills Device Plan for $productType $deviceType product transaction limit plan")
+	public void whenUserFillsDevicePlanTransactionLimitPlan(String productType, String deviceType) {
+		setPinRequiredToFalse();
+		devicePlan = DevicePlan.createWithProvider(provider);
+		devicePlan.setProductType(ProductType.fromShortName(productType));
+		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
+		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+		devicePlan.setTransactionLimitPlan(context.get(ContextConstants.TX_LIMIT_PLAN_CODE));
+		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
+		if ("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
+			devicePlan.setIsPinLess("YES");
+		programSetupWorkflow.createDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+
+	
 	// refactored and created a new method that could be used in Device Plan to read test data from device context and/or testdata
 	private void settingDevicePlanTestData(String productType, String deviceType) {
 		// virtual cards are pinless so even if this statement is called by mistake, we are setting Pin to false
@@ -1109,7 +1139,7 @@ public class ProgramSetupSteps {
 	@When("User fills Device Range section for $type product")
 	public void whenUserFillsDeviceRangeSection(String type) {
 		DeviceRange deviceRange;
-		if (type.equalsIgnoreCase(ProductType.CREDIT)) {
+		if(ProductType.CREDIT.toUpperCase().contains(type.toUpperCase())) {
 			deviceRange = DeviceRange.createWithProvider(dataProvider,provider, type);
 		} else {
 			deviceRange = DeviceRange.createWithProvider(dataProvider, type);

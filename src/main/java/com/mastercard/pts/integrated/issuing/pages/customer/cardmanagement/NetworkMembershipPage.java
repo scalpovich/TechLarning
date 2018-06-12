@@ -134,11 +134,11 @@ public class NetworkMembershipPage extends AbstractBasePage {
 	public void verifyNewNetworkSuccess() {
 		if (!verifyErrorsOnNetworkPage()) {
 			logger.info("Network membership Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in record Addition");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 
 		}
 	}

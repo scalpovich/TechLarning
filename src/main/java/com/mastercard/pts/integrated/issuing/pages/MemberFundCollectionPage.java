@@ -47,7 +47,7 @@ public class MemberFundCollectionPage extends AbstractBasePage {
 					selectDropDownByIndex(messageReasonCodeDDwn, j);
 					addWicketAjaxListeners(getFinder().getWebDriver());
 					ClickButton(saveBtn);
-					SwitchToDefaultFrame();
+					switchToDefaultFrame();
 
 				}
 

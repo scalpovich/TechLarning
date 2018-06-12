@@ -86,14 +86,6 @@ Then user is logged in institution
 Then search CWD authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform MSR_REFUND Authorization transaction
-When perform an EMV_REFUND MAS transaction
-Then MAS test results are verified
-Then user is logged in institution
-Then search Refund authorization and verify 000-Successful status
-Then validate auth report
-And user sign out from customer portal
-
 Scenario: Perform ASI_EMV Authorization transaction on Individual Primary MSR Card
 When perform an ASI_EMV MAS transaction
 Then MAS test results are verified

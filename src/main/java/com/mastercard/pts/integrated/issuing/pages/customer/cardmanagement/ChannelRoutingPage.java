@@ -56,7 +56,7 @@ public class ChannelRoutingPage extends AbstractBasePage {
 		clickWhenClickable(saveBtn);
 		waitForLoaderToDisappear();	
 		clickWhenClickable(addplanBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe(Constants.ADD_CHANNEL_ROUTING_DETAILS);
 		selectByVisibleText(channelDdwn,channelroutingplan.getChannel());
 		selectByVisibleText(interfaceNameDdwn,channelroutingplan.getInterfaceName());	 
@@ -71,11 +71,11 @@ public class ChannelRoutingPage extends AbstractBasePage {
 	public void verifyNewChannelRoutingSuccess() {
 		if (!publishErrorOnPage()) {
 			logger.info("Record Added Successfully.");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in record Addition");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 
 		}
 	}

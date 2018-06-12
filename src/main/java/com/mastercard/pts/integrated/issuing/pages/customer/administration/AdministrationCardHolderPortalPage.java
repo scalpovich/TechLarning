@@ -1,7 +1,5 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.administration;
 
-import com.mastercard.pts.integrated.issuing.domain.ProductType;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletFeePlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
