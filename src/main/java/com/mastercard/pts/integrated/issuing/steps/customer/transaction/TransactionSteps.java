@@ -229,7 +229,7 @@ public class TransactionSteps {
 
 	private void setDeElementsDynamically(Device device, Transaction transactionData, String transaction) {
 		MiscUtils.reportToConsole("********** Start setDeElementsDynamically ********");
-		if (!"pinless".equalsIgnoreCase(device.getPinNumberForTransaction()) && !transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE")) // ecomm transactions cannot have a PIN
+		if (!"pinless".equalsIgnoreCase(device.getPinNumberForTransaction()) && !transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") && !transactionWorkflow.isContains(transaction, ConstantData.THREE_D_SECURE_TRANSACTION)) // ecomm transactions cannot have a PIN
 			transactionData.setDeKeyValuePairDynamic("052", device.getPinNumberForTransaction());
 		// data format is 12 digits hence leftpad with 0
 		transactionData.setDeKeyValuePairDynamic("004", StringUtils.leftPad(device.getTransactionAmount(), 12, "0"));
