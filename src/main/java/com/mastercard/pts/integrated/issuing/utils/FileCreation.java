@@ -24,6 +24,7 @@ import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.DeviceType;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
@@ -582,10 +583,25 @@ public class FileCreation {
 				for (int i = 0; i < applicationUploadMap.size(); i++) {
 							if (true == dataReader.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
 
-						if (devicePlan.getDeviceType().contains("Static Virtual")) {
-							deviceType = "7";
-						} else if (devicePlan.getDeviceType().contains("Magnetic")) {
+						if (devicePlan.getDeviceType().toUpperCase().contains(DeviceType.MAGNETIC_STRIPE_CARD.toUpperCase())) {
 							deviceType = "1";
+						} else if (devicePlan.getDeviceType().toUpperCase().contains(DeviceType.EMV_CARD.toUpperCase())) {
+							deviceType = "2";
+						}
+						else if(devicePlan.getDeviceType().toUpperCase().contains(DeviceType.PHYSICAL_NFC_DEVICE_MAG_STRIPE_PAYPASS.toUpperCase())) {
+							deviceType = "3";
+						}
+						else if(devicePlan.getDeviceType().toUpperCase().contains(DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS.toUpperCase())) {
+							deviceType = "4";
+						}
+						else if(devicePlan.getDeviceType().toUpperCase().contains(DeviceType.PHYSICAL_NFC_DEVICE_PAYPASS.toUpperCase())) {
+							deviceType = "5";
+						}
+						else if(devicePlan.getDeviceType().toUpperCase().contains(DeviceType.STATIC_VIRTUAL_CARD.toUpperCase())) {
+							deviceType = "7";
+						}
+						else if(devicePlan.getDeviceType().toUpperCase().contains(DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.toUpperCase())) {
+							deviceType = "8";
 						}
 						if (customerType.equals("Individual")) {
 									writer.println(getUploadFileFromDatamap(
@@ -594,6 +610,7 @@ public class FileCreation {
 											.replace("%F%", "FORM"+CustomUtils.randomAlphaNumeric(6))
 											.replace("%t%", "0")
 											.replace("%P%", program.getProgramCode())
+											.replace("%q%", deviceType)
 											.replace("%D%", devicePlan.getDevicePlanCode())
 											.replace("%b%", branchCode)
 											.replace("%Z%", "")
@@ -608,6 +625,7 @@ public class FileCreation {
 											.replace("%F%", "FORM"+CustomUtils.randomAlphaNumeric(6))
 											.replace("%t%", "1")
 											.replace("%P%", program.getProgramCode())
+											.replace("%q%", deviceType)
 											.replace("%D%", devicePlan.getDevicePlanCode())
 											.replace("%b%",branchCode)
 											.replace("%Z%",  Institution.createWithProvider(provider).getCorporateClientCodePrepaid())
@@ -623,6 +641,7 @@ public class FileCreation {
 											.replace("%B%", INSTITUTION_CODE)
 											.replace("%F%", "FORM"+CustomUtils.randomAlphaNumeric(6))
 											.replace("%t%", "1")
+											.replace("%q%", deviceType)
 											.replace("%P%", program.getProgramCode())
 											.replace("%D%", devicePlan.getDevicePlanCode())
 											.replace("%b%",branchCode)
@@ -639,6 +658,7 @@ public class FileCreation {
 											.replace("%F%", "FORM"+CustomUtils.randomAlphaNumeric(6))
 											.replace("%t%", "2")
 											.replace("%P%", program.getProgramCode())
+											.replace("%q%", deviceType)
 											.replace("%D%", devicePlan.getDevicePlanCode())
 											.replace("%b%", branchCode)
 											.replace("%Z%", "")
