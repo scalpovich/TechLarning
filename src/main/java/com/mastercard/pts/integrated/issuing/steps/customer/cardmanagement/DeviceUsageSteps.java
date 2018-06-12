@@ -31,7 +31,7 @@ public class DeviceUsageSteps {
 		String  atc = deviceUsageWorkflow.getApplicationTransactionCounterDeviceUsage(device.getDeviceNumber()).get(0);
 		Logger.info("Application Transaction Counter : {} ",atc);
 		boolean condition = atc.equals(returnATCCounterIncreasedByOne());
-		assertTrue(FAILED_MESSAGE_INFO, condition);		
+		assertTrue(FAILED_MESSAGE_INFO+" - Expected: "+returnATCCounterIncreasedByOne()+" Actual  : "+atc, condition);		
 		context.put(ATC, atc);	
 
 	}
@@ -43,7 +43,7 @@ public class DeviceUsageSteps {
 		String  atc = deviceUsageWorkflow.getApplicationTransactionCounterDeviceUsage(device.getDeviceNumber()).get(0);
 		Logger.info("Application Transaction Counter : {} ",atc);
 		boolean condition = atc.equals("1");
-		assertTrue(FAILED_MESSAGE_INFO, condition);		
+		assertTrue(FAILED_MESSAGE_INFO+" - Expected: 1 Actual  : "+atc, condition);		
 		context.put(ATC, atc);	
 		
 	}
