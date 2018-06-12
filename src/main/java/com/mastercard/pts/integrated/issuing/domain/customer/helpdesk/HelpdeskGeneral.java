@@ -19,6 +19,8 @@ public class HelpdeskGeneral {
 	private static final String NEW_MOBILE_ISD = "NEW_MOBILE_ISD";
 	private static final String DEVICE_NUMBER = "DEVICE_NUMBER";
 	private static final String PRODUCT_TYPE = "PRODUCT_TYPE";
+	private static final String LIMIT_TYPE = "LIMIT_TYPE";
+	
 	private String transactionNote;
 	private String initialLoadTxnDetails;
 	private String transactionDetails;
@@ -35,8 +37,9 @@ public class HelpdeskGeneral {
 	private String newMobileNo;
 	private String newMobileISD;
 	private String defaultWalletNumber;
+	private String limitType;
 	
-	
+
 	public static HelpdeskGeneral createWithProvider(KeyValueProvider provider) {
 		HelpdeskGeneral plan = new HelpdeskGeneral();
 		plan.setServiceCode(provider.getString(CS_SERVICE_CODE));
@@ -50,6 +53,7 @@ public class HelpdeskGeneral {
 		} else {
 			plan.setProductType(ProductType.PREPAID);
 		}
+		plan.setLimitType(provider.getString(LIMIT_TYPE));
 		plan.setNewEmailID(provider.getString(NEW_EMAIL_ID));
 		plan.setNewMobileNo(provider.getString(NEW_MOBILE_NO));
 		plan.setNewMobileISD(provider.getString(NEW_MOBILE_ISD));
@@ -183,6 +187,14 @@ public class HelpdeskGeneral {
 
 	public void setNewMobileISD(String newMobileISD) {
 		this.newMobileISD = newMobileISD;
+	}
+	
+	public String getLimitType() {
+		return limitType;
+	}
+
+	public void setLimitType(String limitType) {
+		this.limitType = limitType;
 	}
 
 	@Override

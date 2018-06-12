@@ -112,7 +112,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement notesTxt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "udf6:input:dropdowncomponent")
-	private MCWebElement selectType;
+	private MCWebElement selectLimitType;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "udf29:input:inputAmountField")
+	private MCWebElement clientCreditLimitTxt;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Save']")
 	private MCWebElement saveBtn;
@@ -138,10 +141,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'Transactions']")
 	private MCWebElement transactionsBtn;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='fromDate']/..")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='date1']/..")
 	private MCWebElement effectiveDateTxt;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='toDate']/..")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='date2']/..")
 	private MCWebElement endDateTxt;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[2]//td[2]//div[@class='radioInput']/input[1]")
@@ -293,6 +296,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(serviceCodeDdwn, serviceCode);
 	}
 	
+	public void selectCreditLimitType(String limittype){
+		WebElementUtils.selectDropDownByVisibleText(selectLimitType, limittype);
+	}
+	
 	public void storeSaleDate(){
 		saleDate = new WebDriverWait(driver(), timeoutInSec)
 		.until(WebElementUtils.visibilityOf(saleDateTxt)).getText();
@@ -340,8 +347,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.enterText(notesTxt, notes);
 	}
 	
-	public void selectType(String type){
-		WebElementUtils.selectDropDownByVisibleText(selectType, type);
+	public void selectLimitType(String type){
+		WebElementUtils.selectDropDownByVisibleText(selectLimitType, type);
 	}
 	
 	public void enterEmailID(HelpdeskGeneral general){
@@ -456,7 +463,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		logger.info("credit limit change request: {}",helpdeskGeneral.getCardPackId());
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
-		runWithinPopup("226-Credit limit Change Request", ()->{
+		runWithinPopup("226 - Credit limit Change Request", ()->{
+			selectLimitType(helpdeskGeneral.getLimitType());
+			WebElementUtils.pickDate(effectiveDateTxt, LocalDate.now());
+			WebElementUtils.pickDate(endDateTxt, LocalDate.now().plusDays(1));
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();

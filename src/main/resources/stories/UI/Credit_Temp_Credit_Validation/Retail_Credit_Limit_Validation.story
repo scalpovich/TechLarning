@@ -1,14 +1,14 @@
-!-- @author: E076170
+!-- @author: E080534
 Narrative:
 As a Customer portal user
-I want to validate temproary credit limit  
+I want to validate temproary credit limit for retail card
 so that credit limit should be validated
 
 Meta:
 @StoryName credit_emv_retail
 @CardReplacementCredit
 
-Scenario:To Verify that the user can validate credit transaction limit
+Scenario:To Verify that the user can validate credit transaction limit for retail card
 Given setting json values in excel
 Given user is logged in institution
 When User fills Dedupe Plan
