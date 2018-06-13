@@ -283,6 +283,7 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 	}
 
 	private void addDetails(TransactionLimitPlanDetails details, String productType) {
+		clickAddNewButton();
 		runWithinPopup("Add Transaction Limit Plan Detail", () -> {
 			selectIframeTransactionType(details.getIframeTransactionType());
 			waitForWicket();
