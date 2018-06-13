@@ -33,9 +33,7 @@ public class MCGFlows extends MenuFlows {
 	}
 	
 	public String getFeedbackText() {
-		page.SwitchToDefaultFrame();
-		
+		page.switchToDefaultFrame();
 		return page.getMessageFromFeedbackPanel();
 	}
-
 }

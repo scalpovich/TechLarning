@@ -337,7 +337,7 @@ public class MCGLimitPlanPage extends AbstractBasePage {
 		});
 		switchToIframe(FRAME_ADD_MCG_LIMIT_PLAN);
 		clickSaveButton();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		return plan;
 	}
 	

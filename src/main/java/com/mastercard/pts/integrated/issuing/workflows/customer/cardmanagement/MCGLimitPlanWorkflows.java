@@ -21,15 +21,13 @@ public class MCGLimitPlanWorkflows {
 	}
 
 	public String getFeedbackText() {
-		page.SwitchToDefaultFrame();
-		
+		page.switchToDefaultFrame();
 		return page.getMessageFromFeedbackPanel();
 	}
 	
 	public boolean isNoRecordsFoundInTableView(MCGLimitPlan plan) {
 		page.enterPlanCodeInSearchBox(plan);
 		page.clickSearchButton();
-		
 		return page.isNoRecordsFoundInTable();
 	}
 }
