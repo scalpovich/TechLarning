@@ -327,8 +327,8 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 			}
 			enterIframeDailyAmount(details.getIframeDailyAmount());
 			selectIframeDailyResponse(details.getIframeDailyResponse());
-			super.clickSaveButton(); // Overriden method included loader handling which is not there is application. Calling parent method to avoid exception being printed in logs.
-			});
+			clickSaveButton();
+		});
 
 		verifyRecordMarkedForUpdationStatusSuccess();
 	}
