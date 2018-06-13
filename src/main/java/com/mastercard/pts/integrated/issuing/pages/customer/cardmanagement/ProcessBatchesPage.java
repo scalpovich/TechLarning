@@ -175,7 +175,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 
 	public void clickSubmitBtn() {
-		clickWhenClickableDoNotWaitForWicket(submitBtn);
+		clickWhenClickable(submitBtn);
 	}
 
 	public static final String FILE_CHK_BOX = "//span[.='%s']/following::input[1]";
@@ -530,7 +530,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		switchToIframe(Constants.VIEW_BATCH_DETAILS);
 
 		// unless it is completed, refresh it - No of attempts: 5
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 5; i++) {
 			if (processBatchStatusTxt.getText().equalsIgnoreCase("PENDING [0]") || processBatchStatusTxt.getText().equalsIgnoreCase("IN PROCESS [1]")) {
 				ClickButton(closeBtn);
 				waitForLoaderToDisappear();

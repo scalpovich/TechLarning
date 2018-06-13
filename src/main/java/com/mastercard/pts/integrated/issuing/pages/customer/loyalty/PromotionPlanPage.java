@@ -76,7 +76,7 @@ public class PromotionPlanPage extends AbstractBasePage {
 		clickAddNewButton();
 		runWithinPopup(ADD_PROMOTION_PLAN, () -> {
 			addPromotionPlan();
-		//	verifyAlreadyExistsAndClickCancel();
+			verifyAlreadyExistsAndClickCancel();
 		});
 	}
 

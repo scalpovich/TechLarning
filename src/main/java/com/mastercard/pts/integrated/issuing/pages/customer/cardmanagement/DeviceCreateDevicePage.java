@@ -399,7 +399,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
         SimulatorUtilities.wait(3000);
 		// Do not Validate only when environment is Automation
 		if (!System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)) {
-		clickNextButton();
+			clickNextButton();
 		}
 
 		fillAddress(device);

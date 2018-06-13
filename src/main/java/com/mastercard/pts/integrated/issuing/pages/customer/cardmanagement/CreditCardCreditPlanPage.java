@@ -79,7 +79,6 @@ public class CreditCardCreditPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='feedbackPanelERROR']")
 	private MCWebElement errorMsgLbl;
 
-	
 	public void verifyUiOperationStatus() {
 		logger.info("Credit Card Credit Plan Page");
 		verifySearchButton("Search");

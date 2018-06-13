@@ -88,7 +88,6 @@ public class CreditCardPaymentPriorityPage extends AbstractBasePage {
 	private MCWebElement interestTxt;
 
 	private int counter=0;
-	
 	public void verifyUiOperationStatus() {
 		logger.info("Credit Card Payment Priority");
 		verifySearchButton("Search");
@@ -132,9 +131,9 @@ public class CreditCardPaymentPriorityPage extends AbstractBasePage {
 			clickSaveButton();
 			SimulatorUtilities.wait(4000);
 		 if (verifyAlreadyExists()) {
-			errorMessagePresence();
-			creditCardPlans.setErrorStatus(errorMessagePresence());
-			canceled.set(verifyAlreadyExistsAndClickCancel());
+			    errorMessagePresence();
+			 	creditCardPlans.setErrorStatus(errorMessagePresence());
+				canceled.set(verifyAlreadyExistsAndClickCancel());
 		 }
 		 else
 		 {

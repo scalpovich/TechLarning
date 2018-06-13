@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Vendor;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceRangeFlows;
 
 @Component
@@ -20,7 +19,7 @@ public class DeviceRangeSteps {
 
 	@Autowired
 	DeviceCreation devicecreation;
-	
+
 	@Autowired
 	Program program;
 
@@ -34,6 +33,7 @@ public class DeviceRangeSteps {
 		devicebin.setProductType(program.getProduct());
 		devicerangeflows.addDeviceRange(devicebin);
 	}
+
 	@When("Device Range Adaptive Authentication CheckBox should be $enabled")
 	@Then("Device Range Adaptive Authentication CheckBox should be $enabled")
 	public void verifyAdaptiveAuthenticationCheckBox(@Named("enabled") String enabled) {

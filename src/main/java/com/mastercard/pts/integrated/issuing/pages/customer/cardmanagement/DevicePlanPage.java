@@ -1112,7 +1112,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		selectIframeBaseDeviceJoiningMemberShipPlanDdwn(devicePlan.getBaseDeviceJoiningMemberShipPlan());
 		if(!devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
 		{
-			selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
+		selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
 		}
 		selectIframeTransactionLimitPlanDdwn(devicePlan.getTransactionLimitPlan());
 		clickIframeNextButton();
