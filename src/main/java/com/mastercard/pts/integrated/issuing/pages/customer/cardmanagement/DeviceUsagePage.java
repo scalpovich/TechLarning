@@ -45,10 +45,10 @@ public class DeviceUsagePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview")
 	private MCWebElement dataTable;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "ul.tabs li a[href*='tab3']")
 	private MCWebElement walletMCGUsageSubMenu;
-	
+
 	private static final String FRAME_VIEW_DEVICE_USAGE = "View Device Usage";
 	private static final String FRAME_VIEW_WALLET_USAGE = "View Wallet Usage";
 	public static final String MCG_CODE = "MCG Code";
@@ -61,23 +61,23 @@ public class DeviceUsagePage extends AbstractBasePage {
 		logger.info("Device Usage");
 		verifySearchButton("Search");
 	}
-	
-	public void enterDeviceNumber(DeviceUsage detail){
-		enterValueinTextBox(deviceNumber,detail.getDeviceNumber());
+
+	public void enterDeviceNumber(DeviceUsage deviceUsage) {
+		enterValueinTextBox(deviceNumber, deviceUsage.getDeviceNumber());
 	}
-	
-	public void navigateToWalletMCGUsage(){
+
+	public void navigateToWalletMCGUsage() {
 		clickWhenClickable(walletMCGUsageSubMenu);
 	}
-	
-	public Optional<Map<String,String>> getWalletMCGUsageData(){
-		Map<String,String> map = new HashMap<>();
-		map.put(MCG_CODE, getCellTextByColumnName(1,MCG_CODE));
-		map.put(DAILY_AMOUNT_DOMESTIC_UTILIZED,getCellTextByColumnName(1,DAILY_AMOUNT_DOMESTIC_UTILIZED));
-		map.put(DAILY_VELOCLITY_DOMESTIC_UTILIZED, getCellTextByColumnName(1,DAILY_VELOCLITY_DOMESTIC_UTILIZED));
-		map.put(DAILY_AMOUNT_INTERNATIONAL_UTILIZED,getCellTextByColumnName(1, DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
-		map.put(DAILY_VELOCLITY_INTERNATIONAL_UTILIZED,getCellTextByColumnName(1,DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
-		
+
+	public Optional<Map<String, String>> getWalletMCGUsageData() {
+		Map<String, String> map = new HashMap<>();
+		map.put(MCG_CODE, getCellTextByColumnName(1, MCG_CODE));
+		map.put(DAILY_AMOUNT_DOMESTIC_UTILIZED, getCellTextByColumnName(1, DAILY_AMOUNT_DOMESTIC_UTILIZED));
+		map.put(DAILY_VELOCLITY_DOMESTIC_UTILIZED, getCellTextByColumnName(1, DAILY_VELOCLITY_DOMESTIC_UTILIZED));
+		map.put(DAILY_AMOUNT_INTERNATIONAL_UTILIZED, getCellTextByColumnName(1, DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
+		map.put(DAILY_VELOCLITY_INTERNATIONAL_UTILIZED, getCellTextByColumnName(1, DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
+
 		return Optional.of(map);
 	}
 
@@ -91,27 +91,27 @@ public class DeviceUsagePage extends AbstractBasePage {
 			deviceUsageDetails.add(periodDebitTransactionAmountUtilizedLbl.getText());
 			deviceUsageDetails.add(yearlyDebitTransactionAmountUtilizedLbl.getText());
 			devicetransactionUsageTabLink.click();
-//			Map<String, String> deviceTransactionUsage = new HashMap<String, String>();
-//			List<MCWebElement> allHeaders = dataTable.inputs(By.tagName("th")).getElements();
-//			List<MCWebElement> allData = dataTable.inputs(By.tagName("td")).getElements();
-//			for (int i = 0; i < allHeaders.size(); i++) {
-//				deviceTransactionUsage.put(allHeaders.get(i).getText(), allData.get(i).getText());
-//			}
+			// Map<String, String> deviceTransactionUsage = new HashMap<String, String>();
+			// List<MCWebElement> allHeaders = dataTable.inputs(By.tagName("th")).getElements();
+			// List<MCWebElement> allData = dataTable.inputs(By.tagName("td")).getElements();
+			// for (int i = 0; i < allHeaders.size(); i++) {
+			// deviceTransactionUsage.put(allHeaders.get(i).getText(), allData.get(i).getText());
+			// }
 
-			deviceUsageDetails.add(getCellTextByColumnName(1, "Daily Amount Utilized"));
-			deviceUsageDetails.add(getCellTextByColumnName(1, "Periodic Amount Utilized"));
-			deviceUsageDetails.add(getCellTextByColumnName(1, "Yearly Amount Utilized"));
-			WebElementUtils.scrollDown(driver(), 250, 350);
-			clickCloseButton();
-		});
+				deviceUsageDetails.add(getCellTextByColumnName(1, "Daily Amount Utilized"));
+				deviceUsageDetails.add(getCellTextByColumnName(1, "Periodic Amount Utilized"));
+				deviceUsageDetails.add(getCellTextByColumnName(1, "Yearly Amount Utilized"));
+				WebElementUtils.scrollDown(driver(), 250, 350);
+				clickCloseButton();
+			});
 		return deviceUsageDetails;
 	}
-	
-	public Optional<Map<String,String>> getWalletMCGUsage(DeviceUsage detail){
-		enterDeviceNumber(detail);
+
+	public Optional<Map<String, String>> getWalletMCGUsage(DeviceUsage deviceUsage) {
+		enterDeviceNumber(deviceUsage);
 		clickSearchButton();
 		viewFirstRecord();
-		runWithinPopup(FRAME_VIEW_DEVICE_USAGE, () ->viewFirstRecord());
+		runWithinPopup(FRAME_VIEW_DEVICE_USAGE, () -> viewFirstRecord());
 		switchToIframe(FRAME_VIEW_WALLET_USAGE);
 		navigateToWalletMCGUsage();
 		return getWalletMCGUsageData();

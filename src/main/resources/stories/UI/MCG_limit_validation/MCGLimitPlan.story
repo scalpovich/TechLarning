@@ -36,7 +36,7 @@ Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-Then verify the MCG Limit in Device Usage Screen
+Then verify the MCG Limit in Device Usage Screen for domestic transactions
 And user sign out from customer portal
 
 Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 2nd transaction
