@@ -67,8 +67,6 @@ public class DeviceProductionPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class = 'feedbackPanelINFO']")
 	private MCWebElement confirmationMsgTxt;
 
-	private MCWebElement ProcessSelectedBtn;
-
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers' and @class!='navigation'][1]/td[2]/span")
 	private MCWebElement deviceNumberFetch;
 
@@ -174,10 +172,10 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public void verifyDeviceProductionRequestSuccess() {
 		if (!verifyErrorsOnDeviceProductionPage()) {
 			logger.info("Device-Production batch succesful");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in batch");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 
@@ -195,8 +193,8 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	public void processDeviceProductionBatchNewApplication(DeviceProductionBatch batch) {
 		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
-		WebElementUtils.enterText(batchNumberTxt, batchNumber);
-		waitAndSearchForRecordToExist();
+		WebElementUtils.enterText(batchNumberTxt,batchNumber);
+		waitAndSearchForRecordToExists();
 		verifyOperationStatus();
 	}
 
@@ -204,6 +202,13 @@ public class DeviceProductionPage extends AbstractBasePage {
 		Device device = context.get(ContextConstants.DEVICE);
 		WebElementUtils.enterText(batchNumberTxt, device.getBatchNumber());
 		waitAndSearchForRecordToExist();
+		verifyOperationStatus();
+	}
+	
+	public void processDeviceProductionBatchNewDeviceSupplementary(DeviceProductionBatch batch) {		
+		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
+		WebElementUtils.enterText(batchNumberTxt, batchNumber);
+		waitAndSearchForRecordToExistForSupplementary();
 		verifyOperationStatus();
 	}
 

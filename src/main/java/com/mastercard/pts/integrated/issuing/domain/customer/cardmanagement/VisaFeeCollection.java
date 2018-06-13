@@ -1,6 +1,5 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.dispute.RetrievalRequest;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 
 public class VisaFeeCollection {

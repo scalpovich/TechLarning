@@ -72,11 +72,11 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:billingCycleCode:input:dropdowncomponent")
 	private MCWebElement billingCyleCodeDDwn;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:mcgLimitPlan:input:dropdowncomponent")
 	private MCWebElement mcgLimitPlanDDwn;
 
-	private int reservedAmount = 0; // MiscUtils.randomNumber(5);
+	private int reservedAmount = 0;
 
 	public void inputWalletPlanCode(String walletPlanCodeString) {
 		WebElementUtils.enterText(walletPlanCodeTxt, walletPlanCodeString);
@@ -87,45 +87,38 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectCurrency(String currency) {
-		WebElementUtils.selectDDByVisibleText(currencyDDwn, currency);
+		WebElementUtils.selectDropDownByVisibleText(currencyDDwn, currency);
 	}
 
 	public void selectProductType(String productType) {
-		WebElementUtils.selectDDByVisibleText(productTypeDDwn, productType);
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, productType);
 	}
 
 	public void selectProgramType(String programType) {
-		WebElementUtils.selectDDByVisibleText(programTypeDDwn, programType);
+		WebElementUtils.selectDropDownByVisibleText(programTypeDDwn, programType);
 	}
 
 	public void selectUsage(String usage) {
-		WebElementUtils.selectDDByVisibleText(usageDDwn, usage);
+		WebElementUtils.selectDropDownByVisibleText(usageDDwn, usage);
 	}
-	
+
 	public void selectMCGLimitPlan(String mcgLimitPlan) {
 		selectByVisibleText(mcgLimitPlanDDwn, mcgLimitPlan);
 	}
 
 	public void selectCreditPlan(String creditPlan) {
-		if(context.get(CreditConstants.CREDIT_PLAN_CODE_ERROR_STATUS).equals(true))
-		{
+		if (context.get(CreditConstants.CREDIT_PLAN_CODE_ERROR_STATUS).equals(true)) {
 			WebElementUtils.selectDropDownByIndex(creditPlanDDwn, 1);
-		}
-		else
-		{
+		} else {
 			WebElementUtils.selectDropDownByVisibleText(creditPlanDDwn, creditPlan);
 		}
 	}
 
 	public void selectBillingCyleCode(String billingCyleCode) {
-		if(context.get(CreditConstants.BILLING_CYCLE_CODE_ERROR_STATUS).equals(true))
-		{
+		if (context.get(CreditConstants.BILLING_CYCLE_CODE_ERROR_STATUS).equals(true)) {
 			WebElementUtils.selectDropDownByIndex(billingCyleCodeDDwn, 1);
-		}
-		else
-		{
-			WebElementUtils.selectDropDownByVisibleText(billingCyleCodeDDwn,
-					billingCyleCode);
+		} else {
+			WebElementUtils.selectDropDownByVisibleText(billingCyleCodeDDwn, billingCyleCode);
 		}
 	}
 
@@ -164,21 +157,30 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			waitForPageToLoad(driver());
 			inputDescription(walletPlan.getDescription());
 			waitForPageToLoad(driver());
+			SimulatorUtilities.wait(2000);
 			selectProductType(productType);
-			waitForPageToLoad(driver());
-			selectProgramType(walletPlan.getProgramType());
-			waitForPageToLoad(driver());
+			if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
+				selectByVisibleText(programTypeDDwn, walletPlan.getProgramType());
+			} else {
+				SimulatorUtilities.wait(2000);
+				selectProgramType(walletPlan.getProgramType());
+				waitForPageToLoad(driver());
+				SimulatorUtilities.wait(2000);
+			}
 			selectCurrency(walletPlan.getCurrency());
 			waitForPageToLoad(driver());
-
+			SimulatorUtilities.wait(2000);
 			selectMCGLimitPlan(walletPlan.getMcgLimitPlan());
 			waitForPageToLoad(driver());
+			SimulatorUtilities.wait(2000);
 			selectUsage(walletPlan.getUsage());
+			SimulatorUtilities.wait(2000);
+
 			fillDetailsBasedOnCardType(walletPlan, productType);
 
 			clickNextButton(); // Click on next button
-			clickFinishButton(); // click on finish button
-		});
+				clickFinishButton(); // click on finish button
+			});
 		verifyOperationStatus();
 	}
 
@@ -203,8 +205,8 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			waitForPageToLoad(driver());
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			clickNextButton(); // Click on next button
-			clickFinishButton(); // click on finish button
-		});
+				clickFinishButton(); // click on finish button
+			});
 		verifyOperationStatus();
 	}
 

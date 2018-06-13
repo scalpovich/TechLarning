@@ -13,6 +13,7 @@ import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionReports;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.collect.administration.AdministrationHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.AuthorizationSearchPage;
@@ -139,14 +140,28 @@ public class AuthorizationSearchWorkflow {
 	}
 
 	public void verifyAuthTransactionSearchReport(Device device) {
-		List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME, context.get(ConstantData.AUTHORIZATION_CODE),context.get(USERNAME));
+		
+		TransactionReports transactionReport = new TransactionReports();
+		transactionReport.setAuthorizationCode(context.get(ConstantData.AUTHORIZATION_CODE));
+		transactionReport.setDeviceNumber(device.getDeviceNumber());
+		transactionReport.setRrnNumber(context.get(ConstantData.RRN_NUMBER));
+		transactionReport.setUsername(context.get(USERNAME));
+		
+		List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME,transactionReport);
 		String authFileData = "";
 		for (int i = 0; i < reportContent.size(); i++) {
 			authFileData += reportContent.get(i) + " ";
 		}
+		
 		boolean condition = authFileData.contains(context.get(ConstantData.AUTHORIZATION_CODE)) && authFileData.contains(device.getDeviceNumber()) 
-				&& authFileData.contains(context.get(ConstantData.TRANSACTION_AMOUNT));
+				&& authFileData.contains(context.get(ConstantData.TRANSACTION_AMOUNT)) && authFileData.contains(context.get(ConstantData.RRN_NUMBER));
 		assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
 	}
 
+	public void verifyStateAuthSearch(String deviceNumber, List<String> authStatus) {
+		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
+		List<String> actualAuthStatus = page.verifyState(deviceNumber);
+		assertTrue(String.format("Response, Auth Code and Auth Description does not match. Expecting %s. Actual %s", authStatus, actualAuthStatus), actualAuthStatus.containsAll(authStatus));
+	}
+	
 }

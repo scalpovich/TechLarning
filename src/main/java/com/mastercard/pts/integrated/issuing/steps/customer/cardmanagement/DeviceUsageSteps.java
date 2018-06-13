@@ -15,7 +15,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCGLimitPlan;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceUsagePage;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceUsageWorklow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceUsageWorkflow;
 
 @Component
 public class DeviceUsageSteps {
@@ -28,7 +28,7 @@ public class DeviceUsageSteps {
 	private TestContext context;
 
 	@Autowired
-	private DeviceUsageWorklow deviceUsageWorkflow;
+	private DeviceUsageWorkflow deviceUsageWorkflow;
 
 	@Autowired
 	KeyValueProvider provider;
@@ -38,6 +38,13 @@ public class DeviceUsageSteps {
 	private DeviceUsage deviceUsage;
 
 	private Device device;
+
+	@Then("user searches device on device usage screen and performs assertions on device $tab usage")
+	public void whenUserSearchesDeviceOnDeviceUsageScreen(String tab) {
+		Device device = context.get(ContextConstants.DEVICE);
+		DeviceUsage deviceUsage = DeviceUsage.createWithProvider(provider);
+		deviceUsageWorkflow.deviceUsageVerification(device.getDeviceNumber(), tab, deviceUsage);
+	}
 
 	@Then("user searches device on device usage screen and performs assertions on device tool usage and device transaction usage tabs")
 	public void whenUserSearchesDeviceOnDeviceUsageScreen() {

@@ -141,13 +141,13 @@ public class WalletPlanFlows extends MenuFlows {
 	}
 
 	public String getFeedbackText() {
-		page.SwitchToDefaultFrame();
+		page.switchToDefaultFrame();
 
 		return page.getFeedbackInfo();
 	}
 
 	public boolean isRecordFoundInTable(WalletPlan plan) {
-		page.SwitchToDefaultFrame();
+		page.switchToDefaultFrame();
 		page.searchByWalletPlanCode(plan);
 		page.clickSearchButton();
 		

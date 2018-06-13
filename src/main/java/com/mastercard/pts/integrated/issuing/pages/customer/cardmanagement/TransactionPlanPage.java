@@ -130,11 +130,11 @@ public class TransactionPlanPage extends AbstractBasePage {
 	public void verifyTransactionPlanSuccess() {
 		if (!verifyErrorsOnTransactionPlanPage()) {
 			logger.info("Transactionplan Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(CancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 

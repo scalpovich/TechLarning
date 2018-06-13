@@ -18,28 +18,28 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.M
 public class MCGSteps {
 
 	@Autowired
-	MCGFlows mcgflows;
+	MCGFlows mcgFlows;
 
 	@Autowired
 	MCG mcg;
-	
+
 	@Autowired
 	KeyValueProvider provider;
-	
+
 	@Autowired
 	private TestContext context;
-	
-	@When("user creates MCG")	
+
+	@When("user creates MCG")
 	public void whenUserCreatesMCG() {
 		mcg = MCG.getMCGDetails(provider);
-		mcgflows.addMCG(mcg);
+		mcgFlows.addMCG(mcg);
 	}
-	
-	@Given("user creates MCG with MCC")	
+
+	@Given("user creates MCG with MCC")
 	public void whenUserCreatesMCGwithMCC() {
 		mcg = MCG.getMCGDetails(provider);
-	    mcgflows.addMCGwithMCC(mcg);
-	    Assert.assertEquals(ConstantData.RECORD_ADDED_SUCCESSFULLY, mcgflows.getFeedbackText());
+		mcgFlows.addMCGwithMCC(mcg);
+		Assert.assertEquals(ConstantData.RECORD_ADDED_SUCCESSFULLY, mcgFlows.getFeedbackText());
 		context.put(ContextConstants.MCG, mcg.getMCG());
 	}
 }
