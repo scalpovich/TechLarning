@@ -22,6 +22,7 @@ import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
+import com.mastercard.pts.integrated.issuing.domain.ProductType;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP, CardManagementNav.L2_TRANSACTION_LIMIT_PLAN })
@@ -278,12 +279,11 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 			logger.debug(te.getMessage(), te);
 		}
 		clickWhenClickable(addNewBtn);
-		transactionLimitPlanDataObject.getTransactionLimitPlanDetails().forEach(details -> addDetails(details, transactionLimitPlanDataObject.getIframeproductType()));
+		transactionLimitPlanDataObject.getTransactionLimitPlanDetails().forEach(details -> addDetailsLimit(details, transactionLimitPlanDataObject.getIframeproductType()));
 		WebElementUtils.scrollDown(driver(), 0, 250);
 	}
 
-	private void addDetails(TransactionLimitPlanDetails details, String productType) {
-		clickAddNewButton();
+	private void addDetailsLimit(TransactionLimitPlanDetails details, String productType) {
 		runWithinPopup("Add Transaction Limit Plan Detail", () -> {
 			selectIframeTransactionType(details.getIframeTransactionType());
 			waitForWicket();
@@ -304,6 +304,33 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 			enterYearlyData(details);
 			clickWhenClickable(saveBtn);
 		});
+	}
+
+	private void addDetails(TransactionLimitPlanDetails details, String productType) {
+		clickAddNewButton();
+
+		runWithinPopup("Add Transaction Limit Plan Detail", () -> {
+			selectIframeTransactionType(details.getIframeTransactionType());
+			waitForWicket();
+			selectIframeTransactionSource(details.getIframeTransactionSource());
+			waitForWicket();
+			selectIframeTransactionChannel(details.getIframeTransactionChannel());
+			waitForWicket();
+			selectIframeTransactionOrigin(details.getIframeTransactionOrigin());
+			enterIframeFloorAmount(details.getIframeFloorAmount());
+			selectIframeFloorResponse(details.getIframeFloorResponse());
+			enterIframeCeilingAmount(details.getIframeCeilingAmount());
+			selectIframeCeilingResponse(details.getIframeCeilingResponse());
+			if (productType.equalsIgnoreCase(ProductType.DEBIT)) {
+				enterIframeStandInAmount(details.getIframeCeilingAmount());
+				selectIframeStandInResponse(details.getIframeCeilingResponse());
+			}
+			enterIframeDailyAmount(details.getIframeDailyAmount());
+			selectIframeDailyResponse(details.getIframeDailyResponse());
+			clickSaveButton();
+		});
+
+		verifyRecordMarkedForUpdationStatusSuccess();
 	}
 
 	private void enterYearlyData(TransactionLimitPlanDetails details) {
