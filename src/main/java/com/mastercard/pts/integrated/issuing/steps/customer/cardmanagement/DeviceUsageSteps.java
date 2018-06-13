@@ -33,7 +33,6 @@ public class DeviceUsageSteps {
 		deviceUsageWorkflow.deviceUsageVerification(device.getDeviceNumber(), tab, deviceUsage);
 	}
 	
-	@Then("verify ATC counter getting updated at device usage screen")
 	@When("verify ATC counter getting updated at device usage screen")
 	public void thenUserVerifyATCCounter() {
 		Device device = context.get(ContextConstants.DEVICE);		
@@ -44,8 +43,7 @@ public class DeviceUsageSteps {
 
 	}
 	
-	@When("user note down ATC counter on device usage screen")
-	@Then("user note down ATC counter on device usage screen")
+	@When("user notes down ATC counter on device usage screen")
 	public void thenUserNoteDownATCCounter() {
 		Device device = context.get(ContextConstants.DEVICE);
 		String  atc = deviceUsageWorkflow.getApplicationTransactionCounterDeviceUsage(device.getDeviceNumber()).get(0);

@@ -51,7 +51,7 @@ When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
 Then user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
-When user note down ATC counter on device usage screen
+When user notes down ATC counter on device usage screen
 Then user sign out from customer portal
 
 
