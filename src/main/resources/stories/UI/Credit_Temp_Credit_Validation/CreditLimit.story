@@ -13,4 +13,3 @@ Given setting json values in excel
 Given user is logged in institution
 When User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 Then user activates credit limit change request
-Then user has current wallet balance amount information for credit device

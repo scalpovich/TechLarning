@@ -23,6 +23,7 @@ public class HelpdeskGeneral {
 	private static final String CLIENT_CREDIT_LIMIT = "CLIENT_CREDIT_LIMIT";
 	private static final String ACCOUNT_CREDIT_LIMIT = "ACCOUNT_CREDIT_LIMIT";
 	private static final String NEW_CREDIT_LIMIT = "NEW_CREDIT_LIMIT";
+	private static final String LIMIT_TYPE_STATUS="LIMIT_TYPE_STATUS";
 	
 	private String transactionNote;
 	private String initialLoadTxnDetails;
@@ -41,12 +42,20 @@ public class HelpdeskGeneral {
 	private String newMobileISD;
 	private String defaultWalletNumber;
 	private String limitType;
+	private String limittypestatus;
 	private String clientCreditLimit;
 	private String accountCreditLimit; 
 	private String newCreditLimit;
 	
 	
+	public String getLimittypestatus() {
+		return limittypestatus;
+	}
 
+	public void setLimittypestatus(String limittypestatus) {
+		this.limittypestatus = limittypestatus;
+	}
+	
 	public String getClientCreditLimit() {
 		return clientCreditLimit;
 	}
@@ -85,6 +94,7 @@ public class HelpdeskGeneral {
 			plan.setProductType(ProductType.PREPAID);
 		}
 		plan.setLimitType(provider.getString(LIMIT_TYPE));
+		plan.setLimittypestatus(provider.getString(LIMIT_TYPE_STATUS));
 		plan.setClientCreditLimit(provider.getString(CLIENT_CREDIT_LIMIT));
 		plan.setAccountCreditLimit(provider.getString(ACCOUNT_CREDIT_LIMIT));
 		plan.setNewCreditLimit(provider.getString(NEW_CREDIT_LIMIT));

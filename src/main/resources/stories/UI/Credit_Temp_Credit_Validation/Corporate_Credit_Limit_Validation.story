@@ -26,6 +26,7 @@ And User fills Transaction Rule Plan
 And User fills Credit Plan
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Corporate Credit Card [10]
+When User fills Program section for credit product and program Corporate Credit Card [10]
 And User fills MCC Rules for credit product
 And User Primary Device fills New Program Corporate Credit Card [10] section for credit product for Mastercard
 When for Primary Device and New Client user fills Device Range section for credit product
@@ -34,6 +35,7 @@ Then credit processes pre-production batch using new Device
 Then credit processes deviceproduction batch using new Device for Supplementary
 Then credit processes pinProduction batch using new Device for Supplementary
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+Then user activates credit limit change request
 
 
 

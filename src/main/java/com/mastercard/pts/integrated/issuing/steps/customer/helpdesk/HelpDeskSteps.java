@@ -644,15 +644,16 @@ public class HelpDeskSteps {
 //		List<String>deviceNumbers=context.get(CreditConstants.SUPPLEMENTARY_DEVICE_NUMBER);
 //        for(String deviceNumber:deviceNumbers)
 //        {
-        	helpdeskgettersetter.setDeviceNumber("4897652333362412");
+        	helpdeskgettersetter.setDeviceNumber("5377162846321810");
         	String actualStatus = helpdeskFlows.searchForNewDevice(helpdeskgettersetter);
     		if (actualStatus.contains(status)) {
     			Assert.assertTrue("status of newly created device is normal ", true);
     		} else {
     			Assert.assertTrue("status of newly created device is not normal ", false);
-    		//}
+    		}
         }
-	}
+//	}
+
 
 	@Then("User search for new application on search screen for $productType and validates the status as $NORMAL")
 	@When("User search for new application on search screen for $productType and validates the status as $NORMAL")
