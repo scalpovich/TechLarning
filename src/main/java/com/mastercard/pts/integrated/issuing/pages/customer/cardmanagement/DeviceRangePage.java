@@ -291,7 +291,7 @@ public class DeviceRangePage extends AbstractBasePage {
 	@Override
 	public void clickSaveButton() {
 		clickWhenClickable(SaveBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public boolean verifyErrorsOnDeviceRangePage() {
@@ -301,11 +301,11 @@ public class DeviceRangePage extends AbstractBasePage {
 	public void verifyDeviceRangeSuccess() {
 		if (!verifyErrorsOnDeviceRangePage()) {
 			logger.info("Device Range Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(CancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 

@@ -383,7 +383,7 @@ public class CustomerUiVerificationSteps {
 		uiVerificationCardManagementWorkflow.verifyDeviceTrackingPage();
 	}
 
-	@Then("DeviceUsageClass.java page of card management tab is rendered correctly")
+	@Then("DeviceUsageClass page of card management tab is rendered correctly")
 	public void thenDeviceUsagePageOfCardManagementTabIsRenderedCorrectly() {
 		uiVerificationCardManagementWorkflow.verifyDeviceUsagePage();
 	}

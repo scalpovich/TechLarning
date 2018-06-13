@@ -99,7 +99,7 @@ public class EmbossingPriorityPassPage extends AbstractBasePage {
 			logger.error(e.toString());
 			logger.info("error pannel not present");
 		}
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public void addTagsFileName() {

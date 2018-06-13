@@ -105,7 +105,7 @@ public class BatchProcessFlows extends MenuFlows {
 				FileUtils.csvReadFileAndValidate(fileName, firstcolumn);
 			loggers.info("Filename and firstcolumn to verified successfully");
 		} catch (Exception e) {
-			loggers.error("Error in copying file");
+			loggers.error("Error in copying file", e);
 		}
 	}
 
