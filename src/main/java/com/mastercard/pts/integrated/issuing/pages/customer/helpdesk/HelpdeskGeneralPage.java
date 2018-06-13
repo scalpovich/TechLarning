@@ -144,6 +144,15 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='date1']/..")
 	private MCWebElement effectiveDateTxt;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "udf29:input:inputAmountField")
+	private MCWebElement creditClientLimit;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "udf19:input:inputAmountField")
+	private MCWebElement creditAccountLimit;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanels:1:childdataPanel:inlineTable:container:dataList:0:colList:colHeaders:3:inputField:input:inputAmountField")
+	private MCWebElement newCreditLimit;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='date2']/..")
 	private MCWebElement endDateTxt;
 	
@@ -347,6 +356,18 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.enterText(notesTxt, notes);
 	}
 	
+	public void enterClientCreditLimit(String clientcreditlimit){
+		WebElementUtils.enterText(creditClientLimit, clientcreditlimit);
+	}
+	
+	public void enterAccountCreditLimit(String accountcreditlimit){
+		WebElementUtils.enterText(creditAccountLimit, accountcreditlimit);
+	}
+	
+	public void enterNewCreditLimit(String newcreditlimit){
+		WebElementUtils.enterText(newCreditLimit, newcreditlimit);
+	}
+	
 	public void selectLimitType(String type){
 		WebElementUtils.selectDropDownByVisibleText(selectLimitType, type);
 	}
@@ -466,7 +487,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		runWithinPopup("226 - Credit limit Change Request", ()->{
 			selectLimitType(helpdeskGeneral.getLimitType());
 			WebElementUtils.pickDate(effectiveDateTxt, LocalDate.now());
-			WebElementUtils.pickDate(endDateTxt, LocalDate.now().plusDays(1));
+			WebElementUtils.pickDate(endDateTxt, LocalDate.now());
+			enterClientCreditLimit(helpdeskGeneral.getClientCreditLimit());
+			enterAccountCreditLimit(helpdeskGeneral.getAccountCreditLimit());
+			enterNewCreditLimit(helpdeskGeneral.getNewCreditLimit());
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();

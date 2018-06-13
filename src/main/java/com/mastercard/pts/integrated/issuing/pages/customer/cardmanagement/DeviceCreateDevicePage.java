@@ -424,7 +424,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		Address currentAddress = device.getCurrentAddress();
 		WebElementUtils.enterText(currentAddressLine1Txt, currentAddress.getAddressLine1());
 		WebElementUtils.selectDropDownByVisibleText(currentCountryCodeDDwn, currentAddress.getCountry());
-		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());
+		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());	
 
 		SimulatorUtilities.wait(5000);
 		pageScrollDown();
