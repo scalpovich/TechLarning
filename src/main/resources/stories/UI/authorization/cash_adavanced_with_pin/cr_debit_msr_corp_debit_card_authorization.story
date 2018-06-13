@@ -27,7 +27,6 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for debit device
 Then device has "normal" status
 When user activates device through helpdesk
-When user updates cvccvv as uncheck on device plan
 Then user sign out from customer portal
 
 Scenario: Pin Generation 
@@ -45,7 +44,6 @@ Meta:
 Given connection to MAS is established
 When perform an MSR_CASH_ADVANCE MAS transaction
 Then MAS test results are verified
-
 
 Scenario: Generate Auth File for Clearing
 Meta:
