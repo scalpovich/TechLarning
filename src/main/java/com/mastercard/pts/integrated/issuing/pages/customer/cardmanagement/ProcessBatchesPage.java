@@ -235,9 +235,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		switchToIframe(Constants.VIEW_BATCH_DETAILS);
 
 		// unless it is completed, refresh it - No of attempts: 5
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 10; i++) {
 			if (processBatchStatusTxt.getText().equalsIgnoreCase("PENDING [0]") || processBatchStatusTxt.getText().equalsIgnoreCase("IN PROCESS [1]")) {
-				SimulatorUtilities.wait(6000);
+				SimulatorUtilities.wait(8000);
 				ClickButton(closeBtn);
 				getFinder().getWebDriver().switchTo().defaultContent();
 				getFinder().getWebDriver().findElement(By.xpath(statusXpath)).click();
