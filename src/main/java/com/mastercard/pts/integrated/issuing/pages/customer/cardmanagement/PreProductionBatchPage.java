@@ -232,7 +232,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		ClickButton(processSelectedBtn);
 		verifyOperationStatus();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
         //}
 
 	}
