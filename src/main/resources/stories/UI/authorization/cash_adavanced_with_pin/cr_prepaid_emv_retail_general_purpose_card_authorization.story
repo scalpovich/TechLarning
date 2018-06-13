@@ -31,7 +31,6 @@ When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 When processes pin generation batch for prepaid
 Then device has "normal" status
-Then user activates device through helpdesk
 And user sign out from customer portal
 
 Scenario: Pin Generation 
