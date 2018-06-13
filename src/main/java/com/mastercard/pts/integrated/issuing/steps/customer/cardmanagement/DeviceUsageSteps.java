@@ -4,7 +4,6 @@ import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.jcabi.log.Logger;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
@@ -16,7 +15,6 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.D
 public class DeviceUsageSteps {
 
 	private static final String FAILED_MESSAGE_INFO = "Invalid ATC counter ";
-	
 	private static final String ATC = "ATC" ;
 	
 	@Autowired
@@ -40,7 +38,6 @@ public class DeviceUsageSteps {
 	public void thenUserVerifyATCCounter() {
 		Device device = context.get(ContextConstants.DEVICE);		
 		String  atc = deviceUsageWorkflow.getApplicationTransactionCounterDeviceUsage(device.getDeviceNumber()).get(0);
-		Logger.info("Application Transaction Counter : {} ",atc);
 		boolean condition = atc.equals(returnATCCounterIncreasedByOne());
 		assertTrue(FAILED_MESSAGE_INFO+" - Expected: "+returnATCCounterIncreasedByOne()+" Actual  : "+atc, condition);		
 		context.put(ATC, atc);	
@@ -52,7 +49,6 @@ public class DeviceUsageSteps {
 	public void thenUserNoteDownATCCounter() {
 		Device device = context.get(ContextConstants.DEVICE);
 		String  atc = deviceUsageWorkflow.getApplicationTransactionCounterDeviceUsage(device.getDeviceNumber()).get(0);
-		Logger.info("Application Transaction Counter : {} ",atc);
 		boolean condition = atc.equals("1");
 		assertTrue(FAILED_MESSAGE_INFO+" - Expected: 1 Actual  : "+atc, condition);		
 		context.put(ATC, atc);	
