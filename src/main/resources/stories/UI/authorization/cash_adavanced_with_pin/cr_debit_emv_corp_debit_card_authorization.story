@@ -15,6 +15,8 @@ And device range for program with device plan for "debit" "emv" card
 When user creates new device of debit type for new client
 Then device has "normal" status
 And user sign out from customer portal
+
+Scenario: Device Production 
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for debit

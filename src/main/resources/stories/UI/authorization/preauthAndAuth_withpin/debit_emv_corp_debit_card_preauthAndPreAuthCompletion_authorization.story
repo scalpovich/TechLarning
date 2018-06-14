@@ -15,6 +15,7 @@ And device range for program with device plan for "debit" "emv" card
 When user creates new device of debit type for new client
 Then user sign out from customer portal
 
+Scenario: Device Production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for debit
@@ -30,19 +31,20 @@ Then device has "normal" status
 Then user activates device through helpdesk
 Then user sign out from customer portal
 
+Scenario: Pin Production
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
+Scenario: Authorization EMV_PREAUTH and EMV_COMPLETION
 Given connection to MAS is established
 When perform an EMV_PREAUTH MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth authorization and verify 000-Successful status
 Then user sign out from customer portal
-
 When perform an EMV_COMPLETION MAS transaction
 Then MAS test results are verified
 

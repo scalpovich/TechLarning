@@ -13,6 +13,7 @@ Scenario: Setup - debit emv retail debit card
 Given user is logged in institution
 And device range for program with device plan for "debit" "emv" card
 When user creates new device of debit type for new client
+Then user sign out from customer portal
 
 Scenario: Device production - debit emv retail debit card
 Given user is logged in institution

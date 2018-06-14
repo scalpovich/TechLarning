@@ -16,6 +16,7 @@ Meta:
 Given user is logged in institution
 And device range for program with device plan for "debit" "magnetic stripe" card
 When user creates new device of debit type for new client
+Then user sign out from customer portal
 
 Scenario: debit msr corporate debit card device production
 Meta:
