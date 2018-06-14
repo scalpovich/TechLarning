@@ -207,7 +207,6 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	public void processPreProductionBatchNewDevice(PreProductionBatch batch) {
 		waitForLoaderToDisappear();
 		selectDropDownByText(productTypeDDwn, batch.getProductType());
-		//
 		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
 		enterText(batchNumberTxt, batchNumber);
 		ClickButton(searchBtn);
