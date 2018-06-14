@@ -235,7 +235,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		switchToIframe(Constants.VIEW_BATCH_DETAILS);
 
 		// unless it is completed, refresh it - No of attempts: 5
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 15; i++) {
 			if (processBatchStatusTxt.getText().equalsIgnoreCase("PENDING [0]") || processBatchStatusTxt.getText().equalsIgnoreCase("IN PROCESS [1]")) {
 				SimulatorUtilities.wait(8000);
 				ClickButton(closeBtn);
@@ -525,12 +525,12 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		String elementXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic);
 		Boolean isProcessed = false;
 		String statusXpath = elementXpath + "//parent::td//following-sibling::td/a";
-		CustomUtils.ThreadDotSleep(20000);
+		SimulatorUtilities.wait(20000);;
 		getFinder().getWebDriver().findElement(By.xpath(statusXpath)).click();
 		switchToIframe(Constants.VIEW_BATCH_DETAILS);
 
 		// unless it is completed, refresh it - No of attempts: 5
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 20; i++) {
 			if (processBatchStatusTxt.getText().equalsIgnoreCase("PENDING [0]") || processBatchStatusTxt.getText().equalsIgnoreCase("IN PROCESS [1]")) {
 				ClickButton(closeBtn);
 				waitForLoaderToDisappear();
