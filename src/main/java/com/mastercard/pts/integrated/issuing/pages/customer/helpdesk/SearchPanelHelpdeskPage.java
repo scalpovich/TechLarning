@@ -5,6 +5,7 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Map;
 
+import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 //TODO: Auto-generated Javadoc
@@ -84,6 +86,9 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr//following-sibling::td[8]/span")
 	private MCWebElement normalStatusCredit;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[@class='headers']//span")
+	private MCWebElements headersTxt;
 
 	public MCWebElement getEditBtn() {
 		return editBtn;
@@ -139,8 +144,23 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 			WebElementUtils.enterText(mobileNumberUpload,helpDeskGeneral.getMobileNumber());
 			clickSearchButton();
 			waitForPageToLoad(driver());
-			assertThat(STATUS_DEVICE_NOT_NORMAL, normalStatusCredit.getText(), equalTo(UPLOAD_EXPECTED_STATUS));
+			String normalStatus=driver().findElement(By.xpath("//table[@class='dataview']//tr//following-sibling::td["+statusHeader()+"]/span")).getText();
+			assertThat(STATUS_DEVICE_NOT_NORMAL, normalStatus, equalTo(UPLOAD_EXPECTED_STATUS));
 			logger.info("Device Number :" +"  "+counter+"   "+ "-" +" "+ deviceNumberTxt.getText());
 		}
+	}
+	
+	public int statusHeader()
+	{
+		int index=0;
+		for(int i=0;i<headersTxt.getElements().size();i++)
+		{
+			if(headersTxt.getElements().get(i).getText().equalsIgnoreCase("Status"))
+			{
+				index=i;
+			}
+		}
+		return index+1;
+		
 	}
 }
