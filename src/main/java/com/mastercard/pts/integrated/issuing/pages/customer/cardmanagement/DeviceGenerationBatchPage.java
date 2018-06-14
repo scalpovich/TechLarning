@@ -82,13 +82,13 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	}
 	
 	public void processAppropriateBatchForApplication()
- {
+	{  
 		checkWhetherRecordPersists();
-		String checkBox = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd'][" + identifyBatchNumberToProcess() + 1 + "]/td[8]/span/input";
+		String checkBox="//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcess()+1+"]/td[8]/span/input";
 		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(checkBox)));
 		clickWhenClickable(processSelected);
 		verifyOperationStatus();
-
+		
 	}
 	
 	public void checkWhetherRecordPersists() {
@@ -104,9 +104,10 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	}
 	
 	public void processAllClick()
- {
+	{
 		SimulatorUtilities.wait(8000);
-		if (!waitForRow()) {
+		if(!waitForRow())
+		{
 			clickWhenClickable(deviceGenerationLink);
 		}
 		clickWhenClickable(processAll);
