@@ -222,8 +222,6 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	
 		public void processPreProductionBatchNewApplicationForFileUpload(PreProductionBatch batch) {
         List<String>batchNumbers=context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
-        /*for(int i=0;i<batchNumbers.size();i++)
-        {*/
 		waitForLoaderToDisappear();
 		selectDropDownByText(productTypeDDwn, batch.getProductType());
 		SimulatorUtilities.wait(8000);
@@ -233,7 +231,6 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		ClickButton(processSelectedBtn);
 		verifyOperationStatus();
 		switchToDefaultFrame();
-        //}
 
 	}
 

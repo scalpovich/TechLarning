@@ -98,6 +98,14 @@ public class PinGenerationBatchPage extends AbstractBasePage {
 				clickWhenClickable(processAllBtn);
 				verifyOperationStatus();
 	}
+		
+		public void processPinProductionBatch(PinGenerationBatch batch) {
+			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+			WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
+			waitAndSearchForRecordToExist();
+			verifyOperationStatus();
+
+		}
 
 	public void verifyUiOperationStatus() {
 		logger.info("Pin Generation Batch");

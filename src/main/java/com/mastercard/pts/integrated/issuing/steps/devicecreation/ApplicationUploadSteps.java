@@ -185,6 +185,17 @@ public class ApplicationUploadSteps {
 		MiscUtils.reportToConsole("device production Batch: {}", preProductionBatch.getBatchNumber());
 		batchProcessFlows.processDeviceProductionBatchAll(batch);
 	}
+	
+	@Then("processes $type pin production batch")
+	@When("processes $type pin production batch")
+	public void whenProcessesPinProductionBatch(String type) {
+		DeviceProductionBatch batch = new DeviceProductionBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batch.setBatchNumber(preProductionBatch.getBatchNumber());
+		MiscUtils.reportToConsole("device production Batch: {}", preProductionBatch.getBatchNumber());
+		batchProcessFlows.processDeviceProductionBatch(batch);
+	}
+	
 	@Then("All processes $type device production batch for fileUpload in Bulk")
 	@When("All processes $type device production batch for fileUpload in Bulk")
 	public void whenProcessesDeviceProductionBatchForAllForFileUpload(String type) {

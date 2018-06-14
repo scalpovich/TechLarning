@@ -603,12 +603,16 @@ public class HelpDeskSteps {
 	@When("User search for device on search screen for product type $prepaid and validates the status as $NORMAL")
 	public void thenUserSearchForDeviceOnSearchScreenPrepaid(String productType, String status) {
 		helpdeskgettersetter.setProductType(ProductType.fromShortName(productType));
-
-		String actualStatus = helpdeskFlows.searchForDevicePrepaid(helpdeskgettersetter);
-		if (actualStatus.contains(status)) {
-			Assert.assertTrue("status of newly created device is normal ", true);
-		} else {
-			Assert.assertTrue("status of newly created device is not normal ", false);
+		List<String>deviceNumbers=context.get(ContextConstants.ALL_DEVICE_NUMBERS);
+		
+		for(int i=0;i<deviceNumbers.size();i++)
+		{
+			String actualStatus = helpdeskFlows.searchForDevicePrepaid(helpdeskgettersetter,deviceNumbers.get(i));
+			if (actualStatus.contains(status)) {
+				Assert.assertTrue("status of newly created device is normal ", true);
+			} else {
+				Assert.assertTrue("status of newly created device is not normal ", false);
+			}
 		}
 
 	}
@@ -773,10 +777,8 @@ public class HelpDeskSteps {
 	
 	@Then("For fileUpload when user search for new application on search screen for $productType and validates the status as $NORMAL")
 	@When("For fileUpload when user search for new application on search screen for $productType and validates the status as $NORMAL")
-	public void thenUserSearchForApplicationOnSearchScreenforFileUpload(
-			String productType, String status) {
-		helpdeskgettersetter.setProductType(ProductType
-				.fromShortName(productType));
+	public void thenUserSearchForApplicationOnSearchScreenforFileUpload(String productType, String status) {
+		helpdeskgettersetter.setProductType(ProductType.fromShortName(productType));
 
 		helpdeskFlows.searchForNewApplicationFileUpload(helpdeskgettersetter);
 	}

@@ -47,6 +47,8 @@ public class ContextConstants {
 	public static final String DEVICE_SUPPLEMENTARY_ADDON_EXISTING = "DEVICE_SUPPLEMENTARY_ADDON_EXISTING";
 	
 	public static final String DEVICE_RANGE = "DEVICE_RANGE";
+	
+	public static final String ALL_DEVICE_NUMBERS = "ALL_DEVICE_NUMBERS";
 
 	private ContextConstants() {
 	}

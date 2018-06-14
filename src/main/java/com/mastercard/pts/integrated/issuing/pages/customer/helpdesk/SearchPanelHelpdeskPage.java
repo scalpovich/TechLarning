@@ -113,12 +113,13 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 		searchBtn.click();
 	}
 
-	public String searchDeviceUsingName(String productType, String name) {
+	public String searchDeviceUsingNumber(String productType, String deviceNumber) {
 		waitForElementVisible(this.productType);
 		selectDropDownByText(this.productType, productType);
-		enterText(this.firstNameInput, String.valueOf(name));
+		enterText(this.deviceNumber, deviceNumber);
+		logger.info("Device Number :{}",deviceNumber );
 		waitForElementVisible(searchBtn);
-		searchBtn.click();
+		clickWhenClickable(searchBtn);
 		return normalStatus.getText();
 	}
 

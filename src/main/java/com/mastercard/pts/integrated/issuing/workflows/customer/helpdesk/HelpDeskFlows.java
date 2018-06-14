@@ -141,10 +141,9 @@ public class HelpDeskFlows extends AbstractBasePage {
 		generalPage.endCall();
 	}
 
-	public String searchForDevicePrepaid(HelpDeskGeneral helpdeskgettersetter) {
+	public String searchForDevicePrepaid(HelpDeskGeneral helpdeskgettersetter,String deviceNumber) {
 		generalPage = navigator.navigateToPage(GeneralPage.class);
-		String status = searchpanelhelpdesk.searchDeviceUsingName(helpdeskgettersetter.getProductType(),
-				helpdeskgettersetter.getFirstName()/*context.get(ContextConstants.DEVICE_NUMBER)*/);
+		String status = searchpanelhelpdesk.searchDeviceUsingNumber(helpdeskgettersetter.getProductType(),deviceNumber);
 		searchpanelhelpdesk.clickSearchBtn();
 		return status;
 	}
@@ -178,12 +177,5 @@ public class HelpDeskFlows extends AbstractBasePage {
 		generalPage.endCall();
 	}
 	
-	public String searchForNewDeviceInBulk(HelpDeskGeneral helpdeskgettersetter) {
-		generalPage = navigator.navigateToPage(GeneralPage.class);
-		String status = searchpanelhelpdesk.searchDeviceUsingName(helpdeskgettersetter.getProductType(),
-				helpdeskgettersetter.getFirstName()/*context.get(ContextConstants.DEVICE_NUMBER)*/);
-		searchpanelhelpdesk.clickSearchBtn();
-		return status;
-	}
 
 }

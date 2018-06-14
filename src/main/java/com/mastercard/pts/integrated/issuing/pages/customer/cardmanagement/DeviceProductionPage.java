@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -74,6 +75,9 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr")
 	private MCWebElements rowSize;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[@class='headers']/th/a/span[text()='Device Number']")
+	private MCWebElements deviceNumberHeaderTxt;
 
 	public void deviceproduction(String prodType, String batchNum, String DeviceNumber) {
 		menuSubMenuPage.getDeviceProduction().click();
@@ -100,6 +104,8 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public void processDeviceProductionBatch(DeviceProductionBatch batch) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
+		waitAndSearchForRecordToAppear();
+		deviceNumbers();
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 
@@ -226,7 +232,34 @@ public class DeviceProductionPage extends AbstractBasePage {
 		waitAndSearchForRecordToExistForSupplementary();
 		verifyOperationStatus();
 	}
-
+   
+	public int deviceNumberHeaderIndexFetch()
+	{ 
+		int index=0;
+		for(int i=0;i<deviceNumberHeaderTxt.getElements().size();i++)
+		{
+			if(deviceNumberHeaderTxt.getElements().get(i).getText().equals("Device Number"))
+			{
+				index=i;
+			}
+		}
+		return index+1;
+	}
+	
+	public List<String>deviceNumbers()
+	{
+		List<WebElement>allDeviceNumbers=new ArrayList<>();
+		List<String>allDeviceNumberfText=new ArrayList<>();
+		allDeviceNumbers=driver().findElements(By.xpath("//table[@class='dataview']//tr[@class='even' or 'odd']/td["+deviceNumberHeaderIndexFetch()+"]/span"));
+		
+		for(int i=0;i<allDeviceNumbers.size();i++)
+		{
+			allDeviceNumberfText.add(allDeviceNumbers.get(i).getText());
+		}
+		context.put(ContextConstants.ALL_DEVICE_NUMBERS, allDeviceNumberfText);
+		return allDeviceNumberfText;
+	}
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		// TODO Auto-generated method stub
