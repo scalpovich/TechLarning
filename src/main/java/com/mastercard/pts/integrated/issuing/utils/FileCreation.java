@@ -586,22 +586,22 @@ public class FileCreation {
 
 						if (devicePlan.getDeviceType().toUpperCase().contains(DeviceType.MAGNETIC_STRIPE_CARD.toUpperCase())) {
 							deviceType = "1";
-						} else if (devicePlan.getDeviceType().toUpperCase().contains(DeviceType.EMV_CARD.toUpperCase())) {
+						} else if (DeviceType.EMV_CARD.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
 							deviceType = "2";
 						}
-						else if(devicePlan.getDeviceType().toUpperCase().contains(DeviceType.PHYSICAL_NFC_DEVICE_MAG_STRIPE_PAYPASS.toUpperCase())) {
+						else if(DeviceType.PHYSICAL_NFC_DEVICE_MAG_STRIPE_PAYPASS.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
 							deviceType = "3";
 						}
-						else if(devicePlan.getDeviceType().toUpperCase().contains(DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS.toUpperCase())) {
+						else if(DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
 							deviceType = "4";
 						}
-						else if(devicePlan.getDeviceType().toUpperCase().contains(DeviceType.PHYSICAL_NFC_DEVICE_PAYPASS.toUpperCase())) {
+						else if(DeviceType.PHYSICAL_NFC_DEVICE_PAYPASS.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
 							deviceType = "5";
 						}
-						else if(devicePlan.getDeviceType().toUpperCase().contains(DeviceType.STATIC_VIRTUAL_CARD.toUpperCase())) {
+						else if(DeviceType.STATIC_VIRTUAL_CARD.toUpperCase().contains(devicePlan.getDeviceType())) {
 							deviceType = "7";
 						}
-						else if(devicePlan.getDeviceType().toUpperCase().contains(DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.toUpperCase())) {
+						else if(DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.toUpperCase().contains(devicePlan.getDeviceType())) {
 							deviceType = "8";
 						}
 						if (customerType.equals("Individual")) {
