@@ -138,7 +138,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	public List<String> getMarkUpFeeDetails() {
 		List<String> markupFeeDetails = new ArrayList<>();
 		runWithinPopup("View Authorization", () -> {
-			markupFeeDetails.add(billingAmount.getText());
+			markupFeeDetails.add(billingAmount.getText()); 
 			markupFeeDetails.add(markupFee.getText());
 			markupFeeDetails.add(markupFeeTax.getText());
 			markupFeeDetails.add(billingCurrency.getText());

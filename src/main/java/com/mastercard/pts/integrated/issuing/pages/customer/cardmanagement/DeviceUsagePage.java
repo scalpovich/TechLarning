@@ -70,6 +70,9 @@ public class DeviceUsagePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview")
 	private MCWebElement dataTable;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.//*[text()='Application Transaction Counter :']]/following-sibling::td[1]/span")
+	private MCWebElement applicationTransactionCounter;
 
 	public void verifyUiOperationStatus() {
 		logger.info("Device Usage");
@@ -119,5 +122,20 @@ public class DeviceUsagePage extends AbstractBasePage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(deviceNumber));
+	}
+	
+	public List<String> getApplicationTransactionCounter (String cardNumber) {
+		WebElementUtils.enterText(deviceNumber, cardNumber);
+		searchButtonElement.click();
+		List<String> atcDetails = new ArrayList<>();
+		viewFirstRecord();
+		runWithinPopup("View Device Usage", () -> {
+			devicetransactionUsageTabLink.click();
+			logger.info("Application Transaction Counter : " + applicationTransactionCounter.getText());		
+			atcDetails.add(applicationTransactionCounter.getText());
+			WebElementUtils.scrollDown(driver(), 250, 350);
+			clickCloseButton();
+		});
+		return atcDetails;
 	}
 }
