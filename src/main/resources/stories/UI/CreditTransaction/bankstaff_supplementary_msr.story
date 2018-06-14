@@ -87,6 +87,7 @@ And user sign out from customer portal
 Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
 When perform an MSR_CASH_WITHDRAWAL MAS transaction on the same card
 Then MAS test results are verified
+Then MAS simulator is closed
 Then user is logged in institution
 Then search CWD authorization and verify 000-Successful status
 Then validate auth report

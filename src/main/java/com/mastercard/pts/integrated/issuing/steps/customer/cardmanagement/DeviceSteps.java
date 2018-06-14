@@ -322,19 +322,11 @@ public class DeviceSteps {
 		context.put(ContextConstants.DEVICE, device);
 	}
 
-
 	@When("User select secondary card for transaction")
 	public void userSelectSecondaryCardForTrasaction(){
-		DevicePlan deviceplan1 = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
-		System.out.println("Device Plan Supply " + deviceplan1.getDevicePlanCode());
-
-		DevicePlan deviceplan2 = context.get(ContextConstants.DEVICE_PLAN);
-		System.out.println("Device Plan " + deviceplan2.getDevicePlanCode());
-
+		DevicePlan deviceplan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
 		Device device = context.get(ContextConstants.DEVICE_SUPPLEMENTARY_ADDON_EXISTING);
-
-		context.put(ContextConstants.DEVICE_PLAN, deviceplan1);
+		context.put(ContextConstants.DEVICE_PLAN, deviceplan);
 		context.put(ContextConstants.DEVICE, device);
 	}
-
 }
