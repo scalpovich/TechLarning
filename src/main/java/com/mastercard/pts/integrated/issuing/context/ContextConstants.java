@@ -43,6 +43,11 @@ public class ContextConstants {
 	public static final String USER = "USER";
 	
 	public static final String DEVICE_SUPPLEMENTARY_ADDON_EXISTING = "DEVICE_SUPPLEMENTARY_ADDON_EXISTING";
+	
+	public static final String PRIMARY_DEVICE = "PRIMARY_DEVICE";
+	
+	public static final String PRIMARY_DEVICE_PLAN = "PRIMARY_DEVICE_PLAN";
+	
 
 	private ContextConstants() {
 	}
