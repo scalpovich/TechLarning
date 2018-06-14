@@ -107,9 +107,7 @@ public class TransactionPlanPage extends AbstractBasePage {
 		String TransactionPlanCode;
 		String TransactionPlanDesc;
 		TransactionPlanCode = enterTransactionPlanCode();
-		SimulatorUtilities.wait(2000);
 		TransactionPlanDesc = enterTransactionDescription();
-		SimulatorUtilities.wait(1000);
 		selectProduct(deviceCreation);
 		return TransactionPlanDesc + " " + "[" + TransactionPlanCode + "]";
 	}

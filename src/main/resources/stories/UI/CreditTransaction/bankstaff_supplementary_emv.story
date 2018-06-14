@@ -4,11 +4,11 @@ As a user
 I want to assert pages
 
 Meta:
-@CreditRegression
-@StoryName credit_emv_retail				 
+@CreditSupplementaryCardTransaction
+@StoryName credit_emv_retail
+@SupplementaryCardTransaction
+		 
 Scenario:creation of mastercard_bankstaff_supplementary_emv credit device
-Meta:
-@UserCreatesNewCreditDevice
 Given setting json values in excel
 Given user is logged in institution
 When User fills Dedupe Plan
