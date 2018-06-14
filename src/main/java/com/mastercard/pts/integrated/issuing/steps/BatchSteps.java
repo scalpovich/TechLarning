@@ -83,6 +83,40 @@ public class BatchSteps {
 		}
 	}
 	
+	
+	@When("Pin Offset file batch was generated successfully")
+	@Then("Pin Offset file batch was generated successfully")
+	public void getPinFileData() {
+		MiscUtils.reportToConsole("******** Pin Offset Start ***** ");
+		String[] values = null;
+		DevicePlan tempdevice = context.get(ContextConstants.DEVICE_PLAN);
+		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevice.getDevicePlanCode(),
+				tempDirectory.toString(), "PIN_PROD");
+		Device device = context.get(ContextConstants.DEVICE);
+		try (Scanner scanner = new Scanner(batchFile)) {
+			while (scanner.hasNext()) {
+				values = scanner.nextLine().split(">");
+			}
+
+			if (values != null) {
+				device.setPinOffset(values[0]);
+				logger.info("Pin Offset :  {}", values[0]);
+			}
+			scanner.close(); 
+			// renaming file name as sometimes the embosing file name is also same
+			MiscUtils.renamePinFile(batchFile.toString());
+			MiscUtils.reportToConsole("******** Pin Offset Completed ***** ");
+		} catch (NullPointerException | FileNotFoundException e) {
+			MiscUtils.reportToConsole("getPinFileData Exception :  " + e.toString());
+			if (e.getLocalizedMessage().contains("NullPointerException")) {
+				device.setPinOffset("pin not retrieved");
+				MiscUtils.reportToConsole("Pin Offset :  " + "pin not retrieved");
+			}
+			
+			throw MiscUtils.propagate(e);
+		}
+	}
+	
 	@SuppressWarnings("unused")
 	private String getHeaderPattern() {
 		return provider.getString("BATCH_HEADER_PATTERN", DEFAULT_HEADER);
