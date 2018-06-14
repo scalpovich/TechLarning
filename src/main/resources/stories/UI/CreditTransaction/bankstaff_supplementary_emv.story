@@ -81,7 +81,6 @@ And user sign out from customer portal
 Scenario: Perform EMV_POS_BALANCE_INQUIRY Authorization transaction
 When perform an EMV_POS_BALANCE_INQUIRY MAS transaction on the same card
 Then MAS test results are verified
-When MAS simulator is closed
 Then user is logged in institution
 Then search Balance Inquiry authorization and verify 000-Successful status
 Then validate auth report
