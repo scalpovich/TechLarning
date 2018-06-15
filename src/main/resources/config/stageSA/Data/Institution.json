@@ -1,8 +1,8 @@
 {  
    "name":"AUTOBNK",
-   "code":"270635",
+   "code":"110088",
    "codeCredit":"270635",
-   "abbreviation":"CANARA",
+   "abbreviation":"AUTOBNK",
    "prepaidLinuxUploadPath" : "/mptshome/STAGE2/integrated/elt_bo/data/AUTOMATION_1/APPLICATION_UPD_PREPAID/input",
    "creditLinuxUploadPath" : "/mptshome/STAGE2/integrated/elt_bo/data/AUTOMATION_1/APPLICATION_UPD_CREDIT/input",
     "corporateClientCodePrepaid" :"27063518131000003",
