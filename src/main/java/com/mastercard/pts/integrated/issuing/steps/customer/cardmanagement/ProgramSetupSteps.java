@@ -358,6 +358,17 @@ public class ProgramSetupSteps {
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPin(String deviceType) {
 		// composite step
 	}
+	
+	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin for ApplicationUpload")
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
+		    "When User fills Device Range section for prepaid product" , "When user assigns service code to program"})
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinForApplicationUpload(String deviceType) {
+		// composite step
+	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" with limit plan")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
@@ -1148,6 +1159,7 @@ public class ProgramSetupSteps {
 		deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
 
 		programSetupWorkflow.createDeviceRange(deviceRange);
+		context.put(ContextConstants.DEVICE_RANGE, deviceRange);
 	}
 	
 	@When("for $applicationType and $subApplicationType user fills Device Range section for $type product")
