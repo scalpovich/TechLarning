@@ -13,6 +13,9 @@ Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
 And user sign out from customer portal
+
+
+Scenario: Device Production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
@@ -51,6 +54,7 @@ When Auth file is generated after transaction
 When MAS simulator is closed
 Then user is logged in institution
 Then search CWD authorization and verify 000-Successful status
+Then verify transaction currency as INR [356] and billing currency as USD [840] on auth search
 Then user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension

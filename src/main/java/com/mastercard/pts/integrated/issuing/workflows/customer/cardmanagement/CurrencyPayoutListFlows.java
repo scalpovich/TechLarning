@@ -21,7 +21,7 @@ public class CurrencyPayoutListFlows {
 	}
 
 	public String getFeedbackText() {
-		page.SwitchToDefaultFrame();
+		page.switchToDefaultFrame();
 		
 		return page.getFeedbackText();
 	}

@@ -92,11 +92,11 @@ public class PictureCodePage extends AbstractBasePage {
 	public void verifyPictureCodeSuccess() {
 		if (!verifyErrorsOnPictureCodePage()) {
 			logger.info("Picture code Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 

@@ -785,7 +785,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	public void verifyNewInstituteCreationSuccess(InstitutionCreation instution) {
 		try{
 		if (!verifyErrorsOnInstitutePage()) {
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 			enterNewInstitutionName(instution);
 			searchNewInstitution();
 			for (int l = 0; l < 21; l++) {
@@ -827,7 +827,7 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	
 	public void cancel() {
 		clickWhenClickable(cancelBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public void provideInstitutionType(InstitutionCreation institution) {
@@ -946,11 +946,11 @@ public class InstitutionCreationPageNew extends AbstractBaseFlows {
 	public void checkErrorOnPage() {
 		if (!publishErrorOnPage()) {
 			logg.info("Instituion Added Successfully.");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logg.info("Error in Instituion Creation");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 
 	}

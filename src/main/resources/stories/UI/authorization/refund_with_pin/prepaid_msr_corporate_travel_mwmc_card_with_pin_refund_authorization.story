@@ -12,17 +12,25 @@ Scenario: Setup multi-currency prepaid msr corporate travel card and perfomr ref
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
+Then user sign out from customer portal
+
+Scenario: Device Production
+Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 When processes pin generation batch for prepaid
-Then device has "normal" status
 When user has wallet number information for prepaid device
-When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
-Then user activates device through helpdesk
-Then user sign out from customer portal
+When user activates device through helpdesk
+And user setup device currency through helpdesk
+Then currency setup for prepaid device is done correctly and updated in wallet details tab
+When user performs adjustment transaction with 500 amount
+And user performs adjustment transaction for second wallet
+And user sign out from customer portal
+
+Scenario: Pin Production
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 When embossing file batch was generated in correct format
@@ -43,6 +51,7 @@ When Auth file is generated after transaction
 When MAS simulator is closed
 Then user is logged in institution
 Then search Refund authorization and verify 000-Successful status
+Then verify transaction currency as INR [356] and billing currency as USD [840] on auth search
 Then user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension

@@ -91,7 +91,7 @@ public class DocumentChecklistPage extends AbstractBasePage {
 
 	public void clickSaveButton() {
 		clickWhenClickable(saveBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public boolean verifyErrorsOnDocListPage() {
@@ -101,23 +101,23 @@ public class DocumentChecklistPage extends AbstractBasePage {
 	public void verifyDoclistSuccess() {
 		if (!verifyErrorsOnDocListPage()) {
 			logger.info("Doclist Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(CancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 
 	public void clickAddDocCheckListSubDetails() {
 		switchToIframe(Constants.ADD_DOCUMENT_CHECKLIST_FRAME);
 		clickWhenClickable(addSubDetailsBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe(Constants.ADD_DOCUMENT_CHECKLIST_DETAILS_FRAME);
 	}
 
 	public void switchToAddDocumentChecklistDetailsFrame() {
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe(Constants.ADD_DOCUMENT_CHECKLIST_DETAILS_FRAME);
 	}
 
@@ -144,7 +144,7 @@ public class DocumentChecklistPage extends AbstractBasePage {
 		selectDropDownByIndex(DocumentNameTxtrbtn, 1);
 		ClickCheckBox(SelectedDocumentMandatoryrbtn, true);
 		clickSaveButton();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public void verifyUiOperationStatus() {

@@ -113,7 +113,7 @@ public class CurrencyPayoutListPlanPage extends AbstractBasePage {
 	}
 
 	public void saveMain() {
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe(ADD_CURRENCY_PAYOUT_PLAN_FRAME);
 		ClickButton(saveBtn);
 	}

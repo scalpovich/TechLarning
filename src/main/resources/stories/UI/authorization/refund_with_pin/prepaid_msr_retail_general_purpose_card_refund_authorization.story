@@ -17,6 +17,7 @@ Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
 Then device has "normal" status
+Then user sign out from customer portal
 
 Scenario: prepaid msr retail general purpose card device production
 Meta:
@@ -32,6 +33,7 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
+Then user sign out from customer portal
 
 Scenario: Pin Generation 
 Meta:

@@ -105,7 +105,7 @@ public class BatchProcessFlows extends MenuFlows {
 				FileUtils.csvReadFileAndValidate(fileName, firstcolumn);
 			loggers.info("Filename and firstcolumn to verified successfully");
 		} catch (Exception e) {
-			loggers.error("Error in copying file");
+			loggers.error("Error in copying file", e);
 		}
 	}
 
@@ -154,6 +154,10 @@ public class BatchProcessFlows extends MenuFlows {
 		deviceProductionPage.processDeviceProductionBatchNewApplication(batch);
 	}
 
+	public void processPinGenerationBatch(PinGenerationBatch batch) {
+		pinGenerationPage = navigator.navigateToPage(PinGenerationBatchPage.class);
+		pinGenerationPage.processPinGenerationBatchNewDeviceSupplementary(batch);
+	}
 	public void processPinProductionBatchNewDevice(PinGenerationBatch batch) {
 		PinGenerationBatchPage page = navigator.navigateToPage(PinGenerationBatchPage.class);
 		page.processPinProductionBatchNewDevice(batch);
