@@ -26,10 +26,10 @@ And User fills Transaction Rule Plan
 And User fills Credit Plan
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Corporate Credit Card [10]
-When User fills Program section for credit product and program Corporate Credit Card [10]
 And User fills MCC Rules for credit product
 And User Primary Device fills New Program Corporate Credit Card [10] section for credit product for Mastercard
 When for Primary Device and New Client user fills Device Range section for credit product
+When user assigns service code to program
 Then credit device is created using new device screen for Corporate and Primary Device and New Client and Magnetic Stripe Card
 Then credit processes pre-production batch using new Device
 Then credit processes deviceproduction batch using new Device for Supplementary

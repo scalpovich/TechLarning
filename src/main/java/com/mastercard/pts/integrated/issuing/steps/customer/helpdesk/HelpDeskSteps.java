@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
+import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
@@ -575,7 +576,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickEndCall();
 		assertThat("Device has incorrect Sale Date", helpdeskWorkflow.saleDate(), equalTo(DateUtils.currentDateddMMyyyy()));
 	}
-
+	
 	@Then("device activated and activation date is updated in general details")
 	public void thenActivationDateIsUpdatedGeneralDetails() {
 		helpdeskWorkflow.clickCustomerCareEditLink();
@@ -590,6 +591,13 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.storeDeliveryDate();
 		helpdeskWorkflow.clickEndCall();
 		assertThat("Device has incorrect Delivery Date", helpdeskWorkflow.deliveryDate(), equalTo(DateUtils.currentDateddMMyyyy()));
+	}
+	
+	@Then("available balance is updated in current status and limits tab")
+		public void thenAvailableBalanceUpdatedinCurrentStatus(){
+		helpdeskGeneral.createWithProvider(provider);
+		helpdeskWorkflow.clickOnCurrentStatusTab();
+		Assert.assertEquals("Available balance",helpdeskWorkflow.availableBalance(),helpdeskGeneral.getAvailableBalance());
 	}
 
 	/*
@@ -641,10 +649,10 @@ public class HelpDeskSteps {
 	@When("User search for new device Supplementary on search screen for $productType and validates the status as $NORMAL")
 	public void thenUserSearchForDeviceOnSearchScreenForSupplementary(String productType, String status) {
 		helpdeskgettersetter.setProductType(ProductType.fromShortName(productType));
-//		List<String>deviceNumbers=context.get(CreditConstants.SUPPLEMENTARY_DEVICE_NUMBER);
-//        for(String deviceNumber:deviceNumbers)
-//        {
-        	helpdeskgettersetter.setDeviceNumber("5377162846321810");
+		List<String>deviceNumbers=context.get(CreditConstants.SUPPLEMENTARY_DEVICE_NUMBER);
+        for(String deviceNumber:deviceNumbers)
+        {
+        	helpdeskgettersetter.setDeviceNumber(deviceNumber);
         	String actualStatus = helpdeskFlows.searchForNewDevice(helpdeskgettersetter);
     		if (actualStatus.contains(status)) {
     			Assert.assertTrue("status of newly created device is normal ", true);
@@ -652,7 +660,7 @@ public class HelpDeskSteps {
     			Assert.assertTrue("status of newly created device is not normal ", false);
     		}
         }
-//	}
+	}
 
 
 	@Then("User search for new application on search screen for $productType and validates the status as $NORMAL")

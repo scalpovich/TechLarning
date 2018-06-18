@@ -66,6 +66,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String CLOSED_BY =  "Closed By:";
 	private static final String CLOSURE_PERIOD = "Estimated Closure Period(Days:HH:MM):";
 	private static final String PRIORITY_REQUEST = "Priority Request:";
+	private static final String AVAILABLE_BALANCE = "AVAILABLE_BALANCE";
 	
 	private static String ERROR_MESSAGE = "This field is required.";
 	
@@ -79,7 +80,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private String[] values;
 	private String walletBalanceInformation;
 	public  boolean serviceStatus = false;
-	
+	public String availablebalance;
 	
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -98,6 +99,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "helpdeskDetailContainer:go")
 	private MCWebElement goBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Current Status and Limits']")
+	private MCWebElement currentStatusAndLimitTab;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#saleDate")
 	private MCWebElement saleDateTxt;
@@ -186,6 +190,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()[contains(.,'Device Details')]]")
 	private MCWebElement deviceDetailsLnk;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@id='tab4']/table//tr//span[contains(text(),'Avail Card')]/../../following-sibling::td[1]/span/span")
+	private MCWebElement availableBalanceTxt;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind="udf9:input:inputAmountField")
 	private MCWebElement debitAmtInpt;
 	
@@ -243,6 +250,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind="span#priorityRequest>input")
 	private MCWebElement priorityRequestChkBx;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//li/a[text()='Current Status and Limits']")
+	private MCWebElement tabCurrentStatusAndLimits;
+	
+	
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
 	
 	protected String getWalletNumber() {
@@ -271,6 +282,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void clickDeviceDetailsTab() {
 		new WebDriverWait(driver(), timeoutInSec)
 		.until(WebElementUtils.visibilityOf(deviceDetailsLnk)).click();
+	}
+	
+	public void clickCurrentStatusAndLimitsTab(){
+		new WebDriverWait(driver(), timeoutInSec)
+		.until(WebElementUtils.visibilityOf(currentStatusAndLimitTab)).click();
 	}
 	
 	public void clickActivateRadioButton() {
@@ -343,6 +359,13 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return deliveryDate;
 	}
 		
+	public String getAvailablebalance() {
+		return availablebalance;
+	}
+
+	public void setAvailablebalance(String availablebalance) {
+		this.availablebalance = availablebalance;
+	}
 
 	public void clickGoButton() {
 		clickWhenClickableDoNotWaitForWicket(goBtn);
@@ -500,6 +523,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickOKButtonPopup();
 		});
 		SimulatorUtilities.wait(5000);
+		clickCurrentStatusAndLimitsTab();
 		clickEndCall();
 	}
 	
@@ -1029,6 +1053,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			verifyPriorityRequest();
 		});
 		return true;
+	}
+	
+	public String availableBalance()
+	{
+		return availableBalanceTxt.getText();
 	}
 	
 }

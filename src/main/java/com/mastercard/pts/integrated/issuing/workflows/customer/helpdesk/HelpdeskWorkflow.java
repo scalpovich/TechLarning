@@ -13,10 +13,11 @@ import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGe
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConnectionUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
 @Workflow
 public class HelpdeskWorkflow {
-	@Autowired
+	
 	private HelpdeskGeneralPage helpDeskPage;
 
 	@Autowired
@@ -59,6 +60,7 @@ public class HelpdeskWorkflow {
 	}
 
 	public void clickCustomerCareEditLink() {
+		SimulatorUtilities.wait(2000);
 		helpDeskPage.clickCustomerCareEditLink();
 	}
 
@@ -84,6 +86,10 @@ public class HelpdeskWorkflow {
 
 	public void setupDeviceCurrency(HelpdeskGeneral helpdeskGeneral) {
 		helpDeskPage.setupDeviceCurrency(helpdeskGeneral);
+	}
+	
+	public void clickOnCurrentStatusTab(){
+		helpDeskPage.clickCurrentStatusAndLimitsTab();
 	}
 
 	public void storeActivationDate() {
@@ -177,6 +183,10 @@ public class HelpdeskWorkflow {
 		}
 	}
 	
+	public String availableBalance()
+	{
+		return helpDeskPage.availableBalance();
+	}
 	public void validateRequiredFields(HelpdeskGeneral general){
 		helpDeskPage.validateRequiredFields(general);
 		helpDeskPage.validateMandatoryFields(3);

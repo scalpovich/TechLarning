@@ -24,7 +24,17 @@ public class HelpdeskGeneral {
 	private static final String ACCOUNT_CREDIT_LIMIT = "ACCOUNT_CREDIT_LIMIT";
 	private static final String NEW_CREDIT_LIMIT = "NEW_CREDIT_LIMIT";
 	private static final String LIMIT_TYPE_STATUS="LIMIT_TYPE_STATUS";
+	private static final String AVAILABLE_BALANCE="AVAILABLE_BALANCE";
 	
+	private String availableBalance;
+	public String getAvailableBalance() {
+		return availableBalance;
+	}
+
+	public void setAvailableBalance(String availableBalance) {
+		this.availableBalance = availableBalance;
+	}
+
 	private String transactionNote;
 	private String initialLoadTxnDetails;
 	private String transactionDetails;
@@ -102,6 +112,7 @@ public class HelpdeskGeneral {
 		plan.setNewMobileNo(provider.getString(NEW_MOBILE_NO));
 		plan.setNewMobileISD(provider.getString(NEW_MOBILE_ISD));
 		plan.setDeviceNumber(provider.getString(DEVICE_NUMBER));
+		plan.setAvailableBalance(provider.getString(AVAILABLE_BALANCE));
 		return plan;
 	}
 	
