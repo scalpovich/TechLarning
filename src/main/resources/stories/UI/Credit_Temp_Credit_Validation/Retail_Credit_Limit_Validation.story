@@ -9,6 +9,7 @@ Meta:
 @CardReplacementCredit
 
 Scenario:To Verify that the user can validate credit transaction limit for retail card
+
 Given setting json values in excel
 Given user is logged in institution
 When User fills Dedupe Plan
