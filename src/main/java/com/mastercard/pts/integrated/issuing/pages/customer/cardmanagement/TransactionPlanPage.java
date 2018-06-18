@@ -148,7 +148,6 @@ public class TransactionPlanPage extends AbstractBasePage {
 		runWithinPopup(
 				"Add Transaction Plan",
 				() -> {
-					SimulatorUtilities.wait(2000);
 					WebElementUtils.enterText(planCodeTxt, plan.getTransactionPlanCode());
 					WebElementUtils.enterText(transactionSetDescTxt, plan.getDescription());
 					WebElementUtils.selectDropDownByVisibleText( productTypeDDwn, plan.getProductType());
