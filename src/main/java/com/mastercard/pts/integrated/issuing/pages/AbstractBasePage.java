@@ -83,7 +83,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public static final String ERROR_MESSAGE = "Error: {}";
 
-	public static final String RESPONSE_MESSAGE = "Response message: {}";
+	public static final String RESPONSE_MESSAGE	 = "Response message: {}";
 
 	public static final String CONTACT_INFORMATION_EXPECTED = "Contact Information";
 
@@ -589,6 +589,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 	
 	protected boolean verifyAlreadyExists() {
+		SimulatorUtilities.wait(3000);
 		String message = getMessageFromFeedbackPanel();
 		if (message != null && message.contains("already exist")) {
 			return true;
