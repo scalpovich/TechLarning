@@ -18,6 +18,7 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 @Workflow
 public class HelpdeskWorkflow {
 	
+	@Autowired
 	private HelpdeskGeneralPage helpDeskPage;
 
 	@Autowired
@@ -60,7 +61,6 @@ public class HelpdeskWorkflow {
 	}
 
 	public void clickCustomerCareEditLink() {
-		SimulatorUtilities.wait(2000);
 		helpDeskPage.clickCustomerCareEditLink();
 	}
 
