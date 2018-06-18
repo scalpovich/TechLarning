@@ -59,3 +59,4 @@ Then user is logged in institution
 Then search Refund authorization and verify 000-Successful status
 Then validate auth report
 And user sign out from customer portal
+

@@ -93,6 +93,7 @@ public class PinGenerationBatchPage extends AbstractBasePage {
 			clickWhenClickable(processAllBtn);
 			verifyOperationStatus();
 	}
+		
 
 	public void verifyUiOperationStatus() {
 		logger.info("Pin Generation Batch");
