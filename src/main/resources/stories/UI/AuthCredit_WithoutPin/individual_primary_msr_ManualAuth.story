@@ -34,20 +34,13 @@ Then credit device is created using new device screen for Individual and Primary
 Then credit processes pre-production batch using new Device
 Then credit processes deviceproduction batch using new Device for Supplementary
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-When embossing file batch was generated in correct format
+When user performs adjustment transaction
+When user has current wallet balance amount information for prepaid device
 
-Scenario: Perform RECURRING_PUR_TXN Authorization transaction
+Scenario: emv corporate travel prepaid card authorization
 Meta:
-@TestId 
-Given connection to MAS is established
-When perform an MSR_RECURRING_PUR_TXN MAS transaction
-Then MAS test results are verified
-
-Scenario: Generate Auth File for Clearing
-Meta:
-@TestId 
-When Auth file is generated after transaction
-When MAS simulator is closed
-Then user is logged in institution
-Then search Purchase authorization and verify 000-Successful status
-Then user sign out from customer portal
+@TestId TC408235
+Given user is logged in institution
+And a new device was created
+When user raises an authorization request
+Then status of request is "approved"
