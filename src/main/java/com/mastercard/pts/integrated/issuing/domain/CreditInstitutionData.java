@@ -22,6 +22,18 @@ public class CreditInstitutionData {
 	private String visaPrepaidIssuerBin;
 	private String visaDebitIssuerBin;
 	private String visaCreditIssuerBin;
+	private String deDupePlanCode;
+	private String statementMessagePlan;
+	private String marketingMessagePlan;
+	private String documentCheckListPlan;
+	private String mccRulePlan;
+	private String deviceJoiningAndMemberShipFeePlan;
+	private String deviceEventBasedFeePlan;
+	private String transactionLimitPlan;
+	private String transactionPlan;
+	private String creditPlan;
+	private String billingCycle;
+	
 	
 	public String getAssociation() {
 		return association;
@@ -165,6 +177,99 @@ public class CreditInstitutionData {
 
 	public void setVisaCreditIssuerBin(String visaCreditIssuerBin) {
 		this.visaCreditIssuerBin = visaCreditIssuerBin;
+	}
+    
+	
+
+	public String getDeDupePlanCode() {
+		return deDupePlanCode;
+	}
+
+	public void setDeDupePlanCode(String deDupePlanCode) {
+		this.deDupePlanCode = deDupePlanCode;
+	}
+	
+	
+
+	public String getStatementMessagePlan() {
+		return statementMessagePlan;
+	}
+
+	public void setStatementMessagePlan(String statementMessagePlan) {
+		this.statementMessagePlan = statementMessagePlan;
+	}
+
+	public String getMarketingMessagePlan() {
+		return marketingMessagePlan;
+	}
+
+	public void setMarketingMessagePlan(String marketingMessagePlan) {
+		this.marketingMessagePlan = marketingMessagePlan;
+	}
+    
+	public String getDocumentCheckListPlan() {
+		return documentCheckListPlan;
+	}
+
+	public void setDocumentCheckListPlan(String documentCheckListPlan) {
+		this.documentCheckListPlan = documentCheckListPlan;
+	}
+
+	public String getMccRulePlan() {
+		return mccRulePlan;
+	}
+
+	public void setMccRulePlan(String mccRulePlan) {
+		this.mccRulePlan = mccRulePlan;
+	}
+    
+	public String getDeviceJoiningAndMemberShipFeePlan() {
+		return deviceJoiningAndMemberShipFeePlan;
+	}
+
+	public void setDeviceJoiningAndMemberShipFeePlan(
+			String deviceJoiningAndMemberShipFeePlan) {
+		this.deviceJoiningAndMemberShipFeePlan = deviceJoiningAndMemberShipFeePlan;
+	}
+
+	public String getDeviceEventBasedFeePlan() {
+		return deviceEventBasedFeePlan;
+	}
+
+	public void setDeviceEventBasedFeePlan(String deviceEventBasedFeePlan) {
+		this.deviceEventBasedFeePlan = deviceEventBasedFeePlan;
+	}
+
+	public String getTransactionLimitPlan() {
+		return transactionLimitPlan;
+	}
+
+	public void setTransactionLimitPlan(String transactionLimitPlan) {
+		this.transactionLimitPlan = transactionLimitPlan;
+	}
+
+	public String getTransactionPlan() {
+		return transactionPlan;
+	}
+
+	public void setTransactionPlan(String transactionPlan) {
+		this.transactionPlan = transactionPlan;
+	}
+    
+	public String getCreditPlan() {
+		return creditPlan;
+	}
+
+	public void setCreditPlan(String creditPlan) {
+		this.creditPlan = creditPlan;
+	}
+
+	public String getBillingCycle() {
+		return billingCycle;
+	}
+
+	public void setBillingCycle(String billingCycle) {
+		this.billingCycle = billingCycle;
 	}
 
 	public static CreditInstitutionData createWithProvider(DataProvider provider,String institutionCode) {

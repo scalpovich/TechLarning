@@ -18,7 +18,18 @@
    "visaCreditIssuerBin":"489765",
    "plasticId":"AUT",
    "pictureCode":"AUT",
-   "corporateClientCode":"12121218003000051"
+   "corporateClientCode":"12121218003000051",
+   "deDupePlanCode":"TA1027DCKP [TA1027DCKP]",
+   "statementMessagePlan":"AUTOMATION [TA9800DWJU]",
+   "marketingMessagePlan":"AUTOMATION [TA9672VXUV]",
+   "documentCheckListPlan":"AUTOMATION [TA5048RTBG]",
+   "mccRulePlan":"AUTOMATIO [TA1574HB2N]",
+   "deviceJoiningAndMemberShipFeePlan":"AUTOMATION [TA1446TF]",
+   "deviceEventBasedFeePlan":"AUTOMATION [TA1161EG]",
+   "transactionLimitPlan":"AUTOMATION [TA4406RMHA]",
+   "transactionPlan":"AUTOMATION [T7568P]",
+   "creditPlan":"AUTO12ZXBL [926]",
+   "billingCycle":"AUTOMATION [929]"
    }
   ]
 }
