@@ -45,7 +45,8 @@ When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
 Scenario: Perform EMV_PURCHASE Authorization transaction
-When perform an EMV_PURCHASE MAS transaction on the same card
+Given connection to MAS is established
+When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
 
 Scenario: Generate Auth File for Clearing
