@@ -102,11 +102,11 @@ public class PlasticCodePage extends AbstractBasePage {
 	public void verifyPlasticSuccess() {
 		if (!verifyErrorsOnPlasticCodePage()) {
 			logger.info("Vendor Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Vendor Addition");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 	

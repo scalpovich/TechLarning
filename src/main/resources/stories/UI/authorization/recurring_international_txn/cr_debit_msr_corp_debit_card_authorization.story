@@ -7,7 +7,7 @@ I want to create a msr Corporate debit card for client
 
 Meta:
 @StoryName d_msr_corp
-@CRCardsWithAuthorizationCashAdvancedWithClearing
+@RecurringWithPin_INT
 
 Scenario: Setup - debit msr corp debit card
 Given user is logged in institution
@@ -27,7 +27,6 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for debit device
 Then device has "normal" status
 When user activates device through helpdesk
-When user updates cvccvv as uncheck on device plan
 Then user sign out from customer portal
 
 Scenario: Pin Generation 
@@ -39,11 +38,11 @@ Then embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform INT_RECURRING_PUR_TXN_PIN Authorization transaction
+Scenario: Perform INT_MSR_RECURRING_PUR_TXN Authorization transaction
 Meta:
 @TestId 
 Given connection to MAS is established
-When perform an INT_RECURRING_PUR_TXN MAS transaction
+When perform an INT_MSR_RECURRING_PUR_TXN MAS transaction
 Then MAS test results are verified
 
 

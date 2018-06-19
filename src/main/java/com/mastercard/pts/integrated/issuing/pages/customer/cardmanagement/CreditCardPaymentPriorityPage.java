@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 
 
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
 
 
 
@@ -28,6 +30,7 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -84,6 +87,7 @@ public class CreditCardPaymentPriorityPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "balInterests:input:inputTextField")
 	private MCWebElement interestTxt;
 
+	private int counter=0;
 	public void verifyUiOperationStatus() {
 		logger.info("Credit Card Payment Priority");
 		verifySearchButton("Search");
@@ -125,9 +129,16 @@ public class CreditCardPaymentPriorityPage extends AbstractBasePage {
 			WebElementUtils.enterText(interestTxt, creditCardPaymentPriority.getInterest());
 		
 			clickSaveButton();
-			errorMessagePresence();
-			creditCardPlans.setErrorStatus(errorMessagePresence());
-			canceled.set(verifyAlreadyExistsAndClickCancel());
+			SimulatorUtilities.wait(4000);
+		 if (verifyAlreadyExists()) {
+			    errorMessagePresence();
+			 	creditCardPlans.setErrorStatus(errorMessagePresence());
+				canceled.set(verifyAlreadyExistsAndClickCancel());
+		 }
+		 else
+		 {
+			 creditCardPlans.setErrorStatus(false);
+		 }
 		});
 		if (!canceled.get()) {
 			verifyOperationStatus();
@@ -138,12 +149,17 @@ public class CreditCardPaymentPriorityPage extends AbstractBasePage {
 
 	private void checkDuplicacyOfPaymentPriorityPlanCode(CreditCardPaymentPriority creditCardPaymentPriority) {
 		if(!isNoRecordsFoundInTable())
-		{
+		{   
+			 counter+=1;
+			if(counter<2)
+			{
 			 creditCardPaymentPriority.setPaymentPriorityPlanCode(MiscUtils.generateRandomNumberBetween2Number(100, 999));
 			 logger.info("PaymentPriorityPlanCode: {}",creditCardPaymentPriority.getPaymentPriorityPlanCode());
 			 performSearchOperationOnMainScreen(creditCardPaymentPriority);
 			 waitForPageToLoad(getFinder().getWebDriver());
 			 checkDuplicacyOfPaymentPriorityPlanCode(creditCardPaymentPriority);
+			}
+		     
 		}
 	}
 

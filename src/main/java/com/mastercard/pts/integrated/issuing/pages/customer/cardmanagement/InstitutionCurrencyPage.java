@@ -104,11 +104,11 @@ public class InstitutionCurrencyPage extends AbstractBasePage {
 	public void verifyNewInstutionCurrencySuccess() {
 		if (!verifyErrorsOnInstitutionCurrencyPage()) {
 			logger.info("Institution Currency Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in record Addition");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 
 		}
 	}

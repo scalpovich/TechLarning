@@ -263,7 +263,7 @@ Scenario: UI verification - Collect Portal -  ResetPassword, Administration tab
 Given user is on login page of collect portal
 And user logs in with valid credentials
 When user is logged into collect portal successfully
-Then ResetPassword.java page of administration tab is rendered correctly
+Then ResetPassword page of administration tab is rendered correctly
 And user signs out from collect portal
 
 Scenario: UI verification - Collect Portal -  ScreenPrivileges, Administration tab

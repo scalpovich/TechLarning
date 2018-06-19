@@ -81,7 +81,7 @@ public class TransactionTypePage extends AbstractBasePage {
 					+ "   and transaction code:- " + transactionTypeCode);
 			verifyOptionsSelected(transactionTypeCode);
 			ClickButton(closeBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 
 		}
 

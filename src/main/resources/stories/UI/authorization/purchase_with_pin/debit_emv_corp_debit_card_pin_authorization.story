@@ -8,13 +8,14 @@ I want to create a EMV Corporate debit card for client
 Meta:
 @StoryName d_emv_corp
 
-Scenario: Transaction - debit emv corp debit card - EMV_PURCHASE Authorization transaction
+Scenario: Setup debit emv corp debit card 
 Given user is logged in institution
 And device range for program with device plan for "debit" "emv" card
 When user creates new device of debit type for new client
+Then device has "normal" status
 And user sign out from customer portal
 
-Scenario: Device Production
+Scenario: Device Production 
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for debit
@@ -27,12 +28,16 @@ Then device has "normal" status
 When user activates device through helpdesk
 And user sign out from customer portal
 
+
 Scenario: Pin Generation 
+Meta:
+@TestId 
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
-When embossing file batch was generated in correct format
+Then embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
+
 
 Scenario: Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
@@ -45,7 +50,7 @@ Meta:
 When Auth file is generated after transaction
 When MAS simulator is closed
 Then user is logged in institution
-Then search Purchase with Cash back authorization and verify 000-Successful status
+Then search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension

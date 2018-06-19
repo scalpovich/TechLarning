@@ -335,11 +335,11 @@ public class GeneralPage extends AbstractBasePage {
 		isElementPresent(successInfo);
 		OKBtn.click();
 
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public void endCall() {
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		CustomUtils.ThreadDotSleep(5000);
 		Scrolldown(endCallBtn);
 		waitForElementVisible(endCallBtn);

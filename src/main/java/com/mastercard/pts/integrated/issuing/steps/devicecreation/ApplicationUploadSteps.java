@@ -117,6 +117,15 @@ public class ApplicationUploadSteps {
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processDeviceProductionBatchNewDevice(batch);
 	}
+	
+	
+	@Then("$type processes deviceproduction batch using new Device for Supplementary")
+	@When("$type processes deviceproduction batch using new Device for Supplementary")
+	public void whenProcessesDeviceproductionBatchForDeviceSupplementary(String type) {
+		DeviceProductionBatch batch = new DeviceProductionBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processDeviceProductionBatchNewDeviceSupplementary(batch);
+	}
 
 	@Then("$type processes pinProduction batch using new Application")
 	@When("$type processes pinProduction batch using new Application")
@@ -125,6 +134,13 @@ public class ApplicationUploadSteps {
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPinProductionBatchNewApplication(batch);
 	}
+	
+	@When("$type processes pingeneration batch using new Device for Supplementary")
+	public void whenProcessesPinGenerationBatchUsingNewDeviceForSupplementry(String type) {
+		PinGenerationBatch batch = new PinGenerationBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processPinGenerationBatch(batch);
+	}
 
 	@Then("$type processes pinProduction batch using new Device")
 	@When("$type processes pinProduction batch using new Device")
@@ -132,6 +148,14 @@ public class ApplicationUploadSteps {
 		PinGenerationBatch batch = new PinGenerationBatch();
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPinProductionBatchNewDevice(batch);
+	}
+	
+	@Then("$type processes pinProduction batch using new Device for Supplementary")
+	@When("$type processes pinProduction batch using new Device for Supplementary")
+	public void whenProcessesPinproductionBatchForCredit(String type) {
+		PinGenerationBatch batch = new PinGenerationBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processPinProductionBatchNewDeviceCredit(batch);;
 	}
 
 	@Then("$type processes deviceproduction batch using new Application")
