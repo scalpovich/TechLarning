@@ -149,7 +149,7 @@ public class Device {
 	}
 	
 	public  static Device createWithProviderForOtherDetails(KeyValueProvider provider) {
-		Device device = Device.createWithProvider(provider);
+		Device device = new Device();
 		device.setOtherInfoDeliveryMode(provider.getString(ND_OTHERINFO_DELIVERY_MODE));
 		device.setOtherInfoEmailAlertRequired(provider.getString(ND_OTHERINFO_EMAIL_ALERT_REQUIRED));
 		device.setOtherInfoPreferredLanguage(provider.getString(ND_OTHERINFO_PREFERRED_LANGUAGE));
@@ -157,6 +157,7 @@ public class Device {
 		device.setOtherInfoRegisteredMobileNumber(provider.getString(ND_OTHERINFO_REGISTERED_MOBILE_NUMBER));
 		device.setOtherInfoRegisterForDncr(provider.getString(ND_OTHERINFO_REGISTER_FOR_DCNR));
 		device.setOtherInfoSmsAlertRequired(provider.getString(ND_OTHERINFO_SMS_ALERT_REQUIRED));
+		device.setOtherInfoStatementPreference(provider.getString(ND_OTHERINFO_STATEMENT_PREFERENCE));		
 		return device;
 	}
 

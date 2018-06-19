@@ -618,9 +618,13 @@ public class ProgramSetupSteps {
 		setPinRequiredToFalse();
 		devicePlan = DevicePlan.createProviderForCredit(provider);
 		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
-		if ("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
+		
+		if ("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())){
 			devicePlan.setIsPinLess("YES");
+		}
+		
 		devicePlan.setProductType(ProductType.fromShortName(type));
+		
 		if (Objects.nonNull(deviceJoiningAndMemberShipFeePlan) && Objects.nonNull(deviceEventBasedFeePlan)) {
 			devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
 			devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
@@ -628,7 +632,9 @@ public class ProgramSetupSteps {
 			devicePlan.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());
 			devicePlan.setBaseDeviceEventBasedPlan(data.getDeviceEventBasedFeePlan());
 		}
+		
 		devicePlan.setAssociation(interchange);
+		
 		if (Objects.nonNull(transactionLimitPlan) && Objects.nonNull(transactionPlan)) {
 			devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 			devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
@@ -638,6 +644,7 @@ public class ProgramSetupSteps {
 			devicePlan.setAfterKYC(data.getTransactionPlan());
 			devicePlan.setBeforeKYC(data.getTransactionPlan());
 		}
+		
 		devicePlan.setDeviceType(deviceType);
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
@@ -1079,6 +1086,7 @@ public class ProgramSetupSteps {
 		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
 		program.setProduct(ProductType.fromShortName(type));
 		program.setInterchange(interchange);
+
 		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
 			if (Objects.nonNull(statementMessagePlan) && Objects.nonNull(marketingMessagePlan)) {
 				program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
@@ -1114,10 +1122,21 @@ public class ProgramSetupSteps {
 		} else {
 			program.setMccRulePlan(data.getMccRulePlan());
 		}
-		program.setProgramType(programType);
 
-		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID))
+		program.setProgramType(programType);
+		
+		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)){
+			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
+			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+		}
+
+		if(program.getApplicationType().contains("Supplementary")||program.getApplicationType().contains("Add-on")&& program.getSubApplicationType().contains("Existing")){
+			program.setDevicePlanPlan2(devicePlanSupplementary.buildDescriptionAndCode());
+		}
+		
+		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID)){
 			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+		}	
 
 		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
@@ -1301,21 +1320,22 @@ public class ProgramSetupSteps {
 	
 	@When("for $applicationType and $subApplicationType user fills Device Range section for $type product")
 	public void whenUserFillsDeviceRangeSectionforSupplementaryAndAddonExistingClient(String applicationType,String subApplicationType,String type) {
-		DeviceRange deviceRange;
-			if(ProductType.CREDIT.toUpperCase().contains(type.toUpperCase())) {
+		
+		DeviceRange deviceRange = null;
+		
+		if(ProductType.CREDIT.toUpperCase().contains(type.toUpperCase()) || ProductType.PREPAID.toUpperCase().contains(type.toUpperCase())){
 			deviceRange = DeviceRange.createWithProvider(dataProvider,provider, type);
-			if(applicationType.contains("Supplementary")||applicationType.contains("Add-on")&& subApplicationType.contains("Existing"))
-			{
+			
+			if(applicationType.contains("Supplementary")||applicationType.contains("Add-on")&& subApplicationType.contains("Existing")){
 				deviceRange.setProductType(ProductType.fromShortName(type));
 				deviceRange.setProgram(program.buildDescriptionAndCode());
 				deviceRange.setDevicePlanCode(devicePlanSupplementary.buildDescriptionAndCode());	
-			}
-			else
-			{
+			}else{
 				deviceRange.setProductType(ProductType.fromShortName(type));
 				deviceRange.setProgram(program.buildDescriptionAndCode());
 				deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
 			}
+			
 		} else {
 			deviceRange = DeviceRange.createWithProvider(dataProvider, type);
 			deviceRange.setProductType(ProductType.fromShortName(type));

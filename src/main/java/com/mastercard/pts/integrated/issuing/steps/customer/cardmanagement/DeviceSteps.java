@@ -1,11 +1,11 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
-import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
@@ -43,7 +43,6 @@ public class DeviceSteps {
 	private static final String CORPORATE_CLIENT_CODE_DEVICE2 = "CORPORATE_CLIENT_CODE_DEVICE2";
 
 	@When("user creates new device of $type type for new client")
-	@Then("user creates new device of $type type for new client")
 	public void whenUserCreatesNewDeviceForNewClient(String type) {
 		Device device = Device.createWithProvider(provider);
 
@@ -57,6 +56,7 @@ public class DeviceSteps {
 
 		deviceWorkflow.createDevice(device);
 		context.put(ContextConstants.DEVICE, device);
+
 	}
 
 	@When("user creates new device of $type type for non-default institution")
@@ -176,12 +176,21 @@ public class DeviceSteps {
 		context.put(CreditConstants.APPLICATION, device);
 	}
 	
-	@Given("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
-	@When("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
 	@Then("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
 	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewDevice(String type,String customerType,String applicationType,String subApplicationType,String deviceType) {
-		Device device = Device.createWithProviderForOtherDetails(provider);
+		Device device = Device.createWithProvider(provider);
 		device.setAppliedForProduct(ProductType.fromShortName(type));
+
+		Device deviceTemp = Device.createWithProviderForOtherDetails(provider);
+		device.setOtherInfoDeliveryMode(deviceTemp.getOtherInfoDeliveryMode());
+		device.setOtherInfoEmailAlertRequired(deviceTemp.getOtherInfoEmailAlertRequired());
+		device.setOtherInfoFaxNo(deviceTemp.getOtherInfoFaxNo());
+		device.setOtherInfoPreferredLanguage(deviceTemp.getOtherInfoPreferredLanguage());
+		device.setOtherInfoRegisteredEmailAddress(deviceTemp.getOtherInfoRegisteredEmailAddress());
+		device.setOtherInfoRegisteredMobileNumber(deviceTemp.getOtherInfoRegisteredMobileNumber());
+		device.setOtherInfoRegisterForDncr(deviceTemp.getOtherInfoRegisterForDncr());
+		device.setOtherInfoSmsAlertRequired(deviceTemp.getOtherInfoSmsAlertRequired());
+		device.setOtherInfoStatementPreference(deviceTemp.getOtherInfoStatementPreference());
 		device.setCustomerType(customerType);
 		device.setApplicationType(applicationType);
 		device.setSubApplicationType(subApplicationType);
@@ -189,17 +198,14 @@ public class DeviceSteps {
 
 		Program program = context.get(ContextConstants.PROGRAM);
 		device.setProgramCode(program.buildDescriptionAndCode());
-		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT))
-		{
+		
+		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)){
 			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
 			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+		}else{
+			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 		}
-		else
-		{
-		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
-		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
-		}
-
 		deviceWorkflow.createDevice(device);
 	}
 	
@@ -311,61 +317,5 @@ public class DeviceSteps {
 		sdnUncheckProgram(program.getProgramCode());
 		deviceWorkflow.createDevice(device);
 		context.put(ContextConstants.DEVICE, device);
-	}
-	
-	@Given("\"$type\" is created with \"$application\" as application type with application sub-type as \"$applicationSubType\" and customer of type \"$customerType\" with \"$deviceType\"")
-	@When("\"$type\" is created with \"$application\" as application type with application sub-type as \"$applicationSubType\" and customer of type \"$customerType\" with \"$deviceType\"")
-	@Then("\"$type\" is created with \"$application\" as application type with application sub-type as \"$applicationSubType\" and customer of type \"$customerType\" with \"$deviceType\"")
-	public void creditDevicePlanDeviceCreation(
-			String type, String application, String applicationSubType,String customerType,String deviceType) {
-		Device device = Device.createWithProvider(provider);
-		
-		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));	
-		
-		device.setAppliedForProduct(ProductType.fromShortName(type));
-		device.setApplicationType(application);
-		device.setSubApplicationType(applicationSubType);
-		device.setCustomerType(customerType);
-		device.setDeviceType1(deviceType);
-
-		Device deviceData = Device.createWithProviderForOtherDetails(provider);
-		device.setOtherInfoDeliveryMode(deviceData.getOtherInfoDeliveryMode());
-		device.setOtherInfoEmailAlertRequired(deviceData
-				.getOtherInfoEmailAlertRequired());
-		device.setOtherInfoFaxNo(deviceData.getOtherInfoFaxNo());
-		device.setOtherInfoPreferredLanguage(deviceData
-				.getOtherInfoPreferredLanguage());
-		device.setOtherInfoRegisteredEmailAddress(deviceData
-				.getOtherInfoRegisteredEmailAddress());
-		device.setOtherInfoRegisteredMobileNumber(deviceData
-				.getOtherInfoRegisteredMobileNumber());
-		device.setOtherInfoRegisterForDncr(deviceData
-				.getOtherInfoRegisterForDncr());
-		device.setOtherInfoSmsAlertRequired(deviceData
-				.getOtherInfoSmsAlertRequired());
-		device.setOtherInfoStatementPreference(deviceData
-				.getOtherInfoStatementPreference());
-
-		Program program = context.get(ContextConstants.PROGRAM);
-		device.setProgramCode(program.buildDescriptionAndCode());
-		sdnUncheckProgram(program.getProgramCode());
-
-
-		if("supplementary".contains(device.getApplicationType().toLowerCase())
-			||"add-on".contains(device.getApplicationType().toLowerCase())
-			&&"existing".contains(device.getSubApplicationType().toLowerCase()))
-        {
-              DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
-              device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
-        }
-        else
-        {
-	        DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
-	        device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
-        }
-
-		Assert.assertTrue("Application is not created successfully",
-				deviceWorkflow.createDeviceUsingApplication(device));
-		context.put(CreditConstants.APPLICATION, device);
 	}
 }

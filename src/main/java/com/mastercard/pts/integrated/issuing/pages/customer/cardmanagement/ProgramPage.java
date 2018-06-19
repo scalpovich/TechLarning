@@ -387,7 +387,7 @@ public class ProgramPage extends AbstractBasePage {
 						selectByVisibleText(interchangeDDwn,program.getInterchange());
 					} else {
 					     SimulatorUtilities.wait(2000);
-						selectInterchange(program.getInterchange());
+						 selectInterchange(program.getInterchange());
 					}
 						SimulatorUtilities.wait(2000);
 					selectProduct(program.getProduct());
@@ -397,8 +397,8 @@ public class ProgramPage extends AbstractBasePage {
 						SimulatorUtilities.wait(2000);
 						selectProgramType(program.getProgramType());
 					}
-						SimulatorUtilities.wait(2000);
-			      selectBaseCurrency(program.getBaseCurrency());
+			SimulatorUtilities.wait(2000);
+			selectBaseCurrency(program.getBaseCurrency());
 			program.setProgramCodeDevice(program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
@@ -512,7 +512,7 @@ public class ProgramPage extends AbstractBasePage {
 		clickNextButton();
 		selectWalletPlanPlan1(program.getFirstWalletPlan());
 		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
-		if (productType.equalsIgnoreCase(ProductType.CREDIT))
+		if (productType.equalsIgnoreCase(ProductType.CREDIT) || productType.equalsIgnoreCase(ProductType.PREPAID))
 		{
 			if(program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && program.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT))
 			{
