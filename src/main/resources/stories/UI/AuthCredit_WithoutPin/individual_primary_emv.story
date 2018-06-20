@@ -51,3 +51,10 @@ Then user is logged in institution
 Then search E-Commerce Transaction authorization and verify 000-Successful status
 Then validate auth report
 And user sign out from customer portal
+
+Scenario: Perform EMV_PURCHASE Authorization transaction
+When perform an EMV_PURCHASE MAS transaction on the same card
+Then MAS test results are verified
+And user is logged in institution
+And search Purchase authorization and verify 000-Successful status
+And user sign out from customer portal
