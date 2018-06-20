@@ -995,7 +995,12 @@ public class ProgramSetupSteps {
 				program.setOtherPlanMarketingMessagePlan(data.getMarketingMessagePlan());
 			}	
 		}
+		if(Objects.nonNull(walletPlan)){
 		program.setFirstWalletPlan(walletPlan.buildDescriptionAndCode());
+		}
+		else{
+		program.setFirstWalletPlan(data.getWalletPlan());
+		}
 		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
 		program.setApplicationType(applicationType);
 		program.setSubApplicationType(subApplicationType);

@@ -33,6 +33,7 @@ public class CreditInstitutionData {
 	private String transactionPlan;
 	private String creditPlan;
 	private String billingCycle;
+	private String walletPlan;
 	
 	
 	public String getAssociation() {
@@ -270,6 +271,14 @@ public class CreditInstitutionData {
 
 	public void setBillingCycle(String billingCycle) {
 		this.billingCycle = billingCycle;
+	}
+    
+	public String getWalletPlan() {
+		return walletPlan;
+	}
+
+	public void setWalletPlan(String walletPlan) {
+		this.walletPlan = walletPlan;
 	}
 
 	public static CreditInstitutionData createWithProvider(DataProvider provider,String institutionCode) {
