@@ -85,10 +85,3 @@ When MAS simulator is closed
 Then user is logged in institution
 Then search CWD authorization and verify 000-Successful status
 And user sign out from customer portal
-
-Scenario: Perform ASI_EMV Authorization transaction on Individual Primary MSR Card
-When perform an ASI_EMV MAS transaction on the same card
-Then MAS test results are verified
-And user is logged in institution
-And search Account Status authorization and verify 085-Successful status
-And user sign out from customer portal
