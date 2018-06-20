@@ -58,3 +58,10 @@ Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
+
+Scenario: Perform ASI_PAYMENT_WITH_AMOUNT Authorization transaction
+When perform an ASI_PAYMENT_WITH_AMOUNT MAS transaction on the same card
+Then MAS test results are verified
+And user is logged in institution
+And search Account Status authorization and verify 085-Successful status
+And user sign out from customer portal
