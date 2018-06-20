@@ -29,7 +29,7 @@
    "transactionLimitPlan":"AUTOMATION [TA4406RMHA]",
    "transactionPlan":"AUTOMATION [T7568P]",
    "creditPlan":"AUTO12ZXBL [926]",
-   "billingCycle":"AUTOMATION [929]"
+   "billingCycle":"AUTOMATION [929]",
    "walletPlan":"AUTOMATION [TA5454IRIV]"
    }
   ]
