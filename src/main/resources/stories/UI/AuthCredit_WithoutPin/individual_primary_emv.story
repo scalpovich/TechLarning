@@ -33,3 +33,13 @@ Then credit device is created using new device screen for Individual and Primary
 Then credit processes pre-production batch using new Device
 Then credit processes deviceproduction batch using new Device for Supplementary
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+When embossing file batch was generated in correct format
+
+Scenario: perform 3D_SECURE_CAVV authorization on corporate msr card
+When connection to MAS is established
+When perform an 3D_SECURE_CAVV MAS transaction
+Then MAS test results are verified
+When MAS simulator is closed
+Then user is logged in institution
+Then search E-Commerce Transaction authorization and verify 000-Successful status
+And user sign out from customer portal
