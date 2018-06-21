@@ -62,7 +62,6 @@ Then validate auth report
 And user sign out from customer portal
 
 Scenario: perform 3D_SECURE_CAVV authorization on corporate msr card
-When connection to MAS is established
 When perform an 3D_SECURE_CAVV MAS transaction on the same card
 Then MAS test results are verified
 Then user is logged in institution
