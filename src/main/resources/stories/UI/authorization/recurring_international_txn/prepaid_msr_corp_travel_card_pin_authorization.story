@@ -1,23 +1,21 @@
-prepaid msr corp travel card authorization
+prepaid msr corporate travel card recurring international transactions
 
 Narrative:
-In order to check transactions on prepaid msr corp travel card
+In order to check transactions on prepaid msr corporate travel card
 As an issuer
-I want to authorize transactions for prepaid msr corp travel card
+I want to authorize transactions for prepaid msr corporate travel card
 
 Meta:
 @StoryName p_msr_corp_travel
-@oldReferenceSheet_S203707
-@CRCardsWithAuthorizationCashAdvancedWithClearing
+@RecurringWithPin_INT
 
 
 Scenario: Set up prepaid msr corporate travel card
 Meta:
 @TestId TC398452
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
+And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
-When user updates cvccvv as uncheck on device plan
 Then user sign out from customer portal
 
 Scenario: prepaid msr corporate travel card device production
@@ -27,22 +25,31 @@ Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
+When processes pin generation batch for prepaid
 Then device has "normal" status
 When user has wallet number information for prepaid device
 Then user sign out from customer portal
 Then user is logged in institution
-When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
+When user performs adjustment transaction
 Then device has "normal" status
 Then user activates device through helpdesk
 Then user sign out from customer portal
 
+Scenario: Pin Generation 
+Meta:
+@TestId 
+Given connection to FINSim is established
+When Pin Offset file batch was generated successfully
+When embossing file batch was generated in correct format
+When PIN is retrieved successfully with data from Pin Offset File
+Then FINSim simulator is closed
 
-Scenario: Perform RECURRING_PUR_TXN Authorization transaction
+Scenario: Perform INT_MSR_RECURRING_PUR_TXN Authorization transaction
 Meta:
 @TestId 
 Given connection to MAS is established
-When perform an RECURRING_PUR_TXN MAS transaction
+When perform an INT_MSR_RECURRING_PUR_TXN MAS transaction
 Then MAS test results are verified
 
 Scenario: Generate Auth File for Clearing

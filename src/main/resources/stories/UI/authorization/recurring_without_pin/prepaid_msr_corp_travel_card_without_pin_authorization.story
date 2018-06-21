@@ -1,23 +1,21 @@
 prepaid msr corp travel card authorization
 
 Narrative:
-In order to check transactions on prepaid msr corp travel card card
+In order to check transactions on prepaid msr corp travel card
 As an issuer
-I want to authorize transactions for prepaid msr corp travel card card
+I want to authorize transactions for prepaid msr corp travel card
 
 Meta:
-@StoryName p_emv_corp_travel
-@oldReferenceSheet_S203707
-@CRCardsWithAuthorizationCashAdvancedWithClearing
+@StoryName p_msr_corp_travel
+@RecurringWithoutPin
 
 
 Scenario: Set up prepaid msr corporate travel card
 Meta:
 @TestId TC398452
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "magnetic stripe" card
+And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client
-When user updates cvccvv as uncheck on device plan
 Then user sign out from customer portal
 
 Scenario: prepaid msr corporate travel card device production
@@ -27,33 +25,23 @@ Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
-When processes pin generation batch for prepaid
 Then device has "normal" status
-
 When user has wallet number information for prepaid device
 Then user sign out from customer portal
 Then user is logged in institution
 When user performs adjustment transaction
-
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
+Then embossing file batch was generated in correct format
 Then user sign out from customer portal
 
-Scenario: Pin Generation 
-Meta:
-@TestId 
-Given connection to FINSim is established
-When Pin Offset file batch was generated successfully
-When embossing file batch was generated in correct format
-When PIN is retrieved successfully with data from Pin Offset File
-Then FINSim simulator is closed
 
-Scenario: Perform RECURRING_PUR_TXN_PIN Authorization transaction
+Scenario: Perform MSR_RECURRING_PUR_TXN Authorization transaction
 Meta:
 @TestId 
 Given connection to MAS is established
-When perform an RECURRING_PUR_TXN MAS transaction
+When perform an MSR_RECURRING_PUR_TXN MAS transaction
 Then MAS test results are verified
 
 Scenario: Generate Auth File for Clearing
@@ -90,4 +78,3 @@ When transaction status is "Matching Pending"
 When "Matching" batch for prepaid is successful
 Then transaction status is "Presentment Matched with authorization"
 Then user sign out from customer portal
-
