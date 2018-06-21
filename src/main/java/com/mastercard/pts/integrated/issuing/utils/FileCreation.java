@@ -576,7 +576,7 @@ public class FileCreation {
 				for (int i = 0; i < applicationUploadMap.size(); i++) {
 					if (true == dataReader.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
 
-						if (devicePlan.getDeviceType().toUpperCase().contains(DeviceType.MAGNETIC_STRIPE_CARD.toUpperCase())) {
+						if (DeviceType.MAGNETIC_STRIPE_CARD.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
 							deviceType = "1";
 						} else if (DeviceType.EMV_CARD.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
 							deviceType = "2";
@@ -586,9 +586,9 @@ public class FileCreation {
 							deviceType = "4";
 						} else if (DeviceType.PHYSICAL_NFC_DEVICE_PAYPASS.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
 							deviceType = "5";
-						} else if (DeviceType.STATIC_VIRTUAL_CARD.toUpperCase().contains(devicePlan.getDeviceType())) {
+						} else if (DeviceType.STATIC_VIRTUAL_CARD.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
 							deviceType = "7";
-						} else if (DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.toUpperCase().contains(devicePlan.getDeviceType())) {
+						} else if (DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
 							deviceType = "8";
 						}
 						if (customerType.equals("Individual")) {
