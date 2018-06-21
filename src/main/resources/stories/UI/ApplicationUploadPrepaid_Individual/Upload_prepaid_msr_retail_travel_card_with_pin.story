@@ -12,6 +12,7 @@ Scenario: Set up prepaid msr retail travel card
 Meta:
 @TestId
 Given user is logged in institution
+And delete dat file from Workspace
 And device range for program with device plan for "prepaid" "magnetic stripe" card without dedupe
 When user creates Application Upload prepaid batch file and upload it on server for Individual for prepaid
 When processes prepaid pre-production batch

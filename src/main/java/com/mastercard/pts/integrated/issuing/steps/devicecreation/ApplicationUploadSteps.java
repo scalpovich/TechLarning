@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.devicecreation;
 
+import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -212,6 +213,8 @@ public class ApplicationUploadSteps {
 		batchProcessFlows.processPinProductionBatchAllForFileUpload(batch);
 	}
 	
+	@Given("delete dat file from Workspace")
+	@When("delete dat file from Workspace")
 	@Then("delete dat file from Workspace")
 	public void deleteDATfile()
 	{

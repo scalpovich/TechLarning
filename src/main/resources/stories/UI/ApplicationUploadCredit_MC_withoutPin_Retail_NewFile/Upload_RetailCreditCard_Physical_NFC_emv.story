@@ -8,6 +8,7 @@ Meta:
 @FileUpload
 Scenario: creation of MC_Individual_primary_NFC_emv credit device using applicationUpload functionality
 Given setting json values in excel
+When delete dat file from Workspace
 When user is logged in institution
 And User fills Statement Message Plan for credit product
 And User fills Marketing Message Plan for credit product
