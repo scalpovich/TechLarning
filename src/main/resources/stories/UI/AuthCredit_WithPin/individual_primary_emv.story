@@ -85,3 +85,13 @@ When MAS simulator is closed
 Then user is logged in institution
 Then search CWD authorization and verify 000-Successful status
 And user sign out from customer portal
+
+Scenario: Perform PIN_CHANGE Authorization transaction
+
+Then connection to MDFS is established
+When user performs an optimized MDFS_EMV_PIN_CHANGE MDFS transaction
+Then MDFS test results are verified
+When MDFS simulator is closed
+Then user is logged in institution
+Then search Pin Change authorization and verify 000-Successful status
+And user sign out from customer portal
