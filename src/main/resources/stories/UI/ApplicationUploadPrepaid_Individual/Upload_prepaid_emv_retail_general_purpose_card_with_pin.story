@@ -1,14 +1,14 @@
-Prepaid emv retail travel card multi currency with pin authorization
+prepaid emv retail general purpose card authorization
 
 Narrative:
-In order to check transactions on prepaid emv retail travel card
+In order to check transactions on prepaid emv retail general purpose card
 As an issuer
-I want to authorize transactions for prepaid emv retail travel card
+I want to authorize transactions for prepaid emv retail general purpose card
 
 Meta:
-@StoryName p_emv_retail_travel
+@StoryName p_emv_retail_general
 
-Scenario: Set up prepaid emv retail travel card
+Scenario: Set up prepaid emv retail general purpose card using ApplicationUpload
 Meta:
 @TestId TC398452
 Given user is logged in institution

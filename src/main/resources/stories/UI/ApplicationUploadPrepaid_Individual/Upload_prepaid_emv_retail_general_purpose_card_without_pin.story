@@ -17,4 +17,5 @@ When user creates Application Upload prepaid batch file and upload it on server 
 When processes prepaid pre-production batch
 When All processes prepaid device production batch
 When User search for device on search screen for product type prepaid and validates the status as NORMAL
+Then delete dat file from Workspace
 Then user logouts from customer portal

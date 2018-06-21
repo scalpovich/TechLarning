@@ -18,4 +18,5 @@ When processes prepaid pre-production batch
 When processes prepaid device production batch
 When processes prepaid pin production batch
 When User search for device on search screen for product type prepaid and validates the status as NORMAL
+Then delete dat file from Workspace
 Then user logouts from customer portal
