@@ -699,7 +699,8 @@ String fileName, String cardType) throws IOException {
 
 			File file = new File(System.getProperty("user.dir"));
 
-			if (file.delete()) {
+			if (!file.isDirectory()&& file.getName().startsWith("APP")) {
+				file.delete();
 				logger.info(file.getName() + " is deleted!");
 			} else {
 				logger.info("Delete operation is failed.");
