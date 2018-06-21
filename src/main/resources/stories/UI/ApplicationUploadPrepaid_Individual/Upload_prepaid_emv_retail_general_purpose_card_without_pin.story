@@ -12,7 +12,7 @@ Scenario: Set up prepaid emv retail general purpose card using ApplicationUpload
 Meta:
 @TestId TC398452
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card without pin
+And device range for program with device plan for "prepaid" "emv" card without pin for ApplicationUpload
 When user creates Application Upload prepaid batch file and upload it on server for Individual for prepaid
 When processes prepaid pre-production batch
 When All processes prepaid device production batch
