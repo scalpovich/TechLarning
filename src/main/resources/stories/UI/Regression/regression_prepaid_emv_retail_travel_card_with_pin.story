@@ -24,7 +24,7 @@ When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 When processes pin generation batch for prepaid
 Then device has "normal" status
-When user has wallet number information for debit device
+When user has wallet number information for prepaid device
 Then user sign out from customer portal
 Then user is logged in institution
 When user performs adjustment transaction
@@ -46,7 +46,6 @@ When perform an EMV_PREAUTH MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth authorization and verify 000-Successful status
-Then validate auth report
 And user sign out from customer portal
 When perform an EMV_COMPLETION MAS transaction
 Then MAS test results are verified

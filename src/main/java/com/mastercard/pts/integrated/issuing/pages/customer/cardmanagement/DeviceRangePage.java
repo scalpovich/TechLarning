@@ -15,11 +15,13 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.CreditInstitutionData;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -78,8 +80,8 @@ public class DeviceRangePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#activeFlag select")
 	private MCWebElement statusDDwn;
 
-	private final String DEVICE_ROUTING = "Device Range Based [D]";
-	
+	@Autowired
+	Program program;
 	@Autowired
 	DevicePlan deviceplan;
 
@@ -163,6 +165,8 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	int i = 0;
 
+	private final String DEVICE_ROUTING = "Device Range Based [D]";
+
 	public void clickAddDeviceRange() {
 		clickWhenClickable(AddDeviceRangeBtn);
 		switchToAddDeviceRangeFrame();
@@ -228,7 +232,7 @@ public class DeviceRangePage extends AbstractBasePage {
 	}
 
 	public void selectBranch() {
-		SelectDropDownByIndex(BranchDDwn, 1);
+		selectDropDownByIndex(BranchDDwn, 1);
 
 	}
 
@@ -265,28 +269,28 @@ public class DeviceRangePage extends AbstractBasePage {
 	public void selectEndPoint() {
 		if (EndpointDDwn.isEnabled()) {
 			waitForPageToLoad(driver());
-			SelectDropDownByIndex(EndpointDDwn, 1);
+			selectDropDownByIndex(EndpointDDwn, 1);
 		}
 	}
 
 	public void selectInterface() {
 		waitForPageToLoad(driver());
 		if (InterfaceDDwn.isEnabled()) {
-			SelectDropDownByIndex(InterfaceDDwn, 1);
+			selectDropDownByIndex(InterfaceDDwn, 1);
 		}
 	}
 
 	public void selectRoutingType() {
 		waitForPageToLoad(driver());
 		if (RoutingTypeDDwn.isEnabled()) {
-			SelectDropDownByIndex(RoutingTypeDDwn, 1);
+			selectDropDownByIndex(RoutingTypeDDwn, 1);
 		}
 	}
 
 	@Override
 	public void clickSaveButton() {
 		clickWhenClickable(SaveBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public boolean verifyErrorsOnDeviceRangePage() {
@@ -296,11 +300,11 @@ public class DeviceRangePage extends AbstractBasePage {
 	public void verifyDeviceRangeSuccess() {
 		if (!verifyErrorsOnDeviceRangePage()) {
 			logger.info("Device Range Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(CancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 
@@ -331,15 +335,15 @@ public class DeviceRangePage extends AbstractBasePage {
 	public void configureDeviceranges(String prodType) {
 		ClickButton(AddDeviceRangeBtn);
 		switchToIframe(Constants.ADD_DEVICE_RANGE_FRAME);
-		SelectDropDownByText(ProductTypeDDwn, prodType);
+		selectDropDownByText(ProductTypeDDwn, prodType);
 		addWicketAjaxListeners(driver());
-		SelectDropDownByIndex(ProgramDDwn, 1);
+		selectDropDownByIndex(ProgramDDwn, 1);
 		addWicketAjaxListeners(driver());
-		SelectDropDownByIndex(BranchDDwn, 1);
+		selectDropDownByIndex(BranchDDwn, 1);
 		addWicketAjaxListeners(driver());
-		SelectDropDownByIndex(DevicePlanCodeDDwn, 1);
+		selectDropDownByIndex(DevicePlanCodeDDwn, 1);
 		addWicketAjaxListeners(driver());
-		SelectDropDownByIndex(IssuerBINDDwn, 1);
+		selectDropDownByIndex(IssuerBINDDwn, 1);
 
 	}
 
@@ -424,8 +428,47 @@ public class DeviceRangePage extends AbstractBasePage {
 		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		logger.info("ProductType : {}", devicePlan.getProductType());
 		logger.info("issuerBin :{}", deviceRange.getIssuerBin());
-		selectIssuerBin(deviceRange.getIssuerBin());
-		selectBranch(deviceRange.getBranch());
+		CreditInstitutionData valuesInJsonNotInExcel=context.get(CreditConstants.JSON_VALUES);
+		program=context.get(ContextConstants.PROGRAM);
+		if (deviceRange.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
+			if (program.getInterchange().toUpperCase().contains("MASTERCARD")) {
+				if (program.getProduct().toUpperCase()
+						.contains(ProductType.PREPAID.toUpperCase())) {
+					deviceRange.setIssuerBin(valuesInJsonNotInExcel
+							.getMastercardPrepaidIssuerBin());
+				} else if (program.getProduct().toUpperCase()
+						.contains(ProductType.DEBIT.toUpperCase())) {
+					deviceRange.setIssuerBin(valuesInJsonNotInExcel
+							.getMastercardDebitIssuerBin());
+				} else if (program.getProduct().toUpperCase()
+						.contains(ProductType.CREDIT.toUpperCase())) {
+					deviceRange.setIssuerBin(valuesInJsonNotInExcel
+							.getMastercardCreditIssuerBin());
+				}
+			} else if (program.getInterchange().toUpperCase().contains("VISA")) {
+				if (program.getProduct().toUpperCase()
+						.contains(ProductType.PREPAID.toUpperCase())) {
+					deviceRange.setIssuerBin(valuesInJsonNotInExcel
+							.getVisaPrepaidIssuerBin());
+				} else if (program.getProduct().toUpperCase()
+						.contains(ProductType.DEBIT.toUpperCase())) {
+					deviceRange.setIssuerBin(valuesInJsonNotInExcel
+							.getVisaDebitIssuerBin());
+				} else if (program.getProduct().toUpperCase()
+						.contains(ProductType.CREDIT.toUpperCase())) {
+					deviceRange.setIssuerBin(valuesInJsonNotInExcel
+							.getVisaCreditIssuerBin());
+				}
+			}
+
+			selectByVisibleText(issuerBinDDwn, deviceRange.getIssuerBin());
+			selectByVisibleText(branchDDwn, deviceRange.getBranch());
+		}
+
+		else {
+			selectIssuerBin(deviceRange.getIssuerBin());
+			selectBranch(deviceRange.getBranch());
+		}
 		addBtn.click();
 		waitForWicket();
 	}

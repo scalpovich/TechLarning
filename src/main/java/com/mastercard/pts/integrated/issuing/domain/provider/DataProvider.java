@@ -46,4 +46,10 @@ public interface DataProvider {
 	default <T> T getDataBySimpleClassName(Class<T> typeToLoad, String... tags) {
 		return getData(typeToLoad, typeToLoad.getSimpleName(), tags);
 	}
+	
+	<T> T getData(Class<T> typeToLoad, String key,String institutionCode,String... tags);
+	
+	default <T> T getDataBySimpleClassNameForInstitute(Class<T> typeToLoad,String institutionCode,String... tags) {
+		return getData(typeToLoad, typeToLoad.getSimpleName(),institutionCode,tags);
+	}
 }

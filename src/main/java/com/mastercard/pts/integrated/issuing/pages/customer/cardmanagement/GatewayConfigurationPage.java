@@ -166,48 +166,48 @@ public class GatewayConfigurationPage extends AbstractBasePage {
 	}
 
 	public void selectSMTPIsCryptoVault(GatewayConfiguration plan) {
-		SelectDropDownByText(smtpIsCryptoValutDdwn, plan.getSMTPIsCryptoVault());
+		selectDropDownByText(smtpIsCryptoValutDdwn, plan.getSMTPIsCryptoVault());
 	}
 
 	public String getFeedbackText() {
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		return getMessageFromFeedbackPanel();
 	}
 
 	public void selectConfigurationFor(GatewayConfiguration plan) {
-		SelectDropDownByText(addConfigurationForDdwn, plan.getConfigurationFor());
+		selectDropDownByText(addConfigurationForDdwn, plan.getConfigurationFor());
 	}
 	
 	public void selectCopyToSelf(GatewayConfiguration plan) {
-		SelectDropDownByText(copyToSelfDdwn, plan.getConfigurationFor());
+		selectDropDownByText(copyToSelfDdwn, plan.getConfigurationFor());
 	}
 	
 	public void selectActive(GatewayConfiguration plan) {
-		SelectDropDownByText(addActiveDdwn, plan.getActive());
+		selectDropDownByText(addActiveDdwn, plan.getActive());
 	}
 	
 	public void selectEmailProtocol(GatewayConfiguration plan) {
-		SelectDropDownByText(addEmailProtocolDdwn, plan.getEmailProtocol());
+		selectDropDownByText(addEmailProtocolDdwn, plan.getEmailProtocol());
 	}
 	
 	public void selectGlobalOutputCheck(GatewayConfiguration plan) {
-		SelectDropDownByText(globalOutputCheckDdwn, plan.getGlobalOutputCheck());
+		selectDropDownByText(globalOutputCheckDdwn, plan.getGlobalOutputCheck());
 	}
 	
 	public void selectReporting(GatewayConfiguration plan) {
-		SelectDropDownByText(reportingDdwn, plan.getGlobalOutputCheck());
+		selectDropDownByText(reportingDdwn, plan.getGlobalOutputCheck());
 	}
 	
 	public void selectsmtpIsDebug(GatewayConfiguration plan) {
-		SelectDropDownByText(smtpIsDebugDdwn, plan.getSmtpIsDebug());
+		selectDropDownByText(smtpIsDebugDdwn, plan.getSmtpIsDebug());
 	}
 	
 	public void selectsmtpIsAuthDdwn(GatewayConfiguration plan) {
-		SelectDropDownByText(smtpIsAuthDdwn, plan.getSmtpIsAuth());
+		selectDropDownByText(smtpIsAuthDdwn, plan.getSmtpIsAuth());
 	}
 	
 	public void selectSmtpSslRequiredDdwn(GatewayConfiguration plan) {
-		SelectDropDownByText(smtpSslRequiredDdwn, plan.getSmtpSslRequired());
+		selectDropDownByText(smtpSslRequiredDdwn, plan.getSmtpSslRequired());
 	}
 	
 	public void enterSiteId(GatewayConfiguration plan) {

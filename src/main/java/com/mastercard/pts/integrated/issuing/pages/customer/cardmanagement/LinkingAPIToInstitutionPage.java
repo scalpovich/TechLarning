@@ -72,12 +72,12 @@ public class LinkingAPIToInstitutionPage extends AbstractBasePage {
 			clickWhenClickable(addbtn);
 			clickWhenClickable(saveBtn);
 			waitForLoaderToDisappear();	
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 			verifyNewChannelRoutingSuccess();
 		}else {
 			logger.info("Error in record Addition");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 
 
@@ -85,11 +85,11 @@ public class LinkingAPIToInstitutionPage extends AbstractBasePage {
 	public void verifyNewChannelRoutingSuccess() {
 		if (!publishErrorOnPage()) {
 			logger.info("Record Added Successfully.");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in record Addition");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 
 		}
 	}

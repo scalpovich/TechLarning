@@ -139,7 +139,7 @@ public class DeviceCardPackTemplatePage extends AbstractBasePage {
 	@Override
 	public void clickSaveButton() {
 		clickWhenClickable(saveBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public boolean verifyErrorsOnDeviceTemplatePage() {
@@ -149,11 +149,11 @@ public class DeviceCardPackTemplatePage extends AbstractBasePage {
 	public void verifyNewVendorSuccess() {
 		if (!verifyErrorsOnDeviceTemplatePage()) {
 			logger.info("Template Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 

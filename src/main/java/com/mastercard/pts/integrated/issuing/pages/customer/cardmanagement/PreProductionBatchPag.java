@@ -37,14 +37,14 @@ public class PreProductionBatchPag extends AbstractBasePage {
 
 	public void preproduction(String product, String batchNum) {
 		menuSubMenuPage.getPreProductionBatch().click();
-		SelectDropDownByText(ProductTypeDDwn, product);
+		selectDropDownByText(ProductTypeDDwn, product);
 		if (batchNum != null) {
 			enterText(BatchNumTxt, batchNum);
 		}
 		ClickButton(SearchBtn);
 		ClickCheckBox(PreProductionBatchRecordChkBx, true);
 		ClickButton(ProcessSelectedBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	@Override

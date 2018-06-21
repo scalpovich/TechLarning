@@ -145,7 +145,7 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		logger.info("Status  -", statuslabelTxt);
 		Assert.assertEquals(statusString, statuslabelTxt);
 		clickWhenClickable(closeBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 
 	}
 

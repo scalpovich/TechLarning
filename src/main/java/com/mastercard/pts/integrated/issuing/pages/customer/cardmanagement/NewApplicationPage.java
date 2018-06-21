@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Arrays;
 import java.util.Collection;
+
 import net.serenitybdd.core.annotations.findby.By;
+
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -14,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.deviceCreation.NewApplication;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -22,7 +25,7 @@ import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.ReadTestDataFromExcel;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
-//TODO: Auto-generated Javadoc
+
 /**
  * @author E070234 
  */
@@ -31,15 +34,13 @@ import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_ACTIVITY, CardManagementNav.L2ACTIVITY_APPLICATION, CardManagementNav.L3_NEW_APPLCIATION
-		})
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_ACTIVITY, CardManagementNav.L2ACTIVITY_APPLICATION, CardManagementNav.L3_NEW_APPLCIATION })
 public class NewApplicationPage extends AbstractCardManagementPage {
 
 	private static final Logger logger = LoggerFactory.getLogger(NewApplicationPage.class);
 	@Autowired
 	Program program;
-	
+
 	@Autowired
 	NewApplication newApp;
 
@@ -82,7 +83,7 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePhotoIndicator1:input:dropdowncomponent")
 	private MCWebElement photoIndicatorDDwn;
 
-	//// Profile Screen
+	// // Profile Screen
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:branchCode:input:dropdowncomponent")
 	private MCWebElement BranchCodeDDwn;
 
@@ -137,7 +138,7 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:currentZipCode:input:inputTextField")
 	private MCWebElement PostalCodeTxt;
 
-	//// Other fields
+	// // Other fields
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:middleName1:input:inputCodeField")
 	private MCWebElement MiddleName1Txt;
@@ -226,11 +227,9 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 
 	public void selectMandatoryFields(String excelFileName) {
 		String FieldToBeAdded = "";
-		String filepath = System.getProperty("user.dir") + File.separator + "TempFiles" + File.separator
-				+ excelFileName;
+		String filepath = System.getProperty("user.dir") + File.separator + "TempFiles" + File.separator + excelFileName;
 		System.out.println("FilePath " + filepath);
-		HashMap<String, HashMap<String, String>> map = excelTestData.fnReadEntireTestData(filepath, "Sheet1",
-				"SequenceNo.");
+		HashMap<String, HashMap<String, String>> map = excelTestData.fnReadEntireTestData(filepath, "Sheet1", "SequenceNo.");
 
 		for (int i = 1; i < map.size(); i++) {
 			excelTestData.dataProviderIterator(map, String.valueOf(i));
@@ -349,19 +348,19 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 
 	public void selectDeviceType() {
 		waitForElementVisible(DeviceTypeDDwn);
-		SelectDropDownByIndex(DeviceTypeDDwn, 1);
+		selectDropDownByIndex(DeviceTypeDDwn, 1);
 
 	}
 
 	public void selectDevicePlan() {
 		waitForElementVisible(DevicePlanDDwn);
 		CustomUtils.ThreadDotSleep(1000);
-		SelectDropDownByIndex(DevicePlanDDwn, 1);
+		selectDropDownByIndex(DevicePlanDDwn, 1);
 	}
 
 	public void selectDevicePhotoIndicator() {
 		waitForElementVisible(photoIndicatorDDwn);
-		SelectDropDownByIndex(photoIndicatorDDwn, 1);
+		selectDropDownByIndex(photoIndicatorDDwn, 1);
 	}
 
 	/**
@@ -772,8 +771,7 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 		boolean strRequestNumber = strOutputMessage.contains("Application Processed Successfully.");
 		Assert.assertNotNull("VIP Status needs to be provided", strRequestNumber);
 	}
-	
-	
+
 	@Override
 	public void verifyUiOperationStatus() {
 		logger.info("Application");
@@ -782,12 +780,7 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(applicationNumber),
-				WebElementUtils.elementToBeClickable(formNumber),
-				WebElementUtils.elementToBeClickable(firstName),
-				WebElementUtils.elementToBeClickable(lastName),
-				WebElementUtils.elementToBeClickable(fromDate),
-				WebElementUtils.elementToBeClickable(toDate));
+		return Arrays.asList(WebElementUtils.elementToBeClickable(applicationNumber), WebElementUtils.elementToBeClickable(formNumber), WebElementUtils.elementToBeClickable(firstName),
+				WebElementUtils.elementToBeClickable(lastName), WebElementUtils.elementToBeClickable(fromDate), WebElementUtils.elementToBeClickable(toDate));
 	}
 }

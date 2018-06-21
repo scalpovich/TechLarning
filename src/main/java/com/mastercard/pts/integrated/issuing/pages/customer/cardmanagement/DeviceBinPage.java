@@ -192,11 +192,11 @@ public class DeviceBinPage extends AbstractBasePage {
 	public void verifyNewDeviceBinSuccess() {
 		if (!verifyErrorsOnDeviceBinPage()) {
 			logger.info("Device BIN Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(CancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 
@@ -232,13 +232,13 @@ public class DeviceBinPage extends AbstractBasePage {
 		switchToIframe(Constants.EDIT_DEVICE_PLAN_FRAME);
 
 		if (fieldUpdated.equals("BINType")) {
-			SelectDropDownByText(BinTypeDDwn, updatedValue);
+			selectDropDownByText(BinTypeDDwn, updatedValue);
 		}
 		if (fieldUpdated.equals("Remark")) {
 			enterText(RemarkTxt, updatedValue);
 		}
 		ClickButton(saveBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public void deleteDeviceBin() {
@@ -270,11 +270,11 @@ public class DeviceBinPage extends AbstractBasePage {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		switchToIframe(Constants.ADD_DEVICE_BIN_FRAME);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByText(InterchangeDDwn, interchangeType);
+		selectDropDownByText(InterchangeDDwn, interchangeType);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByText(ProductTypeDDwn, productType);
+		selectDropDownByText(ProductTypeDDwn, productType);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByText(BinTypeDDwn, binType);
+		selectDropDownByText(BinTypeDDwn, binType);
 		enterText(IssuerBINTxt, CustomUtils.RandomNumbers(4));
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		enterText(RemarkTxt, remark);

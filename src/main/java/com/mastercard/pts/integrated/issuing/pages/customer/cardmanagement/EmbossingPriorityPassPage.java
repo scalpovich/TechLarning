@@ -76,13 +76,13 @@ public class EmbossingPriorityPassPage extends AbstractBasePage {
 		switchToIframe(Constants.ADD_EMBOSS_PRIORITY_PASS_FRAME);
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		waitForElementVisible(FileTypeDDwn);
-		SelectDropDownByText(FileTypeDDwn, Constants.EmbossingPriorityPass_fileType);
+		selectDropDownByText(FileTypeDDwn, Constants.EmbossingPriorityPass_fileType);
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		enterText(DescriptionTxt, embossPriorityPassDesc);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByText(ProductTypeDDwn, productType);
+		selectDropDownByText(ProductTypeDDwn, productType);
 		addWicketAjaxListeners(getFinder().getWebDriver());
-		SelectDropDownByText(InterchangeDDwn, embossPriorityInterchange);
+		selectDropDownByText(InterchangeDDwn, embossPriorityInterchange);
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		// SelectDropDownByIndex(DevicePlanDDwn, 1);
 		// addWicketAjaxListeners(getFinder().getWebDriver());
@@ -99,7 +99,7 @@ public class EmbossingPriorityPassPage extends AbstractBasePage {
 			logger.error(e.toString());
 			logger.info("error pannel not present");
 		}
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public void addTagsFileName() {
@@ -113,7 +113,7 @@ public class EmbossingPriorityPassPage extends AbstractBasePage {
 		ClickButton(AddTagBtn);
 		for (int i = 0; i < Tags.length; i++) {
 			waitForElementVisible(FileNameTagDDwn);
-			SelectDropDownByText(FileNameTagDDwn, Tags[i]);
+			selectDropDownByText(FileNameTagDDwn, Tags[i]);
 			ClickButton(AddTagBtn);
 
 		}
