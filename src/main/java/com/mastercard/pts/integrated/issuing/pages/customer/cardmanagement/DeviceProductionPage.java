@@ -76,7 +76,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr")
 	private MCWebElements rowSize;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[@class='headers']/th/a/span[text()='Device Number']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a/span[text()='Device Number']")
 	private MCWebElements deviceNumberHeaderTxt;
 
 	public void deviceproduction(String prodType, String batchNum, String DeviceNumber) {
