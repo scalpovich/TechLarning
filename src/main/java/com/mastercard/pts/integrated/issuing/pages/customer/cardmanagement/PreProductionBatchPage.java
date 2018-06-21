@@ -78,7 +78,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		}
 		ClickButton(searchBtn);
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
-		ClickButton(processSelectedBtn);
+		clickWhenClickable(processAllBtn);
 		switchToDefaultFrame();
 	}
 
@@ -106,7 +106,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		batch.setBatchNumber(batchNumber);
 		ClickButton(searchBtn);
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
-		ClickButton(processSelectedBtn);
+		clickWhenClickable(processAllBtn);
 		verifyOperationStatus();
 		switchToDefaultFrame();
 
@@ -123,7 +123,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		waitAndSearchForRecordToAppear();
 		setQuantityRequested();
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
-		ClickButton(processSelectedBtn);
+		clickWhenClickable(processAllBtn);
 		verifyOperationStatus();
 		switchToDefaultFrame();
 

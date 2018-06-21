@@ -611,7 +611,7 @@ public class FileCreation {
 				logger.error("Fail to create page object: {}", e);
 				throw Throwables.propagate(e);
 			}
-			System.out.println(file.getPath());
+			logger.info(file.getPath());
 
 			if (cardType.equalsIgnoreCase("credit")) {
 				readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(fileName, cardType);
