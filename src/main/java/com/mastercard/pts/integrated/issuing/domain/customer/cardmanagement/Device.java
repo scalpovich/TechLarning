@@ -149,7 +149,7 @@ public class Device {
 	}
 	
 	public  static Device createWithProviderForOtherDetails(KeyValueProvider provider) {
-		Device device = new Device();
+		Device device = Device.createWithProvider(provider);
 		device.setOtherInfoDeliveryMode(provider.getString(ND_OTHERINFO_DELIVERY_MODE));
 		device.setOtherInfoEmailAlertRequired(provider.getString(ND_OTHERINFO_EMAIL_ALERT_REQUIRED));
 		device.setOtherInfoPreferredLanguage(provider.getString(ND_OTHERINFO_PREFERRED_LANGUAGE));

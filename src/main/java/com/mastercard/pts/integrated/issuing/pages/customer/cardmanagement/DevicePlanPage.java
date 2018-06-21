@@ -975,61 +975,58 @@ public class DevicePlanPage extends AbstractBasePage {
 		runWithinPopup("Add Device Plan", () -> {
 			enterIframeDevicePlanCode(devicePlanDataObject.getDevicePlanCode());
 			enterIframeDescription(devicePlanDataObject.getDescription());
-			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT))
-			{
-			selectByVisibleText(iframeAssociationDdwn, devicePlanDataObject.getAssociation());
-			selectByVisibleText(iframeProductTypeDdwn, devicePlanDataObject.getProductType());
-			}
-			else
-			{
-			selectIframeAssociationType(devicePlanDataObject.getAssociation());
-			selectIframeProductType(devicePlanDataObject.getProductType());
+			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT)){
+				selectByVisibleText(iframeAssociationDdwn, devicePlanDataObject.getAssociation());
+				selectByVisibleText(iframeProductTypeDdwn, devicePlanDataObject.getProductType());
+			}else {
+				selectIframeAssociationType(devicePlanDataObject.getAssociation());
+				selectIframeProductType(devicePlanDataObject.getProductType());
 			}
 			
-					if (devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-						SimulatorUtilities.wait(2000);
-						selectByVisibleText(iframeDeviceTypeDdwn,devicePlanDataObject.getDeviceType());
-						if (devicePlanDataObject.getDeviceType().contains("EMV")) {
-							WebElementUtils.enterText(iframeServiceCodeTxt,Constants.EMV_SERVICE_CODE);
-							devicePlanDataObject.setServiceCode(Constants.EMV_SERVICE_CODE);
-						} else if (devicePlanDataObject.getDeviceType().contains("Mag")) {
-							WebElementUtils.enterText(iframeServiceCodeTxt,Constants.MSR_SERVICE_CODE);
-							devicePlanDataObject.setServiceCode(Constants.MSR_SERVICE_CODE );
-						}
-						else
-						{
-							WebElementUtils.enterText(iframeServiceCodeTxt,Constants.MSR_SERVICE_CODE);
-						}
-					} else {
-						selectIframeDeviceType(devicePlanDataObject.getDeviceType());
-						enterIframeServiceCode(devicePlanDataObject.getServiceCode());
-					}
+			if (devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
+				SimulatorUtilities.wait(2000);
+				selectByVisibleText(iframeDeviceTypeDdwn,devicePlanDataObject.getDeviceType());
+				
+				if (devicePlanDataObject.getDeviceType().contains("EMV")) {
+					WebElementUtils.enterText(iframeServiceCodeTxt,Constants.EMV_SERVICE_CODE);
+					devicePlanDataObject.setServiceCode(Constants.EMV_SERVICE_CODE);
+				} else if (devicePlanDataObject.getDeviceType().contains("Mag")) {
+					WebElementUtils.enterText(iframeServiceCodeTxt,Constants.MSR_SERVICE_CODE);
+					devicePlanDataObject.setServiceCode(Constants.MSR_SERVICE_CODE );
+				}else{
+					WebElementUtils.enterText(iframeServiceCodeTxt,Constants.MSR_SERVICE_CODE);
+				}								
+			} else {
+				selectIframeDeviceType(devicePlanDataObject.getDeviceType());
+				enterIframeServiceCode(devicePlanDataObject.getServiceCode());
+			}
+			
 			selectIframeDeliveryMode(devicePlanDataObject.getDeliveryMode());
-			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT))
-			{
-			selectByVisibleText(iframeDeviceIDGenerationTemplateDdwn, devicePlanDataObject.getDeviceIdGenerationTemplate());
-			selectByVisibleText(iframeCardPackIDGenerationTemplateDdwn, devicePlanDataObject.getCardPackIdGenerationTemplate());
-			selectByVisibleText(iframePlasticIdDdwn, devicePlanDataObject.getPlasticId());
-			selectByVisibleText(iframePictureCodeDdwn, devicePlanDataObject.getPictureCode());
 			
+			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT)){
+				selectByVisibleText(iframeDeviceIDGenerationTemplateDdwn, devicePlanDataObject.getDeviceIdGenerationTemplate());
+				selectByVisibleText(iframeCardPackIDGenerationTemplateDdwn, devicePlanDataObject.getCardPackIdGenerationTemplate());
+				selectByVisibleText(iframePlasticIdDdwn, devicePlanDataObject.getPlasticId());
+				selectByVisibleText(iframePictureCodeDdwn, devicePlanDataObject.getPictureCode());	
+				
+			}else{
+				selectIframeDeviceIDGenerationTemplate(devicePlanDataObject.getDeviceIdGenerationTemplate());
+				selectIframeCardPackIDGenerationTemplate(devicePlanDataObject.getCardPackIdGenerationTemplate());
+				selectIframePlasticIdDdwn(devicePlanDataObject.getPlasticId());
+				selectIframePictureCodeDdwn(devicePlanDataObject.getPictureCode());
+			}			
+			if(devicePlanDataObject.getPriorityPassIndicator().equalsIgnoreCase("with")){
+				setPriorityPass(devicePlanDataObject);
 			}
-			else
-			{
-			selectIframeDeviceIDGenerationTemplate(devicePlanDataObject.getDeviceIdGenerationTemplate());
-			selectIframeCardPackIDGenerationTemplate(devicePlanDataObject.getCardPackIdGenerationTemplate());
-			selectIframePlasticIdDdwn(devicePlanDataObject.getPlasticId());
-			selectIframePictureCodeDdwn(devicePlanDataObject.getPictureCode());
-			}
-			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT)&& !DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlanDataObject.getDeviceType()))
-			{
+			
+			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT)&& !DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlanDataObject.getDeviceType())){
 				selectIframeActivationModeLst(devicePlanDataObject.getActivationMode());
 				selectIframeExpiryFlagDdwn(devicePlanDataObject.getExpiryFlag());	
-			}
-			else
-			{
-			selectIframeActivationModeLst(devicePlanDataObject.getActivationMode());
-			selectIframeExpiryFlagDdwn(devicePlanDataObject.getExpiryFlag());
-			}
+			}else{
+				selectIframeActivationModeLst(devicePlanDataObject.getActivationMode());
+				selectIframeExpiryFlagDdwn(devicePlanDataObject.getExpiryFlag());
+			}		
+			
 			// next steps have been pushed to below method due to SONAR
 			// limitation
 			createDevicePlanContinuation(devicePlanDataObject);
@@ -1045,12 +1042,14 @@ public class DevicePlanPage extends AbstractBasePage {
 		
 		selectIframeBeforeKYCDdwn(devicePlan.getBeforeKYC());
 		selectIframeAfterKYCDdwn(devicePlan.getAfterKYC());
-		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES))
+		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES)){
 			selectAllcavv();
+		}			
 		// perform below steps only when pinRequired is true which is the
 		// default state
-		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
+		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())){
 			selectAllPinValidation();
+		}			
 		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES)) {
 			selectAllcvccvv();
 			// as of now, we do not need CVV check for MDFS pin change transactions
@@ -1071,13 +1070,12 @@ public class DevicePlanPage extends AbstractBasePage {
 				WebElementUtils.enterText(pinRetryLimitTxt,devicePlan.getPinRetryLimit());
 				}
 			}
+		}else{
+			if (!devicePlan.getDeviceType().contains(DeviceType.STATIC_VIRTUAL_CARD)&& "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
+				WebElementUtils.enterText(pinRetryLimitTxt, devicePlan.getPinRetryLimit());
+			}			
 		}
-		else
-		{
-		if (!devicePlan.getDeviceType().contains(DeviceType.STATIC_VIRTUAL_CARD)&& "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
-			WebElementUtils.enterText(pinRetryLimitTxt, devicePlan.getPinRetryLimit());
-		}	
-		}
+		
 		clickIframeNextButton();
 		SimulatorUtilities.wait(300);
 		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
@@ -1088,21 +1086,18 @@ public class DevicePlanPage extends AbstractBasePage {
 				enterVirtualDeviceCreditLimit();
 			}
 		}
-			clickIframeNextButton();			
-		
+		clickIframeNextButton();	
 		
 		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			if (DeviceType.EMV_CARD.contains(devicePlan.getDeviceType())|| DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS.contains(devicePlan.getDeviceType())) {
 				forEmvOrNfc(devicePlan);
 			}
-		}
-			else
-			{
+		}else{
 			if (DeviceType.EMV_CARD.contains(devicePlan.getDeviceType())
 					|| DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS
 							.contains(devicePlan.getDeviceType())) {
 				forEmvOrNfc(devicePlan);
-			}
+			}		
 		}
 		clickIframeFinishButton();
 	}
@@ -1110,10 +1105,9 @@ public class DevicePlanPage extends AbstractBasePage {
 	private void fillDevicePlanPage(DevicePlan devicePlan) {
 		selectIframeBaseDeviceEventBasedPlanDdwn(devicePlan.getBaseDeviceEventBasedPlan());
 		selectIframeBaseDeviceJoiningMemberShipPlanDdwn(devicePlan.getBaseDeviceJoiningMemberShipPlan());
-		if(!devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
-		{
-		selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
-		}
+		if(!devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)){
+			selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
+		}		
 		selectIframeTransactionLimitPlanDdwn(devicePlan.getTransactionLimitPlan());
 		clickIframeNextButton();
 	}
@@ -1124,54 +1118,44 @@ public class DevicePlanPage extends AbstractBasePage {
 		// filling date when flag is fixed
 		if(!devicePlan.DeviceType.equalsIgnoreCase("Limited Validity Virtual Card [8]")){
 			if ("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
-			if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT) )
-			{
-				if(!DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType()))
+				if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT) )
 				{
+					if(!DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType())){
+						enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
+						String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
+						devicePlan.setExpiryDate(dateInYYMM);
+						logger.info("Expiry date for device = {}",devicePlan.getExpiryDate());				
+					}
+				}else{
 					enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
+					// making necessary changes so that this value can be set in the
+					// required format so that it can be used when a pinless card is
+					// used
+					logger.info("Validity On Initial Months = {} ", devicePlan.getValidityOnInitialMonths());
 					String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
 					devicePlan.setExpiryDate(dateInYYMM);
-					logger.info("Expiry date for device = {}",devicePlan.getExpiryDate());				
-				}
-				}
-				else
-				{
-			enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
-			// making necessary changes so that this value can be set in the
-			// required format so that it can be used when a pinless card is
-			// used
-			logger.info("Validity On Initial Months = {} ", devicePlan.getValidityOnInitialMonths());
-			String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
-			devicePlan.setExpiryDate(dateInYYMM);
-				}
+				}			
 			} else {
 				enterIframeValidityOnInitialMonthsTxt(devicePlan.getValidityOnInitialMonths());
 			}
 		
-		if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT) && DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType()))
-		{
-		logger.info("Skipping anable of card production check box");
-		}
-		else
-		{
+		if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT) && DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType())){
+			logger.info("Skipping anable of card production check box");
+		}else{
 			enableIframeCardProductionChkbx();
 		}
-
-		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
-			{
+		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)){
 			if(iframeEmbossingVendorDdwn.isEnabled())
-			  selectByVisibleText(iframeEmbossingVendorDdwn, devicePlan.getEmbossingVendor());
-			}
-			else
-			{
+				  selectByVisibleText(iframeEmbossingVendorDdwn, devicePlan.getEmbossingVendor());
+			}else{
 				 selectIframeEmbossingVendorDdwn(devicePlan.getEmbossingVendor());
-			 }
-		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-			if (DeviceType.EMV_CARD.contains(devicePlan.getDeviceType())|| DeviceType.MAGNETIC_STRIPE_CARD.contains(devicePlan.getDeviceType())) {
-				fillRenewalSection(devicePlan);
-				fillReplacementSection(devicePlan);
-				fillPinGenerationSection(devicePlan);
 			}
+			if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
+				if (DeviceType.EMV_CARD.contains(devicePlan.getDeviceType())|| DeviceType.MAGNETIC_STRIPE_CARD.contains(devicePlan.getDeviceType())) {
+					fillRenewalSection(devicePlan);
+					fillReplacementSection(devicePlan);
+					fillPinGenerationSection(devicePlan);
+				}
 		} else {
 			if (devicePlan.getFillRenewalSection().equalsIgnoreCase(STATUS_YES))
 				fillRenewalSection(devicePlan);
@@ -1290,6 +1274,15 @@ public class DevicePlanPage extends AbstractBasePage {
 	public void enterVirtualDeviceCreditLimit()
 	{
 		WebElementUtils.enterText(virtualDeviceCreditLimitTxt,CustomUtils.randomNumbers(3));
+	}
+	
+	public void setPriorityPass(DevicePlan dedevicePlanDataObject){
+		iframePriorityPassIndicatorChkbx.click();
+		SimulatorUtilities.wait(4000);
+		waitForElementEnabled(iframePriorityPassIDTemplateDdwn);
+		selectByVisibleText(iframePriorityPassIDTemplateDdwn, dedevicePlanDataObject.getPriorityPassIdTemplate());
+		enterText(iframePriorityPassExpiryInMonthsTxt, dedevicePlanDataObject.getPriorityPassExpiry());
+		selectByVisibleText(iframePriorityPassVendorDdwn, dedevicePlanDataObject.getPriorityPassVendor());
 	}
 	
 	private String getStoryName()
