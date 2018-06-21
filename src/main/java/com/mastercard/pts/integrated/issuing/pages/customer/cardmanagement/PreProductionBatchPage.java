@@ -99,12 +99,12 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		CustomUtils.ThreadDotSleep(8000);
 		logger.info(batch.getJobID());
 		enterText(sourceJobIdTxt, batch.getJobID());
-		ClickButton(searchBtn);
+		clickWhenClickable(searchBtn);
+		SimulatorUtilities.wait(3000);
 		String batchNumberWebElement = "//table[@class='dataview']//tbody/tr/td[3]/span";
 		String batchNumber = getFinder().getWebDriver().findElement(By.xpath(batchNumberWebElement)).getText().trim();
 		logger.info("BatchNumber - {} ", batchNumber);
 		batch.setBatchNumber(batchNumber);
-		ClickButton(searchBtn);
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		clickWhenClickable(processAllBtn);
 		verifyOperationStatus();
@@ -119,7 +119,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		CustomUtils.ThreadDotSleep(8000);
 		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
 		enterText(batchNumberTxt, batchNumber);
-		ClickButton(searchBtn);
+		clickWhenClickable(searchBtn);
 		waitAndSearchForRecordToAppear();
 		setQuantityRequested();
 		ClickCheckBox(preProductionBatchRecordChkBx, true);

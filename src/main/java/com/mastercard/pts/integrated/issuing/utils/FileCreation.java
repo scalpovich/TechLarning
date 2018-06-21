@@ -693,4 +693,22 @@ String fileName, String cardType) throws IOException {
 		reader.close();
 		return cnt;
 	}
+	
+	public void deleteFile() {
+		try {
+
+			File file = new File(System.getProperty("user.dir"));
+
+			if (file.delete()) {
+				logger.info(file.getName() + " is deleted!");
+			} else {
+				logger.info("Delete operation is failed.");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+	}
 }
