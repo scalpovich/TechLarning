@@ -14,9 +14,9 @@ public class ProductType {
 	public static final String INDIVIDUAL = "Individual [0]";
 	public static final String Corporate = "Corporate [1]";
 	public static final String Individual = "Individual [0]";
-    public static final String INTERCHANGE="Mastercard";
-    public static final String ALL="All [0]";
-    public static final String All="All [0]";
+    public static final String INTERCHANGE = "Mastercard";
+    public static final String ALL = "All [0]";
+    public static final String All = "All [0]";
     
 	private ProductType() {
 	}

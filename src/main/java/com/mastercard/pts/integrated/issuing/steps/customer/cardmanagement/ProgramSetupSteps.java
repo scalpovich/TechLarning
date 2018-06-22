@@ -1,7 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import java.util.Objects;
-
 import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
@@ -9,7 +8,6 @@ import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
@@ -1130,7 +1128,7 @@ public class ProgramSetupSteps {
 			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
 		}
 
-		if(program.getApplicationType().contains("Supplementary")||program.getApplicationType().contains("Add-on")&& program.getSubApplicationType().contains("Existing")){
+		if(program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)&& program.getSubApplicationType().contains("Existing")){
 			program.setDevicePlanPlan2(devicePlanSupplementary.buildDescriptionAndCode());
 		}
 		
@@ -1323,7 +1321,7 @@ public class ProgramSetupSteps {
 		
 		DeviceRange deviceRange = null;
 		
-		if(ProductType.CREDIT.toUpperCase().contains(type.toUpperCase()) || ProductType.PREPAID.toUpperCase().contains(type.toUpperCase())){
+		if(Objects.nonNull(context.get(CreditConstants.JSON_VALUES))){
 			deviceRange = DeviceRange.createWithProvider(dataProvider,provider, type);
 			
 			if(applicationType.contains("Supplementary")||applicationType.contains("Add-on")&& subApplicationType.contains("Existing")){
@@ -1335,12 +1333,17 @@ public class ProgramSetupSteps {
 				deviceRange.setProgram(program.buildDescriptionAndCode());
 				deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
 			}
-			
 		} else {
 			deviceRange = DeviceRange.createWithProvider(dataProvider, type);
-			deviceRange.setProductType(ProductType.fromShortName(type));
-			deviceRange.setProgram(program.buildDescriptionAndCode());
-			deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
+			if(applicationType.contains("Supplementary")||applicationType.contains("Add-on")&& subApplicationType.contains("Existing")){
+				deviceRange.setProductType(ProductType.fromShortName(type));
+				deviceRange.setProgram(program.buildDescriptionAndCode());
+				deviceRange.setDevicePlanCode(devicePlanSupplementary.buildDescriptionAndCode());	
+			}else{
+				deviceRange.setProductType(ProductType.fromShortName(type));
+				deviceRange.setProgram(program.buildDescriptionAndCode());
+				deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
+			}
 		}
 
 		programSetupWorkflow.createDeviceRange(deviceRange);

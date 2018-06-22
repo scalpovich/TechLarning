@@ -288,7 +288,7 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	public void selectInterchange(String interchange) {
-		WebElementUtils.selectDropDownByVisibleText(interchangeDDwn, interchange);
+		selectByVisibleText(interchangeDDwn, interchange);
 	}
 
 	public void selectProduct(String product) {
@@ -296,7 +296,7 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	public void selectProgramType(String programType) {
-		WebElementUtils.selectDropDownByVisibleText(programTypeDDwn, programType);
+		selectByVisibleText(programTypeDDwn, programType);
 	}
 
 	public void selectBaseCurrency(String baseCurrency) {
@@ -383,29 +383,19 @@ public class ProgramPage extends AbstractBasePage {
 		runWithinPopup("Add Program", () -> {
 			addProgram(program.getProgramCode());          	
 			addDescription(program.getDescription());
-					if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
-						selectByVisibleText(interchangeDDwn,program.getInterchange());
-					} else {
-					     SimulatorUtilities.wait(2000);
-						 selectInterchange(program.getInterchange());
-					}
-						SimulatorUtilities.wait(2000);
-					selectProduct(program.getProduct());
-					if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
-						selectByVisibleText(programTypeDDwn,program.getProgramType());
-					} else {
-						SimulatorUtilities.wait(2000);
-						selectProgramType(program.getProgramType());
-					}
+			SimulatorUtilities.wait(2000);
+			selectInterchange(program.getInterchange());
+			SimulatorUtilities.wait(2000);
+			selectProduct(program.getProduct());
+			SimulatorUtilities.wait(2000);
+			selectProgramType(program.getProgramType());					
 			SimulatorUtilities.wait(2000);
 			selectBaseCurrency(program.getBaseCurrency());
 			program.setProgramCodeDevice(program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
-				if (!MiscUtils.getEnvironment().contains(Constants.ENVIRONMENT)) {
-					selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
-				}
+				selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
 				selectRefundInCurrency(program.getRefundInCurrency());
 				selectWalletToWalletTransferType(program.getWalletToWalletTransferType());
 				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
@@ -416,7 +406,6 @@ public class ProgramPage extends AbstractBasePage {
 			selectCalendarStartMonth(program.getCalendarStartMonth());
 			fillExtraSections(program, productType);
 			clickNextButton();
-			SimulatorUtilities.wait(2000);
 			clickFinishButton();
 		});
 		verifyOperationStatus();
@@ -455,7 +444,6 @@ public class ProgramPage extends AbstractBasePage {
 			selectCalendarStartMonth(program.getCalendarStartMonth());
 			fillExtraSections(program, productType);
 			clickNextButton();
-		
 			clickFinishButton();
 		});
 		verifyOperationStatus();
@@ -501,6 +489,7 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	private void fillExtraSections(Program program, String productType) {
+		
 		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
 			addMaximumBalanceWithoutKyc(program.getMaximumBalanceWithoutKyc());
 			addnumberOfLoadsAllowedWithoutKyc(program.getNumberOfLoadsAllowedWithoutKyc());
@@ -512,13 +501,10 @@ public class ProgramPage extends AbstractBasePage {
 		clickNextButton();
 		selectWalletPlanPlan1(program.getFirstWalletPlan());
 		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
-		if (productType.equalsIgnoreCase(ProductType.CREDIT) || productType.equalsIgnoreCase(ProductType.PREPAID))
-		{
-			if(program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && program.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT))
-			{
+		if(program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && program.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)){
 		      selectDevicePlanPlan2DDwn(program.getDevicePlanPlan2());
-			}
 		}
+		
 		if (!productType.equalsIgnoreCase(ProductType.DEBIT)) {
 			selectOtherPlanStatementMessagePlan(program.getOtherPlanStatementMessagePlan());
 			selectOtherPlanMarketingMessagePlan(program.getOtherPlanMarketingMessagePlan());
@@ -532,6 +518,7 @@ public class ProgramPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByOptionalVisibleText(markupFeePlanDDwn, program.getMarkUpFeePlan());
 			WebElementUtils.selectDropDownByOptionalVisibleText(stmtPlanCodeDDwn, program.getPrepaidStatementPlan());
 		}
+		
 		waitForLoaderToDisappear();
 		clickNextButton();
 		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
