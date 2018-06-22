@@ -153,7 +153,7 @@ public class Program implements HasCodeAndDescription {
 		programObject.setReferenceCurrency(provider.getString(REFERENCE_CURRENCY));
 		programObject.setWalletToWalletTransferType(provider.getString(WALLET_TO_WALLET_TRANSFER_TYPE));
 		programObject.setMarkUpFeePlan(provider.getString(MARK_UP_FEE_PLAN));
-		programObject.setPayoutCurrencyPlan(provider.getString(PAYOUT_CURRENCY_PLAN));
+		programObject.setPayoutCurrencyPlan("Auto Payout [AUTOPAY]");
 		return programObject;
 	}
 
@@ -177,7 +177,7 @@ public class Program implements HasCodeAndDescription {
 		programObject.setReferenceCurrency(provider.getString(REFERENCE_CURRENCY));
 		programObject.setWalletToWalletTransferType(provider.getString(WALLET_TO_WALLET_TRANSFER_TYPE));
 		programObject.setMarkUpFeePlan(provider.getString(MARK_UP_FEE_PLAN));
-		programObject.setPayoutCurrencyPlan(provider.getString(PAYOUT_CURRENCY_PLAN));
+		programObject.setPayoutCurrencyPlan("Auto Payout [AUTOPAY]");
 		return programObject;
 	}
 
@@ -217,7 +217,7 @@ public class Program implements HasCodeAndDescription {
 		programObject.setResetLimitsAddonLimitReset(provider.getString(PGM_RESET_LIMITS_ADDON_LIMIT_RESET));
 		programObject.setEventsSelectAll(provider.getString(PGM_EVENTS_SELECT_ALL));
 		programObject.setMarkUpFeePlan(provider.getString(MARK_UP_FEE_PLAN));
-		programObject.setPayoutCurrencyPlan(provider.getString(PAYOUT_CURRENCY_PLAN));
+		programObject.setPayoutCurrencyPlan("Auto Payout [AUTOPAY]");
 		return programObject;
 	}
 

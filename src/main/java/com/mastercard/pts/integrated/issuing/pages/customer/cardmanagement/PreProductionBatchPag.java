@@ -44,7 +44,7 @@ public class PreProductionBatchPag extends AbstractBasePage {
 		ClickButton(SearchBtn);
 		ClickCheckBox(PreProductionBatchRecordChkBx, true);
 		ClickButton(ProcessSelectedBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	@Override

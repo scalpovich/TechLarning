@@ -751,11 +751,11 @@ public class DevicePlanPage extends AbstractBasePage {
 	public void verifyNewDevicePlanSuccess() {
 		if (!verifyErrorsOnDevicePlanPage()) {
 			logger.info("Device Plan Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Device plan Addition");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 
@@ -991,8 +991,10 @@ public class DevicePlanPage extends AbstractBasePage {
 						selectByVisibleText(iframeDeviceTypeDdwn,devicePlanDataObject.getDeviceType());
 						if (devicePlanDataObject.getDeviceType().contains("EMV")) {
 							WebElementUtils.enterText(iframeServiceCodeTxt,Constants.EMV_SERVICE_CODE);
+							devicePlanDataObject.setServiceCode(Constants.EMV_SERVICE_CODE);
 						} else if (devicePlanDataObject.getDeviceType().contains("Mag")) {
 							WebElementUtils.enterText(iframeServiceCodeTxt,Constants.MSR_SERVICE_CODE);
+							devicePlanDataObject.setServiceCode(Constants.MSR_SERVICE_CODE );
 						}
 						else
 						{
@@ -1227,9 +1229,7 @@ public class DevicePlanPage extends AbstractBasePage {
 			WebElementUtils.enterText(acceptableBelowATCRangeTxt, devicePlan.getEmvBelowATCRange());
 			WebElementUtils.enterText(acceptableAboveATCRangeTxt, devicePlan.getEmvAboveATCRange());
 			clickWhenClickable(allowFallBackChkBx);
-			clickWhenClickable(atcFlagChkBx);
-			//allowFallBackChkBx.click();
-			//atcFlagChkBx.click();
+
 		}
 	}
 

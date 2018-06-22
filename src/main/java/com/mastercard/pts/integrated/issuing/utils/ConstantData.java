@@ -69,6 +69,10 @@ public class ConstantData {
 	public static final String LOAN_TYPE_OBJECT = "LoanTypeObject";
 	public static final String START_RANGE_DIGITS = "0000000000";
 	public static final String END_RANGE_DIGITS = "9999999999";
+	public static final String RRN_NUMBER = "rrnumber";
+	
+	public static final String THREE_D_SECURE_TRANSACTION = "3D_SECURE_CAVV";
+	public static final String DATA_ELEMENT_CAVV = "048.TLV.43";
 
 	private ConstantData() {
 	}

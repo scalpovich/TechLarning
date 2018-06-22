@@ -94,11 +94,11 @@ public class AccountTypePage extends AbstractBasePage {
 	public void verifyNewAccountTypeSuccess() {
 		if (!verifyErrorsOnAccountTypePage()) {
 			logger.info("Account type Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(CancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 

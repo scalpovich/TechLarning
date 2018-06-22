@@ -7,12 +7,12 @@ I want to authorize transactions for prepaid msr retail travel mwmc card
 
 Meta:
 @StoryName p_msr_retail_travel_mc
+@RecurringWithoutPin
 
 Scenario: Setup multi-currency prepaid msr retail travel card and perfomr refund without pin authorization
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client
-When user updates cvccvv as uncheck on device plan
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
@@ -22,15 +22,16 @@ Then device has "normal" status
 When user activates device through helpdesk
 And user setup device currency through helpdesk
 Then currency setup for prepaid device is done correctly and updated in wallet details tab
-When user performs adjustment transaction
+When user performs adjustment transaction with 500 amount
 And user performs adjustment transaction for second wallet
 And user sign out from customer portal
+Then embossing file batch was generated in correct format
 
-Scenario: Perform RECURRING_PUR_TXN Authorization transaction
+Scenario: Perform MSR_RECURRING_PUR_TXN Authorization transaction
 Meta:
 @TestId 
 Given connection to MAS is established
-When perform an RECURRING_PUR_TXN MAS transaction
+When perform an MSR_RECURRING_PUR_TXN MAS transaction
 Then MAS test results are verified
 
 Scenario: Generate Auth File for Clearing
