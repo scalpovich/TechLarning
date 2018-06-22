@@ -22,11 +22,11 @@ And a new device was created
 When processes pre-production batch for debit
 When processes device production batch for debit
 When processes pin generation batch for debit
+Then device has "normal" status
+When user activates device through helpdesk
 When user has wallet number information for debit device
 When user performs adjustment transaction
 When user has current wallet balance amount information for debit device
-Then device has "normal" status
-When user activates device through helpdesk
 Then user sign out from customer portal
 
 Scenario: Pin Generation 
