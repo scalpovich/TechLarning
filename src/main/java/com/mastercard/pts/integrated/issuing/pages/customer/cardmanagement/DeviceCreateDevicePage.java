@@ -326,14 +326,16 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		SimulatorUtilities.wait(500);
 		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)/*&& device.getSubApplicationType().contains("Existing")*/){
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));			
-			driver().findElement(By.xpath(".//")).sendKeys(Keys.TAB);
+			asWebElement(existingDeviceNumberTxt).sendKeys(Keys.TAB);
+			SimulatorUtilities.wait(3000);
+			
 		}else{
 			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
-			SimulatorUtilities.wait(500);
+			SimulatorUtilities.wait(2000);
 			selectByVisibleText(programCodeDDwn, device.getProgramCode());
-			SimulatorUtilities.wait(500);			
+			SimulatorUtilities.wait(2000);			
 		}
-		SimulatorUtilities.wait(500);
+		SimulatorUtilities.wait(1000);
 		clickNextButton();
 		
 		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());		
@@ -360,10 +362,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		}else{
 			fillProfile(device);
 	        SimulatorUtilities.wait(3000);
-				// Do not Validate only when environment is Automation
-				if (!System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)){
-					clickNextButton();
-				}
+			// Do not Validate only when environment is Automation
+			if (!System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)){
+				clickNextButton();
+			}
 	
 			fillAddress(device);
 			
