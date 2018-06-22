@@ -1054,13 +1054,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return true;
 	}
 	
-<<<<<<< HEAD
 	public String availableBalance()
 	{
 		return availableBalanceTxt.getText();
 	}
-	
 }
-=======
-}
->>>>>>> 46def1446e8945595f32246509049b0c7737f138
