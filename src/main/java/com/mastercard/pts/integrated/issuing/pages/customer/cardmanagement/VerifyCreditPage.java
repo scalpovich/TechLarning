@@ -120,6 +120,7 @@ TestContext context;
 			SimulatorUtilities.wait(5000);
 			allBatchNumbers.add(batchNumberTxt.getText());
 			clickWhenClickable(verifyBtn);
+			SimulatorUtilities.wait(5000);
 			clickWhenClickable(verifyLink);
 		}
 		context.put(CreditConstants.ALL_APPLICATION_NUMBERS, allApplicationNumbers);

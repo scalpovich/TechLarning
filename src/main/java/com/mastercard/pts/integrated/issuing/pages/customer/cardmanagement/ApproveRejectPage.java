@@ -113,6 +113,7 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 			switchToIframe(APPROVE_REJECT_FRAME);
 			SimulatorUtilities.wait(5000);
 			clickWhenClickable(approveBtn);
+			SimulatorUtilities.wait(5000);
 			clickWhenClickable(approveRejectLink);
 		}
 	}
