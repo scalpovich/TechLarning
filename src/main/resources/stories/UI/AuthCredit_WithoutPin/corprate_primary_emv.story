@@ -42,7 +42,7 @@ Given connection to MAS is established
 When perform an ASI_EMV MAS transaction
 Then MAS test results are verified
 And user is logged in institution
-And search Account Status authorization and verify 085-Successful status
+And search Account Status authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: Perform ASI_PAYMENT_WITH_AMOUNT Authorization transaction
@@ -57,8 +57,6 @@ When perform an ECOMM_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
 Then user is logged in institution
 Then search E-Commerce Transaction authorization and verify 000-Successful status
-Then validate auth report
-And user sign out from customer portal
 
 Scenario: perform 3D_SECURE_CAVV authorization on corporate msr card
 When perform an 3D_SECURE_CAVV MAS transaction on the same card
