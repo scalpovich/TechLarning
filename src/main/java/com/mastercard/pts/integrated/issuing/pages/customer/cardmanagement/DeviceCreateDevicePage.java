@@ -327,7 +327,8 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)/*&& device.getSubApplicationType().contains("Existing")*/){
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));			
 			asWebElement(existingDeviceNumberTxt).sendKeys(Keys.TAB);
-			SimulatorUtilities.wait(3000);
+			waitForWicket(driver());
+			SimulatorUtilities.wait(10000);
 			
 		}else{
 			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
