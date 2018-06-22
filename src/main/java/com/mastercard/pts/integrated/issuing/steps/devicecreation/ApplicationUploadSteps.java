@@ -190,11 +190,11 @@ public class ApplicationUploadSteps {
 	@Then("processes $type pin production batch")
 	@When("processes $type pin production batch")
 	public void whenProcessesPinProductionBatch(String type) {
-		DeviceProductionBatch batch = new DeviceProductionBatch();
+		PinGenerationBatch batch = new PinGenerationBatch();
 		batch.setProductType(ProductType.fromShortName(type));
 		batch.setBatchNumber(preProductionBatch.getBatchNumber());
-		MiscUtils.reportToConsole("device production Batch: {}", preProductionBatch.getBatchNumber());
-		batchProcessFlows.processDeviceProductionBatch(batch);
+		MiscUtils.reportToConsole("pin production Batch: {}", preProductionBatch.getBatchNumber());
+		batchProcessFlows.processPinGenerationBatch(batch);
 	}
 	
 	@Then("All processes $type device production batch for fileUpload in Bulk")

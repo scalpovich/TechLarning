@@ -138,7 +138,7 @@ public class BatchProcessFlows extends MenuFlows {
 		deviceProductionPage.processDeviceProductionBatch(batch);
 	}
 	
-	public void processDeviceProductionBatch(PinGenerationBatch batch) {
+	public void processPinGenerationBatch(PinGenerationBatch batch) {
 		PinGenerationBatchPage pinGenerationBatchPage = navigator.navigateToPage(PinGenerationBatchPage.class);
 		pinGenerationBatchPage.processPinProductionBatch(batch);
 	}

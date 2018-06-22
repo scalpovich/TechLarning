@@ -107,6 +107,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 		waitAndSearchForRecordToAppear();
 		deviceNumbers();
 		waitAndSearchForRecordToExist();
+		clickWhenClickable(processAllBtn);
 		verifyOperationStatus();
 
 	}
