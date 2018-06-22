@@ -538,7 +538,7 @@ public class FileCreation {
 		File[] listOfFiles = folder.listFiles();
 		logger.info("Length Of all Files:{}", listOfFiles.length);
 
-		for (int k = 0; k < listOfFiles.length; k++) {
+		/*for (int k = 0; k < listOfFiles.length; k++) {
 
 			// This will check if already existing credit or prepaid file is
 			// present in workspace,if yes that file will be uploaded
@@ -552,7 +552,8 @@ public class FileCreation {
 		}
 		if (fileName.contains("APP")) {
 			linuxBox.upload(fileName, remoteDir);
-		} else {
+		}*/
+		// else {
 			if (cardType.equalsIgnoreCase("prepaid")) {
 				fileName = "APPPR" + INSTITUTION_CODE + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
 			} else if (cardType.equalsIgnoreCase("credit")) {
@@ -619,7 +620,7 @@ public class FileCreation {
 			}
 			linuxBox.upload(file.getPath(), remoteDir);
 
-		}
+		//}
 
 		return fileName;
 	}
@@ -628,8 +629,7 @@ public class FileCreation {
 		return filename;
 	}
 
-	public Map<String, Object> readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(
-String fileName, String cardType) throws IOException {
+	public Map<String, Object> readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(String fileName, String cardType) throws IOException {
 		List<Integer> indexRequiredToSeachDeviceOnHelpdesk = new LinkedList<Integer>();
 		Map<String, Object> mapFileUpload = new HashMap<>();
 		if (cardType.equalsIgnoreCase("credit")) {
