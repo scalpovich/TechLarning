@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -323,10 +324,11 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	}
 
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
-		SimulatorUtilities.wait(500);
+		SimulatorUtilities.wait(1000);
 		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)/*&& device.getSubApplicationType().contains("Existing")*/){
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));			
-			asWebElement(existingDeviceNumberTxt).sendKeys(Keys.TAB);
+			Actions action = new Actions(driver());
+			action.moveToElement(asWebElement(existingDeviceNumberTxt), 45, 45).click().build().perform();
 			waitForWicket(driver());
 			SimulatorUtilities.wait(10000);
 			
