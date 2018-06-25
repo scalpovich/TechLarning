@@ -13,7 +13,7 @@ Scenario: Set up prepaid msr corporate travel card
 Meta:
 @TestId TC398452
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "magnetic stripe" card
+And device range for program with device plan for "prepaid" "emv" card without dedupe
 When user creates Application Upload prepaid batch file and upload it on server for Corporate for prepaid
 When processes prepaid pre-production batch
 When processes prepaid device production batch

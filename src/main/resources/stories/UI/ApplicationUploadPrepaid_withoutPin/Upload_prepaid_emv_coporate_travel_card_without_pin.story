@@ -12,7 +12,7 @@ Scenario: Set up prepaid emv corporate travel card uisng applicationUpload
 Meta:
 @TestId TC398452
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card without pin
+And device range for program with device plan for "prepaid" "emv" card without pin for ApplicationUpload
 When user creates Application Upload prepaid batch file and upload it on server for Corporate for prepaid
 When processes prepaid pre-production batch
 When processes prepaid device production batch

@@ -8,7 +8,6 @@ Meta:
 @FileUpload
 Scenario: creation of MC_Individual_primary_emv credit device using applicationUpload functionality
 Given setting json values in excel
-When delete dat file from Workspace
 When user is logged in institution
 And User fills Statement Message Plan for credit product
 And User fills Marketing Message Plan for credit product
@@ -36,5 +35,4 @@ When user searches for created application for fileUpload
 When credit processes pre-production batch using new Application for fileUpload in Bulk
 When All processes credit device production batch for fileUpload in Bulk
 When For fileUpload when user search for new application on search screen for credit and validates the status as NORMAL
-Then delete dat file from Workspace
 Then user logouts from customer portal
