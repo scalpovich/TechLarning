@@ -508,8 +508,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		runWithinPopup("226 - Credit limit Change Request", ()->{
 			if(helpdeskGeneral.getLimittypestatus().equalsIgnoreCase("true")){
 				selectLimitType(helpdeskGeneral.getLimitType());
-				WebElementUtils.pickDate(effectiveDateTxt, LocalDate.now());
-				WebElementUtils.pickDate(endDateTxt, LocalDate.now());
+				WebElementUtils.pickDate(effectiveDateTxt, LocalDate.now().plusDays(1));
+				WebElementUtils.pickDate(endDateTxt, LocalDate.now().plusDays(1));
 			}
 			//selectLimitType(helpdeskGeneral.getLimitType());
 			enterClientCreditLimit(helpdeskGeneral.getClientCreditLimit());

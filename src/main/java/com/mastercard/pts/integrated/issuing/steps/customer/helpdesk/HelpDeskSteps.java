@@ -48,6 +48,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDeskFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpdeskWorkflow;
 
@@ -517,6 +518,7 @@ public class HelpDeskSteps {
 	@When("user activates credit limit change request")
 	public void whenUserActivatesCreditLimitChangeRequestThroughHelpdesk() {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		SimulatorUtilities.wait(2000);
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.activateCreditLimitChangeRequest(helpdeskGeneral);
 	}
@@ -649,10 +651,10 @@ public class HelpDeskSteps {
 	@When("User search for new device Supplementary on search screen for $productType and validates the status as $NORMAL")
 	public void thenUserSearchForDeviceOnSearchScreenForSupplementary(String productType, String status) {
 		helpdeskgettersetter.setProductType(ProductType.fromShortName(productType));
-		List<String>deviceNumbers=context.get(CreditConstants.SUPPLEMENTARY_DEVICE_NUMBER);
-        for(String deviceNumber:deviceNumbers)
-        {
-        	helpdeskgettersetter.setDeviceNumber(deviceNumber);
+//		List<String>deviceNumbers=context.get(CreditConstants.SUPPLEMENTARY_DEVICE_NUMBER);
+//        for(String deviceNumber:deviceNumbers)
+//        {
+        	helpdeskgettersetter.setDeviceNumber("5377166760658313");
         	String actualStatus = helpdeskFlows.searchForNewDevice(helpdeskgettersetter);
     		if (actualStatus.contains(status)) {
     			Assert.assertTrue("status of newly created device is normal ", true);
@@ -660,7 +662,7 @@ public class HelpDeskSteps {
     			Assert.assertTrue("status of newly created device is not normal ", false);
     		}
         }
-	}
+//	}
 
 
 	@Then("User search for new application on search screen for $productType and validates the status as $NORMAL")
