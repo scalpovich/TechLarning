@@ -518,7 +518,7 @@ public class HelpDeskSteps {
 	@When("user activates credit limit change request")
 	public void whenUserActivatesCreditLimitChangeRequestThroughHelpdesk() {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
-		SimulatorUtilities.wait(2000);
+		SimulatorUtilities.wait(4000);
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.activateCreditLimitChangeRequest(helpdeskGeneral);
 	}
