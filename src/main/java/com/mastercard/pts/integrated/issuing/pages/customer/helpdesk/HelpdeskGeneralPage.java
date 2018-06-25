@@ -981,14 +981,16 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return true;
 	}
 	
-	public String noteDownAvailableLimit(String type){		
+	public String noteDownAvailableLimit(String type){	
+		String creditLimit = "";
 		runWithinPopup("General", () -> {			
 			WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
-			clickWhenClickable(currentStatusAndLimitTab);		
-			
+			clickWhenClickable(currentStatusAndLimitTab);	
 		});		
-		clickEndCall();		
-		return creditLimitLable.getText();
+	
+		creditLimit = creditLimitLable.getText();		
+		clickEndCall();				
+		return creditLimit;
 	}
 	
 }
