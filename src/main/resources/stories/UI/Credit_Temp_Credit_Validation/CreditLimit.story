@@ -30,4 +30,3 @@ And user is logged in institution
 Then search Purchase with Cash back authorization and verify 000-Successful status
 Then available balance is updated in current status and limits tab
 And user sign out from customer portal
-
