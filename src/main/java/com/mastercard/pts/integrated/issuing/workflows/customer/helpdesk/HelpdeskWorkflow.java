@@ -153,6 +153,10 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.changeRegisteredMobileNo(general);
 	}
 	
+	public void noteDownAvailableLimit(String type) {
+		helpDeskPage.noteDownAvailableLimit(type);
+	}
+	
 	public Optional<String[]> getDeviceTypeAndNumber(String institutionSelector){	
 		String institution = System.getProperty("institution");
 		if (institution != null && !institution.trim().isEmpty())

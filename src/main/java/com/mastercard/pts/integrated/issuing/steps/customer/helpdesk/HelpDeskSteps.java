@@ -520,6 +520,16 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.setupDeviceCurrency(helpdeskGeneral);
 	}
+	
+	@Given("user notes down available $type limit for card")
+	@When("user notes down available $type limit for card")
+	public void whenUserNotesDownLimitThroughHelpDesk(String type) {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskWorkflow.getDeviceStatus(device);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.noteDownAvailableLimit(type);
+	}
 
 	@Given("user sets up device currency through helpdesk for FileUpload")
 	@When("user sets up device currency through helpdesk for FileUpload")

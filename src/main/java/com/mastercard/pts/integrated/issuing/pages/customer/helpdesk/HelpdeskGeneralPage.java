@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.CharMatcher;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
@@ -64,6 +65,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String CLOSED_BY =  "Closed By:";
 	private static final String CLOSURE_PERIOD = "Estimated Closure Period(Days:HH:MM):";
 	private static final String PRIORITY_REQUEST = "Priority Request:";
+
 	
 	private static String ERROR_MESSAGE = "This field is required.";
 	
@@ -224,7 +226,14 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement closurePeriodLbl;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind="span#priorityRequest>input")
-	private MCWebElement priorityRequestChkBx;
+	private MCWebElement priorityRequestChkBx;	
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Current Status and Limits']")
+	private MCWebElement currentStatusAndLimitTab;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Card :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement creditLimitLable;
+	
 	
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
 	
@@ -970,6 +979,16 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			verifyPriorityRequest();
 		});
 		return true;
+	}
+	
+	public String noteDownAvailableLimit(String type){		
+		runWithinPopup("General", () -> {			
+			WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
+			clickWhenClickable(currentStatusAndLimitTab);		
+			
+		});		
+		clickEndCall();		
+		return creditLimitLable.getText();
 	}
 	
 }

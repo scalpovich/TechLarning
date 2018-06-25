@@ -45,6 +45,8 @@ public class ContextConstants {
 	public static final String USER = "USER";
 	
 	public static final String DEVICE_SUPPLEMENTARY_ADDON_EXISTING = "DEVICE_SUPPLEMENTARY_ADDON_EXISTING";
+	
+	public static final String CARD_CREDIT_LIMIT = "CARD_CREDIT_LIMIT";
 
 	private ContextConstants() {
 	}
