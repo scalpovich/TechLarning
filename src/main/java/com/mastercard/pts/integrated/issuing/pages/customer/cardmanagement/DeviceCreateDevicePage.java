@@ -163,7 +163,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:cardBatch.openedBatches:input:dropdowncomponent")
 	private MCWebElement openBatchDdwn;
-   
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Existing Client Code')]")
+	private MCWebElement existingClientLabel;
+	
 	
 	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
@@ -326,11 +329,12 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
 		SimulatorUtilities.wait(1000);
 		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)/*&& device.getSubApplicationType().contains("Existing")*/){
-			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));			
-			Actions action = new Actions(driver());
-			action.moveToElement(asWebElement(existingDeviceNumberTxt), 45, 45).click().build().perform();
+			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
+			SimulatorUtilities.wait(5000);
+			Actions action = new Actions(driver());		
+			action.moveToElement(asWebElement(existingClientLabel), 50, 50).click().build().perform();
 			waitForWicket(driver());
-			SimulatorUtilities.wait(10000);
+			SimulatorUtilities.wait(5000);
 			
 		}else{
 			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
