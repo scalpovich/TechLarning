@@ -23,6 +23,7 @@ public class CreditInstitutionData {
 	private String visaDebitIssuerBin;
 	private String visaCreditIssuerBin;
 	private String deDupePlanCode;
+	private String prepaidStatementPlan;
 	private String statementMessagePlan;
 	private String marketingMessagePlan;
 	private String documentCheckListPlan;
@@ -33,8 +34,7 @@ public class CreditInstitutionData {
 	private String transactionPlan;
 	private String creditPlan;
 	private String billingCycle;
-	private String walletPlan;
-	
+	private String walletPlan;	
 	
 	public String getAssociation() {
 		return association;
@@ -190,7 +190,13 @@ public class CreditInstitutionData {
 		this.deDupePlanCode = deDupePlanCode;
 	}
 	
-	
+	public String getPrepaidStatementPlan() {
+		return prepaidStatementPlan;
+	}
+
+	public void setPrepaidStatementPlan(String prepaidStatementPlan) {
+		this.prepaidStatementPlan = prepaidStatementPlan;
+	}
 
 	public String getStatementMessagePlan() {
 		return statementMessagePlan;

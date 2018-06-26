@@ -2,6 +2,8 @@ package com.mastercard.pts.integrated.issuing.steps;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,29 +50,36 @@ public class CreditUtilitySteps {
 	{
 		String institution=System.getProperty("institution");
 		Method[]methodsJson=CreditInstitutionData.class.getDeclaredMethods();
-		Method[]methodsExcel=CreditMappingForExcel.class.getDeclaredMethods();
 		/** Step-1
 		 * creating context of excel and json for all the fields mention in CreditInstitutionData.json
 		 */
 		contextForExcelAndJson(institution);
 	    context.put(CreditConstants.JSON_VALUES, creditMappingForJson);
 
-		Map<String,String>jsonMap=new LinkedHashMap<String, String>();
 		/**Step-2
 		 * Getting the initial excel context which retrieves all the data of @Storyname
 		 */
         Map<String, Object> map = context.get(TestContext.KEY_STORY_DATA);
-       ConcurrentHashMap<String, Object>concurrentMap=new ConcurrentHashMap<String, Object>(map);
-         /**Step-3
- 		 * Replacing excel context of Step-1 values with json context values
- 		 */
-		replacingValuesFromJsonToExcel(methodsJson, methodsExcel, jsonMap);
-		 /**Step-4
- 		 * Update the excel context of Step-2 with the replaced values and using it to run the entire scenario/Story
- 		 */
-		updatedExcelContext(jsonMap, concurrentMap);
-		context.put(TestContext.KEY_STORY_DATA,concurrentMap);
+        ConcurrentHashMap<String, Object>concurrentMap=new ConcurrentHashMap<String, Object>(map);
+//         /**Step-3
+// 		 * Replacing excel context of Step-1 values with json context values
+// 		 */
+          //replacingValuesFromJsonToExcel(methodsJson, methodsExcel, jsonMap);
+        
+//		 /**Step-4
+// 		 * Update the excel context of Step-2 with the replaced values and using it to run the entire scenario/Story
+// 		 */
+//		updatedExcelContext(jsonMap, concurrentMap);
+
+        Map<String,String>jsonMap=getJsonMap(methodsJson);
+
+        map=putExtraJsonValuesTOExcel(concurrentMap, jsonMap);
+        Map<String, Object> allInOneMap=replacingValuesFromJsonToExcel(map, jsonMap);
+     
+		context.put(TestContext.KEY_STORY_DATA,allInOneMap);
 		context.get(TestContext.KEY_STORY_DATA);
+		
+	
 	}
 
 
@@ -125,6 +134,7 @@ public class CreditUtilitySteps {
 			{
 			 valueJson=(String) creditMappingForJson.getClass().getMethod(methodsJson[i].getName()).invoke(creditMappingForJson);
 			
+			 System.out.println(methodsExcel.length);
 			for(int j=0;j<methodsExcel.length;j++)
 			{
 				if(methodsJson[i].getName().equalsIgnoreCase(methodsExcel[j].getName())&& methodsJson[i].getName().startsWith("get"))
@@ -139,12 +149,47 @@ public class CreditUtilitySteps {
 						 jsonMap.put(methodsJson[i].getName(), valueJson);
 		
 				}
+				
 				else {
 					jsonMap.put(methodsJson[i].getName(),valueJson);
+					break;
 				}
 			}	
 		}
 		}
+	}
+	
+	public Map<String, Object> replacingValuesFromJsonToExcel(Map<String, Object> excelMap, Map<String, String> jsonMap)
+			throws IllegalAccessException, InvocationTargetException,
+			NoSuchMethodException {
+		String updatedValue=null;
+		for (Map.Entry<String, Object> entry : excelMap.entrySet()) {
+			for(Map.Entry<String, String> entryJson:jsonMap.entrySet())
+			{	            
+			  if (entryJson.getKey().contains(entry.getKey().replaceAll("_", ""))) {	 
+				   updatedValue=String.valueOf(entry.getValue()).replaceAll(".+", entryJson.getValue());				  
+				   excelMap.put(entry.getKey(), updatedValue);				
+
+		}}}
+		
+		return excelMap;
+	}
+	public Map<String, Object> putExtraJsonValuesTOExcel(Map<String, Object> excelMap, Map<String, String> jsonMap)
+			throws IllegalAccessException, InvocationTargetException,
+			NoSuchMethodException {
+		Map<String, Object> excelMapWithoutUnderScore=new HashMap<String, Object>();
+		ArrayList<String> keyList=new ArrayList<String>();
+		for (Map.Entry<String, Object> entry : excelMap.entrySet()) {
+			excelMapWithoutUnderScore.put(entry.getKey().replaceAll("_", ""), entry.getValue());
+			keyList.add(entry.getKey().replaceAll("_", ""));
+		}	
+		for(Map.Entry<String, String> entryJson:jsonMap.entrySet()) {	            
+			  if (!keyList.contains(entryJson.getKey().replaceFirst("GET", ""))) {				  
+				   excelMap.put(entryJson.getKey(), entryJson.getValue());
+		}}
+
+		
+		return excelMap;
 	}
 
 
@@ -166,5 +211,22 @@ public class CreditUtilitySteps {
 			creditMappingForExcel=creditMappingForExcel.createWithProviderCSV(keyValueProvider);
 			context.put(CreditConstants.EXCEL_VALUES,creditMappingForExcel);
 		}
+	}
+	
+	public Map<String,String> getJsonMap(Method[] getMap) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+		Map<String,String> tempMap=new HashMap<String,String>();
+		
+		for(int i=0;i<getMap.length;i++)
+        {
+        	String valueOfJson="";
+        	creditMappingForJson=context.get(CreditConstants.JSON_VALUES);
+			if(getMap[i].getName().startsWith("get"))
+			{
+			valueOfJson=(String) creditMappingForJson.getClass().getMethod(getMap[i].getName()).invoke(creditMappingForJson);
+			tempMap.put(getMap[i].getName().toUpperCase(), valueOfJson);
+        }
+        }
+		return tempMap;
+		
 	}
 }
