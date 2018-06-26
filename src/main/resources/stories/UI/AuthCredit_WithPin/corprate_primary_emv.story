@@ -74,24 +74,3 @@ When perform an ECOMM_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
 Then user is logged in institution
 Then search E-Commerce Transaction authorization and verify 000-Successful status
-
-Scenario: Perform MMSR-CORPORATE_CREDIT_CARD Authorization transaction
-When perform an MMSR MAS transaction on the same card
-Then MAS test results are verified
-And user is logged in institution
-And search MasterCard MoneySend authorization and verify 000-Successful status
-And user sign out from customer portal
-
-Scenario: Perform ASI_MSR Authorization transaction on Individual Primary MSR Card
-When perform an ASI_EMV MAS transaction on the same card
-Then MAS test results are verified
-And user is logged in institution
-And search Account Status authorization and verify 000-Successful status
-And user sign out from customer portal
-
-Scenario: Perform ASI_PAYMENT_WITH_AMOUNT Authorization transaction
-When perform an ASI_PAYMENT_WITH_AMOUNT MAS transaction on the same card
-Then MAS test results are verified
-And user is logged in institution
-And search Account Status authorization and verify 085-Successful status
-And user sign out from customer portal
