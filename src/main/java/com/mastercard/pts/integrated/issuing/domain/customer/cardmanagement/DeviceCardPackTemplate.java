@@ -129,31 +129,31 @@ public class DeviceCardPackTemplate {
 	public String Length4;
 	public String Length5;
 	public String Field6;
-	public String Lengh12;
+	public String Length12;
 	public String firstCustomValue12;
 	public String secondCustomValue12;
 	
-	public String getLengh12() {
-		return Lengh12;
+	public String getLength12() {
+		return Length12;
 	}
 
-	public void setLengh12(String Lengh12) {
-		this.Lengh12 = Lengh12;
+	public void setLength12(String Lengh12) {
+		this.Length12 = Lengh12;
 	}
 	
-	public String getfirstCustomValue12() {
+	public String getFirstCustomValue12() {
 		return firstCustomValue12;
 	}
 
-	public void setfirstCustomValue12(String firstCustomValue12) {
+	public void setFirstCustomValue12(String firstCustomValue12) {
 		this.firstCustomValue12 = firstCustomValue12;
 	}
 	
-	public String getsecondCustomValue12() {
+	public String getSecondCustomValue12() {
 		return firstCustomValue12;
 	}
 
-	public void setsecondCustomValue12(String secondCustomValue12) {
+	public void setSecondCustomValue12(String secondCustomValue12) {
 		this.secondCustomValue12 = secondCustomValue12;
 	}
 	
@@ -178,9 +178,9 @@ public class DeviceCardPackTemplate {
 		devicecardpacktemplate.setField5(MapUtils.fnGetInputDataFromMap("Field5"));
 		devicecardpacktemplate.setLength5(MapUtils.fnGetInputDataFromMap("Length5"));
 		devicecardpacktemplate.setField6(MapUtils.fnGetInputDataFromMap("Field6"));
-		devicecardpacktemplate.setLengh12(MapUtils.fnGetInputDataFromMap("Lengh12"));
-		devicecardpacktemplate.setfirstCustomValue12(MapUtils.fnGetInputDataFromMap("FirstCustomValue12"));
-		devicecardpacktemplate.setsecondCustomValue12(MapUtils.fnGetInputDataFromMap("SecondCustomValue12"));
+		devicecardpacktemplate.setLength12(MapUtils.fnGetInputDataFromMap("Length12"));
+		devicecardpacktemplate.setFirstCustomValue12(MapUtils.fnGetInputDataFromMap("FirstCustomValue12"));
+		devicecardpacktemplate.setSecondCustomValue12(MapUtils.fnGetInputDataFromMap("SecondCustomValue12"));
 		return devicecardpacktemplate;
 	}
 

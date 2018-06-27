@@ -33,11 +33,9 @@ public class DeviceCardPackTemplateSteps {
 		devicecreation.setLength(Templatelength);
 		if (Templatetype.contains(DEVICE_TEMPLATE)) {
 			devicecardpacktemplflows.createDeviceTemplateCardPack(devicecreation, devicecardtemplate);
-		}
-		if (Templatetype.contains(CARD_PACK_TEMPLATE)) {
+		}else if (Templatetype.contains(CARD_PACK_TEMPLATE)) {
 			devicecardpacktemplflows.createCardPackTemplate(devicecreation, devicecardtemplate);
-		}
-		if(Templatetype.contains(Constants.PRIORITY_PASS_TEMPLATE)){
+		}else if(Templatetype.contains(Constants.PRIORITY_PASS_TEMPLATE)){
 			devicecardpacktemplflows.createTemplate(devicecreation, devicecardtemplate);
 		}
 	}

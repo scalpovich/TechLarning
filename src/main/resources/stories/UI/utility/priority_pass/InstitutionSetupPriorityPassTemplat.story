@@ -8,7 +8,7 @@ Meta:
 @InstituteSetUpPrepaid
 @InstitutionSetUpForAllType
 
-Scenario:Configire priority pass for given Institution 
+Scenario:Configure priority pass for given Institution
 Meta:
 @institutePriority
 @TCName Institution_priority_setup

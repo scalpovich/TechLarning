@@ -80,7 +80,7 @@ public class DeviceCardPackTemplatePage extends AbstractBasePage {
 	private MCWebElement firstCustom12Txt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mainContainer:trnsTypeChkDgtCstValue1:input:inputTextField")
-	private MCWebElement SecondCustom12Txt;
+	private MCWebElement secondCustom12Txt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "buttonContainer:submitTemplate")
 	private MCWebElement submitBtn;
@@ -196,10 +196,10 @@ public class DeviceCardPackTemplatePage extends AbstractBasePage {
 			enterText(templateLengthTxt,devicecreation.getLength());			
 			selectByVisibleText(field1DDwn,devicetemplate.getField1());
 			enterValueinTextBox(length1Txt,devicetemplate.getLength1());			
-			enterValueinTextBox(length12Txt, devicetemplate.getLengh12());			
+			enterValueinTextBox(length12Txt, devicetemplate.getLength12());			
 			clickInRect(firstCustom12Txt);
-			enterValueinTextBox(firstCustom12Txt,devicetemplate.getfirstCustomValue12());
-			enterValueinTextBox(SecondCustom12Txt,devicetemplate.getsecondCustomValue12());			
+			enterValueinTextBox(firstCustom12Txt,devicetemplate.getFirstCustomValue12());
+			enterValueinTextBox(secondCustom12Txt,devicetemplate.getSecondCustomValue12());			
 			clickWhenClickable(submitBtn);
 			clickWhenClickable(saveBtn);			
 		});
