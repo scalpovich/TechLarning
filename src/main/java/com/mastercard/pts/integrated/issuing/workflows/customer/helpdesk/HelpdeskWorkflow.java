@@ -153,8 +153,14 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.changeRegisteredMobileNo(general);
 	}
 	
-	public void noteDownAvailableLimit(String type) {
-		helpDeskPage.noteDownAvailableLimit(type);
+	public BigDecimal noteDownAvailableLimit(String type,Device device) {
+		clickCustomerCareEditLink();
+		return helpDeskPage.noteDownAvailableLimit(type);
+	}
+	
+	public BigDecimal verifyAvailableLimit(String type,Device device) {
+		clickCustomerCareEditLink();
+		return helpDeskPage.noteDownAvailableLimit(type);
 	}
 	
 	public Optional<String[]> getDeviceTypeAndNumber(String institutionSelector){	
