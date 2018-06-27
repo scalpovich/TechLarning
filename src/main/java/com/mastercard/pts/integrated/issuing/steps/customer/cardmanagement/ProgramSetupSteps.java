@@ -917,6 +917,7 @@ public class ProgramSetupSteps {
 			walletPlan.setBillingCyleCode(context.get(CreditConstants.BILLING_CYCLE));
 			}
 			else{
+		    context.put("dataDrivenExecution", true);
 			walletPlan.setCreditPlan(data.getCreditPlan());
 			walletPlan.setBillingCyleCode(data.getBillingCycle());	
 			}

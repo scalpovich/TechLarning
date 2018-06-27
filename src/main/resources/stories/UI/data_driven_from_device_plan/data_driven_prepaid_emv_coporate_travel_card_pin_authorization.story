@@ -14,7 +14,7 @@ Meta:
 @EMVWithPin
 
 Scenario: Set up prepaid emv corporate travel card
-Given setting json values in excel
+Given setting json values in excel for Prepaid
 Given user is logged in institution
 When User fills Device Plan for "Prepaid" "emv" card
 When User fills Wallet Plan for prepaid product

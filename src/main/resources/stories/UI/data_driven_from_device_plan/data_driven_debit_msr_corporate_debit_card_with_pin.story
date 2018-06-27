@@ -11,7 +11,7 @@ Meta:
 @MSRWithPin
 
 Scenario: Set up program for debit MSR corporate debit card
-Given setting json values in excel
+Given setting json values in excel for Debit
 Given user is logged in institution
 When User fills Device Plan for "Debit" "magnetic stripe" card
 When User fills Wallet Plan for debit product

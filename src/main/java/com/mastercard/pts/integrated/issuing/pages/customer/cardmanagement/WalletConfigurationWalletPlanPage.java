@@ -100,17 +100,24 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectCreditPlan(String creditPlan) {
-		if(context.get(CreditConstants.CREDIT_PLAN_CODE_ERROR_STATUS).equals(true))
-		{
-			WebElementUtils.selectDropDownByIndex(creditPlanDDwn, 1);
-		}
-		else
-		{
-			WebElementUtils.selectDropDownByVisibleText(creditPlanDDwn, creditPlan);
-		}
+	    if(!(boolean) context.get("dataDrivenExecution")){
+	    	if(context.get(CreditConstants.CREDIT_PLAN_CODE_ERROR_STATUS).equals(true))
+	    	{
+	    		WebElementUtils.selectDropDownByIndex(creditPlanDDwn, 1);
+	    	}
+	    	else
+	    	{
+	    		WebElementUtils.selectDropDownByVisibleText(creditPlanDDwn, creditPlan);
+	    	}
+	    }
+	    else{
+	    	WebElementUtils.selectDropDownByVisibleText(creditPlanDDwn, creditPlan);
+	    }
+	
 	}
 
 	public void selectBillingCyleCode(String billingCyleCode) {
+	    if(!(boolean) context.get("dataDrivenExecution")){
 		if(context.get(CreditConstants.BILLING_CYCLE_CODE_ERROR_STATUS).equals(true))
 		{
 			WebElementUtils.selectDropDownByIndex(billingCyleCodeDDwn, 1);
@@ -119,7 +126,11 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		{
 			WebElementUtils.selectDropDownByVisibleText(billingCyleCodeDDwn,
 					billingCyleCode);
-		}
+		}}
+	    else{
+	    	WebElementUtils.selectDropDownByVisibleText(billingCyleCodeDDwn,
+					billingCyleCode);	
+	    }
 	}
 
 	public void inputReservedAmount() {

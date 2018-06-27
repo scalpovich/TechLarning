@@ -34,7 +34,8 @@ public class CreditInstitutionData {
 	private String transactionPlan;
 	private String creditPlan;
 	private String billingCycle;
-	private String walletPlan;	
+	private String walletPlan;
+	private String product_identity;
 	
 	public String getAssociation() {
 		return association;
@@ -285,6 +286,14 @@ public class CreditInstitutionData {
 
 	public void setWalletPlan(String walletPlan) {
 		this.walletPlan = walletPlan;
+	}
+    
+	public String getProduct_identity() {
+		return product_identity;
+	}
+
+	public void setProduct_identity(String product_identity) {
+		this.product_identity = product_identity;
 	}
 
 	public static CreditInstitutionData createWithProvider(DataProvider provider,String institutionCode) {

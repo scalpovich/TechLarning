@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -45,9 +44,10 @@ public class CreditUtilitySteps {
 	private CreditInstitutionData creditMappingForJson;
 	
 	 
-	@Given("setting json values in excel")
-	public void mappingJsonValuesInExcel() throws Exception
+	@Given("setting json values in excel for $product")
+	public void mappingJsonValuesInExcel(String product) throws Exception
 	{
+		context.put("product_identity", product);
 		String institution=System.getProperty("institution");
 		Method[]methodsJson=CreditInstitutionData.class.getDeclaredMethods();
 		/** Step-1
