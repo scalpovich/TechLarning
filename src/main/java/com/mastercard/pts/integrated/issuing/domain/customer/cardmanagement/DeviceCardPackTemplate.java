@@ -7,7 +7,7 @@ import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 @Component
 public class DeviceCardPackTemplate {
 
-	public String Field1;
+	public String field1;
 
 	public String cardpackID;
 
@@ -40,105 +40,105 @@ public class DeviceCardPackTemplate {
 	}
 
 	public String getField1() {
-		return Field1;
+		return field1;
 	}
 
 	public void setField1(String field1) {
-		Field1 = field1;
+		this.field1 = field1;
 	}
 
 	public String getField2() {
-		return Field2;
+		return field2;
 	}
 
 	public void setField2(String field2) {
-		Field2 = field2;
+		this.field2 = field2;
 	}
 
 	public String getField3() {
-		return Field3;
+		return field3;
 	}
 
 	public void setField3(String field3) {
-		Field3 = field3;
+		this.field3 = field3;
 	}
 
 	public String getField4() {
-		return Field4;
+		return field4;
 	}
 
 	public void setField4(String field4) {
-		Field4 = field4;
+		this.field4 = field4;
 	}
 
 	public String getField5() {
-		return Field5;
+		return field5;
 	}
 
 	public void setField5(String field5) {
-		Field5 = field5;
+		this.field5 = field5;
 	}
 
 	public String getLength1() {
-		return Length1;
+		return length1;
 	}
 
 	public void setLength1(String length1) {
-		Length1 = length1;
+		this.length1 = length1;
 	}
 
 	public String getLength2() {
-		return Length2;
+		return length2;
 	}
 
 	public void setLength2(String length2) {
-		Length2 = length2;
+		this.length2 = length2;
 	}
 
 	public String getLength3() {
-		return Length3;
+		return length3;
 	}
 
 	public void setLength3(String length3) {
-		Length3 = length3;
+		this.length3 = length3;
 	}
 
 	public String getLength4() {
-		return Length4;
+		return length4;
 	}
 
 	public void setLength4(String length4) {
-		Length4 = length4;
+		this.length4 = length4;
 	}
 
 	public String getLength5() {
-		return Length5;
+		return length5;
 	}
 
 	public void setLength5(String length5) {
-		Length5 = length5;
+		this.length5 = length5;
 	}
 
-	public String Field2;
-	public String Field3;
-	public String Field4;
-	public String Field5;
-	public String Length1;
-	public String Length2;
-	public String Length3;
-	public String Length4;
-	public String Length5;
-	public String Field6;
-	public String Length12;
+	public String field2;
+	public String field3;
+	public String field4;
+	public String field5;
+	public String length1;
+	public String length2;
+	public String length3;
+	public String length4;
+	public String length5;
+	public String field6;
+	public String length12;
 	public String firstCustomValue12;
 	public String secondCustomValue12;
 	
 	public String getLength12() {
-		return Length12;
+		return length12;
 	}
 
-	public void setLength12(String Lengh12) {
-		this.Length12 = Lengh12;
+	public void setLength12(String length12) {
+		this.length12 = length12;
 	}
 	
 	public String getFirstCustomValue12() {
@@ -158,11 +158,11 @@ public class DeviceCardPackTemplate {
 	}
 	
 	public String getField6() {
-		return Field6;
+		return field6;
 	}
 
 	public void setField6(String field6) {
-		Field6 = field6;
+		this.field6 = field6;
 	}
 
 	public static DeviceCardPackTemplate deviceCardPackTemplateDataProvider() {
