@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -34,6 +35,9 @@ public class AuthorizationSearchWorkflow {
 
 	@Autowired
 	KeyValueProvider provider;
+	
+	@Autowired
+	AuthorizationSearchPage authorizationSearchPage;
 
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
@@ -164,4 +168,12 @@ public class AuthorizationSearchWorkflow {
 		assertTrue(String.format("Response, Auth Code and Auth Description does not match. Expecting %s. Actual %s", authStatus, actualAuthStatus), actualAuthStatus.containsAll(authStatus));
 	}
 	
+	public List<BigDecimal> getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(BigDecimal availableBalance){
+		authorizationSearchPage.viewDeviceDetails();
+		List<BigDecimal> lst = authorizationSearchPage.getTransactionBillingAmount();
+		logger.info("Available balance before transaction amount = " + availableBalance);
+		logger.info("Sum of all applicable fee and amounts = " +  lst.get(0));
+		logger.info("Available balance after transaction amount = " +  lst.get(1));
+		return lst;
+	}
 }

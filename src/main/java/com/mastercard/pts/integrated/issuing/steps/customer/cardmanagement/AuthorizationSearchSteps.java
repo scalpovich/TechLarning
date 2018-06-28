@@ -1,7 +1,9 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,5 +118,13 @@ public class AuthorizationSearchSteps {
 			Device device = context.get(ContextConstants.DEVICE);
 			authorizationSearchWorkflow.verifyAuthTransactionSearchReport(device);
 		} 
+	}
+	
+	@Then("user verify available balance after transaction")
+	public void validateAvailableBalanceAfterTransaction(){
+		BigDecimal availableBalanceBeforeTransaction =context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
+		List<BigDecimal> lst = authorizationSearchWorkflow.getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(availableBalanceBeforeTransaction);
+		assertThat("Verify Available Balance", availableBalanceBeforeTransaction.subtract(lst.get(0)), equalTo(lst.get(1)));
+		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, lst.get(1));
 	}
 }

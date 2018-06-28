@@ -61,18 +61,18 @@ When perform an EMV_COMPLETION MAS transaction on the same card
 Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth Completion authorization and verify 000-Successful status
+Then user verify available balance after transaction
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-!-- Then user verify available balance after transaction
 Then user verify available Card limit for card after transaction
 Then user sign out from customer portal
 
 Scenario: Perform EMV_PURCHASE Authorization transaction
-When perform an EMV_PURCHASE MAS transaction
+When perform an EMV_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
 Then user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
+Then user verify available balance after transaction
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-!-- Then user verify available balance after transaction
 Then user verify available Card limit for card after transaction
 Then user sign out from customer portal
 
@@ -82,8 +82,8 @@ When perform an EMV_CASH_ADVANCE MAS transaction on the same card
 Then MAS test results are verified
 Then user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
+Then user verify available balance after transaction
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-!-- Then user verify available balance after transaction
 Then user verify available Card limit for card after transaction
 And user sign out from customer portal
 
@@ -93,8 +93,8 @@ Then MAS test results are verified
 When MAS simulator is closed
 Then user is logged in institution
 Then search CWD authorization and verify 000-Successful status
+Then user verify available balance after transaction
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-!-- Then user verify available balance after transaction
 Then user verify available Card limit for card after transaction
 And user sign out from customer portal
 
