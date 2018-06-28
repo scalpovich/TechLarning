@@ -28,6 +28,10 @@ And fills Wallet Plan for credit product and program Corporate Credit Card [10]
 And User fills MCC Rules for credit product
 And User Primary Device [P] fills New Client [N] Program Corporate Credit Card [10] section for credit product for Mastercard
 When User fills Device Range section for credit product
+And user sign out from customer portal
+
+Scenario:Create device through above created configuration
+Given user is logged in institution
 Then credit device is created using new device screen for Corporate [1] and Primary Device [P] and New Client [N] and EMV Card [2]
 Then credit processes pre-production batch using new Device
 Then credit processes deviceproduction batch using new Device
