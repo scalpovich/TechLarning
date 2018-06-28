@@ -44,25 +44,11 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: emv corporate credit card authorization
-Meta:
-@TestId TC408235
-Given user is logged in institution
-And a new device was created
-When user raises an authorization request
-Then status of request is "approved"
-
-Scenario: Perform RECURRING_PUR_TXN Authorization transaction
-Given connection to MAS is established
-When perform an EMV_RECURRING_PUR_TXN MAS transaction
-Then MAS test results are verified
-When Auth file is generated after transaction
+Scenario: Credit Corporate- Pin Change Transaction
+Then connection to MDFS is established
+When user performs an optimized MDFS_EMV_PIN_CHANGE MDFS transaction
+Then MDFS test results are verified
+When MDFS simulator is closed
 Then user is logged in institution
-Then search Purchase authorization and verify 000-Successful status
-Then user sign out from customer portal
-
-Scenario: perform ECCOM-PURCHASE authorization on retail emv card
-When perform an ECOMM_PURCHASE MAS transaction on the same card
-Then MAS test results are verified
-Then user is logged in institution
-Then search E-Commerce Transaction authorization and verify 000-Successful status
+Then search Pin Change authorization and verify 000-Successful status
+And user sign out from customer portal

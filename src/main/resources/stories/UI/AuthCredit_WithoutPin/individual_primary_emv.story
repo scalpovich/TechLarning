@@ -64,4 +64,3 @@ Then MAS test results are verified
 And user is logged in institution
 And search Account Status authorization and verify 085-Successful status
 And user sign out from customer portal
-
