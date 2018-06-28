@@ -60,9 +60,3 @@ When Auth file is generated after transaction
 Then user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
-
-Scenario: perform ECCOM-PURCHASE authorization on retail emv card
-When perform an ECOMM_PURCHASE MAS transaction on the same card
-Then MAS test results are verified
-Then user is logged in institution
-Then search E-Commerce Transaction authorization and verify 000-Successful status
