@@ -2,6 +2,8 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CardType;
 import com.mastercard.pts.integrated.issuing.domain.DeviceType;
@@ -1007,17 +1010,18 @@ public class DevicePlanPage extends AbstractBasePage {
 				selectByVisibleText(iframeDeviceIDGenerationTemplateDdwn, devicePlanDataObject.getDeviceIdGenerationTemplate());
 				selectByVisibleText(iframeCardPackIDGenerationTemplateDdwn, devicePlanDataObject.getCardPackIdGenerationTemplate());
 				selectByVisibleText(iframePlasticIdDdwn, devicePlanDataObject.getPlasticId());
-				selectByVisibleText(iframePictureCodeDdwn, devicePlanDataObject.getPictureCode());	
-				
+				selectByVisibleText(iframePictureCodeDdwn, devicePlanDataObject.getPictureCode());
+				if(Objects.nonNull(devicePlanDataObject.getPriorityPassIndicator())){
+					if(devicePlanDataObject.getPriorityPassIndicator().equalsIgnoreCase("with")){
+						setPriorityPass(devicePlanDataObject);
+					}
+				}
 			}else{
 				selectIframeDeviceIDGenerationTemplate(devicePlanDataObject.getDeviceIdGenerationTemplate());
 				selectIframeCardPackIDGenerationTemplate(devicePlanDataObject.getCardPackIdGenerationTemplate());
 				selectIframePlasticIdDdwn(devicePlanDataObject.getPlasticId());
 				selectIframePictureCodeDdwn(devicePlanDataObject.getPictureCode());
 			}			
-			if(devicePlanDataObject.getPriorityPassIndicator().equalsIgnoreCase("with")){
-				setPriorityPass(devicePlanDataObject);
-			}
 			
 			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT)&& !DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlanDataObject.getDeviceType())){
 				selectIframeActivationModeLst(devicePlanDataObject.getActivationMode());
