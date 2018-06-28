@@ -32,7 +32,7 @@ And user sign out from customer portal
 
 Scenario:Create device through above created configuration
 Given user is logged in institution
-Then credit device is created using new device screen for Corporate [1] and Primary Device [P] and New Client [N] and EMV Card [2]
+Then credit device is created using new device screen for Individual [0] and Primary Device [P] and New Client [N] and EMV Card [2]
 Then credit processes pre-production batch using new Device
 Then credit processes deviceproduction batch using new Device
 Then User search for new device on search screen for credit and validates the status as NORMAL
