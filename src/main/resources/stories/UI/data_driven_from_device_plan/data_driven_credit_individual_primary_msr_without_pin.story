@@ -23,9 +23,9 @@ Then credit processes deviceproduction batch using new Device for Supplementary
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 Then user sign out from customer portal
 
-Scenario: Transaction - EMV_PREAUTH and EMV_COMPLETION Authorization transaction
+Scenario: Transaction - MSR_PREAUTH Authorization transaction
 Given connection to MAS is established
-When perform an EMV_PREAUTH MAS transaction
+When perform an MSR_PREAUTH MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth authorization and verify 000-Successful status

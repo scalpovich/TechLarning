@@ -38,7 +38,7 @@ When user has current wallet balance amount information for prepaid device
 Then user activates device through helpdesk
 Then user sign out from customer portal
 
-Scenario: Transaction - EMV_PREAUTH and EMV_COMPLETION Authorization transaction
+Scenario: Transaction - EMV_PREAUTH Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PREAUTH MAS transaction
 Then MAS test results are verified

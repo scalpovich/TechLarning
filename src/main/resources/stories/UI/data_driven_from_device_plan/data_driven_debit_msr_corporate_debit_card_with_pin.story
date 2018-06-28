@@ -43,9 +43,9 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Transaction - EMV_PREAUTH and EMV_COMPLETION Authorization transaction
+Scenario: Transaction - MSR_PREAUTH Authorization transaction
 Given connection to MAS is established
-When perform an EMV_PREAUTH MAS transaction
+When perform an MSR_PREAUTH MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth authorization and verify 000-Successful status
