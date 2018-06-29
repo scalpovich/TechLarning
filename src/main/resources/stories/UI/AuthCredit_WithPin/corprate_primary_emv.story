@@ -51,12 +51,4 @@ Given user is logged in institution
 And a new device was created
 When user raises an authorization request
 Then status of request is "approved"
-
-Scenario: Perform RECURRING_PUR_TXN Authorization transaction
-Given connection to MAS is established
-When perform an EMV_RECURRING_PUR_TXN MAS transaction
-Then MAS test results are verified
-When Auth file is generated after transaction
-Then user is logged in institution
-Then search Purchase authorization and verify 000-Successful status
-Then user sign out from customer portal
+And user sign out from customer portal

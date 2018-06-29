@@ -51,3 +51,11 @@ Then user is logged in institution
 Then search Refund authorization and verify 000-Successful status
 Then validate auth report
 And user sign out from customer portal
+
+Scenario: Perform RECURRING_PUR_TXN Authorization transaction
+When perform an MSR_RECURRING_PUR_TXN MAS transaction on the same card
+Then MAS test results are verified
+When Auth file is generated after transaction
+Then user is logged in institution
+Then search Purchase authorization and verify 000-Successful status
+Then user sign out from customer portal
