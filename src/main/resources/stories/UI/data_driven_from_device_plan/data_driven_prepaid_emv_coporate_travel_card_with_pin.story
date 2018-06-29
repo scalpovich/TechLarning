@@ -30,13 +30,12 @@ And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 When processes pin generation batch for prepaid
-Then device has "normal" status
 When user has wallet number information for prepaid device
-Then user sign out from customer portal
-Then user is logged in institution
 When user performs adjustment transaction
-Then user activates device through helpdesk
-Then user sign out from customer portal
+When user has current wallet balance amount information for prepaid device
+Then device has "normal" status
+When user activates device through helpdesk
+And user sign out from customer portal
 
 Scenario: Pin Generation
 Given connection to FINSim is established
@@ -49,6 +48,7 @@ Scenario: Transaction - EMV_PREAUTH Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PREAUTH MAS transaction
 Then MAS test results are verified
-And user is logged in institution
-And search Pre-Auth authorization and verify 000-Successful status
-And user sign out from customer portal
+Then MAS simulator is closed
+Given user is logged in institution
+Then search Pre-Auth authorization and verify 000-Successful status
+Then user sign out from customer portal

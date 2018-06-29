@@ -29,19 +29,19 @@ Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
-Then device has "normal" status
 When user has wallet number information for prepaid device
-Then user sign out from customer portal
-Then user is logged in institution
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
-Then user activates device through helpdesk
+Then device has "normal" status
+When user activates device through helpdesk
+Then embossing file batch was generated in correct format
 Then user sign out from customer portal
 
 Scenario: Transaction - EMV_PREAUTH Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PREAUTH MAS transaction
 Then MAS test results are verified
-And user is logged in institution
-And search Pre-Auth authorization and verify 000-Successful status
+Then MAS simulator is closed
+Given user is logged in institution
+Then search Pre-Auth authorization and verify 000-Successful status
 Then user sign out from customer portal

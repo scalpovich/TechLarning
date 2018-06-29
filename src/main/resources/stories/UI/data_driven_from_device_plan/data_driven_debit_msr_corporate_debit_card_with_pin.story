@@ -25,16 +25,14 @@ When user has wallet number information for debit device
 When user performs adjustment transaction
 When user has current wallet balance amount information for debit device
 
-Scenario: debit MSR corporate debit card device production
+Scenario: debit msr corporate debit card device production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for debit
 When processes device production batch for debit
 When processes pin generation batch for debit
-When user has wallet number information for debit device
-When user performs adjustment transaction
-When user has current wallet balance amount information for debit device
-And user sign out from customer portal
+Then device has "normal" status
+Then user activates device through helpdesk
 
 Scenario: Pin Generation
 Given connection to FINSim is established
