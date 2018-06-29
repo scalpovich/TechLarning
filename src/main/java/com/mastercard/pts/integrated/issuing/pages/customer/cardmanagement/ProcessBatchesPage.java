@@ -526,7 +526,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		Boolean isProcessed = false;
 		String statusXpath = elementXpath + "//parent::td//following-sibling::td/a";
 		SimulatorUtilities.wait(20000);;
-		getFinder().getWebDriver().findElement(By.xpath(statusXpath)).click();
+		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
 		switchToIframe(Constants.VIEW_BATCH_DETAILS);
 
 		// unless it is completed, refresh it - No of attempts: 5
