@@ -324,22 +324,22 @@ public class DeviceSteps {
 		device.setCustomerType(customerType);
 		device.setDeviceType1(deviceType);
 
-		Device deviceTemp = Device.createWithProviderForOtherDetails(provider);
-		device.setOtherInfoDeliveryMode(deviceTemp.getOtherInfoDeliveryMode());
-		device.setOtherInfoEmailAlertRequired(deviceTemp
+		Device deviceData = Device.createWithProviderForOtherDetails(provider);
+		device.setOtherInfoDeliveryMode(deviceData.getOtherInfoDeliveryMode());
+		device.setOtherInfoEmailAlertRequired(deviceData
 				.getOtherInfoEmailAlertRequired());
-		device.setOtherInfoFaxNo(deviceTemp.getOtherInfoFaxNo());
-		device.setOtherInfoPreferredLanguage(deviceTemp
+		device.setOtherInfoFaxNo(deviceData.getOtherInfoFaxNo());
+		device.setOtherInfoPreferredLanguage(deviceData
 				.getOtherInfoPreferredLanguage());
-		device.setOtherInfoRegisteredEmailAddress(deviceTemp
+		device.setOtherInfoRegisteredEmailAddress(deviceData
 				.getOtherInfoRegisteredEmailAddress());
-		device.setOtherInfoRegisteredMobileNumber(deviceTemp
+		device.setOtherInfoRegisteredMobileNumber(deviceData
 				.getOtherInfoRegisteredMobileNumber());
-		device.setOtherInfoRegisterForDncr(deviceTemp
+		device.setOtherInfoRegisterForDncr(deviceData
 				.getOtherInfoRegisterForDncr());
-		device.setOtherInfoSmsAlertRequired(deviceTemp
+		device.setOtherInfoSmsAlertRequired(deviceData
 				.getOtherInfoSmsAlertRequired());
-		device.setOtherInfoStatementPreference(deviceTemp
+		device.setOtherInfoStatementPreference(deviceData
 				.getOtherInfoStatementPreference());
 
 		Program program = context.get(ContextConstants.PROGRAM);
