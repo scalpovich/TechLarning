@@ -12,9 +12,6 @@ Meta:
 Scenario: To verify functionality of prepaid card boarding
 Given setting json values in excel
 Given user is logged in institution
-When User fills Statement Message Plan for debit product
-When User fills Marketing Message Plan for debit product
-When User fills Prepaid Statement Plan
 When User fills MCC Rules for debit product
 And User fills Dedupe Plan
 And User fills Transaction Plan for debit product
