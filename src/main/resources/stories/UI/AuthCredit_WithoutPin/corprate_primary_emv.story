@@ -35,9 +35,10 @@ Then credit processes pre-production batch using new Device
 Then credit processes deviceproduction batch using new Device for Supplementary
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 When embossing file batch was generated in correct format
+And user sign out from customer portal
 
 
-Scenario: Perform ASI_MSR Authorization transaction on Individual Primary MSR Card
+Scenario: Perform ASI_EMV Authorization transaction on Individual Primary MSR Card
 Given connection to MAS is established
 When perform an ASI_EMV MAS transaction
 Then MAS test results are verified
@@ -65,19 +66,10 @@ Then user is logged in institution
 Then search E-Commerce Transaction authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform MSR_REFUND Authorization transaction
+Scenario: Perform EMV_REFUND Authorization transaction
 When perform an EMV_REFUND MAS transaction on the same card
 Then MAS test results are verified
 Then user is logged in institution
 Then search Refund authorization and verify 000-Successful status
 Then validate auth report
 And user sign out from customer portal
-
-Scenario: Perform RECURRING_PUR_TXN Authorization transaction
-When perform an EMV_RECURRING_PUR_TXN MAS transaction on the same card
-Then MAS test results are verified
-When Auth file is generated after transaction
-When MAS simulator is closed
-Then user is logged in institution
-Then search Purchase authorization and verify 000-Successful status
-Then user sign out from customer portal
