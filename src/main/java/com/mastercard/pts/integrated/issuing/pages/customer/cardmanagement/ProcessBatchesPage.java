@@ -525,7 +525,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		String elementXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic);
 		Boolean isProcessed = false;
 		String statusXpath = elementXpath + "//parent::td//following-sibling::td/a";
-		SimulatorUtilities.wait(20000);;
+		SimulatorUtilities.wait(20000);
 		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
 		switchToIframe(Constants.VIEW_BATCH_DETAILS);
 
@@ -536,7 +536,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 				waitForLoaderToDisappear();
 				getFinder().getWebDriver().switchTo().defaultContent();
 				waitForLoaderToDisappear();
-				getFinder().getWebDriver().findElement(By.xpath(statusXpath)).click();
+				clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
 				switchToIframe(Constants.VIEW_BATCH_DETAILS);
 				waitForLoaderToDisappear();
 				waitForElementVisible(processBatchStatusTxt);
