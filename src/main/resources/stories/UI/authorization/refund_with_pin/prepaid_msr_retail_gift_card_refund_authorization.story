@@ -15,7 +15,6 @@ Meta:
 @TestId TC398484
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
-Then device has "normal" status
 Then user sign out from customer portal
 
 
