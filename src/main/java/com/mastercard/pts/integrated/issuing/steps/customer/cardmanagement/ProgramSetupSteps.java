@@ -625,8 +625,6 @@ public class ProgramSetupSteps {
 		devicePlan.setBeforeKYC(data.getTransactionPlan());	
 		}
 		devicePlan.setDeviceType(deviceType);
-		if ("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
-		     devicePlan.setIsPinLess("YES");
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}

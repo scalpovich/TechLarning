@@ -73,6 +73,9 @@ public class ConstantData {
 	
 	public static final String THREE_D_SECURE_TRANSACTION = "3D_SECURE_CAVV";
 	public static final String DATA_ELEMENT_CAVV = "048.TLV.43";
+	
+	public static final String INSTITUTION_KEY = "institution";
+	public static final String PRODUCT_IDENTITY = "product_identity";
 
 	private ConstantData() {
 	}

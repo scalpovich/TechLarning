@@ -24,6 +24,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Cred
 import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 
 @Component
 public class CreditUtilitySteps {
@@ -47,8 +48,8 @@ public class CreditUtilitySteps {
 	@Given("setting json values in excel for $product")
 	public void mappingJsonValuesInExcel(String product) throws Exception
 	{
-		context.put("product_identity", product);
-		String institution=System.getProperty("institution");
+		context.put(ConstantData.PRODUCT_IDENTITY, product);
+		String institution=System.getProperty(ConstantData.INSTITUTION_KEY);
 		Method[]methodsJson=CreditInstitutionData.class.getDeclaredMethods();
 		/** Step-1
 		 * creating context of excel and json for all the fields mention in CreditInstitutionData.json
@@ -70,16 +71,18 @@ public class CreditUtilitySteps {
 // 		 * Update the excel context of Step-2 with the replaced values and using it to run the entire scenario/Story
 // 		 */
 //		updatedExcelContext(jsonMap, concurrentMap);
-
+   
+        //get json values in map
         Map<String,String>jsonMap=getJsonMap(methodsJson);
 
+        //append extra json values to ExcelMap
         map=putExtraJsonValuesTOExcel(concurrentMap, jsonMap);
+        
+        //replace excel values with Excel values
         Map<String, Object> allInOneMap=replacingValuesFromJsonToExcel(map, jsonMap);
      
 		context.put(TestContext.KEY_STORY_DATA,allInOneMap);
 		context.get(TestContext.KEY_STORY_DATA);
-		
-	
 	}
 
 
