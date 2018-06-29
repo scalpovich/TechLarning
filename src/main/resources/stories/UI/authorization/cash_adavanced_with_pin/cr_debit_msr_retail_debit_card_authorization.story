@@ -13,11 +13,11 @@ Meta:
 Scenario: Setup - debit msr retail debit card
 Given user is logged in institution
 And device range for program with device plan for "debit" "magnetic stripe" card
-When user creates new device of debit type for new client
 Then user sign out from customer portal
 
 Scenario: Device production - debit msr retail debit card
 Given user is logged in institution
+When user creates new device of debit type for new client
 And a new device was created
 When processes pre-production batch for debit
 When processes device production batch for debit

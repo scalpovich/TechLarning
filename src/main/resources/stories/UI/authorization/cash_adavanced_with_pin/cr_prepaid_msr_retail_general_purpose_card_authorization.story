@@ -15,7 +15,6 @@ Meta:
 @TestId TC398484
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
-When user creates new device of prepaid type for new client
 And user sign out from customer portal
 
 
@@ -23,6 +22,7 @@ Scenario: prepaid msr retail general purpose card device production
 Meta:
 @TestId TC398484
 Given user is logged in institution
+When user creates new device of prepaid type for new client
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
