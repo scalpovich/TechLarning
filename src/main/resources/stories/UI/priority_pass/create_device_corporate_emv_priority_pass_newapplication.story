@@ -27,6 +27,10 @@ And User fills Wallet Plan for credit product and program Corporate Credit Card 
 And User fills MCC Rules for credit product
 And User Primary Device [P] fills New Client [N] Program Corporate Credit Card [10] section for credit product for Mastercard
 And User fills Device Range section for credit product
+And user sign out from customer portal
+
+Scenario:Create device through above created configuration
+Given user is logged in institution
 Then "credit" is created with "Primary Device [P]" as application type with application sub-type as "New Client [N]" and customer of type "Corporate [1]" with "EMV Card [2]"
 When user verifies the credit application device
 When user approves the credit application device
