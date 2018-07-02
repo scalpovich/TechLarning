@@ -237,7 +237,7 @@ public class UserPage extends AbstractBasePage{
 	
 	public void verifyNewUserCreationSuccess(UserCreation userCreation) {
 		if (!publishErrorOnPage()) {
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 			enterNewCreatedUser(userCreation);
 			searchNewUser();			
 			for (int l = 0; l < 21; l++) {

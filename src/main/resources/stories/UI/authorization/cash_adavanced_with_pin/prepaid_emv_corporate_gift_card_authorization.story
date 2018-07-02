@@ -17,6 +17,7 @@ Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
 Then device has "normal" status
+Then user sign out from customer portal
 
 Scenario: prepaid emv corporate giftcard card device production
 Meta:
@@ -26,8 +27,6 @@ And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 When processes pin generation batch for prepaid
-Then user sign out from customer portal
-Then user is logged in institution
 Then device has "normal" status
 When user has wallet number information for prepaid device
 When user performs adjustment transaction
@@ -58,7 +57,9 @@ Meta:
 @TestId 
 When Auth file is generated after transaction
 When MAS simulator is closed
-
+Then user is logged in institution
+Then search Cash Advance authorization and verify 000-Successful status
+Then user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
 Meta:

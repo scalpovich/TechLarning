@@ -212,7 +212,7 @@ public class CollectUiVerificationSteps {
 		collectUiVerificationAdministrationWorkflow.verifyReportPrivilegesPage();
 	}
 
-	@Then("ResetPassword.java page of administration tab is rendered correctly")
+	@Then("ResetPassword page of administration tab is rendered correctly")
 	public void thenResetPasswordPageOfAdministratorTabIsRenderedCorrectly() {
 		collectUiVerificationAdministrationWorkflow.verifyResetPasswordPage();
 	}

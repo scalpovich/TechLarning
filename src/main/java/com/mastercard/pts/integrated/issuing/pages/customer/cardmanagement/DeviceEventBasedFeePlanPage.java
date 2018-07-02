@@ -160,7 +160,7 @@ public class DeviceEventBasedFeePlanPage extends AbstractBasePage {
 
 	public void clickSaveButton() {
 		clickWhenClickable(saveBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public void clickAddDeviceEventBasedFeeDetails() {
@@ -170,7 +170,7 @@ public class DeviceEventBasedFeePlanPage extends AbstractBasePage {
 	}
 
 	public void switchToAddDeviceEventBasedFeeDetailsFrame() {
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe(Constants.ADD_DEVICE_EVENT_BASED_FEE_DETAILS_FRAME);
 	}
 
@@ -201,11 +201,11 @@ public class DeviceEventBasedFeePlanPage extends AbstractBasePage {
 	public void verifyDeviceEventBasedFeePlanSuccess() {
 		if (!verifyErrorsOnDeviceEventBasedFeePlanPage()) {
 			logger.info("Plan Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(CancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 

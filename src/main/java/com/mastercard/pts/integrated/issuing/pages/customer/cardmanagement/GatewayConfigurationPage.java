@@ -170,7 +170,7 @@ public class GatewayConfigurationPage extends AbstractBasePage {
 	}
 
 	public String getFeedbackText() {
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		return getMessageFromFeedbackPanel();
 	}
 

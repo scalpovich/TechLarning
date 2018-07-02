@@ -14,7 +14,6 @@ Given user is logged in institution
 And device range for program with device plan for "debit" "magnetic stripe" card without pin
 When user creates new device of debit type for new client
 Then device has "normal" status
-When user updates cvccvv as uncheck on device plan
 Then user sign out from customer portal
 
 Scenario: Device production - debit msr corp debit card
@@ -60,7 +59,7 @@ Meta:
 @TestId 
 Given user is logged in institution
 When User uploads the NOT file
-When user processes batch for prepaid
+When user processes batch for debit
 Then user sign out from customer portal
 
 Scenario: Matching & Posting to Cardholders account
@@ -68,6 +67,6 @@ Meta:
 @TestId 
 Given user is logged in institution
 When transaction status is "Matching Pending"
-When "Matching" batch for prepaid is successful
+When "Matching" batch for debit is successful
 Then transaction status is "Presentment Matched with authorization"
 Then user sign out from customer portal

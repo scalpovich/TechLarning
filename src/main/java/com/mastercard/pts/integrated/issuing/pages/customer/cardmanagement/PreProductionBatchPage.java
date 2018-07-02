@@ -6,6 +6,8 @@ import java.util.Collection;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -74,7 +77,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		ClickButton(searchBtn);
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		ClickButton(processSelectedBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public void processPreProductionBatch(PreProductionBatch batch) {
@@ -103,7 +106,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		ClickButton(processSelectedBtn);
 		verifyOperationStatus();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 
 	}
 
@@ -115,13 +118,19 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
 		enterText(batchNumberTxt, batchNumber);
 		ClickButton(searchBtn);
+		waitAndSearchForRecordToAppear();
+		setQuantityRequested();
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		ClickButton(processSelectedBtn);
 		verifyOperationStatus();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 
 	}
-
+	
+	public void setQuantityRequested(){		
+		context.put(CreditConstants.QUANTITY_REQUESTED, getCellTextByColumnName(1,"Quantity Requested")); 
+	}
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Pre-Prodcution Batch");
 		verifySearchButton("Search");
@@ -182,10 +191,10 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	public void verifyPreProductionRequestSuccess() {
 		if (!verifyErrorsOnPreProductionPage()) {
 			logger.info("Pre-Production batch succesful");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in batch");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 
@@ -200,13 +209,13 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		waitForLoaderToDisappear();
 		selectDropDownByText(productTypeDDwn, batch.getProductType());
 		CustomUtils.ThreadDotSleep(8000);
-		Device device = context.get(ContextConstants.DEVICE);
-		enterText(batchNumberTxt, device.getBatchNumber());
+		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
+		enterText(batchNumberTxt, batchNumber);
 		ClickButton(searchBtn);
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		ClickButton(processSelectedBtn);
 		verifyOperationStatus();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	@Override

@@ -142,7 +142,7 @@ public class BusinessMandatoryFieldsPage extends AbstractBasePage {
 
 	public void clickSaveButton() {
 		clickWhenClickable(saveBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public boolean verifyErrorsOnBusinessMandatesPage() {
@@ -152,11 +152,11 @@ public class BusinessMandatoryFieldsPage extends AbstractBasePage {
 	public void verifyBusinessMandatesSuccess() {
 		if (!verifyErrorsOnBusinessMandatesPage()) {
 			logger.info("Business Mandate Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(CancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 
@@ -170,7 +170,7 @@ public class BusinessMandatoryFieldsPage extends AbstractBasePage {
 
 	public void addBusinessMandFieldDetails() {
 		clickWhenClickable(addSubDetailsBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe(Constants.ADD_BUSINESS_MANDATORY_DETAILS_FRAME);
 		selectDropDownByIndex(FieldNameDDwn, 1);
 		clickSaveButton();

@@ -103,7 +103,7 @@ public class DeviceJoiningPage extends AbstractBasePage {
 
 	public void clickSaveButton() {
 		clickWhenClickable(saveBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public boolean verifyErrorsOnDeviceJoiningPage() {
@@ -113,11 +113,11 @@ public class DeviceJoiningPage extends AbstractBasePage {
 	public void verifyDeviceJoiningSuccess() {
 		if (!verifyErrorsOnDeviceJoiningPage()) {
 			logger.info("DeviceJoining Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in record Addition");
 			clickWhenClickable(CancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 
@@ -140,7 +140,7 @@ public class DeviceJoiningPage extends AbstractBasePage {
 	}
 
 	public void switchToAddDeviceJoiningPlanDetailsFrame() {
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe(Constants.ADD_DEVICE_JOINING_PLAN_DETAILS_FRAME);
 	}
 
@@ -196,11 +196,11 @@ public class DeviceJoiningPage extends AbstractBasePage {
 	public void verifyDeviceJoiningMembershipSuccess() {
 		if (!verifyErrorsOnDeviceJoiningMembershipPage()) {
 			logger.info("Device Joining Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(CancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 

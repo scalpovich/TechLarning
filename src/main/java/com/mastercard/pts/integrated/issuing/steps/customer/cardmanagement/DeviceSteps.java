@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.SubApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
@@ -33,10 +35,10 @@ public class DeviceSteps {
 
 	@Autowired
 	private DeviceWorkflow deviceWorkflow;
-	
+
 	@Autowired
 	ProgramFlows programFlows;
-	
+
 	@Autowired
 	Program program;
 
@@ -122,7 +124,8 @@ public class DeviceSteps {
 	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceCreation(String type) {
 		Device device = Device.createWithProvider(provider);
 		device.setAppliedForProduct(ProductType.fromShortName(type));
-
+		device.setApplicationType(device.getApplicationType());
+		context.put(ContextConstants.APPLICATION_TYPE, device.getApplicationType());
 		Device deviceTemp = Device.createWithProviderForOtherDetails(provider);
 		device.setOtherInfoDeliveryMode(deviceTemp.getOtherInfoDeliveryMode());
 		device.setOtherInfoEmailAlertRequired(deviceTemp.getOtherInfoEmailAlertRequired());
@@ -143,83 +146,180 @@ public class DeviceSteps {
 		Assert.assertTrue("Application is not created successfully",deviceWorkflow.createDeviceUsingApplication(device));
 		context.put(CreditConstants.APPLICATION, device);
 	}
+	
+	@Then("$type device is created for $customerType and $applicationType and $subApplicationType and $deviceType")
+	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomer(String type,String customerType,String applicationType,String subApplicationType,String deviceType) {
+		Device device = Device.createWithProvider(provider);
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+
+		Device deviceTemp = Device.createWithProviderForOtherDetails(provider);
+		device.setOtherInfoDeliveryMode(deviceTemp.getOtherInfoDeliveryMode());
+		device.setOtherInfoEmailAlertRequired(deviceTemp.getOtherInfoEmailAlertRequired());
+		device.setOtherInfoFaxNo(deviceTemp.getOtherInfoFaxNo());
+		device.setOtherInfoPreferredLanguage(deviceTemp.getOtherInfoPreferredLanguage());
+		device.setOtherInfoRegisteredEmailAddress(deviceTemp.getOtherInfoRegisteredEmailAddress());
+		device.setOtherInfoRegisteredMobileNumber(deviceTemp.getOtherInfoRegisteredMobileNumber());
+		device.setOtherInfoRegisterForDncr(deviceTemp.getOtherInfoRegisterForDncr());
+		device.setOtherInfoSmsAlertRequired(deviceTemp.getOtherInfoSmsAlertRequired());
+		device.setOtherInfoStatementPreference(deviceTemp.getOtherInfoStatementPreference());
+		device.setCustomerType(customerType);
+		device.setApplicationType(applicationType);
+		device.setSubApplicationType(subApplicationType);
+		device.setDeviceType1(deviceType);
+
+		Program program = context.get(ContextConstants.PROGRAM);
+		device.setProgramCode(program.buildDescriptionAndCode());
+		sdnUncheckProgram(program.getProgramCode());
+		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+
+		Assert.assertTrue("Application is not created successfully",deviceWorkflow.createDeviceUsingApplication(device));
+		context.put(CreditConstants.APPLICATION, device);
+	}
+	
+	@Then("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
+	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewDevice(String type,String customerType,String applicationType,String subApplicationType,String deviceType) {
+		Device device = Device.createWithProvider(provider);
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+
+		Device deviceTemp = Device.createWithProviderForOtherDetails(provider);
+		device.setOtherInfoDeliveryMode(deviceTemp.getOtherInfoDeliveryMode());
+		device.setOtherInfoEmailAlertRequired(deviceTemp.getOtherInfoEmailAlertRequired());
+		device.setOtherInfoFaxNo(deviceTemp.getOtherInfoFaxNo());
+		device.setOtherInfoPreferredLanguage(deviceTemp.getOtherInfoPreferredLanguage());
+		device.setOtherInfoRegisteredEmailAddress(deviceTemp.getOtherInfoRegisteredEmailAddress());
+		device.setOtherInfoRegisteredMobileNumber(deviceTemp.getOtherInfoRegisteredMobileNumber());
+		device.setOtherInfoRegisterForDncr(deviceTemp.getOtherInfoRegisterForDncr());
+		device.setOtherInfoSmsAlertRequired(deviceTemp.getOtherInfoSmsAlertRequired());
+		device.setOtherInfoStatementPreference(deviceTemp.getOtherInfoStatementPreference());
+		device.setCustomerType(customerType);
+		device.setApplicationType(applicationType);
+		device.setSubApplicationType(subApplicationType);
+		device.setDeviceType1(deviceType);
+
+		Program program = context.get(ContextConstants.PROGRAM);
+		device.setProgramCode(program.buildDescriptionAndCode());
+		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT))
+		{
+			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
+			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+		}
+		else
+		{
+		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+		}
+
+		deviceWorkflow.createDevice(device);
+	}
+	
+	@Then("$type device is created using new Application screen for $customerType and $applicationType and $subApplicationType and $deviceType")
+	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewApplication(String type,String customerType,String applicationType,String subApplicationType,String deviceType) {
+		Device device = Device.createWithProvider(provider);
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+
+		Device deviceTemp = Device.createWithProviderForOtherDetails(provider);
+		device.setOtherInfoDeliveryMode(deviceTemp.getOtherInfoDeliveryMode());
+		device.setOtherInfoEmailAlertRequired(deviceTemp.getOtherInfoEmailAlertRequired());
+		device.setOtherInfoFaxNo(deviceTemp.getOtherInfoFaxNo());
+		device.setOtherInfoPreferredLanguage(deviceTemp.getOtherInfoPreferredLanguage());
+		device.setOtherInfoRegisteredEmailAddress(deviceTemp.getOtherInfoRegisteredEmailAddress());
+		device.setOtherInfoRegisteredMobileNumber(deviceTemp.getOtherInfoRegisteredMobileNumber());
+		device.setOtherInfoRegisterForDncr(deviceTemp.getOtherInfoRegisterForDncr());
+		device.setOtherInfoSmsAlertRequired(deviceTemp.getOtherInfoSmsAlertRequired());
+		device.setOtherInfoStatementPreference(deviceTemp.getOtherInfoStatementPreference());
+		device.setCustomerType(customerType);
+		device.setApplicationType(applicationType);
+		device.setSubApplicationType(subApplicationType);
+		device.setDeviceType1(deviceType);
+
+		Program program = context.get(ContextConstants.PROGRAM);
+		device.setProgramCode(program.buildDescriptionAndCode());
+		sdnUncheckProgram(program.getProgramCode());
+		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+
+		Assert.assertTrue("Application is not created successfully",deviceWorkflow.createDeviceUsingApplication(device));
+		context.put(CreditConstants.APPLICATION, device);
+	}
 		
-		@Then("$type device is created using new device screen")
+
+	@Then("$type device is created using new device screen")
 		public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceCreationUsingNewDevice(String type){
-			Device device = Device.createWithProvider(provider);
-			device.setAppliedForProduct(ProductType.fromShortName(type));
-			
-			Device deviceTemp = Device.createWithProviderForOtherDetails(provider); 
-			device.setOtherInfoDeliveryMode(deviceTemp.getOtherInfoDeliveryMode());
+		Device device = Device.createWithProvider(provider);
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+
+		Device deviceTemp = Device.createWithProviderForOtherDetails(provider);
+		device.setOtherInfoDeliveryMode(deviceTemp.getOtherInfoDeliveryMode());
 			device.setOtherInfoEmailAlertRequired(deviceTemp.getOtherInfoEmailAlertRequired());
-			device.setOtherInfoFaxNo(deviceTemp.getOtherInfoFaxNo());
+		device.setOtherInfoFaxNo(deviceTemp.getOtherInfoFaxNo());
 			device.setOtherInfoPreferredLanguage(deviceTemp.getOtherInfoPreferredLanguage());
 			device.setOtherInfoRegisteredEmailAddress(deviceTemp.getOtherInfoRegisteredEmailAddress());
 			device.setOtherInfoRegisteredMobileNumber(deviceTemp.getOtherInfoRegisteredMobileNumber());
 			device.setOtherInfoRegisterForDncr(deviceTemp.getOtherInfoRegisterForDncr());
 			device.setOtherInfoSmsAlertRequired(deviceTemp.getOtherInfoSmsAlertRequired());
 			device.setOtherInfoStatementPreference(deviceTemp.getOtherInfoStatementPreference());
-			
-			Program program = context.get(ContextConstants.PROGRAM);
-			device.setProgramCode(program.buildDescriptionAndCode());
-			sdnUncheckProgram(program.getProgramCode());
-			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
-			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
-			
-			deviceWorkflow.createDevice(device);
-			context.put(ContextConstants.DEVICE, device);
-		}
-	
-		public void sdnUncheckProgram(String value) {
-			programFlows.programEdit(value);
-			program.setProgramCode(value);
-		}
-		
-		@Then("$type device is created using new device screen by data driven")
+
+		Program program = context.get(ContextConstants.PROGRAM);
+		device.setProgramCode(program.buildDescriptionAndCode());
+		sdnUncheckProgram(program.getProgramCode());
+		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+
+		deviceWorkflow.createDevice(device);
+		context.put(ContextConstants.DEVICE, device);
+	}
+
+	public void sdnUncheckProgram(String value) {
+		programFlows.programEdit(value);
+		program.setProgramCode(value);
+	}
+
+	@Then("$type device is created using new device screen by data driven")
 	      public void thenCreditDevicePlanAndProgramAreMadeAvailableFroDeviceCreationUsingNewDeviceDataDriven(String type){
-	            Device device = Device.createWithProvider(provider);
-	            device.setAppliedForProduct(ProductType.fromShortName(type));                 
-	            Device deviceTemp = Device.createWithProviderForOtherDetails(provider); 
-	            device.setOtherInfoDeliveryMode(deviceTemp.getOtherInfoDeliveryMode());
+		Device device = Device.createWithProvider(provider);
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+		Device deviceTemp = Device.createWithProviderForOtherDetails(provider);
+		device.setOtherInfoDeliveryMode(deviceTemp.getOtherInfoDeliveryMode());
 	            device.setOtherInfoEmailAlertRequired(deviceTemp.getOtherInfoEmailAlertRequired());
-	            device.setOtherInfoFaxNo(deviceTemp.getOtherInfoFaxNo());
+		device.setOtherInfoFaxNo(deviceTemp.getOtherInfoFaxNo());
 	            device.setOtherInfoPreferredLanguage(deviceTemp.getOtherInfoPreferredLanguage());
 	            device.setOtherInfoRegisteredEmailAddress(deviceTemp.getOtherInfoRegisteredEmailAddress());
 	            device.setOtherInfoRegisteredMobileNumber(deviceTemp.getOtherInfoRegisteredMobileNumber());
 	            device.setOtherInfoRegisterForDncr(deviceTemp.getOtherInfoRegisterForDncr());
 	            device.setOtherInfoSmsAlertRequired(deviceTemp.getOtherInfoSmsAlertRequired());
 	            device.setOtherInfoStatementPreference(deviceTemp.getOtherInfoStatementPreference());
-	            sdnUncheckProgram(program.getProgramCode());
-	            deviceWorkflow.createDevice(device);
-	            context.put(ContextConstants.DEVICE, device);
-	      }
-		
-		@When("$type device is created using new device screen by data driven $pinOption Pin")
-		@Then("$type device is created using new device screen by data driven $pinOption Pin")
-		public void createWithProviderDataDriven(String type,String pinOption){
-			Device device = Device.createWithProviderDataDriven(provider);
-			
-			Constants.DATA_DRIVEN_CARD_BOARDING ="YES";
-			
-			if(pinOption.equalsIgnoreCase("with")){
-				context.put(ConstantData.IS_PIN_REQUIRED, "TRUE");
-			}else{
-				context.put(ConstantData.IS_PIN_REQUIRED, "FALSE");
-			}
-			
-			device.setAppliedForProduct(ProductType.fromShortName(type));			
-			Device deviceTemp = Device.createWithProviderForOtherDetails(provider); 
-			device.setOtherInfoDeliveryMode(deviceTemp.getOtherInfoDeliveryMode());
+		sdnUncheckProgram(program.getProgramCode());
+		deviceWorkflow.createDevice(device);
+		context.put(ContextConstants.DEVICE, device);
+	}
+
+	@When("$type device is created using new device screen by data driven $pinOption Pin")
+	@Then("$type device is created using new device screen by data driven $pinOption Pin")
+	public void createWithProviderDataDriven(String type, String pinOption) {
+		Device device = Device.createWithProviderDataDriven(provider);
+
+		Constants.DATA_DRIVEN_CARD_BOARDING = "YES";
+
+		if (pinOption.equalsIgnoreCase("with")) {
+			context.put(ConstantData.IS_PIN_REQUIRED, "TRUE");
+		} else {
+			context.put(ConstantData.IS_PIN_REQUIRED, "FALSE");
+		}
+
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+		Device deviceTemp = Device.createWithProviderForOtherDetails(provider);
+		device.setOtherInfoDeliveryMode(deviceTemp.getOtherInfoDeliveryMode());
 			device.setOtherInfoEmailAlertRequired(deviceTemp.getOtherInfoEmailAlertRequired());
-			device.setOtherInfoFaxNo(deviceTemp.getOtherInfoFaxNo());
+		device.setOtherInfoFaxNo(deviceTemp.getOtherInfoFaxNo());
 			device.setOtherInfoPreferredLanguage(deviceTemp.getOtherInfoPreferredLanguage());
 			device.setOtherInfoRegisteredEmailAddress(deviceTemp.getOtherInfoRegisteredEmailAddress());
 			device.setOtherInfoRegisteredMobileNumber(deviceTemp.getOtherInfoRegisteredMobileNumber());
 			device.setOtherInfoRegisterForDncr(deviceTemp.getOtherInfoRegisterForDncr());
 			device.setOtherInfoSmsAlertRequired(deviceTemp.getOtherInfoSmsAlertRequired());
 			device.setOtherInfoStatementPreference(deviceTemp.getOtherInfoStatementPreference());			
-			sdnUncheckProgram(program.getProgramCode());			
-			deviceWorkflow.createDevice(device);
-			context.put(ContextConstants.DEVICE, device);
-		}
+		sdnUncheckProgram(program.getProgramCode());
+		deviceWorkflow.createDevice(device);
+		context.put(ContextConstants.DEVICE, device);
+	}
 }
