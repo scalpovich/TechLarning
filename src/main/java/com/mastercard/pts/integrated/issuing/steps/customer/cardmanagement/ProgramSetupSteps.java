@@ -535,7 +535,6 @@ public class ProgramSetupSteps {
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 		
 		programSetupWorkflow.createDevicePlan(devicePlan);
-		transactionFeeWaiverPlanFlows.addTransactionFeeWaiverPlanForMultipleType(transactionFeeWaiverPlan);
 		
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}

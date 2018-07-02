@@ -275,6 +275,8 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setPinGenerationOption(provider.getString(PIN_GENERATION_OPTION));
 		plan.setPinDataTransmission(provider.getString(PIN_DATA_TRANSMISSION));
 		plan.setTransactionFeeWaiverPlan(provider.getString(TRANSACTION_FEE_WAIVER_PLAN));
+		System.out.println(provider.getString(TRANSACTION_FEE_WAIVER_PLAN));
+		
 		plan.setTransactionLimitPlan(provider.getString(TRANSACTION_LIMIT_PLAN));
 		plan.setChipType(provider.getString(CHIP_TYPE));
 		plan.setEcommerceAllowed(true);
