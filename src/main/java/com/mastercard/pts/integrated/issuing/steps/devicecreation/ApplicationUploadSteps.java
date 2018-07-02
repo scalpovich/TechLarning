@@ -118,6 +118,7 @@ public class ApplicationUploadSteps {
 		batchProcessFlows.processDeviceProductionBatchNewDevice(batch);
 	}
 	
+	
 	@Then("$type processes deviceproduction batch using new Device for Supplementary")
 	@When("$type processes deviceproduction batch using new Device for Supplementary")
 	public void whenProcessesDeviceproductionBatchForDeviceSupplementary(String type) {
@@ -132,6 +133,13 @@ public class ApplicationUploadSteps {
 		PinGenerationBatch batch = new PinGenerationBatch();
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPinProductionBatchNewApplication(batch);
+	}
+	
+	@When("$type processes pingeneration batch using new Device for Supplementary")
+	public void whenProcessesPinGenerationBatchUsingNewDeviceForSupplementry(String type) {
+		PinGenerationBatch batch = new PinGenerationBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processPinGenerationBatch(batch);
 	}
 
 	@Then("$type processes pinProduction batch using new Device")

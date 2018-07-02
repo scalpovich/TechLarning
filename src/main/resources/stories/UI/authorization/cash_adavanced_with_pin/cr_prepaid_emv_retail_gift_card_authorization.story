@@ -19,6 +19,7 @@ Then device has "normal" status
 When user has wallet number information for prepaid device
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
+And user sign out from customer portal
 
 Scenario: prepaid emv retail giftcard card device production
 Meta:
@@ -43,7 +44,7 @@ Then FINSim simulator is closed
 
 Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
 Meta:
-@TestId
+@TestId 
 Given connection to MAS is established
 When perform an EMV_CASH_ADVANCE MAS transaction
 Then MAS test results are verified

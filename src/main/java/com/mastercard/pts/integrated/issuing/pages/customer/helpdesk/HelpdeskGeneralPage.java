@@ -444,6 +444,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public void setupCurrency(String lst) {
+		SimulatorUtilities.wait(1000);
 		int rowCount = driver().findElements(By.xpath(TABLE_XPATH)).size();
 		values = lst.trim().split(",");
 			for (int i = 0; i < values.length ; i++)

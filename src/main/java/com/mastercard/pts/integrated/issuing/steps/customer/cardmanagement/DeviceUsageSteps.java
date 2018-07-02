@@ -1,9 +1,12 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.Map;
 import java.util.Optional;
 
 import org.jbehave.core.annotations.Then;
+import org.jbehave.core.annotations.When;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,6 +27,9 @@ public class DeviceUsageSteps {
 
 	private static final String INTERNATIONAL = "INTERNATIONAL";
 
+	private static final String FAILED_MESSAGE_INFO = "Invalid ATC counter ";
+	private static final String ATC = "ATC" ;
+	
 	@Autowired
 	private TestContext context;
 
@@ -45,7 +51,7 @@ public class DeviceUsageSteps {
 		DeviceUsage deviceUsage = DeviceUsage.createWithProvider(provider);
 		deviceUsageWorkflow.deviceUsageVerification(device.getDeviceNumber(), tab, deviceUsage);
 	}
-
+	
 	@Then("user searches device on device usage screen and performs assertions on device tool usage and device transaction usage tabs")
 	public void whenUserSearchesDeviceOnDeviceUsageScreen() {
 		Device device = context.get(ContextConstants.DEVICE);
@@ -80,5 +86,30 @@ public class DeviceUsageSteps {
 			deviceUsage.setVelocity();
 			context.put(ContextConstants.DEVICE, device);
 		}
+	}
+	
+	@When("verify ATC counter getting updated at device usage screen")
+	public void thenUserVerifyATCCounter() {
+		Device device = context.get(ContextConstants.DEVICE);		
+		String  atc = deviceUsageWorkflow.getApplicationTransactionCounterDeviceUsage(device.getDeviceNumber()).get(0);
+		boolean condition = atc.equals(returnATCCounterIncreasedByOne());
+		assertTrue(FAILED_MESSAGE_INFO+" - Expected: "+returnATCCounterIncreasedByOne()+" Actual  : "+atc, condition);		
+		context.put(ATC, atc);	
+
+	}
+	
+	@When("user notes down ATC counter on device usage screen")
+	public void thenUserNoteDownATCCounter() {
+		Device device = context.get(ContextConstants.DEVICE);
+		String  atc = deviceUsageWorkflow.getApplicationTransactionCounterDeviceUsage(device.getDeviceNumber()).get(0);
+		boolean condition = atc.equals("1");
+		assertTrue(FAILED_MESSAGE_INFO+" - Expected: 1 Actual  : "+atc, condition);		
+		context.put(ATC, atc);	
+		
+	}
+	
+	public String returnATCCounterIncreasedByOne() {
+		int atc = Integer.parseInt(context.get(ATC)) + 1;		
+		return Integer.toString(atc);
 	}
 }

@@ -7,8 +7,7 @@ I want to authorize transactions for prepaid msr retail general purpose card
 
 Meta:
 @StoryName p_msr_retail_gen_purpose
-@oldReferenceSheet_prepaid_msr
-@CRCardsWithAuthorizationCashAdvancedWithClearing
+@RecurringWithPin
 
 Scenario: Set up prepaid msr retail general purpose card
 Meta:
@@ -28,10 +27,13 @@ When processes device production batch for prepaid
 When processes pin generation batch for prepaid
 Then device has "normal" status
 When user has wallet number information for prepaid device
+Then user sign out from customer portal
+Then user is logged in institution
 When user has current wallet balance amount information for prepaid device
+When user performs adjustment transaction
 Then device has "normal" status
 Then user activates device through helpdesk
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario: Pin Generation 
 Meta:
@@ -42,11 +44,11 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform RECURRING_PUR_TXN_PIN Authorization transaction
+Scenario: Perform MSR_RECURRING_PUR_TXN Authorization transaction
 Meta:
 @TestId 
 Given connection to MAS is established
-When perform an RECURRING_PUR_TXN MAS transaction
+When perform an MSR_RECURRING_PUR_TXN MAS transaction
 Then MAS test results are verified
 
 Scenario: Generate Auth File for Clearing

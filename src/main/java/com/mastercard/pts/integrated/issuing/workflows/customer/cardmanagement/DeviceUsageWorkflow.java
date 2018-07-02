@@ -94,4 +94,10 @@ public class DeviceUsageWorkflow extends MenuFlows {
 
 		}
 	}
+	
+
+	public List<String> getApplicationTransactionCounterDeviceUsage(String cardNumber) {
+		DeviceUsagePage deviceUsage = navigator.navigateToPage(DeviceUsagePage.class);
+		return deviceUsage.getApplicationTransactionCounter(cardNumber);		
+	}
 }
