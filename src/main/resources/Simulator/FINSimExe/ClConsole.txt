@@ -77,3 +77,13 @@
 13:40.02  The Send Failed with error 10054
 13:40.13  The Send Failed with error 10054
 13:40.24  The Send Failed with error 10054
+13:40.35  The Send Failed with error 10054
+13:40.46  The Send Failed with error 10054
+13:40.57  The Send Failed with error 10054
+13:41.08  The Send Failed with error 10054
+13:41.19  The Send Failed with error 10054
+13:41.30  The Send Failed with error 10054
+13:41.41  The Send Failed with error 10054
+13:41.52  The Send Failed with error 10054
+13:42.03  The Send Failed with error 10054
+13:42.14  The Send Failed with error 10054
