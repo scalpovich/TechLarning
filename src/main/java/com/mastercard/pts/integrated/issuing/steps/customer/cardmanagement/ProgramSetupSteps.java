@@ -61,9 +61,6 @@ public class ProgramSetupSteps {
 
 	@Autowired
 	private ProgramSetupWorkflow programSetupWorkflow;
-	
-	@Autowired
-	private TransactionFeeWaiverPlanFlows transactionFeeWaiverPlanFlows;
 
 	@Autowired
 	private KeyValueProvider provider;
@@ -77,6 +74,9 @@ public class ProgramSetupSteps {
 	@Autowired
 	MCG mcg;
 
+	@Autowired
+	private TransactionFeeWaiverPlanFlows transactionFeeWaiverPlanFlows;
+	
 	private DeviceJoiningAndMemberShipFeePlan deviceJoiningAndMemberShipFeePlan;
 
 	private DeviceEventBasedFeePlan deviceEventBasedFeePlan;
@@ -90,8 +90,6 @@ public class ProgramSetupSteps {
 	private TransactionPlan transactionPlan;
 
 	private static final String TRANSACTION_FEE_PLAN = "TRANSACTION_FEE_PLAN";
-	
-	private static final String TRANSACTION_FEE_WAIVER_PLAN = "TRANSACTION_FEE_WAIVER_PLAN";
 
 	private TransactionLimitPlan transactionLimitPlan;
 
@@ -105,8 +103,11 @@ public class ProgramSetupSteps {
 
 	private DevicePlan devicePlan;
 	
+<<<<<<< HEAD
 	private TransactionFeeWaiverPlan transactionFeeWaiverPlan;
 	
+=======
+>>>>>>> 1caec0048d7124a4504f08a297b2b3a76dbc20bb
 	private DevicePlan devicePlanSupplementary;
 
 	private Program program;
@@ -122,6 +123,10 @@ public class ProgramSetupSteps {
 	private MCCRulePlan mccRulePlan;
 
 	private PrepaidStatementPlan prepaidStatementPlan;
+	
+	private TransactionFeeWaiverPlan transactionFeeWaiverPlan;
+	
+	private static final String TRANSACTION_FEE_WAIVER_PLAN = "TRANSACTION_FEE_WAIVER_PLAN";
 
 	private static final String CARD_PACKID_GENERATION_TEMPLATE_FOR_DEVICE2 = "CARD_PACKID_GENERATION_TEMPLATE_FOR_DEVICE2";
 
@@ -546,9 +551,12 @@ public class ProgramSetupSteps {
 		devicePlan.setTransactionFeeWaiverPlan(provider.getString(TRANSACTION_FEE_WAIVER_PLAN));
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
-		
 		programSetupWorkflow.createDevicePlan(devicePlan);
+<<<<<<< HEAD
 		
+=======
+		transactionFeeWaiverPlanFlows.addTransactionFeeWaiverPlanForMultipleType(transactionFeeWaiverPlan);
+>>>>>>> 1caec0048d7124a4504f08a297b2b3a76dbc20bb
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 	
