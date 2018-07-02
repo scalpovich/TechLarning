@@ -223,6 +223,11 @@ public class ProgramSetupWorkflow {
 		TransactionPlanPage page = navigator.navigateToPage(TransactionPlanPage.class);
 		page.createTransactionPlan(plan);
 	}
+	
+	public void createTransactionPlanWithoutAnyTransaction(TransactionPlan plan){
+		TransactionPlanPage page = navigator.navigateToPage(TransactionPlanPage.class);
+		page.createTransactionPlanWithoutAnyTransaction(plan);
+	}
 
 	public void createTransactionFeePlan(TransactionFeePlan plan) {
 		TransactionFeePlanPage page = navigator.navigateToPage(TransactionFeePlanPage.class);

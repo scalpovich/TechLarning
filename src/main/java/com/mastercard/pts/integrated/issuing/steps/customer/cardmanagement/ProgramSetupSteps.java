@@ -1227,4 +1227,12 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
 	}
+	
+	@When("User create empty Transaction Plan for $type product")
+	public void whenUserCreateEmptyTransactionPlan(String type) {
+		setPinRequiredToDefaultState();
+		transactionPlan = TransactionPlan.createWithProvider(dataProvider);
+		transactionPlan.setProductType(ProductType.fromShortName(type));
+		programSetupWorkflow.createTransactionPlanWithoutAnyTransaction(transactionPlan);
+	}
 }
