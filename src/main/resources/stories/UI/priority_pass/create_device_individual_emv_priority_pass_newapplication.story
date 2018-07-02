@@ -26,19 +26,19 @@ And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card [9]
 And User fills MCC Rules for credit product
 And User Primary Device [P] fills New Client [N] Program Retail Credit Card [9] section for credit product for Mastercard
-When User fills Device Range section for credit product
+And User fills Device Range section for credit product
 And user sign out from customer portal
 
 Scenario:Create device through above created configuration
 Given user is logged in institution
 Then "credit" is created with "Primary Device [P]" as application type with application sub-type as "New Client [N]" and customer of type "Individual [0]" with "EMV Card [2]"
-When user verifies the credit application device
-When user approves the credit application device
-When user processes close batch for new Application
-When user processes deviceGeneration batch for new Application
-When user searches for created application
-When credit processes pre-production batch using new Application
-When credit processes deviceproduction batch using new Application
-When new Application processes pin generation batch for credit
+And user verifies the credit application device
+And user approves the credit application device
+And user processes close batch for new Application
+And user processes deviceGeneration batch for new Application
+And user searches for created application
+And credit processes pre-production batch using new Application
+And credit processes deviceproduction batch using new Application
+And new Application processes pin generation batch for credit
 Then User search for new application on search screen for credit and validates the status as NORMAL
 And user sign out from customer portal

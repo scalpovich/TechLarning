@@ -32,13 +32,13 @@ And user sign out from customer portal
 Scenario:Create device through above created configuration
 Given user is logged in institution
 Then "credit" is created with "Primary Device [P]" as application type with application sub-type as "New Client [N]" and customer of type "Corporate [1]" with "EMV Card [2]"
-When user verifies the credit application device
-When user approves the credit application device
-When user processes close batch for new Application
-When user processes deviceGeneration batch for new Application
-When user searches for created application
-When credit processes pre-production batch using new Application
-When credit processes deviceproduction batch using new Application
-When new Application processes pin generation batch for credit
+And user verifies the credit application device
+And user approves the credit application device
+And user processes close batch for new Application
+And user processes deviceGeneration batch for new Application
+And user searches for created application
+And credit processes pre-production batch using new Application
+And credit processes deviceproduction batch using new Application
+And new Application processes pin generation batch for credit
 Then User search for new application on search screen for credit and validates the status as NORMAL
 And user sign out from customer portal
