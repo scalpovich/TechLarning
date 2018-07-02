@@ -27,6 +27,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	private static final String EXPIRY_FLAG = "EXPIRY_FLAG";
 	private static final String VALIDITY_ON_INITIAL_MONTHS = "VALIDITY_ON_INITIAL_MONTHS";
 	private static final String TRANSACTION_LIMIT_PLAN = "TRANSACTION_LIMIT_PLAN";
+	
 	private static final String CHIP_TYPE = "CHIP_TYPE";
 	private static final String PIN_RETRY_LIMIT = "PIN_RETRY_LIMIT";
 	private static final String PIN_LENGTH = "PIN_LENGTH";
@@ -126,6 +127,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	private static final String DP_EMV_PLAN_PIN_UNBLOCK = "DP_EMV_PLAN_PIN_UNBLOCK";
 	private static final String DP_ALLOW_INTERNATIONAL_TRANSACTIONS = "DP_ALLOW_INTERNATIONAL_TRANSACTIONS";
 	private static final String TRANSACTION_FEE_PLAN = "TRANSACTION_FEE_PLAN";
+	private static final String TRANSACTION_FEE_WAIVER_PLAN = "TRANSACTION_FEE_WAIVER_PLAN";
 	private static final String DP_VIRTUAL_CREDIT_CARD_LIMIT = "VIRTUAL_CREDIT_CARD_LIMIT";
 	private static final String DP_PER_TRANSACTION_LIMIT ="DP_PER_TRANSACTION_LIMIT";
 	private static final String DP_TOTAL_TRANSACTION_LIMIT ="DP_TOTAL_TRANSACTION_LIMIT";
@@ -245,6 +247,16 @@ public class DevicePlan implements HasCodeAndDescription {
 	private String expiryDateExcel;
 	private String allowInternationalTransaction;
 	private String transactionFeePlan;
+	private String transactionFeeWaiverPlan;
+	
+	public String getTransactionFeeWaiverPlan() {
+		return transactionFeeWaiverPlan;
+	}
+
+	public void setTransactionFeeWaiverPlan(String transactionFeeWaiverPlan) {
+		this.transactionFeeWaiverPlan = transactionFeeWaiverPlan;
+	}
+
 	private String virtualCreditCardLimit;
 
 	public static DevicePlan createWithProvider(KeyValueProvider provider) {
@@ -295,6 +307,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setFillEMVPlan(provider.getString(FILL_EMV_PLAN));
 		plan.setAllowInternationalTransaction(provider.getString(DP_ALLOW_INTERNATIONAL_TRANSACTIONS));
 		plan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
+		plan.setTransactionFeeWaiverPlan(provider.getString(TRANSACTION_FEE_WAIVER_PLAN));
 		return plan;
 	}
 	
