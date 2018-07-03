@@ -427,8 +427,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(maritialStatusDDwn, client.getMaritialStatus());
 		
 		if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.DEBIT)) {
-			WebElementUtils.enterText(accountNbrTxt, device.getAccountNumber());
-			WebElementUtils.selectDropDownByVisibleText(accountTypeDDwn, device.getAccountType());
+			if(!(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE ))){
+				WebElementUtils.enterText(accountNbrTxt, device.getAccountNumber());
+				WebElementUtils.selectDropDownByVisibleText(accountTypeDDwn, device.getAccountType());
+			}	
 		}
 		
 		WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
