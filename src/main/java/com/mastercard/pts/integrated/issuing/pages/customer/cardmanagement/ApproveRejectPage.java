@@ -111,9 +111,9 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 			waitForPageToLoad(driver());
 			clickWhenClickable(editImg);
 			switchToIframe(APPROVE_REJECT_FRAME);
-			SimulatorUtilities.wait(5000);
-			clickWhenClickablewithWicket(approveBtn);
-			SimulatorUtilities.wait(5000);
+			SimulatorUtilities.wait(8000);
+			clickWhenClickable(approveBtn);
+			SimulatorUtilities.wait(10000);
 			clickWhenClickable(approveRejectLink);
 		}
 	}

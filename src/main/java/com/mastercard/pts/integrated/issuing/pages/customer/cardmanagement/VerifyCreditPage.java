@@ -117,10 +117,10 @@ TestContext context;
 			allApplicationNumbers.add(applicationNumberFileUploadTxt.getText());
 			clickWhenClickable(editImg);
 			switchToIframe(VERIFY_FRAME);
-			SimulatorUtilities.wait(5000);
+			SimulatorUtilities.wait(8000);
 			allBatchNumbers.add(batchNumberTxt.getText());
-			clickWhenClickablewithWicket(verifyBtn);
-			SimulatorUtilities.wait(5000);
+			clickWhenClickable(verifyBtn);
+			SimulatorUtilities.wait(10000);
 			clickWhenClickable(verifyLink);
 		}
 		context.put(CreditConstants.ALL_APPLICATION_NUMBERS, allApplicationNumbers);

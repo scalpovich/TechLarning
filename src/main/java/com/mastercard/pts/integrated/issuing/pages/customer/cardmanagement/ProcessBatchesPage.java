@@ -530,7 +530,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		switchToIframe(Constants.VIEW_BATCH_DETAILS);
 
 		// unless it is completed, refresh it - No of attempts: 5
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 100; i++) {
 			if (processBatchStatusTxt.getText().equalsIgnoreCase("PENDING [0]") || processBatchStatusTxt.getText().equalsIgnoreCase("IN PROCESS [1]")) {
 				ClickButton(closeBtn);
 				waitForLoaderToDisappear();
