@@ -103,11 +103,6 @@ public class ProgramSetupSteps {
 
 	private DevicePlan devicePlan;
 	
-<<<<<<< HEAD
-	private TransactionFeeWaiverPlan transactionFeeWaiverPlan;
-	
-=======
->>>>>>> 1caec0048d7124a4504f08a297b2b3a76dbc20bb
 	private DevicePlan devicePlanSupplementary;
 
 	private Program program;
@@ -552,11 +547,11 @@ public class ProgramSetupSteps {
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 		programSetupWorkflow.createDevicePlan(devicePlan);
-<<<<<<< HEAD
+
 		
-=======
+
 		transactionFeeWaiverPlanFlows.addTransactionFeeWaiverPlanForMultipleType(transactionFeeWaiverPlan);
->>>>>>> 1caec0048d7124a4504f08a297b2b3a76dbc20bb
+
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 	

@@ -403,6 +403,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setEmvPlanUcota(provider.getString(DP_EMV_PLAN_UCOTA));
 		plan.setAllowInternationalTransaction(provider.getString(DP_ALLOW_INTERNATIONAL_TRANSACTIONS));		
 		plan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
+		plan.setTransactionFeeWaiverPlan(provider.getString(TRANSACTION_FEE_WAIVER_PLAN));
 		return plan;
 	}
 	

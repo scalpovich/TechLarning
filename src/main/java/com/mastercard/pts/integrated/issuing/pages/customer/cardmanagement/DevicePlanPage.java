@@ -347,6 +347,9 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnFeePlanCode:input:dropdowncomponent")
 	private MCWebElement iframeTransactionFee;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnFeeWaiverPlanCode:input:dropdowncomponent")
+	private MCWebElement iframeTransactionFeeWaiverPlanDdwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnLimitPlanCode:input:dropdowncomponent")
 	private MCWebElement transactionLimitPlanDDwn;
@@ -893,6 +896,11 @@ public class DevicePlanPage extends AbstractBasePage {
 		if (iframeTransactionLimitPlanDdwn.isEnabled())
 			WebElementUtils.selectDropDownByVisibleText(iframeTransactionLimitPlanDdwn, transactionLimitPlan);
 	}
+	
+	public void selectIframeTransactionFeeWaiverPlan(String transactionFeeWaiverPlan) {
+		WebElementUtils.selectDropDownByVisibleText(iframeTransactionFeeWaiverPlanDdwn, 
+					transactionFeeWaiverPlan);
+	}
 
 	public void selectIframeAfterKYCDdwn(String kycType) {
 		WebElementUtils.selectDropDownByVisibleText(iframeAfterKYCDdwn, kycType);
@@ -1115,6 +1123,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
 		}
 		selectIframeTransactionLimitPlanDdwn(devicePlan.getTransactionLimitPlan());
+		selectIframeTransactionFeeWaiverPlan(devicePlan.getTransactionFeeWaiverPlan());
 		clickIframeNextButton();
 	}
 
@@ -1298,5 +1307,5 @@ public class DevicePlanPage extends AbstractBasePage {
 		logger.info("System.getStoryName  : "+name);
 		return name;
 	}
->>>>>>> 40fc0e2247eacf3601146a3cbf54a53caf7afdad
+
 }
