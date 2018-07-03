@@ -363,6 +363,9 @@ public class DevicePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:lvcPerTxnLimit:input:inputAmountField")
 	private MCWebElement perTranscLimitTxt;
 	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#pinChangeTnxFirst input")
+	private MCWebElement pinChangeTransactionFirst;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:virtualDeviceCreditLimit:input:inputTextField")
 	private MCWebElement virtualDeviceCrediLimitTxt;
 
@@ -943,7 +946,10 @@ public class DevicePlanPage extends AbstractBasePage {
 	public void checkCvcCvv(boolean status) {
 		ClickCheckBox(cvccCvvChkBx, status);
 	}
-
+	public void checkPinChangeTransactionFirst(boolean status)
+	{
+	  ClickCheckBox(pinChangeTransactionFirst, status);
+	}
 	public void clickIframeDialogCloseX() {
 		dialogCloseX.click();
 	}
@@ -965,6 +971,20 @@ public class DevicePlanPage extends AbstractBasePage {
 			clickSaveButton();
 		});
 
+		verifyOperationStatus();
+	}
+	public void updatePinChangeTransactionFirst(DevicePlan devicePlanDataObject) {
+		logger.info("Update Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
+		enterValueinTextBox(devicePlanCode, devicePlanDataObject.getDevicePlanCode());
+		clickSearchButton();
+		editFirstRecord();
+		runWithinPopup("Edit Device Plan", () -> {
+			WebElementUtils.elementToBeClickable(authorizationTab);
+			clickWhenClickable(authorizationTab);
+			WebElementUtils.elementToBeClickable(pinChangeTransactionFirst);
+			checkPinChangeTransactionFirst(true);
+			clickSaveButton();
+		});
 		verifyOperationStatus();
 	}
 

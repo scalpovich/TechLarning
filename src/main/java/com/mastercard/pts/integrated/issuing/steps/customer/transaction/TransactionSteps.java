@@ -389,6 +389,13 @@ public class TransactionSteps {
 		logger.info("FINSim PIN Number generated : {} ", pinNumber);
 		device.setPinNumberForTransaction(pinNumber);
 	}
+	
+	@When("PIN is created for Pin Change First Transaction")
+	@Then("PIN is created for Pin Change First Transaction")
+	public void thenPINIsCreatedForPinChangeFirstTransaction() {
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setPinNumberForTransaction("1176");
+	}
 
 	@When("$simulatorName simulator is closed")
 	@Then("$simulatorName simulator is closed")

@@ -292,6 +292,13 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.uncheckCVCCVVDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
+	
+	@When("User checks Pin Change Transaction First check box on Device Plan Page")
+	public void userChecksPinChangeTransactionFirstOnDevicePlan()
+	{
+		programSetupWorkflow.checkPinChangeTransactionFirst(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
 
 	@When("device range for program with device plan for \"debit\" \"$deviceType\" card without pin")
 	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin")

@@ -122,6 +122,11 @@ public class ProgramSetupWorkflow {
 		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
 		page.updateCVCCVVDevicePlan(devicePlan);
 	}
+	
+	public void checkPinChangeTransactionFirst(DevicePlan devicePlan){
+		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
+		page.updatePinChangeTransactionFirst(devicePlan);
+	}
 	// Device configuration ends
 	
 	public void fillDocumentChecklist(ApplicationDocumentChecklist  applicationDocumentChecklist) {
