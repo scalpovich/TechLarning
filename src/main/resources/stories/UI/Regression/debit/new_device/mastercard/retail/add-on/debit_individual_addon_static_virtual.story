@@ -6,7 +6,7 @@ In order to crate prepaid card
 
 
 Meta:
-@StoryName prepaid_card
+@StoryName debit_card
 @SanityCards
 
 Scenario: To verify functionality of prepaid card boarding
