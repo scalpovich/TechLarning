@@ -351,7 +351,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	}
 
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
-		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
+		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)){
 			if(!System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)){
 				clickNextButton();
 			}	
