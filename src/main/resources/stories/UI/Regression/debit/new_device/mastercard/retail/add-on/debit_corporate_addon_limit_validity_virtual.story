@@ -26,7 +26,7 @@ And User Add-on Device fills Existing Program Corporate Debit Card [12] section 
 When for Primary Device and New Client user fills Device Range section for debit product
 When for Add-on Device and Existing Client user fills Device Range section for debit product
 Then debit device is created using new device screen for Corporate [1] and Primary Device [P] and New Client [N] and Magnetic Stripe Card [1]
-Then debit device is created using new device screen for Corporate [1] and Add-on Device [A] and Existing Client [E] and Limited Validity Virtual Card [8]
+Then debit device is created using new device screen for Corporate [1] and Add-on Device [A] and New Client [N] and Limited Validity Virtual Card [8]
 Then debit processes pre-production batch using new Device
 Then debit processes deviceproduction batch using new Device for Supplementary
 Then User search for new device Supplementary on search screen for debit and validates the status as NORMAL

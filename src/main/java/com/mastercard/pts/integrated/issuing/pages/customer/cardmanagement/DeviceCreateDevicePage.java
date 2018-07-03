@@ -315,7 +315,8 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(openBatchDdwn, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));			
 		}		
 		device.setBatchNumber(batchNumberTxt.getText());
-		logger.info(" *********** Batch number *********** " + device.getBatchNumber());
+		logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());
+		
 		clickNextButton();
 	}
 
@@ -334,8 +335,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			Actions action = new Actions(driver());		
 			action.moveToElement(asWebElement(existingClientLabel), 50, 50).click().build().perform();
 			waitForWicket(driver());
-			SimulatorUtilities.wait(10000);
-			
+			SimulatorUtilities.wait(10000);			
 		}else{
 			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
 			SimulatorUtilities.wait(2000);
@@ -351,7 +351,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	}
 
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
-		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)){
+		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
 			if(!System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)){
 				clickNextButton();
 			}	

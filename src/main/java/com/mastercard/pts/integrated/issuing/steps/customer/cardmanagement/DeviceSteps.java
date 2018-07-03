@@ -154,7 +154,11 @@ public class DeviceSteps {
 		Program program = context.get(ContextConstants.PROGRAM);
 		device.setProgramCode(program.buildDescriptionAndCode());
 		
+<<<<<<< 3f2f23ded4a818e443e01f10d5b4f18a1fd3f0e3
 		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)){
+=======
+		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
+>>>>>>> Debit card boarding storys 
 			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
 			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 		}else{
