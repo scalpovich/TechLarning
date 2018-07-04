@@ -29,6 +29,14 @@ public class BatchSteps {
 
 	private static final String DEFAULT_HEADER = "[\\w ]{32}\\d{6}";
 	
+	private static final String INVALID_CVV = "123";
+	
+	private static final String INVALID_CVV2 = "123";
+	
+	private static final String INVALID_ICVV = "123";
+	
+	private static final String INVALID_PVKI = "123";
+	
 	private static final Logger logger = LoggerFactory.getLogger(BatchSteps.class);
 
 	@Autowired
@@ -76,6 +84,27 @@ public class BatchSteps {
 			logger.info("Expiration Data :  {} ", tempDate );
 			MiscUtils.reportToConsole("Expiration Data :  " + tempDate );
 			MiscUtils.reportToConsole("******** Embossing File Completed ***** " );
+
+		} catch (Exception e) {
+			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
+			throw MiscUtils.propagate(e);
+		}
+	}
+	
+	
+	@When("user sets invalid cvv/ccv2/icvv to device")
+	@Then("user sets invalid cvv/ccv2/icvv to device")
+	public void  userSetInvaliCVVCVV2ICVV() {
+		MiscUtils.reportToConsole("******** setting invalid CVV/CVV2/ICVV ***** " );
+		try {
+			
+			Device device = context.get(ContextConstants.DEVICE);
+	
+				device.setCvv2Data(INVALID_CVV2);
+				device.setCvvData(INVALID_CVV);
+				device.setIcvvData(INVALID_ICVV);		
+				device.setPvkiData(INVALID_PVKI);				
+
 
 		} catch (Exception e) {
 			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
