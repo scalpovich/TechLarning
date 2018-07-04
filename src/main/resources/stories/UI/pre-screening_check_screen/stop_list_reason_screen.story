@@ -1,4 +1,4 @@
-Stop_List: Screen to add multiple reasons of stopping card in stop list section
+Stop_List_Reason: Screen to add multiple reasons of stopping card in stop list section
 
 Narrative:
 In order to stop the card, 

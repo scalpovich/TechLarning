@@ -1,11 +1,8 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
-import org.apache.poi.util.SystemOutLogger;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
-import com.mastercard.pts.integrated.issuing.utils.ConstantData;
-import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 @Component
 public class StopListReasonPlan {
@@ -592,7 +589,7 @@ public class StopListReasonPlan {
 		plan.setReasonCodeLost(provider.getString(REASON_CODE_LOST));
 		plan.setDescriptionLost(provider.getString(DESCRIPTION_LOST));
 		plan.setStickyLost(provider.getString(STICKY_LOST));
-		plan.setSentToMasterLost(provider.getString(SENT_TO_AMEX_LOST));
+		plan.setSentToMasterLost(provider.getString(SENT_TO_MASTER_LOST));
 		plan.setRegionMastercardLost(provider.getString(REGION_MASTERCARD_LOST));
 		plan.setSentToVisaLost(provider.getString(SENT_TO_VISA_LOST));
 		plan.setRegionVisaLost(provider.getString(REGION_VISA_LOST));
@@ -601,7 +598,7 @@ public class StopListReasonPlan {
 		plan.setReasonCodeStolen(provider.getString(REASON_CODE_STOLEN));
 		plan.setDescriptionStolen(provider.getString(DESCRIPTION_STOLEN));
 		plan.setStickyStolen(provider.getString(STICKY_STOLEN));
-		plan.setSentToMasterStolen(provider.getString(SENT_TO_AMEX_STOLEN));
+		plan.setSentToMasterStolen(provider.getString(SENT_TO_MASTER_STOLEN));
 		plan.setRegionMastercardStolen(provider.getString(REGION_MASTERCARD_STOLEN));
 		plan.setSentToVisaStolen(provider.getString(SENT_TO_VISA_STOLEN));
 		plan.setRegionVisaStolen(provider.getString(REGION_VISA_STOLEN));
@@ -610,7 +607,7 @@ public class StopListReasonPlan {
 		plan.setReasonCodeCounterfeit(provider.getString(REASON_CODE_COUNTERFEIT));
 		plan.setDescriptionCounterfeit(provider.getString(DESCRIPTION_COUNTERFEIT));
 		plan.setStickyCounterfeit(provider.getString(STICKY_COUNTERFEIT));
-		plan.setSentToMasterCounterfeit(provider.getString(SENT_TO_AMEX_COUNTERFEIT));
+		plan.setSentToMasterCounterfeit(provider.getString(SENT_TO_MASTER_COUNTERFEIT));
 		plan.setRegionMastercardCounterfeit(provider.getString(REGION_MASTERCARD_COUNTERFEIT));
 		plan.setSentToVisaCounterfeit(provider.getString(SENT_TO_VISA_COUNTERFEIT));
 		plan.setRegionVisaCounterfeit(provider.getString(REGION_VISA_COUNTERFEIT));
@@ -619,7 +616,7 @@ public class StopListReasonPlan {
 		plan.setReasonCodeReturned(provider.getString(REASON_CODE_RETURNED));
 		plan.setDescriptionReturned(provider.getString(DESCRIPTION_RETURNED));
 		plan.setStickyReturned(provider.getString(STICKY_RETURNED));
-		plan.setSentToMasterReturned(provider.getString(SENT_TO_AMEX_RETURNED));
+		plan.setSentToMasterReturned(provider.getString(SENT_TO_MASTER_RETURNED));
 		plan.setRegionMastercardReturned(provider.getString(REGION_MASTERCARD_RETURNED));
 		plan.setSentToVisaReturned(provider.getString(SENT_TO_VISA_RETURNED));
 		plan.setRegionVisaReturned(provider.getString(REGION_VISA_RETURNED));
@@ -628,7 +625,7 @@ public class StopListReasonPlan {
 		plan.setReasonCodeExpired(provider.getString(REASON_CODE_EXPIRED));
 		plan.setDescriptionExpired(provider.getString(DESCRIPTION_EXPIRED));
 		plan.setStickyExpired(provider.getString(STICKY_EXPIRED));
-		plan.setSentToMasterExpired(provider.getString(SENT_TO_AMEX_EXPIRED));
+		plan.setSentToMasterExpired(provider.getString(SENT_TO_MASTER_EXPIRED));
 		plan.setRegionMastercardExpired(provider.getString(REGION_MASTERCARD_EXPIRED));
 		plan.setSentToVisaExpired(provider.getString(SENT_TO_VISA_EXPIRED));
 		plan.setRegionVisaExpired(provider.getString(REGION_VISA_EXPIRED));
@@ -637,7 +634,7 @@ public class StopListReasonPlan {
 		plan.setReasonCodeDamaged(provider.getString(REASON_CODE_DAMAGED));
 		plan.setDescriptionDamaged(provider.getString(DESCRIPTION_DAMAGED));
 		plan.setStickyDamaged(provider.getString(STICKY_DAMAGED));
-		plan.setSentToMasterDamaged(provider.getString(SENT_TO_AMEX_DAMAGED));
+		plan.setSentToMasterDamaged(provider.getString(SENT_TO_MASTER_DAMAGED));
 		plan.setRegionMastercardDamaged(provider.getString(REGION_MASTERCARD_DAMAGED));
 		plan.setSentToVisaDamaged(provider.getString(SENT_TO_VISA_DAMAGED));
 		plan.setRegionVisaDamaged(provider.getString(REGION_VISA_DAMAGED));
@@ -646,7 +643,7 @@ public class StopListReasonPlan {
 		plan.setReasonCodeEmergency(provider.getString(REASON_CODE_EMERGENCY));
 		plan.setDescriptionEmergency(provider.getString(DESCRIPTION_EMERGENCY));
 		plan.setStickyEmergency(provider.getString(STICKY_EMERGENCY));
-		plan.setSentToMasterEmergency(provider.getString(SENT_TO_AMEX_EMERGENCY));
+		plan.setSentToMasterEmergency(provider.getString(SENT_TO_MASTER_EMERGENCY));
 		plan.setRegionMastercardEmergency(provider.getString(REGION_MASTERCARD_EMERGENCY));
 		plan.setSentToVisaEmergency(provider.getString(SENT_TO_VISA_EMERGENCY));
 		plan.setRegionVisaEmergency(provider.getString(REGION_VISA_EMERGENCY));
@@ -655,7 +652,7 @@ public class StopListReasonPlan {
 		plan.setReasonCodeErroneous(provider.getString(REASON_CODE_ERRONEOUS));
 		plan.setDescriptionErroneous(provider.getString(DESCRIPTION_ERRONEOUS));
 		plan.setStickyErroneous(provider.getString(STICKY_ERRONEOUS));
-		plan.setSentToMasterErroneous(provider.getString(SENT_TO_AMEX_ERRONEOUS));
+		plan.setSentToMasterErroneous(provider.getString(SENT_TO_MASTER_ERRONEOUS));
 		plan.setRegionMastercardErroneous(provider.getString(REGION_MASTERCARD_ERRONEOUS));
 		plan.setSentToVisaErroneous(provider.getString(SENT_TO_VISA_ERRONEOUS));
 		plan.setRegionVisaErroneous(provider.getString(REGION_VISA_ERRONEOUS));

@@ -2,11 +2,6 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import javax.xml.xpath.XPath;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -33,9 +28,6 @@ public class StoplistReasonPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=description]")
 	private MCWebElement description;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:searchButtonPanel:buttonCol:searchButton")
-	private MCWebElement search;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement reasonCode;
@@ -168,10 +160,8 @@ public class StoplistReasonPage extends AbstractBasePage {
 
 	private boolean verifyReasonAlreadyExistsOrNotInStopList(String stopListReason) {
 		WebElementUtils.enterText(description, stopListReason);
-		search.click();
+		clickSearchButton();
 		SimulatorUtilities.wait(1000);
-		System.out.println(getFinder().getWebDriver()
-				.findElements(By.xpath("//table[@class='dataview']/tbody/tr/td[2]/span")).size());
 		if (getFinder().getWebDriver().findElements(By.xpath("//table[@class='dataview']/tbody/tr/td[2]/span"))
 				.size() == 1)
 			return true;
