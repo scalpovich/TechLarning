@@ -44,13 +44,12 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform EMV_PURCHASE_WITH_CASHBACK Authorization transaction
-Given connection to MAS is established
-When perform an EMV_PURCHASE_WITH_CASHBACK MAS transaction
+Scenario: Perform INT_EMV_POS_BALANCE_INQUIRY Authorization transaction
+When perform an INT_EMV_POS_BALANCE_INQUIRY MAS transaction on the same card
 Then MAS test results are verified
 When MAS simulator is closed
-And user is logged in institution
-Then search Purchase with Cash back authorization and verify 000-Successful status
+Then user is logged in institution
+Then search Balance Inquiry authorization and verify 000-Successful status
 Then available balance is updated in current status and limits tab
 And user sign out from customer portal
 
