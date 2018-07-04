@@ -1125,26 +1125,18 @@ public class DevicePlanPage extends AbstractBasePage {
 		
 		if(iframeEmbossingVendorDdwn.isEnabled())
 			selectIframeEmbossingVendorDdwn(devicePlan.getEmbossingVendor());
-		}		
-		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-			if (DeviceType.EMV_CARD.contains(devicePlan.getDeviceType())|| DeviceType.MAGNETIC_STRIPE_CARD.contains(devicePlan.getDeviceType())) {
-				fillRenewalSection(devicePlan);
-				fillReplacementSection(devicePlan);
-				fillPinGenerationSection(devicePlan);
-			}
-		} else {
-			if (devicePlan.getFillRenewalSection().equalsIgnoreCase(STATUS_YES))
-				fillRenewalSection(devicePlan);
+		}
 		
-			if (devicePlan.getFillReplacementSection().equalsIgnoreCase(STATUS_YES)){
-				if(!devicePlan.getDeviceType().contains(DeviceType.VIRTUAL_CARD)){
-					fillReplacementSection(devicePlan);
-				}
-			}	
-			if (!devicePlan.getDeviceType().contains(DeviceType.VIRTUAL_CARD)){
-					fillPinGenerationSection(devicePlan);
-			}			
-		}		
+		if (devicePlan.getFillRenewalSection().equalsIgnoreCase(STATUS_YES))
+			fillRenewalSection(devicePlan);
+	
+		if (devicePlan.getFillReplacementSection().equalsIgnoreCase(STATUS_YES)){
+			fillReplacementSection(devicePlan);
+		}	
+		if (!devicePlan.getDeviceType().contains(DeviceType.VIRTUAL_CARD)){
+				fillPinGenerationSection(devicePlan);
+		}
+		
 		clickIframeNextButton();
 	}
 	
@@ -1203,22 +1195,34 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	private void fillRenewalSection(DevicePlan devicePlan) {
-		allowRenewalChkBx.click();
-		selectByVisibleText(renewalDeviceTechnologyDdwn, devicePlan.getDeviceType());
-		WebElementUtils.enterText(validityOnRenewalMonthsTxt, devicePlan.getValidityOnRenewalMonths());
-		WebElementUtils.enterText(autoRenewalDaysTxt, devicePlan.getAutoRenewalDays());
-		WebElementUtils.enterText(advanceRenewalReportTxt, devicePlan.getAdvanceRenewalReport());
-		WebElementUtils.enterText(renewalActivationModeTxt, devicePlan.getRenewalActivationMode());
+		if(devicePlan.getDeviceType().contains(DeviceType.MAGNETIC_STRIPE_CARD) 
+				|| devicePlan.getDeviceType().contains(DeviceType.EMV_CARD) 
+				|| devicePlan.getDeviceType().contains(DeviceType.PHYSICAL_NFC_DEVICE_MAG_STRIPE_PAYPASS)
+				|| devicePlan.getDeviceType().contains(DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS)
+				|| devicePlan.getDeviceType().contains(DeviceType.PHYSICAL_NFC_DEVICE_PAYPASS)){
+			allowRenewalChkBx.click();
+			selectByVisibleText(renewalDeviceTechnologyDdwn,devicePlan.getDeviceType());
+			WebElementUtils.enterText(validityOnRenewalMonthsTxt, devicePlan.getValidityOnRenewalMonths());
+			WebElementUtils.enterText(autoRenewalDaysTxt, devicePlan.getAutoRenewalDays());
+			WebElementUtils.enterText(advanceRenewalReportTxt, devicePlan.getAdvanceRenewalReport());
+			WebElementUtils.enterText(renewalActivationModeTxt, devicePlan.getRenewalActivationMode());
+		}
 	}
 
 	private void fillReplacementSection(DevicePlan devicePlan) {
-		replacementNewExpiryFlagChkBx.click();
-		WebElementUtils.enterText(replacementNoOfDaysTxt, devicePlan.getReplacementNoOfDays());
-		WebElementUtils.enterText(validityOnReplacementMonthsTxt, devicePlan.getValidityOnReplacementMonths());
-		allowInstanceDeviceReplaceChkBx.click();
-		if (!devicePlan.getReplacementDeviceTechnology().isEmpty()) {
-			WebElementUtils.selectDropDownByVisibleText(replacementDeviceTechnologyDdwn,
-					devicePlan.getReplacementDeviceTechnology());
+		if(devicePlan.getDeviceType().contains(DeviceType.MAGNETIC_STRIPE_CARD) 
+				|| devicePlan.getDeviceType().contains(DeviceType.EMV_CARD) 
+				|| devicePlan.getDeviceType().contains(DeviceType.PHYSICAL_NFC_DEVICE_MAG_STRIPE_PAYPASS)
+				|| devicePlan.getDeviceType().contains(DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS)
+				|| devicePlan.getDeviceType().contains(DeviceType.PHYSICAL_NFC_DEVICE_PAYPASS)){
+			replacementNewExpiryFlagChkBx.click();
+			WebElementUtils.enterText(replacementNoOfDaysTxt, devicePlan.getReplacementNoOfDays());
+			WebElementUtils.enterText(validityOnReplacementMonthsTxt, devicePlan.getValidityOnReplacementMonths());
+			allowInstanceDeviceReplaceChkBx.click();
+			if (!devicePlan.getReplacementDeviceTechnology().isEmpty()) {
+				WebElementUtils.selectDropDownByVisibleText(replacementDeviceTechnologyDdwn,
+						devicePlan.getReplacementDeviceTechnology());
+			}
 		}
 	}
 
