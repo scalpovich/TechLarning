@@ -1,4 +1,4 @@
-!-- @author: E080534
+
 Narrative:
 As a Customer portal user
 I want to validate temproary credit limit for retail card
@@ -44,8 +44,9 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform INT_EMV_POS_BALANCE_INQUIRY Authorization transaction
-When perform an INT_EMV_POS_BALANCE_INQUIRY MAS transaction on the same card
+Scenario: Perform MSR_POS_BALANCE_INQUIRY Authorization transaction
+Given connection to MAS is established
+When perform an MSR_POS_BALANCE_INQUIRY MAS transaction
 Then MAS test results are verified
 When MAS simulator is closed
 Then user is logged in institution
