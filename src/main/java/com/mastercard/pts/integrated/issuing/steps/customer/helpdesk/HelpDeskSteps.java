@@ -48,6 +48,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDeskFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpdeskWorkflow;
 
@@ -517,6 +518,7 @@ public class HelpDeskSteps {
 	@When("user activates credit limit change request")
 	public void whenUserActivatesCreditLimitChangeRequestThroughHelpdesk() {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		//SimulatorUtilities.wait(9000);
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.activateCreditLimitChangeRequest(helpdeskGeneral);
 	}
