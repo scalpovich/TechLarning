@@ -42,7 +42,7 @@ When user sets invalid cvv/ccv2/icvv to device
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
+Scenario: Perform EMV_CASH_ADVANCE Authorization transaction on invalid ICVV 
 Meta:
 @TestId 
 Given connection to MAS is established
@@ -52,18 +52,33 @@ Then search Cash Advance authorization and verify 183-CVV Verification Failure s
 Then assert Decline response with 46039 AuthDecline Code and Invalid CVV.. as description
 Then user sign out from customer portal
 
-Scenario: Generate Auth File for Clearing
-Meta:s
+Scenario: Perform ECOMM_PURCHASE Authorization transaction on invalid CVV2 
+Meta:
+@TestId 
+When perform an ECOMM_PURCHASE MAS transaction on the same card
+Then user is logged in institution
+Then search E-Commerce Transaction authorization and verify CVV2 Verification Failure status
+Then assert Decline response with 46039 AuthDecline Code and Invalid CVV2.. as description
+Then user sign out from customer portal
+
+
+Scenario: Perform EMV_CASH_ADVANCE Authorization transaction on valid ICVV 
+Meta:
 @TestId 
 When embossing file batch was generated in correct format
-When perform an EMV_CASH_ADVANCE MAS transaction
+When perform an EMV_CASH_ADVANCE MAS transaction on the same card
 Then user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
 Then user sign out from customer portal
 
 
-
-
-
+Scenario: Perform ECOMM_PURCHASE Authorization transaction on valid CVV2 
+Meta:
+@TestId 
+When perform an ECOMM_PURCHASE MAS transaction on the same card
+Then user is logged in institution
+Then search E-Commerce Transaction authorization and verify 000-Successful status
+And user sign out from customer portal
+When MAS simulator is closed
 
 
