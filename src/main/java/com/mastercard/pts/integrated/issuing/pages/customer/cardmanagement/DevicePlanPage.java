@@ -1063,12 +1063,15 @@ public class DevicePlanPage extends AbstractBasePage {
 		clickIframeNextButton();
 		SimulatorUtilities.wait(300);
 		
-		if (DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType())) {
-			fillVirtualDeviceDetails(devicePlan);
-			enterVirtualDeviceCreditLimit();
-		} else if (DeviceType.STATIC_VIRTUAL_CARD.contains(devicePlan.getDeviceType())) {
-			enterVirtualDeviceCreditLimit();
+		if(!devicePlan.getProductType().equalsIgnoreCase(ProductType.DEBIT)){
+			if (DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType())) {
+				fillVirtualDeviceDetails(devicePlan);
+				enterVirtualDeviceCreditLimit();
+			} else if (DeviceType.STATIC_VIRTUAL_CARD.contains(devicePlan.getDeviceType())) {
+				enterVirtualDeviceCreditLimit();
+			}
 		}
+		
 		clickIframeNextButton();
 		
 		if (DeviceType.EMV_CARD.contains(devicePlan.getDeviceType()) || DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS.contains(devicePlan.getDeviceType())) {
