@@ -35,4 +35,5 @@ Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 Then user is logged in institution
 And search Purchase authorization and verify 116-Insufficient Fund status
+And assert Decline response with 46017 AuthDecline Code and Insufficient fund available. as description
 And user sign out from customer portal
