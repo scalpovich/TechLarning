@@ -1,37 +1,32 @@
-prepaid emv retail general purpose card authorization
+debit emv retail debit card authorization PINLESS
 
 Narrative:
-In order to check transactions on prepaid emv retail general purpose card
+In order to check transactions on debit emv retail debit card pinless
 As an issuer
-I want to authorize transactions for prepaid emv retail general purpose card
+I want to authorize transactions for debit emv retail debit card pinless
 
 Meta:
-@StoryName p_emv_retail_general
-@oldReferenceSheet_S203707
+@StoryName d_emv_retail
 @CRCardsWithAuthorizationCashAdvancedWithClearing
 
-Scenario: Set up prepaid emv retail general purpose card
-Meta:
-@TestId TC398452
+Scenario: Setup - debit emv retail debit card
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card
-And user sign out from customer portal
+And device range for program with device plan for "debit" "emv" card
+Then user sign out from customer portal
 
-Scenario: prepaid emv retail general purpose card device production
-Meta:
-@TestId TC408068
+Scenario: Device production - debit emv retail debit card
 Given user is logged in institution
-When user creates new device of prepaid type for new client
+When user creates new device of debit type for new client
 And a new device was created
-When processes pre-production batch for prepaid
-When processes device production batch for prepaid
-When processes pin generation batch for prepaid
+When processes pre-production batch for debit
+When processes device production batch for debit
+When processes pin generation batch for debit
 Then device has "normal" status
-Then user activates device through helpdesk
-When user has wallet number information for prepaid device
+When user activates device through helpdesk
+When user has wallet number information for debit device
 When user performs adjustment transaction
-When user has current wallet balance amount information for prepaid device
-And user sign out from customer portal
+When user has current wallet balance amount information for debit device
+Then user sign out from customer portal
 
 Scenario: Pin Generation 
 Meta:
@@ -80,5 +75,3 @@ Then user is logged in institution
 Then search E-Commerce Transaction authorization and verify 000-Successful status
 And user sign out from customer portal
 When MAS simulator is closed
-
-
