@@ -1049,27 +1049,21 @@ public class DevicePlanPage extends AbstractBasePage {
 
 		WebElementUtils.checkCheckbox(ecommAllowedChkBx, devicePlan.isEcommerceAllowed());
 	
-		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-			if (DeviceType.MAGNETIC_STRIPE_CARD.contains(devicePlan.getDeviceType())|| DeviceType.EMV_CARD.contains(devicePlan.getDeviceType()) && "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
-				if(pinRetryLimitTxt.isEnabled()){
-					WebElementUtils.enterText(pinRetryLimitTxt,devicePlan.getPinRetryLimit());
-				}			
-			}
-		}else{
-			if (!devicePlan.getDeviceType().contains(DeviceType.STATIC_VIRTUAL_CARD)&& "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
+		if("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())){
+			if (!(DeviceType.STATIC_VIRTUAL_CARD.contains(devicePlan.getDeviceType())
+					|| DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType()))) {
 				WebElementUtils.enterText(pinRetryLimitTxt, devicePlan.getPinRetryLimit());
 			}	
-		}				
+		}
+		
 		clickIframeNextButton();
 		SimulatorUtilities.wait(300);
 		
-		if(!devicePlan.getProductType().equalsIgnoreCase(ProductType.DEBIT)){
-			if (DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType())) {
-				fillVirtualDeviceDetails(devicePlan);
-				enterVirtualDeviceCreditLimit();
-			} else if (DeviceType.STATIC_VIRTUAL_CARD.contains(devicePlan.getDeviceType())) {
-				enterVirtualDeviceCreditLimit();
-			}
+		if (DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType())) {
+			fillVirtualDeviceDetails(devicePlan);
+			enterVirtualDeviceCreditLimit();
+		} else if (DeviceType.STATIC_VIRTUAL_CARD.contains(devicePlan.getDeviceType())) {
+			enterVirtualDeviceCreditLimit();
 		}
 		
 		clickIframeNextButton();
@@ -1136,24 +1130,11 @@ public class DevicePlanPage extends AbstractBasePage {
 		if (devicePlan.getFillReplacementSection().equalsIgnoreCase(STATUS_YES)){
 			fillReplacementSection(devicePlan);
 		}	
-		if (!devicePlan.getDeviceType().contains(DeviceType.VIRTUAL_CARD)){
-				fillPinGenerationSection(devicePlan);
-		}
+		if("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())){
+			fillPinGenerationSection(devicePlan);
+		}		
 		
 		clickIframeNextButton();
-	}
-	
-	private void fillVirtualDeviceInfo(DevicePlan devicePlan){		
-		enterPerTransactionLimit(devicePlan);
-		enterTotalTransactionLimit(devicePlan);		
-		enterVelocity(devicePlan);		
-		enterValidity(devicePlan);
-		enterVirtualCreditLimit(devicePlan);	
-	}
-	
-	private void fillVirtualDeviceCreditLimit(DevicePlan devicePlan){
-		
-		enterVirtualDeviceCreditLimit(devicePlan);
 	}
 	
 	private String getValueInYYMMFormatForExpiryDate(String dateVal) {
@@ -1186,7 +1167,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	private void fillPinGenerationSection(DevicePlan devicePlan) {
 		// perform below steps only when pinRequired is true which is the
 		// default state
-		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
+		if (!(devicePlan.getDeviceType().contains(DeviceType.VIRTUAL_CARD) || devicePlan.getDeviceType().contains(DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD))){
 			WebElementUtils.scrollDown(driver(), 0, 250);
 			pinRequiredChk.click();
 			WebElementUtils.selectDropDownByVisibleText(pinDataTransmissionDDwn, devicePlan.getPinDataTransmission());
@@ -1237,8 +1218,10 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void enterVirtualDeviceCreditLimit()
-	{
-		WebElementUtils.enterText(virtualDeviceCreditLimitTxt,CustomUtils.randomNumbers(3));
+	{	
+		if(virtualDeviceCreditLimitTxt.isEnabled()){
+			WebElementUtils.enterText(virtualDeviceCreditLimitTxt,CustomUtils.randomNumbers(3));
+		}
 	}
 	
 	private String getStoryName()
