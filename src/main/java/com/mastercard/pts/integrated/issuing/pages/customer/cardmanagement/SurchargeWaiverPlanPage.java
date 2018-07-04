@@ -162,7 +162,7 @@ CreditCardPlan creditCardPlans;
 	public void addNewButtonClick()
 	{
 		clickWhenClickable(addButton);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe(ADD_SURCHARGE_WAIVER_PLAN_DETAIL);
 		
 	}
@@ -182,7 +182,7 @@ CreditCardPlan creditCardPlans;
 	}
 	public void saveButtonClickInner()
 	{
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	    switchToIframe(Constants.ADD_SURCHARGE_WAIVER_FEE_PLAN);
 	    waitForLoaderToDisappear();
 	    waitForElementVisible(saveButton);

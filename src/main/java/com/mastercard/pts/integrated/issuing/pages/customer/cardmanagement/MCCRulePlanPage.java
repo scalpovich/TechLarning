@@ -61,8 +61,8 @@ public class MCCRulePlanPage extends AbstractBasePage {
 			WebElementUtils.scrollDown(driver(),0,250);
 			clickSaveButton();
 			verifyNoErrors();
+			SimulatorUtilities.wait(4000);
 		});
-
 		verifyOperationStatus();
 	}
 

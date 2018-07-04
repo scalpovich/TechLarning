@@ -118,7 +118,7 @@ public class CutoverProfilePage extends AbstractBasePage {
 			logger.error(e.toString());
 			logger.info("error pannel not present");
 		}
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public boolean verifyErrorsOnCutoverprofilePage() {
@@ -128,11 +128,11 @@ public class CutoverProfilePage extends AbstractBasePage {
 	public void verifyNewCutoverProfileSuccess() {
 		if (!verifyErrorsOnCutoverprofilePage()) {
 			logger.info("Cutover profile Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in record Addition");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 
 		}
 	}

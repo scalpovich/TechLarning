@@ -216,7 +216,7 @@ public class SurchargePlanPage extends AbstractBasePage {
 	}
 
 	public void saveMain() {
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToSurchargePlanFrame();
 		ClickButton(saveBtn);
 	}

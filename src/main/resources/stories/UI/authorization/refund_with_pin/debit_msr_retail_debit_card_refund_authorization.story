@@ -16,6 +16,8 @@ Meta:
 Given user is logged in institution
 And device range for program with device plan for "debit" "magnetic stripe" card
 When user creates new device of debit type for new client
+Then user sign out from customer portal
+
 
 Scenario: debit msr retail debit card device production
 Meta:
@@ -25,7 +27,6 @@ And a new device was created
 When processes pre-production batch for debit
 When processes device production batch for debit
 When processes pin generation batch for debit
-
 Then device has "normal" status
 When user has wallet number information for debit device
 Then user sign out from customer portal
