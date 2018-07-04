@@ -238,4 +238,10 @@ public class ProgramSetupWorkflow {
 		MCCRulePlanPage page = navigator.navigateToPage(MCCRulePlanPage.class);
 		page.createMCCRulePlanPage(plan);
 	}
+	
+	public void createWalletPlan(WalletPlan walletPlan, int reservedAmount) {
+		WalletConfigurationWalletPlanPage page = navigator.navigateToPage(WalletConfigurationWalletPlanPage.class);
+		page.setReservedAmount(reservedAmount);
+		page.addWalletPlanData(walletPlan);
+	}
 }
