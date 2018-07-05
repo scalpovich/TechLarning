@@ -50,5 +50,5 @@ Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 When MAS simulator is closed
 Then user is logged in institution
-Then search CWD authorization and verify 000-Successful status
+Then search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
