@@ -39,7 +39,6 @@ Then user activates credit limit change request
 Then user verify available Card limit for card after transaction
 And user sign out from customer portal
 
-
 Scenario: Pin Generation 
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
