@@ -1,7 +1,7 @@
 Narrative:
-In order to check transactions on prepaid emv corporate travel card
+In order to test transaction plan without assigned transaction for prepaid emv corporate travel card
 As an issuer
-I want to authorize transactions for prepaid emv corporate travel card
+I want to failed transactions for prepaid emv corporate travel card
 
 Meta:
 @StoryName p_emv_corp_travel
@@ -55,4 +55,5 @@ Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 Then user is logged in institution
 And search Purchase authorization and verify 119-Transaction not permitted status
+And assert Decline response with 10001 AuthDecline Code and Transaction not permitted to device holder. as description
 And user sign out from customer portal
