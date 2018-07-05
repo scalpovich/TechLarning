@@ -164,30 +164,7 @@ public class HelpdeskWorkflow {
 	public List <BigDecimal> noteDownCreditLimit(String type,Device device) {
 		clickCustomerCareEditLink();
 		return helpDeskPage.noteDownCreditLimit(type);
-		
 	}
-	
-//	public BigDecimal noteDownAvailableClient(String type,Device device) {
-//		//clickCustomerCareEditLink();
-//		return helpDeskPage.noteDownAvailableClient(type);
-//	}
-//	
-//	public BigDecimal noteDownClient(String type,Device device) {
-//		//clickCustomerCareEditLink();
-//		return helpDeskPage.noteDownClient(type);
-//	}
-//	
-//	public BigDecimal noteDownAccount(String type,Device device) {
-//		//clickCustomerCareEditLink();
-//		return helpDeskPage.noteDownAccount(type);
-//	}
-//	
-//	public BigDecimal noteDownCard(String type,Device device) {
-//		//clickCustomerCareEditLink();
-//		return helpDeskPage.noteDownCard(type);
-//	}
-//	
-	
 	
 	public boolean resetCardholderTranPassword(String clientID){		
 		return helpDeskPage.serviceRequestCardholderTransactionPassword(clientID);
@@ -215,11 +192,6 @@ public class HelpdeskWorkflow {
 		   e.printStackTrace();
 			return Optional.empty();
 		}
-	}
-	
-	public String availableBalance()
-	{
-		return helpDeskPage.availableBalance();
 	}
 	public void validateRequiredFields(HelpdeskGeneral general){
 		helpDeskPage.validateRequiredFields(general);
