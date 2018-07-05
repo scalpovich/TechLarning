@@ -20,7 +20,7 @@ When processes device production batch for prepaid
 When processes pin generation batch for prepaid
 When user has wallet number information for prepaid device
 When user performs adjustment transaction
-And user has current wallet balance amount information for debit device
+And user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
 When embossing file batch was generated in correct format
