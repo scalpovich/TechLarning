@@ -38,7 +38,7 @@ When user sets invalid cvv/ccv2/icvv to device
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
+Scenario: Perform MSR_CASH_ADVANCE Authorization transaction with invalid CVV
 Meta:
 @TestId 
 Given connection to MAS is established
