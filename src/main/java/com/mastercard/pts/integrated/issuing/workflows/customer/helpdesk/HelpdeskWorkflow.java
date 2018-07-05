@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,31 +161,32 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.noteDownAvailableLimit(type);
 	}
 	
-	public BigDecimal noteDownAvailableAccount(String type,Device device) {
-		//clickCustomerCareEditLink();
-		return helpDeskPage.noteDownAvailableAccount(type);
+	public List <BigDecimal> noteDownCreditLimit(String type,Device device) {
+		clickCustomerCareEditLink();
+		return helpDeskPage.noteDownCreditLimit(type);
+		
 	}
 	
-	public BigDecimal noteDownAvailableClient(String type,Device device) {
-		//clickCustomerCareEditLink();
-		return helpDeskPage.noteDownAvailableClient(type);
-	}
-	
-	public BigDecimal noteDownClient(String type,Device device) {
-		//clickCustomerCareEditLink();
-		return helpDeskPage.noteDownClient(type);
-	}
-	
-	public BigDecimal noteDownAccount(String type,Device device) {
-		//clickCustomerCareEditLink();
-		return helpDeskPage.noteDownAccount(type);
-	}
-	
-	public BigDecimal noteDownCard(String type,Device device) {
-		//clickCustomerCareEditLink();
-		return helpDeskPage.noteDownCard(type);
-	}
-	
+//	public BigDecimal noteDownAvailableClient(String type,Device device) {
+//		//clickCustomerCareEditLink();
+//		return helpDeskPage.noteDownAvailableClient(type);
+//	}
+//	
+//	public BigDecimal noteDownClient(String type,Device device) {
+//		//clickCustomerCareEditLink();
+//		return helpDeskPage.noteDownClient(type);
+//	}
+//	
+//	public BigDecimal noteDownAccount(String type,Device device) {
+//		//clickCustomerCareEditLink();
+//		return helpDeskPage.noteDownAccount(type);
+//	}
+//	
+//	public BigDecimal noteDownCard(String type,Device device) {
+//		//clickCustomerCareEditLink();
+//		return helpDeskPage.noteDownCard(type);
+//	}
+//	
 	
 	
 	public boolean resetCardholderTranPassword(String clientID){		

@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -34,6 +35,7 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
+
 
 
 
@@ -1122,14 +1124,18 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	}
 	
-	public BigDecimal noteDownAvailableAccount(String type){	
-		BigDecimal creditLimitAccount;
+	public List<BigDecimal> noteDownCreditLimit(String type){	
+		List<BigDecimal> creditLimit=new ArrayList<BigDecimal>();
 		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
 		clickWhenClickable(currentStatusAndLimitTab);			
-		creditLimitAccount = new BigDecimal(creditLimitLableAccount.getText());		
+		creditLimit.add(new BigDecimal(creditLimitLableAccount.getText()));		
+		creditLimit.add(new BigDecimal(creditLimitLableClient.getText()));	
+		creditLimit.add(new BigDecimal(creditLimitClient.getText()));	
+		creditLimit.add(new BigDecimal(creditLimitAccount.getText()));	
+		creditLimit.add(new BigDecimal(creditLimitCard.getText()));
 		logger.info("Credit limit noted down : {} ",creditLimitAccount);
 		clickEndCall();
-		return creditLimitAccount;				
+		return creditLimit;				
 	
 	}
 	

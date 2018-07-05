@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -542,14 +543,22 @@ public class HelpDeskSteps {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);		
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (helpdeskWorkflow.noteDownAvailableLimit(type,device)), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (helpdeskWorkflow.noteDownAvailableAccount(type,device)), equalTo(context.get(ContextConstants.AVAILABLE_ACCOUNT_OR_CREDIT_LIMIT)));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (helpdeskWorkflow.noteDownAvailableClient(type,device)), equalTo(context.get(ContextConstants.AVAILABLE_CLIENT_OR_CREDIT_LIMIT)));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (helpdeskWorkflow.noteDownClient(type,device)), equalTo(context.get(ContextConstants.AVAILABLE_CLIENT)));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (helpdeskWorkflow.noteDownAccount(type,device)), equalTo(context.get(ContextConstants.AVAILABLE_ACCOUNT)));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (helpdeskWorkflow.noteDownCard(type,device)), equalTo(context.get(ContextConstants.AVAILABLE_CARD)));
-		
 	}
 	
+	@Given("user verify temproary credit client limit")
+	@When("user verify temproary credit client limit")
+	@Then("user verify temproary credit client limit")
+	public void whenUserVerifyAvailableBalance(String type){
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		List<BigDecimal> creditLimit = helpdeskWorkflow.noteDownCreditLimit(type, device);
+		//assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (helpdeskWorkflow.noteDownAvailableLimit(type,device)), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(1)), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(2)), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(3)), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(4)), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(5)), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
+	}
 	
 	@Given("user setup device currency through helpdesk")
 	@When("user setup device currency through helpdesk")
