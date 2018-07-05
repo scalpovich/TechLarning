@@ -544,6 +544,10 @@ public class HelpDeskSteps {
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (helpdeskWorkflow.noteDownAvailableLimit(type,device)), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (helpdeskWorkflow.noteDownAvailableAccount(type,device)), equalTo(context.get(ContextConstants.AVAILABLE_ACCOUNT_OR_CREDIT_LIMIT)));
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (helpdeskWorkflow.noteDownAvailableClient(type,device)), equalTo(context.get(ContextConstants.AVAILABLE_CLIENT_OR_CREDIT_LIMIT)));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (helpdeskWorkflow.noteDownClient(type,device)), equalTo(context.get(ContextConstants.AVAILABLE_CLIENT)));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (helpdeskWorkflow.noteDownAccount(type,device)), equalTo(context.get(ContextConstants.AVAILABLE_ACCOUNT)));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (helpdeskWorkflow.noteDownCard(type,device)), equalTo(context.get(ContextConstants.AVAILABLE_CARD)));
+		
 	}
 	
 	

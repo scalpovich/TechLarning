@@ -297,6 +297,17 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Client :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement creditLimitLableClient;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Client :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement creditLimitClient;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Account :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement creditLimitAccount;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Card :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement creditLimitCard;
+	
+	
+	
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
 	
 	protected String getWalletNumber() {
@@ -1130,6 +1141,39 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		logger.info("Credit limit noted down : {} ",creditLimitClient);
 		clickEndCall();
 		return creditLimitClient;				
+	
+	}
+	
+	public BigDecimal noteDownClient(String type){	
+		BigDecimal creditClient;
+		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
+		clickWhenClickable(currentStatusAndLimitTab);			
+		creditClient = new BigDecimal(creditLimitClient.getText());		
+		logger.info("Credit limit noted down : {} ",creditClient);
+		clickEndCall();
+		return creditClient;				
+	
+	}
+	
+	public BigDecimal noteDownAccount(String type){	
+		BigDecimal creditAccount;
+		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
+		clickWhenClickable(currentStatusAndLimitTab);			
+		creditAccount = new BigDecimal(creditLimitAccount.getText());		
+		logger.info("Credit limit noted down : {} ",creditAccount);
+		clickEndCall();
+		return creditAccount;				
+	
+	}
+	
+	public BigDecimal noteDownCard(String type){	
+		BigDecimal creditCard;
+		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
+		clickWhenClickable(currentStatusAndLimitTab);			
+		creditCard = new BigDecimal(creditLimitCard.getText());		
+		logger.info("Credit limit noted down : {} ",creditCard);
+		clickEndCall();
+		return creditCard;				
 	
 	}
 	

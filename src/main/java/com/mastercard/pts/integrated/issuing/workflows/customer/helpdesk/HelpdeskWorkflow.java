@@ -170,6 +170,23 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.noteDownAvailableClient(type);
 	}
 	
+	public BigDecimal noteDownClient(String type,Device device) {
+		//clickCustomerCareEditLink();
+		return helpDeskPage.noteDownClient(type);
+	}
+	
+	public BigDecimal noteDownAccount(String type,Device device) {
+		//clickCustomerCareEditLink();
+		return helpDeskPage.noteDownAccount(type);
+	}
+	
+	public BigDecimal noteDownCard(String type,Device device) {
+		//clickCustomerCareEditLink();
+		return helpDeskPage.noteDownCard(type);
+	}
+	
+	
+	
 	public boolean resetCardholderTranPassword(String clientID){		
 		return helpDeskPage.serviceRequestCardholderTransactionPassword(clientID);
 	}
