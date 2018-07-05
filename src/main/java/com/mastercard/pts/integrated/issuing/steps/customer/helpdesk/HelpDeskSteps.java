@@ -630,15 +630,6 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickEndCall();
 		assertThat("Device has incorrect Delivery Date", helpdeskWorkflow.deliveryDate(), equalTo(DateUtils.currentDateddMMyyyy()));
 	}
-	
-	@Then("available balance is updated in current status and limits tab")
-		public void thenAvailableBalanceUpdatedinCurrentStatus(){
-		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
-		//helpdeskGeneral.createWithProvider(provider);
-		helpdeskWorkflow.clickCustomerCareEditLink();
-		helpdeskWorkflow.clickOnCurrentStatusTab();
-		Assert.assertEquals("Available balance",helpdeskWorkflow.availableBalance(),helpdeskGeneral.getAvailableBalance());
-	}
 	/*
 	 * @param registeredType accepts two values "registered" and "notregistered"
 	 */
