@@ -44,15 +44,18 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform MSR_POS_BALANCE_INQUIRY Authorization transaction
+Scenario: Perform MSR_PURCHASE Authorization transaction
 Given connection to MAS is established
-When perform an MSR_POS_BALANCE_INQUIRY MAS transaction
+When perform an MSR_PURCHASE MAS transaction
 Then MAS test results are verified
 When MAS simulator is closed
 Then user is logged in institution
-Then search Balance Inquiry authorization and verify 000-Successful status
+Then search Purchase authorization and verify 000-Successful status
 Then available balance is updated in current status and limits tab
 And user sign out from customer portal
+
+
+
 
 
 
