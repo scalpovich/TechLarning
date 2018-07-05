@@ -17,24 +17,32 @@ Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
+When processes pin generation batch for prepaid
 When user has wallet number information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
+When embossing file batch was generated in correct format
+When user set invalid pin
+And user sign out from customer portal
+
+Scenario: Perform EMV_PURCHASE Authorization transaction with invalid pin
+Given connection to MAS is established
+When perform an EMV_PURCHASE MAS transaction
+When perform an EMV_PURCHASE MAS transaction on the same card
+Then user is logged in institution
+Then device has "normal" status
+When user reset pin retry counter Reset Pin Retry Counter [109]
 And user sign out from customer portal
 
 Scenario: Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 When PIN is retrieved successfully with data from Pin Offset File
-When embossing file batch was generated in correct format
 Then FINSim simulator is closed
 
-Scenario: Perform EMV_PURCHASE Authorization transaction
-Given connection to MAS is established
-When perform an EMV_PURCHASE MAS transaction
-When perform an EMV_PURCHASE MAS transaction on the same card
+
+Scenario: Perform EMV_PURCHASE Authorization transaction with valid pin
 When perform an EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
-!-- And search Purchase authorization and verify 119-Transaction not permitted status
-!-- And assert Decline response with 10001 AuthDecline Code and Transaction not permitted to device holder. as description
+And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal

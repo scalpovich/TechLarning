@@ -537,6 +537,9 @@ public class HelpDeskSteps {
 	public void thenDeviceHasStatus(String deviceStatus) {
 		String expectedStatus = DeviceStatus.fromShortName(deviceStatus);
 		Device device = context.get(ContextConstants.DEVICE);
+		/*Device device = new Device();
+		device.setAppliedForProduct("Credit [C]");
+		device.setDeviceNumber("5897659292960513");*/
 		String actualStatus = helpdeskWorkflow.getDeviceStatus(device);
 		assertThat(STATUS_INCORRECT_INFO_MSG, actualStatus, equalTo(expectedStatus));
 	}
@@ -769,5 +772,13 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.validateRequiredFields(helpdeskGeneral);
+	}
+	
+	@When("user reset pin retry counter $counter")
+	public void whenUserResetPinRetryCounterThroughHelpDesk(String serviceCode) {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.setServiceCode(serviceCode);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.resetPinCounter(helpdeskGeneral);
 	}
 }
