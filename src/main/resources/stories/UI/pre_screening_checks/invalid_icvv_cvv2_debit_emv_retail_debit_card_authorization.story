@@ -1,9 +1,9 @@
-debit emv retail debit card authorization PINLESS
+invalid icvv cvv2 debit emv retail debit card authorization
 
 Narrative:
-In order to check transactions on debit emv retail debit card pinless
+In order to check invalid icvv cvv2 debit emv retail debit card authorization 
 As an issuer
-I want to authorize transactions for debit emv retail debit card pinless
+I want to authorize transactions for debit emv retail debit card 
 
 Meta:
 @StoryName d_emv_retail
@@ -55,23 +55,3 @@ Then user is logged in institution
 Then search E-Commerce Transaction authorization and verify 192-CVV2/CVC2/CVD2 Verification Failure status
 Then assert Decline response with 46042 AuthDecline Code and Invalid CVV2 for E-Comm transaction. as description
 Then user sign out from customer portal
-
-
-Scenario: Perform EMV_CASH_ADVANCE Authorization transaction on valid ICVV
-Meta:
-@TestId 
-When embossing file batch was generated in correct format
-When perform an EMV_CASH_ADVANCE MAS transaction
-Then user is logged in institution
-Then search Cash Advance authorization and verify 000-Successful status
-Then user sign out from customer portal
-
-
-Scenario: Perform ECOMM_PURCHASE Authorization transaction on valid CVV2 
-Meta:
-@TestId 
-When perform an ECOMM_PURCHASE MAS transaction on the same card
-Then user is logged in institution
-Then search E-Commerce Transaction authorization and verify 000-Successful status
-And user sign out from customer portal
-When MAS simulator is closed
