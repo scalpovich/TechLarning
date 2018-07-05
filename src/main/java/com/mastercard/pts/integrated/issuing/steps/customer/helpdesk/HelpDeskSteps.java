@@ -520,8 +520,8 @@ public class HelpDeskSteps {
 	public void whenUserActivatesCreditLimitChangeRequestThroughHelpdesk() {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		//SimulatorUtilities.wait(9000);
-		helpdeskWorkflow.clickCustomerCareEditLink();
-		helpdeskWorkflow.activateCreditLimitChangeRequest(helpdeskGeneral);
+		helpdeskWorkflow.clickCustomerCareEditLink();		
+		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.activateCreditLimitChangeRequest(helpdeskGeneral));
 	}
 	
 	@Given("user notes down available $type limit for card")
@@ -541,7 +541,9 @@ public class HelpDeskSteps {
 	public void whenUserVerifyLimitThroughHelpDesk(String type) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);		
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.noteDownAvailableLimit(type,device), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (helpdeskWorkflow.noteDownAvailableLimit(type,device)), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (helpdeskWorkflow.noteDownAvailableAccount(type,device)), equalTo(context.get(ContextConstants.AVAILABLE_ACCOUNT_OR_CREDIT_LIMIT)));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (helpdeskWorkflow.noteDownAvailableClient(type,device)), equalTo(context.get(ContextConstants.AVAILABLE_CLIENT_OR_CREDIT_LIMIT)));
 	}
 	
 	

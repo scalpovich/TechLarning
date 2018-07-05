@@ -76,8 +76,8 @@ public class HelpdeskWorkflow {
 		helpDeskPage.activateDevice(helpdeskGeneral);
 	}
 	
-	public void activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
-		helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
+	public String activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
+		return helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
 	}
 	
 	public void creditLimitChange(HelpdeskGeneral helpdeskGeneral){
@@ -160,9 +160,14 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.noteDownAvailableLimit(type);
 	}
 	
-	public BigDecimal verifyAvailableLimit(String type,Device device) {
-		clickCustomerCareEditLink();
-		return helpDeskPage.noteDownAvailableLimit(type);
+	public BigDecimal noteDownAvailableAccount(String type,Device device) {
+		//clickCustomerCareEditLink();
+		return helpDeskPage.noteDownAvailableAccount(type);
+	}
+	
+	public BigDecimal noteDownAvailableClient(String type,Device device) {
+		//clickCustomerCareEditLink();
+		return helpDeskPage.noteDownAvailableClient(type);
 	}
 	
 	public boolean resetCardholderTranPassword(String clientID){		

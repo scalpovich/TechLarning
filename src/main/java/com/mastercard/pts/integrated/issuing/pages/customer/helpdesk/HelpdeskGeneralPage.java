@@ -291,6 +291,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Card :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement creditLimitLable;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Account :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement creditLimitLableAccount;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Client :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement creditLimitLableClient;
 	
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
 	
@@ -1103,6 +1108,28 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		logger.info("Credit limit noted down : {} ",creditLimit);
 		clickEndCall();
 		return creditLimit;				
+	
+	}
+	
+	public BigDecimal noteDownAvailableAccount(String type){	
+		BigDecimal creditLimitAccount;
+		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
+		clickWhenClickable(currentStatusAndLimitTab);			
+		creditLimitAccount = new BigDecimal(creditLimitLableAccount.getText());		
+		logger.info("Credit limit noted down : {} ",creditLimitAccount);
+		clickEndCall();
+		return creditLimitAccount;				
+	
+	}
+	
+	public BigDecimal noteDownAvailableClient(String type){	
+		BigDecimal creditLimitClient;
+		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
+		clickWhenClickable(currentStatusAndLimitTab);			
+		creditLimitClient = new BigDecimal(creditLimitLableClient.getText());		
+		logger.info("Credit limit noted down : {} ",creditLimitClient);
+		clickEndCall();
+		return creditLimitClient;				
 	
 	}
 	
