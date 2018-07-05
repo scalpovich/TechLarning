@@ -68,6 +68,7 @@ Scenario: Perform ECOMM_PURCHASE Authorization transaction on invalid CVV2
 Meta:
 @TestId 
 When perform an ECOMM_PURCHASE MAS transaction on the same card
+Then MAS simulator is closed
 Then user is logged in institution
 Then search E-Commerce Transaction authorization and verify 192-CVV2/CVC2/CVD2 Verification Failure status
 Then assert Decline response with 46042 AuthDecline Code and Invalid CVV2 for E-Comm transaction. as description

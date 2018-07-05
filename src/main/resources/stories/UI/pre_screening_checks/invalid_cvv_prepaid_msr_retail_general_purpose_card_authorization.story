@@ -48,6 +48,8 @@ Meta:
 @TestId 
 Given connection to MAS is established
 When perform an MSR_CASH_ADVANCE MAS transaction
+Then MAS simulator is closed
+Then user is logged in institution
 Then search Cash Advance authorization and verify 183-CVV Verification Failure status
 Then assert Decline response with 46039 AuthDecline Code and Invalid CVV.. as description
 Then user sign out from customer portal
