@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import static org.junit.Assert.assertThat;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Then;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import static org.hamcrest.Matchers.equalTo;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
@@ -33,7 +35,7 @@ public class AuthorizationSearchSteps {
 	@Then("search $type authorization and verify $state status")
 	public void thenUserSearchDeviceNumerWithTodaysDate(String type, String state) {
 		Device device = context.get(ContextConstants.DEVICE);
-		authorizationSearchWorkflow.verifyAuthTransactionSearch(type, state,device.getDeviceNumber());
+		authorizationSearchWorkflow.verifyAuthTransactionSearch(type, state,"5897658859228918");
 	}
 
 	@Then("assert $response response with $code AuthDecline Code and $description as description")
@@ -116,5 +118,13 @@ public class AuthorizationSearchSteps {
 			Device device = context.get(ContextConstants.DEVICE);
 			authorizationSearchWorkflow.verifyAuthTransactionSearchReport(device);
 		} 
+	}
+	
+	@Then("user verify available balance after transaction")
+	public void validateAvailableBalanceAfterTransaction(){
+		BigDecimal availableBalanceBeforeTransaction =context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
+		List<BigDecimal> lst = authorizationSearchWorkflow.getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(availableBalanceBeforeTransaction);
+		assertThat("Verify Available Balance", availableBalanceBeforeTransaction.subtract(lst.get(0)), equalTo(lst.get(1)));
+		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, lst.get(1));
 	}
 }

@@ -8,7 +8,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import java.math.BigDecimal;
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
@@ -25,6 +25,9 @@ public class AuthorizationSearchWorkflow {
 
 	@Autowired
 	private Navigator navigator;
+	
+	@Autowired
+	AuthorizationSearchPage authorizationSearchPage;
 
 	@Autowired
 	private TestContext context;
@@ -162,6 +165,15 @@ public class AuthorizationSearchWorkflow {
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		List<String> actualAuthStatus = page.verifyState(deviceNumber);
 		assertTrue(String.format("Response, Auth Code and Auth Description does not match. Expecting %s. Actual %s", authStatus, actualAuthStatus), actualAuthStatus.containsAll(authStatus));
+	}
+	
+	public List<BigDecimal> getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(BigDecimal availableBalance){
+		authorizationSearchPage.viewDeviceDetails();
+		List<BigDecimal> lst = authorizationSearchPage.getTransactionBillingAmount();
+		logger.info("Available balance before transaction amount = " + availableBalance);
+		logger.info("Sum of all applicable fee and amounts = " +  lst.get(0));
+		logger.info("Available balance after transaction amount = " +  lst.get(1));
+		return lst;
 	}
 	
 }

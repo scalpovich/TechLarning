@@ -288,6 +288,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//li/a[text()='Current Status and Limits']")
 	private MCWebElement tabCurrentStatusAndLimits;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Card :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement creditLimitLable;
+	
 	
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
 	
@@ -538,7 +541,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 	}
 	
-	public void activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
+	public String activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
 		logger.info("credit limit change request: {}",helpdeskGeneral.getCardPackId());
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
@@ -560,6 +563,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(5000);
 		clickCurrentStatusAndLimitsTab();
 		clickEndCall();
+		return helpdeskGeneral.getNewCreditLimit();
 	}
 	
 	public void setupCurrency(String lst) {
@@ -1089,6 +1093,17 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			verifyPriorityRequest();
 		});
 		return true;
+	}
+	
+	public BigDecimal noteDownAvailableLimit(String type){	
+		BigDecimal creditLimit;
+		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
+		clickWhenClickable(currentStatusAndLimitTab);			
+		creditLimit = new BigDecimal(creditLimitLable.getText());		
+		logger.info("Credit limit noted down : {} ",creditLimit);
+		clickEndCall();
+		return creditLimit;				
+	
 	}
 	
 	public String availableBalance()

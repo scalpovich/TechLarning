@@ -155,6 +155,16 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.serviceRequestCardholderLoginPassword(clientID);
 	}
 	
+	public BigDecimal noteDownAvailableLimit(String type,Device device) {
+		clickCustomerCareEditLink();
+		return helpDeskPage.noteDownAvailableLimit(type);
+	}
+	
+	public BigDecimal verifyAvailableLimit(String type,Device device) {
+		clickCustomerCareEditLink();
+		return helpDeskPage.noteDownAvailableLimit(type);
+	}
+	
 	public boolean resetCardholderTranPassword(String clientID){		
 		return helpDeskPage.serviceRequestCardholderTransactionPassword(clientID);
 	}

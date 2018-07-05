@@ -19,6 +19,8 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
+import java.math.BigDecimal;
+import java.math.MathContext;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_SEARCH, CardManagementNav.L2_SEARCH_AUTHORIZATION, CardManagementNav.L3_AUTHORIZATION_SEARCH })
@@ -86,6 +88,11 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='modelFormClass']//span[contains(text(),'Auth Decline Code')]/../following-sibling::td[1]/span/span")
 	private MCWebElement authDeclineCodeLbl;
+	
+	@PageElement(findBy=FindBy.X_PATH, valueToFind = "//td[contains(text(),'Available Balance')]/following-sibling::td[1]/span/span")
+	private MCWebElement availableBalanceTxt;
+	
+	private String amountTypes = "Billing Amount:Transaction Fee:Service Tax:Markup Fee:Markup Service Tax";
 
 	public void verifyUiOperationStatus() {
 		logger.info("Authorization Search");
@@ -169,5 +176,24 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 			clickCloseButton();
 		});
 		return fieldsForAssertion;
+	}
+	
+	public List<BigDecimal> getTransactionBillingAmount(){
+
+		String[] amountType = amountTypes.split(":");
+		List<BigDecimal> lst = new ArrayList<BigDecimal>();
+
+		runWithinPopup("View Authorization", () -> {
+			BigDecimal sum =  new BigDecimal(0)   ;
+			for(String str : amountType){
+				String value = Element("//span[contains(text(),'"+str+"')]/../span[2]/span").getText();
+				logger.info("value of " + str + " = "+  value);
+				sum = sum.add(new BigDecimal(value),  new MathContext(5));
+			}
+			lst.add(sum);
+			lst.add(new BigDecimal(getTextFromPage(availableBalanceTxt)));
+			clickCloseButton();
+		});
+		return lst;
 	}
 }

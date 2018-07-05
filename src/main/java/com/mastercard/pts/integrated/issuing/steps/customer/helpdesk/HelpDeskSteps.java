@@ -66,6 +66,7 @@ public class HelpDeskSteps {
 	private BigDecimal currentBalanceAmount;
 	private String beforeLoadBalanceInformation;
 	private static final String STATUS_INCORRECT_INFO_MSG = "Device has incorrect status";
+	private static final String INCORRECT_BALANCE_OR_CREDIT_LIMIT = "Available balance/Credit limit does not match : ";
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
 	private String clientID;
 	private String loginType = "login";
@@ -523,6 +524,26 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.activateCreditLimitChangeRequest(helpdeskGeneral);
 	}
 	
+	@Given("user notes down available $type limit for card")
+	@When("user notes down available $type limit for card")
+	@Then("user notes down available $type limit for card")
+	public void whenUserNotesDownLimitThroughHelpDesk(String type) {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.noteDownAvailableLimit(type,device));
+	}
+	
+	
+	
+	@Given("user verify available $type limit for card after transaction")
+	@When("user verify available $type limit for card after transaction")
+	@Then("user verify available $type limit for card after transaction")
+	public void whenUserVerifyLimitThroughHelpDesk(String type) {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		Device device = context.get(ContextConstants.DEVICE);		
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.noteDownAvailableLimit(type,device), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
+	}
+	
 	
 	@Given("user setup device currency through helpdesk")
 	@When("user setup device currency through helpdesk")
@@ -597,11 +618,12 @@ public class HelpDeskSteps {
 	
 	@Then("available balance is updated in current status and limits tab")
 		public void thenAvailableBalanceUpdatedinCurrentStatus(){
-		helpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		//helpdeskGeneral.createWithProvider(provider);
+		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.clickOnCurrentStatusTab();
 		Assert.assertEquals("Available balance",helpdeskWorkflow.availableBalance(),helpdeskGeneral.getAvailableBalance());
 	}
-
 	/*
 	 * @param registeredType accepts two values "registered" and "notregistered"
 	 */
