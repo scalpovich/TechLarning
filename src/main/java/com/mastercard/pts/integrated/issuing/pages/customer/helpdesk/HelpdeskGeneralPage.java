@@ -1182,10 +1182,5 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return creditCard;				
 	
 	}
-	
-	public String availableBalance()
-	{
-		return availableBalanceTxt.getText();
-	}
 }
 
