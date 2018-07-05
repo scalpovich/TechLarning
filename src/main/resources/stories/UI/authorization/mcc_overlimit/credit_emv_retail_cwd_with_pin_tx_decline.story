@@ -6,7 +6,7 @@ So that mcc overlimit functionality is tested
 
 Meta:
 @CreditRegression
-@StoryName credit_emv_retail
+@StoryName credit_emv_retail_overlimit
 @mcc_overlimit 
 @mcc_overlimit_tx_decline
 
