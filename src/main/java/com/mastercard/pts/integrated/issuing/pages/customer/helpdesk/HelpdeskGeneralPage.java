@@ -518,9 +518,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
     }
 
 	public String getDeviceStatus(Device device) {
-		logger.info("Fetching information for : {}",device.getDeviceNumber());
-		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
-		WebElementUtils.enterText(deviceNumberSearchTxt,device.getDeviceNumber());
+		logger.info("Fetching information for : {}","5897655596049219");
+		//WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
+		WebElementUtils.enterText(deviceNumberSearchTxt,"5897655596049219");
 		clickSearchButton();
 		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
 		return getFirstRecordCellTextByColumnName(COLUMN_STATUS);
