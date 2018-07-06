@@ -507,6 +507,15 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createMarketingMessagePlan(marketingMessagePlan);
 	}
 
+	@When("user edits MCC rules from $fromMCC to $toMCC uncheck approve $origin transactions")
+	public void whenUserEditsMCCRules(String fromMCC,String toMCC,String origin) {
+		//mccRulePlan.setProductType(ProductType.fromShortName(type));
+		mccRulePlan.setFromMccCode(fromMCC);
+		mccRulePlan.setToMccCode(toMCC);
+		mccRulePlan.setOrigin(origin);
+		programSetupWorkflow.editMCCRulePlan(mccRulePlan);
+	}
+	
 	@When("User fills MCC Rules for $type product")
 	public void whenUserFillsMCCRules(String type) {
 		mccRulePlan = MCCRulePlan.createGenericTestData();

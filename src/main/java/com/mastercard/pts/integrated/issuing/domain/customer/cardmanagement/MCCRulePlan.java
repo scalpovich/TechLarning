@@ -21,6 +21,12 @@ public class MCCRulePlan implements HasCodeAndDescription {
 	
 	private String approveInternationalTransactions;
 	
+	private String fromMccCode;	
+
+	private String toMccCode;
+	
+	private String origin;
+	
 	// TODO: Add list of MCC	
 	public static MCCRulePlan createGenericTestData() {
 		MCCRulePlan plan = new MCCRulePlan();
@@ -90,4 +96,29 @@ public class MCCRulePlan implements HasCodeAndDescription {
 			String approveInternationalTransactions) {
 		this.approveInternationalTransactions = approveInternationalTransactions;
 	}
+	
+	public String getFromMccCode() {
+		return fromMccCode;
+	}
+
+	public void setFromMccCode(String fromMccCode) {
+		this.fromMccCode = fromMccCode;
+	}
+
+	public String getToMccCode() {
+		return toMccCode;
+	}
+
+	public void setToMccCode(String toMccCode) {
+		this.toMccCode = toMccCode;
+	}
+	
+	public String getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+
 }

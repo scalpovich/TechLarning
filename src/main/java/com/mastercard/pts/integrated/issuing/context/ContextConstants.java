@@ -50,6 +50,10 @@ public class ContextConstants {
 	
 	public static final String AVAILABLE_BALANCE_OR_CREDIT_LIMIT = "AVAILABLE_BALANCE_OR_CREDIT_LIMIT";
 
+	public static final String INTERNATIONAL = "international";
+	
+	public static final String DOMESTIC = "domestic";
+	
 	private ContextConstants() {
 	}
 
