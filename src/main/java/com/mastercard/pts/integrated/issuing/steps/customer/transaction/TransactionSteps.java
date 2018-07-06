@@ -395,6 +395,7 @@ public class TransactionSteps {
 	public void thenPINIsCreatedForPinChangeFirstTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setPinNumberForTransaction("1176");
+		context.put(ContextConstants.DEVICE, device);
 	}
 
 	@When("$simulatorName simulator is closed")
