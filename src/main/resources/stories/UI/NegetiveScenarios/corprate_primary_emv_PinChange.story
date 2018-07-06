@@ -62,7 +62,6 @@ Then search Pin Change authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: Perform EMV_PURCHASE Authorization transaction
-Given connection to MAS is established
 When PIN is created for Pin Change First Transaction
 When perform an EMV_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
