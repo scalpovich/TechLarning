@@ -44,32 +44,36 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Transaction
+Scenario: Perform MSR_PURCHASE Authorization transaction with inrnational MCC detached
 Given connection to MAS is established
 When perform an MSR_PURCHASE MAS transaction
 Then user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 
-Scenario: Transaction
+Scenario: Perform INT_MSR_PURCHASE Authorization transaction with inrnational MCC detached
 When perform an INT_MSR_PURCHASE MAS transaction on the same card
 Then user is logged in institution
-Then search Purchase authorization and verify 000-Successful status
+Then search Purchase authorization and verify 100-Do Not Honour status
+Then assert Decline response with 46059 AuthDecline Code and MCC Blocked for International usage. as description
 Then user sign out from customer portal
 
+Scenario: change MCC rule plan for international and dometic  
 Given user is logged in institution
 When user edits MCC rules from 5999 to 5999 uncheck approve international transactions
 When user edits MCC rules from 5999 to 5999 uncheck approve domestic transactions
 Then user sign out from customer portal
 
 
-Scenario: Transaction
+Scenario: Perform MSR_PURCHASE Authorization transaction with domestic MCC detached
 When perform an MSR_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
+Then search Purchase authorization and verify 100-Do Not Honour status
+Then assert Decline response with 46058 AuthDecline Code and MCC Blocked for Domestic usage. as description
 Then user sign out from customer portal
 
-Scenario: Transaction
+Scenario: Perform INT_MSR_PURCHASE Authorization domestic with domestic MCC detached
 When perform an INT_MSR_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
