@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.helpdesk;
 
+import java.math.BigDecimal;
+
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;

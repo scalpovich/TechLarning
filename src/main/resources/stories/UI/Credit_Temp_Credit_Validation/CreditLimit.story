@@ -10,6 +10,8 @@ Meta:
 Scenario: CreditLimit
 Given setting json values in excel
 And user is logged in institution
-Then search Purchase authorization and verify 000-Successful status
-Then available balance is updated in current status and limits tab
+Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+Then user activates credit limit change request
+Then device has "normal" status
+Then user verify available Card limit for card after transaction
 And user sign out from customer portal

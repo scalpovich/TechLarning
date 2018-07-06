@@ -36,6 +36,7 @@ Then credit processes deviceproduction batch using new Device for Supplementary
 Then credit processes pinProduction batch using new Device for Supplementary
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 Then user activates credit limit change request
+Then device has "normal" status
 Then user verify available Card limit for card after transaction
 And user sign out from customer portal
 

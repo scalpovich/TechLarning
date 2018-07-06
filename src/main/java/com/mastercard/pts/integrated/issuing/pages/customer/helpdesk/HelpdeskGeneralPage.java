@@ -39,6 +39,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 
 
+
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -517,9 +518,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
     }
 
 	public String getDeviceStatus(Device device) {
-		logger.info("Fetching information for : {}", device.getDeviceNumber());
-		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
-		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
+		logger.info("Fetching information for : {}","5897651997732016");
+		//WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
+		WebElementUtils.enterText(deviceNumberSearchTxt,"5897651997732016");
 		clickSearchButton();
 		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
 		return getFirstRecordCellTextByColumnName(COLUMN_STATUS);
@@ -559,7 +560,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 	}
 	
-	public String activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
+	public BigDecimal activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
 		logger.info("credit limit change request: {}",helpdeskGeneral.getCardPackId());
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
@@ -581,7 +582,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(5000);
 		clickCurrentStatusAndLimitsTab();
 		clickEndCall();
-		return helpdeskGeneral.getNewCreditLimit();
+		return new BigDecimal(helpdeskGeneral.getNewCreditLimit()+".00");
 	}
 	
 	public void setupCurrency(String lst) {
@@ -1117,7 +1118,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		BigDecimal creditLimit;
 		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
 		clickWhenClickable(currentStatusAndLimitTab);			
-		creditLimit = new BigDecimal(creditLimitLable.getText());		
+		creditLimit = new BigDecimal(creditLimitLable.getText());
 		logger.info("Credit limit noted down : {} ",creditLimit);
 		clickEndCall();
 		return creditLimit;				

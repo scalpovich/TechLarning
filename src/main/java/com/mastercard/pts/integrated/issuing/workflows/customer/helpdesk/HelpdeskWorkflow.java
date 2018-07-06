@@ -77,7 +77,7 @@ public class HelpdeskWorkflow {
 		helpDeskPage.activateDevice(helpdeskGeneral);
 	}
 	
-	public String activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
+	public BigDecimal activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
 		return helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
 	}
 	
