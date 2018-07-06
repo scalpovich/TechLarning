@@ -119,7 +119,7 @@ TestContext context;
 			switchToIframe(VERIFY_FRAME);
 			SimulatorUtilities.wait(8000);
 			allBatchNumbers.add(batchNumberTxt.getText());
-			clickWhenClickable(verifyBtn);
+			clickWhenClickablewithWicket(verifyBtn);
 			SimulatorUtilities.wait(10000);
 			clickWhenClickable(verifyLink);
 		}
