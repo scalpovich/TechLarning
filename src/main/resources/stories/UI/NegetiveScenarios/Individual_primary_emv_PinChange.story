@@ -51,7 +51,7 @@ Scenario: Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 And user is logged in institution
-Then assert Decline response with 100-Do Not Honour AuthDecline Code and Tranaction is not Pin change. as description
+Then assert Decline response with 46010 AuthDecline Code and Tranaction is not Pin change. as description
 And user sign out from customer portal
 
 Scenario: Credit Corporate- Pin Change Transaction
