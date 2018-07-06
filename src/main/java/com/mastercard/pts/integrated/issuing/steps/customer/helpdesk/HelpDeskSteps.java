@@ -679,10 +679,10 @@ public class HelpDeskSteps {
 	@When("User search for new device Supplementary on search screen for $productType and validates the status as $NORMAL")
 	public void thenUserSearchForDeviceOnSearchScreenForSupplementary(String productType, String status) {
 		helpdeskgettersetter.setProductType(ProductType.fromShortName(productType));
-//		List<String>deviceNumbers=context.get(CreditConstants.SUPPLEMENTARY_DEVICE_NUMBER);
-//		for(String deviceNumber:deviceNumbers)
+		List<String>deviceNumbers=context.get(CreditConstants.SUPPLEMENTARY_DEVICE_NUMBER);
+		for(String deviceNumber:deviceNumbers)
         {
-        	helpdeskgettersetter.setDeviceNumber("5897655596049219");
+        	helpdeskgettersetter.setDeviceNumber(deviceNumber);
         	String actualStatus = helpdeskFlows.searchForNewDevice(helpdeskgettersetter);
     		if (actualStatus.contains(status)) {
     			Assert.assertTrue("status of newly created device is normal ", true);
