@@ -40,6 +40,6 @@ public class MCGSteps {
 		mcg = MCG.getMCGDetails(provider);
 		mcgFlows.addMCGwithMCC(mcg);
 		Assert.assertEquals(ConstantData.RECORD_ADDED_SUCCESSFULLY, mcgFlows.getFeedbackText());
-		context.put(ContextConstants.MCG, mcg.getMCG());
+		context.put(ContextConstants.MCG, mcg.getMCGCode());
 	}
 }

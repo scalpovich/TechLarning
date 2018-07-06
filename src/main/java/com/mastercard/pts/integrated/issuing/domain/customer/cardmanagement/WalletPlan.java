@@ -37,6 +37,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	private static final String WP_WALLET_INACTVITY_RULES_CLOSURE_WALLET_AFTER_DAYS = "WP_WALLET_INACTVITY_RULES_CLOSURE_WALLET_AFTER_DAYS";
 	private static final String WP_WALLET_RESERVERD_AMOUNT = "WP_WALLET_RESERVERD_AMOUNT";
 	private static final String WP_MCG_LIMIT_PLAN = "WP_MCG_LIMIT_PLAN";
+	private static final String WP_MCG = "WP_MCG";
 
 	private String walletReserveAmount;
 	private String description;
@@ -76,6 +77,15 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String secondWallet;
 	private String whiteMcgCode;
 	private String mcgLimitPlan;
+	private String mCG;
+
+	public String getMCG() {
+		return mCG;
+	}
+
+	public void setMCG(String mCG) {
+		this.mCG = mCG;
+	}
 
 	public String getWhiteMcgCode() {
 		return whiteMcgCode;
@@ -194,6 +204,7 @@ public class WalletPlan implements HasCodeAndDescription {
 		plan.setReservedAmount(keyValueProvider.getString(WP_WALLET_RESERVERD_AMOUNT));
 		plan.setDummyAccountNumber(RandomStringUtils.randomNumeric(6));
 		plan.setMcgLimitPlan(keyValueProvider.getString(WP_MCG_LIMIT_PLAN));
+		plan.setMCG(keyValueProvider.getString(WP_MCG));
 		return plan;
 	}
 
