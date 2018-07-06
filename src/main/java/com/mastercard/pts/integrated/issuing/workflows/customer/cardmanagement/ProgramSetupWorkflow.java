@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ApplicationBusinessMandatoryFields;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ApplicationDocumentChecklist;
@@ -232,5 +233,9 @@ public class ProgramSetupWorkflow {
 	public void createMCCRulePlan(MCCRulePlan plan) {
 		MCCRulePlanPage page = navigator.navigateToPage(MCCRulePlanPage.class);
 		page.createMCCRulePlanPage(plan);
+	}
+	public void enableStopListFlag(DevicePlan devicePlanDataObject) {
+		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
+		page.enableStopListFlag(devicePlanDataObject);
 	}
 }

@@ -401,6 +401,9 @@ public class DevicePlanPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="view:virtualDeviceCreditLimit:input:inputTextField")	
 	private MCWebElement virtualDeviceCreditLimitTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "stopListFlag:checkBoxComponent")
+	private MCWebElement stopListFlagChkBx;
 		
 	
 	public void AddDevicePlan() {
@@ -943,6 +946,10 @@ public class DevicePlanPage extends AbstractBasePage {
 	public void checkCvcCvv(boolean status) {
 		ClickCheckBox(cvccCvvChkBx, status);
 	}
+	
+	public void checStopListFlg(boolean status) {
+		ClickCheckBox(stopListFlagChkBx, status);
+	}
 
 	public void clickIframeDialogCloseX() {
 		dialogCloseX.click();
@@ -1297,5 +1304,19 @@ public class DevicePlanPage extends AbstractBasePage {
 		String name = System.getProperty("storyName").toString();
 		logger.info("System.getStoryName  : "+name);
 		return name;
+	}
+	public void enableStopListFlag(DevicePlan devicePlanDataObject) {
+		logger.info("Update Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
+		enterValueinTextBox(devicePlanCode, devicePlanDataObject.getDevicePlanCode());
+		clickSearchButton();
+		editFirstRecord();				
+		runWithinPopup("Edit Device Plan", () -> {			
+			WebElementUtils.elementToBeClickable(authorizationTab);
+			clickWhenClickable(authorizationTab);
+			checStopListFlg(true);
+			clickSaveButton();
+		});
+
+		verifyOperationStatus();
 	}
 }

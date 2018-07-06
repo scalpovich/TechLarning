@@ -590,6 +590,12 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 	
+	@When("edit deviceplan and enable stoplist flag")
+	public void editDevicePlanAndEnableStopListFlag() {
+		devicePlan=context.get(ContextConstants.DEVICE_PLAN);
+		programSetupWorkflow.enableStopListFlag(devicePlan);
+	}
+	
 	@When("for $deviceType User fills Supplementary Device Plan for $type product for $interchange")
 	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeForSupplementary(String deviceType,String type,String interchange) {
 		devicePlanSupplementary = DevicePlan.createProviderForCredit(provider);
@@ -1176,6 +1182,8 @@ public class ProgramSetupSteps {
 		}
 
 		programSetupWorkflow.createDeviceRange(deviceRange);
+		
+		context.put(ConstantData.DEVICE_RANGE_DATA, deviceRange);
 	}
 
 	@When("User fills Device Range section for $type product for non-default institution")
