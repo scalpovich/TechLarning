@@ -40,10 +40,10 @@ public class WithdrawDeviceRangePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=rangeEnd]")
 	private MCWebElement rangeEndDDwn;
 	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "withdrawalReasonCode:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "withdrawalReasonCode:input:dropdowncomponent")
 	private MCWebElement withdarwReasonDDwn;
 	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "withdrawalDescription:input:textAreaComponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "withdrawalDescription:input:textAreaComponent")
 	private MCWebElement withdarwalDescriptionTxt;
 	
 	
@@ -82,11 +82,11 @@ public class WithdrawDeviceRangePage extends AbstractBasePage {
 	}
 	
 	public void enterStartRange(String startRange){
-		enterText(rangeStartDDwn, "5877658362331600");
+		enterText(rangeStartDDwn, startRange);
 	}
 	
 	public void enterEndRange(String endRange){
-		enterText(rangeEndDDwn, "5877658362331699");
+		enterText(rangeEndDDwn, endRange);
 	}
 	
 	public void selectWithdrawReason(String withdrawReason){

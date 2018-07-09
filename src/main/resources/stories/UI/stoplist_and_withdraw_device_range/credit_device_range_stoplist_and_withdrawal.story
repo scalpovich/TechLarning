@@ -37,26 +37,27 @@ Then User search for new device Supplementary on search screen for credit and va
 When embossing file batch was generated in correct format
 Then user sign out from customer portal
 
-Scenario:To Verify that the user can stoplist device range
+Scenario:To Verify that the user can stoplist device range of credit device
 Given user is logged in institution
 When user stoplists a device range from stoplist device range screen
 When edit deviceplan and enable stoplist flag
 Then user sign out from customer portal
 
-Scenario: Transaction - MSR_PREAUTH Authorization transaction
+Scenario: Transaction - MSR_PREAUTH Authorization transaction on credit device after stoplisted device range
 Given connection to MAS is established
 When perform an MSR_PREAUTH MAS transaction
 Then MAS simulator is closed
 Given user is logged in institution
 Then search Pre-Auth authorization and verify 207-PICK-UP CARD status
+Then assert Capture response with 27001 AuthDecline Code and Device range is stoplisted. as description
 Then user sign out from customer portal
 
-Scenario:To Verify that the user can withdraw stoplist device range
+Scenario:To Verify that the user can withdraw stoplist device range of credit device
 Given user is logged in institution
 When user withdraws a device range from withdraw device range screen
 Then user sign out from customer portal
 
-Scenario: Transaction - MSR_PREAUTH Authorization transaction
+Scenario: Transaction - MSR_PREAUTH Authorization transaction on credit device after withdrawn device range
 Given connection to MAS is established
 When perform an MSR_PREAUTH MAS transaction
 Then MAS test results are verified
