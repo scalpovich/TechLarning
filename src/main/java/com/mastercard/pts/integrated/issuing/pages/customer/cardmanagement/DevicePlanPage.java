@@ -2,15 +2,18 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.List;
+
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CardType;
 import com.mastercard.pts.integrated.issuing.domain.DeviceType;
@@ -912,6 +915,8 @@ public class DevicePlanPage extends AbstractBasePage {
 		SimulatorUtilities.wait(900);
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
 		.until(WebElementUtils.visibilityOf(iframeFinishBtn));
+		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
+		.until(WebElementUtils.stalenessOf(iframeFinishBtn));
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
 		.until(WebElementUtils.elementToBeClickable(iframeFinishBtn)).click();
 	}
