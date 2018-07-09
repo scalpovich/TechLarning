@@ -56,15 +56,13 @@ And user sign out from customer portal
 
 Scenario: Credit Corporate- Pin Change Transaction
 Then connection to MDFS is established
-When user performs an optimized MDFS_EMV_PIN_CHANGE MDFS transaction on the same card
+When user performs an optimized MDFS_EMV_PIN_CHANGE MDFS transaction
 Then MDFS test results are verified
-When MDFS simulator is closed
 Given user is logged in institution
 Then search Pin Change authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: Perform Second EMV_PURCHASE Authorization transaction
-Given connection to MAS is established
 When PIN is created for Pin Change First Transaction
 When perform an EMV_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
