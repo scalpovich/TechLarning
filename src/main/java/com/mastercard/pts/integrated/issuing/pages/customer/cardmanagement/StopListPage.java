@@ -27,7 +27,7 @@ public class StopListPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "componentPanel")
 	private MCWebElement selectReportDDwn;
-	
+
 	public void verifyUiOperationStatus() {
 		logger.info("Stop List");
 		verifySearchButton("Go");

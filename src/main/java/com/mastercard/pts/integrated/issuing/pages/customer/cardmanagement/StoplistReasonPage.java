@@ -121,41 +121,50 @@ public class StoplistReasonPage extends AbstractBasePage {
 				WebElementUtils.elementToBeClickable(description));
 	}
 
-	public boolean addStopListReasonInStopListPage(StopListReasonPlan stopListReasonPlan, String stopListReason) {
+	public void addStopListReasonInStopListPage(StopListReasonPlan stopListReasonPlan) {
 
-		if (verifyReasonAlreadyExistsOrNotInStopList(stopListReason) == false) {
-			clickAddNewButton();
-			runWithinPopup("Add Stoplist Reason", () -> {
-				switch (stopListReason) {
-				case "Lost":
-					addLostPlanInStopList(stopListReasonPlan);
-					break;
-				case "Stolen":
-					addStolenPlanInStopList(stopListReasonPlan);
-					break;
-				case "Counterfeit":
-					addCounterfeitPlanInStopList(stopListReasonPlan);
-					break;
-				case "Returned":
-					addReturnedPlanInStopList(stopListReasonPlan);
-					break;
-				case "Expired":
-					addExpiredPlanInStopList(stopListReasonPlan);
-					break;
-				case "Damaged Card":
-					addDamagedCardPlanInStopList(stopListReasonPlan);
-					break;
-				case "Emergency Replacement":
-					addEmergencyReplacementPlanInStopList(stopListReasonPlan);
-					break;
-				case "Erroneous Card":
-					addErroneousCardPlanInStopList(stopListReasonPlan);
-					break;
+		for (int index = 0; index < stopListReasonPlan.getSize(); index++) {
+			if (verifyReasonAlreadyExistsOrNotInStopList(stopListReasonPlan.getDescription(index)) == false) {
+				clickAddNewButton();
+				
+					addLostPlanInStopList(stopListReasonPlan.getReasonCode()[index],
+							stopListReasonPlan.getDescription(index), stopListReasonPlan.getSticky(index),
+							stopListReasonPlan.getSentToMastercard(index),
+							stopListReasonPlan.getRegionMastercard(index), stopListReasonPlan.getSentToVisa(index),
+							stopListReasonPlan.getRegionVisa(index), stopListReasonPlan.getSentToRupay(index),
+							stopListReasonPlan.getSentToAmex(index));
 				}
-				SimulatorUtilities.wait(1000);
-			});
+
 		}
-		return verifyReasonAlreadyExistsOrNotInStopList(stopListReason);
+
+		
+	}
+
+	private void addLostPlanInStopList(String reasonCode, String description, String sticky, String sentToMasterCard,
+			String regionMastercard, String sentToVisa, String regionVisa, String sentToRupay, String sentToAmex) {
+		runWithinPopup("Add Stoplist Reason", () -> {
+		WebElementUtils.selectDropDownByVisibleText(reasonCodeInPopUp, reasonCode);
+		WebElementUtils.enterText(descriptionInPopUp, description);
+		if (sticky.equals("Yes"))
+			WebElementUtils.selectRadioBtn(stickyRadioButton);
+		if (sentToMasterCard.equals("Online"))
+			WebElementUtils.selectRadioBtn(sentToMasterOnline);
+		if (sentToVisa.equals("Online"))
+			WebElementUtils.selectRadioBtn(sentToVisaOnline);
+		if (sentToRupay.equals("Online"))
+			WebElementUtils.selectRadioBtn(sentToRupayOnline);
+		if (sentToRupay.equals("Batch Mode"))
+			WebElementUtils.selectRadioBtn(sentToRupayBatch);
+		if (sentToAmex.equals("Online"))
+			WebElementUtils.selectRadioBtn(sentToAmexOnline);
+		if (sentToAmex.equals("Batch Mode"))
+			WebElementUtils.selectRadioBtn(sentToAmexBatch);
+		if (regionMastercard != null || regionVisa != null) {
+			selectRegions(regionMastercard.split(" "));
+			selectRegions(regionVisa.split(" "));
+		}
+		clickSaveButton();
+		});
 	}
 
 	private boolean verifyReasonAlreadyExistsOrNotInStopList(String stopListReason) {
@@ -166,218 +175,6 @@ public class StoplistReasonPage extends AbstractBasePage {
 				.size() == 1)
 			return true;
 		return false;
-	}
-
-	private void addLostPlanInStopList(StopListReasonPlan stopListReasonPlan) {
-
-		WebElementUtils.selectDropDownByVisibleText(reasonCodeInPopUp, stopListReasonPlan.getReasonCodeLost());
-		WebElementUtils.enterText(descriptionInPopUp, stopListReasonPlan.getDescriptionLost());
-		if (stopListReasonPlan.getStickyLost().equals("Yes"))
-			WebElementUtils.selectRadioBtn(stickyRadioButton);
-		if (stopListReasonPlan.getSentToMasterLost().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToMasterOnline);
-		if (stopListReasonPlan.getSentToVisaLost().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToVisaOnline);
-		if (stopListReasonPlan.getSentToRupayLost().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToRupayOnline);
-		if (stopListReasonPlan.getSentToRupayLost().equals("Batch Mode"))
-			WebElementUtils.selectRadioBtn(sentToRupayBatch);
-		if (stopListReasonPlan.getSentToAmexLost().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToAmexOnline);
-		if (stopListReasonPlan.getSentToAmexLost().equals("Batch Mode"))
-			WebElementUtils.selectRadioBtn(sentToAmexBatch);
-		if (stopListReasonPlan.getRegionMastercardLost() != null || stopListReasonPlan.getRegionVisaLost() != null) {
-			selectRegions(stopListReasonPlan.getRegionMastercardLost().split(","));
-			selectRegions(stopListReasonPlan.getRegionVisaLost().split(","));
-		}
-		clickSaveButton();
-
-	}
-
-	private void addStolenPlanInStopList(StopListReasonPlan stopListReasonPlan) {
-
-		WebElementUtils.selectDropDownByVisibleText(reasonCodeInPopUp, stopListReasonPlan.getReasonCodeStolen());
-		WebElementUtils.enterText(descriptionInPopUp, stopListReasonPlan.getDescriptionStolen());
-		if (stopListReasonPlan.getStickyStolen().equals("Yes"))
-			WebElementUtils.selectRadioBtn(stickyRadioButton);
-		if (stopListReasonPlan.getSentToMasterStolen().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToMasterOnline);
-		if (stopListReasonPlan.getSentToVisaStolen().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToVisaOnline);
-		if (stopListReasonPlan.getSentToRupayStolen().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToRupayOnline);
-		if (stopListReasonPlan.getSentToRupayStolen().equals("Batch Mode"))
-			WebElementUtils.selectRadioBtn(sentToRupayBatch);
-		if (stopListReasonPlan.getSentToAmexStolen().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToAmexOnline);
-		if (stopListReasonPlan.getSentToAmexStolen().equals("Batch Mode"))
-			WebElementUtils.selectRadioBtn(sentToAmexBatch);
-		if (stopListReasonPlan.getRegionMastercardStolen() != null
-				|| stopListReasonPlan.getRegionVisaStolen() != null) {
-			selectRegions(stopListReasonPlan.getRegionMastercardStolen().split(","));
-			selectRegions(stopListReasonPlan.getRegionVisaStolen().split(","));
-		}
-		clickSaveButton();
-
-	}
-
-	private void addCounterfeitPlanInStopList(StopListReasonPlan stopListReasonPlan) {
-
-		WebElementUtils.selectDropDownByVisibleText(reasonCodeInPopUp, stopListReasonPlan.getReasonCodeCounterfeit());
-		WebElementUtils.enterText(descriptionInPopUp, stopListReasonPlan.getDescriptionCounterfeit());
-		if (stopListReasonPlan.getStickyCounterfeit().equals("Yes"))
-			WebElementUtils.selectRadioBtn(stickyRadioButton);
-		if (stopListReasonPlan.getSentToMasterCounterfeit().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToMasterOnline);
-		if (stopListReasonPlan.getSentToVisaCounterfeit().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToVisaOnline);
-		if (stopListReasonPlan.getSentToRupayCounterfeit().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToRupayOnline);
-		if (stopListReasonPlan.getSentToRupayCounterfeit().equals("Batch Mode"))
-			WebElementUtils.selectRadioBtn(sentToRupayBatch);
-		if (stopListReasonPlan.getSentToAmexCounterfeit().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToAmexOnline);
-		if (stopListReasonPlan.getSentToAmexCounterfeit().equals("Batch Mode"))
-			WebElementUtils.selectRadioBtn(sentToAmexBatch);
-		if (stopListReasonPlan.getRegionMastercardCounterfeit() != null
-				|| stopListReasonPlan.getRegionVisaCounterfeit() != null) {
-			selectRegions(stopListReasonPlan.getRegionMastercardCounterfeit().split(","));
-			selectRegions(stopListReasonPlan.getRegionVisaCounterfeit().split(","));
-		}
-		clickSaveButton();
-
-	}
-
-	private void addReturnedPlanInStopList(StopListReasonPlan stopListReasonPlan) {
-
-		WebElementUtils.selectDropDownByVisibleText(reasonCodeInPopUp, stopListReasonPlan.getReasonCodeReturned());
-		WebElementUtils.enterText(descriptionInPopUp, stopListReasonPlan.getDescriptionReturned());
-		if (stopListReasonPlan.getStickyReturned().equals("Yes"))
-			WebElementUtils.selectRadioBtn(stickyRadioButton);
-		if (stopListReasonPlan.getSentToMasterReturned().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToMasterOnline);
-		if (stopListReasonPlan.getSentToVisaReturned().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToVisaOnline);
-		if (stopListReasonPlan.getSentToRupayReturned().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToRupayOnline);
-		if (stopListReasonPlan.getSentToRupayReturned().equals("Batch Mode"))
-			WebElementUtils.selectRadioBtn(sentToRupayBatch);
-		if (stopListReasonPlan.getSentToAmexReturned().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToAmexOnline);
-		if (stopListReasonPlan.getSentToAmexReturned().equals("Batch Mode"))
-			WebElementUtils.selectRadioBtn(sentToAmexBatch);
-		if (stopListReasonPlan.getRegionMastercardReturned() != null
-				|| stopListReasonPlan.getRegionVisaReturned() != null) {
-			selectRegions(stopListReasonPlan.getRegionMastercardReturned().split(","));
-			selectRegions(stopListReasonPlan.getRegionVisaReturned().split(","));
-		}
-		clickSaveButton();
-
-	}
-
-	private void addExpiredPlanInStopList(StopListReasonPlan stopListReasonPlan) {
-
-		WebElementUtils.selectDropDownByVisibleText(reasonCodeInPopUp, stopListReasonPlan.getReasonCodeExpired());
-		WebElementUtils.enterText(descriptionInPopUp, stopListReasonPlan.getDescriptionExpired());
-		if (stopListReasonPlan.getStickyExpired().equals("Yes"))
-			WebElementUtils.selectRadioBtn(stickyRadioButton);
-		if (stopListReasonPlan.getSentToMasterExpired().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToMasterOnline);
-		if (stopListReasonPlan.getSentToVisaExpired().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToVisaOnline);
-		if (stopListReasonPlan.getSentToRupayExpired().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToRupayOnline);
-		if (stopListReasonPlan.getSentToRupayExpired().equals("Batch Mode"))
-			WebElementUtils.selectRadioBtn(sentToRupayBatch);
-		if (stopListReasonPlan.getSentToAmexExpired().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToAmexOnline);
-		if (stopListReasonPlan.getSentToAmexExpired().equals("Batch Mode"))
-			WebElementUtils.selectRadioBtn(sentToAmexBatch);
-		if (stopListReasonPlan.getRegionMastercardExpired() != null
-				|| stopListReasonPlan.getRegionVisaExpired() != null) {
-			selectRegions(stopListReasonPlan.getRegionMastercardExpired().split(","));
-			selectRegions(stopListReasonPlan.getRegionVisaExpired().split(","));
-		}
-		clickSaveButton();
-
-	}
-
-	private void addDamagedCardPlanInStopList(StopListReasonPlan stopListReasonPlan) {
-
-		WebElementUtils.selectDropDownByVisibleText(reasonCodeInPopUp, stopListReasonPlan.getReasonCodeDamaged());
-		WebElementUtils.enterText(descriptionInPopUp, stopListReasonPlan.getDescriptionDamaged());
-		if (stopListReasonPlan.getStickyDamaged().equals("Yes"))
-			WebElementUtils.selectRadioBtn(stickyRadioButton);
-		if (stopListReasonPlan.getSentToMasterDamaged().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToMasterOnline);
-		if (stopListReasonPlan.getSentToVisaDamaged().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToVisaOnline);
-		if (stopListReasonPlan.getSentToRupayDamaged().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToRupayOnline);
-		if (stopListReasonPlan.getSentToRupayDamaged().equals("Batch Mode"))
-			WebElementUtils.selectRadioBtn(sentToRupayBatch);
-		if (stopListReasonPlan.getSentToAmexDamaged().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToAmexOnline);
-		if (stopListReasonPlan.getSentToAmexDamaged().equals("Batch Mode"))
-			WebElementUtils.selectRadioBtn(sentToAmexBatch);
-		if (stopListReasonPlan.getRegionMastercardDamaged() != null
-				|| stopListReasonPlan.getRegionVisaDamaged() != null) {
-			selectRegions(stopListReasonPlan.getRegionMastercardDamaged().split(","));
-			selectRegions(stopListReasonPlan.getRegionVisaDamaged().split(","));
-		}
-		clickSaveButton();
-
-	}
-
-	private void addEmergencyReplacementPlanInStopList(StopListReasonPlan stopListReasonPlan) {
-
-		WebElementUtils.selectDropDownByVisibleText(reasonCodeInPopUp, stopListReasonPlan.getReasonCodeEmergency());
-		WebElementUtils.enterText(descriptionInPopUp, stopListReasonPlan.getDescriptionEmergency());
-		if (stopListReasonPlan.getStickyEmergency().equals("Yes"))
-			WebElementUtils.selectRadioBtn(stickyRadioButton);
-		if (stopListReasonPlan.getSentToMasterEmergency().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToMasterOnline);
-		if (stopListReasonPlan.getSentToVisaEmergency().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToVisaOnline);
-		if (stopListReasonPlan.getSentToRupayEmergency().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToRupayOnline);
-		if (stopListReasonPlan.getSentToRupayEmergency().equals("Batch Mode"))
-			WebElementUtils.selectRadioBtn(sentToRupayBatch);
-		if (stopListReasonPlan.getSentToAmexEmergency().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToAmexOnline);
-		if (stopListReasonPlan.getSentToAmexEmergency().equals("Batch Mode"))
-			WebElementUtils.selectRadioBtn(sentToAmexBatch);
-		if (stopListReasonPlan.getRegionMastercardEmergency() != null
-				|| stopListReasonPlan.getRegionVisaEmergency() != null) {
-			selectRegions(stopListReasonPlan.getRegionMastercardEmergency().split(","));
-			selectRegions(stopListReasonPlan.getRegionVisaEmergency().split(","));
-		}
-		clickSaveButton();
-	}
-
-	private void addErroneousCardPlanInStopList(StopListReasonPlan stopListReasonPlan) {
-		WebElementUtils.selectDropDownByVisibleText(reasonCodeInPopUp, stopListReasonPlan.getReasonCodeErroneous());
-		WebElementUtils.enterText(descriptionInPopUp, stopListReasonPlan.getDescriptionErroneous());
-		if (stopListReasonPlan.getStickyErroneous().equals("Yes"))
-			WebElementUtils.selectRadioBtn(stickyRadioButton);
-		if (stopListReasonPlan.getSentToMasterErroneous().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToMasterOnline);
-		if (stopListReasonPlan.getSentToVisaErroneous().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToVisaOnline);
-		if (stopListReasonPlan.getSentToRupayErroneous().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToRupayOnline);
-		if (stopListReasonPlan.getSentToRupayErroneous().equals("Batch Mode"))
-			WebElementUtils.selectRadioBtn(sentToRupayBatch);
-		if (stopListReasonPlan.getSentToAmexErroneous().equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToAmexOnline);
-		if (stopListReasonPlan.getSentToAmexErroneous().equals("Batch Mode"))
-			WebElementUtils.selectRadioBtn(sentToAmexBatch);
-		if (stopListReasonPlan.getRegionMastercardErroneous() != null
-				|| stopListReasonPlan.getRegionVisaErroneous() != null) {
-			selectRegions(stopListReasonPlan.getRegionMastercardErroneous().split(","));
-			selectRegions(stopListReasonPlan.getRegionVisaErroneous().split(","));
-		}
-		clickSaveButton();
 
 	}
 

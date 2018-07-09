@@ -233,4 +233,9 @@ public class ProgramSetupWorkflow {
 		MCCRulePlanPage page = navigator.navigateToPage(MCCRulePlanPage.class);
 		page.createMCCRulePlanPage(plan);
 	}
+	
+	public void createProgramWithCountryWhiteOrBlackListPlan(Program program, String productType ) {
+		ProgramPage page = navigator.navigateToPage(ProgramPage.class);
+		page.addProgramDataForCountryWhiteBlackListPlan(program, productType);
+	}
 }

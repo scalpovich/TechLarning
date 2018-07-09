@@ -22,9 +22,9 @@ public class StopListReasonSteps {
 
 	
 
-	@Then("user can add \"$stopListReason\" in stoplist reason page")
-	public void thenUserCanAddStopListReasonInStoplistReasonPage(String stopListReason) {
+	@Then("user add all raesons in stoplist reason page")
+	public void thenUserCanAddStopListReasonInStoplistReasonPage() {
 		StopListReasonPlan listReasonPlan = StopListReasonPlan.createWithProvider(provider);
-		Assert.assertTrue(stopListReasonWorkflow.addStopListReasonPlan(listReasonPlan,stopListReason));
+		stopListReasonWorkflow.addStopListReasonPlan(listReasonPlan);
 	}
 }
