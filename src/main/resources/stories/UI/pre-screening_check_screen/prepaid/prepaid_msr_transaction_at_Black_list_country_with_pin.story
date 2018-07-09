@@ -13,7 +13,7 @@ Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card with Country White or Black List
 When user creates new device of prepaid type for new client
 Then device has "normal" status
-Then user sign out from customer portal
+And user sign out from customer portal
 
 Scenario: Device Production
 Given user is logged in institution
@@ -39,5 +39,5 @@ Given connection to MAS is established
 When perform an INT_MSR_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 Then search Purchase authorization and verify 100-Do Not Honour status
-Then assert Decline response with 25001 AuthDecline Code and Whitelisted Country Not Found as description
+Then assert Decline response with 25002 AuthDecline Code and Country is blacklisted. as description
 Then user sign out from customer portal
