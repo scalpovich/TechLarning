@@ -294,7 +294,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void launchWiniumAndSimulator(String simulator) {
 		launchRequiredSimulatorSession(simulator); // to fetch required Simulator installed on the machine or read value from WhichSimulatorVersionToChoose.java
-		//closeSimulator(simulator);
+		closeSimulator(simulator);
 		String methodName = new Object() {
 		}.getClass().getEnclosingMethod().getName();
 
