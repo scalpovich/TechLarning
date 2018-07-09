@@ -46,7 +46,6 @@ Then user sign out from customer portal
 Scenario: Transaction - MSR_PREAUTH Authorization transaction on credit device after stoplisted device range
 Given connection to MAS is established
 When perform an MSR_PREAUTH MAS transaction
-Then MAS simulator is closed
 Given user is logged in institution
 Then search Pre-Auth authorization and verify 207-PICK-UP CARD status
 Then assert Capture response with 27001 AuthDecline Code and Device range is stoplisted. as description
@@ -59,7 +58,7 @@ Then user sign out from customer portal
 
 Scenario: Transaction - MSR_PREAUTH Authorization transaction on credit device after withdrawn device range
 Given connection to MAS is established
-When perform an MSR_PREAUTH MAS transaction
+When perform an MSR_PREAUTH MAS transaction on the same card
 Then MAS test results are verified
 Then MAS simulator is closed
 Given user is logged in institution
