@@ -54,9 +54,6 @@ Then MAS test results are verified
 When MAS simulator is closed
 Then user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
-Then user verify available balance after transaction
-Then device has "normal" status
-Then user verify available Card limit for card after transaction
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 Then user verify temproary credit client limit
 And user sign out from customer portal

@@ -47,6 +47,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.Proce
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
@@ -553,11 +554,13 @@ public class HelpDeskSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		List<BigDecimal> creditLimit = helpdeskWorkflow.noteDownCreditLimit(type, device);
 		//assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (helpdeskWorkflow.noteDownAvailableLimit(type,device)), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(1)), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(2)), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(3)), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(4)), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(5)), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
+		BigDecimal updatedAvailableBal = context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
+		updatedAvailableBal = updatedAvailableBal.subtract(context.get(ConstantData.TRANSACTION_AMOUNT));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(1)), equalTo(updatedAvailableBal));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(2)), equalTo(updatedAvailableBal));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(3)), equalTo(updatedAvailableBal));
+//		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(4)), equalTo(updatedAvailableBal));
+//		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(5)), equalTo(updatedAvailableBal));
 	}
 	
 	@Given("user setup device currency through helpdesk")

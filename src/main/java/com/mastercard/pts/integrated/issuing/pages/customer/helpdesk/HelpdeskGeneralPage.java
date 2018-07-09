@@ -1129,12 +1129,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public List<BigDecimal> noteDownCreditLimit(String type){	
 		List<BigDecimal> creditLimit=new ArrayList<BigDecimal>();
 		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
-		clickWhenClickable(currentStatusAndLimitTab);			
-		creditLimit.add(new BigDecimal(creditLimitLableAccount.getText()));		
+		clickWhenClickable(currentStatusAndLimitTab);		
+		creditLimit.add(new BigDecimal(creditLimitLable.getText()));
+		creditLimit.add(new BigDecimal(creditLimitLableAccount.getText()));	
 		creditLimit.add(new BigDecimal(creditLimitLableClient.getText()));	
-		creditLimit.add(new BigDecimal(creditLimitClient.getText()));	
-		creditLimit.add(new BigDecimal(creditLimitAccount.getText()));	
-		creditLimit.add(new BigDecimal(creditLimitCard.getText()));
 		logger.info("Credit limit noted down : {} ",creditLimitAccount);
 		clickEndCall();
 		return creditLimit;				
