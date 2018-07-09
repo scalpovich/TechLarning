@@ -913,8 +913,8 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	public void clickIframeFinishButton() {
 		SimulatorUtilities.wait(900);
-		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
-		.until(WebElementUtils.visibilityOf(iframeFinishBtn));
+//		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
+//		.until(WebElementUtils.visibilityOf(iframeFinishBtn));
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
 		.until(WebElementUtils.stalenessOf(iframeFinishBtn));
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
