@@ -862,6 +862,7 @@ public class ProgramSetupSteps {
 			mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
 			walletPlan.setMcgLimitPlan(mcgLimitPlan.getMcgLimitPlanCode());
 		} else {
+			mcgLimitPlan =  new MCGLimitPlan();
             mcgLimitPlan.setMcgLimitPlanCode(walletPlan.getMcgLimitPlan());
             mcgLimitPlan.setMcgCode(walletPlan.getMCG());
             context.put(ContextConstants.MCG_LIMIT_PLAN, mcgLimitPlan);
