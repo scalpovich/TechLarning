@@ -36,6 +36,8 @@ Then FINSim simulator is closed
 
 Scenario: Perform INT_MSR_PURCHASE Authorization transaction
 Given connection to MAS is established
+When perform an MSR_PURCHASE MAS transaction
+Then MAS test results are verified
 When perform an INT_MSR_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 Then search Purchase authorization and verify 100-Do Not Honour status
