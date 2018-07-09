@@ -56,7 +56,7 @@ Then user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 Then user verify temproary credit client limit
-And user sign out from customer portal
+And user sign out from customer portal	
 
 
 

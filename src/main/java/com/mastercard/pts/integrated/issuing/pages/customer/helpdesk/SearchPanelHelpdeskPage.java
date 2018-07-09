@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -95,6 +96,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 		enterText(this.deviceNumber, deviceNumber);
 		waitForElementVisible(searchBtn);
 		searchBtn.click();
+		SimulatorUtilities.wait(2000);
 		return getCellTextByColumnName(Constants.TABLE_ROW_NUM, Constants.COLUMN_NAME);
 	}
 }
