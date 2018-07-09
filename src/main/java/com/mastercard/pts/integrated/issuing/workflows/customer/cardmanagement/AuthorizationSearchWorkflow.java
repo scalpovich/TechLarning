@@ -79,6 +79,7 @@ public class AuthorizationSearchWorkflow {
 		String transactionAmountValue = authSearchPage.getCellTextByColumnName(1, "Transaction Amount");
 		context.put(ConstantData.AUTHORIZATION_CODE, authCodeValue);
 		context.put(ConstantData.TRANSACTION_AMOUNT, transactionAmountValue);
+		context.put(ConstantData.TRANSACTION_AMOUNT_BD, new BigDecimal(transactionAmountValue));
 		logger.info("CodeAction on Authorization Search Page : {} ", actualCodeAction);
 		logger.info("Description on Authorization Search Page : {} ", actualDescription);
 

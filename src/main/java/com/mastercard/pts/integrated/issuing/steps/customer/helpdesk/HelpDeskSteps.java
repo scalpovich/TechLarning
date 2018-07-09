@@ -554,7 +554,8 @@ public class HelpDeskSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		List<BigDecimal> creditLimit = helpdeskWorkflow.noteDownCreditLimit(type, device);
 		BigDecimal updatedAvailableBal = context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
-		updatedAvailableBal = updatedAvailableBal.subtract(new BigDecimal(context.get(ConstantData.TRANSACTION_AMOUNT)));
+		BigDecimal transactionAmount= context.get(ConstantData.TRANSACTION_AMOUNT_BD);
+		updatedAvailableBal = updatedAvailableBal.subtract(transactionAmount);
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(1)), equalTo(updatedAvailableBal));
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(2)), equalTo(updatedAvailableBal));
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(3)), equalTo(updatedAvailableBal));
