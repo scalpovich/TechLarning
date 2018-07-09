@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -913,12 +914,18 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	public void clickIframeFinishButton() {
 		SimulatorUtilities.wait(900);
+		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
+		.until(WebElementUtils.visibilityOf(iframeFinishBtn));
 //		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
-//		.until(WebElementUtils.visibilityOf(iframeFinishBtn));
+//		.until(WebElementUtils.stalenessOf(iframeFinishBtn));
+		try{
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
-		.until(WebElementUtils.stalenessOf(iframeFinishBtn));
-		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
-		.until(WebElementUtils.elementToBeClickable(iframeFinishBtn)).click();
+		.until(WebElementUtils.elementToBeClickable(iframeFinishBtn)).click();}
+		catch(StaleElementReferenceException e)
+		{
+		getFinder().getWebDriver().navigate().refresh();
+		iframeFinishBtn.click();
+		}
 	}
 
 	public void clickIframeNextButton() {
