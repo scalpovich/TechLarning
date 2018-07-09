@@ -57,7 +57,6 @@ When user withdraws a device range from withdraw device range screen
 Then user sign out from customer portal
 
 Scenario: Transaction - MSR_PREAUTH Authorization transaction on credit device after withdrawn device range
-Given connection to MAS is established
 When perform an MSR_PREAUTH MAS transaction on the same card
 Then MAS test results are verified
 Then MAS simulator is closed

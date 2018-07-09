@@ -35,7 +35,6 @@ Then user sign out from customer portal
 Scenario: Transaction - EMV_PREAUTH Authorization transaction on debit card after stoplisted device range
 Given connection to MAS is established
 When perform an EMV_PREAUTH MAS transaction
-Then MAS simulator is closed
 Given user is logged in institution
 Then search Pre-Auth authorization and verify 207-PICK-UP CARD status
 Then assert Capture response with 27001 AuthDecline Code and Device range is stoplisted. as description
@@ -47,8 +46,7 @@ When user withdraws a device range from withdraw device range screen
 Then user sign out from customer portal
 
 Scenario: Transaction - EMV_PREAUTH Authorization transaction on debit card after withdrawn device range
-Given connection to MAS is established
-When perform an EMV_PREAUTH MAS transaction
+When perform an EMV_PREAUTH MAS transaction on the same card
 Then MAS test results are verified
 Then MAS simulator is closed
 Given user is logged in institution
