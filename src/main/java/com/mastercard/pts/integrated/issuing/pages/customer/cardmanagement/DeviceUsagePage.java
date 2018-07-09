@@ -147,6 +147,8 @@ public class DeviceUsagePage extends AbstractBasePage {
 		map.put(DAILY_VELOCLITY_DOMESTIC_UTILIZED, getCellTextByColumnName(1, DAILY_VELOCLITY_DOMESTIC_UTILIZED));
 		map.put(DAILY_AMOUNT_INTERNATIONAL_UTILIZED, getCellTextByColumnName(1, DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
 		map.put(DAILY_VELOCLITY_INTERNATIONAL_UTILIZED, getCellTextByColumnName(1, DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
+		clickCloseButton();
+		switchToDefaultFrame();
 
 		return Optional.of(map);
 	}
