@@ -68,7 +68,6 @@ Then user sign out from customer portal
 Scenario: Perform MSR_PURCHASE Authorization transaction with domestic MCC detached
 When perform an MSR_PURCHASE MAS transaction on the same card
 Then user is logged in institution
-Then search Purchase authorization and verify 000-Successful status
 Then search Purchase authorization and verify 100-Do Not Honour status
 Then assert Decline response with 46058 AuthDecline Code and MCC Blocked for Domestic usage. as description
 Then user sign out from customer portal
