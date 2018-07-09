@@ -556,9 +556,9 @@ public class HelpDeskSteps {
 		BigDecimal updatedAvailableBal = context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
 		BigDecimal transactionAmount= context.get(ConstantData.TRANSACTION_AMOUNT_BD);
 		updatedAvailableBal = updatedAvailableBal.subtract(transactionAmount);
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(0)), equalTo(updatedAvailableBal));
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(1)), equalTo(updatedAvailableBal));
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(2)), equalTo(updatedAvailableBal));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(3)), equalTo(updatedAvailableBal));
 	}
 	
 	@Given("user setup device currency through helpdesk")
@@ -680,10 +680,10 @@ public class HelpDeskSteps {
 	@When("User search for new device Supplementary on search screen for $productType and validates the status as $NORMAL")
 	public void thenUserSearchForDeviceOnSearchScreenForSupplementary(String productType, String status) {
 		helpdeskgettersetter.setProductType(ProductType.fromShortName(productType));
-		List<String>deviceNumbers=context.get(CreditConstants.SUPPLEMENTARY_DEVICE_NUMBER);
-		for(String deviceNumber:deviceNumbers)
+//		List<String>deviceNumbers=context.get(CreditConstants.SUPPLEMENTARY_DEVICE_NUMBER);
+//		for(String deviceNumber:deviceNumbers)
         {
-        	helpdeskgettersetter.setDeviceNumber(deviceNumber);
+        	helpdeskgettersetter.setDeviceNumber("5897650077909916");
         	String actualStatus = helpdeskFlows.searchForNewDevice(helpdeskgettersetter);
     		if (actualStatus.contains(status)) {
     			Assert.assertTrue("status of newly created device is normal ", true);
