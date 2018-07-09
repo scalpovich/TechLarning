@@ -18,6 +18,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCGLimitPlan;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceUsagePage;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceUsageWorkflow;
 
 @Component
@@ -69,10 +70,10 @@ public class DeviceUsageSteps {
 		if (data.isPresent()) {
 			Assert.assertEquals("Error asserting MCG Code", mcgLimitPlan.getMcgCode(), data.get().get(DeviceUsagePage.MCG_CODE));
 			if (type.equalsIgnoreCase(DOMESTIC)) {
-				Assert.assertEquals("Error asserting Domestic Transaction Amount", device.getTransactionAmount(), data.get().get(DeviceUsagePage.DAILY_AMOUNT_DOMESTIC_UTILIZED));
+				Assert.assertEquals("Error asserting Domestic Transaction Amount", context.get(ConstantData.TRANSACTION_AMOUNT), data.get().get(DeviceUsagePage.DAILY_AMOUNT_DOMESTIC_UTILIZED));
 				Assert.assertEquals("Error asserting Domestic Velocity", deviceUsage.getVelocity(), data.get().get(DeviceUsagePage.DAILY_VELOCLITY_DOMESTIC_UTILIZED));
 			} else if (type.equalsIgnoreCase(INTERNATIONAL)) {
-				Assert.assertEquals("Error asserting International Transaction Amount", device.getTransactionAmount(), data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
+				Assert.assertEquals("Error asserting International Transaction Amount", context.get(ConstantData.TRANSACTION_AMOUNT), data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
 				Assert.assertEquals("Error asserting International Velocity", deviceUsage.getVelocity(), data.get().get(DeviceUsagePage.DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
 			} else {
 				Assert.fail("Incorrect transaction type in step");
@@ -81,7 +82,7 @@ public class DeviceUsageSteps {
 			Assert.fail("No Transaction was recorded under MCG usage");
 		}
 
-		if (device.getTransactionAmount() != deviceUsage.getNextTransactionAmount()) {
+		if (context.get(ConstantData.TRANSACTION_AMOUNT)!= deviceUsage.getNextTransactionAmount()) {
 			device.setTransactionAmount(deviceUsage.getNextTransactionAmount());
 			deviceUsage.setVelocity();
 			context.put(ContextConstants.DEVICE, device);
