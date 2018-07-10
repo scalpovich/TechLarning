@@ -40,8 +40,7 @@ And user sign out from customer portal
 
 Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 2nd transaction
 When perform an MSR_PURCHASE MAS transaction on the same card
-Then MAS test results are verified
-And MAS simulator is closed
+Then MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
 And user sign out from customer portal
