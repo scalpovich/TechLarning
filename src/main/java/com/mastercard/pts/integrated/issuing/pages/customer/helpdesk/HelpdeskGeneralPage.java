@@ -109,6 +109,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "memo1:input:textAreaComponent")
 	private MCWebElement notesTxt;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='udf4:input:inputTextField']")
+	private MCWebElement timeInHour;
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Save']")
 	private MCWebElement saveBtn;
 	
@@ -465,6 +468,23 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			}
 	}
 	
+	public void chooseOperationDeactivate()
+	{
+		SimulatorUtilities.wait(1000);
+		WebElement element = driver().findElement(By.xpath("//select[@name='udf1:input:dropdowncomponent']"));
+		WebElementUtils.retryUntilNoErrors(() -> new Select(element).selectByValue("0"));
+	}
+	
+	public void chooseOperationActivate()
+	{
+		SimulatorUtilities.wait(1000);
+		WebElement element = driver().findElement(By.xpath("//select[@name='udf1:input:dropdowncomponent']"));
+		WebElement element1 = driver().findElement(By.xpath("//select[@name='udf2:input:dropdowncomponent']"));
+		WebElementUtils.retryUntilNoErrors(() -> new Select(element).selectByValue("1"));
+		WebElementUtils.retryUntilNoErrors(() -> new Select(element1).selectByVisibleText(ConstantData.ACTIVATION_VALUE));
+		WebElementUtils.enterText(timeInHour, "1");
+	}
+	
 	public void setupDeviceCurrency(HelpdeskGeneral helpdeskGeneral) {
 		logger.info("Setup Device Currency: {}", "helpdeskGeneral.getCardPackId()");
 		selectServiceCode(helpdeskGeneral.getCurrencySetupServiceCode());
@@ -475,6 +495,37 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickSaveButton();
 			verifyOperationStatus();
 			helpdeskGeneral.setNewWalletNumber(getWalletNumber());
+			clickOKButtonPopup();			
+		});
+		//There is a delay in page rendering
+		SimulatorUtilities.wait(5000);
+		clickEndCall();
+	}
+	
+	public void setupInternationalAllowDisallowCheck(HelpdeskGeneral helpdeskGeneral) {
+		selectServiceCode(ConstantData.INTERNATIONAL_ALLOW_DISALLOW);
+		clickGoButton();
+		runWithinPopup("400 - International Use Allow/Disallow", () -> {
+			chooseOperationDeactivate();
+			SimulatorUtilities.wait(2000);
+			enterNotes("Automation");
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();			
+		});
+		//There is a delay in page rendering
+		SimulatorUtilities.wait(5000);
+		clickEndCall();
+	}
+	
+	public void AllowInternationalTransactionForOneHour(HelpdeskGeneral helpdeskGeneral) {
+		selectServiceCode(ConstantData.INTERNATIONAL_ALLOW_DISALLOW);
+		clickGoButton();
+		runWithinPopup("400 - International Use Allow/Disallow", () -> {
+			chooseOperationActivate();
+			enterNotes("Automation");
+			clickSaveButton();
+			verifyOperationStatus();
 			clickOKButtonPopup();			
 		});
 		//There is a delay in page rendering

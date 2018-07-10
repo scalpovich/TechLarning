@@ -77,6 +77,14 @@ public class HelpdeskWorkflow {
 	public void setupDeviceCurrency(HelpdeskGeneral helpdeskGeneral) {
 		helpDeskPage.setupDeviceCurrency(helpdeskGeneral);
 	}
+	
+	public void setupInternationalAllowDisallowCheck(HelpdeskGeneral helpdeskGeneral) {
+		helpDeskPage.setupInternationalAllowDisallowCheck(helpdeskGeneral);
+	}
+	
+	public void AllowInternationalTransactionForOneHour(HelpdeskGeneral helpdeskGeneral) {
+		helpDeskPage.AllowInternationalTransactionForOneHour(helpdeskGeneral);
+	}
 
 	public void storeActivationDate() {
 		helpDeskPage.storeActivationDate();

@@ -21,6 +21,7 @@ public class ConstantData {
 	public static final String SAME_TRANSACTION_EXISTS = "Information with same Transaction Rule Plan Code already exists.";
 	public static final String SAME_CREDIT_PLAN_EXISTS = "Information with same Credit Plan Code already exists.";
 	public static final String GENERIC_DESCRIPTION = "AUTOMATION";
+	public static final String INTERNATIONAL_ALLOW_DISALLOW = "International Use Allow/Disallow [400]";
 	public static final String REQUIRED_FIELD_VALIDATION_MESSAGE = "This field is required.";
 	public static final String TRANSACTION_UPLOAD_FILE_PATH = "/home/dc-user/integrated/elt_bo/data/TRANSACTION_UPLOAD/INPUT";
 	public static final String IPM_UPLOAD_FILE_PATH = "/mptshome/STAGE2/integrated/elt_bo/data/AUTOMATION_1/IPM_INCOMING/input"; // "/home/dc-user/integrated/elt_bo/data/IPM_INCOMING/INPUT"
@@ -74,6 +75,7 @@ public class ConstantData {
 	public static final String THREE_D_SECURE_TRANSACTION = "3D_SECURE_CAVV";
 	public static final String DATA_ELEMENT_CAVV = "048.TLV.43";
 	public static final String WORNG_EXPIRY = "1809";
+	public static final String ACTIVATION_VALUE ="Immediate Activation for n Hrs [Immediate Activation for n Hrs]";
 
 	private ConstantData() {
 	}

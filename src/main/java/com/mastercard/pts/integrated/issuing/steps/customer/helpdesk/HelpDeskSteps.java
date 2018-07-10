@@ -520,6 +520,22 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.setupDeviceCurrency(helpdeskGeneral);
 	}
+	
+	@When("user selects International Use Allow/Disallow status")
+	public void whenUserSelectsInternationalUseAllowDisallowStatus(){
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskWorkflow.getDeviceStatus(device);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.setupInternationalAllowDisallowCheck(helpdeskGeneral);
+	}
+	
+	@When("user Allow/Disllow International Transaction For One Hour")
+	public void whenUserAllowDisallowInternationalTransactionForOneHour(){
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskWorkflow.getDeviceStatus(device);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.AllowInternationalTransactionForOneHour(helpdeskGeneral);
+	}
 
 	@Given("user sets up device currency through helpdesk for FileUpload")
 	@When("user sets up device currency through helpdesk for FileUpload")
