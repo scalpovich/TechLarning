@@ -559,9 +559,9 @@ public class HelpDeskSteps {
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(0)), equalTo(updatedAvailableBal));
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(1)), equalTo(updatedAvailableBal));
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(2)), equalTo(updatedAvailableBal));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(3)), equalTo(updatedAvailableBal));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(4)), equalTo(updatedAvailableBal));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(5)), equalTo(updatedAvailableBal));
+		//assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(3)), equalTo(updatedAvailableBal));
+		//assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(4)), equalTo(updatedAvailableBal));
+		//assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(5)), equalTo(updatedAvailableBal));
 	}
 	
 	
