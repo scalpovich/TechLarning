@@ -12,7 +12,7 @@ Scenario: Set up prepaid emv retail general purpose card with MCG Limit Plan
 Given user is logged in institution
 !-- And user creates MCG with MCC
 !-- And user creates MCG limit plan with details for Prepaid
-And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
+And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client
 
 Scenario: prepaid EMV retail general purpose card device production
@@ -42,6 +42,12 @@ Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 2nd transaction
 When perform an MSR_PURCHASE MAS transaction on the same card
 Then MAS simulator is closed
 And user is logged in institution
-And search Purchase authorization and verify 121-Exceeds Amount Limit status
+And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
+Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 3rd transaction
+When perform an MSR_PURCHASE MAS transaction on the same card
+Then MAS simulator is closed
+And user is logged in institution
+And search Purchase authorization and verify 123-Frequency Exceeded status
+And user sign out from customer portal
