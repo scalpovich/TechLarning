@@ -1,27 +1,27 @@
 Narrative:
 In order to test transaction with invalid pin and reset pin retry counter
 As an issuer
-I want to perform transactions for prepaid emv corporate card
+I want to perform transactions for debit emv card
 
 Meta:
-@StoryName p_emv_corp_travel
+@StoryName d_emv_corp
 @pinRetryLimitValidationAndResetCounter
 
-Scenario: Setup - prepaid emv corporate travel card with PIN
+Scenario: Setup - debit emv corporate travel card with PIN
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card
-When user creates new device of prepaid type for new client
+And device range for program with device plan for "debit" "emv" card
+When user creates new device of debit type for new client
 And user sign out from customer portal
 
-Scenario: Device production - prepaid emv corporate travel card with PIN
+Scenario: Device production - debit emv corporate travel card with PIN
 Given user is logged in institution
 And a new device was created
-When processes pre-production batch for prepaid
-When processes device production batch for prepaid
-When processes pin generation batch for prepaid
-When user has wallet number information for prepaid device
+When processes pre-production batch for debit
+When processes device production batch for debit
+When processes pin generation batch for debit
+When user has wallet number information for debit device
 When user performs adjustment transaction
-And user has current wallet balance amount information for prepaid device
+And user has current wallet balance amount information for debit device
 Then device has "normal" status
 When user activates device through helpdesk
 When embossing file batch was generated in correct format
