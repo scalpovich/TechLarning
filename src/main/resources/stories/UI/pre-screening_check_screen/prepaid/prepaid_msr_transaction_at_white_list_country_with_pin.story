@@ -1,4 +1,4 @@
-prepaid card transaction at white listed country
+prepaid card transaction in white/black listed country
 
 Narrative:
 In order to provide to transaction at white listed country
@@ -44,7 +44,6 @@ Then user sign out from customer portal
 
 Scenario: Perform INT_MSR_PURCHASE Authorization transaction
 When perform an INT_MSR_PURCHASE MAS transaction on the same card
-Then MAS test results are verified
 Then user is logged in institution
 Then search Purchase authorization and verify 100-Do Not Honour status
 Then assert Decline response with 25001 AuthDecline Code and Whitelisted Country Not Found as description
