@@ -214,7 +214,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			fillCustomerTypeProgramCodeAndDeviceDetails(device);
 
 			clickNextButton();
-
+			
 			fillProfileAndAddressDetailsAndClickNext(device);
 
 			// skip wallet extra fields
