@@ -1183,7 +1183,6 @@ public class ProgramSetupSteps {
 
 		programSetupWorkflow.createDeviceRange(deviceRange);
 		
-		context.put(ConstantData.DEVICE_RANGE_DATA, deviceRange);
 	}
 
 	@When("User fills Device Range section for $type product for non-default institution")

@@ -25,6 +25,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Prog
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -417,6 +418,8 @@ public class DeviceRangePage extends AbstractBasePage {
 		});
 
 		verifyOperationStatus();
+		context.put(ConstantData.DEVICE_RANGE_DATA, deviceRange);
+
 	}
 
 	private void fillAddDevicePage(DeviceRange deviceRange) {
