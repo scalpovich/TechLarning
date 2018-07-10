@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -79,7 +80,7 @@ public class DeviceUsagePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "ul.tabs li a[href*='tab3']")
 	private MCWebElement walletMCGUsageSubMenu;
 	
-	private String closePopUpBtn = "//a[@class='w_close']";
+	private String closePopUpBtn = "a.w_close";
 
 	private static final String FRAME_VIEW_DEVICE_USAGE = "View Device Usage";
 	private static final String FRAME_VIEW_WALLET_USAGE = "View Wallet Usage";
@@ -154,9 +155,12 @@ public class DeviceUsagePage extends AbstractBasePage {
 		map.put(DAILY_VELOCLITY_DOMESTIC_UTILIZED, getCellTextByColumnName(1, DAILY_VELOCLITY_DOMESTIC_UTILIZED));
 		map.put(DAILY_AMOUNT_INTERNATIONAL_UTILIZED, getCellTextByColumnName(1, DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
 		map.put(DAILY_VELOCLITY_INTERNATIONAL_UTILIZED, getCellTextByColumnName(1, DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
-		clickXButton();
-		switchToDefaultFrame();
-
+        clickCloseButton();
+        switchToDefaultFrame();
+        switchToIframe(FRAME_VIEW_DEVICE_USAGE);
+        clickCloseButton();
+        switchToDefaultFrame();
+        
 		return Optional.of(map);
 	}
 

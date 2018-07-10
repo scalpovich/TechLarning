@@ -48,17 +48,18 @@ public class DeviceUsageSteps {
 
 	@Then("user searches device on device usage screen and performs assertions on device $tab usage")
 	public void whenUserSearchesDeviceOnDeviceUsageScreen(String tab) {
-		Device device = context.get(ContextConstants.DEVICE);
-		DeviceUsage deviceUsage = DeviceUsage.createWithProvider(provider);
+		device = context.get(ContextConstants.DEVICE);
+	    deviceUsage = DeviceUsage.createWithProvider(provider);
 		deviceUsageWorkflow.deviceUsageVerification(device.getDeviceNumber(), tab, deviceUsage);
 	}
 	
 	@Then("user searches device on device usage screen and performs assertions on device tool usage and device transaction usage tabs")
 	public void whenUserSearchesDeviceOnDeviceUsageScreen() {
-		Device device = context.get(ContextConstants.DEVICE);
+	    device = context.get(ContextConstants.DEVICE);
 		deviceUsageWorkflow.deviceUsageVerification(device.getDeviceNumber());
 	}
 
+	@When("verify the MCG Limit in Device Usage Screen for $type transactions")
 	@Then("verify the MCG Limit in Device Usage Screen for $type transactions")
 	public void userDeviceUsage(String type) {
 		mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
@@ -91,7 +92,7 @@ public class DeviceUsageSteps {
 	
 	@When("verify ATC counter getting updated at device usage screen")
 	public void thenUserVerifyATCCounter() {
-		Device device = context.get(ContextConstants.DEVICE);		
+	    device = context.get(ContextConstants.DEVICE);		
 		String  atc = deviceUsageWorkflow.getApplicationTransactionCounterDeviceUsage(device.getDeviceNumber()).get(0);
 		boolean condition = atc.equals(returnATCCounterIncreasedByOne());
 		assertTrue(FAILED_MESSAGE_INFO+" - Expected: "+returnATCCounterIncreasedByOne()+" Actual  : "+atc, condition);		
@@ -101,7 +102,7 @@ public class DeviceUsageSteps {
 	
 	@When("user notes down ATC counter on device usage screen")
 	public void thenUserNoteDownATCCounter() {
-		Device device = context.get(ContextConstants.DEVICE);
+	    device = context.get(ContextConstants.DEVICE);
 		String  atc = deviceUsageWorkflow.getApplicationTransactionCounterDeviceUsage(device.getDeviceNumber()).get(0);
 		boolean condition = atc.equals("1");
 		assertTrue(FAILED_MESSAGE_INFO+" - Expected: 1 Actual  : "+atc, condition);		
