@@ -237,8 +237,8 @@ public class ProgramSetupWorkflow {
 		page.createMCCRulePlanPage(plan);
 	}
 
-	public void editProgram(Program program) {
+	public void editProgram(Program program,String editItem) {
 		ProgramPage page = navigator.navigateToPage(ProgramPage.class);
-		page.editProgramForPlans(program);
+		page.editProgramForPlans(program,editItem);
 	}
 }

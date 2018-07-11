@@ -1472,7 +1472,7 @@ public class ProgramSetupSteps {
 	@Then("User edit Program to update $editItem")
 	public void andUserEditProgramToUpdateCountryWhiteBlackList(String editItem) {
 		program.setCountryWhiteBlackListPlan(provider);
-		programSetupWorkflow.editProgram(program);
+		programSetupWorkflow.editProgram(program,editItem);
 
 	}
 
