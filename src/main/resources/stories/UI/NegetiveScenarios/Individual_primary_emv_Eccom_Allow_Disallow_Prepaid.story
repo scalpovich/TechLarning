@@ -26,7 +26,7 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
-When User checks Pin Change Transaction First check box on Device Plan Page
+When user selects E-commerce Activation/Deactivation [304] status
 Then user sign out from customer portal
 
 Scenario: Pin Generation
@@ -36,26 +36,29 @@ When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform EMV_PURCHASE Authorization transaction
+Scenario: Perform ECCOM_PURCHASE Authorization transaction
 Given connection to MAS is established
-When perform an EMV_PURCHASE MAS transaction
+When perform an ECOMM_PURCHASE MAS transaction
 And user is logged in institution
-Then assert Decline response with 46010 AuthDecline Code and Tranaction is not Pin change. as description
-And user sign out from customer portal
+Then search E-Commerce Transaction authorization and verify 119-Transaction not permitted status
+Then assert Decline response with 46008 AuthDecline Code and E-Comm transaction not allowed. as description
+Then user sign out from customer portal
 
-Scenario: Credit Corporate- Pin Change Transaction
-Then connection to MDFS is established
-When user performs an optimized MDFS_EMV_PIN_CHANGE MDFS transaction
-Then MDFS test results are verified
+Scenario: Perform ECCOM Allow/DisAllow for one hour
 Given user is logged in institution
-Then search Pin Change authorization and verify 000-Successful status
+When user allow E-commerce Activation/Deactivation [304] Transaction For One Hour
 And user sign out from customer portal
 
-Scenario: Perform Second EMV_PURCHASE Authorization transaction
-Given connection to MAS is established
-When PIN is created for Pin Change First Transaction
-When perform an EMV_CASH_ADVANCE MAS transaction
-Then MAS test results are verified
-Then user is logged in institution
-Then search Cash Advance authorization and verify 000-Successful status
+Scenario: Perform INT_EMV_PURCHASE Authorization transaction
+When perform an ECOMM_PURCHASE MAS transaction on the same card
+And user is logged in institution
+Then search ECCOM-PURCHASE authorization and verify 000-Successful status
+And user sign out from customer portal
+
+Scenario: Wait for 1 hour and Then Perform Purchase Transaction
+When user wait for one hour to perform transaction
+And perform an ECOMM_PURCHASE MAS transaction on the same card
+And user is logged in institution
+Then search E-Commerce Transaction authorization and verify 119-Transaction not permitted status
+Then assert Decline response with 46008 AuthDecline Code and E-Comm transaction not allowed. as description
 And user sign out from customer portal

@@ -4,30 +4,28 @@ As a user
 I want to assert pages
 
 Meta:
-@Pre-ScreeningCheck
-@StoryName p_emv_corp_travel				 
+@StoryName d_emv_corp
+@SanityCardsWithAuthorization
+@EMVWithPin
 
-Scenario: Set up prepaid emv corporate travel card
+Scenario: Set up program for debit emv corporate debit card
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card
-When user creates new device of prepaid type for new client
+And device range for program with device plan for "debit" "emv" card
+When user creates new device of debit type for new client
+Then device has "normal" status
+When user has wallet number information for debit device
+When user performs adjustment transaction
+When user has current wallet balance amount information for debit device
 
-Scenario: prepaid emv corporate travel card device production
+Scenario: debit emv corporate debit card device production
 Given user is logged in institution
 And a new device was created
-When processes pre-production batch for prepaid
-When processes device production batch for prepaid
-When processes pin generation batch for prepaid
+When processes pre-production batch for debit
+When processes device production batch for debit
+When processes pin generation batch for debit
 Then device has "normal" status
-When user has wallet number information for prepaid device
-Then user sign out from customer portal
-Then user is logged in institution
-When user performs adjustment transaction
-When user has current wallet balance amount information for prepaid device
-Then device has "normal" status
-Then user activates device through helpdesk
 When User checks Pin Change Transaction First check box on Device Plan Page
-Then user sign out from customer portal
+Then user activates device through helpdesk
 
 Scenario: Pin Generation
 Given connection to FINSim is established

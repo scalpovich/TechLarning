@@ -52,6 +52,7 @@ Given connection to MAS is established
 When perform an ECOMM_PURCHASE MAS transaction
 And user is logged in institution
 Then search E-Commerce Transaction authorization and verify 119-Transaction not permitted status
+Then assert Decline response with 46008 AuthDecline Code and E-Comm transaction not allowed. as description
 Then user sign out from customer portal
 
 Scenario: Perform ECCOM Allow/DisAllow for one hour
@@ -69,5 +70,6 @@ Scenario: Wait for 1 hour and Then Perform Purchase Transaction
 When user wait for one hour to perform transaction
 And perform an ECOMM_PURCHASE MAS transaction on the same card
 And user is logged in institution
-Then search ECCOM-PURCHASE authorization and verify 000-Successful status
+Then search E-Commerce Transaction authorization and verify 119-Transaction not permitted status
+Then assert Decline response with 46008 AuthDecline Code and E-Comm transaction not allowed. as description
 And user sign out from customer portal
