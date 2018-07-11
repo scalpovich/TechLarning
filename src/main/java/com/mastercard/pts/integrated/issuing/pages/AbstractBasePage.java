@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -491,6 +492,24 @@ public abstract class AbstractBasePage extends AbstractPage {
 		SimulatorUtilities.wait(3000);
 		By frameSelector = By.xpath(String.format("//h3[contains(text(), '%s')]/ancestor::div//iframe", caption));
 		WebElementUtils.runWithinFrame(driver(), timeoutInSec, frameSelector, action);
+	}
+	
+	protected void reTryTask(Runnable action) {
+		 int numberOfRetries = 5; // total number of tries
+		 int numberOfTriesLeft = numberOfRetries;
+		while (true) {
+			try {
+				action.run();
+				break;
+			} catch (StaleElementReferenceException e) {
+				logger.info("After Exception tried--", numberOfTriesLeft);
+				numberOfTriesLeft--;
+				if (numberOfTriesLeft == 0) {
+					break;
+				}
+				// SimulatorUtilities.wait(5000);
+			}
+		}	
 	}
 
 	protected void verifyResponseMessage() {

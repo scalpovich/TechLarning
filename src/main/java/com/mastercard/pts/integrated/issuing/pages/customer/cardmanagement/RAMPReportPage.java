@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -76,12 +77,16 @@ public class RAMPReportPage extends AbstractBasePage {
 	public void generateReport(){
 		selectDropDownByIndex(selectReportDDwn,1);
 	    clicksearchButtonElement();
+	    
 	    selectByVisibleText(selectReportTypeDDwn, "REP05");
 	    selectByVisibleText(selectProductTypeDDwn, "ALL");
 	    selectByVisibleText(selectRecordTypeDDwn, "A-Authorised transactions");
-	    selectByVisibleText(selectTransactionTypeDDwn, "ALL");
+		reTryTask(()->{
+		selectByVisibleText(selectTransactionTypeDDwn, "ALL");
+		selectByVisibleText(selectTransactionTypeDDwn, "ALL");
 	    selectByVisibleText(selectHighRiskMccDDwn, "ALL");
 	    selectByVisibleText(selectHighRiskMccGroupDDwn, "ALL");
+		});
 		WebElementUtils.pickDate(fromDatePkr, LocalDate.now());
 		WebElementUtils.pickDate(toDateDPkr, LocalDate.now());
 		selectByVisibleText(selectFileTypeDDwn, "PDF");
