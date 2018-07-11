@@ -37,11 +37,11 @@ Then user sign out from customer portal
 
 Scenario:creation of mastercard_individual_primary_emv Card credit device step 2
 Given user is logged in institution
-Then credit device is created using new device screen for Individual and Primary Device and New Client and EMV Card
-Then credit processes pre-production batch using new Device
-Then credit processes deviceproduction batch using new Device for Supplementary
-When credit processes pingeneration batch using new Device for Supplementary
-Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+When credit device is created using new device screen for Individual and Primary Device and New Client and EMV Card
+And credit processes pre-production batch using new Device
+And credit processes deviceproduction batch using new Device for Supplementary
+And credit processes pingeneration batch using new Device for Supplementary
+And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 Then user sign out from customer portal
 
 
@@ -59,17 +59,17 @@ Meta:
 @TestId 
 Given connection to MAS is established
 When perform an EMV_CASH_ADVANCE MAS transaction
-Then user is logged in institution
-Then search Cash Advance authorization and verify 183-CVV Verification Failure status
-Then assert Decline response with 46039 AuthDecline Code and Invalid CVV.. as description
+And user is logged in institution
+And search Cash Advance authorization and verify 183-CVV Verification Failure status
+And assert Decline response with 46039 AuthDecline Code and Invalid CVV.. as description
 Then user sign out from customer portal
 
 Scenario: Perform ECOMM_PURCHASE Authorization transaction on invalid CVV2 
 Meta:
 @TestId 
 When perform an ECOMM_PURCHASE MAS transaction on the same card
-Then MAS simulator is closed
-Then user is logged in institution
-Then search E-Commerce Transaction authorization and verify 192-CVV2/CVC2/CVD2 Verification Failure status
-Then assert Decline response with 46042 AuthDecline Code and Invalid CVV2 for E-Comm transaction. as description
+And MAS simulator is closed
+And user is logged in institution
+And search E-Commerce Transaction authorization and verify 192-CVV2/CVC2/CVD2 Verification Failure status
+And assert Decline response with 46042 AuthDecline Code and Invalid CVV2 for E-Comm transaction. as description
 Then user sign out from customer portal

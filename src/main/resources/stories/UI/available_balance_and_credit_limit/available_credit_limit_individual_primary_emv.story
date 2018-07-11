@@ -30,18 +30,18 @@ And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
 And User fills MCC Rules for credit product
 And User Primary Device fills New Program Retail Credit Card section for credit product for Mastercard
-When for Primary Device and New Client user fills Device Range section for credit product
+And for Primary Device and New Client user fills Device Range section for credit product
 Then user sign out from customer portal
 
 Scenario:creation of mastercard_individual_primary_emv Card credit device step 2
 Given user is logged in institution
-Then credit device is created using new device screen for Individual and Primary Device and New Client and EMV Card
-Then credit processes pre-production batch using new Device
-Then credit processes deviceproduction batch using new Device for Supplementary
-When credit processes pingeneration batch using new Device for Supplementary
+When credit device is created using new device screen for Individual and Primary Device and New Client and EMV Card
+And credit processes pre-production batch using new Device
+And credit processes deviceproduction batch using new Device for Supplementary
+And credit processes pingeneration batch using new Device for Supplementary
 !-- Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-Then device has "normal" status
-Then user notes down available Card limit for card
+And device has "normal" status
+And user notes down available Card limit for card
 Then user sign out from customer portal
 
 Scenario: Pin Generation
@@ -54,48 +54,48 @@ Then FINSim simulator is closed
 Scenario: Transaction - EMV_PREAUTH and EMV_COMPLETION Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PREAUTH MAS transaction
-Then MAS test results are verified
+And MAS test results are verified
 And user is logged in institution
 And search Pre-Auth authorization and verify 000-Successful status
-Then user sign out from customer portal
-When perform an EMV_COMPLETION MAS transaction on the same card
-Then MAS test results are verified
+And user sign out from customer portal
+And perform an EMV_COMPLETION MAS transaction on the same card
+And MAS test results are verified
 And user is logged in institution
 And search Pre-Auth Completion authorization and verify 000-Successful status
-Then user verify available balance after transaction
-Then device has "normal" status
-Then user verify available Card limit for card after transaction
+And user verify available balance after transaction
+And device has "normal" status
+And user verify available Card limit for card after transaction
 Then user sign out from customer portal
 
 Scenario: Perform EMV_PURCHASE Authorization transaction
 When perform an EMV_PURCHASE MAS transaction on the same card
-Then MAS test results are verified
-Then user is logged in institution
-Then search Purchase authorization and verify 000-Successful status
-Then user verify available balance after transaction
-Then device has "normal" status
-Then user verify available Card limit for card after transaction
+And MAS test results are verified
+And user is logged in institution
+And search Purchase authorization and verify 000-Successful status
+And user verify available balance after transaction
+And device has "normal" status
+And user verify available Card limit for card after transaction
 Then user sign out from customer portal
 
 
 Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
 When perform an EMV_CASH_ADVANCE MAS transaction on the same card
-Then MAS test results are verified
-Then user is logged in institution
-Then search Cash Advance authorization and verify 000-Successful status
-Then user verify available balance after transaction
-Then device has "normal" status
-Then user verify available Card limit for card after transaction
+And MAS test results are verified
+And user is logged in institution
+And search Cash Advance authorization and verify 000-Successful status
+And user verify available balance after transaction
+And device has "normal" status
+And user verify available Card limit for card after transaction
 And user sign out from customer portal
 
 Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
 When perform an EMV_CASH_WITHDRAWAL MAS transaction on the same card
-Then MAS test results are verified
-When MAS simulator is closed
-Then user is logged in institution
-Then search CWD authorization and verify 000-Successful status
-Then user verify available balance after transaction
-Then device has "normal" status
-Then user verify available Card limit for card after transaction
-And user sign out from customer portal
+And MAS test results are verified
+And MAS simulator is closed
+And user is logged in institution
+And search CWD authorization and verify 000-Successful status
+And user verify available balance after transaction
+And device has "normal" status
+And user verify available Card limit for card after transaction
+Then user sign out from customer portal
 

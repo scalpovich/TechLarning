@@ -73,9 +73,6 @@ public class HelpDeskSteps {
 	private TestContext context;
 
 	@Autowired
-	private Navigator navigator;
-
-	@Autowired
 	private HelpdeskWorkflow helpdeskWorkflow;
 
 	@Autowired
@@ -362,7 +359,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
 	}
 
-	@Then("currency setup for $type device is done correctly and updated in wallet details tab")
+	@When("currency setup for $type device is done correctly and updated in wallet details tab")
 	public void thenCurrencySetupForDeviceIsDoneCorrectlyAndUpdatedInWalletDetailsTab(String type) {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
@@ -524,7 +521,6 @@ public class HelpDeskSteps {
 	
 	@Given("user notes down available $type limit for card")
 	@When("user notes down available $type limit for card")
-	@Then("user notes down available $type limit for card")
 	public void whenUserNotesDownLimitThroughHelpDesk(String type) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);
@@ -535,7 +531,6 @@ public class HelpDeskSteps {
 	
 	@Given("user verify available $type limit for card after transaction")
 	@When("user verify available $type limit for card after transaction")
-	@Then("user verify available $type limit for card after transaction")
 	public void whenUserVerifyLimitThroughHelpDesk(String type) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);		

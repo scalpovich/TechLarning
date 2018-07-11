@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Then;
+import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,12 +33,14 @@ public class AuthorizationSearchSteps {
 	private KeyValueProvider provider;
 	
 	
+	@When("search $type authorization and verify $state status")
 	@Then("search $type authorization and verify $state status")
 	public void thenUserSearchDeviceNumerWithTodaysDate(String type, String state) {
 		Device device = context.get(ContextConstants.DEVICE);
 		authorizationSearchWorkflow.verifyAuthTransactionSearch(type, state, device.getDeviceNumber());
 	}
 
+	@When("assert $response response with $code AuthDecline Code and $description as description")
 	@Then("assert $response response with $code AuthDecline Code and $description as description")
 	public void thenAssertStateOnAuthSearchScreen(String response, String code, String description) {
 		List<String> authStatus = new ArrayList<>();
@@ -48,6 +51,7 @@ public class AuthorizationSearchSteps {
 		authorizationSearchWorkflow.verifyStateAuthSearch(device.getDeviceNumber(), authStatus);
 	}
 
+	@When("verify transaction currency as $tcurrency and billing currency as $bcurrency on auth search")
 	@Then("verify transaction currency as $tcurrency and billing currency as $bcurrency on auth search")
 	public void verifyBillingCurrency(String tcurrency, String bcurrency) {
 		Device device = context.get(ContextConstants.DEVICE);
@@ -120,7 +124,7 @@ public class AuthorizationSearchSteps {
 		} 
 	}
 	
-	@Then("user verify available balance after transaction")
+	@When("user verify available balance after transaction")
 	public void validateAvailableBalanceAfterTransaction(){
 		BigDecimal availableBalanceBeforeTransaction =context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
 		List<BigDecimal> lst = authorizationSearchWorkflow.getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(availableBalanceBeforeTransaction);

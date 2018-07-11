@@ -29,12 +29,12 @@ And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
 And User fills MCC Rules for credit product
 And User Primary Device fills New Program Retail Credit Card section for credit product for Mastercard
-When for Primary Device and New Client user fills Device Range section for credit product
-Then credit device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
-Then credit processes pre-production batch using new Device
-Then credit processes deviceproduction batch using new Device for Supplementary
-Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-When embossing file batch was generated in correct format
+And for Primary Device and New Client user fills Device Range section for credit product
+And credit device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
+And credit processes pre-production batch using new Device
+And credit processes deviceproduction batch using new Device for Supplementary
+And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+And embossing file batch was generated in correct format
 Then user sign out from customer portal
 
 Scenario: Perform MSR_PURCHASE Authorization transaction
@@ -47,9 +47,9 @@ Scenario: Generate Auth File for Clearing
 Meta:
 @TestId 
 When Auth file is generated after transaction
-When MAS simulator is closed
-Then user is logged in institution
-Then search Purchase authorization and verify 000-Successful status
+And MAS simulator is closed
+And user is logged in institution
+And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
@@ -57,8 +57,8 @@ Meta:
 @TestId 
 Given connection to MCPS is established
 When Auth file is generated
-When Auth file is loaded into MCPS and processed
-Then NOT file is successfully generated
+And Auth file is loaded into MCPS and processed
+And NOT file is successfully generated
 When MCPS simulator is closed
 
 Scenario: Upload ipm file from customer portal and process it
@@ -66,7 +66,7 @@ Meta:
 @TestId
 Given user is logged in institution
 When User uploads the NOT file
-When user processes batch for credit
+And user processes batch for credit
 Then user sign out from customer portal
 
 Scenario: Matching & Posting to Cardholders account
@@ -74,8 +74,8 @@ Meta:
 @TestId 
 Given user is logged in institution
 When transaction status is "Matching Pending"
-When "Matching" batch for credit is successful
-Then transaction status is "Presentment Matched with authorization"
+And "Matching" batch for credit is successful
+And transaction status is "Presentment Matched with authorization"
 Then user sign out from customer portal
 
 
