@@ -505,7 +505,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 				logger.info("After Exception tried--", numberOfTriesLeft);
 				numberOfTriesLeft--;
 				if (numberOfTriesLeft == 0) {
-					break;
+					throw new StaleElementReferenceException(e.printStackTrace());
 				}
 				// SimulatorUtilities.wait(5000);
 			}

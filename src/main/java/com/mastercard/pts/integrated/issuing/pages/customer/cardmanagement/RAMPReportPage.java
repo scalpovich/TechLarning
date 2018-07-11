@@ -41,10 +41,10 @@ public class RAMPReportPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "p_processing_type:input:dropdowncomponent")
 	private MCWebElement selectTransactionTypeDDwn;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "p_from_date:input:dateTextField")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span#p_from_date")
 	private MCWebElement fromDatePkr;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "p_to_date:input:dateTextField")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span#p_to_date")
 	private MCWebElement toDateDPkr;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "p_file_type:input:dropdowncomponent")
@@ -86,10 +86,11 @@ public class RAMPReportPage extends AbstractBasePage {
 		selectByVisibleText(selectTransactionTypeDDwn, "ALL");
 	    selectByVisibleText(selectHighRiskMccDDwn, "ALL");
 	    selectByVisibleText(selectHighRiskMccGroupDDwn, "ALL");
-		});
+		
 		WebElementUtils.pickDate(fromDatePkr, LocalDate.now());
 		WebElementUtils.pickDate(toDateDPkr, LocalDate.now());
 		selectByVisibleText(selectFileTypeDDwn, "PDF");
 		clickWhenClickable(generateReportBtn);
+		});
 	}
 }
