@@ -1,5 +1,5 @@
 Narrative:
-In order to check transaction without balance in emv corporate travel card
+In order to perform transaction without balance in emv corporate travel card
 As an issuer
 I want to failed transactions for prepaid emv corporate travel card
 

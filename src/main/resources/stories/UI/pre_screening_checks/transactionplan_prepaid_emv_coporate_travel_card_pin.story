@@ -5,6 +5,7 @@ I want to failed transactions for prepaid emv corporate travel card
 
 Meta:
 @StoryName p_emv_corp_travel
+@TransactionPlanWithAssignTransactions
 
 Scenario: Set up prepaid emv corporate travel card
 Given user is logged in institution

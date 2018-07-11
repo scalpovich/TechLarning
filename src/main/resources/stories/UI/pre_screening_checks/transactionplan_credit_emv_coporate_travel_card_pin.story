@@ -1,10 +1,11 @@
 Narrative:
-In order to a create a Credit Device under customer portal cardmanagement tab
-As a user
-I want to assert pages
+In order to test transaction plan without assigned transaction for credit emv retails card
+As an issuer
+I want to failed transactions for prepaid emv retail card
 
 Meta:
 @StoryName credit_emv_retail
+@TransactionPlanWithAssignTransactions
 				 
 Scenario:creation of mastercard_bankstaff_primary_emv credit device
 Meta:

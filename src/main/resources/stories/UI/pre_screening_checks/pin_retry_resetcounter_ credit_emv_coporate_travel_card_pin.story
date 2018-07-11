@@ -1,7 +1,7 @@
 Narrative:
 In order to test transaction with invalid pin and reset pin retry counter
 As an issuer
-I want to perform transactions for credit emv corporate card
+I want to perform transactions for credit emv retail card
 
 Meta:
 @StoryName credit_emv_retail
