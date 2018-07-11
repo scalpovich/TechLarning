@@ -563,6 +563,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public void AllowTransactionForOneHour(HelpdeskGeneral helpdeskGeneral, String status) {
+		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW))
+		{
 		selectServiceCode(ConstantData.INTERNATIONAL_ALLOW_DISALLOW);
 		clickGoButton();
 		runWithinPopup("400 - International Use Allow/Disallow", () -> {
@@ -572,6 +574,20 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			verifyOperationStatus();
 			clickOKButtonPopup();			
 		});
+		}
+		else
+		{
+			selectServiceCode(ConstantData.ECCOMERCE_ALLOW_DISALLOW);
+			clickGoButton();
+			runWithinPopup("304 - E-commerce Activation/Deactivation", () -> {
+				chooseOperationActivate(status);
+				enterNotes("Automation");
+				clickSaveButton();
+				verifyOperationStatus();
+				clickOKButtonPopup();			
+			});
+		}
+	
 		//There is a delay in page rendering
 		SimulatorUtilities.wait(5000);
 		clickEndCall();

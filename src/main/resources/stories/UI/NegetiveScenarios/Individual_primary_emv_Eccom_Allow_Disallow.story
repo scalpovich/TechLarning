@@ -51,7 +51,7 @@ Scenario: Perform ECCOM_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an ECOMM_PURCHASE MAS transaction
 And user is logged in institution
-Then search ECCOM-PURCHASE authorization and verify 000-Successful status
+Then search E-Commerce Transaction authorization and verify 119-Transaction not permitted status
 Then user sign out from customer portal
 
 Scenario: Perform ECCOM Allow/DisAllow for one hour
