@@ -556,20 +556,23 @@ public class HelpDeskSteps {
 		LinkedList<BigDecimal> creditLimit = helpdeskWorkflow.noteDownCreditLimit(type, device);
 		BigDecimal updatedAvailableBal = context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
 		BigDecimal transactionAmount= context.get(ConstantData.TRANSACTION_AMOUNT_BD);
-		//BigDecimal bd = new BigDecimal("7500.00");
-		updatedAvailableBal = updatedAvailableBal.subtract(transactionAmount);
+		BigDecimal bd = new BigDecimal("500.00");
+		//updatedAvailableBal = updatedAvailableBal.subtract(transactionAmount);
 		if(ContextConstants.CREDIT_LIMIT_TEMP.equalsIgnoreCase(limittype)){
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(0)), equalTo(updatedAvailableBal));
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(1)), equalTo(updatedAvailableBal));
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(2)), equalTo(updatedAvailableBal));
 		}
 		else{
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(0)), equalTo(updatedAvailableBal));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(1)), equalTo(updatedAvailableBal));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(2)), equalTo(updatedAvailableBal));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(3)), equalTo(helpdeskGeneral.getClientCreditLimit()));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(4)), equalTo(helpdeskGeneral.getAccountCreditLimit()));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(5)), equalTo(helpdeskGeneral.getNewCreditLimit()));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(0)), equalTo(bd));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(1)), equalTo(bd));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(2)), equalTo(bd));
+		String clientCreditLimit =helpdeskGeneral.getClientCreditLimit()+".00";
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(3)), equalTo(new BigDecimal(clientCreditLimit)));
+		String accountCreditLimit=helpdeskGeneral.getAccountCreditLimit()+".00";
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(4)), equalTo(new BigDecimal(accountCreditLimit)));
+		String cardCreditLimit=helpdeskGeneral.getNewCreditLimit()+".00";
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(5)), equalTo(new BigDecimal(cardCreditLimit)));
 		}
 	}
 	
