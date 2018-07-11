@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import com.google.common.base.Throwables;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.GenericReport;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionReports;
 
 @Component
@@ -83,6 +84,36 @@ public class PDFUtils {
 					break;
 				}
 			}
+			if (pdfReader != null)
+				pdfReader.close();
+		} catch (Exception e) {
+			logger.info("Failed to read pdf file ", e);
+			throw Throwables.propagate(e);
+		}
+		return programWiseContent;
+	}
+	
+	public List<String> getContentRow(String pdfPath, GenericReport genericReports) {
+		String pageContent = "";
+		List<String> programWiseContent = new ArrayList<String>();
+		String[] fullRow = { "" };
+		int pages = 0;
+		String rrn = genericReports.getRrnNumber();
+		String code = genericReports.getAuthorizationCode(); 
+		try {
+			File file = new File(pdfPath);
+			file.getParentFile().mkdirs();
+			PdfReader pdfReader = manipulatePdf(pdfPath, genericReports.getUsername());
+			if (pdfReader != null)
+				pages = pdfReader.getNumberOfPages();
+			for (int i = 1; i <= pages; i++) {
+				pageContent = PdfTextExtractor.getTextFromPage(pdfReader, i);
+				if (pageContent.contains(code) && pageContent.contains(rrn)) {
+					fullRow = pageContent.split("\n");
+					break;
+				}
+			}
+
 			if (pdfReader != null)
 				pdfReader.close();
 		} catch (Exception e) {

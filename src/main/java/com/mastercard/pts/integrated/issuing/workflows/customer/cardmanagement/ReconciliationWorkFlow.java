@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.GenericReport;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionReports;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.RAMPReportPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionReportsPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
@@ -62,6 +65,15 @@ public class ReconciliationWorkFlow {
 		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
 		return getReportContent(fileName,transactionReports);
 		//return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
+	}
+	
+	public List<String> verifyGenericReport(String fileName, GenericReport report) {
+		RAMPReportPage page = navigator.navigateToPage(RAMPReportPage.class);
+		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
+		deleteExistingAuthorizationFilesFromSystem(fileName);
+		page.generateReport();
+		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
+		return getReportContent(fileName,report);
 	}
 		
 	public boolean verifyReportGenerationClearing() {
@@ -119,6 +131,19 @@ public class ReconciliationWorkFlow {
 		}
 		return records;
 	}
+	
+	public List<String> getReportContent(String fileName,GenericReport genericReports) {
+		PDFUtils pdfutils=new PDFUtils();
+		List<String> records = pdfutils.getContentRow(PDFUtils.getuserDownloadPath() + "\\"+fileName, genericReports);
+		for(int i=0;i<records.size();i++)
+		{
+			if (records != null)
+				logger.info("Authorization data file content {} ", records.get(i));
+		}
+		return records;
+	}
+	
+	
 	public void deleteExistingAuthorizationFilesFromSystem(String authFileName)
 	{
 		for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
