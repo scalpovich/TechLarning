@@ -1,5 +1,5 @@
 Narrative:
-In order to a create a Credit Device under customer portal cardmanagement tab
+In order to a create a Credit Device under customer portal with priority pass
 As a user
 I want to assert pages
 
