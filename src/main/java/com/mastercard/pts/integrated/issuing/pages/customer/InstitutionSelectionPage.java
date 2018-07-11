@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.InstitutionSelection;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -77,6 +78,14 @@ public class InstitutionSelectionPage extends AbstractBasePage {
 		}
 		confirmButton.click();
 	}
+	public boolean checkSessionExpired(){
+		SimulatorUtilities.wait(2000);
+		if( Elements("//ul[@class='feedbackPanel']//span").size()>0 ){
+			Element("//a[contains(text(),'Click here to login')]").click();
+			return true;
+		}
+		return false;
+	} 
 
 
 	@Override
