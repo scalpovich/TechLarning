@@ -35,7 +35,7 @@ Then credit processes pre-production batch using new Device
 Then credit processes deviceproduction batch using new Device for Supplementary
 Then credit processes pinProduction batch using new Device for Supplementary
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-Then user activates credit limit change request
+Then user activates permanent credit limit change request
 Then device has "normal" status
 Then user verify available Card limit for card after transaction
 And user sign out from customer portal
@@ -55,7 +55,7 @@ When MAS simulator is closed
 Then user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-Then user verify credit client limit for credit product
+Then user verify permanent credit limit for credit product
 And user sign out from customer portal
 
 

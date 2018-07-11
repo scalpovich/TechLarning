@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -516,12 +517,11 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.activateDevice(helpdeskGeneral);
 	}
 	
-	@Then("user activates credit limit change request")
-	@Given("user activates credit limit change request")
-	@When("user activates credit limit change request")
-	public void whenUserActivatesCreditLimitChangeRequestThroughHelpdesk() {
+	@Then("user activates $limittype credit limit change request")
+	@Given("user activates $limittype credit limit change request")
+	@When("user activates $limittype credit limit change request")
+	public void whenUserActivatesCreditLimitChangeRequestThroughHelpdesk(String limittype) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
-		//SimulatorUtilities.wait(9000);
 		helpdeskWorkflow.clickCustomerCareEditLink();		
 		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.activateCreditLimitChangeRequest(helpdeskGeneral));
 	}
@@ -552,11 +552,12 @@ public class HelpDeskSteps {
 	public void whenUserVerifyAvailableBalance(String type,String limittype){
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);
-		List<BigDecimal> creditLimit = helpdeskWorkflow.noteDownCreditLimit(type, device);
+		LinkedList<BigDecimal> creditLimit = helpdeskWorkflow.noteDownCreditLimit(type, device);
 		BigDecimal updatedAvailableBal = context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
 		BigDecimal transactionAmount= context.get(ConstantData.TRANSACTION_AMOUNT_BD);
+		//BigDecimal bd = new BigDecimal("7500.00");
 		updatedAvailableBal = updatedAvailableBal.subtract(transactionAmount);
-		if(ContextConstants.CREDIT_LIMIT_TEPM.equalsIgnoreCase(limittype)){
+		if(ContextConstants.CREDIT_LIMIT_TEMP.equalsIgnoreCase(limittype)){
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(0)), equalTo(updatedAvailableBal));
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(1)), equalTo(updatedAvailableBal));
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(2)), equalTo(updatedAvailableBal));

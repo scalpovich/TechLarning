@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -161,7 +162,7 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.noteDownAvailableLimit(type);
 	}
 	
-	public List <BigDecimal> noteDownCreditLimit(String type,Device device) {
+	public LinkedList <BigDecimal> noteDownCreditLimit(String type,Device device) {
 		clickCustomerCareEditLink();
 		return helpDeskPage.noteDownCreditLimit(type);
 	}

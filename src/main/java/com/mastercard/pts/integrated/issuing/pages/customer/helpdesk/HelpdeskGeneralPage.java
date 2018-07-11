@@ -9,6 +9,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -36,6 +37,7 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
+
 
 
 
@@ -1126,8 +1128,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	}
 	
-	public List<BigDecimal> noteDownCreditLimit(String type){	
-		List<BigDecimal> creditLimit=new ArrayList<BigDecimal>();
+	public LinkedList<BigDecimal> noteDownCreditLimit(String type){	
+		LinkedList<BigDecimal> creditLimit=new LinkedList<BigDecimal>();
 		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
 		clickWhenClickable(currentStatusAndLimitTab);		
 		creditLimit.add(new BigDecimal(creditLimitLable.getText()));
