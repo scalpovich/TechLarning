@@ -1,6 +1,8 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
@@ -40,6 +42,10 @@ public class MCGLimitPlan {
 	private static final String PERIODIC_PERCENTAGE_OF_CREDIT_LIMIT_INTERNATIONAL = "PERIODIC_PERCENTAGE_OF_CREDIT_LIMIT_INTERNATIONAL";
 	private static final String PERIODIC_VELOCITY_INTERNATIONAL = "PERIODIC_VELOCITY_INTERNATIONAL";
 	private static final String PERIODIC_VELOCITY_RESPONSE_INTERNATIONAL = "PERIODIC_VELOCITY_RESPONSE_INTERNATIONAL";
+	public static final String EXCEEDS_AMOUNT_LIMIT_DOMESTIC_DESCRIPTION ="MCC - Transaction amount is greater than daily amount configured at Wallet Plan level (Domestic).";
+	public static final String FREQUENCY_EXCEEDED_DOMESTIC_DESCRIPTION ="MCC - Transaction amount is greater than daily velocity configured at Wallet Plan level (Domestic).";
+	public static final String EXCEEDS_AMOUNT_LIMIT_INTERNATIONAL_DESCRIPTION ="MCC - Transaction amount is greater than daily amount configured at Wallet Plan level (International).";
+	public static final String FREQUENCY_EXCEEDED_INTERNATIONAL_DESCRIPTION ="MCC - Transaction amount is greater than daily velocity configured at Wallet Plan level (International).";
 
 
 	private String mcgLimitPlanCode;
@@ -94,6 +100,15 @@ public class MCGLimitPlan {
 		plan.setDailyVelocity(provider.getString(MCG_DAILY_VELOCITY));
 		plan.setDailyVelocityResponse(provider.getString(MCG_DAILY_VELOCITY_RESPONSE));
 		return plan;
+	}
+	
+	public static Map<String,String> getAuthDeclineDescription(){
+		HashMap<String,String> description = new HashMap<String, String>();
+		description.put("Exceeds Amount Limit Domestic", EXCEEDS_AMOUNT_LIMIT_DOMESTIC_DESCRIPTION);
+		description.put("Frequency Exceeded Domestic",FREQUENCY_EXCEEDED_DOMESTIC_DESCRIPTION);
+		description.put("Exceeds Amount Limit International", EXCEEDS_AMOUNT_LIMIT_DOMESTIC_DESCRIPTION);
+		description.put("Frequency Exceeded International",FREQUENCY_EXCEEDED_DOMESTIC_DESCRIPTION);
+		return description;
 	}
 
 	public String getMcgLimitPlanCode() {

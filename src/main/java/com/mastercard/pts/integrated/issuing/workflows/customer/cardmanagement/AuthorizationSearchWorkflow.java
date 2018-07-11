@@ -157,6 +157,25 @@ public class AuthorizationSearchWorkflow {
 				&& authFileData.contains(context.get(ConstantData.TRANSACTION_AMOUNT)) && authFileData.contains(context.get(ConstantData.RRN_NUMBER));
 		assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
 	}
+	
+    public void verifyGenericReport(Device device) {
+		
+		TransactionReports transactionReport = new TransactionReports();
+		transactionReport.setAuthorizationCode(context.get(ConstantData.AUTHORIZATION_CODE));
+		transactionReport.setDeviceNumber(device.getDeviceNumber());
+		transactionReport.setRrnNumber(context.get(ConstantData.RRN_NUMBER));
+		transactionReport.setUsername(context.get(USERNAME));
+		
+		List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME,transactionReport);
+		String authFileData = "";
+		for (int i = 0; i < reportContent.size(); i++) {
+			authFileData += reportContent.get(i) + " ";
+		}
+		
+		boolean condition = authFileData.contains(context.get(ConstantData.AUTHORIZATION_CODE)) && authFileData.contains(device.getDeviceNumber()) 
+				&& authFileData.contains(context.get(ConstantData.TRANSACTION_AMOUNT)) && authFileData.contains(context.get(ConstantData.RRN_NUMBER));
+		assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
+	}
 
 	public void verifyStateAuthSearch(String deviceNumber, List<String> authStatus) {
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCGLimitPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.AuthorizationSearchWorkflow;
@@ -36,12 +37,12 @@ public class AuthorizationSearchSteps {
 		authorizationSearchWorkflow.verifyAuthTransactionSearch(type, state, device.getDeviceNumber());
 	}
 
-	@Then("assert $response response with $code AuthDecline Code and $description as description")
-	public void thenAssertStateOnAuthSearchScreen(String response, String code, String description) {
+	@Then("assert $response response with $code AuthDecline Code and $descriptionBrief as description")
+	public void thenAssertStateOnAuthSearchScreen(String response, String code, String descriptionBrief) {
 		List<String> authStatus = new ArrayList<>();
 		authStatus.add(response);
 		authStatus.add(code);
-		authStatus.add(description);
+		authStatus.add(MCGLimitPlan.getAuthDeclineDescription().get(descriptionBrief));
 		Device device = context.get(ContextConstants.DEVICE);
 		authorizationSearchWorkflow.verifyStateAuthSearch(device.getDeviceNumber(), authStatus);
 	}
@@ -116,5 +117,11 @@ public class AuthorizationSearchSteps {
 			Device device = context.get(ContextConstants.DEVICE);
 			authorizationSearchWorkflow.verifyAuthTransactionSearchReport(device);
 		} 
+	}
+	
+	@Then("validate $reportName report")
+	public void validateGenericReport(String reportName){
+		Device device = context.get(ContextConstants.DEVICE);
+		authorizationSearchWorkflow.verifyAuthTransactionSearchReport(device);
 	}
 }
