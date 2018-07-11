@@ -45,6 +45,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.Proce
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDeskFlows;
@@ -521,20 +522,34 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.setupDeviceCurrency(helpdeskGeneral);
 	}
 	
-	@When("user selects International Use Allow/Disallow status")
-	public void whenUserSelectsInternationalUseAllowDisallowStatus(){
+	/*@When("user selects $reason status")
+	public void whenUserSelectsInternationalUseAllowDisallowStatus(String status){
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskWorkflow.getDeviceStatus(device);
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.setupInternationalAllowDisallowCheck(helpdeskGeneral);
 	}
+	*/
+	@When("user selects $reason status")
 	
-	@When("user Allow/Disllow International Transaction For One Hour")
-	public void whenUserAllowDisallowInternationalTransactionForOneHour(){
+	public void whenUserSelectsEccomerceUseAllowDisallowStatus(String status) {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskWorkflow.getDeviceStatus(device);
 		helpdeskWorkflow.clickCustomerCareEditLink();
-		helpdeskWorkflow.AllowInternationalTransactionForOneHour(helpdeskGeneral);
+		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW)) {
+			helpdeskWorkflow
+					.setupInternationalAllowDisallowCheck(helpdeskGeneral, status);
+		} else {
+			helpdeskWorkflow.setupEccomerceAllowDisallowCheck(helpdeskGeneral, status);
+		}
+	}
+	
+	@When("user allow $type Transaction For One Hour")
+	public void whenUserTransactionForOneHour(String status){
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskWorkflow.getDeviceStatus(device);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.AllowTransactionForOneHour(helpdeskGeneral, status);
 	}
 
 	@Given("user sets up device currency through helpdesk for FileUpload")

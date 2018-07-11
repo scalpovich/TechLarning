@@ -229,6 +229,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind="span#priorityRequest>input")
 	private MCWebElement priorityRequestChkBx;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@name='udf23:radioComponent' and @value='0']")
+	private MCWebElement eccomDeactivate;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@name='udf23:radioComponent' and @value='1']")
+	private MCWebElement eccomAactivate;
+	
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
 	
 	protected String getWalletNumber() {
@@ -468,23 +474,45 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			}
 	}
 	
-	public void chooseOperationDeactivate()
-	{
+	public void chooseOperationDeactivate(String status) {
 		SimulatorUtilities.wait(1000);
-		WebElement element = driver().findElement(By.xpath("//select[@name='udf1:input:dropdowncomponent']"));
-		WebElementUtils.retryUntilNoErrors(() -> new Select(element).selectByValue("0"));
+		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW)) {
+			WebElement element = driver().findElement(
+					By.xpath("//select[@name='udf1:input:dropdowncomponent']"));
+			WebElementUtils.retryUntilNoErrors(() -> new Select(element)
+					.selectByValue("0"));
+		} else {
+			eccomDeactivate.click();
+		}
 	}
 	
-	public void chooseOperationActivate()
-	{
-		SimulatorUtilities.wait(1000);
-		WebElement element = driver().findElement(By.xpath("//select[@name='udf1:input:dropdowncomponent']"));
-		WebElement element1 = driver().findElement(By.xpath("//select[@name='udf2:input:dropdowncomponent']"));
-		WebElementUtils.retryUntilNoErrors(() -> new Select(element).selectByValue("1"));
-		WebElementUtils.retryUntilNoErrors(() -> new Select(element1).selectByVisibleText(ConstantData.ACTIVATION_VALUE));
-		WebElementUtils.enterText(timeInHour, "1");
+	public void chooseOperationActivate(String status) {
+		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW)) {
+			SimulatorUtilities.wait(1000);
+			WebElement element = driver().findElement(
+					By.xpath("//select[@name='udf1:input:dropdowncomponent']"));
+			WebElement element1 = driver().findElement(
+					By.xpath("//select[@name='udf2:input:dropdowncomponent']"));
+			WebElementUtils.retryUntilNoErrors(() -> new Select(element)
+					.selectByValue("1"));
+			WebElementUtils.retryUntilNoErrors(() -> new Select(element1)
+					.selectByVisibleText(ConstantData.ACTIVATION_VALUE));
+			WebElementUtils.enterText(timeInHour, "1");
+		} else {
+			SimulatorUtilities.wait(1000);
+			List<WebElement> listEccom = driver().findElements(
+					By.xpath("//input[@name='udf23:radioComponent']"));
+			boolean rValue;
+			rValue = listEccom.get(1).isSelected();
+			if (rValue = true) {
+				listEccom.get(0).click();
+			}
+			WebElement element = driver().findElement(By.xpath("//input[@name='udf25:radioComponent' and @value='2']"));
+			element.click();
+			WebElementUtils.enterText(timeInHour, "1");
+		}
 	}
-	
+
 	public void setupDeviceCurrency(HelpdeskGeneral helpdeskGeneral) {
 		logger.info("Setup Device Currency: {}", "helpdeskGeneral.getCardPackId()");
 		selectServiceCode(helpdeskGeneral.getCurrencySetupServiceCode());
@@ -502,11 +530,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 	}
 	
-	public void setupInternationalAllowDisallowCheck(HelpdeskGeneral helpdeskGeneral) {
+	public void setupInternationalAllowDisallowCheck(HelpdeskGeneral helpdeskGeneral, String status) {
 		selectServiceCode(ConstantData.INTERNATIONAL_ALLOW_DISALLOW);
 		clickGoButton();
 		runWithinPopup("400 - International Use Allow/Disallow", () -> {
-			chooseOperationDeactivate();
+			chooseOperationDeactivate(status);
 			SimulatorUtilities.wait(2000);
 			enterNotes("Automation");
 			clickSaveButton();
@@ -518,11 +546,27 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 	}
 	
-	public void AllowInternationalTransactionForOneHour(HelpdeskGeneral helpdeskGeneral) {
+	public void setupEccomerceDisallowCheck(HelpdeskGeneral helpdeskGeneral, String status) {
+		selectServiceCode(ConstantData.ECCOMERCE_ALLOW_DISALLOW);
+		clickGoButton();
+		runWithinPopup("304 - E-commerce Activation/Deactivation", () -> {
+			chooseOperationDeactivate(status);
+			SimulatorUtilities.wait(2000);
+			enterNotes("Automation");
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();			
+		});
+		//There is a delay in page rendering
+		SimulatorUtilities.wait(5000);
+		clickEndCall();
+	}
+	
+	public void AllowTransactionForOneHour(HelpdeskGeneral helpdeskGeneral, String status) {
 		selectServiceCode(ConstantData.INTERNATIONAL_ALLOW_DISALLOW);
 		clickGoButton();
 		runWithinPopup("400 - International Use Allow/Disallow", () -> {
-			chooseOperationActivate();
+			chooseOperationActivate(status);
 			enterNotes("Automation");
 			clickSaveButton();
 			verifyOperationStatus();
