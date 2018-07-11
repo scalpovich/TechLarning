@@ -444,7 +444,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
-		logger.info("activate device: {}", helpdeskGeneral.getCardPackId());
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
 		runWithinPopup("109 - Reset Pin Retry Counter", () -> {

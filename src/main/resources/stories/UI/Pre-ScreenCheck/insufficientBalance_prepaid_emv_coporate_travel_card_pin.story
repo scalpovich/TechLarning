@@ -16,9 +16,9 @@ Scenario: Device production - prepaid emv corporate travel card with PIN
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
-When processes device production batch for prepaid
-When processes pin generation batch for prepaid
-When user has wallet number information for prepaid device
+And processes device production batch for prepaid
+And processes pin generation batch for prepaid
+And user has wallet number information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
 And user sign out from customer portal
@@ -26,8 +26,8 @@ And user sign out from customer portal
 Scenario: Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
-When PIN is retrieved successfully with data from Pin Offset File
-When embossing file batch was generated in correct format
+And PIN is retrieved successfully with data from Pin Offset File
+And embossing file batch was generated in correct format
 Then FINSim simulator is closed
 
 Scenario: Perform EMV_PURCHASE Authorization transaction

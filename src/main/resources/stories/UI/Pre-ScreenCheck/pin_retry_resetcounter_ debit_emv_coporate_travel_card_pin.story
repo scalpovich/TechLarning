@@ -17,15 +17,15 @@ Scenario: Device production - debit emv corporate travel card with PIN
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for debit
-When processes device production batch for debit
-When processes pin generation batch for debit
-When user has wallet number information for debit device
-When user performs adjustment transaction
+And processes device production batch for debit
+And processes pin generation batch for debit
+And user has wallet number information for debit device
+And user performs adjustment transaction
 And user has current wallet balance amount information for debit device
 Then device has "normal" status
 When user activates device through helpdesk
-When embossing file batch was generated in correct format
-When user set invalid pin
+And embossing file batch was generated in correct format
+And user set invalid pin
 And user sign out from customer portal
 
 Scenario: Perform EMV_PURCHASE Authorization transaction with invalid pin
@@ -48,12 +48,12 @@ And user sign out from customer portal
 Scenario: Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
-When PIN is retrieved successfully with data from Pin Offset File
+And PIN is retrieved successfully with data from Pin Offset File
 
 Scenario: Perform EMV_PURCHASE Authorization transaction with valid pin
 When perform an EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
-Then FINSim simulator is closed
-Then MAS simulator is closed
+And FINSim simulator is closed
+And MAS simulator is closed
