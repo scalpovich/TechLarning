@@ -551,6 +551,7 @@ public class HelpDeskSteps {
 	@Then("user verify $limittype credit limit for $type product")
 	public void whenUserVerifyAvailableBalance(String type,String limittype){
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.getClientCreditLimit();
 		Device device = context.get(ContextConstants.DEVICE);
 		LinkedList<BigDecimal> creditLimit = helpdeskWorkflow.noteDownCreditLimit(type, device);
 		BigDecimal updatedAvailableBal = context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
@@ -566,9 +567,9 @@ public class HelpDeskSteps {
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(0)), equalTo(updatedAvailableBal));
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(1)), equalTo(updatedAvailableBal));
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(2)), equalTo(updatedAvailableBal));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(3)), equalTo(updatedAvailableBal));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(4)), equalTo(updatedAvailableBal));
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(5)), equalTo(updatedAvailableBal));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(3)), equalTo(helpdeskGeneral.getClientCreditLimit()));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(4)), equalTo(helpdeskGeneral.getAccountCreditLimit()));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(5)), equalTo(helpdeskGeneral.getNewCreditLimit()));
 		}
 	}
 	

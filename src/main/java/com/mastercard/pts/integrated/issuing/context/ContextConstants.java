@@ -60,10 +60,10 @@ public class ContextConstants {
 	
 	public static final String AVAILABLE_CARD = "AVAILABLE_CARD";
 	
-	public static final String CREDIT_LIMIT_TEMP = "temproary";
+	public static final String CREDIT_LIMIT_TEMP = "CREDIT_LIMIT_TEMP";
 	
-	public static final String CREDIT_LIMIT_PERM = "permanent";
-
+	public static final String CREDIT_LIMIT_PERM = "CREDIT_LIMIT_PERM";
+	
 	private ContextConstants() {
 	}
 
