@@ -51,7 +51,8 @@ Scenario: Perform INT_EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an INT_EMV_PURCHASE MAS transaction
 And user is logged in institution
-Then search Purchase authorization and verify 000-Successful status
+Then search Purchase authorization and verify 119-Transaction not permitted status
+Then assert Decline response with 46007 AuthDecline Code and International transaction not allowed. as description
 And user sign out from customer portal
 
 Scenario: Perform International Allow/DisAllow for one hour
@@ -61,6 +62,13 @@ And user sign out from customer portal
 
 Scenario: Perform INT_EMV_PURCHASE Authorization transaction
 When perform an INT_EMV_PURCHASE MAS transaction on the same card
+And user is logged in institution
+Then search Purchase authorization and verify 000-Successful status
+And user sign out from customer portal
+
+Scenario: Wait for 1 hour and Then Perform Purchase Transaction
+When user wait for one hour to perform transaction
+And perform an INT_EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
