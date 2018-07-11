@@ -1,4 +1,4 @@
-prepaid card transaction at white black country
+prepaid card transaction at white/black list country
 
 Narrative:
 In order to provide to transaction at black listed country
@@ -10,9 +10,28 @@ Meta:
 
 Scenario: Set up prepaid msr retail general purpose card
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "magnetic stripe" card with Country White or Black List
-When user creates new device of prepaid type for new client
-Then device has "normal" status
+When User fills Statement Message Plan for prepaid product
+Then User fills Marketing Message Plan for prepaid product
+And User fills Prepaid Statement Plan
+And User fills MCC Rules for prepaid product
+And User fills Dedupe Plan
+And User fills Transaction Plan for prepaid product
+And User fills Transaction Limit Plan for prepaid product
+And User fills Document Checklist Screen for prepaid product
+And User fills Device Joining and Membership Fee Plan for prepaid product
+And User fills Device Event Based Fee Plan for prepaid product
+And User fills Device Plan for "prepaid" "magnetic stripe" card
+And User fills Wallet Plan for prepaid product
+And User fills Program section for prepaid product
+And User edit Program to update country white black list
+And User fills Business Mandatory Fields Screen for prepaid product
+And User fills Device Range section for prepaid product
+And user assigns service code to program
+And user creates new device of prepaid type for new client
+And device has "normal" status
+And user sign out from customer portal
+And user creates new device of prepaid type for new client
+And device has "normal" status
 And user sign out from customer portal
 
 Scenario: Device Production
