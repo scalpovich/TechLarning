@@ -55,7 +55,7 @@ When MAS simulator is closed
 Then user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-Then user verify credit client limit for credit product
+Then user verify permanent credit limit for credit product
 And user sign out from customer portal
 
 

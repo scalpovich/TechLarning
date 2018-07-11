@@ -571,7 +571,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				WebElementUtils.pickDate(effectiveDateTxt, LocalDate.now());
 				WebElementUtils.pickDate(endDateTxt, LocalDate.now());
 			}
-			//selectLimitType(helpdeskGeneral.getLimitType());
+			selectLimitType(helpdeskGeneral.getLimitType());
 			enterClientCreditLimit(helpdeskGeneral.getClientCreditLimit());
 			enterAccountCreditLimit(helpdeskGeneral.getAccountCreditLimit());
 			enterNewCreditLimit(helpdeskGeneral.getNewCreditLimit());
@@ -1133,9 +1133,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		creditLimit.add(new BigDecimal(creditLimitLable.getText()));
 		creditLimit.add(new BigDecimal(creditLimitLableAccount.getText()));	
 		creditLimit.add(new BigDecimal(creditLimitLableClient.getText()));
-		//creditLimit.add(new BigDecimal(creditLimitClient.getText()));
-		//creditLimit.add(new BigDecimal(creditLimitAccount.getText()));
-		//creditLimit.add(new BigDecimal(creditLimitCard.getText()));
+		creditLimit.add(new BigDecimal(creditLimitClient.getText()));
+		creditLimit.add(new BigDecimal(creditLimitAccount.getText()));
+		creditLimit.add(new BigDecimal(creditLimitCard.getText()));
 		logger.info("Credit limit noted down : {} ",creditLimitAccount);
 		clickEndCall();
 		return creditLimit;				

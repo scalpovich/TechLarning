@@ -63,6 +63,7 @@ public class MCCRulePlanPage extends AbstractBasePage {
 			verifyNoErrors();
 			SimulatorUtilities.wait(4000);
 		});
+		SimulatorUtilities.wait(2000);
 		verifyOperationStatus();
 	}
 

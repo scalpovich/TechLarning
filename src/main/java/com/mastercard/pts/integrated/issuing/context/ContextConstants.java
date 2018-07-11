@@ -59,6 +59,10 @@ public class ContextConstants {
 	public static final String AVAILABLE_ACCOUNT = "AVAILABLE_ACCOUNT";
 	
 	public static final String AVAILABLE_CARD = "AVAILABLE_CARD";
+	
+	public static final String CREDIT_LIMIT_TEPM = "temproary";
+	
+	public static final String CREDIT_LIMIT_PERM = "permanent";
 
 	private ContextConstants() {
 	}
