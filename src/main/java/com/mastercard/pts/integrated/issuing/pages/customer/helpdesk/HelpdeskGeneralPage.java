@@ -109,7 +109,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "memo1:input:textAreaComponent")
 	private MCWebElement notesTxt;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='udf4:input:inputTextField']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='udf24:input:inputTextField']")
 	private MCWebElement timeInHour;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Save']")
@@ -509,6 +509,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			}
 			WebElement element = driver().findElement(By.xpath("//input[@name='udf25:radioComponent' and @value='2']"));
 			element.click();
+			SimulatorUtilities.wait(2000);
 			WebElementUtils.enterText(timeInHour, "1");
 		}
 	}
