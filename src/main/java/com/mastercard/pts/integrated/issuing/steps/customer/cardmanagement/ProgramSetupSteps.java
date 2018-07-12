@@ -1227,4 +1227,11 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
 	}
+	
+	@When("User edits Wallet Plan for $editItem")
+	public void whenUsereditsWalletPlan(String edit)
+	{
+		walletPlan.setWhiteListedMCGPlan(provider);
+		programSetupWorkflow.editsWalletPlan(walletPlan,edit);
+	}
 }

@@ -233,4 +233,10 @@ public class ProgramSetupWorkflow {
 		MCCRulePlanPage page = navigator.navigateToPage(MCCRulePlanPage.class);
 		page.createMCCRulePlanPage(plan);
 	}
+
+	public void editsWalletPlan(WalletPlan walletPlan, String edit) {
+		WalletConfigurationWalletPlanPage page = navigator.navigateToPage(WalletConfigurationWalletPlanPage.class);
+		page.editsWalletPlan(walletPlan,edit);
+		
+	}
 }

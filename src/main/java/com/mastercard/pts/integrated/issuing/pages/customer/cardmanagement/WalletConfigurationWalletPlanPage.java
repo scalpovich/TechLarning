@@ -73,6 +73,14 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:billingCycleCode:input:dropdowncomponent")
 	private MCWebElement billingCyleCodeDDwn;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//following-sibling::td[4]/span/a")
+	private MCWebElement editWalletPlan;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "whiteListedMcgCode:input:dropdowncomponent")
+	private MCWebElement editWihiteListedMCG;
+	
+	
+	
 	private int reservedAmount = 0; // MiscUtils.randomNumber(5);
 
 	public void inputWalletPlanCode(String walletPlanCodeString) {
@@ -247,6 +255,16 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(walletPlanCodeSearchTxt));
+	}
+
+	public void editsWalletPlan(WalletPlan walletPlan, String edit) {
+		WebElementUtils.enterText(walletPlanCodeSearchTxt, walletPlan.getWalletPlanCode());
+		clickSearchButton();
+		clickWhenClickable(editWalletPlan);
+		runWithinPopup("Edit Wallet Plan",() ->{
+			selectByVisibleText(editWihiteListedMCG, walletPlan.getWhiteListedMCGPlan());
+			clickSaveButton();
+		});
 	}
 
 }

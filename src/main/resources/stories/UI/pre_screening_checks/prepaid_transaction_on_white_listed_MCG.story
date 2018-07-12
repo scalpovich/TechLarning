@@ -5,37 +5,19 @@ As an issuer
 I want to make transaction at white listed MCG via prepaid card
 
 Meta:
-@StoryName prepaid_card_trx_at_white_list_country
+@StoryName p_transaction_white_listed_MCG
 
 Scenario: Set up prepaid msr retail general purpose card
 Given user is logged in institution
-When User fills Statement Message Plan for prepaid product
-Then User fills Marketing Message Plan for prepaid product
-And User fills Prepaid Statement Plan
-And User fills MCC Rules for prepaid product
-And User fills Dedupe Plan
-And User fills Transaction Plan for prepaid product
-And User fills Transaction Limit Plan for prepaid product
-And User fills Document Checklist Screen for prepaid product
-And User fills Device Joining and Membership Fee Plan for prepaid product
-And User fills Device Event Based Fee Plan for prepaid product
-And User fills Device Plan for "prepaid" "magnetic stripe" card
-And User fills Wallet Plan for prepaid product
-And User fills Program section for prepaid product
-And User fills Business Mandatory Fields Screen for prepaid product
-And User fills Device Range section for prepaid product
-And user assigns service code to program
+Given device range for program with device plan for "prepaid" "magnetic stripe" card
+When User edits Wallet Plan for White Listed MCG
 And user creates new device of prepaid type for new client
-And device has "normal" status
-And user sign out from customer portal
-And user creates new device of prepaid type for new client
-And device has "normal" status
 And user sign out from customer portal
 
 Scenario: Device Production
 Given user is logged in institution
 When a new device was created
-Then processes pre-production batch for prepaid
+When processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
 And user has wallet number information for prepaid device
@@ -59,3 +41,10 @@ And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
+Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
+When perform an MSR_CASH_ADVANCE MAS transaction
+Then MAS simulator is closed
+And user is logged in institution
+And search Cash Advance authorization and verify 100-Do Not Honour status
+And assert Decline response with 25004 AuthDecline Code and Invalid wallet. as description
+And user sign out from customer portal
