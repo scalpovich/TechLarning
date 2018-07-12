@@ -39,13 +39,7 @@ When credit processes pingeneration batch using new Device for Supplementary
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 When user selects E-commerce Activation/Deactivation [304] status
 And user sign out from customer portal
-
-Scenario: Pin Generation
-Given connection to FINSim is established
-When Pin Offset file batch was generated successfully
 When embossing file batch was generated in correct format
-When PIN is retrieved successfully with data from Pin Offset File
-Then FINSim simulator is closed
 
 Scenario: Perform ECCOM_PURCHASE Authorization transaction
 Given connection to MAS is established
