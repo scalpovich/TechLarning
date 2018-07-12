@@ -23,6 +23,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class MCCOverlimitPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(MCCOverlimitPage.class);
+	private static final int FIRST_ITEM = 1;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement walletPlanSearchDdwn;
@@ -54,7 +55,7 @@ public class MCCOverlimitPage extends AbstractBasePage {
 		clickAddNewButton();
 		runWithinPopup("Add MCC Overlimit", () -> {
 			WebElementUtils.selectDDByVisibleText(walletPlanDdwn, mccOverlimit.getWalletPlan());
-			WebElementUtils.selectDropDownByIndex(currencyDdwn, 1);
+			WebElementUtils.selectDropDownByIndex(currencyDdwn, FIRST_ITEM);
 			enterText(mccSearchCriteriaFromTxt, mccOverlimit.getMerchantCategoryCode());
 			enterText(mccSearchCriteriaToTxt, mccOverlimit.getMerchantCategoryCode());
 			clickSearchButton();
