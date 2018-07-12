@@ -1,7 +1,7 @@
 Narrative:
 In order to test transaction plan without assigned transaction for credit emv retails card
 As an issuer
-I want to failed transactions for prepaid emv retail card
+I want to fail transactions for prepaid emv retail card
 
 Meta:
 @StoryName credit_emv_retail

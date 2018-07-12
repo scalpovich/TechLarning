@@ -1,7 +1,7 @@
 Narrative:
 In order to check minimum wallet balance/reserved amount on prepaid emv corporate travel card
 As an issuer
-I want to failed transactions for prepaid emv corporate travel card
+I want to perform transactions for prepaid emv corporate travel card
 
 Meta:
 @StoryName p_emv_corp_travel

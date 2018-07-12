@@ -101,15 +101,7 @@ public class InstitutionSelectionPage extends AbstractBasePage {
 	public void clickConfirm() {
 		confirmButton.click();
 	}
-	
-	public boolean checkSessionExpired(){
-		SimulatorUtilities.wait(2000);
-		if( Elements("//ul[@class='feedbackPanel']//span").size()>0 ){
-			Element("//a[contains(text(),'Click here to login')]").click();
-			return true;
-		}
-		return false;
-	}
+
 	
 	
 }

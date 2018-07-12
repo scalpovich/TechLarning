@@ -7,13 +7,13 @@ Meta:
 @StoryName d_emv_corp
 @pinRetryLimitValidationAndResetCounter
 
-Scenario: Setup - debit emv corporate travel card with PIN
+Scenario: Setup - debit emv corporate card with PIN
 Given user is logged in institution
 And device range for program with device plan for "debit" "emv" card
 When user creates new device of debit type for new client
 And user sign out from customer portal
 
-Scenario: Device production - debit emv corporate travel card with PIN
+Scenario: Device production - debit emv corporate card with PIN
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for debit

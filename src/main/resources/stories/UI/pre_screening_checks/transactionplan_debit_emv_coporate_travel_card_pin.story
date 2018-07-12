@@ -1,7 +1,7 @@
 Narrative:
 In order to test transaction plan without assigned transaction for debit emv corporate card
 As an issuer
-I want to failed transactions for prepaid emv corporate card
+I want to fail transactions for prepaid emv corporate card
 Meta:
 @StoryName d_emv_corp
 @TransactionPlanWithAssignTransactions
