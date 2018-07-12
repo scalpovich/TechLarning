@@ -39,23 +39,19 @@ public class LoginWorkflow {
 		loginPage.clickLoginButton();
 	}
 	
-	public boolean confirmInstitutionSelection(String institutionSelector) {
+	public void confirmInstitutionSelection(String institutionSelector) {
 		InstitutionSelectionPage page = pageFactory.getPage(InstitutionSelectionPage.class);
 		String institution = System.getProperty("institution");
 		if (institution != null && !institution.trim().isEmpty())
 			institutionSelector=institution;
 		page.selectInstitution(institutionSelector);
 		page.clickConfirm();
-		return page.checkSessionExpired();
 	}
 
 	public void logInInstitution(Portal portal, String institution) {
 		openLoginPageForPortal(portal);
 		login(portal.getUserName(), portal.getPassword());
-		boolean flag = confirmInstitutionSelection(institution);
-		if(flag){
-			logInInstitution(portal,institution);
-		}
+		confirmInstitutionSelection(institution);
 	} 
 	
 	public void logInInstitutionAsAdmin(Portal portal, String institution) {

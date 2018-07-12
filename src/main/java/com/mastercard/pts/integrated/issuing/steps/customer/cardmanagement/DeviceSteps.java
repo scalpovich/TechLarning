@@ -292,6 +292,16 @@ public class DeviceSteps {
 		deviceWorkflow.createDevice(device);
 		context.put(ContextConstants.DEVICE, device);
 	}
+	
+	@When("User enter incorrect Expiry Date")
+	public void expiryDateIsIncorrect() {
+		Device device = context.get(ContextConstants.DEVICE);
+		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		devicePlan.setExpiryDate(ConstantData.WORNG_EXPIRY);
+		device.setExpirationDate(ConstantData.WORNG_EXPIRY);
+		context.put(ContextConstants.DEVICE, device);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
 
 	@When("$type device is created using new device screen by data driven $pinOption Pin")
 	@Then("$type device is created using new device screen by data driven $pinOption Pin")

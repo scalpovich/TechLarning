@@ -522,14 +522,6 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.setupDeviceCurrency(helpdeskGeneral);
 	}
 	
-	/*@When("user selects $reason status")
-	public void whenUserSelectsInternationalUseAllowDisallowStatus(String status){
-		Device device = context.get(ContextConstants.DEVICE);
-		helpdeskWorkflow.getDeviceStatus(device);
-		helpdeskWorkflow.clickCustomerCareEditLink();
-		helpdeskWorkflow.setupInternationalAllowDisallowCheck(helpdeskGeneral);
-	}
-	*/
 	@When("user selects $reason status")
 	
 	public void whenUserSelectsEccomerceUseAllowDisallowStatus(String status) {
