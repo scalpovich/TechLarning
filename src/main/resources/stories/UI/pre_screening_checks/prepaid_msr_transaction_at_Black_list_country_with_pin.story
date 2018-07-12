@@ -30,9 +30,6 @@ And user assigns service code to program
 And user creates new device of prepaid type for new client
 And device has "normal" status
 And user sign out from customer portal
-And user creates new device of prepaid type for new client
-And device has "normal" status
-And user sign out from customer portal
 
 Scenario: Device Production
 Given user is logged in institution
