@@ -50,6 +50,7 @@ Then FINSim simulator is closed
 Scenario: Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
+And MAS simulator is closed
 Then user is logged in institution
 And search Purchase authorization and verify 119-Transaction not permitted status
 And assert Decline response with 10001 AuthDecline Code and Transaction not permitted to device holder. as description
