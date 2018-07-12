@@ -48,7 +48,7 @@ public class ChannelRoutingPlanStep  {
 		accountRangeRoutingFlows.addChannelRoutingPlan(accountRangeRoutingPlan);
 	}
 	
-	@When("user creates Acount Range Routing for $channelName channel")
+	@When("user creates Account Range for Routing for $channelName channel")
 	public void userCreatesChannelRoutingForUserDefineChannel(String channelName) {
 		accountRangeRoutingPlan=AccountRangeRoutingPlan.channelRoutingPlanDataProvider(context.get(ContextConstants.DEVICE));
 		if(channelName.equals(this.channelName)){
