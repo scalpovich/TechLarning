@@ -4,7 +4,7 @@ As an issuer
 I want to authorize transactions for EMV prepaid card
 
 Meta:
-@MCGLimitPlan
+@MCGLimitPlan_p
 @Author Nitin Kumar
 @StoryName MCG_LIMIT
 
