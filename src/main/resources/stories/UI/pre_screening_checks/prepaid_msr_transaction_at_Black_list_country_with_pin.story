@@ -36,29 +36,29 @@ And user sign out from customer portal
 
 Scenario: Device Production
 Given user is logged in institution
-And a new device was created
-When processes pre-production batch for prepaid
-When processes device production batch for prepaid
-When processes pin generation batch for prepaid
-When user has wallet number information for prepaid device
-When user performs adjustment transaction
-When user has current wallet balance amount information for prepaid device
-Then device has "normal" status
+When a new device was created
+Then processes pre-production batch for prepaid
+And processes device production batch for prepaid
+And processes pin generation batch for prepaid
+And user has wallet number information for prepaid device
+And user performs adjustment transaction
+And user has current wallet balance amount information for prepaid device
+And device has "normal" status
 And user sign out from customer portal
 
 Scenario: Pin Generation 
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
-When embossing file batch was generated in correct format
-When PIN is retrieved successfully with data from Pin Offset File
-Then FINSim simulator is closed
+Then embossing file batch was generated in correct format
+And PIN is retrieved successfully with data from Pin Offset File
+And FINSim simulator is closed
 
 Scenario: Perform INT_MSR_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an MSR_PURCHASE MAS transaction
 Then MAS test results are verified
-When perform an INT_MSR_PURCHASE MAS transaction on the same card
-Then user is logged in institution
-Then search Purchase authorization and verify 100-Do Not Honour status
-Then assert Decline response with 25002 AuthDecline Code and Country is blacklisted. as description
-Then user sign out from customer portal
+And perform an INT_MSR_PURCHASE MAS transaction on the same card
+And user is logged in institution
+And search Purchase authorization and verify 100-Do Not Honour status
+And assert Decline response with 25002 AuthDecline Code and Country is blacklisted. as description
+And user sign out from customer portal

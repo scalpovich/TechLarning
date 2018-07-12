@@ -10,5 +10,5 @@ Meta:
 
 Scenario: User can add country in black or white list plan
 Given user is logged in institution
-Then user can add country in black or white list in plan
-And user signs out from customer portal
+When user can add country in black or white list in plan
+Then user signs out from customer portal
