@@ -20,7 +20,7 @@ And User fills Transaction Limit Plan for prepaid product
 And User fills Document Checklist Screen for prepaid product
 And User fills Device Joining and Membership Fee Plan for prepaid product
 And User fills Device Event Based Fee Plan for prepaid product
-And User fills Device Plan for "prepaid" "magnetic stripe" card
+And User fills Device Plan for "prepaid" "magnetic stripe" card product
 And User fills Wallet Plan for prepaid product
 And User fills Program section for prepaid product
 And User edit Program to update country white black list
