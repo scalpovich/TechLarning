@@ -1,7 +1,7 @@
 Narrative:
-In order to check mcg limit plan on prepaid emv card
+In order to check mcg limit plan on Credit EMV card
 As an issuer
-I want to authorize transactions for EMV prepaid card
+I want to authorize transactions for EMV Credit card
 
 Meta:
 @MCGLimitPlan
@@ -33,7 +33,7 @@ When perform an INT_EMV_PURCHASE MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-Then verify the MCG Limit in Device Usage Screen for international transactions
+Then verify the MCG daily velocity in Device Usage Screen for international transactions
 And user sign out from customer portal
 
 Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 2nd transaction
@@ -41,6 +41,7 @@ When perform an INT_EMV_PURCHASE MAS transaction on the same card
 Then MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
+Then verify the MCG daily velocity in Device Usage Screen for international transactions
 And user sign out from customer portal
 
 Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 3rd transaction

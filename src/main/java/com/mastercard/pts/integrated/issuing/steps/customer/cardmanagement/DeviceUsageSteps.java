@@ -30,6 +30,7 @@ public class DeviceUsageSteps {
 
 	private static final String FAILED_MESSAGE_INFO = "Invalid ATC counter ";
 	private static final String ATC = "ATC" ;
+	public static final String DEVICE_USUAGE = "DEVICE_USUAGE";
 	
 	@Autowired
 	private TestContext context;
@@ -59,12 +60,11 @@ public class DeviceUsageSteps {
 		deviceUsageWorkflow.deviceUsageVerification(device.getDeviceNumber());
 	}
 
-	@When("verify the MCG Limit in Device Usage Screen for $type transactions")
-	@Then("verify the MCG Limit in Device Usage Screen for $type transactions")
+	@Then("verify the MCG daily transaction in Device Usage Screen for $type transactions")
 	public void userDeviceUsage(String type) {
 		mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
 		device = context.get(ContextConstants.DEVICE);
-		deviceUsage = DeviceUsage.getDeviceUsageDetails(provider);
+		deviceUsage = DeviceUsage.getDeviceUsageDetails();
 		deviceUsage.setDeviceNumber(device.getDeviceNumber());
 		Optional<Map<String, String>> data = deviceUsageWorkflow.getWalletMCGUsage(deviceUsage);
 
@@ -79,14 +79,37 @@ public class DeviceUsageSteps {
 			} else {
 				Assert.fail("Incorrect transaction type in step");
 			}
+			device.setTransactionAmount(deviceUsage.getNextTransactionAmount());
+			context.put(ContextConstants.DEVICE, device);
 		} else {
 			Assert.fail("No Transaction was recorded under MCG usage");
 		}
+	}
+	
+	@Then("verify the MCG daily velocity in Device Usage Screen for $type transactions")
+	public void userDeviceUsageDailyVelocity(String type) {
+		mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
+		device = context.get(ContextConstants.DEVICE);
+		if(context.get(DEVICE_USUAGE)==null){
+		deviceUsage = DeviceUsage.getDeviceUsageDetails();
+		deviceUsage.setDeviceNumber(device.getDeviceNumber());
+		}
+		Optional<Map<String, String>> data = deviceUsageWorkflow.getWalletMCGUsage(deviceUsage);
 
-		if (context.get(ConstantData.TRANSACTION_AMOUNT)!= deviceUsage.getNextTransactionAmount()) {
-			device.setTransactionAmount(deviceUsage.getNextTransactionAmount());
-			deviceUsage.setVelocity();
-			context.put(ContextConstants.DEVICE, device);
+		if (data.isPresent()) {
+			Assert.assertEquals("Error asserting MCG Code", mcgLimitPlan.getMcgCode(), data.get().get(DeviceUsagePage.MCG_CODE));
+			if (type.equalsIgnoreCase(DOMESTIC)) {
+				Assert.assertEquals("Error asserting Domestic Transaction Amount", context.get(ConstantData.TRANSACTION_AMOUNT), data.get().get(DeviceUsagePage.DAILY_AMOUNT_DOMESTIC_UTILIZED));
+				Assert.assertEquals("Error asserting Domestic Velocity", deviceUsage.getVelocity(), data.get().get(DeviceUsagePage.DAILY_VELOCLITY_DOMESTIC_UTILIZED));
+			} else if (type.equalsIgnoreCase(INTERNATIONAL)) {
+				Assert.assertEquals("Error asserting International Transaction Amount", context.get(ConstantData.TRANSACTION_AMOUNT), data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
+				Assert.assertEquals("Error asserting International Velocity", deviceUsage.getVelocity(), data.get().get(DeviceUsagePage.DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
+			} else {
+				Assert.fail("Incorrect transaction type in step");
+			}
+			DeviceUsage.setVelocity();
+		} else {
+			Assert.fail("No Transaction was recorded under MCG usage");
 		}
 	}
 	

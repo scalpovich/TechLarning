@@ -148,13 +148,13 @@ public class DeviceUsagePage extends AbstractBasePage {
 		getList(closePopUpBtn).get(0);
 	}
 
-	public Optional<Map<String, String>> getWalletMCGUsageData() {
+	public Optional<Map<String, String>> getWalletMCGUsageData(int rowNumber) {
 		Map<String, String> map = new HashMap<>();
-		map.put(MCG_CODE, getCellTextByColumnName(1, MCG_CODE));
-		map.put(DAILY_AMOUNT_DOMESTIC_UTILIZED, getCellTextByColumnName(1, DAILY_AMOUNT_DOMESTIC_UTILIZED));
-		map.put(DAILY_VELOCLITY_DOMESTIC_UTILIZED, getCellTextByColumnName(1, DAILY_VELOCLITY_DOMESTIC_UTILIZED));
-		map.put(DAILY_AMOUNT_INTERNATIONAL_UTILIZED, getCellTextByColumnName(1, DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
-		map.put(DAILY_VELOCLITY_INTERNATIONAL_UTILIZED, getCellTextByColumnName(1, DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
+		map.put(MCG_CODE, getCellTextByColumnName(rowNumber, MCG_CODE));
+		map.put(DAILY_AMOUNT_DOMESTIC_UTILIZED, getCellTextByColumnName(rowNumber, DAILY_AMOUNT_DOMESTIC_UTILIZED));
+		map.put(DAILY_VELOCLITY_DOMESTIC_UTILIZED, getCellTextByColumnName(rowNumber, DAILY_VELOCLITY_DOMESTIC_UTILIZED));
+		map.put(DAILY_AMOUNT_INTERNATIONAL_UTILIZED, getCellTextByColumnName(rowNumber, DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
+		map.put(DAILY_VELOCLITY_INTERNATIONAL_UTILIZED, getCellTextByColumnName(rowNumber, DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
         clickCloseButton();
         switchToDefaultFrame();
         switchToIframe(FRAME_VIEW_DEVICE_USAGE);
@@ -190,7 +190,7 @@ public class DeviceUsagePage extends AbstractBasePage {
 		runWithinPopup(FRAME_VIEW_DEVICE_USAGE, () -> viewFirstRecord());
 		switchToIframe(FRAME_VIEW_WALLET_USAGE);
 		navigateToWalletMCGUsage();
-		return getWalletMCGUsageData();
+		return getWalletMCGUsageData(Integer.valueOf(deviceUsage.getVelocity()));
 	}
 
 	@Override

@@ -35,7 +35,7 @@ public class DeviceUsage {
 
 	private String nextTransactionAmount;
 	private String walletMCGCode;
-	private int velocity;
+	private static int velocity;
 	private String deviceNumber;
 
 	public String getDailyDebitVelocity() {
@@ -151,14 +151,10 @@ public class DeviceUsage {
 		return deviceUsage;
 	}
 
-	public static DeviceUsage getDeviceUsageDetails(KeyValueProvider provider) {
+	public static DeviceUsage getDeviceUsageDetails() {
 		DeviceUsage plan = new DeviceUsage();
-		plan.setTransactionAmount(provider.getString(NEXT_TRANSACTION_AMOUNT));
+		velocity = 1;
 		return plan;
-	}
-
-	public DeviceUsage() {
-		this.velocity = 1;
 	}
 
 	public String getNextTransactionAmount() {
@@ -181,7 +177,7 @@ public class DeviceUsage {
 		return String.valueOf(velocity);
 	}
 
-	public void setVelocity() {
+	public static void setVelocity() {
 		++velocity;
 	}
 
