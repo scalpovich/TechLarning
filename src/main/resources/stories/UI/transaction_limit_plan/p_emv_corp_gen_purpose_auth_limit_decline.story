@@ -50,7 +50,7 @@ Then user searches device on device usage screen and performs assertions on devi
 And user signs out from customer portal
 
 Scenario: Transaction EMV_PURCHASE - Overlimit
-When perform an EMV_PURCHASE MAS transaction
+When perform an EMV_PURCHASE MAS transaction on the same card
 Then MAS test results are verified with code 61 Not OK
 And MAS simulator is closed
 
