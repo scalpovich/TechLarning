@@ -121,7 +121,8 @@ public class TransactionSteps {
 	}
 
 	@When("perform an $transaction MAS transaction on the same card")
-	@Alias("a sample simulator \"$transaction\" is executed on the same card")
+	@Aliases(values={"a sample simulator \"$transaction\" is executed on the same card",
+    "user performs an \"$transaction\" MAS transaction on the same card"})
 	@Given("perform an $transaction MAS transaction on the same card")
 	public void givenTransactionIsExecutedOnTheSameCard(String transaction) {
 		String temp = transaction;

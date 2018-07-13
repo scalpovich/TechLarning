@@ -40,11 +40,11 @@ Then User search for new device Supplementary on search screen for credit and va
 Scenario: Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
-When embossing file batch was generated in correct format
+When embossing file 	batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Credit Retail- Pin Change Transaction
+Scenario: Credit Retail- Pin Change Transaction	
 Then connection to MDFS is established
 When user performs an optimized MDFS_EMV_PIN_CHANGE MDFS transaction
 Then MDFS test results are verified

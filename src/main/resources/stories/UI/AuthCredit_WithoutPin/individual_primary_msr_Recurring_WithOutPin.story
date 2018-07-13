@@ -37,15 +37,11 @@ Then User search for new device Supplementary on search screen for credit and va
 When embossing file batch was generated in correct format
 
 Scenario: Perform RECURRING_PUR_TXN Authorization transaction
-Meta:
-@TestId 
 Given connection to MAS is established
 When perform an MSR_RECURRING_PUR_TXN MAS transaction
 Then MAS test results are verified
 
 Scenario: Generate Auth File for Clearing
-Meta:
-@TestId 
 When Auth file is generated after transaction
 When MAS simulator is closed
 Then user is logged in institution

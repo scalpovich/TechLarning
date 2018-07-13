@@ -29,26 +29,26 @@ And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Corporate Credit Card
 And User fills MCC Rules for credit product
 And User Primary Device fills New Program Corporate Credit Card section for credit product for Mastercard
-When for Primary Device and New Client user fills Device Range section for credit product
+And for Primary Device and New Client user fills Device Range section for credit product
 Then credit device is created using new device screen for Corporate and Primary Device and New Client and EMV Card
-Then credit processes pre-production batch using new Device
-Then credit processes deviceproduction batch using new Device for Supplementary
-When credit processes pingeneration batch using new Device for Supplementary
+And credit processes pre-production batch using new Device
+And credit processes deviceproduction batch using new Device for Supplementary
+And credit processes pingeneration batch using new Device for Supplementary
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 And user sign out from customer portal
 
 Scenario: Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
-When embossing file batch was generated in correct format
-When PIN is retrieved successfully with data from Pin Offset File
+Then embossing file batch was generated in correct format
+And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
 Scenario: emv corporate credit card authorization
 Meta:
 @TestId TC408235
 Given user is logged in institution
-And a new device was created
-When user raises an authorization request
+When a new device was created
+And user raises an authorization request
 Then status of request is "approved"
 And user sign out from customer portal
