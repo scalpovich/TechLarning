@@ -28,6 +28,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -43,7 +44,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private TestContext context;
 	private static final Logger logger = LoggerFactory.getLogger(DeviceCreateDevicePage.class);
 	
-	private static final String OPEN_BATCH="Open [O]";
+	private static final String OPEN_BATCH = "Open [O]";
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
 	private MCWebElement deviceNumberSearchTxt;
@@ -277,10 +278,14 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		logger.info("Sub-Application Type: {}",device.getSubApplicationType());		
 		logger.info("Application Type: {}",device.getApplicationType());
 		
-		if(device.getApplicationType().contains(ApplicationType.PRIMARY_DEVICE)){
+		if(device.getApplicationType().contains(ApplicationType.PRIMARY_DEVICE) 
+				|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) 
+				&& device.getSubApplicationType().contains(SubApplicationType.NEW_CLIENT)){
 			context.put(CreditConstants.EXISTING_DEVICE_NUMBER, device.getDeviceNumber());
-		}			
-		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)
+		}
+		
+		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)
+				|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)
 				&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)) {
 			context.put(ContextConstants.DEVICE_SUPPLEMENTARY_ADDON_EXISTING,device);
 		} else {
@@ -311,7 +316,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			SimulatorUtilities.wait(30000);
 			context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());
 		}else if(device.getApplicationType().contains("Supplementary Device")||device.getApplicationType().contains("Add-on Device")/*&& device.getSubApplicationType().contains("Existing")*/){
-			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn,OPEN_BATCH);
+			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn,ConstantData.OPEN_BATCH);
 			WebElementUtils.selectDropDownByVisibleText(openBatchDdwn, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));			
 		}		
 		device.setBatchNumber(batchNumberTxt.getText());
@@ -329,7 +334,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
 		SimulatorUtilities.wait(1000);
-		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)/*&& device.getSubApplicationType().contains("Existing")*/){
+		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
 			SimulatorUtilities.wait(8000);
 			Actions action = new Actions(driver());		

@@ -66,39 +66,38 @@ public class CloseBatchPage extends AbstractBasePage {
 		CustomUtils.ThreadDotSleep(1000);
 	}
 
-	public List<String> allBatchNumberRetrieval()
-	{
+	public List<String> allBatchNumberRetrieval(){
 		List<String>batchNumbers=new ArrayList<>();
-		for(int i=0;i<allBatchNumberTxt.getElements().size();i++)
-		{
+		
+		for(int i=0;i<allBatchNumberTxt.getElements().size();i++){
 			batchNumbers.add(allBatchNumberTxt.getElements().get(i).getText());
 		}
+		
 		return batchNumbers;
 	}
+	
 	
 	public int identifyBatchNumberToProcess()
 	{
 		Device device=context.get(ContextConstants.DEVICE);
-		int i;
-		for(i=0;i<allBatchNumberRetrieval().size();i++)
-		{
-			if(allBatchNumberRetrieval().get(i).equals(device.getBatchNumber()))
-			{
-				logger.info("batchNumber: {}",allBatchNumberRetrieval().get(i));
+		int index;
+		for(index=0;index<allBatchNumberRetrieval().size();index++){
+			if(allBatchNumberRetrieval().get(index).equals(device.getBatchNumber())){
+				logger.info("Batch Number: {}",allBatchNumberRetrieval().get(index));
 				break;
-			}
+			}			
 		}
-		return i;
+		return index;
 	}
 	
-	public void processAppropriateBatchForApplication()
-	{
-		String checkBox="//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcess()+1+"]/td[10]/span/input";
+	public void processAppropriateBatchForApplication(){
+		String checkBox = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcess()+1+"]/td[10]/span/input";
 		clickWhenClickable(driver().findElement(By.xpath(checkBox)));
 		processSelected.click();
 		verifyOperationStatus();
 		
 	}
+	
 	
 	public void processFirstBatch() {
 		clickWhenClickable(firstBatchNumberTxt);
