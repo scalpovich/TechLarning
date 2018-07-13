@@ -6,7 +6,7 @@ I want to authorize transactions for EMV prepaid card
 Meta:
 @MCGLimitPlan
 @Author Nitin Kumar
-@StoryName MCG_LIMIT
+@StoryName mcg_prepaid_emv_general_purpose
 
 Scenario: Set up prepaid emv retail general purpose card with MCG Limit Plan
 Given user is logged in institution
