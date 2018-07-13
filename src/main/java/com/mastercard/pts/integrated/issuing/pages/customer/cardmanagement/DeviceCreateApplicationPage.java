@@ -244,16 +244,16 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			fillDeviceInformation(device);
 			fillBatchDetails(device);
 			fillCustomerTypeProgramCodeAndDeviceDetails(device);
-	
+
 			clickNextButton();
-	
+
 			fillProfileAndAddressDetailsAndClickNext(device);			
 			
-			//skip wallet extra fields
-			clickFinishButton();
-	
-			verifyNoErrors();
-		});
+			// skip wallet extra fields
+				clickFinishButton();
+
+				verifyNoErrors();
+			});
 
 		verifyOperationStatus();
 		if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)) {
