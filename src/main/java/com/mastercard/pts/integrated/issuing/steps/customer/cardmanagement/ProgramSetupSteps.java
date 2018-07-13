@@ -880,6 +880,15 @@ public class ProgramSetupSteps {
 		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
 		walletPlan.setProductType(ProductType.fromShortName(type));
 		walletPlan.setProgramType(programtype);
+		if (context.get(ContextConstants.MCG_LIMIT_PLAN) != null) {
+			mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
+			walletPlan.setMcgLimitPlan(mcgLimitPlan.getMcgLimitPlanCode());
+		} else {
+			mcgLimitPlan =  new MCGLimitPlan();
+            mcgLimitPlan.setMcgLimitPlanCode(walletPlan.getMcgLimitPlan());
+            mcgLimitPlan.setMcgCode(walletPlan.getMCG());
+            context.put(ContextConstants.MCG_LIMIT_PLAN, mcgLimitPlan);
+		}
 
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			walletPlan.setCreditPlan(context.get(CreditConstants.CREDIT_PLAN));

@@ -6,7 +6,7 @@ I want to create MCG Limit Plan for all product types
 Meta:
 @MCGLimitPlan
 @Author Nitin Kumar
-@StoryName MCG_LIMIT
+@StoryName mcg_debit_emv_general_purpose
 
 Scenario: Create MCG Limit Plan for Prepaid
 Given user is logged in institution
