@@ -244,12 +244,16 @@ public class TransactionSteps {
 			// for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInuxbox
 			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); // Transaction currency code
 		}
+		
+		if(transaction.equalsIgnoreCase("INT_MSR_CASH_ADVANCE")){
+			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data());
+		}
+	}	
 		// This is a Single Wallet, Single Currency INDIA card
 		// transactionData.setDeKeyValuePairDynamic("049", device.getCurrency()); // Transaction currency code
 		// transactionData.setDeKeyValuePairDynamic("050", device.getCurrency()); // Settlement currency code
 		// transactionData.setDeKeyValuePairDynamic("051", device.getCurrency()); // CardHolder billing currency code
 		// transactionData.setDeKeyValuePairDynamic("061.13", device.getCurrency()); // POS country code
-	}
 
 	private void settingValuesDynamicallyFromDeviceContext(Device device, Transaction transactionData) {
 		MiscUtils.reportToConsole("********** Start settingValuesDynamicallyFromDeviceContext ********");
