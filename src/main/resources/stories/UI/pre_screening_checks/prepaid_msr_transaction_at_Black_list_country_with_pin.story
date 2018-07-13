@@ -10,26 +10,11 @@ Meta:
 
 Scenario: Set up prepaid msr retail general purpose card
 Given user is logged in institution
-When User fills Statement Message Plan for prepaid product
-Then User fills Marketing Message Plan for prepaid product
-And User fills Prepaid Statement Plan
-And User fills MCC Rules for prepaid product
-And User fills Dedupe Plan
-And User fills Transaction Plan for prepaid product
-And User fills Transaction Limit Plan for prepaid product
-And User fills Document Checklist Screen for prepaid product
-And User fills Device Joining and Membership Fee Plan for prepaid product
-And User fills Device Event Based Fee Plan for prepaid product
-And User fills Device Plan for "prepaid" "magnetic stripe" card product
-And User fills Wallet Plan for prepaid product
-And User fills Program section for prepaid product
+When device range for program with device plan for "prepaid" "magnetic stripe" card
 And User edit Program to update country white black list
-And User fills Business Mandatory Fields Screen for prepaid product
-And User fills Device Range section for prepaid product
-And user assigns service code to program
 And user creates new device of prepaid type for new client
-And device has "normal" status
-And user sign out from customer portal
+Then user sign out from customer portal
+
 
 Scenario: Device Production
 Given user is logged in institution
