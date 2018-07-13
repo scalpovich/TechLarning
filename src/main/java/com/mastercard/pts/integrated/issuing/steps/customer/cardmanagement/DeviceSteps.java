@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.junit.Assert;
@@ -176,6 +177,8 @@ public class DeviceSteps {
 		context.put(CreditConstants.APPLICATION, device);
 	}
 	
+	@Given("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
+	@When("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
 	@Then("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
 	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewDevice(String type,String customerType,String applicationType,String subApplicationType,String deviceType) {
 		Device device = Device.createWithProviderForOtherDetails(provider);
@@ -311,8 +314,10 @@ public class DeviceSteps {
 		context.put(ContextConstants.DEVICE, device);
 	}
 	
+	@Given("\"$type\" is created with \"$application\" as application type with application sub-type as \"$applicationSubType\" and customer of type \"$customerType\" with \"$deviceType\"")
+	@When("\"$type\" is created with \"$application\" as application type with application sub-type as \"$applicationSubType\" and customer of type \"$customerType\" with \"$deviceType\"")
 	@Then("\"$type\" is created with \"$application\" as application type with application sub-type as \"$applicationSubType\" and customer of type \"$customerType\" with \"$deviceType\"")
-	public void creditDevicePlanAndProgramAreMadeAvailableToDeviceCreation(
+	public void creditDevicePlanDeviceCreation(
 			String type, String application, String applicationSubType,String customerType,String deviceType) {
 		Device device = Device.createWithProvider(provider);
 		

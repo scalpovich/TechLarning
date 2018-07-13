@@ -28,7 +28,7 @@ And User fills Wallet Plan for credit product and program Retail Credit Card
 And User fills MCC Rules for credit product
 And User fills Program section for credit product and program Retail Credit Card
 And User fills Device Range section for credit product
-Then "credit" is created with "Primary Device" as application type with application sub-type as "New" and customer of type "Individual" with "EMV Card"
+And "credit" is created with "Primary Device" as application type with application sub-type as "New" and customer of type "Individual" with "EMV Card"
 And user verifies the credit application device
 And user approves the credit application device
 And user processes close batch for new Application

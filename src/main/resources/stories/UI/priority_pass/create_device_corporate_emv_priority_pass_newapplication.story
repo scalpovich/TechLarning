@@ -8,8 +8,8 @@ Meta:
 @StoryName CardBoarding_Priority				 
 Scenario:creation of mastercard_corporate_primary_emv Card credit device with priority pass through New Application
 Given setting json values in excel
-Given user is logged in institution
-When User fills Dedupe Plan
+When user is logged in institution
+And User fills Dedupe Plan
 And User fills Statement Message Plan for credit product
 And User fills Marketing Message Plan for credit product
 And User fills Transaction Plan for credit product
@@ -27,11 +27,7 @@ And User fills Wallet Plan for credit product and program Corporate Credit Card 
 And User fills MCC Rules for credit product
 And User Primary Device [P] fills New Client [N] Program Corporate Credit Card [10] section for credit product for Mastercard
 And User fills Device Range section for credit product
-And user sign out from customer portal
-
-Scenario:Create device through above created configuration
-Given user is logged in institution
-Then "credit" is created with "Primary Device [P]" as application type with application sub-type as "New Client [N]" and customer of type "Corporate [1]" with "EMV Card [2]"
+And "credit" is created with "Primary Device [P]" as application type with application sub-type as "New Client [N]" and customer of type "Corporate [1]" with "EMV Card [2]"
 And user verifies the credit application device
 And user approves the credit application device
 And user processes close batch for new Application
