@@ -2,8 +2,8 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 
 
-import org.jbehave.core.annotations.Then;
-import org.junit.Assert;
+
+import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +22,7 @@ public class StopListReasonSteps {
 
 	
 
-	@Then("user add all raesons in stoplist reason page")
+	@When("user add all raesons in stoplist reason page")
 	public void thenUserCanAddStopListReasonInStoplistReasonPage() {
 		StopListReasonPlan listReasonPlan = StopListReasonPlan.createWithProvider(provider);
 		stopListReasonWorkflow.addStopListReasonPlan(listReasonPlan);

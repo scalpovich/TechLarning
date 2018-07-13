@@ -10,5 +10,5 @@ Meta:
 
 Scenario: User can add multiple reason to stop the card in stop list screen
 Given user is logged in institution
-Then user add all raesons in stoplist reason page
-And user signs out from customer portal
+When user add all raesons in stoplist reason page
+Then user signs out from customer portal
