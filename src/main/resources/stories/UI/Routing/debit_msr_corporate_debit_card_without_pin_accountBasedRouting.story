@@ -48,7 +48,7 @@ Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth authorization and verify 000-Successful status
 And user sign out from customer portal
-When perform an MSR_COMPLETION MAS transaction
+When perform an MSR_COMPLETION MAS transaction on the same card
 Then MAS test results are verified
 And user is logged in institution
 And search Pre-Auth Completion authorization and verify 000-Successful status
@@ -90,9 +90,6 @@ And search Refund authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: Perform INT_MSR_CASH_ADVANCE Authorization transaction
-Given user is logged in institution
-When user updates cvccvv as uncheck on device plan
-And user sign out from customer portal
 When perform an INT_MSR_CASH_ADVANCE MAS transaction on the same card
 Then MAS test results are verified
 When MAS simulator is closed
