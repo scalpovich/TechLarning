@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
-import org.jbehave.core.annotations.Then;
+
+import org.jbehave.core.annotations.When;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,7 @@ public class CountryWhiteListBlackListSteps {
 	@Autowired
 	private CountryWhiteListBlackListWorkflow countryWhiteListBlackListWorkflow;
 
-	@Then("user can add country in black or white list in plan")
+	@When("user can add country in black or white list in plan")
 	public void thenUserCanAddCountryInBlackOrWhiteListInPlan() {
 		CountryWhiteListBlackListPlan countryWhiteListBlackListPlan = CountryWhiteListBlackListPlan
 				.createWithProvider(provider);

@@ -1469,7 +1469,7 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.PROGRAM, program);
 	}
 
-	@Then("User edit Program to update $editItem")
+	@When("User edit Program to update $editItem")
 	public void andUserEditProgramToUpdateCountryWhiteBlackList(String editItem) {
 		program.setCountryWhiteBlackListPlan(provider);
 		programSetupWorkflow.editProgram(program,editItem);
