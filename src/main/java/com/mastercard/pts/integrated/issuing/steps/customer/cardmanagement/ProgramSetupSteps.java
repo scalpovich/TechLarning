@@ -465,7 +465,6 @@ public class ProgramSetupSteps {
 	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card")
-	@When("device range for program with device plan for \"prepaid\" \"$deviceType\" card")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
 			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
 			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
@@ -1229,10 +1228,22 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.PROGRAM, program);
 	}
 	
-	@When("User edits Wallet Plan for $editItem")
-	public void whenUsereditsWalletPlan(String edit)
-	{
-		walletPlan.setWhiteListedMCGPlan(provider);
-		programSetupWorkflow.editsWalletPlan(walletPlan,edit);
+	@When("for \"$deviceType\" User create Device Plan for \"$type\" product for \"$interchange\" and \"$priorityPass\" priority pass")
+	public void whenUserFillsDevicePlanForInterchangeAndDeviceType(String deviceType,String type,String interchange,String priorityPass) {
+		devicePlan = DevicePlan.createProviderForCredit(provider);
+		
+		devicePlan.setProductType(ProductType.fromShortName(type));
+		devicePlan.setAssociation(interchange);
+		devicePlan.setPriorityPassIndicator(priorityPass);
+		devicePlan.setDeviceType(deviceType);
+		
+		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());		
+		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode()); 
+		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+
+		programSetupWorkflow.createDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 }

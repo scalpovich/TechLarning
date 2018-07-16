@@ -202,14 +202,19 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
 			inputDescription(walletPlan.getDescription());
 			selectProductType(productType);
+			SimulatorUtilities.wait(2000);
 			waitForPageToLoad(driver());
 			selectProgramType(walletPlan.getProgramType());
+			SimulatorUtilities.wait(2000);
 			waitForPageToLoad(driver());
 			selectCurrency(walletPlan.getCurrency());
+			SimulatorUtilities.wait(2000);
 			waitForPageToLoad(driver());
 			selectUsage(walletPlan.getUsage());
+			SimulatorUtilities.wait(2000);
 			waitForPageToLoad(driver());
 			fillDetailsBasedOnCardType(walletPlan, productType);
+			SimulatorUtilities.wait(2000);
 			clickNextButton(); // Click on next button
 			clickFinishButton(); // click on finish button
 		});
