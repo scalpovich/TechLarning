@@ -53,7 +53,7 @@ And user sign out from customer portal
 
 Scenario: Assert Authorization Search and Device Usage
 Given user is logged in institution
-Then search MasterCard MoneySend  authorization and verify Successful status
+Then search Money Send Person To Person authorization and verify 000-Successful status
 Then user searches device on device usage screen and performs assertions on device total usage
 And user searches device on device usage screen and performs assertions on device transaction usage
 And user sign out from customer portal
