@@ -299,6 +299,15 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.checkPinChangeTransactionFirst(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
+	
+	@When("User checks Cross Border Transaction check box on Device Plan Page")
+	public void userChecksCrossBorderTransactionCheckBoxOnDevicePlanPage()
+	{
+		programSetupWorkflow.checkCrossBorserTransaction(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+		
+	}
+	
 
 	@When("device range for program with device plan for \"debit\" \"$deviceType\" card without pin")
 	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin")

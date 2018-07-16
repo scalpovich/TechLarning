@@ -366,6 +366,12 @@ public class DevicePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#pinChangeTnxFirst input")
 	private MCWebElement pinChangeTransactionFirst;
 	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#crossBorderTxnCheck input")
+	private MCWebElement crossBorderTransaction;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#crossBorderTxnCheckTime input")
+	private MCWebElement timeIntervalCrossBorder;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:virtualDeviceCreditLimit:input:inputTextField")
 	private MCWebElement virtualDeviceCrediLimitTxt;
 
@@ -950,6 +956,10 @@ public class DevicePlanPage extends AbstractBasePage {
 	{
 	  ClickCheckBox(pinChangeTransactionFirst, status);
 	}
+	public void checkCrossBorderTransaction(boolean status)
+	{
+	  ClickCheckBox(crossBorderTransaction, status);
+	}
 	public void clickIframeDialogCloseX() {
 		dialogCloseX.click();
 	}
@@ -983,6 +993,22 @@ public class DevicePlanPage extends AbstractBasePage {
 			clickWhenClickable(authorizationTab);
 			WebElementUtils.elementToBeClickable(pinChangeTransactionFirst);
 			checkPinChangeTransactionFirst(true);
+			clickSaveButton();
+		});
+		verifyOperationStatus();
+	}
+	
+	public void checkCrossBorderTransaction(DevicePlan devicePlanDataObject) {
+		logger.info("Update Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
+		enterValueinTextBox(devicePlanCode, devicePlanDataObject.getDevicePlanCode());
+		clickSearchButton();
+		editFirstRecord();
+		runWithinPopup("Edit Device Plan", () -> {
+			WebElementUtils.elementToBeClickable(authorizationTab);
+			clickWhenClickable(authorizationTab);
+			WebElementUtils.elementToBeClickable(crossBorderTransaction);
+			checkCrossBorderTransaction(true);
+			WebElementUtils.enterText(timeIntervalCrossBorder, 20);
 			clickSaveButton();
 		});
 		verifyOperationStatus();
