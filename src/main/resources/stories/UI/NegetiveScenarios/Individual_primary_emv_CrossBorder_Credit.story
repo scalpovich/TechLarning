@@ -61,8 +61,8 @@ Then search Purchase authorization and verify 102-Suspected fraud status
 Then assert Decline response with 25000 AuthDecline Code and Cross border-Fraud transaction. as description
 And user sign out from customer portal
 
-Scenario: Wait for 15 mins and Then Perform INT_Purchase Transaction
-When user wait for one 15 mins to perform transaction
+Scenario: Wait for 21 mins and Then Perform INT_Purchase Transaction
+When user wait for one 21 mins to perform transaction
 When perform an INT_EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
