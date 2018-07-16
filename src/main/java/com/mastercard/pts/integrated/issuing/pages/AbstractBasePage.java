@@ -16,7 +16,6 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
@@ -39,13 +38,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -106,8 +103,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
 	
 	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid transaction type - ";
-
-    private static final String Device = null;
+    
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
@@ -1709,12 +1705,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 	}
 	
-	private void deviceNumberContextDeviceProduction() {
-		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());		
-		Device device  = context.get(CreditConstants.APPLICATION);
-		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
-	}
-	
 	public int getDeviceNumberIndex()
 	{  
 		int index=0;
@@ -1769,7 +1759,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		String ins = String.format(instituteSelectionVal, instituteName);
 		CustomUtils.ThreadDotSleep(500);
 		getFinder().getWebDriver().findElement(By.xpath(ins)).click();
-
 	}
 
 	public void deleteExistingRecord(String parameter) {

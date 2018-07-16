@@ -29,7 +29,7 @@ And User fills Wallet Plan for credit product and program Corporate Credit Card 
 And User fills MCC Rules for credit product
 And User Primary fills new Program Corporate Credit Card [10] section for credit product for mastercard
 And User fills Device Range section for credit product
-And credit device is created using new Application screen for Corporate [1] and Primary Device and New Client and Physical NFC Device - Paypass
+And credit device is created using new Application screen for Corporate [1] and "Primary Device" and New Client and Physical NFC Device - Paypass
 And user verifies the credit application device
 And user approves the credit application device
 And user processes close batch for new Application
@@ -39,3 +39,4 @@ And credit processes pre-production batch using new Application
 And credit processes deviceproduction batch using new Application
 And new Application processes pin generation batch for credit
 Then User search for new application on search screen for credit and validates the status as NORMAL
+And user sign out from customer portal

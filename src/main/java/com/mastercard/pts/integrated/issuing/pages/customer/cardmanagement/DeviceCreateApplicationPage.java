@@ -26,7 +26,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -265,12 +265,6 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		device.setApplicationNumber(getCodeFromInfoMessage("Application Number"));
 		logger.info("Application Number: {}",device.getApplicationNumber());
 		
-		/*if(device.getApplicationType().contains(ApplicationType.PRIMARY_DEVICE) 
-				|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) 
-				&& device.getSubApplicationType().contains(SubApplicationType.NEW_CLIENT)){
-			context.put(CreditConstants.EXISTING_DEVICE_NUMBER, device.getDeviceNumber());
-		}*/
-		
 		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)
 				&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)) {
 			context.put(ContextConstants.DEVICE_SUPPLEMENTARY_ADDON_EXISTING,device);
@@ -283,24 +277,12 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
         return applicationNumber;
 	}
 
-	private void fillBatchDetails(Device device) {				
-		/*if(device.getApplicationType().contains(ApplicationType.PRIMARY_DEVICE)){
-			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
-			clickWhenClickable(generateDeviceBatchBtn);
-			waitForWicket();
-			SimulatorUtilities.wait(30000);
-			context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());
-		}else if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
-			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn,ConstantData.OPEN_BATCH);
-			WebElementUtils.selectDropDownByVisibleText(openBatchDdwn, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));			
-		}*/
-		
+	private void fillBatchDetails(Device device) {		
 		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
 		clickWhenClickable(generateDeviceBatchBtn);
 		waitForWicket();
 		SimulatorUtilities.wait(30000);
-		context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());
-		
+		context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());		
 		device.setBatchNumber(batchNumberTxt.getText());
 		logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());		
 		clickNextButton();
@@ -334,30 +316,50 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 	}
 
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
-
-		fillProfile(device);
 		
-		if(device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
-			fillAddOnProfileAndClickNext(device);
-		}else{
+		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)
+				||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) 
+				&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)){
+			
+			if(!System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)){
+				clickNextButton();
+			}	
+			
 			clickNextButton();
-		}
-		
-		fillAddress(device);
-		
-		fillEmploymentDetails(device);
-		selectProfessionByIndex(1);
-		
-		// skip employment details
-		clickNextButton();
-		// Bank Details applicable only for Credit type product
-		clickNextButton();
-		// Nomination Details applicable only for Credit type product
-		clickNextButton();
-		// skip client extra fields
-		clickNextButton();
-		// skip device extra fields
-		clickNextButton();		
+			clickNextButton();
+			// Nomination Details applicable only for Credit type product
+			clickNextButton();
+			// skip client extra fields
+			clickNextButton();
+			// skip device extra fields
+			clickNextButton();			
+			clickNextButton();
+			clickNextButton();
+		}else{
+			fillProfile(device);
+			
+			if(device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
+				fillAddOnProfileAndClickNext(device);
+			}else{
+				clickNextButton();
+			}
+			
+			fillAddress(device);
+			
+			fillEmploymentDetails(device);
+			selectProfessionByIndex(1);
+			
+			// skip employment details
+			clickNextButton();
+			// Bank Details applicable only for Credit type product
+			clickNextButton();
+			// Nomination Details applicable only for Credit type product
+			clickNextButton();
+			// skip client extra fields
+			clickNextButton();
+			// skip device extra fields
+			clickNextButton();	
+		}	
 	}
 	private void fillAddOnProfileAndClickNext(Device device){
 		ClientDetails client = device.getClientDetails();

@@ -165,9 +165,9 @@ public class DeviceSteps {
 		deviceWorkflow.createDevice(device);
 	}
 	
-	@When("$type device is created using new Application screen for $customerType and $applicationType and $subApplicationType and $deviceType")
-	@Given("$type device is created using new Application screen for $customerType and $applicationType and $subApplicationType and $deviceType")
-	@Then("$type device is created using new Application screen for $customerType and $applicationType and $subApplicationType and $deviceType")
+	@When("$type device is created using new Application screen for $customerType and \"$applicationType\" and $subApplicationType and $deviceType")
+	@Given("$type device is created using new Application screen for $customerType and \"$applicationType\" and $subApplicationType and $deviceType")
+	@Then("$type device is created using new Application screen for $customerType and \"$applicationType\" and $subApplicationType and $deviceType")
 	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewApplication(String type,String customerType,String applicationType,String subApplicationType,String deviceType) {
 		Device device = Device.createWithProviderForOtherDetails(provider);
 		device.setAppliedForProduct(ProductType.fromShortName(type));
@@ -189,7 +189,7 @@ public class DeviceSteps {
 			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 		}		
 
-		Assert.assertTrue("Application is not created successfully",deviceWorkflow.createDeviceUsingApplication(device));
+ 		Assert.assertTrue("Application is not created successfully",deviceWorkflow.createDeviceUsingApplication(device));
 		context.put(CreditConstants.APPLICATION, device);
 	}
 		

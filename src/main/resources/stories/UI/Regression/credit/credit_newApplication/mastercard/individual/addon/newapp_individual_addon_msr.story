@@ -10,7 +10,7 @@ Scenario:creation of mastercard_individual_primary_msr Card credit device
 Meta:
 @UserCreatesNewCreditDevice
 Given setting json values in excel
-Then user is logged in institution
+When user is logged in institution
 And User fills Dedupe Plan
 And User fills Statement Message Plan for credit product
 And User fills Marketing Message Plan for credit product
@@ -29,7 +29,7 @@ And User fills Wallet Plan for credit product and program Retail Credit Card
 And User fills MCC Rules for credit product
 And User Primary fills new Program Retail Credit Card section for credit product for mastercard
 And User fills Device Range section for credit product
-And credit device is created using new Application screen for Individual and Primary Device and New Client and Magnetic Stripe Card User
+And credit device is created using new Application screen for Individual and "Primary Device" and New Client and Magnetic Stripe Card User
 And user verifies the credit application device
 And user approves the credit application device
 And user processes close batch for new Application
@@ -39,3 +39,4 @@ And credit processes pre-production batch using new Application
 And credit processes deviceproduction batch using new Application
 And new Application processes pin generation batch for credit
 Then User search for new application on search screen for credit and validates the status as NORMAL
+And user sign out from customer portal

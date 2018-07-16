@@ -1133,7 +1133,7 @@ public class ProgramSetupSteps {
 
 		if(program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)
 				||program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)
-				&& program.getSubApplicationType().contains(SubApplicationType.NEW_CLIENT)){
+				&& program.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)){
 			program.setDevicePlanPlan2(devicePlanSupplementary.buildDescriptionAndCode());
 		}
 		
