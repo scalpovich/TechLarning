@@ -35,7 +35,7 @@ Then credit processes pre-production batch using new Device
 Then credit processes deviceproduction batch using new Device for Supplementary
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 
-Scenario: Perform MMSR-CORPORATE_TravelCard Authorization transaction
+Scenario: Perform MMSR-CORPORATE Authorization transaction
 Given connection to MAS is established
 When perform an MMSR MAS transaction
 Then MAS test results are verified
