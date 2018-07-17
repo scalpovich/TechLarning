@@ -109,7 +109,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "memo1:input:textAreaComponent")
 	private MCWebElement notesTxt;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='udf24:input:inputTextField']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='udf4:input:inputTextField']")
 	private MCWebElement timeInHour;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Save']")

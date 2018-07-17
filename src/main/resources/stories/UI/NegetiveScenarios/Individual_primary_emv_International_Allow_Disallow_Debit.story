@@ -7,6 +7,7 @@ Meta:
 @StoryName d_emv_corp
 @SanityCardsWithAuthorization
 @EMVWithPin
+@PreScreening
 
 Scenario: Set up program for debit emv corporate debit card
 Given user is logged in institution

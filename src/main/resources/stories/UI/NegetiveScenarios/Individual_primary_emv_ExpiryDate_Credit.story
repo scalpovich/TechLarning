@@ -6,10 +6,10 @@ I want to assert pages
 Meta:
 @CreditRegression
 @StoryName credit_emv_retail
-@DipeshSirExecution				 
+@PreScreening
+@TestId TC548377			 
 Scenario:creation of mastercard_corporate_primary_EMV Card credit device
-Meta:
-@TestId TC548377
+
 Given setting json values in excel
 Given user is logged in institution
 When User fills Dedupe Plan
@@ -42,10 +42,10 @@ And user sign out from customer portal
 Scenario: Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
-When embossing file batch was generated in correct format
-When PIN is retrieved successfully with data from Pin Offset File
-Then FINSim simulator is closed
-When User enter incorrect Expiry Date
+Then embossing file batch was generated in correct format
+And PIN is retrieved successfully with data from Pin Offset File
+And FINSim simulator is closed
+And User enter incorrect Expiry Date
 
 Scenario: Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established

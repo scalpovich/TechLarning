@@ -6,10 +6,9 @@ I want to assert pages
 Meta:
 @CreditRegression
 @StoryName credit_emv_retail
-@DipeshSirExecution				 
-Scenario:creation of mastercard_corporate_primary_EMV Card credit device
-Meta:
 @TestId TC548377
+@PreScreening				 
+Scenario:creation of mastercard_corporate_primary_EMV Card credit device
 Given setting json values in excel
 Given user is logged in institution
 When User fills Dedupe Plan

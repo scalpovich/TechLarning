@@ -6,7 +6,7 @@ I want to assert pages
 Meta:
 @Pre-ScreeningCheck
 @StoryName p_emv_corp_travel				 
-
+@PreScreening
 Scenario: Set up prepaid emv corporate travel card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card

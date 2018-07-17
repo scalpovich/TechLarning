@@ -4,7 +4,7 @@ As a user
 I want to assert pages
 
 Meta:
-@Pre-ScreeningCheck
+@PreScreening
 @StoryName p_emv_corp_travel				 
 
 Scenario: Set up prepaid emv corporate travel card

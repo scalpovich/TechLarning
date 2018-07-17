@@ -6,6 +6,7 @@ I want to assert pages
 Meta:
 @Pre-ScreeningCheck
 @StoryName p_emv_corp_travel				 
+@PreScreening
 
 Scenario: Set up prepaid emv corporate travel card
 Given user is logged in institution
@@ -43,7 +44,7 @@ Given user is logged in institution
 When user allow E-commerce Activation/Deactivation [304] Transaction For One Hour
 And user sign out from customer portal
 
-Scenario: Perform INT_EMV_PURCHASE Authorization transaction
+Scenario: Perform INT_ECCOM_PURCHASE Authorization transaction
 When perform an ECOMM_PURCHASE MAS transaction on the same card
 And user is logged in institution
 Then search ECCOM-PURCHASE authorization and verify 000-Successful status
