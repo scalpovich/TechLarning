@@ -41,7 +41,7 @@ Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 Then embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
-Then FINSim simulator is closed
+And FINSim simulator is closed
 
 Scenario: Credit Corporate- Pin Change Transaction
 Given connection to MDFS is established

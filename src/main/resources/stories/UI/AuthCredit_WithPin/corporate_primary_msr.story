@@ -40,7 +40,7 @@ Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 Then embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
-Then FINSim simulator is closed
+And FINSim simulator is closed
 
 Scenario: Perform MSR_REFUND Authorization transaction
 Given connection to MAS is established
@@ -57,4 +57,4 @@ Then MAS test results are verified
 And Auth file is generated after transaction
 And user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
-Then user sign out from customer portal
+And user sign out from customer portal
