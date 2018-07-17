@@ -6,7 +6,7 @@ I want to assert pages
 Meta:
 @CreditRegression
 @StoryName CardBoarding_Priority				 
-Scenario:creation of mastercard_individual_primary_emv Card credit device with priority pass through New Device
+Scenario:creation of mastercard_corporate_primary_emv Card credit device with priority pass through New Device
 Given setting json values in excel
 When user is logged in institution
 And User fills Dedupe Plan
@@ -24,11 +24,11 @@ And User fills Payment Bounce Reason
 And User fills Transaction Rule Plan
 And User fills Credit Plan
 And User fills Wallet Fee Plan for credit product
-And fills Wallet Plan for credit product and program Retail Credit Card [9]
+And fills Wallet Plan for credit product and program Corporate Credit Card [10]
 And User fills MCC Rules for credit product
-And User Primary Device [P] fills New Client [N] Program Retail Credit Card [9] section for credit product for Mastercard
+And User Primary Device [P] fills New Client [N] Program Corporate Credit Card [10] section for credit product for Mastercard
 And User fills Device Range section for credit product
-And credit device is created using new device screen for Individual [0] and Primary Device [P] and New Client [N] and EMV Card [2]
+And credit device is created using new device screen for Corporate [1] and Primary Device [P] and New Client [N] and EMV Card [2]
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device
 Then User search for new device on search screen for credit and validates the status as NORMAL

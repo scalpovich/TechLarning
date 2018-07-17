@@ -214,7 +214,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			fillCustomerTypeProgramCodeAndDeviceDetails(device);
 
 			clickNextButton();
-			
+
 			fillProfileAndAddressDetailsAndClickNext(device);
 
 			// skip wallet extra fields
@@ -264,13 +264,16 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		device.setWalletNumber(getCodeFromInfoMessage("wallet"));
 		// device.setWalletNumber(getWalletsId(getWalletsFromPage()));
 		device.setDeviceNumber(getCodeFromInfoMessage("device(s)"));
-		logger.info("clientCode: {}, applicationType: {}, subApplicationType: {}",device.getClientCode(),device.getApplicationType(),device.getSubApplicationType());
+		logger.info("clientCode: {}",device.getClientCode());
 		logger.info("WalletNumber: {}",device.getWalletNumber());
-		if(device.getApplicationType().contains(ApplicationType.PRIMARY_DEVICE))
-		{
-		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, device.getDeviceNumber());
-		}
 		logger.info("DeviceNumber: {}",device.getDeviceNumber());
+		logger.info("Sub ApplicationType: {}",device.getSubApplicationType());		
+		logger.info("Application Type: {}",device.getApplicationType());		
+				
+		if(device.getApplicationType().contains(ApplicationType.PRIMARY_DEVICE)){
+			context.put(CreditConstants.EXISTING_DEVICE_NUMBER, device.getDeviceNumber());
+		}		
+		
 		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)
 				&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)) {
 			context.put(ContextConstants.DEVICE_SUPPLEMENTARY_ADDON_EXISTING,device);
@@ -375,8 +378,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	}
 
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
-		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT))
-		{
+		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)){
 			if(!System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)){
 				clickNextButton();
 			}	
@@ -390,41 +392,37 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			clickNextButton();
 			
 			clickNextButton();
-			clickNextButton();
-		}
-		
-		else
-		{
-		fillProfile(device);
-        SimulatorUtilities.wait(3000);
-		// Do not Validate only when environment is Automation
-		if (!System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)) {
-			clickNextButton();
-		}
+		}else {
+			fillProfile(device);
+	        SimulatorUtilities.wait(3000);
+			// Do not Validate only when environment is Automation
+			if (!System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)) {
+				clickNextButton();
+			}
 
-		fillAddress(device);
-		
-		fillEmploymentDetails(device);
-		selectProfessionByIndex(1);
-		
-		clickNextButton();
-		// Bank Details applicable only for Credit type product
-		clickNextButton();
-		// Nomination Details applicable only for Credit type product
-		clickNextButton();
-		// skip client extra fields
-		clickNextButton();
-		// skip device extra fields
-		clickNextButton();
-		
-		}
+			fillAddress(device);
+			
+			fillEmploymentDetails(device);
+			selectProfessionByIndex(1);
+			
+			clickNextButton();
+			// Bank Details applicable only for Credit type product
+			clickNextButton();
+			// Nomination Details applicable only for Credit type product
+			clickNextButton();
+			// skip client extra fields
+			clickNextButton();
+			// skip device extra fields
+			clickNextButton();
+			
+	 }
 	}
 
 	private void fillAddress(Device device) {
 		Address currentAddress = device.getCurrentAddress();
 		WebElementUtils.enterText(currentAddressLine1Txt, currentAddress.getAddressLine1());
 		WebElementUtils.selectDropDownByVisibleText(currentCountryCodeDDwn, currentAddress.getCountry());
-		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());	
+		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());
 
 		SimulatorUtilities.wait(5000);
 		pageScrollDown();
@@ -433,21 +431,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	private void fillProfile(Device device) {
 		Program program=context.get(ContextConstants.PROGRAM);
-		if(device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)){
-			selectByVisibleText(branchCodeDDwn, device.getBranchCode());
-		}else{		
-			WebElementUtils.selectDropDownByVisibleText(branchCodeDDwn, device.getBranchCode());
-		}
-		if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)) {
-			if(corporateClientCodeDDwn.isEnabled())
-			{
-				selectByVisibleText(corporateClientCodeDDwn,device.getCorporateClientCode());	
-			}
-		} else {
-			if(corporateClientCodeDDwn.isEnabled())
-			{
-			WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
-			}
+		selectByVisibleText(branchCodeDDwn, device.getBranchCode());
+		if(corporateClientCodeDDwn.isEnabled())
+		{
+			selectByVisibleText(corporateClientCodeDDwn,device.getCorporateClientCode());	
 		}
 		ClientDetails client = device.getClientDetails();
 		WebElementUtils.selectDropDownByVisibleText(titleDDwn, client.getTitle());
@@ -468,29 +455,16 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		}
 		WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
 		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDDwn, client.getLanguagePreference());
-		WebElementUtils.selectDropDownByVisibleText(vipDDwn, device.getVip());
-
-		try{
-			if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)) {
-				WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);
-				WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));
-			}
-			else
-			{
-				WebElementUtils.selectDropDownByVisibleText(statementPreferenceDDwn, device.getOtherInfoStatementPreference());
-				WebElementUtils.enterText(faxNumberTxt, device.getOtherInfoFaxNo());
-			}
-		}catch(Exception e){
-			if(device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)){
-				WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);
-				WebElementUtils.enterText(creditLimitTxt,device.getCreditLimit());
-			}else{
-				WebElementUtils.selectDropDownByVisibleText(statementPreferenceDDwn, device.getOtherInfoStatementPreference());
-				WebElementUtils.enterText(faxNumberTxt, device.getOtherInfoFaxNo());
-			}
-		} 
-
+		WebElementUtils.selectDropDownByVisibleText(vipDDwn, device.getVip());	
+		if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)) {
+			WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);
+			WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));
+		}else{
+			WebElementUtils.selectDropDownByVisibleText(statementPreferenceDDwn, device.getOtherInfoStatementPreference());
+			WebElementUtils.enterText(faxNumberTxt, device.getOtherInfoFaxNo());
+		}		
 		clickNextButton();
 		clickNextButton();
 	}
 }
+
