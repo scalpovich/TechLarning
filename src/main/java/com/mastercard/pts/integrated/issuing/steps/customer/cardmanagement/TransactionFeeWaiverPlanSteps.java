@@ -16,7 +16,7 @@ public class TransactionFeeWaiverPlanSteps {
 	@Autowired
 	private TransactionFeeWaiverPlanFlows transactionFeeWaiverPlanFlows;
 
-	@When("user creates a transaction fee waiver plan and verify")
+	@When("user creates a transaction fee waiver")
 	public void createTransactionFeeWaiverPlan(){
 		TransactionFeeWaiverPlan plan=TransactionFeeWaiverPlan.createWithProvider(provider);
 		transactionFeeWaiverPlanFlows.addTransactionFeeWaiverPlanForMultipleType(plan);

@@ -39,5 +39,5 @@ Then MAS test results are verified
 When MAS simulator is closed
 Then user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
-Then verify fixed transaction fee applied on purchase transaction
+Then verify transaction fee waived off
 Then user sign out from customer portal

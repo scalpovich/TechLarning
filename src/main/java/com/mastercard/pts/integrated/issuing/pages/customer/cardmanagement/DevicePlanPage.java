@@ -2,11 +2,9 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.List;
-<<<<<<< HEAD
+
 =======
 import java.util.Objects;
-
->>>>>>> 95b2dffffdff65348cc3ffcea7434240caee810d
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -356,12 +354,9 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnFeePlanCode:input:dropdowncomponent")
 	private MCWebElement iframeTransactionFee;
-<<<<<<< HEAD
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnFeeWaiverPlanCode:input:dropdowncomponent")
-	private MCWebElement iframeTransactionFeeWaiverPlanDdwn;
-=======
->>>>>>> 95b2dffffdff65348cc3ffcea7434240caee810d
+	private MCWebElement iframeTransactionFeeWaiverPlanDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnLimitPlanCode:input:dropdowncomponent")
 	private MCWebElement transactionLimitPlanDDwn;
@@ -908,14 +903,11 @@ public class DevicePlanPage extends AbstractBasePage {
 		if (iframeTransactionLimitPlanDdwn.isEnabled())
 			WebElementUtils.selectDropDownByVisibleText(iframeTransactionLimitPlanDdwn, transactionLimitPlan);
 	}
-<<<<<<< HEAD
-	
+
 	public void selectIframeTransactionFeeWaiverPlan(String transactionFeeWaiverPlan) {
 		WebElementUtils.selectDropDownByVisibleText(iframeTransactionFeeWaiverPlanDdwn, 
 					transactionFeeWaiverPlan);
 	}
-=======
->>>>>>> 95b2dffffdff65348cc3ffcea7434240caee810d
 
 	public void selectIframeAfterKYCDdwn(String kycType) {
 		WebElementUtils.selectDropDownByVisibleText(iframeAfterKYCDdwn, kycType);
@@ -1124,14 +1116,13 @@ public class DevicePlanPage extends AbstractBasePage {
 		
 		selectIframeBeforeKYCDdwn(devicePlan.getBeforeKYC());
 		selectIframeAfterKYCDdwn(devicePlan.getAfterKYC());
-<<<<<<< HEAD
 		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES))
 			selectAllcavv();
 		// perform below steps only when pinRequired is true which is the
 		// default state
 		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
 			selectAllPinValidation();
-=======
+
 		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES)){
 			selectAllcavv();
 		}			
@@ -1140,7 +1131,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())){
 			selectAllPinValidation();
 		}			
->>>>>>> 95b2dffffdff65348cc3ffcea7434240caee810d
+
 		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES)) {
 			selectAllcvccvv();
 			// as of now, we do not need CVV check for MDFS pin change transactions
@@ -1187,33 +1178,29 @@ public class DevicePlanPage extends AbstractBasePage {
 				enterVirtualDeviceCreditLimit();
 			}
 		}
-<<<<<<< HEAD
+
 			clickIframeNextButton();			
 		
-=======
+
 		clickIframeNextButton();	
->>>>>>> 95b2dffffdff65348cc3ffcea7434240caee810d
 		
 		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			if (DeviceType.EMV_CARD.contains(devicePlan.getDeviceType())|| DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS.contains(devicePlan.getDeviceType())) {
 				forEmvOrNfc(devicePlan);
 			}
-<<<<<<< HEAD
+
 		}
 			else
 			{
-=======
 		}else{
->>>>>>> 95b2dffffdff65348cc3ffcea7434240caee810d
+
 			if (DeviceType.EMV_CARD.contains(devicePlan.getDeviceType())
 					|| DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS
 							.contains(devicePlan.getDeviceType())) {
 				forEmvOrNfc(devicePlan);
-<<<<<<< HEAD
 			}
-=======
+
 			}		
->>>>>>> 95b2dffffdff65348cc3ffcea7434240caee810d
 		}
 		clickIframeFinishButton();
 	}
@@ -1221,19 +1208,16 @@ public class DevicePlanPage extends AbstractBasePage {
 	private void fillDevicePlanPage(DevicePlan devicePlan) {
 		selectIframeBaseDeviceEventBasedPlanDdwn(devicePlan.getBaseDeviceEventBasedPlan());
 		selectIframeBaseDeviceJoiningMemberShipPlanDdwn(devicePlan.getBaseDeviceJoiningMemberShipPlan());
-<<<<<<< HEAD
 		if(!devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
 		{
 		selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
 		}
 		selectIframeTransactionLimitPlanDdwn(devicePlan.getTransactionLimitPlan());
 		selectIframeTransactionFeeWaiverPlan(devicePlan.getTransactionFeeWaiverPlan());
-=======
 		if(!devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)){
 			selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
 		}		
 		selectIframeTransactionLimitPlanDdwn(devicePlan.getTransactionLimitPlan());
->>>>>>> 95b2dffffdff65348cc3ffcea7434240caee810d
 		clickIframeNextButton();
 	}
 
@@ -1243,7 +1227,6 @@ public class DevicePlanPage extends AbstractBasePage {
 		// filling date when flag is fixed
 		if(!devicePlan.DeviceType.equalsIgnoreCase("Limited Validity Virtual Card [8]")){
 			if ("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
-<<<<<<< HEAD
 			if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT) )
 			{
 				if(!DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType()))
@@ -1264,7 +1247,6 @@ public class DevicePlanPage extends AbstractBasePage {
 			String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
 			devicePlan.setExpiryDate(dateInYYMM);
 				}
-=======
 				if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT) )
 				{
 					if(!DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType())){
@@ -1282,12 +1264,11 @@ public class DevicePlanPage extends AbstractBasePage {
 					String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
 					devicePlan.setExpiryDate(dateInYYMM);
 				}			
->>>>>>> 95b2dffffdff65348cc3ffcea7434240caee810d
+
 			} else {
 				enterIframeValidityOnInitialMonthsTxt(devicePlan.getValidityOnInitialMonths());
 			}
 		
-<<<<<<< HEAD
 		if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT) && DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType()))
 		{
 		logger.info("Skipping anable of card production check box");
@@ -1312,7 +1293,7 @@ public class DevicePlanPage extends AbstractBasePage {
 				fillReplacementSection(devicePlan);
 				fillPinGenerationSection(devicePlan);
 			}
-=======
+			
 		if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT) && DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType())){
 			logger.info("Skipping anable of card production check box");
 		}else{
@@ -1330,7 +1311,7 @@ public class DevicePlanPage extends AbstractBasePage {
 					fillReplacementSection(devicePlan);
 					fillPinGenerationSection(devicePlan);
 				}
->>>>>>> 95b2dffffdff65348cc3ffcea7434240caee810d
+
 		} else {
 			if (devicePlan.getFillRenewalSection().equalsIgnoreCase(STATUS_YES))
 				fillRenewalSection(devicePlan);
@@ -1347,6 +1328,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		}		
 		clickIframeNextButton();
 		}
+	}
 		
 	}
 	
@@ -1451,8 +1433,6 @@ public class DevicePlanPage extends AbstractBasePage {
 		WebElementUtils.enterText(virtualDeviceCreditLimitTxt,CustomUtils.randomNumbers(3));
 	}
 	
-<<<<<<< HEAD
-=======
 	public void setPriorityPass(DevicePlan dedevicePlanDataObject){
 		iframePriorityPassIndicatorChkbx.click();
 		SimulatorUtilities.wait(4000);
@@ -1462,15 +1442,10 @@ public class DevicePlanPage extends AbstractBasePage {
 		selectByVisibleText(iframePriorityPassVendorDdwn, dedevicePlanDataObject.getPriorityPassVendor());
 	}
 	
->>>>>>> 95b2dffffdff65348cc3ffcea7434240caee810d
 	private String getStoryName()
 	{
 		String name = System.getProperty("storyName").toString();
 		logger.info("System.getStoryName  : "+name);
 		return name;
 	}
-<<<<<<< HEAD
-
-=======
->>>>>>> 95b2dffffdff65348cc3ffcea7434240caee810d
 }
