@@ -37,11 +37,10 @@ public class TransactionLimitPlanFlows extends MenuFlows {
 	}
 	
 	public void clickSave(){
-
-		runWithinPopup("Add Transaction Limit Plan", () -> {
+	//	runWithinPopup("Add Transaction Limit Plan", () -> {
 		WebElementUtils.scrollDown(driver(), 0, 300);
 		pageToPass.clickSaveButton();
-		});
+	//	});
 	}
 	
 	public void addDetails(TransactionLimitPlan transactionLimitPlan) {
