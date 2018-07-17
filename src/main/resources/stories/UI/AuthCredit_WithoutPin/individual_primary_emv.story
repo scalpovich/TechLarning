@@ -1,7 +1,7 @@
 Narrative:
 In order to a create a Credit Device under customer portal cardmanagement tab
 As a user
-I want to execute multiple Transactions with pin on the  same card 
+I want to perform Transaction on retail credit card.
 
 Meta:
 @CreditRegression
