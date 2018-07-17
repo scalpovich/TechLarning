@@ -905,7 +905,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectIframeTransactionFeeWaiverPlan(String transactionFeeWaiverPlan) {
-		WebElementUtils.selectDropDownByVisibleText(iframeTransactionFeeWaiverPlanDdwn, 
+		WebElementUtils.selectDropDownByVisibleText(iframeTransactionFeeWaiverPlanDDwn, 
 					transactionFeeWaiverPlan);
 	}
 
@@ -990,7 +990,6 @@ public class DevicePlanPage extends AbstractBasePage {
 		runWithinPopup("Add Device Plan", () -> {
 			enterIframeDevicePlanCode(devicePlanDataObject.getDevicePlanCode());
 			enterIframeDescription(devicePlanDataObject.getDescription());
-<<<<<<< HEAD
 			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT))
 			{
 			selectByVisibleText(iframeAssociationDdwn, devicePlanDataObject.getAssociation());
@@ -1046,7 +1045,6 @@ public class DevicePlanPage extends AbstractBasePage {
 			selectIframeActivationModeLst(devicePlanDataObject.getActivationMode());
 			selectIframeExpiryFlagDdwn(devicePlanDataObject.getExpiryFlag());
 			}
-=======
 			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT)){
 				selectByVisibleText(iframeAssociationDdwn, devicePlanDataObject.getAssociation());
 				selectByVisibleText(iframeProductTypeDdwn, devicePlanDataObject.getProductType());
@@ -1100,7 +1098,6 @@ public class DevicePlanPage extends AbstractBasePage {
 				selectIframeExpiryFlagDdwn(devicePlanDataObject.getExpiryFlag());
 			}		
 			
->>>>>>> 95b2dffffdff65348cc3ffcea7434240caee810d
 			// next steps have been pushed to below method due to SONAR
 			// limitation
 			createDevicePlanContinuation(devicePlanDataObject);
@@ -1152,7 +1149,6 @@ public class DevicePlanPage extends AbstractBasePage {
 				WebElementUtils.enterText(pinRetryLimitTxt,devicePlan.getPinRetryLimit());
 				}
 			}
-<<<<<<< HEAD
 		}
 		else
 		{
@@ -1167,7 +1163,6 @@ public class DevicePlanPage extends AbstractBasePage {
 			}			
 		}
 		
->>>>>>> 95b2dffffdff65348cc3ffcea7434240caee810d
 		clickIframeNextButton();
 		SimulatorUtilities.wait(300);
 		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
