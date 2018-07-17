@@ -6,7 +6,7 @@ As an issuer
 I want to create a prepaid emv corporate general purpose card and test various transactions
 
 Meta:
-@StoryName p_emv_corp_general_purpose
+@StoryName p_emv_corp_general_purpose_mmsr
 
 Scenario: Adding TransactionLimitPlan, card management tab
 Given user is logged in institution
