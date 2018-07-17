@@ -413,6 +413,10 @@ public class DevicePlan implements HasCodeAndDescription {
 		devicePlan.setTotalTransactionLimit(provider.getString(DP_TOTAL_TRANSACTION_LIMIT));
 		devicePlan.setVelocity(provider.getString(DP_VELOCITY));
 		devicePlan.setValidity(provider.getString(DP_VALIDITYDATE));
+		devicePlan.setPriorityPassIndicator(provider.getString(DP_PRIORITY_PASS_INDICATOR));
+		devicePlan.setPriorityPassIdTemplate(provider.getString(DP_PRIORITY_PASS_ID_TEMPLATE));
+		devicePlan.setPriorityPassVendor(provider.getString(DP_PRIORITY_PASS_VENDOR));
+		devicePlan.setPriorityPassExpiry(provider.getString(DP_PRIORITY_PASS_EXPIRY));
 		return devicePlan;
 		
 	}
