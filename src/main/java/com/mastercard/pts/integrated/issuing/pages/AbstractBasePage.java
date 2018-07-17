@@ -501,15 +501,24 @@ public abstract class AbstractBasePage extends AbstractPage {
 			try {
 				action.run();
 				break;
-			} catch (StaleElementReferenceException e) {
+			} catch (Exception e) {
+				e.printStackTrace();
 				logger.info("After Exception tried--", numberOfTriesLeft);
 				numberOfTriesLeft--;
+				//getFinder().getWebDriver().navigate().refresh();
 				if (numberOfTriesLeft == 0) {
-					throw new StaleElementReferenceException(e.getMessage());
+				   break;
 				}
 				 SimulatorUtilities.wait(5000);
 			}
+//			catch(Exception e){
+//				e.printStackTrace();
+//			}
 		}	
+	}
+	
+	public void checkStaleness(MCWebElement element){
+		new WebDriverWait(getFinder().getWebDriver(), 20).until(ExpectedConditions.stalenessOf(asWebElement(element)));
 	}
 
 	protected void verifyResponseMessage() {

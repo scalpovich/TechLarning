@@ -17,6 +17,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -204,6 +205,7 @@ public class WebElementUtils {
 		asWebElement(datePicker).findElement(By.cssSelector("img")).click();
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
+		 monthYear = fluentWait(() -> asWebElement(datePicker).findElement(By.cssSelector("a.calnav")));
 		YearMonth currentYearMonth = YearMonth.parse(monthYear.getText(), formatter);
 
 		if (date.getYear() != currentYearMonth.getYear() || date.getMonthValue() != currentYearMonth.getMonthValue()) {

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.GenericReport;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.Exceptionhandler;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -75,22 +76,21 @@ public class RAMPReportPage extends AbstractBasePage {
 	}
 	
 	public void generateReport(){
+		Exceptionhandler.registerExceptionHandler();
 		selectDropDownByIndex(selectReportDDwn,1);
 	    clicksearchButtonElement();
 	    
 	    selectByVisibleText(selectReportTypeDDwn, "REP05");
 	    selectByVisibleText(selectProductTypeDDwn, "ALL");
 	    selectByVisibleText(selectRecordTypeDDwn, "A-Authorised transactions");
-		reTryTask(()->{
-		selectByVisibleText(selectTransactionTypeDDwn, "ALL");
+	//	reTryTask(()->{
 		selectByVisibleText(selectTransactionTypeDDwn, "ALL");
 	    selectByVisibleText(selectHighRiskMccDDwn, "ALL");
 	    selectByVisibleText(selectHighRiskMccGroupDDwn, "ALL");
-		
 		WebElementUtils.pickDate(fromDatePkr, LocalDate.now());
 		WebElementUtils.pickDate(toDateDPkr, LocalDate.now());
 		selectByVisibleText(selectFileTypeDDwn, "PDF");
 		clickWhenClickable(generateReportBtn);
-		});
+		//});
 	}
 }
