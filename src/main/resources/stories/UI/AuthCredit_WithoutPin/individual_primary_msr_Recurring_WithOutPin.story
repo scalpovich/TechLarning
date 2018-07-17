@@ -2,7 +2,6 @@ Narrative:
 In order to a create a Credit Device under customer portal cardmanagement tab
 As a user
 I want to perform Transaction on retail credit card.
-
 Meta:
 @CreditRegression
 @StoryName credit_msr_retail				 
@@ -35,26 +34,14 @@ And credit processes deviceproduction batch using new Device for Supplementary
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 And embossing file batch was generated in correct format
 
-Scenario: Perform ASI_MSR Authorization transaction on Individual Primary MSR Card
+Scenario: Perform RECURRING_PUR_TXN Authorization transaction
 Given connection to MAS is established
-When perform an ASI_MSR MAS transaction
+When perform an MSR_RECURRING_PUR_TXN MAS transaction
 Then MAS test results are verified
-And user is logged in institution
-And search Account Status authorization and verify 085-Successful status
-And user sign out from customer portal
 
-Scenario: Perform MMSR-CORPORATE_TravelCard Authorization transaction
-When perform an MMSR MAS transaction on the same card
-Then MAS test results are verified
-And MAS simulator is closed
+Scenario: Generate Auth File for Clearing
+Given Auth file is generated after transaction
+When MAS simulator is closed
 And user is logged in institution
-And search MasterCard MoneySend authorization and verify 000-Successful status
-And user sign out from customer portal
-
-Scenario: Perform MSR_REFUND Authorization transaction
-When perform an MSR_REFUND MAS transaction on the same card
-Then MAS test results are verified
-And user is logged in institution
-Then search Refund authorization and verify 000-Successful status
-Then validate auth report
+Then search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
