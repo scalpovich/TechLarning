@@ -48,6 +48,6 @@ Given connection to MDFS is established
 When user performs an optimized MDFS_EMV_PIN_CHANGE MDFS transaction
 Then MDFS test results are verified
 And MDFS simulator is closed
-Given user is logged in institution
+When user is logged in institution
 Then search Pin Change authorization and verify 000-Successful status
 And user sign out from customer portal
