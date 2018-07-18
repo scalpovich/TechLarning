@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
-import com.mastercard.pts.integrated.issuing.domain.CreditInstitutionData;
+import com.mastercard.pts.integrated.issuing.domain.InstitutionData;
 import com.mastercard.pts.integrated.issuing.domain.DeviceType;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.ProgramType;
@@ -561,35 +561,31 @@ public class ProgramSetupSteps {
 	@When("for $deviceType User fills Device Plan for $type product for $interchange")
 	public void whenUserFillsDevicePlanForInterchangeAndDeviceType(String deviceType,String type,String interchange) {
 		devicePlan = DevicePlan.createProviderForCredit(provider);
-		CreditInstitutionData data= context.get(CreditConstants.JSON_VALUES);
+		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
 		devicePlan.setProductType(ProductType.fromShortName(type));
-		if(Objects.nonNull(deviceJoiningAndMemberShipFeePlan)){
-		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		if (Objects.nonNull(deviceJoiningAndMemberShipFeePlan)) {
+			devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		} else {
+			devicePlan.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());
 		}
-		else{
-		devicePlan.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());
-		}
-		if(Objects.nonNull(deviceEventBasedFeePlan)){
-		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
-		}
-		else{
-		devicePlan.setBaseDeviceEventBasedPlan(data.getDeviceEventBasedFeePlan());	
+		if (Objects.nonNull(deviceEventBasedFeePlan)) {
+			devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+		} else {
+			devicePlan.setBaseDeviceEventBasedPlan(data.getDeviceEventBasedFeePlan());
 		}
 		devicePlan.setAssociation(interchange);
-		if(Objects.nonNull(transactionLimitPlan)){
-		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		if (Objects.nonNull(transactionLimitPlan)) {
+			devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		} else {
+			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
 		}
-		else{
-		devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());	
-		}
-		if(Objects.nonNull(transactionLimitPlan)){
-		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
-		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
-		}
-		else{
-		setPinRequiredToDefaultState();
-		devicePlan.setAfterKYC(data.getTransactionPlan());
-		devicePlan.setBeforeKYC(data.getTransactionPlan());	
+		if (Objects.nonNull(transactionLimitPlan)) {
+			devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+			devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		} else {
+			setPinRequiredToDefaultState();
+			devicePlan.setAfterKYC(data.getTransactionPlan());
+			devicePlan.setBeforeKYC(data.getTransactionPlan());
 		}
 		devicePlan.setDeviceType(deviceType);
 
@@ -601,28 +597,26 @@ public class ProgramSetupSteps {
 	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeWithoutPin(String deviceType,String type,String interchange) {
 		setPinRequiredToFalse();
 		devicePlan = DevicePlan.createProviderForCredit(provider);
-		CreditInstitutionData data= context.get(CreditConstants.JSON_VALUES);
+		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
 		if ("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
-		     devicePlan.setIsPinLess("YES");
+			devicePlan.setIsPinLess("YES");
 		devicePlan.setProductType(ProductType.fromShortName(type));
-		if(Objects.nonNull(deviceJoiningAndMemberShipFeePlan)&& Objects.nonNull(deviceEventBasedFeePlan)){
-		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
-		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
-		}
-		else{
-		devicePlan.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());	
-		devicePlan.setBaseDeviceEventBasedPlan(data.getDeviceEventBasedFeePlan());
+		if (Objects.nonNull(deviceJoiningAndMemberShipFeePlan) && Objects.nonNull(deviceEventBasedFeePlan)) {
+			devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+			devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+		} else {
+			devicePlan.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());
+			devicePlan.setBaseDeviceEventBasedPlan(data.getDeviceEventBasedFeePlan());
 		}
 		devicePlan.setAssociation(interchange);
-		if(Objects.nonNull(transactionLimitPlan)&&Objects.nonNull(transactionPlan)){
-		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
-		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
-		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
-		}
-		else{
-		devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());	
-		devicePlan.setAfterKYC(data.getTransactionPlan());
-		devicePlan.setBeforeKYC(data.getTransactionPlan());	
+		if (Objects.nonNull(transactionLimitPlan) && Objects.nonNull(transactionPlan)) {
+			devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+			devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+			devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		} else {
+			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
+			devicePlan.setAfterKYC(data.getTransactionPlan());
+			devicePlan.setBeforeKYC(data.getTransactionPlan());
 		}
 		devicePlan.setDeviceType(deviceType);
 		programSetupWorkflow.createDevicePlan(devicePlan);
@@ -722,38 +716,39 @@ public class ProgramSetupSteps {
 	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card without pin")
 	public void whenUserFillsDevicePlanForCrddWithoutPin(String productType, String deviceType) {
 		setPinRequiredToFalse();
-		// virtual cards are pinless so even if this statement is called by mistake, we are setting Pin to false
-				if (deviceType.toLowerCase().contains("virtual")) {
-					setPinRequiredToFalse();
-				}
-				devicePlan = DevicePlan.createWithProvider(provider);
-				CreditInstitutionData data= context.get(CreditConstants.JSON_VALUES);
-				devicePlan.setProductType(ProductType.fromShortName(productType));
-				devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
-				if(Objects.nonNull(deviceJoiningAndMemberShipFeePlan)){
-				devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
-				devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
-				devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
-				}
-				else{
-					devicePlan.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());
-					devicePlan.setBaseDeviceEventBasedPlan(data.getDeviceEventBasedFeePlan());
-					devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
-				}
-				if(Objects.nonNull(transactionPlan)){
-				devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
-				devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
-				}
-				else{
-					devicePlan.setAfterKYC(data.getTransactionPlan());
-					devicePlan.setBeforeKYC(data.getTransactionPlan());
-				}
+		// virtual cards are pinless so even if this statement is called by
+		// mistake, we are setting Pin to false
+		if (deviceType.toLowerCase().contains(ConstantData.VIRTUAL_DEVICE_TYPE)) {
+			setPinRequiredToFalse();
+		}
+		devicePlan = DevicePlan.createWithProvider(provider);
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		devicePlan.setProductType(ProductType.fromShortName(productType));
+		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
+		if (Objects.nonNull(deviceJoiningAndMemberShipFeePlan)) {
+			devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+			devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+			devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		} else {
+			devicePlan.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());
+			devicePlan.setBaseDeviceEventBasedPlan(data.getDeviceEventBasedFeePlan());
+			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
+		}
+		if (Objects.nonNull(transactionPlan)) {
+			devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+			devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		} else {
+			devicePlan.setAfterKYC(data.getTransactionPlan());
+			devicePlan.setBeforeKYC(data.getTransactionPlan());
+		}
 
-				// setting a flag through setter to figure out if the card is pinless card or not. This is used in TransactionSteps to set ExpiryDate in case of PinLess Card
-				if ("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
-					devicePlan.setIsPinLess("YES");
-				programSetupWorkflow.createDevicePlan(devicePlan);
-				context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+		// setting a flag through setter to figure out if the card is pinless
+		// card or not. This is used in TransactionSteps to set ExpiryDate in
+		// case of PinLess Card
+		if (ConstantData.PIN_REQUIRED_FALSE.equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
+			devicePlan.setIsPinLess("YES");
+		programSetupWorkflow.createDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 
 	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card")
@@ -789,25 +784,23 @@ public class ProgramSetupSteps {
 			setPinRequiredToFalse();
 		}
 		devicePlan = DevicePlan.createWithProvider(provider);
-		CreditInstitutionData data= context.get(CreditConstants.JSON_VALUES);
+		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
 		devicePlan.setProductType(ProductType.fromShortName(productType));
 		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
-		if(Objects.nonNull(deviceJoiningAndMemberShipFeePlan)){
-		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
-		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
-		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
-		}
-		else{
+		if (Objects.nonNull(deviceJoiningAndMemberShipFeePlan)) {
+			devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+			devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+			devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		} else {
 			devicePlan.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());
 			devicePlan.setBaseDeviceEventBasedPlan(data.getDeviceEventBasedFeePlan());
 			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
 			setPinRequiredToDefaultState();
 		}
-		if(Objects.nonNull(transactionPlan)){
-		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
-		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
-		}
-		else{
+		if (Objects.nonNull(transactionPlan)) {
+			devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+			devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		} else {
 			devicePlan.setAfterKYC(data.getTransactionPlan());
 			devicePlan.setBeforeKYC(data.getTransactionPlan());
 		}
@@ -956,19 +949,18 @@ public class ProgramSetupSteps {
 	@When("User fills Wallet Plan for $type product and program $programtype")
 	public void userFillsWalletPlan(String type, String programtype) {
 		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
-		CreditInstitutionData data= context.get(CreditConstants.JSON_VALUES);
+		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
 		walletPlan.setProductType(ProductType.fromShortName(type));
 		walletPlan.setProgramType(programtype);
 
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-			if(Objects.nonNull(context.get(CreditConstants.CREDIT_PLAN))){
-			walletPlan.setCreditPlan(context.get(CreditConstants.CREDIT_PLAN));
-			walletPlan.setBillingCyleCode(context.get(CreditConstants.BILLING_CYCLE));
-			}
-			else{
-		    context.put("dataDrivenExecution", true);
-			walletPlan.setCreditPlan(data.getCreditPlan());
-			walletPlan.setBillingCyleCode(data.getBillingCycle());	
+			if (Objects.nonNull(context.get(CreditConstants.CREDIT_PLAN))) {
+				walletPlan.setCreditPlan(context.get(CreditConstants.CREDIT_PLAN));
+				walletPlan.setBillingCyleCode(context.get(CreditConstants.BILLING_CYCLE));
+			} else {
+				context.put(ConstantData.JSON_DATA_DRIVEN_EXECUTION, true);
+				walletPlan.setCreditPlan(data.getCreditPlan());
+				walletPlan.setBillingCyleCode(data.getBillingCycle());
 			}
 		}
 		programSetupWorkflow.createWalletPlan(walletPlan);
@@ -1027,36 +1019,33 @@ public class ProgramSetupSteps {
 	public void whenUserFillsProgramSection(String type) {
 		program = Program.createWithProvider(dataProvider, provider);
 		//datadriven
-		CreditInstitutionData data= context.get(CreditConstants.JSON_VALUES);
+		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
 		program.setProduct(ProductType.fromShortName(type));
 		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
-			if(Objects.nonNull(statementMessagePlan)&& Objects.nonNull(marketingMessagePlan)){
-			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
-			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
-			}
-			else{
-			program.setOtherPlanStatementMessagePlan(data.getStatementMessagePlan());
-			program.setOtherPlanMarketingMessagePlan(data.getMarketingMessagePlan());	
+			if (Objects.nonNull(statementMessagePlan) && Objects.nonNull(marketingMessagePlan)) {
+				program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
+				program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+			} else {
+				program.setOtherPlanStatementMessagePlan(data.getStatementMessagePlan());
+				program.setOtherPlanMarketingMessagePlan(data.getMarketingMessagePlan());
 			}
 		}
 		program.setFirstWalletPlan(walletPlan.buildDescriptionAndCode());
 		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
-        if(Objects.nonNull(dedupePlan)&&Objects.nonNull(documentCheckListPlan)&&Objects.nonNull(mccRulePlan)){
-		program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
-		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
-		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
-        }
-        else{
-    		program.setDedupPlan(data.getDeDupePlanCode());
-    		program.setDocumentChecklistPlan(data.getDocumentCheckListPlan());
-    		program.setMccRulePlan(data.getMccRulePlan());	
-        }
+		if (Objects.nonNull(dedupePlan) && Objects.nonNull(documentCheckListPlan) && Objects.nonNull(mccRulePlan)) {
+			program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
+			program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
+			program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
+		} else {
+			program.setDedupPlan(data.getDeDupePlanCode());
+			program.setDocumentChecklistPlan(data.getDocumentCheckListPlan());
+			program.setMccRulePlan(data.getMccRulePlan());
+		}
 
 		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID))
-			if(Objects.nonNull(prepaidStatementPlan)){
-			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
-			}
-			else{
+			if (Objects.nonNull(prepaidStatementPlan)) {
+				program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+			} else {
 				program.setPrepaidStatementPlan(data.getPrepaidStatementPlan());
 			}
 
@@ -1067,48 +1056,42 @@ public class ProgramSetupSteps {
 	@When("User $applicationType fills $subApplicationType Program $programType section for $type product for $interchange")
 	public void whenUserFillsProgramSection(String applicationType,String subApplicationType,String programType,String type,String interchange) {
 		program = Program.createWithProvider(dataProvider, provider);
-		CreditInstitutionData data= context.get(CreditConstants.JSON_VALUES);
+		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
 		program.setProduct(ProductType.fromShortName(type));
 		program.setInterchange(interchange);
 		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
-			if(Objects.nonNull(statementMessagePlan)&&Objects.nonNull(marketingMessagePlan)){
-			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
-			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
-			}
-			else{
+			if (Objects.nonNull(statementMessagePlan) && Objects.nonNull(marketingMessagePlan)) {
+				program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
+				program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+			} else {
 				program.setOtherPlanStatementMessagePlan(data.getStatementMessagePlan());
 				program.setOtherPlanMarketingMessagePlan(data.getMarketingMessagePlan());
-			}	
+			}
 		}
-		if(Objects.nonNull(walletPlan)){
-		program.setFirstWalletPlan(walletPlan.buildDescriptionAndCode());
-		}
-		else{
-		program.setFirstWalletPlan(data.getWalletPlan());
+		if (Objects.nonNull(walletPlan)) {
+			program.setFirstWalletPlan(walletPlan.buildDescriptionAndCode());
+		} else {
+			program.setFirstWalletPlan(data.getWalletPlan());
 		}
 		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
 		program.setApplicationType(applicationType);
 		program.setSubApplicationType(subApplicationType);
-		if(program.getApplicationType().contains("Supplementary")||program.getApplicationType().contains("Add-on")&& program.getSubApplicationType().contains("Existing"))
-		{
-		program.setDevicePlanPlan2(devicePlanSupplementary.buildDescriptionAndCode());
+		if (program.getApplicationType().contains("Supplementary") || program.getApplicationType().contains("Add-on") && program.getSubApplicationType().contains("Existing")) {
+			program.setDevicePlanPlan2(devicePlanSupplementary.buildDescriptionAndCode());
 		}
-		if(Objects.nonNull(dedupePlan)){
+		if (Objects.nonNull(dedupePlan)) {
 			program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
-		}
-		else{
+		} else {
 			program.setDedupPlan(data.getDeDupePlanCode());
 		}
-		if(Objects.nonNull(documentCheckListPlan)){
+		if (Objects.nonNull(documentCheckListPlan)) {
 			program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
-		}
-		else{
+		} else {
 			program.setDocumentChecklistPlan(data.getDocumentCheckListPlan());
 		}
-		if(Objects.nonNull(mccRulePlan)){
+		if (Objects.nonNull(mccRulePlan)) {
 			program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
-		}
-		else{
+		} else {
 			program.setMccRulePlan(data.getMccRulePlan());
 		}
 		program.setProgramType(programType);

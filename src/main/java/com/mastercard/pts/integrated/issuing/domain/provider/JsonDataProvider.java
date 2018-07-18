@@ -187,7 +187,7 @@ public class JsonDataProvider implements DataProvider {
 		JsonNode nodeArray=null;
 		if (node.isArray()) {
 			for (JsonNode objNode : node) {
-				if (objNode.get("code").asText().equals(institutionCode) && objNode.get("product_identity").asText().equals(product)) {
+				if (objNode.get(ConstantData.INSTITUTION_CODE_KEY).asText().equals(institutionCode) && objNode.get(product).asText().equals(product)) {
 					nodeArray=objNode;
 					return objNode;
 				}

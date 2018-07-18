@@ -1,14 +1,12 @@
+peform credit authorization on msr without pin card
 Narrative:
-In order to a create a Credit Device under customer portal cardmanagement tab
-As a user
-I want to assert pages
+In order to verify credit authorization on msr without pin card
+As a user 
+I want to peform credit authorization on msr without pin card
 
 Meta:
-@CreditRegression
 @StoryName credit_emv_retail			 
 Scenario:creation of mastercard_individual_primary_msr Card credit device
-Meta:
-@TestId TC550110
 Given setting json values in excel for Credit
 Given user is logged in institution
 When for Magnetic Stripe Card User fills without pin Device Plan for credit product for Mastercard

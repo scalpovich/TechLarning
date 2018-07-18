@@ -3,14 +3,11 @@ package com.mastercard.pts.integrated.issuing.domain;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
-public class CreditInstitutionData {
-	private String association;
+public class InstitutionData {
 	private String branch;
 	private String cardPackIdGenerationTemplate;
 	private String deviceIdGenerationTemplate;
-	private String customerType;
 	private String embossingVendor;
-    private String interchange;
 	private String plasticId;
 	private String pictureCode;
 	private String code;
@@ -35,15 +32,7 @@ public class CreditInstitutionData {
 	private String creditPlan;
 	private String billingCycle;
 	private String walletPlan;
-	private String product_identity;
-	
-	public String getAssociation() {
-		return association;
-	}
-
-	public void setAssociation(String association) {
-		this.association = association;
-	}
+	private String productIdentity;
 
 	public String getBranch() {
 		return branch;
@@ -51,22 +40,6 @@ public class CreditInstitutionData {
 
 	public void setBranch(String branch) {
 		this.branch = branch;
-	}
-
-	public String getCustomerType() {
-		return customerType;
-	}
-
-	public void setCustomerType(String customerType) {
-		this.customerType = customerType;
-	}
-
-	public String getInterchange() {
-		return interchange;
-	}
-
-	public void setInterchange(String interchange) {
-		this.interchange = interchange;
 	}
 	
 	public String getCardPackIdGenerationTemplate() {
@@ -287,17 +260,19 @@ public class CreditInstitutionData {
 	public void setWalletPlan(String walletPlan) {
 		this.walletPlan = walletPlan;
 	}
-    
-	public String getProduct_identity() {
-		return product_identity;
+	
+	
+
+	public String getProductIdentity() {
+		return productIdentity;
 	}
 
-	public void setProduct_identity(String product_identity) {
-		this.product_identity = product_identity;
+	public void setProductIdentity(String productIdentity) {
+		this.productIdentity = productIdentity;
 	}
 
-	public static CreditInstitutionData createWithProvider(DataProvider provider,String institutionCode) {
-         return  provider.getDataBySimpleClassNameForInstitute(CreditInstitutionData.class, institutionCode);
+	public static InstitutionData createWithProvider(DataProvider provider,String institutionCode) {
+         return  provider.getDataBySimpleClassNameForInstitute(InstitutionData.class, institutionCode);
 	}
 	
 	

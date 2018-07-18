@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Then;
+import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +30,7 @@ public class AuthorizationSearchSteps {
 	@Autowired
 	private KeyValueProvider provider;
 	
-	
+	@When("search $type authorization and verify $state status")
 	@Then("search $type authorization and verify $state status")
 	public void thenUserSearchDeviceNumerWithTodaysDate(String type, String state) {
 		Device device = context.get(ContextConstants.DEVICE);

@@ -1,16 +1,13 @@
 {
   "institute": [
    {
-   "product_identity":"Debit",
+   "productIdentity":"Debit",
    "code":"121212",
    "abbreviation":"AUTO",
-   "association":"MASTERCARD [02]",
    "branch":"auto branch [1000]",
    "cardPackIdGenerationTemplate":"AUTOMATION [PAN042]",
    "deviceIdGenerationTemplate":"AUTOMATION [PAN019]",
-   "customerType":"Corporate",
    "embossingVendor":"AUTOMATION PERS BUREAU [AUTOB1]",
-   "interchange":"MASTERCARD [02]",
    "mastercardPrepaidIssuerBin":"532560",
    "mastercardDebitIssuerBin":"543870",
    "mastercardCreditIssuerBin":"589765",
@@ -35,16 +32,13 @@
    "walletPlan":"AUTOMATION [TA5454IRIV]"
    },
    {
-   "product_identity":"Credit",
+   "productIdentity":"Credit",
    "code":"121212",
    "abbreviation":"AUTO",
-   "association":"MASTERCARD [02]",
    "branch":"auto branch [1000]",
    "cardPackIdGenerationTemplate":"AUTOMATION [PAN042]",
    "deviceIdGenerationTemplate":"AUTOMATION [PAN019]",
-   "customerType":"Corporate",
    "embossingVendor":"AUTOMATION PERS BUREAU [AUTOB1]",
-   "interchange":"MASTERCARD",
    "mastercardPrepaidIssuerBin":"532560",
    "mastercardDebitIssuerBin":"543870",
    "mastercardCreditIssuerBin":"589765",
@@ -69,16 +63,13 @@
    "walletPlan":"AUTOMATION [TA5454IRIV]"
    },
    {
-   "product_identity":"Prepaid",
+   "productIdentity":"Prepaid",
    "code":"121212",
    "abbreviation":"AUTO",
-   "association":"MASTERCARD [02]",
    "branch":"auto branch [1000]",
    "cardPackIdGenerationTemplate":"AUTOMATION [PAN042]",
    "deviceIdGenerationTemplate":"AUTOMATION [PAN019]",
-   "customerType":"Corporate",
    "embossingVendor":"AUTOMATION PERS BUREAU [AUTOB1]",
-   "interchange":"MASTERCARD [02]",
    "mastercardPrepaidIssuerBin":"532560",
    "mastercardDebitIssuerBin":"543870",
    "mastercardCreditIssuerBin":"589765",
