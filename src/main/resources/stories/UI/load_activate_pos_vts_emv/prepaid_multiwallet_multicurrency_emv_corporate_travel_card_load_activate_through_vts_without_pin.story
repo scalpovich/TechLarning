@@ -14,6 +14,7 @@ Meta:
 @TestId 
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin for an interface
+When user updates cvccvv as uncheck on device plan
 When user creates new device of prepaid type for new client
 Then device has "normal" status
 

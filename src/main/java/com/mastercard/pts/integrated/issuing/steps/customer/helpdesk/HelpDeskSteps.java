@@ -616,16 +616,16 @@ public class HelpDeskSteps {
 
 	@Then("User search for new device on search screen for $productType and validates the status as $NORMAL")
 	@When("User search for new device on search screen for $productType and validates the status as $NORMAL")
-	public void thenUserSearchForDeviceOnSearchScreen(String productType, String status) {
+	public void thenUserSearchForDeviceOnSearchScreen(String productType, String status) {		
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskgettersetter.setDeviceNumber(device.getDeviceNumber());	
 		helpdeskgettersetter.setProductType(ProductType.fromShortName(productType));
-
-		String actualStatus = helpdeskFlows.searchForNewDevice(helpdeskgettersetter);
-		if (actualStatus.contains(status)) {
+		
+		if (helpdeskFlows.searchForNewDevice(helpdeskgettersetter).contains(status)) {
 			Assert.assertTrue("status of newly created device is normal ", true);
 		} else {
 			Assert.assertTrue("status of newly created device is not normal ", false);
 		}
-
 	}
 	
 	@Then("User search for new device Supplementary on search screen for $productType and validates the status as $NORMAL")

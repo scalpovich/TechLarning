@@ -213,13 +213,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 		verifyOperationStatus();
 	}
 	
-	public void processPinGenerationBatchNewDeviceSupplementary(PinGenerationBatch batch) {
-		//Device device = context.get(ContextConstants.DEVICE);
-		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
-		WebElementUtils.enterText(batchNumberTxt, batchNumber);
-		waitAndSearchForRecordToExistForSupplementary();
-		verifyOperationStatus();
-	}
+	
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
