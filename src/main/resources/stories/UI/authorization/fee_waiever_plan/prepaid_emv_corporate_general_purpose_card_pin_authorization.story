@@ -40,6 +40,6 @@ When perform an EMV_PURCHASE MAS transaction
 And MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
-Then search Purchase authorization and verify 000-Successful status
-Then verify transaction fee waived off
+And search Purchase authorization and verify 000-Successful status
+And verify transaction fee waived off
 Then user sign out from customer portal
