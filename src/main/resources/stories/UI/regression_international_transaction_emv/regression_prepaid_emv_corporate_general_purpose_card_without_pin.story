@@ -23,13 +23,16 @@ Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
+Then user sign out from customer portal
+Then user is logged in institution
+Then device has "normal" status
 When user has wallet number information for prepaid device
 When user performs adjustment transaction with 300000 amount
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
-When user activates device through helpdesk
-Then user sign out from customer portal
+Then user activates device through helpdesk
 Then embossing file batch was generated in correct format
+Then user sign out from customer portal
 
 Scenario: Transaction - INT_EMV_PREAUTH and INT_EMV_COMPLETION Authorization transaction
 Given connection to MAS is established

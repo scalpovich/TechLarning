@@ -6,7 +6,6 @@ import org.jbehave.core.annotations.When;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
@@ -22,7 +21,6 @@ import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramFlows;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.TransactionFeeWaiverPlanFlows;
 
 @Component
 public class DeviceSteps {

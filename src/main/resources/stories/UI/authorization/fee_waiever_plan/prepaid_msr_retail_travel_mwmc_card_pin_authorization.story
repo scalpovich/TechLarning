@@ -8,7 +8,7 @@ I want to authorize transactions for prepaid msr retail travel mwmc card
 Meta:
 @StoryName p_msr_retail_travel_mwmc
 
-Scenario: Transaction - prepaid msr retail card - MSR_PURCHASEWITH_CASHBACK Authorization transaction
+Scenario: Transaction - prepaid msr retail card - MSR_PURCHASE_WITH_CASHBACK Authorization transaction
 Given user is logged in institution
 When User fills Statement Message Plan for prepaid product
 And User fills Marketing Message Plan for prepaid product

@@ -20,7 +20,7 @@ And User fills Transaction Limit Plan for prepaid product
 And User fills Document Checklist Screen for prepaid product
 And User fills Device Joining and Membership Fee Plan for prepaid product
 And User fills Device Event Based Fee Plan for prepaid product
-And User fills Device Plan for prepaid "magnetic stripe" card with transaction fee waived Off
+And User fills Device Plan for prepaid magnetic stripe card with transaction fee waived Off
 And User fills Wallet Plan for prepaid product
 And User fills Program section for prepaid product
 And User fills Business Mandatory Fields Screen for prepaid product
