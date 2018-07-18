@@ -275,7 +275,6 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setReplacementNoOfDays(provider.getString(REPLACEMENT_NO_OF_DAYS));
 		plan.setValidityOnReplacementMonths(provider.getString(VALIDITY_ON_REPLACEMENT_MONTHS));
 		plan.setReplacementDeviceTechnology(provider.getString(REPLACEMENT_DEVICE_TECHNOLOGY));
-		plan.setTransactionFeeWaiverPlan(provider.getString(TRANSACTION_FEE_WAIVER_PLAN));
 		plan.setFillRenewalSection(provider.getString(FILL_RENEWAL_SECTION));
 		plan.setFillReplacementSection(provider.getString(FILL_REPLACEMENT_SECTION));
 		plan.setPinRetryLimit(provider.getString(PIN_RETRY_LIMIT));

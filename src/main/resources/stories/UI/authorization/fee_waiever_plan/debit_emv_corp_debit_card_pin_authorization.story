@@ -8,10 +8,22 @@ I want to create a EMV Corporate debit card for client
 Meta:
 @StoryName d_emv_corp
 
-Scenario: Transaction - debit emv corp debit card - EMV_PURCHASE Authorization transaction
+Scenario: Transaction - debit emv corp debit card - EMV_PURCHASE_WITH_CASHBACK Authorization transaction
 Given user is logged in institution
-And device range for program with device plan for "debit" "emv" card
-When user creates new device of debit type for new client
+When User fills Dedupe Plan
+And User fills MCC Rules for debit product
+And User fills Transaction Plan for debit product
+And User fills Transaction Limit Plan for debit product
+And User fills Document Checklist Screen for debit product
+And User fills Device Joining and Membership Fee Plan for debit product
+And User fills Device Event Based Fee Plan for debit product
+And User fills Device Plan for debit emv card with transaction fee waived Off
+And User fills Wallet Plan for debit product
+And User fills Program section for debit product
+And User fills Business Mandatory Fields Screen for debit product
+And User fills Device Range section for debit product
+And user assigns service code to program
+And user creates new device of debit type for new client
 Then user sign out from customer portal
 
 Scenario: Device Production
@@ -40,20 +52,6 @@ When perform an EMV_PURCHASE_WITH_CASHBACK MAS transaction
 And MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
-And search Purchase with Cash back authorization and verify 000-Successful status
+Then search Purchase with Cash back authorization and verify 000-Successful status
 And verify transaction fee waived off
-Then user sign out from customer portal
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+And user sign out from customer portal

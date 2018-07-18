@@ -293,6 +293,18 @@ public class ProgramSetupSteps {
 	public void givenDeviceRangeForDebitProgramWithDevicePlan(String deviceType) {
 		// composite step
 	}
+	
+	
+	@When("device range for program with device plan for \"debit\" \"$deviceType\" card with transaction fee waieve off")
+	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card with transaction fee waieve off")
+	@Composite(steps = { "When User fills Device Plan for \"debit\" \"<deviceType>\" card with transaction fee waived Off","When User fills Dedupe Plan", "When User fills MCC Rules for debit product", "When User fills Transaction Plan for debit product",
+			"When User fills Transaction Limit Plan for debit product", "When User fills Document Checklist Screen for debit product",
+			"When User fills Device Joining and Membership Fee Plan for debit product", "When User fills Device Event Based Fee Plan for debit product",
+			"When User fills Device Plan for \"debit\" \"<deviceType>\" card with transaction fee waived Off", "When User fills Wallet Plan for debit product", "When User fills Program section for debit product",
+			"When User fills Business Mandatory Fields Screen for debit product", "When User fills Device Range section for debit product", "When user assigns service code to program" })
+	public void givenDeviceRangeForDebitProgramWithDevicePlanWithTransactionFeeWaivedOff(String deviceType) {
+		// composite step
+	}
 
 	@Given("user updates cvccvv as uncheck on device plan")
 	@When("user updates cvccvv as uncheck on device plan")
@@ -543,7 +555,6 @@ public class ProgramSetupSteps {
 		 */
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
-		devicePlan.setTransactionFeeWaiverPlan(provider.getString(TRANSACTION_FEE_WAIVER_PLAN));
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 		programSetupWorkflow.createDevicePlan(devicePlan);
@@ -1258,6 +1269,14 @@ public class ProgramSetupSteps {
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode()); 
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 
+		programSetupWorkflow.createDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+	
+	@When("User fills Device Plan for $productType $deviceType card with transaction fee waived Off")
+	public void whenUserFillsDevicePlaWithTransactionFeeWaivedOff(String productType, String deviceType) {
+		settingDevicePlanTestData(productType, deviceType); // call to re-usable method
+		devicePlan.setTransactionFeeWaiverPlan(provider.getString(TRANSACTION_FEE_WAIVER_PLAN));
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
