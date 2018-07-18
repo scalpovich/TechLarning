@@ -5,16 +5,19 @@ import java.util.Collection;
 
 
 
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeeWaiverPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
@@ -96,17 +99,17 @@ public class TransactionFeeWaiverPlanPage extends AbstractBasePage {
 		clickAddNewButton();
 		runWithinPopup("Add Transaction Fee Waiver Plan Master", () -> {
 			WebElementUtils.enterText(waiverPlanCodeTxt,plan.getTransactionFeeWaiverPlanCode());
-			WebElementUtils.enterText(descriptionTxt,Constants.GENERIC_DESCRIPTION);
+			WebElementUtils.enterText(descriptionTxt,CustomUtils.randomString(8));
 			clickAddDetailsButton();
 			addTransactionFeeWaiverPlanDetails(plan);
 			clickSaveButton();	
 		});
 	}
 
-	public void addTransactionFeeWaiverPlanMasterDetail(TransactionFeeWaiverPlan plan, String trasType) {
+	public void addTransactionFeeWaiverPlanMasterDetails(TransactionFeeWaiverPlan plan) {
 
-		String[] source = plan.getTransactionSource().trim().split(":");
-		String[] type = plan.getTransactionType().trim().split(":");
+		String[] transactionSource = plan.getTransactionSource().trim().split(":");
+		String[] transactionType = plan.getTransactionType().trim().split(":");
 		logger.info("Create transaction Fee Waiver Plan Master: {}", plan.getTransactionFeeWaiverPlanCode());
 		SimulatorUtilities.wait(2000);
 		clickAddNewButton();
@@ -114,11 +117,10 @@ public class TransactionFeeWaiverPlanPage extends AbstractBasePage {
 			WebElementUtils.enterText(waiverPlanCodeTxt,plan.getTransactionFeeWaiverPlanCode());
 			WebElementUtils.enterText(descriptionTxt,Constants.GENERIC_DESCRIPTION);
 			clickAddDetailsButton();
-			for(String tranType : type){
-				for (String value:source) {
-					addTransactionFeeWaiverPlanDetails(plan,tranType,value);
+			for(String type : transactionType){
+				for (String source:transactionSource) {
+					addTransactionFeeWaiverPlanDetails(plan,type,source);
 				}
-				//clickSaveButton();
 			}
 			clickSaveButton();
 		});
@@ -163,9 +165,9 @@ public class TransactionFeeWaiverPlanPage extends AbstractBasePage {
 		});
 		verifyOperationStatus();	
 	}
-	
+
 	public void setupTransactionTypeForSources(TransactionFeeWaiverPlan plan) {
-		addTransactionFeeWaiverPlanMasterDetail(plan,"test");
+		addTransactionFeeWaiverPlanMasterDetails(plan);
 	}  
 
 }
