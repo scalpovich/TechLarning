@@ -169,7 +169,6 @@ public class TransactionFeeWaiverPlanPage extends AbstractBasePage {
 	public void setupTransactionTypeForSources(TransactionFeeWaiverPlan plan) {
 		addTransactionFeeWaiverPlanMasterDetails(plan);
 	}  
-
 }
 
 
