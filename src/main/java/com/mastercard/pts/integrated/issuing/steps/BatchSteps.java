@@ -83,16 +83,6 @@ public class BatchSteps {
 		}
 	}
 	
-	@When("User enter incorrect Expiry Date")
-	public void expiryDateIsIncorrect() {
-		Device device = context.get(ContextConstants.DEVICE);
-		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
-		devicePlan.setExpiryDate(ConstantData.WORNG_EXPIRY);
-		device.setExpirationDate(ConstantData.WORNG_EXPIRY);
-		context.put(ContextConstants.DEVICE, device);
-		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
-	}
-
 	@When("Pin Offset file batch was generated successfully")
 	@Then("Pin Offset file batch was generated successfully")
 	public void getPinFileData() {
