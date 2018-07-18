@@ -404,7 +404,51 @@ public class DevicePlanPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="view:virtualDeviceCreditLimit:input:inputTextField")	
 	private MCWebElement virtualDeviceCreditLimitTxt;
-		
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:issuerScripting:checkBoxComponent")	
+	private MCWebElement issuerScriptingChkBx;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:ucol:input:inputAmountField")	
+	private MCWebElement ucol;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:ucota:input:inputAmountField")	
+	private MCWebElement ucota;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:lcol:input:inputAmountField")	
+	private MCWebElement lcol;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:lcota:input:inputAmountField")	
+	private MCWebElement lcota;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:applicationBlock:checkBoxComponent")	
+	private MCWebElement applicationBlockChkBx;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:applicationUnblock:checkBoxComponent")	
+	private MCWebElement applicationUnblockChkBx;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:putData:checkBoxComponent")	
+	private MCWebElement putDataChkBx;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:pinChange:checkBoxComponent")	
+	private MCWebElement pinChangeChkBx;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:pinUnblock:checkBoxComponent")	
+	private MCWebElement pinUnblockChkBx;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:appBlockPriority:input:dropdowncomponent")	
+	private MCWebElement applicationBlockPriorityDropdown;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:appUnblockPriority:input:dropdowncomponent")	
+	private MCWebElement applicationUnblockPriorityDropdown;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:putDataPriority:input:dropdowncomponent")	
+	private MCWebElement putDataPriorityDropdown;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:pinChangePriority:input:dropdowncomponent")	
+	private MCWebElement pinChangePriorityDropdown;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:pinUnblockPriority:input:dropdowncomponent")	
+	private MCWebElement pinUnblockPriorityDropdown;
 	
 	public void AddDevicePlan() {
 		clickWhenClickable(AddDevicePlanBtn);
@@ -1217,6 +1261,44 @@ public class DevicePlanPage extends AbstractBasePage {
 			WebElementUtils.enterText(acceptableBelowATCRangeTxt, devicePlan.getEmvBelowATCRange());
 			WebElementUtils.enterText(acceptableAboveATCRangeTxt, devicePlan.getEmvAboveATCRange());
 			clickWhenClickable(allowFallBackChkBx);
+		}
+		if (devicePlan.getEmvPlanIssuerScripting().equalsIgnoreCase(STATUS_YES))
+		{
+			clickWhenClickable(issuerScriptingChkBx);
+			WebElementUtils.enterText(ucol, devicePlan.getEmvPlanUcol());
+			WebElementUtils.enterText(ucota, devicePlan.getEmvPlanUcota());
+			WebElementUtils.enterText(lcol, devicePlan.getEmvPlanLcol());
+			WebElementUtils.enterText(lcota, devicePlan.getEmvPlanLcota());
+
+			if (devicePlan.getEmvPlanApplicationBlock().equalsIgnoreCase(STATUS_YES)) {
+				clickWhenClickable(applicationBlockChkBx);
+			}
+
+			if (devicePlan.getEmvPlanApplicationUnblock().equalsIgnoreCase(STATUS_YES)) {
+				clickWhenClickable(applicationUnblockChkBx);
+			}
+
+			if (devicePlan.getEmvPlanPutData().equalsIgnoreCase(STATUS_YES)) {
+				clickWhenClickable(putDataChkBx);
+			}
+
+			if (devicePlan.getEmvPlanPinChange().equalsIgnoreCase(STATUS_YES)) {
+				clickWhenClickable(pinChangeChkBx);
+			}
+
+			if (devicePlan.getEmvPlanPinUnblock().equalsIgnoreCase(STATUS_YES)) {
+				clickWhenClickable(pinUnblockChkBx);
+			}
+			WebElementUtils.selectDropDownByVisibleText(applicationBlockPriorityDropdown,
+					devicePlan.getEmvPlanApplicationBlockPriority());
+			WebElementUtils.selectDropDownByVisibleText(applicationUnblockPriorityDropdown,
+					devicePlan.getEmvPlanApplicationUnblockPriority());
+			WebElementUtils.selectDropDownByVisibleText(pinChangePriorityDropdown,
+					devicePlan.getEmvPlanPinChangePriority());
+			WebElementUtils.selectDropDownByVisibleText(putDataPriorityDropdown,
+					devicePlan.getEmvPlanPutDataPriority());
+			WebElementUtils.selectDropDownByVisibleText(pinUnblockPriorityDropdown,
+					devicePlan.getEmvPlanPinUnblockPriority());
 
 		}
 	}

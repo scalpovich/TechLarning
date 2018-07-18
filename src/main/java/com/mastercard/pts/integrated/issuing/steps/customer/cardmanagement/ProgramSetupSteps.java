@@ -485,6 +485,17 @@ public class ProgramSetupSteps {
 		// composite step
 	}
 
+	@When("device range for program with device plan for \"prepaid\" \"$deviceType\" card for issuer scripting")
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card for issuer scripting", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product" , "When user assigns service code to program"})
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidForIssuerScripting(String deviceType) {
+		// composite step
+	}
+
 	@When("User fills Statement Message Plan for $type product")
 	public void whenUserFillsStatementMessagePlanForProductType(String type) {
 		statementMessagePlan = StatementMessagePlan.generateDynamicTestData();
@@ -687,6 +698,27 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 
+	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card for issuer scripting")
+	public void whenUserFillsDevicePlanForCrddForIssuerScripting(String productType, String deviceType) {
+		if (deviceType.toLowerCase().contains("virtual")) {
+			setPinRequiredToFalse();
+		}
+		devicePlan = DevicePlan.createWithProviderForIssuerScripting(provider);
+		devicePlan.setProductType(ProductType.fromShortName(productType));
+		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
+		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+
+		// setting a flag through setter to figure out if the card is pinless card or not. This is used in TransactionSteps to set ExpiryDate in case of PinLess Card
+		if ("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
+			devicePlan.setIsPinLess("YES");
+		programSetupWorkflow.createDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+	 
 	@When("User fills Device Plan for $productType $deviceType product transaction limit plan")
 	public void whenUserFillsDevicePlanTransactionLimitPlan(String productType, String deviceType) {
 		setPinRequiredToFalse();
