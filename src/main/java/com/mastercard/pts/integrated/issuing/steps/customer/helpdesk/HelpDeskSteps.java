@@ -526,11 +526,10 @@ public class HelpDeskSteps {
 	
 	
 	
-	@Given("user verify available $type limit for card after transaction")
-	@When("user verify available $type limit for card after transaction")
+	@Given("user verifies available $type limit for card after transaction")
+	@When("user verifies available $type limit for card after transaction")
 	public void whenUserVerifyLimitThroughHelpDesk(String type) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
-		Device device = context.get(ContextConstants.DEVICE);		
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.noteDownAvailableLimit(type), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
 	}
 

@@ -62,9 +62,9 @@ And perform an EMV_COMPLETION MAS transaction on the same card
 And MAS test results are verified
 And user is logged in institution
 And search Pre-Auth Completion authorization and verify 000-Successful status
-And user verify available balance after transaction
+And user verifies available balance after transaction
 And device has "normal" status
-And user verify available Card limit for card after transaction
+And user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 Scenario: Perform EMV_PURCHASE Authorization transaction
@@ -72,9 +72,9 @@ When perform an EMV_PURCHASE MAS transaction on the same card
 And MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-And user verify available balance after transaction
+And user verifies available balance after transaction
 And device has "normal" status
-And user verify available Card limit for card after transaction
+And user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 
@@ -83,9 +83,9 @@ When perform an EMV_CASH_ADVANCE MAS transaction on the same card
 And MAS test results are verified
 And user is logged in institution
 And search Cash Advance authorization and verify 000-Successful status
-And user verify available balance after transaction
+And user verifies available balance after transaction
 And device has "normal" status
-And user verify available Card limit for card after transaction
+And user verifies available Card limit for card after transaction
 And user sign out from customer portal
 
 Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
@@ -94,8 +94,8 @@ And MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
 And search CWD authorization and verify 000-Successful status
-And user verify available balance after transaction
+And user verifies available balance after transaction
 And device has "normal" status
-And user verify available Card limit for card after transaction
+And user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 

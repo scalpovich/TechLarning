@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AvailableBalance;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionReports;
@@ -168,12 +169,12 @@ public class AuthorizationSearchWorkflow {
 		assertTrue(String.format("Response, Auth Code and Auth Description does not match. Expecting %s. Actual %s", authStatus, actualAuthStatus), actualAuthStatus.containsAll(authStatus));
 	}
 	
-	public List<BigDecimal> getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(BigDecimal availableBalance){
+	public AvailableBalance getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(BigDecimal availableBalance){
 		authorizationSearchPage.viewDeviceDetails();
-		List<BigDecimal> lst = authorizationSearchPage.getTransactionBillingAmount();
+		AvailableBalance availBal = authorizationSearchPage.getTransactionBillingAmount();
 		logger.info("Available balance before transaction amount = {}", availableBalance);
-		logger.info("Sum of all applicable fee and amounts = {}" , lst.get(0));
-		logger.info("Available balance after transaction amount = {}", lst.get(1));
-		return lst;
+		logger.info("Sum of all applicable fee and amounts = {}" , availBal.getSum());
+		logger.info("Available balance after transaction amount = {}", availBal.getAvailableBal());
+		return availBal;
 	}
 }

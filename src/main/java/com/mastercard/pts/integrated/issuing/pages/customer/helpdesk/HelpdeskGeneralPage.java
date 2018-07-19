@@ -231,7 +231,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement currentStatusAndLimitTab;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Card :']/../../following-sibling::td[1]/span/span")
-	private MCWebElement creditLimitLable;
+	private MCWebElement creditLimitLabel;
 	
 	
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
@@ -984,7 +984,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		BigDecimal creditLimit;
 		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
 		clickWhenClickable(currentStatusAndLimitTab);			
-		creditLimit = new BigDecimal(creditLimitLable.getText());		
+		creditLimit = new BigDecimal(creditLimitLabel.getText());		
 		logger.info("Credit limit noted down : {} ",creditLimit);
 		clickEndCall();
 		return creditLimit;				

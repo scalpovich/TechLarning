@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AvailableBalance;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
@@ -124,11 +125,11 @@ public class AuthorizationSearchSteps {
 		} 
 	}
 	
-	@When("user verify available balance after transaction")
+	@When("user verifies available balance after transaction")
 	public void validateAvailableBalanceAfterTransaction(){
 		BigDecimal availableBalanceBeforeTransaction =context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
-		List<BigDecimal> lst = authorizationSearchWorkflow.getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(availableBalanceBeforeTransaction);
-		assertThat("Verify Available Balance", availableBalanceBeforeTransaction.subtract(lst.get(0)), equalTo(lst.get(1)));
-		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, lst.get(1));
+		AvailableBalance availBal = authorizationSearchWorkflow.getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(availableBalanceBeforeTransaction);
+		assertThat("Verify Available Balance", availableBalanceBeforeTransaction.subtract(availBal.getSum()), equalTo(availBal.getAvailableBal()));
+		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, availBal.getAvailableBal());
 	}
 }

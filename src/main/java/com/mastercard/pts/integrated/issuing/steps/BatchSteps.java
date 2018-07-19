@@ -29,14 +29,6 @@ public class BatchSteps {
 
 	private static final String DEFAULT_HEADER = "[\\w ]{32}\\d{6}";
 	
-	private static final String INVALID_CVV = "123";
-	
-	private static final String INVALID_CVV2 = "123";
-	
-	private static final String INVALID_ICVV = "123";
-	
-	private static final String INVALID_PVKI = "123";
-	
 	private static final Logger logger = LoggerFactory.getLogger(BatchSteps.class);
 
 	@Autowired
@@ -100,10 +92,10 @@ public class BatchSteps {
 			
 			Device device = context.get(ContextConstants.DEVICE);
 	
-				device.setCvv2Data(INVALID_CVV2);
-				device.setCvvData(INVALID_CVV);
-				device.setIcvvData(INVALID_ICVV);		
-				device.setPvkiData(INVALID_PVKI);				
+				device.setCvv2Data(ConstantData.INVALID_CVV2);
+				device.setCvvData(ConstantData.INVALID_CVV);
+				device.setIcvvData(ConstantData.INVALID_ICVV);		
+				device.setPvkiData(ConstantData.INVALID_PVKI);				
 
 
 		} catch (Exception e) {

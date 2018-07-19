@@ -41,7 +41,7 @@ And perform an MSR_COMPLETION MAS transaction
 And MAS test results are verified
 And user is logged in institution
 And search Pre-Auth Completion authorization and verify 000-Successful status
-And user verify available balance after transaction
+And user verifies available balance after transaction
 Then user sign out from customer portal
 
 Scenario: Perform MSR_PURCHASE Authorization transaction
@@ -49,7 +49,7 @@ When perform an MSR_PURCHASE MAS transaction on the same card
 And MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-And user verify available balance after transaction
+And user verifies available balance after transaction
 Then user sign out from customer portal
 
 Scenario: Perform MSR_PURCHASE_WITH_CASHBACK Authorization transaction
@@ -57,7 +57,7 @@ When perform an MSR_PURCHASE_WITH_CASHBACK MAS transaction on the same card
 And MAS test results are verified
 And user is logged in institution
 And search Purchase with Cash back authorization and verify 000-Successful status
-And user verify available balance after transaction
+And user verifies available balance after transaction
 Then user sign out from customer portal
 
 Scenario: Perform MSR_POS_BALANCE_INQUIRY Authorization transaction
@@ -65,5 +65,5 @@ When perform an MSR_POS_BALANCE_INQUIRY MAS transaction on the same card
 And MAS test results are verified
 And user is logged in institution
 And search Balance Inquiry authorization and verify 000-Successful status
-And user verify available balance after transaction
+And user verifies available balance after transaction
 Then user sign out from customer portal
