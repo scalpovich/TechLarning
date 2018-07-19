@@ -11,9 +11,15 @@ Meta:
 
 
 Scenario: Set up prepaid emv retail general purpose card
-Given user is logged in institution
-When device range for program with device plan for "prepaid" "emv" card for issuer scripting
-And user creates new device of prepaid type for new client
+Given setting json values in excel for Prepaid
+When user is logged in institution
+When User fills Device Plan for "prepaid" "emv" card for issuer scripting
+And User fills Wallet Plan for prepaid product
+And User fills Program section for prepaid product
+And User fills Business Mandatory Fields Screen for prepaid product
+And User fills Device Range section for prepaid product
+And user assigns service code to program
+When user creates new device of prepaid type for new client
 And device has "normal" status
 And user has wallet number information for prepaid device
 And user performs adjustment transaction
