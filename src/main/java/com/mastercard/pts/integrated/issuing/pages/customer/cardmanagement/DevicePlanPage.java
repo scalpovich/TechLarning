@@ -1160,8 +1160,8 @@ public class DevicePlanPage extends AbstractBasePage {
 			WebElementUtils.enterText(acceptableBelowATCRangeTxt, devicePlan.getEmvBelowATCRange());
 			WebElementUtils.enterText(acceptableAboveATCRangeTxt, devicePlan.getEmvAboveATCRange());
 			clickWhenClickable(allowFallBackChkBx);
-
 		}
+		
 	}
 
 	private void fillPinGenerationSection(DevicePlan devicePlan) {
@@ -1224,10 +1224,10 @@ public class DevicePlanPage extends AbstractBasePage {
 		}
 	}
 	
-	private String getStoryName()
-	{
+	private String getStoryName(){
 		String name = System.getProperty("storyName").toString();
 		logger.info("System.getStoryName  : "+name);
 		return name;
 	}
+	
 }

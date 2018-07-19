@@ -73,7 +73,7 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 				logger.info("batchNumber: {}",allBatchNumberRetrieval().get(i));
 				index = i;
 			}
-		}		
+		}				
 		return index;
 	}	
 	
