@@ -358,6 +358,7 @@ public class ProgramSetupSteps {
 	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin")
+	@When("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
 			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
 			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
@@ -474,6 +475,7 @@ public class ProgramSetupSteps {
 	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card")
+	@When("device range for program with device plan for \"prepaid\" \"$deviceType\" card")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
 			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
 			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
@@ -516,6 +518,14 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createMarketingMessagePlan(marketingMessagePlan);
 	}
 
+	@When("user edits MCC rules from $fromMCC to $toMCC uncheck approve $origin transactions")
+	public void whenUserEditsMCCRules(String fromMCC,String toMCC,String origin) {
+		mccRulePlan.setFromMccCode(fromMCC);
+		mccRulePlan.setToMccCode(toMCC);
+		mccRulePlan.setOrigin(origin);
+		programSetupWorkflow.editMCCRulePlan(mccRulePlan);
+	}
+	
 	@When("User fills MCC Rules for $type product")
 	public void whenUserFillsMCCRules(String type) {
 		mccRulePlan = MCCRulePlan.createGenericTestData();
