@@ -132,7 +132,12 @@ public class DevicePlan implements HasCodeAndDescription {
 	private static final String DP_VELOCITY ="DP_VELOCITY";
 	private static final String DP_VALIDITYDATE ="DP_VALIDITYDATE";
 	private static final String DP_ALLOW_OVERRIDING_LIMITS = "DP_ALLOW_OVERRIDING_LIMITS";	
-	
+	private static final String DP_EMV_PLAN_APPLICATION_BLOCK_PRIORITY="DP_EMV_PLAN_APPLICATION_BLOCK_PRIORITY";	 		 
+	private static final String DP_EMV_PLAN_APPLICATION_UNBLOCK_PRIORITY="DP_EMV_PLAN_APPLICATION_UNBLOCK_PRIORITY";	 		 
+	private static final String DP_EMV_PLAN_PUT_DATA_PRIORITY="DP_EMV_PLAN_PUT_DATA_PRIORITY";	 		 
+	private static final String DP_EMV_PLAN_PIN_CHANGE_PRIORITY="DP_EMV_PLAN_PIN_CHANGE_PRIORITY";	 		 
+	private static final String DP_EMV_PLAN_PIN_UNBLOCK_PRIORITY="DP_EMV_PLAN_PIN_UNBLOCK_PRIORITY";
+
 	
 	public String association;
 	public String DeviceType;
@@ -247,6 +252,51 @@ public class DevicePlan implements HasCodeAndDescription {
 	private String transactionFeePlan;
 	private String virtualCreditCardLimit;
 
+	private String emvPlanApplicationBlockPriority;
+	private String emvPlanApplicationUnblockPriority;
+	private String emvPlanPutDataPriority;
+	private String emvPlanPinChangePriority;
+	private String emvPlanPinUnblockPriority;
+	public String getEmvPlanApplicationBlockPriority() {
+		return emvPlanApplicationBlockPriority;
+	}
+
+	public void setEmvPlanApplicationBlockPriority(String emvPlanApplicationBlockPriority) {
+		this.emvPlanApplicationBlockPriority = emvPlanApplicationBlockPriority;
+	}
+
+	public String getEmvPlanApplicationUnblockPriority() {
+		return emvPlanApplicationUnblockPriority;
+	}
+
+	public void setEmvPlanApplicationUnblockPriority(String emvPlanApplicationUnblockPriority) {
+		this.emvPlanApplicationUnblockPriority = emvPlanApplicationUnblockPriority;
+	}
+
+	public String getEmvPlanPutDataPriority() {
+		return emvPlanPutDataPriority;
+	}
+
+	public void setEmvPlanPutDataPriority(String emvPlanPutDataPriority) {
+		this.emvPlanPutDataPriority = emvPlanPutDataPriority;
+	}
+
+	public String getEmvPlanPinChangePriority() {
+		return emvPlanPinChangePriority;
+	}
+
+	public void setEmvPlanPinChangePriority(String emvPlanPinChangePriority) {
+		this.emvPlanPinChangePriority = emvPlanPinChangePriority;
+	}
+
+	public String getEmvPlanPinUnblockPriority() {
+		return emvPlanPinUnblockPriority;
+	}
+
+	public void setEmvPlanPinUnblockPriority(String emvPlanPinUnblockPriority) {
+		this.emvPlanPinUnblockPriority = emvPlanPinUnblockPriority;
+	}
+
 	public static DevicePlan createWithProvider(KeyValueProvider provider) {
 		DevicePlan plan = new DevicePlan();
 		plan.setDevicePlanCode(MiscUtils.generate8CharAlphaNumeric());
@@ -297,7 +347,72 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
 		return plan;
 	}
-	
+
+	public static DevicePlan createWithProviderForIssuerScripting(KeyValueProvider provider) {
+		DevicePlan plan = new DevicePlan();
+		plan.setDevicePlanCode(MiscUtils.generate8CharAlphaNumeric());
+		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);
+		plan.setAssociation(provider.getString(ASSOCIATION));
+		plan.setProductType(provider.getString(PRODUCT_TYPE));
+		plan.setDeviceType(provider.getString(DEVICE_TYPE));
+		plan.setServiceCode(provider.getString(SERVICE_CODE));
+		plan.setDeliveryMode(provider.getString(DELIVERY_MODE));
+        plan.setEmvPlanIssuerScripting(provider.getString(DP_EMV_PLAN_ISSUER_SCRIPTING));
+		plan.setDeviceIdGenerationTemplate(provider.getString(DEVICE_ID_GENERATION_TEMPLATE));
+		plan.setCardPackIdGenerationTemplate(provider.getString(CARD_PACKID_GENERATION_TEMPLATE));
+		plan.setPlasticId(provider.getString(PLASTIC_ID));
+		plan.setPictureCode(provider.getString(PICTURE_CODE));
+		plan.setCardProduction(provider.getString(CARD_PRODUCTION));
+		plan.setEmbossingVendor(provider.getString(EMBOSSING_VENDOR));
+		plan.setActivationMode(provider.getString(ACTIVATION_CODE));
+		plan.setExpiryFlag(provider.getString(EXPIRY_FLAG));
+		plan.setPersonalizationValidityOnInitialMonths(provider.getString(VALIDITY_ON_INITIAL_MONTHS));
+		plan.setValidityOnRenewalMonths(provider.getString(VALIDITY_ON_RENEWAL_MONTHS));
+		plan.setAutoRenewalDays(provider.getString(AUTO_RENEWAL_DAYS));
+		plan.setAdvanceRenewalReport(provider.getString(ADVANCE_RENEWAL_REPORT));
+		plan.setRenewalActivationMode(provider.getString(RENEWAL_ACTIVATION_MODE));
+		plan.setReplacementNoOfDays(provider.getString(REPLACEMENT_NO_OF_DAYS));
+		plan.setValidityOnReplacementMonths(provider.getString(VALIDITY_ON_REPLACEMENT_MONTHS));
+		plan.setReplacementDeviceTechnology(provider.getString(REPLACEMENT_DEVICE_TECHNOLOGY));
+
+		plan.setFillRenewalSection(provider.getString(FILL_RENEWAL_SECTION));
+		plan.setFillReplacementSection(provider.getString(FILL_REPLACEMENT_SECTION));
+		plan.setPinRetryLimit(provider.getString(PIN_RETRY_LIMIT));
+		plan.setPinLength(provider.getString(PIN_LENGTH));
+		plan.setPinGenerationOption(provider.getString(PIN_GENERATION_OPTION));
+		plan.setPinDataTransmission(provider.getString(PIN_DATA_TRANSMISSION));
+
+		plan.setTransactionLimitPlan(provider.getString(TRANSACTION_LIMIT_PLAN));
+		plan.setChipType(provider.getString(CHIP_TYPE));
+		plan.setEcommerceAllowed(true);
+
+		plan.setSelectAllCAVV(provider.getString(SELECT_ALL_CAVV));
+		plan.setSelectAllPinValidation(provider.getString(SELECT_ALL_PIN_VALIDATION));
+		plan.setSelectAllCVCCVV(provider.getString(SELECT_ALL_CVCCVV));
+
+		plan.setEmvPlanResponse(provider.getString(EMV_PLAN_RESPONSE));
+		plan.setEmvBelowATCRange(provider.getString(EMV_BELOW_ATC_RANGE));
+		plan.setEmvAboveATCRange(provider.getString(EMV_ABOVE_ATC_RANGE));
+		plan.setFillEMVPlan(provider.getString(FILL_EMV_PLAN));
+		plan.setAllowInternationalTransaction(provider.getString(DP_ALLOW_INTERNATIONAL_TRANSACTIONS));
+		plan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
+		plan.setEmvPlanUcol(provider.getString(DP_EMV_PLAN_UCOL));
+		plan.setEmvPlanUcota(provider.getString(DP_EMV_PLAN_UCOTA));
+		plan.setEmvPlanLcol(provider.getString(DP_EMV_PLAN_LCOL));
+		plan.setEmvPlanLcota(provider.getString(DP_EMV_PLAN_LCOTA));
+		plan.setEmvPlanApplicationBlock(provider.getString(DP_EMV_PLAN_APPLICATION_BLOCK));
+		plan.setEmvPlanApplicationUnblock(provider.getString(DP_EMV_PLAN_APPLICATION_UNBLOCK));
+		plan.setEmvPlanPutData(provider.getString(DP_EMV_PLAN_PUT_DATA));
+		plan.setEmvPlanPinChange(provider.getString(DP_EMV_PLAN_PIN_CHANGE));
+		plan.setEmvPlanPinUnblock(provider.getString(DP_EMV_PLAN_PIN_UNBLOCK));
+		plan.setEmvPlanApplicationBlockPriority(provider.getString(DP_EMV_PLAN_APPLICATION_BLOCK_PRIORITY));
+		plan.setEmvPlanApplicationUnblockPriority(provider.getString(DP_EMV_PLAN_APPLICATION_UNBLOCK_PRIORITY));
+		plan.setEmvPlanPutDataPriority(provider.getString(DP_EMV_PLAN_PUT_DATA_PRIORITY));
+		plan.setEmvPlanPinChangePriority(provider.getString(DP_EMV_PLAN_PIN_CHANGE_PRIORITY));
+		plan.setEmvPlanPinUnblockPriority(provider.getString(DP_EMV_PLAN_PIN_UNBLOCK_PRIORITY));
+		return plan;
+	}
+
 	public static DevicePlan createWithProviderForCredit(KeyValueProvider provider){
 
 		DevicePlan deviceplan = createWithProvider(provider);

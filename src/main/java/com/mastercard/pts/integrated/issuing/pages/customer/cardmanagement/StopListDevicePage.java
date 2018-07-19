@@ -7,8 +7,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StopListDevice;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -27,17 +32,58 @@ public class StopListDevicePage extends AbstractBasePage {
 	
 	private static final Logger logger = LoggerFactory.getLogger(StopListDevicePage.class);
 	
+	@Autowired
+	private TestContext context;
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=cardNumber]")
 	private MCWebElement cardNumber;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent")
 	private MCWebElement interchange;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "stopCardContainer:cardNumber:input:inputTextField")
+	private MCWebElement stopListDeviceNumberTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "stopCardContainer:search")
+	private MCWebElement searchStopListBtn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "stopCardDetailContainer:reasonCode:input:dropdowncomponent")
+	private MCWebElement reasonCodeDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "stopCardDetailContainer:abrevName:input:textAreaComponent")
+	private MCWebElement stopListDeviceDescriptionTxt;
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Stop List Device");
 		verifyButton("Search");
 	}
 	
+	public void addStopListDevice(StopListDevice stopListDevice){
+		Device device=context.get(ContextConstants.DEVICE);
+		clickAddNewButton();
+		runWithinPopup("Add Stop List Device", ()->{
+			enterDeviceNumber(device.getDeviceNumber());
+		    ClickButton(searchStopListBtn);
+		    selectReasonCode(stopListDevice.getStopListReason());
+		    enterStopListDescription(stopListDevice.getStopListReasonDescription());
+		    clickSaveButton();
+		});
+	}
+	
+	public void enterDeviceNumber(String deviceNumber){
+		enterText(stopListDeviceNumberTxt, deviceNumber);	
+	}
+	
+	public void selectReasonCode(String reasonCode){
+		selectByVisibleText(reasonCodeDDwn, reasonCode);
+	}
+	
+	public void enterStopListDescription(String description){
+		enterText(stopListDeviceDescriptionTxt, description);	
+	}
+	
+	
+		
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
