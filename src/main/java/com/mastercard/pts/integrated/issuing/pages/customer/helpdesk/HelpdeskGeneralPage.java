@@ -443,6 +443,19 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 	}
 	
+	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		clickGoButton();
+		runWithinPopup("109 - Reset Pin Retry Counter", () -> {
+			enterNotes(helpdeskGeneral.getNotes());
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();			
+		});
+		SimulatorUtilities.wait(3000);
+		clickEndCall();
+	}
+	
 	public void setupCurrency(String lst) {
 		SimulatorUtilities.wait(1000);
 		int rowCount = driver().findElements(By.xpath(TABLE_XPATH)).size();

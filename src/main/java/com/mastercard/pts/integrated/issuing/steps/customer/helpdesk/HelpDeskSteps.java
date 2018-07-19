@@ -47,6 +47,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDeskFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpdeskWorkflow;
 
@@ -770,5 +771,12 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.validateRequiredFields(helpdeskGeneral);
+	}
+	@When("user reset pin retry counter $serviceCode")
+	public void whenUserResetPinRetryCounterThroughHelpDesk(String serviceCode) {
+		helpdeskGeneral.setServiceCode(serviceCode);
+		helpdeskGeneral.setNotes(MiscUtils.generate10CharAlphaNumeric());
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.resetPinCounter(helpdeskGeneral);
 	}
 }
