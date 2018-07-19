@@ -6,7 +6,7 @@ As an issuer
 I want to make transaction at white listed MCG via debit card
 					 
 Meta:
-@StoryName d_transaction_white_listed_MCG
+@StoryName d_emv_corp_on_white_listed_MCG
 Scenario: Set up program for debit emv corporate debit card
 Given user is logged in institution
 When User fills Dedupe Plan

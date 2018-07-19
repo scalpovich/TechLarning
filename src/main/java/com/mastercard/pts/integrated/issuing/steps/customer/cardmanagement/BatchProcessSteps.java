@@ -118,7 +118,6 @@ public class BatchProcessSteps {
 	}
 
 	@When("processes device production batch for $type")
-	@Then("processes device production batch for $type")
 	public void whenProcessesDeviceProductionBatch(String type){
 		DeviceProductionBatch batch = new DeviceProductionBatch();
 		batch.setProductType(ProductType.fromShortName(type));

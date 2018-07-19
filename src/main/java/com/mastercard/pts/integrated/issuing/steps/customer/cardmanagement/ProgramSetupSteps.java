@@ -1247,10 +1247,10 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 	
-	@When("User edits Wallet Plan for $editItem")
-	public void whenUsereditsWalletPlan(String edit)
+	@When("User edits Wallet Plan for $editableFieldForWalletPlan")
+	public void whenUsereditsWalletPlan(String editableFieldForWalletPlan)
 	{
 		walletPlan.setWhiteListedMCGPlan(provider);
-		programSetupWorkflow.editsWalletPlan(walletPlan,edit);
+		programSetupWorkflow.editsWalletPlan(walletPlan,editableFieldForWalletPlan);
 	}
 }

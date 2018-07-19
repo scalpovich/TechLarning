@@ -267,8 +267,13 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		clickSearchButton();
 		clickWhenClickable(editWalletPlan);
 		runWithinPopup("Edit Wallet Plan",() ->{
+		switch(editableFieldForWalletPlan)
+		{
+		case "White Listed MCG":
 			selectByVisibleText(editWihiteListedMCG, walletPlan.getWhiteListedMCGPlan());
-			clickSaveButton();
+		break;
+		}
+		clickSaveButton();
 		});
 	}
 
