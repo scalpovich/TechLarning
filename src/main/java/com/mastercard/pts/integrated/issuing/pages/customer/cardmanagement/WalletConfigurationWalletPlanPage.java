@@ -262,7 +262,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(walletPlanCodeSearchTxt));
 	}
 
-	public void editsWalletPlan(WalletPlan walletPlan, String edit) {
+	public void editsWalletPlan(WalletPlan walletPlan, String editableFieldForWalletPlan) {
 		WebElementUtils.enterText(walletPlanCodeSearchTxt, walletPlan.getWalletPlanCode());
 		clickSearchButton();
 		clickWhenClickable(editWalletPlan);

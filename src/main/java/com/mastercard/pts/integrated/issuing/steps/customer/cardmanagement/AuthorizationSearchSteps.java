@@ -32,12 +32,14 @@ public class AuthorizationSearchSteps {
 	
 	
 	@When("search $type authorization and verify $state status")
+	@Then("search $type authorization and verify $state status")
 	public void thenUserSearchDeviceNumerWithTodaysDate(String type, String state) {
 		Device device = context.get(ContextConstants.DEVICE);
 		authorizationSearchWorkflow.verifyAuthTransactionSearch(type, state, device.getDeviceNumber());
 	}
 
 	@When("assert $response response with $code AuthDecline Code and $description as description")
+	@Then("assert $response response with $code AuthDecline Code and $description as description")
 	public void thenAssertStateOnAuthSearchScreen(String response, String code, String description) {
 		List<String> authStatus = new ArrayList<>();
 		authStatus.add(response);
