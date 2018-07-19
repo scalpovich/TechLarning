@@ -7,6 +7,7 @@ I want to authorize transactions for prepaid msr retail gift card
 
 Meta:
 @StoryName p_msr_retail_gift
+@CRCardsWithAuthorizationPurchaseWithClearing
 
 Scenario: Transaction - prepaid msr retail gift card - MSR_PURCHASE Authorization transaction
 Given user is logged in institution

@@ -7,6 +7,7 @@ I want to authorize transactions for prepaid emv retail gift card
 
 Meta:
 @StoryName p_emv_retail_gift
+@CRCardsWithAuthorizationPurchaseWithClearing
 
 Scenario: Transaction - prepaid emv retail gift card - EMV_PURCHASE Authorization transaction
 Given user is logged in institution

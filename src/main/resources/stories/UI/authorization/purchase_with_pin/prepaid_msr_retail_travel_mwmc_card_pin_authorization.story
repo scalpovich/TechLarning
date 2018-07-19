@@ -7,6 +7,7 @@ I want to authorize transactions for prepaid msr retail travel mwmc card
 
 Meta:
 @StoryName p_msr_retail_travel_mwmc
+@CRCardsWithAuthorizationPurchaseWithClearing
 
 Scenario: Transaction - prepaid msr retail travel card multi wallet multi currency - MSR_PURCHASE Authorization transaction
 Given user is logged in institution

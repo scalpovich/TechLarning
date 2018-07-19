@@ -7,6 +7,7 @@ I want to create a prepaid emv corporate travel card and test various transactio
 
 Meta:
 @StoryName p_emv_corp_travel
+@CRCardsWithAuthorizationPurchaseWithClearing
 
 Scenario: Transaction - prepaid emv corporate travel card - EMV_PURCHASE Authorization transaction
 Given user is logged in institution

@@ -8,6 +8,7 @@ I want to authorize transactions for prepaid msr retail general purpose card
 Meta:
 @StoryName p_msr_retail_gen_purpose
 @SanityCardsWithAuthorization
+@CRCardsWithAuthorizationPurchaseWithClearing
 
 Scenario: Transaction - MSR_PURCHASE_PIN Authorization transaction - prepaid msr retail general purpose card
 Given user is logged in institution

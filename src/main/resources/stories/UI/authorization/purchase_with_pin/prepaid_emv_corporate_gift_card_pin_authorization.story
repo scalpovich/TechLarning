@@ -7,6 +7,7 @@ I want to create a prepaid emv corporate gift card and test various transactions
 
 Meta:
 @StoryName p_emv_corp_gift
+@CRCardsWithAuthorizationPurchaseWithClearing
 
 Scenario: Transaction - prepaid emv corporate gift card - EMV_PURCHASE Authorization transaction
 Given user is logged in institution

@@ -511,7 +511,6 @@ public class ProgramSetupSteps {
 
 	@When("user edits MCC rules from $fromMCC to $toMCC uncheck approve $origin transactions")
 	public void whenUserEditsMCCRules(String fromMCC,String toMCC,String origin) {
-		//mccRulePlan.setProductType(ProductType.fromShortName(type));
 		mccRulePlan.setFromMccCode(fromMCC);
 		mccRulePlan.setToMccCode(toMCC);
 		mccRulePlan.setOrigin(origin);

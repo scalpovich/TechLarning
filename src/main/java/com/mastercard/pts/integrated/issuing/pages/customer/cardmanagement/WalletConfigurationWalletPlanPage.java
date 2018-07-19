@@ -162,22 +162,22 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			waitForPageToLoad(driver());
 			if(walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
 			{
-						selectByVisibleText(programTypeDDwn,walletPlan.getProgramType());
+				selectByVisibleText(programTypeDDwn,walletPlan.getProgramType());
 			}
 			else
 			{            
-			            SimulatorUtilities.wait(2000);
-						selectProgramType(walletPlan.getProgramType());
-						waitForPageToLoad(driver());
-						SimulatorUtilities.wait(2000);
-					}
+	            SimulatorUtilities.wait(2000);
+				selectProgramType(walletPlan.getProgramType());
+				waitForPageToLoad(driver());
+				SimulatorUtilities.wait(2000);
+			}
 			selectCurrency(walletPlan.getCurrency());
 			waitForPageToLoad(driver());
-				SimulatorUtilities.wait(2000);
+		    SimulatorUtilities.wait(2000);
 			selectUsage(walletPlan.getUsage());
 			waitForPageToLoad(driver());
-				SimulatorUtilities.wait(2000);
-				waitForPageToLoad(driver());
+			SimulatorUtilities.wait(2000);
+			waitForPageToLoad(driver());
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			waitForPageToLoad(driver());
 			clickNextButton(); // Click on next button
