@@ -867,7 +867,7 @@ public class ProgramSetupSteps {
 		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
 		walletPlan.setProductType(ProductType.fromShortName(type));
 		walletPlan.setProgramType(programtype);
-
+		context.put(ContextConstants.WALLET, walletPlan);
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			walletPlan.setCreditPlan(context.get(CreditConstants.CREDIT_PLAN));
 			walletPlan.setBillingCyleCode(context.get(CreditConstants.BILLING_CYCLE));
