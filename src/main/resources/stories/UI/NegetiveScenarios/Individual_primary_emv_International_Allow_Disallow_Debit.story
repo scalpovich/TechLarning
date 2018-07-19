@@ -17,6 +17,7 @@ Then device has "normal" status
 When user has wallet number information for debit device
 When user performs adjustment transaction
 When user has current wallet balance amount information for debit device
+And user sign out from customer portal
 
 Scenario: debit emv corporate debit card device production
 Given user is logged in institution

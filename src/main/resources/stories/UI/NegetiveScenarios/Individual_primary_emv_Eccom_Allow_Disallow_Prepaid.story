@@ -12,6 +12,7 @@ Scenario: Set up prepaid emv corporate travel card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
+Then user sign out from customer portal
 
 Scenario: prepaid emv corporate travel card device production
 Given user is logged in institution
