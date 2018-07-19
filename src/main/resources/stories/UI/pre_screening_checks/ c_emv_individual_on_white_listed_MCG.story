@@ -5,7 +5,7 @@ As an issuer
 I want to make transaction at white listed MCG via credit card
 
 Meta:
-@StoryName cr_transaction_white_listed_MCG				 
+@StoryName  c_emv_individual_on_white_listed_MCG				 
 Scenario:creation of mastercard_individual_primary_emv Card credit device
 Meta:
 @UserCreatesNewCreditDevice

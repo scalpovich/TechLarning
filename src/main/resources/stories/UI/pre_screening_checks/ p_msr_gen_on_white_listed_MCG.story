@@ -5,7 +5,7 @@ As an issuer
 I want to make transaction at white listed MCG via prepaid card
 
 Meta:
-@StoryName p_transaction_white_listed_MCG
+@StoryName  p_msr_gen_on_white_listed_MCG
 
 Scenario: Set up prepaid msr retail general purpose card
 When user is logged in institution
