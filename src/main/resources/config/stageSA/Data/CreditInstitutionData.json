@@ -161,6 +161,26 @@
    "plasticId":"759",
    "pictureCode":"394",
    "corporateClientCode":"12121218003000051"
+   },
+   {
+   "code":"303045",
+   "abbreviation":"AUTOBNG",
+   "association":"MASTERCARD",
+   "branch":"184",
+   "cardPackIdGenerationTemplate":"PAN800",
+   "deviceIdGenerationTemplate":"PAN798",
+   "customerType":"Individual",
+   "embossingVendor":"AUTO",
+   "interchange":"MASTERCARD",
+   "mastercardPrepaidIssuerBin":"592733",
+   "mastercardDebitIssuerBin":"571504",
+   "mastercardCreditIssuerBin":"574253",
+   "visaPrepaidIssuerBin":"417429",
+   "visaDebitIssuerBin":"417360 ",
+   "visaCreditIssuerBin":"431112",
+   "plasticId":"AUT",
+   "pictureCode":"AUT",
+   "corporateClientCode":"30304518199000001"
    }
    ]
 }

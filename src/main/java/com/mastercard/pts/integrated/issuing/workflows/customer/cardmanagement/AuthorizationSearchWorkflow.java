@@ -171,7 +171,7 @@ public class AuthorizationSearchWorkflow {
 	
 	public AvailableBalance getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(BigDecimal availableBalance){
 		authorizationSearchPage.viewDeviceDetails();
-		AvailableBalance availBal = authorizationSearchPage.getAvailableBalance();
+		AvailableBalance availBal = authorizationSearchPage.getTransactionBillingAmount();
 		logger.info("Available balance before transaction amount = {}", availableBalance);
 		logger.info("Sum of all applicable fee and amounts = {}" , availBal.getSum());
 		logger.info("Available balance after transaction amount = {}", availBal.getAvailableBal());
