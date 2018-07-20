@@ -1,0 +1,35 @@
+{
+  "institute": [
+   {
+   "productIdentity":"Prepaid",
+   "code":"110088",
+   "abbreviation":"AUTOBNK",
+   "branch":"OfficeBranch [184]",
+   "cardPackIdGenerationTemplate":"Card Pack ID [PAN743]",
+   "deviceIdGenerationTemplate":"CardTemplate/DeviceTemplate [PAN678]",
+   "embossingVendor":"HDFCVendor01 [Aut011]",
+   "mastercardPrepaidIssuerBin":"automation prepaid card [538316]",
+   "mastercardDebitIssuerBin":"537716",
+   "mastercardCreditIssuerBin":"537716",
+   "visaPrepaidIssuerBin":"477765",
+   "visaDebitIssuerBin":"487677",
+   "visaCreditIssuerBin":"470110",
+   "plasticId":"Plastic code [317]",
+   "pictureCode":"Picture code [705]",
+   "corporateClientCode":"Prepaid [11008818116000015]",
+   "deDupePlanCode":"TA8730JMOD [TA8730JMOD]",
+   "prepaidStatementPlan":"AUTOMATION [TA2709PNVS]",
+   "statementMessagePlan":"AUTOMATION [TA8010TFFZ]",
+   "marketingMessagePlan":"AUTOMATION [TA7549JQBG]",
+   "documentCheckListPlan":"AUTOMATION [TA1784GYBE]",
+   "mccRulePlan":"AUTOMATION [TA8184QV1]",
+   "deviceJoiningAndMemberShipFeePlan":"AUTOMATION [TA7565TA]",
+   "deviceEventBasedFeePlan":"AUTOMATION [TA3578VE]",
+   "transactionLimitPlan":"AUTOMATION [TA7791KCVA]",
+   "transactionPlan":"AUTOMATION [T5427J]",
+   "creditPlan":"AUTOMATION [103]",
+   "billingCycle":"AUTOMATION [141]",
+   "walletPlan":"AUTOMATION [TA9647MFFO]"
+   }
+  ]
+}

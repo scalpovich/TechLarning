@@ -47,8 +47,5 @@ public class InstitutionSelection {
 		
 		return institute;
 	}
-	
-	
-	
 
 }
