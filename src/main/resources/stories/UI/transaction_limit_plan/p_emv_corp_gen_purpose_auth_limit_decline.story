@@ -21,12 +21,16 @@ Then user signs out from customer portal
 Scenario: Card Setup
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" with limit plan
+Then user sign out from customer portal
+
+Scenario: Card Setup 2
+Given user is logged in institution
 When user creates new device of prepaid type for new client
+And a new device was created
 Then user sign out from customer portal
 
 Scenario: Device Production
 Given user is logged in institution
-And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 Then device has "normal" status
@@ -35,8 +39,6 @@ Then user sign out from customer portal
 Then user is logged in institution
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
-Then device has "normal" status
-Then user activates device through helpdesk
 Then embossing file batch was generated in correct format
 Then user sign out from customer portal
 
@@ -52,7 +54,7 @@ Then user searches device on device usage screen and performs assertions on devi
 And user signs out from customer portal
 
 Scenario: Transaction EMV_PURCHASE - Overlimit
-When perform an EMV_PURCHASE MAS transaction
+When perform an EMV_PURCHASE MAS transaction on the same card
 Then MAS test results are verified with code 61 Not OK
 And MAS simulator is closed
 
