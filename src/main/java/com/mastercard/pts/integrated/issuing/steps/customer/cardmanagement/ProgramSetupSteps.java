@@ -753,7 +753,7 @@ public class ProgramSetupSteps {
 
 	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card for issuer scripting")
 	public void whenUserFillsDevicePlanForCrddForIssuerScripting(String productType, String deviceType) {
-	setPinRequiredToFalse();
+	    
 		// virtual cards are pinless so even if this statement is called by
 		// mistake, we are setting Pin to false
 		if (deviceType.toLowerCase().contains(ConstantData.VIRTUAL_DEVICE_TYPE)) {
