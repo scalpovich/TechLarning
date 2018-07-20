@@ -43,6 +43,7 @@ public class DeviceSteps {
 	private static final String CORPORATE_CLIENT_CODE_DEVICE2 = "CORPORATE_CLIENT_CODE_DEVICE2";
 
 	@When("user creates new device of $type type for new client")
+	@Then("user creates new device of $type type for new client")
 	public void whenUserCreatesNewDeviceForNewClient(String type) {
 		Device device = Device.createWithProvider(provider);
 
@@ -175,7 +176,7 @@ public class DeviceSteps {
 		Assert.assertTrue("Application is not created successfully",deviceWorkflow.createDeviceUsingApplication(device));
 		context.put(CreditConstants.APPLICATION, device);
 	}
-	
+	@When("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
 	@Then("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
 	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewDevice(String type,String customerType,String applicationType,String subApplicationType,String deviceType) {
 		Device device = Device.createWithProvider(provider);

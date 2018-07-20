@@ -26,7 +26,7 @@ public class AuthorizationSearchSteps {
 
 	@Autowired
 	private KeyValueProvider provider;
-
+	@When("search $type authorization and verify $state status")
 	@Then("search $type authorization and verify $state status")
 	public void thenUserSearchDeviceNumerWithTodaysDate(String type, String state) {
 		Device device = context.get(ContextConstants.DEVICE);

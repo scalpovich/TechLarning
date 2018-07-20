@@ -84,8 +84,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectCurrency(String currency) {
-		SimulatorUtilities.wait(5000);
-		WebElementUtils.selectDDByVisibleText(currencyDDwn, currency);
+		WebElementUtils.selectDropDownByVisibleText(currencyDDwn, currency);
 	}
 
 	public void selectProductType(String productType) {

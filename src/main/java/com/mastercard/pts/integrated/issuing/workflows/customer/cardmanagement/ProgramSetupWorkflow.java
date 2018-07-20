@@ -233,4 +233,8 @@ public class ProgramSetupWorkflow {
 		MCCRulePlanPage page = navigator.navigateToPage(MCCRulePlanPage.class);
 		page.createMCCRulePlanPage(plan);
 	}
+	public void enableStopListFlag(DevicePlan devicePlanDataObject) {
+		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
+		page.enableStopListFlag(devicePlanDataObject);
+	}
 }
