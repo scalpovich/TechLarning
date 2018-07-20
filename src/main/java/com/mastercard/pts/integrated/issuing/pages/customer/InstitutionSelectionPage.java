@@ -113,4 +113,3 @@ public class InstitutionSelectionPage extends AbstractBasePage {
 	}
 
 }
-
