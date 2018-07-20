@@ -42,7 +42,6 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Prog
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StatementMessageDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StatementMessagePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeeWaiverPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionLimitPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionLimitPlanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionPlan;
@@ -54,7 +53,6 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.MCGFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramSetupWorkflow;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.TransactionFeeWaiverPlanFlows;
 
 @Component
 public class ProgramSetupSteps {
@@ -77,9 +75,6 @@ public class ProgramSetupSteps {
 	@Autowired
 	MCG mcg;
 
-	@Autowired
-	private TransactionFeeWaiverPlanFlows transactionFeeWaiverPlanFlows;
-	
 	private DeviceJoiningAndMemberShipFeePlan deviceJoiningAndMemberShipFeePlan;
 
 	private DeviceEventBasedFeePlan deviceEventBasedFeePlan;
@@ -121,10 +116,6 @@ public class ProgramSetupSteps {
 	private MCCRulePlan mccRulePlan;
 
 	private PrepaidStatementPlan prepaidStatementPlan;
-	
-	private TransactionFeeWaiverPlan transactionFeeWaiverPlan;
-	
-	private static final String TRANSACTION_FEE_WAIVER_PLAN = "TRANSACTION_FEE_WAIVER_PLAN";
 
 	private static final String CARD_PACKID_GENERATION_TEMPLATE_FOR_DEVICE2 = "CARD_PACKID_GENERATION_TEMPLATE_FOR_DEVICE2";
 
@@ -361,7 +352,6 @@ public class ProgramSetupSteps {
 	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin")
-	@When("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
 			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
 			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
@@ -478,7 +468,6 @@ public class ProgramSetupSteps {
 	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card")
-	@When("device range for program with device plan for \"prepaid\" \"$deviceType\" card")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
 			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
 			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
@@ -521,14 +510,6 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createMarketingMessagePlan(marketingMessagePlan);
 	}
 
-	@When("user edits MCC rules from $fromMCC to $toMCC uncheck approve $origin transactions")
-	public void whenUserEditsMCCRules(String fromMCC,String toMCC,String origin) {
-		mccRulePlan.setFromMccCode(fromMCC);
-		mccRulePlan.setToMccCode(toMCC);
-		mccRulePlan.setOrigin(origin);
-		programSetupWorkflow.editMCCRulePlan(mccRulePlan);
-	}
-	
 	@When("User fills MCC Rules for $type product")
 	public void whenUserFillsMCCRules(String type) {
 		mccRulePlan = MCCRulePlan.createGenericTestData();
@@ -1009,7 +990,7 @@ public class ProgramSetupSteps {
 		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
 		walletPlan.setProductType(ProductType.fromShortName(type));
 		walletPlan.setProgramType(programtype);
-		context.put(ContextConstants.WALLET, walletPlan);
+
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			if (Objects.nonNull(context.get(CreditConstants.CREDIT_PLAN))) {
 				walletPlan.setCreditPlan(context.get(CreditConstants.CREDIT_PLAN));
@@ -1428,14 +1409,6 @@ public class ProgramSetupSteps {
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode()); 
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 
-		programSetupWorkflow.createDevicePlan(devicePlan);
-		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
-	}
-	
-	@When("User fills Device Plan for $productType $deviceType card with transaction fee waived Off")
-	public void whenUserFillsDevicePlaWithTransactionFeeWaivedOff(String productType, String deviceType) {
-		settingDevicePlanTestData(productType, deviceType); // call to re-usable method
-		devicePlan.setTransactionFeeWaiverPlan(provider.getString(TRANSACTION_FEE_WAIVER_PLAN));
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
