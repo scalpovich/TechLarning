@@ -976,13 +976,8 @@ public class DevicePlanPage extends AbstractBasePage {
 			enterIframeDevicePlanCode(devicePlanDataObject.getDevicePlanCode());
 			enterIframeDescription(devicePlanDataObject.getDescription());
 	
-			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT)){
-				selectByVisibleText(iframeAssociationDdwn, devicePlanDataObject.getAssociation());
-				selectByVisibleText(iframeProductTypeDdwn, devicePlanDataObject.getProductType());
-			}else{
-				selectIframeAssociationType(devicePlanDataObject.getAssociation());
-				selectIframeProductType(devicePlanDataObject.getProductType());
-			}
+			selectIframeAssociationType(devicePlanDataObject.getAssociation());
+			selectIframeProductType(devicePlanDataObject.getProductType());
 			
 			if (devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 				SimulatorUtilities.wait(2000);

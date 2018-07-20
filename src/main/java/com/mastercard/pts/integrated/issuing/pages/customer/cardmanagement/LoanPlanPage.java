@@ -214,6 +214,14 @@ public class LoanPlanPage extends AbstractBasePage {
     	enterText(cancellationFeeFixedTxt, cancellationAmount);
 	}
     
+    public void selectProgram(String programCode){
+		selectByVisibleText(programDDwn, programCode);
+	}
+    
+    public void selectWallet(String walletCode){
+		selectByVisibleText(walletPromotionDDwn,walletCode);
+	}
+    
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
@@ -223,5 +231,42 @@ public class LoanPlanPage extends AbstractBasePage {
 				WebElementUtils.elementToBeClickable(program),
 				WebElementUtils.elementToBeClickable(walletPromotion)
 				);
+	}
+	
+	public void addLoanPlan(LoanPlan loanPlan){
+		logger.info("Add Loan Plan");
+		clickAddNewButton();
+		runWithinPopup("Add Loan Plan", () -> {
+			
+			enterLoanPlanCode(loanPlan.getLoanPlanCode());
+			enterLoanPlanDescription(loanPlan.getLoanPlanDescription());
+			selectLoanType(loanPlan.getLoanType());
+			selectDefaultLoanType();
+			selectProgramWalletPromotion(loanPlan.getProgramWalletPromotion());
+			WebElementUtils.scrollDown(driver(), 0, 250);
+			if(loanPlan.getProgramWalletPromotion().contains("Program")){
+				selectProgram(loanPlan.getProgramCode());
+			}else{
+				selectWallet(loanPlan.getWalletCode());
+			}
+			
+			enterMaximumEligibleLoanFixedAmount(loanPlan.getMaximumEligibleLoanFixedAmount());
+			enterNumberOfConcurrentLoan(loanPlan.getNumberOfConcurrentLoan());
+			WebElementUtils.scrollDown(driver(), 0, 250);
+			enterMinimumLoanAmount(loanPlan.getMinimumLoanAmount());
+			enterMaximumLoanAmount(loanPlan.getMaximumLoanAmount());
+			enterMinimumNumberOfInstallment(loanPlan.getMinimumNumberOfInstallment());
+			WebElementUtils.scrollDown(driver(), 0, 250);
+			enterMaximumNumberOfInstallment(loanPlan.getMaximumNumberOfInstallment());
+			WebElementUtils.scrollDown(driver(), 0, 250);
+			enterMinimumInterestRate(loanPlan.getMinimumInterestRate());
+			enterMaximumInterestRate(loanPlan.getMaximumInterestRate());
+			enterMaximumMoratoriumPeriod( loanPlan.getMaximumMoratoriumPeriod());
+			navigateToFeesTab();
+			enterProcessingFixedFeeAmount(loanPlan.getProcessingFixedFeeAmount());
+			enterPreclosureFixedFeeAmount(loanPlan.getPreclosureFixedFeeAmount());
+			enterCancellationFixedFeeAmount(loanPlan.getCancellationFixedFeeAmount());
+			clickSaveButton();
+		});
 	}
 }

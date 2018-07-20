@@ -1,8 +1,8 @@
-!-- auther: e076168
+!-- author: e076168
 Narrative:
-As a Cardhodler
-I want to able to loing into customer portal 
-In order to crate prepaid card
+As a user
+I want to able to login into customer portal 
+In order to create prepaid card
 
 
 Meta:
@@ -11,11 +11,11 @@ Meta:
 
 Scenario: To verify functionality of prepaid card boarding
 Given setting json values in excel
-Given user is logged in institution
-When User fills Statement Message Plan for prepaid product
-When User fills Marketing Message Plan for prepaid product
-When User fills Prepaid Statement Plan
-When User fills MCC Rules for prepaid product
+When user is logged in institution
+And User fills Statement Message Plan for prepaid product
+And User fills Marketing Message Plan for prepaid product
+And User fills Prepaid Statement Plan
+And User fills MCC Rules for prepaid product
 And User fills Dedupe Plan
 And User fills Transaction Plan for prepaid product
 And User fills Transaction Limit Plan for prepaid product
@@ -26,10 +26,10 @@ And for Magnetic Stripe Card [1] User fills Device Plan for prepaid product for 
 And for Limited Validity Virtual Card [8] User fills Supplementary Device Plan for prepaid product for MASTERCARD [02]
 And User fills Wallet Plan for prepaid product and program Retail Travel Card - Multi Currency [2]
 And User Add-on Device fills Existing Program Retail Travel Card - Multi Currency [2] section for prepaid product for MASTERCARD [02]
-When for Primary Device and New Client user fills Device Range section for prepaid product
-When for Add-on Device and Existing Client user fills Device Range section for prepaid product
-Then prepaid device is created using new device screen for Individual [0] and Primary Device [P] and New Client [N] and Magnetic Stripe Card [1]
-Then prepaid device is created using new device screen for Individual [0] and Add-on Device [A] and New Client [N] and Limited Validity Virtual Card [8]
-Then prepaid processes pre-production batch using new Device
-Then prepaid processes deviceproduction batch using new Device for Supplementary
+And for Primary Device and New Client user fills Device Range section for prepaid product
+And for Add-on Device and Existing Client user fills Device Range section for prepaid product
+And prepaid device is created using new device screen for Individual [0] and Primary Device [P] and New Client [N] and Magnetic Stripe Card [1]
+And prepaid device is created using new device screen for Individual [0] and Add-on Device [A] and New Client [N] and Limited Validity Virtual Card [8]
+And prepaid processes pre-production batch using new Device
+And prepaid processes deviceproduction batch using new Device for Supplementary
 Then User search for new device Supplementary on search screen for prepaid and validates the status as NORMAL

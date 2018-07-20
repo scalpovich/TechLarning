@@ -106,11 +106,12 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		try{	
 			String path = String.format("//table[@class='dataview']/..//td[count(//th[.//*[text()='%S']]/preceding-sibling::th)+1]", "Device Batch Number");
 			
-			if(!driver().findElement(By.xpath(path)).isDisplayed()){	SimulatorUtilities.wait(8000);
+			if(driver().findElement(By.xpath(path)).getText().equals("-")){				
+				SimulatorUtilities.wait(8000);
 				clickSearchButton();
 				waitForPageToLoad(driver());
 				searchUntilBatchNumberIsDisplayed();
-			}		
+			}						
 		}catch(Exception e){
 			e.printStackTrace();
 		}
