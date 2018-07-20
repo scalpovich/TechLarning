@@ -7,7 +7,7 @@ I want to authorize transactions for prepaid emv corporate travel card
 
 Meta:
 @StoryName p_emv_corp_travel
-
+@JsonDataDriven
 Scenario: Set up prepaid emv corporate travel card
 Given setting json values in excel for Prepaid
 When user is logged in institution
