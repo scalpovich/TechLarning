@@ -9,11 +9,10 @@ import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.stereotype.Component;
-
 import com.google.common.base.Strings;
-import com.jcraft.jsch.Logger;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.Transaction;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.ExcelUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
@@ -102,6 +101,13 @@ public class TransactionProvider {
 
 		transaction.setDeKeyValuePair(parseDataElements(dataProvider.apply(DE),
 				transaction));
+		
+		if(testCaseName.equalsIgnoreCase(ConstantData.THREE_D_SECURE_TRANSACTION)){
+			Map<String , String> tempMap=transaction.getDeKeyValuePair();
+			StringBuffer elementChange=new StringBuffer(tempMap.get(ConstantData.DATA_ELEMENT_CAVV));
+			tempMap.put(ConstantData.DATA_ELEMENT_CAVV, elementChange.append("=").toString());
+			transaction.setDeKeyValuePair(tempMap);
+		}
 		transaction.setExpectedDataElements(parseDataElements(
 				dataProvider.apply(EXPECTED_DE), transaction));
 		transaction.setCardDataElements(parseDataElements(

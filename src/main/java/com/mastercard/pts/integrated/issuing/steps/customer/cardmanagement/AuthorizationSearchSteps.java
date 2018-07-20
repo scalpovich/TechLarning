@@ -1,6 +1,11 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Then;
@@ -10,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AvailableBalance;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
@@ -26,13 +32,26 @@ public class AuthorizationSearchSteps {
 
 	@Autowired
 	private KeyValueProvider provider;
+	
 	@When("search $type authorization and verify $state status")
 	@Then("search $type authorization and verify $state status")
 	public void thenUserSearchDeviceNumerWithTodaysDate(String type, String state) {
 		Device device = context.get(ContextConstants.DEVICE);
-		authorizationSearchWorkflow.verifyAuthTransactionSearch(type, state, device.getDeviceNumber());
+		authorizationSearchWorkflow.verifyAuthTransactionSearch(type, state,device.getDeviceNumber());
 	}
 
+	@When("assert $response response with $code AuthDecline Code and $description as description")
+	@Then("assert $response response with $code AuthDecline Code and $description as description")
+	public void thenAssertStateOnAuthSearchScreen(String response, String code, String description) {
+		List<String> authStatus = new ArrayList<>();
+		authStatus.add(response);
+		authStatus.add(code);
+		authStatus.add(description);
+		Device device = context.get(ContextConstants.DEVICE);
+		authorizationSearchWorkflow.verifyStateAuthSearch(device.getDeviceNumber(), authStatus);
+	}
+
+	@When("verify transaction currency as $tcurrency and billing currency as $bcurrency on auth search")
 	@Then("verify transaction currency as $tcurrency and billing currency as $bcurrency on auth search")
 	public void verifyBillingCurrency(String tcurrency, String bcurrency) {
 		Device device = context.get(ContextConstants.DEVICE);
@@ -45,6 +64,22 @@ public class AuthorizationSearchSteps {
 		TransactionFeePlan txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
 		assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),
 				Matchers.hasItems(txnFeePlan.getfixedTxnFees(), txnFeePlan.getFixedRateFee(), txnFeePlan.getBillingAmount()));
+	}
+	
+	@Then("verify transaction fee waived off")
+	public void veriyTransactionFeeWaivedOff() {
+		Device device = context.get(ContextConstants.DEVICE);
+		TransactionFeePlan txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
+		assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),
+				Matchers.hasItems(txnFeePlan.getfixedTxnFees(), txnFeePlan.getFixedRateFee(), txnFeePlan.getBillingAmount()));
+	}
+	
+	@Then("verify fixed transaction fee applied on purchase transaction waived off")
+	public void veriyFixedTransactionFeePurchaseTransaction(){
+		Device device = context.get(ContextConstants.DEVICE);
+		TransactionFeePlan txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
+		assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),
+				Matchers.hasItems(txnFeePlan.getfixedTxnFees()));
 	}
 
 	@Then("verify rate transaction fee applied on purchase transaction")
@@ -103,5 +138,13 @@ public class AuthorizationSearchSteps {
 			Device device = context.get(ContextConstants.DEVICE);
 			authorizationSearchWorkflow.verifyAuthTransactionSearchReport(device);
 		} 
+	}
+	
+	@When("user verifies available balance after transaction")
+	public void validateAvailableBalanceAfterTransaction(){
+		BigDecimal availableBalanceBeforeTransaction =context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
+		AvailableBalance availBal = authorizationSearchWorkflow.getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(availableBalanceBeforeTransaction);
+		assertThat("Verify Available Balance", availableBalanceBeforeTransaction.subtract(availBal.getSum()), equalTo(availBal.getAvailableBal()));
+		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, availBal.getAvailableBal());
 	}
 }

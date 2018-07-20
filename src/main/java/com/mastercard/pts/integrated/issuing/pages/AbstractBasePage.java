@@ -83,7 +83,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public static final String ERROR_MESSAGE = "Error: {}";
 
-	public static final String RESPONSE_MESSAGE = "Response message: {}";
+	public static final String RESPONSE_MESSAGE	 = "Response message: {}";
 
 	public static final String CONTACT_INFORMATION_EXPECTED = "Contact Information";
 
@@ -589,6 +589,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 	
 	protected boolean verifyAlreadyExists() {
+		SimulatorUtilities.wait(3000);
 		String message = getMessageFromFeedbackPanel();
 		if (message != null && message.contains("already exist")) {
 			return true;
@@ -1341,7 +1342,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		});
 	}
 
-	public void SwitchToDefaultFrame() {
+	public void switchToDefaultFrame() {
 		getFinder().getWebDriver().switchTo().defaultContent();
 	}
 
@@ -1617,7 +1618,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public String editingInnerFrameValue() {
 		clickWhenClickable(editRecord.getElements().get(editSize() - 1));
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe("Plan Detail");
 		WebElementUtils.enterText(innerDescriptionTxt, "");
 		WebElementUtils.enterText(innerDescriptionTxt, CustomUtils.randomNumbers(5));

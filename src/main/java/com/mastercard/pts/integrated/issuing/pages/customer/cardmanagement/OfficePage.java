@@ -170,12 +170,12 @@ public class OfficePage extends AbstractBasePage {
 	public void verifyNewOfficeSuccess() {
 		if (!verifyErrorsOnOfficePage()) {
 			logger.info("Office Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in record Addition");
 			waitForPageToLoad(getFinder().getWebDriver());
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 

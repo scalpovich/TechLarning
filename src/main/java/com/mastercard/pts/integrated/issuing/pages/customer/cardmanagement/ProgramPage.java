@@ -416,6 +416,7 @@ public class ProgramPage extends AbstractBasePage {
 			selectCalendarStartMonth(program.getCalendarStartMonth());
 			fillExtraSections(program, productType);
 			clickNextButton();
+			SimulatorUtilities.wait(2000);
 			clickFinishButton();
 		});
 		verifyOperationStatus();
@@ -454,6 +455,7 @@ public class ProgramPage extends AbstractBasePage {
 			selectCalendarStartMonth(program.getCalendarStartMonth());
 			fillExtraSections(program, productType);
 			clickNextButton();
+		
 			clickFinishButton();
 		});
 		verifyOperationStatus();
@@ -744,7 +746,7 @@ public class ProgramPage extends AbstractBasePage {
 	public void clickFinishButton() {
 		waitForElementVisible(FinishBtn);
 		clickWhenClickable(FinishBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public boolean verifyErrorsOnProgramPage() {
@@ -755,11 +757,11 @@ public class ProgramPage extends AbstractBasePage {
 		if (!verifyErrorsOnProgramPage()) {
 			logger.info("Program Added Successfully");
 			waitForPageToLoad(driver());
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(CancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 

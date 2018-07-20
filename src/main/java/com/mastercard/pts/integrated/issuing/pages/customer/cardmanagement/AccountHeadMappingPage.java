@@ -40,15 +40,15 @@ public class AccountHeadMappingPage extends AbstractBasePage {
 
 	/** The transaction code. */
 	@PageElement(findBy = FindBy.NAME, valueToFind = "transactionCode:input:dropdowncomponent")
-	private MCWebElement transactionCode;
+	private MCWebElement transactionCodeDDwn;
 
 	/** The fee reason code. */
 	@PageElement(findBy = FindBy.NAME, valueToFind = "feeReasonCode:input:dropdowncomponent")
-	private MCWebElement feeReasonCode;
+	private MCWebElement feeReasonCodeDDwn;
 
 	/** The account head. */
 	@PageElement(findBy = FindBy.NAME, valueToFind = "accountCode:input:dropdowncomponent")
-	private MCWebElement accountHead;
+	private MCWebElement accountHeadDDwn;
 
 	/** The save button. */
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
@@ -72,7 +72,7 @@ public class AccountHeadMappingPage extends AbstractBasePage {
 
 	/** The save notification message */
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "feedbackPanelINFO")
-	private MCWebElements saveNotification;
+	private MCWebElements saveNotificationLbl;
 
 	/** The account head mapping edit button. */
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[@class='even'][1]/td[4]/span")
@@ -82,23 +82,21 @@ public class AccountHeadMappingPage extends AbstractBasePage {
 
 	/** The search transaction code. */
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
-	private MCWebElement searchTransactionCode;
+	private MCWebElement searchTransactionCodeDDwn;
 
 	/** The search fee reason code. */
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent")
-	private MCWebElement searchFeeReasonCode;
+	private MCWebElement searchFeeReasonCodeDDwn;
 
 	/** The search account head. */
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:0:componentPanel:input:dropdowncomponent")
-	private MCWebElement searchAccountHead;
+	private MCWebElement searchAccountHeadDDwn;
 
 	/** The export CSV. */
-	// Export CSV
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "exportCSV")
 	private MCWebElement exportCSV;
 
 	/** The note card fee transaction. */
-	// Note for Card Fee transaction
 	@PageElement(findBy = FindBy.ID, valueToFind = "note")
 	private MCWebElement noteCardFeeTransaction;
 
@@ -120,7 +118,7 @@ public class AccountHeadMappingPage extends AbstractBasePage {
 	 * @return the save notification
 	 */
 	public MCWebElements getSaveNotification() {
-		return saveNotification;
+		return saveNotificationLbl;
 	}
 
 	/**
@@ -129,7 +127,7 @@ public class AccountHeadMappingPage extends AbstractBasePage {
 	 * @return the fee reason code
 	 */
 	public MCWebElement getFeeReasonCode() {
-		return feeReasonCode;
+		return feeReasonCodeDDwn;
 	}
 
 	/**
@@ -170,15 +168,15 @@ public class AccountHeadMappingPage extends AbstractBasePage {
 	 * @return the account head
 	 */
 	public MCWebElement getAccountHead() {
-		return accountHead;
+		return accountHeadDDwn;
 	}
 
 	public MCWebElement getSearchTransactionCode() {
-		return searchTransactionCode;
+		return searchTransactionCodeDDwn;
 	}
 
 	public MCWebElement getTransactionCode() {
-		return transactionCode;
+		return transactionCodeDDwn;
 	}
 
 	/**
@@ -196,20 +194,20 @@ public class AccountHeadMappingPage extends AbstractBasePage {
 	}
 
 	public void selectTransactionAsCardFees() {
-		selectDropDownByText(this.transactionCode, cardFees);
+		selectDropDownByText(this.transactionCodeDDwn, cardFees);
 	}
 
 	public void addDuplicateAccountHeadMapping() {
 		clickAddAccountHeadMapping();
 		switchToAddAccountHeadMapping();
-		waitForElementVisible(transactionCode);
+		waitForElementVisible(transactionCodeDDwn);
 		String transactionCodeValue = MapUtils.fnGetInputDataFromMap("Transaction Code");
-		selectDropDownByText(this.transactionCode, transactionCodeValue);
+		selectDropDownByText(this.transactionCodeDDwn, transactionCodeValue);
 		if (transactionCodeValue.toLowerCase().contains("card fees [21]")) {
 			CustomUtils.ThreadDotSleep(2000);
-			selectDropDownByText(this.feeReasonCode, MapUtils.fnGetInputDataFromMap("Fee Reason Code"));
+			selectDropDownByText(this.feeReasonCodeDDwn, MapUtils.fnGetInputDataFromMap("Fee Reason Code"));
 		}
-		selectDropDownByText(this.accountHead, MapUtils.fnGetInputDataFromMap("Account Head"));
+		selectDropDownByText(this.accountHeadDDwn, MapUtils.fnGetInputDataFromMap("Account Head"));
 		saveBtn.click();
 	}
 
@@ -232,21 +230,21 @@ public class AccountHeadMappingPage extends AbstractBasePage {
 	public List<String> getAccountHeadListFromFrame() {
 		addAccountHeadMapping.click();
 		switchToIframe(Constants.ADD_ACCOUNT_HEAD_MAPPING_FRAME);
-		return CustomUtils.getAllOptionsOfDropDown(accountHead);
+		return CustomUtils.getAllOptionsOfDropDown(accountHeadDDwn);
 	}
 
 	/**
 	 * Searches an Account Head Mapping
 	 */
 	public void searchAccountHeadMapping() {
-		waitForElementVisible(searchTransactionCode);
+		waitForElementVisible(searchTransactionCodeDDwn);
 		String transactionCodeValue = MapUtils.fnGetInputDataFromMap("Transaction Code");
 		Select sel = new Select(getFinder().getWebDriver().findElement(By.name("searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")));
 		sel.selectByVisibleText(transactionCodeValue);
-		selectDropDownByText(searchTransactionCode, transactionCodeValue);
+		selectDropDownByText(searchTransactionCodeDDwn, transactionCodeValue);
 		if (transactionCodeValue.toLowerCase().contains("card fees"))
-			selectDropDownByText(searchFeeReasonCode, MapUtils.fnGetInputDataFromMap("Fee Reason Code"));
-		selectDropDownByText(searchAccountHead, MapUtils.fnGetInputDataFromMap("Account Head"));
+			selectDropDownByText(searchFeeReasonCodeDDwn, MapUtils.fnGetInputDataFromMap("Fee Reason Code"));
+		selectDropDownByText(searchAccountHeadDDwn, MapUtils.fnGetInputDataFromMap("Account Head"));
 		searchBtn.click();
 	}
 
@@ -274,7 +272,7 @@ public class AccountHeadMappingPage extends AbstractBasePage {
 		waitForElementVisible(accountHeadMappingEditBtn);
 		accountHeadMappingEditBtn.click();
 		switchToEditAccountHeadMapping();
-		waitForElementVisible(accountHead);
+		waitForElementVisible(accountHeadDDwn);
 
 		Select select = new Select(getFinder().getWebDriver().findElement(By.name("accountCode:input:dropdowncomponent")));
 		String selectedOption = select.getFirstSelectedOption().getText();
@@ -362,9 +360,9 @@ public class AccountHeadMappingPage extends AbstractBasePage {
 
 	public void retryAddAccountHeadMapping(String accountHead) {
 		switchToAddAccountHeadMapping();
-		waitForElementVisible(transactionCode);
+		waitForElementVisible(transactionCodeDDwn);
 		MapUtils.fnSetInputDataToInputMap("Account Head", accountHead);
-		List<String> transactionCodeElements = CustomUtils.getAllOptionsOfDropDown(transactionCode);
+		List<String> transactionCodeElements = CustomUtils.getAllOptionsOfDropDown(transactionCodeDDwn);
 
 		if (transactionCodeElements.contains("Card fees [21]"))
 			transactionCodeElements.remove("Card fees [21]");
@@ -376,7 +374,7 @@ public class AccountHeadMappingPage extends AbstractBasePage {
 			for (String option : transactionCodeElements) {
 				Select select = new Select(getFinder().getWebDriver().findElement(By.name("transactionCode:input:dropdowncomponent")));
 				select.selectByVisibleText(option);
-				selectDropDownByText(this.accountHead, accountHead);
+				selectDropDownByText(this.accountHeadDDwn, accountHead);
 				saveBtn.click();
 
 				if (!isElementPresent(getErrorMessageText())) {
@@ -393,13 +391,13 @@ public class AccountHeadMappingPage extends AbstractBasePage {
 
 	public void retryAddAccountHeadMappingCardFees(String accountHead) {
 		switchToAddAccountHeadMapping();
-		selectDropDownByText(this.transactionCode, cardFees);
+		selectDropDownByText(this.transactionCodeDDwn, cardFees);
 		MapUtils.fnSetInputDataToInputMap("Transaction Code", cardFees);
-		selectDropDownByText(this.accountHead, accountHead);
+		selectDropDownByText(this.accountHeadDDwn, accountHead);
 		MapUtils.fnSetInputDataToInputMap("Account Head", accountHead);
-		waitForElementVisible(feeReasonCode);
-		if (feeReasonCode.isEnabled()) {
-			List<String> feeReasonCodeElements = CustomUtils.getAllOptionsOfDropDown(feeReasonCode);
+		waitForElementVisible(feeReasonCodeDDwn);
+		if (feeReasonCodeDDwn.isEnabled()) {
+			List<String> feeReasonCodeElements = CustomUtils.getAllOptionsOfDropDown(feeReasonCodeDDwn);
 
 			for (String option : feeReasonCodeElements) {
 				Select select = new Select(getFinder().getWebDriver().findElement(By.name("feeReasonCode:input:dropdowncomponent")));

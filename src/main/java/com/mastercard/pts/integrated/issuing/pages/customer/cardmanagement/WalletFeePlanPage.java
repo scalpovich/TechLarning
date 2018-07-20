@@ -121,7 +121,7 @@ public class WalletFeePlanPage extends AbstractBasePage {
 	}
 
 	public void switchToAddWalletFeePlanDetailsFrame() {
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe(Constants.ADD_WALLET_FEE_PLAN_DETAILS_FRAME);
 	}
 

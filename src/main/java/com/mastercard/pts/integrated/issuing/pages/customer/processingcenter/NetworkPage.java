@@ -52,7 +52,7 @@ public class NetworkPage extends AbstractBasePage {
 		enterText(retworkDescTxt, networkdesc);
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		ClickButton(saveBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 
 	}
 	
