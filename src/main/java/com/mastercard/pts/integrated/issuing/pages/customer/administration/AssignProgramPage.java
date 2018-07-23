@@ -41,8 +41,8 @@ public class AssignProgramPage extends AbstractBasePage {
 					WebElementUtils .selectAllOptionsInListBox(availableServiceCodeLstBx);
 					addServiceCodeBtn.click();
 					clickSaveButton();
-					//verifyNoErrors();
+					verifyNoErrors();
 				});
-		//verifyOperationStatus();
+		verifyOperationStatus();
 	}
 }
