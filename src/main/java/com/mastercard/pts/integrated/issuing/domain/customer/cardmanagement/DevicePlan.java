@@ -348,7 +348,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		return plan;
 	}
 
-	public static DevicePlan createWithProviderForIssuerScripting(KeyValueProvider provider) {
+	public static DevicePlan createWithProviderForIssuerScripting(KeyValueProvider provider, String productType) {
 		DevicePlan plan = new DevicePlan();
 		plan.setDevicePlanCode(MiscUtils.generate8CharAlphaNumeric());
 		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);
@@ -410,6 +410,17 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setEmvPlanPutDataPriority(provider.getString(DP_EMV_PLAN_PUT_DATA_PRIORITY));
 		plan.setEmvPlanPinChangePriority(provider.getString(DP_EMV_PLAN_PIN_CHANGE_PRIORITY));
 		plan.setEmvPlanPinUnblockPriority(provider.getString(DP_EMV_PLAN_PIN_UNBLOCK_PRIORITY));
+		if (productType.equalsIgnoreCase("CREDIT"))
+		{
+			plan.setPerTransactionLimit(provider.getString(DP_PER_TRANSACTION_LIMIT));
+			plan.setTotalTransactionLimit(provider.getString(DP_TOTAL_TRANSACTION_LIMIT));
+			plan.setVelocity(provider.getString(DP_VELOCITY));
+			plan.setValidity(provider.getString(DP_VALIDITYDATE));
+			plan.setPriorityPassIndicator(provider.getString(DP_PRIORITY_PASS_INDICATOR));
+			plan.setPriorityPassIdTemplate(provider.getString(DP_PRIORITY_PASS_ID_TEMPLATE));
+			plan.setPriorityPassVendor(provider.getString(DP_PRIORITY_PASS_VENDOR));
+			plan.setPriorityPassExpiry(provider.getString(DP_PRIORITY_PASS_EXPIRY));	
+		}
 		return plan;
 	}
 
@@ -529,6 +540,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		devicePlan.setPriorityPassIdTemplate(provider.getString(DP_PRIORITY_PASS_ID_TEMPLATE));
 		devicePlan.setPriorityPassVendor(provider.getString(DP_PRIORITY_PASS_VENDOR));
 		devicePlan.setPriorityPassExpiry(provider.getString(DP_PRIORITY_PASS_EXPIRY));
+		
 		return devicePlan;
 		
 	}

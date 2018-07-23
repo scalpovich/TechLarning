@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
-import com.mastercard.pts.integrated.issuing.domain.CreditInstitutionData;
 import com.mastercard.pts.integrated.issuing.domain.InstitutionData;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;

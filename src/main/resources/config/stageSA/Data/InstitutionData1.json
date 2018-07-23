@@ -53,9 +53,9 @@
    "mastercardPrepaidIssuerBin":"537716",
    "mastercardDebitIssuerBin":"537716",
    "mastercardCreditIssuerBin":"537716",
-   "visaPrepaidIssuerBin":"537716",
-   "visaDebitIssuerBin":"537716",
-   "visaCreditIssuerBin":"537716",
+   "visaPrepaidIssuerBin":"477765",
+   "visaDebitIssuerBin":"487677",
+   "visaCreditIssuerBin":"470110",
    "plasticId":"317",
    "pictureCode":"705",
    "corporateClientCode":"11008818116000015"

@@ -56,7 +56,6 @@ public class TransactionSteps {
 	private static final String IPM_INCOMING = "IPM_INCOMING";
 	private static final String DEVICE_PRODUCTION = "device production";
 	private static final String PIN_PRODUCTION = "pin production";
-	private final String INVALID_PIN = "1234";
 	private static final String IPMINCOMING = "ipm incoming";
 	private static Boolean sameCard = false;
 
@@ -122,7 +121,8 @@ public class TransactionSteps {
 	}
 
 	@When("perform an $transaction MAS transaction on the same card")
-	@Alias("a sample simulator \"$transaction\" is executed on the same card")
+	@Aliases(values={"a sample simulator \"$transaction\" is executed on the same card",
+    "user performs an \"$transaction\" MAS transaction on the same card"})
 	@Given("perform an $transaction MAS transaction on the same card")
 	public void givenTransactionIsExecutedOnTheSameCard(String transaction) {
 		String temp = transaction;
@@ -542,11 +542,5 @@ public class TransactionSteps {
 		else if (type.equalsIgnoreCase(IPMINCOMING))
 			transactionWorkflow.setFolderPermisson(provider.getString(IPM_INCOMING));
 		transactionWorkflow.closeWinSCP();
-	}
-	@When("user set invalid pin")
-	public void userSetInvalidPin(){
-		Device device = context.get(ContextConstants.DEVICE);
-		device.setPinNumberForTransaction(INVALID_PIN);
-		context.put(ContextConstants.DEVICE, device);
 	}
 }
