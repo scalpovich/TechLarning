@@ -23,7 +23,8 @@ And user performs adjustment transaction
 And user has current wallet balance amount information for debit device
 And device has "normal" status
 And user activates device through helpdesk
-Then user sign out from customer portal
+Then embossing file batch was generated in correct format
+And user sign out from customer portal
 
 Scenario:To Verify that the user can stoplist debit device from stoplist screen
 Given user is logged in institution
@@ -36,8 +37,8 @@ Scenario: Transaction - EMV_PREAUTH Authorization transaction on debit device af
 Given connection to MAS is established
 When perform an EMV_PREAUTH MAS transaction
 And user is logged in institution
-And search Pre-Auth authorization and verify 207-PICK-UP CARD status
-And assert Capture response with 27000 AuthDecline Code and Device is stoplisted. as description
+And search Pre-Auth authorization and verify 208-LOST CARD, PICK-UP status
+And assert Capture response with 70053 AuthDecline Code and Card Status is Lost with Capture Response as description
 Then user sign out from customer portal
 
 Scenario:To Verify that the user can withdraw stoplist debit device from stoplist screen

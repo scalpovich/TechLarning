@@ -33,7 +33,8 @@ And credit device is created using new device screen for Individual and Primary 
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-Then user sign out from customer portal
+Then embossing file batch was generated in correct format
+And user sign out from customer portal
 
 Scenario:To Verify that the user can stoplist credit device from stoplist screen
 Given user is logged in institution
@@ -46,8 +47,8 @@ Scenario: Transaction - MSR_PREAUTH Authorization transaction on credit device a
 Given connection to MAS is established
 When perform an MSR_PREAUTH MAS transaction
 And user is logged in institution
-And search Pre-Auth authorization and verify 207-PICK-UP CARD status
-And assert Capture response with 27000 AuthDecline Code and Device is stoplisted. as description
+And search Pre-Auth authorization and verify 208-LOST CARD, PICK-UP status
+And assert Capture response with 70053 AuthDecline Code and Card Status is Lost with Capture Response as description
 Then user sign out from customer portal
 
 Scenario:To Verify that the user can withdraw stoplist credit device from stoplist screen
