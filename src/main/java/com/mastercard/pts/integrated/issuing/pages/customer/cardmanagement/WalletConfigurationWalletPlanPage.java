@@ -106,7 +106,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		}
 		else
 		{
-			WebElementUtils.selectDropDownByVisibleText(creditPlanDDwn, "100");
+			WebElementUtils.selectDropDownByVisibleText(creditPlanDDwn, "Automation [100]");
 		}
 	}
 
@@ -118,7 +118,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		else
 		{
 			WebElementUtils.selectDropDownByVisibleText(billingCyleCodeDDwn,
-					"100");
+					"Automation Billing [100]");
 		}
 	}
 
