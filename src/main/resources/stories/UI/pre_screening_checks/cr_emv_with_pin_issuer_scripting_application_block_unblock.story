@@ -9,17 +9,10 @@ when application is in block or unblock mode
 Meta:
 @StoryName cr_emv_issuer_scripting_app_block_unblock
 Scenario:creation of mastercard_individual_primary_emv Card credit device
-Given setting json values in excel
+Given setting json values in excel for Credit
 When user is logged in institution
-And User fills Dedupe Plan
-And User fills Statement Message Plan for credit product
-And User fills Marketing Message Plan for credit product
-And User fills Transaction Plan for credit product
-And User fills Transaction Limit Plan for credit product
-And User fills Document Checklist Screen for credit product
-And User fills Device Joining and Membership Fee Plan for credit product
-And User fills Device Event Based Fee Plan for credit product
-And for EMV Card User fills Device Plan for credit product for Mastercard
+!-- And for EMV Card User fills Device Plan for credit product for Mastercard
+And User fills Device Plan for "credit" "emv" card for issuer scripting
 And User fills Billing Cycle
 And User fills Payment Priority
 And User fills Transaction Rule Plan
@@ -36,10 +29,22 @@ And credit processes pinProduction batch using new Device for Supplementary
 And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 Then user sign out from customer portal
 
+Scenario: Add the device into stoplist
+Given user is logged in institution
+When user stoplists a card from stoplist device screen
+Then user sign out from customer portal
 
-Scenario: Pin Generation 
+Scenario: Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
+
+Scenario: Transaction EMV_PURCHASE
+Given connection to MAS is established
+When perform an EMV_PURCHASE MAS transaction on the same card
+And user is logged in institution
+And search Purchase authorization and verify 208-LOST CARD, PICK-UP status
+Then assert Purchase response with 70053 AuthDecline Code and Card Status is Lost with Capture Response as description
+And user sign out from customer portal

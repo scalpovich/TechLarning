@@ -9,29 +9,27 @@ when application is in block or unblock mode
 Meta:
 @StoryName p_emv_issuer_scripting_app_block_unblock
 
-Scenario: Set up prepaid emv retail general purpose card
+Scenario: Set up prepaid emv corporate travel card
 Given setting json values in excel for Prepaid
 When user is logged in institution
-When User fills Device Plan for "prepaid" "emv" card for issuer scripting
+And User fills Device Plan for "prepaid" "emv" card for issuer scripting
 And User fills Wallet Plan for prepaid product
 And User fills Program section for prepaid product
 And User fills Business Mandatory Fields Screen for prepaid product
 And User fills Device Range section for prepaid product
 And user assigns service code to program
 When user creates new device of prepaid type for new client
-And device has "normal" status
-And user has wallet number information for prepaid device
-And user performs adjustment transaction
-And user has current wallet balance amount information for prepaid device
 Then user sign out from customer portal
 
-
-Scenario: prepaid emv retail general purpose card device production
+Scenario: prepaid emv corporate travel card device production
 Given user is logged in institution
 When a new device was created
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
+And user has wallet number information for prepaid device
+And user performs adjustment transaction
+And user has current wallet balance amount information for prepaid device
 And device has "normal" status
 Then user sign out from customer portal
 
@@ -49,9 +47,8 @@ Then FINSim simulator is closed
 
 Scenario: Transaction EMV_PURCHASE
 Given connection to MAS is established
-When perform an EMV_PURCHASE MAS transaction
+When perform an EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
 And search Purchase authorization and verify 208-LOST CARD, PICK-UP status
 Then assert Purchase response with 70053 AuthDecline Code and Card Status is Lost with Capture Response as description
 And user sign out from customer portal
-

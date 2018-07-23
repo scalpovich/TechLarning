@@ -10,14 +10,8 @@ Meta:
 @StoryName d_emv_issuer_scripting_app_block_unblock
 
 Scenario: Set up program for debit emv corporate debit card
-Given user is logged in institution
-When User fills Dedupe Plan
-And User fills MCC Rules for debit product
-And User fills Transaction Plan for debit product
-And User fills Transaction Limit Plan for debit product
-And User fills Document Checklist Screen for debit product
-And User fills Device Joining and Membership Fee Plan for debit product
-And User fills Device Event Based Fee Plan for debit product
+Given setting json values in excel for Debit
+When user is logged in institution
 And User fills Device Plan for "debit" "emv" card for issuer scripting
 And User fills Wallet Plan for debit product
 And User fills Program section for debit product
@@ -40,3 +34,24 @@ And device has "normal" status
 And user activates device through helpdesk
 And embossing file batch was generated in correct format
 Then user sign out from customer portal
+
+
+Scenario: Add the device into stoplist
+Given user is logged in institution
+When user stoplists a card from stoplist device screen
+Then user sign out from customer portal
+
+Scenario: Pin Generation
+Given connection to FINSim is established
+When Pin Offset file batch was generated successfully
+And embossing file batch was generated in correct format
+And PIN is retrieved successfully with data from Pin Offset File
+Then FINSim simulator is closed
+
+Scenario: Transaction EMV_PURCHASE
+Given connection to MAS is established
+When perform an EMV_PURCHASE MAS transaction on the same card
+And user is logged in institution
+And search Purchase authorization and verify 208-LOST CARD, PICK-UP status
+Then assert Purchase response with 70053 AuthDecline Code and Card Status is Lost with Capture Response as description
+And user sign out from customer portal

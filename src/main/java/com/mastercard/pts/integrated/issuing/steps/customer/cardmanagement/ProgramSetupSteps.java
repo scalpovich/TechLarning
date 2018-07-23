@@ -753,14 +753,13 @@ public class ProgramSetupSteps {
 
 	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card for issuer scripting")
 	public void whenUserFillsDevicePlanForCrddForIssuerScripting(String productType, String deviceType) {
-	    
 		// virtual cards are pinless so even if this statement is called by
 		// mistake, we are setting Pin to false
-		if (deviceType.toLowerCase().contains(ConstantData.VIRTUAL_DEVICE_TYPE)) {
+		if (deviceType.toLowerCase().contains("virtual")) {
 			setPinRequiredToFalse();
 		}
-		devicePlan = DevicePlan.createWithProviderForIssuerScripting(provider);
-		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		devicePlan = DevicePlan.createWithProviderForIssuerScripting(provider, productType);
+		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
 		devicePlan.setProductType(ProductType.fromShortName(productType));
 		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
 		if (Objects.nonNull(deviceJoiningAndMemberShipFeePlan)) {
@@ -771,6 +770,7 @@ public class ProgramSetupSteps {
 			devicePlan.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());
 			devicePlan.setBaseDeviceEventBasedPlan(data.getDeviceEventBasedFeePlan());
 			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
+			setPinRequiredToDefaultState();
 		}
 		if (Objects.nonNull(transactionPlan)) {
 			devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
@@ -780,10 +780,8 @@ public class ProgramSetupSteps {
 			devicePlan.setBeforeKYC(data.getTransactionPlan());
 		}
 
-		// setting a flag through setter to figure out if the card is pinless
-		// card or not. This is used in TransactionSteps to set ExpiryDate in
-		// case of PinLess Card
-		if (ConstantData.PIN_REQUIRED_FALSE.equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
+		// setting a flag through setter to figure out if the card is pinless card or not. This is used in TransactionSteps to set ExpiryDate in case of PinLess Card
+		if ("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
 			devicePlan.setIsPinLess("YES");
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
