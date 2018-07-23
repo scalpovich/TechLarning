@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -65,15 +66,15 @@ public class CloseBatchPage extends AbstractBasePage {
 		processSelected.click();
 		CustomUtils.ThreadDotSleep(1000);
 	}
-
+	
 	public List<String> allBatchNumberRetrieval(){
-		List<String>batchNumbers=new ArrayList<>();
+		List<String>batchNumbers = new ArrayList<>();
 		
-		for(int i=0;i<allBatchNumberTxt.getElements().size();i++){
-			batchNumbers.add(allBatchNumberTxt.getElements().get(i).getText());
-		}
+		allBatchNumberTxt.getElements().stream().forEach((element)->{
+				batchNumbers.add(element.getText());
+		});
 		
-		return batchNumbers;
+		return batchNumbers;			
 	}
 	
 	
