@@ -734,7 +734,7 @@ public class ProgramSetupSteps {
 	}
 	
 	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card without pin")
-	public void whenUserFillsDevicePlanForCrddWithoutPin(String productType, String deviceType) {
+	public void whenUserFillsDevicePlanForCardWithoutPin(String productType, String deviceType) {
 		setPinRequiredToFalse();
 		// virtual cards are pinless so even if this statement is called by
 		// mistake, we are setting Pin to false

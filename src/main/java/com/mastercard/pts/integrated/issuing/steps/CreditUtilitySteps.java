@@ -67,7 +67,7 @@ public class CreditUtilitySteps {
         Map<String,String>jsonMap=getJsonMap(methodsJson);
 
         //append extra json values to ExcelMap
-        map=putExtraJsonValuesTOExcel(concurrentMap, jsonMap);
+        map=putExtraJsonValuesToExcel(concurrentMap, jsonMap);
         
         //replace excel values with Excel values
         Map<String, Object> allInOneMap=replacingValuesFromJsonToExcel(map, jsonMap);
@@ -165,7 +165,7 @@ public class CreditUtilitySteps {
 		return excelMap;
 	}
 
-	public Map<String, Object> putExtraJsonValuesTOExcel(Map<String, Object> excelMap, Map<String, String> jsonMap) throws Exception {
+	public Map<String, Object> putExtraJsonValuesToExcel(Map<String, Object> excelMap, Map<String, String> jsonMap) throws Exception {
 		Map<String, Object> excelMapWithoutUnderScore = new HashMap<String, Object>();
 		ArrayList<String> keyList = new ArrayList<String>();
 		for (Map.Entry<String, Object> entry : excelMap.entrySet()) {
