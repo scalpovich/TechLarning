@@ -11,28 +11,28 @@ Meta:
 
 Scenario: Set up prepaid emv retail general purpose card
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card
-When user creates new device of prepaid type for new client
-Then device has "normal" status
-When user has wallet number information for prepaid device
-When user performs adjustment transaction
-When user has current wallet balance amount information for prepaid device
+When device range for program with device plan for "prepaid" "emv" card
+And user creates new device of prepaid type for new client
+And device has "normal" status
+And user has wallet number information for prepaid device
+Then user performs adjustment transaction
+And user has current wallet balance amount information for prepaid device
 
 Scenario: prepaid emv retail general purpose card device production
 Given user is logged in institution
-And a new device was created
-When processes pre-production batch for prepaid
-When processes device production batch for prepaid
-When processes pin generation batch for prepaid
+When a new device was created
+And processes pre-production batch for prepaid
+And processes device production batch for prepaid
+And processes pin generation batch for prepaid
 Then device has "normal" status
-Then user activates device through helpdesk
+And user activates device through helpdesk
 
 Scenario: Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
-When embossing file batch was generated in correct format
-When PIN is retrieved successfully with data from Pin Offset File
-Then FINSim simulator is closed
+And embossing file batch was generated in correct format
+Then PIN is retrieved successfully with data from Pin Offset File
+And FINSim simulator is closed
 
 Scenario: Transaction - EMV_PREAUTH and EMV_COMPLETION Authorization transaction
 Given connection to MAS is established
