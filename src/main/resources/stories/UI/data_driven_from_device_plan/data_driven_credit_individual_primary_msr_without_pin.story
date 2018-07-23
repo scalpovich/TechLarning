@@ -24,11 +24,11 @@ Then user sign out from customer portal
 Scenario: Transaction - MSR_PREAUTH Authorization transaction
 Given connection to MAS is established
 When perform an MSR_PREAUTH MAS transaction
-Then MAS test results are verified
-Then MAS simulator is closed
-Given user is logged in institution
+And MAS test results are verified
+And MAS simulator is closed
+And user is logged in institution
 Then search Pre-Auth authorization and verify 000-Successful status
-Then user sign out from customer portal
+And user sign out from customer portal
 
 
 
