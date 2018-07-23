@@ -47,8 +47,30 @@ Then FINSim simulator is closed
 
 Scenario: Transaction EMV_PURCHASE
 Given connection to MAS is established
-When perform an EMV_PURCHASE MAS transaction on the same card
+When perform an EMV_PURCHASE MAS transaction
 And user is logged in institution
 And search Purchase authorization and verify 208-LOST CARD, PICK-UP status
 Then assert Purchase response with 70053 AuthDecline Code and Card Status is Lost with Capture Response as description
+And user sign out from customer portal
+
+Scenario: Verify Last executed script status for Application block
+When user is logged in institution
+Then assert Pending status of Last Executed Script Status in Device Details Screen
+And user sign out from customer portal
+
+Scenario: Withdraw the device from stoplist
+Given user is logged in institution
+When user withdraws a card from withdraw device screen
+And user sign out from customer portal
+
+Scenario: Transaction EMV_PURCHASE_ISSUER_SCRIPTING_RES
+When perform an EMV_PURCHASE_ISSUER_SCRIPTING_RES MAS transaction on the same card
+And user is logged in institution
+And search Purchase authorization and verify 208-LOST CARD, PICK-UP status
+Then assert Purchase response with 70053 AuthDecline Code and Card Status is Lost with Capture Response as description
+And user sign out from customer portal
+
+Scenario: Verify Last executed script status for Application unblock
+When user is logged in institution
+Then assert Success status of Last Executed Script Status in Device Details Screen
 And user sign out from customer portal
