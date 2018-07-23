@@ -1,10 +1,5 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.administration;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collection;
-
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -85,6 +80,7 @@ public class AuditReportPage extends AbstractBasePage{
 	{
 		selectByVisibleText(reportGenerationModeDDwn, auditreport.getReportGenerationMode());
 	}
+	@Override
 	public void clickSubmitButton()
 	{
 		ClickButton(submitBtn);

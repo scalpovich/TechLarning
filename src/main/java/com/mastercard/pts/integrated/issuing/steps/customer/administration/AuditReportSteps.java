@@ -1,6 +1,5 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.administration;
 import org.jbehave.core.annotations.Then;
-import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

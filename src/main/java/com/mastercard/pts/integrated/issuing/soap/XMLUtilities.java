@@ -222,7 +222,7 @@ public class XMLUtilities extends AbstractSteps {
 
 			case "transactionDateTime":
 				updatedXml = updateXml(updatedXml,
-						dateutils.getDateYYMMDDFormat(), tagName);
+						DateUtils.getDateYYMMDDFormat(), tagName);
 				break;
 			case "formFactor":
 				updatedXml = updateXml(updatedXml,

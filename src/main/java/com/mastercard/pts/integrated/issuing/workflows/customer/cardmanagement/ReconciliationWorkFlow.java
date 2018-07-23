@@ -1,9 +1,8 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +14,10 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Gene
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionReports;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.RAMPReportPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionReportsPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
-import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.PDFUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
 @Workflow
 public class ReconciliationWorkFlow {
@@ -65,15 +63,6 @@ public class ReconciliationWorkFlow {
 		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
 		return getReportContent(fileName,transactionReports);
 		//return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
-	}
-	
-	public List<String> verifyGenericReport(String fileName, GenericReport report) {
-		RAMPReportPage page = navigator.navigateToPage(RAMPReportPage.class);
-		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
-		deleteExistingAuthorizationFilesFromSystem(fileName);
-		page.generateReport();
-		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
-		return getReportContent(fileName,report);
 	}
 		
 	public boolean verifyReportGenerationClearing() {
@@ -132,9 +121,11 @@ public class ReconciliationWorkFlow {
 		return records;
 	}
 	
-	public List<String> getReportContent(String fileName,GenericReport genericReports) {
+	public HashMap<Integer, String[]> getReportContent(String fileName,GenericReport genericReports) {
 		PDFUtils pdfutils=new PDFUtils();
-		List<String> records = pdfutils.getContentRow(PDFUtils.getuserDownloadPath() + "\\"+fileName, genericReports);
+		genericReports.setRegEx("\\d\\d-\\d\\d-\\d\\d\\d\\d");
+		System.out.println("+++++++++++++++"+PDFUtils.getuserDownloadPath() + "\\"+fileName+".pdf");
+		HashMap<Integer, String[]> records = pdfutils.getContentRow(PDFUtils.getuserDownloadPath() + "\\"+fileName+".pdf", genericReports);
 		for(int i=0;i<records.size();i++)
 		{
 			if (records != null)
@@ -147,9 +138,23 @@ public class ReconciliationWorkFlow {
 	public void deleteExistingAuthorizationFilesFromSystem(String authFileName)
 	{
 		for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
-			if (!file.isDirectory()&& file.getName().startsWith(ConstantData.AUTHORIZATION_REPORT_NAME))   	
+			if (!file.isDirectory()&& file.getName().startsWith(authFileName))   	
 				file.delete();
 		}
+	}
+	
+	public boolean verifyReportDownloaded(String authFileName)
+	{
+		String downLoadPath = System.getProperty("user.home") + "\\Downloads";
+		File report = new File(downLoadPath+authFileName+".pdf");
+		System.out.println("++++++++++++++--+"+report.getAbsolutePath());
+       for (int i = 0;i<=5;i++ ){
+    	   if(report.isFile())
+    	   break;
+    	   else
+    		  SimulatorUtilities.wait(1000); 
+       }
+        return true;
 	}
 
 }

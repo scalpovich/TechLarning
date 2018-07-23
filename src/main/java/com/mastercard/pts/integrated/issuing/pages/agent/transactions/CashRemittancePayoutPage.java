@@ -70,6 +70,7 @@ public class CashRemittancePayoutPage extends AbstractBasePage {
 		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(masterDetailContentTitle)).getText();
 	}
 	
+	@Override
 	public void clickSubmitButton() {
 		new WebDriverWait(driver(), timeoutInSec).until(
 				WebElementUtils.elementToBeClickable(submitBtn)).click();

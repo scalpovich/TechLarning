@@ -2,8 +2,6 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
-
-import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 @Component
 public class PictureCode {
 

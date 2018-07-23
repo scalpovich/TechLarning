@@ -2,13 +2,23 @@ package com.mastercard.pts.integrated.issuing.utils;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.pdfbox.lucene.LucenePDFDocument;
+import org.apache.pdfbox.multipdf.Splitter;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.common.PDStream;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -93,34 +103,48 @@ public class PDFUtils {
 		return programWiseContent;
 	}
 	
-	public List<String> getContentRow(String pdfPath, GenericReport genericReports) {
-		String pageContent = "";
-		List<String> programWiseContent = new ArrayList<String>();
-		String[] fullRow = { "" };
-		int pages = 0;
-		String rrn = genericReports.getRrnNumber();
-		String code = genericReports.getAuthorizationCode(); 
+	public HashMap<Integer, String[]> getContentRow(String pdfPath, GenericReport genericReports) {
+		HashMap<Integer, String[]> map = new HashMap<>();
 		try {
 			File file = new File(pdfPath);
 			file.getParentFile().mkdirs();
-			PdfReader pdfReader = manipulatePdf(pdfPath, genericReports.getUsername());
-			if (pdfReader != null)
-				pages = pdfReader.getNumberOfPages();
-			for (int i = 1; i <= pages; i++) {
-				pageContent = PdfTextExtractor.getTextFromPage(pdfReader, i);
-				if (pageContent.contains(code) && pageContent.contains(rrn)) {
-					fullRow = pageContent.split("\n");
-					break;
-				}
-			}
+			PDDocument document =  PDDocument.load(file,genericReports.getUsername().substring(0,4)+"1707");        
+			PDStream ps=new PDStream(document);
+			InputStream is=ps.createInputStream();
+            Document doc1 = LucenePDFDocument.getDocument(is);
+            System.out.println("END-------"+doc1.getFields().get(1));
+			PDFTextStripper tStripper = new PDFTextStripper();
+            tStripper.setAddMoreFormatting(true);
+                //Instantiating Splitter class
+            Splitter splitter = new Splitter();
 
-			if (pdfReader != null)
-				pdfReader.close();
-		} catch (Exception e) {
-			logger.info("Failed to read pdf file ", e);
-			throw Throwables.propagate(e);
-		}
-		return programWiseContent;
+            //Creating an iterator 
+            Iterator<PDDocument> iterator = splitter.split(document).listIterator();
+
+            //Saving each page as an individual document
+            int i = 1;
+          // while(iterator.hasNext()) {
+               PDDocument pd = iterator.next();
+            
+            String pdfFileInText = tStripper.getText(pd);
+            Document doc = new Document();
+            doc.add(new Field("pdfContent", pdfFileInText, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS));
+            System.out.println("END-------"+doc.getFields().get(0));
+
+			// split by RegEx
+            //String lines[] = pdfFileInText.split(genericReports.getRegEx());
+//            String lines[] = pdfFileInText.split("\\d\\d-\\d\\d-\\d\\d\\d\\d");
+//           for(String line : lines){
+//        	   System.out.println(line);
+//        	   System.out.println("END-----");
+//           }
+//            map.put(i++,lines);
+//				//}
+           document.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}	
+			return map;
 	}
 
 	public PdfReader manipulatePdf(String src, String username) {
@@ -128,6 +152,7 @@ public class PDFUtils {
 		PdfReader.unethicalreading = true;
 		PdfReader reader = null;
 		try {
+			System.out.println("PASSWORD++++++++++++++++"+username.substring(0,4)+dateutils.getDateDDMMFormat());
 			reader = new PdfReader(src, (username.substring(0,4)+dateutils.getDateDDMMFormat()).getBytes());
 		}  catch (Exception e) {
 			logger.info("Document Exception {}", e);

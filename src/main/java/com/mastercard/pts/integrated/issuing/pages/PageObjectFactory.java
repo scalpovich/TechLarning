@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
-import com.google.common.base.Throwables;
 import com.mastercard.testing.mtaf.bindings.page.AbstractPage;
 
 /**
@@ -36,7 +35,7 @@ public class PageObjectFactory {
 	 * @return page object
 	 */
 	public <T extends AbstractPage> T getPage(Class<T> pageClass) {
-		return initPageObject(() -> (T) beanFactory.getBean(pageClass));
+		return initPageObject(() -> beanFactory.getBean(pageClass));
 	}
 
 	/**
@@ -49,8 +48,10 @@ public class PageObjectFactory {
 	 */
 	@SuppressWarnings("unchecked")
 	public <T extends AbstractPage> T getPage(String pageName) {
+//		String beanName = StringUtils.capitalize(pageName
+//				.replaceAll("\\s+", "")) + "Page";
 		String beanName = StringUtils.capitalize(pageName
-				.replaceAll("\\s+", "")) + "Page";
+				.replaceAll("\\s+", ""));
 		return initPageObject(() -> (T) beanFactory.getBean(beanName));
 	}
 

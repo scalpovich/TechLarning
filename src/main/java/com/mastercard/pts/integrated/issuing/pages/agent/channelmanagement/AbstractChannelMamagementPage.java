@@ -88,6 +88,7 @@ public class AbstractChannelMamagementPage  extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "faxNo")
 	protected MCWebElement faxNoTxt;
 
+	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(masterDetailContentTitle));
 	}

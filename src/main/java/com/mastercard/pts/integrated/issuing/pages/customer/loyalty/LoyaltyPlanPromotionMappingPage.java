@@ -98,11 +98,13 @@ public class LoyaltyPlanPromotionMappingPage extends AbstractBasePage{
 		enterText(priorityTxt,"1");
 	}
 
+	@Override
 	public void clickSaveButton() {
 
 		clickWhenClickableDoNotWaitForWicket(btnSave);
 	}
 
+	@Override
 	public void clickCancelButton() {
 		clickWhenClickable(btnCancel);
 	}

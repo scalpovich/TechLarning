@@ -57,7 +57,7 @@ public class ZipUnzipUtils {
 	 */
 	public String getReportPassword() {
 		return org.apache.commons.lang.StringUtils.substring(MapUtils.fnGetInputDataFromMap("UserId"), 0, 4)
-				+ org.apache.commons.lang.StringUtils.substring(dateUtils.getDateDDMMYYFormat(), 0, 4);
+				+ org.apache.commons.lang.StringUtils.substring(DateUtils.getDateDDMMYYFormat(), 0, 4);
 
 	}
 

@@ -180,6 +180,7 @@ public class InstitutionCreationPage extends AbstractBasePage {
 	 * @param instituteName
 	 *            the institute name
 	 */
+	@Override
 	public void selectInstituteFromDrpDwn(String instituteName) {
 		instituteSelectionDrpDwn.click();
 		String ins = String.format(instituteSelectionVal, instituteName);

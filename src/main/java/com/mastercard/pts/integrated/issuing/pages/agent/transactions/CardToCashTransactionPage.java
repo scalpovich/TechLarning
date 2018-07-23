@@ -73,6 +73,7 @@ public class CardToCashTransactionPage extends TransactionsAbstractPage {
 				WebElementUtils.elementToBeClickable(viewBtn)).click();
 	}
 	
+	@Override
 	public void clickConfirmButton() {
 		new WebDriverWait(driver(), timeoutInSec).until(
 				WebElementUtils.elementToBeClickable(confirmBtn)).click();
@@ -84,6 +85,7 @@ public class CardToCashTransactionPage extends TransactionsAbstractPage {
 				WebElementUtils.elementToBeClickable(searchBtn)).click();
 	}
 	
+	@Override
 	public void clickSubmitButton() {
 		new WebDriverWait(driver(), timeoutInSec).until(
 				WebElementUtils.elementToBeClickable(submitBtn)).click();

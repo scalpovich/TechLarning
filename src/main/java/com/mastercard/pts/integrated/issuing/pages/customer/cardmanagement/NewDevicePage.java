@@ -508,7 +508,7 @@ public class NewDevicePage extends AbstractCardManagementPage {
 				"SequenceNo.");
 		for (int i = 1; i < map.size(); i++) {
 			String Word = "";
-			excelTestData.dataProviderIterator(map, String.valueOf(i));
+			ReadTestDataFromExcel.dataProviderIterator(map, String.valueOf(i));
 			String Value = MapUtils.getIterativeDataFromDatamap("Value (Y/N)");
 			if (Value.contains("Y")) {
 				FieldToBeAdded = MapUtils.getIterativeDataFromDatamap("Field Name");
@@ -522,7 +522,7 @@ public class NewDevicePage extends AbstractCardManagementPage {
 				CustomUtils.ThreadDotSleep(3000);
 				try {
 					WebElement Field = getFinder().getWebDriver().findElement(
-							By.xpath("//td[contains(.,'" + word + "')]/following::td[1]/span/input[@type='text']"));
+							org.openqa.selenium.By.xpath("//td[contains(.,'" + word + "')]/following::td[1]/span/input[@type='text']"));
 					String css = Field.getCssValue("border-left-color");
 					String s = css.substring(5, 14);
 					String[] index = s.split(",");

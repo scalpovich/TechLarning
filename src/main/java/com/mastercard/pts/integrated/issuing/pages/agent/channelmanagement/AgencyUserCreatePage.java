@@ -19,6 +19,7 @@ import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 public class AgencyUserCreatePage extends AbstractChannelMamagementPage {
 	private static final Logger logger = LoggerFactory.getLogger(AgencyUserCreatePage.class);
 
+	@Override
 	public void verifyUiOperationStatus() {
 		logger.info("Agency Information");
 		verifyButton("Create");

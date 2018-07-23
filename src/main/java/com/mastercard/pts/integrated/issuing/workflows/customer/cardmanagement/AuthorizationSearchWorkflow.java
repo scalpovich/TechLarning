@@ -12,14 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.GenericReport;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionReports;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.collect.administration.AdministrationHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.AuthorizationSearchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
-import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 
 @Workflow
@@ -150,21 +148,6 @@ public class AuthorizationSearchWorkflow {
 		transactionReport.setUsername(context.get(USERNAME));
 		
 		List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME,transactionReport);
-		String authFileData = "";
-		for (int i = 0; i < reportContent.size(); i++) {
-			authFileData += reportContent.get(i) + " ";
-		}
-		
-		boolean condition = authFileData.contains(context.get(ConstantData.AUTHORIZATION_CODE)) && authFileData.contains(device.getDeviceNumber()) 
-				&& authFileData.contains(context.get(ConstantData.TRANSACTION_AMOUNT)) && authFileData.contains(context.get(ConstantData.RRN_NUMBER));
-		assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
-	}
-	
-    public void verifyGenericReport(Device device,String reportName,String reportField) {
-		GenericReport report = GenericReport.getGenericReport();
-		report.setUsername(UserManagementSteps.USERNAME);
-		report.setFieldToValidate(reportField, context.get(reportField));
-		List<String> reportContent = reconciliationWorkFlow.verifyGenericReport(reportName+".pdf",report);
 		String authFileData = "";
 		for (int i = 0; i < reportContent.size(); i++) {
 			authFileData += reportContent.get(i) + " ";

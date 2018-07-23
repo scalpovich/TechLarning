@@ -2,7 +2,6 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import java.time.LocalDate;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;

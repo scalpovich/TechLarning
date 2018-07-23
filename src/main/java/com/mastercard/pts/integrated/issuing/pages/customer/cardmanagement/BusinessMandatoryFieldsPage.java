@@ -122,7 +122,7 @@ public class BusinessMandatoryFieldsPage extends AbstractBasePage {
 		HashMap<String, HashMap<String, String>> map = excelTestData.fnReadEntireTestData(filepath, "Sheet1",
 				"SequenceNo.");
 		for (int i = 1; i < map.size(); i++) {
-			excelTestData.dataProviderIterator(map, String.valueOf(i));
+			ReadTestDataFromExcel.dataProviderIterator(map, String.valueOf(i));
 			String Value = MapUtils.getIterativeDataFromDatamap("Value (Y/N)");
 			if (Value.contains("Y")) {
 				FieldToBeAdded = MapUtils.getIterativeDataFromDatamap("Field Name");
@@ -140,6 +140,7 @@ public class BusinessMandatoryFieldsPage extends AbstractBasePage {
 		}
 	}
 
+	@Override
 	public void clickSaveButton() {
 		clickWhenClickable(saveBtn);
 		switchToDefaultFrame();

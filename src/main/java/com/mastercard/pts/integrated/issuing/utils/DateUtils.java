@@ -10,7 +10,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -318,6 +317,6 @@ public class DateUtils {
 
 	public static void main(String[] args) {
 		DateUtils date = new DateUtils();
-		System.out.println(date.getDateinDDMMYYYY());
+		System.out.println(DateUtils.getDateinDDMMYYYY());
 	}
 }

@@ -82,7 +82,7 @@ public class ApplicationUploadSteps {
 
 	@Then("The file will process the records successfully if all the all the business mandatory field are configured in file")
 	public void verifyApplicationFileUpload() {
-		searchDomain = searchDomain.getSearchApplicationData();
+		searchDomain = SearchApplicationDetails.getSearchApplicationData();
 		search.verifyApplicationUploadSuccess(searchDomain);
 	}
 

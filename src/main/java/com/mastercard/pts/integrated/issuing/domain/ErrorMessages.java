@@ -83,7 +83,7 @@ public class ErrorMessages extends AbstractBasePage {
 
 	private WebElement getElement(String xpath) {
 
-		org.openqa.selenium.By locator = By.xpath(xpath);
+		org.openqa.selenium.By locator = org.openqa.selenium.By.xpath(xpath);
 		return fluentWait(() -> driverProvider.get().findElement(locator));
 	}
 

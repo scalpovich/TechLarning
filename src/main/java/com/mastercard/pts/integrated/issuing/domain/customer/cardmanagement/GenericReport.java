@@ -10,6 +10,7 @@ public class GenericReport {
 	private String rrnNumber;
 	private String username;
 	private static Map<String, String> reportFields;
+	private String regEx;
 	
 	
 	public Map<String, String> setFieldToValidate(String field,String value){
@@ -54,5 +55,14 @@ public class GenericReport {
 	public void setRrnNumber(String rrnNumber) {
 		this.rrnNumber = rrnNumber;
 	}
+	
+	public void setRegEx(String regEx){
+		this.regEx = regEx;
+	}
+	
+	public String getRegEx(){
+		return regEx;
+	}
+	
 	
 }

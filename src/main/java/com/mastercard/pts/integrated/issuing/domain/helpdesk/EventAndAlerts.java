@@ -83,6 +83,7 @@ public class EventAndAlerts extends AbstractBasePage {
 		this.eCommType = eCommType;
 	}
 
+	@Override
 	public String getErrorMessage() {
 		return errorMessage;
 	}

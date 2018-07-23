@@ -58,6 +58,7 @@ public abstract class CustomJBehaveStories extends JUnitStories {
 		return new SpringStepsFactory(configuration(), this.context);
 	}
 
+	@Override
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<String> storyPaths() {
 		List paths = null;
@@ -156,7 +157,7 @@ public abstract class CustomJBehaveStories extends JUnitStories {
 	}
 
 	protected ALMReport getAlmReport() {
-		ALMService almService = (ALMService) getContextInstance().getBean(ALMService.class);
+		ALMService almService = getContextInstance().getBean(ALMService.class);
 		return new ALMReport(almService);
 	}
 

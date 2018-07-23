@@ -181,6 +181,17 @@
                   <version>${pdf.reader.version}</version>
             </dependency>
             <dependency>
+                  <groupId>org.apache.pdfbox</groupId>
+                  <artifactId>pdfbox</artifactId>
+                  <version>2.0.6</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox-lucene -->
+            <dependency>
+                  <groupId>org.apache.pdfbox</groupId>
+                  <artifactId>pdfbox-lucene</artifactId>
+                  <version>1.8.15</version>
+            </dependency>
+            <dependency>
                   <groupId>com.mastercard.testing</groupId>
                   <artifactId>mtaf-jdbc-tools</artifactId>
                   <version>${mtaf-jdbc-tools.version}</version>

@@ -41,7 +41,7 @@ public class NetworkPage extends AbstractBasePage {
 	public void editNetwork(String ntkCode, String networkdesc) {
 		waitForElementVisible(processingcenter.getProcessingCenter());
 		WebElement editRupayNtkCode = getFinder().getWebDriver().findElement(
-				By.xpath("//td[contains(.,'" + ntkCode
+				org.openqa.selenium.By.xpath("//td[contains(.,'" + ntkCode
 						+ "')]/following::a[1]/img[@alt='Edit Record']"));
 		waitForElementVisible(processingcenter.getProcessingCenter());
 		retryUntilNoErrors(() -> editRupayNtkCode.click());

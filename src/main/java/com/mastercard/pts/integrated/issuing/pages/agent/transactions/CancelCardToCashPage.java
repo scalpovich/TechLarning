@@ -78,6 +78,7 @@ public class CancelCardToCashPage extends AbstractBasePage {
 				() -> WebElementUtils.hasClass(getFinder().findOne(FindBy.X_PATH, "//*[@class='dataview']/tbody/tr[1]"), "select"));
 	}
 	
+	@Override
 	public void clickSubmitButton() {
 		new WebDriverWait(driver(), timeoutInSec).until(
 				WebElementUtils.elementToBeClickable(submitBtn)).click();

@@ -117,11 +117,5 @@ public class AuthorizationSearchSteps {
 			authorizationSearchWorkflow.verifyAuthTransactionSearchReport(device);
 		} 
 	}
-	
-	@Then("validate the $reportField in $reportName report")
-	public void validateGenericReport(String reportName,String reportField){
-		Device device = context.get(ContextConstants.DEVICE);
-		authorizationSearchWorkflow.verifyGenericReport(device,reportName,reportField);
-	}
 
 }

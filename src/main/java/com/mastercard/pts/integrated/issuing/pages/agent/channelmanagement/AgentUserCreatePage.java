@@ -30,6 +30,7 @@ public class AgentUserCreatePage extends AbstractChannelMamagementPage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "txnPassword")
 	private MCWebElement transactionPasswordTxt;
 
+	@Override
 	public void verifyUiOperationStatus() {
 		logger.info("Agency Information");
 		verifyButton("Create");

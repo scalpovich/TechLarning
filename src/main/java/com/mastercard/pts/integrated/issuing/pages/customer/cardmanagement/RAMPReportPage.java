@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -14,9 +13,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.GenericReport;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.Exceptionhandler;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
-import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -24,8 +21,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1_REPORTS, CardManagementNav.L2_RAMP_REPORT})
-
-public class RAMPReportPage extends AbstractBasePage {
+public class RAMPReportPage extends AbstractBasePage implements ReportVerificationPage {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(RAMPReportPage.class);
@@ -74,9 +70,10 @@ public class RAMPReportPage extends AbstractBasePage {
 				WebElementUtils.elementToBeClickable(selectReportDDwn)
 				);
 	}
-	
-	public void generateReport(){
-		Exceptionhandler.registerExceptionHandler();
+
+	@Override
+	public boolean generateReport(GenericReport report) {
+		// TODO Auto-generated method stub
 		selectDropDownByIndex(selectReportDDwn,1);
 	    clicksearchButtonElement();
 	    
@@ -87,10 +84,12 @@ public class RAMPReportPage extends AbstractBasePage {
 		selectByVisibleText(selectTransactionTypeDDwn, "ALL");
 	    selectByVisibleText(selectHighRiskMccDDwn, "ALL");
 	    selectByVisibleText(selectHighRiskMccGroupDDwn, "ALL");
+	    selectByVisibleText(selectTransactionTypeDDwn, "ALL");
 		WebElementUtils.pickDate(fromDatePkr, LocalDate.now());
 		WebElementUtils.pickDate(toDateDPkr, LocalDate.now());
 		selectByVisibleText(selectFileTypeDDwn, "PDF");
 		clickWhenClickable(generateReportBtn);
 		//});
+		return true;
 	}
 }

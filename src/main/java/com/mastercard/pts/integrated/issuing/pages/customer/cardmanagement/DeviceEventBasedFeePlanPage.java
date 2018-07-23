@@ -158,6 +158,7 @@ public class DeviceEventBasedFeePlanPage extends AbstractBasePage {
 		selectByVisibleText(CurrencyDDwn, deviceeventbasedfeeplan.getCurrency());
 	}
 
+	@Override
 	public void clickSaveButton() {
 		clickWhenClickable(saveBtn);
 		switchToDefaultFrame();

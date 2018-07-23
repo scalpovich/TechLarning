@@ -61,6 +61,7 @@ public class MCGPage extends AbstractBasePage {
 		return Description.getAttribute("value");
 	}
 
+	@Override
 	public void clickSaveButton() {
 		clickWhenClickable(save);
 	}

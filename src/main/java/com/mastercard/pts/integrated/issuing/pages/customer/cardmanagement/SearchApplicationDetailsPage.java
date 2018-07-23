@@ -101,6 +101,7 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		return batchNumberTxt.getText();
 		
 	}
+	@Override
 	public void clickSearchButton(){
 		clickWhenClickable(SearchBtn);
 	}
