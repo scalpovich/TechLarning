@@ -1,7 +1,7 @@
 !-- author: e076168
 Narrative:
 As a user
-I want to able to login into customer portal 
+I want to login into customer portal
 In order to create add-on prepaid card
 
 

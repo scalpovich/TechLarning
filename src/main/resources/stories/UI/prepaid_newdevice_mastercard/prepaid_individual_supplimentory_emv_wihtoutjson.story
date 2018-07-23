@@ -1,8 +1,8 @@
 !-- auther: e076168
 Narrative:
 As a Cardhodler
-I want to able to loing into customer portal 
-In order to crate prepaid card
+I want to loing into customer portal 
+In order to create prepaid card
 
 
 Meta:

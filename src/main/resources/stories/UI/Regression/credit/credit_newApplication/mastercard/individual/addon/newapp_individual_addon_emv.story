@@ -1,7 +1,8 @@
 Narrative:
 In order to a create a Credit Device under customer portal cardmanagement tab
 As a user
-I want to assert pages
+I want to assert card creation
+
 
 Meta:
 @CreditRegression

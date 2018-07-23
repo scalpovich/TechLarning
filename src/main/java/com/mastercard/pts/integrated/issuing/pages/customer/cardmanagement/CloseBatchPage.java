@@ -77,7 +77,6 @@ public class CloseBatchPage extends AbstractBasePage {
 		return batchNumbers;			
 	}
 	
-	
 	public int identifyBatchNumberToProcess()
 	{
 		Device device=context.get(ContextConstants.DEVICE);
