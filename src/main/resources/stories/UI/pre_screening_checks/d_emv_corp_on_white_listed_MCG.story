@@ -49,7 +49,7 @@ And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 
-Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
+Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
 When perform an EMV_CASH_ADVANCE MAS transaction
 And MAS simulator is closed
 And user is logged in institution
