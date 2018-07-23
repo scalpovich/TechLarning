@@ -86,6 +86,9 @@ public class ConstantData {
 	public static final String INVALID_CVV2 = "123";	
 	public static final String INVALID_ICVV = "123";	
 	public static final String INVALID_PVKI = "123";
+	
+	public static final String EXISTING = "Existing";
+	public static final String PIN_REQUIRED_YES = "YES";
 
 	private ConstantData() {
 	}
