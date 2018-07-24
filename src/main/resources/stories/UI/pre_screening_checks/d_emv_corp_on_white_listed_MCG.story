@@ -50,7 +50,7 @@ And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 
 Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
-When perform an EMV_CASH_ADVANCE MAS transaction
+When perform an EMV_CASH_ADVANCE MAS transaction on the same card
 And MAS simulator is closed
 And user is logged in institution
 And search Cash Advance authorization and verify 100-Do Not Honour status
