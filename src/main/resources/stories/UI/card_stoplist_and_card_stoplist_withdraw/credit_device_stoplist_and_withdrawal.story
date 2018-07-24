@@ -9,7 +9,7 @@ Meta:
 @CardStoplistAndWithdrawal
 		 
 Scenario:creation of mastercard_individual_primary_msr Card credit device
-Given setting json values in excel
+Given setting json values in excel for credit
 Given user is logged in institution
 When User fills Dedupe Plan
 And User fills Statement Message Plan for credit product
