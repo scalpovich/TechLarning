@@ -173,7 +173,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 	private MCWebElement professionDDwn;  
   	
   	@PageElement(findBy = FindBy.NAME, valueToFind = "view:applicationBatch.openedBatches:input:dropdowncomponent")  													  
-	private MCWebElement openBatchDdwn;
+	private MCWebElement openBatchDDwn;
   	
 	public void selectAppliedForProduct(String product) {
 		WebElementUtils.selectDropDownByVisibleText(appliedForProdutDDwn, product);

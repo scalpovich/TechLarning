@@ -1773,7 +1773,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public List<WebElement> getValidationErrors() {
 		return Elements(ERROR_XPATH);
 	}
-
+	
+	public void moveToElemenAndClick(MCWebElement element,int xOffset, int yOffset){
+		Actions action = new Actions(driver());		
+		action.moveToElement(asWebElement(element), xOffset, yOffset).click().build().perform();
+	}
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		logger.info("Not validaiting any elements, as this is an Abstraction layer to Pages");

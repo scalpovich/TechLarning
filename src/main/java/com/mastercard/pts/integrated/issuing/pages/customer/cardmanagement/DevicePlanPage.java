@@ -666,8 +666,6 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 	
 	public void enterVirtualCreditLimit(DevicePlan devicePlan){
-		
-		
 		if (virtualDeviceCreditLimitTxt.isVisible()) {
 			if (virtualDeviceCreditLimitTxt.isEnabled())
 				enterValueinTextBox(virtualDeviceCreditLimitTxt, devicePlan.getPerTransactionLimit());
