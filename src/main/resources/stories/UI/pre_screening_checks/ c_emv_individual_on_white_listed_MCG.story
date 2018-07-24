@@ -6,12 +6,10 @@ I want to make transaction at white listed MCG via credit card
 
 Meta:
 @StoryName  c_emv_individual_on_white_listed_MCG				 
+@white_listed_MCG
 Scenario:creation of mastercard_individual_primary_emv Card credit device
-Meta:
-@UserCreatesNewCreditDevice
-Given setting json values in excel
-When user is logged in institution
-And User fills Dedupe Plan
+Given user is logged in institution
+When User fills Dedupe Plan
 And User fills Statement Message Plan for credit product
 And User fills Marketing Message Plan for credit product
 And User fills Transaction Plan for credit product
