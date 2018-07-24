@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AvailableBalance;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -86,6 +89,11 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='modelFormClass']//span[contains(text(),'Auth Decline Code')]/../following-sibling::td[1]/span/span")
 	private MCWebElement authDeclineCodeLbl;
+	
+	@PageElement(findBy=FindBy.X_PATH, valueToFind = "//td[contains(text(),'Available Balance')]/following-sibling::td[1]/span/span")
+	private MCWebElement availableBalanceTxt;
+	
+	private String amountTypes = "Billing Amount:Transaction Fee:Service Tax:Markup Fee:Markup Service Tax";
 
 	public void verifyUiOperationStatus() {
 		logger.info("Authorization Search");
@@ -169,5 +177,22 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 			clickCloseButton();
 		});
 		return fieldsForAssertion;
+	}
+	
+	public AvailableBalance getAvailableBalance(){
+		String[] amountType = amountTypes.split(":");
+		AvailableBalance availBal = new AvailableBalance();
+		runWithinPopup("View Authorization", () -> {
+			BigDecimal sum =  new BigDecimal(0)   ;
+			for(String str : amountType){
+				String value = Element("//span[contains(text(),'"+str+"')]/../span[2]/span").getText();
+				logger.info("value of " + str + " = "+  value);
+				sum = sum.add(new BigDecimal(value),  new MathContext(5));
+			}
+			availBal.setSum(sum);
+			availBal.setAvailableBal(new BigDecimal(getTextFromPage(availableBalanceTxt)));			
+			clickCloseButton();
+		});
+		return availBal;
 	}
 }

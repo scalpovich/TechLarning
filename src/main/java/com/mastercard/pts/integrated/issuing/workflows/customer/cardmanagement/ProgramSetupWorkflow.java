@@ -241,4 +241,9 @@ public class ProgramSetupWorkflow {
 		ProgramPage page = navigator.navigateToPage(ProgramPage.class);
 		page.editProgramForPlans(program,editItem);
 	}
+	
+	public void editMCCRulePlan(MCCRulePlan plan) {
+		MCCRulePlanPage page = navigator.navigateToPage(MCCRulePlanPage.class);
+		page.editMCCRulePlanPage(plan);
+	}
 }
