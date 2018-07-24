@@ -10,7 +10,7 @@ Meta:
 @SanityCards
 
 Scenario: To verify functionality of prepaid card boarding
-Given setting json values in excel
+Given setting json values in excel for Prepaid
 When user is logged in institution
 And User fills Statement Message Plan for prepaid product
 And User fills Marketing Message Plan for prepaid product

@@ -10,7 +10,7 @@ Meta:
 @SanityCards
 
 Scenario: To verify functionality of prepaid card boarding
-Given setting json values in excel
+Given setting json values in excel for Debit
 When user is logged in institution
 And User fills MCC Rules for debit product
 And User fills Dedupe Plan
