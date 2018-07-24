@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Test;
@@ -88,7 +89,7 @@ public class CloseBatchPage extends AbstractBasePage {
 			}			
 		}
 		return index;
-	}
+	}	
 	
 	public void processAppropriateBatchForApplication(){
 		String checkBox = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcess()+1+"]/td[10]/span/input";
