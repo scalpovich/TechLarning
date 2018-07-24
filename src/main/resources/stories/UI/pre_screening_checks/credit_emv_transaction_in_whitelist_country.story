@@ -7,9 +7,8 @@ I want to make transaction at white listed country via credit card
 
 Meta:
 @StoryName credit_emv_retail_trx_in_white_list_country				 
+@countryWhiteBlackListPreScreening
 Scenario:creation of mastercard_individual_primary_emv Card credit device
-Meta:
-@UserCreatesNewCreditDevice
 Given setting json values in excel
 When user is logged in institution
 And User fills Dedupe Plan
@@ -48,14 +47,14 @@ Then FINSim simulator is closed
 
 Scenario: Transaction
 Given connection to MAS is established
-When perform an MSR_PURCHASE MAS transaction
+When perform an EMV_PURCHASE MAS transaction
 And MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 
 Scenario: Perform INT_MSR_PURCHASE Authorization transaction
-When perform an INT_MSR_PURCHASE MAS transaction on the same card
+When perform an INT_EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
 And search Purchase authorization and verify 100-Do Not Honour status
 And assert Decline response with 25001 AuthDecline Code and Whitelisted Country Not Found as description

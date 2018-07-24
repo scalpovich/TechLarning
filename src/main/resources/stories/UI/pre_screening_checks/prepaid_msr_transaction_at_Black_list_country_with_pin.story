@@ -7,7 +7,7 @@ I want to make transaction at black listed country via prepaid card
 
 Meta:
 @StoryName prepaid_card_trx_at_black_list_country
-
+@countryWhiteBlackListPreScreening
 Scenario: Set up prepaid msr retail general purpose card
 Given user is logged in institution
 When User fills Statement Message Plan for prepaid product

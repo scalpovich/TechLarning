@@ -34,7 +34,6 @@ public class AuthorizationSearchSteps {
 	private KeyValueProvider provider;
 	
 	@When("search $type authorization and verify $state status")
-	@When("search $type authorization and verify $state status")
 	public void thenUserSearchDeviceNumerWithTodaysDate(String type, String state) {
 		Device device = context.get(ContextConstants.DEVICE);
 		authorizationSearchWorkflow.verifyAuthTransactionSearch(type, state,device.getDeviceNumber());

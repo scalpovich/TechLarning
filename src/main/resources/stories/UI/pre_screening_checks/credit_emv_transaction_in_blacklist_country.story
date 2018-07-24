@@ -7,9 +7,8 @@ I want to make transaction at black listed country via credit card
 
 Meta:
 @StoryName credit_emv_retail_trx_in_black_list_country				 
+@countryWhiteBlackListPreScreening
 Scenario:creation of mastercard_individual_primary_emv Card credit device
-Meta:
-@UserCreatesNewCreditDevice
 Given setting json values in excel
 When user is logged in institution
 And User fills Dedupe Plan
@@ -48,9 +47,9 @@ Then FINSim simulator is closed
 
 Scenario: Perform INT_MSR_PURCHASE Authorization transaction
 Given connection to MAS is established
-When perform an MSR_PURCHASE MAS transaction
+When perform an EMV_PURCHASE MAS transaction
 And MAS test results are verified
-And perform an INT_MSR_PURCHASE MAS transaction on the same card
+And perform an INT_EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
 And search Purchase authorization and verify 100-Do Not Honour status
 And assert Decline response with 25002 AuthDecline Code and Country is blacklisted. as description
