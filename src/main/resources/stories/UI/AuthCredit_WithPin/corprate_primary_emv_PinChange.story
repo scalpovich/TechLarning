@@ -9,7 +9,7 @@ Meta:
 Scenario:creation of mastercard_corporate_primary_EMV Card credit device
 Meta:
 @TestId TC548377
-Given setting json values in excel
+Given setting json values in excel for Credit
 Given user is logged in institution
 When User fills Dedupe Plan
 And User fills Statement Message Plan for credit product
