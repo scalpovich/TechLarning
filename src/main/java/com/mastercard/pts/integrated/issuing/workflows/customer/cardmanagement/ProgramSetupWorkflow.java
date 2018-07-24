@@ -239,4 +239,9 @@ public class ProgramSetupWorkflow {
 		page.editsWalletPlan(walletPlan,editableFieldForWalletPlan);
 		
 	}
+	
+	public void editMCCRulePlan(MCCRulePlan plan) {
+		MCCRulePlanPage page = navigator.navigateToPage(MCCRulePlanPage.class);
+		page.editMCCRulePlanPage(plan);
+	}
 }

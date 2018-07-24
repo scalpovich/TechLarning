@@ -6,7 +6,6 @@ import org.jbehave.core.annotations.When;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
@@ -44,6 +43,7 @@ public class DeviceSteps {
 	private static final String CORPORATE_CLIENT_CODE_DEVICE2 = "CORPORATE_CLIENT_CODE_DEVICE2";
 
 	@When("user creates new device of $type type for new client")
+	@Then("user creates new device of $type type for new client")
 	public void whenUserCreatesNewDeviceForNewClient(String type) {
 		Device device = Device.createWithProvider(provider);
 
@@ -57,7 +57,6 @@ public class DeviceSteps {
 
 		deviceWorkflow.createDevice(device);
 		context.put(ContextConstants.DEVICE, device);
-
 	}
 
 	@When("user creates new device of $type type for non-default institution")

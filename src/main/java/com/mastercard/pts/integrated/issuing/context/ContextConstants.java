@@ -42,10 +42,20 @@ public class ContextConstants {
 
 	public static final String TX_LIMIT_PLAN_CODE = "TX_LIMIT_PLAN_CODE";
 
+	public static final String TRANSACTION_FEE_WAIVER_PLAN = "TRANSACTION_FEE_WAIVER_PLAN";
+	
 	public static final String USER = "USER";
 	
 	public static final String DEVICE_SUPPLEMENTARY_ADDON_EXISTING = "DEVICE_SUPPLEMENTARY_ADDON_EXISTING";
+	
+	public static final String CARD_CREDIT_LIMIT = "CARD_CREDIT_LIMIT";
+	
+	public static final String AVAILABLE_BALANCE_OR_CREDIT_LIMIT = "AVAILABLE_BALANCE_OR_CREDIT_LIMIT";
 
+	public static final String INTERNATIONAL = "international";
+	
+	public static final String DOMESTIC = "domestic";
+	
 	private ContextConstants() {
 	}
 
