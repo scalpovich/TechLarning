@@ -163,15 +163,13 @@
    "corporateClientCode":"12121218003000051"
    },
    {
+   "productIdentity":"Credit",
    "code":"303045",
    "abbreviation":"AUTOBNG",
-   "association":"MASTERCARD",
    "branch":"184",
    "cardPackIdGenerationTemplate":"PAN800",
    "deviceIdGenerationTemplate":"PAN798",
-   "customerType":"Individual",
    "embossingVendor":"AUTO",
-   "interchange":"MASTERCARD",
    "mastercardPrepaidIssuerBin":"592733",
    "mastercardDebitIssuerBin":"571504",
    "mastercardCreditIssuerBin":"574253",
@@ -181,6 +179,19 @@
    "plasticId":"AUT",
    "pictureCode":"AUT",
    "corporateClientCode":"30304518199000001"
+   "dedupePlanCode":"TA5289SXCU [TA5289SXCU]",
+   "prepaidStatementPlan":"AUTOMATION [TA4048YAQU]",
+   "statementMessagePlan":"AUTOMATION [TA4195CHGX]",
+   "marketingMessagePlan":"AUTOMATION [TA1480MCFS]",
+   "documentCheckListPlan":"AUTOMATION [TA9790HTCU]",
+   "mccRulePlan":"AUTOMATION [TA9473FE8]",
+   "deviceJoiningAndMemberShipFeePlan":"AUTOMATION [TA3608VH]",
+   "deviceEventBasedFeePlan":"AUTOMATION [TA1764NE]",
+   "transactionLimitPlan":"AUTOMATION [TA1347LPRR]",
+   "transactionPlan":"AUTOMATION [T8278L]",
+   "creditPlan":"TA4413NYAX [102]",
+   "billingCycle":"AUTOMATION [131]",
+   "walletPlan":"AUTOMATION [TA1160XDAT]"
    }
    ]
 }
