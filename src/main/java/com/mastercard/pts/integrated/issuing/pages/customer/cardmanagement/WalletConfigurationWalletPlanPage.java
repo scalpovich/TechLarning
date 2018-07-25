@@ -17,6 +17,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Cred
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -72,7 +73,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	private MCWebElement creditPlanDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:billingCycleCode:input:dropdowncomponent")
-	private MCWebElement billingCyleCodeDDwn;
+	private MCWebElement billingCycleCodeDDwn;
 
 	private int reservedAmount = 0; // MiscUtils.randomNumber(5);
 
@@ -100,26 +101,30 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(usageDDwn, usage);
 	}
 
-	public void selectCreditPlan(String creditPlan) {
-		if(context.get(CreditConstants.CREDIT_PLAN_CODE_ERROR_STATUS).equals(true))
-		{
+	public void selectCreditPlan(String creditPlan) {	
+		
+		if (Objects.isNull(context.get(ConstantData.JSON_DATA_DRIVEN_EXECUTION))) {
+			if (context.get(CreditConstants.CREDIT_PLAN_CODE_ERROR_STATUS).equals(true)) {
 			WebElementUtils.selectDropDownByIndex(creditPlanDDwn, 1);
+			} else {
+				WebElementUtils.selectDropDownByVisibleText(creditPlanDDwn, creditPlan);
 		}
-		else
-		{
+		} else {
 			WebElementUtils.selectDropDownByVisibleText(creditPlanDDwn, creditPlan);
 		}
+
 	}
 
-	public void selectBillingCycleCode(String billingCyleCode) {
-		if(context.get(CreditConstants.BILLING_CYCLE_CODE_ERROR_STATUS).equals(true))
-		{
-			WebElementUtils.selectDropDownByIndex(billingCyleCodeDDwn, 1);
+	public void selectBillingCycleCode(String billingCycleCode) {
+		
+		if (Objects.isNull(context.get(ConstantData.JSON_DATA_DRIVEN_EXECUTION))) {
+			if (context.get(CreditConstants.BILLING_CYCLE_CODE_ERROR_STATUS).equals(true)) {
+				WebElementUtils.selectDropDownByIndex(billingCycleCodeDDwn, 1);
+			} else {
+				WebElementUtils.selectDropDownByVisibleText(billingCycleCodeDDwn, billingCycleCode);
 		}
-		else
-		{
-			WebElementUtils.selectDropDownByVisibleText(billingCyleCodeDDwn,
-					billingCyleCode);
+		} else {
+			WebElementUtils.selectDropDownByVisibleText(billingCycleCodeDDwn, billingCycleCode);
 		}
 	}
 
