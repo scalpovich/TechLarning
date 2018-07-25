@@ -9,7 +9,7 @@ Meta:
 Scenario:creation of mastercard_individual_primary_LVVC Card credit device
 Meta:
 @UserCreatesNewCreditDevice
-Given setting json values in excel
+Given setting json values in excel for Credit
 When user is logged in institution
 When User fills Dedupe Plan
 And User fills Statement Message Plan for credit product

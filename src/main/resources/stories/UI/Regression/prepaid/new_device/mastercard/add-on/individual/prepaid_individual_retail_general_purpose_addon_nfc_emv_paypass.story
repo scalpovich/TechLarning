@@ -33,3 +33,4 @@ And prepaid device is created using new device screen for Individual [0] and Add
 And prepaid processes pre-production batch using new Device
 And prepaid processes deviceproduction batch using new Device for Supplementary
 Then User search for new device Supplementary on search screen for prepaid and validates the status as NORMAL
+And user sign out from customer portal

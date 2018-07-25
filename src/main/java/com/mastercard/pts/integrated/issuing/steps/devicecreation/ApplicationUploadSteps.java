@@ -139,6 +139,7 @@ public class ApplicationUploadSteps {
 		batchProcessFlows.processPinProductionBatchNewApplication(batch);
 	}
 	
+	@Then("$type processes pingeneration batch using new Device for Supplementary")
 	@When("$type processes pingeneration batch using new Device for Supplementary")
 	public void whenProcessesPinGenerationBatchUsingNewDeviceForSupplementry(String type) {
 		PinGenerationBatch batch = new PinGenerationBatch();
