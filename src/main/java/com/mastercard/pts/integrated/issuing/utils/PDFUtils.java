@@ -1,8 +1,13 @@
 package com.mastercard.pts.integrated.issuing.utils;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.PipedInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -12,13 +17,17 @@ import java.util.List;
 
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.pdfbox.lucene.LucenePDFDocument;
 import org.apache.pdfbox.multipdf.Splitter;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.common.PDStream;
+import org.apache.pdfbox.pdmodel.encryption.StandardDecryptionMaterial;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.pdfbox.text.TextPosition;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.AutoDetectParser;
+import org.apache.tika.parser.ParseContext;
+import org.apache.tika.parser.Parser;
+import org.apache.tika.sax.BodyContentHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -108,13 +117,11 @@ public class PDFUtils {
 		try {
 			File file = new File(pdfPath);
 			file.getParentFile().mkdirs();
-			PDDocument document =  PDDocument.load(file,genericReports.getUsername().substring(0,4)+"1707");        
-			PDStream ps=new PDStream(document);
-			InputStream is=ps.createInputStream();
-            Document doc1 = LucenePDFDocument.getDocument(is);
-            System.out.println("END-------"+doc1.getFields().get(1));
-			PDFTextStripper tStripper = new PDFTextStripper();
-            tStripper.setAddMoreFormatting(true);
+			PDDocument document =  PDDocument.load(file,genericReports.getUsername().substring(0,4)+"1707");
+			document.setAllSecurityToBeRemoved(true);
+			StringBuilder sb = new StringBuilder();
+     		PDFTextStripper tStripper = new PDFTextStripper();
+     		tStripper.setAddMoreFormatting(true);
                 //Instantiating Splitter class
             Splitter splitter = new Splitter();
 
@@ -123,23 +130,15 @@ public class PDFUtils {
 
             //Saving each page as an individual document
             int i = 1;
-          // while(iterator.hasNext()) {
+          while(iterator.hasNext()) {
                PDDocument pd = iterator.next();
             
             String pdfFileInText = tStripper.getText(pd);
-            Document doc = new Document();
-            doc.add(new Field("pdfContent", pdfFileInText, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS));
-            System.out.println("END-------"+doc.getFields().get(0));
-
+            
+            System.out.println("PDF--"+sb.toString());
 			// split by RegEx
-            //String lines[] = pdfFileInText.split(genericReports.getRegEx());
-//            String lines[] = pdfFileInText.split("\\d\\d-\\d\\d-\\d\\d\\d\\d");
-//           for(String line : lines){
-//        	   System.out.println(line);
-//        	   System.out.println("END-----");
-//           }
-//            map.put(i++,lines);
-//				//}
+            map.put(i++,pdfFileInText.split(genericReports.getRegEx()));
+			}
            document.close();
 		}catch(Exception e){
 			e.printStackTrace();
