@@ -260,8 +260,7 @@ public class DeviceSteps {
 	@Given("\"$type\" is created with \"$application\" as application type with application sub-type as \"$applicationSubType\" and customer of type \"$customerType\" with \"$deviceType\"")
 	@When("\"$type\" is created with \"$application\" as application type with application sub-type as \"$applicationSubType\" and customer of type \"$customerType\" with \"$deviceType\"")
 	@Then("\"$type\" is created with \"$application\" as application type with application sub-type as \"$applicationSubType\" and customer of type \"$customerType\" with \"$deviceType\"")
-	public void createDeviceWithDeviceAndProgramPlan(
-			String type, String application, String applicationSubType,String customerType,String deviceType) {
+	public void createDeviceWithDeviceAndProgramPlan(String type, String application, String applicationSubType,String customerType,String deviceType) {
 		Device device = Device.createWithProvider(provider);
 		
 		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));	
