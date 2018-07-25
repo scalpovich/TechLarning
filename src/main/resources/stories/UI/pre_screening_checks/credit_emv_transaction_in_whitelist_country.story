@@ -7,11 +7,10 @@ I want to make transaction at white listed country via credit card
 
 Meta:
 @StoryName credit_emv_retail_trx_in_white_list_country				 
-@countryWhiteBlackListPreScreening
+@CountryWhiteBlackListPreScreening
 Scenario:creation of mastercard_individual_primary_emv Card credit device
-Given setting json values in excel
-When user is logged in institution
-And User fills Dedupe Plan
+Given user is logged in institution
+When User fills Dedupe Plan
 And User fills Statement Message Plan for credit product
 And User fills Marketing Message Plan for credit product
 And User fills Transaction Plan for credit product

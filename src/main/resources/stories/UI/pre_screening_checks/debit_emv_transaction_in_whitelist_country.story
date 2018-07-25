@@ -7,7 +7,7 @@ I want to make transaction at white listed country via debit card
 
 Meta:
 @StoryName d_emv_corp_trx_on_white_list_country
-@countryWhiteBlackListPreScreening
+@CountryWhiteBlackListPreScreening
 
 Scenario: Set up program for debit emv corporate debit card
 Given user is logged in institution
