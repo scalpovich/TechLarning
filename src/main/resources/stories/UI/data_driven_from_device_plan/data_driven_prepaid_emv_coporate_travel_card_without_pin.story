@@ -7,7 +7,7 @@ I want to authorize transactions for prepaid emv corporate travel card
 
 Meta:
 @StoryName p_emv_corp_travel
-
+@JsonDataDriven
 Scenario: Set up prepaid emv corporate travel card
 Given setting json values in excel for Prepaid
 When user is logged in institution
@@ -38,5 +38,5 @@ When perform an EMV_PREAUTH MAS transaction
 And MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
-And search Pre-Auth authorization and verify 000-Successful status
-Then user sign out from customer portal
+Then search Pre-Auth authorization and verify 000-Successful status
+And user sign out from customer portal

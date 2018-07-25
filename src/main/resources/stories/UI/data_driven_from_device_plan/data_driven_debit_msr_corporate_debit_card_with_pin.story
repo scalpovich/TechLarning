@@ -44,5 +44,5 @@ Given connection to MAS is established
 When perform an MSR_PREAUTH MAS transaction
 And MAS test results are verified
 And user is logged in institution
-And search Pre-Auth authorization and verify 000-Successful status
-Then user sign out from customer portal
+Then search Pre-Auth authorization and verify 000-Successful status
+And user sign out from customer portal

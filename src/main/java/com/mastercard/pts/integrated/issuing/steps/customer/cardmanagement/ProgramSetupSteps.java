@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.InstitutionData;
 import com.mastercard.pts.integrated.issuing.domain.DeviceType;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
@@ -714,7 +715,7 @@ public class ProgramSetupSteps {
 	}
 	
 	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card without pin")
-	public void whenUserFillsDevicePlanForCrddWithoutPin(String productType, String deviceType) {
+	public void whenUserFillsDevicePlanForCardWithoutPin(String productType, String deviceType) {
 		setPinRequiredToFalse();
 		// virtual cards are pinless so even if this statement is called by
 		// mistake, we are setting Pin to false
@@ -746,7 +747,7 @@ public class ProgramSetupSteps {
 		// card or not. This is used in TransactionSteps to set ExpiryDate in
 		// case of PinLess Card
 		if (ConstantData.PIN_REQUIRED_FALSE.equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
-			devicePlan.setIsPinLess("YES");
+			devicePlan.setIsPinLess(ConstantData.PIN_REQUIRED_YES);
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
@@ -1073,7 +1074,7 @@ public class ProgramSetupSteps {
 			program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
 			program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
 		} else {
-			program.setDedupPlan(data.getDeDupePlanCode());
+			program.setDedupPlan(data.getDedupePlanCode());
 			program.setDocumentChecklistPlan(data.getDocumentCheckListPlan());
 			program.setMccRulePlan(data.getMccRulePlan());
 		}
@@ -1112,13 +1113,13 @@ public class ProgramSetupSteps {
 		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
 		program.setApplicationType(applicationType);
 		program.setSubApplicationType(subApplicationType);
-		if (program.getApplicationType().contains("Supplementary") || program.getApplicationType().contains("Add-on") && program.getSubApplicationType().contains("Existing")) {
+		if (program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE) || program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && program.getSubApplicationType().contains(ConstantData.EXISTING)) {
 			program.setDevicePlanPlan2(devicePlanSupplementary.buildDescriptionAndCode());
 		}
 		if (Objects.nonNull(dedupePlan)) {
 			program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
 		} else {
-			program.setDedupPlan(data.getDeDupePlanCode());
+			program.setDedupPlan(data.getDedupePlanCode());
 		}
 		if (Objects.nonNull(documentCheckListPlan)) {
 			program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
