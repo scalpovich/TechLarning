@@ -38,5 +38,5 @@ When perform an FALLBACK_PURCHASE MAS transaction
 And MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
-Then search Pre-Auth authorization and verify 000-Successful status
+Then search FallBack Transaction authorization and verify 000-Successful status
 And user sign out from customer portal
