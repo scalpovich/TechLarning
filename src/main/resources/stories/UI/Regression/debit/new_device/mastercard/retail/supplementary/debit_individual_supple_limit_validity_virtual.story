@@ -7,7 +7,7 @@ In order to crate supplementary debit card
 
 Meta:
 @StoryName debit_card
-@SanityCards
+@DebitRegression
 
 Scenario: To verify functionality of debit supplementary Limited Validity Virtual Card [8] card boarding
 Given setting json values in excel for Debit

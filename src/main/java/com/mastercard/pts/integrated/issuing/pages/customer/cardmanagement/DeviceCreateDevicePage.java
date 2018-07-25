@@ -445,8 +445,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);
 			WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));
 		}
-
-		clickNextButton();
-		//clickNextButton();
+		clickNextButton();		
 	}
 }

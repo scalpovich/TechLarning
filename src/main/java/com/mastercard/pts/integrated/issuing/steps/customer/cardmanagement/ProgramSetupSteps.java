@@ -15,6 +15,7 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.DeviceType;
+import com.mastercard.pts.integrated.issuing.domain.InstitutionData;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.ProgramType;
 import com.mastercard.pts.integrated.issuing.domain.SubApplicationType;
@@ -700,6 +701,44 @@ public class ProgramSetupSteps {
 	public void whenUserFillsDevicePlanForCrddWithNoPin(String productType, String deviceType) {
 		setPinRequiredToFalse();
 		whenUserFillsDevicePlanForCrdd(productType, deviceType);
+	}
+	
+	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card without pin")
+	public void whenUserFillsDevicePlanForCardWithoutPin(String productType, String deviceType) {
+		setPinRequiredToFalse();
+		// virtual cards are pinless so even if this statement is called by
+		// mistake, we are setting Pin to false
+		if (deviceType.toLowerCase().contains(ConstantData.VIRTUAL_DEVICE_TYPE)) {
+			setPinRequiredToFalse();
+		}
+		devicePlan = DevicePlan.createWithProvider(provider);
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		devicePlan.setProductType(ProductType.fromShortName(productType));
+		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
+		if (Objects.nonNull(deviceJoiningAndMemberShipFeePlan)) {
+			devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+			devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+			devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		} else {
+			devicePlan.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());
+			devicePlan.setBaseDeviceEventBasedPlan(data.getDeviceEventBasedFeePlan());
+			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
+		}
+		if (Objects.nonNull(transactionPlan)) {
+			devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+			devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		} else {
+			devicePlan.setAfterKYC(data.getTransactionPlan());
+			devicePlan.setBeforeKYC(data.getTransactionPlan());
+		}
+
+		// setting a flag through setter to figure out if the card is pinless
+		// card or not. This is used in TransactionSteps to set ExpiryDate in
+		// case of PinLess Card
+		if (ConstantData.PIN_REQUIRED_FALSE.equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
+			devicePlan.setIsPinLess(ConstantData.PIN_REQUIRED_YES);
+		programSetupWorkflow.createDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 
 	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card")

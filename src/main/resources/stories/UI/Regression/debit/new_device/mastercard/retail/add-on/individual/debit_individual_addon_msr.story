@@ -7,7 +7,7 @@ In order to create add-on debit card
 
 Meta:
 @StoryName debit_card
-@SanityCards
+@DebitRegression
 
 Scenario: To verify functionality of prepaid card boarding
 Given setting json values in excel for Debit

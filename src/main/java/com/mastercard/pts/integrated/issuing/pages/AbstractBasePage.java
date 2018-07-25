@@ -1774,7 +1774,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return Elements(ERROR_XPATH);
 	}
 	
-	public void moveToElemenAndClick(MCWebElement element,int xOffset, int yOffset){
+	public void moveToElementAndClick(MCWebElement element,int xOffset, int yOffset){
 		Actions action = new Actions(driver());		
 		action.moveToElement(asWebElement(element), xOffset, yOffset).click().build().perform();
 	}

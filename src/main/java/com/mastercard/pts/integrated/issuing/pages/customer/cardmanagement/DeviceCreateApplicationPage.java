@@ -104,7 +104,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 	private MCWebElement birthDateDPkr;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:married:input:dropdowncomponent")
-	private MCWebElement maritialStatusDDwn;
+	private MCWebElement maritalStatusDDwn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#crAccountNbr input")
 	private MCWebElement accountNbrTxt;
@@ -422,7 +422,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(genderDDwn, client.getGender());
 		WebElementUtils.selectDropDownByVisibleText(nationalityDDwn, client.getNationality());
 		WebElementUtils.pickDate(birthDateDPkr, client.getBirthDate());
-		WebElementUtils.selectDropDownByVisibleText(maritialStatusDDwn, client.getMaritialStatus());
+		WebElementUtils.selectDropDownByVisibleText(maritalStatusDDwn, client.getMaritialStatus());
 		
 		if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.DEBIT)) {
 			WebElementUtils.enterText(accountNbrTxt, device.getAccountNumber());

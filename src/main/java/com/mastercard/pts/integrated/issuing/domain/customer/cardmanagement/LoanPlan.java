@@ -100,8 +100,8 @@ public class LoanPlan {
 		this.loanPlanDescription = loanPlanDescription;
 	}
 	
-	public void setProgramCode(String ProgramCode) {
-		this.programCode = ProgramCode;
+	public void setProgramCode(String programCode) {
+		this.programCode = programCode;
 	}	
 	
 	public String getProgramCode() {

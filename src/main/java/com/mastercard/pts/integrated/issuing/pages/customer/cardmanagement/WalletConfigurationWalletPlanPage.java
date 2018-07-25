@@ -111,7 +111,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		}
 	}
 
-	public void selectBillingCyleCode(String billingCyleCode) {
+	public void selectBillingCycleCode(String billingCyleCode) {
 		if(context.get(CreditConstants.BILLING_CYCLE_CODE_ERROR_STATUS).equals(true))
 		{
 			WebElementUtils.selectDropDownByIndex(billingCyleCodeDDwn, 1);
@@ -205,7 +205,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	private void fillDetailsBasedOnCardType(WalletPlan walletPlan, String productType) {
 		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 			selectCreditPlan(walletPlan.getCreditPlan());
-			selectBillingCyleCode(walletPlan.getBillingCyleCode());
+			selectBillingCycleCode(walletPlan.getBillingCyleCode());
 		}
 		
 		if (productType.equalsIgnoreCase(ProductType.DEBIT)) {

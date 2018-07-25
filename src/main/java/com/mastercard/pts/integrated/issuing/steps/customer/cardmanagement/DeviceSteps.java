@@ -44,6 +44,7 @@ public class DeviceSteps {
 	private static final String CORPORATE_CLIENT_CODE_DEVICE2 = "CORPORATE_CLIENT_CODE_DEVICE2";
 
 	@When("user creates new device of $type type for new client")
+	@Then("user creates new device of $type type for new client")
 	public void whenUserCreatesNewDeviceForNewClient(String type) {
 		Device device = Device.createWithProvider(provider);
 
@@ -259,7 +260,7 @@ public class DeviceSteps {
 	@Given("\"$type\" is created with \"$application\" as application type with application sub-type as \"$applicationSubType\" and customer of type \"$customerType\" with \"$deviceType\"")
 	@When("\"$type\" is created with \"$application\" as application type with application sub-type as \"$applicationSubType\" and customer of type \"$customerType\" with \"$deviceType\"")
 	@Then("\"$type\" is created with \"$application\" as application type with application sub-type as \"$applicationSubType\" and customer of type \"$customerType\" with \"$deviceType\"")
-	public void creditDevicePlanAndProgramAreMadeAvailableToDeviceCreation(
+	public void createDeviceWithDeviceAndProgramPlan(
 			String type, String application, String applicationSubType,String customerType,String deviceType) {
 		Device device = Device.createWithProvider(provider);
 		

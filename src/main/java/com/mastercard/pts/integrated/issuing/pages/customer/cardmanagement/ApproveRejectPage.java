@@ -60,7 +60,7 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 	}
 	
 	
-	public void clickEditImageForTheRecordDisplayed(){
+	public void clickEditRecord(){
 		waitForPageToLoad(driver());
 		clickWhenClickableDoNotWaitForWicket(editImg);	
 	}
@@ -69,7 +69,7 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 	public String approveApplication(){
 		enterApplicationNumber();
 		selectFromAndToDate();	
-		clickEditImageForTheRecordDisplayed();	
+		clickEditRecord();	
 		SimulatorUtilities.wait(5000);
 		
 		runWithinPopup("Edit Application", () -> {

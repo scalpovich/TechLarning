@@ -46,7 +46,7 @@ public class LoanPlanSteps extends AbstractBaseSteps {
 	}
 	
 	@When("user creates loan plan for $type")
-	public void userCreatessLoanplan(String type) { 		
+	public void userCreateLoanPlan(String type) { 		
 		loanPlan = LoanPlan.dataProvider(keyValueProvider);		
 		if(Objects.nonNull(context.get(ContextConstants.PROGRAM))){
 			program = context.get(ContextConstants.PROGRAM);		
