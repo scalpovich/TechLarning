@@ -4,36 +4,27 @@ As an issuer
 I want to run few tests
 
 Meta:
-@StoryName debit_emv_retailBVT
+@StoryName p_emv_retail_travel
 @NonUIBVTest
 
-Scenario:1 Non-UI Verification - Set up emv debit card and device production
+Scenario: Set up prepaid emv retail travel card
 Meta:
-@TestId TC398108
+@TestId TC398452
 Given user is logged in institution
-When User fills Dedupe Plan
-When User fills MCC Rules for prepaid product
-When User fills Transaction Plan for prepaid product
-When User fills Transaction Limit Plan for prepaid product
-When User fills Document Checklist Screen for prepaid product
-When User fills Device Joining and Membership Fee Plan for prepaid product
-When User fills Device Event Based Fee Plan for prepaid product
-When User fills Device Plan for "prepaid" "magnetic stripe" card with no pin
-When User fills Wallet Plan for prepaid product
-When User fills Program section for prepaid product
-When User fills Device Range section for prepaid product
-When user assigns service code to program
+And device range for program with device plan for "prepaid" "emv" card
+Then user sign out from customer portal
+
+Scenario: prepaid emv retail travel card device production
+Meta:
+@TestId TC408068
+Given user is logged in institution
 When user creates new device of prepaid type for new client
-Then device has "normal" status
-When a new device was created
+And a new device was created
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
-!-- And processes pin generation batch for debit
-!-- When user has wallet number information for debit device
-!-- When user performs adjustment transaction
-!-- When user has current wallet balance amount information for debit device
-!-- Then device has "normal" status
-!-- When user activates device through helpdesk
+And processes pin generation batch for prepaid
+And device has "normal" status
+
 Scenario:2 Non-UI Verification - emv debit card manual authorization
 Meta:
 @TestId TC408283
