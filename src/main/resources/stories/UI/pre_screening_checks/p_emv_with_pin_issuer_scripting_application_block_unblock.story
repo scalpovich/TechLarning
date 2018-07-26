@@ -8,7 +8,7 @@ when application is in block or unblock mode
 
 Meta:
 @StoryName p_emv_issuer_scripting_app_block_unblock
-
+@IssuerScript
 Scenario: Set up prepaid emv corporate travel card
 Given setting json values in excel for Prepaid
 When user is logged in institution
