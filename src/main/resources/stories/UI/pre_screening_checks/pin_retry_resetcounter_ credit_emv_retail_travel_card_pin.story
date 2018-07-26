@@ -29,7 +29,7 @@ And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
 And User fills MCC Rules for credit product
 And User Primary Device fills New Program Retail Credit Card section for credit product for Mastercard
-When for Primary Device and New Client user fills Device Range section for credit product
+And for Primary Device and New Client user fills Device Range section for credit product
 Then credit device is created using new device screen for Bank Staff and Primary Device and New Client and EMV Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
@@ -52,7 +52,7 @@ When perform an EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 106-Allowable Pin tries exceeded status
 And assert Decline response with 46053 AuthDecline Code and Pin retry limit exceeded. as description
-Then device has "normal" status
+And device has "normal" status
 When user reset pin retry counter Reset Pin Retry Counter [109]
 And user sign out from customer portal
 
@@ -66,5 +66,5 @@ When perform an EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
-Then FINSim simulator is closed
+And FINSim simulator is closed
 And MAS simulator is closed

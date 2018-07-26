@@ -36,7 +36,7 @@ And processes pin generation batch for prepaid
 Then device has "normal" status
 When user has wallet number information for prepaid device
 Then user sign out from customer portal
-Then user is logged in institution
+And user is logged in institution
 When user performs adjustment transaction with 105 amount
 And user has current wallet balance amount information for prepaid device
 Then device has "normal" status

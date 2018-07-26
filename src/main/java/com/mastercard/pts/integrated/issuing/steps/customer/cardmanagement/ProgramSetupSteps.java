@@ -1236,7 +1236,7 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createTransactionPlanWithoutAnyTransaction(transactionPlan);
 	}
 	
-	@When("User fills Wallet Plan for $type product and $amount reserved amount")
+	@When("User fills Wallet Plan for $type product and $reservedAmount reserved amount")
 	public void whenUserFillsWalletPlanWithReservedAmount(String type, int reservedAmount) {
 		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
 		walletPlan.setProductType(ProductType.fromShortName(type));

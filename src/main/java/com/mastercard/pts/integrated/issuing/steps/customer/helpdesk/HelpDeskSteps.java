@@ -773,7 +773,7 @@ public class HelpDeskSteps {
 	@When("user reset pin retry counter $serviceCode")
 	public void whenUserResetPinRetryCounterThroughHelpDesk(String serviceCode) {
 		helpdeskGeneral.setServiceCode(serviceCode);
-		helpdeskGeneral.setNotes(MiscUtils.generate10CharAlphaNumeric());
+		helpdeskGeneral.setNotes(MiscUtils.generateRandomNumberAsString(6));
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.resetPinCounter(helpdeskGeneral);
 	}

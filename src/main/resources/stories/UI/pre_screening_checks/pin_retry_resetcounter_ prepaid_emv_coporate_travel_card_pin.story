@@ -41,7 +41,7 @@ When perform an EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 106-Allowable Pin tries exceeded status
 And assert Decline response with 46053 AuthDecline Code and Pin retry limit exceeded. as description
-Then device has "normal" status
+And device has "normal" status
 When user reset pin retry counter Reset Pin Retry Counter [109]
 And user sign out from customer portal
 
