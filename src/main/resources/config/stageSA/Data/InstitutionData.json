@@ -17,7 +17,7 @@
    "plasticId":"Plastic code [317]",
    "pictureCode":"Picture code [705]",
    "corporateClientCode":"Prepaid Corporate Client [11008818074000001]",
-   "deDupePlanCode":"TA8730JMOD [TA8730JMOD]",
+   "dedupePlanCode":"TA8730JMOD [TA8730JMOD]",
    "prepaidStatementPlan":"AUTOMATION [TA2709PNVS]",
    "statementMessagePlan":"AUTOMATION [TA8010TFFZ]",
    "marketingMessagePlan":"AUTOMATION [TA7549JQBG]",
