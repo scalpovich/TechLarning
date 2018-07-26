@@ -37,6 +37,7 @@ And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pingeneration batch using new Device for Supplementary
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+And user sign out from customer portal
 
 Scenario: Pin Generation
 Given connection to FINSim is established
