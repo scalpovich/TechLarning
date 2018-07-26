@@ -64,6 +64,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String CLOSED_BY =  "Closed By:";
 	private static final String CLOSURE_PERIOD = "Estimated Closure Period(Days:HH:MM):";
 	private static final String PRIORITY_REQUEST = "Priority Request:";
+
 	
 	private static String ERROR_MESSAGE = "This field is required.";
 	
@@ -224,7 +225,14 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement closurePeriodLbl;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind="span#priorityRequest>input")
-	private MCWebElement priorityRequestChkBx;
+	private MCWebElement priorityRequestChkBx;	
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Current Status and Limits']")
+	private MCWebElement currentStatusAndLimitTab;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Card :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement creditLimitLabel;
+	
 	
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
 	
@@ -970,6 +978,17 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			verifyPriorityRequest();
 		});
 		return true;
+	}
+	
+	public BigDecimal noteDownAvailableLimit(String type){	
+		BigDecimal creditLimit;
+		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
+		clickWhenClickable(currentStatusAndLimitTab);			
+		creditLimit = new BigDecimal(creditLimitLabel.getText());		
+		logger.info("Credit limit noted down : {} ",creditLimit);
+		clickEndCall();
+		return creditLimit;				
+	
 	}
 	
 }

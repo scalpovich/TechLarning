@@ -74,9 +74,24 @@ public class ConstantData {
 	public static final String THREE_D_SECURE_TRANSACTION = "3D_SECURE_CAVV";
 	public static final String DATA_ELEMENT_CAVV = "048.TLV.43";
 	
+	public static final String INSTITUTION_KEY = "institution";
+	public static final String PRODUCT_IDENTITY = "productIdentity";
+	public static final String INSTITUTION_CODE_KEY = "code";
+	
+	public static final String PIN_REQUIRED_FALSE = "false";
+	public static final String JSON_DATA_DRIVEN_EXECUTION = "dataDrivenExecution";
+	public static final String VIRTUAL_DEVICE_TYPE = "virtual";
+
+	public static final String INVALID_CVV = "123";	
+	public static final String INVALID_CVV2 = "123";	
+	public static final String INVALID_ICVV = "123";	
+	public static final String INVALID_PVKI = "123";
+	
+	public static final String EXISTING = "Existing";
+	public static final String PIN_REQUIRED_YES = "YES";
+	
 	public static final String ZERO_ZERO = "00";
 	public static final String NINE_NINE = "99";
-	
 
 	private ConstantData() {
 	}

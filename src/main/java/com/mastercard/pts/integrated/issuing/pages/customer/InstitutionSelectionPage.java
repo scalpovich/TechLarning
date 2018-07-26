@@ -31,7 +31,7 @@ public class InstitutionSelectionPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "institutionCode:input:dropdowncomponent")
 	private MCWebElement institution;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "//a[contains(text(),'Click here to login')]")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[contains(text(),'Click here to login')]")
 	private MCWebElement loginElement;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "confirm")
