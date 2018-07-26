@@ -5,11 +5,12 @@ I want to perform Transaction on retail credit card.
 
 Meta:
 @CreditRegression
+@CreditWithOutPin
 @StoryName credit_msr_retail				 
 Scenario:creation of mastercard_individual_primary_msr Card credit device
 Meta:
 @TestId TC550110
-Given setting json values in excel
+Given setting json values in excel for Credit
 Given user is logged in institution
 When User fills Dedupe Plan
 And User fills Statement Message Plan for credit product
@@ -34,6 +35,7 @@ And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 And embossing file batch was generated in correct format
+And user sign out from customer portal
 
 Scenario: Perform ASI_MSR Authorization transaction on Individual Primary MSR Card
 Given connection to MAS is established
