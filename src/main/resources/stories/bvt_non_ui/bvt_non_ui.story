@@ -12,22 +12,22 @@ Meta:
 @TestId TC398108
 Given user is logged in institution
 When User fills Dedupe Plan
-When User fills MCC Rules for debit product
-When User fills Transaction Plan for debit product
-When User fills Transaction Limit Plan for debit product
-When User fills Document Checklist Screen for debit product
-When User fills Device Joining and Membership Fee Plan for debit product
-When User fills Device Event Based Fee Plan for debit product
-When User fills Device Plan for "debit" "magnetic stripe" card with no pin
-When User fills Wallet Plan for debit product
-When User fills Program section for debit product
-When User fills Device Range section for debit product
+When User fills MCC Rules for prepaid product
+When User fills Transaction Plan for prepaid product
+When User fills Transaction Limit Plan for prepaid product
+When User fills Document Checklist Screen for prepaid product
+When User fills Device Joining and Membership Fee Plan for prepaid product
+When User fills Device Event Based Fee Plan for prepaid product
+When User fills Device Plan for "prepaid" "magnetic stripe" card with no pin
+When User fills Wallet Plan for prepaid product
+When User fills Program section for prepaid product
+When User fills Device Range section for prepaid product
 When user assigns service code to program
-When user creates new device of debit type for new client
+When user creates new device of prepaid type for new client
 Then device has "normal" status
 When a new device was created
-And processes pre-production batch for debit
-And processes device production batch for debit
+And processes pre-production batch for prepaid
+And processes device production batch for prepaid
 !-- And processes pin generation batch for debit
 !-- When user has wallet number information for debit device
 !-- When user performs adjustment transaction
