@@ -1,7 +1,7 @@
 Narrative:
 In order to a create a Credit Device under customer portal cardmanagement tab
 As a user
-I want to perform Transaction on Retail credit card.
+I want to perform Transaction on Retails credit card.
 
 Meta:
 @CreditRegression
@@ -46,11 +46,44 @@ Then embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 And FINSim simulator is closed
 
-Scenario: Credit Retail- Pin Change Transaction	
-Given connection to MDFS is established
-When user performs an optimized MDFS_EMV_PIN_CHANGE MDFS transaction
-Then MDFS test results are verified
-And MDFS simulator is closed
+Scenario: Transaction - EMV_PREAUTH and EMV_COMPLETION Authorization transaction
+Given connection to MAS is established
+When perform an EMV_PREAUTH MAS transaction
+Then MAS test results are verified
 And user is logged in institution
-Then search Pin Change authorization and verify 000-Successful status
+And search Pre-Auth authorization and verify 000-Successful status
+Then user sign out from customer portal
+When perform an EMV_COMPLETION MAS transaction
+Then MAS test results are verified
+And user is logged in institution
+And search Pre-Auth Completion authorization and verify 000-Successful status
+And user sign out from customer portal
+
+Scenario: Perform EMV_PURCHASE Authorization transaction
+When perform an EMV_PURCHASE MAS transaction on the same card
+Then MAS test results are verified
+And user is logged in institution
+And search Purchase authorization and verify 000-Successful status
+And user sign out from customer portal
+
+Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
+When perform an EMV_CASH_ADVANCE MAS transaction on the same card
+Then MAS test results are verified
+Then user is logged in institution
+Then search Cash Advance authorization and verify 000-Successful status
+And user sign out from customer portal
+
+Scenario: Perform EMV_POS_BALANCE_INQUIRY Authorization transaction
+When perform an EMV_POS_BALANCE_INQUIRY MAS transaction on the same card
+Then MAS test results are verified
+Then user is logged in institution
+Then search Balance Inquiry authorization and verify 000-Successful status
+And user sign out from customer portal
+
+Scenario: Perform EMV_CASH_WITHDRAWAL Authorization transaction
+When perform an EMV_CASH_WITHDRAWAL MAS transaction on the same card
+Then MAS test results are verified
+And MAS simulator is closed
+And user is logged in institution
+Then search CWD authorization and verify 000-Successful status
 And user sign out from customer portal
