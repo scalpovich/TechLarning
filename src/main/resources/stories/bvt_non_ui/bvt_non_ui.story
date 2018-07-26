@@ -18,7 +18,7 @@ When User fills Transaction Limit Plan for debit product
 When User fills Document Checklist Screen for debit product
 When User fills Device Joining and Membership Fee Plan for debit product
 When User fills Device Event Based Fee Plan for debit product
-When User fills Device Plan for "debit" "Retail Debit Card [11]" card
+When User fills Device Plan for "debit" "magnetic stripe" card with no pin
 When User fills Wallet Plan for debit product
 When User fills Program section for debit product
 When User fills Device Range section for debit product
