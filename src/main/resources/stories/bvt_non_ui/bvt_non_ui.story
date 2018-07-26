@@ -4,7 +4,7 @@ As an issuer
 I want to run few tests
 
 Meta:
-@StoryName credit_emv_retail
+@StoryName debit_emv_retailBVT
 @NonUIBVTest
 
 Scenario:1 Non-UI Verification - Set up emv debit card and device production
