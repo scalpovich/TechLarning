@@ -274,6 +274,7 @@ public class ProgramSetupStepsForRegression {
 		deviceRange.setProgram(program.buildDescriptionAndCode());
 		deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
 		programSetupWorkflow.createDeviceRange(deviceRange);
+		context.put(ContextConstants.DEVICE_RANGE, deviceRange);
 	}
 
 }
