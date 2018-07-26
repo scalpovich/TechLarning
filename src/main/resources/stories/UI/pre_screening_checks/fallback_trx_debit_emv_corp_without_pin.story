@@ -6,7 +6,7 @@ As an issuer
 I want to authorize  fallback transactions for prepaid emv corporate travel card
 
 Meta:
-@StoryName @StoryName d_emv_corp
+@StoryName d_emv_corp
 @FallbackTrx
 Scenario: Set up program for debit EMV corporate debit card
 Given setting json values in excel for Debit
