@@ -121,7 +121,8 @@ public class TransactionSteps {
 	}
 
 	@When("perform an $transaction MAS transaction on the same card")
-	@Aliases(values = { "a sample simulator \"$transaction\" is executed on the same card", "user performs an \"$transaction\" MAS transaction on the same card" })
+	@Aliases(values={"a sample simulator \"$transaction\" is executed on the same card",
+    "user performs an \"$transaction\" MAS transaction on the same card"})
 	@Given("perform an $transaction MAS transaction on the same card")
 	public void givenTransactionIsExecutedOnTheSameCard(String transaction) {
 		String temp = transaction;
@@ -150,8 +151,7 @@ public class TransactionSteps {
 	@Given("user performs an optimized $transaction MAS transaction")
 	public void givenOptimizedTransactionIsExecuted(String transaction) {
 		transactionWorkflow.browserMinimize(); // minimize browser
-		// operation of MAS/MDFS ... Storing transaction name in context to use
-		// it at runtime
+		// operation of MAS/MDFS ... Storing transaction name in context to use it at runtime
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		Transaction transactionData = generateMasTestDataForTransaction(transaction);
 
@@ -170,17 +170,14 @@ public class TransactionSteps {
 		MiscUtils.reportToConsole("********** start generateMasTestDataForTransaction ********");
 		Device device = context.get(ContextConstants.DEVICE);
 		DevicePlan devicePlan = null;
-		// this line of code reads data from the
-		// "AuthorizationTransaction_DataDriven.xls" at
-		// \\Isser-automation-epam\src\main\resources\config\Data folder as the
+		// this line of code reads data from the "AuthorizationTransaction_DataDriven.xls" at \\Isser-automation-epam\src\main\resources\config\Data folder as the
 		// "Transaction Templates" sheet has the template information
 		Transaction transactionData = transactionProvider.loadTransaction(transaction);
 
 		// when data is dynamically passed when scripts run from end-2-end
 		if (device != null) {
 			MiscUtils.reportToConsole("********** Fetching data from DeviceContect ********");
-			// _____________________FOR PINLESS CARD________________ device plan
-			// context is used to get Expiry Date incase of PinLess card
+			// _____________________FOR PINLESS CARD________________ device plan context is used to get Expiry Date incase of PinLess card
 			if (!Constants.DATA_DRIVEN_CARD_BOARDING.equalsIgnoreCase("YES")) {
 				devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 				device.setServiceCode(devicePlan.getServiceCode());
@@ -194,13 +191,10 @@ public class TransactionSteps {
 					device.setPinNumberForTransaction("PINLESS");
 				}
 			}
-			// ____________FOR PINLESS CARD__________CURRENCY VAL FROM EXCEL
-			// _________ fetching currency value from excel
+			// ____________FOR PINLESS CARD__________CURRENCY VAL FROM EXCEL _________ fetching currency value from excel
 			Transaction tempData = transactionProvider.createWithProvider(provider);
-			// this line of code is temporary as this will only work for Single
-			// wallet currency for multi wallet, we may have to set other setter
-			// --> setIssuerCountryCode, setIssuerCurrencyCode,
-			// setCardHolderBillingCurrency
+			// this line of code is temporary as this will only work for Single wallet currency for multi wallet, we may have to set other setter
+			// --> setIssuerCountryCode, setIssuerCurrencyCode, setCardHolderBillingCurrency
 			device.setCurrency(tempData.getCurrency());
 
 			if (!Constants.DATA_DRIVEN_CARD_BOARDING.equalsIgnoreCase("YES")) {
@@ -213,41 +207,30 @@ public class TransactionSteps {
 				}
 			}
 
-			// __________________CURRENCY VAL FROM EXCEL _________ This is a
-			// Single Wallet, Single Currency INDIA card */
+			// __________________CURRENCY VAL FROM EXCEL _________ This is a Single Wallet, Single Currency INDIA card */
 			settingValuesDynamicallyFromDeviceContext(device, transactionData);
-			// setting values of Card Data Element (Card Profile) which are
-			// placed in the "Transaction Templates" sheet
+			// setting values of Card Data Element (Card Profile) which are placed in the "Transaction Templates" sheet
 			setCardDataDynamically(device, transactionData, transaction);
-			// setting values of Data Element which are placed in the
-			// "Transaction Templates" sheet
+			// setting values of Data Element which are placed in the "Transaction Templates" sheet
 			setDeElementsDynamically(device, transactionData, transaction);
 
 		}
-		// else block for when scripts are running from excel -
-		// AuthorizationTransaction_DataDriven alone
+		// else block for when scripts are running from excel - AuthorizationTransaction_DataDriven alone
 		else {
 			transactionData.setIssuerCountryCode(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair().get("049")));
 			transactionData.setIssuerCurrencyCode(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair().get("049")));
 			transactionData.setCardHolderBillingCurrency(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair().get("061.13")));
 		}
-		// creating & import card profile to temp location
-		// ex:C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413
+		// creating & import card profile to temp location ex:C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413
 		transactionData.setCardProfile(transactionFactory.createCsvCardProfile(transactionData));
-		// creating & import testcase/transaction file to temp location ex: *
-		// C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413
+		// creating & import testcase/transaction file to temp location ex: * C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413
 		transactionData.setTestCase(transactionFactory.createCsvTesCase(transactionData));
 		return transactionData;
 	}
 
 	private void setDeElementsDynamically(Device device, Transaction transactionData, String transaction) {
 		MiscUtils.reportToConsole("********** Start setDeElementsDynamically ********");
-		if (!"pinless".equalsIgnoreCase(device.getPinNumberForTransaction()) && !transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE")) // ecomm
-																																				// transactions
-																																				// cannot
-																																				// have
-																																				// a
-																																				// PIN
+		if (!"pinless".equalsIgnoreCase(device.getPinNumberForTransaction()) && !transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE")) // ecomm transactions cannot have a PIN
 			transactionData.setDeKeyValuePairDynamic("052", device.getPinNumberForTransaction());
 		// data format is 12 digits hence leftpad with 0
 		transactionData.setDeKeyValuePairDynamic("004", StringUtils.leftPad(device.getTransactionAmount(), 12, "0"));
@@ -259,23 +242,18 @@ public class TransactionSteps {
 		// changed ECOMMERCE to ECOM
 		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") || transactionWorkflow.isContains(transaction, "ASI_") || transactionWorkflow.isContains(transaction, "MMSR")
 				|| transactionWorkflow.isContains(transaction, ConstantData.THREE_D_SECURE_TRANSACTION)) {
-			// for pinless card, we are not performing CVV validation as we do
-			// not know the CVV as this is fetched from embosing file on
-			// LInuxbox
-			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data());
-		}// Transaction currency code
-		if (transaction.equalsIgnoreCase("INT_MSR_CASH_ADVANCE")) {
-			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data());
+			// for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInuxbox
+			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); // Transaction currency code
 		}
+		if(transaction.equalsIgnoreCase("INT_MSR_CASH_ADVANCE")){
+			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data());
+		} 
+
 		// This is a Single Wallet, Single Currency INDIA card
-		// transactionData.setDeKeyValuePairDynamic("049",
-		// device.getCurrency()); // Transaction currency code
-		// transactionData.setDeKeyValuePairDynamic("050",
-		// device.getCurrency()); // Settlement currency code
-		// transactionData.setDeKeyValuePairDynamic("051",
-		// device.getCurrency()); // CardHolder billing currency code
-		// transactionData.setDeKeyValuePairDynamic("061.13",
-		// device.getCurrency()); // POS country code
+		// transactionData.setDeKeyValuePairDynamic("049", device.getCurrency()); // Transaction currency code
+		// transactionData.setDeKeyValuePairDynamic("050", device.getCurrency()); // Settlement currency code
+		// transactionData.setDeKeyValuePairDynamic("051", device.getCurrency()); // CardHolder billing currency code
+		// transactionData.setDeKeyValuePairDynamic("061.13", device.getCurrency()); // POS country code
 	}
 
 	private void settingValuesDynamicallyFromDeviceContext(Device device, Transaction transactionData) {
