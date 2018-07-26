@@ -230,26 +230,13 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		}
 		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
 			inputReservedAmount();
-		}
-	}
-
-	private void fillDetailsBasedOnCarddType(WalletPlan walletPlan, String productType) {
-		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
-			selectCreditPlan(walletPlan.getCreditPlan());
-			selectBillingCycleCode(walletPlan.getBillingCyleCode());
-		}
-		if (productType.equalsIgnoreCase(ProductType.DEBIT)) {
-			WebElementUtils.enterText(dummyAccountNumberTxt, walletPlan.getDummyAccountNumber());
-		}
-		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
-			enterReservedAmount(walletPlan.getReservedAmount());
 			if (walletPlan.getWhiteMcgCode() != null) {
 				logger.info("White listed MCG {}", walletPlan.getWhiteMcgCode());
 				selectWhiteListMSG(walletPlan.getWhiteMcgCode());
 			}
 		}
 	}
-
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Wallet Configuration Wallet PLan");
 		verifySearchButton("Search");
