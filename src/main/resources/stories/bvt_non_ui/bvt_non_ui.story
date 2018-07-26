@@ -23,7 +23,6 @@ When User fills Wallet Plan for debit product
 When User fills Program section for debit product
 When User fills Device Range section for debit product
 When user assigns service code to program
-And device range for program with device plan for "debit" "emv" card
 When user creates new device of debit type for new client
 Then device has "normal" status
 When a new device was created
