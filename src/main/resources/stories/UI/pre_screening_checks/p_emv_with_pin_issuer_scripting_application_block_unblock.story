@@ -55,7 +55,7 @@ And user sign out from customer portal
 
 Scenario: Verify Last executed script status for Application block
 When user is logged in institution
-Then assert Pending status of Last Executed Script Status in Device Details Screen
+Then assert Pending[2] status of Last Executed Script Status in Device Details Screen
 And user sign out from customer portal
 
 Scenario: Withdraw the device from stoplist
@@ -72,5 +72,5 @@ And user sign out from customer portal
 
 Scenario: Verify Last executed script status for Application unblock
 When user is logged in institution
-Then assert Success status of Last Executed Script Status in Device Details Screen
+Then assert Success[0] status of Last Executed Script Status in Device Details Screen
 And user sign out from customer portal
