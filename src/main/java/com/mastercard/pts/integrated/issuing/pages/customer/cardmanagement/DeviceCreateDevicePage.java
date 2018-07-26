@@ -3,13 +3,9 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
 import org.hamcrest.Matchers;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +26,6 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -282,18 +277,18 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 				|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) 
 				&& device.getSubApplicationType().contains(SubApplicationType.NEW_CLIENT)){
 			context.put(CreditConstants.EXISTING_DEVICE_NUMBER, device.getDeviceNumber());
-		}
+		}		
 		
 		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)
 				|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)
 				&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)) {
 			context.put(ContextConstants.DEVICE_SUPPLEMENTARY_ADDON_EXISTING,device);
-		} else {
+		}else {
 			context.put(ContextConstants.DEVICE, device);
 		}
 	}
 
-	public String getWalletsId(String wallets) {
+	public String getWalletsId(String wallets) {		
 		String walletList[] = wallets.split(" : ");
 		String walletLists[] = walletList[1].split(", ");
 		logger.info("Wallet aaded :[%s]", walletLists[0]);
@@ -339,7 +334,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			SimulatorUtilities.wait(5000);
 			moveToElementAndClick(existingClientLabel, 50, 50);
 			waitForWicket(driver());
-			SimulatorUtilities.wait(15000);			
+			SimulatorUtilities.wait(15000);		
 		}else{
 			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
 			SimulatorUtilities.wait(2000);
@@ -393,7 +388,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			// skip device extra fields
 			clickNextButton();		
 		}
-		
 	}
 
 	private void fillAddress(Device device) {

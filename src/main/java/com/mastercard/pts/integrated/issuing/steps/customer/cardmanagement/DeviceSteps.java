@@ -58,7 +58,6 @@ public class DeviceSteps {
 
 		deviceWorkflow.createDevice(device);
 		context.put(ContextConstants.DEVICE, device);
-
 	}
 
 	@When("user creates new device of $type type for non-default institution")
