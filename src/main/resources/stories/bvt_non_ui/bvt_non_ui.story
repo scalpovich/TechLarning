@@ -4,7 +4,7 @@ As an issuer
 I want to run few tests
 
 Meta:
-@StoryName p_emv_retail_travel
+@StoryName debit_emv_retailBVT
 @NonUIBVTest
 
 Scenario: Set up prepaid emv retail travel card
