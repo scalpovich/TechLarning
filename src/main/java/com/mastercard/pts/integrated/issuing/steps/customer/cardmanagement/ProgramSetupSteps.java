@@ -1034,7 +1034,45 @@ public class ProgramSetupSteps {
 		deviceEventBasedFeePlan.getDeviceEventBasedFeePlanDetails().add(details);
 
 		programSetupWorkflow.createDeviceEventBasedFeePlan(deviceEventBasedFeePlan);
-	}	
+	}
+	
+	@When("User fills Program section for $type product")
+	public void whenUserFillsProgramSection(String type) {
+		program = Program.createWithProvider(dataProvider, provider);
+		//datadriven
+		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
+		program.setProduct(ProductType.fromShortName(type));
+		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
+			if (Objects.nonNull(statementMessagePlan) && Objects.nonNull(marketingMessagePlan)) {
+				program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
+				program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+			} else {
+				program.setOtherPlanStatementMessagePlan(data.getStatementMessagePlan());
+				program.setOtherPlanMarketingMessagePlan(data.getMarketingMessagePlan());
+			}
+		}
+		program.setFirstWalletPlan(walletPlan.buildDescriptionAndCode());
+		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
+		if (Objects.nonNull(dedupePlan) && Objects.nonNull(documentCheckListPlan) && Objects.nonNull(mccRulePlan)) {
+			program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
+			program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
+			program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
+		} else {
+			program.setDedupPlan(data.getDedupePlanCode());
+			program.setDocumentChecklistPlan(data.getDocumentCheckListPlan());
+			program.setMccRulePlan(data.getMccRulePlan());
+		}
+
+		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID))
+			if (Objects.nonNull(prepaidStatementPlan)) {
+				program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+			} else {
+				program.setPrepaidStatementPlan(data.getPrepaidStatementPlan());
+			}
+
+		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
+		context.put(ContextConstants.PROGRAM, program);
+	}
 	
 	@When("User $applicationType fills $subApplicationType Program $programType section for $type product for $interchange")
 	public void whenUserFillsProgramSection(String applicationType,String subApplicationType,String programType,String type,String interchange) {
