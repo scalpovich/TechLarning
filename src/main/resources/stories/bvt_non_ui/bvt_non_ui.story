@@ -11,6 +11,18 @@ Scenario:1 Non-UI Verification - Set up emv debit card and device production
 Meta:
 @TestId TC398108
 Given user is logged in institution
+When User fills Dedupe Plan
+When User fills MCC Rules for debit product
+When User fills Transaction Plan for debit product
+When User fills Transaction Limit Plan for debit product
+When User fills Document Checklist Screen for debit product
+When User fills Device Joining and Membership Fee Plan for debit product
+When User fills Device Event Based Fee Plan for debit product
+When User fills Device Plan for "debit" "Retail Debit Card [11]" card
+When User fills Wallet Plan for debit product
+When User fills Program section for debit product
+When User fills Device Range section for debit product
+When user assigns service code to program
 And device range for program with device plan for "debit" "emv" card
 When user creates new device of debit type for new client
 Then device has "normal" status
