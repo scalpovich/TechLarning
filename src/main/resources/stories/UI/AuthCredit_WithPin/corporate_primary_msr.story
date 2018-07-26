@@ -5,6 +5,7 @@ I want to perform Transaction on corporate credit card.
 
 Meta:
 @CreditRegression
+@CreditWithPin
 @StoryName credit_msr_retail			 
 Scenario:creation of mastercard_corporate_primary_msr Card credit device
 Meta:

@@ -5,6 +5,7 @@ I want to perform Transaction on Retails credit card.
 
 Meta:
 @CreditRegression
+@CreditWithPin
 @StoryName credit_emv_retail
 @Individual
 @Primary	 

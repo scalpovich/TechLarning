@@ -5,6 +5,7 @@ I want to perform Transaction on retail credit card.
 
 Meta:
 @CreditRegression
+@CreditWithOutPin
 @StoryName credit_emv_retail				 
 Scenario:creation of visa_individual_primary_emv credit device
 Meta:
