@@ -587,7 +587,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return walletBalanceInformation;
 	}
 
-	public String getWalletBalanceInformationForRemittance(Device device, CardToCash cardtocash) {
+	public String getWalletBalanceInformationForRemittance(Device device, CardToCash cardToCash) {
 		logger.info("Get Wallet Balance Information for Device: {}", device.getDeviceNumber());
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
@@ -603,7 +603,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				logger.info("Current Available Balance {} Settled Debit {} ", getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"),
 						getCellTextByColumnNameInEmbeddedTab(j, "Settled Debit"));
 				Double balance = Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"))
-						+ Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Settled Debit")) - Double.parseDouble(cardtocash.getRemittanceAmount());
+						+ Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Settled Debit")) - Double.parseDouble(cardToCash.getRemittanceAmount());
 				logger.info("Current Available Balance + Settled Debit : " + dec.format(balance));
 				walletBalanceInformation = getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency") + ":" + dec.format(balance) + ":" + getCellTextByColumnNameInEmbeddedTab(j, "WALLET_NUMBER");
 			}
