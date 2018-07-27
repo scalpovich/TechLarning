@@ -369,7 +369,7 @@ public class CustomerPortalUserCreationPage extends AbstractBasePage {
 
 	public void frameSwitchingToDefault() {
 
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		waitForElementVisible(administrationSearchUserIDTxt);
 	}
 

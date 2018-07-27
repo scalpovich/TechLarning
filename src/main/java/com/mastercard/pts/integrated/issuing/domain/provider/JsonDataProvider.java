@@ -11,7 +11,6 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 import java.util.stream.Stream.Builder;
 
-import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,7 @@ import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 @Component
@@ -177,6 +177,7 @@ public class JsonDataProvider implements DataProvider {
 	
 	private JsonNode buildJsonNodeInstitute(JsonNode target, String path,String institutionCode)
 			throws Exception {
+		String product=context.get(ConstantData.PRODUCT_IDENTITY);
 		InputStream inputStream = getResource(path);
 		if (inputStream == null) {
 			return target;
@@ -186,7 +187,7 @@ public class JsonDataProvider implements DataProvider {
 		JsonNode nodeArray=null;
 		if (node.isArray()) {
 			for (JsonNode objNode : node) {
-				if (objNode.get("code").asText().equals(institutionCode)) {
+				if (objNode.get(ConstantData.INSTITUTION_CODE_KEY).asText().equals(institutionCode) && objNode.get(ConstantData.PRODUCT_IDENTITY).asText().equals(product)) {
 					nodeArray=objNode;
 					return objNode;
 				}

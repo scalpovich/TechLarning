@@ -25,7 +25,7 @@ public class HighRiskMerchantLocationWorkflow {
 	}
 	
 	public String getFeedbackText() {
-		page.SwitchToDefaultFrame();	
+		page.switchToDefaultFrame();	
 		return page.getFeedbackText();
 	}
 	

@@ -1,9 +1,5 @@
 package com.mastercard.pts.integrated.issuing.workflows;
 
-import java.util.Collection;
-
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
@@ -27,11 +23,4 @@ public class MenuFlows extends AbstractBaseFlows {
 		suboption.click();
 		CustomUtils.ThreadDotSleep(2000);
 	}
-
-	@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

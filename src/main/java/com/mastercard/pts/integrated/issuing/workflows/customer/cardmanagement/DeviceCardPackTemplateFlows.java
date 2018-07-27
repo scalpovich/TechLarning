@@ -17,14 +17,14 @@ public class DeviceCardPackTemplateFlows extends MenuFlows {
 
 	public void createDeviceTemplateCardPack(DeviceCreation deviceCreation, DeviceCardPackTemplate deviceTemplate) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
-		DeviceCardPackTemplatePage devicecardpacktemplatepage = navigator
+		DeviceCardPackTemplatePage deviceCardPackTemplatePage = navigator
 				.navigateToPage(DeviceCardPackTemplatePage.class);
-		devicecardpacktemplatepage.clickAddDeviceCardPackTemplate();
-		devicecardpacktemplatepage.addTemplateFields(deviceCreation);
-		devicecardpacktemplatepage.selectCardTemplateFields(deviceTemplate);
-		devicecardpacktemplatepage.clickSubmit();
-		devicecardpacktemplatepage.clickSaveButton();
-		devicecardpacktemplatepage.verifyNewVendorSuccess();
+		deviceCardPackTemplatePage.clickAddDeviceCardPackTemplate();
+		deviceCardPackTemplatePage.addTemplateFields(deviceCreation);
+		deviceCardPackTemplatePage.selectCardTemplateFields(deviceTemplate);
+		deviceCardPackTemplatePage.clickSubmit();
+		deviceCardPackTemplatePage.clickSaveButton();
+		deviceCardPackTemplatePage.verifyNewVendorSuccess();
 	}
 
 	public void createCardPackTemplate(DeviceCreation deviceCreation, DeviceCardPackTemplate deviceTemplate) {
@@ -37,6 +37,11 @@ public class DeviceCardPackTemplateFlows extends MenuFlows {
 		devicecardpacktemplatepage.clickSubmit();
 		devicecardpacktemplatepage.clickSaveButton();
 		devicecardpacktemplatepage.verifyNewVendorSuccess();
+	}
+	
+	public void createTemplate(DeviceCreation deviceCreation, DeviceCardPackTemplate deviceTemplate){
+		DeviceCardPackTemplatePage devicecardpacktemplatepage = navigator.navigateToPage(DeviceCardPackTemplatePage.class);
+		devicecardpacktemplatepage.createTemplates(deviceCreation,deviceTemplate);		
 	}
 
 }

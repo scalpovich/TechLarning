@@ -12,19 +12,20 @@ Meta:
 Scenario: Setup - debit emv retail debit card
 Given user is logged in institution
 And device range for program with device plan for "debit" "emv" card
-When user creates new device of debit type for new client
+Then user sign out from customer portal
 
 Scenario: Device production - debit emv retail debit card
 Given user is logged in institution
+When user creates new device of debit type for new client
 And a new device was created
-When processes pre-production batch for debit
-When processes device production batch for debit
-When processes pin generation batch for debit
-When user has wallet number information for debit device
-When user performs adjustment transaction
-When user has current wallet balance amount information for debit device
-Then device has "normal" status
-When user activates device through helpdesk
+And processes pre-production batch for debit
+And processes device production batch for debit
+And processes pin generation batch for debit
+And device has "normal" status
+And user activates device through helpdesk
+And user has wallet number information for debit device
+And user performs adjustment transaction
+And user has current wallet balance amount information for debit device
 Then user sign out from customer portal
 
 Scenario: Pin Generation 
@@ -32,8 +33,8 @@ Meta:
 @TestId 
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
-Then embossing file batch was generated in correct format
-When PIN is retrieved successfully with data from Pin Offset File
+And embossing file batch was generated in correct format
+And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
 Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
@@ -48,8 +49,8 @@ Meta:
 @TestId 
 When Auth file is generated after transaction
 When MAS simulator is closed
-Then user is logged in institution
-Then search Cash Advance authorization and verify 000-Successful status
+And user is logged in institution
+And search Cash Advance authorization and verify 000-Successful status
 Then user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
@@ -57,8 +58,8 @@ Meta:
 @TestId 
 Given connection to MCPS is established
 When Auth file is generated
-When Auth file is loaded into MCPS and processed
-Then NOT file is successfully generated
+And Auth file is loaded into MCPS and processed
+And NOT file is successfully generated
 When MCPS simulator is closed
 
 Scenario: Upload ipm file from customer portal and process it
@@ -66,7 +67,7 @@ Meta:
 @TestId 
 Given user is logged in institution
 When User uploads the NOT file
-When user processes batch for debit
+And user processes batch for debit
 Then user sign out from customer portal
 
 Scenario: Matching & Posting to Cardholders account
@@ -74,7 +75,7 @@ Meta:
 @TestId 
 Given user is logged in institution
 When transaction status is "Matching Pending"
-When "Matching" batch for debit is successful
-Then transaction status is "Presentment Matched with authorization"
+And "Matching" batch for debit is successful
+And transaction status is "Presentment Matched with authorization"
 Then user sign out from customer portal
 

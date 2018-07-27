@@ -70,11 +70,11 @@ public class InstitutionLoadCurrencyPage extends AbstractBasePage {
 	public void verifySuccess() {
 		if (!publishErrorOnPage()) {
 			logger.info("Record Added Successfully.");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in record Addition");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 
 		}
 	}

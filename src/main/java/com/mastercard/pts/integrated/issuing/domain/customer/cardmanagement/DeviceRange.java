@@ -8,18 +8,18 @@ import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 public class DeviceRange {
-
+    
 	private static final int BIN_RANGE_SIZE = 10;
-	private static final String ISSUER_BIN = "ISSUER_BIN";
-	private static final String BRANCH = "BRANCH";
-	private static final String DR_ISSUER_BIN = "DR_ISSUER_BIN";
-	private static final String DR_BRANCH = "DR_BRANCH";
-	private static final String DR_CARD_TYPE = "DR_CARD_TYPE";
-	private static final String DR_ENDPOINT_MODE = "DR_ENDPOINT_MODE";
-	private static final String DR_INTERFACE_NAME = "DR_INTERFACE_NAME";
-	private static final String DR_ROUTING_TYPE = "DR_ROUTING_TYPE";
-	private static final String DR_STATUS = "DR_STATUS";
-
+	private static final String	ISSUER_BIN	 = 	"ISSUER_BIN";
+	private static final String	BRANCH	 = 	"BRANCH";
+	private static final String	DR_ISSUER_BIN	 = 	"DR_ISSUER_BIN";
+	private static final String	DR_BRANCH	 = 	"DR_BRANCH";
+	private static final String	DR_CARD_TYPE	 = 	"DR_CARD_TYPE";
+	private static final String	DR_ENDPOINT_MODE	 = 	"DR_ENDPOINT_MODE";
+	private static final String	DR_INTERFACE_NAME	 = 	"DR_INTERFACE_NAME";
+	private static final String	DR_ROUTING_TYPE	 = 	"DR_ROUTING_TYPE";
+	private static final String	DR_STATUS	 = 	"DR_STATUS";
+		
 	private String productType;
 	private String program;
 	private String devicePlanCode;
@@ -32,16 +32,15 @@ public class DeviceRange {
 	private String routingType;
 	private String status;
 	private String cardType;
-
-	private String channelRoutingPlan;
-
-	public String getChannelRoutingPlan() {
-		return channelRoutingPlan;
-	}
-
-	public void setChannelRoutingPlan(String channelRoutinPlan) {
-		this.channelRoutingPlan = channelRoutinPlan;
-	}
+	
+		private String channelRoutingPlan;
+		public String getChannelRoutingPlan() {
+			return channelRoutingPlan;
+		}
+	
+		public void setChannelRoutingPlan(String channelRoutinPlan) {
+			this.channelRoutingPlan = channelRoutinPlan;
+		}
 
 	public static String[] generateDeviceRange(int length) {
 		String randomSpan = RandomStringUtils.randomNumeric(length - 2);
@@ -49,8 +48,8 @@ public class DeviceRange {
 		String to = randomSpan + "99";
 		return new String[] { from, to };
 	}
-
-	public static DeviceRange createWithProvider(DataProvider dprovider, KeyValueProvider provider, String... tags) {
+	
+	public static DeviceRange createWithProvider(DataProvider dprovider, KeyValueProvider provider, String... tags){
 		String[] deviceRange = generateDeviceRange(BIN_RANGE_SIZE);
 		DeviceRange range = dprovider.getDataBySimpleClassName(DeviceRange.class, tags);
 		range.setFromDeviceNumber(deviceRange[0]);
@@ -59,16 +58,16 @@ public class DeviceRange {
 		range.setBranch(provider.getString(BRANCH));
 		return range;
 	}
-
-	public static DeviceRange createWithProvider(DataProvider provider, String... tags) {
-		String[] deviceRange = generateDeviceRange(BIN_RANGE_SIZE);
+	
+	public static DeviceRange createWithProvider(DataProvider provider, String... tags){
+		String[] deviceRange = generateDeviceRange(BIN_RANGE_SIZE);		
 		DeviceRange range = provider.getDataBySimpleClassName(DeviceRange.class, tags);
 		range.setFromDeviceNumber(deviceRange[0]);
 		range.setToDeviceNumber(deviceRange[1]);
 		return range;
 	}
 
-	public static DeviceRange createWithProvider(KeyValueProvider provider, String... tags) {
+	public static DeviceRange createWithProvider(KeyValueProvider provider, String... tags){
 		String[] deviceRange = generateDeviceRange(BIN_RANGE_SIZE);
 		DeviceRange range = new DeviceRange();
 		range.setFromDeviceNumber(deviceRange[0]);
@@ -84,7 +83,7 @@ public class DeviceRange {
 
 		return range;
 	}
-
+	
 	public String getProductType() {
 		return productType;
 	}
@@ -140,39 +139,39 @@ public class DeviceRange {
 	public void setToDeviceNumber(String toDeviceNumber) {
 		this.toDeviceNumber = toDeviceNumber;
 	}
-
+	
 	public String getEndPointMode() {
 		return endPointMode;
 	}
-
+	
 	public void setEndPointMode(String endPointMode) {
 		this.endPointMode = endPointMode;
 	}
-
+	
 	public String getInterfaceName() {
 		return interfaceName;
 	}
-
+	
 	public void setInterfaceName(String interfaceName) {
 		this.interfaceName = interfaceName;
 	}
-
+	
 	public String getRoutingType() {
 		return routingType;
 	}
-
+	
 	public void setRoutingType(String routingType) {
 		this.routingType = routingType;
 	}
-
+	
 	public String getStatus() {
 		return status;
 	}
-
+	
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
+	
 	@Override
 	public String toString() {
 		return MiscUtils.toString(this);
@@ -185,7 +184,6 @@ public class DeviceRange {
 	public void setCardType(String cardType) {
 		this.cardType = cardType;
 	}
-
 	public DeviceRange devicerangeDataProvider() {
 		DeviceRange devicerange = new DeviceRange();
 		devicerange.setFromDeviceNumber(MapUtils.fnGetInputDataFromMap("FromDeviceNo"));
@@ -193,9 +191,9 @@ public class DeviceRange {
 		return devicerange;
 
 	}
-
-	public String getIssuerBinCode(String issuerBin) {
-		issuerBin = issuerBin.substring(issuerBin.indexOf("[") + 1);
+	
+	public String getIssuerBinCode(String issuerBin){
+		issuerBin =issuerBin.substring(issuerBin.indexOf("[") + 1);
 		issuerBin = issuerBin.substring(0, issuerBin.indexOf("]"));
 		return issuerBin;
 	}
