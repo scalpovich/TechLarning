@@ -7,8 +7,7 @@ I want to create an magnetic stripe prepaid card pinless and perform various tra
 
 Meta:
 @StoryName prepaid_msr_retail_gift
-@oldReferenceSheet_prepaid_msr
-@CRCardsWithAuthorizationCashAdvancedWithClearing
+@RecurringWithoutPin
 
 Scenario: Set up prepaid msr retail gift card authorization pinless
 Meta:
@@ -17,7 +16,6 @@ Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client
 Then device has "normal" status
-When user updates cvccvv as uncheck on device plan
 Then user sign out from customer portal
 
 Scenario: prepaid msr retail gift card authorization pinless device production
@@ -33,13 +31,14 @@ When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
+Then embossing file batch was generated in correct format
 And user sign out from customer portal
 
-Scenario: Perform RECURRING_PUR_TXN Authorization transaction
+Scenario: Perform MSR_RECURRING_PUR_TXN Authorization transaction
 Meta:
 @TestId 
 Given connection to MAS is established
-When perform an RECURRING_PUR_TXN MAS transaction
+When perform an MSR_RECURRING_PUR_TXN MAS transaction
 Then MAS test results are verified
 
 Scenario: Generate Auth File for Clearing

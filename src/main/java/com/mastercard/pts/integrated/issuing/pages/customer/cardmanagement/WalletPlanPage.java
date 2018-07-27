@@ -295,7 +295,7 @@ public class WalletPlanPage extends AbstractBasePage {
 	public void clickFinishButton() {
 		clickWhenClickable(finishBtn);
 		waitForWicket();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public boolean verifyErrorsOnWalletPlanPagePage() {
@@ -317,11 +317,11 @@ public class WalletPlanPage extends AbstractBasePage {
 	public void verifyWalletPlanSuccess() {
 		if (!verifyErrorsOnWalletPlanPagePage()) {
 			logger.info("Wallet Plan Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(cancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 

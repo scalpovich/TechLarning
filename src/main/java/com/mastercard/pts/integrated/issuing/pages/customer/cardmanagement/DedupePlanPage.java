@@ -181,11 +181,11 @@ public class DedupePlanPage extends AbstractBasePage {
 	public void verifyNewDedupePlanSuccess() {
 		if (!verifyErrorsOnDedupePlanPage()) {
 			logger.info("Dedupe Plan Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(CancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 

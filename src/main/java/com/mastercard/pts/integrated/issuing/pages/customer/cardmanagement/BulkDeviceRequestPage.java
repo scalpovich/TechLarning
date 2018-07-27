@@ -79,7 +79,7 @@ public class BulkDeviceRequestPage extends AbstractBasePage {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		enterText(QuantityRequestedTxt, quantityReq);
 		ClickButton(SaveBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		return getBatchNumber();
 
 	}
@@ -130,7 +130,7 @@ public class BulkDeviceRequestPage extends AbstractBasePage {
 
 	public void Save() {
 		clickWhenClickable(SaveBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public void addBulkDeviceRequestGeneral(DeviceCreation deviceCreation, BulkDeviceRequestbatch bulkdeviceGenBatch) {
@@ -152,11 +152,11 @@ public class BulkDeviceRequestPage extends AbstractBasePage {
 	public void verifyBulkDeviceRequestSuccess() {
 		if (!verifyErrorsOnBulkDevicePage()) {
 			logger.info("Record Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
 			clickWhenClickable(CancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 

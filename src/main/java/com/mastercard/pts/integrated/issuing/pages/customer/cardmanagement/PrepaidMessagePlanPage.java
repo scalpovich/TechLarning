@@ -118,11 +118,11 @@ public class PrepaidMessagePlanPage extends AbstractBasePage {
 
 	public void clickSaveButton() {
 		clickWhenClickable(saveBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public void addpreapidMessageDetails(PrepaidStatementPlan prepaidstmt) {
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToAddPrepaidStatementPlanFrame();
 		enterToLot(prepaidstmt);
 		enterPrintDay(prepaidstmt);
@@ -131,7 +131,7 @@ public class PrepaidMessagePlanPage extends AbstractBasePage {
 		switchToAddPrepaidStatementFrame();
 		Scrolldown(saveBtn);
 		ClickButton(saveBtn);
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	@Override

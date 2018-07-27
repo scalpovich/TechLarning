@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCardPackTemplate;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceCardPackTemplateFlows;
 
 @Component
@@ -32,9 +33,10 @@ public class DeviceCardPackTemplateSteps {
 		devicecreation.setLength(Templatelength);
 		if (Templatetype.contains(DEVICE_TEMPLATE)) {
 			devicecardpacktemplflows.createDeviceTemplateCardPack(devicecreation, devicecardtemplate);
-		}
-		if (Templatetype.contains(CARD_PACK_TEMPLATE)) {
+		}else if (Templatetype.contains(CARD_PACK_TEMPLATE)) {
 			devicecardpacktemplflows.createCardPackTemplate(devicecreation, devicecardtemplate);
+		}else if(Templatetype.contains(Constants.PRIORITY_PASS_TEMPLATE)){
+			devicecardpacktemplflows.createTemplate(devicecreation, devicecardtemplate);
 		}
 	}
 }

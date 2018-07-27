@@ -121,7 +121,8 @@ public class TransactionSteps {
 	}
 
 	@When("perform an $transaction MAS transaction on the same card")
-	@Alias("a sample simulator \"$transaction\" is executed on the same card")
+	@Aliases(values={"a sample simulator \"$transaction\" is executed on the same card",
+    "user performs an \"$transaction\" MAS transaction on the same card"})
 	@Given("perform an $transaction MAS transaction on the same card")
 	public void givenTransactionIsExecutedOnTheSameCard(String transaction) {
 		String temp = transaction;
@@ -239,10 +240,15 @@ public class TransactionSteps {
 		}
 
 		// changed ECOMMERCE to ECOM
-		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") || transactionWorkflow.isContains(transaction, "ASI_")||transactionWorkflow.isContains(transaction, "MMSR")|| transactionWorkflow.isContains(transaction, ConstantData.THREE_D_SECURE_TRANSACTION)) {
+		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") || transactionWorkflow.isContains(transaction, "ASI_") || transactionWorkflow.isContains(transaction, "MMSR")
+				|| transactionWorkflow.isContains(transaction, ConstantData.THREE_D_SECURE_TRANSACTION)) {
 			// for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInuxbox
 			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); // Transaction currency code
 		}
+		if(transaction.equalsIgnoreCase("INT_MSR_CASH_ADVANCE")){
+			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data());
+		} 
+
 		// This is a Single Wallet, Single Currency INDIA card
 		// transactionData.setDeKeyValuePairDynamic("049", device.getCurrency()); // Transaction currency code
 		// transactionData.setDeKeyValuePairDynamic("050", device.getCurrency()); // Settlement currency code
@@ -342,6 +348,32 @@ public class TransactionSteps {
 			logger.error("Test Results retrieved from Simulator :- ", testResults);
 			assertFalse("Transaction failed! ", false);
 			throw new ValidationException("Transaction failed!");
+		}
+	}
+
+	@Then("$tool test results are verified with code $code Not OK")
+	public void thenTestResultsAreVerifiedForCodeNotOK(String tool, String code) {
+		String testResults;
+		if ("mas".contains(tool.toLowerCase())) {
+			testResults = transactionWorkflow.verifyTestResults();
+		} else if ("mdfs".contains(tool.toLowerCase())) {
+			testResults = transactionWorkflow.verifyTestResultsOnMdfs();
+		} else {
+			testResults = "Unsupported tool type!";
+			throw new ValidationException(testResults);
+		}
+		transactionWorkflow.browserMaximize(); // restoring browser after
+		logger.info("Expected Result :- {}", testResults);
+		logger.info("Code :- {}", code);
+
+		if (testResults.contains("Validations OK")) {
+			assertFalse("Transaction failed!  -  Result : " + testResults, false);
+			throw new ValidationException("Transaction failed! -  Result : " + testResults);
+		} else if (testResults.contains("Validations Not OK") && testResults.contains(code)) {
+			assertTrue("Transaction is succcessful!  - Expected Result : " + testResults, true);
+		} else {
+			assertFalse("Transaction failed! Code or status is incorrect!", false);
+			throw new ValidationException("Transaction failed! Code or Description does not Match!");
 		}
 	}
 

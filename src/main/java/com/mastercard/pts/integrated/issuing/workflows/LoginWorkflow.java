@@ -17,14 +17,14 @@ import com.mastercard.pts.integrated.issuing.pages.customer.InstitutionSelection
 @Workflow
 public class LoginWorkflow {
 	final Logger logger = LoggerFactory.getLogger(LoginWorkflow.class);
-	
+
 	@Autowired
 	private PageObjectFactory pageFactory;
-	
+
 	@Autowired
 	private WebDriverProvider webProvider;
-	
-	public void openLoginPageForPortal(Portal portal) {		
+
+	public void openLoginPageForPortal(Portal portal) {                        
 		webProvider.get().get(portal.getUrl());
 		webProvider.get().manage().window().maximize();
 		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
@@ -38,43 +38,48 @@ public class LoginWorkflow {
 		loginPage.inputPassword(password);
 		loginPage.clickLoginButton();
 	}
-	
-	public void confirmInstitutionSelection(String institutionSelector) {
+
+	public boolean confirmInstitutionSelection(String institutionSelector) {
 		InstitutionSelectionPage page = pageFactory.getPage(InstitutionSelectionPage.class);
 		String institution = System.getProperty("institution");
 		if (institution != null && !institution.trim().isEmpty())
 			institutionSelector=institution;
 		page.selectInstitution(institutionSelector);
 		page.clickConfirm();
+		return page.checkSessionExpired();
 	}
 
 	public void logInInstitution(Portal portal, String institution) {
 		openLoginPageForPortal(portal);
 		login(portal.getUserName(), portal.getPassword());
-		confirmInstitutionSelection(institution);
+		boolean flag = confirmInstitutionSelection(institution);
+		if(flag){
+			logInInstitution(portal,institution);
+		}
 	}
-	
+
+
 	public void logInInstitutionAsAdmin(Portal portal, String institution) {
 		openLoginPageForPortal(portal);
 		login(portal.getAdminUserName(), portal.getAdminPassword());
 		confirmInstitutionSelection(institution);
 	}
-	
+
 	public void signOutCustomer(){
 		HeaderPage page = pageFactory.getPage(HeaderPage.class);
 		page.signOutCustomer();
 	}
-	
+
 	public void signOutCollect(){
 		HeaderPage page = pageFactory.getPage(HeaderPage.class);
 		page.signOutCollect();
 	}
-	
+
 	public void signOutCardholder(){
 		HeaderPage page = pageFactory.getPage(HeaderPage.class);
 		page.signOutCardholder();
 	}
-	
+
 	public void signOutAgent(){
 		HeaderPage page = pageFactory.getPage(HeaderPage.class);
 		page.signOutAgent();

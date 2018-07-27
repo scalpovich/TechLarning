@@ -11,20 +11,23 @@ Meta:
 Scenario: Transaction - prepaid emv corporate travel multi wallet multi currency card - EMV_PURCHASE_WITH_CASHBACK Authorization transaction
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card
-When user creates new device of prepaid type for new client
 And user sign out from customer portal
 
 Scenario: Device Production
 Given user is logged in institution
+When user creates new device of prepaid type for new client
 And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 When processes pin generation batch for prepaid
 When user has wallet number information for prepaid device
-When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
+And user setup device currency through helpdesk
+Then currency setup for prepaid device is done correctly and updated in wallet details tab
+When user performs adjustment transaction with 500 amount
+And user performs adjustment transaction for second wallet
 And user sign out from customer portal
 
 Scenario: Pin Generation 
@@ -46,6 +49,7 @@ When Auth file is generated after transaction
 When MAS simulator is closed
 Then user is logged in institution
 Then search Purchase with Cash back authorization and verify 000-Successful status
+Then verify transaction currency as INR [356] and billing currency as USD [840] on auth search
 Then user sign out from customer portal
 
 Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension

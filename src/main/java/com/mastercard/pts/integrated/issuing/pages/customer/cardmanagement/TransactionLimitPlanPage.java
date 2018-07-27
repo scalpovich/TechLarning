@@ -1,9 +1,9 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import java.util.Collection;
 import java.util.Arrays;
 import java.util.List;
 
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -17,22 +17,33 @@ import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManag
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
-import com.mastercard.pts.integrated.issuing.domain.ProductType;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionLimitPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionLimitPlanDetails;
-import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
-import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
+import com.mastercard.pts.integrated.issuing.domain.ProductType;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP, CardManagementNav.L2_DEVICE_CONFIGURATION,
-		CardManagementNav.L2_TRANSACTION_LIMIT_PLAN })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1PROGRAM_SETUP, CardManagementNav.L2_TRANSACTION_LIMIT_PLAN })
 public class TransactionLimitPlanPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(TransactionLimitPlanPage.class);
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "dailyVel:input:inputAmountField")
+	private MCWebElement dailyVelocityTxt;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "periodicAmt:input:inputAmountField")
+	private MCWebElement periodicAmtTxt;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "periodicVel:input:inputAmountField")
+	private MCWebElement periodicVelTxt;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "yearlyAmt:input:inputAmountField")
+	private MCWebElement yearlyAmtTxt;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "yearlyVel:input:inputAmountField")
+	private MCWebElement yearlyVelTxt;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#txnLimitPlanCode input")
 	private MCWebElement planCodeSearchTxt;
@@ -88,23 +99,24 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "dailyAmtResp:input:dropdowncomponent")
 	private MCWebElement iframeDailyResponseDDwn;
+
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addTransactionLimitPlanBtn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "txnLimitPlanCode:input:inputTextField")
-	private MCWebElement TransactionLimitPlanCodeTxt;
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=txnLimitPlanCode]")
+	private MCWebElement transactionLimitPlanCodeTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "description:input:inputTextField")
-	private MCWebElement DescriptionTxt;
+	private MCWebElement descriptionTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "productType:input:dropdowncomponent")
-	private MCWebElement ProductTypeDDwn;
+	private MCWebElement productTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "planType:input:dropdowncomponent")
-	private MCWebElement PlanTypeDDwn;
+	private MCWebElement planTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "txnLimitYearStartMonth:input:dropdowncomponent")
-	private MCWebElement StartMonthForYearlyLimitsDDwn;
+	private MCWebElement startMonthForYearlyLimitsDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement save2Btn;
@@ -113,38 +125,46 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 	private MCWebElement addSubDetailsBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "transactionCode:input:dropdowncomponent")
-	private MCWebElement TransactionTypeDDwn;
+	private MCWebElement transactionTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "transactionSource:input:dropdowncomponent")
-	private MCWebElement TransactionSourceDDwn;
+	private MCWebElement transactionSourceDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "transactionChannel:input:dropdowncomponent")
-	private MCWebElement TransactionChannelDDwn;
+	private MCWebElement transactionChannelDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "transactionOrigin:input:dropdowncomponent")
-	private MCWebElement TransactionOriginDDwn;
+	private MCWebElement transactionOriginDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "minAmount:input:inputAmountField")
-	private MCWebElement FloorAmountTxt;
+	private MCWebElement floorAmountTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "perTxnAmt:input:inputAmountField")
-	private MCWebElement CeilingAmountTxt;
+	private MCWebElement ceilingAmountTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "standInTxnOffAmt:input:inputAmountField")
-	private MCWebElement StandInAmountTxt;
+	private MCWebElement standInAmountTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement saveBtn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
-	private MCWebElement CancelBtn;
+	private MCWebElement cancelBtn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "authPeriodCode:input:dropdowncomponent")
+	private MCWebElement periodicityDDwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "periodNumber:input:inputTextField")
+	private MCWebElement periodicityNumberTxt;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//form//a[@class='addR']")
+	private MCWebElement addNewBtn;
 
 	public void verifyUiOperationStatus() {
 		logger.info("Transaction Limit Plan");
 		verifySearchButton("Search");
 	}
 
-	// Methods
 	@Override
 	protected List<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(planCodeSearchTxt));
@@ -237,6 +257,56 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 		verifyOperationStatus();
 	}
 
+	public void createTransactionLimitPlanWithoutDetails(TransactionLimitPlan transactionLimitPlanDataObject) {
+		logger.info("Create Transaction Limit Plan: {}", transactionLimitPlanDataObject.getTransactionLimitPlanCode());
+		clickAddNewButton();
+		runWithinPopup("Add Transaction Limit Plan", () -> {
+			enterIframeTransactionLimitPlanCode(transactionLimitPlanDataObject.getTransactionLimitPlanCode());
+			enterIframeDescription(transactionLimitPlanDataObject.getDescription());
+			selectIframeProductType(transactionLimitPlanDataObject.getIframeproductType());
+			WebElementUtils.selectDropDownByIndex(iframePlanTypeDDwn, 1);
+			WebElementUtils.selectDropDownByIndex(periodicityDDwn, 2);
+			WebElementUtils.enterText(periodicityNumberTxt, "9");
+			WebElementUtils.selectDropDownByIndex(iframeStartMonthForYearlyLimitsDDwn, 1);
+			clickAddDetailsButton();
+		});
+	}
+
+	public void addEachDetail(TransactionLimitPlan transactionLimitPlanDataObject) {
+		try {
+			switchToIframe(Constants.ADD_TRANSACTION_LIMIT_PLAN_FRAME);
+		} catch (TimeoutException te) {
+			logger.debug(te.getMessage(), te);
+		}
+		WebElementUtils.scrollDown(driver(), 0, 300);
+		clickWhenClickable(addNewBtn);
+		transactionLimitPlanDataObject.getTransactionLimitPlanDetails().forEach(details -> addDetailsLimit(details, transactionLimitPlanDataObject.getIframeproductType()));
+		WebElementUtils.scrollDown(driver(), 0, 250);
+	}
+
+	private void addDetailsLimit(TransactionLimitPlanDetails details, String productType) {
+		runWithinPopup("Add Transaction Limit Plan Detail", () -> {
+			selectIframeTransactionType(details.getIframeTransactionType());
+			waitForWicket();
+			selectIframeTransactionSource(details.getIframeTransactionSource());
+			waitForWicket();
+			selectIframeTransactionChannel(details.getIframeTransactionChannel());
+			waitForWicket();
+			selectIframeTransactionOrigin(details.getIframeTransactionOrigin());
+			enterIframeFloorAmount(details.getIframeFloorAmount());
+			selectIframeFloorResponse(details.getIframeFloorResponse());
+			enterIframeCeilingAmount(details.getIframeCeilingAmount());
+			selectIframeCeilingResponse(details.getIframeCeilingResponse());
+			enterIframeDailyAmount(details.getIframeDailyAmount());
+			selectIframeDailyResponse(details.getIframeDailyResponse());
+			enterDailyVelocity(details.getLimitDailyVelocity());
+			enterPeriodicAmt(details.getLimitPeriodicAmount());
+			enterPeriodicVel(details.getLimitPeriodicVelocity());
+			enterYearlyData(details);
+			clickWhenClickable(saveBtn);
+		});
+	}
+
 	private void addDetails(TransactionLimitPlanDetails details, String productType) {
 		clickAddNewButton();
 
@@ -258,13 +328,38 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 			}
 			enterIframeDailyAmount(details.getIframeDailyAmount());
 			selectIframeDailyResponse(details.getIframeDailyResponse());
-			super.clickSaveButton(); // Overriden method included loader handling which is not there is application. Calling parent method to avoid exception being printed in logs.
-			});
+			clickSaveButton();
+		});
 
 		verifyRecordMarkedForUpdationStatusSuccess();
 	}
 
-	public void clickaddTransactionLimitPlan() {
+	private void enterYearlyData(TransactionLimitPlanDetails details) {
+		enterYearlyAmt(details.getLimitYearlyAmount());
+		enterYearlyVel(details.getLimitYearlyVelocity());
+	}
+
+	private void enterYearlyVel(String limitYearlyVelocity) {
+		WebElementUtils.enterText(yearlyVelTxt, limitYearlyVelocity);
+	}
+
+	private void enterYearlyAmt(String limitYearlyAmount) {
+		WebElementUtils.enterText(yearlyAmtTxt, limitYearlyAmount);
+	}
+
+	private void enterPeriodicVel(String limitPeriodicVelocity) {
+		WebElementUtils.enterText(periodicVelTxt, limitPeriodicVelocity);
+	}
+
+	private void enterPeriodicAmt(String limitPeriodicAmount) {
+		WebElementUtils.enterText(periodicAmtTxt, limitPeriodicAmount);
+	}
+
+	private void enterDailyVelocity(String limitDailyVelocity) {
+		WebElementUtils.enterText(dailyVelocityTxt, limitDailyVelocity);
+	}
+
+	public void clickAddTransactionLimitPlan() {
 		clickWhenClickable(addTransactionLimitPlanBtn);
 		switchToAddTransactionLimitPlanFrame();
 	}
@@ -274,31 +369,32 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 	}
 
 	public String enterTransactionCode() {
-		enterValueinTextBox(TransactionLimitPlanCodeTxt, CustomUtils.randomNumbers(5));
-		return TransactionLimitPlanCodeTxt.getAttribute("value");
+		enterValueinTextBox(transactionLimitPlanCodeTxt, CustomUtils.randomNumbers(5));
+		return transactionLimitPlanCodeTxt.getAttribute("value");
 	}
 
 	public String enterTransactionDescription() {
-		enterValueinTextBox(DescriptionTxt, "transaction limit plan");
-		return DescriptionTxt.getAttribute("value");
+		enterValueinTextBox(descriptionTxt, "transaction limit plan");
+		return descriptionTxt.getAttribute("value");
 	}
 
 	public void selectProduct(DeviceCreation deviceCreation) {
-		selectByVisibleText(ProductTypeDDwn, deviceCreation.getProduct());
+		selectByVisibleText(productTypeDDwn, deviceCreation.getProduct());
 	}
 
 	public void selectStartMonthlyYearlyLimits(TransactionLimitPlan transactionlimitplan) {
-		selectByVisibleText(StartMonthForYearlyLimitsDDwn, transactionlimitplan.getStartMonthForYearlyLimits());
+		selectByVisibleText(startMonthForYearlyLimitsDDwn, transactionlimitplan.getStartMonthForYearlyLimits());
 	}
 
 	public void selectPlanType(DeviceCreation deviceCreation) {
-		selectByVisibleText(PlanTypeDDwn, deviceCreation.getPlanType());
+		selectByVisibleText(planTypeDDwn, deviceCreation.getPlanType());
 	}
 
+	@Override
 	public void clickSaveButton() {
 		clickWhenClickable(saveBtn);
 		waitForLoaderToDisappear();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 	}
 
 	public void clickaddTransactionLimitDetails() {
@@ -308,50 +404,50 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 	}
 
 	public void switchToAddTransactionLimitdetailFrame() {
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe(Constants.ADD_TRANSACTION_LIMIT_DETAIL_PLAN_FRAME);
 	}
 
 	public void selectTransactionType(TransactionLimitPlan transactionlimitplan) {
-		waitForElementVisible(TransactionTypeDDwn);
-		selectByVisibleText(TransactionTypeDDwn, transactionlimitplan.getTransactionType());
+		waitForElementVisible(transactionTypeDDwn);
+		selectByVisibleText(transactionTypeDDwn, transactionlimitplan.getTransactionType());
 		waitForLoaderToDisappear();
 	}
 
 	public void selectTransactionSource() {
-		waitForElementVisible(TransactionSourceDDwn);
-		selectDropDownByIndex(TransactionSourceDDwn, 1);
+		waitForElementVisible(transactionSourceDDwn);
+		selectDropDownByIndex(transactionSourceDDwn, 1);
 		waitForLoaderToDisappear();
 	}
 
 	public void selectTransactionChannel() {
-		waitForElementVisible(TransactionChannelDDwn);
-		selectDropDownByIndex(TransactionChannelDDwn, 1);
+		waitForElementVisible(transactionChannelDDwn);
+		selectDropDownByIndex(transactionChannelDDwn, 1);
 		waitForLoaderToDisappear();
 	}
 
 	public void selectTransactionOrigin() {
-		waitForElementVisible(TransactionOriginDDwn);
-		selectDropDownByIndex(TransactionOriginDDwn, 1);
+		waitForElementVisible(transactionOriginDDwn);
+		selectDropDownByIndex(transactionOriginDDwn, 1);
 		waitForLoaderToDisappear();
 	}
 
 	public void enterFloorAmount(TransactionLimitPlan transactionlimitplan) {
-		waitForElementVisible(FloorAmountTxt);
-		enterValueinTextBox(FloorAmountTxt, transactionlimitplan.getFloorAmount());
+		waitForElementVisible(floorAmountTxt);
+		enterValueinTextBox(floorAmountTxt, transactionlimitplan.getFloorAmount());
 		waitForLoaderToDisappear();
 	}
 
 	public void enterCeilingAmount(TransactionLimitPlan transactionlimitplan) {
-		waitForElementVisible(CeilingAmountTxt);
-		enterValueinTextBox(CeilingAmountTxt, transactionlimitplan.getCeilingAmount());
+		waitForElementVisible(ceilingAmountTxt);
+		enterValueinTextBox(ceilingAmountTxt, transactionlimitplan.getCeilingAmount());
 		waitForLoaderToDisappear();
 	}
 
 	public void enterStandInAmount(TransactionLimitPlan transactionlimitplan) {
-		waitForElementVisible(StandInAmountTxt);
-		if (StandInAmountTxt.isEnabled()) {
-			enterValueinTextBox(StandInAmountTxt, transactionlimitplan.getCeilingAmount());
+		waitForElementVisible(standInAmountTxt);
+		if (standInAmountTxt.isEnabled()) {
+			enterValueinTextBox(standInAmountTxt, transactionlimitplan.getCeilingAmount());
 			waitForLoaderToDisappear();
 		}
 	}
@@ -363,22 +459,22 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 	public void verifyTransactionPlanSuccess() {
 		if (!verifyErrorsOnTransactionLimitPlanPage()) {
 			logger.info("Transactionlimitplan Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Record Addition");
-			clickWhenClickable(CancelBtn);
-			SwitchToDefaultFrame();
+			clickWhenClickable(cancelBtn);
+			switchToDefaultFrame();
 		}
 	}
 
 	public String addTransactionLimitPlan(DeviceCreation deviceCreation, TransactionLimitPlan transactionlimitplan) {
 		String transactionlimitcode = enterTransactionCode();
-		String Description = enterTransactionDescription();
+		String description = enterTransactionDescription();
 		selectProduct(deviceCreation);
 		selectStartMonthlyYearlyLimits(transactionlimitplan);
 		selectPlanType(deviceCreation);
 		clickSaveButton();
-		return Description + " " + "[" + transactionlimitcode + "]";
+		return description + " " + "[" + transactionlimitcode + "]";
 	}
 
 	public void addTransactionLimitPlanDetails(TransactionLimitPlan transactionlimitplan) {
@@ -391,7 +487,14 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 		enterStandInAmount(transactionlimitplan);
 		clickSaveButton();
 		waitForLoaderToDisappear();
-
 	}
 
+	public void deletePlan(String name) {
+		WebElementUtils.enterText(transactionLimitPlanCodeTxt, name);
+		clickSearchButton();
+		if (isDeleteColumnPresent()) {
+			deleteFirstRecord();
+			driver().switchTo().alert().accept();
+		}
+	}
 }
