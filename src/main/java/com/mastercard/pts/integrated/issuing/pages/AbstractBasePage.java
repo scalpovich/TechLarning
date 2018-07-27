@@ -17,7 +17,6 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -42,7 +41,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
@@ -87,7 +85,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private static final String SUCCESS_MESSAGE = "Success message: {}";
 
 	private static final String WALLET_NUMBER = "Wallet number: {}";
-	
 	public static final String ERROR_MESSAGE = "Error: {}";
 
 	public static final String RESPONSE_MESSAGE	 = "Response message: {}";
@@ -184,7 +181,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private MCWebElement paragraph;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.//*[text()='Status :']]/following-sibling::td[1]")
-	protected MCWebElement batchStatus;
+	private MCWebElement batchStatus;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Create']")
 	private MCWebElement createBtn;
@@ -315,7 +312,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected MCWebElement institutionDateTxt;
     
     int retryCounter =0;
-	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
 		MCAnnotationProcessor.initializeSuper(this, finderProvider);
@@ -671,7 +667,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
         logger.info("Button clicked successfully.");
 	}
-	
 	protected void clickWhenClickablewithWicket(MCWebElement element) {
 		SimulatorUtilities.wait(4000);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
@@ -737,20 +732,16 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 		}
 	}
-	
 	public void waitAndSearchForApplicationBatchNumberToAppear() {
 		clickSearchButton();
-		// Pre-production batch and device production batch & Authorization Search page take little long to
-				// be completed, and do not appear in search result, hence a for loop
 		for (int l = 0; l < 21; l++) {
-			if (!waitForbatchNumber())
+			if (!waitForRow())
 				clickSearchButton();
 			else {
 				break;
 			}
 		}
 	}
-	
 	protected boolean waitForbatchNumber() {
 		try {
 			waitForWicket();
@@ -763,9 +754,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void waitAndSearchForRecordToExist() {
-		waitAndSearchForRecordToAppear();
-		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, deviceNumberFetch.getText());
-		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
+		waitAndSearchForRecordToAppear();		
 		selectFirstRecord();
 		clickProcessSelectedButton();		
 	}	
@@ -1824,7 +1813,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 		}
 	}
-	
 	
 	private void deviceNumberContextDeviceProduction() {
 		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());		
