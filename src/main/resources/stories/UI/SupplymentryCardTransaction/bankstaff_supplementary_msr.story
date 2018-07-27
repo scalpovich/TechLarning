@@ -1,5 +1,5 @@
 Narrative:
-In order to check supplementary device functionality
+In order to check credit supplementary device functionality
 As a issuer 
 I want to perform transaction on supplementary decive
 
@@ -9,6 +9,7 @@ Meta:
 @SupplementaryCardTransaction			 
 
 Scenario:creation of mastercard_bankstaff_supplementary_msr credit device
+
 Given setting json values in excel for Credit
 And user is logged in institution
 When User fills Dedupe Plan

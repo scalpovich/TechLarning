@@ -1,7 +1,7 @@
 Narrative:
-In order to a create a Credit Device under customer portal cardmanagement tab
-As a user
-I want to assert pages
+In order to check credit supplementary device functionality
+As a issuer 
+I want to perform transaction on supplementary decive
 
 Meta:
 @CreditSupplementaryCardTransaction
