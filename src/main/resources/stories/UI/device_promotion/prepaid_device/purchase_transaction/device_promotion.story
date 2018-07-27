@@ -13,4 +13,5 @@ Scenario: To verify that the user is able to add a new Device Promotion Plan for
 Meta:
 @AddDevicePromotionPlan
 Given user is logged in institution
-When user creates device promotion plan code for prepaid product
+When user creates device promotion plan code for credit product
+Then update Credit device with promotion plan

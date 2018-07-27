@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
@@ -25,7 +24,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L2_SEARCH_DEVICE, CardManagementNav.L3_DEVICE_DETAILS })
 
 public class DeviceDetailsPage extends AbstractCardManagementPage {
-
+	
 	private static final Logger logger = LoggerFactory.getLogger(DeviceDetailsPage.class);
 
 	private String statusText = "";

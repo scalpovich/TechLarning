@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePromotionPlan;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DevicePromotionPlanPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.UpdateDeviceDetailsPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
 @Workflow
@@ -21,4 +23,9 @@ public class DevicePromotionPlanWorkFlow {
     	DevicePromotionPlanPage page = navigator.navigateToPage(DevicePromotionPlanPage.class);
 		page.createDevicePromotionPlan(devicePromotionPlan);
 	}
+    
+    public void updateDeviceWithPromotionPlan(Device device, DevicePromotionPlan devicePromotionPlan){
+    	UpdateDeviceDetailsPage page = navigator.navigateToPage(UpdateDeviceDetailsPage.class);
+    	page.updateDevieWithPromotionPlan(device,devicePromotionPlan);
+    }
 }
