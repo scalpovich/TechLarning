@@ -49,7 +49,6 @@ Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 And user is logged in institution
 And search Purchase authorization and verify 208-LOST CARD, PICK-UP status
-Then assert Purchase response with 70053 AuthDecline Code and Card Status is Lost with Capture Response as description
 And user sign out from customer portal
 
 Scenario: Verify Last executed script status for Application block
@@ -64,10 +63,10 @@ When user withdraws a card from withdraw device screen
 
 Scenario: Transaction EMV_PURCHASE_ISSUER_SCRIPTING_RES
 When perform an EMV_PURCHASE_ISSUER_SCRIPTING_RES MAS transaction on the same card
+And MAS simulator is closed
 And user is logged in institution
-And search Purchase authorization and verify 208-LOST CARD, PICK-UP status
-Then assert Purchase response with 70053 AuthDecline Code and Card Status is Lost with Capture Response as description
-And user sign out from customer portal
+And search Purchase authorization and verify 000-Successful status
+Then user sign out from customer portal
 
 Scenario: Verify Last executed script status for Application unblock
 When user is logged in institution
