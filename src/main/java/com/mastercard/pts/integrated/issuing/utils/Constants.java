@@ -465,5 +465,7 @@ public class Constants {
 	public static final String PRIORITY_PASS_TEMPLATE ="Priority Pass ID [P]";
 	public static final String DEVICE_TEMPLATE = "Device Template";
 	public static final String CARD_PACK_TEMPLATE = "Card Pack ID Template";
+	
+	public static final String PROGRAM = "Program";
 
 }

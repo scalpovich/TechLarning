@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -109,8 +110,9 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectCreditPlan(String creditPlan) {
-		boolean executionFlag=context.get(ConstantData.JSON_DATA_DRIVEN_EXECUTION);
-		if (!executionFlag) {
+
+		if (Objects.isNull(context.get(ConstantData.JSON_DATA_DRIVEN_EXECUTION))) {
+
 			if (context.get(CreditConstants.CREDIT_PLAN_CODE_ERROR_STATUS).equals(true)) {
 				WebElementUtils.selectDropDownByIndex(creditPlanDDwn, 1);
 			} else {
@@ -123,8 +125,8 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectBillingCycleCode(String billingCycleCode) {
-		boolean executionFlag=context.get(ConstantData.JSON_DATA_DRIVEN_EXECUTION);
-		if (!executionFlag) {
+
+		if (Objects.isNull(context.get(ConstantData.JSON_DATA_DRIVEN_EXECUTION))) {
 			if (context.get(CreditConstants.BILLING_CYCLE_CODE_ERROR_STATUS).equals(true)) {
 				WebElementUtils.selectDropDownByIndex(billingCycleCodeDDwn, 1);
 			} else {
@@ -167,26 +169,23 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		runWithinPopup("Add Wallet Plan", () -> {
 			String productType = walletPlan.getProductType();
 			inputWalletPlanCode(walletPlan.getWalletPlanCode());
-            waitForPageToLoad(driver());
+			waitForPageToLoad(driver());
 			inputDescription(walletPlan.getDescription());
-            waitForPageToLoad(driver());
+			waitForPageToLoad(driver());
 			SimulatorUtilities.wait(2000);
 			selectProductType(productType);
 			waitForPageToLoad(driver());
-			if(walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
-			{
-				selectByVisibleText(programTypeDDwn,walletPlan.getProgramType());
-			}
-			else
-			{            
-	            SimulatorUtilities.wait(2000);
+			if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
+				selectByVisibleText(programTypeDDwn, walletPlan.getProgramType());
+			} else {
+				SimulatorUtilities.wait(2000);
 				selectProgramType(walletPlan.getProgramType());
 				waitForPageToLoad(driver());
 				SimulatorUtilities.wait(2000);
 			}
 			selectCurrency(walletPlan.getCurrency());
 			waitForPageToLoad(driver());
-		    SimulatorUtilities.wait(2000);
+			SimulatorUtilities.wait(2000);
 			selectUsage(walletPlan.getUsage());
 			waitForPageToLoad(driver());
 			SimulatorUtilities.wait(2000);
@@ -194,8 +193,8 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			waitForPageToLoad(driver());
 			clickNextButton(); // Click on next button
-			clickFinishButton(); // click on finish button
-		});
+				clickFinishButton(); // click on finish button
+			});
 		verifyOperationStatus();
 	}
 
@@ -223,8 +222,8 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			SimulatorUtilities.wait(2000);
 			clickNextButton(); // Click on next button
-			clickFinishButton(); // click on finish button
-		});
+				clickFinishButton(); // click on finish button
+			});
 		verifyOperationStatus();
 	}
 
@@ -239,26 +238,13 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		}
 		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
 			inputReservedAmount();
-		}
-	}
-
-	private void fillDetailsBasedOnCarddType(WalletPlan walletPlan, String productType) {
-		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
-			selectCreditPlan(walletPlan.getCreditPlan());
-			selectBillingCycleCode(walletPlan.getBillingCyleCode());
-		}
-		if (productType.equalsIgnoreCase(ProductType.DEBIT)) {
-			WebElementUtils.enterText(dummyAccountNumberTxt, walletPlan.getDummyAccountNumber());
-		}
-		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
-			enterReservedAmount(walletPlan.getReservedAmount());
 			if (walletPlan.getWhiteMcgCode() != null) {
 				logger.info("White listed MCG {}", walletPlan.getWhiteMcgCode());
 				selectWhiteListMSG(walletPlan.getWhiteMcgCode());
 			}
 		}
 	}
-
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Wallet Configuration Wallet PLan");
 		verifySearchButton("Search");
@@ -268,7 +254,6 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(walletPlanCodeSearchTxt));
 	}
-
 	public void editsWalletPlan(WalletPlan walletPlan, String editableFieldForWalletPlan) {
 		WebElementUtils.enterText(walletPlanCodeSearchTxt, walletPlan.getWalletPlanCode());
 		clickSearchButton();

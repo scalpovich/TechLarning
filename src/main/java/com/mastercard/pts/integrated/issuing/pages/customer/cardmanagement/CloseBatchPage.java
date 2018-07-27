@@ -3,8 +3,10 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -65,40 +67,37 @@ public class CloseBatchPage extends AbstractBasePage {
 		processSelected.click();
 		CustomUtils.ThreadDotSleep(1000);
 	}
-
-	public List<String> allBatchNumberRetrieval()
-	{
-		List<String>batchNumbers=new ArrayList<>();
-		for(int i=0;i<allBatchNumberTxt.getElements().size();i++)
-		{
-			batchNumbers.add(allBatchNumberTxt.getElements().get(i).getText());
-		}
-		return batchNumbers;
+	
+	public List<String> allBatchNumberRetrieval(){
+		List<String>batchNumbers = new ArrayList<>();
+		
+		allBatchNumberTxt.getElements().stream().forEach((element)->{
+				batchNumbers.add(element.getText());
+		});
+		
+		return batchNumbers;			
 	}
 	
 	public int identifyBatchNumberToProcess()
 	{
 		Device device=context.get(ContextConstants.DEVICE);
-		int i;
-		for(i=0;i<allBatchNumberRetrieval().size();i++)
-		{
-			if(allBatchNumberRetrieval().get(i).equals(device.getBatchNumber()))
-			{
-				logger.info("batchNumber: {}",allBatchNumberRetrieval().get(i));
+		int index;
+		for(index=0;index<allBatchNumberRetrieval().size();index++){
+			if(allBatchNumberRetrieval().get(index).equals(device.getBatchNumber())){
+				logger.info("Batch Number: {}",allBatchNumberRetrieval().get(index));
 				break;
-			}
+			}			
 		}
-		return i;
-	}
+		return index;
+	}	
 	
-	public void processAppropriateBatchForApplication()
-	{
-		String checkBox="//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcess()+1+"]/td[10]/span/input";
+	public void processAppropriateBatchForApplication(){
+		String checkBox = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcess()+1+"]/td[10]/span/input";
 		clickWhenClickable(driver().findElement(By.xpath(checkBox)));
 		processSelected.click();
-		verifyOperationStatus();
-		
+		verifyOperationStatus();		
 	}
+	
 	
 	public void processFirstBatch() {
 		clickWhenClickable(firstBatchNumberTxt);
