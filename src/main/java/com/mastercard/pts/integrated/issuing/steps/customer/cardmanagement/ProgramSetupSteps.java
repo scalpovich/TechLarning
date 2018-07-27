@@ -1410,6 +1410,7 @@ public class ProgramSetupSteps {
 	{
 		walletPlan.setWhiteListedMCGPlan(provider);
 		programSetupWorkflow.editsWalletPlan(walletPlan,editableFieldForWalletPlan);
+		
 	}
 	
 	@When("User fills Device Plan for $productType $deviceType card with transaction fee waived Off")
