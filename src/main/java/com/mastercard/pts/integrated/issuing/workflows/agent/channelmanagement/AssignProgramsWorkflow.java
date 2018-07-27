@@ -35,6 +35,7 @@ public class AssignProgramsWorkflow {
 	
 	public String getAgencyProgramAssignedMessage() {
 		return agencyProgram.getAgencyProgramAssignedMessage();
+		
 	}
 	
 	public String getBranchProgramAssignedMessage() {

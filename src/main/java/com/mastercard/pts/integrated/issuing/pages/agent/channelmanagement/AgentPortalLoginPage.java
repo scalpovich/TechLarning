@@ -29,7 +29,7 @@ public class AgentPortalLoginPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[contains(text(),'Signout')]")
 	private MCWebElement signOut;
-
+	
 	public void loadPage() {
 		getFinder().getWebDriver()
 				.get(env.getProperty("agent.application.url"));

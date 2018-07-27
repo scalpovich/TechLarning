@@ -1769,7 +1769,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		getFinder().getWebDriver().findElement(By.xpath(ins)).click();
 
 	}
-
+	
 	public void deleteExistingRecord(String parameter) {
 		for (int i = 0; i < firstElementOfTable.getElements().size(); i++) {
 			if (firstElementOfTable.getElements().get(i).getText().equals(parameter)) {
