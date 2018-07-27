@@ -18,7 +18,7 @@ And User fills Document Checklist Screen for credit product
 And User fills Device Joining and Membership Fee Plan for credit product
 And User fills Device Event Based Fee Plan for credit product
 And for Static Virtual Card User fills Device Plan for credit product for Mastercard
-And for NFC Device - Paypass User fills Supplementary Device Plan for prepaid product for MASTERCARD [02]
+And for NFC Device - Paypass User fills Supplementary Device Plan for credit product for MASTERCARD [02]
 And User fills Billing Cycle
 And User fills Payment Priority
 And User fills Transaction Rule Plan

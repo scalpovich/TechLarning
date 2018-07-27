@@ -363,15 +363,6 @@ public class DevicePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:lvcPerTxnLimit:input:inputAmountField")
 	private MCWebElement perTranscLimitTxt;
 	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "#pinChangeTnxFirst input")
-	private MCWebElement pinChangeTransactionFirstChbx;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "#crossBorderTxnCheck input")
-	private MCWebElement crossBorderTransaction;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "#crossBorderTxnCheckTime input")
-	private MCWebElement timeIntervalCrossBorder;
-	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:virtualDeviceCreditLimit:input:inputTextField")
 	private MCWebElement virtualDeviceCrediLimitTxt;
 
@@ -410,57 +401,9 @@ public class DevicePlanPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="view:virtualDeviceCreditLimit:input:inputTextField")	
 	private MCWebElement virtualDeviceCreditLimitTxt;
+		
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "stopListFlag:checkBoxComponent")
-	private MCWebElement stoplistFlagChkBx;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind="view:issuerScripting:checkBoxComponent")	
-	private MCWebElement issuerScriptingChkBx;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind="view:ucol:input:inputAmountField")	
-	private MCWebElement ucol;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind="view:ucota:input:inputAmountField")	
-	private MCWebElement ucota;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind="view:lcol:input:inputAmountField")	
-	private MCWebElement lcol;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind="view:lcota:input:inputAmountField")	
-	private MCWebElement lcota;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind="view:applicationBlock:checkBoxComponent")	
-	private MCWebElement applicationBlockChkBx;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind="view:applicationUnblock:checkBoxComponent")	
-	private MCWebElement applicationUnblockChkBx;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind="view:putData:checkBoxComponent")	
-	private MCWebElement putDataChkBx;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind="view:pinChange:checkBoxComponent")	
-	private MCWebElement pinChangeChkBx;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind="view:pinUnblock:checkBoxComponent")	
-	private MCWebElement pinUnblockChkBx;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind="view:appBlockPriority:input:dropdowncomponent")	
-	private MCWebElement applicationBlockPriorityDdwn;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind="view:appUnblockPriority:input:dropdowncomponent")	
-	private MCWebElement applicationUnblockPriorityDdwn;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind="view:putDataPriority:input:dropdowncomponent")	
-	private MCWebElement putDataPriorityDdwn;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind="view:pinChangePriority:input:dropdowncomponent")	
-	private MCWebElement pinChangePriorityDdwn;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind="view:pinUnblockPriority:input:dropdowncomponent")	
-	private MCWebElement pinUnblockPriorityDdwn;
-	
-	
-public void AddDevicePlan() {
+	public void AddDevicePlan() {
 		clickWhenClickable(AddDevicePlanBtn);
 		switchToAddDevicePlanFrame();
 	}
@@ -999,18 +942,6 @@ public void AddDevicePlan() {
 		ClickCheckBox(cvccCvvChkBx, status);
 	}
 
-	public void checkPinChangeTransactionFirst(boolean status) {
-		ClickCheckBox(pinChangeTransactionFirstChbx, status);
-	}
-
-	public void checkCrossBorderTransaction(boolean status) {
-		ClickCheckBox(crossBorderTransaction, status);
-	}
-
-	public void checkStoplistFlag(boolean status) {
-		ClickCheckBox(stoplistFlagChkBx, status);
-	}
-
 	public void clickIframeDialogCloseX() {
 		dialogCloseX.click();
 	}
@@ -1032,37 +963,6 @@ public void AddDevicePlan() {
 			clickSaveButton();
 		});
 
-		verifyOperationStatus();
-	}
-
-	public void updatePinChangeTransactionFirst(DevicePlan devicePlanDataObject) {
-		logger.info("Update Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
-		enterValueinTextBox(devicePlanCode, devicePlanDataObject.getDevicePlanCode());
-		clickSearchButton();
-		editFirstRecord();
-		runWithinPopup("Edit Device Plan", () -> {
-			WebElementUtils.elementToBeClickable(authorizationTab);
-			clickWhenClickable(authorizationTab);
-			WebElementUtils.elementToBeClickable(pinChangeTransactionFirstChbx);
-			checkPinChangeTransactionFirst(true);
-			clickSaveButton();
-		});
-		verifyOperationStatus();
-	}
-
-	public void checkCrossBorderTransaction(DevicePlan devicePlanDataObject) {
-		logger.info("Update Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
-		enterValueinTextBox(devicePlanCode, devicePlanDataObject.getDevicePlanCode());
-		clickSearchButton();
-		editFirstRecord();
-		runWithinPopup("Edit Device Plan", () -> {
-			WebElementUtils.elementToBeClickable(authorizationTab);
-			clickWhenClickable(authorizationTab);
-			WebElementUtils.elementToBeClickable(crossBorderTransaction);
-			checkCrossBorderTransaction(true);
-			WebElementUtils.enterText(timeIntervalCrossBorder, 20);
-			clickSaveButton();
-		});
 		verifyOperationStatus();
 	}
 
@@ -1240,71 +1140,27 @@ public void AddDevicePlan() {
 
 	private void forEmvOrNfc(DevicePlan devicePlan) {
 		iCVVOptionChkBx.click();
-		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
+		if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)){
 			WebElementUtils.selectDropDownByIndex(iframeChipTypeDdwn, 1);
-		} else {
+		}else{
 			selectIframeChipTypeDdwnDdwn(devicePlan.getChipType());
-		}
-
+		}		
+		
 		if (devicePlan.getFillEMVPlan().equalsIgnoreCase(STATUS_YES)) {
 			clickWhenClickable(atcFlagChkBx);
-			// atcFlagChkBx.click();
+			//atcFlagChkBx.click();
 			WebElementUtils.selectDropDownByVisibleText(emvPlanResponseDdwn, devicePlan.getEmvPlanResponse());
 			WebElementUtils.enterText(acceptableBelowATCRangeTxt, devicePlan.getEmvBelowATCRange());
 			WebElementUtils.enterText(acceptableAboveATCRangeTxt, devicePlan.getEmvAboveATCRange());
 			clickWhenClickable(allowFallBackChkBx);
 		}
-      	if (devicePlan.getEmvPlanIssuerScripting() != null) {
-			fillIssuerScriptingDetails(devicePlan);
-        }
+		
 	}
 
-	private void fillIssuerScriptingDetails(DevicePlan devicePlan )
-	{
-		if (devicePlan.getEmvPlanIssuerScripting().equalsIgnoreCase(STATUS_YES))
-		{
-			clickWhenClickable(issuerScriptingChkBx);
-			WebElementUtils.enterText(ucol, devicePlan.getEmvPlanUcol());
-			WebElementUtils.enterText(ucota, devicePlan.getEmvPlanUcota());
-			WebElementUtils.enterText(lcol, devicePlan.getEmvPlanLcol());
-			WebElementUtils.enterText(lcota, devicePlan.getEmvPlanLcota());
-
-			if (devicePlan.getEmvPlanApplicationBlock().equalsIgnoreCase(STATUS_YES)) {
-				clickWhenClickable(applicationBlockChkBx);
-			}
-
-			if (devicePlan.getEmvPlanApplicationUnblock().equalsIgnoreCase(STATUS_YES)) {
-				clickWhenClickable(applicationUnblockChkBx);
-			}
-
-			if (devicePlan.getEmvPlanPutData().equalsIgnoreCase(STATUS_YES)) {
-				clickWhenClickable(putDataChkBx);
-			}
-
-			if (devicePlan.getEmvPlanPinChange().equalsIgnoreCase(STATUS_YES)) {
-				clickWhenClickable(pinChangeChkBx);
-			}
-
-			if (devicePlan.getEmvPlanPinUnblock().equalsIgnoreCase(STATUS_YES)) {
-				clickWhenClickable(pinUnblockChkBx);
-			}
-			WebElementUtils.selectDropDownByVisibleText(applicationBlockPriorityDdwn,
-					devicePlan.getEmvPlanApplicationBlockPriority());
-			WebElementUtils.selectDropDownByVisibleText(applicationUnblockPriorityDdwn,
-					devicePlan.getEmvPlanApplicationUnblockPriority());
-			WebElementUtils.selectDropDownByVisibleText(pinChangePriorityDdwn,
-					devicePlan.getEmvPlanPinChangePriority());
-			WebElementUtils.selectDropDownByVisibleText(putDataPriorityDdwn,
-					devicePlan.getEmvPlanPutDataPriority());
-			WebElementUtils.selectDropDownByVisibleText(pinUnblockPriorityDdwn,
-					devicePlan.getEmvPlanPinUnblockPriority());
-
-		}
-	}
 	private void fillPinGenerationSection(DevicePlan devicePlan) {
 		// perform below steps only when pinRequired is true which is the
 		// default state
-		if (!(devicePlan.getDeviceType().contains(DeviceType.VIRTUAL_CARD) || devicePlan.getDeviceType().contains(DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD))){
+		if (!(DeviceType.VIRTUAL_CARD.toLowerCase().contains(devicePlan.getDeviceType().toLowerCase()) || DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.toLowerCase().contains(devicePlan.getDeviceType().toLowerCase()))){
 			WebElementUtils.scrollDown(driver(), 0, 250);
 			pinRequiredChk.click();
 			WebElementUtils.selectDropDownByVisibleText(pinDataTransmissionDDwn, devicePlan.getPinDataTransmission());
@@ -1365,20 +1221,5 @@ public void AddDevicePlan() {
 		String name = System.getProperty("storyName").toString();
 		logger.info("System.getStoryName  : "+name);
 		return name;
-	}
-	
-	public void enableStopListFlag(DevicePlan devicePlanDataObject) {
-		logger.info("Update Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
-		enterValueinTextBox(devicePlanCode, devicePlanDataObject.getDevicePlanCode());
-		clickSearchButton();
-		editFirstRecord();				
-		runWithinPopup("Edit Device Plan", () -> {			
-			WebElementUtils.elementToBeClickable(authorizationTab);
-			clickWhenClickable(authorizationTab);
-			checkStoplistFlag(true);
-			clickSaveButton();
-		});
-
-		verifyOperationStatus();
-	}
+	}	
 }
