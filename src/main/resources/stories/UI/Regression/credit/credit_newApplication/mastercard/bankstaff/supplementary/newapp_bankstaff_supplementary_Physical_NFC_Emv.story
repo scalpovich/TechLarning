@@ -18,7 +18,7 @@ And User fills Document Checklist Screen for credit product
 And User fills Device Joining and Membership Fee Plan for credit product
 And User fills Device Event Based Fee Plan for credit product
 And for EMV Card User fills Device Plan for credit product for Mastercard
-And for Physical NFC Device - EMV Paypass User fills Supplementary Device Plan for credit product for Mastercard
+And for NFC Device - EMV Paypass User fills Supplementary Device Plan for credit product for Mastercard
 And User fills Billing Cycle
 And User fills Payment Priority
 And User fills Transaction Rule Plan
@@ -42,7 +42,7 @@ And user sign out from customer portal
 
 Scenario:Board new Supplementary Device
 Given user is logged in institution
-When credit device is created using new Application screen for Bank Staff [2] and "Supplementary Device [S]" and Existing Program [E] and Physical NFC Device - EMV Paypass
+When credit device is created using new Application screen for Bank Staff [2] and "Supplementary Device [S]" and Existing Program [E] and NFC Device - EMV Paypass
 And user verifies the credit application device
 And user approves the credit application device
 And user processes close batch for new Application

@@ -165,7 +165,7 @@ public class BatchProcessSteps {
 	public void whenProcessesPinGenerationBatchUsingNewApplication(String type){
 		PinGenerationBatch batch = new PinGenerationBatch();
 		batch.setProductType(ProductType.fromShortName(type));
-		String batchNumber=context.get(CreditConstants.NEW_APPLICATION_BATCH);
+		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
 		batch.setBatchNumber(batchNumber);
 		MiscUtils.reportToConsole("pin generation Batch: {}", batchNumber);
 		jobId = batchProcessWorkflow.processPinGenerationBatch(batch);

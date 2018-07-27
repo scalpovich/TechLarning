@@ -17,7 +17,7 @@ And User fills Transaction Limit Plan for credit product
 And User fills Document Checklist Screen for credit product
 And User fills Device Joining and Membership Fee Plan for credit product
 And User fills Device Event Based Fee Plan for credit product
-And for Physical NFC Device - Paypass User fills Device Plan for credit product for Mastercard
+And for NFC Device - Paypass User fills Device Plan for credit product for Mastercard
 And User fills Billing Cycle
 And User fills Payment Priority
 And User fills Transaction Rule Plan
@@ -27,7 +27,7 @@ And User fills Wallet Plan for credit product and program Retail Credit Card
 And User fills MCC Rules for credit product
 And User Primary fills new Program Retail Credit Card section for credit product for mastercard
 And User fills Device Range section for credit product
-And credit device is created using new Application screen for Individual and "Primary Device" and New Client and Physical NFC Device - Paypass
+And credit device is created using new Application screen for Individual and "Primary Device" and New Client and NFC Device - Paypass
 And user verifies the credit application device
 And user approves the credit application device
 And user processes close batch for new Application

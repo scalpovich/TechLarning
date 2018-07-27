@@ -41,3 +41,4 @@ When credit processes pre-production batch using new Application
 When credit processes deviceproduction batch using new Application
 When new Application processes pin generation batch for credit
 Then User search for new application on search screen for credit and validates the status as NORMAL
+And user sign out from customer portal

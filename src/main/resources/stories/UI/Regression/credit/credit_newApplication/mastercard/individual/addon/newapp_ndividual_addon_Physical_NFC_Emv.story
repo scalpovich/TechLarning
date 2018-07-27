@@ -17,7 +17,8 @@ And User fills Transaction Limit Plan for credit product
 And User fills Document Checklist Screen for credit product
 And User fills Device Joining and Membership Fee Plan for credit product
 And User fills Device Event Based Fee Plan for credit product
-And for Physical NFC Device - EMV Paypass User fills Device Plan for credit product for Mastercard
+And for EMV Card [2] User fills Device Plan for credit product for Mastercard
+And for NFC Device - EMV Paypass User fills Supplementary Device Plan for prepaid product for MASTERCARD [02]
 And User fills Billing Cycle
 And User fills Payment Priority
 And User fills Transaction Rule Plan
@@ -27,7 +28,21 @@ And User fills Wallet Plan for credit product and program Retail Credit Card
 And User fills MCC Rules for credit product
 And User Primary fills new Program Retail Credit Card section for credit product for mastercard
 And User fills Device Range section for credit product
-And credit device is created using new Application screen for Individual and "Primary Device" and New Client and Physical NFC Device - EMV Paypass
+And credit device is created using new Application screen for Individual and "Primary Device" and New Client and EMV Card [2]
+And user verifies the credit application device
+And user approves the credit application device
+And user processes close batch for new Application
+And user processes deviceGeneration batch for new Application
+And user searches for created application
+And credit processes pre-production batch using new Application
+And credit processes deviceproduction batch using new Application
+And new Application processes pin generation batch for credit
+Then User search for new application on search screen for credit and validates the status as NORMAL
+And user sign out from customer portal
+
+Scenario:Board new add-on device
+Given user is logged in institution
+When credit device is created using new Application screen for Individual [0] and "Add-on Device [A]" and New Client [N] and NFC Device - EMV Paypass
 And user verifies the credit application device
 And user approves the credit application device
 And user processes close batch for new Application

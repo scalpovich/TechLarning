@@ -2,7 +2,7 @@
 Narrative:
 As a user
 I want to login into customer portal 
-In order to crate supplementary debit card
+In order to create supplementary debit card
 
 
 Meta:

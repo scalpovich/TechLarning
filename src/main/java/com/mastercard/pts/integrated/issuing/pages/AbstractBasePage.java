@@ -16,10 +16,8 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.xerces.dom3.as.ASElementDeclaration;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -40,13 +38,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -82,8 +78,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	private static final String SUCCESS_MESSAGE = "Success message: {}";
 
-	private static final String WALLET_NUMBER = "Wallet number: {}";
-	
 	public static final String ERROR_MESSAGE = "Error: {}";
 
 	public static final String RESPONSE_MESSAGE	 = "Response message: {}";
@@ -110,7 +104,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid transaction type - ";
     
-    private static final String Device = null;
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
@@ -294,14 +287,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private MCWebElement errorMsgPresence;
 	
 	private static final String DeviceNumber="Device Number";
-	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers']/td[5]/span")
-	private MCWebElement deviceProductionHeaderBatchTxt;
-	
-	private static final int loopIterationToCheckBatchNumber=21;
-	
-    @PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
-	private MCWebElement institutionDateTxt;
 	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -500,9 +485,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void runWithinPopup(String caption, Runnable action) {
 		SimulatorUtilities.wait(3000);
-		String xpath = String.format("//h3[contains(text(), '%s')]/ancestor::div//iframe", caption);
-		logger.info("runWithinPopup -> xpath: {}", xpath);
-		By frameSelector = By.xpath(xpath);
+		By frameSelector = By.xpath(String.format("//h3[contains(text(), '%s')]/ancestor::div//iframe", caption));
 		WebElementUtils.runWithinFrame(driver(), timeoutInSec, frameSelector, action);
 	}
 
@@ -613,10 +596,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected boolean verifyDuplicateAndClickCancel() {
 		String message = getMessageFromFeedbackPanel();
 		if (message != null
-				&& (message.contains("Effective Date and End Date should not overlap for same Country") || 
-						message.contains("Error in Insertion/Save") || 
-						message.contains("Effective Date and End Date should not overlap for same MCG") ||
-						message.contains("Business Calendar setup already exists for logged in Institution for same Effective Date"))) {
+				&& (message.contains("Effective Date and End Date should not overlap for same Country") || message.contains("Error in Insertion/Save") || message
+						.contains("Business Calendar setup already exists for logged in Institution for same Effective Date"))) {
 			clickCancelButton();
 			return true;
 		}
@@ -638,13 +619,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected void clickWhenClickable(MCWebElement element) {
 		SimulatorUtilities.wait(4000);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
-        logger.info("Button clicked successfully.");
-	}
-	
-	protected void clickWhenClickablewithWicket(MCWebElement element) {
-		SimulatorUtilities.wait(4000);
-		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
-		waitForWicket();
 	}
 
 	protected void clickWhenClickableDoNotWaitForWicket(MCWebElement element) {
@@ -698,7 +672,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		// Pre-production batch and device production batch & Authorization
 		// Search page take little long to
 		// be completed, and do not appear in search result, hence a for loop
-		for (int l = 0; l < loopIterationToCheckBatchNumber; l++) {
+		for (int l = 0; l < 21; l++) {
 			if (!waitForRow())
 				clickSearchButton();
 			else {
@@ -706,35 +680,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 		}
 	}
-	
-	public void waitAndSearchForApplicationBatchNumberToAppear() {
-		clickSearchButton();
-		// Pre-production batch and device production batch & Authorization Search page take little long to
-				// be completed, and do not appear in search result, hence a for loop
-		for (int l = 0; l < 21; l++) {
-			if (!waitForbatchNumber())
-				clickSearchButton();
-			else {
-				break;
-			}
-		}
-	}
-	
-	protected boolean waitForbatchNumber() {
-		try {
-			waitForWicket();
-			SimulatorUtilities.wait(20000); 
-			return asWebElement(deviceProductionHeaderBatchTxt).isDisplayed();
-		} catch (Exception e) {
-			logger.debug("Result not found", e);
-			return false;
-		}
-	}
 
 	protected void waitAndSearchForRecordToExist() {
-		waitAndSearchForRecordToAppear();
-		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, deviceNumberFetch.getText());
-		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
+		waitAndSearchForRecordToAppear();		
 		selectFirstRecord();
 		clickProcessSelectedButton();		
 	}	
@@ -1220,27 +1168,18 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return null;
 	}
 
-	public void doSelectByVisibleText(MCWebElement ele, String optionName) {
-		String optionalVisibleText = "";
+	public void selectByVisibleText(MCWebElement ele, String optionName) {
+		String optionVisbleText = "";
 		waitUntilSelectOptionsPopulated(ele);
-		List<WebElement> selectedOptions = new Select(asWebElement(ele)).getOptions();
+		List<WebElement> selectedOptions = ele.getSelect().getOptions();
 		for (WebElement element : selectedOptions) {
 			if (element.getText().toUpperCase().contains(optionName.toUpperCase())) {
-				optionalVisibleText = element.getText();
+				optionVisbleText = element.getText();
 				break;
 			}
 		}
-		ele.getSelect().selectByVisibleText(optionalVisibleText);
-	}
-
-	public void selectByVisibleText(MCWebElement ele, String optionName) {
-		try {
-			doSelectByVisibleText(ele, optionName);
+		ele.getSelect().selectByVisibleText(optionVisbleText);
 		waitForLoaderToDisappear();
-		waitForPageToLoad(driver());
-		} catch (StaleElementReferenceException e) {
-			doSelectByVisibleText(ele, optionName);
-	}
 		waitForPageToLoad(driver());
 	}
 
@@ -1764,12 +1703,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 	}
 	
-	
-	private void deviceNumberContextDeviceProduction() {
-		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());		
-		Device device  = context.get(CreditConstants.APPLICATION);
-		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
-	}
 	public int getDeviceNumberIndex()
 	{  
 		int index=0;
@@ -1848,15 +1781,5 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		logger.info("Not validaiting any elements, as this is an Abstraction layer to Pages");
 		return null;
-	}
-	
-	public void switchToDefaultFrame(String element,int index) {
-		driver().switchTo().frame(Elements(element).get(index));
-	}
-	
-	public String getInstitutionDate()
-	{	
-		logger.info("Institution date : {}",getTextFromPage(institutionDateTxt));
-		return getTextFromPage(institutionDateTxt);
 	}
 }

@@ -28,7 +28,7 @@ And User fills Wallet Plan for credit product and program Retail Credit Card
 And User fills MCC Rules for credit product
 And User Supplementary Device [S] fills Existing Program Retail Credit Card section for credit product for mastercard
 And User fills Device Range section for credit product
-And credit device is created using new Application screen for Individual and "Primary Device" and New Client and Magnetic Stripe Card User
+And credit device is created using new Application screen for Individual and "Primary Device" and New Client and Limited Validity Virtual Card
 And user verifies the credit application device
 And user approves the credit application device
 And user processes close batch for new Application
@@ -42,7 +42,7 @@ Then user sign out from customer portal
 
 Scenario:Board new Supplementary Device
 Given user is logged in institution
-When credit device is created using new Application screen for Bank Staff [2] and "Supplementary Device [S]" and Existing Program [E] and Limited Validity Virtual Card
+When credit device is created using new Application screen for Bank Staff [2] and "Supplementary Device [S]" and Existing Program [E] and Magnetic Stripe Card
 And user verifies the credit application device
 And user approves the credit application device
 And user processes close batch for new Application

@@ -1,8 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -18,6 +16,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Bulk
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -42,13 +41,13 @@ public class DeviceProductionPage extends AbstractBasePage {
 	// ------------- Card Management > Institution Parameter Setup > Institution
 	// Currency [ISSS05]
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Product Type')]//following-sibling::td[2]//select")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement productTypeDDwn;
 
-	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='batchNumber']")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:inputTextField")
 	private MCWebElement batchNumberTxt;
 
-	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='cardNumber']")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
 	private MCWebElement deviceNumberTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:searchButtonPanel:buttonCol:searchButton")
@@ -63,7 +62,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "processAll")
 	private MCWebElement processAllBtn;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Action Code')]//following-sibling::td[2]//select")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:1:componentPanel:input:dropdowncomponent")
 	private MCWebElement actionCodeDDwn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class = 'feedbackPanelINFO']")
@@ -74,9 +73,6 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr")
 	private MCWebElements rowSize;
-	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class='headers']//a/span")
-	private MCWebElements deviceNumberHeaderTxt;
 
 	public void deviceproduction(String prodType, String batchNum, String DeviceNumber) {
 		menuSubMenuPage.getDeviceProduction().click();
@@ -103,10 +99,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public void processDeviceProductionBatch(DeviceProductionBatch batch) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
-		waitAndSearchForRecordToAppear();
-		deviceNumbers();
 		waitAndSearchForRecordToExist();
-		clickWhenClickable(processAllBtn);
 		verifyOperationStatus();
 
 	}
@@ -118,16 +111,6 @@ public class DeviceProductionPage extends AbstractBasePage {
 		clickWhenClickable(processAllBtn);
 		verifyOperationStatus();
 
-	}
-	
-	public void processDeviceProductionBatchForAllForFileUpload(DeviceProductionBatch batch) {
-		List<String> batchNumbers = context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
-		waitForLoaderToDisappear();
-		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		WebElementUtils.enterText(batchNumberTxt, batchNumbers.get(0));
-		waitAndSearchForRecordToAppear();
-		clickWhenClickable(processAllBtn);
-		verifyOperationStatus();
 	}
 
 	public void selectProduct(BulkDeviceRequestbatch bulkdeviceGenBatch) {
@@ -212,14 +195,13 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public void processDeviceProductionBatchNewApplication(DeviceProductionBatch batch) {
 		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
 		WebElementUtils.enterText(batchNumberTxt,batchNumber);
-		waitAndSearchForRecordToExist();
+		waitForRecordAndAssignDevice();
 		verifyOperationStatus();
 	}
 
 	public void processDeviceProductionBatchNewDevice(DeviceProductionBatch batch) {
 		Device device = context.get(ContextConstants.DEVICE);
 		WebElementUtils.enterText(batchNumberTxt, device.getBatchNumber());
-        WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 	}
@@ -227,36 +209,18 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public void processDeviceProductionBatchNewDeviceSupplementary(DeviceProductionBatch batch) {		
 		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
 		WebElementUtils.enterText(batchNumberTxt, batchNumber);
-        WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		waitAndSearchForRecordToExistForSupplementary();
 		verifyOperationStatus();
 	}
 	
-	
-   
-	public int deviceNumberHeaderIndexFetch() {
-		int index = 0;
-		for (int i = 0; i < deviceNumberHeaderTxt.getElements().size(); i++) {
-			if (deviceNumberHeaderTxt.getElements().get(i).getText().equals("Device Number")) {
-				index = i;
-			}
-		}
-		return index + 1;
+	protected void waitForRecordAndAssignDevice() {
+		waitAndSearchForRecordToAppear();
+		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, deviceNumberFetch.getText());
+		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
+		selectFirstRecord();
+		clickProcessSelectedButton();		
 	}
-	
-	public List<String> deviceNumbers() {
-		List<WebElement> allDeviceNumbers = new ArrayList<>();
-		List<String> allDeviceNumberfText = new ArrayList<>();
-		String deviceNumberToFetch=String.format("//table[@class='dataview']//tr[@class='even' or 'odd']/td['%s']/span",deviceNumberHeaderIndexFetch());
-		allDeviceNumbers = Elements(deviceNumberToFetch);
 
-		for (int i = 0; i < allDeviceNumbers.size(); i++) {
-			allDeviceNumberfText.add(allDeviceNumbers.get(i).getText());
-		}
-		context.put(ContextConstants.ALL_DEVICE_NUMBERS, allDeviceNumberfText);
-		return allDeviceNumberfText;
-	}
-	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		// TODO Auto-generated method stub

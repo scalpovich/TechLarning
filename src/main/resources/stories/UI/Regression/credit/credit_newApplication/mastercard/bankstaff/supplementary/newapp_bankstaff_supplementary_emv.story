@@ -28,7 +28,7 @@ And User fills Wallet Plan for credit product and program Retail Credit Card
 And User fills MCC Rules for credit product
 And User Supplementary Device [S] fills Existing Program Retail Credit Card section for credit product for mastercard
 And User fills Device Range section for credit product
-And credit device is created using new Application screen for Individual and "Primary Device" and New Client and EMV Card
+And credit device is created using new Application screen for Individual and "Primary Device" and New Client and Physical NFC Device - EMV Paypass
 And user verifies the credit application device
 And user approves the credit application device
 And user processes close batch for new Application
