@@ -6,7 +6,6 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import java.math.BigDecimal;
 import java.util.List;
-import org.openqa.selenium.WebElement;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
@@ -64,7 +63,7 @@ public class HelpDeskSteps {
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
 	private String clientID;
 	private String loginType = "login";
-	private CardToCash ctc;
+	private CardToCash cardtocash;
 
 	@Autowired
 	private TestContext context;
@@ -436,22 +435,22 @@ public class HelpDeskSteps {
 	@Then("balance in helpdesk deducted correctly for $type device")
 	public void thenBalanceInHelpDeskDeductedCorrectly(String type) {
 		Device device = context.get(ContextConstants.DEVICE);
-		ctc=context.get(ContextConstants.REMITTANCE);
+		cardtocash=context.get(ContextConstants.REMITTANCE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
 		device.setAppliedForProduct(ProductType.fromShortName(type));
-		assertTrue(helpdeskWorkflow.verifyBalanceDeductedCorreclty(beforeLoadBalanceInformation, helpdeskGeneral.getTransactionDetails(), helpdeskWorkflow.getWalletBalanceInformationForRemittance(device,ctc)));
+		assertTrue(helpdeskWorkflow.verifyBalanceDeductedCorreclty(beforeLoadBalanceInformation, helpdeskGeneral.getTransactionDetails(), helpdeskWorkflow.getWalletBalanceInformationForRemittance(device,cardtocash)));
 	}
 	
 	@Then("balance in helpdesk for remittance not changed for $type device")
 	@When("balance in helpdesk for remittance not changed for $type device")
 	public void thenBalanceInHelpDeskNotChangedForRemittance(String type) {
 		Device device = context.get(ContextConstants.DEVICE);
-		ctc = context.get(ContextConstants.REMITTANCE);
+		cardtocash = context.get(ContextConstants.REMITTANCE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
 		device.setAppliedForProduct(ProductType.fromShortName(type));
-		assertTrue(helpdeskWorkflow.verifyBalanceNotChanged(beforeLoadBalanceInformation, helpdeskWorkflow.getWalletBalanceInformationForRemittance(device, ctc)));
+		assertTrue(helpdeskWorkflow.verifyBalanceNotChanged(beforeLoadBalanceInformation, helpdeskWorkflow.getWalletBalanceInformationForRemittance(device, cardtocash)));
 	}
 
 	@When("balance in helpdesk not changed for $type device")

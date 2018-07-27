@@ -9,7 +9,7 @@ public class CardToCash {
 	private static final String CURRENT_ADDRESS_LINE_1 = "CURRENT_ADDRESS_LINE_1";
 	private static final String POSTAL_CODE = "POSTAL_CODE";
 	private static final String CITY = "CITY";
-	private static final String REMITTANCE_AMOUNT="REMITTANCE_AMOUNT";
+	private static final String REMITTANCE_AMOUNT = "REMITTANCE_AMOUNT";
 	private int beneficiaryId;
 	private String beneficiaryFirstName;
 	private String beneficiaryLastName;
@@ -22,7 +22,6 @@ public class CardToCash {
 	private String remittanceNumber;
 	private String txnPassword;
 	private String transactionDetails;
-	private String remittanceTransactionDetails;
 	
 	public static CardToCash getProviderData(KeyValueProvider provider) {
 		CardToCash ctc = new CardToCash();
@@ -131,6 +130,4 @@ public class CardToCash {
 	public void setRemittanceCurrency(String remittanceCurrency) {
 		this.remittanceCurrency = remittanceCurrency;
 	}
-	
-	
 }

@@ -118,9 +118,9 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.getWalletBalanceInformation(device);
 	}
 	
-	public String getWalletBalanceInformationForRemittance(Device device, CardToCash ctc) {
+	public String getWalletBalanceInformationForRemittance(Device device, CardToCash cardtocash) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
-		return helpDeskPage.getWaalletBalanceInformationForRemittance(device, ctc);
+		return helpDeskPage.getWalletBalanceInformationForRemittance(device, cardtocash);
 	}
 
 	public boolean verifyBalanceUpdatedCorreclty(String beforeLoadBalanceInformation, String transactionDetailsFromExcel, String afterLoadBalanceInformation) {

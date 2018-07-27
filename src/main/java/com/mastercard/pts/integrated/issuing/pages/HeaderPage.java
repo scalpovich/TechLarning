@@ -13,7 +13,6 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.AbstractPage;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
-
 @Component
 public class HeaderPage extends AbstractPage{
 	

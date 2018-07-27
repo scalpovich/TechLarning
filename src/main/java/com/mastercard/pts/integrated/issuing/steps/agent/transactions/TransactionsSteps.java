@@ -4,15 +4,13 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-import org.jbehave.core.annotations.Alias;
+
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
-import com.mastercard.pts.integrated.issuing.domain.agent.services.CurrencySetup;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.TransferFunds;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
@@ -28,7 +26,7 @@ public class TransactionsSteps {
 	private static final String REMITTANCE_PAYOUT_MESSAGE = "Your transaction is successful.";
 	private static final String SUCCESS_MESSAGE_EXPECTED = "Your transaction is successful. Reference Number is :";
 	
-	private CardToCash ctc;
+	private CardToCash cardtocash;
 	private Device device;
 	
 	@Autowired
@@ -43,16 +41,15 @@ public class TransactionsSteps {
 	@When("user performs remittance card to cash transaction")
 	public void whenUserPerformsRemittanceCardToCashTransaction(){
 		device = context.get(ContextConstants.DEVICE);
-		ctc = CardToCash.getProviderData(provider);
-		String[] txnDetails = ctc.getTransactionDetails().trim().split(":");
-		ctc.setRemittanceAmount(ctc.getRemittanceAmount());
-		ctc.setRemittanceCurrency(txnDetails[2].trim());
-		ctc.setBeneficiaryId(MiscUtils.randomNumber(6));
-		ctc.setBeneficiaryFirstName("FN"+MiscUtils.randomAlphabet(6).toLowerCase());
-		ctc.setBeneficiaryLastName("LN"+MiscUtils.randomAlphabet(6).toLowerCase());
-		String remittanceNumber = transactionsWorkflow.performRemittanceCardToCashTransaction(device, ctc);
-		ctc.setRemittanceNumber(remittanceNumber);
-		context.put(ContextConstants.REMITTANCE, ctc);
+		cardtocash = CardToCash.getProviderData(provider);
+		String[] txnDetails = cardtocash.getTransactionDetails().trim().split(":");
+		cardtocash.setRemittanceCurrency(txnDetails[2].trim());
+		cardtocash.setBeneficiaryId(MiscUtils.randomNumber(6));
+		cardtocash.setBeneficiaryFirstName("FN"+MiscUtils.randomAlphabet(6).toLowerCase());
+		cardtocash.setBeneficiaryLastName("LN"+MiscUtils.randomAlphabet(6).toLowerCase());
+		String remittanceNumber = transactionsWorkflow.performRemittanceCardToCashTransaction(device, cardtocash);
+		cardtocash.setRemittanceNumber(remittanceNumber);
+		context.put(ContextConstants.REMITTANCE, cardtocash);
 	}
 	
 	@When("remittance card to cash transaction is successful")
@@ -63,20 +60,20 @@ public class TransactionsSteps {
 	
 	@When("user performs remittance card to cash lookup")
 	public void whenUserPerformsRemittanceCardToCashLookup(){
-		ctc = context.get(ContextConstants.REMITTANCE);
-		transactionsWorkflow.performRemittanceCardToCashLookup(device, ctc);
+		cardtocash = context.get(ContextConstants.REMITTANCE);
+		transactionsWorkflow.performRemittanceCardToCashLookup(device, cardtocash);
 	}
 	
 	@When("remittance card to cash lookup has transfer amount details")
 	@Then("remittance card to cash lookup has transfer amount details")
 	public void thenRemittanceCardToCashLookupHasDetails(){
-		assertTrue(transactionsWorkflow.validateLookupTableTransferAmount(ctc));
+		assertTrue(transactionsWorkflow.validateLookupTableTransferAmount(cardtocash));
 	}
 	
 	@When("user performs remittance card to cash cancellation")
 	public void whenUserPerformsRemittanceCardToCashCancellation(){
-		ctc = context.get(ContextConstants.REMITTANCE);
-		transactionsWorkflow.performRemittanceCancelCardToCash(device, ctc);
+		cardtocash = context.get(ContextConstants.REMITTANCE);
+		transactionsWorkflow.performRemittanceCancelCardToCash(device, cardtocash);
 	}
 	
 	@When("remittance card to cash cancellation is successful")
@@ -87,8 +84,8 @@ public class TransactionsSteps {
 	
 	@When("user performs remittance card to cash payout")
 	public void whenUserPerformsRemittanceCardToCashPayout(){
-		ctc = context.get(ContextConstants.REMITTANCE);
-		transactionsWorkflow.performRemittancePayout(device, ctc);
+		cardtocash = context.get(ContextConstants.REMITTANCE);
+		transactionsWorkflow.performRemittancePayout(device, cardtocash);
 	}
 	
 	@When("remittance card to cash payout is successful")
