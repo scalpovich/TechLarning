@@ -14,7 +14,6 @@ Meta:
 
 Scenario: Prepaid - Admin User - Assign Program to Agency
 
-Given setting json values in excel
 Given user is logged in institution
 And bulk card generation for prepaid emv is completed
 When User fills Device Range section for prepaid product
