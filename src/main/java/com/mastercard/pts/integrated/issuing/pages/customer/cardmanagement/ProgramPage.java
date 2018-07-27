@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebElement;
@@ -16,7 +17,6 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.SubApplicationType;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -294,7 +294,7 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	public void selectInterchange(String interchange) {
-		WebElementUtils.selectDropDownByVisibleText(interchangeDDwn, interchange);
+		selectByVisibleText(interchangeDDwn, interchange);
 	}
 
 	public void selectProduct(String product) {
@@ -302,7 +302,7 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	public void selectProgramType(String programType) {
-		WebElementUtils.selectDropDownByVisibleText(programTypeDDwn, programType);
+		selectByVisibleText(programTypeDDwn, programType);
 	}
 
 	public void selectBaseCurrency(String baseCurrency) {
@@ -388,40 +388,30 @@ public class ProgramPage extends AbstractBasePage {
 		runWithinPopup("Add Program", () -> {
 			addProgram(program.getProgramCode());
 			addDescription(program.getDescription());
-			if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
-				selectByVisibleText(interchangeDDwn, program.getInterchange());
-			} else {
-				SimulatorUtilities.wait(2000);
-				selectInterchange(program.getInterchange());
-			}
+			SimulatorUtilities.wait(2000);
+			selectInterchange(program.getInterchange());
 			SimulatorUtilities.wait(2000);
 			selectProduct(program.getProduct());
-			if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
-				selectByVisibleText(programTypeDDwn, program.getProgramType());
-			} else {
-				SimulatorUtilities.wait(2000);
-				selectProgramType(program.getProgramType());
-			}
+			SimulatorUtilities.wait(2000);
+			selectProgramType(program.getProgramType());					
 			SimulatorUtilities.wait(2000);
 			selectBaseCurrency(program.getBaseCurrency());
 			program.setProgramCodeDevice(program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
 				addNumberOfCurrency(program.getNoOfCurrencyAllowed());
-				if (!MiscUtils.getEnvironment().contains(Constants.ENVIRONMENT)) {
-					selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
-				}
+				selectPayoutCurrencyPlan(program.getPayoutCurrencyPlan());
 				selectRefundInCurrency(program.getRefundInCurrency());
 				selectWalletToWalletTransferType(program.getWalletToWalletTransferType());
 				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
 					selectReferenceCurrency(program.getReferenceCurrency());
 			}
-			if (!productType.equalsIgnoreCase(ProductType.DEBIT))
+			if (!productType.equalsIgnoreCase(ProductType.DEBIT)){
 				selectCurrencyConversionBy(program.getCurrencyConversionBy());
+			}				
 			selectCalendarStartMonth(program.getCalendarStartMonth());
 			fillExtraSections(program, productType);
 			clickNextButton();
-			SimulatorUtilities.wait(2000);
 			clickFinishButton();
 		});
 		verifyOperationStatus();
@@ -465,7 +455,6 @@ public class ProgramPage extends AbstractBasePage {
 			selectCalendarStartMonth(program.getCalendarStartMonth());
 			fillExtraSections(program, productType);
 			clickNextButton();
-		
 			clickFinishButton();
 		});
 		verifyOperationStatus();
@@ -511,6 +500,7 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	private void fillExtraSections(Program program, String productType) {
+		
 		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
 			addMaximumBalanceWithoutKyc(program.getMaximumBalanceWithoutKyc());
 			addnumberOfLoadsAllowedWithoutKyc(program.getNumberOfLoadsAllowedWithoutKyc());
@@ -522,13 +512,13 @@ public class ProgramPage extends AbstractBasePage {
 		clickNextButton();
 		selectWalletPlanPlan1(program.getFirstWalletPlan());
 		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
-		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
-			if (program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)
-					|| program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)
-							&& program.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)) {
-				selectDevicePlanPlan2DDwn(program.getDevicePlanPlan2());
+		
+		if(Objects.nonNull(program.getApplicationType()) || Objects.nonNull(program.getSubApplicationType())){
+			if(program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && program.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)){
+			      selectDevicePlanPlan2DDwn(program.getDevicePlanPlan2());
 			}
-		}
+		}		
+		
 		if (!productType.equalsIgnoreCase(ProductType.DEBIT)) {
 			selectOtherPlanStatementMessagePlan(program.getOtherPlanStatementMessagePlan());
 			selectOtherPlanMarketingMessagePlan(program.getOtherPlanMarketingMessagePlan());
@@ -542,6 +532,7 @@ public class ProgramPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByOptionalVisibleText(markupFeePlanDDwn, program.getMarkUpFeePlan());
 			WebElementUtils.selectDropDownByOptionalVisibleText(stmtPlanCodeDDwn, program.getPrepaidStatementPlan());
 		}
+		
 		waitForLoaderToDisappear();
 		clickNextButton();
 		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
@@ -591,8 +582,7 @@ public class ProgramPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(cashLimitTypeDDwn, program.getCashLimitType());
 		WebElementUtils.enterText(cashLimitAmountTxt, program.getCashLimitAmount());
 		WebElementUtils.selectDropDownByVisibleText(cashLimitResetDDwn, program.getCashLimitReset());
-		WebElementUtils.selectDropDownByVisibleText(addOnLimitResetDDwn, program.getAddOnLimitReset());
-		// CustomUtils.ThreadDotSleep(10000);
+		WebElementUtils.selectDropDownByVisibleText(addOnLimitResetDDwn, program.getAddOnLimitReset());		
 	}
 
 	public void verifyUiOperationStatus() {
