@@ -32,9 +32,7 @@ public class SearchApplicationDetailsFlows {
 	}
 	
 	public void searchApplicationDetails() {
-		searchpage = navigator.navigateToPage(SearchApplicationDetailsPage.class);
-		String batchNumber=searchpage.searchApplicationNumber();
-		context.put(CreditConstants.NEW_APPLICATION_BATCH, batchNumber);
-		
+		searchpage = navigator.navigateToPage(SearchApplicationDetailsPage.class);		
+		context.put(CreditConstants.NEW_APPLICATION_BATCH, searchpage.searchApplicationNumber());		
 	}
 }

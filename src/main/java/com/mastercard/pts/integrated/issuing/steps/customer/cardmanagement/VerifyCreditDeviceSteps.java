@@ -17,8 +17,8 @@ public class VerifyCreditDeviceSteps {
 	@Given("user verifies the credit application device")
 	@Then("user verifies the credit application device")
 	@When("user verifies the credit application device")
-	public void verifyCreditDeviceAfterApplicaionCreation()
-	{
+	public void verifyCreditDeviceAfterApplicaionCreation(){
 		verifyCreditApplicationFlows.verifyCreditApplication();
 	}
+	
 }

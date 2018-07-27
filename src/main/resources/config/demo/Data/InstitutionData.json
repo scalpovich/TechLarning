@@ -4,7 +4,7 @@
    "code":"121212",
    "abbreviation":"AUTO",
    "association":"MASTERCARD",
-   "branch":"1000",
+   "branch":"auto branch [1000]",
    "cardPackIdGenerationTemplate":"PAN042",
    "deviceIdGenerationTemplate":"PAN019",
    "customerType":"Individual",
