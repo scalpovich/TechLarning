@@ -409,6 +409,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickSearchButton();
 			firstRow = getFirstColumnValueFromTable();
 			clickCloseButton();
+			
 		});
 		clickEndCall();
 		return firstRow.isEmpty();
