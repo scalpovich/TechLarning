@@ -8,7 +8,7 @@ when application is in block or unblock mode
 
 Meta:
 @StoryName d_emv_issuer_scripting_app_block_unblock
-
+@IssuerScript
 Scenario: Set up program for debit emv corporate debit card
 Given setting json values in excel for Debit
 When user is logged in institution

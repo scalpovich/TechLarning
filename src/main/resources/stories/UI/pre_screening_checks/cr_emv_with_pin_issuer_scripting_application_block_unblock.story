@@ -8,6 +8,7 @@ when application is in block or unblock mode
 
 Meta:
 @StoryName cr_emv_issuer_scripting_app_block_unblock
+@IssuerScript
 Scenario:creation of mastercard_individual_primary_emv Card credit device
 Given setting json values in excel for Credit
 When user is logged in institution
