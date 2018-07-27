@@ -33,6 +33,7 @@ And user has current wallet balance amount information for prepaid device
 And device has "normal" status
 
 Scenario: Add the device into stoplist
+When user is logged in institution
 When user stoplists a card from stoplist device screen
 And user sign out from customer portal
 

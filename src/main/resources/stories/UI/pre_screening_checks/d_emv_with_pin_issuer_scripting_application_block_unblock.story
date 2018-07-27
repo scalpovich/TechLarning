@@ -34,6 +34,7 @@ And device has "normal" status
 Then user activates device through helpdesk
 
 Scenario: Add the device into stoplist
+When user is logged in institution
 When user stoplists a card from stoplist device screen
 And user sign out from customer portal
 
