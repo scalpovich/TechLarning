@@ -8,9 +8,10 @@ Meta:
 @StoryName transactionWithDevicePromotionPlan
 
 Scenario:Create prepaid EMV card
-Given user is logged in institution
-When device range for program with device plan for "prepaid" "emv" card
-And user creates new device of prepaid type for new client
+Given setting json values in excel for Debit
+When user is logged in institution
+And device range for program with device plan for "debit" "emv" card
+And user creates new device of debit type for new client
 Then device has "normal" status
 And user performs adjustment transaction
 And user sign out from customer portal
@@ -26,7 +27,7 @@ And user sign out from customer portal
 
 Scenario:Perform purcase transaction with updated device promotion plan
 Given user is logged in institution
-And update prepaid device with promotion plan
+And update debit device with promotion plan
 And connection to MAS is established
 When perform an ECOMM_PURCHASE MAS transaction
 Then MAS test results are verified

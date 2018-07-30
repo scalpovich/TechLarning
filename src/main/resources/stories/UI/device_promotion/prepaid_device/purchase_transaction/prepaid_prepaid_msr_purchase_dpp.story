@@ -8,8 +8,9 @@ Meta:
 @StoryName transactionWithDevicePromotionPlan
 
 Scenario:Create prepaid EMV card
-Given user is logged in institution
-When device range for program with device plan for "prepaid" "msr" card
+Given setting json values in excel for Prepaid
+When user is logged in institution
+And device range for program with device plan for "prepaid" "msr" card
 And user creates new device of prepaid type for new client
 Then device has "normal" status
 And user performs adjustment transaction
