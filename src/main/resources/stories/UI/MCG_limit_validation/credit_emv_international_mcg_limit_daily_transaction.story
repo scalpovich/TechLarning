@@ -9,7 +9,7 @@ Meta:
 @StoryName mcg_credit_emv_retail
 
 Scenario: Set up Credit emv retail with MCG Limit Plan
-Given setting json values in excel
+Given setting json values in excel for Credit
 And user is logged in institution
 When User fills Dedupe Plan
 And User fills Statement Message Plan for credit product
