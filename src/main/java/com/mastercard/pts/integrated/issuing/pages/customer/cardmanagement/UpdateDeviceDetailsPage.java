@@ -50,7 +50,7 @@ public class UpdateDeviceDetailsPage extends AbstractCardManagementPage {
 		runWithinPopup("Edit Device Details",()->{
 			
 			if(Objects.nonNull(promotionPlan.getPlanDescription())){
-				selectByVisibleText(devicePromotionPlanDdown, promotionPlan.getPlanDescription());
+				selectByVisibleText(devicePromotionPlanDdown, promotionPlan.buildDescriptionAndCode());
 			}else{
 				selectByVisibleText(devicePromotionPlanDdown, device.getAccountNumber());
 			}
