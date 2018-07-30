@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AvailableBalance;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionReports;
@@ -34,6 +36,9 @@ public class AuthorizationSearchWorkflow {
 
 	@Autowired
 	KeyValueProvider provider;
+	
+	@Autowired
+	AuthorizationSearchPage authorizationSearchPage;
 
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
@@ -183,4 +188,12 @@ public class AuthorizationSearchWorkflow {
 		assertTrue(String.format("Response, Auth Code and Auth Description does not match. Expecting %s. Actual %s", authStatus, actualAuthStatus), actualAuthStatus.containsAll(authStatus));
 	}
 	
+	public AvailableBalance getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(BigDecimal availableBalance){
+		authorizationSearchPage.viewDeviceDetails();
+		AvailableBalance availBal = authorizationSearchPage.getAvailableBalance();
+		logger.info("Available balance before transaction amount = {}", availableBalance);
+		logger.info("Sum of all applicable fee and amounts = {}" , availBal.getSum());
+		logger.info("Available balance after transaction amount = {}", availBal.getAvailableBal());
+		return availBal;
+	}
 }

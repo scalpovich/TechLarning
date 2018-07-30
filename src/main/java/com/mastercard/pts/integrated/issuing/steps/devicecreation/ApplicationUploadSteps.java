@@ -37,22 +37,27 @@ public class ApplicationUploadSteps {
 	private SearchApplicationDetailsFlows search;
 
 	@Autowired
-	private BatchProcessFlows batchProcessingFlows;
-
-	public SearchApplicationDetails searchDomain;
+	private BatchProcessFlows batchProcessingFlows;	
+	
 	@Autowired
 	private ProcessBatchesFlows processBatchesFlows;
+	
 	@Autowired
 	private PreProductionBatch preProductionBatch;
+	
 	@Autowired
 	private BatchProcessFlows batchProcessFlows;
+	
 	@Autowired
 	Program program;
+	
 	@Autowired
 	private Device device;
 
 	@Autowired
 	private DataProvider provider;
+	
+	public SearchApplicationDetails searchDomain;
 
 	@When("user creates $application_upload_file batch file and upload it on server for $customerType for $cardType")
 	public void createFileForApplicationUpload(@Named("application_upload_file") String batchName, @Named("customerType") String customerType, @Named("cardType") String cardType) throws Exception {
@@ -105,7 +110,6 @@ public class ApplicationUploadSteps {
 	@Then("$type processes pre-production batch using new Application")
 	@When("$type processes pre-production batch using new Application")
 	public void whenProcessesPreproductionBatchForDeviceUsingApplication(String type) {
-
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPreProductionBatchNewApplication(preProductionBatch);
 	}
@@ -135,6 +139,7 @@ public class ApplicationUploadSteps {
 		batchProcessFlows.processPinProductionBatchNewApplication(batch);
 	}
 	
+	@Then("$type processes pingeneration batch using new Device for Supplementary")
 	@When("$type processes pingeneration batch using new Device for Supplementary")
 	public void whenProcessesPinGenerationBatchUsingNewDeviceForSupplementry(String type) {
 		PinGenerationBatch batch = new PinGenerationBatch();
@@ -185,5 +190,4 @@ public class ApplicationUploadSteps {
 		MiscUtils.reportToConsole("device production Batch: {}", preProductionBatch.getBatchNumber());
 		batchProcessFlows.processDeviceProductionBatchAll(batch);
 	}
-
 }
