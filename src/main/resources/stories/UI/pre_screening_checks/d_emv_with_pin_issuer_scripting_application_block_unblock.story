@@ -61,7 +61,7 @@ And user sign out from customer portal
 Scenario: Withdraw the device from stoplist
 Given user is logged in institution
 When user withdraws a card from withdraw device screen
-Then user sign out from customer portal
+
 
 Scenario: Transaction EMV_PURCHASE and EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application unblock
 When perform an EMV_PURCHASE MAS transaction on the same card
