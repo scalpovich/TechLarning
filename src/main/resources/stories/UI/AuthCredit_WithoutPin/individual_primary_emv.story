@@ -5,11 +5,12 @@ I want to perform Transaction on retail credit card.
 
 Meta:
 @CreditRegression
+@CreditWithOutPin
 @StoryName credit_emv_retail				 
 Scenario:creation of visa_individual_primary_emv credit device
 Meta:
 @UserCreatesNewCreditDevice
-Given setting json values in excel
+Given setting json values in excel for Credit
 Given user is logged in institution
 When User fills Dedupe Plan
 And User fills Statement Message Plan for credit product

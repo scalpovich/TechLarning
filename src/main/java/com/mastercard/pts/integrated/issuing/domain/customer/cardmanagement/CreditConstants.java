@@ -53,7 +53,6 @@ public class CreditConstants {
 	
 	public static final String SUPPLEMENTARY_DEVICE_NUMBER="SUPPLEMENTARY_DEVICE_NUMBER";
 
-
 	private CreditConstants() {
 	}
 }
