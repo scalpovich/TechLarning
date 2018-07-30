@@ -3,8 +3,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +18,6 @@ import com.mastercard.pts.integrated.issuing.pages.collect.administration.Admini
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReportVerificationPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
-import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.PDFUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
@@ -51,34 +49,30 @@ public class ReportVerificationWorkflow {
 		fileURL = PDFUtils.getuserDownloadPath()+"\\"+reportName+" Report.pdf";
 		report.setUsername("NitinK");
 		report.setFieldToValidate(reportField, context.get(reportField));
-		HashMap<Integer, String[]> reportContent = verifyGenericReport(reportName,report);
-//		String authFileData = "";
-//		for (int i = 0; i < reportContent.size(); i++) {
-//			authFileData += reportContent.get(i) + " ";		
-//			}
-//		
-//		boolean condition = authFileData.contains(context.get(ConstantData.AUTHORIZATION_CODE)) && authFileData.contains(device.getDeviceNumber()) 
-//				&& authFileData.contains(context.get(ConstantData.TRANSACTION_AMOUNT)) && authFileData.contains(context.get(ConstantData.RRN_NUMBER));
-//		assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
+		Map<Integer, String> reportContent = verifyGenericReport(reportName,report);
+		reportContent.forEach((k,v)-> {
+			//if(v.contains(context.get(ContextConstants.DEVICE))){
+			if(v.contains("5551230600000041")){
+//			boolean condition = v.contains(context.get(ConstantData.AUTHORIZATION_CODE)) && authFileData.contains(device.getDeviceNumber()) 
+//					&& authFileData.contains(context.get(ConstantData.TRANSACTION_AMOUNT)) && authFileData.contains(context.get(ConstantData.RRN_NUMBER));
+				boolean condition =  v.contains("Purchase/Auth Completion");
+			assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
+			}
+		});
 	}
     
-    public HashMap<Integer, String[]> verifyGenericReport(String fileName, GenericReport report) {
+    public Map<Integer, String> verifyGenericReport(String fileName, GenericReport report) {
 		//navigator.navigateToPage(page.getClass().getSimpleName());
 		//deleteExistingAuthorizationFilesFromSystem(fileName);
 		//page.generateReport(report);
-		//verifyReportDownloaded(fileName);
+		//verifyReportDownloaded();
 		return getReportContent(fileName,report);
 	}
     
-    public HashMap<Integer, String[]> getReportContent(String fileName,GenericReport genericReports) {
+    public Map<Integer, String> getReportContent(String fileName,GenericReport genericReports) {
 		PDFUtils pdfutils=new PDFUtils();
 		genericReports.setRegEx("\\d\\d-\\d\\d-\\d\\d\\d\\d");
-		HashMap<Integer, String[]> records = pdfutils.getContentRow(fileURL, genericReports);
-		for(int i=0;i<records.size();i++)
-		{
-			if (records != null)
-				logger.info("Authorization data file content {} ", records.get(i));
-		}
+		Map<Integer, String> records = pdfutils.getContentRow(fileURL, genericReports);
 		return records;
 	}
     
@@ -90,7 +84,7 @@ public class ReportVerificationWorkflow {
 		}
 	}
     
-    public boolean verifyReportDownloaded(String authFileName)
+    public boolean verifyReportDownloaded()
 	{
 		File report = new File(fileURL);
 		System.out.println("++++++++++++++--+"+report.getAbsolutePath());

@@ -1,33 +1,20 @@
 package com.mastercard.pts.integrated.issuing.utils;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PipedInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.pdfbox.multipdf.Splitter;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.common.PDStream;
-import org.apache.pdfbox.pdmodel.encryption.StandardDecryptionMaterial;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.apache.pdfbox.text.TextPosition;
-import org.apache.tika.metadata.Metadata;
-import org.apache.tika.parser.AutoDetectParser;
-import org.apache.tika.parser.ParseContext;
-import org.apache.tika.parser.Parser;
-import org.apache.tika.sax.BodyContentHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -76,7 +63,7 @@ public class PDFUtils {
 
 	public List<String> getContentRow(String pdfPath, TransactionReports transactionReports) {
 		String pageContent = "";
-		List<String> programWiseContent = new ArrayList<String>();
+		List<String> programWiseContent = new ArrayList<>();
 		String[] fullRow = { "" };
 		int pages = 0;
 		String rrn = transactionReports.getRrnNumber();
@@ -112,14 +99,13 @@ public class PDFUtils {
 		return programWiseContent;
 	}
 	
-	public HashMap<Integer, String[]> getContentRow(String pdfPath, GenericReport genericReports) {
-		HashMap<Integer, String[]> map = new HashMap<>();
+	public Map<Integer, String> getContentRow(String pdfPath, GenericReport genericReports) {
+		HashMap<Integer, String> map = new HashMap<>();
 		try {
 			File file = new File(pdfPath);
 			file.getParentFile().mkdirs();
 			PDDocument document =  PDDocument.load(file,genericReports.getUsername().substring(0,4)+"1707");
 			document.setAllSecurityToBeRemoved(true);
-			StringBuilder sb = new StringBuilder();
      		PDFTextStripper tStripper = new PDFTextStripper();
      		tStripper.setAddMoreFormatting(true);
                 //Instantiating Splitter class
@@ -129,15 +115,17 @@ public class PDFUtils {
             Iterator<PDDocument> iterator = splitter.split(document).listIterator();
 
             //Saving each page as an individual document
-            int i = 1;
+            Integer i = 1;
           while(iterator.hasNext()) {
                PDDocument pd = iterator.next();
             
             String pdfFileInText = tStripper.getText(pd);
             
-            System.out.println("PDF--"+sb.toString());
 			// split by RegEx
-            map.put(i++,pdfFileInText.split(genericReports.getRegEx()));
+            String row[] = pdfFileInText.split(genericReports.getRegEx());
+            for(String text : row){
+            	map.put(i++, text);
+            }
 			}
            document.close();
 		}catch(Exception e){

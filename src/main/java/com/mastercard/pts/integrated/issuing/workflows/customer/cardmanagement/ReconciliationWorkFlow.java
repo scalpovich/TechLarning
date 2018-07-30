@@ -121,19 +121,6 @@ public class ReconciliationWorkFlow {
 		return records;
 	}
 	
-	public HashMap<Integer, String[]> getReportContent(String fileName,GenericReport genericReports) {
-		PDFUtils pdfutils=new PDFUtils();
-		genericReports.setRegEx("\\d\\d-\\d\\d-\\d\\d\\d\\d");
-		System.out.println("+++++++++++++++"+PDFUtils.getuserDownloadPath() + "\\"+fileName+".pdf");
-		HashMap<Integer, String[]> records = pdfutils.getContentRow(PDFUtils.getuserDownloadPath() + "\\"+fileName+".pdf", genericReports);
-		for(int i=0;i<records.size();i++)
-		{
-			if (records != null)
-				logger.info("Authorization data file content {} ", records.get(i));
-		}
-		return records;
-	}
-	
 	
 	public void deleteExistingAuthorizationFilesFromSystem(String authFileName)
 	{
