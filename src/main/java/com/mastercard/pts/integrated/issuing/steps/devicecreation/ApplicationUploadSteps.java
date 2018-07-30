@@ -39,22 +39,27 @@ public class ApplicationUploadSteps {
 	private SearchApplicationDetailsFlows search;
 
 	@Autowired
-	private BatchProcessFlows batchProcessingFlows;
-
-	public SearchApplicationDetails searchDomain;
+	private BatchProcessFlows batchProcessingFlows;	
+	
 	@Autowired
 	private ProcessBatchesFlows processBatchesFlows;
+	
 	@Autowired
 	private PreProductionBatch preProductionBatch;
+	
 	@Autowired
 	private BatchProcessFlows batchProcessFlows;
+	
 	@Autowired
 	Program program;
+	
 	@Autowired
 	private Device device;
 
 	@Autowired
 	private DataProvider provider;
+	
+	public SearchApplicationDetails searchDomain;
 
 	@When("user creates $application_upload_file batch file and upload it on server for $customerType for $cardType")
 	public void createFileForApplicationUpload(@Named("application_upload_file") String batchName, @Named("customerType") String customerType, @Named("cardType") String cardType) throws Exception {
@@ -106,7 +111,6 @@ public class ApplicationUploadSteps {
 	@Then("$type processes pre-production batch using new Application")
 	@When("$type processes pre-production batch using new Application")
 	public void whenProcessesPreproductionBatchForDeviceUsingApplication(String type) {
-
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPreProductionBatchNewApplication(preProductionBatch);
 	}
@@ -127,6 +131,7 @@ public class ApplicationUploadSteps {
 		batchProcessFlows.processDeviceProductionBatchNewDevice(batch);
 	}
 	
+	
 	@Then("$type processes deviceproduction batch using new Device for Supplementary")
 	@When("$type processes deviceproduction batch using new Device for Supplementary")
 	public void whenProcessesDeviceproductionBatchForDeviceSupplementary(String type) {
@@ -142,6 +147,14 @@ public class ApplicationUploadSteps {
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPinProductionBatchNewApplication(batch);
 	}
+	
+	@Then("$type processes pingeneration batch using new Device for Supplementary")
+	@When("$type processes pingeneration batch using new Device for Supplementary")
+	public void whenProcessesPinGenerationBatchUsingNewDeviceForSupplementry(String type) {
+		PinGenerationBatch batch = new PinGenerationBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processPinGenerationBatch(batch);
+	}
 
 	@Then("$type processes pinProduction batch using new Device")
 	@When("$type processes pinProduction batch using new Device")
@@ -156,7 +169,7 @@ public class ApplicationUploadSteps {
 	public void whenProcessesPinproductionBatchForCredit(String type) {
 		PinGenerationBatch batch = new PinGenerationBatch();
 		batch.setProductType(ProductType.fromShortName(type));
-		batchProcessFlows.processPinProductionBatchNewDeviceCredit(batch);;
+		batchProcessFlows.processPinGenerationBatchForSupplementary(batch);;
 	}
 
 	@Then("$type processes deviceproduction batch using new Application")
@@ -186,7 +199,7 @@ public class ApplicationUploadSteps {
 		MiscUtils.reportToConsole("device production Batch: {}", preProductionBatch.getBatchNumber());
 		batchProcessFlows.processDeviceProductionBatchAll(batch);
 	}
-	
+
 	@Then("processes $type pin production batch")
 	@When("processes $type pin production batch")
 	public void whenProcessesPinProductionBatch(String type) {

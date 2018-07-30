@@ -73,7 +73,6 @@ public class CreditConstants {
 	public static final String ALL_BATCH_NUMBERS_PREPRODUCTION="ALL_BATCH_NUMBERS_PREPRODUCTION";
 	
 
-
 	private CreditConstants() {
 	}
 }

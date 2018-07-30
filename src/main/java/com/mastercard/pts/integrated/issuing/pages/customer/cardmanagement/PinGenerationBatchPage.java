@@ -79,6 +79,14 @@ public class PinGenerationBatchPage extends AbstractBasePage {
 		clickWhenClickable(processAllBtn);
 		verifyOperationStatus();
 		}
+	
+	public void processPinGenerationBatchNewDeviceSupplementary(PinGenerationBatch batch) {
+		//Device device = context.get(ContextConstants.DEVICE);
+		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
+		WebElementUtils.enterText(batchNumberTxt, batchNumber);
+		waitAndSearchForRecordToExistForSupplementary();
+		verifyOperationStatus();
+	}
 		
 		public void processPinProductionBatchNewDevice(PinGenerationBatch batch) {
 		Device device=context.get(ContextConstants.DEVICE);

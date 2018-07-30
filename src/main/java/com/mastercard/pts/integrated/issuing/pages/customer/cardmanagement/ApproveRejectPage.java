@@ -67,6 +67,7 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());	
 	}
 	
+	
 	public void selectFromAndToDate()
 	{
 		WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
@@ -74,24 +75,25 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 		clickSearchButton();
 	}
 	
-	public void clickEditImageForTheRecordDisplayed()
-	{
+	
+	public void clickEditRecord(){
 		waitForPageToLoad(driver());
 		clickWhenClickableDoNotWaitForWicket(editImg);	
 	}
 	
-	public void approveButtonClick()
-	{
-		switchToIframe(APPROVE_REJECT_FRAME);
-		clickWhenClickable(approveBtn);
-		verifyOperationStatus();
-	}
 	
-	public String getApplicationNumber()
-	{
+	public String approveApplication(){
+		enterApplicationNumber();
+		selectFromAndToDate();	
+		clickEditRecord();	
+		SimulatorUtilities.wait(5000);
+		
+		runWithinPopup("Edit Application", () -> {
+			clickWhenClickable(approveBtn);			
+		});		
+		verifyOperationStatus();
 		return getCodeFromInfoMessage("Application Number");
 	}
-	
 	public void enterFormNumber()
 	{
 		String formNumber=context.get(CreditConstants.FORM_NUMBER);

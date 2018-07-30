@@ -16,7 +16,6 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
@@ -39,7 +38,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
@@ -85,7 +83,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	public static final String ERROR_MESSAGE = "Error: {}";
 
-	public static final String RESPONSE_MESSAGE = "Response message: {}";
+	public static final String RESPONSE_MESSAGE	 = "Response message: {}";
 
 	public static final String CONTACT_INFORMATION_EXPECTED = "Contact Information";
 
@@ -108,7 +106,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
 	
 	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid transaction type - ";
-
+    
     private static final String Device = null;
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -591,6 +589,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 	
 	protected boolean verifyAlreadyExists() {
+		SimulatorUtilities.wait(3000);
 		String message = getMessageFromFeedbackPanel();
 		if (message != null && message.contains("already exist")) {
 			return true;
@@ -718,9 +717,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void waitAndSearchForRecordToExist() {
 		waitAndSearchForRecordToAppear();
+		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, deviceNumberFetch.getText());
+		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
 		selectFirstRecord();
-		clickProcessSelectedButton();
-		
+		clickProcessSelectedButton();		
 	}	
 	
 	protected void waitAndSearchForRecordToExists() {
@@ -1745,7 +1745,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		Device device  = context.get(CreditConstants.APPLICATION);
 		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
 	}
-	
 	public int getDeviceNumberIndex()
 	{  
 		int index=0;
@@ -1800,7 +1799,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		String ins = String.format(instituteSelectionVal, instituteName);
 		CustomUtils.ThreadDotSleep(500);
 		getFinder().getWebDriver().findElement(By.xpath(ins)).click();
-
 	}
 
 	public void deleteExistingRecord(String parameter) {
@@ -1815,7 +1813,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public List<WebElement> getValidationErrors() {
 		return Elements(ERROR_XPATH);
 	}
-
+	
+	public void moveToElementAndClick(MCWebElement element,int xOffset, int yOffset){
+		Actions action = new Actions(driver());		
+		action.moveToElement(asWebElement(element), xOffset, yOffset).click().build().perform();
+	}
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		logger.info("Not validaiting any elements, as this is an Abstraction layer to Pages");

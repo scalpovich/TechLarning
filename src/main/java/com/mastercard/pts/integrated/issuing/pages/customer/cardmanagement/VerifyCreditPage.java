@@ -79,27 +79,26 @@ TestContext context;
 	private MCWebElement lastNameTxt;
 	
 	public void verifyapplication() {
-		Device device=context.get(CreditConstants.APPLICATION);
+		Device device = context.get(CreditConstants.APPLICATION);
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
 		WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDatePicker, LocalDate.now());
 		clickSearchButton();
 	}
 
-	public String editAndVerifyApplication()
-	{
+	public String editAndVerifyApplication(){
+		verifyapplication();
 		waitForPageToLoad(driver());
-		context.put(CreditConstants.APPLICATION_NUMBER_FILEUPLOAD, applicationNumberFileUploadTxt.getText());
 		clickWhenClickable(editImg);
-		switchToIframe(VERIFY_FRAME);
 		SimulatorUtilities.wait(5000);
-		context.put(CreditConstants.BATCH_NUMBER_FILEUPLOAD, batchNumberTxt.getText());
-		clickWhenClickable(verifyBtn);
+		
+		runWithinPopup("Edit Application", () ->{					
+			clickWhenClickable(verifyBtn);
+		});		
+		
 		verifyOperationStatus();
-		SimulatorUtilities.wait(5000);
-		String applicationNumber=getCodeFromInfoMessage("Application Number");
-		return applicationNumber;
-	}
+		return getCodeFromInfoMessage("Application Number");
+	}	
 	
 	public void verifyApplicationFileUpload() {
 		Map<String, Object>mapFileUpload=context.get(CreditConstants.FILEUPLOAD_IN_BULK);
@@ -127,10 +126,5 @@ TestContext context;
 		context.put(CreditConstants.ALL_BATCH_NUMBERS, allBatchNumbers);
 	}
 	
-	@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

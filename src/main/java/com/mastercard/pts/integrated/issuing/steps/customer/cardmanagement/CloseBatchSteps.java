@@ -8,18 +8,18 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.C
 
 @Component
 public class CloseBatchSteps {
-@Autowired
-CloseBatchFlows closeBatchFlows;
+	@Autowired
+	CloseBatchFlows closeBatchFlows;
 
-@When("user processes close batch for new Application")
-public void closeBatchExecutionForNewApplication()
-{
-	closeBatchFlows.closeBatchExecution();
-}
+	@When("user processes close batch for new Application")
+	public void closeBatchExecutionForNewApplication(){
+		closeBatchFlows.closeBatchExecution();
+	}
 
-@When("user processes close batch for new Application for fileUpload")
-public void closeBatchExecutionForNewApplicationFileUpload()
-{
-	closeBatchFlows.closeBatchExecutionForFileUpload();
-}
+
+	@When("user processes close batch for new Application for FileUpload")
+	public void closeFirstBatchExecutionForNewApplication(){
+		closeBatchFlows.closeFirstBatchExecution();
+	}
+
 }

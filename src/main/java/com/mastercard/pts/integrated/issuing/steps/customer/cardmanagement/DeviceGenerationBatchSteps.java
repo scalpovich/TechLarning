@@ -8,18 +8,16 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.D
 
 @Component
 public class DeviceGenerationBatchSteps {
-@Autowired
-DeviceGenerationBatchFlows deviceGenerationBatchFlows;
+	@Autowired
+	DeviceGenerationBatchFlows deviceGenerationBatchFlows;
 
-@When("user processes deviceGeneration batch for new Application")
-public void closeBatchExecutionForNewApplication()
-{
-	deviceGenerationBatchFlows.deviceGenerationBatchExecution();
-}
-
-@When("user processes deviceGeneration batch for new Application for fileUpload")
-public void closeBatchExecutionForNewApplicationForFileUpload()
-{
-	deviceGenerationBatchFlows.deviceGenerationBatchExecutionForFileUpload();
-}
+	@When("user processes deviceGeneration batch for new Application")
+	public void closeBatchExecutionForNewApplication(){
+		deviceGenerationBatchFlows.deviceGenerationBatchExecution();
+	}
+	
+	@When("user processes deviceGeneration batch for new Application for FileUpload")
+	public void closeFirstBatchExecutionForNewApplication(){
+		deviceGenerationBatchFlows.deviceGenerationFirstBatchExecution();
+	}	
 }

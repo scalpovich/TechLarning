@@ -19,19 +19,21 @@ public class CloseBatchFlows {
 	
 	protected  static final Logger logger = LoggerFactory.getLogger(CloseBatchFlows.class);
 	
-	public void closeBatchExecution()
-	{
-		closeBatchPage=navigator.navigateToPage(CloseBatchPage.class);
+	public void closeBatchExecution(){
+		closeBatchPage = navigator.navigateToPage(CloseBatchPage.class);
 		closeBatchPage.allBatchNumberRetrieval();
 		SimulatorUtilities.wait(5000);
 		closeBatchPage.identifyBatchNumberToProcess();
 		closeBatchPage.processAppropriateBatchForApplication();
 	}
 	
-	public void closeBatchExecutionForFileUpload()
-	{
+	public void closeFirstBatchExecution(){
+		closeBatchPage=navigator.navigateToPage(CloseBatchPage.class);
+		closeBatchPage.processFirstBatch();
+	}
+
+    public void closeBatchExecutionForFileUpload(){
 		closeBatchPage=navigator.navigateToPage(CloseBatchPage.class);
 		closeBatchPage.processAllClick();
 	}
-
 }

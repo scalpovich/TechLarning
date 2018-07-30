@@ -11,13 +11,10 @@ public class VerifyCreditApplicationFlows {
 	@Autowired
 	Navigator navigator;
 	
-	public String verifyCreditApplication()
-	{
-		VerifyCreditPage verifyCreditPage = navigator.navigateToPage(VerifyCreditPage.class);
-		verifyCreditPage.verifyapplication();
-		String message=verifyCreditPage.editAndVerifyApplication();
-		return message;
-	}
+	public String verifyCreditApplication(){
+		VerifyCreditPage verifyCreditPage = navigator.navigateToPage(VerifyCreditPage.class);		
+		return verifyCreditPage.editAndVerifyApplication();
+	}		
 	
 	public void verifyCreditApplicationFileUpload()
 	{
