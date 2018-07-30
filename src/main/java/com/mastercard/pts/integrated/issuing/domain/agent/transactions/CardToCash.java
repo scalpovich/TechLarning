@@ -9,7 +9,7 @@ public class CardToCash {
 	private static final String CURRENT_ADDRESS_LINE_1 = "CURRENT_ADDRESS_LINE_1";
 	private static final String POSTAL_CODE = "POSTAL_CODE";
 	private static final String CITY = "CITY";
-	
+	private static final String REMITTANCE_AMOUNT = "REMITTANCE_AMOUNT";
 	private int beneficiaryId;
 	private String beneficiaryFirstName;
 	private String beneficiaryLastName;
@@ -27,6 +27,7 @@ public class CardToCash {
 		CardToCash ctc = new CardToCash();
 		ctc.setTxnPassword(provider.getString(TXN_PASSWORD));
 		ctc.setTransactionDetails(provider.getString(TRANSACTION_DETAILS));
+		ctc.setRemittanceAmount(provider.getString(REMITTANCE_AMOUNT));
 		ctc.setMobileNumber(provider.getString(MOBILE_NUMBER));
 		ctc.setBeneficiaryAddress1(provider.getString(CURRENT_ADDRESS_LINE_1));
 		ctc.setZipCode(provider.getString(POSTAL_CODE));
@@ -41,7 +42,7 @@ public class CardToCash {
 	public void setTransactionDetails(String transactionDetails) {
 		this.transactionDetails = transactionDetails;
 	}
-
+	
 	public String getTxnPassword() {
 		return txnPassword;
 	}
@@ -129,5 +130,4 @@ public class CardToCash {
 	public void setRemittanceCurrency(String remittanceCurrency) {
 		this.remittanceCurrency = remittanceCurrency;
 	}
-	
 }
