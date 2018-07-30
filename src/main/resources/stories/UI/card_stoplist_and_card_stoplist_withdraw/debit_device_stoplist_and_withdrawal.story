@@ -29,7 +29,7 @@ And user sign out from customer portal
 Scenario:To Verify that the user can stoplist debit device from stoplist screen
 Given user is logged in institution
 When user stoplists a card from stoplist device screen
-And user edits deviceplan and enable stoplist flag
+And user edits deviceplan and enables stoplist flag
 And device has "lost" status
 Then user sign out from customer portal
 

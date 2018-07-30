@@ -644,7 +644,7 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 	
-	@When("user edits deviceplan and enable stoplist flag")
+	@When("user edits deviceplan and enables stoplist flag")
 	public void editDevicePlanAndEnableStopListFlag() {
 		devicePlan=context.get(ContextConstants.DEVICE_PLAN);
 		programSetupWorkflow.enableStopListFlag(devicePlan);
