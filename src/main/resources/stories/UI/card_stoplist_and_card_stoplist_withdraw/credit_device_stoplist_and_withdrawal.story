@@ -2,7 +2,7 @@
 Narrative:
 As a Customer portal user
 I want to stoplist and stoplist withdraw a credit device  
-so that the user's device can be stoplisted and stoplist withdrawal
+so that the users device can be stoplisted and stoplist withdrawal
 
 Meta:
 @StoryName credit_emv_retail_stoplist_withdraw
@@ -39,7 +39,7 @@ And user sign out from customer portal
 Scenario:To Verify that the user can stoplist credit device from stoplist screen
 Given user is logged in institution
 When user stoplists a card from stoplist device screen
-And edit deviceplan and enable stoplist flag
+And user edits deviceplan and enable stoplist flag
 And device has "lost" status
 Then user sign out from customer portal
 

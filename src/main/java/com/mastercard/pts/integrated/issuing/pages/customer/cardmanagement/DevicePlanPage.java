@@ -403,7 +403,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	private MCWebElement virtualDeviceCreditLimitTxt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "stopListFlag:checkBoxComponent")
-	private MCWebElement stopListFlagChkBx;
+	private MCWebElement stoplistFlagChkBx;
 
 	public void AddDevicePlan() {
 		clickWhenClickable(AddDevicePlanBtn);
@@ -944,8 +944,8 @@ public class DevicePlanPage extends AbstractBasePage {
 		ClickCheckBox(cvccCvvChkBx, status);
 	}
 	
-	public void checStopListFlg(boolean status) {
-		ClickCheckBox(stopListFlagChkBx, status);
+	public void checkStoplistFlag(boolean status) {
+		ClickCheckBox(stoplistFlagChkBx, status);
 	}
 
 	public void clickIframeDialogCloseX() {
@@ -1237,7 +1237,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		runWithinPopup("Edit Device Plan", () -> {			
 			WebElementUtils.elementToBeClickable(authorizationTab);
 			clickWhenClickable(authorizationTab);
-			checStopListFlg(true);
+			checkStoplistFlag(true);
 			clickSaveButton();
 		});
 

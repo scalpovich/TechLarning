@@ -6,8 +6,8 @@ import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 public class WithdrawDevice {
      
 	
-	String withdrawReason;
-	String withdrawDescription;
+	private String withdrawReason;
+	private String withdrawDescription;
 
 	public String getWithdrawReason() {
 		return withdrawReason;

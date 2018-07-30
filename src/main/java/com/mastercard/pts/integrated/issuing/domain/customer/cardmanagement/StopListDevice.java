@@ -7,8 +7,8 @@ import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 public class StopListDevice {
      
 	
-	String stopListReason;
-	String stopListReasonDescription;
+	private String stopListReason;
+	private String stopListReasonDescription;
 	
 	public String getStopListReason() {
 		return stopListReason;

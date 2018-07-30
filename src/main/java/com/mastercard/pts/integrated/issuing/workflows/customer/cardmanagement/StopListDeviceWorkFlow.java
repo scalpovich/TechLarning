@@ -12,9 +12,9 @@ public class StopListDeviceWorkFlow {
 	
 	@Autowired
 	private Navigator navigator;
-	public void addStopLlistDevice(StopListDevice stopListDevice){
+	public void addStoplistDevice(StopListDevice stopListDevice){
 		StopListDevicePage page = navigator.navigateToPage(StopListDevicePage.class);
-		page.addStopListDevice(stopListDevice);
+		page.addStoplistDevice(stopListDevice);
 	}
 
 }

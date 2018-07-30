@@ -26,7 +26,7 @@ public class StopListDeviceSteps extends AbstractBaseSteps {
 	@When("user stoplists a card from stoplist device screen")
 	public void userStoplistsCard() {
 		StopListDevice stopListDevice=StopListDevice.createWithProvider(keyProvider);
-		stopListDeviceWorkFlow.addStopLlistDevice(stopListDevice);
+		stopListDeviceWorkFlow.addStoplistDevice(stopListDevice);
 	}
 
 }

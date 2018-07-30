@@ -2,7 +2,7 @@
 Narrative:
 As a Customer portal user
 I want to stoplist and stoplist withdraw a debit device  
-so that the user's device can be stoplisted and stoplist withdrawal
+so that the users device can be stoplisted and stoplist withdrawal
 
 Meta:
 @StoryName d_emv_retail_stoplist_withdraw
@@ -29,7 +29,7 @@ And user sign out from customer portal
 Scenario:To Verify that the user can stoplist debit device from stoplist screen
 Given user is logged in institution
 When user stoplists a card from stoplist device screen
-And edit deviceplan and enable stoplist flag
+And user edits deviceplan and enable stoplist flag
 And device has "lost" status
 Then user sign out from customer portal
 
@@ -47,7 +47,7 @@ When user withdraws a card from withdraw device screen
 Then device has "normal" status
 And user sign out from customer portal
 
-Scenario: Transaction - MSR_PREAUTH Authorization transaction on debit device after withdrawn device
+Scenario: Transaction - EMV_PREAUTH Authorization transaction on debit device after withdrawn device
 Given perform an EMV_PREAUTH MAS transaction on the same card
 When MAS test results are verified
 And MAS simulator is closed

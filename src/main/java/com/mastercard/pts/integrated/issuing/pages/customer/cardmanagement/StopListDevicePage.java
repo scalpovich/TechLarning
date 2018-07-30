@@ -58,7 +58,7 @@ public class StopListDevicePage extends AbstractBasePage {
 		verifyButton("Search");
 	}
 	
-	public void addStopListDevice(StopListDevice stopListDevice){
+	public void addStoplistDevice(StopListDevice stopListDevice){
 		Device device=context.get(ContextConstants.DEVICE);
 		clickAddNewButton();
 		runWithinPopup("Add Stop List Device", ()->{

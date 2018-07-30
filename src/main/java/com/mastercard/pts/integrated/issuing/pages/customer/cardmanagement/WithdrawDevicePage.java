@@ -63,13 +63,13 @@ public class WithdrawDevicePage extends AbstractBasePage {
 				WebElementUtils.elementToBeClickable(interchange));
 	}
 	
-	public void withDrawStopListDevice(WithdrawDevice withdrawDevice){
+	public void withdrawStopListDevice(WithdrawDevice withdrawDevice){
 		Device device=context.get(ContextConstants.DEVICE);
 		searchWithdrawDevice(device.getDeviceNumber());
 		runWithinPopup("Withdraw Device", ()->{
 			selectApplyFeesCheckBox();
 			selectReasonCode(withdrawDevice.getWithdrawReason());
-			enterWithDrawDeviceDescription(withdrawDevice.getWithdrawDescription());
+			enterWithdrawDeviceDescription(withdrawDevice.getWithdrawDescription());
 			clickSaveButton();
 		});
 	}
@@ -88,7 +88,7 @@ public class WithdrawDevicePage extends AbstractBasePage {
 		selectDropDownByText(reasonCodeDDwn, reasonCode);
 	}
 	
-	public void enterWithDrawDeviceDescription(String description){
+	public void enterWithdrawDeviceDescription(String description){
 		enterText(withdrawDeviceDescription, description);
 	}
 	
