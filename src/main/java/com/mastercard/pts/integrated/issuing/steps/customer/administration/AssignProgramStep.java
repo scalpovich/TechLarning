@@ -23,9 +23,7 @@ public class AssignProgramStep {
 
 	@When("user assigns service code to program")
 	public void assignServiceCodeToProgram(){
-		if(MiscUtils.getEnvironment().contains(Constants.ENV_STAGESA) || MiscUtils.getEnvironment().contains(Constants.ENV_DEMO)){
-			Program	program = context.get(ContextConstants.PROGRAM);
-			assignProgramWorkflow.assignServiceCodeToProgram(program);
-		}
+		Program	program = context.get(ContextConstants.PROGRAM);
+		assignProgramWorkflow.assignServiceCodeToProgram(program);
 	}
 }

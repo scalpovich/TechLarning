@@ -19,11 +19,9 @@ public class ApplicationBusinessMandatoryFields {
 		ApplicationBusinessMandatoryFields details = new ApplicationBusinessMandatoryFields();
 		if(provider.getString(CUSTOMER_TYPE).contains("Corporate")){
 			details.setCustomerType("1");
-		}
-		else{
+		}else{
 			details.setCustomerType("0");
-		}		
-		
+		}			
 		details.setMandatoryFields(provider.getString(MANDATORY_FIELDS));
 		details.setSelectAll(provider.getString(BMF_SELECT_ALL));
 		return details;
