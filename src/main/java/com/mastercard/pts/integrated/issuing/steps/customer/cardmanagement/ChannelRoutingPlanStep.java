@@ -26,9 +26,9 @@ public class ChannelRoutingPlanStep  {
 	AccountRangeRoutingFlows  accountRangeRoutingFlows;
 	@Autowired
 	private TestContext context;
-	private final String channelNamePlan = "CBS1 [CBS1]" ;
-	private final String channelName = "CBS1" ;
-	
+	private final String channelNamePlan1 = "CBS1 [CBS1]" ;
+	private final String channelNamePlan2 = "CBS2 [CBS2]" ;
+
 
 	@When("user creates channel Routing plan for $channelName channel and $interfaceName interface")
 	public void userCreatesChannelRouting(@Named("channelName") String channel,@Named("interfaceName") String interfaceType) {
@@ -47,12 +47,15 @@ public class ChannelRoutingPlanStep  {
 		accountRangeRoutingPlan.setChannelRoutingPlan(channelRouting.getPlanID());
 		accountRangeRoutingFlows.addChannelRoutingPlan(accountRangeRoutingPlan);
 	}
-	
+
 	@When("user creates Account Range for Routing for $channelName channel")
 	public void userCreatesChannelRoutingForUserDefineChannel(String channelName) {
 		accountRangeRoutingPlan=AccountRangeRoutingPlan.channelRoutingPlanDataProvider(context.get(ContextConstants.DEVICE));
-		if(channelName.equals(this.channelName)){
-			accountRangeRoutingPlan.setChannelRoutingPlan(channelNamePlan);
+		if(channelNamePlan1.contains(channelName)){
+			accountRangeRoutingPlan.setChannelRoutingPlan(channelNamePlan1);
+		}
+		else{
+			accountRangeRoutingPlan.setChannelRoutingPlan(channelNamePlan2);
 		}
 		accountRangeRoutingFlows.addChannelRoutingPlan(accountRangeRoutingPlan);
 	}

@@ -308,7 +308,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
 			clickWhenClickable(generateDeviceBatchBtn);
 			waitForWicket();
-			SimulatorUtilities.wait(30000);
+			SimulatorUtilities.wait(10000);
 			context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());
 		}else if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
 			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn,ConstantData.OPEN_BATCH);

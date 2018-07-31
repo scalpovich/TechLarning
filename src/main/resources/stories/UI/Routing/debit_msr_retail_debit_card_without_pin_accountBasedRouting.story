@@ -23,7 +23,7 @@ And User fills Program section for debit product
 And User fills Business Mandatory Fields Screen for debit product
 And User filled Device Range section for debit product
 And user creates new device of debit type for new client
-And user creates Account Range for Routing for CBS1 channel
+And user creates Account Range for Routing for CBS2 channel
 And device has "normal" status
 And user has wallet number information for debit device
 And user performs adjustment transaction
