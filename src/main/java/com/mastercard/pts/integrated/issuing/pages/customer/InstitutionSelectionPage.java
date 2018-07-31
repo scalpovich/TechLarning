@@ -35,6 +35,9 @@ public class InstitutionSelectionPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "confirm")
 	private MCWebElement confirmButton;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[contains(text(),'Click here to login')]")
+	private MCWebElement loginElement;
+	
 	public MCWebElement getInstitution() {
 		return institution;
 	}
@@ -100,6 +103,15 @@ public class InstitutionSelectionPage extends AbstractBasePage {
 	
 	public void clickConfirm() {
 		confirmButton.click();
+	}
+	
+	public boolean checkSessionExpired(){
+		SimulatorUtilities.wait(5000);
+		if( Elements("//ul[@class='feedbackPanel']//span").size()>0 ){
+			loginElement.click();
+			return true;
+		}
+		return false;
 	}
 
 	
