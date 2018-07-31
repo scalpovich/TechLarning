@@ -8,6 +8,8 @@ I want to create an magnetic stripe prepaid card pinless and perform various tra
 Meta:
 @StoryName prepaid_msr_retail_gift_MMSR
 @MMSR
+@nitin_summarised
+
 Scenario: Set up prepaid msr retail gift card authorization pinless
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin

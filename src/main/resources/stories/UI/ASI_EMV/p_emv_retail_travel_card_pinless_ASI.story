@@ -8,6 +8,7 @@ I want to authorize transactions for prepaid msr retail travel card
 Meta:
 @StoryName p_emv_retail_travel_ASI
 @ASI
+@nitin_summarised
 
 Scenario: Set up prepaid msr retail travel card
 Given user is logged in institution
