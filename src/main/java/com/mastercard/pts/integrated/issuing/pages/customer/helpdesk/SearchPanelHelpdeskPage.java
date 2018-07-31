@@ -151,17 +151,14 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 		}
 	}
 	
-	public int statusHeader()
-	{
-		int index=0;
-		for(int i=0;i<headersTxt.getElements().size();i++)
-		{
-			if(headersTxt.getElements().get(i).getText().equalsIgnoreCase("Status"))
-			{
-				index=i;
+	public int statusHeader() {
+		int index = 0;
+		for (int i = 0; i < headersTxt.getElements().size(); i++) {
+			if (headersTxt.getElements().get(i).getText().equalsIgnoreCase("Status")) {
+				index = i;
 			}
 		}
-		return index+1;
-		
+		return index + 1;
+
 	}
 }

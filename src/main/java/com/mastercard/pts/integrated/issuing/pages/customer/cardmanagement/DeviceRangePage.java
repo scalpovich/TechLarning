@@ -316,15 +316,6 @@ public class DeviceRangePage extends AbstractBasePage {
 		selectBranch();
 		clickAddButton();
 	}
-	
-	/*public void addDeviceRangeUpload(DeviceCreation devicecreation) {
-		selectProduct(devicecreation);
-		selectProgram();
-		selectDevicePlan();
-		selectIssuerBIN();
-		selectBranchUpload();
-		clickAddButton();
-	}*/
 
 	public void addDeviceRangeDetails() {
 		enterFromDeviceNo();

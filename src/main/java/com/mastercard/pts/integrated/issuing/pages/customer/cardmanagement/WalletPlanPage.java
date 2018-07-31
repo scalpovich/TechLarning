@@ -331,17 +331,12 @@ public class WalletPlanPage extends AbstractBasePage {
 		walletPlancode = enterWalletPlanCode(walletplan);
 		walletPlanDesc = enterWalletPlanDescription(walletplan);
 		waitForWicket(driver());
-		//waitForPageToLoad(getFinder().getWebDriver());
 		selectProduct(walletplan);
-		/*waitForPageToLoad(getFinder().getWebDriver());
-		waitForLoaderToDisappear();*/
 		waitForWicket(driver());
 		selectProgramType(walletplan);
-	/*	waitForPageToLoad(getFinder().getWebDriver());*/
 		selectCurrency(walletplan);
 		selectWalletUsage(walletplan);
-		if(walletplan.getProductType().equalsIgnoreCase("credit"))
-		{
+		if (walletplan.getProductType().equalsIgnoreCase("credit")) {
 			selectCreditPlan();
 			selectBillingCycleCode();
 		}

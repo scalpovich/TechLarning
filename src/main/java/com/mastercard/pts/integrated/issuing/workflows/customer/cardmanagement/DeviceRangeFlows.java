@@ -46,7 +46,6 @@ public class DeviceRangeFlows extends MenuFlows {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
 		DeviceRangePage devicerangepage = navigator.navigateToPage(DeviceRangePage.class);
 		devicerangepage.clickAddDeviceRange();
-		//devicerangepage.addDeviceRangeUpload(deviceCreation);
 		devicerangepage.addDeviceRangeDetails();
 		devicerangepage.selectDebitInerface();
 		devicerangepage.Information();

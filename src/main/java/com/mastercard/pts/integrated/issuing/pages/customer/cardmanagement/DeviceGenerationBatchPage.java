@@ -59,23 +59,23 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[1]/td[10]/span/input")
 	public MCWebElement firstBatchNumberTxt;
 
-	public List<String> allBatchNumberRetrieval(){
-		List<String>batchnumbers=new ArrayList<>();
-		for(int i=0;i<allBatchNumberTxt.getElements().size(); i++){
+	public List<String> allBatchNumberRetrieval() {
+		List<String> batchnumbers = new ArrayList<>();
+		for (int i = 0; i < allBatchNumberTxt.getElements().size(); i++) {
 			batchnumbers.add(allBatchNumberTxt.getElements().get(i).getText());
 		}
-		return batchnumbers;	
+		return batchnumbers;
 	}	
 	
-	public int identifyBatchNumberToProcess(){
-		Device device=context.get(ContextConstants.DEVICE);
+	public int identifyBatchNumberToProcess() {
+		Device device = context.get(ContextConstants.DEVICE);
 		int index = 0;
-		for(int i=0;i<allBatchNumberRetrieval().size();i++){
-			if(allBatchNumberRetrieval().get(i).equals(device.getBatchNumber())){
-				logger.info("batchNumber: {}",allBatchNumberRetrieval().get(i));
+		for (int i = 0; i < allBatchNumberRetrieval().size(); i++) {
+			if (allBatchNumberRetrieval().get(i).equals(device.getBatchNumber())) {
+				logger.info("batchNumber: {}", allBatchNumberRetrieval().get(i));
 				index = i;
 			}
-		}				
+		}
 		return index;
 	}	
 	
@@ -99,40 +99,34 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 		verifyOperationStatus();
 	}
 	
-	public void processAllClick()
-	{
+	public void processAllClick() {
 		SimulatorUtilities.wait(8000);
-		if(!waitForRow())
-		{
+		if (!waitForRow()) {
 			clickWhenClickable(deviceGenerationLink);
 		}
 		clickWhenClickable(processAll);
 	}
 	
-	public int identifyBatchNumberToProcessForFileUpload()
-	{
+	public int identifyBatchNumberToProcessForFileUpload() {
 		int index = 0;
-		String batchNumber=context.get(CreditConstants.BATCH_NUMBER_FILEUPLOAD);
-		logger.info("BatchNumber_Application:{}",batchNumber);
-		for(int i=0;i<allBatchNumberRetrieval().size();i++)
-		{
-			if(allBatchNumberRetrieval().get(i).equals(batchNumber))
-			{
-				logger.info("batchNumber: {}",allBatchNumberRetrieval().get(i));
-				index=i;
+		String batchNumber = context.get(CreditConstants.BATCH_NUMBER_FILEUPLOAD);
+		logger.info("BatchNumber_Application:{}", batchNumber);
+		for (int i = 0; i < allBatchNumberRetrieval().size(); i++) {
+			if (allBatchNumberRetrieval().get(i).equals(batchNumber)) {
+				logger.info("batchNumber: {}", allBatchNumberRetrieval().get(i));
+				index = i;
 			}
 		}
 		return index;
 	}
 	
-	public void processAppropriateBatchForApplicationForFileUpload()
-	{  
+	public void processAppropriateBatchForApplicationForFileUpload() {
 		checkWhetherRecordPersists();
-		String checkBox="//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcessForFileUpload()+1+"]/td[8]/span/input";
+		String checkBox = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd'][" + identifyBatchNumberToProcessForFileUpload() + 1 + "]/td[8]/span/input";
 		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(checkBox)));
 		processSelected.click();
 		verifyOperationStatus();
-		
+
 	}
 	
     @Override

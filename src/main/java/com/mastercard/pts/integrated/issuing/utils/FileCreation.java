@@ -538,22 +538,6 @@ public class FileCreation {
 		File[] listOfFiles = folder.listFiles();
 		logger.info("Length Of all Files:{}", listOfFiles.length);
 
-		/*for (int k = 0; k < listOfFiles.length; k++) {
-
-			// This will check if already existing credit or prepaid file is
-			// present in workspace,if yes that file will be uploaded
-			if (listOfFiles[k].getName().startsWith("APP")) {
-				fileName = listOfFiles[k].getName();
-				countLines(fileName);
-				readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(fileName, cardType);
-				logger.info("Already existing fileName in workspace: {}", fileName);
-				context.put(CreditConstants.FILEUPLOAD_IN_BULK, readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(fileName, cardType));
-			}
-		}
-		if (fileName.contains("APP")) {
-			linuxBox.upload(fileName, remoteDir);
-		}*/
-		// else {
 			if (cardType.equalsIgnoreCase("prepaid")) {
 				fileName = "APPPR" + INSTITUTION_CODE + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
 			} else if (cardType.equalsIgnoreCase("credit")) {

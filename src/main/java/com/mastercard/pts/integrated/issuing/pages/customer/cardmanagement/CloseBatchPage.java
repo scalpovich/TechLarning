@@ -112,20 +112,14 @@ public class CloseBatchPage extends AbstractBasePage {
 		
 	}
 	
-	public void processAllClick()
-	{
+	public void processAllClick() {
 		clickWhenClickable(processAll);
 		try {
-			if (driver()
-					.findElement(By.xpath("//h3[text()= 'Confirmation Message']/ancestor::div//iframe"))
-					.isDisplayed()) {
+			if (driver().findElement(By.xpath("//h3[text()= 'Confirmation Message']/ancestor::div//iframe")).isDisplayed()) {
 				switchToIframe("Confirmation Message");
 				clickWhenClickable(yesBtn);
 				verifyOperationStatus();
-			}
-			else
-				
-			{
+			} else {
 				verifyOperationStatus();
 			}
 
@@ -134,16 +128,13 @@ public class CloseBatchPage extends AbstractBasePage {
 		}
 	}
 	
-		public int identifyBatchNumberToProcessForFileUpload()
-	{
+	public int identifyBatchNumberToProcessForFileUpload() {
 		int i;
-		String batchNumber=context.get(CreditConstants.BATCH_NUMBER_FILEUPLOAD);
-		logger.info("BatchNumber_Application:{}",batchNumber);
-		for(i=0;i<allBatchNumberRetrieval().size();i++)
-		{
-			if(allBatchNumberRetrieval().get(i).equals(batchNumber.trim()))
-			{
-				logger.info("batchNumber: {}",allBatchNumberRetrieval().get(i));
+		String batchNumber = context.get(CreditConstants.BATCH_NUMBER_FILEUPLOAD);
+		logger.info("BatchNumber_Application:{}", batchNumber);
+		for (i = 0; i < allBatchNumberRetrieval().size(); i++) {
+			if (allBatchNumberRetrieval().get(i).equals(batchNumber.trim())) {
+				logger.info("batchNumber: {}", allBatchNumberRetrieval().get(i));
 				break;
 			}
 		}

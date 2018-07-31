@@ -61,8 +61,6 @@ public class VendorFlows extends MenuFlows {
 		vendorpage.vendorWithEmbossingTemplateFileName(vendor);
 		vendorpage.selectDeviceProductionCheckBox();
 		vendorpage.selectEmbossingFileTemplate();
-		//vendorpage.selectPinProductionCheckBox();
-		//vendorpage.selectPinFileTemplate();
 		vendorpage.addressDetails(vendor);
 		vendorpage.contactDetails(vendor);
 		vendorpage.Save();

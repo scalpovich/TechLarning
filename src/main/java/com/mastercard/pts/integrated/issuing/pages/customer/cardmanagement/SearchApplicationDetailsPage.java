@@ -119,8 +119,6 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		}
 	}
 	
-	
-	
 	public void searchNewApplication(SearchApplicationDetails search){
 		enterFirstName(search);
 		enterLastName(search);

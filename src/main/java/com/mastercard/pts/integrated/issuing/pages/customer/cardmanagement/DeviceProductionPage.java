@@ -123,18 +123,15 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	}
 	
-	public void processDeviceProductionBatchForAllForFileUpload(
-			DeviceProductionBatch batch) {
-		List<String> batchNumbers = context
-				.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
-			waitForLoaderToDisappear();
-			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn,
-					batch.getProductType());
-			WebElementUtils.enterText(batchNumberTxt, batchNumbers.get(0));
-			waitAndSearchForRecordToAppear();
-			clickWhenClickable(processAllBtn);
-			verifyOperationStatus();
-}
+	public void processDeviceProductionBatchForAllForFileUpload(DeviceProductionBatch batch) {
+		List<String> batchNumbers = context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
+		waitForLoaderToDisappear();
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+		WebElementUtils.enterText(batchNumberTxt, batchNumbers.get(0));
+		waitAndSearchForRecordToAppear();
+		clickWhenClickable(processAllBtn);
+		verifyOperationStatus();
+	}
 
 	public void selectProduct(BulkDeviceRequestbatch bulkdeviceGenBatch) {
 		selectByVisibleText(productTypeDDwn, bulkdeviceGenBatch.getProduct());
@@ -238,27 +235,22 @@ public class DeviceProductionPage extends AbstractBasePage {
 	
 	
    
-	public int deviceNumberHeaderIndexFetch()
-	{ 
-		int index=0;
-		for(int i=0;i<deviceNumberHeaderTxt.getElements().size();i++)
-		{
-			if(deviceNumberHeaderTxt.getElements().get(i).getText().equals("Device Number"))
-			{
-				index=i;
+	public int deviceNumberHeaderIndexFetch() {
+		int index = 0;
+		for (int i = 0; i < deviceNumberHeaderTxt.getElements().size(); i++) {
+			if (deviceNumberHeaderTxt.getElements().get(i).getText().equals("Device Number")) {
+				index = i;
 			}
 		}
-		return index+1;
+		return index + 1;
 	}
 	
-	public List<String>deviceNumbers()
-	{
-		List<WebElement>allDeviceNumbers=new ArrayList<>();
-		List<String>allDeviceNumberfText=new ArrayList<>();
-		allDeviceNumbers=driver().findElements(By.xpath("//table[@class='dataview']//tr[@class='even' or 'odd']/td["+deviceNumberHeaderIndexFetch()+"]/span"));
-		
-		for(int i=0;i<allDeviceNumbers.size();i++)
-		{
+	public List<String> deviceNumbers() {
+		List<WebElement> allDeviceNumbers = new ArrayList<>();
+		List<String> allDeviceNumberfText = new ArrayList<>();
+		allDeviceNumbers = driver().findElements(By.xpath("//table[@class='dataview']//tr[@class='even' or 'odd']/td[" + deviceNumberHeaderIndexFetch() + "]/span"));
+
+		for (int i = 0; i < allDeviceNumbers.size(); i++) {
 			allDeviceNumberfText.add(allDeviceNumbers.get(i).getText());
 		}
 		context.put(ContextConstants.ALL_DEVICE_NUMBERS, allDeviceNumberfText);

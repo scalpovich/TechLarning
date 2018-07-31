@@ -126,32 +126,27 @@ public class PinGenerationBatchPage extends AbstractBasePage {
 
 		}
 
-		public List<String>deviceNumbers()
-		{
-			List<WebElement>allDeviceNumbers=new ArrayList<>();
-			List<String>allDeviceNumberfText=new ArrayList<>();
-			allDeviceNumbers=driver().findElements(By.xpath("//table[@class='dataview']//tr[@class='even' or 'odd']/td["+deviceNumberHeaderIndexFetch()+"]/span"));
-			
-			for(int i=0;i<allDeviceNumbers.size();i++)
-			{
-				allDeviceNumberfText.add(allDeviceNumbers.get(i).getText());
-			}
-			context.put(ContextConstants.ALL_DEVICE_NUMBERS, allDeviceNumberfText);
-			return allDeviceNumberfText;
+	public List<String> deviceNumbers() {
+		List<WebElement> allDeviceNumbers = new ArrayList<>();
+		List<String> allDeviceNumberfText = new ArrayList<>();
+		allDeviceNumbers = driver().findElements(By.xpath("//table[@class='dataview']//tr[@class='even' or 'odd']/td[" + deviceNumberHeaderIndexFetch() + "]/span"));
+
+		for (int i = 0; i < allDeviceNumbers.size(); i++) {
+			allDeviceNumberfText.add(allDeviceNumbers.get(i).getText());
 		}
+		context.put(ContextConstants.ALL_DEVICE_NUMBERS, allDeviceNumberfText);
+		return allDeviceNumberfText;
+	}
 		
-		public int deviceNumberHeaderIndexFetch()
-		{ 
-			int index=0;
-			for(int i=0;i<deviceNumberHeaderTxt.getElements().size();i++)
-			{
-				if(deviceNumberHeaderTxt.getElements().get(i).getText().equals("Device Number"))
-				{
-					index=i;
-				}
+	public int deviceNumberHeaderIndexFetch() {
+		int index = 0;
+		for (int i = 0; i < deviceNumberHeaderTxt.getElements().size(); i++) {
+			if (deviceNumberHeaderTxt.getElements().get(i).getText().equals("Device Number")) {
+				index = i;
 			}
-			return index+1;
 		}
+		return index + 1;
+	}
 		
 	public void verifyUiOperationStatus() {
 		logger.info("Pin Generation Batch");
