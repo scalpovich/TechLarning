@@ -28,7 +28,7 @@ public class WithdrawDeviceSteps extends AbstractBaseSteps {
 	@When("user withdraws a card from withdraw device screen")
 	public void userWithdrawsCard() {
 		WithdrawDevice withdrawDevice=WithdrawDevice.createWithProvider(keyProvider);
-		withdrawDeviceWorkFlow.withdrawStopListDevice(withdrawDevice);
+		withdrawDeviceWorkFlow.withdrawStoplistDevice(withdrawDevice);
 	}
 
 }

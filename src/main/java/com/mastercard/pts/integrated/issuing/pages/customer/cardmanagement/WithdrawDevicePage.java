@@ -63,7 +63,7 @@ public class WithdrawDevicePage extends AbstractBasePage {
 				WebElementUtils.elementToBeClickable(interchange));
 	}
 	
-	public void withdrawStopListDevice(WithdrawDevice withdrawDevice){
+	public void withdrawStoplistDevice(WithdrawDevice withdrawDevice){
 		Device device=context.get(ContextConstants.DEVICE);
 		searchWithdrawDevice(device.getDeviceNumber());
 		runWithinPopup("Withdraw Device", ()->{
