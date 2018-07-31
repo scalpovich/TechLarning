@@ -6,7 +6,7 @@ import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 
 public class StopListDevice {
      
-	
+	private final static String STOP_LIST_REASON="Stop_List_Reason";
 	private String stopListReason;
 	private String stopListReasonDescription;
 	
@@ -28,7 +28,7 @@ public class StopListDevice {
 
 	public static StopListDevice createWithProvider(KeyValueProvider provider) {
 		StopListDevice stopListDevice=new StopListDevice();
-		stopListDevice.setStopListReason(provider.getString("Stop_List_Reason"));
+		stopListDevice.setStopListReason(provider.getString(STOP_LIST_REASON));
 		stopListDevice.setStopListReasonDescription(CustomUtils.randomString(8));
 		return stopListDevice;
 	}
