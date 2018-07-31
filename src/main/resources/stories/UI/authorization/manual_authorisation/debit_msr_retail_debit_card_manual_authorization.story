@@ -8,7 +8,6 @@ I want to create an msr debit card for client and perform manual authorization f
 Meta:
 @StoryName S198222
 @CRCardsWithAuthorization
-@nitin_summarised
 
 Scenario: Set up msr retail debit card
 Meta:

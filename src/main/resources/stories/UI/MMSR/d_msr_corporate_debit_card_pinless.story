@@ -8,7 +8,6 @@ I want to authorize transactions for debit MSR retail debit card
 Meta:
 @StoryName d_msr_corp_MMSR
 @MMSR
-@nitin_summarised
 
 Scenario: Set up program for debit emv retail debit card
 Given user is logged in institution

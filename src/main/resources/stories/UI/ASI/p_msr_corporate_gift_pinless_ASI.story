@@ -8,8 +8,6 @@ I want to create a prepaid MSR corporate gift card and test various scenarios
 Meta:
 @StoryName p_msr_corp_gift_ASI
 @ASI
-@nitin_summarised
-
 Scenario: Setup - prepaid MSR corporate gift card without PIN
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
