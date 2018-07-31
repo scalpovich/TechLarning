@@ -780,6 +780,7 @@ public class HelpDeskSteps {
 		}
 	}
 
+	@When("currency setup for device")
 	@Then("currency setup for device")
 	public void searchDevice() {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);

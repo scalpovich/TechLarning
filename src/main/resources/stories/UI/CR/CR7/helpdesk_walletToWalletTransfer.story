@@ -12,208 +12,223 @@ Meta:
 Scenario: To Verify functionality of wallet transfer from mastercard interchange by emv card with program Corporate Travel Card - Multi Currency
 Given user is logged in institution
 When User fills Statement Message Plan for prepaid product
-When User fills Marketing Message Plan for prepaid product
-When User fills Prepaid Statement Plan
-When User fills MCC Rules for prepaid product
-When User fills Dedupe Plan
-When User fills Transaction Plan for prepaid product
-When User fills Transaction Limit Plan for prepaid product
-When User fills Document Checklist Screen for prepaid product
-When User fills Device Joining and Membership Fee Plan for prepaid product
-When User fills Device Event Based Fee Plan for prepaid product
-When User fills Device Plan for "prepaid" "emv" card with no pin
-When fills Wallet Plan for prepaid product and program Corporate Travel Card - Multi Currency [6]
-When User fills Program section for prepaid product and program Corporate Travel Card - Multi Currency [6]
-When User fills Business Mandatory Fields Screen for prepaid product with Corporate
-When User fills Device Range section for prepaid product
-When add menus to access card holder portal
-When user creates new device of prepaid type for new client of Corporate customer
-Then device has "normal" status
-Then user performs adjustment transaction
-Then currency setup for device
-When wallet to wallet transfer selected account
+And User fills Marketing Message Plan for prepaid product
+And User fills Prepaid Statement Plan
+And User fills MCC Rules for prepaid product
+And User fills Dedupe Plan
+And User fills Transaction Plan for prepaid product
+And User fills Transaction Limit Plan for prepaid product
+And User fills Document Checklist Screen for prepaid product
+And User fills Device Joining and Membership Fee Plan for prepaid product
+And User fills Device Event Based Fee Plan for prepaid product
+And User fills Device Plan for "prepaid" "emv" card with no pin
+And fills Wallet Plan for prepaid product and program Corporate Travel Card - Multi Currency [6]
+And User fills Program section for prepaid product and program Corporate Travel Card - Multi Currency [6]
+And User fills Business Mandatory Fields Screen for prepaid product with Corporate [1]
+And User fills Device Range section for prepaid product
+And add menus to access card holder portal
+And user creates new device of prepaid type for new client of Corporate customer
+And device has "normal" status
+And user performs adjustment transaction
+And user assigns service code to program
+And currency setup for device
+And wallet to wallet transfer selected account
 Then search with device in transaction screen and status for wallet to wallet transfer transaction
+And user sign out from customer portal
 
-Scenario: To Verify functionality of wallet transfer from mastercard interchange by msr card with program Corporate Travel Card - Multi Currency
-Given user is logged in institution
-When User fills Statement Message Plan for prepaid product
-When User fills Marketing Message Plan for prepaid product
-When User fills Prepaid Statement Plan
-When User fills MCC Rules for prepaid product
-When User fills Dedupe Plan
-When User fills Transaction Plan for prepaid product
-When User fills Transaction Limit Plan for prepaid product
-When User fills Document Checklist Screen for prepaid product
-When User fills Device Joining and Membership Fee Plan for prepaid product
-When User fills Device Event Based Fee Plan for prepaid product
-When User fills Device Plan for "prepaid" "magnetic stripe" card with no pin
-When fills Wallet Plan for prepaid product and program Corporate Travel Card - Multi Currency [6]
-When User fills Program section for prepaid product and program Corporate Travel Card - Multi Currency [6]
-When User fills Business Mandatory Fields Screen for prepaid product with Corporate
-When User fills Device Range section for prepaid product
-When add menus to access card holder portal
-When user creates new device of prepaid type for new client of Corporate customer
-Then device has "normal" status
-Then user performs adjustment transaction
-Then currency setup for device
-When wallet to wallet transfer selected account
-Then search with device in transaction screen and status for wallet to wallet transfer transaction
-
-
-Scenario: To Verify functionality of wallet transfer from mastercard interchange by emv card with program Retail Travel Card - Multi Currency
-Given user is logged in institution
-When User fills Statement Message Plan for prepaid product
-When User fills Marketing Message Plan for prepaid product
-When User fills Prepaid Statement Plan
-When User fills MCC Rules for prepaid product
-When User fills Dedupe Plan
-When User fills Transaction Plan for prepaid product
-When User fills Transaction Limit Plan for prepaid product
-When User fills Document Checklist Screen for prepaid product
-When User fills Device Joining and Membership Fee Plan for prepaid product
-When User fills Device Event Based Fee Plan for prepaid product
-When User fills Device Plan for "prepaid" "emv" card with no pin
-When fills Wallet Plan for prepaid product and program Retail Travel Card - Multi Currency [2]
-When User fills Program section for prepaid product and program Retail Travel Card - Multi Currency [2]
-When User fills Business Mandatory Fields Screen for prepaid product with Individual
-When User fills Device Range section for prepaid product
-When add menus to access card holder portal
-When user creates new device of prepaid type for new client of Individual customer
-Then device has "normal" status
-Then user performs adjustment transaction
-Then currency setup for device
-When wallet to wallet transfer selected account
-Then search with device in transaction screen and status for wallet to wallet transfer transaction
-
-Scenario: To Verify functionality of wallet transfer from mastercard interchange by msr card with program Retail Travel Card - Multi Currency
-Given user is logged in institution
-When User fills Statement Message Plan for prepaid product
-When User fills Marketing Message Plan for prepaid product
-When User fills Prepaid Statement Plan
-When User fills MCC Rules for prepaid product
-When User fills Dedupe Plan
-When User fills Transaction Plan for prepaid product
-When User fills Transaction Limit Plan for prepaid product
-When User fills Document Checklist Screen for prepaid product
-When User fills Device Joining and Membership Fee Plan for prepaid product
-When User fills Device Event Based Fee Plan for prepaid product
-When User fills Device Plan for "prepaid" "magnetic stripe" card with no pin
-When fills Wallet Plan for prepaid product and program Retail Travel Card - Multi Currency [2]
-When User fills Program section for prepaid product and program Retail Travel Card - Multi Currency [2]
-When User fills Business Mandatory Fields Screen for prepaid product with Individual
-When User fills Device Range section for prepaid product
-When add menus to access card holder portal
-When user creates new device of prepaid type for new client of Individual customer
-Then device has "normal" status
-Then user performs adjustment transaction
-Then currency setup for device
-When wallet to wallet transfer selected account
-Then search with device in transaction screen and status for wallet to wallet transfer transaction
-
-Scenario: To Verify functionality of wallet transfer from mastercard interchange by msr card with program Corporate General Purpose Card
-Given user is logged in institution
-When User fills Statement Message Plan for prepaid product
-When User fills Marketing Message Plan for prepaid product
-When User fills Prepaid Statement Plan
-When User fills MCC Rules for prepaid product
-When User fills Dedupe Plan
-When User fills Transaction Plan for prepaid product
-When User fills Transaction Limit Plan for prepaid product
-When User fills Document Checklist Screen for prepaid product
-When User fills Device Joining and Membership Fee Plan for prepaid product
-When User fills Device Event Based Fee Plan for prepaid product
-When User fills Device Plan for "prepaid" "magnetic stripe" card with no pin
-When user fills Merchant Category Group
-When create wallet Plan for "prepaid" product and program "Corporate General Purpose Card [8]" with usage "Open Loop"
-When create wallet Plan for "prepaid" product and program "Corporate General Purpose Card [8]" with usage "Closed Loop"
-When fills Program section for prepaid product and program Corporate General Purpose Card [8]
-When User fills Business Mandatory Fields Screen for prepaid product with Corporate
-When User fills Device Range section for prepaid product
-When add menus to access card holder portal
-When user creates new device of prepaid type for new client of Corporate customer
-Then device has "normal" status
-Then user gets attached wallet details for device
-Then user performs adjustment transaction
-When wallet to wallet transfer for general purpose account
-Then search with device in transaction screen and status for wallet to wallet transfer transaction
-
-Scenario: To Verify functionality of wallet transfer from mastercard interchange by emv card with program Corporate General Purpose Card
-Given user is logged in institution
-When User fills Statement Message Plan for prepaid product
-When User fills Marketing Message Plan for prepaid product
-When User fills Prepaid Statement Plan
-When User fills MCC Rules for prepaid product
-When User fills Dedupe Plan
-When User fills Transaction Plan for prepaid product
-When User fills Transaction Limit Plan for prepaid product
-When User fills Document Checklist Screen for prepaid product
-When User fills Device Joining and Membership Fee Plan for prepaid product
-When User fills Device Event Based Fee Plan for prepaid product
-When User fills Device Plan for "prepaid" "emv" card with no pin
-When user fills Merchant Category Group
-When create wallet Plan for "prepaid" product and program "Corporate General Purpose Card [8]" with usage "Open Loop"
-When create wallet Plan for "prepaid" product and program "Corporate General Purpose Card [8]" with usage "Closed Loop"
-When fills Program section for prepaid product and program Corporate General Purpose Card [8]
-When User fills Business Mandatory Fields Screen for prepaid product with Corporate
-When User fills Device Range section for prepaid product
-When add menus to access card holder portal
-When user creates new device of prepaid type for new client of Corporate customer
-Then device has "normal" status
-Then user gets attached wallet details for device
-Then user performs adjustment transaction
-When wallet to wallet transfer for general purpose account
-Then search with device in transaction screen and status for wallet to wallet transfer transaction
-
-Scenario: To Verify functionality of wallet transfer from mastercard interchange by msr card with Retail General Purpose Card
-Given user is logged in institution
-When User fills Statement Message Plan for prepaid product
-When User fills Marketing Message Plan for prepaid product
-When User fills Prepaid Statement Plan
-When User fills MCC Rules for prepaid product
-When User fills Dedupe Plan
-When User fills Transaction Plan for prepaid product
-When User fills Transaction Limit Plan for prepaid product
-When User fills Document Checklist Screen for prepaid product
-When User fills Device Joining and Membership Fee Plan for prepaid product
-When User fills Device Event Based Fee Plan for prepaid product
-When User fills Device Plan for "prepaid" "magnetic stripe" card with no pin
-When user fills Merchant Category Group
-When create wallet Plan for "prepaid" product and program "Retail General Purpose Card [4]" with usage "Open Loop"
-When create wallet Plan for "prepaid" product and program "Retail General Purpose Card [4]" with usage "Closed Loop"
-When fills Program section for prepaid product and program Retail General Purpose Card [4]
-When User fills Business Mandatory Fields Screen for prepaid product with Individual
-When User fills Device Range section for prepaid product
-When add menus to access card holder portal
-When user creates new device of prepaid type for new client of Individual customer
-Then device has "normal" status
-Then user gets attached wallet details for device
-Then user performs adjustment transaction
-When wallet to wallet transfer for general purpose account
-Then search with device in transaction screen and status for wallet to wallet transfer transaction
-
-Scenario: To Verify functionality of wallet transfer from mastercard interchange by emv card with Retail General Purpose Card
-Given user is logged in institution
-When User fills Statement Message Plan for prepaid product
-When User fills Marketing Message Plan for prepaid product
-When User fills Prepaid Statement Plan
-When User fills MCC Rules for prepaid product
-When User fills Dedupe Plan
-When User fills Transaction Plan for prepaid product
-When User fills Transaction Limit Plan for prepaid product
-When User fills Document Checklist Screen for prepaid product
-When User fills Device Joining and Membership Fee Plan for prepaid product
-When User fills Device Event Based Fee Plan for prepaid product
-When User fills Device Plan for "prepaid" "emv" card with no pin
-When user fills Merchant Category Group
-When create wallet Plan for "prepaid" product and program "Retail General Purpose Card [4]" with usage "Open Loop"
-When create wallet Plan for "prepaid" product and program "Retail General Purpose Card [4]" with usage "Closed Loop"
-When fills Program section for prepaid product and program Retail General Purpose Card [4]
-When User fills Business Mandatory Fields Screen for prepaid product with Individual
-When User fills Device Range section for prepaid product
-When add menus to access card holder portal
-When user creates new device of prepaid type for new client of Individual customer
-Then device has "normal" status
-Then user gets attached wallet details for device
-Then user performs adjustment transaction
-When wallet to wallet transfer for general purpose account
-Then search with device in transaction screen and status for wallet to wallet transfer transaction
+!-- Scenario: To Verify functionality of wallet transfer from mastercard interchange by msr card with program Corporate Travel Card - Multi Currency
+!-- Given user is logged in institution
+!-- When User fills Statement Message Plan for prepaid product
+!-- And User fills Marketing Message Plan for prepaid product
+!-- And User fills Prepaid Statement Plan
+!-- And User fills MCC Rules for prepaid product
+!-- And User fills Dedupe Plan
+!-- And User fills Transaction Plan for prepaid product
+!-- And User fills Transaction Limit Plan for prepaid product
+!-- And User fills Document Checklist Screen for prepaid product
+!-- And User fills Device Joining and Membership Fee Plan for prepaid product
+!-- And User fills Device Event Based Fee Plan for prepaid product
+!-- And User fills Device Plan for "prepaid" "magnetic stripe" card with no pin
+!-- And fills Wallet Plan for prepaid product and program Corporate Travel Card - Multi Currency [6]
+!-- And User fills Program section for prepaid product and program Corporate Travel Card - Multi Currency [6]
+!-- And User fills Business Mandatory Fields Screen for prepaid product with Corporate [1]
+!-- And User fills Device Range section for prepaid product
+!-- And add menus to access card holder portal
+!-- And user creates new device of prepaid type for new client of Corporate customer
+!-- And device has "normal" status
+!-- And user performs adjustment transaction
+!-- And user assigns service code to program
+!-- And currency setup for device
+!-- And wallet to wallet transfer selected account
+!-- Then search with device in transaction screen and status for wallet to wallet transfer transaction
+!-- And user sign out from customer portal
+!-- 
+!-- Scenario: To Verify functionality of wallet transfer from mastercard interchange by emv card with program Retail Travel Card - Multi Currency
+!-- Given user is logged in institution
+!-- When User fills Statement Message Plan for prepaid product
+!-- And User fills Marketing Message Plan for prepaid product
+!-- And User fills Prepaid Statement Plan
+!-- And User fills MCC Rules for prepaid product
+!-- And User fills Dedupe Plan
+!-- And User fills Transaction Plan for prepaid product
+!-- And User fills Transaction Limit Plan for prepaid product
+!-- And User fills Document Checklist Screen for prepaid product
+!-- And User fills Device Joining and Membership Fee Plan for prepaid product
+!-- And User fills Device Event Based Fee Plan for prepaid product
+!-- And User fills Device Plan for "prepaid" "emv" card with no pin
+!-- And fills Wallet Plan for prepaid product and program Retail Travel Card - Multi Currency [2]
+!-- And User fills Program section for prepaid product and program Retail Travel Card - Multi Currency [2]
+!-- And User fills Business Mandatory Fields Screen for prepaid product with All [0]
+!-- And User fills Device Range section for prepaid product
+!-- And add menus to access card holder portal
+!-- And user creates new device of prepaid type for new client of Individual customer
+!-- And device has "normal" status
+!-- And user performs adjustment transaction
+!-- And user assigns service code to program
+!-- And currency setup for device
+!-- And wallet to wallet transfer selected account
+!-- Then search with device in transaction screen and status for wallet to wallet transfer transaction
+!-- And user sign out from customer portal
+!-- 
+!-- Scenario: To Verify functionality of wallet transfer from mastercard interchange by msr card with program Retail Travel Card - Multi Currency
+!-- Given user is logged in institution
+!-- When User fills Statement Message Plan for prepaid product
+!-- And User fills Marketing Message Plan for prepaid product
+!-- And User fills Prepaid Statement Plan
+!-- And User fills MCC Rules for prepaid product
+!-- And User fills Dedupe Plan
+!-- And User fills Transaction Plan for prepaid product
+!-- And User fills Transaction Limit Plan for prepaid product
+!-- And User fills Document Checklist Screen for prepaid product
+!-- And User fills Device Joining and Membership Fee Plan for prepaid product
+!-- And User fills Device Event Based Fee Plan for prepaid product
+!-- And User fills Device Plan for "prepaid" "magnetic stripe" card with no pin
+!-- And fills Wallet Plan for prepaid product and program Retail Travel Card - Multi Currency [2]
+!-- And User fills Program section for prepaid product and program Retail Travel Card - Multi Currency [2]
+!-- And User fills Business Mandatory Fields Screen for prepaid product with All [0]
+!-- And User fills Device Range section for prepaid product
+!-- And add menus to access card holder portal
+!-- And user creates new device of prepaid type for new client of Individual customer
+!-- And device has "normal" status
+!-- And user performs adjustment transaction
+!-- And user assigns service code to program
+!-- And currency setup for device
+!-- And wallet to wallet transfer selected account
+!-- Then search with device in transaction screen and status for wallet to wallet transfer transaction
+!-- And user sign out from customer portal
+!-- 
+!-- Scenario: To Verify functionality of wallet transfer from mastercard interchange by msr card with program Corporate General Purpose Card
+!-- Given user is logged in institution
+!-- When User fills Statement Message Plan for prepaid product
+!-- And User fills Marketing Message Plan for prepaid product
+!-- And User fills Prepaid Statement Plan
+!-- And User fills MCC Rules for prepaid product
+!-- And User fills Dedupe Plan
+!-- And User fills Transaction Plan for prepaid product
+!-- And User fills Transaction Limit Plan for prepaid product
+!-- And User fills Document Checklist Screen for prepaid product
+!-- And User fills Device Joining and Membership Fee Plan for prepaid product
+!-- And User fills Device Event Based Fee Plan for prepaid product
+!-- And User fills Device Plan for "prepaid" "magnetic stripe" card with no pin
+!-- And user fills Merchant Category Group
+!-- And create wallet Plan for "prepaid" product and program "Corporate General Purpose Card [8]" with usage "Open Loop"
+!-- And create wallet Plan for "prepaid" product and program "Corporate General Purpose Card [8]" with usage "Closed Loop"
+!-- And fills Program section for prepaid product and program Corporate General Purpose Card [8]
+!-- And User fills Business Mandatory Fields Screen for prepaid product with Corporate [1]
+!-- And User fills Device Range section for prepaid product
+!-- And add menus to access card holder portal
+!-- And user creates new device of prepaid type for new client of Corporate customer
+!-- And device has "normal" status
+!-- And user get attached wallet details for device
+!-- And user assigns service code to program
+!-- And user performs adjustment transaction
+!-- And wallet to wallet transfer for general purpose account
+!-- Then search with device in transaction screen and status for wallet to wallet transfer transaction
+!-- And user sign out from customer portal
+!-- 
+!-- Scenario: To Verify functionality of wallet transfer from mastercard interchange by emv card with program Corporate General Purpose Card
+!-- Given user is logged in institution
+!-- When User fills Statement Message Plan for prepaid product
+!-- And User fills Marketing Message Plan for prepaid product
+!-- And User fills Prepaid Statement Plan
+!-- And User fills MCC Rules for prepaid product
+!-- And User fills Dedupe Plan
+!-- And User fills Transaction Plan for prepaid product
+!-- And User fills Transaction Limit Plan for prepaid product
+!-- And User fills Document Checklist Screen for prepaid product
+!-- And User fills Device Joining and Membership Fee Plan for prepaid product
+!-- And User fills Device Event Based Fee Plan for prepaid product
+!-- And User fills Device Plan for "prepaid" "emv" card with no pin
+!-- And user fills Merchant Category Group
+!-- And create wallet Plan for "prepaid" product and program "Corporate General Purpose Card [8]" with usage "Open Loop"
+!-- And create wallet Plan for "prepaid" product and program "Corporate General Purpose Card [8]" with usage "Closed Loop"
+!-- And fills Program section for prepaid product and program Corporate General Purpose Card [8]
+!-- And User fills Business Mandatory Fields Screen for prepaid product with Corporate [1]
+!-- And User fills Device Range section for prepaid product
+!-- And add menus to access card holder portal
+!-- And user creates new device of prepaid type for new client of Corporate customer
+!-- And device has "normal" status
+!-- And user get attached wallet details for device
+!-- And user assigns service code to program
+!-- And user performs adjustment transaction
+!-- And wallet to wallet transfer for general purpose account
+!-- Then search with device in transaction screen and status for wallet to wallet transfer transaction
+!-- And user sign out from customer portal
+!-- 
+!-- Scenario: To Verify functionality of wallet transfer from mastercard interchange by msr card with Retail General Purpose Card
+!-- Given user is logged in institution
+!-- When User fills Statement Message Plan for prepaid product
+!-- And User fills Marketing Message Plan for prepaid product
+!-- And User fills Prepaid Statement Plan
+!-- And User fills MCC Rules for prepaid product
+!-- And User fills Dedupe Plan
+!-- And User fills Transaction Plan for prepaid product
+!-- And User fills Transaction Limit Plan for prepaid product
+!-- And User fills Document Checklist Screen for prepaid product
+!-- And User fills Device Joining and Membership Fee Plan for prepaid product
+!-- And User fills Device Event Based Fee Plan for prepaid product
+!-- And User fills Device Plan for "prepaid" "magnetic stripe" card with no pin
+!-- And user fills Merchant Category Group
+!-- And create wallet Plan for "prepaid" product and program "Retail General Purpose Card [4]" with usage "Open Loop"
+!-- And create wallet Plan for "prepaid" product and program "Retail General Purpose Card [4]" with usage "Closed Loop"
+!-- And fills Program section for prepaid product and program Retail General Purpose Card [4]
+!-- And User fills Business Mandatory Fields Screen for prepaid product with All [0]
+!-- And User fills Device Range section for prepaid product
+!-- And add menus to access card holder portal
+!-- And user creates new device of prepaid type for new client of Individual customer
+!-- And device has "normal" status
+!-- And user get attached wallet details for device
+!-- And user assigns service code to program
+!-- And user performs adjustment transaction
+!-- And wallet to wallet transfer for general purpose account
+!-- Then search with device in transaction screen and status for wallet to wallet transfer transaction
+!-- And user sign out from customer portal
+!-- 
+!-- Scenario: To Verify functionality of wallet transfer from mastercard interchange by emv card with Retail General Purpose Card
+!-- Given user is logged in institution
+!-- When User fills Statement Message Plan for prepaid product
+!-- And User fills Marketing Message Plan for prepaid product
+!-- And User fills Prepaid Statement Plan
+!-- And User fills MCC Rules for prepaid product
+!-- And User fills Dedupe Plan
+!-- And User fills Transaction Plan for prepaid product
+!-- And User fills Transaction Limit Plan for prepaid product
+!-- And User fills Document Checklist Screen for prepaid product
+!-- And User fills Device Joining and Membership Fee Plan for prepaid product
+!-- And User fills Device Event Based Fee Plan for prepaid product
+!-- And User fills Device Plan for "prepaid" "emv" card with no pin
+!-- And user fills Merchant Category Group
+!-- And create wallet Plan for "prepaid" product and program "Retail General Purpose Card [4]" with usage "Open Loop"
+!-- And create wallet Plan for "prepaid" product and program "Retail General Purpose Card [4]" with usage "Closed Loop"
+!-- And fills Program section for prepaid product and program Retail General Purpose Card [4]
+!-- And User fills Business Mandatory Fields Screen for prepaid product with All [0]
+!-- And User fills Device Range section for prepaid product
+!-- And add menus to access card holder portal
+!-- And user creates new device of prepaid type for new client of Individual customer
+!-- And device has "normal" status
+!-- And user get attached wallet details for device
+!-- And user assigns service code to program
+!-- And user performs adjustment transaction
+!-- And wallet to wallet transfer for general purpose account
+!-- Then search with device in transaction screen and status for wallet to wallet transfer transaction
+!-- And user sign out from customer portal

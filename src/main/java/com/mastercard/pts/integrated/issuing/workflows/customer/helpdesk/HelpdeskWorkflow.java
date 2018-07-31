@@ -88,7 +88,7 @@ public class HelpdeskWorkflow {
 		helpDeskPage.resetPinRetryCounter(helpdeskGeneral);
 	}
 
-	public void setupDeviceCurrency(HelpdeskGeneral helpdeskGeneral) {
+	public void setupDeviceCurrency(HelpdeskGeneral helpdeskGeneral){		
 		helpDeskPage.setupDeviceCurrency(helpdeskGeneral);
 	}
 	
