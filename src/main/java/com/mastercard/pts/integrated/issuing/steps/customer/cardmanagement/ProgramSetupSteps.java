@@ -1426,7 +1426,7 @@ public class ProgramSetupSteps {
 	@When("User fills Device Plan for $productType $deviceType card with transaction fee waived Off")
 	public void whenUserFillsDevicePlaWithTransactionFeeWaivedOff(String productType, String deviceType) {
 		settingDevicePlanTestData(productType, deviceType); // call to re-usable method
-		devicePlan.setTransactionFeeWaiverPlan(provider.getString(TRANSACTION_FEE_WAIVER_PLAN));
+		//devicePlan.setTransactionFeeWaiverPlan(provider.getString(TRANSACTION_FEE_WAIVER_PLAN));
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
