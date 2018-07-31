@@ -1,6 +1,6 @@
 {
 	"endPointMode": "Host [H]",
-	"interfaceName": "CBS2 [CBS2]",
+	"interfaceName": "CBS1 [CBS1]",
 	"routingType": "Device Range Based [D]",
 	"status": "Active [1]",
 	"channelRoutingPlan": "EPAM TEST PLAN [TESTPL_01]"

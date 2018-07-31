@@ -131,7 +131,8 @@ public class DevicePlan implements HasCodeAndDescription {
 	private static final String DP_TOTAL_TRANSACTION_LIMIT ="DP_TOTAL_TRANSACTION_LIMIT";
 	private static final String DP_VELOCITY ="DP_VELOCITY";
 	private static final String DP_VALIDITYDATE ="DP_VALIDITYDATE";
-	private static final String DP_ALLOW_OVERRIDING_LIMITS = "DP_ALLOW_OVERRIDING_LIMITS";	
+	private static final String DP_ALLOW_OVERRIDING_LIMITS = "DP_ALLOW_OVERRIDING_LIMITS";
+	private static final String TRANSACTION_FEE_WAIVER_PLAN="TRANSACTION_FEE_WAIVER_PLAN";
 	private static final String DP_EMV_PLAN_APPLICATION_BLOCK_PRIORITY="DP_EMV_PLAN_APPLICATION_BLOCK_PRIORITY";	 		 
 	private static final String DP_EMV_PLAN_APPLICATION_UNBLOCK_PRIORITY="DP_EMV_PLAN_APPLICATION_UNBLOCK_PRIORITY";	 		 
 	private static final String DP_EMV_PLAN_PUT_DATA_PRIORITY="DP_EMV_PLAN_PUT_DATA_PRIORITY";	 		 
@@ -527,6 +528,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setEmvPlanUcota(provider.getString(DP_EMV_PLAN_UCOTA));
 		plan.setAllowInternationalTransaction(provider.getString(DP_ALLOW_INTERNATIONAL_TRANSACTIONS));		
 		plan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
+		plan.setTransactionFeeWaiverPlan(provider.getString(TRANSACTION_FEE_WAIVER_PLAN));
 		return plan;
 	}
 	
@@ -1371,6 +1373,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	}
 
 	public String DevicePlan;
+	private String transactionFeeWaiverPlan;
 
 	public String getDevicePlan() {
 		return DevicePlan;
@@ -1411,6 +1414,13 @@ public class DevicePlan implements HasCodeAndDescription {
 		setVelocity(MapUtils.fnGetInputDataFromMap("Velocity"));
 		setValidity(MapUtils.fnGetInputDataFromMap("Validity"));
 
+	}
+	public String getTransactionFeeWaiverPlan() {
+		return transactionFeeWaiverPlan;
+	}
+	
+	public void setTransactionFeeWaiverPlan(String transactionFeeWaiverPlan) {
+		this.transactionFeeWaiverPlan = transactionFeeWaiverPlan;
 	}
 
 }
