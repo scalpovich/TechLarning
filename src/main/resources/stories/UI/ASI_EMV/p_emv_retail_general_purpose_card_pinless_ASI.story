@@ -8,6 +8,7 @@ I want to authorize transactions for prepaid emv retail general purpose card
 Meta:
 @StoryName p_emv_retail_general_ASI
 @ASI_EMV
+@nitin_summarised
 
 Scenario: Set up prepaid emv retail general purpose card
 Given user is logged in institution

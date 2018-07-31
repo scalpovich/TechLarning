@@ -8,6 +8,7 @@ I want to create an emv debit card for client and perform manual authorization f
 Meta:
 @StoryName debit_cdc_manual_auth
 @CRCardsWithAuthorization
+@nitin_summarised
 
 Scenario: Set up emv corporate debit card
 Meta:

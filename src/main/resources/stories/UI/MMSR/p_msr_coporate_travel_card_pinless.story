@@ -8,6 +8,8 @@ I want to authorize transactions for prepaid MSR retail general purpose card
 Meta:
 @StoryName p_msr_corp_travel_MMSR
 @MMSR
+@nitin_summarised
+
 Scenario: Set up prepaid msr corporate travel card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
