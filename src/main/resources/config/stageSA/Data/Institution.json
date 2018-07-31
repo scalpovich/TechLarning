@@ -1,7 +1,7 @@
 {  
    "name":"AUTOBNK",
    "code":"110088",
-   "codeCredit":"270635",
+   "codeCredit":"110088",
    "abbreviation":"AUTOBNK",
    "prepaidLinuxUploadPath" : "/mptshome/STAGE2/integrated/elt_bo/data/AUTOMATION_1/APPLICATION_UPD_PREPAID/input",
    "creditLinuxUploadPath" : "/mptshome/STAGE2/integrated/elt_bo/data/AUTOMATION_1/APPLICATION_UPD_CREDIT/input",
