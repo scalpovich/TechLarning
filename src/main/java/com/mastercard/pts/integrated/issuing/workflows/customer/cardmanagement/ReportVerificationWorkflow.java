@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.GenericReport;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
@@ -42,21 +43,24 @@ public class ReportVerificationWorkflow {
 	private String fileURL ;
 
 
-    public void verifyGenericReport(Device device,String reportName,String reportField) {
-		GenericReport report = GenericReport.getGenericReport();
+    public void verifyGenericReport(Device device,String reportName,String[] fieldName) {
+    	Map<String,String> field_data = null;
+    	GenericReport report = GenericReport.getGenericReport();
 		page = (ReportVerificationPage)getInstance(reportName);
 		report.setUsername(context.get(UserManagementSteps.USERNAME));
 		fileURL = PDFUtils.getuserDownloadPath()+"\\"+reportName+" Report.pdf";
 		report.setUsername("NitinK");
-		report.setFieldToValidate(reportField, context.get(reportField));
+		for(String field : fieldName){
+			field_data = report.setFieldToValidate(field, context.get(field));
+		}
 		Map<Integer, String> reportContent = verifyGenericReport(reportName,report);
 		reportContent.forEach((k,v)-> {
-			//if(v.contains(context.get(ContextConstants.DEVICE))){
-			if(v.contains("5551230600000041")){
-//			boolean condition = v.contains(context.get(ConstantData.AUTHORIZATION_CODE)) && authFileData.contains(device.getDeviceNumber()) 
-//					&& authFileData.contains(context.get(ConstantData.TRANSACTION_AMOUNT)) && authFileData.contains(context.get(ConstantData.RRN_NUMBER));
-				boolean condition =  v.contains("Purchase/Auth Completion");
-			assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
+			if(v.contains(context.get(ContextConstants.DEVICE))){
+			field_data.forEach((field,FieldValue) ->{
+				boolean condition = v.contains(field_data.get(field));
+				assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
+			});
+				
 			}
 		});
 	}

@@ -10,7 +10,7 @@ Meta:
 Scenario: Set up prepaid emv retail card
 Given setting json values in excel for Prepaid
 When user is logged in institution
-And User fills Device Plan for "Prepaid" "emv" card without pin
+And User fills Device Plan for "Prepaid" "emv" card
 And User fills Wallet Plan for prepaid product
 And User fills Program section for prepaid product
 And User fills Business Mandatory Fields Screen for prepaid product
@@ -34,11 +34,25 @@ Then user sign out from customer portal
 
 Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 1st transaction
 Given connection to MAS is established
-When perform an INT_EMV_PURCHASE MAS transaction
+When perform an EMV_PURCHASE_HRM_PIN MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-Then verify the MCG daily velocity in Device Usage Screen for international transactions
 And user sign out from customer portal
 
+Scenario: validate the High Risk Country Report
+Given user is logged in institution
 Given validate the authCode in RAMP report
+
+Scenario: validate the High Risk MCC Report
+Given user is logged in institution
+Given validate the authCode in RAMP report
+
+Scenario: validate the High Risk MCG Report
+Given user is logged in institution
+Given validate the authCode in RAMP report
+
+Scenario: validate the High Risk Merchant Location Report
+Given user is logged in institution
+Given validate the authCode in RAMP report
+

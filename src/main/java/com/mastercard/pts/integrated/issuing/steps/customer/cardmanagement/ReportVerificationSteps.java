@@ -25,10 +25,9 @@ public class ReportVerificationSteps {
 
 	@Given("validate the $reportField in $reportName report")
 	@Then("validate the $reportField in $reportName report")
-	public void validateGenericReport(String reportField, String reportName) {
+	public void validateGenericReport(String reportFields, String reportName) {
 		Device device = context.get(ContextConstants.DEVICE);
-		reportVerificationWorkflow.verifyGenericReport(device, reportName,
-				reportField);
+		reportVerificationWorkflow.verifyGenericReport(device, reportName,reportFields.split(","));
 	}
 
 }
