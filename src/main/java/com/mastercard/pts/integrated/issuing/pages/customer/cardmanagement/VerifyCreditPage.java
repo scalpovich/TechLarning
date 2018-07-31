@@ -51,23 +51,24 @@ TestContext context;
 	private MCWebElement verifyBtn;
 
 	public void verifyapplication() {
-		Device device=context.get(CreditConstants.APPLICATION);
+		Device device = context.get(CreditConstants.APPLICATION);
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
 		WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDatePicker, LocalDate.now());
 		clickSearchButton();
 	}
 
-	public String editAndVerifyApplication()
-	{
+	public String editAndVerifyApplication(){
+		verifyapplication();
 		waitForPageToLoad(driver());
 		clickWhenClickable(editImg);
-		switchToIframe(VERIFY_FRAME);
-		clickWhenClickable(verifyBtn);
-		verifyOperationStatus();
 		SimulatorUtilities.wait(5000);
-		String applicationNumber=getCodeFromInfoMessage("Application Number");
-		return applicationNumber;
-	}
-
+		
+		runWithinPopup("Edit Application", () ->{					
+			clickWhenClickable(verifyBtn);
+		});		
+		
+		verifyOperationStatus();
+		return getCodeFromInfoMessage("Application Number");
+	}	
 }

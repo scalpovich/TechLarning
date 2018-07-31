@@ -72,8 +72,6 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='toDate']/../..")
 	private MCWebElement toDate;
 	
-	
-	
 	public void enterFirstName(SearchApplicationDetails search){
 		enterText(firstName, search.getFirstName());
 	}
@@ -90,34 +88,31 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		date.setDate(search.getToDate());
 	}
 	
-	public String searchApplicationNumber()
-	{
+	public String searchApplicationNumber(){
 		Device device=context.get(CreditConstants.APPLICATION);
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
 		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDate, LocalDate.now());
 		clickSearchButton();		
-		searchUntilBatchNumberIsDisplayed();		
+		searchUntilBatchNumberIsDisplayed();	
 		return batchNumberTxt.getText();
-		
 	}
-	@Override
+	
 	public void clickSearchButton(){
 		clickWhenClickable(SearchBtn);
 	}
 	
-	public void searchUntilBatchNumberIsDisplayed()
-	{
-		try
-		{	String path = String.format("//table[@class='dataview']/..//td[count(//th[.//*[text()='%S']]/preceding-sibling::th)+1]", "Device Batch Number");
-			if(!driver().findElement(By.xpath(path)).isDisplayed())
-			{	SimulatorUtilities.wait(8000);
+	public void searchUntilBatchNumberIsDisplayed(){
+		try{	
+			String path = String.format("//table[@class='dataview']/..//td[count(//th[.//*[text()='%S']]/preceding-sibling::th)+1]", "Device Batch Number");
+			
+			if(driver().findElement(By.xpath(path)).getText().equals("-")){				
+				SimulatorUtilities.wait(8000);
 				clickSearchButton();
 				waitForPageToLoad(driver());
 				searchUntilBatchNumberIsDisplayed();
-			}
-		}
-		catch(Exception e){
+			}						
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
@@ -127,8 +122,7 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		enterLastName(search);
 		selectFromDate(search);
 		selectToDate(search);
-		clickSearchButton();
-		
+		clickSearchButton();		
 	}
 	
 	public void verifyNewApplication(){

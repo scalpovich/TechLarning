@@ -35,7 +35,7 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 
 public class WebElementUtils {
 
-	private static final long TIMEOUT = 60;
+	private static final long TIMEOUT = 180;
 
 	private WebElementUtils() {
 	}

@@ -132,8 +132,10 @@ public class DevicePlan implements HasCodeAndDescription {
 	private static final String DP_VELOCITY ="DP_VELOCITY";
 	private static final String DP_VALIDITYDATE ="DP_VALIDITYDATE";
 	private static final String DP_ALLOW_OVERRIDING_LIMITS = "DP_ALLOW_OVERRIDING_LIMITS";	
+	private static final String TRANSACTION_FEE_WAIVER_PLAN="TRANSACTION_FEE_WAIVER_PLAN";
 	
 	
+	public String transactionFeeWaiverPlan;
 	public String association;
 	public String DeviceType;
 	public String ServiceCode;
@@ -273,7 +275,6 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setReplacementNoOfDays(provider.getString(REPLACEMENT_NO_OF_DAYS));
 		plan.setValidityOnReplacementMonths(provider.getString(VALIDITY_ON_REPLACEMENT_MONTHS));
 		plan.setReplacementDeviceTechnology(provider.getString(REPLACEMENT_DEVICE_TECHNOLOGY));
-
 		plan.setFillRenewalSection(provider.getString(FILL_RENEWAL_SECTION));
 		plan.setFillReplacementSection(provider.getString(FILL_REPLACEMENT_SECTION));
 		plan.setPinRetryLimit(provider.getString(PIN_RETRY_LIMIT));
@@ -401,6 +402,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setEmvPlanUcota(provider.getString(DP_EMV_PLAN_UCOTA));
 		plan.setAllowInternationalTransaction(provider.getString(DP_ALLOW_INTERNATIONAL_TRANSACTIONS));		
 		plan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
+		plan.setTransactionFeeWaiverPlan(provider.getString(TRANSACTION_FEE_WAIVER_PLAN));
 		return plan;
 	}
 	
@@ -410,6 +412,10 @@ public class DevicePlan implements HasCodeAndDescription {
 		devicePlan.setTotalTransactionLimit(provider.getString(DP_TOTAL_TRANSACTION_LIMIT));
 		devicePlan.setVelocity(provider.getString(DP_VELOCITY));
 		devicePlan.setValidity(provider.getString(DP_VALIDITYDATE));
+		devicePlan.setPriorityPassIndicator(provider.getString(DP_PRIORITY_PASS_INDICATOR));
+		devicePlan.setPriorityPassIdTemplate(provider.getString(DP_PRIORITY_PASS_ID_TEMPLATE));
+		devicePlan.setPriorityPassVendor(provider.getString(DP_PRIORITY_PASS_VENDOR));
+		devicePlan.setPriorityPassExpiry(provider.getString(DP_PRIORITY_PASS_EXPIRY));
 		return devicePlan;
 		
 	}
@@ -1264,6 +1270,15 @@ public class DevicePlan implements HasCodeAndDescription {
 	public void setVirtualCreditCardLimit(String virtualCreditCardLimit) {
 		this.virtualCreditCardLimit = virtualCreditCardLimit;
 	}
+	
+	public String getTransactionFeeWaiverPlan() {
+		return transactionFeeWaiverPlan;
+	}
+	
+	public void setTransactionFeeWaiverPlan(String transactionFeeWaiverPlan) {
+		this.transactionFeeWaiverPlan = transactionFeeWaiverPlan;
+	}
+
 
 	public void devicePlanDataprovider() {
 		setDescription(MapUtils.fnGetInputDataFromMap("DevicePlanDesc"));
@@ -1279,7 +1294,6 @@ public class DevicePlan implements HasCodeAndDescription {
 		setTotalTransactionLimit(MapUtils.fnGetInputDataFromMap("TotalTransactionLimit"));
 		setVelocity(MapUtils.fnGetInputDataFromMap("Velocity"));
 		setValidity(MapUtils.fnGetInputDataFromMap("Validity"));
-
 	}
 
 }

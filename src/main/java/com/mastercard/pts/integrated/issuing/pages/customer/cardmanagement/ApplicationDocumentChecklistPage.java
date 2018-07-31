@@ -77,9 +77,9 @@ public class ApplicationDocumentChecklistPage extends AbstractBasePage {
 		clickAddNewButton();		
 		//Add Document Checklist section
 		runWithinPopup("Add Document Checklist", () -> {
-			WebElementUtils.enterText(documentChecklistPlanCodeTxt, applicationDocumentChecklist.getDocumentChecklistPlanCode());
-			WebElementUtils.enterText(descriptionTxt, applicationDocumentChecklist.getDescription());
 			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, applicationDocumentChecklist.getProductType());
+			WebElementUtils.enterText(documentChecklistPlanCodeTxt, applicationDocumentChecklist.getDocumentChecklistPlanCode());
+			WebElementUtils.enterText(descriptionTxt, applicationDocumentChecklist.getDescription());			
 			clickAddDetailsButton();			
 
 			addDcoumentChecklistDetails();

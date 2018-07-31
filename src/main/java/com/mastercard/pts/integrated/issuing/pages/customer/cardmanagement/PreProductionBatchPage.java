@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
@@ -106,12 +105,10 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	}
 
 	public void processPreProductionBatchNewApplication(PreProductionBatch batch) {
-
 		waitForLoaderToDisappear();
 		selectDropDownByText(productTypeDDwn, batch.getProductType());
-		CustomUtils.ThreadDotSleep(8000);
-		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
-		enterText(batchNumberTxt, batchNumber);
+		CustomUtils.ThreadDotSleep(8000);		
+		enterText(batchNumberTxt, context.get(CreditConstants.NEW_APPLICATION_BATCH));
 		ClickButton(searchBtn);
 		waitAndSearchForRecordToAppear();
 		setQuantityRequested();
@@ -119,7 +116,6 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		ClickButton(processSelectedBtn);
 		verifyOperationStatus();
 		switchToDefaultFrame();
-
 	}
 	
 	public void setQuantityRequested(){		
