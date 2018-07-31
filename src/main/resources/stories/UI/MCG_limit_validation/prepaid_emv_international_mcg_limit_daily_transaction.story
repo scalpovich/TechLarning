@@ -8,24 +8,29 @@ Meta:
 @Author Nitin Kumar
 @StoryName mcg_prepaid_emv_general_purpose
 
-Scenario: Set up prepaid emv retail general purpose card with MCG Limit Plan
-Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card without pin
-When user creates new device of prepaid type for new client
+Scenario: Set up prepaid emv corporate travel card
+Given setting json values in excel for Prepaid
+When user is logged in institution
+And User fills Device Plan for "Prepaid" "emv" card without pin
+And User fills Wallet Plan for prepaid product
+And User fills Program section for prepaid product
+And User fills Business Mandatory Fields Screen for prepaid product
+And User fills Device Range section for prepaid product
+And user assigns service code to program
+Then user creates new device of prepaid type for new client
 
-Scenario: prepaid EMV retail general purpose card device production
+Scenario: prepaid emv corporate travel card device production
 Given user is logged in institution
-And a new device was created
-When processes pre-production batch for prepaid
-When processes device production batch for prepaid
-Then device has "normal" status
-When user has wallet number information for prepaid device
-When user performs adjustment transaction
-When user has current wallet balance amount information for prepaid device
-Then device has "normal" status
-Then user activates device through helpdesk
+When a new device was created
+And processes pre-production batch for prepaid
+And processes device production batch for prepaid
+And user has wallet number information for prepaid device
+And user performs adjustment transaction
+And user has current wallet balance amount information for prepaid device
+And device has "normal" status
+And user activates device through helpdesk
+And embossing file batch was generated in correct format
 Then user sign out from customer portal
-Then embossing file batch was generated in correct format
 
 Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 1st transaction
 Given connection to MAS is established
