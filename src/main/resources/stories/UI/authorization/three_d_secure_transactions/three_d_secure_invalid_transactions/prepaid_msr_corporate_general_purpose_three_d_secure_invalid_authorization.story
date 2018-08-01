@@ -27,8 +27,6 @@ Then embossing file batch was generated in correct format
 And user sign out from customer portal
 
 Scenario: Perform 3D_SECURE_INVALID_CAVV Authorization transaction on prepaid msr corporate general purpose card
-Meta:
-@TestId 
 Given connection to MAS is established
 When perform an 3D_SECURE_INVALID_CAVV MAS transaction
 Then MAS simulator is closed
