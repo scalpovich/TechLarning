@@ -59,7 +59,6 @@ When perform an EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
-And FINSim simulator is closed
 
 Scenario: Verify Last executed script status for Application block
 When user is logged in institution
