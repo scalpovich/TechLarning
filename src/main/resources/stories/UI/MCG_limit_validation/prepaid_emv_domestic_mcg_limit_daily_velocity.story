@@ -17,15 +17,15 @@ Scenario: prepaid EMV retail general purpose card device production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
-When processes device production batch for prepaid
+And processes device production batch for prepaid
 Then device has "normal" status
 When user has wallet number information for prepaid device
-When user performs adjustment transaction
-When user has current wallet balance amount information for prepaid device
+And user performs adjustment transaction
+And user has current wallet balance amount information for prepaid device
 Then device has "normal" status
-Then user activates device through helpdesk
-Then user sign out from customer portal
-Then embossing file batch was generated in correct format
+And user activates device through helpdesk
+And user sign out from customer portal
+And embossing file batch was generated in correct format
 
 
 Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 1st transaction
@@ -34,7 +34,7 @@ When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-Then verify the MCG daily velocity in Device Usage Screen for domestic transactions
+And verify the MCG daily velocity in Device Usage Screen for domestic transactions
 And user sign out from customer portal
 
 Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 2nd transaction
@@ -42,7 +42,7 @@ When perform an EMV_PURCHASE MAS transaction on the same card
 Then MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-Then verify the MCG daily velocity in Device Usage Screen for domestic transactions
+And verify the MCG daily velocity in Device Usage Screen for domestic transactions
 And user sign out from customer portal
 
 Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 3rd transaction

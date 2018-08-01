@@ -34,6 +34,7 @@ And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device
 And User search for new device on search screen for credit and validates the status as NORMAL
 And user sign out from customer portal
+And embossing file batch was generated in correct format
 
 Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 1st transaction
 Given connection to MAS is established

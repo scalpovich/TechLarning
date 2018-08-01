@@ -34,6 +34,7 @@ And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device
 And User search for new device on search screen for credit and validates the status as NORMAL
 And user sign out from customer portal
+And embossing file batch was generated in correct format
 
 Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 1st transaction
 Given connection to MAS is established
@@ -41,7 +42,7 @@ When perform an INT_EMV_PURCHASE MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-Then verify the MCG daily velocity in Device Usage Screen for international transactions
+And verify the MCG daily velocity in Device Usage Screen for international transactions
 And user sign out from customer portal
 
 Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 2nd transaction
@@ -49,7 +50,7 @@ When perform an INT_EMV_PURCHASE MAS transaction on the same card
 Then MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-Then verify the MCG daily velocity in Device Usage Screen for international transactions
+And verify the MCG daily velocity in Device Usage Screen for international transactions
 And user sign out from customer portal
 
 Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 3rd transaction
