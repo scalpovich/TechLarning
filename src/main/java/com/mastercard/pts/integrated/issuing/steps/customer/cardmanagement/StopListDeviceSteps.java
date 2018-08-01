@@ -9,6 +9,12 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.steps.AbstractBaseSteps;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.StopListDeviceWorkFlow;
 
+/**
+ * @author E076170
+ * 
+ *
+ */
+
 @Component
 public class StopListDeviceSteps extends AbstractBaseSteps {
     @Autowired
@@ -17,11 +23,10 @@ public class StopListDeviceSteps extends AbstractBaseSteps {
 	@Autowired
 	private KeyValueProvider keyProvider;
 
-	
 	@When("user stoplists a card from stoplist device screen")
 	public void userStoplistsCard() {
 		StopListDevice stopListDevice=StopListDevice.createWithProvider(keyProvider);
-		stopListDeviceWorkFlow.addStopLlistDevice(stopListDevice);
+		stopListDeviceWorkFlow.addStoplistDevice(stopListDevice);
 	}
 
 }

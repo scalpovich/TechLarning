@@ -44,6 +44,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Prog
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StatementMessageDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StatementMessagePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeeWaiverPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionLimitPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionLimitPlanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionPlan;
@@ -55,6 +56,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.MCGFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramSetupWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.TransactionFeeWaiverPlanFlows;
 
 @Component
 public class ProgramSetupSteps {
@@ -77,6 +79,9 @@ public class ProgramSetupSteps {
 	@Autowired
 	MCG mcg;
 
+	@Autowired
+	private TransactionFeeWaiverPlanFlows transactionFeeWaiverPlanFlows;
+	
 	private DeviceJoiningAndMemberShipFeePlan deviceJoiningAndMemberShipFeePlan;
 
 	private DeviceEventBasedFeePlan deviceEventBasedFeePlan;
@@ -118,6 +123,9 @@ public class ProgramSetupSteps {
 	private MCCRulePlan mccRulePlan;
 
 	private PrepaidStatementPlan prepaidStatementPlan;
+	
+	private TransactionFeeWaiverPlan transactionFeeWaiverPlan;
+	
 	private static final String TRANSACTION_FEE_WAIVER_PLAN = "TRANSACTION_FEE_WAIVER_PLAN";
 
 	private static final String CARD_PACKID_GENERATION_TEMPLATE_FOR_DEVICE2 = "CARD_PACKID_GENERATION_TEMPLATE_FOR_DEVICE2";
@@ -355,6 +363,7 @@ public class ProgramSetupSteps {
 	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin")
+	@When("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
 			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
 			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
@@ -471,6 +480,7 @@ public class ProgramSetupSteps {
 	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card")
+	@When("device range for program with device plan for \"prepaid\" \"$deviceType\" card")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
 			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
 			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
@@ -513,6 +523,14 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createMarketingMessagePlan(marketingMessagePlan);
 	}
 
+	@When("user edits MCC rules from $fromMCC to $toMCC uncheck approve $origin transactions")
+	public void whenUserEditsMCCRules(String fromMCC,String toMCC,String origin) {
+		mccRulePlan.setFromMccCode(fromMCC);
+		mccRulePlan.setToMccCode(toMCC);
+		mccRulePlan.setOrigin(origin);
+		programSetupWorkflow.editMCCRulePlan(mccRulePlan);
+	}
+	
 	@When("User fills MCC Rules for $type product")
 	public void whenUserFillsMCCRules(String type) {
 		mccRulePlan = MCCRulePlan.createGenericTestData();
@@ -624,6 +642,12 @@ public class ProgramSetupSteps {
 		devicePlan.setDeviceType(deviceType);
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+	
+	@When("user edits deviceplan and enables stoplist flag")
+	public void editDevicePlanAndEnableStopListFlag() {
+		devicePlan=context.get(ContextConstants.DEVICE_PLAN);
+		programSetupWorkflow.enableStopListFlag(devicePlan);
 	}
 	
 	@When("for $deviceType User fills Supplementary Device Plan for $type product for $interchange")
@@ -754,42 +778,6 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 
-	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card for issuer scripting")
-	public void whenUserFillsDevicePlanForCrddForIssuerScripting(String productType, String deviceType) {
-		// virtual cards are pinless so even if this statement is called by
-		// mistake, we are setting Pin to false
-		if (deviceType.toLowerCase().contains("virtual")) {
-			setPinRequiredToFalse();
-		}
-		devicePlan = DevicePlan.createWithProviderForIssuerScripting(provider, productType);
-		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
-		devicePlan.setProductType(ProductType.fromShortName(productType));
-		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
-		if (Objects.nonNull(deviceJoiningAndMemberShipFeePlan)) {
-			devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
-			devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
-			devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
-		} else {
-			devicePlan.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());
-			devicePlan.setBaseDeviceEventBasedPlan(data.getDeviceEventBasedFeePlan());
-			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
-			setPinRequiredToDefaultState();
-		}
-		if (Objects.nonNull(transactionPlan)) {
-			devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
-			devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
-		} else {
-			devicePlan.setAfterKYC(data.getTransactionPlan());
-			devicePlan.setBeforeKYC(data.getTransactionPlan());
-		}
-
-		// setting a flag through setter to figure out if the card is pinless card or not. This is used in TransactionSteps to set ExpiryDate in case of PinLess Card
-		if ("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
-			devicePlan.setIsPinLess("YES");
-		programSetupWorkflow.createDevicePlan(devicePlan);
-		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
-	}
-	
 	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card")
 	public void whenUserFillsDevicePlanForCrdd(String productType, String deviceType) {
 		settingDevicePlanTestData(productType, deviceType); // call to re-usable method
@@ -991,7 +979,7 @@ public class ProgramSetupSteps {
 		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
 		walletPlan.setProductType(ProductType.fromShortName(type));
 		walletPlan.setProgramType(programtype);
-
+		context.put(ContextConstants.WALLET, walletPlan);
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			if (Objects.nonNull(context.get(CreditConstants.CREDIT_PLAN))) {
 			walletPlan.setCreditPlan(context.get(CreditConstants.CREDIT_PLAN));
@@ -1444,5 +1432,41 @@ public class ProgramSetupSteps {
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
+	}
+	
+	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card for issuer scripting")
+	public void whenUserFillsDevicePlanForCrddForIssuerScripting(String productType, String deviceType) {
+		// virtual cards are pinless so even if this statement is called by
+		// mistake, we are setting Pin to false
+		if (deviceType.toLowerCase().contains("virtual")) {
+			setPinRequiredToFalse();
+		}
+		devicePlan = DevicePlan.createWithProviderForIssuerScripting(provider, productType);
+		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
+		devicePlan.setProductType(ProductType.fromShortName(productType));
+		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
+		if (Objects.nonNull(deviceJoiningAndMemberShipFeePlan)) {
+			devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+			devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+			devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		} else {
+			devicePlan.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());
+			devicePlan.setBaseDeviceEventBasedPlan(data.getDeviceEventBasedFeePlan());
+			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
+			setPinRequiredToDefaultState();
+		}
+		if (Objects.nonNull(transactionPlan)) {
+			devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+			devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		} else {
+			devicePlan.setAfterKYC(data.getTransactionPlan());
+			devicePlan.setBeforeKYC(data.getTransactionPlan());
+		}
+
+		// setting a flag through setter to figure out if the card is pinless card or not. This is used in TransactionSteps to set ExpiryDate in case of PinLess Card
+		if ("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
+			devicePlan.setIsPinLess("YES");
+		programSetupWorkflow.createDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 }
