@@ -93,10 +93,9 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 		return getCodeFromInfoMessage("Application Number");
 	}
 	
-	public void enterFormNumber()
-	{
-		String formNumber=context.get(CreditConstants.FORM_NUMBER);
-		WebElementUtils.enterText(formNumberTxt,formNumber);	
+	public void enterFormNumber() {
+		String formNumber = context.get(CreditConstants.FORM_NUMBER);
+		WebElementUtils.enterText(formNumberTxt, formNumber);
 	}
 	
 	public void approveApplicationFileUpload() {
