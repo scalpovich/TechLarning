@@ -16,6 +16,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Bulk
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -172,10 +173,10 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public void verifyDeviceProductionRequestSuccess() {
 		if (!verifyErrorsOnDeviceProductionPage()) {
 			logger.info("Device-Production batch succesful");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in batch");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 
@@ -194,7 +195,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public void processDeviceProductionBatchNewApplication(DeviceProductionBatch batch) {
 		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
 		WebElementUtils.enterText(batchNumberTxt,batchNumber);
-		waitAndSearchForRecordToExists();
+		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 	}
 
@@ -211,6 +212,8 @@ public class DeviceProductionPage extends AbstractBasePage {
 		waitAndSearchForRecordToExistForSupplementary();
 		verifyOperationStatus();
 	}
+	
+	
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

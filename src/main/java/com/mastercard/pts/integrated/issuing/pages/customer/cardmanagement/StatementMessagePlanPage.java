@@ -147,24 +147,19 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 	private void addDetails(StatementMessageDetails details, String productType) {
 		clickAddNewButton();
 
-		runWithinPopup("Add Statement Message Details", () -> {
-			WebElementUtils.enterText(messageLabelTxt, details.getMessageLabel());
-			WebElementUtils.enterText(messageTxt, details.getMessage());
-			if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
-				logger.info("branch :{}",details.getBranch());
-				selectByVisibleText(branchDDwn, details.getBranch());
-			} else {
-				WebElementUtils.selectDropDownByVisibleText(branchDDwn,
-						details.getBranch());
-			}
+		runWithinPopup("Add Statement Message Details", () -> {			
+			logger.info("Branch Name :{}",details.getBranch());
+			selectByVisibleText(branchDDwn, details.getBranch());
 			WebElementUtils.pickDate(effectiveDateDPkr, details.getEffectiveDate());
 			WebElementUtils.pickDate(endDateDPkr, details.getEndDate());
-
 			if (ProductType.CREDIT.equals(productType)) {
 				WebElementUtils.selectDropDownByVisibleText(unpaidStatusDDwn, details.getUnpaidStatus());
 				WebElementUtils.selectDropDownByVisibleText(adminStatusDDwn, details.getAdminStatus());
 				WebElementUtils.selectDropDownByVisibleText(balanceStatusDDwn, details.getBalanceStatus());
 			}
+			WebElementUtils.enterText(messageLabelTxt, details.getMessageLabel());
+			WebElementUtils.enterText(messageTxt, details.getMessage());
+
 			clickSaveButton();
 
 			verifyNoErrors();
@@ -213,11 +208,11 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 	public void verifyStatementPlanSuccess() {
 		if (!verifyErrorsOnStatementPlanPage()) {
 			logger.info("Vendor Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Vendor Addition");
 			clickWhenClickable(CancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 
@@ -226,7 +221,7 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 	}
 
 	public void switchToAddStatementMessageDetailsFrame() {
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe(Constants.ADD_STATEMENT_MESSAGE_DETAILS_FRAME);
 	}
 
@@ -251,14 +246,14 @@ public class StatementMessagePlanPage extends AbstractBasePage {
 	}
 
 	public void addStatementMsgDetails(StatementMessagePlan stmnt) {
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToIframe(Constants.ADD_STATEMENT_MESSAGE_DETAILS_FRAME);
 		selectEffectiveDate(stmnt);
 		selectEndDate(stmnt);
 		enterStatementMessageSubDetailsLabel();
 		enterStatementMessageSubDetailsMessage();
 		clickSaveButton();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 		switchToAddStatementMessagePlanFrame();
 		Scrolldown(save);
 		waitForElementVisible(save);

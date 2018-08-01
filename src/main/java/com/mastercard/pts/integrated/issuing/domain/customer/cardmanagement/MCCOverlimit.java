@@ -50,7 +50,6 @@ public class MCCOverlimit {
 		this.overlimitPercentage = overlimitPercentage;
 	}
 
-	// TODO
 	public static MCCOverlimit createDataWithProvider(KeyValueProvider provider) {
 		MCCOverlimit mccOverlimit = new MCCOverlimit();
 		mccOverlimit.setCurrency(provider.getString("Currency"));

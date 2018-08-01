@@ -244,11 +244,11 @@ public class VendorPage extends AbstractBasePage {
 	public void verifyNewVendorSuccess() {
 		if (!verifyErrorsOnVendorPage()) {
 			logger.info("Vendor Added Successfully");
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		} else {
 			logger.info("Error in Vendor Addition");
 			clickWhenClickable(CancelBtn);
-			SwitchToDefaultFrame();
+			switchToDefaultFrame();
 		}
 	}
 

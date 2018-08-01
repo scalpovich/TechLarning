@@ -201,7 +201,7 @@ public class BatchProcessingPage extends AbstractBasePage {
 			if (processBatchStatusTxt.getText().equalsIgnoreCase(BatchType.PENDING_STATUS)
 					|| processBatchStatusTxt.getText().equalsIgnoreCase(BatchType.INPROCESS_STATUS)) {
 				clickCloseBtn();
-				SwitchToDefaultFrame();
+				switchToDefaultFrame();
 
 				clickStatusLink();
 
@@ -310,7 +310,7 @@ public class BatchProcessingPage extends AbstractBasePage {
 		CustomUtils.ThreadDotSleep(2000);
 		logger.info("Status  -", statuslabelTxt);
 		closeBtn.click();
-		SwitchToDefaultFrame();
+		switchToDefaultFrame();
 
 	}
 
