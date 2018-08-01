@@ -246,7 +246,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 		List<WebElement> allDeviceNumbers = new ArrayList<>();
 		List<String> allDeviceNumberfText = new ArrayList<>();
 		String deviceNumberToFetch=String.format("//table[@class='dataview']//tr[@class='even' or 'odd']/td['%s']/span",deviceNumberHeaderIndexFetch());
-		allDeviceNumbers = driver().findElements(By.xpath(deviceNumberToFetch));
+		allDeviceNumbers = Elements(deviceNumberToFetch);
 
 		for (int i = 0; i < allDeviceNumbers.size(); i++) {
 			allDeviceNumberfText.add(allDeviceNumbers.get(i).getText());

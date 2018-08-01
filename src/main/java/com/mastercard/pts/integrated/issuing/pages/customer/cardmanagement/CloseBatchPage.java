@@ -147,7 +147,7 @@ public class CloseBatchPage extends AbstractBasePage {
 		clickWhenClickable(driver().findElement(By.xpath(checkBox)));
 		clickWhenClickable(processSelected);
 		try {
-			if (driver().findElement(By.xpath("//h3[text()= 'Confirmation Message']/ancestor::div//iframe")).isDisplayed()) {
+			if (asWebElement(confirmMsgBtn).isDisplayed()) {
 				switchToIframe("Confirmation Message");
 				clickWhenClickable(yesBtn);
 				verifyOperationStatus();
