@@ -225,13 +225,4 @@ public class ApplicationUploadSteps {
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPinProductionBatchAllForFileUpload(batch);
 	}
-	
-	@Given("delete dat file from Workspace")
-	@When("delete dat file from Workspace")
-	@Then("delete dat file from Workspace")
-	public void deleteDATfile()
-	{
-		FileCreation file=new FileCreation();
-		file.deleteFile();
-	}
 }

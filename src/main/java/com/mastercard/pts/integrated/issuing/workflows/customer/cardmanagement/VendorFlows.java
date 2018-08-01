@@ -55,17 +55,17 @@ public class VendorFlows extends MenuFlows {
 	}
 	
 	public String createVendorWithEmbossingTemplateFileUpload(Vendor vendor) {
-		VendorPage vendorpage = navigator.navigateToPage(VendorPage.class);
-		vendorpage.clickaddVenor();
-		newVendor = vendorpage.addVendorDetails(vendor);
-		vendorpage.vendorWithEmbossingTemplateFileName(vendor);
-		vendorpage.selectDeviceProductionCheckBox();
-		vendorpage.selectEmbossingFileTemplate();
-		vendorpage.addressDetails(vendor);
-		vendorpage.contactDetails(vendor);
-		vendorpage.Save();
+		VendorPage vendorPage = navigator.navigateToPage(VendorPage.class);
+		vendorPage.clickaddVenor();
+		newVendor = vendorPage.addVendorDetails(vendor);
+		vendorPage.vendorWithEmbossingTemplateFileName(vendor);
+		vendorPage.selectDeviceProductionCheckBox();
+		vendorPage.selectEmbossingFileTemplate();
+		vendorPage.addressDetails(vendor);
+		vendorPage.contactDetails(vendor);
+		vendorPage.Save();
 		waitForWicket(driver());
-		vendorpage.verifyNewVendorSuccess();
+		vendorPage.verifyNewVendorSuccess();
 		return newVendor;
 	}
 

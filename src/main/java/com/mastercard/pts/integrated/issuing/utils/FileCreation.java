@@ -668,32 +668,13 @@ public class FileCreation {
 	
 	public int countLines(String fileName) throws IOException {
 		LineNumberReader reader = new LineNumberReader(new FileReader(System.getProperty("user.dir") + "\\" + fileName));
-		int cnt = 0;
+		int countNumberOfLinesInDatFile = 0;
 		String lineRead = "";
 		while ((lineRead = reader.readLine()) != null) {
 		}
 
-		cnt = reader.getLineNumber();
+		countNumberOfLinesInDatFile = reader.getLineNumber();
 		reader.close();
-		return cnt;
-	}
-	
-	public void deleteFile() {
-		try {
-
-			File file = new File(System.getProperty("user.dir"));
-
-			if (!file.isDirectory()&& file.getName().startsWith("APP")) {
-				file.delete();
-				logger.info(file.getName() + " is deleted!");
-			} else {
-				logger.info("Delete operation is failed.");
-			}
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-		}
+		return countNumberOfLinesInDatFile;
 	}
 }

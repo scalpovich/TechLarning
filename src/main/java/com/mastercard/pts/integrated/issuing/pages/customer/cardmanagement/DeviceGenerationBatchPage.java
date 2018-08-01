@@ -108,16 +108,15 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	}
 	
 	public int identifyBatchNumberToProcessForFileUpload() {
-		int index = 0;
+		int i = 0;
 		String batchNumber = context.get(CreditConstants.BATCH_NUMBER_FILEUPLOAD);
 		logger.info("BatchNumber_Application:{}", batchNumber);
-		for (int i = 0; i < allBatchNumberRetrieval().size(); i++) {
+		for (i = 0; i < allBatchNumberRetrieval().size(); i++) {
 			if (allBatchNumberRetrieval().get(i).equals(batchNumber)) {
 				logger.info("batchNumber: {}", allBatchNumberRetrieval().get(i));
-				index = i;
 			}
 		}
-		return index;
+		return i;
 	}
 	
 	public void processAppropriateBatchForApplicationForFileUpload() {

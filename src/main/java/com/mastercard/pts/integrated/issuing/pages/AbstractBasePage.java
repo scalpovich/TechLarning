@@ -16,8 +16,10 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.xerces.dom3.as.ASElementDeclaration;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -38,6 +40,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
@@ -291,6 +294,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private MCWebElement errorMsgPresence;
 	
 	private static final String DeviceNumber="Device Number";
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers']/td[5]/span")
+	private MCWebElement deviceProductionHeaderBatchTxt;
+	
+	private static final int loopIterationToCheckBatchNumber=21;
 	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -682,7 +690,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		// Pre-production batch and device production batch & Authorization
 		// Search page take little long to
 		// be completed, and do not appear in search result, hence a for loop
-		for (int l = 0; l < 21; l++) {
+		for (int l = 0; l < loopIterationToCheckBatchNumber; l++) {
 			if (!waitForRow())
 				clickSearchButton();
 			else {
@@ -708,7 +716,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		try {
 			waitForWicket();
 			SimulatorUtilities.wait(20000); 
-			return driver().findElement(By.xpath("//table[@class='dataview']//tr[@class!='headers']/td[5]/span")).isDisplayed();
+			return asWebElement(deviceProductionHeaderBatchTxt).isDisplayed();
 		} catch (Exception e) {
 			logger.debug("Result not found", e);
 			return false;

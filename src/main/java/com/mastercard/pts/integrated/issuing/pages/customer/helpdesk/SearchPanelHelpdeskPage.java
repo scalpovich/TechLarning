@@ -70,22 +70,22 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = ".//*[@alt='Edit Record']")
 	private MCWebElement editBtn;
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr//following-sibling::td[7]/span")
-	private MCWebElement normalStatus;
+	private MCWebElement normalStatusTxt;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='client.firstName']")
-	private MCWebElement firstNameUpload;
+	private MCWebElement firstNameUploadTxt;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='client.lastName']")
-	private MCWebElement lastNameUpload;
+	private MCWebElement lastNameUploadTxt;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='client.registeredMobileNumber']")
-	private MCWebElement mobileNumberUpload;
+	private MCWebElement mobileNumberUploadTxt;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr//following-sibling::td[1]/span/a/span")
 	private MCWebElement deviceNumberTxt;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr//following-sibling::td[8]/span")
-	private MCWebElement normalStatusCredit;
+	private MCWebElement normalStatusCreditTxt;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[@class='headers']//span")
 	private MCWebElements headersTxt;
@@ -120,7 +120,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 		logger.info("Device Number :{}",deviceNumber );
 		waitForElementVisible(searchBtn);
 		clickWhenClickable(searchBtn);
-		return normalStatus.getText();
+		return normalStatusTxt.getText();
 	}
 
 	public String searchNewDevice(String productType, String deviceNumber) {
@@ -140,9 +140,9 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 		for (Map.Entry<String, Object> entry : mapFileUpload.entrySet()) {
 			counter++;
 			HelpDeskGeneral helpDeskGeneral=(HelpDeskGeneral) entry.getValue();
-			WebElementUtils.enterText(firstNameUpload,helpDeskGeneral.getFirstName());
-			WebElementUtils.enterText(lastNameUpload,helpDeskGeneral.getLastName());
-			WebElementUtils.enterText(mobileNumberUpload,helpDeskGeneral.getMobileNumber());
+			WebElementUtils.enterText(firstNameUploadTxt,helpDeskGeneral.getFirstName());
+			WebElementUtils.enterText(lastNameUploadTxt,helpDeskGeneral.getLastName());
+			WebElementUtils.enterText(mobileNumberUploadTxt,helpDeskGeneral.getMobileNumber());
 			clickSearchButton();
 			waitForPageToLoad(driver());
 			String normalStatus=driver().findElement(By.xpath("//table[@class='dataview']//tr//following-sibling::td["+statusHeader()+"]/span")).getText();

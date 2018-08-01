@@ -164,6 +164,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement binDD;
+	
+	private static final int numberOfAttemptsToCheckSuccessStateOfUploadedFile=100;
 
 	public void selectBatchType(String option) {
 		selectByVisibleText(batchTypeDDwn, option);
@@ -235,7 +237,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		switchToIframe(Constants.VIEW_BATCH_DETAILS);
 
 		// unless it is completed, refresh it - No of attempts: 5
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < numberOfAttemptsToCheckSuccessStateOfUploadedFile; i++) {
 			if (processBatchStatusTxt.getText().equalsIgnoreCase("PENDING [0]") || processBatchStatusTxt.getText().equalsIgnoreCase("IN PROCESS [1]")) {
 				SimulatorUtilities.wait(8000);
 				ClickButton(closeBtn);
@@ -529,8 +531,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
 		switchToIframe(Constants.VIEW_BATCH_DETAILS);
 
-		// unless it is completed, refresh it - No of attempts: 5
-		for (int i = 0; i < 100; i++) {
+		// unless it is completed, refresh it - No of attempts: 100
+		for (int i = 0; i < numberOfAttemptsToCheckSuccessStateOfUploadedFile; i++) {
 			if (processBatchStatusTxt.getText().equalsIgnoreCase("PENDING [0]") || processBatchStatusTxt.getText().equalsIgnoreCase("IN PROCESS [1]")) {
 				ClickButton(closeBtn);
 				waitForLoaderToDisappear();

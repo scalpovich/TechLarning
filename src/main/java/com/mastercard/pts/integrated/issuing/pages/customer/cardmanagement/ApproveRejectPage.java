@@ -61,15 +61,13 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='lastName']")
 	private MCWebElement lastNameTxt;
     
-	public void enterApplicationNumber()
-	{
-		Device device=context.get(CreditConstants.APPLICATION);
-		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());	
+	public void enterApplicationNumber() {
+		Device device = context.get(CreditConstants.APPLICATION);
+		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
 	}
 	
 	
-	public void selectFromAndToDate()
-	{
+	public void selectFromAndToDate() {
 		WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDatePicker, LocalDate.now());
 		clickSearchButton();
@@ -82,18 +80,19 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 	}
 	
 	
-	public String approveApplication(){
+	public String approveApplication() {
 		enterApplicationNumber();
-		selectFromAndToDate();	
-		clickEditRecord();	
+		selectFromAndToDate();
+		clickEditRecord();
 		SimulatorUtilities.wait(5000);
-		
+
 		runWithinPopup("Edit Application", () -> {
-			clickWhenClickable(approveBtn);			
-		});		
+			clickWhenClickable(approveBtn);
+		});
 		verifyOperationStatus();
 		return getCodeFromInfoMessage("Application Number");
 	}
+	
 	public void enterFormNumber()
 	{
 		String formNumber=context.get(CreditConstants.FORM_NUMBER);

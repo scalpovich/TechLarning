@@ -34,7 +34,6 @@ public class DeviceGenerationBatchFlows {
 
      public void deviceGenerationBatchExecutionForFileUpload(){
 		deviceGenerationBatchPage=navigator.navigateToPage(DeviceGenerationBatchPage.class);
-		navigator.navigateToPage(DeviceGenerationBatchPage.class);
 		deviceGenerationBatchPage.processAllClick();
 	}
 }

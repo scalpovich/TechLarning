@@ -18,8 +18,7 @@ public class SearchApplicationSteps {
 	}
 	
 	@When("user searches for created application for fileUpload")
-	public void searchApplicationDetailsForFileUpload()
-	{
+	public void searchApplicationDetailsForFileUpload() {
 		searchApplicationDetailsFlows.searchApplicationDetailsForFileUpload();
 	}
 }

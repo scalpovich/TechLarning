@@ -3,10 +3,8 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 
-import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -23,7 +21,6 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.CloseBatchFlows;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
@@ -65,6 +62,10 @@ public class CloseBatchPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Yes']")
 	private MCWebElement yesBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//h3[text()= 'Confirmation Message']/ancestor::div//iframe")
+	private MCWebElement confirmMsgBtn;
+	
 
 	public void closebatch() {
 		waitForLoaderToDisappear();
@@ -115,7 +116,7 @@ public class CloseBatchPage extends AbstractBasePage {
 	public void processAllClick() {
 		clickWhenClickable(processAll);
 		try {
-			if (driver().findElement(By.xpath("//h3[text()= 'Confirmation Message']/ancestor::div//iframe")).isDisplayed()) {
+			if (confirmMsgBtn.isEnabled()) {
 				switchToIframe("Confirmation Message");
 				clickWhenClickable(yesBtn);
 				verifyOperationStatus();
@@ -134,36 +135,30 @@ public class CloseBatchPage extends AbstractBasePage {
 		logger.info("BatchNumber_Application:{}", batchNumber);
 		for (i = 0; i < allBatchNumberRetrieval().size(); i++) {
 			if (allBatchNumberRetrieval().get(i).equals(batchNumber.trim())) {
-				logger.info("batchNumber: {}", allBatchNumberRetrieval().get(i));
+				logger.info("Batch Number: {}", allBatchNumberRetrieval().get(i));
 				break;
 			}
 		}
 		return i;
 	}
 	
-	public void processAppropriateBatchForApplicationForFileUpload()
-	{
-		String checkBox="//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcessForFileUpload()+1+"]/td[10]/span/input";
+	public void processAppropriateBatchForApplicationForFileUpload() {
+		String checkBox = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd'][" + identifyBatchNumberToProcessForFileUpload() + 1 + "]/td[10]/span/input";
 		clickWhenClickable(driver().findElement(By.xpath(checkBox)));
 		clickWhenClickable(processSelected);
-			try {
-				if (driver()
-						.findElement(By.xpath("//h3[text()= 'Confirmation Message']/ancestor::div//iframe"))
-						.isDisplayed()) {
-					switchToIframe("Confirmation Message");
-					clickWhenClickable(yesBtn);
-					verifyOperationStatus();
-				}
-				else
-					
-				{
-					verifyOperationStatus();
-				}
-
-			} catch (Exception e) {
-				e.getMessage();
+		try {
+			if (driver().findElement(By.xpath("//h3[text()= 'Confirmation Message']/ancestor::div//iframe")).isDisplayed()) {
+				switchToIframe("Confirmation Message");
+				clickWhenClickable(yesBtn);
+				verifyOperationStatus();
+			} else {
+				verifyOperationStatus();
 			}
-		
+
+		} catch (Exception e) {
+			e.getMessage();
+		}
+
 	}
 	
     @Override

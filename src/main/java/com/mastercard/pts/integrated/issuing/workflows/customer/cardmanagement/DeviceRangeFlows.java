@@ -44,12 +44,12 @@ public class DeviceRangeFlows extends MenuFlows {
 	
 	public void addDeviceRangeUpload(DeviceCreation deviceCreation) {
 		waitForElementVisible(menuSubMenuPage.getCardManagement());
-		DeviceRangePage devicerangepage = navigator.navigateToPage(DeviceRangePage.class);
-		devicerangepage.clickAddDeviceRange();
-		devicerangepage.addDeviceRangeDetails();
-		devicerangepage.selectDebitInerface();
-		devicerangepage.Information();
-		devicerangepage.clickSaveButton();
+		DeviceRangePage deviceRangePage = navigator.navigateToPage(DeviceRangePage.class);
+		deviceRangePage.clickAddDeviceRange();
+		deviceRangePage.addDeviceRangeDetails();
+		deviceRangePage.selectDebitInerface();
+		deviceRangePage.Information();
+		deviceRangePage.clickSaveButton();
 	}
 
 }

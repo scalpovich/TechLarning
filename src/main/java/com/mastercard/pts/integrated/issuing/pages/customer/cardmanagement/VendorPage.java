@@ -271,13 +271,11 @@ public class VendorPage extends AbstractBasePage {
 		ClickCheckBox(priorityPassProductionCheckBox, true);
 	}
 	
-	public void selectEmbossingFileTemplate()
-	{
+	public void selectEmbossingFileTemplate() {
 		WebElementUtils.selectDropDownByIndex(EmbossingFileTemplateDDwn, 1);
 	}
 	
-	public void selectPinFileTemplate()
-	{
+	public void selectPinFileTemplate() {
 		WebElementUtils.selectDropDownByIndex(PINFileTemplateDDwn, 1);
 	}
 }

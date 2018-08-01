@@ -18,7 +18,6 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Bulk
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -29,8 +28,6 @@ import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_OPERATION,
@@ -248,7 +245,8 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public List<String> deviceNumbers() {
 		List<WebElement> allDeviceNumbers = new ArrayList<>();
 		List<String> allDeviceNumberfText = new ArrayList<>();
-		allDeviceNumbers = driver().findElements(By.xpath("//table[@class='dataview']//tr[@class='even' or 'odd']/td[" + deviceNumberHeaderIndexFetch() + "]/span"));
+		String deviceNumberToFetch=String.format("//table[@class='dataview']//tr[@class='even' or 'odd']/td['%s']/span",deviceNumberHeaderIndexFetch());
+		allDeviceNumbers = driver().findElements(By.xpath(deviceNumberToFetch));
 
 		for (int i = 0; i < allDeviceNumbers.size(); i++) {
 			allDeviceNumberfText.add(allDeviceNumbers.get(i).getText());

@@ -18,27 +18,27 @@ public class SearchApplicationDetailsFlows {
 	@Autowired
 	TestContext context;
 
-	public SearchApplicationDetailsPage searchpage;
+	public SearchApplicationDetailsPage searchPage;
 
 	public void searchApplication(SearchApplicationDetails search) {
-		searchpage = navigator
+		searchPage = navigator
 				.navigateToPage(SearchApplicationDetailsPage.class);
-		searchpage.searchNewApplication(search);
+		searchPage.searchNewApplication(search);
 	}
 
 	public void verifyApplicationUploadSuccess(SearchApplicationDetails search) {
 		searchApplication(search);
-		searchpage.verifyNewApplication();
+		searchPage.verifyNewApplication();
 	}
 	
 	public void searchApplicationDetails() {
-		searchpage = navigator.navigateToPage(SearchApplicationDetailsPage.class);		
-		context.put(CreditConstants.NEW_APPLICATION_BATCH, searchpage.searchApplicationNumber());		
+		searchPage = navigator.navigateToPage(SearchApplicationDetailsPage.class);		
+		context.put(CreditConstants.NEW_APPLICATION_BATCH, searchPage.searchApplicationNumber());		
 	}
 	
 	public void searchApplicationDetailsForFileUpload() {
-		searchpage = navigator.navigateToPage(SearchApplicationDetailsPage.class);
-		searchpage.searchApplicationNumberForFileUpload();
+		searchPage = navigator.navigateToPage(SearchApplicationDetailsPage.class);
+		searchPage.searchApplicationNumberForFileUpload();
 		
 	}
 }

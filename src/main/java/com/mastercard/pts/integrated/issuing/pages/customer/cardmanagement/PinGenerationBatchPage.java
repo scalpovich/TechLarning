@@ -104,27 +104,26 @@ public class PinGenerationBatchPage extends AbstractBasePage {
 			verifyOperationStatus();
 	}
 		
-		public void processPinProductionBatchForAllForFileUpload(
-				PinGenerationBatch batch) {
-			    List<String> batchNumbers = context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
-				waitForLoaderToDisappear();
-				WebElementUtils.selectDropDownByVisibleText(productTypeDDwn,batch.getProductType());
-				WebElementUtils.enterText(batchNumberTxt, batchNumbers.get(0));
-				waitAndSearchForRecordToAppear();
-				clickWhenClickable(processAllBtn);
-				verifyOperationStatus();
+	public void processPinProductionBatchForAllForFileUpload(PinGenerationBatch batch) {
+		List<String> batchNumbers = context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
+		waitForLoaderToDisappear();
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+		WebElementUtils.enterText(batchNumberTxt, batchNumbers.get(0));
+		waitAndSearchForRecordToAppear();
+		clickWhenClickable(processAllBtn);
+		verifyOperationStatus();
 	}
 		
-		public void processPinProductionBatch(PinGenerationBatch batch) {
-			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-			WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
-			waitAndSearchForRecordToAppear();
-			deviceNumbers();
-			waitAndSearchForRecordToExist();
-			clickWhenClickable(processAllBtn);
-			verifyOperationStatus();
+	public void processPinProductionBatch(PinGenerationBatch batch) {
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
+		waitAndSearchForRecordToAppear();
+		deviceNumbers();
+		waitAndSearchForRecordToExist();
+		clickWhenClickable(processAllBtn);
+		verifyOperationStatus();
 
-		}
+	}
 
 	public List<String> deviceNumbers() {
 		List<WebElement> allDeviceNumbers = new ArrayList<>();
