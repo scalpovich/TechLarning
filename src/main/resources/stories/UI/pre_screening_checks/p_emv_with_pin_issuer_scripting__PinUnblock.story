@@ -73,6 +73,6 @@ And user sign out from customer portal
 
 Scenario: Verify Last executed script status for Application unblock
 When user is logged in institution
-Then assert Success status of Last Executed Script Status in Device Details Screen
+Then assert Success [0] status of Last Executed Script Status in Device Details Screen
 And user sign out from customer portal
 And FINSim simulator is closed
