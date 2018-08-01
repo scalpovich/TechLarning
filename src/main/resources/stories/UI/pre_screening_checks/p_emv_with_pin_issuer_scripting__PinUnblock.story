@@ -63,7 +63,7 @@ And FINSim simulator is closed
 
 Scenario: Verify Last executed script status for Application block
 When user is logged in institution
-Then assert Pending status of Last Executed Script Status in Device Details Screen
+Then assert Pending [2] status of Last Executed Script Status in Device Details Screen
 And user sign out from customer portal
 
 Scenario: Perform EMV_PURCHASE_ISSUER_SCRIPTING_RES Transaction
@@ -76,3 +76,4 @@ Scenario: Verify Last executed script status for Application unblock
 When user is logged in institution
 Then assert Success status of Last Executed Script Status in Device Details Screen
 And user sign out from customer portal
+And FINSim simulator is closed
