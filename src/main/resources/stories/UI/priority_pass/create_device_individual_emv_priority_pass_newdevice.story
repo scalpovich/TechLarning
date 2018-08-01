@@ -19,7 +19,6 @@ And User fills Device Event Based Fee Plan for Credit product
 And for "EMV Card" User fills Device Plan for "Credit" product for "Mastercard" and "with" priority pass
 And User fills Billing Cycle
 And User fills Payment Priority
-And User fills Payment Bounce Reason
 And User fills Transaction Rule Plan
 And User fills Credit Plan
 And User fills Wallet Fee Plan for Credit product
