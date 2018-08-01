@@ -29,14 +29,14 @@ And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product
 And User fills MCC Rules for credit product
 And User fills Program section for credit product
-When User fills Device Range section for credit product
-When user creates Application Upload Credit batch file and upload it on server for Corporate for credit
-When user verifies the credit application device for fileUpload
-When user approves the credit application device for fileUpload
-When user processes close batch for new Application for fileUpload
-When user processes deviceGeneration batch for new Application for fileUpload
-When user searches for created application for fileUpload
-When credit processes pre-production batch using new Application for fileUpload in Bulk
-When All processes credit device production batch for fileUpload in Bulk
-When For fileUpload when user search for new application on search screen for credit and validates the status as NORMAL
+And User fills Device Range section for credit product
+And user creates Application Upload Credit batch file and upload it on server for Corporate for credit
+And user verifies the credit application device for fileUpload
+And user approves the credit application device for fileUpload
+And user processes close batch for new Application for FileUpload
+And user processes deviceGeneration batch for new Application for FileUpload
+And user searches for created application for fileUpload
+And credit processes pre-production batch using new Application for fileUpload in Bulk
+And All processes credit device production batch for fileUpload in Bulk
+Then For fileUpload when user search for new application on search screen for credit and validates the status as NORMAL
 Then user logouts from customer portal
