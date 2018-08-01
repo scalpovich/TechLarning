@@ -6,7 +6,7 @@ I want to assert pages
 Meta:
 @StoryName CardBoarding_Priority				 
 Scenario:creation of mastercard_individual_primary_emv Card credit device with priority pass through New Application
-Given setting json values in excel for credit
+Given setting json values in excel for Credit
 When user is logged in institution
 And User fills Dedupe Plan
 And User fills Statement Message Plan for credit product
