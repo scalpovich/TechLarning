@@ -22,8 +22,7 @@ public class VerifyCreditDeviceSteps {
 	}
 	
 	@When("user verifies the credit application device for fileUpload")
-	public void verifyCreditDeviceAfterApplicaionCreationFileUpload()
-	{
+	public void verifyCreditDeviceAfterApplicaionCreationFileUpload() {
 		verifyCreditApplicationFlows.verifyCreditApplicationFileUpload();
 	}
 }

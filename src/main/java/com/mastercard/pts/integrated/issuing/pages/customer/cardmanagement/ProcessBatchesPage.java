@@ -163,7 +163,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private MCWebElement methodToGenerateFileDD;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
-	private MCWebElement binDD;
+	private MCWebElement binDDwn;
 	
 	private static final int numberOfAttemptsToCheckSuccessStateOfUploadedFile=100;
 
@@ -583,6 +583,6 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 	public void selectBin(String option)
 	{
-		WebElementUtils.selectDropDownByVisibleText(binDD, option);
+		WebElementUtils.selectDropDownByVisibleText(binDDwn, option);
 	}
 }
