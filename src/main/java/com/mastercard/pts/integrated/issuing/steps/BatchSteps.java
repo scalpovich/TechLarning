@@ -84,6 +84,27 @@ public class BatchSteps {
 	}
 	
 	
+	@When("user sets invalid cvv/ccv2/icvv to device")
+	@Then("user sets invalid cvv/ccv2/icvv to device")
+	public void  userSetInvaliCVVCVV2ICVV() {
+		MiscUtils.reportToConsole("******** setting invalid CVV/CVV2/ICVV ***** " );
+		try {
+			
+			Device device = context.get(ContextConstants.DEVICE);
+	
+				device.setCvv2Data(ConstantData.INVALID_CVV2);
+				device.setCvvData(ConstantData.INVALID_CVV);
+				device.setIcvvData(ConstantData.INVALID_ICVV);		
+				device.setPvkiData(ConstantData.INVALID_PVKI);				
+
+
+		} catch (Exception e) {
+			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
+			throw MiscUtils.propagate(e);
+		}
+	}
+	
+	
 	@When("Pin Offset file batch was generated successfully")
 	@Then("Pin Offset file batch was generated successfully")
 	public void getPinFileData() {

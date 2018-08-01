@@ -158,11 +158,9 @@ public class HelpDeskFlows extends AbstractBasePage {
 		return searchpanelhelpdesk.searchNewDevice(helpdeskgettersetter.getProductType(),helpdeskgettersetter.getDeviceNumber());
 	}
 	
-	public String searchForNewApplication(HelpDeskGeneral helpdeskgettersetter) {
-		
+	public String searchForNewApplication(HelpDeskGeneral helpdeskgettersetter) {		
 		generalPage = navigator.navigateToPage(GeneralPage.class);
-		String status = searchpanelhelpdesk.searchNewDevice(helpdeskgettersetter.getProductType(),helpdeskgettersetter.getDeviceNumber());
-		return status;
+		return searchpanelhelpdesk.searchNewDevice(helpdeskgettersetter.getProductType(),helpdeskgettersetter.getDeviceNumber());		
 	}
 
 	public void verifyExpiryDate() {

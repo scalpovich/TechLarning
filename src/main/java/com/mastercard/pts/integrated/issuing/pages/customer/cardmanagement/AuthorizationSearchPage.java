@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AvailableBalance;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -178,11 +181,17 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		return fieldsForAssertion;
 	}
 	
+<<<<<<< HEAD
 	public List<BigDecimal> getTransactionBillingAmount(){
 
 		String[] amountType = amountTypes.split(":");
 		List<BigDecimal> lst = new ArrayList<BigDecimal>();
 
+=======
+	public AvailableBalance getAvailableBalance(){
+		String[] amountType = amountTypes.split(":");
+		AvailableBalance availBal = new AvailableBalance();
+>>>>>>> 2cb8d2c499cadec37ef0c1a088cd4f3acaf254af
 		runWithinPopup("View Authorization", () -> {
 			BigDecimal sum =  new BigDecimal(0)   ;
 			for(String str : amountType){
@@ -190,10 +199,18 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 				logger.info("value of " + str + " = "+  value);
 				sum = sum.add(new BigDecimal(value),  new MathContext(5));
 			}
+<<<<<<< HEAD
 			lst.add(sum);
 			lst.add(new BigDecimal(getTextFromPage(availableBalanceTxt)));
 			clickCloseButton();
 		});
 		return lst;
+=======
+			availBal.setSum(sum);
+			availBal.setAvailableBal(new BigDecimal(getTextFromPage(availableBalanceTxt)));			
+			clickCloseButton();
+		});
+		return availBal;
+>>>>>>> 2cb8d2c499cadec37ef0c1a088cd4f3acaf254af
 	}
 }

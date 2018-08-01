@@ -10,6 +10,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Cred
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -46,35 +47,35 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[@name='approve']")
 	private MCWebElement approveBtn;
     
-	public void enterApplicationNumber()
-	{
+	public void enterApplicationNumber(){
 		Device device=context.get(CreditConstants.APPLICATION);
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());	
 	}
 	
-	public void selectFromAndToDate()
-	{
+	
+	public void selectFromAndToDate(){
 		WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDatePicker, LocalDate.now());
 		clickSearchButton();
 	}
 	
-	public void clickEditImageForTheRecordDisplayed()
-	{
+	
+	public void clickEditRecord(){
 		waitForPageToLoad(driver());
 		clickWhenClickableDoNotWaitForWicket(editImg);	
 	}
 	
-	public void approveButtonClick()
-	{
-		switchToIframe(APPROVE_REJECT_FRAME);
-		clickWhenClickable(approveBtn);
-		verifyOperationStatus();
-	}
 	
-	public String getApplicationNumber()
-	{
+	public String approveApplication(){
+		enterApplicationNumber();
+		selectFromAndToDate();	
+		clickEditRecord();	
+		SimulatorUtilities.wait(5000);
+		
+		runWithinPopup("Edit Application", () -> {
+			clickWhenClickable(approveBtn);			
+		});		
+		verifyOperationStatus();
 		return getCodeFromInfoMessage("Application Number");
 	}
-	
 }

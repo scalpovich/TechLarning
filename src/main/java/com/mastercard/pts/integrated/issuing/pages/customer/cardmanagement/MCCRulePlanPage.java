@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCCRulePlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -35,7 +37,20 @@ public class MCCRulePlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#productType select")
 	private MCWebElement productTypeDDwn;
-
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=fromMccCode]")
+	private MCWebElement fromMccCodeTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=toMccCode]")
+	private MCWebElement toMccCodeTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=selectAllDom]")
+	private MCWebElement selectAllDomCheckBox;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=selectAllInt]")
+	private MCWebElement selectAllIntCheckBox;
+	
+	
 	public void verifyUiOperationStatus() {
 		logger.info("MCC Rule");
 		verifySearchButton("Search");
@@ -66,5 +81,36 @@ public class MCCRulePlanPage extends AbstractBasePage {
 		SimulatorUtilities.wait(2000);
 		verifyOperationStatus();
 	}
+	
+	public void editMCCRulePlanPage(MCCRulePlan plan) {
+		logger.info("Edit MCC Rule Plan {}", plan.getMccRulePlanCode());
+		WebElementUtils.enterText(planCodeSearchTxt, plan.getMccRulePlanCode());
+		clickSearchButton();
+		editFirstRecord();
+		
+		runWithinPopup("Edit MCC Rule Plan", () -> {
+			SimulatorUtilities.wait(1500);
+			WebElementUtils.elementToBeClickable(fromMccCodeTxt);
+			WebElementUtils.enterText(fromMccCodeTxt, plan.getFromMccCode());
+			SimulatorUtilities.wait(100);
+			WebElementUtils.enterText(toMccCodeTxt, plan.getToMccCode());
+			clickSearchButton();
+			waitForPageToLoad(driver());
+			clickApproveCheckBox(plan.getOrigin());			
+			WebElementUtils.scrollDown(driver(),0,250);
+			clickSaveButton();
+			verifyNoErrors();
+			SimulatorUtilities.wait(4000);
+		});
+		verifyOperationStatus();
+	}
+	
+	private void clickApproveCheckBox(String origin) {
+		if(origin.equalsIgnoreCase(ContextConstants.INTERNATIONAL))
+			clickWhenClickable(selectAllIntCheckBox);
+		else
+			clickWhenClickable(selectAllDomCheckBox);
+	}
+	
 
 }

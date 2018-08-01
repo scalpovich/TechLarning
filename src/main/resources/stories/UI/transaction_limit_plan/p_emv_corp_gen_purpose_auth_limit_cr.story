@@ -6,7 +6,7 @@ As an issuer
 I want to create a prepaid emv corporate general purpose card and test various transactions
 
 Meta:
-@StoryName p_emv_corp_general_purpose
+@StoryName p_emv_corp_general_purpose_mmsr
 
 Scenario: Adding TransactionLimitPlan, card management tab
 Given user is logged in institution
@@ -21,12 +21,16 @@ Then user signs out from customer portal
 Scenario: Card Setup
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" with limit plan
+Then user sign out from customer portal
+
+Scenario: Card Setup 2
+Given user is logged in institution
 When user creates new device of prepaid type for new client
+And a new device was created
 Then user sign out from customer portal
 
 Scenario: Device Production
 Given user is logged in institution
-And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 Then device has "normal" status
@@ -35,8 +39,6 @@ Then user sign out from customer portal
 Then user is logged in institution
 When user performs adjustment transaction
 When user has current wallet balance amount information for prepaid device
-Then device has "normal" status
-Then user activates device through helpdesk
 Then embossing file batch was generated in correct format
 Then user sign out from customer portal
 
@@ -46,12 +48,12 @@ When perform an MMSR MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
-And search MasterCard MoneySend authorization and verify 000-Successful status
+And search Money Send Person To Person authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: Assert Authorization Search and Device Usage
 Given user is logged in institution
-Then search MasterCard MoneySend  authorization and verify Successful status
+Then search Money Send Person To Person authorization and verify 000-Successful status
 Then user searches device on device usage screen and performs assertions on device total usage
 And user searches device on device usage screen and performs assertions on device transaction usage
 And user sign out from customer portal

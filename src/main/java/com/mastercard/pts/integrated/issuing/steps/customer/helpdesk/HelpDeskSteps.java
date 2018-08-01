@@ -4,34 +4,38 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-
 import java.math.BigDecimal;
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+=======
+>>>>>>> 2cb8d2c499cadec37ef0c1a088cd4f3acaf254af
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+<<<<<<< HEAD
 
 import org.hamcrest.Matchers;
+=======
+>>>>>>> 2cb8d2c499cadec37ef0c1a088cd4f3acaf254af
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.junit.Assert;
-import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
+import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
 import com.mastercard.pts.integrated.issuing.domain.customer.distribution.Dispatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
@@ -46,7 +50,6 @@ import com.mastercard.pts.integrated.issuing.domain.provider.DataLoader;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
-import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
@@ -73,12 +76,10 @@ public class HelpDeskSteps {
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
 	private String clientID;
 	private String loginType = "login";
+	private CardToCash cardtocash;
 
 	@Autowired
 	private TestContext context;
-
-	@Autowired
-	private Navigator navigator;
 
 	@Autowired
 	private HelpdeskWorkflow helpdeskWorkflow;
@@ -367,7 +368,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
 	}
 
-	@Then("currency setup for $type device is done correctly and updated in wallet details tab")
+	@When("currency setup for $type device is done correctly and updated in wallet details tab")
 	public void thenCurrencySetupForDeviceIsDoneCorrectlyAndUpdatedInWalletDetailsTab(String type) {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
@@ -408,12 +409,17 @@ public class HelpDeskSteps {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
 		device.setAppliedForProduct(ProductType.fromShortName(type));
-		beforeLoadBalanceInformation = helpdeskWorkflow.getWalletBalanceInformation(device);			
-		String walletinfo [] = beforeLoadBalanceInformation.split(",");	
-		walletinfo=walletinfo[0].split(":");		
-		logger.info("Wallet Number : "+walletinfo[2]);
-		device.setWalletNumber(walletinfo[2]);	
-		context.put(ContextConstants.DEVICE,device);
+		beforeLoadBalanceInformation = helpdeskWorkflow.getWalletBalanceInformation(device);
+		String walletinfo[] = beforeLoadBalanceInformation.split(",");
+		if (walletinfo.length > 1) {
+			walletinfo = walletinfo[1].split(":");
+			device.setWalletNumber(walletinfo[2]);
+			context.put(ContextConstants.DEVICE, device);
+		} else {
+			walletinfo = walletinfo[0].split(":");
+			device.setWalletNumber(walletinfo[2]);
+			context.put(ContextConstants.DEVICE, device);
+		}
 	}
 
 	@When("balance in helpdesk updated correctly for $type device")
@@ -442,10 +448,22 @@ public class HelpDeskSteps {
 	@Then("balance in helpdesk deducted correctly for $type device")
 	public void thenBalanceInHelpDeskDeductedCorrectly(String type) {
 		Device device = context.get(ContextConstants.DEVICE);
+		cardtocash=context.get(ContextConstants.REMITTANCE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
 		device.setAppliedForProduct(ProductType.fromShortName(type));
-		assertTrue(helpdeskWorkflow.verifyBalanceDeductedCorreclty(beforeLoadBalanceInformation, helpdeskGeneral.getTransactionDetails(), helpdeskWorkflow.getWalletBalanceInformation(device)));
+		assertTrue(helpdeskWorkflow.verifyBalanceDeductedCorreclty(beforeLoadBalanceInformation, helpdeskGeneral.getTransactionDetails(), helpdeskWorkflow.getWalletBalanceInformationForRemittance(device,cardtocash)));
+	}
+	
+	@Then("balance in helpdesk for remittance not changed for $type device")
+	@When("balance in helpdesk for remittance not changed for $type device")
+	public void thenBalanceInHelpDeskNotChangedForRemittance(String type) {
+		Device device = context.get(ContextConstants.DEVICE);
+		cardtocash = context.get(ContextConstants.REMITTANCE);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+		assertTrue(helpdeskWorkflow.verifyBalanceNotChanged(beforeLoadBalanceInformation, helpdeskWorkflow.getWalletBalanceInformationForRemittance(device, cardtocash)));
 	}
 
 	@When("balance in helpdesk not changed for $type device")
@@ -470,11 +488,13 @@ public class HelpDeskSteps {
 
 	@Given("user has current wallet balance amount information for $type device")
 	@When("user has current wallet balance amount information for $type device")
+	@Then("user has current wallet balance amount information for $type device")
 	public void givenUserHasCurrentWalletBalanceAmountInformation(String type) {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
 		currentBalanceAmount = helpdeskWorkflow.getWalletBalance(device);
+		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, currentBalanceAmount);
 	}
 
 	@Then("after balance enquiry wallet balance amount for $type device is updated correctly")
@@ -584,6 +604,23 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.getDeviceStatus(device);
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.setupDeviceCurrency(helpdeskGeneral);
+	}
+	
+	@Given("user notes down available $type limit for card")
+	@When("user notes down available $type limit for card")
+	public void whenUserNotesDownLimitThroughHelpDesk(String type) {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.noteDownAvailableLimit(type));
+	}
+	
+	
+	
+	@Given("user verifies available $type limit for card after transaction")
+	@When("user verifies available $type limit for card after transaction")
+	public void whenUserVerifyLimitThroughHelpDesk(String type) {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.noteDownAvailableLimit(type), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
 	}
 
 	@Given("user sets up device currency through helpdesk for FileUpload")
@@ -734,7 +771,6 @@ public class HelpDeskSteps {
 		} else {
 			Assert.assertTrue("status of newly created device is not normal ", false);
 		}
-
 	}
 
 	@Then("currency setup for device")

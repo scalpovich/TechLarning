@@ -18,5 +18,10 @@ public class LoanPlanFlows {
 		LoanPlanPage page = navigator.navigateToPage(LoanPlanPage.class);
 		page.addLoanPlan(loanPlan,loanTypedata);
 	}
+	
+	public void addLoanPlan(LoanPlan loanPlan){
+		LoanPlanPage page = navigator.navigateToPage(LoanPlanPage.class);
+		page.addLoanPlan(loanPlan);
+	}
 
 }
