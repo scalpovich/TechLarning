@@ -18,11 +18,9 @@ import com.mastercard.pts.integrated.issuing.domain.InstitutionData;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceBin;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Vendor;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -80,7 +78,7 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#activeFlag select")
 	private MCWebElement statusDDwn;
-	
+
 	@Autowired
 	Program program;
 	@Autowired
@@ -160,10 +158,12 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:3:buttonPanel:buttonCol:searchButton")
 	private MCWebElement searchbtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[contains(@name,'branchCode')]/option[text()!='Select One']")
 	private MCWebElements branchDDwnList; 
 
+	private final String DEVICE_ROUTING = "Device Range Based [D]";
+	
 	int i = 0;
 
 	public void clickAddDeviceRange() {
@@ -232,9 +232,9 @@ public class DeviceRangePage extends AbstractBasePage {
 
 	public void selectBranch() {
 		selectDropDownByIndex(BranchDDwn, 1);
-		
+
 	}
-	
+
 
 	public void clickAddButton() {
 		clickWhenClickable(AddTxt);
@@ -429,7 +429,7 @@ public class DeviceRangePage extends AbstractBasePage {
 		logger.info("ProductType : {}", devicePlan.getProductType());
 		logger.info("issuerBin :{}", deviceRange.getIssuerBin());
 		program = context.get(ContextConstants.PROGRAM);
-		
+
 		if(Objects.nonNull(context.get(CreditConstants.JSON_VALUES))){
 			InstitutionData valuesFromJson = context.get(CreditConstants.JSON_VALUES);
 			if (program.getInterchange().toUpperCase().contains("MASTERCARD")) {
@@ -458,7 +458,7 @@ public class DeviceRangePage extends AbstractBasePage {
 			selectIssuerBin(deviceRange.getIssuerBin());
 			selectBranch(deviceRange.getBranch());
 		}		
-		
+
 		addBtn.click();
 		waitForWicket();
 	}
@@ -467,7 +467,9 @@ public class DeviceRangePage extends AbstractBasePage {
 		if (ProductType.DEBIT.equalsIgnoreCase(deviceRange.getProductType())) {
 			WebElementUtils.selectDropDownByVisibleText(endPointModeDDwn, deviceRange.getEndPointMode());
 			WebElementUtils.selectDropDownByVisibleText(routingTypeDDwn, deviceRange.getRoutingType());
-			WebElementUtils.selectDropDownByVisibleText(interfaceNameDDwn, deviceRange.getInterfaceName());
+			if(deviceRange.getRoutingType().equalsIgnoreCase(DEVICE_ROUTING)){
+				WebElementUtils.selectDropDownByVisibleText(interfaceNameDDwn, deviceRange.getInterfaceName());
+			}
 		}
 	}
 
