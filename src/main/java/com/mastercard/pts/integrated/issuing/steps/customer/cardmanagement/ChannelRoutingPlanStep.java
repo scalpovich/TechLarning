@@ -10,6 +10,8 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AccountRangeRoutingPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ChannelRoutingPlan;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.AccountRangeRoutingFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ChannelRoutingFlows;
 
@@ -26,6 +28,7 @@ public class ChannelRoutingPlanStep  {
 	AccountRangeRoutingFlows  accountRangeRoutingFlows;
 	@Autowired
 	private TestContext context;
+	
 	private final String channelNamePlan1 = "CBS1 [CBS1]" ;
 	private final String channelNamePlan2 = "CBS2 [CBS2]" ;
 
@@ -51,7 +54,8 @@ public class ChannelRoutingPlanStep  {
 	@When("user creates Account Range for Routing for $channelName channel")
 	public void userCreatesChannelRoutingForUserDefineChannel(String channelName) {
 		accountRangeRoutingPlan=AccountRangeRoutingPlan.channelRoutingPlanDataProvider(context.get(ContextConstants.DEVICE));
-		if(channelNamePlan1.contains(channelName)){
+		//Environment change is temporary fix as we are migrating on CBS2
+		if(channelNamePlan1.contains(channelName)&& !MiscUtils.getEnvironment().equalsIgnoreCase(Constants.ENV_STAGESA)){
 			accountRangeRoutingPlan.setChannelRoutingPlan(channelNamePlan1);
 		}
 		else{
