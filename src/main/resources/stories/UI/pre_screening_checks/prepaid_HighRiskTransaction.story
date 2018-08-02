@@ -44,15 +44,3 @@ Scenario: validate the High Risk Country Report
 Given user is logged in institution
 Given validate the authCode in RAMP report
 
-Scenario: validate the High Risk MCC Report
-Given user is logged in institution
-Given validate the authCode in RAMP report
-
-Scenario: validate the High Risk MCG Report
-Given user is logged in institution
-Given validate the authCode in RAMP report
-
-Scenario: validate the High Risk Merchant Location Report
-Given user is logged in institution
-Given validate the authCode in RAMP report
-

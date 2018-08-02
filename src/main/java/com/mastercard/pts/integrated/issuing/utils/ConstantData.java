@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.utils;
 
+import com.mastercard.pts.integrated.issuing.domain.ProductType;
+
 /**
  * Issuing Team
  * 
@@ -94,5 +96,12 @@ public class ConstantData {
 	public static final String PIN_REQUIRED_YES = "YES";
 
 	private ConstantData() {
+	}
+	/*
+	 return parameter name for paasing value
+	
+	*/
+	public static String fromShortName(String name) {
+		return MiscUtils.getConstantStringFromClassByPefixMatch(ProductType.class, name);
 	}
 }

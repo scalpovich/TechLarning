@@ -19,6 +19,7 @@ import com.mastercard.pts.integrated.issuing.pages.collect.administration.Admini
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReportVerificationPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.PDFUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
@@ -41,24 +42,23 @@ public class ReportVerificationWorkflow {
 	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
 	
 	private String fileURL ;
+	
+	Map<String,String> field_data;
 
 
     public void verifyGenericReport(Device device,String reportName,String[] fieldName) {
-    	Map<String,String> field_data = null;
     	GenericReport report = GenericReport.getGenericReport();
 		page = (ReportVerificationPage)getInstance(reportName);
 		report.setUsername(context.get(UserManagementSteps.USERNAME));
 		fileURL = PDFUtils.getuserDownloadPath()+"\\"+reportName+" Report.pdf";
-		report.setUsername("NitinK");
 		for(String field : fieldName){
-			field_data = report.setFieldToValidate(field, context.get(field));
+			field_data = report.setFieldToValidate(field, context.get(ConstantData.fromShortName(field)));
 		}
 		Map<Integer, String> reportContent = verifyGenericReport(reportName,report);
 		reportContent.forEach((k,v)-> {
-			if(v.contains(context.get(ContextConstants.DEVICE))){
+			if(v.contains(device.getDeviceNumber())){
 			field_data.forEach((field,FieldValue) ->{
-				boolean condition = v.contains(field_data.get(field));
-				assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
+				assertTrue(field+" did not match with Authoraization Report content", v.contains(field_data.get(field)));
 			});
 				
 			}
@@ -66,10 +66,10 @@ public class ReportVerificationWorkflow {
 	}
     
     public Map<Integer, String> verifyGenericReport(String fileName, GenericReport report) {
-		//navigator.navigateToPage(page.getClass().getSimpleName());
-		//deleteExistingAuthorizationFilesFromSystem(fileName);
-		//page.generateReport(report);
-		//verifyReportDownloaded();
+		navigator.navigateToPage(page.getClass().getSimpleName());
+		deleteExistingAuthorizationFilesFromSystem(fileName);
+		page.generateReport(report);
+		verifyReportDownloaded();
 		return getReportContent(fileName,report);
 	}
     
