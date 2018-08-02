@@ -16,7 +16,7 @@ And User fills Transaction Limit Plan for Credit product
 And User fills Document Checklist Screen for Credit product
 And User fills Device Joining and Membership Fee Plan for Credit product
 And User fills Device Event Based Fee Plan for Credit product
-And for "EMV Card" User fills Device Plan for "Credit" product for "Mastercard" and "with" priority pass
+And for "EMV Card" User create Device Plan for "Credit" product for "Mastercard" and "with" priority pass
 And User fills Billing Cycle
 And User fills Payment Priority
 And User fills Transaction Rule Plan

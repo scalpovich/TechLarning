@@ -59,12 +59,13 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[1]/td[10]/span/input")
 	public MCWebElement firstBatchNumberTxt;
 
-	public List<String> allBatchNumberRetrieval() {
-		List<String> batchnumbers = new ArrayList<>();
-		for (int i = 0; i < allBatchNumberTxt.getElements().size(); i++) {
-			batchnumbers.add(allBatchNumberTxt.getElements().get(i).getText());
+	public List<String> allBatchNumberRetrieval(){
+		List<String>batchNumber=new ArrayList<>();
+		SimulatorUtilities.wait(20000);
+		for(int i=0; i<allBatchNumberTxt.getElements().size(); i++){
+			batchNumber.add(allBatchNumberTxt.getElements().get(i).getText());
 		}
-		return batchnumbers;
+		return batchNumber;	
 	}	
 	
 	public int identifyBatchNumberToProcess() {
