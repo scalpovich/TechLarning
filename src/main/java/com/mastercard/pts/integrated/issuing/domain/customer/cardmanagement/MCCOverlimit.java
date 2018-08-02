@@ -52,6 +52,8 @@ public class MCCOverlimit {
 
 	public static MCCOverlimit createDataWithProvider(KeyValueProvider provider) {
 		MCCOverlimit mccOverlimit = new MCCOverlimit();
+		mccOverlimit.setCurrency(provider.getString("Currency"));
+		mccOverlimit.setWalletPlan(provider.getString("Wallet Plan"));
 		mccOverlimit.setMerchantCategoryCode(provider.getString("Merchant Category Code"));
 		mccOverlimit.setOverlimitFixedAmount(provider.getString("Overlimit Fixed Amount"));
 		mccOverlimit.setOverlimitPercentage(provider.getString("Overlimit Percentage"));

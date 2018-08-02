@@ -12,9 +12,9 @@ public class WithdrawDeviceWorkFlow {
 	
 	@Autowired
 	private Navigator navigator;
-	public void withDrawStopListDevice(WithdrawDevice withdrawDevice){
+	public void withdrawStoplistDevice(WithdrawDevice withdrawDevice){
 		WithdrawDevicePage page = navigator.navigateToPage(WithdrawDevicePage.class);
-		page.withDrawStopListDevice(withdrawDevice);
+		page.withdrawStoplistDevice(withdrawDevice);
 	}
 
 }

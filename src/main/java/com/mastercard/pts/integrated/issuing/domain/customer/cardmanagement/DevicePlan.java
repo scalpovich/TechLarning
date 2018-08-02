@@ -138,10 +138,11 @@ public class DevicePlan implements HasCodeAndDescription {
 	private static final String DP_EMV_PLAN_PIN_CHANGE_PRIORITY = "DP_EMV_PLAN_PIN_CHANGE_PRIORITY";
 	private static final String DP_EMV_PLAN_PIN_UNBLOCK_PRIORITY = "DP_EMV_PLAN_PIN_UNBLOCK_PRIORITY";
 	private static final String CORPORATE_CLIENT_CODE = "CORPORATE_CLIENT_CODE";
-
+	private static final String TRANSACTION_FEE_WAIVER_PLAN="TRANSACTION_FEE_WAIVER_PLAN";
 	public String association;
 	public String DeviceType;
 	public String ServiceCode;
+	public String transactionFeeWaiverPlan;
 	public String CustomCode;
 	public String ExpiryFlag;
 	public String ExpiryDate;
@@ -346,6 +347,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setFillEMVPlan(provider.getString(FILL_EMV_PLAN));
 		plan.setAllowInternationalTransaction(provider.getString(DP_ALLOW_INTERNATIONAL_TRANSACTIONS));
 		plan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
+		plan.setTransactionFeeWaiverPlan(provider.getString(TRANSACTION_FEE_WAIVER_PLAN));
 		return plan;
 	}
 
@@ -1398,6 +1400,10 @@ public class DevicePlan implements HasCodeAndDescription {
 
 	public String getCorporateClientCode() {
 		return corporateClientCode;
+	}
+	
+	public void setTransactionFeeWaiverPlan(String transactionFeeWaiverPlan) {
+		this.transactionFeeWaiverPlan = transactionFeeWaiverPlan;
 	}
 
 	public void setCorporateClientCode(String corporateClientCode) {

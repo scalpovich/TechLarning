@@ -5,9 +5,9 @@ import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 
 public class WithdrawDevice {
      
-	
-	String withdrawReason;
-	String withdrawDescription;
+	private final static String WITHDRAW_REASON="Withdraw_Reason";
+	private String withdrawReason;
+	private String withdrawDescription;
 
 	public String getWithdrawReason() {
 		return withdrawReason;
@@ -27,7 +27,7 @@ public class WithdrawDevice {
 	
 	public static WithdrawDevice createWithProvider(KeyValueProvider provider) {
 		WithdrawDevice withdrawDevice=new WithdrawDevice();
-		withdrawDevice.setWithdrawReason(provider.getString("Withdraw_Reason"));
+		withdrawDevice.setWithdrawReason(provider.getString(WITHDRAW_REASON));
 		withdrawDevice.setWithdrawDescription(CustomUtils.randomString(8));
 		return withdrawDevice;
 	}

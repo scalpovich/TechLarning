@@ -231,7 +231,7 @@ public class TransactionSteps {
 
 	private void setDeElementsDynamically(Device device, Transaction transactionData, String transaction) {
 		MiscUtils.reportToConsole("********** Start setDeElementsDynamically ********");
-		if (!"pinless".equalsIgnoreCase(device.getPinNumberForTransaction()) && !transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE")) // ecomm transactions cannot have a PIN
+		if (!"pinless".equalsIgnoreCase(device.getPinNumberForTransaction()) && !transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") && !transactionWorkflow.isContains(transaction, ConstantData.THREE_D_SECURE_TRANSACTION)) // ecomm transactions cannot have a PIN
 			transactionData.setDeKeyValuePairDynamic("052", device.getPinNumberForTransaction());
 		// data format is 12 digits hence leftpad with 0
 		transactionData.setDeKeyValuePairDynamic("004", StringUtils.leftPad(device.getTransactionAmount(), 12, "0"));
@@ -246,6 +246,10 @@ public class TransactionSteps {
 			// for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInuxbox
 			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); // Transaction currency code
 		}
+		if(transaction.equalsIgnoreCase("INT_MSR_CASH_ADVANCE")){
+			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data());
+		} 
+
 		// This is a Single Wallet, Single Currency INDIA card
 		// transactionData.setDeKeyValuePairDynamic("049", device.getCurrency()); // Transaction currency code
 		// transactionData.setDeKeyValuePairDynamic("050", device.getCurrency()); // Settlement currency code

@@ -19,7 +19,7 @@ public class InstitutionData {
 	private String visaPrepaidIssuerBin;
 	private String visaDebitIssuerBin;
 	private String visaCreditIssuerBin;
-	private String deDupePlanCode;
+	private String dedupePlanCode;
 	private String prepaidStatementPlan;
 	private String statementMessagePlan;
 	private String marketingMessagePlan;
@@ -153,17 +153,15 @@ public class InstitutionData {
 	public void setVisaCreditIssuerBin(String visaCreditIssuerBin) {
 		this.visaCreditIssuerBin = visaCreditIssuerBin;
 	}
-    
 	
-
-	public String getDeDupePlanCode() {
-		return deDupePlanCode;
+	public String getDedupePlanCode() {
+		return dedupePlanCode;
 	}
 
-	public void setDeDupePlanCode(String deDupePlanCode) {
-		this.deDupePlanCode = deDupePlanCode;
+	public void setDedupePlanCode(String dedupePlanCode) {
+		this.dedupePlanCode = dedupePlanCode;
 	}
-	
+
 	public String getPrepaidStatementPlan() {
 		return prepaidStatementPlan;
 	}
