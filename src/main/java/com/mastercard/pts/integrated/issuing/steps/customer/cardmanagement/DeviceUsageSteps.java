@@ -32,6 +32,8 @@ public class DeviceUsageSteps {
 	private static final String ATC = "ATC" ;
 	public static final String DEVICE_USUAGE = "DEVICE_USUAGE";
 	
+	private static int previousAmountUtilized =0;
+	
 	@Autowired
 	private TestContext context;
 
@@ -71,11 +73,13 @@ public class DeviceUsageSteps {
 		if (data.isPresent()) {
 			Assert.assertEquals("Error asserting MCG Code", mcgLimitPlan.getMcgCode(), data.get().get(DeviceUsagePage.MCG_CODE));
 			if (type.equalsIgnoreCase(DOMESTIC)) {
-				Assert.assertEquals("Error asserting Domestic Transaction Amount", context.get(ConstantData.TRANSACTION_AMOUNT), data.get().get(DeviceUsagePage.DAILY_AMOUNT_DOMESTIC_UTILIZED));
+				Assert.assertEquals("Error asserting Domestic Transaction Amount", context.get(ConstantData.TRANSACTION_AMOUNT), Integer.toString(Integer.parseInt(data.get().get(DeviceUsagePage.DAILY_AMOUNT_DOMESTIC_UTILIZED))-previousAmountUtilized));
 				Assert.assertEquals("Error asserting Domestic Velocity", deviceUsage.getVelocity(), data.get().get(DeviceUsagePage.DAILY_VELOCLITY_DOMESTIC_UTILIZED));
+				previousAmountUtilized = Integer.parseInt(data.get().get(DeviceUsagePage.DAILY_AMOUNT_DOMESTIC_UTILIZED));
 			} else if (type.equalsIgnoreCase(INTERNATIONAL)) {
-				Assert.assertEquals("Error asserting International Transaction Amount", context.get(ConstantData.TRANSACTION_AMOUNT), data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
+				Assert.assertEquals("Error asserting International Transaction Amount", context.get(ConstantData.TRANSACTION_AMOUNT), Integer.toString(Integer.parseInt(data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED))-previousAmountUtilized));
 				Assert.assertEquals("Error asserting International Velocity", deviceUsage.getVelocity(), data.get().get(DeviceUsagePage.DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
+				previousAmountUtilized = Integer.parseInt(data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
 			} else {
 				Assert.fail("Incorrect transaction type in step");
 			}
@@ -99,11 +103,13 @@ public class DeviceUsageSteps {
 		if (data.isPresent()) {
 			Assert.assertEquals("Error asserting MCG Code", mcgLimitPlan.getMcgCode(), data.get().get(DeviceUsagePage.MCG_CODE));
 			if (type.equalsIgnoreCase(DOMESTIC)) {
-				Assert.assertEquals("Error asserting Domestic Transaction Amount", context.get(ConstantData.TRANSACTION_AMOUNT), data.get().get(DeviceUsagePage.DAILY_AMOUNT_DOMESTIC_UTILIZED));
+				Assert.assertEquals("Error asserting Domestic Transaction Amount", context.get(ConstantData.TRANSACTION_AMOUNT), Integer.toString(Integer.parseInt(data.get().get(DeviceUsagePage.DAILY_AMOUNT_DOMESTIC_UTILIZED))-previousAmountUtilized));
 				Assert.assertEquals("Error asserting Domestic Velocity", deviceUsage.getVelocity(), data.get().get(DeviceUsagePage.DAILY_VELOCLITY_DOMESTIC_UTILIZED));
+				previousAmountUtilized = Integer.parseInt(data.get().get(DeviceUsagePage.DAILY_AMOUNT_DOMESTIC_UTILIZED));
 			} else if (type.equalsIgnoreCase(INTERNATIONAL)) {
-				Assert.assertEquals("Error asserting International Transaction Amount", context.get(ConstantData.TRANSACTION_AMOUNT), data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
+				Assert.assertEquals("Error asserting International Transaction Amount", context.get(ConstantData.TRANSACTION_AMOUNT), Integer.toString(Integer.parseInt(data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED))-previousAmountUtilized));
 				Assert.assertEquals("Error asserting International Velocity", deviceUsage.getVelocity(), data.get().get(DeviceUsagePage.DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
+				previousAmountUtilized = Integer.parseInt(data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
 			} else {
 				Assert.fail("Incorrect transaction type in step");
 			}

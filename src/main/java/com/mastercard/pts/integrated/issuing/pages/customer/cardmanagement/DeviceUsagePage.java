@@ -190,7 +190,7 @@ public class DeviceUsagePage extends AbstractBasePage {
 		runWithinPopup(FRAME_VIEW_DEVICE_USAGE, () -> viewFirstRecord());
 		switchToIframe(FRAME_VIEW_WALLET_USAGE);
 		navigateToWalletMCGUsage();
-		return getWalletMCGUsageData(Integer.valueOf(deviceUsage.getVelocity()));
+		return getWalletMCGUsageData(1);
 	}
 
 	@Override
