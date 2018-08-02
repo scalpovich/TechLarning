@@ -4,7 +4,7 @@ As an issuer
 I want to run few tests
 
 Meta:
-@StoryName debit_emv_retailBVT
+@StoryName prepaid_cgc_manual_auth
 @NonUIBVTest
 
 Scenario: Set up emv corporate gift prepaid card
