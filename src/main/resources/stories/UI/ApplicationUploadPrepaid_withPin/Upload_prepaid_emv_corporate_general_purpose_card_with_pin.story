@@ -1,14 +1,14 @@
 prepaid emv retail general purpose card authorization
 
 Narrative:
-In order to check transactions on prepaid emv retail general purpose card
+In order to check transactions on prepaid emv corporate general purpose card
 As an issuer
-I want to authorize transactions for prepaid emv retail general purpose card
+I want to authorize transactions for prepaid emv corporate general purpose card
 
 Meta:
 @StoryName p_emv_corp_general_purpose
 
-Scenario: Set up prepaid emv retail general purpose card using applicationUpload
+Scenario: Set up prepaid emv corporate general purpose card using applicationUpload
 Meta:
 @TestId TC398452
 Given user is logged in institution
