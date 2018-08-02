@@ -12,7 +12,6 @@ import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import static org.hamcrest.Matchers.equalTo;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
@@ -141,20 +140,12 @@ public class AuthorizationSearchSteps {
 		} 
 	}
 	
-<<<<<<< HEAD
-	@Then("user verify available balance after transaction")
-	public void validateAvailableBalanceAfterTransaction(){
-		BigDecimal availableBalanceBeforeTransaction =context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
-		List<BigDecimal> lst = authorizationSearchWorkflow.getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(availableBalanceBeforeTransaction);
-		assertThat("Verify Available Balance", availableBalanceBeforeTransaction.subtract(lst.get(0)), equalTo(lst.get(1)));
-		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, lst.get(1));
-=======
 	@When("user verifies available balance after transaction")
 	public void validateAvailableBalanceAfterTransaction(){
 		BigDecimal availableBalanceBeforeTransaction =context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
 		AvailableBalance availBal = authorizationSearchWorkflow.getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(availableBalanceBeforeTransaction);
 		assertThat("Verify Available Balance", availableBalanceBeforeTransaction.subtract(availBal.getSum()), equalTo(availBal.getAvailableBal()));
 		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, availBal.getAvailableBal());
->>>>>>> 2cb8d2c499cadec37ef0c1a088cd4f3acaf254af
 	}
+
 }

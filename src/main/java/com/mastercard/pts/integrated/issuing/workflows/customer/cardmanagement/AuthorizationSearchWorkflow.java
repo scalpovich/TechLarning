@@ -9,7 +9,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.math.BigDecimal;
+
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AvailableBalance;
@@ -27,9 +27,6 @@ public class AuthorizationSearchWorkflow {
 
 	@Autowired
 	private Navigator navigator;
-	
-	@Autowired
-	AuthorizationSearchPage authorizationSearchPage;
 
 	@Autowired
 	private TestContext context;
@@ -84,7 +81,6 @@ public class AuthorizationSearchWorkflow {
 		String transactionAmountValue = authSearchPage.getCellTextByColumnName(1, "Transaction Amount");
 		context.put(ConstantData.AUTHORIZATION_CODE, authCodeValue);
 		context.put(ConstantData.TRANSACTION_AMOUNT, transactionAmountValue);
-		context.put(ConstantData.TRANSACTION_AMOUNT_BD, new BigDecimal(transactionAmountValue));
 		logger.info("CodeAction on Authorization Search Page : {} ", actualCodeAction);
 		logger.info("Description on Authorization Search Page : {} ", actualDescription);
 
@@ -173,17 +169,6 @@ public class AuthorizationSearchWorkflow {
 		assertTrue(String.format("Response, Auth Code and Auth Description does not match. Expecting %s. Actual %s", authStatus, actualAuthStatus), actualAuthStatus.containsAll(authStatus));
 	}
 	
-<<<<<<< HEAD
-	public List<BigDecimal> getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(BigDecimal availableBalance){
-		authorizationSearchPage.viewDeviceDetails();
-		List<BigDecimal> lst = authorizationSearchPage.getTransactionBillingAmount();
-		logger.info("Available balance before transaction amount = " + availableBalance);
-		logger.info("Sum of all applicable fee and amounts = " +  lst.get(0));
-		logger.info("Available balance after transaction amount = " +  lst.get(1));
-		return lst;
-	}
-	
-=======
 	public AvailableBalance getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(BigDecimal availableBalance){
 		authorizationSearchPage.viewDeviceDetails();
 		AvailableBalance availBal = authorizationSearchPage.getAvailableBalance();
@@ -192,5 +177,4 @@ public class AuthorizationSearchWorkflow {
 		logger.info("Available balance after transaction amount = {}", availBal.getAvailableBal());
 		return availBal;
 	}
->>>>>>> 2cb8d2c499cadec37ef0c1a088cd4f3acaf254af
 }
