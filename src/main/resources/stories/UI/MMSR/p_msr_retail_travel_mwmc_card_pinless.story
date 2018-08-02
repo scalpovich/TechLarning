@@ -23,7 +23,7 @@ When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
 And user setup device currency through helpdesk
-Then currency setup for prepaid device is done correctly and updated in wallet details tab
+And currency setup for prepaid device is done correctly and updated in wallet details tab
 When user performs adjustment transaction
 And user performs adjustment transaction for second wallet
 Then embossing file batch was generated in correct format

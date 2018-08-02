@@ -85,4 +85,3 @@ public class LoginWorkflow {
 		page.signOutAgent();
 	}
 }
->>>>>>> release/Iteration14
