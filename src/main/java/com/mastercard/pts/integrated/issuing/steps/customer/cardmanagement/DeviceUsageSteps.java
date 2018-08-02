@@ -66,7 +66,7 @@ public class DeviceUsageSteps {
 	public void userDeviceUsage(String type) {
 		mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
 		device = context.get(ContextConstants.DEVICE);
-		deviceUsage = DeviceUsage.getDeviceUsageDetails();
+		deviceUsage = DeviceUsage.getDeviceUsageDetails(provider);
 		deviceUsage.setDeviceNumber(device.getDeviceNumber());
 		Optional<Map<String, String>> data = deviceUsageWorkflow.getWalletMCGUsage(deviceUsage);
 
@@ -77,7 +77,7 @@ public class DeviceUsageSteps {
 				Assert.assertEquals("Error asserting Domestic Velocity", deviceUsage.getVelocity(), data.get().get(DeviceUsagePage.DAILY_VELOCLITY_DOMESTIC_UTILIZED));
 				previousAmountUtilized = Integer.parseInt(data.get().get(DeviceUsagePage.DAILY_AMOUNT_DOMESTIC_UTILIZED));
 			} else if (type.equalsIgnoreCase(INTERNATIONAL)) {
-				Assert.assertEquals("Error asserting International Transaction Amount", context.get(ConstantData.TRANSACTION_AMOUNT), Integer.toString(Integer.parseInt(data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED))-previousAmountUtilized));
+				Assert.assertEquals("Error asserting International Transaction Amount", context.get(ConstantData.BILLING_AMOUNT), Integer.toString(Integer.parseInt(data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED))-previousAmountUtilized));
 				Assert.assertEquals("Error asserting International Velocity", deviceUsage.getVelocity(), data.get().get(DeviceUsagePage.DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
 				previousAmountUtilized = Integer.parseInt(data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
 			} else {
@@ -95,7 +95,7 @@ public class DeviceUsageSteps {
 		mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
 		device = context.get(ContextConstants.DEVICE);
 		if(context.get(DEVICE_USUAGE)==null){
-		deviceUsage = DeviceUsage.getDeviceUsageDetails();
+		deviceUsage = DeviceUsage.getDeviceUsageDetails(provider);
 		deviceUsage.setDeviceNumber(device.getDeviceNumber());
 		}
 		Optional<Map<String, String>> data = deviceUsageWorkflow.getWalletMCGUsage(deviceUsage);
@@ -107,7 +107,7 @@ public class DeviceUsageSteps {
 				Assert.assertEquals("Error asserting Domestic Velocity", deviceUsage.getVelocity(), data.get().get(DeviceUsagePage.DAILY_VELOCLITY_DOMESTIC_UTILIZED));
 				previousAmountUtilized = Integer.parseInt(data.get().get(DeviceUsagePage.DAILY_AMOUNT_DOMESTIC_UTILIZED));
 			} else if (type.equalsIgnoreCase(INTERNATIONAL)) {
-				Assert.assertEquals("Error asserting International Transaction Amount", context.get(ConstantData.TRANSACTION_AMOUNT), Integer.toString(Integer.parseInt(data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED))-previousAmountUtilized));
+				Assert.assertEquals("Error asserting International Transaction Amount", context.get(ConstantData.BILLING_AMOUNT), Integer.toString(Integer.parseInt(data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED))-previousAmountUtilized));
 				Assert.assertEquals("Error asserting International Velocity", deviceUsage.getVelocity(), data.get().get(DeviceUsagePage.DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
 				previousAmountUtilized = Integer.parseInt(data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
 			} else {

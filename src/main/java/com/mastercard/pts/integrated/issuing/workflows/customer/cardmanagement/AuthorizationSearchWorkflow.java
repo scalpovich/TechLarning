@@ -79,8 +79,10 @@ public class AuthorizationSearchWorkflow {
 		String actualDescription = authSearchPage.getCellTextByColumnName(1, descriptionColumnName);
 		String authCodeValue = authSearchPage.getCellTextByColumnName(1, "Auth Code");
 		String transactionAmountValue = authSearchPage.getCellTextByColumnName(1, "Transaction Amount");
+		String billingAmountValue = authSearchPage.getCellTextByColumnName(1, "Billing Amount");
 		context.put(ConstantData.AUTHORIZATION_CODE, authCodeValue);
 		context.put(ConstantData.TRANSACTION_AMOUNT, transactionAmountValue);
+		context.put(ConstantData.BILLING_AMOUNT, billingAmountValue);
 		logger.info("CodeAction on Authorization Search Page : {} ", actualCodeAction);
 		logger.info("Description on Authorization Search Page : {} ", actualDescription);
 
