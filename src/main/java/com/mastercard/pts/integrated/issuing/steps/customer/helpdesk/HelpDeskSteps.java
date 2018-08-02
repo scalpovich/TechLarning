@@ -86,6 +86,9 @@ public class HelpDeskSteps {
 
 	@Autowired
 	NewDevice newDevice;
+	
+	@Autowired
+	HelpDeskGeneral helpDeskGetterSetter;
 
 	EventAndAlerts eventAndAlerts = new EventAndAlerts();
 
@@ -639,13 +642,15 @@ public class HelpDeskSteps {
 
 	@When("User search for device on search screen for product type $prepaid and validates the status as $NORMAL")
 	public void thenUserSearchForDeviceOnSearchScreenPrepaid(String productType, String status) {
-		helpdeskgettersetter.setProductType(ProductType.fromShortName(productType));
-
-		String actualStatus = helpdeskFlows.searchForDevicePrepaid(helpdeskgettersetter);
-		if (actualStatus.contains(status)) {
-			Assert.assertTrue("status of newly created device is normal ", true);
-		} else {
-			Assert.assertTrue("status of newly created device is not normal ", false);
+		helpDeskGetterSetter.setProductType(ProductType.fromShortName(productType));
+		List<String> deviceNumbers = context.get(ContextConstants.ALL_DEVICE_NUMBERS);
+		for (int i = 0; i < deviceNumbers.size(); i++) {
+			String actualStatus = helpdeskFlows.searchForDevicePrepaid(helpDeskGetterSetter, deviceNumbers.get(i));
+			if (actualStatus.contains(status)) {
+				Assert.assertTrue("status of newly created device is normal ", true);
+			} else {
+				Assert.assertTrue("status of newly created device is not normal ", false);
+			}
 		}
 
 	}
