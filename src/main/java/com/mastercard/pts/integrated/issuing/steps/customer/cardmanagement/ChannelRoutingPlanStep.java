@@ -51,7 +51,7 @@ public class ChannelRoutingPlanStep  {
 		accountRangeRoutingFlows.addChannelRoutingPlan(accountRangeRoutingPlan);
 	}
 
-	@When("user creates Account Range for Routing for $channelName channel")
+	@When("user creates account range for routing transactions on $channelName channel")
 	public void userCreatesChannelRoutingForUserDefineChannel(String channelName) {
 		accountRangeRoutingPlan=AccountRangeRoutingPlan.channelRoutingPlanDataProvider(context.get(ContextConstants.DEVICE));
 		//Environment change is temporary fix as we are migrating on CBS2
