@@ -31,6 +31,9 @@ public class InstitutionSelectionPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "institutionCode:input:dropdowncomponent")
 	private MCWebElement institution;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[contains(text(),'Click here to login')]")
+	private MCWebElement loginElement;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "confirm")
 	private MCWebElement confirmButton;
 
@@ -50,8 +53,8 @@ public class InstitutionSelectionPage extends AbstractBasePage {
 
 	public void selectInstitution(String... optionName) {
 		if (optionName.length == 0) {
-			selectByVisibleText(institution, InstitutionSelection
-					.IntitutionDataProvider().getInstiution());
+			selectByVisibleText(institution, InstitutionSelection.IntitutionDataProvider()
+					.getInstiution());
 		} else {
 			selectByVisibleText(institution, Arrays.toString(optionName));
 		}
@@ -60,8 +63,8 @@ public class InstitutionSelectionPage extends AbstractBasePage {
 
 	public void selectAdminInstitution(String... optionName) {
 		if (optionName.length == 0) {
-			selectByVisibleText(institution, InstitutionSelection
-					.IntitutionDataProvider().getAdminInstiutionName());
+			selectByVisibleText(institution, InstitutionSelection.IntitutionDataProvider()
+					.getAdminInstiutionName());
 		} else {
 			selectByVisibleText(institution, Arrays.toString(optionName));
 		}
@@ -70,24 +73,25 @@ public class InstitutionSelectionPage extends AbstractBasePage {
 
 	public void selectBankAdminInstitution(String... optionName) {
 		if (optionName.length == 0) {
-			selectByVisibleText(institution, InstitutionSelection
-					.IntitutionDataProvider().getBankInstitution());
+			selectByVisibleText(institution, InstitutionSelection.IntitutionDataProvider()
+					.getBankInstitution());
 		} else {
 			selectByVisibleText(institution, Arrays.toString(optionName));
 		}
 		confirmButton.click();
 	}
 
+
 	@Override
 	protected List<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.visibilityOf(institutionSelect),
+		return Arrays.asList(
+				WebElementUtils.visibilityOf(institutionSelect),
 				WebElementUtils.elementToBeClickable(confirmButton));
 	}
 
 	public List<String> getAvailableInstitutions() {
 		return institutionSelect.getSelect().getOptions().stream()
-				.map(WebElement::getText)
-				.filter(text -> !text.equals(OPTION_SELECT_ONE))
+				.map(WebElement::getText).filter(text -> !text.equals(OPTION_SELECT_ONE))
 				.collect(Collectors.toList());
 	}
 
@@ -95,14 +99,14 @@ public class InstitutionSelectionPage extends AbstractBasePage {
 		return institutionSelect.getSelect().getFirstSelectedOption().getText();
 	}
 
+
 	public void clickConfirm() {
 		confirmButton.click();
 	}
-
-	public boolean checkSessionExpired() {
+	public boolean checkSessionExpired(){
 		SimulatorUtilities.wait(5000);
-		if (Elements("//ul[@class='feedbackPanel']//span").size() > 0) {
-			Element("//a[contains(text(),'Click here to login')]").click();
+		if( Elements("//ul[@class='feedbackPanel']//span").size()>0 ){
+			loginElement.click();
 			return true;
 		}
 		return false;
