@@ -162,9 +162,9 @@ public class DeviceRangePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[contains(@name,'branchCode')]/option[text()!='Select One']")
 	private MCWebElements branchDDwnList; 
 
-	int i = 0;
-
 	private final String DEVICE_ROUTING = "Device Range Based [D]";
+	
+	int i = 0;
 
 	public void clickAddDeviceRange() {
 		clickWhenClickable(AddDeviceRangeBtn);
@@ -234,6 +234,7 @@ public class DeviceRangePage extends AbstractBasePage {
 		selectDropDownByIndex(BranchDDwn, 1);
 
 	}
+
 
 	public void clickAddButton() {
 		clickWhenClickable(AddTxt);
