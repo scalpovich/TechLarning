@@ -115,7 +115,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	public void processPreProductionBatchNewApplication(PreProductionBatch batch) {
 		waitForLoaderToDisappear();
 		selectDropDownByText(productTypeDDwn, batch.getProductType());
-		CustomUtils.ThreadDotSleep(8000);		
+		CustomUtils.ThreadDotSleep(25000);		
 		enterText(batchNumberTxt, context.get(CreditConstants.NEW_APPLICATION_BATCH));
 		ClickButton(searchBtn);
 		waitAndSearchForRecordToAppear();

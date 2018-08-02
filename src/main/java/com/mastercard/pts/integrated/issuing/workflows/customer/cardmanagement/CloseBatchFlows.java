@@ -22,7 +22,7 @@ public class CloseBatchFlows {
 	public void closeBatchExecution(){
 		closeBatchPage = navigator.navigateToPage(CloseBatchPage.class);
 		closeBatchPage.allBatchNumberRetrieval();
-		SimulatorUtilities.wait(5000);
+		SimulatorUtilities.wait(30000);
 		closeBatchPage.identifyBatchNumberToProcess();
 		closeBatchPage.processAppropriateBatchForApplication();
 	}

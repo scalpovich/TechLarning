@@ -90,7 +90,7 @@ TestContext context;
 		verifyapplication();
 		waitForPageToLoad(driver());
 		clickWhenClickable(editImg);
-		SimulatorUtilities.wait(5000);
+		SimulatorUtilities.wait(30000);
 		
 		runWithinPopup("Edit Application", () ->{					
 			clickWhenClickable(verifyBtn);

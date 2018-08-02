@@ -22,7 +22,7 @@ public class DeviceGenerationBatchFlows {
 	public void deviceGenerationBatchExecution(){
 		deviceGenerationBatchPage = navigator.navigateToPage(DeviceGenerationBatchPage.class);
 		deviceGenerationBatchPage.allBatchNumberRetrieval();
-		SimulatorUtilities.wait(5000);
+		SimulatorUtilities.wait(30000);
 		deviceGenerationBatchPage.identifyBatchNumberToProcess();
 		deviceGenerationBatchPage.processAppropriateBatchForApplication();
 	}	

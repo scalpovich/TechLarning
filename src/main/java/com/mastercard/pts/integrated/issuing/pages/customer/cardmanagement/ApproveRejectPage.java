@@ -82,10 +82,9 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 	
 	public String approveApplication() {
 		enterApplicationNumber();
-		selectFromAndToDate();
-		clickEditRecord();
-		SimulatorUtilities.wait(5000);
-
+		selectFromAndToDate();	
+		clickEditRecord();	
+		SimulatorUtilities.wait(30000);
 		runWithinPopup("Edit Application", () -> {
 			clickWhenClickable(approveBtn);
 		});
