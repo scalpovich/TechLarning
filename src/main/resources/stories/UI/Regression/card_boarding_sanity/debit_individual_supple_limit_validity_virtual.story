@@ -9,7 +9,7 @@ Meta:
 @StoryName debit_card
 @DebitRegression
 
-Scenario: To verify functionality of debit supplementary Limited Validity Virtual Card [8] card boarding
+Scenario: To verify functionality of supplementary limited validity virtual debit card boarding
 Given setting json values in excel for Debit
 When user is logged in institution
 And User fills MCC Rules for debit product

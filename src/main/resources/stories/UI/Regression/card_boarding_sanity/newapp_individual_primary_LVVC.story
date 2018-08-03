@@ -6,7 +6,7 @@ I want to assert card creation
 Meta:
 @CreditRegression
 @StoryName credit_card				 
-Scenario:creation of mastercard_individual_primary_LVVC Card credit device
+Scenario:creation of primary limited validity virtual credit card
 Given setting json values in excel for Credit
 When user is logged in institution
 And User fills Dedupe Plan
