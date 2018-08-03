@@ -13,6 +13,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManag
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
@@ -93,9 +94,19 @@ public class VendorPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
 	private MCWebElement CancelBtn;
-
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "pinProductionSupported:checkBoxComponent")
+	private MCWebElement pinProductionCheckBox;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "deviceProductionSupported:checkBoxComponent")
+	private MCWebElement deviceProductionCheckBox;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "deviceProductionSupported:checkBoxComponent")
+	private MCWebElement priorityPassProductionCheckBox;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[contains(@name,'branchCode')]/option[text()!='Select One']")
 	private MCWebElements branchDDwnList;
+
 
 	public void clickaddVenor() {
 		clickWhenClickable(AddVendorBtn);
@@ -251,5 +262,20 @@ public class VendorPage extends AbstractBasePage {
 			switchToDefaultFrame();
 		}
 	}
-
+	
+	public void selectPinProductionCheckBox() {
+		ClickCheckBox(pinProductionCheckBox, true);
+	}
+	
+	public void selectPriorityPassProductionCheckBox() {
+		ClickCheckBox(priorityPassProductionCheckBox, true);
+	}
+	
+	public void selectEmbossingFileTemplate() {
+		WebElementUtils.selectDropDownByIndex(EmbossingFileTemplateDDwn, 1);
+	}
+	
+	public void selectPinFileTemplate() {
+		WebElementUtils.selectDropDownByIndex(PINFileTemplateDDwn, 1);
+	}
 }

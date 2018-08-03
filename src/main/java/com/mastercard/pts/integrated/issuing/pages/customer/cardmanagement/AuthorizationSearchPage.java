@@ -22,8 +22,6 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
-import java.math.BigDecimal;
-import java.math.MathContext;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_SEARCH, CardManagementNav.L2_SEARCH_AUTHORIZATION, CardManagementNav.L3_AUTHORIZATION_SEARCH })
@@ -181,17 +179,9 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		return fieldsForAssertion;
 	}
 	
-<<<<<<< HEAD
-	public List<BigDecimal> getTransactionBillingAmount(){
-
-		String[] amountType = amountTypes.split(":");
-		List<BigDecimal> lst = new ArrayList<BigDecimal>();
-
-=======
 	public AvailableBalance getAvailableBalance(){
 		String[] amountType = amountTypes.split(":");
 		AvailableBalance availBal = new AvailableBalance();
->>>>>>> 2cb8d2c499cadec37ef0c1a088cd4f3acaf254af
 		runWithinPopup("View Authorization", () -> {
 			BigDecimal sum =  new BigDecimal(0)   ;
 			for(String str : amountType){
@@ -199,18 +189,10 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 				logger.info("value of " + str + " = "+  value);
 				sum = sum.add(new BigDecimal(value),  new MathContext(5));
 			}
-<<<<<<< HEAD
-			lst.add(sum);
-			lst.add(new BigDecimal(getTextFromPage(availableBalanceTxt)));
-			clickCloseButton();
-		});
-		return lst;
-=======
 			availBal.setSum(sum);
 			availBal.setAvailableBal(new BigDecimal(getTextFromPage(availableBalanceTxt)));			
 			clickCloseButton();
 		});
 		return availBal;
->>>>>>> 2cb8d2c499cadec37ef0c1a088cd4f3acaf254af
 	}
 }
