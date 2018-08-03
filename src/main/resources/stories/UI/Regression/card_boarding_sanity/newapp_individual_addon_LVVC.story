@@ -18,7 +18,7 @@ And User fills Document Checklist Screen for credit product
 And User fills Device Joining and Membership Fee Plan for credit product
 And User fills Device Event Based Fee Plan for credit product
 And for EMV Card [2] User fills Device Plan for credit product for Mastercard
-And for Limited Validity Virtual Card User fills Supplementary Device Plan for prepaid product for MASTERCARD [02]
+And for Limited Validity Virtual Card [8] User fills Supplementary Device Plan for prepaid product for MASTERCARD [02]
 And User fills Billing Cycle
 And User fills Payment Priority
 And User fills Transaction Rule Plan
@@ -42,7 +42,7 @@ And user sign out from customer portal
 
 Scenario:Board new add-on device
 Given user is logged in institution
-When credit device is created using new Application screen for Individual [0] and "Add-on Device [A]" and New Client [N] and Limited Validity Virtual Card
+When credit device is created using new Application screen for Individual [0] and "Add-on Device [A]" and New Client [N] and Limited Validity Virtual Card [8]
 And user verifies the credit application device
 And user approves the credit application device
 And user processes close batch for new Application

@@ -26,7 +26,6 @@ And User fills Transaction Rule Plan
 And User fills Credit Plan
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail General Purpose Card [4]
-And User fills Wallet Plan for credit product and program Retail General Purpose Card [4]
 And User fills MCC Rules for credit product
 And User Add-on Device fills new Program Retail General Purpose Card [4] section for credit product for MASTERCARD [02]
 And for Primary Device and New Client user fills Device Range section for credit product

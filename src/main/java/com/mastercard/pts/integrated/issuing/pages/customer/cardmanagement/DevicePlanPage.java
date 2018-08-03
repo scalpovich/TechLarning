@@ -811,7 +811,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectIframeDeviceType(String deviceType) {
-		WebElementUtils.selectDropDownByVisibleText(iframeDeviceTypeDdwn, deviceType);
+		selectByVisibleText(iframeDeviceTypeDdwn, deviceType);
 	}
 
 	public void enterIframeServiceCode(String servicecode) {
