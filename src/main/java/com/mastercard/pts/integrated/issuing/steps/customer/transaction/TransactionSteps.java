@@ -500,7 +500,6 @@ public class TransactionSteps {
 
 	@Then("search with device in transaction screen and status for wallet to wallet transfer transaction")
 	public void thenSearchWithDeviceInTransactionScreenCheckReversalStatusAndStatusShouldBeReversal() {
-		ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		Assert.assertTrue("successfully completed the wallet to wallet fund transfer",

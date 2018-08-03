@@ -133,7 +133,9 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.getWalletNumber(device);
 	}
 
-	public void walletToWalletTransfer(Device device) {
+	public void walletToWalletTransfer(Device device) {		
+		searchByDeviceNumber(device);
+		clickCustomerCareEditLink();
 		helpDeskPage.walletToWalletTransfer(device);
 	}
 

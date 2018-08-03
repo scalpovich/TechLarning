@@ -23,7 +23,8 @@ public class CardholderServicesSteps extends AbstractBaseFlows{
 	@Autowired
 	CardholderServicesFlows cardholderServiceflw;
 	
-	@When ("request for device replace")
+	@Then ("request for device replacement")
+	@When ("request for device replacement")
 	public void replaceDeviceRequest(){
 		CardholderServices cardholderService = CardholderServices.cardholderServicesDataProvider();
 		cardholderServiceflw.navigateToServicesReplaceDevicePage();

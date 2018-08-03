@@ -1,4 +1,3 @@
-!-- auther: e076168
 Narrative:
 As a Cardhodler
 I want to able to loing into customer portal 
@@ -7,7 +6,7 @@ In order to do the wallet to wallet transactions
 
 Meta:
 @StoryName c_helpdesk_wallet_transfer
-@SanityCards
+@csr_wtow_fundTransfer
 
 Scenario: To Verify functionality of wallet transfer from mastercard interchange by emv card with program Corporate Travel Card - Multi Currency
 Given user is logged in institution

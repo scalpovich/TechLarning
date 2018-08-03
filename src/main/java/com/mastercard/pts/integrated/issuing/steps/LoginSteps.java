@@ -100,7 +100,9 @@ public class LoginSteps extends AbstractBaseFlows {
 	 * 
 	 * Login into Card Holder portal with valid login details from excel sheet
 	 */
+	@Then("login to cardholder portal as existing Cardholder user")
 	@Given("login to cardholder portal as existing Cardholder user")
+	@When("login to cardholder portal as existing Cardholder user")
 	public void loginToCardholder() {
 		loginCardHolderProvider = LoginCardholder.loginCardholderDataProvider();
 		loginCardholder(loginCardHolderProvider.getUserName(), loginCardHolderProvider.getPassWord());
