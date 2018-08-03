@@ -8,7 +8,6 @@ I want to authorize transactions for debit MSR retail debit card
 Meta:
 @StoryName d_msr_corp_MMSR
 @MMSR
-@nitin_summarised
 
 Scenario: Set up program for debit emv retail debit card
 Given user is logged in institution
@@ -33,5 +32,5 @@ When perform an MMSR MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
-And search MasterCard MoneySend authorization and verify 000-Successful status
+And search Money Send Person To Person authorization and verify 000-Successful status
 And user sign out from customer portal

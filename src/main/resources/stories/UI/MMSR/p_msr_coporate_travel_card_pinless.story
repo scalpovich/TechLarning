@@ -8,8 +8,6 @@ I want to authorize transactions for prepaid MSR retail general purpose card
 Meta:
 @StoryName p_msr_corp_travel_MMSR
 @MMSR
-@nitin_summarised
-
 Scenario: Set up prepaid msr corporate travel card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
@@ -32,5 +30,5 @@ When perform an MMSR MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
-And search MasterCard MoneySend authorization and verify 000-Successful status
+And search Money Send Person To Person authorization and verify 000-Successful status
 And user sign out from customer portal

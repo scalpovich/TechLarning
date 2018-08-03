@@ -24,7 +24,7 @@ When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 When user activates device through helpdesk
 And user setup device currency through helpdesk
-Then currency setup for prepaid device is done correctly and updated in wallet details tab
+And currency setup for prepaid device is done correctly and updated in wallet details tab
 When user performs adjustment transaction
 And user performs adjustment transaction for second wallet
 Then embossing file batch was generated in correct format
@@ -37,5 +37,5 @@ When perform an MMSR MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
-And search MasterCard MoneySend authorization and verify 000-Successful status
+And search Money Send Person To Person authorization and verify 000-Successful status
 And user sign out from customer portal
