@@ -564,10 +564,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public BigDecimal activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
-		logger.info("credit limit change request: {}",helpdeskGeneral.getCardPackId());
+		logger.info("227 - Credit limit Change Commercial Cards: {}",helpdeskGeneral.getCardPackId());
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
-		runWithinPopup("226 - Credit limit Change Request", ()->{
+		runWithinPopup("227 - Credit limit Change Commercial Cards", ()->{
 			if(helpdeskGeneral.getLimittypestatus().equalsIgnoreCase("true")){
 				selectLimitType(helpdeskGeneral.getLimitType());
 				WebElementUtils.pickDate(effectiveDateTxt, LocalDate.now());
