@@ -11,7 +11,5 @@ Scenario:To Verify that the user can validate credit transaction limit for retai
 Given setting json values in excel for Credit
 Given user is logged in institution
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-Then user activates permanent credit limit change request
-Then device has "normal" status
-Then user verify available Card limit for card after transaction
+Then user verify permanent credit limit for credit product
 And user sign out from customer portal
