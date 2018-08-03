@@ -1,7 +1,7 @@
 Narrative:
 In order to check credit supplementary device functionality
 As a issuer 
-I want to perform transaction on supplementary decive
+I want to perform transaction on supplementary device
 
 Meta:
 @CreditSupplementaryCardTransaction
@@ -62,28 +62,28 @@ Then search Pre-Auth Completion authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: Perform MSR_PURCHASE Authorization transaction
-When perform an MSR_PURCHASE MAS transaction on the same card
+Given perform an MSR_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
 When user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: Perform MSR_POS_BALANCE_INQUIRY Authorization transaction
-When perform an MSR_POS_BALANCE_INQUIRY MAS transaction on the same card
+Given perform an MSR_POS_BALANCE_INQUIRY MAS transaction on the same card
 Then MAS test results are verified
 When user is logged in institution
 Then search Balance Inquiry authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
-When perform an MSR_CASH_ADVANCE MAS transaction on the same card
+Given perform an MSR_CASH_ADVANCE MAS transaction on the same card
 Then MAS test results are verified
 When user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: Perform MSR_CASH_WITHDRAWAL Authorization transaction
-When perform an MSR_CASH_WITHDRAWAL MAS transaction on the same card
+Given perform an MSR_CASH_WITHDRAWAL MAS transaction on the same card
 Then MAS test results are verified
 And MAS simulator is closed
 When user is logged in institution
