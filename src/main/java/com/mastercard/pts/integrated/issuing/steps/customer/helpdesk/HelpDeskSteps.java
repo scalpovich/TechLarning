@@ -848,4 +848,3 @@ public class HelpDeskSteps {
 		helpdeskFlows.searchForNewApplicationFileUpload(helpDeskGetterSetter);
 	}
 }
-
