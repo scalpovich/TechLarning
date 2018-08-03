@@ -573,10 +573,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 //				WebElementUtils.pickDate(effectiveDateTxt, LocalDate.now());
 //				WebElementUtils.pickDate(endDateTxt, LocalDate.now());
 //			}
-//			selectLimitType(helpdeskGeneral.getLimitType());
+			selectLimitType(helpdeskGeneral.getLimitType());
 //			enterClientCreditLimit(helpdeskGeneral.getClientCreditLimit());
 //			enterAccountCreditLimit(helpdeskGeneral.getAccountCreditLimit());
-			enterNewCreditLimit(helpdeskGeneral.getNewCreditLimit());
+//			enterNewCreditLimit(helpdeskGeneral.getNewCreditLimit());
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();
