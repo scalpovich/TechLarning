@@ -307,13 +307,13 @@ public class DeviceSteps {
 		context.put(CreditConstants.APPLICATION, device);
 	}
 	
-	@When("User select secondary card for transaction")
+	@When("user selects secondary card for transaction")
 	public void userSelectSecondaryCardForTrasaction(){
 		//Code for saving primary device for future use
-		DevicePlan primaryDeveicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		DevicePlan primaryDevicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		Device primaryDevice = context.get(ContextConstants.DEVICE);
 		context.put(ContextConstants.PRIMARY_DEVICE, primaryDevice);
-		context.put(ContextConstants.PRIMARY_DEVICE_PLAN, primaryDeveicePlan);
+		context.put(ContextConstants.PRIMARY_DEVICE_PLAN, primaryDevicePlan);
 		
 		//Override device with secondary device
 		DevicePlan deviceplan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
