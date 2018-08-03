@@ -72,6 +72,7 @@ public class WithdrawDevicePage extends AbstractBasePage {
 			enterWithdrawDeviceDescription(withdrawDevice.getWithdrawDescription());
 			clickSaveButton();
 		});
+		verifyOperationStatus();
 	}
 	
 	public void searchWithdrawDevice(String searchDeviceNumber){

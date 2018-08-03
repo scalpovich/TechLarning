@@ -31,10 +31,12 @@ And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
 And device has "normal" status
+Then user sign out from customer portal
 
 Scenario: Add the device into stoplist
 When user is logged in institution
 And user stoplists a card from stoplist device screen
+Then user sign out from customer portal
 
 Scenario: Pin Generation
 Given connection to FINSim is established
@@ -59,7 +61,7 @@ And user sign out from customer portal
 Scenario: Withdraw the device from stoplist
 Given user is logged in institution
 When user withdraws a card from withdraw device screen
-
+Then user sign out from customer portal
 
 Scenario: Transaction EMV_PURCHASE and EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application unblock
 When perform an EMV_PURCHASE MAS transaction on the same card
