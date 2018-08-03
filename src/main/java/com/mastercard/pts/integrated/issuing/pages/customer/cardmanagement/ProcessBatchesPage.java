@@ -163,7 +163,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private MCWebElement methodToGenerateFileDD;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
-	private MCWebElement binDD;
+	private MCWebElement binDDwn;
+	
+	private static final int NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE=100;
 
 	public void selectBatchType(String option) {
 		selectByVisibleText(batchTypeDDwn, option);
@@ -235,9 +237,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		switchToIframe(Constants.VIEW_BATCH_DETAILS);
 
 		// unless it is completed, refresh it - No of attempts: 5
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE; i++) {
 			if (processBatchStatusTxt.getText().equalsIgnoreCase("PENDING [0]") || processBatchStatusTxt.getText().equalsIgnoreCase("IN PROCESS [1]")) {
-				SimulatorUtilities.wait(6000);
+				SimulatorUtilities.wait(8000);
 				ClickButton(closeBtn);
 				getFinder().getWebDriver().switchTo().defaultContent();
 				getFinder().getWebDriver().findElement(By.xpath(statusXpath)).click();
@@ -525,18 +527,18 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		String elementXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic);
 		Boolean isProcessed = false;
 		String statusXpath = elementXpath + "//parent::td//following-sibling::td/a";
-		CustomUtils.ThreadDotSleep(20000);
-		getFinder().getWebDriver().findElement(By.xpath(statusXpath)).click();
+		SimulatorUtilities.wait(20000);
+		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
 		switchToIframe(Constants.VIEW_BATCH_DETAILS);
 
-		// unless it is completed, refresh it - No of attempts: 5
-		for (int i = 0; i < 5; i++) {
+		// unless it is completed, refresh it - No of attempts: 100
+		for (int i = 0; i < NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE; i++) {
 			if (processBatchStatusTxt.getText().equalsIgnoreCase("PENDING [0]") || processBatchStatusTxt.getText().equalsIgnoreCase("IN PROCESS [1]")) {
 				ClickButton(closeBtn);
 				waitForLoaderToDisappear();
 				getFinder().getWebDriver().switchTo().defaultContent();
 				waitForLoaderToDisappear();
-				getFinder().getWebDriver().findElement(By.xpath(statusXpath)).click();
+				clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
 				switchToIframe(Constants.VIEW_BATCH_DETAILS);
 				waitForLoaderToDisappear();
 				waitForElementVisible(processBatchStatusTxt);
@@ -581,6 +583,6 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 	public void selectBin(String option)
 	{
-		WebElementUtils.selectDropDownByVisibleText(binDD, option);
+		WebElementUtils.selectDropDownByVisibleText(binDDwn, option);
 	}
 }

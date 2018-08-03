@@ -118,7 +118,9 @@ public class WalletPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "///div[3]/div[4]/div[2]/div[2]/span/div[1]/ul/li/span")
 	private MCWebElement msg;
-
+    
+	private static final String CREDIT_PRODUCT="credit";
+	
 	public void clickaddWalletPLan() {
 		clickWhenClickable(addWalletPlanBtn);
 		switchToAddWalletPlanFrame();
@@ -330,16 +332,13 @@ public class WalletPlanPage extends AbstractBasePage {
 		String walletPlanDesc;
 		walletPlancode = enterWalletPlanCode(walletplan);
 		walletPlanDesc = enterWalletPlanDescription(walletplan);
+		waitForWicket(driver());
 		selectProduct(walletplan);
-		waitForPageToLoad(driver());
-		waitForLoaderToDisappear();
-		CustomUtils.ThreadDotSleep(5000);
+		waitForWicket(driver());
 		selectProgramType(walletplan);
-		waitForPageToLoad(driver());
-		selectWalletUsage(walletplan);
 		selectCurrency(walletplan);
-		waitForPageToLoad(driver());
-		if (walletplan.getProductType().equalsIgnoreCase("credit")) {
+		selectWalletUsage(walletplan);
+		if (walletplan.getProductType().equalsIgnoreCase(CREDIT_PRODUCT)) {
 			selectCreditPlan();
 			selectBillingCycleCode();
 		}
