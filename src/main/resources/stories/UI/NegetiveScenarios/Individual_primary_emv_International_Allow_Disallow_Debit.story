@@ -11,30 +11,30 @@ Meta:
 
 Scenario: Set up program for debit emv corporate debit card
 Given user is logged in institution
-And device range for program with device plan for "debit" "emv" card
-When user creates new device of debit type for new client
-Then device has "normal" status
-When user has wallet number information for debit device
-When user performs adjustment transaction
-When user has current wallet balance amount information for debit device
+When device range for program with device plan for "debit" "emv" card
+Then user creates new device of debit type for new client
+And device has "normal" status
+And user has wallet number information for debit device
+And user performs adjustment transaction
+And user has current wallet balance amount information for debit device
 And user sign out from customer portal
 
 Scenario: debit emv corporate debit card device production
 Given user is logged in institution
-And a new device was created
-When processes pre-production batch for debit
-When processes device production batch for debit
-When processes pin generation batch for debit
-Then device has "normal" status
-When user selects International Use Allow/Disallow status
-Then user activates device through helpdesk
+When a new device was created
+And processes pre-production batch for debit
+And processes device production batch for debit
+And processes pin generation batch for debit
+And device has "normal" status
+And user selects International Use Allow/Disallow status
+And user activates device through helpdesk
 
 Scenario: Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
-When embossing file batch was generated in correct format
-When PIN is retrieved successfully with data from Pin Offset File
-Then FINSim simulator is closed
+Then embossing file batch was generated in correct format
+And PIN is retrieved successfully with data from Pin Offset File
+And FINSim simulator is closed
 
 Scenario: Perform INT_EMV_PURCHASE Authorization transaction
 Given connection to MAS is established

@@ -367,6 +367,7 @@ public class HelpDeskSteps {
 
 	@Given("user has wallet number information for $type device")
 	@When("user has wallet number information for $type device")
+	@Then("user has wallet number information for $type device")
 	public void givenUserHasWalletNumberInformation(String type) {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
@@ -526,6 +527,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.activateDevice(helpdeskGeneral);
 	}
 	
+	@Then("user selects $reason status")
 	@When("user selects $reason status")
 	public void whenUserSelectsEccomerceUseAllowDisallowStatus(String status) {
 		Device device = context.get(ContextConstants.DEVICE);
