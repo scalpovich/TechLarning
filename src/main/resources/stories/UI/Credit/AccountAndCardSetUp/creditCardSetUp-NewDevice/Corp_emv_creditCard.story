@@ -22,17 +22,15 @@ And User fills Device Event Based Fee Plan for credit product
 And User fills Device Plan for credit product
 And User fills Billing Cycle
 And User fills Payment Priority
-!-- And User fills Payment Bounce Reason
 And User fills Transaction Rule Plan
 And User fills Credit Plan
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Corporate Credit Card [10]
 And User fills MCC Rules for credit product
 And User fills Program section for credit product and program Corporate Credit Card [10]
-When User fills Device Range section for credit product
+And User fills Device Range section for credit product
 Then credit device is created using new device screen
-Then credit processes pre-production batch using new Device
-Then credit processes deviceproduction batch using new Device
-Then credit processes pinProduction batch using new Device
-Then User search for new device on search screen for credit and validates the status as NORMAL
+And credit processes pre-production batch using new Device
+And credit processes deviceproduction batch using new Device
+And User search for new device on search screen for credit and validates the status as NORMAL
 

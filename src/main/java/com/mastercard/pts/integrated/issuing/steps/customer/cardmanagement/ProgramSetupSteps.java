@@ -107,7 +107,7 @@ public class ProgramSetupSteps {
 	private CreditCardBillingCycle creditCardBillingCycle;
 
 	private DevicePlan devicePlan;
-
+	
 	private DevicePlan devicePlanSupplementary;
 
 	private Program program;
@@ -144,40 +144,24 @@ public class ProgramSetupSteps {
 
 	@When("prepaid $deviceType device is available with balance amount")
 	@Given("prepaid $deviceType device is available with balance amount")
-	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
-			"When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
-			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan",
-			"When User fills Transaction Plan for prepaid product",
-			"When User fills Transaction Limit Plan for prepaid product",
-			"When User fills Document Checklist Screen for prepaid product",
-			"When User fills Device Joining and Membership Fee Plan for prepaid product",
-			"When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card",
-			"When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
-			"When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product", "When user assigns service code to program",
-			"When user creates a bulk device production request for prepaid",
-			"When processes created bulk device generation request for prepaid",
-			"When processes pre-production batch for prepaid", "When processes device production batch for prepaid",
-			"When processes pin generation batch for prepaid", "When user sign out from customer portal",
-			"When user is logged in agent portal as admin user",
-			"When user fills information to assign program to agency and submits form",
-			"When user sign out from agent portal", "When user is logged in agent portal as admin user",
-			"When user fills information to assign program to branch and submits form",
-			"When user sign out from agent portal", "When user is logged in agent portal as admin user",
-			"When user fills information to assign program to agent and submits form",
-			"When user sign out from agent portal", "When user is logged in agent portal as agency user",
-			"When user fills order details and submits the form", "When user sign out from agent portal",
-			"When user is logged in institution", "When user fills quantity to be dispatched and submits the form",
-			"When user sign out from customer portal", "When user is logged in agent portal as agency user",
-			"When user fills the order acceptance details and submits the form", "When user sign out from agent portal",
-			"When user is logged in agent portal as agent user", "When user fills program details with registration",
-			"When user sign out from agent portal", "When user is logged in agent portal as agent user",
-			"When user fills card sale checker details and submits the form", "When user sign out from agent portal",
-			"When user is logged in institution",
-			"When user fills General details with product prepaid and submits the form for registered device",
-			"When user activates device through helpdesk", "When user has wallet number information for prepaid device",
-			"When user performs adjustment transaction" })
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product","When user assigns service code to program",
+			"When user creates a bulk device production request for prepaid", "When processes created bulk device generation request for prepaid", "When processes pre-production batch for prepaid",
+			"When processes device production batch for prepaid", "When processes pin generation batch for prepaid", "When user sign out from customer portal",
+			"When user is logged in agent portal as admin user", "When user fills information to assign program to agency and submits form", "When user sign out from agent portal",
+			"When user is logged in agent portal as admin user", "When user fills information to assign program to branch and submits form", "When user sign out from agent portal",
+			"When user is logged in agent portal as admin user", "When user fills information to assign program to agent and submits form", "When user sign out from agent portal",
+			"When user is logged in agent portal as agency user", "When user fills order details and submits the form", "When user sign out from agent portal", "When user is logged in institution",
+			"When user fills quantity to be dispatched and submits the form", "When user sign out from customer portal", "When user is logged in agent portal as agency user",
+			"When user fills the order acceptance details and submits the form", "When user sign out from agent portal", "When user is logged in agent portal as agent user",
+			"When user fills program details with registration", "When user sign out from agent portal", "When user is logged in agent portal as agent user",
+			"When user fills card sale checker details and submits the form", "When user sign out from agent portal", "When user is logged in institution",
+			"When user fills General details with product prepaid and submits the form for registered device", "When user activates device through helpdesk",
+			"When user has wallet number information for prepaid device", "When user performs adjustment transaction" })
 	public void givenPrepaidCardIsAvailableWithAmount(String deviceType) {
 		/*
 		 * This is a composite step to be executed before assigning a program
@@ -185,202 +169,119 @@ public class ProgramSetupSteps {
 	}
 
 	@When("user fills data for prepaid device $deviceType and registers with new program")
-	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
-			"When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
-			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan",
-			"When User fills Transaction Plan for prepaid product",
-			"When User fills Transaction Limit Plan for prepaid product",
-			"When User fills Document Checklist Screen for prepaid product",
-			"When User fills Device Joining and Membership Fee Plan for prepaid product",
-			"When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card",
-			"When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
-			"When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product",
-			"When user creates a bulk device production request for prepaid",
-			"When processes created bulk device generation request for prepaid",
-			"When processes pre-production batch for prepaid", "When processes device production batch for prepaid",
-			"When processes pin generation batch for prepaid", "When user sign out from customer portal",
-			"When user is logged in agent portal as admin user",
-			"When user fills information to assign program to agency and submits form",
-			"When user sign out from agent portal", "When user is logged in agent portal as admin user",
-			"When user fills information to assign program to branch and submits form",
-			"When user sign out from agent portal", "When user is logged in agent portal as admin user",
-			"When user fills information to assign program to agent and submits form",
-			"When user sign out from agent portal", "When user is logged in agent portal as agency user",
-			"When user fills order details and submits the form", "When user sign out from agent portal",
-			"When user is logged in institution", "When user fills quantity to be dispatched and submits the form",
-			"When user sign out from customer portal", "When user is logged in agent portal as agency user",
-			"When user fills the order acceptance details and submits the form", "When user sign out from agent portal",
-			"When user is logged in agent portal as agent user",
-			"When user fills program details with new program for prepaid product emv device",
-			"When user sign out from agent portal", "When user is logged in agent portal as agent user",
-			"When user fills card sale checker details and submits the form", "When user sign out from agent portal",
-			"When user is logged in institution",
-			"When user fills General details with product prepaid and submits the form for registered device",
-			"When user activates device through helpdesk" })
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product",
+			"When user creates a bulk device production request for prepaid", "When processes created bulk device generation request for prepaid", "When processes pre-production batch for prepaid",
+			"When processes device production batch for prepaid", "When processes pin generation batch for prepaid", "When user sign out from customer portal",
+			"When user is logged in agent portal as admin user", "When user fills information to assign program to agency and submits form", "When user sign out from agent portal",
+			"When user is logged in agent portal as admin user", "When user fills information to assign program to branch and submits form", "When user sign out from agent portal",
+			"When user is logged in agent portal as admin user", "When user fills information to assign program to agent and submits form", "When user sign out from agent portal",
+			"When user is logged in agent portal as agency user", "When user fills order details and submits the form", "When user sign out from agent portal", "When user is logged in institution",
+			"When user fills quantity to be dispatched and submits the form", "When user sign out from customer portal", "When user is logged in agent portal as agency user",
+			"When user fills the order acceptance details and submits the form", "When user sign out from agent portal", "When user is logged in agent portal as agent user",
+			"When user fills program details with new program for prepaid product emv device", "When user sign out from agent portal", "When user is logged in agent portal as agent user",
+			"When user fills card sale checker details and submits the form", "When user sign out from agent portal", "When user is logged in institution",
+			"When user fills General details with product prepaid and submits the form for registered device", "When user activates device through helpdesk" })
 	public void whenUserFillsDataForPrepaidDeviceAndRegistersWithNewProgram(String deviceType) {
 		/*
-		 * This is a composite step for creating prepaid device and activating
-		 * it
+		 * This is a composite step for creating prepaid device and activating it
 		 */
 	}
 
 	@When("user fills data for prepaid device $deviceType without registration and with customer registration")
-	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
-			"When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
-			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan",
-			"When User fills Transaction Plan for prepaid product",
-			"When User fills Transaction Limit Plan for prepaid product",
-			"When User fills Document Checklist Screen for prepaid product",
-			"When User fills Device Joining and Membership Fee Plan for prepaid product",
-			"When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card",
-			"When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
-			"When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product",
-			"When user creates a bulk device production request for prepaid",
-			"When processes created bulk device generation request for prepaid",
-			"When processes pre-production batch for prepaid", "When processes device production batch for prepaid",
-			"When processes pin generation batch for prepaid", "When user sign out from customer portal",
-			"When user is logged in agent portal as admin user",
-			"When user fills information to assign program to agency and submits form",
-			"When user sign out from agent portal", "When user is logged in agent portal as admin user",
-			"When user fills information to assign program to branch and submits form",
-			"When user sign out from agent portal", "When user is logged in agent portal as admin user",
-			"When user fills information to assign program to agent and submits form",
-			"When user sign out from agent portal", "When user is logged in agent portal as agency user",
-			"When user fills order details and submits the form", "When user sign out from agent portal",
-			"When user is logged in institution", "When user fills quantity to be dispatched and submits the form",
-			"When user sign out from customer portal", "When user is logged in agent portal as agency user",
-			"When user fills the order acceptance details and submits the form", "When user sign out from agent portal",
-			"When user is logged in agent portal as agent user", "When user fills program details without registration",
-			"When user provides details through customer registration", "When user sign out from agent portal",
-			"When user is logged in agent portal as agent user",
-			"When user fills card sale checker details and submits the form", "When user sign out from agent portal",
-			"When user is logged in institution",
-			"When user fills General details with product prepaid and submits the form for registered device",
-			"When user activates device through helpdesk" })
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product",
+			"When user creates a bulk device production request for prepaid", "When processes created bulk device generation request for prepaid", "When processes pre-production batch for prepaid",
+			"When processes device production batch for prepaid", "When processes pin generation batch for prepaid", "When user sign out from customer portal",
+			"When user is logged in agent portal as admin user", "When user fills information to assign program to agency and submits form", "When user sign out from agent portal",
+			"When user is logged in agent portal as admin user", "When user fills information to assign program to branch and submits form", "When user sign out from agent portal",
+			"When user is logged in agent portal as admin user", "When user fills information to assign program to agent and submits form", "When user sign out from agent portal",
+			"When user is logged in agent portal as agency user", "When user fills order details and submits the form", "When user sign out from agent portal", "When user is logged in institution",
+			"When user fills quantity to be dispatched and submits the form", "When user sign out from customer portal", "When user is logged in agent portal as agency user",
+			"When user fills the order acceptance details and submits the form", "When user sign out from agent portal", "When user is logged in agent portal as agent user",
+			"When user fills program details without registration", "When user provides details through customer registration", "When user sign out from agent portal",
+			"When user is logged in agent portal as agent user", "When user fills card sale checker details and submits the form", "When user sign out from agent portal",
+			"When user is logged in institution", "When user fills General details with product prepaid and submits the form for registered device", "When user activates device through helpdesk" })
 	public void whenUserFillsDataForPrepaidDeviceWithOutRegistrationAndWithCustomerRegistration(String deviceType) {
 		/*
-		 * This is a composite step for creating prepaid device and activating
-		 * it
+		 * This is a composite step for creating prepaid device and activating it
 		 */
 	}
 
 	@When("user fills data for prepaid device $deviceType without registration")
-	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
-			"When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
-			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan",
-			"When User fills Transaction Plan for prepaid product",
-			"When User fills Transaction Limit Plan for prepaid product",
-			"When User fills Document Checklist Screen for prepaid product",
-			"When User fills Device Joining and Membership Fee Plan for prepaid product",
-			"When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card",
-			"When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
-			"When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product",
-			"When user creates a bulk device production request for prepaid",
-			"When processes created bulk device generation request for prepaid",
-			"When processes pre-production batch for prepaid", "When processes device production batch for prepaid",
-			"When processes pin generation batch for prepaid", "When user sign out from customer portal",
-			"When user is logged in agent portal as admin user",
-			"When user fills information to assign program to agency and submits form",
-			"When user sign out from agent portal", "When user is logged in agent portal as admin user",
-			"When user fills information to assign program to branch and submits form",
-			"When user sign out from agent portal", "When user is logged in agent portal as admin user",
-			"When user fills information to assign program to agent and submits form",
-			"When user sign out from agent portal", "When user is logged in agent portal as agency user",
-			"When user fills order details and submits the form", "When user sign out from agent portal",
-			"When user is logged in institution", "When user fills quantity to be dispatched and submits the form",
-			"When user sign out from customer portal", "When user is logged in agent portal as agency user",
-			"When user fills the order acceptance details and submits the form", "When user sign out from agent portal",
-			"When user is logged in agent portal as agent user", "When user fills program details without registration",
-			"When user sign out from agent portal", "When user is logged in institution",
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product",
+			"When user creates a bulk device production request for prepaid", "When processes created bulk device generation request for prepaid", "When processes pre-production batch for prepaid",
+			"When processes device production batch for prepaid", "When processes pin generation batch for prepaid", "When user sign out from customer portal",
+			"When user is logged in agent portal as admin user", "When user fills information to assign program to agency and submits form", "When user sign out from agent portal",
+			"When user is logged in agent portal as admin user", "When user fills information to assign program to branch and submits form", "When user sign out from agent portal",
+			"When user is logged in agent portal as admin user", "When user fills information to assign program to agent and submits form", "When user sign out from agent portal",
+			"When user is logged in agent portal as agency user", "When user fills order details and submits the form", "When user sign out from agent portal", "When user is logged in institution",
+			"When user fills quantity to be dispatched and submits the form", "When user sign out from customer portal", "When user is logged in agent portal as agency user",
+			"When user fills the order acceptance details and submits the form", "When user sign out from agent portal", "When user is logged in agent portal as agent user",
+			"When user fills program details without registration", "When user sign out from agent portal", "When user is logged in institution",
 			"When user fills General details with product prepaid and submits the form for notregistered device" })
 	public void whenUserFillsDataForPrepaidDeviceWithOutRegistration(String deviceType) {
 		/*
-		 * This is a composite step for creating prepaid device and activating
-		 * it
+		 * This is a composite step for creating prepaid device and activating it
 		 */
 	}
 
 	@When("user fills data for prepaid device $deviceType with registration and activates the device")
-	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
-			"When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
-			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan",
-			"When User fills Transaction Plan for prepaid product",
-			"When User fills Transaction Limit Plan for prepaid product",
-			"When User fills Document Checklist Screen for prepaid product",
-			"When User fills Device Joining and Membership Fee Plan for prepaid product",
-			"When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card",
-			"When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
-			"When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product",
-			"When user creates a bulk device production request for prepaid",
-			"When processes created bulk device generation request for prepaid",
-			"When processes pre-production batch for prepaid", "When processes device production batch for prepaid",
-			"When processes pin generation batch for prepaid", "When user sign out from customer portal",
-			"When user is logged in agent portal as admin user",
-			"When user fills information to assign program to agency and submits form",
-			"When user sign out from agent portal", "When user is logged in agent portal as admin user",
-			"When user fills information to assign program to branch and submits form",
-			"When user sign out from agent portal", "When user is logged in agent portal as admin user",
-			"When user fills information to assign program to agent and submits form",
-			"When user sign out from agent portal", "When user is logged in agent portal as agency user",
-			"When user fills order details and submits the form", "When user sign out from agent portal",
-			"When user is logged in institution", "When user fills quantity to be dispatched and submits the form",
-			"When user sign out from customer portal", "When user is logged in agent portal as agency user",
-			"When user fills the order acceptance details and submits the form", "When user sign out from agent portal",
-			"When user is logged in agent portal as agent user", "When user fills program details with registration",
-			"When user sign out from agent portal", "When user is logged in agent portal as agent user",
-			"When user fills card sale checker details and submits the form", "When user sign out from agent portal",
-			"When user is logged in institution",
-			"When user fills General details with product prepaid and submits the form for registered device",
-			"When user activates device through helpdesk" })
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product",
+			"When user creates a bulk device production request for prepaid", "When processes created bulk device generation request for prepaid", "When processes pre-production batch for prepaid",
+			"When processes device production batch for prepaid", "When processes pin generation batch for prepaid", "When user sign out from customer portal",
+			"When user is logged in agent portal as admin user", "When user fills information to assign program to agency and submits form", "When user sign out from agent portal",
+			"When user is logged in agent portal as admin user", "When user fills information to assign program to branch and submits form", "When user sign out from agent portal",
+			"When user is logged in agent portal as admin user", "When user fills information to assign program to agent and submits form", "When user sign out from agent portal",
+			"When user is logged in agent portal as agency user", "When user fills order details and submits the form", "When user sign out from agent portal", "When user is logged in institution",
+			"When user fills quantity to be dispatched and submits the form", "When user sign out from customer portal", "When user is logged in agent portal as agency user",
+			"When user fills the order acceptance details and submits the form", "When user sign out from agent portal", "When user is logged in agent portal as agent user",
+			"When user fills program details with registration", "When user sign out from agent portal", "When user is logged in agent portal as agent user",
+			"When user fills card sale checker details and submits the form", "When user sign out from agent portal", "When user is logged in institution",
+			"When user fills General details with product prepaid and submits the form for registered device", "When user activates device through helpdesk" })
 	public void whenUserFillsDataForPrepaidDeviceWithRegistrationAndActivatesTheDevice(String deviceType) {
 		/*
-		 * This is a composite step for creating prepaid device and activating
-		 * it
+		 * This is a composite step for creating prepaid device and activating it
 		 */
 	}
 
 	@Given("prepaid $deviceType device without pin is available with balance amount")
-	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
-			"When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
-			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan",
-			"When User fills Transaction Plan for prepaid product",
-			"When User fills Transaction Limit Plan for prepaid product",
-			"When User fills Document Checklist Screen for prepaid product",
-			"When User fills Device Joining and Membership Fee Plan for prepaid product",
-			"When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin",
-			"When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
-			"When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product",
-			"When user creates a bulk device production request for prepaid",
-			"When processes created bulk device generation request for prepaid",
-			"When processes pre-production batch for prepaid", "When processes device production batch for prepaid",
-			"When user sign out from customer portal", "When user is logged in agent portal as admin user",
-			"When user fills information to assign program to agency and submits form",
-			"When user sign out from agent portal", "When user is logged in agent portal as admin user",
-			"When user fills information to assign program to branch and submits form",
-			"When user sign out from agent portal", "When user is logged in agent portal as admin user",
-			"When user fills information to assign program to agent and submits form",
-			"When user sign out from agent portal", "When user is logged in agent portal as agency user",
-			"When user fills order details and submits the form", "When user sign out from agent portal",
-			"When user is logged in institution", "When user fills quantity to be dispatched and submits the form",
-			"When user sign out from customer portal", "When user is logged in agent portal as agency user",
-			"When user fills the order acceptance details and submits the form", "When user sign out from agent portal",
-			"When user is logged in agent portal as agent user", "When user fills program details with registration",
-			"When user sign out from agent portal", "When user is logged in agent portal as agent user",
-			"When user fills card sale checker details and submits the form", "When user sign out from agent portal",
-			"When user is logged in institution",
-			"When user fills General details with product prepaid and submits the form for registered device",
-			"When user activates device through helpdesk", "When user has wallet number information for prepaid device",
-			"When user performs adjustment transaction" })
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product",
+			"When user creates a bulk device production request for prepaid", "When processes created bulk device generation request for prepaid", "When processes pre-production batch for prepaid",
+			"When processes device production batch for prepaid", "When user sign out from customer portal", "When user is logged in agent portal as admin user",
+			"When user fills information to assign program to agency and submits form", "When user sign out from agent portal", "When user is logged in agent portal as admin user",
+			"When user fills information to assign program to branch and submits form", "When user sign out from agent portal", "When user is logged in agent portal as admin user",
+			"When user fills information to assign program to agent and submits form", "When user sign out from agent portal", "When user is logged in agent portal as agency user",
+			"When user fills order details and submits the form", "When user sign out from agent portal", "When user is logged in institution",
+			"When user fills quantity to be dispatched and submits the form", "When user sign out from customer portal", "When user is logged in agent portal as agency user",
+			"When user fills the order acceptance details and submits the form", "When user sign out from agent portal", "When user is logged in agent portal as agent user",
+			"When user fills program details with registration", "When user sign out from agent portal", "When user is logged in agent portal as agent user",
+			"When user fills card sale checker details and submits the form", "When user sign out from agent portal", "When user is logged in institution",
+			"When user fills General details with product prepaid and submits the form for registered device", "When user activates device through helpdesk",
+			"When user has wallet number information for prepaid device", "When user performs adjustment transaction" })
 	public void givenPrepaidCardIsAvailableWithAmountWithNoPin(String deviceType) {
 		/*
 		 * This is a composite step to be executed before assigning a program
@@ -389,16 +290,11 @@ public class ProgramSetupSteps {
 
 	@When("device range for program with device plan for \"debit\" \"$deviceType\" card")
 	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card")
-	@Composite(steps = { "When User fills Dedupe Plan", "When User fills MCC Rules for debit product",
-			"When User fills Transaction Plan for debit product",
-			"When User fills Transaction Limit Plan for debit product",
-			"When User fills Document Checklist Screen for debit product",
-			"When User fills Device Joining and Membership Fee Plan for debit product",
-			"When User fills Device Event Based Fee Plan for debit product",
-			"When User fills Device Plan for \"debit\" \"<deviceType>\" card",
-			"When User fills Wallet Plan for debit product", "When User fills Program section for debit product",
-			"When User fills Business Mandatory Fields Screen for debit product",
-			"When User fills Device Range section for debit product", "When user assigns service code to program" })
+	@Composite(steps = { "When User fills Dedupe Plan", "When User fills MCC Rules for debit product", "When User fills Transaction Plan for debit product",
+			"When User fills Transaction Limit Plan for debit product", "When User fills Document Checklist Screen for debit product",
+			"When User fills Device Joining and Membership Fee Plan for debit product", "When User fills Device Event Based Fee Plan for debit product",
+			"When User fills Device Plan for \"debit\" \"<deviceType>\" card", "When User fills Wallet Plan for debit product", "When User fills Program section for debit product",
+			"When User fills Business Mandatory Fields Screen for debit product", "When User fills Device Range section for debit product", "When user assigns service code to program" })
 	public void givenDeviceRangeForDebitProgramWithDevicePlan(String deviceType) {
 		// composite step
 	}
@@ -413,75 +309,54 @@ public class ProgramSetupSteps {
 
 	@When("device range for program with device plan for \"debit\" \"$deviceType\" card without pin")
 	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin")
-	@Composite(steps = { "When User fills Dedupe Plan", "When User fills MCC Rules for debit product",
-			"When User fills Transaction Plan for debit product",
-			"When User fills Transaction Limit Plan for debit product",
-			"When User fills Document Checklist Screen for debit product",
-			"When User fills Device Joining and Membership Fee Plan for debit product",
-			"When User fills Device Event Based Fee Plan for debit product",
-			"When User fills Device Plan for \"debit\" \"<deviceType>\" card with no pin",
-			"When User fills Wallet Plan for debit product", "When User fills Program section for debit product",
-			"When User fills Business Mandatory Fields Screen for debit product",
-			"When User fills Device Range section for debit product", "When user assigns service code to program" })
+	@Composite(steps = { "When User fills Dedupe Plan", "When User fills MCC Rules for debit product", "When User fills Transaction Plan for debit product",
+			"When User fills Transaction Limit Plan for debit product", "When User fills Document Checklist Screen for debit product",
+			"When User fills Device Joining and Membership Fee Plan for debit product", "When User fills Device Event Based Fee Plan for debit product",
+			"When User fills Device Plan for \"debit\" \"<deviceType>\" card with no pin", "When User fills Wallet Plan for debit product", "When User fills Program section for debit product",
+			"When User fills Business Mandatory Fields Screen for debit product", "When User fills Device Range section for debit product" , "When user assigns service code to program"})
 	public void givenDeviceRangeForDebitProgramWithDevicePlanWithOutPin(String deviceType) {
 		// composite step
 	}
 
 	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin for specific interface")
-	@Composite(steps = { "When User fills Dedupe Plan", "When User fills MCC Rules for debit product",
-			"When User fills Transaction Plan for debit product",
-			"When User fills Transaction Limit Plan for debit product",
-			"When User fills Document Checklist Screen for debit product",
-			"When User fills Device Joining and Membership Fee Plan for debit product",
-			"When User fills Device Event Based Fee Plan for debit product",
-			"When User fills Device Plan for \"debit\" \"<deviceType>\" card with no pin for an interface",
-			"When User fills Wallet Plan for debit product",
-			"When User fills Program section for debit product for an interface",
-			"When User fills Business Mandatory Fields Screen for debit product",
-			"When User fills Device Range section for debit product for an interface",
-			"When user assigns service code to program" })
+	@Composite(steps = { "When User fills Dedupe Plan", "When User fills MCC Rules for debit product", "When User fills Transaction Plan for debit product",
+			"When User fills Transaction Limit Plan for debit product", "When User fills Document Checklist Screen for debit product",
+			"When User fills Device Joining and Membership Fee Plan for debit product", "When User fills Device Event Based Fee Plan for debit product",
+			"When User fills Device Plan for \"debit\" \"<deviceType>\" card with no pin for an interface", "When User fills Wallet Plan for debit product",
+			"When User fills Program section for debit product for an interface", "When User fills Business Mandatory Fields Screen for debit product",
+			"When User fills Device Range section for debit product for an interface" , "When user assigns service code to program"})
 	public void givenDeviceRangeForDebitProgramWithDevicePlanWithOutPinForSpecificInterface(String deviceType) {
 		// composite step
 	}
 
 	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin for non-default institution")
-	@Composite(steps = { "When User fills Dedupe Plan", "When User fills MCC Rules for debit product",
-			"When User fills Transaction Plan for debit product",
-			"When User fills Transaction Limit Plan for debit product",
-			"When User fills Document Checklist Screen for debit product",
-			"When User fills Device Joining and Membership Fee Plan for debit product",
-			"When User fills Device Event Based Fee Plan for debit product",
-			"When User fills Device Plan for \"debit\" \"<deviceType>\" card with no pin for non-default institution",
-			"When User fills Wallet Plan for debit product", "When User fills Program section for debit product",
-			"When User fills Business Mandatory Fields Screen for debit product",
-			"When User fills Device Range section for debit product for non-default institution",
-			"When user assigns service code to program" })
+	@Composite(steps = { "When User fills Dedupe Plan", "When User fills MCC Rules for debit product", "When User fills Transaction Plan for debit product",
+			"When User fills Transaction Limit Plan for debit product", "When User fills Document Checklist Screen for debit product",
+			"When User fills Device Joining and Membership Fee Plan for debit product", "When User fills Device Event Based Fee Plan for debit product",
+			"When User fills Device Plan for \"debit\" \"<deviceType>\" card with no pin for non-default institution", "When User fills Wallet Plan for debit product",
+			"When User fills Program section for debit product", "When User fills Business Mandatory Fields Screen for debit product",
+			"When User fills Device Range section for debit product for non-default institution" , "When user assigns service code to program"})
 	public void givenDeviceRangeForProgramWithDevicePlanforDebitWithoutPinForNonDefaultInstitution(String deviceType) {
 		// composite step
 	}
 
 	@Given("$deviceType card has gone through pre-production, production and pin generation")
-	@Composite(steps = { "When user creates new device of $deviceType type for new client",
-			"When processes pre-production batch for $deviceType",
-			"When processes device production batch for $deviceType",
-			"When processes pin generation batch for $deviceType" })
+	@Composite(steps = { "When user creates new device of $deviceType type for new client", "When processes pre-production batch for $deviceType",
+			"When processes device production batch for $deviceType", "When processes pin generation batch for $deviceType" })
 	public void givenDeviceGoesThroughPreproductionAndProductionAndPinGeneration(String deviceType) {
 		// composite step
 	}
 
 	@Given("user performs activate device and adjustment transaction for $type card")
-	@Composite(steps = { "When user fills General details with product $type and submits the form",
-			"When user activates device through help desk",
-			"When activation of  $type device is successful and activation date is updated",
-			"When user performs adjustment transaction" })
+	@Composite(steps = { "When user fills General details with product $type and submits the form", "When user activates device through help desk",
+			"When activation of  $type device is successful and activation date is updated", "When user performs adjustment transaction" })
 	public void givenDeviceGoesCardActivationAndAdjustmentTranasaction(String type) {
 		// composite step
 	}
 
 	@When("data in embossing file and pin offset file are generated successfully and PIN is retrieved successfully")
 	@Given("data in embossing file and pin offset file are generated successfully and PIN is retrieved successfully")
-	@Composite(steps = { "When embossing file batch was generated in correct format",
-			"When Pin Offset file batch was generated successfully",
+	@Composite(steps = { "When embossing file batch was generated in correct format", "When Pin Offset file batch was generated successfully",
 			"When PIN is retrieved successfully with data from Pin Offset File", "When FinSim simulator is closed" })
 	public void readDatafromEmbossingFileAndPinOffsetFile() {
 		// composite step
@@ -498,171 +373,119 @@ public class ProgramSetupSteps {
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPin(String deviceType) {
 		// composite step
 	}
-
-	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" with limit plan")
-	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
-			"When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
-			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan",
-			"When User fills Transaction Plan for prepaid product",
-			"When User fills Document Checklist Screen for prepaid product",
-			"When User fills Device Joining and Membership Fee Plan for prepaid product",
-			"When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for prepaid emv product transaction limit plan",
-			"When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
-			"When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product" })
-	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidLimitPlan(String deviceType) {
+	
+	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin for ApplicationUpload")
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product without dedupe",
+		    "When User fills Device Range section for prepaid product"})
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinForApplicationUpload(String deviceType) {
 		// composite step
 	}
 
+	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" with limit plan")
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			 "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for prepaid emv product transaction limit plan", "When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
+			"When User fills Business Mandatory Fields Screen for prepaid product", "When User fills Device Range section for prepaid product" })
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidLimitPlan(String deviceType) {
+		// composite step
+	}
+	
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin without dedupe")
-	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
-			"When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
-			"When User fills MCC Rules for prepaid product", "When User fills Transaction Plan for prepaid product",
-			"When User fills Transaction Limit Plan for prepaid product",
-			"When User fills Document Checklist Screen for prepaid product",
-			"When User fills Device Joining and Membership Fee Plan for prepaid product",
-			"When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin",
-			"When User fills Wallet Plan for prepaid product",
-			"When User fills Program section using newApplication for prepaid product",
-			"When User fills Device Range section for prepaid product", "When user assigns service code to program" })
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Transaction Plan for prepaid product", "When User fills Transaction Limit Plan for prepaid product",
+			"When User fills Document Checklist Screen for prepaid product", "When User fills Device Joining and Membership Fee Plan for prepaid product",
+			"When User fills Device Event Based Fee Plan for prepaid product", "When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin",
+			"When User fills Wallet Plan for prepaid product", "When User fills Program section using newApplication for prepaid product", "When User fills Device Range section for prepaid product" , "When user assigns service code to program"})
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinWithoutDedupe(String deviceType) {
 		// composite step
 	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin for non-default institution")
-	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
-			"When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
-			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan",
-			"When User fills Transaction Plan for prepaid product",
-			"When User fills Transaction Limit Plan for prepaid product",
-			"When User fills Document Checklist Screen for prepaid product",
-			"When User fills Device Joining and Membership Fee Plan for prepaid product",
-			"When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin for non-default institution",
-			"When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
-			"When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product for non-default institution",
-			"When user assigns service code to program" })
-	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinForNonDefaultInstitution(
-			String deviceType) {
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin for non-default institution", "When User fills Wallet Plan for prepaid product",
+			"When User fills Program section for prepaid product", "When User fills Business Mandatory Fields Screen for prepaid product",
+			"When User fills Device Range section for prepaid product for non-default institution" , "When user assigns service code to program"})
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinForNonDefaultInstitution(String deviceType) {
 		// composite step
 	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin for non-default institution for interface")
-	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
-			"When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
-			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan",
-			"When User fills Transaction Plan for prepaid product",
-			"When User fills Transaction Limit Plan for prepaid product",
-			"When User fills Document Checklist Screen for prepaid product",
-			"When User fills Device Joining and Membership Fee Plan for prepaid product",
-			"When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin for non-default institution",
-			"When User fills Wallet Plan for prepaid product",
-			"When User fills Program section for prepaid product for an interface",
-			"When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product for non-default institution",
-			"When user assigns service code to program" })
-	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinForNonDefaultInstitutionForInterface(
-			String deviceType) {
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin for non-default institution", "When User fills Wallet Plan for prepaid product",
+			"When User fills Program section for prepaid product for an interface", "When User fills Business Mandatory Fields Screen for prepaid product",
+			"When User fills Device Range section for prepaid product for non-default institution" , "When user assigns service code to program"})
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinForNonDefaultInstitutionForInterface(String deviceType) {
 		// composite step for interface
 	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin for an interface")
-	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
-			"When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
-			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan",
-			"When User fills Transaction Plan for prepaid product",
-			"When User fills Transaction Limit Plan for prepaid product",
-			"When User fills Document Checklist Screen for prepaid product",
-			"When User fills Device Joining and Membership Fee Plan for prepaid product",
-			"When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin",
-			"When User fills Wallet Plan for prepaid product",
-			"When User fills Program section for prepaid product for an interface",
-			"When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product for an interface",
-			"When user assigns service code to program" })
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin", "When User fills Wallet Plan for prepaid product",
+			"When User fills Program section for prepaid product for an interface", "When User fills Business Mandatory Fields Screen for prepaid product",
+			"When User fills Device Range section for prepaid product for an interface" , "When user assigns service code to program"})
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinForAnInterface(String deviceType) {
 		// composite step
 	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" \"Manual\" activation code for card without pin for an interface")
-	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
-			"When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
-			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan",
-			"When User fills Transaction Plan for prepaid product",
-			"When User fills Transaction Limit Plan for prepaid product",
-			"When User fills Document Checklist Screen for prepaid product",
-			"When User fills Device Joining and Membership Fee Plan for prepaid product",
-			"When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for  \"prepaid\" \"<deviceType>\" along with \"Manual\" activation mode for card with no pin",
-			"When User fills Wallet Plan for prepaid product",
-			"When User fills Program section for prepaid product for an interface",
-			"When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product for an interface",
-			"When user assigns service code to program" })
-	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidAlongWithActivationCodeWithoutPinForAnInterface(
-			String deviceType) {
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for  \"prepaid\" \"<deviceType>\" along with \"Manual\" activation mode for card with no pin", "When User fills Wallet Plan for prepaid product",
+			"When User fills Program section for prepaid product for an interface", "When User fills Business Mandatory Fields Screen for prepaid product",
+			"When User fills Device Range section for prepaid product for an interface", "When user assigns service code to program" })
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidAlongWithActivationCodeWithoutPinForAnInterface(String deviceType) {
 		// composite step
 	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" \"Load\" activation code for card with pin for an interface")
-	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
-			"When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
-			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan",
-			"When User fills Transaction Plan for prepaid product",
-			"When User fills Transaction Limit Plan for prepaid product",
-			"When User fills Document Checklist Screen for prepaid product",
-			"When User fills Device Joining and Membership Fee Plan for prepaid product",
-			"When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" along with \"Load\" activation mode for card",
-			"When User fills Wallet Plan for prepaid product",
-			"When User fills Program section for prepaid product for an interface",
-			"When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product for an interface",
-			"When user assigns service code to program" })
-	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidAlongWithActivationCodeWithPinForAnInterface(
-			String deviceType) {
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" along with \"Load\" activation mode for card", "When User fills Wallet Plan for prepaid product",
+			"When User fills Program section for prepaid product for an interface", "When User fills Business Mandatory Fields Screen for prepaid product",
+			"When User fills Device Range section for prepaid product for an interface", "When user assigns service code to program" })
+	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidAlongWithActivationCodeWithPinForAnInterface(String deviceType) {
 		// composite step
 	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without pin for specific interface")
-	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
-			"When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
-			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan",
-			"When User fills Transaction Plan for prepaid product",
-			"When User fills Transaction Limit Plan for prepaid product",
-			"When User fills Document Checklist Screen for prepaid product",
-			"When User fills Device Joining and Membership Fee Plan for prepaid product",
-			"When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin for an interface",
-			"When User fills Wallet Plan for prepaid product",
-			"When User fills Program section for prepaid product for an interface",
-			"When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product for an interface",
-			"When user assigns service code to program" })
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card with no pin for an interface", "When User fills Wallet Plan for prepaid product",
+			"When User fills Program section for prepaid product for an interface", "When User fills Business Mandatory Fields Screen for prepaid product",
+			"When User fills Device Range section for prepaid product for an interface", "When user assigns service code to program" })
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutPinForSpecificInterface(String deviceType) {
 		// composite step
 	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card for an interface")
-	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
-			"When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
-			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan",
-			"When User fills Transaction Plan for prepaid product",
-			"When User fills Transaction Limit Plan for prepaid product",
-			"When User fills Document Checklist Screen for prepaid product",
-			"When User fills Device Joining and Membership Fee Plan for prepaid product",
-			"When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card",
-			"When User fills Wallet Plan for prepaid product",
-			"When User fills Program section for prepaid product for an interface",
-			"When User fills Business Mandatory Fields Screen for prepaid product",
-			"When User fills Device Range section for prepaid product for an interface",
-			"When user assigns service code to program" })
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Dedupe Plan", "When User fills Transaction Plan for prepaid product",
+			"When User fills Transaction Limit Plan for prepaid product", "When User fills Document Checklist Screen for prepaid product",
+			"When User fills Device Joining and Membership Fee Plan for prepaid product", "When User fills Device Event Based Fee Plan for prepaid product",
+			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Wallet Plan for prepaid product",
+			"When User fills Program section for prepaid product for an interface", "When User fills Business Mandatory Fields Screen for prepaid product",
+			"When User fills Device Range section for prepaid product for an interface" , "When user assigns service code to program"})
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidForAnInterface(String deviceType) {
 		// composite step
 	}
@@ -680,17 +503,11 @@ public class ProgramSetupSteps {
 	}
 
 	@Given("device range for program with device plan for \"prepaid\" \"$deviceType\" card without dedupe")
-	@Composite(steps = { "When User fills Statement Message Plan for prepaid product",
-			"When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
-			"When User fills MCC Rules for prepaid product", "When User fills Transaction Plan for prepaid product",
-			"When User fills Transaction Limit Plan for prepaid product",
-			"When User fills Document Checklist Screen for prepaid product",
-			"When User fills Device Joining and Membership Fee Plan for prepaid product",
-			"When User fills Device Event Based Fee Plan for prepaid product",
-			"When User fills Device Plan for \"prepaid\" \"<deviceType>\" card",
-			"When User fills Wallet Plan for prepaid product",
-			"When User fills Program section using newApplication for prepaid product",
-			"When User fills Device Range section for prepaid product", "When user assigns service code to program" })
+	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
+			"When User fills MCC Rules for prepaid product", "When User fills Transaction Plan for prepaid product", "When User fills Transaction Limit Plan for prepaid product",
+			"When User fills Document Checklist Screen for prepaid product", "When User fills Device Joining and Membership Fee Plan for prepaid product",
+			"When User fills Device Event Based Fee Plan for prepaid product", "When User fills Device Plan for \"prepaid\" \"<deviceType>\" card", "When User fills Wallet Plan for prepaid product",
+			"When User fills Program section using newApplication for prepaid product", "When User fills Device Range section for prepaid product"})
 	public void givenDeviceRangeForProgramWithDevicePlanforPrepaidWithoutDedupe(String deviceType) {
 		// composite step
 	}
@@ -741,18 +558,13 @@ public class ProgramSetupSteps {
 
 	@When("User fills Device Plan for $type product")
 	public void whenUserFillsDevicePlan(String type) {
-		devicePlan = DevicePlan.createWithProviderForCredit(provider);
+		devicePlan = DevicePlan.createWithProviderForCredit(provider);		
 		devicePlan.setProductType(ProductType.fromShortName(type));
 		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
 		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
 		/*
-		 * Below two line code creates template count in DB, it reaches max
-		 * count 999 on continuous script execution, fetching existing values
-		 * through excel This can be used when need arises to execute script for
-		 * template creation
-		 * devicePlan.setCardPackIdGenerationTemplate(cardPackIDTemplate
-		 * .buildDescriptionAndCode());
-		 * devicePlan.setDeviceIdGenerationTemplate(
+		 * Below two line code creates template count in DB, it reaches max count 999 on continuous script execution, fetching existing values through excel This can be used when need arises to
+		 * execute script for template creation devicePlan.setCardPackIdGenerationTemplate(cardPackIDTemplate .buildDescriptionAndCode()); devicePlan.setDeviceIdGenerationTemplate(
 		 * deviceTemplate.buildDescriptionAndCode());
 		 */
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
@@ -762,9 +574,9 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
-
+	
 	@When("User fills Device Plan for $type product for $interchange")
-	public void whenUserFillsDevicePlanForInterchange(String type, String interchange) {
+	public void whenUserFillsDevicePlanForInterchange(String type,String interchange) {
 		devicePlan = DevicePlan.createWithProvider(provider);
 		devicePlan.setProductType(ProductType.fromShortName(type));
 		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
@@ -777,9 +589,9 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
-
+	
 	@When("for $deviceType User fills Device Plan for $type product for $interchange")
-	public void whenUserFillsDevicePlanForInterchangeAndDeviceType(String deviceType, String type, String interchange) {
+	public void whenUserFillsDevicePlanForInterchangeAndDeviceType(String deviceType,String type,String interchange) {
 		devicePlan = DevicePlan.createProviderForCredit(provider);
 		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
 		devicePlan.setProductType(ProductType.fromShortName(type));
@@ -812,10 +624,9 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
-
+	
 	@When("for $deviceType User fills without pin Device Plan for $type product for $interchange")
-	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeWithoutPin(String deviceType, String type,
-			String interchange) {
+	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeWithoutPin(String deviceType,String type,String interchange) {
 		setPinRequiredToFalse();
 		devicePlan = DevicePlan.createProviderForCredit(provider);
 		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
@@ -843,14 +654,18 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
-
+	
+	@When("user edits deviceplan and enables stoplist flag")
+	public void editDevicePlanAndEnableStopListFlag() {
+		devicePlan=context.get(ContextConstants.DEVICE_PLAN);
+		programSetupWorkflow.enableStopListFlag(devicePlan);
+	}
+	
 	@When("for $deviceType User fills Supplementary Device Plan for $type product for $interchange")
-	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeForSupplementary(String deviceType, String type,
-			String interchange) {
+	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeForSupplementary(String deviceType,String type,String interchange) {
 		devicePlanSupplementary = DevicePlan.createProviderForCredit(provider);
 		devicePlanSupplementary.setProductType(ProductType.fromShortName(type));
-		devicePlanSupplementary
-				.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
 		devicePlanSupplementary.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
 		devicePlanSupplementary.setAssociation(interchange);
 		devicePlanSupplementary.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
@@ -861,15 +676,13 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createDevicePlan(devicePlanSupplementary);
 		context.put(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY, devicePlanSupplementary);
 	}
-
+	
 	@When("for $deviceType User fills without pin Supplementary Device Plan for $type product for $interchange")
-	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeForSupplementaryWithoutPin(String deviceType,
-			String type, String interchange) {
+	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeForSupplementaryWithoutPin(String deviceType,String type,String interchange) {
 		setPinRequiredToFalse();
 		devicePlanSupplementary = DevicePlan.createProviderForCredit(provider);
 		devicePlanSupplementary.setProductType(ProductType.fromShortName(type));
-		devicePlanSupplementary
-				.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlanSupplementary.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
 		devicePlanSupplementary.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
 		devicePlanSupplementary.setAssociation(interchange);
 		devicePlanSupplementary.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
@@ -888,8 +701,7 @@ public class ProgramSetupSteps {
 	}
 
 	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card for non-default institution")
-	public void whenUserFillsDevicePlanforNonDefaultInstitution(String productType, String deviceType,
-			KeyValueProvider provider) {
+	public void whenUserFillsDevicePlanforNonDefaultInstitution(String productType, String deviceType, KeyValueProvider provider) {
 		devicePlan = DevicePlan.createWithProvider(provider);
 		devicePlan.setProductType(ProductType.fromShortName(productType));
 		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
@@ -909,16 +721,11 @@ public class ProgramSetupSteps {
 	}
 
 	@When("User fills Device Plan for \"$productType\" \"$deviceType\" along with \"$activationMode\" activation mode for card")
-	public void whenUserFillsDevicePlanAlongWithActivationcodeWithPin(String productType, String deviceType,
-			String activationMode) {
-		settingDevicePlanTestData(productType,
-				deviceType); /*
-								 * call to re-usable method ; modifiying the
-								 * activation mode into the devicePlan based on
-								 * the $activationMode parameter instead of
-								 * creating new method. Avoiding Sonar code
-								 * duplication
-								 */
+	public void whenUserFillsDevicePlanAlongWithActivationcodeWithPin(String productType, String deviceType, String activationMode) {
+		settingDevicePlanTestData(productType, deviceType); /*
+															 * call to re-usable method ; modifiying the activation mode into the devicePlan based on the $activationMode parameter instead of creating
+															 * new method. Avoiding Sonar code duplication
+															 */
 		devicePlan.setActivationMode(activationMode);
 
 		programSetupWorkflow.createDevicePlan(devicePlan);
@@ -926,17 +733,12 @@ public class ProgramSetupSteps {
 	}
 
 	@When("User fills Device Plan for \"$productType\" \"$deviceType\" along with \"$activationMode\" activation mode for card with no pin")
-	public void whenUserFillsDevicePlanAlongWithActivationcodeWithNoPin(String productType, String deviceType,
-			String activationMode) {
+	public void whenUserFillsDevicePlanAlongWithActivationcodeWithNoPin(String productType, String deviceType, String activationMode) {
 		setPinRequiredToFalse();
-		settingDevicePlanTestData(productType,
-				deviceType); /*
-								 * call to re-usable method ; modifiying the
-								 * activation mode into the devicePlan based on
-								 * the $activationMode parameter instead of
-								 * creating new method. Avoiding Sonar code
-								 * duplication
-								 */
+		settingDevicePlanTestData(productType, deviceType); /*
+															 * call to re-usable method ; modifiying the activation mode into the devicePlan based on the $activationMode parameter instead of creating
+															 * new method. Avoiding Sonar code duplication
+															 */
 		devicePlan.setActivationMode(activationMode);
 
 		programSetupWorkflow.createDevicePlan(devicePlan);
@@ -989,8 +791,7 @@ public class ProgramSetupSteps {
 
 	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card")
 	public void whenUserFillsDevicePlanForCrdd(String productType, String deviceType) {
-		settingDevicePlanTestData(productType, deviceType); // call to re-usable
-															// method
+		settingDevicePlanTestData(productType, deviceType); // call to re-usable method
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
@@ -1013,11 +814,10 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 
-	// refactored and created a new method that could be used in Device Plan to
-	// read test data from device context and/or testdata
+	
+	// refactored and created a new method that could be used in Device Plan to read test data from device context and/or testdata
 	private void settingDevicePlanTestData(String productType, String deviceType) {
-		// virtual cards are pinless so even if this statement is called by
-		// mistake, we are setting Pin to false
+		// virtual cards are pinless so even if this statement is called by mistake, we are setting Pin to false
 		if (deviceType.toLowerCase().contains("virtual")) {
 			setPinRequiredToFalse();
 		}
@@ -1043,9 +843,7 @@ public class ProgramSetupSteps {
 			devicePlan.setBeforeKYC(data.getTransactionPlan());
 		}
 
-		// setting a flag through setter to figure out if the card is pinless
-		// card or not. This is used in TransactionSteps to set ExpiryDate in
-		// case of PinLess Card
+		// setting a flag through setter to figure out if the card is pinless card or not. This is used in TransactionSteps to set ExpiryDate in case of PinLess Card
 		if ("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
 			devicePlan.setIsPinLess("YES");
 	}
@@ -1072,9 +870,7 @@ public class ProgramSetupSteps {
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
 
-		// setting a flag through setter to figure out if the card is pinless
-		// card or not. This is used in TransactionSteps to set ExpiryDate in
-		// case of PinLess Card
+		// setting a flag through setter to figure out if the card is pinless card or not. This is used in TransactionSteps to set ExpiryDate in case of PinLess Card
 		if ("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
 			devicePlan.setIsPinLess("YES");
 		programSetupWorkflow.createDevicePlan(devicePlan);
@@ -1099,10 +895,8 @@ public class ProgramSetupSteps {
 	public void whenUserFillsTransactionFeePlan(String type) {
 		deviceJoiningAndMemberShipFeePlan = DeviceJoiningAndMemberShipFeePlan.createWithProvider(dataProvider);
 		deviceJoiningAndMemberShipFeePlan.setProductType(ProductType.fromShortName(type));
-		DeviceJoiningAndMemberShipFeePlanDetails details = DeviceJoiningAndMemberShipFeePlanDetails
-				.createWithProvider(dataProvider);
-		// for credit card, an additonal value is added in
-		// DeviceJoiningAndMembershipFeePlanPage.JSON
+		DeviceJoiningAndMemberShipFeePlanDetails details = DeviceJoiningAndMemberShipFeePlanDetails.createWithProvider(dataProvider);
+		// for credit card, an additonal value is added in DeviceJoiningAndMembershipFeePlanPage.JSON
 		if (ProductType.fromShortName(type).toUpperCase().contains("CREDIT")) {
 			details.setPostIssuanceFeeOn(details.getPostIssuanceFeeOnForCreditCard());
 		}
@@ -1134,8 +928,7 @@ public class ProgramSetupSteps {
 
 	@When("User fills Device Priority Pass ID template for $type product")
 	public void whenUserFillsDevicePriorityPassIDTemplate(String type) {
-		DevicePriorityPassIDAndCardPackIDTemplate priorityPassID = DevicePriorityPassIDAndCardPackIDTemplate
-				.createWithProviderDevicePriorityPassID(provider);
+		DevicePriorityPassIDAndCardPackIDTemplate priorityPassID = DevicePriorityPassIDAndCardPackIDTemplate.createWithProviderDevicePriorityPassID(provider);
 		programSetupWorkflow.createPriorityPassID(priorityPassID);
 	}
 
@@ -1165,8 +958,7 @@ public class ProgramSetupSteps {
 
 	@When("User fills Business Mandatory Fields Screen for $type product")
 	public void whenUserFillsBusinessMandatoryFieldsScreen(String type) {
-		ApplicationBusinessMandatoryFields testDataObject = ApplicationBusinessMandatoryFields
-				.createWithProvider(provider);
+		ApplicationBusinessMandatoryFields testDataObject = ApplicationBusinessMandatoryFields.createWithProvider(provider);
 		testDataObject.setProductType(ProductType.fromShortName(type));
 		testDataObject.setProgramCode(program.buildDescriptionAndCode());
 		programSetupWorkflow.fillBusinessMandatoryFields(testDataObject);
@@ -1174,8 +966,7 @@ public class ProgramSetupSteps {
 
 	@When("User fills Business Mandatory Fields Screen for $type product with $customerType")
 	public void whenUserFillsBusinessMandatoryFieldsScreen(String type, String customeType) {
-		ApplicationBusinessMandatoryFields testDataObject = ApplicationBusinessMandatoryFields
-				.createWithProvider(provider);
+		ApplicationBusinessMandatoryFields testDataObject = ApplicationBusinessMandatoryFields.createWithProvider(provider);
 		testDataObject.setProductType(ProductType.fromShortName(type));
 		testDataObject.setCustomerType(ProductType.fromShortName(customeType));
 		testDataObject.setProgramCode(program.buildDescriptionAndCode());
@@ -1241,8 +1032,7 @@ public class ProgramSetupSteps {
 	public void whenUserFillsDeviceJoiningAndMembershipFeePlan(String type) {
 		deviceJoiningAndMemberShipFeePlan = DeviceJoiningAndMemberShipFeePlan.createWithProvider(dataProvider);
 		deviceJoiningAndMemberShipFeePlan.setProductType(ProductType.fromShortName(type));
-		DeviceJoiningAndMemberShipFeePlanDetails details = DeviceJoiningAndMemberShipFeePlanDetails
-				.createWithProvider(dataProvider);
+		DeviceJoiningAndMemberShipFeePlanDetails details = DeviceJoiningAndMemberShipFeePlanDetails.createWithProvider(dataProvider);
 		// for credit card, an additonal value is added in
 		// DeviceJoiningAndMembershipFeePlanPage.JSON
 		if (ProductType.fromShortName(type).toUpperCase().contains("CREDIT")) {
@@ -1300,10 +1090,9 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
 	}
-
+	
 	@When("User $applicationType fills $subApplicationType Program $programType section for $type product for $interchange")
-	public void whenUserFillsProgramSection(String applicationType, String subApplicationType, String programType,
-			String type, String interchange) {
+	public void whenUserFillsProgramSection(String applicationType,String subApplicationType,String programType,String type,String interchange) {
 		program = Program.createWithProvider(dataProvider, provider);
 		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
 		program.setProduct(ProductType.fromShortName(type));
@@ -1352,6 +1141,7 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.PROGRAM, program);
 	}
 
+	
 	@When("User fills Program section for $type product and program $programType")
 	public void userFillsProgramSection(String type, String programType) {
 		program = Program.createWithProvider(dataProvider, provider);
@@ -1406,8 +1196,7 @@ public class ProgramSetupSteps {
 	}
 
 	@When("create wallet Plan for \"$type\" product and program \"$programtype\" with usage \"$usageType\"")
-	public void addWalletPlan(@Named("type") String type, @Named("programtype") String programtype,
-			@Named("usageType") String usageType) {
+	public void addWalletPlan(@Named("type") String type, @Named("programtype") String programtype, @Named("usageType") String usageType) {
 		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
 		walletPlan.setProductType(ProductType.fromShortName(type));
 		walletPlan.setProgramType(programtype);
@@ -1504,9 +1293,8 @@ public class ProgramSetupSteps {
 		// setting Test Data
 		creditCardCreditPlan = CreditCardCreditPlan.createWithProvider(provider);
 		/*
-		 * TransactionRulePlan & PaymentPriorityPlan are expected to come from
-		 * related methods hence fetching data from them and setting them again
-		 * below into setTransactionRulePlan & setPaymentPriorityPlan
+		 * TransactionRulePlan & PaymentPriorityPlan are expected to come from related methods hence fetching data from them and setting them again below into setTransactionRulePlan &
+		 * setPaymentPriorityPlan
 		 */
 		creditCardCreditPlan.setTransactionRulePlan(context.get(CreditConstants.TRANSACTION_RULE));
 
@@ -1529,11 +1317,11 @@ public class ProgramSetupSteps {
 		deviceRange.setDevicePlanCode(devicePlan.buildDescriptionAndCode());
 
 		programSetupWorkflow.createDeviceRange(deviceRange);
+		context.put(ContextConstants.DEVICE_RANGE, deviceRange);
 	}
-
+	
 	@When("for $applicationType and $subApplicationType user fills Device Range section for $type product")
-	public void whenUserFillsDeviceRangeSectionforSupplementaryAndAddonExistingClient(String applicationType,
-			String subApplicationType, String type) {
+	public void whenUserFillsDeviceRangeSectionforSupplementaryAndAddonExistingClient(String applicationType,String subApplicationType,String type) {
 		
 		DeviceRange deviceRange = null;
 		
@@ -1563,6 +1351,7 @@ public class ProgramSetupSteps {
 			}
 		}
 		programSetupWorkflow.createDeviceRange(deviceRange);
+       	context.put(ContextConstants.DEVICE_RANGE, deviceRange);
 	}
 
 	@When("User fills Device Range section for $type product for non-default institution")
@@ -1614,14 +1403,6 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
 	}
-
-	@When("User edit Program to update $editItem")
-	public void andUserEditProgramToUpdateCountryWhiteBlackList(String editItem) {
-		program.setCountryWhiteBlackListPlan(provider);
-		programSetupWorkflow.editProgram(program,editItem);
-
-	}
-
 	
 	@Given("for \"$deviceType\" User create Device Plan for \"$type\" product for \"$interchange\" and \"$priorityPass\" priority pass")
 	@When("for \"$deviceType\" User create Device Plan for \"$type\" product for \"$interchange\" and \"$priorityPass\" priority pass")
@@ -1652,7 +1433,6 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
-
 	@When("User fills Device Plan for $type product with $interchange and $deviceType")
 	public void whenUserFillsDevicePlan(String type, String interchange, String deviceType) {
 		devicePlan = DevicePlan.createWithProviderForCredit(provider);	
@@ -1665,5 +1445,53 @@ public class ProgramSetupSteps {
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
+	}
+	
+	@When("User $applicationType fills $subApplicationType Program $programType section without dedupe for $type product for $interchange")
+	public void whenUserFillsProgramSectionWithoutDedupe(String applicationType, String subApplicationType, String programType, String type, String interchange) {
+		program = Program.createWithProvider(dataProvider, provider);
+		program.setProduct(ProductType.fromShortName(type));
+		program.setInterchange(interchange);
+		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
+			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
+			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+		}
+		program.setFirstWalletPlan(walletPlan.buildDescriptionAndCode());
+		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
+		program.setApplicationType(applicationType);
+		program.setSubApplicationType(subApplicationType);
+		if (program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE) || program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && program.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)) {
+			program.setDevicePlanPlan2(devicePlanSupplementary.buildDescriptionAndCode());
+		}
+		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
+		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
+		program.setProgramType(programType);
+
+		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID))
+			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+
+		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
+		context.put(ContextConstants.PROGRAM, program);
+	}
+	
+	
+	@When("User fills Program section for $type product without dedupe")
+	public void whenUserFillsProgramSectionWithoutDedupe(String type) {
+		program = Program.createWithProvider(dataProvider, provider);
+		program.setProduct(ProductType.fromShortName(type));
+		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
+			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
+			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+		}
+		program.setFirstWalletPlan(walletPlan.buildDescriptionAndCode());
+		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
+		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
+		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
+
+		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID))
+			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+
+		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
+		context.put(ContextConstants.PROGRAM, program);
 	}
 }
