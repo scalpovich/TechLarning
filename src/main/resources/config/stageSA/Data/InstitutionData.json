@@ -164,8 +164,8 @@
 								"deviceEventBasedFeePlan": "AUTOMATION [TA1553CR]",
 								"transactionLimitPlan": "AUTOMATION [TA8137UMAE]",
 								"transactionPlan": "AUTOMATION [T4891H]",
-								"creditPlan": "AUTOMATION [103]",
-								"billingCycle": "AUTOMATION [340]",
+								"creditPlan": "TA1012QSWU [211]",
+								"billingCycle": "AUTOMATION [716]",
 								"walletPlan": "AUTOMATION [TA9647MFFO]"
 				},
 				{
