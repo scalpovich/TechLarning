@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -28,7 +29,6 @@ import org.springframework.stereotype.Component;
  * @deprecated to be replaced by {@link com.mastercard.pts.integrated.issuing.utils.ExcelUtils}
  */
 @Component
-@Deprecated
 public class ReadTestDataFromExcel {
 
 	final Logger logger = LoggerFactory.getLogger(ReadTestDataFromExcel.class);
@@ -287,6 +287,55 @@ public class ReadTestDataFromExcel {
 			flag = true;
 		}
 		return flag;
+	}
+	
+	public List<Integer> dataProviderFileUploadHelpDesk(
+			String testDataFileName, String strSheetName) {
+		List<String> strHeaders = new LinkedList<String>();
+		FileInputStream inputStream;
+		XSSFWorkbook excelWB = null;
+		Sheet excelSheet;
+		List<Integer> helpdeskSearchParametersForFileUpload = new LinkedList<Integer>();
+
+		try {
+
+			inputStream = new FileInputStream(testDataFile(testDataFileName));
+			excelWB = new XSSFWorkbook(inputStream);
+			excelSheet = excelWB.getSheet(strSheetName);
+			Row headerRow = excelSheet.getRow(0);
+			for (int j = 1; j < headerRow.getLastCellNum()-1; j++) {
+				if (!headerRow.getCell(j).getStringCellValue().contains("Seperator")) {
+					strHeaders.add(headerRow.getCell(j).getStringCellValue());
+					
+				}
+           }
+			for (int i = 0; i < strHeaders.size(); i++) {
+				if (strHeaders.get(i).equals("FORM_NUMBER")||strHeaders.get(i).equals("FIRST_NAME")
+						|| strHeaders.get(i).equals("LAST_NAME")
+						|| strHeaders.get(i).equals("REGISTERED_MAIL_ID")
+						|| strHeaders.get(i).equals(
+								"REGISTERED_MOBILE_NUMBER")) {
+					helpdeskSearchParametersForFileUpload.add(i);
+				}
+			}
+
+		} catch (FileNotFoundException e) {
+			logger.error("Test Data file not find", e);
+		} catch (IOException e) {
+
+			return null;
+		} catch (Exception e) {
+			return null;
+		} finally {
+			try {
+				if (excelWB != null) {
+					excelWB.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return helpdeskSearchParametersForFileUpload;
 	}
 
 }

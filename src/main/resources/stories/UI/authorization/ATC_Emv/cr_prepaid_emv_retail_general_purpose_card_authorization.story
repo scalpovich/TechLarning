@@ -8,30 +8,30 @@ I want to authorize transactions for prepaid emv retail general purpose card
 Meta:
 @StoryName p_emv_retail_general
 @oldReferenceSheet_S203707
-@CRCardsWithAuthorizationCashAdvancedWithClearing
+@CRCardsATC
 
 Scenario: Set up prepaid emv retail general purpose card
 Meta:
 @TestId TC398452
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card
-When user creates new device of prepaid type for new client
-Then device has "normal" status
-And user sign out from customer portal
+When device range for program with device plan for "prepaid" "emv" card
+And user creates new device of prepaid type for new client
+And device has "normal" status
+Then user sign out from customer portal
 
 Scenario: prepaid emv retail general purpose card device production
 Meta:
 @TestId TC408068
 Given user is logged in institution
-And a new device was created
-When processes pre-production batch for prepaid
-When processes device production batch for prepaid
-When processes pin generation batch for prepaid
-When user has wallet number information for prepaid device
-When user performs adjustment transaction with 50000 amount
-When user has current wallet balance amount information for prepaid device
-Then device has "normal" status
-And user sign out from customer portal
+When a new device was created
+And processes pre-production batch for prepaid
+And processes device production batch for prepaid
+And processes pin generation batch for prepaid
+And user has wallet number information for prepaid device
+And user performs adjustment transaction with 50000 amount
+And user has current wallet balance amount information for prepaid device
+And device has "normal" status
+Then user sign out from customer portal
 
 
 Scenario: Pin Generation 

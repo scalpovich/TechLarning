@@ -13,6 +13,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGe
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConnectionUtils;
+import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 
 @Workflow
 public class HelpdeskWorkflow {
@@ -78,15 +79,15 @@ public class HelpdeskWorkflow {
 		helpDeskPage.setupDeviceCurrency(helpdeskGeneral);
 	}
 	
-	public void setupInternationalAllowDisallowCheck(HelpdeskGeneral helpdeskGeneral, String status) {
-		helpDeskPage.setupInternationalAllowDisallowCheck(helpdeskGeneral, status);
+	public void setupInternationalAllowDisallowCheck(String status) {
+		helpDeskPage.setupInternationalAllowDisallowCheck(status);
 	}
 	
 	public void setupEccomerceAllowDisallowCheck(HelpdeskGeneral helpdeskGeneral, String status) {
-		helpDeskPage.setupEccomerceDisallowCheck(helpdeskGeneral, status);
+		helpDeskPage.setupEccomerceDisallowCheck(status);
 	}
-	public void AllowTransactionForOneHour(HelpdeskGeneral helpdeskGeneral, String status) {
-		helpDeskPage.AllowTransactionForOneHour(helpdeskGeneral,status);
+	public void allowTransactionForOneHour(String status) {
+		helpDeskPage.allowTransactionForOneHour(status);
 	}
 
 	public void storeActivationDate() {
@@ -127,6 +128,11 @@ public class HelpdeskWorkflow {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		return helpDeskPage.getWalletBalanceInformation(device);
 	}
+	
+	public String getWalletBalanceInformationForRemittance(Device device, CardToCash cardToCash) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		return helpDeskPage.getWalletBalanceInformationForRemittance(device, cardToCash);
+	}
 
 	public boolean verifyBalanceUpdatedCorreclty(String beforeLoadBalanceInformation, String transactionDetailsFromExcel, String afterLoadBalanceInformation) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
@@ -162,6 +168,16 @@ public class HelpdeskWorkflow {
 	
 	public boolean changeRegisteredMobileNo(HelpdeskGeneral general){
 		return helpDeskPage.changeRegisteredMobileNo(general);
+	}
+	
+	public BigDecimal noteDownAvailableLimit(String type) {
+		clickCustomerCareEditLink();
+		return helpDeskPage.noteDownAvailableLimit(type);
+	}
+	
+	public BigDecimal verifyAvailableLimit(String type) {
+		clickCustomerCareEditLink();
+		return helpDeskPage.noteDownAvailableLimit(type);
 	}
 	
 	public Optional<String[]> getDeviceTypeAndNumber(String institutionSelector){	

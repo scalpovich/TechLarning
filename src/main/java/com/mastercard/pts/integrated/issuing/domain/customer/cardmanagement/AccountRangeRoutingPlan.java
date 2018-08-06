@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
 @Component
@@ -39,6 +40,13 @@ public class AccountRangeRoutingPlan {
 		AccountRangeRoutingPlan accountRange= new AccountRangeRoutingPlan();
 		accountRange.setFromAccount(MapUtils.fnGetInputDataFromMap("AccountRangeFrom"));
 		accountRange.setToAccount(MapUtils.fnGetInputDataFromMap("AccountRangeTo"));		
+		return  accountRange;
+	}
+	
+	public static AccountRangeRoutingPlan channelRoutingPlanDataProvider(Device device){
+		AccountRangeRoutingPlan accountRange= new AccountRangeRoutingPlan();
+		accountRange.setFromAccount(device.getWalletNumber().substring(0, 9)+ ConstantData.ZERO_ZERO);
+		accountRange.setToAccount(device.getWalletNumber().substring(0, 9)  + ConstantData.NINE_NINE);
 		return  accountRange;
 	}
 }

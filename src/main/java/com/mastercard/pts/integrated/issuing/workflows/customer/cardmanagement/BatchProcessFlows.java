@@ -128,15 +128,34 @@ public class BatchProcessFlows extends MenuFlows {
 		PreProductionBatchPage page = navigator.navigateToPage(PreProductionBatchPage.class);
 		page.processPreProductionBatchNewApplication(batch);
 	}
-
+	public void processPreProductionBatchNewApplicationFileUpload(PreProductionBatch batch) {
+		PreProductionBatchPage page = navigator.navigateToPage(PreProductionBatchPage.class);
+		page.processPreProductionBatchNewApplicationForFileUpload(batch);
+	}
+	
 	public void processDeviceProductionBatch(DeviceProductionBatch batch) {
 		deviceProductionPage = navigator.navigateToPage(DeviceProductionPage.class);
 		deviceProductionPage.processDeviceProductionBatch(batch);
+	}
+	
+	public void processPinGenerationBatch(PinGenerationBatch batch) {
+		PinGenerationBatchPage pinGenerationBatchPage = navigator.navigateToPage(PinGenerationBatchPage.class);
+		pinGenerationBatchPage.processPinProductionBatch(batch);
 	}
 
 	public void processDeviceProductionBatchAll(DeviceProductionBatch batch) {
 		deviceProductionPage = navigator.navigateToPage(DeviceProductionPage.class);
 		deviceProductionPage.processDeviceProductionBatchForAll(batch);
+	}
+	
+	public void processDeviceProductionBatchAllForFileUpload(DeviceProductionBatch batch) {
+		deviceProductionPage = navigator.navigateToPage(DeviceProductionPage.class);
+		deviceProductionPage.processDeviceProductionBatchForAllForFileUpload(batch);
+	}
+	
+	public void processPinProductionBatchAllForFileUpload(PinGenerationBatch batch) {
+		PinGenerationBatchPage page = navigator.navigateToPage(PinGenerationBatchPage.class);
+		page.processPinProductionBatchForAllForFileUpload(batch);
 	}
 
 	public void processDeviceProductionBatchNewDevice(DeviceProductionBatch batch) {
@@ -154,7 +173,7 @@ public class BatchProcessFlows extends MenuFlows {
 		deviceProductionPage.processDeviceProductionBatchNewApplication(batch);
 	}
 
-	public void processPinGenerationBatch(PinGenerationBatch batch) {
+	public void processPinGenerationBatchForSupplementary(PinGenerationBatch batch) {
 		pinGenerationPage = navigator.navigateToPage(PinGenerationBatchPage.class);
 		pinGenerationPage.processPinGenerationBatchNewDeviceSupplementary(batch);
 	}

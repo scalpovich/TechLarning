@@ -1,4 +1,3 @@
-
 package com.mastercard.pts.integrated.issuing.utils;
 
 /**
@@ -21,8 +20,6 @@ public class ConstantData {
 	public static final String SAME_TRANSACTION_EXISTS = "Information with same Transaction Rule Plan Code already exists.";
 	public static final String SAME_CREDIT_PLAN_EXISTS = "Information with same Credit Plan Code already exists.";
 	public static final String GENERIC_DESCRIPTION = "AUTOMATION";
-	public static final String INTERNATIONAL_ALLOW_DISALLOW = "International Use Allow/Disallow [400]";
-	public static final String ECCOMERCE_ALLOW_DISALLOW= "E-commerce Activation/Deactivation [304]";
 	public static final String REQUIRED_FIELD_VALIDATION_MESSAGE = "This field is required.";
 	public static final String TRANSACTION_UPLOAD_FILE_PATH = "/home/dc-user/integrated/elt_bo/data/TRANSACTION_UPLOAD/INPUT";
 	public static final String IPM_UPLOAD_FILE_PATH = "/mptshome/STAGE2/integrated/elt_bo/data/AUTOMATION_1/IPM_INCOMING/input"; // "/home/dc-user/integrated/elt_bo/data/IPM_INCOMING/INPUT"
@@ -59,6 +56,8 @@ public class ConstantData {
 	public static final String AUTHORIZATION_REPORT_FILE_KEY = "Auto";
 	public static final String AUTHORIZATION_CODE = "authCode";
 	public static final String TRANSACTION_AMOUNT = "transactionAmount";
+	public static final String INTERNATIONAL_ALLOW_DISALLOW = "International Use Allow/Disallow [400]";
+	public static final String ECCOMERCE_ALLOW_DISALLOW= "E-commerce Activation/Deactivation [304]";
 
 	public static final String OPTION_SELECT_ONE = "Select One";
 
@@ -75,8 +74,31 @@ public class ConstantData {
 	
 	public static final String THREE_D_SECURE_TRANSACTION = "3D_SECURE_CAVV";
 	public static final String DATA_ELEMENT_CAVV = "048.TLV.43";
+	
+	public static final String INSTITUTION_KEY = "institution";
+	public static final String PRODUCT_IDENTITY = "productIdentity";
+	public static final String INSTITUTION_CODE_KEY = "code";
+	
+	public static final String PIN_REQUIRED_FALSE = "false";
+	public static final String JSON_DATA_DRIVEN_EXECUTION = "dataDrivenExecution";
+	public static final String VIRTUAL_DEVICE_TYPE = "virtual";
+
+
+	public static final String INVALID_CVV = "123";	
+	public static final String INVALID_CVV2 = "123";	
+	public static final String INVALID_ICVV = "123";	
+	public static final String INVALID_PVKI = "123";
+	
+	public static final String OPEN_BATCH = "Open [O]";
+
+	
+	public static final String EXISTING = "Existing";
+	public static final String PIN_REQUIRED_YES = "YES";
 	public static final String WORNG_EXPIRY = "1809";
 	public static final String ACTIVATION_VALUE ="Immediate Activation for n Hrs [Immediate Activation for n Hrs]";
+	
+	public static final String ZERO_ZERO = "00";
+	public static final String NINE_NINE = "99";
 
 	private ConstantData() {
 	}
