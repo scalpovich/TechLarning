@@ -40,5 +40,20 @@ public class VendorSteps {
 		vendor.setNewVendor(EmbossingVendor);
 
 	}
+	
+	@When("user creates a Vendor of Category $category with $template template attached for fileUpload")
+	public void whenUserCreatesAVendorOfCategoryEmbossingTemplateForFileUpload(@Named("category") String category,
+			@Named("template") String template) {
+		vendor.vendorDataProvider();
+		vendor.setEmbossingFileTemp(embossingFile.getEmbossingFileTemplateName());
+		vendor.setVendorCategory(category);
+		String EmbossingVendor = "";
+		if (template.contains(FileType.EMBOSSING_FILE)) {
+			EmbossingVendor = vendorflows.createVendorWithEmbossingTemplateFileUpload(vendor);
+		}
+		Assert.assertNotNull(EmbossingVendor);
+		vendor.setNewVendor(EmbossingVendor);
+
+	}
 
 }

@@ -278,6 +278,7 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 		} catch (TimeoutException te) {
 			logger.debug(te.getMessage(), te);
 		}
+		WebElementUtils.scrollDown(driver(), 0, 300);
 		clickWhenClickable(addNewBtn);
 		transactionLimitPlanDataObject.getTransactionLimitPlanDetails().forEach(details -> addDetailsLimit(details, transactionLimitPlanDataObject.getIframeproductType()));
 		WebElementUtils.scrollDown(driver(), 0, 250);

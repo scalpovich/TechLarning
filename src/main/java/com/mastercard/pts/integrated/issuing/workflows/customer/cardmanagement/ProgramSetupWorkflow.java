@@ -57,13 +57,12 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
 @Workflow
 public class ProgramSetupWorkflow {
-
+	
 	@Autowired
 	private Navigator navigator;
-	@Autowired
-	private TestContext context;
-	private static final Logger logger = LoggerFactory.getLogger(ProgramSetupWorkflow.class);
-
+    @Autowired
+    private TestContext context;
+    private static final Logger logger = LoggerFactory.getLogger(ProgramSetupWorkflow.class);
 	public void createStatementMessagePlan(StatementMessagePlan statementMessagePlan) {
 		StatementMessagePlanPage page = navigator.navigateToPage(StatementMessagePlanPage.class);
 		page.createStatementMessagePlan(statementMessagePlan);
@@ -74,116 +73,114 @@ public class ProgramSetupWorkflow {
 		page.createMarketingMessagePlan(marketingMessagePlan);
 	}
 
-	// Transaction Limit Plan
+	//Transaction Limit Plan
 	public void createTransactionLimitPlan(TransactionLimitPlan transactionLimitPlan) {
 		TransactionLimitPlanPage page = navigator.navigateToPage(TransactionLimitPlanPage.class);
 		page.createTransactionLimitPlan(transactionLimitPlan);
 	}
-	// Transaction Limit Plan ends
-
-	// Device configuration
-	public void createDeviceJoiningAndMemberShipFeePlan(
-			DeviceJoiningAndMemberShipFeePlan deviceJoiningAndMemberShipFeePlan) {
-		DeviceJoiningAndMembershipFeePlanPage page = navigator
-				.navigateToPage(DeviceJoiningAndMembershipFeePlanPage.class);
+	//Transaction Limit Plan ends
+	
+	//Device configuration
+	public void createDeviceJoiningAndMemberShipFeePlan(DeviceJoiningAndMemberShipFeePlan deviceJoiningAndMemberShipFeePlan) {
+		DeviceJoiningAndMembershipFeePlanPage page = navigator.navigateToPage(DeviceJoiningAndMembershipFeePlanPage.class);
 		page.createDeviceJoiningOrMembershipFeePlan(deviceJoiningAndMemberShipFeePlan);
 	}
-
+	
 	public void createDeviceEventBasedFeePlan(DeviceEventBasedFeePlan deviceEventBasedFeePlan) {
 		DeviceEventBasedFeePlanPage page = navigator.navigateToPage(DeviceEventBasedFeePlanPage.class);
 		page.createDeviceEventBasedFeePlan(deviceEventBasedFeePlan);
 	}
-
+	
 	public String createCardPackIDTemplate(DevicePriorityPassIDAndCardPackIDTemplate template) {
-		DevicePriorityPassIDAndCardPackIDTemplatePage page = navigator
-				.navigateToPage(DevicePriorityPassIDAndCardPackIDTemplatePage.class);
+		DevicePriorityPassIDAndCardPackIDTemplatePage page = navigator.navigateToPage(DevicePriorityPassIDAndCardPackIDTemplatePage.class);
 		String code = page.createCardPackIDTemplate(template);
 		template.setCode(code);
 		return code;
 	}
-
+	
 	public String createDeviceTemplate(DevicePriorityPassIDAndCardPackIDTemplate template) {
-		DevicePriorityPassIDAndCardPackIDTemplatePage page = navigator
-				.navigateToPage(DevicePriorityPassIDAndCardPackIDTemplatePage.class);
+		DevicePriorityPassIDAndCardPackIDTemplatePage page = navigator.navigateToPage(DevicePriorityPassIDAndCardPackIDTemplatePage.class);
 		String code = page.createDeviceTemplate(template);
 		template.setCode(code);
 		return code;
 	}
-
+	
 	public String createPriorityPassID(DevicePriorityPassIDAndCardPackIDTemplate template) {
-		DevicePriorityPassIDAndCardPackIDTemplatePage page = navigator
-				.navigateToPage(DevicePriorityPassIDAndCardPackIDTemplatePage.class);
+		DevicePriorityPassIDAndCardPackIDTemplatePage page = navigator.navigateToPage(DevicePriorityPassIDAndCardPackIDTemplatePage.class);
 		String code = page.createPriorityPassID(template);
 		template.setCode(code);
 		return code;
 	}
-
+	
 	public void createDevicePlan(DevicePlan devicePlan) {
 		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
 		page.createDevicePlan(devicePlan);
 	}
 	// Device configuration ends
-
+	
 	public void uncheckCVCCVVDevicePlan(DevicePlan devicePlan) {
 		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
 		page.updateCVCCVVDevicePlan(devicePlan);
 	}
 	// Device configuration ends
-
-	public void fillDocumentChecklist(ApplicationDocumentChecklist applicationDocumentChecklist) {
+	
+	public void fillDocumentChecklist(ApplicationDocumentChecklist  applicationDocumentChecklist) {
 		ApplicationDocumentChecklistPage page = navigator.navigateToPage(ApplicationDocumentChecklistPage.class);
 		page.addDocumentsInDocumentsChecklist(applicationDocumentChecklist);
 	}
-
-	public void fillBusinessMandatoryFields(ApplicationBusinessMandatoryFields applicationBusinessMandatoryFields) {
-		ApplicationBusinessMandatoryFieldsPage page = navigator
-				.navigateToPage(ApplicationBusinessMandatoryFieldsPage.class);
+	
+	public void fillBusinessMandatoryFields(ApplicationBusinessMandatoryFields  applicationBusinessMandatoryFields) {
+		ApplicationBusinessMandatoryFieldsPage page = navigator.navigateToPage(ApplicationBusinessMandatoryFieldsPage.class);
 		page.addBusinessMandatoryFields(applicationBusinessMandatoryFields);
 	}
-
-	public void fillCreditCardBillingCycle(CreditCardBillingCycle creditCardBillingCycle) {
+	
+	public void fillCreditCardBillingCycle(CreditCardBillingCycle creditCardBillingCycle)
+	{
 		CreditCardBillingCyclePage page = navigator.navigateToPage(CreditCardBillingCyclePage.class);
-		Boolean billingCycleStatus = page.addBillingCycle(creditCardBillingCycle);
+		Boolean billingCycleStatus=page.addBillingCycle(creditCardBillingCycle);
 		logger.info("billingCycleStatus : {} ", billingCycleStatus);
-		context.put(CreditConstants.BILLING_CYCLE_CODE_ERROR_STATUS, billingCycleStatus);
+		context.put(CreditConstants.BILLING_CYCLE_CODE_ERROR_STATUS,billingCycleStatus);
 	}
-
-	public void fillCreditCardPaymentPriority(CreditCardPaymentPriority creditCardPaymentPriority) {
+	
+	public void fillCreditCardPaymentPriority(CreditCardPaymentPriority creditCardPaymentPriority)
+	{
 		CreditCardPaymentPriorityPage page = navigator.navigateToPage(CreditCardPaymentPriorityPage.class);
-		Boolean paymentPriorityStatus = page.addPaymentPriority(creditCardPaymentPriority);
+		Boolean paymentPriorityStatus=page.addPaymentPriority(creditCardPaymentPriority);
 		logger.info("paymentPriorityStatus : {} ", paymentPriorityStatus);
-		context.put(CreditConstants.PAYMENT_PRIORITY_STATUS, paymentPriorityStatus);
+		context.put(CreditConstants.PAYMENT_PRIORITY_STATUS,paymentPriorityStatus);
 	}
-
-	public void fillCreditCardPaymentBounceReason(CreditCardPaymentBounceReason creditCardPaymentBounceReason) {
+	
+	public void fillCreditCardPaymentBounceReason(CreditCardPaymentBounceReason creditCardPaymentBounceReason)
+	{
 		CreditCardPaymentBounceReasonPage page = navigator.navigateToPage(CreditCardPaymentBounceReasonPage.class);
-		Boolean paymentBounceStatus = page.addPaymentBounceReason(creditCardPaymentBounceReason);
+		Boolean paymentBounceStatus=page.addPaymentBounceReason(creditCardPaymentBounceReason);
 		logger.info("paymentBounceStatus : {} ", paymentBounceStatus);
-		context.put(CreditConstants.PAYMENT_BOUNCE_STATUS, paymentBounceStatus);
+		context.put(CreditConstants.PAYMENT_BOUNCE_STATUS,paymentBounceStatus);
 	}
 
-	public void fillCreditCardTransactionRulePlancode(CreditCardTransactionRulePlan creditCardTransactionRulePlancode) {
+	public void fillCreditCardTransactionRulePlancode(CreditCardTransactionRulePlan creditCardTransactionRulePlancode)
+	{
 		CreditCardTransactionRulePlanPage page = navigator.navigateToPage(CreditCardTransactionRulePlanPage.class);
-		Boolean transactionPlanStatus = page.addTransactionRulePlan(creditCardTransactionRulePlancode);
+		Boolean transactionPlanStatus=page.addTransactionRulePlan(creditCardTransactionRulePlancode);
 		logger.info("transactionPlanStatus : {} ", transactionPlanStatus);
 		context.put(CreditConstants.TRANSACTION_PLAN_ERROR_STATUS, transactionPlanStatus);
 	}
-
-	public void fillCreditCardCreditPlan(CreditCardCreditPlan creditCardCreditPlan) {
+	
+	public void fillCreditCardCreditPlan(CreditCardCreditPlan creditCardCreditPlan)
+	{
 		CreditCardCreditPlanPage page = navigator.navigateToPage(CreditCardCreditPlanPage.class);
-		Boolean creditPlanStatus = page.addCreditPlan(creditCardCreditPlan);
+		Boolean creditPlanStatus=page.addCreditPlan(creditCardCreditPlan);
 		logger.info("creditPlanStatus : {} ", creditPlanStatus);
 		context.put(CreditConstants.CREDIT_PLAN_CODE_ERROR_STATUS, creditPlanStatus);
 	}
-
-	public void createDedupePlan(DedupePlan dedupePlan) {
+	
+	public void createDedupePlan(DedupePlan dedupePlan){
 		DedupePlanPage page = navigator.navigateToPage(DedupePlanPage.class);
 		page.addDedupePlanData(dedupePlan);
 	}
-
+	
 	public void createWalletFeePlan(WalletFeePlan walletFeePlan, String productType) {
-		WalletConfigurationWalletFeePlanPage page = navigator
-				.navigateToPage(WalletConfigurationWalletFeePlanPage.class);
+		WalletConfigurationWalletFeePlanPage page = navigator.navigateToPage(WalletConfigurationWalletFeePlanPage.class);
 		page.addWalletFeePlan(walletFeePlan, productType);
 	}
 
@@ -191,32 +188,32 @@ public class ProgramSetupWorkflow {
 		WalletConfigurationWalletPlanPage page = navigator.navigateToPage(WalletConfigurationWalletPlanPage.class);
 		page.addWalletPlanData(walletPlan);
 	}
-
+	
 	public void createNewWalletPlan(WalletPlan walletPlan) {
 		WalletConfigurationWalletPlanPage page = navigator.navigateToPage(WalletConfigurationWalletPlanPage.class);
-		page.addNewWalletPlanData(walletPlan);
+		page.addNewWalletPlanData(walletPlan);		
 	}
 
-	public void createProgram(Program program, String productType) {
+	public void createProgram(Program program, String productType ) {
 		ProgramPage page = navigator.navigateToPage(ProgramPage.class);
 		page.addProgramData(program, productType);
 	}
-
-	public void createNewProgram(Program program, String productType) {
+	
+	public void createNewProgram(Program program, String productType ) {
 		ProgramPage page = navigator.navigateToPage(ProgramPage.class);
 		page.addProgramForMultiWallet(program, productType);
 	}
-
-	public void createAddProgram(Program program, String productType) {
+	
+	public void createAddProgram(Program program, String productType ) {
 		ProgramPage page = navigator.navigateToPage(ProgramPage.class);
 		page.addsProgramData(program, productType);
 	}
-
+	
 	public void createDeviceRange(DeviceRange deviceRange) {
 		DeviceRangePage page = navigator.navigateToPage(DeviceRangePage.class);
 		page.addDeviceRangeData(deviceRange);
 	}
-
+	
 	public void createPrepaidStatementPlan(PrepaidStatementPlan plan) {
 		PrepaidStatementPlanPage page = navigator.navigateToPage(PrepaidStatementPlanPage.class);
 		page.createPrepaidStatementPlan(plan);
@@ -236,9 +233,13 @@ public class ProgramSetupWorkflow {
 		MCCRulePlanPage page = navigator.navigateToPage(MCCRulePlanPage.class);
 		page.createMCCRulePlanPage(plan);
 	}
-
-	public void editProgram(Program program,String editItem) {
-		ProgramPage page = navigator.navigateToPage(ProgramPage.class);
-		page.editProgramForPlans(program,editItem);
+	public void enableStopListFlag(DevicePlan devicePlanDataObject) {
+		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
+		page.enableStopListFlag(devicePlanDataObject);
+	}
+	
+	public void editMCCRulePlan(MCCRulePlan plan) {
+		MCCRulePlanPage page = navigator.navigateToPage(MCCRulePlanPage.class);
+		page.editMCCRulePlanPage(plan);
 	}
 }

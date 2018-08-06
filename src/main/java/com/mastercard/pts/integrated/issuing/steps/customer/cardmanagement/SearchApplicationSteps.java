@@ -13,8 +13,12 @@ public class SearchApplicationSteps {
 	SearchApplicationDetailsFlows searchApplicationDetailsFlows;
 
 	@When("user searches for created application")
-	public void searchApplicationDetails()
-	{
+	public void searchApplicationDetails(){
 		searchApplicationDetailsFlows.searchApplicationDetails();
+	}
+	
+	@When("user searches for created application for fileUpload")
+	public void searchApplicationDetailsForFileUpload() {
+		searchApplicationDetailsFlows.searchApplicationDetailsForFileUpload();
 	}
 }

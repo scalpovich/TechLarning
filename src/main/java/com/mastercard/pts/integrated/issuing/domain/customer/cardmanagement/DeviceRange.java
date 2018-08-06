@@ -60,8 +60,7 @@ public class DeviceRange {
 	}
 	
 	public static DeviceRange createWithProvider(DataProvider provider, String... tags){
-		String[] deviceRange = generateDeviceRange(BIN_RANGE_SIZE);
-		
+		String[] deviceRange = generateDeviceRange(BIN_RANGE_SIZE);		
 		DeviceRange range = provider.getDataBySimpleClassName(DeviceRange.class, tags);
 		range.setFromDeviceNumber(deviceRange[0]);
 		range.setToDeviceNumber(deviceRange[1]);

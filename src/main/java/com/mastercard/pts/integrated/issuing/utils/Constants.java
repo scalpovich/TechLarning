@@ -461,6 +461,11 @@ public class Constants {
 	public static final String ENV = "env";
 	public static final String MSR_SERVICE_CODE="101";
 	public static final String EMV_SERVICE_CODE="201";
+
+	public static final String PRIORITY_PASS_TEMPLATE ="Priority Pass ID [P]";
+	public static final String DEVICE_TEMPLATE = "Device Template";
+	public static final String CARD_PACK_TEMPLATE = "Card Pack ID Template";
 	
+	public static final String PROGRAM = "Program";
 
 }

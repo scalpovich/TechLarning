@@ -26,7 +26,7 @@ Then user sign out from customer portal
 Then user is logged in institution
 Then device has "normal" status
 When user has wallet number information for prepaid device
-When user performs adjustment transaction with 10000 amount
+When user performs adjustment transaction with 300000 amount
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 Then user activates device through helpdesk
