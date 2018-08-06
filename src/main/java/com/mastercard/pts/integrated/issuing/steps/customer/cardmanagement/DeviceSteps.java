@@ -227,8 +227,8 @@ public class DeviceSteps {
 		context.put(ContextConstants.DEVICE, device);
 	}
 	
-	@When("User enter incorrect Expiry Date")
-	@Then("User enter incorrect Expiry Date")
+	@When("User enters incorrect Expiry Date")
+	@Then("User enters incorrect Expiry Date")
 	public void expiryDateIsIncorrect() {
 		Device device = context.get(ContextConstants.DEVICE);
 		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);

@@ -316,7 +316,7 @@ public class UserManagementSteps {
 	@When("user wait for one hour to perform transaction")
 	public void whenUserWaitForOneHourToPerformTransaction()
 	{
-		SimulatorUtilities.wait(3900000);
+		SimulatorUtilities.wait(ConstantData.STATIC_WAIT_FOR_PRESCREENING);
 	}
 	@When("user wait for one 21 mins to perform transaction")
 	public void whenUserWaitToPerformCrossBorderTransaction()

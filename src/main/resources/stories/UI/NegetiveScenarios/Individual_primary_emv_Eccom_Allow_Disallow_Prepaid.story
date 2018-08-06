@@ -1,8 +1,7 @@
 Narrative:
-In order to a create a Credit Device under customer portal cardmanagement tab
+In order to a create a Prepaid Device under customer portal cardmanagement tab
 As a user
-I want to assert pages
-
+I want to assert Pre-Screenning Checks by doing various transactions.
 Meta:
 @Pre-ScreeningCheck
 @StoryName p_emv_corp_travel				 

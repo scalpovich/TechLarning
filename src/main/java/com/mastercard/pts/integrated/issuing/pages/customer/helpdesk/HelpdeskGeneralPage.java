@@ -40,6 +40,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Navigation(tabTitle = HelpdeskNav.TAB_HELPDESK, treeMenuItems = { HelpdeskNav.L1_ACTIVITY, HelpdeskNav.L2_GENERAL })
 public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String TABLE_XPATH = "//div[@class='TransScrollY']//table[@class='dataview']//tr";
+	private static final String OPERATION="//select[@name='udf1:input:dropdowncomponent']";
 	private static final String ROWCOUNT_REMITTANCE = "//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr";
 	private static final String COLUMN_STATUS = "Status";
 	private static final String CURRENT_AVAILABLE_BALANCE = "Current Available Balance";
@@ -110,7 +111,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement saveBtn;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='udf4:input:inputTextField']")
-	private MCWebElement timeInHour;
+	private MCWebElement timeInHourTxt;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".feedbackPanelINFO")
 	private MCWebElement activationMessage;
@@ -233,7 +234,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement eccomDeactivate;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@name='udf23:radioComponent' and @value='1']")
-	private MCWebElement eccomAactivate;
+	private MCWebElement eccomActivate;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Card :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement creditLimitLabel;
@@ -474,44 +475,40 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(5000);
 		clickEndCall();
 	}
-	
+
 	public void chooseOperationDeactivate(String status) {
 		SimulatorUtilities.wait(1000);
 		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW)) {
-			WebElement element = driver().findElement(
-					By.xpath("//select[@name='udf1:input:dropdowncomponent']"));
-			WebElementUtils.retryUntilNoErrors(() -> new Select(element)
-					.selectByValue("0"));
+			WebElementUtils.retryUntilNoErrors(() -> new Select(driver().findElement(By.xpath(OPERATION))).selectByValue("0"));
 		} else {
 			eccomDeactivate.click();
 		}
 	}
-	
+
 	public void chooseOperationActivate(String status) {
 		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW)) {
 			SimulatorUtilities.wait(1000);
-			WebElement element = driver().findElement(
+			WebElement operation = driver().findElement(
 					By.xpath("//select[@name='udf1:input:dropdowncomponent']"));
-			WebElement element1 = driver().findElement(
+			WebElement activationType = driver().findElement(
 					By.xpath("//select[@name='udf2:input:dropdowncomponent']"));
-			WebElementUtils.retryUntilNoErrors(() -> new Select(element)
+			WebElementUtils.retryUntilNoErrors(() -> new Select(operation)
 					.selectByValue("1"));
-			WebElementUtils.retryUntilNoErrors(() -> new Select(element1)
-					.selectByVisibleText(ConstantData.ACTIVATION_VALUE));
-			WebElementUtils.enterText(timeInHour, "1");
+			WebElementUtils.retryUntilNoErrors(() -> new Select(activationType)
+					.selectByVisibleText(ConstantData.GENERIC_DESCRIPTION));
+			WebElementUtils.enterText(timeInHourTxt, "1");
 		} else {
 			SimulatorUtilities.wait(1000);
 			List<WebElement> listEccom = driver().findElements(
 					By.xpath("//input[@name='udf23:radioComponent']"));
 			boolean rValue;
-			rValue = listEccom.get(1).isSelected();
-			if (rValue = true) {
+			if (rValue = listEccom.get(1).isSelected()) {
 				listEccom.get(0).click();
 			}
 			WebElement element = driver().findElement(By.xpath("//input[@name='udf25:radioComponent' and @value='2']"));
 			element.click();
 			SimulatorUtilities.wait(2000);
-			WebElementUtils.enterText(timeInHour, "1");
+			WebElementUtils.enterText(timeInHourTxt, "1");
 		}
 	}
 	
@@ -554,7 +551,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickGoButton();
 		runWithinPopup("400 - International Use Allow/Disallow", () -> {
 			chooseOperationActivate(status);
-			enterNotes("Automation");
+			enterNotes(ConstantData.GENERIC_DESCRIPTION);
 			clickSaveButton();
 			verifyOperationStatus();
 			clickOKButtonPopup();			
@@ -566,7 +563,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickGoButton();
 			runWithinPopup("304 - E-commerce Activation/Deactivation", () -> {
 				chooseOperationActivate(status);
-				enterNotes("Automation");
+				enterNotes(ConstantData.GENERIC_DESCRIPTION);
 				clickSaveButton();
 				verifyOperationStatus();
 				clickOKButtonPopup();			

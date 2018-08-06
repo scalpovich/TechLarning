@@ -88,6 +88,10 @@ public class ConstantData {
 	public static final String INVALID_CVV2 = "123";	
 	public static final String INVALID_ICVV = "123";	
 	public static final String INVALID_PVKI = "123";
+	public static final String INVALID_PIN = "1234";
+	
+	public static final int STATIC_WAIT_FOR_PRESCREENING = 3900000;
+	
 	
 	public static final String OPEN_BATCH = "Open [O]";
 

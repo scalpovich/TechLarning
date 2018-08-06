@@ -399,7 +399,7 @@ public class TransactionSteps {
 	@Then("PIN is created for Pin Change First Transaction")
 	public void thenPINIsCreatedForPinChangeFirstTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
-		device.setPinNumberForTransaction("1234");
+		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
 		context.put(ContextConstants.DEVICE, device);
 	}
 

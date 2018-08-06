@@ -306,18 +306,17 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.uncheckCVCCVVDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
-	
+
 	@When("User checks Pin Change Transaction First check box on Device Plan Page")
-	public void userChecksPinChangeTransactionFirstOnDevicePlan()
-	{
+	public void userChecksPinChangeTransactionFirstOnDevicePlan() {
 		programSetupWorkflow.checkPinChangeTransactionFirst(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
-	
+
 	@When("User checks Cross Border Transaction check box on Device Plan Page")
 	public void userChecksCrossBorderTransactionCheckBoxOnDevicePlanPage()
 	{
-		programSetupWorkflow.checkCrossBorserTransaction(devicePlan);
+		programSetupWorkflow.checkCrossBorderTransaction(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 		
 	}
