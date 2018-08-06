@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import static org.junit.Assert.assertTrue;
 
+import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.Optional;
 
@@ -64,6 +65,7 @@ public class DeviceUsageSteps {
 
 	@Then("verify the MCG daily transaction in Device Usage Screen for $type transactions")
 	public void userDeviceUsage(String type) {
+		DecimalFormat df2 = new DecimalFormat("0.00"); 
 		mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
 		device = context.get(ContextConstants.DEVICE);
 		deviceUsage = DeviceUsage.getDeviceUsageDetails(provider);
@@ -73,11 +75,11 @@ public class DeviceUsageSteps {
 		if (data.isPresent()) {
 			Assert.assertEquals("Error asserting MCG Code", mcgLimitPlan.getMcgCode(), data.get().get(DeviceUsagePage.MCG_CODE));
 			if (type.equalsIgnoreCase(DOMESTIC)) {
-				Assert.assertEquals("Error asserting Domestic Transaction Amount", context.get(ConstantData.TRANSACTION_AMOUNT), Double.toString(Double.parseDouble(data.get().get(DeviceUsagePage.DAILY_AMOUNT_DOMESTIC_UTILIZED))-previousAmountUtilized));
+				Assert.assertEquals("Error asserting Domestic Transaction Amount", context.get(ConstantData.TRANSACTION_AMOUNT), df2.format(Double.toString(Double.parseDouble(data.get().get(DeviceUsagePage.DAILY_AMOUNT_DOMESTIC_UTILIZED))-previousAmountUtilized)));
 				Assert.assertEquals("Error asserting Domestic Velocity", deviceUsage.getVelocity(), data.get().get(DeviceUsagePage.DAILY_VELOCLITY_DOMESTIC_UTILIZED));
 				previousAmountUtilized = Double.parseDouble(data.get().get(DeviceUsagePage.DAILY_AMOUNT_DOMESTIC_UTILIZED));
 			} else if (type.equalsIgnoreCase(INTERNATIONAL)) {
-				Assert.assertEquals("Error asserting International Transaction Amount", context.get(ConstantData.BILLING_AMOUNT), Double.toString(Double.parseDouble(data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED))-previousAmountUtilized));
+				Assert.assertEquals("Error asserting International Transaction Amount", context.get(ConstantData.BILLING_AMOUNT), df2.format(Double.toString(Double.parseDouble(data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED))-previousAmountUtilized)));
 				Assert.assertEquals("Error asserting International Velocity", deviceUsage.getVelocity(), data.get().get(DeviceUsagePage.DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
 				previousAmountUtilized = Double.parseDouble(data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
 			} else {
@@ -92,6 +94,7 @@ public class DeviceUsageSteps {
 	
 	@Then("verify the MCG daily velocity in Device Usage Screen for $type transactions")
 	public void userDeviceUsageDailyVelocity(String type) {
+		DecimalFormat df2 = new DecimalFormat("0.00"); 
 		mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
 		device = context.get(ContextConstants.DEVICE);
 		if(context.get(DEVICE_USUAGE)==null){
@@ -103,10 +106,11 @@ public class DeviceUsageSteps {
 		if (data.isPresent()) {
 			Assert.assertEquals("Error asserting MCG Code", mcgLimitPlan.getMcgCode(), data.get().get(DeviceUsagePage.MCG_CODE));
 			if (type.equalsIgnoreCase(DOMESTIC)) {
-				Assert.assertEquals("Error asserting Domestic Transaction Amount", context.get(ConstantData.TRANSACTION_AMOUNT), Double.toString(Double.parseDouble(data.get().get(DeviceUsagePage.DAILY_AMOUNT_DOMESTIC_UTILIZED))-previousAmountUtilized));
+				Assert.assertEquals("Error asserting Domestic Transaction Amount", context.get(ConstantData.TRANSACTION_AMOUNT), df2.format(Double.toString(Double.parseDouble(data.get().get(DeviceUsagePage.DAILY_AMOUNT_DOMESTIC_UTILIZED))-previousAmountUtilized)));
 				Assert.assertEquals("Error asserting Domestic Velocity", deviceUsage.getVelocity(), data.get().get(DeviceUsagePage.DAILY_VELOCLITY_DOMESTIC_UTILIZED));
 				previousAmountUtilized = Double.parseDouble(data.get().get(DeviceUsagePage.DAILY_AMOUNT_DOMESTIC_UTILIZED));
 			} else if (type.equalsIgnoreCase(INTERNATIONAL)) {
+				Assert.assertEquals("Error asserting International Transaction Amount", context.get(ConstantData.BILLING_AMOUNT), df2.format(Double.toString(Double.parseDouble(data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED))-previousAmountUtilized)));
 				Assert.assertEquals("Error asserting International Velocity", deviceUsage.getVelocity(), data.get().get(DeviceUsagePage.DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
 				previousAmountUtilized = Double.parseDouble(data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
 			} else {
