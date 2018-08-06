@@ -1494,4 +1494,11 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
 	}
+	
+	@When("User edit Program to update $editItem")
+	public void andUserEditProgramToUpdateCountryWhiteBlackList(String editItem) {
+		program.setCountryWhiteBlackListPlan(provider);
+		programSetupWorkflow.editProgram(program,editItem);
+
+	}
 }
