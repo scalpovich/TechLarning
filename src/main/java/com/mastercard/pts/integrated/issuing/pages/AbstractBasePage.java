@@ -1832,5 +1832,4 @@ public abstract class AbstractBasePage extends AbstractPage {
 		logger.info("Not validaiting any elements, as this is an Abstraction layer to Pages");
 		return null;
 	}
->>>>>>> release/Iteration14
 }
