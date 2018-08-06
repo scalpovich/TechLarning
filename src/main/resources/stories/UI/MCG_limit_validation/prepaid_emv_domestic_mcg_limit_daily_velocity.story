@@ -9,7 +9,8 @@ Meta:
 @StoryName mcg_prepaid_emv_general_purpose
 
 Scenario: Set up prepaid emv retail general purpose card with MCG Limit Plan
-Given user is logged in institution
+Given setting json values in excel for Prepaid
+And user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client
 
