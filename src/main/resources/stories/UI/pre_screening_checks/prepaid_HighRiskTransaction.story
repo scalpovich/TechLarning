@@ -7,27 +7,24 @@ Meta:
 @HighRiskTransaction
 @Author Nitin Kumar
 
-Scenario: Set up prepaid emv retail card
-Given setting json values in excel for Prepaid
-When user is logged in institution
-And User fills Device Plan for "Prepaid" "emv" card
-And User fills Wallet Plan for prepaid product
-And User fills Program section for prepaid product
-And User fills Business Mandatory Fields Screen for prepaid product
-And User fills Device Range section for prepaid product
-And user assigns service code to program
-Then user creates new device of prepaid type for new client
-
-Scenario: prepaid emv retail card device production
+Scenario: Set up prepaid msr retail general purpose card
 Given user is logged in institution
-When a new device was created
+And device range for program with device plan for "prepaid" "emv" card
+And user sign out from customer portal
+
+
+Scenario: prepaid msr retail general purpose card device production
+Given user is logged in institution
+When user creates new device of prepaid type for new client
+And a new device was created
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
+And processes pin generation batch for prepaid
+And device has "normal" status
+And user activates device through helpdesk
 And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
-And device has "normal" status
-And user activates device through helpdesk
 And embossing file batch was generated in correct format
 Then user sign out from customer portal
 
