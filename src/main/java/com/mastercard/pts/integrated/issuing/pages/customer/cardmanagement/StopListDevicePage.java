@@ -68,7 +68,6 @@ public class StopListDevicePage extends AbstractBasePage {
 		    enterStopListDescription(stopListDevice.getStopListReasonDescription());
 		    clickSaveButton();
 		});
-		verifyOperationStatus();
 	}
 	
 	public void enterDeviceNumber(String deviceNumber){

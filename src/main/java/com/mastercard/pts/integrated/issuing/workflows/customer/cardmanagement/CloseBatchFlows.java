@@ -31,4 +31,9 @@ public class CloseBatchFlows {
 		closeBatchPage=navigator.navigateToPage(CloseBatchPage.class);
 		closeBatchPage.processFirstBatch();
 	}
+
+    public void closeBatchExecutionForFileUpload(){
+		closeBatchPage=navigator.navigateToPage(CloseBatchPage.class);
+		closeBatchPage.processAllClick();
+	}
 }
