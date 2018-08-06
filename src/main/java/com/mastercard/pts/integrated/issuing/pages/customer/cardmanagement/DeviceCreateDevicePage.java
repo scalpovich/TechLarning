@@ -3,8 +3,10 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -334,11 +336,13 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			SimulatorUtilities.wait(6000);
 			moveToElementAndClick(existingClientLabel, 50, 50);
 			waitForWicket(driver());
-			SimulatorUtilities.wait(15000);		
-		} else {
-			selectByVisibleText(customerTypeDDwn, device.getCustomerType());          
-			SimulatorUtilities.wait(6000);
-          	waitForWicket(driver());
+			SimulatorUtilities.wait(15000);
+			JavascriptExecutor jse = (JavascriptExecutor) getFinder().getWebDriver();
+			jse.executeScript("el = document.elementFromPoint(400, 400); el.click();");
+
+		}else{
+			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
+			SimulatorUtilities.wait(2000);
 			selectByVisibleText(programCodeDDwn, device.getProgramCode());
 			SimulatorUtilities.wait(2000);			
 		}
