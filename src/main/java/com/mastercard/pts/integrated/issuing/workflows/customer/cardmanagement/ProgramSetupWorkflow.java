@@ -127,7 +127,7 @@ public class ProgramSetupWorkflow {
 		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
 		page.updatePinChangeTransactionFirst(devicePlan);
 	}
-	public void checkCrossBorserTransaction(DevicePlan devicePlan){
+	public void checkCrossBorderTransaction(DevicePlan devicePlan){
 		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
 		page.checkCrossBorderTransaction(devicePlan);
 	}
