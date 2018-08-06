@@ -45,6 +45,7 @@ public class ReportVerificationSteps {
 			logger.info("No Report Type is present here!!");
 		}
 		report.setDeviceNumber(device.getDeviceNumber());
+		report.setRegEx("\\d\\d-\\d\\d-\\d\\d\\d\\d");
 		report.setUsername(context.get(UserManagementSteps.USERNAME));
 		for(String field : reportFields.split(",")){
 			report.setFieldToValidate(field, context.get(ConstantData.fromShortName(field)));

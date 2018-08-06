@@ -104,7 +104,7 @@ public class PDFUtils {
 		try {
 			File file = new File(pdfPath);
 			file.getParentFile().mkdirs();
-			PDDocument document =  PDDocument.load(file,genericReports.getUsername().substring(0,4)+"1707");
+			PDDocument document =  PDDocument.load(file,genericReports.getUsername().substring(0,4)+dateutils.getDateDDMMFormat());
 			document.setAllSecurityToBeRemoved(true);
      		PDFTextStripper tStripper = new PDFTextStripper();
      		tStripper.setAddMoreFormatting(true);
@@ -139,7 +139,6 @@ public class PDFUtils {
 		PdfReader.unethicalreading = true;
 		PdfReader reader = null;
 		try {
-			System.out.println("PASSWORD++++++++++++++++"+username.substring(0,4)+dateutils.getDateDDMMFormat());
 			reader = new PdfReader(src, (username.substring(0,4)+dateutils.getDateDDMMFormat()).getBytes());
 		}  catch (Exception e) {
 			logger.info("Document Exception {}", e);

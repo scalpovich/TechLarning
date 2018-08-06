@@ -77,10 +77,9 @@ public class RAMPReportPage extends AbstractBasePage implements ReportVerificati
 		selectDropDownByIndex(selectReportDDwn,1);
 	    clicksearchButtonElement();
 	    
-	    selectByVisibleText(selectReportTypeDDwn, report.getReportName());
+	    selectByVisibleText(selectReportTypeDDwn, report.getReportType());
 	    selectByVisibleText(selectProductTypeDDwn, "ALL");
 	    selectByVisibleText(selectRecordTypeDDwn, "A-Authorised transactions");
-	//	reTryTask(()->{
 		selectByVisibleText(selectTransactionTypeDDwn, "ALL");
 	    selectByVisibleText(selectHighRiskMccDDwn, "ALL");
 	    selectByVisibleText(selectHighRiskMccGroupDDwn, "ALL");
@@ -89,7 +88,6 @@ public class RAMPReportPage extends AbstractBasePage implements ReportVerificati
 		WebElementUtils.pickDate(toDateDPkr, LocalDate.now());
 		selectByVisibleText(selectFileTypeDDwn, "PDF");
 		clickWhenClickable(generateReportBtn);
-		//});
 		return true;
 	}
 }

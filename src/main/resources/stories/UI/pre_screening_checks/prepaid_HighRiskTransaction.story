@@ -39,5 +39,5 @@ And user sign out from customer portal
 
 Scenario: validate the High Risk Country Report
 Given user is logged in institution
-Given validate the authCode in RAMP-REP05 report
+And validate the authCode in RAMP-REP05 report
 

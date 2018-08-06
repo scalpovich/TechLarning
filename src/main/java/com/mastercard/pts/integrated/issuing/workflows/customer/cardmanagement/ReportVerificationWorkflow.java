@@ -11,15 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.GenericReport;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.collect.administration.AdministrationHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReportVerificationPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
-import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
-import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.PDFUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
@@ -50,8 +46,8 @@ public class ReportVerificationWorkflow {
 		Map<Integer, String> reportContent = getGenericReport(report);
 		reportContent.forEach((k,v)-> {
 			if(v.contains(report.getDeviceNumber())){
-			report.getFieldToValidate().forEach((field,FieldValue) ->{
-				assertTrue(field+" did not match with Authoraization Report content", v.contains(report.getFieldToValidate().get(field)));
+			report.getFieldToValidate().forEach((field,fieldValue) ->{
+				assertTrue(field+" did not match with Authoraization Report content", v.contains(fieldValue));
 			});
 				
 			}
@@ -68,7 +64,6 @@ public class ReportVerificationWorkflow {
     
     public Map<Integer, String> getReportContent(GenericReport genericReports) {
 		PDFUtils pdfutils=new PDFUtils();
-		genericReports.setRegEx("\\d\\d-\\d\\d-\\d\\d\\d\\d");
 		Map<Integer, String> records = pdfutils.getContentRow(fileURL, genericReports);
 		return records;
 	}
