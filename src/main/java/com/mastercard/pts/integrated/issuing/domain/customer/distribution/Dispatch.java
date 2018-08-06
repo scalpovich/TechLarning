@@ -25,7 +25,7 @@ public class Dispatch {
 	
 	public static Dispatch createWithProvider(KeyValueProvider provider) {
 		Dispatch plan = new Dispatch();
-		plan.setEffectiveDate(LocalDate.now().plusDays(1));
+		plan.setEffectiveDate(LocalDate.now().plusDays(0));
 		plan.setEndDate(plan.getEffectiveDate().plusDays(5));
 		plan.setAgency(provider.getString(AGENCY_XL));
 		plan.setBranchId(provider.getString(BRANCH_ID));
