@@ -77,7 +77,7 @@ public class RAMPReportPage extends AbstractBasePage implements ReportVerificati
 		selectDropDownByIndex(selectReportDDwn,1);
 	    clicksearchButtonElement();
 	    
-	    selectByVisibleText(selectReportTypeDDwn, "REP05");
+	    selectByVisibleText(selectReportTypeDDwn, report.getReportName());
 	    selectByVisibleText(selectProductTypeDDwn, "ALL");
 	    selectByVisibleText(selectRecordTypeDDwn, "A-Authorised transactions");
 	//	reTryTask(()->{

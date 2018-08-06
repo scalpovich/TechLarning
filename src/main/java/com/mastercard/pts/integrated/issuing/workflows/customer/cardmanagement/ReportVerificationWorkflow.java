@@ -42,38 +42,31 @@ public class ReportVerificationWorkflow {
 	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
 	
 	private String fileURL ;
-	
-	Map<String,String> field_data;
 
 
-    public void verifyGenericReport(Device device,String reportName,String[] fieldName) {
-    	GenericReport report = GenericReport.getGenericReport();
-		page = (ReportVerificationPage)getInstance(reportName);
-		report.setUsername(context.get(UserManagementSteps.USERNAME));
-		fileURL = PDFUtils.getuserDownloadPath()+"\\"+reportName+" Report.pdf";
-		for(String field : fieldName){
-			field_data = report.setFieldToValidate(field, context.get(ConstantData.fromShortName(field)));
-		}
-		Map<Integer, String> reportContent = verifyGenericReport(reportName,report);
+    public void verifyGenericReport(GenericReport report) {
+		page = (ReportVerificationPage)getInstance(report.getReportName());
+		fileURL = PDFUtils.getuserDownloadPath()+"\\"+report.getReportName()+" Report.pdf";
+		Map<Integer, String> reportContent = getGenericReport(report);
 		reportContent.forEach((k,v)-> {
-			if(v.contains(device.getDeviceNumber())){
-			field_data.forEach((field,FieldValue) ->{
-				assertTrue(field+" did not match with Authoraization Report content", v.contains(field_data.get(field)));
+			if(v.contains(report.getDeviceNumber())){
+			report.getFieldToValidate().forEach((field,FieldValue) ->{
+				assertTrue(field+" did not match with Authoraization Report content", v.contains(report.getFieldToValidate().get(field)));
 			});
 				
 			}
 		});
 	}
     
-    public Map<Integer, String> verifyGenericReport(String fileName, GenericReport report) {
+    public Map<Integer, String> getGenericReport(GenericReport report) {
 		navigator.navigateToPage(page.getClass().getSimpleName());
-		deleteExistingAuthorizationFilesFromSystem(fileName);
+		deleteExistingAuthorizationFilesFromSystem(report.getReportName());
 		page.generateReport(report);
 		verifyReportDownloaded();
-		return getReportContent(fileName,report);
+		return getReportContent(report);
 	}
     
-    public Map<Integer, String> getReportContent(String fileName,GenericReport genericReports) {
+    public Map<Integer, String> getReportContent(GenericReport genericReports) {
 		PDFUtils pdfutils=new PDFUtils();
 		genericReports.setRegEx("\\d\\d-\\d\\d-\\d\\d\\d\\d");
 		Map<Integer, String> records = pdfutils.getContentRow(fileURL, genericReports);
