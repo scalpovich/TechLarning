@@ -1,7 +1,12 @@
 {  
    "name":"AUTOBNK",
    "code":"110088",
+   "codeCredit":"110088",
    "abbreviation":"AUTOBNK",
+   "prepaidLinuxUploadPath" : "/mptshome/STAGE2/integrated/elt_bo/data/AUTOMATION_1/APPLICATION_UPD_PREPAID/input",
+   "creditLinuxUploadPath" : "/mptshome/STAGE2/integrated/elt_bo/data/AUTOMATION_1/APPLICATION_UPD_CREDIT/input",
+    "corporateClientCodePrepaid" :"11008818074000001",
+   "corporateClientCodeCredit" :"27063518131000001",
    "debit":true,
    "credit":true,
    "prepaid":true,

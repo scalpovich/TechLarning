@@ -2,9 +2,11 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import java.time.LocalDate;
 
+import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
-
+@Component
 public class StatementMessageDetails {
 
 	private static final String SMD_BALANCE_STATUS = "SMD_BALANCE_STATUS";

@@ -32,6 +32,7 @@ public class ManualAuthorizationSteps {
 
 	@Given("user raises an authorization request")
 	@When("user raises an authorization request")
+	@Then("user raises an authorization request")
 	public void whenUserRaisesAnAuthorizationRequest(){
 		AuthorizationRequest request = AuthorizationRequest.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);

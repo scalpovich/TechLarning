@@ -224,7 +224,7 @@ public class ProgramSetupWorkflow {
 		page.createTransactionPlan(plan);
 	}
 	
-	public void createTransactionPlanWithoutAnyTransaction(TransactionPlan plan){
+	public void createTransactionPlanWithoutAnyTransaction(TransactionPlan plan) {
 		TransactionPlanPage page = navigator.navigateToPage(TransactionPlanPage.class);
 		page.createTransactionPlanWithoutAnyTransaction(plan);
 	}
@@ -237,6 +237,15 @@ public class ProgramSetupWorkflow {
 	public void createMCCRulePlan(MCCRulePlan plan) {
 		MCCRulePlanPage page = navigator.navigateToPage(MCCRulePlanPage.class);
 		page.createMCCRulePlanPage(plan);
+	}
+	public void enableStopListFlag(DevicePlan devicePlanDataObject) {
+		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
+		page.enableStopListFlag(devicePlanDataObject);
+	}
+	
+	public void editMCCRulePlan(MCCRulePlan plan) {
+		MCCRulePlanPage page = navigator.navigateToPage(MCCRulePlanPage.class);
+		page.editMCCRulePlanPage(plan);
 	}
 	
 	public void createWalletPlan(WalletPlan walletPlan, int reservedAmount) {
