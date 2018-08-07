@@ -217,7 +217,7 @@ public class WebElementUtils {
 
 			asWebElement(datePicker).findElement(By.xpath(".//button[text()='Okay']")).click();
 		}
-
+		SimulatorUtilities.wait(1000);
 		String cellXPath = String.format(".//td/a[text()='%d']", date.getDayOfMonth());
 		retryUntilNoErrors(() -> asWebElement(datePicker).findElement(By.xpath(cellXPath)).click());
 	}

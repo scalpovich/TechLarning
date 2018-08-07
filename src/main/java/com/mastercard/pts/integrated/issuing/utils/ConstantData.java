@@ -1,7 +1,5 @@
 package com.mastercard.pts.integrated.issuing.utils;
 
-import com.mastercard.pts.integrated.issuing.domain.ProductType;
-
 /**
  * Issuing Team
  * 
@@ -94,6 +92,9 @@ public class ConstantData {
 	
 	public static final String EXISTING = "Existing";
 	public static final String PIN_REQUIRED_YES = "YES";
+	
+	public static final String ZERO_ZERO = "00";
+	public static final String NINE_NINE = "99";
 
 	private ConstantData() {
 	}
@@ -102,6 +103,6 @@ public class ConstantData {
 	
 	*/
 	public static String fromShortName(String name) {
-		return MiscUtils.getConstantStringFromClassByPefixMatch(ProductType.class, name);
+		return MiscUtils.getConstantStringFromClassByPefixMatch(ConstantData.class, name);
 	}
 }

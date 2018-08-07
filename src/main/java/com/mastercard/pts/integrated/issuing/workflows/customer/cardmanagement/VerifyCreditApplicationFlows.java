@@ -15,4 +15,9 @@ public class VerifyCreditApplicationFlows {
 		VerifyCreditPage verifyCreditPage = navigator.navigateToPage(VerifyCreditPage.class);		
 		return verifyCreditPage.editAndVerifyApplication();
 	}		
+	
+	public void verifyCreditApplicationFileUpload() {
+		VerifyCreditPage verifyCreditPage = navigator.navigateToPage(VerifyCreditPage.class);
+		verifyCreditPage.verifyApplicationFileUpload();
+	}
 }
