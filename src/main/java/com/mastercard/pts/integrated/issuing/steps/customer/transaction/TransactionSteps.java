@@ -549,6 +549,7 @@ public class TransactionSteps {
 		transactionWorkflow.closeWinSCP();
 	}
 	
+	@Then("user set invalid pin")
 	@When("user set invalid pin")
 	public void userSetInvalidPin(){
 		Device device = context.get(ContextConstants.DEVICE);

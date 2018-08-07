@@ -1,5 +1,5 @@
 Narrative:
-In order to check transaction without balance in emv corporate travel card
+In order to check transaction without balance in emv corporate travel
 As an issuer
 I want to perform transactions for prepaid emv corporate travel card
 
@@ -10,17 +10,17 @@ Scenario: Setup - prepaid emv corporate travel card with PIN
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card
 When user creates new device of prepaid type for new client
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario: Device production - prepaid emv corporate travel card with PIN
 Given user is logged in institution
-And a new device was created
-When processes pre-production batch for prepaid
+When a new device was created
+And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
 And user has wallet number information for prepaid device
 Then device has "normal" status
-When user activates device through helpdesk
+And user activates device through helpdesk
 And user sign out from customer portal
 
 Scenario: Pin Generation

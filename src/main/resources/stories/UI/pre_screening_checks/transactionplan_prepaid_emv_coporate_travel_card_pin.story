@@ -34,11 +34,11 @@ And a new device was created
 When processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
-Then device has "normal" status
-When user has wallet number information for prepaid device
-Then user sign out from customer portal
+And device has "normal" status
+And user has wallet number information for prepaid device
+And user sign out from customer portal
 And user is logged in institution
-When user performs adjustment transaction
+And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 And user activates device through helpdesk

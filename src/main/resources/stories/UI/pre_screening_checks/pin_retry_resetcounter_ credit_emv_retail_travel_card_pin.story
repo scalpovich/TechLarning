@@ -10,7 +10,7 @@ Meta:
 Scenario:creation of mastercard_bankstaff_primary_emv credit device
 Meta:
 @UserCreatesNewCreditDevice
-Given setting json values in excel
+Given setting json values in excel for Credit
 And user is logged in institution
 When User fills Dedupe Plan
 And User fills Statement Message Plan for credit product
@@ -33,9 +33,9 @@ And for Primary Device and New Client user fills Device Range section for credit
 Then credit device is created using new device screen for Bank Staff and Primary Device and New Client and EMV Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
-When credit processes pingeneration batch using new Device for Supplementary
-Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-When embossing file batch was generated in correct format
+And credit processes pingeneration batch using new Device for Supplementary
+And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+And embossing file batch was generated in correct format
 And user set invalid pin
 And user sign out from customer portal
 
@@ -53,13 +53,13 @@ Then user is logged in institution
 And search Purchase authorization and verify 106-Allowable Pin tries exceeded status
 And assert Decline response with 46053 AuthDecline Code and Pin retry limit exceeded. as description
 And device has "normal" status
-When user reset pin retry counter Reset Pin Retry Counter [109]
+And user reset pin retry counter Reset Pin Retry Counter [109]
 And user sign out from customer portal
 
 Scenario: Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
-And PIN is retrieved successfully with data from Pin Offset File
+Then PIN is retrieved successfully with data from Pin Offset File
 
 Scenario: Perform EMV_PURCHASE Authorization transaction with valid pin
 When perform an EMV_PURCHASE MAS transaction on the same card
