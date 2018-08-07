@@ -815,8 +815,8 @@ public class HelpDeskSteps {
 		helpdeskFlows.searchForNewApplicationFileUpload(helpDeskGetterSetter);
 	}
 	
-	@Then("user reset pin retry counter $serviceCode")
-	@When("user reset pin retry counter $serviceCode")
+	@Then("user resets pin retry counter $serviceCode")
+	@When("user resets pin retry counter $serviceCode")
 	public void whenUserResetPinRetryCounterThroughHelpDesk(String serviceCode) {
 		helpdeskGeneral.setServiceCode(serviceCode);
 		helpdeskGeneral.setNotes(MiscUtils.generateRandomNumberAsString(6));

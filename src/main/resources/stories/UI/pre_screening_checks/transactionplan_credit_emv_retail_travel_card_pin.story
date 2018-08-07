@@ -5,7 +5,7 @@ I want to fail transactions for prepaid emv retail card
 
 Meta:
 @StoryName credit_emv_retail
-@TransactionPlanWithAssignTransactions
+@TransactionPlanWithoutAssignTransactions
 				 
 Scenario:creation of mastercard_bankstaff_primary_emv credit device
 Meta:

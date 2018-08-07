@@ -175,7 +175,7 @@ public class TransactionPlanPage extends AbstractBasePage {
 				() -> {
 					WebElementUtils.enterText(planCodeTxt, plan.getTransactionPlanCode());
 					WebElementUtils.enterText(transactionSetDescTxt, plan.getDescription());
-					WebElementUtils.selectDropDownByVisibleText( productTypeDDwn, plan.getProductType());
+					WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, plan.getProductType());
 					clickSaveButton();
 					verifyNoErrors();
 				});

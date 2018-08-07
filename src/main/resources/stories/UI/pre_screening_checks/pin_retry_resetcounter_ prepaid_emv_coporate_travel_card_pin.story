@@ -25,7 +25,7 @@ And user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 And user activates device through helpdesk
 And embossing file batch was generated in correct format
-And user set invalid pin
+And user sets invalid pin
 And user sign out from customer portal
 
 Scenario: Perform EMV_PURCHASE Authorization transaction with invalid pin
@@ -42,7 +42,7 @@ Then user is logged in institution
 And search Purchase authorization and verify 106-Allowable Pin tries exceeded status
 And assert Decline response with 46053 AuthDecline Code and Pin retry limit exceeded. as description
 And device has "normal" status
-And user reset pin retry counter Reset Pin Retry Counter [109]
+And user resets pin retry counter Reset Pin Retry Counter [109]
 And user sign out from customer portal
 
 Scenario: Pin Generation

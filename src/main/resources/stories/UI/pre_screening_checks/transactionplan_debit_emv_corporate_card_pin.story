@@ -4,7 +4,7 @@ As an issuer
 I want to fail transactions for prepaid emv corporate card
 Meta:
 @StoryName d_emv_corp
-@TransactionPlanWithAssignTransactions
+@TransactionPlanWithoutAssignTransactions
 
 Scenario: Set up debit emv corporate travel card
 Given user is logged in institution
