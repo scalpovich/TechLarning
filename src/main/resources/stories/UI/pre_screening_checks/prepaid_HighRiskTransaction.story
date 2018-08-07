@@ -6,9 +6,9 @@ I want to perform transaction for EMV prepaid card
 Meta:
 @HighRiskTransaction
 @Author Nitin Kumar
-@StoryName mcg_prepaid_emv_general_purpose
+@StoryName p_emv_retail_general
 
-Scenario: Set up prepaid emv retail general purpose card with MCG Limit Plan
+Scenario: Set up prepaid emv retail general purpose card
 Given setting json values in excel for Prepaid
 And user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card
