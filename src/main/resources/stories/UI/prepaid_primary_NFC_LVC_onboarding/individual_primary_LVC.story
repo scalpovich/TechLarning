@@ -11,7 +11,7 @@ Scenario:creation of mastercard_individual_primary_LVC Card prepaid device
 Meta:
 @UserCreatesNewprepaidDevice
 Given setting json values in excel for Prepaid
-Given user is logged in institution
+And user is logged in institution
 When User fills Dedupe Plan
 And User fills Statement Message Plan for prepaid product
 And User fills Marketing Message Plan for prepaid product
@@ -29,7 +29,7 @@ And User fills MCC Rules for prepaid product
 And User Primary Device [P] fills New Client [N] Program Retail General Purpose Card [4] section for prepaid product for MASTERCARD [02]
 When for Primary Device [P] and New Client [N] user fills Device Range section for prepaid product
 Then prepaid device is created using new device screen for Individual [0] and Primary Device [P] and New Client [N] and Limited Validity Virtual Card [8]
-Then prepaid processes pre-production batch using new Device
-Then prepaid processes deviceproduction batch using new Device for Supplementary
-Then prepaid processes pinProduction batch using new Device for Supplementary
-Then User search for new device Supplementary on search screen for prepaid and validates the status as NORMAL
+And prepaid processes pre-production batch using new Device
+And prepaid processes deviceproduction batch using new Device for Supplementary
+And prepaid processes pinProduction batch using new Device for Supplementary
+And User search for new device Supplementary on search screen for prepaid and validates the status as NORMAL
