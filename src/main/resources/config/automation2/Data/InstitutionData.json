@@ -70,7 +70,7 @@
    "cardPackIdGenerationTemplate":"AUTOMATION [PAN042]",
    "deviceIdGenerationTemplate":"AUTOMATION [PAN019]",
    "embossingVendor":"AUTOMATION PERS BUREAU [AUTOB1]",
-   "mastercardPrepaidIssuerBin":"532560",
+   "mastercardPrepaidIssuerBin":"506530",
    "mastercardDebitIssuerBin":"543870",
    "mastercardCreditIssuerBin":"589765",
    "visaPrepaidIssuerBin":"443823",
