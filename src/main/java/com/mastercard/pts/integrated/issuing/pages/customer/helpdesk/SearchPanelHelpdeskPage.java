@@ -1,14 +1,5 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.helpdesk;
 
-import org.springframework.stereotype.Component;
-
-import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
-import com.mastercard.pts.integrated.issuing.utils.Constants;
-import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
-import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
-import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
-import com.mastercard.testing.mtaf.bindings.page.PageElement;
-
 //TODO: Auto-generated Javadoc
 /**
  * @author E070234, E074127 The Class SearchPanelHelpdesk.
@@ -38,11 +29,11 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
  */
 @Component
 public class SearchPanelHelpdeskPage extends AbstractBasePage {
-	
+
 	public static final String UPLOAD_EXPECTED_STATUS="NORMAL [0]";
 	public static final String STATUS_DEVICE_NOT_NORMAL="device status is not normal";
 	private static final Logger logger = LoggerFactory.getLogger(SearchPanelHelpdeskPage.class);
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement productType;
 
@@ -84,22 +75,22 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 	private MCWebElement editBtn;
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr//following-sibling::td[7]/span")
 	private MCWebElement normalStatusTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='client.firstName']")
 	private MCWebElement firstNameUploadTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='client.lastName']")
 	private MCWebElement lastNameUploadTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='client.registeredMobileNumber']")
 	private MCWebElement mobileNumberUploadTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr//following-sibling::td[1]/span/a/span")
 	private MCWebElement deviceNumberTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr//following-sibling::td[8]/span")
 	private MCWebElement normalStatusCreditTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[@class='headers']//span")
 	private MCWebElements headersTxt;
 
@@ -145,7 +136,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 		searchBtn.click();
 		return getCellTextByColumnName(Constants.TABLE_ROW_NUM, Constants.COLUMN_NAME);
 	}
-	
+
 	public void normalStatusCheckFileUploadInBulk(String productType,Map<String, Object>mapFileUpload) {
 		int counter=0;
 		waitForElementVisible(this.productType);
@@ -163,7 +154,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 			logger.info("Device Number :" +"  "+counter+"   "+ "-" +" "+ deviceNumberTxt.getText());
 		}
 	}
-	
+
 	public int statusHeader() {
 		int index = 0;
 		for (int i = 0; i < headersTxt.getElements().size(); i++) {
