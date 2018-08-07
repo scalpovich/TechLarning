@@ -23,9 +23,9 @@ And User fills Payment Priority
 And User fills Transaction Rule Plan
 And User fills Credit Plan
 And User fills Wallet Fee Plan for credit product
-And User fills Wallet Plan for credit product and program Retail Credit Card
+And User fills Wallet Plan for credit product and program Retail Credit Card [9]
 And User fills MCC Rules for credit product
-And User Primary fills new Program Retail Credit Card section for credit product for mastercard
+And User Primary fills new Program Retail Credit Card [9] section for credit product for mastercard
 And User fills Device Range section for credit product
 And credit device is created using new Application screen for Individual and "Primary Device" and New Client and EMV Card
 And user verifies the credit application device
