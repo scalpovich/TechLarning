@@ -526,15 +526,15 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
 		runWithinPopup("227 - Credit limit Change Commercial Cards", ()->{
-			//			if(helpdeskGeneral.getLimittypestatus().equalsIgnoreCase("true")){
-			//				selectLimitType(helpdeskGeneral.getLimitType());
-			//				WebElementUtils.pickDate(effectiveDateTxt, LocalDate.now());
-			//				WebElementUtils.pickDate(endDateTxt, LocalDate.now());
-			//			}
-			selectLimitType(helpdeskGeneral.getLimitType());
-			//			enterClientCreditLimit(helpdeskGeneral.getClientCreditLimit());
-			//			enterAccountCreditLimit(helpdeskGeneral.getAccountCreditLimit());
-			//			enterNewCreditLimit(helpdeskGeneral.getNewCreditLimit());
+						if(helpdeskGeneral.getLimittypestatus().equalsIgnoreCase("true")){
+							selectLimitType(helpdeskGeneral.getLimitType());
+							WebElementUtils.pickDate(effectiveDateTxt, LocalDate.now());
+							WebElementUtils.pickDate(endDateTxt, LocalDate.now());
+						}
+						selectLimitType(helpdeskGeneral.getLimitType());
+						enterClientCreditLimit(helpdeskGeneral.getClientCreditLimit());
+						enterAccountCreditLimit(helpdeskGeneral.getAccountCreditLimit());
+						enterNewCreditLimit(helpdeskGeneral.getNewCreditLimit());
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();
