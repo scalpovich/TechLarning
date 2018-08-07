@@ -306,4 +306,19 @@ public class DeviceSteps {
 				deviceWorkflow.createDeviceUsingApplication(device));
 		context.put(CreditConstants.APPLICATION, device);
 	}
+	
+	@When("user selects secondary card for transaction")
+	public void userSelectSecondaryCardForTrasaction(){
+		//Code for saving primary device for future use
+		DevicePlan primaryDevicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		Device primaryDevice = context.get(ContextConstants.DEVICE);
+		context.put(ContextConstants.PRIMARY_DEVICE, primaryDevice);
+		context.put(ContextConstants.PRIMARY_DEVICE_PLAN, primaryDevicePlan);
+		
+		//Override device with secondary device
+		DevicePlan deviceplan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
+		Device device = context.get(ContextConstants.DEVICE_SUPPLEMENTARY_ADDON_EXISTING);
+		context.put(ContextConstants.DEVICE_PLAN, deviceplan);
+		context.put(ContextConstants.DEVICE, device);
+	}
 }
