@@ -52,6 +52,7 @@ Then user sign out from customer portal
 
 Scenario: Perform INT_MSR_PURCHASE Authorization transaction
 Given perform an INT_EMV_PURCHASE MAS transaction on the same card
+And MAS simulator is closed
 When user is logged in institution
 And search Purchase authorization and verify 100-Do Not Honour status
 And assert Decline response with 25001 AuthDecline Code and Whitelisted Country Not Found as description

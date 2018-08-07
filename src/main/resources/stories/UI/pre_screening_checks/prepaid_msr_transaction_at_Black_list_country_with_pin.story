@@ -55,6 +55,7 @@ Given connection to MAS is established
 When perform an MSR_PURCHASE MAS transaction
 And MAS test results are verified
 And perform an INT_MSR_PURCHASE MAS transaction on the same card
+And MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 100-Do Not Honour status
 And assert Decline response with 25002 AuthDecline Code and Country is blacklisted. as description
