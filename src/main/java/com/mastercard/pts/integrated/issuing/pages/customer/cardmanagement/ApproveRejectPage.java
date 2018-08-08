@@ -24,10 +24,10 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L3_ACTIVITY_APPLICATION_CREDIT,
 		CardManagementNav.L4_APPROVE_REJECT })
 public class ApproveRejectPage extends AbstractCardManagementPage {
+	
 	@Autowired
 	TestContext context;
 	
-	private static final String APPROVE_REJECT_FRAME="Edit Application";
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addEmbossingPriorityPass;
 
@@ -61,11 +61,12 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='lastName']")
 	private MCWebElement lastNameTxt;
     
-	public void enterApplicationNumber() {
-		Device device = context.get(CreditConstants.APPLICATION);
-		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
-	}
+	private static final String APPROVE_REJECT_FRAME="Edit Application";
 	
+	public void enterApplicationNumber(){
+		Device device=context.get(CreditConstants.APPLICATION);
+		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());	
+	}	
 	
 	public void selectFromAndToDate() {
 		WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
@@ -78,16 +79,18 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 		waitForPageToLoad(driver());
 		clickWhenClickableDoNotWaitForWicket(editImg);	
 	}
-	
-	
-	public String approveApplication() {
+
+	public String approveApplication(){
 		enterApplicationNumber();
-		selectFromAndToDate();	
-		clickEditRecord();	
-		SimulatorUtilities.wait(30000);
+		selectFromAndToDate();
+		SimulatorUtilities.wait(5000);
+		clickWhenClickable(editImg);		
+		SimulatorUtilities.wait(15000);
+		
 		runWithinPopup("Edit Application", () -> {
-			clickWhenClickable(approveBtn);
-		});
+			clickWhenClickable(approveBtn);			
+		});		
+		
 		verifyOperationStatus();
 		return getCodeFromInfoMessage("Application Number");
 	}

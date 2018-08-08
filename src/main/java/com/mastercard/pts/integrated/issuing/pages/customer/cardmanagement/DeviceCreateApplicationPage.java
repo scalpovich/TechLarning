@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -281,7 +282,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
 		clickWhenClickable(generateDeviceBatchBtn);
 		waitForWicket();
-		SimulatorUtilities.wait(30000);
+		SimulatorUtilities.wait(10000);
 		context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());		
 		device.setBatchNumber(batchNumberTxt.getText());
 		logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());		
@@ -384,6 +385,9 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			Thread.currentThread().interrupt();
 		}
 		pageScrollDown();
+		pageScrollDown();
+		//moveToWebElementAndClickJS(driver().findElement(By.cssSelector("input[value='Next >']")));
+		clickNextButton();
 		clickNextButton();
 	}
 
