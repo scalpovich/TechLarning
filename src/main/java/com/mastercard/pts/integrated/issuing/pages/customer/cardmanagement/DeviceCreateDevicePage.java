@@ -333,10 +333,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		SimulatorUtilities.wait(1000);
 		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
-			SimulatorUtilities.wait(6000);
+			SimulatorUtilities.wait(8000);
 			moveToElementAndClick(existingClientLabel, 50, 50);
 			waitForWicket(driver());
-			SimulatorUtilities.wait(15000);
+			SimulatorUtilities.wait(10000);
 			JavascriptExecutor jse = (JavascriptExecutor) getFinder().getWebDriver();
 			jse.executeScript("el = document.elementFromPoint(400, 400); el.click();");
 

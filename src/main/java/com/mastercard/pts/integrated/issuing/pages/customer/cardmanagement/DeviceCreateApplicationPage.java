@@ -301,8 +301,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){				
 			enterText(existingDeviceTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
 			SimulatorUtilities.wait(8000);
-			Actions action = new Actions(driver());		
-			action.moveToElement(asWebElement(existingDeviceTxt), 50, 50).click().build().perform();
+			moveToElementAndClick(existingDeviceTxt, 50, 50);			
 			waitForWicket(driver());
 			SimulatorUtilities.wait(10000);
 		}else{

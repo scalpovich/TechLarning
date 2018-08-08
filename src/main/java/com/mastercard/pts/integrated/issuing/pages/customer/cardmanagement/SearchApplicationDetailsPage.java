@@ -38,6 +38,7 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 	
 	@Autowired
 	TestContext context;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='firstName']")
 	private MCWebElement firstName;
 	
@@ -74,6 +75,7 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='toDate']/../..")
 	private MCWebElement toDate;
 	
+	public int retryCounter =0;
 	public void enterFirstName(SearchApplicationDetails search){
 		enterText(firstName, search.getFirstName());
 	}
@@ -107,13 +109,17 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 	public void searchUntilBatchNumberIsDisplayed() {
 		try {
 			String path = String.format("//table[@class='dataview']/..//td[count(//th[.//*[text()='%S']]/preceding-sibling::th)+1]", "Device Batch Number");
-			if (driver().findElement(By.xpath(path)).getText().equals("-")) {
-				SimulatorUtilities.wait(8000);
-				clickSearchButton();
-				waitForPageToLoad(driver());
-				searchUntilBatchNumberIsDisplayed();
-			}
-		} catch (Exception e) {
+			SimulatorUtilities.wait(8000);
+			if(driver().findElement(By.xpath(path)).getText().equals("-")){
+				if(retryCounter <= 4){
+					SimulatorUtilities.wait(8000);
+					clickSearchButton();
+					waitForPageToLoad(driver());
+					searchUntilBatchNumberIsDisplayed();
+					retryCounter++;
+				}
+			}						
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
