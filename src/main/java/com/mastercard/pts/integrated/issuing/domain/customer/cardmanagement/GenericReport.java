@@ -12,9 +12,9 @@ public class GenericReport {
 	private String rrnNumber;
 	private String username;
 	private static Map<String, String> reportFields;
-	private String regEx;
+	private static Map<String, String> reportRegEx;
 	private String reportName;
-	private String reportType;;
+	private String reportType;
 	
 	public String getReportType() {
 		return reportType;
@@ -42,7 +42,9 @@ public class GenericReport {
 	
 	public static GenericReport createWithProvider(KeyValueProvider provider){
 		GenericReport report = new GenericReport();
-		reportFields = new HashMap<String, String>();
+		reportFields = new HashMap<>();
+		reportRegEx = new HashMap<>();
+		reportRegEx.put("RAMP", "\\d\\d-\\d\\d-\\d\\d\\d\\d");
 		return report;
 	}
 	
@@ -78,12 +80,8 @@ public class GenericReport {
 		this.rrnNumber = rrnNumber;
 	}
 	
-	public void setRegEx(String regEx){
-		this.regEx = regEx;
-	}
-	
-	public String getRegEx(){
-		return regEx;
+	public String getReportRegEx(){
+		return reportRegEx.get(reportName);
 	}
 	
 	

@@ -122,7 +122,7 @@ public class PDFUtils {
             String pdfFileInText = tStripper.getText(pd);
             
 			// split by RegEx
-            String row[] = pdfFileInText.split(genericReports.getRegEx());
+            String row[] = pdfFileInText.split(genericReports.getReportRegEx());
             for(String text : row){
             	map.put(i++, text);
             }

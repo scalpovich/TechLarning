@@ -4,7 +4,7 @@ As an issuer
 I want to perform transaction for EMV prepaid card
 
 Meta:
-@HighRiskTransaction
+@HighRiskTransaction_p
 @Author Nitin Kumar
 @StoryName p_emv_retail_general
 
