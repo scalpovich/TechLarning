@@ -1,4 +1,3 @@
-
 Narrative:
 As a user
 I want to login into customer portal 

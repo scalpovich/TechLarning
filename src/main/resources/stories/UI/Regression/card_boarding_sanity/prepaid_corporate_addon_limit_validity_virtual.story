@@ -1,4 +1,3 @@
-!-- author: e076168
 Narrative:
 As a user
 I want to login into customer portal 
