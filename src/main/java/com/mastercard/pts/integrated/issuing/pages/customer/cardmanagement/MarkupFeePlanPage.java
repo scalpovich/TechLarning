@@ -108,15 +108,10 @@ public class MarkupFeePlanPage extends AbstractBasePage {
 		runWithinPopup(
 				"Add Markup Fee Plan",
 				() -> {
-					WebElementUtils.enterText(markupFeePlanCodeTxtBx,
-							plan.getmarkupFeePlanCode());
-					WebElementUtils.enterText(descriptionTxtBx,
-							Constants.GENERIC_DESCRIPTION);
-					WebElementUtils.selectDropDownByVisibleText(statusDdwn,
-							plan.getStatus());
-					WebElementUtils.enterText(defaultRateTxtBx,
-							plan.getDefaultRate());
-
+					WebElementUtils.enterText(markupFeePlanCodeTxtBx,plan.getmarkupFeePlanCode());
+					WebElementUtils.enterText(descriptionTxtBx,Constants.GENERIC_DESCRIPTION);
+					WebElementUtils.selectDropDownByVisibleText(statusDdwn,plan.getStatus());
+					WebElementUtils.enterText(defaultRateTxtBx,plan.getDefaultRate());
 					if (plan.getChargeMarkupFee().equalsIgnoreCase("true")) {
 						ClickCheckBox(chargeMarkUpFeeChkbx, true);
 						ClickCheckBox(clubIntoTransactionChkbx, true);
@@ -125,32 +120,20 @@ public class MarkupFeePlanPage extends AbstractBasePage {
 						ClickCheckBox(portalApiTransactionChkBx, true);
 						clickSaveButton();
 						clickAddNewButton();
-
 						runWithinPopup(
 								"Add Currency Specific Markup Rate",
 								() -> {
-									WebElementUtils
-											.selectDropDownByVisibleText(
-													sourceCurrencyTxtBx,
-													plan.getSourceCurrency());
-									WebElementUtils
-											.selectDropDownByVisibleText(
-													destinationCurrencyTxtBx,
-													plan.getDestinationCurrency());
-									WebElementUtils.enterText(
-											currencySpecificRateTxtBx,
-											plan.getCurrencySpecificRate());
+									WebElementUtils.selectDropDownByVisibleText(sourceCurrencyTxtBx,plan.getSourceCurrency());
+									WebElementUtils.selectDropDownByVisibleText(destinationCurrencyTxtBx,plan.getDestinationCurrency());
+									WebElementUtils.enterText(currencySpecificRateTxtBx,plan.getCurrencySpecificRate());
 									clickSaveButton();
 									verifyNoErrors();
 								});
-
 						clickCloseButton();
 					} else {
 						clickSaveButton();
 					}
-
 					verifyOperationStatus();
-
-				});
+					});
 	}
 }

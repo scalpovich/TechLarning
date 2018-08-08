@@ -1,9 +1,5 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.helpdesk;
 
-//TODO: Auto-generated Javadoc
-/**
- * @author E070234, E074127 The Class SearchPanelHelpdesk.
- */
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
@@ -23,10 +19,6 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
-//TODO: Auto-generated Javadoc
-/**
- * @author E070234, E074127 The Class SearchPanelHelpdesk.
- */
 @Component
 public class SearchPanelHelpdeskPage extends AbstractBasePage {
 
