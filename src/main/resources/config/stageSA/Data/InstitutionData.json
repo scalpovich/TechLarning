@@ -115,7 +115,7 @@
 								"deviceIdGenerationTemplate": "CardTemplate/DeviceTemplate [PAN678]",
 								"embossingVendor": "EmbossVendor [V25157]",
 								"mastercardPrepaidIssuerBin": "automation prepaid card [538316]",
-								"mastercardDebitIssuerBin": "537716",
+								"mastercardDebitIssuerBin": "automation debit card [538816]",
 								"mastercardCreditIssuerBin": "537716",
 								"visaPrepaidIssuerBin": "477765",
 								"visaDebitIssuerBin": "487677",
@@ -164,7 +164,7 @@
 								"deviceEventBasedFeePlan": "AUTOMATION [TA1553CR]",
 								"transactionLimitPlan": "AUTOMATION [TA8137UMAE]",
 								"transactionPlan": "AUTOMATION [T4891H]",
-								"creditPlan": "AUTOMATION [103]",
+								"creditPlan": "TA5339PGQX [103]",
 								"billingCycle": "AUTOMATION [340]",
 								"walletPlan": "AUTOMATION [TA9647MFFO]"
 				},
