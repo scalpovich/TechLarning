@@ -306,19 +306,13 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
   	}
 
 	private void fillBatchDetails(Device device) {
-		if(device.getApplicationType().contains(ApplicationType.PRIMARY_DEVICE)){
-			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
-			clickWhenClickable(generateDeviceBatchBtn);
-			waitForWicket();
-			SimulatorUtilities.wait(10000);
-			context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());
-		}else if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
-			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn,ConstantData.OPEN_BATCH);
-			WebElementUtils.selectDropDownByVisibleText(openBatchDdwn, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));			
-		}		
+		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
+		clickWhenClickable(generateDeviceBatchBtn);
+		waitForWicket();
+		SimulatorUtilities.wait(30000);
+		context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());
 		device.setBatchNumber(batchNumberTxt.getText());
-		logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());
-		
+		logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());		
 		clickNextButton();
 	}
 

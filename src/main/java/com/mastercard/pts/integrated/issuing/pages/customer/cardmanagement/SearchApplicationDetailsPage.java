@@ -76,6 +76,7 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 	private MCWebElement toDate;
 	
 	public int retryCounter =0;
+	
 	public void enterFirstName(SearchApplicationDetails search){
 		enterText(firstName, search.getFirstName());
 	}
@@ -106,17 +107,16 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		clickWhenClickable(SearchBtn);
 	}
 	
-	public void searchUntilBatchNumberIsDisplayed() {
-		try {
-			String path = String.format("//table[@class='dataview']/..//td[count(//th[.//*[text()='%S']]/preceding-sibling::th)+1]", "Device Batch Number");
-			SimulatorUtilities.wait(8000);
-			if(driver().findElement(By.xpath(path)).getText().equals("-")){
-				if(retryCounter <= 4){
-					SimulatorUtilities.wait(8000);
+	public void searchUntilBatchNumberIsDisplayed(){
+		try{	
+			String path = String.format("//table[@class='dataview']/..//td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]", "Device Batch Number");
+			SimulatorUtilities.wait(10000);
+			if(driver().findElement(By.xpath(path)).getText().trim().equals("-")){
+				while(retryCounter <= 4){
+					retryCounter++;
 					clickSearchButton();
 					waitForPageToLoad(driver());
 					searchUntilBatchNumberIsDisplayed();
-					retryCounter++;
 				}
 			}						
 		}catch(Exception e){

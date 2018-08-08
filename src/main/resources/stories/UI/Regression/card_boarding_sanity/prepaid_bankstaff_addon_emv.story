@@ -28,6 +28,9 @@ And User Add-on Device fills Existing Program Retail General Purpose Card [4] se
 And for Primary Device and New Client user fills Device Range section for prepaid product
 And for Add-on Device and Existing Client user fills Device Range section for prepaid product
 And prepaid device is created using new device screen for Bank Staff [2] and Primary Device [P] and New Client [N] and Magnetic Stripe Card [1]
+And prepaid processes pre-production batch using new Device
+And prepaid processes deviceproduction batch using new Device for Supplementary
+Then User search for new device Supplementary on search screen for prepaid and validates the status as NORMAL
 And prepaid device is created using new device screen for Bank Staff [2] and Add-on Device [A] and New Client [N] and EMV Card [2]
 And prepaid processes pre-production batch using new Device
 And prepaid processes deviceproduction batch using new Device for Supplementary

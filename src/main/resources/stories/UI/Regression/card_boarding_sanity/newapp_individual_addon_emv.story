@@ -27,7 +27,7 @@ And User fills Credit Plan
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card [9]
 And User fills MCC Rules for credit product
-And User Add-on Device fills new Program Retail Credit Card [9] section for credit product for MASTERCARD [02]
+And User Add-on Device fills Existing Program Retail Credit Card [9] section for credit product for MASTERCARD [02]
 And for Primary Device and New Client user fills Device Range section for credit product
 And for Add-on Device and Existing Client user fills Device Range section for credit product
 And credit device is created using new Application screen for Individual [0] and "Primary Device [P]" and New Client [N] and Magnetic Stripe Card [1]

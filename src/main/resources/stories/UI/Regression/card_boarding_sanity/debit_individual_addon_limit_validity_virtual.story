@@ -25,6 +25,9 @@ And User Add-on Device fills Existing Program Retail Debit Card [11] section for
 And for Primary Device and New Client user fills Device Range section for debit product
 And for Add-on Device and Existing Client user fills Device Range section for debit product
 And debit device is created using new device screen for Individual [0] and Primary Device [P] and New Client [N] and Magnetic Stripe Card [1]
+And debit processes pre-production batch using new Device
+And debit processes deviceproduction batch using new Device for Supplementary
+Then User search for new device Supplementary on search screen for debit and validates the status as NORMAL
 And debit device is created using new device screen for Individual [0] and Add-on Device [A] and New Client [N] and Limited Validity Virtual Card [8]
 And debit processes pre-production batch using new Device
 And debit processes deviceproduction batch using new Device for Supplementary
