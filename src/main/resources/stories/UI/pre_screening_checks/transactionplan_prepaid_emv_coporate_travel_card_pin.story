@@ -14,7 +14,7 @@ And User fills Marketing Message Plan for prepaid product
 And User fills Prepaid Statement Plan
 And User fills MCC Rules for prepaid product
 And User fills Dedupe Plan
-And User create empty Transaction Plan for prepaid product
+And User creates empty Transaction Plan for prepaid product
 And User fills Transaction Limit Plan for prepaid product
 And User fills Document Checklist Screen for prepaid product
 And User fills Device Joining and Membership Fee Plan for prepaid product

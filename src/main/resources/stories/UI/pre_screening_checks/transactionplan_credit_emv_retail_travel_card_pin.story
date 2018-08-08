@@ -1,7 +1,7 @@
 Narrative:
 In order to test transaction plan without assigned transaction for credit emv retails card
 As an issuer
-I want to fail transactions for prepaid emv retail card
+I want to fail transactions for credit emv retail card
 
 Meta:
 @StoryName credit_emv_retail
@@ -15,7 +15,7 @@ And user is logged in institution
 When User fills Dedupe Plan
 And User fills Statement Message Plan for credit product
 And User fills Marketing Message Plan for credit product
-And User create empty Transaction Plan for credit product
+And User creates empty Transaction Plan for credit product
 And User fills Transaction Limit Plan for credit product
 And User fills Document Checklist Screen for credit product
 And User fills Device Joining and Membership Fee Plan for credit product

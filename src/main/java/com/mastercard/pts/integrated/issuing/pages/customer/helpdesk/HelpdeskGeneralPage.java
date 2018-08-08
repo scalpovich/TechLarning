@@ -230,6 +230,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement creditLimitLabel;
 
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
+	
+	private final String RESET_PIN_RETRY_COUNTER= "109 - Reset Pin Retry Counter";
 
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
@@ -972,7 +974,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
-		runWithinPopup("109 - Reset Pin Retry Counter", () -> {
+		runWithinPopup(RESET_PIN_RETRY_COUNTER, () -> {
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();

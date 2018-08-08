@@ -1495,8 +1495,8 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.PROGRAM, program);
 	}
 	
-	@When("User create empty Transaction Plan for $type product")
-	public void whenUserCreateEmptyTransactionPlan(String type) {
+	@When("User creates empty Transaction Plan for $type product")
+	public void createEmptyTransactionPlan(String type) {
 		setPinRequiredToDefaultState();
 		transactionPlan = TransactionPlan.createWithProvider(dataProvider);
 		transactionPlan.setProductType(ProductType.fromShortName(type));

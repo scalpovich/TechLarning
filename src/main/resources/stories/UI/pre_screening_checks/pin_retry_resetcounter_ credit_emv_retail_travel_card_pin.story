@@ -53,7 +53,7 @@ Then user is logged in institution
 And search Purchase authorization and verify 106-Allowable Pin tries exceeded status
 And assert Decline response with 46053 AuthDecline Code and Pin retry limit exceeded. as description
 And device has "normal" status
-And user resets pin retry counter Reset Pin Retry Counter [109]
+And user raise service request for Reset Pin Retry Counter [109] service
 And user sign out from customer portal
 
 Scenario: Pin Generation

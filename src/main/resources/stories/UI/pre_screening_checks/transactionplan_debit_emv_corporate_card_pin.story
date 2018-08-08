@@ -1,7 +1,7 @@
 Narrative:
 In order to test transaction plan without assigned transaction for debit emv corporate card
 As an issuer
-I want to fail transactions for prepaid emv corporate card
+I want to fail transactions for debit emv corporate card
 Meta:
 @StoryName d_emv_corp
 @TransactionPlanWithoutAssignTransactions
@@ -10,7 +10,7 @@ Scenario: Set up debit emv corporate travel card
 Given user is logged in institution
 When User fills Dedupe Plan
 And User fills MCC Rules for debit product
-And User create empty Transaction Plan for debit product
+And User creates empty Transaction Plan for debit product
 And User fills Transaction Limit Plan for debit product
 And User fills Document Checklist Screen for debit product
 And User fills Device Joining and Membership Fee Plan for debit product
