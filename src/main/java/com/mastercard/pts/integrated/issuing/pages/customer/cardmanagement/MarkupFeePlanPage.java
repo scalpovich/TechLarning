@@ -134,6 +134,6 @@ public class MarkupFeePlanPage extends AbstractBasePage {
 						clickSaveButton();
 					}
 					verifyOperationStatus();
-					});
+				});
 	}
 }
