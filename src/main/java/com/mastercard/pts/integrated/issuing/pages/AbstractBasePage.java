@@ -1385,6 +1385,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 		getFinder().getWebDriver().switchTo().defaultContent();
 	}
 
+	public void switchToDefaultFrame(String element,int index) {
+		driver().switchTo().frame(Elements(element).get(index));
+	}
 	public void enterText(MCWebElement field, String fieldValue) {
 		waitForElementVisible(field);
 		field.sendKeys(fieldValue);

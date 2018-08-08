@@ -23,7 +23,7 @@ public class CountryWhiteListBlackListSteps {
 	public void thenUserCanAddCountryInBlackOrWhiteListInPlan() {
 		CountryWhiteListBlackListPlan countryWhiteListBlackListPlan = CountryWhiteListBlackListPlan
 				.createWithProvider(provider);
-		Assert.assertTrue(countryWhiteListBlackListWorkflow.addCountryInBlackOrWhiteListInPlan(countryWhiteListBlackListPlan));
+		Assert.assertTrue(countryWhiteListBlackListPlan.getPlanCode()+"is added successfully",countryWhiteListBlackListWorkflow.addCountryInBlackOrWhiteListInPlan(countryWhiteListBlackListPlan));
 	}
 
 }

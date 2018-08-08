@@ -870,23 +870,19 @@ public class ProgramPage extends AbstractBasePage {
 
 	}
 
-	public void editProgramForPlans(Program program,String editItem) {
+	public void editProgramForPlans(Program program, String editItem) {
 		enterValueinTextBox(enterProgram, program.getProgramCode());
 		clickWhenClickable(search);
 		waitForElementVisible(editProgram);
 		clickWhenClickable(editProgram);
 		runWithinPopup("Edit Program", () -> {
-		switch(editItem)
-		{
-		case "country white black list":
-			clickWhenClickable(planTab);
-			setCountryWhiteBlackListPlan(program);
-			clickSaveButton();
-			break;
-		}
-			
-
+			switch (editItem) {
+			case "country white black list":
+				clickWhenClickable(planTab);
+				setCountryWhiteBlackListPlan(program);
+				clickSaveButton();
+				break;
+			}
 		});
-
 	}
 }

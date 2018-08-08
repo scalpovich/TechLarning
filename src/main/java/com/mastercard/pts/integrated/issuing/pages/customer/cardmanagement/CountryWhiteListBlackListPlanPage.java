@@ -27,7 +27,8 @@ import net.serenitybdd.core.annotations.findby.By;
 public class CountryWhiteListBlackListPlanPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(CountryWhiteListBlackListPlanPage.class);
-
+	private final String WHITE_LIST="White List";
+	private final String BLACK_LIST="Black List";
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=countryWblistPlanCode]")
 	private MCWebElement countryWblistPlanCode;
 
@@ -54,9 +55,8 @@ public class CountryWhiteListBlackListPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='countryWblistEndDate:input:dateTextField']/..")
 	private MCWebElement endDate;
-
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Add Details']")
-	private MCWebElement addDetailsButton;;
+	
+	private String addCountryFrame="//h3[contains(text(), 'Add Country')]/ancestor::div//iframe";
 
 	public void verifyUiOperationStatus() {
 		logger.info("Country White List/ Black List Plan");
@@ -78,6 +78,7 @@ public class CountryWhiteListBlackListPlanPage extends AbstractBasePage {
 		runWithinPopup("Add Country White List/ Black List Plan", () -> {
 			clickSaveButton();
 		});
+		verifyUiOperationStatus();
 		return verifyPlanCodeIsAdded(countryWhiteListBlackListPlan);
 
 	}
@@ -85,38 +86,34 @@ public class CountryWhiteListBlackListPlanPage extends AbstractBasePage {
 	private void addPlanDetailsInPopUp(CountryWhiteListBlackListPlan countryWhiteListBlackListPlan) {
 		WebElementUtils.enterText(planCode, countryWhiteListBlackListPlan.getPlanCode());
 		WebElementUtils.enterText(planDescription, countryWhiteListBlackListPlan.getDescription());
-		if (countryWhiteListBlackListPlan.getPlanType().equals("White List"))
+		if (countryWhiteListBlackListPlan.getPlanType().equals(WHITE_LIST))
 			WebElementUtils.selectRadioBtn(planTypeWhiteList);
-		else if (countryWhiteListBlackListPlan.getPlanType().equals("Black List"))
+		else if (countryWhiteListBlackListPlan.getPlanType().equals(BLACK_LIST))
 			WebElementUtils.selectRadioBtn(planTypeBlackList);
-		addDetailsButton.click();
-		SimulatorUtilities.wait(500);
+		clickAddDetailsButton();
 		clickAddNewButton();
 
 	}
 
 	private void addCountry(CountryWhiteListBlackListPlan countryWhiteListBlackListPlan) {
 		SimulatorUtilities.wait(1000);
-		driver().switchTo().defaultContent();
-		driver().switchTo().frame(
+		switchToDefaultFrame();
+		/*driver().switchTo().frame(
 				driver().findElements(By.xpath("//h3[contains(text(), 'Add Country')]/ancestor::div//iframe")).get(1));
-
+		*/
+		switchToDefaultFrame(addCountryFrame,1);
 		WebElementUtils.selectDropDownByVisibleText(countryCode, countryWhiteListBlackListPlan.getCountryCode());
 		WebElementUtils.pickDate(effectiveDate, LocalDate.now().plusDays(1));
 		WebElementUtils.pickDate(endDate, LocalDate.now().plusYears(7));
 		clickSaveButton();
-
 	}
 
 	private boolean verifyPlanCodeIsAdded(CountryWhiteListBlackListPlan countryWhiteListBlackListPlan) {
+		SimulatorUtilities.wait(500);
 		WebElementUtils.enterText(countryWblistPlanCode, countryWhiteListBlackListPlan.getPlanCode());
 		clickSearchButton();
-
 		SimulatorUtilities.wait(500);
-		if (getFinder().getWebDriver().findElements(By.xpath("//table[@class='dataview']/tbody/tr/td[2]/span"))
-				.size() == 1)
-			return true;
-		return false;
+		return getFirstColumnValueFromTable().equalsIgnoreCase(countryWhiteListBlackListPlan.getPlanCode());
 
 	}
 }
