@@ -1,4 +1,3 @@
-!-- author: e076168
 Narrative:
 As a user
 I want to login into customer portal 
@@ -9,7 +8,7 @@ Meta:
 @StoryName prepaid_card
 @SanityCards
 
-Scenario: To verify functionality of prepaid card boarding
+Scenario: To verify functionality of NFC_EMV prepaid card boarding
 Given setting json values in excel for Prepaid
 When user is logged in institution
 And User fills Statement Message Plan for prepaid product

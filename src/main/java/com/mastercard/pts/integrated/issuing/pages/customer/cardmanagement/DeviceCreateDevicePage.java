@@ -309,7 +309,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
 		clickWhenClickable(generateDeviceBatchBtn);
 		waitForWicket();
-		SimulatorUtilities.wait(30000);
+		SimulatorUtilities.wait(10000);
 		context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());
 		device.setBatchNumber(batchNumberTxt.getText());
 		logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());		
