@@ -33,7 +33,7 @@ Then user sign out from customer portal
 
 Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 1st transaction
 Given connection to MAS is established
-When perform an EMV_PURCHASE_HRM_PIN MAS transaction
+When perform an EMV_PURCHASE_HRM MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
