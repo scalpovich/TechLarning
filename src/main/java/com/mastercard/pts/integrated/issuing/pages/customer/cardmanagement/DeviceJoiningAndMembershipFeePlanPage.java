@@ -127,7 +127,7 @@ public class DeviceJoiningAndMembershipFeePlanPage extends AbstractBasePage {
 	}
 
 	public void selectIframeCurrency(String currency) {
-		WebElementUtils.selectDropDownByVisibleText(iframeCurrency, currency);
+		selectByVisibleText(iframeCurrency, currency);
 	}
 
 	// Methods for Dialog Screen
