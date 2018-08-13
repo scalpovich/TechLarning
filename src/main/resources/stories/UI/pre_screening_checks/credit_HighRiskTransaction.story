@@ -32,10 +32,17 @@ And for Primary Device and New Client user fills Device Range section for credit
 Then credit device is created using new device screen for Individual and Primary Device and New Client and EMV Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device
+And credit processes pingeneration batch using new Device for Supplementary
 And User search for new device on search screen for credit and validates the status as NORMAL
 And user sign out from customer portal
 And embossing file batch was generated in correct format
 
+Scenario: Pin Generation
+Given connection to FINSim is established
+When Pin Offset file batch was generated successfully
+And embossing file batch was generated in correct format
+And PIN is retrieved successfully with data from Pin Offset File
+Then FINSim simulator is closed
 
 Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 1st transaction
 Given connection to MAS is established

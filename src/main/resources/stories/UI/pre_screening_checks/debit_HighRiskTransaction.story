@@ -28,6 +28,13 @@ And user activates device through helpdesk
 And user sign out from customer portal
 And embossing file batch was generated in correct format
 
+Scenario: Pin Generation
+Given connection to FINSim is established
+When Pin Offset file batch was generated successfully
+And embossing file batch was generated in correct format
+And PIN is retrieved successfully with data from Pin Offset File
+Then FINSim simulator is closed
+
 Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 1st transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE_HRM MAS transaction
