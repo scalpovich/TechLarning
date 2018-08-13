@@ -43,6 +43,6 @@ public class AssignProgramPage extends AbstractBasePage {
 					clickSaveButton();
 					verifyNoErrors();
 				});
-		verifyOperationStatus();
+		//verifyOperationStatus();
 	}
 }
