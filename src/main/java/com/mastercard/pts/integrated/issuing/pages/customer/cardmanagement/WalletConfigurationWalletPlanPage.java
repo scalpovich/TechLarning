@@ -145,7 +145,13 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 	
 	public void selectMCGLimitPlan(String mcgLimitPlan) {
+		if(mcgLimitPlan != null){
 		selectByVisibleText(mcgLimitPlanDDwn, mcgLimitPlan);
+		}
+		else{
+			logger.info("No MCG wallet plan to be attached");
+		}
+			
 	}
 
 	@Override
