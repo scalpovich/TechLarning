@@ -106,8 +106,8 @@ public class MCGLimitPlan {
 		HashMap<String,String> description = new HashMap<String, String>();
 		description.put("Exceeds Amount Limit Domestic", EXCEEDS_AMOUNT_LIMIT_DOMESTIC_DESCRIPTION);
 		description.put("Frequency Exceeded Domestic",FREQUENCY_EXCEEDED_DOMESTIC_DESCRIPTION);
-		description.put("Exceeds Amount Limit International", EXCEEDS_AMOUNT_LIMIT_DOMESTIC_DESCRIPTION);
-		description.put("Frequency Exceeded International",FREQUENCY_EXCEEDED_DOMESTIC_DESCRIPTION);
+		description.put("Exceeds Amount Limit International", EXCEEDS_AMOUNT_LIMIT_INTERNATIONAL_DESCRIPTION);
+		description.put("Frequency Exceeded International",FREQUENCY_EXCEEDED_INTERNATIONAL_DESCRIPTION);
 		return description;
 	}
 
