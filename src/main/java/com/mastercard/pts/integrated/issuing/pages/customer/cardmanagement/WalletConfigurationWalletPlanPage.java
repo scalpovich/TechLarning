@@ -149,7 +149,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		selectByVisibleText(mcgLimitPlanDDwn, mcgLimitPlan);
 		}
 		else{
-			logger.info("No MCG wallet plan to be attached");
+			logger.info("No MCG Limit plan to be attached");
 		}
 			
 	}
