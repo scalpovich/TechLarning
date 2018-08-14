@@ -15,6 +15,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CurrencyExchangeRate;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceUsage;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCGLimitPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -285,11 +286,13 @@ public class CurrencyExchangeRatesSteps {
 				currencyExchangeRateDomainPage.getUploadPathCER());
 	}
 	
+	@Then("fetch currency exchange rate from $Source currency to program currency")
 	@When("fetch currency exchange rate from $Source currency to program currency")
 	public void fetchSourcetoDestinationCurrency(String currency) {
 		Device device =context.get(ContextConstants.DEVICE);
 		Program program =context.get(ContextConstants.PROGRAM);
 		MCGLimitPlan mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
+		DeviceUsage deviceUsage = DeviceUsage.getDeviceUsageDetails(provider);
 		if(mcgLimitPlan==null){
 			mcgLimitPlan = MCGLimitPlan.getMCGLimitPlanData(provider);
 		}
@@ -301,9 +304,10 @@ public class CurrencyExchangeRatesSteps {
 			currencyExchangeRateDomainPage.setRateOrigin(program.getCurrencyConversionBy());}
 		String currencyRate = currencyExchangeRatesFlows.fetchSourceToDestinationCurrency(currencyExchangeRateDomainPage);
 		Double amount = Double.parseDouble(mcgLimitPlan.getDailyAmountInternational())/Double.parseDouble(currencyRate);
-		device.setTransactionAmount(Double.toString(amount));
+		device.setTransactionAmount(Double.toString((amount/3)*100));
+		deviceUsage.setTransactionAmount(Double.toString(amount*100));
 		context.put(ContextConstants.DEVICE,device);
-		
+		context.put(DeviceUsageSteps.DEVICE_USUAGE,deviceUsage);
 	}
 
 }

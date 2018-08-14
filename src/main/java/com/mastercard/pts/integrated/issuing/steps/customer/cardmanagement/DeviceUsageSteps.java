@@ -68,7 +68,9 @@ public class DeviceUsageSteps {
 		DecimalFormat df2 = new DecimalFormat("0.00"); 
 		mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
 		device = context.get(ContextConstants.DEVICE);
-		deviceUsage = DeviceUsage.getDeviceUsageDetails(provider);
+		deviceUsage = context.get(DEVICE_USUAGE);
+		if(deviceUsage==null){
+		deviceUsage = DeviceUsage.getDeviceUsageDetails(provider);}
 		deviceUsage.setDeviceNumber(device.getDeviceNumber());
 		Optional<Map<String, String>> data = deviceUsageWorkflow.getWalletMCGUsage(deviceUsage);
 
@@ -97,7 +99,8 @@ public class DeviceUsageSteps {
 		DecimalFormat df2 = new DecimalFormat("0.00"); 
 		mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
 		device = context.get(ContextConstants.DEVICE);
-		if(context.get(DEVICE_USUAGE)==null){
+		deviceUsage = context.get(DEVICE_USUAGE);
+		if(deviceUsage==null){
 		deviceUsage = DeviceUsage.getDeviceUsageDetails(provider);
 		deviceUsage.setDeviceNumber(device.getDeviceNumber());
 		}
@@ -120,6 +123,7 @@ public class DeviceUsageSteps {
 		} else {
 			Assert.fail("No Transaction was recorded under MCG usage");
 		}
+		context.put(DEVICE_USUAGE,deviceUsage);
 	}
 	
 	@When("verify ATC counter getting updated at device usage screen")
