@@ -10,14 +10,22 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CurrencyExchangeRate;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCGLimitPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CurrencyExchangeRatesPage;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.CurrencyExchangeRatesFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProcessBatchesFlows;
+import com.typesafe.config.ConfigException.Parse;
 
 @Component
 public class CurrencyExchangeRatesSteps {
@@ -37,6 +45,12 @@ public class CurrencyExchangeRatesSteps {
 
 	@Autowired
 	private CurrencyExchangeRatesFlows currencyExchangeRatesFlows;
+	
+	@Autowired
+	private TestContext context;
+	
+	@Autowired
+	private KeyValueProvider provider;
 
 	private static String sourceCurrency = "Source Currency";
 	private static String destinationCurrency = "Destination Currency";
@@ -269,6 +283,27 @@ public class CurrencyExchangeRatesSteps {
 			@Named("invalid_currency") String isInvalid) {
 		currencyExchangeRatesFlows.uploadFileBankInvalidFileFlows(isInvalid,
 				currencyExchangeRateDomainPage.getUploadPathCER());
+	}
+	
+	@When("fetch currency exchange rate from $Source currency to program currency")
+	public void fetchSourcetoDestinationCurrency(String currency) {
+		Device device =context.get(ContextConstants.DEVICE);
+		Program program =context.get(ContextConstants.PROGRAM);
+		MCGLimitPlan mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
+		if(mcgLimitPlan==null){
+			mcgLimitPlan = MCGLimitPlan.getMCGLimitPlanData(provider);
+		}
+		currencyExchangeRateDomainPage.setSourceCurrency(currency);
+		currencyExchangeRateDomainPage.setDestinationCurrency(program.getBaseCurrency());
+		if(!program.getProduct().equalsIgnoreCase(ProductType.PREPAID)){
+		currencyExchangeRateDomainPage.setRateOrigin(program.getInterchange());}
+		else{
+			currencyExchangeRateDomainPage.setRateOrigin(program.getCurrencyConversionBy());}
+		String currencyRate = currencyExchangeRatesFlows.fetchSourceToDestinationCurrency(currencyExchangeRateDomainPage);
+		Double amount = Double.parseDouble(mcgLimitPlan.getDailyAmountInternational())/Double.parseDouble(currencyRate);
+		device.setTransactionAmount(Double.toString(amount));
+		context.put(ContextConstants.DEVICE,device);
+		
 	}
 
 }

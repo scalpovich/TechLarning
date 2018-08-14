@@ -57,14 +57,6 @@ Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 3rd transaction
 When perform an EMV_PURCHASE MAS transaction on the same card
 Then MAS simulator is closed
 And user is logged in institution
-And search Purchase authorization and verify 000-Successful status
-And verify the MCG daily velocity in Device Usage Screen for domestic transactions
-And user sign out from customer portal
-
-Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 4th transaction
-When perform an EMV_PURCHASE MAS transaction on the same card
-Then MAS simulator is closed
-And user is logged in institution
 And search Purchase authorization and verify 123-Frequency Exceeded status
 And assert Decline response with 40008 AuthDecline Code and Frequency Exceeded Domestic as description
 And user sign out from customer portal

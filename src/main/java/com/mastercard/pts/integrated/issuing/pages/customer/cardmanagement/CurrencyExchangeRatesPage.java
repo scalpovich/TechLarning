@@ -85,6 +85,9 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "midRate:input:inputAmountField")
 	private MCWebElement midRateTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "table.modelFormClass tr:nth-of-type(3) > td +td >span>span")
+	private MCWebElement midRateLbl;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "sellRate:input:inputAmountField")
 	private MCWebElement sellRateTxt;
@@ -109,6 +112,8 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
 	private MCWebElement cancelBtn;
+	
+	private String VIEW_CURRENCY_EXCHANGE_RATE = "View Currency Exchange Rate";
 
 	@Autowired
 	ReadTestDataFromExcel dataReader;
@@ -360,6 +365,25 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 	public void uploadInvalidCurrencyExchangeRateFile(String isInvalid,
 			String filepath) {
 		fileCreation.createCERUploadFileBank(isInvalid, filepath);
+	}
+	
+	public String fetchSourceToDestinationCurrency(CurrencyExchangeRate domainObj) {
+		searchCurrencyExchangeRates(
+				domainObj.getSourceCurrency(),
+				domainObj.getDestinationCurrency(),
+				domainObj.getRateOrigin(),
+				domainObj.getProgram());
+		clickOnFirstRowClickableCell();
+		switchToIframe(VIEW_CURRENCY_EXCHANGE_RATE);
+		String rate = getTextFromPage(midRateLbl);
+		clickCloseButton();
+		switchToDefaultFrame();
+		return rate;
+	}
+	
+	private void clickOnFirstRowClickableCell(){
+		String xpath = "//table[@class='dataview']/tbody/tr[1]/td[count(//th[.//*[text()='Source Currency']]/preceding-sibling::th)+1]";
+		driver().findElement(By.xpath(xpath)).click();
 	}
 
 	public void verifyUiOperationStatus() {
