@@ -81,8 +81,8 @@ TestContext context;
 	public void verifyapplication() {
 		Device device = context.get(CreditConstants.APPLICATION);
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
-		WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
-		WebElementUtils.pickDate(toDatePicker, LocalDate.now());
+		WebElementUtils.pickDate(fromDatePicker, getCurrentInstitutionDate());
+		WebElementUtils.pickDate(toDatePicker, getCurrentInstitutionDate());
 		clickSearchButton();
 	}
 

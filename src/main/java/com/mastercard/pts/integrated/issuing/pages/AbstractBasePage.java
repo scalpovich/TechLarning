@@ -3,8 +3,10 @@ package com.mastercard.pts.integrated.issuing.pages;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -297,6 +299,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers']/td[5]/span")
 	private MCWebElement deviceProductionHeaderBatchTxt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='time']/label/following-sibling::*")
+    private MCWebElement instutionCurrentDate;
 	
 	private static final int loopIterationToCheckBatchNumber=21;
 	
@@ -1826,6 +1831,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 		Actions action = new Actions(driver());		
 		action.moveToElement(asWebElement(element), xOffset, yOffset).click().build().perform();
 	}
+	
+	@SuppressWarnings("deprecation")
+	public LocalDate getCurrentInstitutionDate(){
+           String dateInString = instutionCurrentDate.getText(); 
+           Date date = new Date(dateInString);
+           return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+     }
 	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

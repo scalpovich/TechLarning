@@ -96,8 +96,8 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 	public String searchApplicationNumber(){
 		Device device=context.get(CreditConstants.APPLICATION);
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
-		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
-		WebElementUtils.pickDate(toDate, LocalDate.now());
+		WebElementUtils.pickDate(fromDate, getCurrentInstitutionDate());
+		WebElementUtils.pickDate(toDate, getCurrentInstitutionDate());
 		clickSearchButton();		
 		searchUntilBatchNumberIsDisplayed();	
 		return batchNumberTxt.getText();
