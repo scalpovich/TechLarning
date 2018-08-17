@@ -1,17 +1,12 @@
-!-- auther:e076168
-
 Narrative:
 As a Cardhodler
-I want to able to loing into cardholder portal 
+I want to loing into cardholder portal 
 In order to send PIN Set request 
 
-Scenario: To update Pin set request for device 
+Scenario: To update Pin for selected for device 
 Meta:
-@createPinSetRquest
 @TCName TC_createPinSetRquest
 @sheetName CardHolder
-@testDataFileName data
-
 Given read test data for scenario
-And login to cardholder portal as existing Cardholder user
-When PIN set request for card
+When login to cardholder portal as existing Cardholder user
+Then PIN set request for card
