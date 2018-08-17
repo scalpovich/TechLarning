@@ -117,8 +117,9 @@ public class PinGenerationBatchPage extends AbstractBasePage {
 	}
 		
 	public void processPinProductionBatch(PinGenerationBatch batch) {
-		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());		
+        String batchNumber = context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
+		WebElementUtils.enterText(batchNumberTxt, batchNumber);
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());			
 		waitAndSearchForRecordToAppear();
 		deviceNumbers();
 		waitAndSearchForRecordToExist();
