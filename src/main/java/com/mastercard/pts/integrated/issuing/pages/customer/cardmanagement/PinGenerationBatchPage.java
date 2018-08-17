@@ -84,6 +84,7 @@ public class PinGenerationBatchPage extends AbstractBasePage {
 		//Device device = context.get(ContextConstants.DEVICE);
 		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
 		WebElementUtils.enterText(batchNumberTxt, batchNumber);
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		waitAndSearchForRecordToExistForSupplementary();
 		verifyOperationStatus();
 	}
@@ -91,6 +92,7 @@ public class PinGenerationBatchPage extends AbstractBasePage {
 		public void processPinProductionBatchNewDevice(PinGenerationBatch batch) {
 		Device device=context.get(ContextConstants.DEVICE);
 		WebElementUtils.enterText(batchNumberTxt, device.getBatchNumber());
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		waitAndSearchForRecordToExist();
 		clickWhenClickable(processAllBtn);
 		verifyOperationStatus();
@@ -116,7 +118,7 @@ public class PinGenerationBatchPage extends AbstractBasePage {
 		
 	public void processPinProductionBatch(PinGenerationBatch batch) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
+		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());		
 		waitAndSearchForRecordToAppear();
 		deviceNumbers();
 		waitAndSearchForRecordToExist();

@@ -497,7 +497,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void runWithinPopup(String caption, Runnable action) {
 		SimulatorUtilities.wait(3000);
-		By frameSelector = By.xpath(String.format("//h3[contains(text(), '%s')]/ancestor::div//iframe", caption));
+		String xpath = String.format("//h3[contains(text(), '%s')]/ancestor::div//iframe", caption);
+		logger.info("runWithinPopup -> xpath: {}", xpath);
+		By frameSelector = By.xpath(xpath);
 		WebElementUtils.runWithinFrame(driver(), timeoutInSec, frameSelector, action);
 	}
 
@@ -631,6 +633,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected void clickWhenClickable(MCWebElement element) {
 		SimulatorUtilities.wait(4000);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
+        logger.info("Button clicked successfully.");
 	}
 	
 	protected void clickWhenClickablewithWicket(MCWebElement element) {
