@@ -157,6 +157,7 @@ public class Device {
 		device.setOtherInfoRegisteredMobileNumber(provider.getString(ND_OTHERINFO_REGISTERED_MOBILE_NUMBER));
 		device.setOtherInfoRegisterForDncr(provider.getString(ND_OTHERINFO_REGISTER_FOR_DCNR));
 		device.setOtherInfoSmsAlertRequired(provider.getString(ND_OTHERINFO_SMS_ALERT_REQUIRED));
+		device.setOtherInfoStatementPreference(provider.getString(ND_OTHERINFO_STATEMENT_PREFERENCE));
 		return device;
 	}
 

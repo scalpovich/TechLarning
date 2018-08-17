@@ -17,8 +17,12 @@ public class ApproveCreditDeviceSteps {
 	@Given("user approves the credit application device")
 	@Then("user approves the credit application device")
 	@When("user approves the credit application device")
-	public void verifyCreditDeviceAfterApplicaionCreation()
-	{
+	public void verifyCreditDeviceAfterApplicaionCreation(){
 		approveRejectApplicationFlows.approveRejectCreditApplication();
+	}
+	
+	@When("user approves the credit application device for fileUpload")
+	public void verifyCreditDeviceAfterApplicaionCreationFileUpload() {
+		approveRejectApplicationFlows.approveRejectCreditApplication_FileUpload();
 	}
 }

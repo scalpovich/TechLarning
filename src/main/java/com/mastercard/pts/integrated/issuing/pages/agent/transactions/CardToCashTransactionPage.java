@@ -9,6 +9,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -123,6 +124,7 @@ public class CardToCashTransactionPage extends TransactionsAbstractPage {
 		clickSubmitButton();
 		WebElementUtils.enterText(txnPasswordTxt, details.getTxnPassword());
 		WebElementUtils.enterText(remarksTxt, Constants.GENERIC_DESCRIPTION);
+		SimulatorUtilities.wait(3000);
 		clickConfirmButton();
 		return getRemittanceReferenceNumber();
 	}
