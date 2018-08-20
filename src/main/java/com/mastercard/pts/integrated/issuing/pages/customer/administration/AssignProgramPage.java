@@ -10,6 +10,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Prog
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -48,7 +49,8 @@ public class AssignProgramPage extends AbstractBasePage {
 					canceled.set(verifyAlreadyExistsAndClickCancel());
 				});
 		if (!canceled.get()) {
-			//verifyOperationStatus();
+			SimulatorUtilities.wait(4000);
+			verifyOperationStatus();
 		}
 	}
 }
