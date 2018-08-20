@@ -48,7 +48,7 @@ public class TransactionReportsPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "p_file_type:input:dropdowncomponent")
 	private MCWebElement fileTypeDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:3:rows:2:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'File Type')]/../../td[2]//select")
 	private MCWebElement fileTypeAuthReportDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "p_product_type:input:dropdowncomponent")
@@ -57,31 +57,31 @@ public class TransactionReportsPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "p_product_code:input:dropdowncomponent")
 	private MCWebElement programNameDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:2:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Product Type')]/../../td[2]//select")
 	private MCWebElement productTypeAuthReportDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:3:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Program Name')]/../../td[2]//select")
 	private MCWebElement programNameAuthReportDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Authorization Type')]/../../td[4]//select")
 	private MCWebElement authTypeDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:3:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Channel')]/../../td[4]//select")
 	private MCWebElement channelDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:4:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Transaction Type')]/../../td[2]//select")
 	private MCWebElement transactionTypeDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:4:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Transaction Status')]/../../td[4]//select")
 	private MCWebElement transactionStatusDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:5:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Transaction Origin')]/../../td[2]//select")
 	private MCWebElement transactionOriginDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:2:cols:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement transactionCodeDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:5:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Device Type')]/../../td[4]//select")
 	private MCWebElement deviceTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:2:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
