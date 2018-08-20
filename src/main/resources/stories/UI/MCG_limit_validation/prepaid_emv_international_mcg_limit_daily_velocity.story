@@ -26,6 +26,7 @@ And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 And user activates device through helpdesk
+And fetch currency exchange rate from USD currency to program currency
 And user sign out from customer portal
 And embossing file batch was generated in correct format
 

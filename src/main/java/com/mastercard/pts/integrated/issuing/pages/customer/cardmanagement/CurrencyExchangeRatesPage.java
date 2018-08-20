@@ -12,6 +12,7 @@ import java.util.Collection;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.server.handler.FindElements;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -112,6 +113,8 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
 	private MCWebElement cancelBtn;
+	
+	private String editLink = ".dataview tbody img[alt='Edit Record']"; 
 	
 	private String VIEW_CURRENCY_EXCHANGE_RATE = "View Currency Exchange Rate";
 
@@ -373,7 +376,7 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 				domainObj.getDestinationCurrency(),
 				domainObj.getRateOrigin(),
 				domainObj.getProgram());
-		clickOnFirstRowClickableCell();
+		clickOnFirstRowEditLink();
 		switchToIframe(VIEW_CURRENCY_EXCHANGE_RATE);
 		String rate = getTextFromPage(midRateLbl);
 		clickCloseButton();
@@ -381,9 +384,8 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		return rate;
 	}
 	
-	private void clickOnFirstRowClickableCell(){
-		String xpath = "//table[@class='dataview']/tbody/tr[1]/td[count(//th[.//*[text()='Source Currency']]/preceding-sibling::th)+1]";
-		driver().findElement(By.xpath(xpath)).click();
+	private void clickOnFirstRowEditLink(){
+		clickWhenClickable((driver().findElements(By.cssSelector(editLink))).get(0));
 	}
 
 	public void verifyUiOperationStatus() {

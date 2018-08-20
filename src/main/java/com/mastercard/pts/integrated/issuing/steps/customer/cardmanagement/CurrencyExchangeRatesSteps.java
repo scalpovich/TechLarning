@@ -297,13 +297,16 @@ public class CurrencyExchangeRatesSteps {
 			mcgLimitPlan = MCGLimitPlan.getMCGLimitPlanData(provider);
 		}
 		currencyExchangeRateDomainPage.setSourceCurrency(currency);
-		currencyExchangeRateDomainPage.setDestinationCurrency(program.getBaseCurrency());
-		if(!program.getProduct().equalsIgnoreCase(ProductType.PREPAID)){
-		currencyExchangeRateDomainPage.setRateOrigin(program.getInterchange());}
-		else{
-			currencyExchangeRateDomainPage.setRateOrigin(program.getCurrencyConversionBy());}
+		//currencyExchangeRateDomainPage.setDestinationCurrency(program.getBaseCurrency());
+		currencyExchangeRateDomainPage.setDestinationCurrency("INR [356]");
+		//if(program.getProduct().equalsIgnoreCase(ProductType.PREPAID)){
+		//currencyExchangeRateDomainPage.setRateOrigin(program.getInterchange());}
+			currencyExchangeRateDomainPage.setRateOrigin("Mastercard [M]");
+//		else{
+//			currencyExchangeRateDomainPage.setRateOrigin(program.getCurrencyConversionBy());}
 		String currencyRate = currencyExchangeRatesFlows.fetchSourceToDestinationCurrency(currencyExchangeRateDomainPage);
 		Double amount = Double.parseDouble(mcgLimitPlan.getDailyAmountInternational())/Double.parseDouble(currencyRate);
+		System.out.println("AMOUNT+++++++"+amount);
 		device.setTransactionAmount(Double.toString((amount/3)*100));
 		deviceUsage.setTransactionAmount(Double.toString(amount*100));
 		context.put(ContextConstants.DEVICE,device);

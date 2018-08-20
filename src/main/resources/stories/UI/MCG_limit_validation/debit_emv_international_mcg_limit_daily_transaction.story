@@ -19,13 +19,13 @@ Given user is logged in institution
 And a new device was created
 When processes pre-production batch for debit
 And processes device production batch for debit
-And fetch currency exchange rate from USD currency to program currency
 Then device has "normal" status
 When user has wallet number information for debit device
 And user performs adjustment transaction
 And user has current wallet balance amount information for debit device
 Then device has "normal" status
 And user activates device through helpdesk
+And fetch currency exchange rate from USD currency to program currency
 And user sign out from customer portal
 And embossing file batch was generated in correct format
 
