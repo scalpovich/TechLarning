@@ -1197,6 +1197,28 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(1000);
 		captureSaveScreenShot(methodName);
 	}
+	
+	public void selectCVC3KeySet(String valueToSelect) {
+		executeAutoITExe("ActivateEditCardProfile.exe");
+		String methodName = new Object() {
+		}.getClass().getEnclosingMethod().getName();
+		captureSaveScreenShot(methodName);
+		winiumClickOperation("CVC3 Data");
+		captureSaveScreenShot(methodName);
+		Actions action = new Actions(winiumDriver);
+		winiumDriver.findElementByName("TDG").click();
+		action.moveToElement(winiumDriver.findElementByName("toolStripSplitButton1")).moveByOffset(10, 0).click().build().perform();
+		action.moveToElement(winiumDriver.findElementByName("toolStripSplitButton1")).moveByOffset(10, 16).click().build().perform();
+		winiumClickOperation("Drop Down Button");
+		wait(2000);
+		captureSaveScreenShot(methodName);
+		winiumClickOperation(valueToSelect);
+		wait(1000);
+		captureSaveScreenShot(methodName);
+		winiumClickOperation("OK");
+		wait(1000);
+		captureSaveScreenShot(methodName);
+	}
 
 	public String getEnv() {
 		String env = System.getProperty("env").toString();
