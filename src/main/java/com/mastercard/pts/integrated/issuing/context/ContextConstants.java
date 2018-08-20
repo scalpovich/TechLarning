@@ -56,6 +56,8 @@ public class ContextConstants {
 	
 	public static final String DOMESTIC = "domestic";
 	
+	public static final String INSTITUTION_DATE = "INSTITUTION_DATE";
+	
 	private ContextConstants() {
 	}
 

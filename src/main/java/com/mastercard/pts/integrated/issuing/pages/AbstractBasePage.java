@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -291,6 +292,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private MCWebElement errorMsgPresence;
 	
 	private static final String DeviceNumber="Device Number";
+	
+    @PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
+	private MCWebElement institutionDateText;
 	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -1788,5 +1792,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		logger.info("Not validaiting any elements, as this is an Abstraction layer to Pages");
 		return null;
+	}
+	
+	public String getInstitutionDate()
+	{	
+		logger.info("Institution date : {}",getTextFromPage(institutionDateText));
+		return getTextFromPage(institutionDateText);
 	}
 }

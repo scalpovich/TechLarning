@@ -66,6 +66,8 @@ public class UserManagementSteps {
 	private static final String USER_INSTITUTION_NON_DEFAULT = "USER_INSTITUTION_NON_DEFAULT";
 	
 	private static final String USERNAME = "USERNAME";
+	
+	
 
 	@Autowired
 	private AppEnvironment environment;
@@ -123,6 +125,7 @@ public class UserManagementSteps {
 		context.put(USER_INSTITUTION_SELECTED, institution.getCode());
 		loginWorkflow.logInInstitution(loginPortal, userDefaultInstitution);
 		context.put(USERNAME, loginPortal.getUserName());
+		context.put(ContextConstants.INSTITUTION_DATE, loginWorkflow.getInstitutionDateLogin());
 	}
 
 	@Given("user is logged in non-default institution")

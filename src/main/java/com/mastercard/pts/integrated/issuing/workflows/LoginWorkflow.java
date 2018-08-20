@@ -2,6 +2,8 @@ package com.mastercard.pts.integrated.issuing.workflows;
 
 import net.thucydides.core.annotations.Step;
 
+import java.time.LocalDate;
+
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +38,7 @@ public class LoginWorkflow {
 		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
 		loginPage.inputUserName(userName);
 		loginPage.inputPassword(password);
-		loginPage.clickLoginButton();
+		loginPage.clickLoginButton();		
 	}
 
 	public boolean confirmInstitutionSelection(String institutionSelector) {
@@ -83,6 +85,12 @@ public class LoginWorkflow {
 	public void signOutAgent(){
 		HeaderPage page = pageFactory.getPage(HeaderPage.class);
 		page.signOutAgent();
+	}
+	
+	public String getInstitutionDateLogin()
+	{
+		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
+		return loginPage.getInstitutionDateLogin();
 	}
 }
 

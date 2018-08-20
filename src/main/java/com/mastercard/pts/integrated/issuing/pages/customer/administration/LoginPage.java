@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.administration;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -346,5 +347,10 @@ public class LoginPage extends AbstractBasePage {
 			llogger.debug("Error message {}: ", e);
 			return null;
 		}
+	}
+	
+	public String getInstitutionDateLogin()
+	{
+		return getInstitutionDate();
 	}
 }

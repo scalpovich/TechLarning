@@ -13,6 +13,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
@@ -319,5 +320,17 @@ public class DateUtils {
 	public static void main(String[] args) {
 		DateUtils date = new DateUtils();
 		System.out.println(date.getDateinDDMMYYYY());
+	}
+	
+	public static LocalDate convertInstitutionDateInLocalDateFormat(String institutionDate){
+		return LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+	}
+	
+	public static int getNextMonthFirstDayDifference(String institutionDate){
+		LocalDate convertedDate = LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+		LocalDate monthLastDate = convertedDate.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear())) ;
+		Period period = Period.between (convertedDate, monthLastDate);
+		Integer daysElapsed = period.getDays();
+		return daysElapsed + 1;
 	}
 }
