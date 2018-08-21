@@ -1,7 +1,7 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk;
 
 import java.util.List;
-
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,10 +141,9 @@ public class HelpDeskFlows extends AbstractBasePage {
 		generalPage.endCall();
 	}
 
-	public String searchForDevicePrepaid(HelpDeskGeneral helpdeskgettersetter) {
+	public String searchForDevicePrepaid(HelpDeskGeneral helpdeskgettersetter,String deviceNumber) {
 		generalPage = navigator.navigateToPage(GeneralPage.class);
-		String status = searchpanelhelpdesk.searchDeviceUsingName(helpdeskgettersetter.getProductType(),
-				helpdeskgettersetter.getFirstName()/*context.get(ContextConstants.DEVICE_NUMBER)*/);
+		String status = searchpanelhelpdesk.searchDeviceUsingNumber(helpdeskgettersetter.getProductType(),deviceNumber);
 		searchpanelhelpdesk.clickSearchBtn();
 		return status;
 	}
@@ -154,11 +153,15 @@ public class HelpDeskFlows extends AbstractBasePage {
 		return searchpanelhelpdesk.searchNewDevice(helpdeskgettersetter.getProductType(),helpdeskgettersetter.getDeviceNumber());
 	}
 	
-	public String searchForNewApplication(HelpDeskGeneral helpdeskgettersetter) {
-		
+	public String searchForNewApplication(HelpDeskGeneral helpdeskgettersetter) {		
 		generalPage = navigator.navigateToPage(GeneralPage.class);
-		String status = searchpanelhelpdesk.searchNewDevice(helpdeskgettersetter.getProductType(),helpdeskgettersetter.getDeviceNumber());
-		return status;
+		return searchpanelhelpdesk.searchNewDevice(helpdeskgettersetter.getProductType(),helpdeskgettersetter.getDeviceNumber());		
+	}
+	
+	public void searchForNewApplicationFileUpload(HelpDeskGeneral helpdeskgettersetter) {
+		generalPage = navigator.navigateToPage(GeneralPage.class);
+		Map<String, Object>mapFileUpload=context.get(CreditConstants.FILEUPLOAD_IN_BULK);
+        searchpanelhelpdesk.normalStatusCheckFileUploadInBulk(helpdeskgettersetter.getProductType(),mapFileUpload);
 	}
 
 	public void verifyExpiryDate() {
@@ -170,5 +173,5 @@ public class HelpDeskFlows extends AbstractBasePage {
 		generalPage.checkNoAndStatusOfCards();
 		generalPage.endCall();
 	}
-
+	
 }

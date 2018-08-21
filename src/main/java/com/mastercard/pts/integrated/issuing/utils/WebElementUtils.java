@@ -29,14 +29,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.seleniumhq.selenium.fluent.FluentWebElement;
 
 import com.google.common.collect.Iterators;
-import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementFinder.ByNativeXPath;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 
 public class WebElementUtils {
 
-	private static final long TIMEOUT = 60;
+	private static final long TIMEOUT = 180;
 
 	private WebElementUtils() {
 	}
@@ -217,7 +216,7 @@ public class WebElementUtils {
 
 			asWebElement(datePicker).findElement(By.xpath(".//button[text()='Okay']")).click();
 		}
-
+		SimulatorUtilities.wait(1000);
 		String cellXPath = String.format(".//td/a[text()='%d']", date.getDayOfMonth());
 		retryUntilNoErrors(() -> asWebElement(datePicker).findElement(By.xpath(cellXPath)).click());
 	}

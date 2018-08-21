@@ -12,7 +12,7 @@ Meta:
 @mcc_overlimit_tx_decline
 
 Scenario:creation of mastercard_individual_primary_emv Card credit device
-Given setting json values in excel
+Given setting json values in excel for Credit
 And user is logged in institution
 When User fills Dedupe Plan
 And User fills Statement Message Plan for credit product
@@ -37,7 +37,7 @@ Then credit device is created using new device screen for Individual and Primary
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pinProduction batch using new Device for Supplementary
-And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+And device has "normal" status
 And user sign out from customer portal
 
 Scenario: Pin Generation

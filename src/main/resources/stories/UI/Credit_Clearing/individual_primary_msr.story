@@ -10,7 +10,7 @@ Meta:
 Scenario:creation of mastercard_individual_primary_msr Card credit device
 Meta:
 @TestId TC550110
-Given setting json values in excel
+Given setting json values in excel for Credit
 Given user is logged in institution
 When User fills Dedupe Plan
 And User fills Statement Message Plan for credit product
@@ -33,7 +33,7 @@ And for Primary Device and New Client user fills Device Range section for credit
 And credit device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
-And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+And device has "normal" status
 And embossing file batch was generated in correct format
 Then user sign out from customer portal
 

@@ -71,6 +71,7 @@ public class AssignProgramsSteps {
 			"When User fills Wallet Plan for prepaid product", "When User fills Program section for prepaid product",
 			"When User fills Business Mandatory Fields Screen for prepaid product",
 			"When User fills Device Range section for prepaid product",
+			"When user assigns service code to program",
 			"When user creates a bulk device production request for prepaid",
 			"When processes created bulk device generation request for prepaid",
 			"When processes pre-production batch for prepaid", "When processes device production batch for prepaid",
