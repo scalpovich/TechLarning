@@ -317,17 +317,12 @@ public class DateUtils {
 		return tempVal + tempArr[0];
 	}
 
-	public static void main(String[] args) {
-		DateUtils date = new DateUtils();
-		System.out.println(date.getDateinDDMMYYYY());
-	}
-	
 	public static LocalDate convertInstitutionDateInLocalDateFormat(String institutionDate){
 		return LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
 	}
 	
-	public static int getNextMonthFirstDayDifference(String institutionDate){
-		LocalDate convertedDate = LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+	public static int getNextMonthFirstDayDifference(String institutionDate){		
+		LocalDate convertedDate = LocalDate.now();// LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("YYYY-MM-DD"));
 		LocalDate monthLastDate = convertedDate.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear())) ;
 		Period period = Period.between (convertedDate, monthLastDate);
 		Integer daysElapsed = period.getDays();
