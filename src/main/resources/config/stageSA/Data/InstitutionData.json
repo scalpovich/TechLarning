@@ -496,7 +496,7 @@
 							   "deviceEventBasedFeePlan":"AUTOMATION [TA3264SL]",
 							   "transactionLimitPlan":"AUTOMATION [TA9706ODEV]",
 							   "transactionPlan":"AUTOMATION [T7185S]",
-							   "creditPlan":"Automation Credit Plan [100]",
+							   "creditPlan":"Automation [100]",
 							   "billingCycle":"Automation Billing [100]",
 							   "walletPlan":"AUTOMATION [TA4946EBFC]"
   				 }
