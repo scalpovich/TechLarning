@@ -372,37 +372,27 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 	}
 	
 	public String fetchSourceToDestinationCurrency(CurrencyExchangeRate domainObj) {
-		try{
 		searchCurrencyExchangeRates(
 				domainObj.getSourceCurrency(),
 				domainObj.getDestinationCurrency(),
 				domainObj.getRateOrigin().split(" ")[0],
 				domainObj.getProgram());
+		try{
 		clickOnFirstRowEditLink();
+		}
+		catch(StaleElementReferenceException e ){
+			e.printStackTrace();
+			clickOnFirstRowEditLink();
+		}
 		switchToIframe(VIEW_CURRENCY_EXCHANGE_RATE);
 		String rate = getTextFromPage(midRateLbl);
 		clickCloseButton();
 		switchToDefaultFrame();
 		return rate;
-		}
-		catch(StaleElementReferenceException e ){
-			e.printStackTrace();
-			searchCurrencyExchangeRates(
-					domainObj.getSourceCurrency(),
-					domainObj.getDestinationCurrency(),
-					domainObj.getRateOrigin().split(" ")[0],
-					domainObj.getProgram());
-			clickOnFirstRowEditLink();
-			switchToIframe(VIEW_CURRENCY_EXCHANGE_RATE);
-			String rate = getTextFromPage(midRateLbl);
-			clickCloseButton();
-			switchToDefaultFrame();
-			return rate;
-		}
 	}
 	
 	private void clickOnFirstRowEditLink(){
-		clickWhenClickable((driver().findElements(By.cssSelector(editLink))).get(0));
+		(driver().findElements(By.cssSelector(editLink))).get(0).click();
 	}
 
 	public void verifyUiOperationStatus() {
