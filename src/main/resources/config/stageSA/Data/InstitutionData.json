@@ -468,6 +468,37 @@
 								"plasticId": "759",
 								"pictureCode": "394",
 								"corporateClientCode": "12121218003000051"
-				}
+				},
+				{
+							   "productIdentity":"Credit",
+							   "code":"303045",
+							   "abbreviation":"AUTOBNG",
+							   "branch":"OfficeBranch [184]",
+							   "cardPackIdGenerationTemplate":"Card Pack ID Template [PAN800]",
+							   "deviceIdGenerationTemplate":"Device Template [PAN799]",
+							   "embossingVendor":"AUTOVENDOR [AUTO]",
+							   "mastercardPrepaidIssuerBin":"MASTERCARDPREPAID [592733]",
+							   "mastercardDebitIssuerBin":"MASTERCARDDEBIT [571504]",
+							   "mastercardCreditIssuerBin":"MASTERCARDCREDIT [574253]",
+							   "visaPrepaidIssuerBin":"VISAPREPAID [417429]",
+							   "visaDebitIssuerBin":"VISADEBIT [417360]",
+							   "visaCreditIssuerBin":"VISACREDIT [431112]",
+							   "plasticId":"AUTOMATION PLASTIC CODE [AUT]",
+							   "pictureCode":"AUTOMATION PICTURE CODE [AUT]",
+							   "corporateClientCode":"Credit [30304518199000001]",
+							   "dedupePlanCode":"TA4596YMGE [TA4596YMGE]",
+							   "prepaidStatementPlan":"AUTOMATION [TA4048YAQU]",
+							   "statementMessagePlan":"AUTOMATION [TA5447CYID]",
+							   "marketingMessagePlan":"AUTOMATION [TA7617GDAV]",
+							   "documentCheckListPlan":"AUTOMATION [TA4886UCOI]",
+							   "mccRulePlan":"AUTOMATION [TA8071XO6]",
+							   "deviceJoiningAndMemberShipFeePlan":"AUTOMATION [TA2699UL]",
+							   "deviceEventBasedFeePlan":"AUTOMATION [TA3264SL]",
+							   "transactionLimitPlan":"AUTOMATION [TA9706ODEV]",
+							   "transactionPlan":"AUTOMATION [T7185S]",
+							   "creditPlan":"Automation Credit Plan [100]",
+							   "billingCycle":"Automation Billing [100]",
+							   "walletPlan":"AUTOMATION [TA4946EBFC]"
+  				 }
 ]
 }
