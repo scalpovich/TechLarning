@@ -567,20 +567,4 @@ public class DatabaseUtils {
 		System.out.println(EncryptUtils.encrypt("KmslWW3d"));
 
 	}
-	
-	public boolean updateSystemCodes(String RNG_STRT_NUM,
-			String ACTV_CD_MTHD_CD, String ACTV_CD_MTHD_VAL) {
-		
-			String updateQuery = "update system_codes set short_name=short_name-11  WHERE TYPE_ID = 'SYS_PARAM' AND code = 'BACK_DAY' AND bank_code = '554466'";
-			Utils.logged("Updating Query :" + updateQuery);
-			int updatedRow = runUpdateQuery(updateQuery, true);
-			if (updatedRow != 1) {
-				AssertTypes.assertTrue("Not Able to update " + updateQuery,
-						false);
-				return false;
-			}
-			
-			return true;		
-	}
-
 }

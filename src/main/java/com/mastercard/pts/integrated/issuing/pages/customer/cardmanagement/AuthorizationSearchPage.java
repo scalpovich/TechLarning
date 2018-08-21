@@ -179,7 +179,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		return fieldsForAssertion;
 	}
 	
-	public AvailableBalance getTransactionBillingAmount(){
+	public AvailableBalance getAvailableBalance(){
 		String[] amountType = amountTypes.split(":");
 		AvailableBalance availBal = new AvailableBalance();
 		runWithinPopup("View Authorization", () -> {

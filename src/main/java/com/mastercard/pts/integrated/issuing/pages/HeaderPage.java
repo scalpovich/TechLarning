@@ -50,7 +50,5 @@ public class HeaderPage extends AbstractPage{
     
     public void signOutAgent(){
     	signOutAgentLnk.click();
-    	WebDriver driver= getFinder().getWebDriver();
-    	driver.close();
     }
 }
