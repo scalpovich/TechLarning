@@ -12,25 +12,19 @@ Scenario:creation of mastercard_individual_primary_emv Card credit device
 Meta:
 @UserCreatesNewCreditDevice
 Given setting json values in excel for Credit
-Given user is logged in institution
-When User fills Dedupe Plan
-And User fills Statement Message Plan for credit product
-And User fills Marketing Message Plan for credit product
-And User fills Transaction Plan for credit product
-And User fills Transaction Limit Plan for credit product
-And User fills Document Checklist Screen for credit product
-And User fills Device Joining and Membership Fee Plan for credit product
-And User fills Device Event Based Fee Plan for credit product
+When user is logged in institution
 And for EMV Card User fills Device Plan for credit product for Mastercard
-And User fills Billing Cycle
-And User fills Payment Priority
-And User fills Transaction Rule Plan
-And User fills Credit Plan
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
-And User fills MCC Rules for credit product
 And User Primary Device fills New Program Retail Credit Card section for credit product for Mastercard
 And for Primary Device and New Client user fills Device Range section for credit product
+Then credit device is created using new device screen for Individual and Primary Device and New Client and EMV Card
+And credit processes pre-production batch using new Device
+And credit processes deviceproduction batch using new Device for Supplementary
+And credit processes pingeneration batch using new Device for Supplementary
+Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+And device has "normal" status
+When user notes down available Card limit for card
 Then user sign out from customer portal
 
 Scenario:creation of mastercard_individual_primary_emv Card credit device step 2
@@ -88,12 +82,28 @@ Given user is logged in institution
 When transaction status is "Matching Pending"
 And "Matching" batch for credit is successful
 And transaction status is "Presentment Matched with authorization"
+When user processes "EOD-Credit" system internal batch
 Then user sign out from customer portal
 
 Scenario: update instutite and check billing
 Given user is logged in institution
 When update institution date to first of next month
 Then user sign out from customer portal
+
+Scenario: Process Batches
+Meta:
+@TestId 
+Given user is logged in institution
+When user processes "EOD-Credit" system internal batch
+Then user verify Unbilled amount for Purchase category
+When user processes "Billing Process - Credit" system internal batch
+Then user verify Billed amount for Purchase category
+When user run Statement Extract system internal batch
+Then user sign out from customer portal
+
+
+
+
 
 
 

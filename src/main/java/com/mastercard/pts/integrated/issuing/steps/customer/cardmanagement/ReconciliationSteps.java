@@ -71,5 +71,19 @@ public class ReconciliationSteps {
 
 		reconciliationWorkFlow.runPreClearingAndLoyaltyCalcBatch(processBatches);
 	}
+	
+	@When("user processes $batchName system internal batch")
+	public void processBillingBatchForCredit(String batchName){
+		ProcessBatches batch = new ProcessBatches();
+		batch.setBatchName(batchName);
+		reconciliationWorkFlow.runCreditBillingBatch(batch);
+	}
+	
+	@When("user run $batchName system internal batch")
+	public void runStatementExtractBatch(String batchName){
+		ProcessBatches batch = new ProcessBatches();
+		batch.setBatchName(batchName);
+		reconciliationWorkFlow.processStatementExtractBatch(batch);
+	}
 
 }

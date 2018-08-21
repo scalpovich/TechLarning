@@ -189,4 +189,10 @@ public class HelpdeskWorkflow {
 		helpDeskPage.validateRequiredFields(general);
 		helpDeskPage.validateMandatoryFields(3);
 	}
+	
+	public String verifyBillingAmounts(Device device){
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		helpDeskPage.getDeviceStatus(device);
+		return helpDeskPage.verifyBillingDetails(device);
+	}
 }
