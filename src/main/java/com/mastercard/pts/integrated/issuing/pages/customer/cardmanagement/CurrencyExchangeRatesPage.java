@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.server.handler.FindElements;
 import org.openqa.selenium.support.ui.Select;
@@ -371,10 +372,11 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 	}
 	
 	public String fetchSourceToDestinationCurrency(CurrencyExchangeRate domainObj) {
+		try{
 		searchCurrencyExchangeRates(
 				domainObj.getSourceCurrency(),
 				domainObj.getDestinationCurrency(),
-				domainObj.getRateOrigin(),
+				domainObj.getRateOrigin().split(" ")[0],
 				domainObj.getProgram());
 		clickOnFirstRowEditLink();
 		switchToIframe(VIEW_CURRENCY_EXCHANGE_RATE);
@@ -382,6 +384,21 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 		clickCloseButton();
 		switchToDefaultFrame();
 		return rate;
+		}
+		catch(StaleElementReferenceException e ){
+			e.printStackTrace();
+			searchCurrencyExchangeRates(
+					domainObj.getSourceCurrency(),
+					domainObj.getDestinationCurrency(),
+					domainObj.getRateOrigin().split(" ")[0],
+					domainObj.getProgram());
+			clickOnFirstRowEditLink();
+			switchToIframe(VIEW_CURRENCY_EXCHANGE_RATE);
+			String rate = getTextFromPage(midRateLbl);
+			clickCloseButton();
+			switchToDefaultFrame();
+			return rate;
+		}
 	}
 	
 	private void clickOnFirstRowEditLink(){
