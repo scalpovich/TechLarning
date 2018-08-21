@@ -27,16 +27,6 @@ And device has "normal" status
 When user notes down available Card limit for card
 Then user sign out from customer portal
 
-Scenario:creation of mastercard_individual_primary_emv Card credit device step 2
-Given user is logged in institution
-When credit device is created using new device screen for Individual and Primary Device and New Client and EMV Card
-And credit processes pre-production batch using new Device
-And credit processes deviceproduction batch using new Device for Supplementary
-And credit processes pingeneration batch using new Device for Supplementary
-And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-Then user sign out from customer portal
-
-
 Scenario: Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
