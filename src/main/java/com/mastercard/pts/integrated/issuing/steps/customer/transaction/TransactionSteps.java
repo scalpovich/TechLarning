@@ -547,4 +547,12 @@ public class TransactionSteps {
 			transactionWorkflow.setFolderPermisson(provider.getString(IPM_INCOMING));
 		transactionWorkflow.closeWinSCP();
 	}
+	
+	@Then("user sets invalid pin")
+	@When("user sets invalid pin")
+	public void userSetInvalidPin(){
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
+		context.put(ContextConstants.DEVICE, device);
+	}
 }
