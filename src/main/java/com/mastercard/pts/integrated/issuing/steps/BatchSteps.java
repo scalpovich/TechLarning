@@ -21,6 +21,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
 @Component
 public class BatchSteps {
@@ -48,6 +49,7 @@ public class BatchSteps {
 	public void  embossingFileWasGeneratedSuccessfully() {
 		MiscUtils.reportToConsole("******** Embossing File Start ***** " );
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		SimulatorUtilities.wait(40000);
 		try {
 			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE");		
 			String[] fileData = LinuxUtils.getCardNumberAndExpiryDate(batchFile);
@@ -113,6 +115,7 @@ public class BatchSteps {
 		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevice.getDevicePlanCode(),
 				tempDirectory.toString(), "PIN_PROD");
 		Device device = context.get(ContextConstants.DEVICE);
+		SimulatorUtilities.wait(40000);
 		try (Scanner scanner = new Scanner(batchFile)) {
 			while (scanner.hasNext()) {
 				values = scanner.nextLine().split(">");
