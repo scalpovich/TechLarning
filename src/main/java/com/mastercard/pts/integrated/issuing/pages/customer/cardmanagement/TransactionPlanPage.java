@@ -167,5 +167,20 @@ public class TransactionPlanPage extends AbstractBasePage {
 
 		verifyOperationStatus();
 	}
+	
+	public void createTransactionPlanWithoutAnyTransaction(TransactionPlan plan) {
+		logger.info("Create Transaction Plan {}", plan.getTransactionPlanCode());
+		clickAddNewButton();
+		runWithinPopup(
+				"Add Transaction Plan",
+				() -> {
+					WebElementUtils.enterText(planCodeTxt, plan.getTransactionPlanCode());
+					WebElementUtils.enterText(transactionSetDescTxt, plan.getDescription());
+					WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, plan.getProductType());
+					clickSaveButton();
+					verifyNoErrors();
+				});
+		verifyOperationStatus();
+	}
 
 }
