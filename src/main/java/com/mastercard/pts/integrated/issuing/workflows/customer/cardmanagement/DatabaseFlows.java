@@ -22,7 +22,7 @@ public class DatabaseFlows {
 	{		
 		String queryString = "update system_codes set short_name='-" + DateUtils.getNextMonthFirstDayDifference(date) + "'  WHERE TYPE_ID = 'SYS_PARAM' AND code = 'BACK_DAY' AND bank_code = '"+ getInstitutionCode() +"'";
 		System.out.println(queryString);
-		dbUtil.executeUpdate(queryString);
+		//dbUtil.executeUpdate(queryString);
 	}
 	
 	public String getInstitutionCode()

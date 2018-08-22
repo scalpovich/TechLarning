@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -321,11 +322,16 @@ public class DateUtils {
 		return LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
 	}
 	
-	public static int getNextMonthFirstDayDifference(String institutionDate){		
-		LocalDate convertedDate = LocalDate.now();// LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("YYYY-MM-DD"));
+	public static int getNextMonthFirstDayDifference(String institutionDate){			
+	
+		LocalDate localDate = LocalDate.now();
+		System.out.println("localDate date : " + localDate);
+		LocalDate convertedDate = LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+		System.out.println("Coverted Institution date : " + convertedDate);
 		LocalDate monthLastDate = convertedDate.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear())) ;
-		Period period = Period.between (convertedDate, monthLastDate);
-		Integer daysElapsed = period.getDays();
-		return daysElapsed + 1;
-	}
+		System.out.println(" monthLastDate date : " + monthLastDate);		
+		System.out.println("Diffrence Days : "+ChronoUnit.DAYS.between(localDate, monthLastDate));	
+		return (int) (ChronoUnit.DAYS.between(localDate, monthLastDate) + 1);
+	}	
+	
 }

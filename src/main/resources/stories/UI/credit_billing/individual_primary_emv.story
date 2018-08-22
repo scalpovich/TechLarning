@@ -76,10 +76,6 @@ When transaction status is "Matching Pending"
 And "Matching" batch for credit is successful
 And transaction status is "Presentment Matched with authorization"
 When user processes "EOD-Credit" system internal batch
-Then user sign out from customer portal
-
-Scenario: update instutite and check billing
-Given user is logged in institution
 When update institution date to first of next month
 Then user sign out from customer portal
 
