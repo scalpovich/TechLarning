@@ -916,13 +916,13 @@ public class DevicePlanPage extends AbstractBasePage {
 		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
 		.until(WebElementUtils.visibilityOf(iframeFinishBtn));
 		try{
-		new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
-		.until(WebElementUtils.elementToBeClickable(iframeFinishBtn)).click();}
-		catch(StaleElementReferenceException e)
-		{
-		getFinder().getWebDriver().navigate().refresh();
-		iframeFinishBtn.click();
-		}
+			new WebDriverWait(getFinder().getWebDriver(), timeoutInSec)
+			.until(WebElementUtils.elementToBeClickable(iframeFinishBtn)).click();}
+			catch(StaleElementReferenceException e)
+			{
+			getFinder().getWebDriver().navigate().refresh();
+			iframeFinishBtn.click();
+			}
 	}
 
 	public void clickIframeNextButton() {
