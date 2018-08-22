@@ -157,10 +157,10 @@ public class DeviceSteps {
 		Program program = context.get(ContextConstants.PROGRAM);
 		device.setProgramCode(program.buildDescriptionAndCode());
 		
-		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
+		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && !(device.getSubApplicationType().contains(SubApplicationType.NEW_CLIENT))){
 			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
 			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
-		}else{
+		} else {
 			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 		}
@@ -316,5 +316,20 @@ public class DeviceSteps {
 		Assert.assertTrue("Application is not created successfully",
 				deviceWorkflow.createDeviceUsingApplication(device));
 		context.put(CreditConstants.APPLICATION, device);
+	}
+	
+	@When("user selects secondary card for transaction")
+	public void userSelectSecondaryCardForTrasaction(){
+		//Code for saving primary device for future use
+		DevicePlan primaryDevicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		Device primaryDevice = context.get(ContextConstants.DEVICE);
+		context.put(ContextConstants.PRIMARY_DEVICE, primaryDevice);
+		context.put(ContextConstants.PRIMARY_DEVICE_PLAN, primaryDevicePlan);
+		
+		//Override device with secondary device
+		DevicePlan deviceplan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
+		Device device = context.get(ContextConstants.DEVICE_SUPPLEMENTARY_ADDON_EXISTING);
+		context.put(ContextConstants.DEVICE_PLAN, deviceplan);
+		context.put(ContextConstants.DEVICE, device);
 	}
 }

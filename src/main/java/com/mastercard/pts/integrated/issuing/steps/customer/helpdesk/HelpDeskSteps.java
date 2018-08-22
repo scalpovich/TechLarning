@@ -4,11 +4,13 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
@@ -18,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
@@ -43,6 +46,7 @@ import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDeskFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpdeskWorkflow;
 
@@ -831,7 +835,16 @@ public class HelpDeskSteps {
 	@When("For fileUpload when user search for new application on search screen for $productType and validates the status as $NORMAL")
 	public void thenUserSearchForApplicationOnSearchScreenforFileUpload(String productType, String status) {
 		helpDeskGetterSetter.setProductType(ProductType.fromShortName(productType));
-
 		helpdeskFlows.searchForNewApplicationFileUpload(helpDeskGetterSetter);
+	}
+	
+	
+	@Then("user creates service request for $serviceCode service")
+	@When("user creates service request for $serviceCode service")
+	public void whenUserResetPinRetryCounterThroughHelpDesk(String serviceCode) {
+		helpdeskGeneral.setServiceCode(serviceCode);			// Service Code e.g : Activate Device [108]
+		helpdeskGeneral.setNotes(MiscUtils.generateRandomNumberAsString(6));
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.resetPinCounter(helpdeskGeneral);
 	}
 }

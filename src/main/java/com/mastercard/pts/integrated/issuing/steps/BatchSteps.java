@@ -83,7 +83,6 @@ public class BatchSteps {
 		}
 	}
 	
-	
 	@When("user sets invalid cvv/ccv2/icvv to device")
 	@Then("user sets invalid cvv/ccv2/icvv to device")
 	public void  userSetInvaliCVVCVV2ICVV() {

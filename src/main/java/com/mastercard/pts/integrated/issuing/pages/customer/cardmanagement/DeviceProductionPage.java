@@ -219,6 +219,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public void processDeviceProductionBatchNewDevice(DeviceProductionBatch batch) {
 		Device device = context.get(ContextConstants.DEVICE);
 		WebElementUtils.enterText(batchNumberTxt, device.getBatchNumber());
+        WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 	}
@@ -226,6 +227,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public void processDeviceProductionBatchNewDeviceSupplementary(DeviceProductionBatch batch) {		
 		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
 		WebElementUtils.enterText(batchNumberTxt, batchNumber);
+        WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		waitAndSearchForRecordToExistForSupplementary();
 		verifyOperationStatus();
 	}

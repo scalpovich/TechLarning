@@ -232,6 +232,11 @@ public class ProgramSetupWorkflow {
 		TransactionPlanPage page = navigator.navigateToPage(TransactionPlanPage.class);
 		page.createTransactionPlan(plan);
 	}
+	
+	public void createTransactionPlanWithoutAnyTransaction(TransactionPlan plan) {
+		TransactionPlanPage page = navigator.navigateToPage(TransactionPlanPage.class);
+		page.createTransactionPlanWithoutAnyTransaction(plan);
+	}
 
 	public void createTransactionFeePlan(TransactionFeePlan plan) {
 		TransactionFeePlanPage page = navigator.navigateToPage(TransactionFeePlanPage.class);
@@ -250,5 +255,11 @@ public class ProgramSetupWorkflow {
 	public void editMCCRulePlan(MCCRulePlan plan) {
 		MCCRulePlanPage page = navigator.navigateToPage(MCCRulePlanPage.class);
 		page.editMCCRulePlanPage(plan);
+	}
+	
+	public void createWalletPlan(WalletPlan walletPlan, int reservedAmount) {
+		WalletConfigurationWalletPlanPage page = navigator.navigateToPage(WalletConfigurationWalletPlanPage.class);
+		page.setReservedAmount(reservedAmount);
+		page.addWalletPlanData(walletPlan);
 	}
 }
