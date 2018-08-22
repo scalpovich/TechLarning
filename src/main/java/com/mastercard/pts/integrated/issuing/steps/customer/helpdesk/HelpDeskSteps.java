@@ -816,8 +816,8 @@ public class HelpDeskSteps {
 	}
 	
 	
-	@Then("user raise service request for $serviceCode service")
-	@When("user raise service request for $serviceCode service")
+	@Then("user creates service request for $serviceCode service")
+	@When("user creates service request for $serviceCode service")
 	public void whenUserResetPinRetryCounterThroughHelpDesk(String serviceCode) {
 		helpdeskGeneral.setServiceCode(serviceCode);			// Service Code e.g : Activate Device [108]
 		helpdeskGeneral.setNotes(MiscUtils.generateRandomNumberAsString(6));
