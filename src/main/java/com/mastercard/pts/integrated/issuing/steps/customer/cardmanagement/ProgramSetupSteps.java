@@ -1501,4 +1501,23 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
 	}
+	
+	@When("User creates empty Transaction Plan for $type product")
+	public void createEmptyTransactionPlan(String type) {
+		setPinRequiredToDefaultState();
+		transactionPlan = TransactionPlan.createWithProvider(dataProvider);
+		transactionPlan.setProductType(ProductType.fromShortName(type));
+		programSetupWorkflow.createTransactionPlanWithoutAnyTransaction(transactionPlan);
+	}
+	
+	@When("User fills Wallet Plan for $type product and $reservedAmount reserved amount")
+	public void whenUserFillsWalletPlanWithReservedAmount(String type, int reservedAmount) {
+		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
+		walletPlan.setProductType(ProductType.fromShortName(type));
+		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
+			walletPlan.setCreditPlan(context.get(CreditConstants.CREDIT_PLAN));
+			walletPlan.setBillingCyleCode(context.get(CreditConstants.BILLING_CYCLE));
+		}
+		programSetupWorkflow.createWalletPlan(walletPlan,reservedAmount);
+	}
 }
