@@ -393,6 +393,12 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 		else if ("Loyalty-Calc".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Loyalty Calculation [LYT_CALC]");
+		
+		else if("EOD-Credit".equalsIgnoreCase(batchName))
+			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "End Of Day - Credit [DAILY]");
+		
+		else if("Statement Extract".equalsIgnoreCase(batchName))
+			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Statement Extract [STATEMENT_GENERATION]"); 
 	}
 
 	public String processDownloadBatch(ProcessBatches batch) {

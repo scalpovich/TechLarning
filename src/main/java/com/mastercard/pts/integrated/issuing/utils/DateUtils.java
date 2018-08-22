@@ -26,11 +26,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
 
 @Component
 public class DateUtils {
-	
+	private static final Logger logger = LoggerFactory.getLogger(TransactionWorkflow.class);
 	private static final int DEFAULT_KEY_LENGTH = 10;
 	int month = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH);
 	int year = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
@@ -323,14 +328,13 @@ public class DateUtils {
 	}
 	
 	public static int getNextMonthFirstDayDifference(String institutionDate){			
-	
 		LocalDate localDate = LocalDate.now();
-		System.out.println("localDate date : " + localDate);
+		logger.info("localDate date : {}" , localDate);
 		LocalDate convertedDate = LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
-		System.out.println("Coverted Institution date : " + convertedDate);
+		logger.info("Coverted Institution date : {} " , convertedDate);
 		LocalDate monthLastDate = convertedDate.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear())) ;
-		System.out.println(" monthLastDate date : " + monthLastDate);		
-		System.out.println("Diffrence Days : "+ChronoUnit.DAYS.between(localDate, monthLastDate));	
+		logger.info("monthLastDate date : {}" ,monthLastDate);
+		logger.info("Diffrence Days : {}",ChronoUnit.DAYS.between(localDate, monthLastDate));
 		return (int) (ChronoUnit.DAYS.between(localDate, monthLastDate) + 1);
 	}	
 	

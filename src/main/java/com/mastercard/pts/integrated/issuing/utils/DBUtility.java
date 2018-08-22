@@ -112,6 +112,7 @@ public class DBUtility {
 	 * This method executes update query
 	 */
 	public void executeUpdate(String queryString) {
+		logger.info("** executing update query ** : {}",queryString);
 		try {
 			stmt = getConnection().createStatement();
 		      stmt.executeUpdate(queryString);

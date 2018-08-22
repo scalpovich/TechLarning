@@ -73,6 +73,7 @@ Meta:
 @TestId 
 Given user is logged in institution
 When transaction status is "Matching Pending"
+When user processes "Pre-clearing" system internal batch
 And "Matching" batch for credit is successful
 And transaction status is "Presentment Matched with authorization"
 When user processes "EOD-Credit" system internal batch
@@ -89,10 +90,3 @@ When user processes "Billing Process - Credit" system internal batch
 Then user verify Billed amount for Purchase category
 When user run Statement Extract system internal batch
 Then user sign out from customer portal
-
-
-
-
-
-
-
