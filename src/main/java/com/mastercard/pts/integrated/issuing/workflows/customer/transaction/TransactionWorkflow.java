@@ -257,6 +257,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 				performClickOperation("Edit Node");
 				wait(4000);
 				fillEmvChipKeySetDetails();
+				selectCVC3KeySet(transactionData);
 			}
 		}
 		importAndLoadTestCase(transactionData.getTestCase(), transaction);
@@ -1196,28 +1197,30 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("OK");
 		wait(1000);
 		captureSaveScreenShot(methodName);
+		
 	}
 	
-	public void selectCVC3KeySet(String valueToSelect) {
+	public void selectCVC3KeySet(Transaction transactionData) {
+		if(transactionData.getTransactionProfile().equals("MSR_NFC_PURCHASE")){
 		executeAutoITExe("ActivateEditCardProfile.exe");
 		String methodName = new Object() {
 		}.getClass().getEnclosingMethod().getName();
 		captureSaveScreenShot(methodName);
 		winiumClickOperation("CVC3 Data");
-		captureSaveScreenShot(methodName);
-		Actions action = new Actions(winiumDriver);
-		winiumDriver.findElementByName("TDG").click();
-		action.moveToElement(winiumDriver.findElementByName("toolStripSplitButton1")).moveByOffset(10, 0).click().build().perform();
-		action.moveToElement(winiumDriver.findElementByName("toolStripSplitButton1")).moveByOffset(10, 16).click().build().perform();
-		winiumClickOperation("Drop Down Button");
 		wait(2000);
 		captureSaveScreenShot(methodName);
-		winiumClickOperation(valueToSelect);
+		winiumClickOperation("No");
+		wait(2000);
+		Actions action = new Actions(winiumDriver);
+		action.moveToElement(winiumDriver.findElementByName("Not Specified")).moveByOffset(10, 0).click().build().perform();
+		wait(2000);
+		winiumClickOperation("Yes");
 		wait(1000);
-		captureSaveScreenShot(methodName);
+		action.moveToElement(winiumDriver.findElementByName("Not Specified")).moveByOffset(10, 0).click().build().perform();
 		winiumClickOperation("OK");
 		wait(1000);
 		captureSaveScreenShot(methodName);
+		}
 	}
 
 	public String getEnv() {
