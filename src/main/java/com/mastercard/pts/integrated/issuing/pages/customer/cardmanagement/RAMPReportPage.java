@@ -26,7 +26,7 @@ public class RAMPReportPage extends AbstractBasePage implements ReportVerificati
 	private static final Logger logger = LoggerFactory
 			.getLogger(RAMPReportPage.class);
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "componentPanel")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "select#id15")
 	private MCWebElement selectReportDDwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "p_report_type:input:dropdowncomponent")
@@ -58,9 +58,11 @@ public class RAMPReportPage extends AbstractBasePage implements ReportVerificati
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "p_high_risk_mcc_group:input:dropdowncomponent")
 	private MCWebElement selectHighRiskMccGroupDDwn;
+	
+	private String reportName = "RAMP Report";
 
 	public void verifyUiOperationStatus() {
-		logger.info("RAMP Report");
+		logger.info(reportName);
 		verifySearchButton("Go");
 	}
 
@@ -71,10 +73,9 @@ public class RAMPReportPage extends AbstractBasePage implements ReportVerificati
 				);
 	}
 
-	@Override
 	public boolean generateReport(GenericReport report) {
 		// TODO Auto-generated method stub
-		selectDropDownByIndex(selectReportDDwn,1);
+		selectByVisibleText(selectReportDDwn,reportName);
 	    clicksearchButtonElement();
 	    
 	    selectByVisibleText(selectReportTypeDDwn, report.getReportType());
