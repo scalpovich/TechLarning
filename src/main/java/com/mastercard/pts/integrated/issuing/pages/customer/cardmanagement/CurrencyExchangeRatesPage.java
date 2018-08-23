@@ -14,8 +14,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.server.handler.FindElements;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -392,6 +394,7 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 	}
 	
 	private void clickOnFirstRowEditLink(){
+		new WebDriverWait(driver(), 30).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(editLink)));
 		(driver().findElements(By.cssSelector(editLink))).get(0).click();
 	}
 
