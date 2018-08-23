@@ -818,7 +818,7 @@ public class HelpDeskSteps {
 	@Then("For fileUpload when user search for new application on search screen for $productType and validates the status as $NORMAL")
 	@When("For fileUpload when user search for new application on search screen for $productType and validates the status as $NORMAL")
 	public void thenUserSearchForApplicationOnSearchScreenforFileUpload(String productType, String status) {
-		helpDeskGetterSetter.setProductType(ProductType.fromShortName(productType));
+		helpdeskgettersetter.setProductType(ProductType.fromShortName(productType));
 		helpdeskFlows.searchForNewApplicationFileUpload(helpdeskgettersetter);
 	}
 	

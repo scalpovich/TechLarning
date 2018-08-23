@@ -237,7 +237,11 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		logger.info("Wallet Configuration Wallet PLan");
 		verifySearchButton("Search");
 	}
-
+	
+	public void setReservedAmount(int reservedAmount){
+		this.reservedAmount=reservedAmount; 
+	}
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(walletPlanCodeSearchTxt));
