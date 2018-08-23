@@ -16,8 +16,10 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.xerces.dom3.as.ASElementDeclaration;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -38,11 +40,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -78,6 +82,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	private static final String SUCCESS_MESSAGE = "Success message: {}";
 
+	private static final String WALLET_NUMBER = "Wallet number: {}";
+	
 	public static final String ERROR_MESSAGE = "Error: {}";
 
 	public static final String RESPONSE_MESSAGE	 = "Response message: {}";
@@ -104,6 +110,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid transaction type - ";
     
+    private static final String Device = null;
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
@@ -287,6 +294,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private MCWebElement errorMsgPresence;
 	
 	private static final String DeviceNumber="Device Number";
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers']/td[5]/span")
+	private MCWebElement deviceProductionHeaderBatchTxt;
+	
+	private static final int loopIterationToCheckBatchNumber=21;
 	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -485,7 +497,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void runWithinPopup(String caption, Runnable action) {
 		SimulatorUtilities.wait(3000);
-		By frameSelector = By.xpath(String.format("//h3[contains(text(), '%s')]/ancestor::div//iframe", caption));
+		String xpath = String.format("//h3[contains(text(), '%s')]/ancestor::div//iframe", caption);
+		logger.info("runWithinPopup -> xpath: {}", xpath);
+		By frameSelector = By.xpath(xpath);
 		WebElementUtils.runWithinFrame(driver(), timeoutInSec, frameSelector, action);
 	}
 
@@ -619,6 +633,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected void clickWhenClickable(MCWebElement element) {
 		SimulatorUtilities.wait(4000);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
+        logger.info("Button clicked successfully.");
+	}
+	
+	protected void clickWhenClickablewithWicket(MCWebElement element) {
+		SimulatorUtilities.wait(4000);
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
+		waitForWicket();
 	}
 
 	protected void clickWhenClickableDoNotWaitForWicket(MCWebElement element) {
@@ -672,12 +693,36 @@ public abstract class AbstractBasePage extends AbstractPage {
 		// Pre-production batch and device production batch & Authorization
 		// Search page take little long to
 		// be completed, and do not appear in search result, hence a for loop
-		for (int l = 0; l < 21; l++) {
+		for (int l = 0; l < loopIterationToCheckBatchNumber; l++) {
 			if (!waitForRow())
 				clickSearchButton();
 			else {
 				break;
 			}
+		}
+	}
+	
+	public void waitAndSearchForApplicationBatchNumberToAppear() {
+		clickSearchButton();
+		// Pre-production batch and device production batch & Authorization Search page take little long to
+				// be completed, and do not appear in search result, hence a for loop
+		for (int l = 0; l < 21; l++) {
+			if (!waitForbatchNumber())
+				clickSearchButton();
+			else {
+				break;
+			}
+		}
+	}
+	
+	protected boolean waitForbatchNumber() {
+		try {
+			waitForWicket();
+			SimulatorUtilities.wait(20000); 
+			return asWebElement(deviceProductionHeaderBatchTxt).isDisplayed();
+		} catch (Exception e) {
+			logger.debug("Result not found", e);
+			return false;
 		}
 	}
 
@@ -1705,6 +1750,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 	}
 	
+	
+	private void deviceNumberContextDeviceProduction() {
+		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());		
+		Device device  = context.get(CreditConstants.APPLICATION);
+		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
+	}
 	public int getDeviceNumberIndex()
 	{  
 		int index=0;

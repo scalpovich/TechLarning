@@ -7,15 +7,17 @@ So that Prepaid customer can get onboarded Corporate General purpose single wall
 Scenario: Verify system allows onboarding for new prepaid customer through fileUpload if file already exists - Corporate Credit Card single wallet using application upload funcationality
 Meta:
 @CR 
-@TCName TC_Application_Upload_Prepaid
-@sheetName Prepaid_Application_Upload
+@StoryName credit_emv_corp
 @FileUpload
 
-Given login to portal as existing bank as a Customeruser
-When user creates Application Upload Credit batch file and uploads it on server for Corporate for credit
-When user processes close batch for new Application for FileUpload
-When user processes deviceGeneration batch for new Application for FileUpload
-When processes prepaid pre-production batch
-When All processes prepaid device production batch
-When User search for device on search screen for product type prepaid and validates the status as NORMAL
+Given user is logged in institution
+When user creates Application Upload Credit batch file and upload it on server for Corporate for credit
+And user verifies the credit application device for fileUpload
+And user approves the credit application device for fileUpload
+And user processes close batch for new Application for FileUpload
+And user processes deviceGeneration batch for new Application for FileUpload
+And user searches for created application for fileUpload
+And credit processes pre-production batch using new Application for fileUpload in Bulk
+And All processes credit device production batch for fileUpload in Bulk
+And For fileUpload when user search for new application on search screen for credit and validates the status as NORMAL
 Then user logouts from customer portal
