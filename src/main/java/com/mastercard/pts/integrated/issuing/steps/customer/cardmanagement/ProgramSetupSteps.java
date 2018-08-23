@@ -1502,7 +1502,7 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.editProgram(program,editItem);
 
 	}
-}
+
 	
 	@When("User creates empty Transaction Plan for $type product")
 	public void createEmptyTransactionPlan(String type) {
