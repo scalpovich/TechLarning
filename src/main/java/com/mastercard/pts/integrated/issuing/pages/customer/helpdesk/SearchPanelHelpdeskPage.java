@@ -64,7 +64,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:5:componentList:1:componentPanel:input:inputTextField")
 	private MCWebElement CBSClientID;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "input[value='Search']")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Search']")
 	private MCWebElement searchBtn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = ".//*[@alt='Edit Record']")
