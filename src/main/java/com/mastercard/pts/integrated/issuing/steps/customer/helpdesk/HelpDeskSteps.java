@@ -815,6 +815,7 @@ public class HelpDeskSteps {
 	}
 	
 	@Then("user verify $amount amount for $category category")
+	@When("user verify $amount amount for $category category")
 	public void assertionForBilling(String amount, String category){
 		String transactionAmount = context.get(ConstantData.TRANSACTION_AMOUNT);
 		Device device = context.get(ContextConstants.DEVICE);

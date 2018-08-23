@@ -73,10 +73,10 @@ Meta:
 @TestId 
 Given user is logged in institution
 When transaction status is "Matching Pending"
-When user processes "Pre-clearing" system internal batch
+When user processes "Pre-clearing" system internal batch for Credit
 And "Matching" batch for credit is successful
 And transaction status is "Presentment Matched with authorization"
-When user processes "EOD-Credit" system internal batch
+When user processes "EOD-Credit" system internal batch for Credit
 When update institution date to first of next month
 Then user sign out from customer portal
 
@@ -84,9 +84,9 @@ Scenario: Process Batches
 Meta:
 @TestId 
 Given user is logged in institution
-When user processes "EOD-Credit" system internal batch
-Then user verify Unbilled amount for Purchase category
-When user processes "Billing Process - Credit" system internal batch
-Then user verify Billed amount for Purchase category
-When user run Statement Extract system internal batch
+When user processes "EOD-Credit" system internal batch for Credit
+And user verify Unbilled amount for Purchase category
+And user processes "Billing Process - Credit" system internal batch for Credit
+And user verify Billed amount for Purchase category
+And user run Statement Extract system internal batch
 Then user sign out from customer portal
