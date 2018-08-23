@@ -7,7 +7,7 @@ Meta:
 @StoryName prepaid_cgc_manual_auth
 @non_ui_bvt_prepaid
 
-Scenario: Set up prepaid emv corporate travel card
+Scenario:1 Set up prepaid emv corporate travel card
 Meta:
 @non_ui_bvt_prepaid_sc1
 Given setting json values in excel for Prepaid
@@ -20,7 +20,7 @@ And User fills Device Range section for prepaid product
 And user assigns service code to program
 Then user creates new device of prepaid type for new client
 
-Scenario: prepaid emv corporate travel card device production
+Scenario:2 prepaid emv corporate travel card device production
 Meta:
 @non_ui_bvt_prepaid_sc2
 Given user is logged in institution
@@ -35,7 +35,7 @@ And device has "normal" status
 And user activates device through helpdesk
 Then user sign out from customer portal
 
-Scenario: emv corporate gift prepaid card authorization
+Scenario:3 emv corporate gift prepaid card authorization
 Meta:
 @non_ui_bvt_prepaid_sc3
 Given user is logged in institution
@@ -44,7 +44,7 @@ When user raises an authorization request
 Then status of request is "approved"
 
 
-Scenario: Non-UI Verification - Event Trigger Validation
+Scenario:4 Non-UI Verification - Event Trigger Validation
 Meta:
 @non_ui_bvt_prepaid_sc4
 Given user is logged in institution
@@ -54,14 +54,14 @@ Then EventAlertHistory page of card management tab is rendered correctly
 Then verify that alert was successfully triggered
 And user signs out from customer portal
 
-Scenario:3 Non-UI Verification - Report Generation
+Scenario:5 Non-UI Verification - Report Generation
 Meta:
 @non_ui_bvt_prepaid_sc5
 Given user is logged in institution
 When user is at the home tab
 Then verify report for Auth is downloaded
 
-Scenario: Non-UI Verification - Statement Generation
+Scenario:6 Non-UI Verification - Statement Generation
 Meta:
 @non_ui_bvt_prepaid_sc6
 Given user is logged in institution
