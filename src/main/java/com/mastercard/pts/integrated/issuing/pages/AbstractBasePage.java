@@ -479,6 +479,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]", rowNumber, columnName);
 		WebElement element = driver().findElement(By.xpath(xpath));
 		waitForElementVisible(element);
+		SimulatorUtilities.wait(10000);
 		return element.getText().trim();
 	}
 
