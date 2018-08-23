@@ -289,6 +289,7 @@ public class CurrencyExchangeRatesSteps {
 	@Then("fetch currency exchange rate from $Source currency to program currency")
 	@When("fetch currency exchange rate from $Source currency to program currency")
 	public void fetchSourcetoDestinationCurrency(String currency) {
+		try{
 		Device device =context.get(ContextConstants.DEVICE);
 		Program program =context.get(ContextConstants.PROGRAM);
 		MCGLimitPlan mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
@@ -309,6 +310,11 @@ public class CurrencyExchangeRatesSteps {
 		deviceUsage.setTransactionAmount(Double.toString(amount*100));
 		context.put(ContextConstants.DEVICE,device);
 		context.put(DeviceUsageSteps.DEVICE_USUAGE,deviceUsage);
+		}
+		catch(NullPointerException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 }
