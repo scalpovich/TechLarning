@@ -12,17 +12,18 @@ import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_ACTIVITY, CardManagementNav.L2_DEVICE,
-		CardManagementNav.L3_DEVICE_DEDUPE_SDN_VERIFICATION })
+		CardManagementNav.L1_ACTIVITY,
+		CardManagementNav.L2_DE_DUPE_SDN_VERIFICATION })
 public class DeviceDeDupeSDNVerificationPage extends AbstractCardManagementPage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(deviceNumber),
+				//WebElementUtils.elementToBeClickable(deviceNumber),
 				WebElementUtils.elementToBeClickable(applicationNumber),
-				WebElementUtils.elementToBeClickable(firstName),
-				WebElementUtils.elementToBeClickable(lastName),
+				WebElementUtils.elementToBeClickable(formNumber),
+				//WebElementUtils.elementToBeClickable(firstName),
+				//WebElementUtils.elementToBeClickable(lastName),
 				WebElementUtils.elementToBeClickable(fromDate),
 				WebElementUtils.elementToBeClickable(toDate));
 	}
