@@ -134,6 +134,7 @@
 			"deviceJoiningAndMemberShipFeePlan": "AUTOMATION [TA8421KX]",
 			"deviceEventBasedFeePlan": "AUTOMATION [TA4588OA]",
 			"transactionLimitPlan": "AUTOMATION [TA9161KIEF]",
+			"transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]"
 			"transactionPlan": "AUTOMATION [T1036T]",
 			"creditPlan": "AUTOMATION [103]",
 			"billingCycle": "AUTOMATION [141]",
@@ -197,6 +198,7 @@
 			"deviceJoiningAndMemberShipFeePlan": "AUTOMATION [TA7565TA]",
 			"deviceEventBasedFeePlan": "AUTOMATION [TA6611FO]",
 			"transactionLimitPlan": "AUTOMATION [TA7791KCVA]",
+			"transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]"
 			"transactionPlan": "AUTOMATION [T5756G]",
 			"creditPlan": "AUTOMATION [103]",
 			"billingCycle": "AUTOMATION [141]",
