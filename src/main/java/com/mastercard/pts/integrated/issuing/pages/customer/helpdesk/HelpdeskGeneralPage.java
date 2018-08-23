@@ -228,8 +228,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Card :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement creditLimitLabel;
-	
+
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
+	
+	private final String RESET_PIN_RETRY_COUNTER= "109 - Reset Pin Retry Counter";
 
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
@@ -409,7 +411,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickSearchButton();
 			firstRow = getFirstColumnValueFromTable();
 			clickCloseButton();
-			
+
 		});
 		clickEndCall();
 		return firstRow.isEmpty();
@@ -967,6 +969,19 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		return creditLimit;
 
+	}
+
+	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		clickGoButton();
+		runWithinPopup(RESET_PIN_RETRY_COUNTER, () -> {
+			enterNotes(helpdeskGeneral.getNotes());
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();			
+		});
+		SimulatorUtilities.wait(3000);
+		clickEndCall();
 	}
 
 }
