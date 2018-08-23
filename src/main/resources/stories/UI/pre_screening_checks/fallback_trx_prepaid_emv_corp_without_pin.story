@@ -13,6 +13,7 @@ Given setting json values in excel for Prepaid
 When user is logged in institution
 And User fills Device Plan for "Prepaid" "emv" card without pin
 And User fills Wallet Plan for prepaid product
+And User fills MCC Rules for prepaid product
 And User fills Program section for prepaid product
 And User fills Business Mandatory Fields Screen for prepaid product
 And User fills Device Range section for prepaid product

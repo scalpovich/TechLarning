@@ -15,6 +15,7 @@ Given user is logged in institution
 When for EMV Card User fills without pin Device Plan for credit product for Mastercard
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
+And User fills MCC Rules for credit product
 And User Primary Device fills New Program Retail Credit Card section for credit product for Mastercard
 And for Primary Device and New Client user fills Device Range section for credit product
 Then credit device is created using new device screen for Individual and Primary Device and New Client and EMV Card

@@ -13,6 +13,7 @@ Given setting json values in excel for Debit
 When user is logged in institution
 And User fills Device Plan for "Debit" "emv" card without pin
 And User fills Wallet Plan for debit product
+And User fills MCC Rules for debit product
 And User fills Program section for debit product
 And User fills Business Mandatory Fields Screen for debit product
 And User fills Device Range section for debit product
