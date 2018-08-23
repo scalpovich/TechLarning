@@ -394,7 +394,7 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 	}
 	
 	private void clickOnFirstRowEditLink(){
-		new WebDriverWait(driver(), 30).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(editLink)));
+		SimulatorUtilities.wait(3000);
 		(driver().findElements(By.cssSelector(editLink))).get(0).click();
 	}
 
