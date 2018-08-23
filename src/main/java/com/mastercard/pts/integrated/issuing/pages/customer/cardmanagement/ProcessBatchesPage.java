@@ -23,6 +23,7 @@ import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.BatchType;
+import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -399,6 +400,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		
 		else if("Statement Extract".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Statement Extract [STATEMENT_GENERATION]"); 
+		
+		else if("Billing Process - Credit".equalsIgnoreCase(batchName))
+			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Billing Process - Credit [BILLING]"); 
 	}
 
 	public String processDownloadBatch(ProcessBatches batch) {
@@ -630,7 +634,10 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private void selectBatchTypeAndName(ProcessBatches batch) {
 		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
 		batchStatus = null;
-		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, SYSTEM_INTERNAL_PROCESSING);
+		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, SYSTEM_INTERNAL_PROCESSING);		
 		selectInternalBatchType(batch.getBatchName());
+		if(batch.getBatchName().equalsIgnoreCase("Pre-clearing"))
+			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+	
 	}
 }
