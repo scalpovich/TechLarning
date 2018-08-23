@@ -9,17 +9,12 @@ Meta:
 @StoryName d_emv_corp_on_white_listed_MCG
 @white_listed_MCG
 Scenario: Set up program for debit emv corporate debit card
-Given user is logged in institution
-When User fills Dedupe Plan
-And User fills MCC Rules for debit product
-And User fills Transaction Plan for debit product
-And User fills Transaction Limit Plan for debit product
-And User fills Document Checklist Screen for debit product
-And User fills Device Joining and Membership Fee Plan for debit product
-And User fills Device Event Based Fee Plan for debit product
-And User fills Device Plan for "debit" "emv" card with no pin
+Given setting json values in excel for Debit
+When user is logged in institution
+And User fills Device Plan for "Debit" "emv" card without pin
 And User fills Wallet Plan for debit product
 And User edits Wallet Plan for White Listed MCG
+And User fills MCC Rules for debit product
 And User fills Program section for debit product
 And User fills Business Mandatory Fields Screen for debit product
 And User fills Device Range section for debit product
@@ -28,8 +23,9 @@ And user creates new device of debit type for new client
 And device has "normal" status
 And user has wallet number information for debit device
 And user performs adjustment transaction
-And user has current wallet balance amount information for debit device
+Then user has current wallet balance amount information for debit device
 Then user sign out from customer portal
+
 
 Scenario: debit emv corporate debit card device production
 Given user is logged in institution

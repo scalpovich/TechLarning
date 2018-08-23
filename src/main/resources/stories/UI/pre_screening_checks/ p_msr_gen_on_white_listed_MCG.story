@@ -8,10 +8,17 @@ Meta:
 @StoryName  p_msr_gen_on_white_listed_MCG
 @white_listed_MCG
 Scenario: Set up prepaid msr retail general purpose card
+Given setting json values in excel for Prepaid
 When user is logged in institution
-Given device range for program with device plan for "prepaid" "magnetic stripe" card
+And User fills Device Plan for "Prepaid" "magnetic stripe" card
+And User fills Wallet Plan for prepaid product
 When User edits Wallet Plan for White Listed MCG
-And user creates new device of prepaid type for new client
+When User fills MCC Rules for prepaid product
+And User fills Program section for prepaid product
+And User fills Business Mandatory Fields Screen for prepaid product
+And User fills Device Range section for prepaid product
+And user assigns service code to program
+Then user creates new device of prepaid type for new client
 Then user sign out from customer portal
 
 Scenario: Device Production for  prepaid msr retail general purpose card
