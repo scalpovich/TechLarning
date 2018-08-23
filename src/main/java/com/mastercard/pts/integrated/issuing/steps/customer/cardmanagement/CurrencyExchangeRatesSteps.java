@@ -21,6 +21,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Proc
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CurrencyExchangeRatesPage;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
@@ -304,10 +305,10 @@ public class CurrencyExchangeRatesSteps {
 		else{
 			currencyExchangeRateDomainPage.setRateOrigin(program.getCurrencyConversionBy());}
 		String currencyRate = currencyExchangeRatesFlows.fetchSourceToDestinationCurrency(currencyExchangeRateDomainPage);
-		Double amount = Double.parseDouble(mcgLimitPlan.getDailyAmountInternational())/Double.parseDouble(currencyRate);
+		double amount = (Double.parseDouble(mcgLimitPlan.getDailyAmountInternational())/Double.parseDouble(currencyRate));
 		System.out.println("AMOUNT+++++++"+amount);
-		device.setTransactionAmount(Double.toString((amount/3)*100));
-		deviceUsage.setTransactionAmount(Double.toString(amount*100));
+		device.setTransactionAmount(Integer.toString(((int)(amount/3))*100));
+		deviceUsage.setTransactionAmount(Integer.toString(((int)amount)*100));
 		context.put(ContextConstants.DEVICE,device);
 		context.put(DeviceUsageSteps.DEVICE_USUAGE,deviceUsage);
 		}
