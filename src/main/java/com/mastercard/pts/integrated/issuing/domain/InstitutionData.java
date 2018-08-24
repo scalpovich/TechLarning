@@ -33,6 +33,15 @@ public class InstitutionData {
 	private String billingCycle;
 	private String walletPlan;
 	private String productIdentity;
+	private String transactionFeePlan;
+	  
+ 	public String getTransactionFeePlan() {
+		return transactionFeePlan;
+	}
+
+	public void setTransactionFeePlan(String transactionFeePlan) {
+		this.transactionFeePlan = transactionFeePlan;
+	}
 
 	public String getBranch() {
 		return branch;
