@@ -7,6 +7,7 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -312,22 +313,19 @@ public class HSMDeviceKeysPage extends AbstractBasePage {
 
 	public void fillCVV3Cryptogram(HSMDeviceKeys hsmKeys) {
 		waitforElement(cvv3CryptogramTxt);
-		new SimulatorUtilities();
-		SimulatorUtilities.wait(200);
+		new SimulatorUtilities().wait(200);
 		enterText(cvv3CryptogramTxt, hsmKeys.getCVV3Cryptogram());
 	}
 
 	public void fillConfirmCVV3Cryptogram(HSMDeviceKeys hsmKeys) {
 		waitforElement(confirmCVV3CryptogramTxt);
-		new SimulatorUtilities();
-		SimulatorUtilities.wait(200);
+		new SimulatorUtilities().wait(200);
 		enterText(confirmCVV3CryptogramTxt, hsmKeys.getConfirmCVV3Cryptogram());
 	}
 
 	public void fillCVV3KeyCheckvalue(HSMDeviceKeys hsmKeys) { 
 		waitforElement(cvv3KeyCheckvalueTxt);
-		new SimulatorUtilities();
-		SimulatorUtilities.wait(200);
+		new SimulatorUtilities().wait(200);
 		enterText(cvv3KeyCheckvalueTxt, hsmKeys.getCVV3KeyCheckvalue());
 	}
 

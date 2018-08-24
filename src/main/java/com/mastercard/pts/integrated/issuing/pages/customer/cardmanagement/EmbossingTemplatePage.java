@@ -264,7 +264,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 
 	public void editEmbossTemplate(String legalType, String excelName, EmbossingFile embossingFile)
 			throws InterruptedException {
-		WebElement EditEmbossingTemp = getFinder().getWebDriver().findElement(org.openqa.selenium.By.xpath("//td[contains(.,'"
+		WebElement EditEmbossingTemp = getFinder().getWebDriver().findElement(By.xpath("//td[contains(.,'"
 				+ embossingFile.getEmbossingTempCode() + "')]/following::a[1]/img[@alt='Edit Record']"));
 		EditEmbossingTemp.click();
 		switchToIframe(Constants.EDIT_EMBOSS_TEMPLATE_FRAME);
@@ -282,7 +282,7 @@ public class EmbossingTemplatePage extends AbstractBasePage {
 			switchToDefaultFrame();
 			switchToIframe(Constants.EDIT_EMBOSS_TEMPLATE_FRAME);
 			clickAddSubdetails();
-			ReadTestDataFromExcel.dataProviderIterator(map, String.valueOf(i));
+			excelTestData.dataProviderIterator(map, String.valueOf(i));
 			String FieldToBeAdded = MapUtils.getIterativeDataFromDatamap("Template Fields");
 			String LengthOfField = MapUtils.getIterativeDataFromDatamap("Length");
 			selectByVisibleText(DrpDown, FieldToBeAdded);

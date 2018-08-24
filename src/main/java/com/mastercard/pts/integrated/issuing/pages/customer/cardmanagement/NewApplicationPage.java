@@ -232,7 +232,7 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 		HashMap<String, HashMap<String, String>> map = excelTestData.fnReadEntireTestData(filepath, "Sheet1", "SequenceNo.");
 
 		for (int i = 1; i < map.size(); i++) {
-			ReadTestDataFromExcel.dataProviderIterator(map, String.valueOf(i));
+			excelTestData.dataProviderIterator(map, String.valueOf(i));
 			String Value = MapUtils.getIterativeDataFromDatamap("Value (Y/N)");
 			System.out.println(Value);
 			if (Value.contains("Y")) {
@@ -428,7 +428,7 @@ public class NewApplicationPage extends AbstractCardManagementPage {
 
 	public void enterDOB() {
 		BirthDateCalendar.click();
-		List<WebElement> calendar = getFinder().getWebDriver().findElements(org.openqa.selenium.By.xpath("//a[@class='calnav']"));
+		List<WebElement> calendar = getFinder().getWebDriver().findElements(By.xpath("//a[@class='calnav']"));
 		for (int i = 0; i <= calendar.size(); i++) {
 			calendar.get(i).click();
 			break;

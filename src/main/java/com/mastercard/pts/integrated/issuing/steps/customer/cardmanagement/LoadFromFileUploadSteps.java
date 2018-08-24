@@ -165,7 +165,7 @@ public class LoadFromFileUploadSteps {
 	public void thenUserUploadsTheNOTFile() {
 		ProcessBatches batch = ProcessBatches.getBatchData();
 		loadFromFileUploadWorkflow.loadIncomingIPM(notFileName);
-		ProcessBatches.setBatchFileName(notFileName.getName());
+		batch.setBatchFileName(notFileName.getName());
 	}
 
 	@When("user processes upload batch for $type")
@@ -182,7 +182,7 @@ public class LoadFromFileUploadSteps {
 	public void whenUserProcessesTransactionUploadBatchForPrepaid(String type) {
 		ProcessBatches batch = ProcessBatches.getBatchData();
 		batch.setBatchName("Transaction Upload [TRANSACTION_UPLOAD]");
-		ProcessBatches.setBatchFileName(file.getFilename());
+		batch.setBatchFileName(file.getFilename());
 		batch.setProductType(ProductType.fromShortName(type));
 		HashMap<String, String> hm = (HashMap<String, String>) loadFromFileUploadWorkflow.processUploadBatch(batch);
 		jobStatus = hm.get("BatchStatus");

@@ -170,7 +170,7 @@ public class NetworkMembershipPage extends AbstractBasePage {
 
 	public void editnetworkmembership(String interchange) {
 		WebElement EditRupayNtkBtn = getFinder().getWebDriver().findElement(
-				org.openqa.selenium.By.xpath("//td[contains(.,'" + interchange + "')]/following::a[1]/img[@alt='Edit Record']"));
+				By.xpath("//td[contains(.,'" + interchange + "')]/following::a[1]/img[@alt='Edit Record']"));
 		EditRupayNtkBtn.click();
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		switchToIframe(Constants.EDIT_NETWORK_MEMBERSHIP_FRAME);
@@ -186,7 +186,7 @@ public class NetworkMembershipPage extends AbstractBasePage {
 
 	public void deletenetworkmembership(String interchangeName) {
 		WebElement DeleteRupayNtkBtn = getFinder().getWebDriver().findElement(
-				org.openqa.selenium.By.xpath("//td[contains(.,'" + interchangeName + "')]/following::a[2]/img[@alt='Delete Record']"));
+				By.xpath("//td[contains(.,'" + interchangeName + "')]/following::a[2]/img[@alt='Delete Record']"));
 		waitForElementVisible(DeleteRupayNtkBtn);
 		DeleteRupayNtkBtn.click();
 		Alert alert = getFinder().getWebDriver().switchTo().alert();

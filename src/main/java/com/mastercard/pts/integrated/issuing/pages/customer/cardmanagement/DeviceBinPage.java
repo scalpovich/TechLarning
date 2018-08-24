@@ -181,7 +181,6 @@ public class DeviceBinPage extends AbstractBasePage {
 		return RemarkTxt.getAttribute("value");
 	}
 
-	@Override
 	public void clickSaveButton() {
 		clickWhenClickable(saveBtn);
 	}
@@ -225,7 +224,7 @@ public class DeviceBinPage extends AbstractBasePage {
 		WebElement editRupayNtkBtn = getFinder()
 				.getWebDriver()
 				.findElement(
-						org.openqa.selenium.By.xpath("//td[contains(.,'"
+						By.xpath("//td[contains(.,'"
 								+ issuerBIN
 								+ "')]/following::td[2]/span/a/img[@alt='Edit Record']"));
 		editRupayNtkBtn.click();
@@ -245,17 +244,17 @@ public class DeviceBinPage extends AbstractBasePage {
 	public void deleteDeviceBin() {
 
 		List<WebElement> Bins = getFinder().getWebDriver().findElements(
-				org.openqa.selenium.By.xpath("//table[@class='dataview']/tbody/tr"));
+				By.xpath("//table[@class='dataview']/tbody/tr"));
 		int i = Bins.size();
 		String issuerBIN = getFinder()
 				.getWebDriver()
 				.findElement(
-						org.openqa.selenium.By.xpath("//table[@class='dataview']/tbody/tr[" + i
+						By.xpath("//table[@class='dataview']/tbody/tr[" + i
 								+ "]/td[3]")).getText();
 		getFinder()
 				.getWebDriver()
 				.findElement(
-						org.openqa.selenium.By.xpath("//td[contains(.,'"
+						By.xpath("//td[contains(.,'"
 								+ issuerBIN
 								+ "')]/following::td[3]/span/a/img[@alt='Delete Record']"))
 				.click();

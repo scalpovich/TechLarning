@@ -119,7 +119,7 @@ public abstract class LinuxUtils {
 			if (in.read(buf, 0, 1) < 0 || buf[0] == ' ') {
 				break;
 			}
-			fileSize = fileSize * 10L + buf[0] - '0';
+			fileSize = fileSize * 10L + (long) (buf[0] - '0');
 		}
 		for (int i = 1; i < buf.length; i++) {
 			in.read(buf, i - 1, 1);
