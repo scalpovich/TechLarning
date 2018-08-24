@@ -19,11 +19,8 @@ public class DeviceDeDupeSDNVerificationPage extends AbstractCardManagementPage 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
-				//WebElementUtils.elementToBeClickable(deviceNumber),
 				WebElementUtils.elementToBeClickable(applicationNumber),
 				WebElementUtils.elementToBeClickable(formNumber),
-				//WebElementUtils.elementToBeClickable(firstName),
-				//WebElementUtils.elementToBeClickable(lastName),
 				WebElementUtils.elementToBeClickable(fromDate),
 				WebElementUtils.elementToBeClickable(toDate));
 	}
