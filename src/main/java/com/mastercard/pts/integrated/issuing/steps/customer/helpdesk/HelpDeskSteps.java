@@ -688,6 +688,7 @@ public class HelpDeskSteps {
     		} else {
     			Assert.assertTrue("status of newly created device is not normal ", false);
     		}
+        	
         }
 	}
 
