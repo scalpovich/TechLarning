@@ -40,7 +40,7 @@ And user sign out from customer portal
 
 Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 2nd transaction
 When perform an EMV_PURCHASE MAS transaction on the same card
-Then MAS simulator is closed
+Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And verify the MCG daily velocity in Device Usage Screen for domestic transactions
