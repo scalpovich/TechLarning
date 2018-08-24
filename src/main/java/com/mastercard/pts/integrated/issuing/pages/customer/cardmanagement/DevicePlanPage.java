@@ -364,7 +364,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	private MCWebElement perTranscLimitTxt;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#pinChangeTnxFirst input")
-	private MCWebElement pinChangeTransactionFirst;
+	private MCWebElement pinChangeTransactionFirstChbx;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#crossBorderTxnCheck input")
 	private MCWebElement crossBorderTransaction;
@@ -954,7 +954,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void checkPinChangeTransactionFirst(boolean status) {
-		ClickCheckBox(pinChangeTransactionFirst, status);
+		ClickCheckBox(pinChangeTransactionFirstChbx, status);
 	}
 
 	public void checkCrossBorderTransaction(boolean status) {
@@ -997,7 +997,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		runWithinPopup("Edit Device Plan", () -> {
 			WebElementUtils.elementToBeClickable(authorizationTab);
 			clickWhenClickable(authorizationTab);
-			WebElementUtils.elementToBeClickable(pinChangeTransactionFirst);
+			WebElementUtils.elementToBeClickable(pinChangeTransactionFirstChbx);
 			checkPinChangeTransactionFirst(true);
 			clickSaveButton();
 		});

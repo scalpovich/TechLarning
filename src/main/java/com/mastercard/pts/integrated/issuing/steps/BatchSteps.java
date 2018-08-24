@@ -49,7 +49,6 @@ public class BatchSteps {
 	public void  embossingFileWasGeneratedSuccessfully() {
 		MiscUtils.reportToConsole("******** Embossing File Start ***** " );
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
-		SimulatorUtilities.wait(40000);
 		try {
 			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE");		
 			String[] fileData = LinuxUtils.getCardNumberAndExpiryDate(batchFile);
@@ -115,7 +114,6 @@ public class BatchSteps {
 		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevice.getDevicePlanCode(),
 				tempDirectory.toString(), "PIN_PROD");
 		Device device = context.get(ContextConstants.DEVICE);
-		SimulatorUtilities.wait(40000);
 		try (Scanner scanner = new Scanner(batchFile)) {
 			while (scanner.hasNext()) {
 				values = scanner.nextLine().split(">");
