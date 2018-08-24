@@ -84,6 +84,7 @@ Scenario: Process Batches
 Meta:
 @TestId 
 Given user is logged in institution
+When user processes "Pre-clearing" system internal batch for Credit
 When user processes "EOD-Credit" system internal batch for Credit
 And user verify Unbilled amount for Purchase category
 And user processes "Billing Process - Credit" system internal batch for Credit
