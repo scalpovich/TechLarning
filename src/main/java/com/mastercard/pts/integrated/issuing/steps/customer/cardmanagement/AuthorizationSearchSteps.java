@@ -137,7 +137,7 @@ public class AuthorizationSearchSteps {
 		//if(!System.getProperty("env").equalsIgnoreCase("automation2")){
 		//	Device device = context.get(ContextConstants.DEVICE);
 		//	authorizationSearchWorkflow.verifyAuthTransactionSearchReport(device);
-		} 
+		//} 
 	}
 	
 	@When("user verifies available balance after transaction")
