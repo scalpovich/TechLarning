@@ -4,27 +4,25 @@ As an issuer
 I want to run few tests
 
 Meta:
-@StoryName debit_emv_retailBVT
+@StoryName bvt
 @NonUIBVTest
 
-Scenario: Set up prepaid emv retail travel card
+Scenario:1 Non-UI Verification - Set up emv debit card and device production
 Meta:
-@TestId TC398452
+@TestId TC398108
 Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card
-Then user sign out from customer portal
-
-Scenario: prepaid emv retail travel card device production
-Meta:
-@TestId TC408068
-Given user is logged in institution
-When user creates new device of prepaid type for new client
-And a new device was created
-And processes pre-production batch for prepaid
-And processes device production batch for prepaid
-And processes pin generation batch for prepaid
-And device has "normal" status
-
+And device range for program with device plan for "debit" "emv" card
+When user creates new device of debit type for new client
+Then device has "normal" status
+When a new device was created
+And processes pre-production batch for debit
+And processes device production batch for debit
+!-- And processes pin generation batch for debit
+!-- When user has wallet number information for debit device
+!-- When user performs adjustment transaction
+!-- When user has current wallet balance amount information for debit device
+!-- Then device has "normal" status
+!-- When user activates device through helpdesk
 Scenario:2 Non-UI Verification - emv debit card manual authorization
 Meta:
 @TestId TC408283
