@@ -59,5 +59,5 @@ When perform an INT_EMV_PURCHASE MAS transaction on the same card
 Then MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 123-Frequency Exceeded status
-And assert Decline response with 40008 AuthDecline Code and Frequency Exceeded International as description
+And assert Decline response with 42008 AuthDecline Code and Frequency Exceeded International as description
 And user sign out from customer portal
