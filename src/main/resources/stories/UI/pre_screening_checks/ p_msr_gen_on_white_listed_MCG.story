@@ -7,7 +7,7 @@ I want to make transaction at white listed MCG via prepaid card
 Meta:
 @StoryName  p_msr_gen_on_white_listed_MCG
 @white_listed_MCG
-Scenario: Set up prepaid msr retail general purpose card
+Scenario:1 Set up prepaid msr retail general purpose card
 Given setting json values in excel for Prepaid
 When user is logged in institution
 And User fills Device Plan for "Prepaid" "magnetic stripe" card
@@ -21,7 +21,7 @@ And user assigns service code to program
 Then user creates new device of prepaid type for new client
 Then user sign out from customer portal
 
-Scenario: Device Production for  prepaid msr retail general purpose card
+Scenario:2 Device Production for  prepaid msr retail general purpose card
 Given user is logged in institution
 When a new device was created
 And processes pre-production batch for prepaid
@@ -33,14 +33,14 @@ And user has current wallet balance amount information for prepaid device
 And device has "normal" status
 Then user sign out from customer portal
 
-Scenario: Pin Generation for  prepaid msr retail general purpose card
+Scenario:3 Pin Generation for  prepaid msr retail general purpose card
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Transaction  for prepaid msr retail general purpose card
+Scenario:4 Transaction  for prepaid msr retail general purpose card
 Given connection to MAS is established
 When perform an MSR_PURCHASE MAS transaction
 And MAS test results are verified
@@ -48,7 +48,7 @@ And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 
-Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
+Scenario:5 Perform MSR_CASH_ADVANCE Authorization transaction
 When perform an MSR_CASH_ADVANCE MAS transaction on the same card
 And MAS simulator is closed
 And user is logged in institution

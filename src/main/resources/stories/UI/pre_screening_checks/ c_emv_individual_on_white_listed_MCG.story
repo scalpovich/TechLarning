@@ -7,7 +7,7 @@ I want to make transaction at white listed MCG via credit card
 Meta:
 @StoryName  c_emv_individual_on_white_listed_MCG				 
 @white_listed_MCG
-Scenario:creation of mastercard_individual_primary_emv Card credit device
+Scenario:1 creation of mastercard_individual_primary_emv Card credit device
 Given setting json values in excel for Credit
 When user is logged in institution
 And for EMV Card User fills Device Plan for credit product for Mastercard
@@ -24,14 +24,14 @@ And credit processes pinProduction batch using new Device for Supplementary
 And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 Then user sign out from customer portal
 
-Scenario: Pin Generation
+Scenario:2 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Transaction for mastercard_individual_primary_emv Card credit device
+Scenario:3 Transaction for mastercard_individual_primary_emv Card credit device
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 And MAS test results are verified
@@ -39,7 +39,7 @@ And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 
-Scenario: Perform EMV_CASH_ADVANCE Authorization transaction
+Scenario:4 Perform EMV_CASH_ADVANCE Authorization transaction
 When perform an EMV_CASH_ADVANCE MAS transaction on the same card
 And MAS simulator is closed
 And user is logged in institution
