@@ -647,7 +647,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		action.moveToElement(winiumDriver.findElementByName("012 - Date And Time, Local Transaction")).doubleClick().build().perform();
 		wait(1000);
 		activateEditField();
-		winiumDriver.findElementByName(EDIT_SUBFIELD_VALUE).click();
+		action.moveToElement(winiumDriver.findElementByName(EDIT_SUBFIELD_VALUE)).moveByOffset(0, 15).doubleClick().build().perform();
 		setText("");
 		setText(date);
 		wait(1000);
