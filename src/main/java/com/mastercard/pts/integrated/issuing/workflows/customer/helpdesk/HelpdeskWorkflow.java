@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGe
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConnectionUtils;
-import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
 @Workflow
 public class HelpdeskWorkflow {
@@ -76,8 +76,8 @@ public class HelpdeskWorkflow {
 		helpDeskPage.activateDevice(helpdeskGeneral);
 	}
 	
-	public void activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
-		helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
+	public BigDecimal activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
+		return helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
 	}
 	
 	public void creditLimitChange(HelpdeskGeneral helpdeskGeneral){
@@ -155,6 +155,16 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.serviceRequestCardholderLoginPassword(clientID);
 	}
 	
+	public BigDecimal noteDownAvailableLimit(String type,Device device) {
+		clickCustomerCareEditLink();
+		return helpDeskPage.noteDownAvailableLimit(type);
+	}
+	
+	public LinkedList <BigDecimal> noteDownCreditLimit(String type,Device device) {
+		clickCustomerCareEditLink();
+		return helpDeskPage.noteDownCreditLimit(type);
+	}
+	
 	public boolean resetCardholderTranPassword(String clientID){		
 		return helpDeskPage.serviceRequestCardholderTransactionPassword(clientID);
 	}
@@ -181,11 +191,6 @@ public class HelpdeskWorkflow {
 		   e.printStackTrace();
 			return Optional.empty();
 		}
-	}
-	
-	public String availableBalance()
-	{
-		return helpDeskPage.availableBalance();
 	}
 	public void validateRequiredFields(HelpdeskGeneral general){
 		helpDeskPage.validateRequiredFields(general);

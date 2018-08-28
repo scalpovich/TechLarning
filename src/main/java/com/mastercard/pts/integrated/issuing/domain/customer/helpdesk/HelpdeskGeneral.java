@@ -25,7 +25,7 @@ public class HelpdeskGeneral {
 	private static final String NEW_CREDIT_LIMIT = "NEW_CREDIT_LIMIT";
 	private static final String LIMIT_TYPE_STATUS="LIMIT_TYPE_STATUS";
 	private static final String AVAILABLE_BALANCE="AVAILABLE_BALANCE";
-	
+
 	private String availableBalance;
 	public String getAvailableBalance() {
 		return availableBalance;
@@ -52,20 +52,20 @@ public class HelpdeskGeneral {
 	private String newMobileISD;
 	private String defaultWalletNumber;
 	private String limitType;
-	private String limittypestatus;
+	private String limitTypeStatus;
 	private String clientCreditLimit;
 	private String accountCreditLimit; 
 	private String newCreditLimit;
-	
-	
+
+
 	public String getLimittypestatus() {
-		return limittypestatus;
+		return limitTypeStatus;
 	}
 
 	public void setLimittypestatus(String limittypestatus) {
-		this.limittypestatus = limittypestatus;
+		this.limitTypeStatus = limitTypeStatus;
 	}
-	
+
 	public String getClientCreditLimit() {
 		return clientCreditLimit;
 	}
@@ -115,7 +115,7 @@ public class HelpdeskGeneral {
 		plan.setAvailableBalance(provider.getString(AVAILABLE_BALANCE));
 		return plan;
 	}
-	
+
 	public String getNewWalletNumber() {
 		return newWalletNumber;
 	}
@@ -171,7 +171,7 @@ public class HelpdeskGeneral {
 	public void setDeviceNumber(String deviceNumber) {
 		this.deviceNumber = deviceNumber;
 	}
-	
+
 	public String getDefaultWalletNumber() {
 		return defaultWalletNumber;
 	}
@@ -211,11 +211,11 @@ public class HelpdeskGeneral {
 	public void setServiceCode(String serviceCode) {
 		this.serviceCode = serviceCode;
 	}
-	
+
 	public void setServiceDescription(String serviceDescription) {
 		this.serviceDescription = serviceDescription;
 	}
-	
+
 	public String getServiceDescription() {
 		return serviceDescription;
 	}
@@ -243,7 +243,7 @@ public class HelpdeskGeneral {
 	public void setNewMobileISD(String newMobileISD) {
 		this.newMobileISD = newMobileISD;
 	}
-	
+
 	public String getLimitType() {
 		return limitType;
 	}

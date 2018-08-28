@@ -6,8 +6,12 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AccountRangeRoutingPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ChannelRoutingPlan;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.AccountRangeRoutingFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ChannelRoutingFlows;
 
@@ -22,7 +26,12 @@ public class ChannelRoutingPlanStep  {
 	AccountRangeRoutingPlan accountRangeRoutingPlan;
 	@Autowired
 	AccountRangeRoutingFlows  accountRangeRoutingFlows;
+	@Autowired
+	private TestContext context;
 	
+	private final String channelNamePlan1 = "CBS1 [CBS1]" ;
+	private final String channelNamePlan2 = "CBS2 [CBS2]" ;
+
 
 	@When("user creates channel Routing plan for $channelName channel and $interfaceName interface")
 	public void userCreatesChannelRouting(@Named("channelName") String channel,@Named("interfaceName") String interfaceType) {
@@ -39,6 +48,19 @@ public class ChannelRoutingPlanStep  {
 	public void userCreatesChannelRouting() {
 		accountRangeRoutingPlan=AccountRangeRoutingPlan.channelRoutingPlanDataProvider();
 		accountRangeRoutingPlan.setChannelRoutingPlan(channelRouting.getPlanID());
+		accountRangeRoutingFlows.addChannelRoutingPlan(accountRangeRoutingPlan);
+	}
+
+	@When("user creates account range for routing transactions on $channelName channel")
+	public void userCreatesChannelRoutingForUserDefineChannel(String channelName) {
+		accountRangeRoutingPlan=AccountRangeRoutingPlan.channelRoutingPlanDataProvider(context.get(ContextConstants.DEVICE));
+		//Environment change is temporary fix as we are migrating on CBS2
+		if(channelNamePlan1.contains(channelName)&& !MiscUtils.getEnvironment().equalsIgnoreCase(Constants.ENV_STAGESA)){
+			accountRangeRoutingPlan.setChannelRoutingPlan(channelNamePlan1);
+		}
+		else{
+			accountRangeRoutingPlan.setChannelRoutingPlan(channelNamePlan2);
+		}
 		accountRangeRoutingFlows.addChannelRoutingPlan(accountRangeRoutingPlan);
 	}
 }

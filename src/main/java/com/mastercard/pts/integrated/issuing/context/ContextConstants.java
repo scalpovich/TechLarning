@@ -42,10 +42,43 @@ public class ContextConstants {
 
 	public static final String TX_LIMIT_PLAN_CODE = "TX_LIMIT_PLAN_CODE";
 
+	public static final String TRANSACTION_FEE_WAIVER_PLAN = "TRANSACTION_FEE_WAIVER_PLAN";
+	
 	public static final String USER = "USER";
 	
 	public static final String DEVICE_SUPPLEMENTARY_ADDON_EXISTING = "DEVICE_SUPPLEMENTARY_ADDON_EXISTING";
+	
+	public static final String CARD_CREDIT_LIMIT = "CARD_CREDIT_LIMIT";
+	
+	public static final String AVAILABLE_BALANCE_OR_CREDIT_LIMIT = "AVAILABLE_BALANCE_OR_CREDIT_LIMIT";
+	
+	public static final String AVAILABLE_ACCOUNT_OR_CREDIT_LIMIT = "AVAILABLE_ACCOUNT_OR_CREDIT_LIMIT";
+	
+	public static final String AVAILABLE_CLIENT_OR_CREDIT_LIMIT = "AVAILABLE_CLIENT_OR_CREDIT_LIMIT";
+	
+	public static final String AVAILABLE_CLIENT = "AVAILABLE_CLIENT";
+	
+	public static final String AVAILABLE_ACCOUNT = "AVAILABLE_ACCOUNT";
+	
+	public static final String AVAILABLE_CARD = "AVAILABLE_CARD";
+	
+	public static final String CREDIT_LIMIT_TEMP = "CREDIT_LIMIT_TEMP";
+	
+	public static final String CREDIT_LIMIT_PERM = "CREDIT_LIMIT_PERM";
 
+	public static final String INTERNATIONAL = "international";
+	
+	public static final String DOMESTIC = "domestic";
+
+	
+	public static final String DEVICE_RANGE = "DEVICE_RANGE";
+	
+	public static final String ALL_DEVICE_NUMBERS = "ALL_DEVICE_NUMBERS";
+	
+	public static final String PRIMARY_DEVICE = "PRIMARY_DEVICE";
+	
+	public static final String PRIMARY_DEVICE_PLAN = "PRIMARY_DEVICE_PLAN";
+	
 	private ContextConstants() {
 	}
 
