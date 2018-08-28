@@ -1217,7 +1217,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("Yes");
 		wait(1000);
 		action.moveToElement(winiumDriver.findElementByName("CVC3 Key Set from the related BIN range will be used")).moveByOffset(10, 0).click().build().perform();
-		winiumClickOperation("00999 - CVC3 Test Key Example 1");
+		winiumClickOperation("00123 - CVC3 Test Key Example 1");
 		winiumClickOperation("OK");
 		wait(1000);
 		captureSaveScreenShot(methodName);
