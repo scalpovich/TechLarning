@@ -28,7 +28,7 @@ public class HighRiskMCCPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory
 			.getLogger(HighRiskMCCPage.class);
 	
-	public static final String MCC_CODE="Accent Rent-A-Car [3374]";
+	public static final String MCC_CODE="Action Auto Rental [3354]";
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement mccCode;
