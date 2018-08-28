@@ -160,8 +160,6 @@ public class PinGenerationBatchPage extends AbstractBasePage {
 		return Arrays.asList(WebElementUtils.visibilityOf(batchNumberTxt));
 	}
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> d0e30eb5a8a4a2f6032eab20c527465852b84919
+
+
