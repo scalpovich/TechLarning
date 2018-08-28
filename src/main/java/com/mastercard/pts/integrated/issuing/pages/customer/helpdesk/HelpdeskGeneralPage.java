@@ -253,6 +253,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement tabCurrentStatusAndLimits;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Card :']/../../following-sibling::td[1]/span/span")
+<<<<<<< HEAD
 	private MCWebElement creditLimitLable;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Account :']/../../following-sibling::td[1]/span/span")
@@ -271,8 +272,13 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement creditLimitCard;
 
 
+=======
+	private MCWebElement creditLimitLabel;
+>>>>>>> d0e30eb5a8a4a2f6032eab20c527465852b84919
 
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
+	
+	private final String RESET_PIN_RETRY_COUNTER= "109 - Reset Pin Retry Counter";
 
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
@@ -501,6 +507,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickSearchButton();
 			firstRow = getFirstColumnValueFromTable();
 			clickCloseButton();
+<<<<<<< HEAD
+=======
+
+>>>>>>> d0e30eb5a8a4a2f6032eab20c527465852b84919
 		});
 		clickEndCall();
 		return firstRow.isEmpty();
@@ -1113,6 +1123,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	}
 
+<<<<<<< HEAD
 	public BigDecimal noteDownClient(String type){	
 		BigDecimal creditClient;
 		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
@@ -1146,3 +1157,19 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	}
 }
+=======
+	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		clickGoButton();
+		runWithinPopup(RESET_PIN_RETRY_COUNTER, () -> {
+			enterNotes(helpdeskGeneral.getNotes());
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();			
+		});
+		SimulatorUtilities.wait(3000);
+		clickEndCall();
+	}
+
+}
+>>>>>>> d0e30eb5a8a4a2f6032eab20c527465852b84919

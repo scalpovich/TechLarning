@@ -47,6 +47,7 @@ import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDeskFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpdeskWorkflow;
 
@@ -838,7 +839,20 @@ public class HelpDeskSteps {
 	@When("For fileUpload when user search for new application on search screen for $productType and validates the status as $NORMAL")
 	public void thenUserSearchForApplicationOnSearchScreenforFileUpload(String productType, String status) {
 		helpDeskGetterSetter.setProductType(ProductType.fromShortName(productType));
-
 		helpdeskFlows.searchForNewApplicationFileUpload(helpDeskGetterSetter);
 	}
+<<<<<<< HEAD
 }
+=======
+	
+	
+	@Then("user creates service request for $serviceCode service")
+	@When("user creates service request for $serviceCode service")
+	public void whenUserResetPinRetryCounterThroughHelpDesk(String serviceCode) {
+		helpdeskGeneral.setServiceCode(serviceCode);			// Service Code e.g : Activate Device [108]
+		helpdeskGeneral.setNotes(MiscUtils.generateRandomNumberAsString(6));
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.resetPinCounter(helpdeskGeneral);
+	}
+}
+>>>>>>> d0e30eb5a8a4a2f6032eab20c527465852b84919

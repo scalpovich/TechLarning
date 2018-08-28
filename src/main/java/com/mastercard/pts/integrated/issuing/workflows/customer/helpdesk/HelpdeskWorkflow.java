@@ -76,12 +76,17 @@ public class HelpdeskWorkflow {
 		helpDeskPage.activateDevice(helpdeskGeneral);
 	}
 	
+<<<<<<< HEAD
 	public BigDecimal activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
 		return helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
 	}
 	
 	public void creditLimitChange(HelpdeskGeneral helpdeskGeneral){
 		helpDeskPage.activateDevice(helpdeskGeneral);
+=======
+	public void resetPinCounter(HelpdeskGeneral helpdeskGeneral) {
+		helpDeskPage.resetPinRetryCounter(helpdeskGeneral);
+>>>>>>> d0e30eb5a8a4a2f6032eab20c527465852b84919
 	}
 
 	public void setupDeviceCurrency(HelpdeskGeneral helpdeskGeneral) {
