@@ -77,8 +77,18 @@ When user processes Pre-clearing system internal batch for Credit
 And "Matching" batch for credit is successful
 And transaction status is "Presentment Matched with authorization"
 When user processes EOD-Credit system internal batch for Credit
-When update institution date to first of next month
-Then user sign out from customer portal
+And user sign out from customer portal
+And update institution date to first of next month
+
+Scenario: Login & Logout to wait for date to be updated 
+Meta:
+@TestId 
+Given user is logged in institution
+When user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
 
 Scenario: Process Batches
 Meta:
