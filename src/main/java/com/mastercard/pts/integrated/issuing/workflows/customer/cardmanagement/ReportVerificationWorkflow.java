@@ -17,7 +17,6 @@ import com.mastercard.pts.integrated.issuing.pages.collect.administration.Admini
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReportVerificationPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.PDFUtils;
-import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
 @Workflow
 public class ReportVerificationWorkflow {
@@ -36,70 +35,50 @@ public class ReportVerificationWorkflow {
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
 	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
-	
-	private String fileURL ;
 
 
     public void verifyGenericReport(GenericReport report) {
 		page = (ReportVerificationPage)getInstance(report.getReportName());
-		fileURL = PDFUtils.getuserDownloadPath()+"\\"+report.getReportName()+" Report.pdf";
 		Map<Integer, String> reportContent = getGenericReport(report);
 		reportContent.forEach((k,v)-> {
 			if(v.contains(report.getDeviceNumber())){
 			report.getFieldToValidate().forEach((field,fieldValue) ->{
 				assertTrue(field+" did not match with Authoraization Report content", v.contains(fieldValue));
 			});
-				
 			}
 		});
 	}
     
     public Map<Integer, String> getGenericReport(GenericReport report) {
-		navigator.navigateToPage(page.getClass().getSimpleName());
-		deleteExistingAuthorizationFilesFromSystem(report.getReportName());
-		page.generateReport(report);
-		verifyReportDownloaded();
+    	deleteExistingReportsFromSystem(report.getReportName());
+    	page = navigator.navigateToPage(page.getClass().getSimpleName());
+		String reportUrl = page.generateReport(report);
+		report.setReportUrl(reportUrl);
 		return getReportContent(report);
 	}
     
     public Map<Integer, String> getReportContent(GenericReport genericReports) {
-		PDFUtils pdfutils=new PDFUtils();
-		Map<Integer, String> records = pdfutils.getContentRow(fileURL, genericReports);
+		PDFUtils pdfutils = new PDFUtils();
+		Map<Integer, String> records = pdfutils.getContentRow(genericReports);
 		return records;
 	}
     
-    public void deleteExistingAuthorizationFilesFromSystem(String authFileName)
+    public void deleteExistingReportsFromSystem(String reportName)
 	{
 		for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
-			if (!file.isDirectory()&& file.getName().startsWith(authFileName))   	
+			if (!file.isDirectory()&& file.getName().startsWith(reportName))   	
 				file.delete();
 		}
-	}
-    
-    public boolean verifyReportDownloaded()
-	{
-		File report = new File(fileURL);
-		System.out.println("++++++++++++++--+"+report.getAbsolutePath());
-       for (int i = 0;i<=5;i++ ){
-    	   if(report.isFile())
-    	   break;
-    	   else
-    		  SimulatorUtilities.wait(1000); 
-       }
-        return true;
-	}
-    
+	}   
     
     // Please make sure pass the exact name in Steps as the name of class
     public Object getInstance(String className){
 			try {
-				return Class.forName("com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement."+className.split("-")[0]+"ReportPage").newInstance();
+				return Class.forName("com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement."+className+"ReportPage").newInstance();
 			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e ) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return null;
 			} 	
     }
-
-	
 }

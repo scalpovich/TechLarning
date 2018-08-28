@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
@@ -26,8 +27,11 @@ public class RAMPReportPage extends AbstractBasePage implements ReportVerificati
 	private static final Logger logger = LoggerFactory
 			.getLogger(RAMPReportPage.class);
 
-	@PageElement(findBy = FindBy.CSS, valueToFind = "select#id15")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "select[name='componentPanel']")
 	private MCWebElement selectReportDDwn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span[class=btn_or_span]")
+	protected MCWebElement searchButtonElement;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "p_report_type:input:dropdowncomponent")
 	private MCWebElement selectReportTypeDDwn;
@@ -69,11 +73,12 @@ public class RAMPReportPage extends AbstractBasePage implements ReportVerificati
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(selectReportDDwn)
+				WebElementUtils.elementToBeClickable(searchButtonElement)
 				);
 	}
 
-	public boolean generateReport(GenericReport report) {
+	@Override
+	public String generateReport(GenericReport report) {
 		// TODO Auto-generated method stub
 		selectByVisibleText(selectReportDDwn,reportName);
 	    clicksearchButtonElement();
@@ -89,6 +94,6 @@ public class RAMPReportPage extends AbstractBasePage implements ReportVerificati
 		WebElementUtils.pickDate(toDateDPkr, LocalDate.now());
 		selectByVisibleText(selectFileTypeDDwn, "PDF");
 		clickWhenClickable(generateReportBtn);
-		return true;
+		return verifyReportDownloaded(report.getReportName());
 	}
 }

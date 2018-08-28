@@ -44,8 +44,7 @@ public class ReportVerificationSteps {
 		catch(ArrayIndexOutOfBoundsException e){
 			logger.info("No Report Type is present here!!");
 		}
-		//report.setDeviceNumber(device.getDeviceNumber());
-		report.setDeviceNumber("5383162544459112");
+		report.setDeviceNumber(device.getDeviceNumber());
 		report.setUsername(context.get(UserManagementSteps.USERNAME));
 		for(String field : reportFields.split(",")){
 			report.setFieldToValidate(field, context.get(ConstantData.fromShortName(field)));

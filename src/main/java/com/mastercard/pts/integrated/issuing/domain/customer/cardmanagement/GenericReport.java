@@ -15,7 +15,16 @@ public class GenericReport {
 	private static Map<String, String> reportRegEx;
 	private String reportName;
 	private String reportType;
+	private String reportUrl;
 	
+	public String getReportUrl() {
+		return reportUrl;
+	}
+
+	public void setReportUrl(String reportUrl) {
+		this.reportUrl = reportUrl;
+	}
+
 	public String getReportType() {
 		return reportType;
 	}
@@ -23,7 +32,7 @@ public class GenericReport {
 	public void setReportType(String reportType) {
 		this.reportType = reportType;
 	}
-
+	
 	public String getReportName() {
 		return reportName;
 	}

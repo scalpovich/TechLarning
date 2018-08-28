@@ -99,11 +99,11 @@ public class PDFUtils {
 		return programWiseContent;
 	}
 	
-	public Map<Integer, String> getContentRow(String pdfPath, GenericReport genericReports) {
+	public Map<Integer, String> getContentRow(GenericReport genericReports) {
+		dateutils=new DateUtils();
 		HashMap<Integer, String> map = new HashMap<>();
 		try {
-			File file = new File(pdfPath);
-			file.getParentFile().mkdirs();
+			File file = new File(genericReports.getReportUrl());
 			PDDocument document =  PDDocument.load(file,genericReports.getUsername().substring(0,4)+dateutils.getDateDDMMFormat());
 			document.setAllSecurityToBeRemoved(true);
      		PDFTextStripper tStripper = new PDFTextStripper();

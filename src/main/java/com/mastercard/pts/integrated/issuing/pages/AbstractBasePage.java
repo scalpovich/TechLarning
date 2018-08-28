@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages;
 
+import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
@@ -47,10 +48,12 @@ import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReportVerificationPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.PDFUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementFinderProvider;
@@ -1234,10 +1237,31 @@ public abstract class AbstractBasePage extends AbstractPage {
 		WebDriverWait wait = new WebDriverWait(driver(), 100);
 		wait.until(new ExpectedCondition<Boolean>() {
 			@Override
-			public Boolean apply(WebDriver driver) {
+			public Boolean apply(WebDriver driver) {			
 				return ele.getSelect().getOptions().size() > 1;
 			}
 		});
+	}
+	
+	protected String verifyReportDownloaded(String reportName) {
+		StringBuffer path= new StringBuffer();
+		WebDriverWait wait = new WebDriverWait(driver(), TIMEOUT);
+		wait.until(new ExpectedCondition<Boolean>() {
+			@Override
+			public Boolean apply(WebDriver driver) {
+				Boolean exists = false;
+				for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
+				 if(file.isFile()&& file.getName().startsWith(reportName)){
+					exists = true;
+				    path.append(file.getAbsolutePath());
+				    logger.info("File Path:"+path.toString());
+					 break;
+				 }
+			}
+				return exists;
+			}
+		});
+		return path.toString();
 	}
 
 	protected void selectByText(MCWebElement ele, String optionName) {

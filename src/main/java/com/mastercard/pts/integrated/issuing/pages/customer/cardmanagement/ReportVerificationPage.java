@@ -4,6 +4,6 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Gene
 
 public interface ReportVerificationPage {
 
-	boolean generateReport(GenericReport report);
+	String generateReport(GenericReport report);
 
 }
