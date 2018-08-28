@@ -125,7 +125,7 @@ public class TransactionReportsPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(authTypeDDwn, ALL);
 		WebElementUtils.selectDropDownByVisibleText(channelDDwn, ALL);
 		WebElementUtils.selectDropDownByVisibleText(transactionTypeDDwn, ALL);
-		WebElementUtils.selectDropDownByVisibleText(transactionStatusDDwn, BOTH);
+		WebElementUtils.selectDropDownByVisibleText(transactionStatusDDwn, ALL);
 		WebElementUtils.selectDropDownByVisibleText(transactionOriginDDwn, BOTH);
 		WebElementUtils.selectDropDownByVisibleText(deviceTypeDDwn, ALL);
 		WebElementUtils.selectDropDownByVisibleText(programNameAuthReportDDwn, ALL);
