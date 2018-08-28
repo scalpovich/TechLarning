@@ -48,6 +48,7 @@ public class ReportVerificationSteps {
 		report.setUsername(context.get(UserManagementSteps.USERNAME));
 		for(String field : reportFields.split(",")){
 			report.setFieldToValidate(field, context.get(ConstantData.fromShortName(field)));
+			logger.info("value of {field} is {value}",field,context.get(ConstantData.fromShortName(field)));
 		}
 		reportVerificationWorkflow.verifyGenericReport(report);		
 	}

@@ -44,7 +44,11 @@ public class ReportVerificationWorkflow {
 			if(v.contains(report.getDeviceNumber())){
 			report.getFieldToValidate().forEach((field,fieldValue) ->{
 				assertTrue(field+" did not match with Authoraization Report content", v.contains(fieldValue));
+				logger.info("{field} is present in the report",fieldValue);
 			});
+			}
+			else{
+				assertTrue("Device Number is not present in the Report"+report.getDeviceNumber(),false);
 			}
 		});
 	}
