@@ -3,6 +3,9 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
+import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.math.RandomUtils;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
@@ -431,7 +434,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			}	
 		}
 		
-		WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
+		WebElementUtils.enterText(registeredMailIdTxt, "tuptewar.pavan7+"+ RandomStringUtils.randomNumeric(4)+"@gmail.com");
 		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDDwn, client.getLanguagePreference());
 		WebElementUtils.selectDropDownByVisibleText(vipDDwn, device.getVip());
 
