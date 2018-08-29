@@ -411,8 +411,23 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setEmvPlanPutDataPriority(provider.getString(DP_EMV_PLAN_PUT_DATA_PRIORITY));
 		plan.setEmvPlanPinChangePriority(provider.getString(DP_EMV_PLAN_PIN_CHANGE_PRIORITY));
 		plan.setEmvPlanPinUnblockPriority(provider.getString(DP_EMV_PLAN_PIN_UNBLOCK_PRIORITY));
-		if (productType.equalsIgnoreCase("CREDIT"))
-		{
+		createWithProviderForCredit(plan,productType,provider);
+		return plan;
+	}
+
+	public static DevicePlan createWithProviderForCredit(KeyValueProvider provider){
+		DevicePlan deviceplan = createWithProvider(provider);
+		deviceplan.setPerTransactionLimit(provider.getString(DP_PER_TRANSACTION_LIMIT));
+		deviceplan.setTotalTransactionLimit(provider.getString(DP_TOTAL_TRANSACTION_LIMIT));
+		deviceplan.setVelocity(provider.getString(DP_VELOCITY));
+		deviceplan.setValidity(DP_VALIDITYDATE);
+		deviceplan.setVirtualCreditCardLimit(provider.getString(DP_VIRTUAL_CREDIT_CARD_LIMIT));
+		return deviceplan;
+	}
+	
+	public static DevicePlan createWithProviderForCredit(DevicePlan plan, String productType,
+			KeyValueProvider provider) {
+		if (productType.equalsIgnoreCase("CREDIT")) {
 			plan.setPerTransactionLimit(provider.getString(DP_PER_TRANSACTION_LIMIT));
 			plan.setTotalTransactionLimit(provider.getString(DP_TOTAL_TRANSACTION_LIMIT));
 			plan.setVelocity(provider.getString(DP_VELOCITY));
@@ -420,24 +435,11 @@ public class DevicePlan implements HasCodeAndDescription {
 			plan.setPriorityPassIndicator(provider.getString(DP_PRIORITY_PASS_INDICATOR));
 			plan.setPriorityPassIdTemplate(provider.getString(DP_PRIORITY_PASS_ID_TEMPLATE));
 			plan.setPriorityPassVendor(provider.getString(DP_PRIORITY_PASS_VENDOR));
-			plan.setPriorityPassExpiry(provider.getString(DP_PRIORITY_PASS_EXPIRY));	
+			plan.setPriorityPassExpiry(provider.getString(DP_PRIORITY_PASS_EXPIRY));
 		}
 		return plan;
 	}
-
-	public static DevicePlan createWithProviderForCredit(KeyValueProvider provider){
-
-		DevicePlan deviceplan = createWithProvider(provider);
-		deviceplan.setPerTransactionLimit(provider.getString(DP_PER_TRANSACTION_LIMIT));
-		deviceplan.setTotalTransactionLimit(provider.getString(DP_TOTAL_TRANSACTION_LIMIT));
-		deviceplan.setVelocity(provider.getString(DP_VELOCITY));
-		deviceplan.setValidity(DP_VALIDITYDATE);
-		deviceplan.setVirtualCreditCardLimit(provider.getString(DP_VIRTUAL_CREDIT_CARD_LIMIT));
-		
-		
-		return deviceplan;
-		
-	}
+	
 	public static DevicePlan createWithProviderForRegression(KeyValueProvider provider) {
 		DevicePlan plan = new DevicePlan();
 		plan.setDevicePlanCode(MiscUtils.generate8CharAlphaNumeric());
