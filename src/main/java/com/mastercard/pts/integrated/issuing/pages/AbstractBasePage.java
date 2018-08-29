@@ -513,10 +513,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 		logger.info(RESPONSE_MESSAGE, responseMessage.getText());
 	}
 
-	protected void verifyOperationStatus() {
+	/*protected void verifyOperationStatus() {
 		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
-	}
+	}*/
 
 	protected boolean waitForRow() {
 		try {

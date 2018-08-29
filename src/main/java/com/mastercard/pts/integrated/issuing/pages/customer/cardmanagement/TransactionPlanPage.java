@@ -164,7 +164,7 @@ public class TransactionPlanPage extends AbstractBasePage {
 					verifyNoErrors();
 				});
 
-		//verifyOperationStatus();
+		verifyOperationStatus();
 	}
 	
 	public void createTransactionPlanWithoutAnyTransaction(TransactionPlan plan) {
