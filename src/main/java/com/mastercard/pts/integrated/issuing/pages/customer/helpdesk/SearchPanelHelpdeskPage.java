@@ -14,6 +14,7 @@ import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
@@ -64,7 +65,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:5:componentList:1:componentPanel:input:inputTextField")
 	private MCWebElement CBSClientID;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:searchButtonPanel:buttonCol:searchButton")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Search']")
 	private MCWebElement searchBtn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = ".//*[@alt='Edit Record']")
@@ -130,6 +131,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 		enterText(this.deviceNumber, deviceNumber);
 		waitForElementVisible(searchBtn);
 		searchBtn.click();
+		SimulatorUtilities.wait(4000);
 		return getCellTextByColumnName(Constants.TABLE_ROW_NUM, Constants.COLUMN_NAME);
 	}
 	

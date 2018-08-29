@@ -27,7 +27,7 @@ public class FixedScorePage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory
 			.getLogger(FixedScorePage.class);
 
-	@PageElement(findBy = FindBy.CSS, valueToFind = "#prodCode select")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[text()='Program']/..//select[1]")
 	private MCWebElement programDdwn;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#columnCode select")
