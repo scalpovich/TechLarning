@@ -36,7 +36,7 @@ And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Transaction - Cash Withdrawl
+Scenario: Transaction - Cash eWithdrawl
 When connection to VISA is established
 When perform an POS_Retail_Magstripe_cash_withdrawal_with_Pin VISA transaction
 When VISA test results are verified for POS_Retail_Magstripe_cash_withdrawal_with_Pin
