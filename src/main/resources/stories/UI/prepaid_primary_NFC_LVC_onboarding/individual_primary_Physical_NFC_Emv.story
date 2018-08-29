@@ -1,5 +1,5 @@
 Narrative:
-In order to a create a prepaid Device under customer portal cardmanagement tab
+In order to a create a Prepaid Primary Physical NFC EMV Device under customer portal cardmanagement tab
 As a user
 I want to assert pages
 
