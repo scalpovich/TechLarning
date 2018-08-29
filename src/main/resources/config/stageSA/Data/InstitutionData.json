@@ -499,6 +499,37 @@
 							   "creditPlan":"Automation [100]",
 							   "billingCycle":"Automation Billing [100]",
 							   "walletPlan":"AUTOMATION [TA4946EBFC]"
+  				 },
+  				 {
+							   "productIdentity":"Prepaid",
+							   "code":"111777",
+							   "abbreviation":"LANKA",
+							   "branch":"OfficeBranch [184]",
+							   "cardPackIdGenerationTemplate":"Card Pack ID [PAN088]",
+							   "deviceIdGenerationTemplate":"AUTOTEMP [PAN801]",
+							   "embossingVendor":"AUTOVENDOR [AUTO]",
+							   "mastercardPrepaidIssuerBin":"Lanka MC Device Bin [111770]",
+							   "mastercardDebitIssuerBin":"MASTERCARDDEBIT [571504]",
+							   "mastercardCreditIssuerBin":"MASTERCARDCREDIT [574253]",
+							   "visaPrepaidIssuerBin":"VISAPREPAID [417429]",
+							   "visaDebitIssuerBin":"VISADEBIT [417360]",
+							   "visaCreditIssuerBin":"VISACREDIT [431112]",
+							   "plasticId":"Plastic code [266]",
+							   "pictureCode":"	Picture code [827]",
+							   "corporateClientCode":"MasterCard [11177716335000002]",
+							   "dedupePlanCode":"AMIT2018 [AMIT2018]",
+							   "prepaidStatementPlan":"AUTOMATION [TA4048YAQU]",
+							   "statementMessagePlan":"Statement Plan [39466]",
+							   "marketingMessagePlan":"AUTOMATION [TA7617GDAV]",
+							   "documentCheckListPlan":"AUTOMATION [TA4886UCOI]",
+							   "mccRulePlan":"AUTOMATION [TA8071XO6]",
+							   "deviceJoiningAndMemberShipFeePlan":"AUTOMATION [TA2699UL]",
+							   "deviceEventBasedFeePlan":"AUTOMATION [TA3264SL]",
+							   "transactionLimitPlan":"AUTOMATION [TA9706ODEV]",
+							   "transactionPlan":"AUTOMATION [T7185S]",
+							   "creditPlan":"Automation [100]",
+							   "billingCycle":"Automation Billing [100]",
+							   "walletPlan":"AUTOMATION [TA4946EBFC]"
   				 }
 ]
 }
