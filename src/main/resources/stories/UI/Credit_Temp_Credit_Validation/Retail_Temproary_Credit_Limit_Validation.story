@@ -1,4 +1,3 @@
-
 Narrative:
 As a Customer portal user
 I want to validate permanent credit limit for retail card

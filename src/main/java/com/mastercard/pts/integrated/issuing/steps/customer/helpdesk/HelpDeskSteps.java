@@ -519,7 +519,7 @@ public class HelpDeskSteps {
 	@Given("user activates $limittype credit limit change request")
 	@When("user activates $limittype credit limit change request")
 	public void whenUserActivatesCreditLimitChangeRequestThroughHelpdesk(String limittype) {
-		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		 helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskWorkflow.clickCustomerCareEditLink();		
 		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.activateCreditLimitChangeRequest(helpdeskGeneral));
 	}
@@ -698,7 +698,7 @@ public class HelpDeskSteps {
 		List<String>deviceNumbers=context.get(CreditConstants.SUPPLEMENTARY_DEVICE_NUMBER);
 		for(String deviceNumber:deviceNumbers)
 		{
-			helpDeskGetterSetter.setDeviceNumber("");
+			helpDeskGetterSetter.setDeviceNumber(deviceNumber);
 			String actualStatus = helpdeskFlows.searchForNewDevice(helpDeskGetterSetter);
 			if (actualStatus.contains(status)) {
 				Assert.assertTrue("status of newly created device is normal ", true);

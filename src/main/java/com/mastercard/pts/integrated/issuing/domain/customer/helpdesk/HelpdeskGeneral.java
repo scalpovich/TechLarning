@@ -54,7 +54,7 @@ public class HelpdeskGeneral {
 		return limitTypeStatus;
 	}
 
-	public void setLimittypestatus(String limittypestatus) {
+	public void setLimittypestatus(String limitTypeStatus) {
 		this.limitTypeStatus = limitTypeStatus;
 	}
 	
