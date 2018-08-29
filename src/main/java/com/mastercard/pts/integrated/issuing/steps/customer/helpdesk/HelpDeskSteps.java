@@ -841,7 +841,7 @@ public class HelpDeskSteps {
 		helpDeskGetterSetter.setProductType(ProductType.fromShortName(productType));
 		helpdeskFlows.searchForNewApplicationFileUpload(helpDeskGetterSetter);
 	}
-		
+
 	@Then("user creates service request for $serviceCode service")
 	@When("user creates service request for $serviceCode service")
 	public void whenUserResetPinRetryCounterThroughHelpDesk(String serviceCode) {
@@ -851,3 +851,4 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.resetPinCounter(helpdeskGeneral);
 	}
 }
+

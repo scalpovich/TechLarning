@@ -24,6 +24,49 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 /**
  * @author E070234, E074127 The Class SearchPanelHelpdesk.
  */
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
+
+import java.util.Map;
+
+import org.openqa.selenium.By;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
+import com.mastercard.testing.mtaf.bindings.page.PageElement;
+
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
+
+import java.util.Map;
+
+import org.openqa.selenium.By;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
+import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
+import com.mastercard.testing.mtaf.bindings.page.PageElement;
+
+//TODO: Auto-generated Javadoc
+/**
+ * @author E070234, E074127 The Class SearchPanelHelpdesk.
+ */
 @Component
 public class SearchPanelHelpdeskPage extends AbstractBasePage {
 	
@@ -163,4 +206,5 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 		return index + 1;
 
 	}
+
 }

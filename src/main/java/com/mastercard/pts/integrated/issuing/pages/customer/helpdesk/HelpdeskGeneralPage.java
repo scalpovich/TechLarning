@@ -253,7 +253,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement tabCurrentStatusAndLimits;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Card :']/../../following-sibling::td[1]/span/span")
-
 	private MCWebElement creditLimitLable;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Account :']/../../following-sibling::td[1]/span/span")
@@ -270,8 +269,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Card :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement creditLimitCard;
-
-
 
 	private MCWebElement creditLimitLabel;
 
@@ -1150,6 +1147,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return creditCard;				
 
 	}
+
 	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
@@ -1164,3 +1162,4 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 }
+
