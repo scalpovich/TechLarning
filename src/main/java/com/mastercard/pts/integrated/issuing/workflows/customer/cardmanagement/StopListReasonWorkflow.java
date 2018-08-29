@@ -11,8 +11,10 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 public class StopListReasonWorkflow {
 	 
 		@Autowired
-		Navigator navigator;
-		StoplistReasonPage stopListPage;
+		private Navigator navigator;
+		
+		@Autowired
+		private StoplistReasonPage stopListPage;
 		public void addStopListReasonPlan(StopListReasonPlan stopListReasonPlan)
 		{
 			stopListPage=navigator.navigateToPage(StoplistReasonPage.class);

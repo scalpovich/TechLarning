@@ -30,13 +30,13 @@ public class StoplistReasonPage extends AbstractBasePage {
 	private MCWebElement description;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
-	private MCWebElement reasonCode;
+	private MCWebElement reasonCodeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "reasonCode:input:dropdowncomponent")
-	private MCWebElement reasonCodeInPopUp;
+	private MCWebElement reasonCodeInPopUpDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "description:input:inputTextField")
-	private MCWebElement descriptionInPopUp;
+	private MCWebElement txtDescriptionInPopUp;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "stickyFlag:checkBoxComponent")
 	private MCWebElement stickyRadioButton;
@@ -110,6 +110,8 @@ public class StoplistReasonPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "visaLatinAm:checkBoxComponent")
 	private MCWebElement regionVisaCarribbean;
 
+	private String noOfRecordXpath = "//table[@class='dataview']/tbody/tr/td[2]/span";
+
 	public void verifyUiOperationStatus() {
 		logger.info("Stoplist Reason");
 		verifyUiOperation("Add Stoplist Reason");
@@ -117,53 +119,47 @@ public class StoplistReasonPage extends AbstractBasePage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.elementToBeClickable(reasonCode),
+		return Arrays.asList(WebElementUtils.elementToBeClickable(reasonCodeDDwn),
 				WebElementUtils.elementToBeClickable(description));
 	}
 
 	public void addStopListReasonInStopListPage(StopListReasonPlan stopListReasonPlan) {
-
 		for (int index = 0; index < stopListReasonPlan.getSize(); index++) {
-			if (verifyReasonAlreadyExistsOrNotInStopList(stopListReasonPlan.getDescription(index)) == false) {
+			if (verifyReasonAlreadyExistsOrNotInStopList(stopListReasonPlan.getDescription(index))) {
 				clickAddNewButton();
-				
-					addLostPlanInStopList(stopListReasonPlan.getReasonCode()[index],
-							stopListReasonPlan.getDescription(index), stopListReasonPlan.getSticky(index),
-							stopListReasonPlan.getSentToMastercard(index),
-							stopListReasonPlan.getRegionMastercard(index), stopListReasonPlan.getSentToVisa(index),
-							stopListReasonPlan.getRegionVisa(index), stopListReasonPlan.getSentToRupay(index),
-							stopListReasonPlan.getSentToAmex(index));
-				}
-
+				addLostPlanInStopList(stopListReasonPlan.getReasonCode()[index],
+						stopListReasonPlan.getDescription(index), stopListReasonPlan.getSticky(index),
+						stopListReasonPlan.getSentToMastercard(index), stopListReasonPlan.getRegionMastercard(index),
+						stopListReasonPlan.getSentToVisa(index), stopListReasonPlan.getRegionVisa(index),
+						stopListReasonPlan.getSentToRupay(index), stopListReasonPlan.getSentToAmex(index));
+			}
 		}
-
-		
 	}
 
 	private void addLostPlanInStopList(String reasonCode, String description, String sticky, String sentToMasterCard,
 			String regionMastercard, String sentToVisa, String regionVisa, String sentToRupay, String sentToAmex) {
 		runWithinPopup("Add Stoplist Reason", () -> {
-		WebElementUtils.selectDropDownByVisibleText(reasonCodeInPopUp, reasonCode);
-		WebElementUtils.enterText(descriptionInPopUp, description);
-		if (sticky.equals("Yes"))
-			WebElementUtils.selectRadioBtn(stickyRadioButton);
-		if (sentToMasterCard.equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToMasterOnline);
-		if (sentToVisa.equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToVisaOnline);
-		if (sentToRupay.equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToRupayOnline);
-		if (sentToRupay.equals("Batch Mode"))
-			WebElementUtils.selectRadioBtn(sentToRupayBatch);
-		if (sentToAmex.equals("Online"))
-			WebElementUtils.selectRadioBtn(sentToAmexOnline);
-		if (sentToAmex.equals("Batch Mode"))
-			WebElementUtils.selectRadioBtn(sentToAmexBatch);
-		if (regionMastercard != null || regionVisa != null) {
-			selectRegions(regionMastercard.split(" "));
-			selectRegions(regionVisa.split(" "));
-		}
-		clickSaveButton();
+			WebElementUtils.selectDropDownByVisibleText(reasonCodeInPopUpDDwn, reasonCode);
+			WebElementUtils.enterText(txtDescriptionInPopUp, description);
+			if (sticky.equals("Yes"))
+				WebElementUtils.selectRadioBtn(stickyRadioButton);
+			if (sentToMasterCard.equals("Online"))
+				WebElementUtils.selectRadioBtn(sentToMasterOnline);
+			if (sentToVisa.equals("Online"))
+				WebElementUtils.selectRadioBtn(sentToVisaOnline);
+			if (sentToRupay.equals("Online"))
+				WebElementUtils.selectRadioBtn(sentToRupayOnline);
+			if (sentToRupay.equals("Batch Mode"))
+				WebElementUtils.selectRadioBtn(sentToRupayBatch);
+			if (sentToAmex.equals("Online"))
+				WebElementUtils.selectRadioBtn(sentToAmexOnline);
+			if (sentToAmex.equals("Batch Mode"))
+				WebElementUtils.selectRadioBtn(sentToAmexBatch);
+			if (regionMastercard != null || regionVisa != null) {
+				selectRegions(regionMastercard.split(" "));
+				selectRegions(regionVisa.split(" "));
+			}
+			clickSaveButton();
 		});
 	}
 
@@ -171,11 +167,7 @@ public class StoplistReasonPage extends AbstractBasePage {
 		WebElementUtils.enterText(description, stopListReason);
 		clickSearchButton();
 		SimulatorUtilities.wait(1000);
-		if (getFinder().getWebDriver().findElements(By.xpath("//table[@class='dataview']/tbody/tr/td[2]/span"))
-				.size() == 1)
-			return true;
-		return false;
-
+		return driver().findElements(By.xpath(noOfRecordXpath)).size() == 1;
 	}
 
 	public void selectRegions(String regions[]) {

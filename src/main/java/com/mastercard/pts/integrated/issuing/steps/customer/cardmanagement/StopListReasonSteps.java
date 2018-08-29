@@ -22,8 +22,8 @@ public class StopListReasonSteps {
 
 	
 
-	@When("user add all raesons in stoplist reason page")
-	public void thenUserCanAddStopListReasonInStoplistReasonPage() {
+	@When("user adds all raesons in stoplist reason page")
+	public void thenUserCanAddsStopListReasonInStoplistReasonPage() {
 		StopListReasonPlan listReasonPlan = StopListReasonPlan.createWithProvider(provider);
 		stopListReasonWorkflow.addStopListReasonPlan(listReasonPlan);
 	}
