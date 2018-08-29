@@ -50,11 +50,11 @@ public class BatchLevelPreviledgePage extends BatchLevelPriviledge {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='Save']")
 	private MCWebElement saveBtn;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='feedbackPanelINFO']")
 	private MCWebElement feedBackPanel;
-
-
+	
+	
 
 	public WebElement BatchTypeAccessWithName(String OptionName) {
 		return getFinder().getWebDriver().findElement(
@@ -117,14 +117,17 @@ public class BatchLevelPreviledgePage extends BatchLevelPriviledge {
 		accessOnTab(String.valueOf(1)).click();
 		clickWhenClickable(saveBtn);
 	}
+
 	public void supplyAccessToDownloadBatches() {
 		clickBatchDownloadTab();
 		accessOnTab(String.valueOf(2)).click();
 		clickWhenClickable(saveBtn);
 	}
+
 	public void supplyAccessToSystemInternalBatches() {
 		clickBatchSystemInternalTabs();
 		accessOnTab(String.valueOf(3)).click();
 		clickWhenClickable(saveBtn);
 	}
+
 }

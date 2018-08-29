@@ -83,6 +83,10 @@ public class HelpdeskWorkflow {
 	public void creditLimitChange(HelpdeskGeneral helpdeskGeneral){
 		helpDeskPage.activateDevice(helpdeskGeneral);
 	}
+	
+	public void resetPinCounter(HelpdeskGeneral helpdeskGeneral) {
+		helpDeskPage.resetPinRetryCounter(helpdeskGeneral);
+	}
 
 	public void setupDeviceCurrency(HelpdeskGeneral helpdeskGeneral) {
 		helpDeskPage.setupDeviceCurrency(helpdeskGeneral);

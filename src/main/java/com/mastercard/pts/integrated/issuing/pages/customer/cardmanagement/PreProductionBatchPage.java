@@ -7,13 +7,18 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
@@ -119,11 +124,11 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		verifyOperationStatus();
 		switchToDefaultFrame();
 	}
-
+	
 	public void setQuantityRequested(){		
 		context.put(CreditConstants.QUANTITY_REQUESTED, getCellTextByColumnName(1,"Quantity Requested")); 
 	}
-
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Pre-Prodcution Batch");
 		verifySearchButton("Search");
@@ -210,9 +215,9 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		verifyOperationStatus();
 		switchToDefaultFrame();
 	}
-
-	public void processPreProductionBatchNewApplicationForFileUpload(PreProductionBatch batch) {
-		List<String>batchNumbers=context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
+	
+		public void processPreProductionBatchNewApplicationForFileUpload(PreProductionBatch batch) {
+        List<String>batchNumbers=context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
 		waitForLoaderToDisappear();
 		selectDropDownByText(productTypeDDwn, batch.getProductType());
 		SimulatorUtilities.wait(8000);
@@ -231,4 +236,3 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	}
 
 }
-

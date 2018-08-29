@@ -32,6 +32,6 @@ When for Add-on Device and New Client user fills Device Range section for credit
 Then credit device is created using new device screen for Bank Staff and Primary Device and New Client and Limited Validity Virtual Card
 Then credit device is created using new device screen for Bank Staff and Add-on Device and New Client and Limited Validity Virtual Card
 Then credit processes pre-production batch using new Device
-Then credit processes deviceproduction batch using new Device
+Then credit processes deviceproduction batch using new Device for Supplementary
 Then credit processes pinProduction batch using new Device for Supplementary
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
