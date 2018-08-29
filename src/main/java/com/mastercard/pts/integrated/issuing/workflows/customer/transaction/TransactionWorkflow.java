@@ -241,7 +241,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private void captureSaveScreenShot(String methodName) {
-		SimulatorUtilities.takeScreenShot(winiumDriver, methodName + "_" + new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
+		//SimulatorUtilities.takeScreenShot(winiumDriver, methodName + "_" + new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 	}
 
 	public void performOptimizedMasTransaction(String transaction, Transaction transactionData, Boolean sameCard) {
@@ -863,11 +863,13 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public String getFileData(String filePath) throws IOException {
-		try (FileInputStream fis = new FileInputStream(getTempDirectoryLocationForSimulatorResults() + "//" + filePath);) {
+		//String test = "C:\\Users\\E079917\\Desktop\\20180827_IssuingTests_Simulator"; //getTempDirectoryLocationForSimulatorResults()
+		try (FileInputStream fis = new FileInputStream(getTempDirectoryLocationForSimulatorResults()+ "//" + filePath);) {
 			BufferedReader br = new BufferedReader(new InputStreamReader(fis));
 			String fileName = br.readLine();
 			fis.close();
 			return fileName;
+
 		}
 	}
 
@@ -1999,6 +2001,19 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("Close");
 		wait(2000);
 		winiumClickOperation("OK");
+	}
 
+	public void manipulateIPMData(){
+		try{
+			//startWiniumDriverWithSimulator("MCPS");
+			activateMcps();
+			//System.out.println("****GGG*****" + getIpmFileName());
+			loadIpmFile(getIpmFileName());
+			winiumClickOperation(getIpmFileName());
+			assignUniqueFileId();
+		}catch(Exception e){
+			logger.debug("Exception occurred while editing fields :: {}", e);
+			throw MiscUtils.propagate(e);
+		}
 	}
 }

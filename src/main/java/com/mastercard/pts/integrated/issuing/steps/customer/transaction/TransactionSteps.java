@@ -122,7 +122,7 @@ public class TransactionSteps {
 
 	@When("perform an $transaction MAS transaction on the same card")
 	@Aliases(values={"a sample simulator \"$transaction\" is executed on the same card",
-    "user performs an \"$transaction\" MAS transaction on the same card"})
+	"user performs an \"$transaction\" MAS transaction on the same card"})
 	@Given("perform an $transaction MAS transaction on the same card")
 	public void givenTransactionIsExecutedOnTheSameCard(String transaction) {
 		String temp = transaction;
@@ -547,12 +547,17 @@ public class TransactionSteps {
 			transactionWorkflow.setFolderPermisson(provider.getString(IPM_INCOMING));
 		transactionWorkflow.closeWinSCP();
 	}
-	
+
 	@Then("user sets invalid pin")
 	@When("user sets invalid pin")
 	public void userSetInvalidPin(){
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
 		context.put(ContextConstants.DEVICE, device);
+	}
+
+	@When("user update IPM for duplicate record check")
+	public void userUpdateIPMForDuplicateRecordCheck(){
+		transactionWorkflow.manipulateIPMData();
 	}
 }
