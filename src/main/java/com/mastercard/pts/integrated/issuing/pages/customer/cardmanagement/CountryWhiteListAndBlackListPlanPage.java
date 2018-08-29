@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CountryWhiteListBlackListPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CountryWhiteListAndBlackListPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -24,9 +24,9 @@ import net.serenitybdd.core.annotations.findby.By;
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_PROGRAM_SETUP,
 		CardManagementNav.L2_COUNTRY_WHITE_LIST_BLACK_LIST_PLAN })
-public class CountryWhiteListBlackListPlanPage extends AbstractBasePage {
+public class CountryWhiteListAndBlackListPlanPage extends AbstractBasePage {
 
-	private static final Logger logger = LoggerFactory.getLogger(CountryWhiteListBlackListPlanPage.class);
+	private static final Logger logger = LoggerFactory.getLogger(CountryWhiteListAndBlackListPlanPage.class);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=countryWblistPlanCode]")
 	private MCWebElement countryWblistPlanCode;
@@ -69,7 +69,7 @@ public class CountryWhiteListBlackListPlanPage extends AbstractBasePage {
 				WebElementUtils.elementToBeClickable(description));
 	}
 
-	public boolean addCountryInBlackOrWhiteListInPlan(CountryWhiteListBlackListPlan countryWhiteListBlackListPlan) {
+	public boolean addCountryInBlackOrWhiteListInPlan(CountryWhiteListAndBlackListPlan countryWhiteListBlackListPlan) {
 		clickAddNewButton();
 		runWithinPopup("Add Country White List/ Black List Plan", () -> {
 			addPlanDetailsInPopUp(countryWhiteListBlackListPlan);
@@ -82,7 +82,7 @@ public class CountryWhiteListBlackListPlanPage extends AbstractBasePage {
 
 	}
 
-	private void addPlanDetailsInPopUp(CountryWhiteListBlackListPlan countryWhiteListBlackListPlan) {
+	private void addPlanDetailsInPopUp(CountryWhiteListAndBlackListPlan countryWhiteListBlackListPlan) {
 		WebElementUtils.enterText(planCode, countryWhiteListBlackListPlan.getPlanCode());
 		WebElementUtils.enterText(planDescription, countryWhiteListBlackListPlan.getDescription());
 		if (countryWhiteListBlackListPlan.getPlanType().equals("White List"))
@@ -95,7 +95,7 @@ public class CountryWhiteListBlackListPlanPage extends AbstractBasePage {
 
 	}
 
-	private void addCountry(CountryWhiteListBlackListPlan countryWhiteListBlackListPlan) {
+	private void addCountry(CountryWhiteListAndBlackListPlan countryWhiteListBlackListPlan) {
 		SimulatorUtilities.wait(1000);
 		driver().switchTo().defaultContent();
 		driver().switchTo().frame(
@@ -108,7 +108,7 @@ public class CountryWhiteListBlackListPlanPage extends AbstractBasePage {
 
 	}
 
-	private boolean verifyPlanCodeIsAdded(CountryWhiteListBlackListPlan countryWhiteListBlackListPlan) {
+	private boolean verifyPlanCodeIsAdded(CountryWhiteListAndBlackListPlan countryWhiteListBlackListPlan) {
 		WebElementUtils.enterText(countryWblistPlanCode, countryWhiteListBlackListPlan.getPlanCode());
 		clickSearchButton();
 

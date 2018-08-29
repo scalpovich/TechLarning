@@ -191,7 +191,7 @@ public class UiVerificationCardManagementWorkflow {
 	}
 
 	public void verifyCountryWhiteListBlackListPlanPage() {
-		CountryWhiteListBlackListPlanPage page = navigator.navigateToPage(CountryWhiteListBlackListPlanPage.class);
+		CountryWhiteListAndBlackListPlanPage page = navigator.navigateToPage(CountryWhiteListAndBlackListPlanPage.class);
 		page.verifyUiOperationStatus();
 	}
 

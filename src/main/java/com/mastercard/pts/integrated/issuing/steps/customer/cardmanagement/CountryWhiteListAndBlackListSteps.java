@@ -5,12 +5,12 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CountryWhiteListBlackListPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CountryWhiteListAndBlackListPlan;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.CountryWhiteListBlackListWorkflow;
 
 @Component
-public class CountryWhiteListBlackListSteps {
+public class CountryWhiteListAndBlackListSteps {
 
 	@Autowired
 	private KeyValueProvider provider;
@@ -20,7 +20,7 @@ public class CountryWhiteListBlackListSteps {
 
 	@When("user can add country in black or white list in plan")
 	public void thenUserCanAddCountryInBlackOrWhiteListInPlan() {
-		CountryWhiteListBlackListPlan countryWhiteListBlackListPlan = CountryWhiteListBlackListPlan
+		CountryWhiteListAndBlackListPlan countryWhiteListBlackListPlan = CountryWhiteListAndBlackListPlan
 				.createWithProvider(provider);
 		Assert.assertTrue(countryWhiteListBlackListWorkflow.addCountryInBlackOrWhiteListInPlan(countryWhiteListBlackListPlan));
 	}
