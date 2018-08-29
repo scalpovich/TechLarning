@@ -48,7 +48,7 @@ public class AssignProgramPage extends AbstractBasePage {
 					canceled.set(verifyAlreadyExistsAndClickCancel());
 				});
 		if (!canceled.get()) {
-			verifyOperationStatus();
+			//verifyOperationStatus();
 		}
 	}
 }

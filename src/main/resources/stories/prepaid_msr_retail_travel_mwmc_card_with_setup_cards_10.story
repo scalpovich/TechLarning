@@ -12,12 +12,12 @@ Meta:
 Scenario: Setup multi-currency prepaid msr retail travel card and perfomr refund without pin authorization
 Given user is logged in institution
 When device range for program with device plan for "prepaid" "magnetic stripe" card
+Then user sign out from customer portal
+
+Scenario: Device Production
+Given user is logged in institution
+When user creates new device of prepaid type for new client
 And a new device was created
-Then user sign out from customer portal
-
-Scenario: Device Production
-Given user is logged in institution
-When user creates new device of prepaid type for new client
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
@@ -43,6 +43,7 @@ Then FINSim simulator is closed
 Scenario: Device Production
 Given user is logged in institution
 When user creates new device of prepaid type for new client
+And a new device was created
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
@@ -68,6 +69,7 @@ Then FINSim simulator is closed
 Scenario: Device Production
 Given user is logged in institution
 When user creates new device of prepaid type for new client
+And a new device was created
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
@@ -93,6 +95,7 @@ Then FINSim simulator is closed
 Scenario: Device Production
 Given user is logged in institution
 When user creates new device of prepaid type for new client
+And a new device was created
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
@@ -118,6 +121,7 @@ Then FINSim simulator is closed
 Scenario: Device Production
 Given user is logged in institution
 When user creates new device of prepaid type for new client
+And a new device was created
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
@@ -143,6 +147,7 @@ Then FINSim simulator is closed
 Scenario: Device Production
 Given user is logged in institution
 When user creates new device of prepaid type for new client
+And a new device was created
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
@@ -168,6 +173,7 @@ Then FINSim simulator is closed
 Scenario: Device Production
 Given user is logged in institution
 When user creates new device of prepaid type for new client
+And a new device was created
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
@@ -193,6 +199,7 @@ Then FINSim simulator is closed
 Scenario: Device Production
 Given user is logged in institution
 When user creates new device of prepaid type for new client
+And a new device was created
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
@@ -218,6 +225,7 @@ Then FINSim simulator is closed
 Scenario: Device Production
 Given user is logged in institution
 When user creates new device of prepaid type for new client
+And a new device was created
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
@@ -243,6 +251,7 @@ Then FINSim simulator is closed
 Scenario: Device Production
 Given user is logged in institution
 When user creates new device of prepaid type for new client
+And a new device was created
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
@@ -268,6 +277,7 @@ Then FINSim simulator is closed
 Scenario: Device Production
 Given user is logged in institution
 When user creates new device of prepaid type for new client
+And a new device was created
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
@@ -289,3 +299,4 @@ When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
+
