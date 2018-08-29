@@ -273,7 +273,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement creditLimitLabel;
 
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
-	
+
 	private final String RESET_PIN_RETRY_COUNTER= "109 - Reset Pin Retry Counter";
 
 	protected String getWalletNumber() {
@@ -524,19 +524,19 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 	public BigDecimal activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
-		logger.info("227 - Credit limit Change Commercial Cards: {}",helpdeskGeneral.getCardPackId());
+		logger.info("227 - Credit limit Change Request: {}",helpdeskGeneral.getCardPackId());
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
-		runWithinPopup("227 - Credit limit Change Commercial Cards", ()->{
-						if(helpdeskGeneral.getLimittypestatus().equalsIgnoreCase("true")){
-							selectLimitType(helpdeskGeneral.getLimitType());
-							WebElementUtils.pickDate(effectiveDateTxt, LocalDate.now());
-							WebElementUtils.pickDate(endDateTxt, LocalDate.now());
-						}
-						selectLimitType(helpdeskGeneral.getLimitType());
-						enterClientCreditLimit(helpdeskGeneral.getClientCreditLimit());
-						enterAccountCreditLimit(helpdeskGeneral.getAccountCreditLimit());
-						enterNewCreditLimit(helpdeskGeneral.getNewCreditLimit());
+		runWithinPopup("227 - Credit limit Change Request", ()->{
+			if(helpdeskGeneral.getLimittypestatus().equalsIgnoreCase("true")){
+				selectLimitType(helpdeskGeneral.getLimitType());
+				WebElementUtils.pickDate(effectiveDateTxt, LocalDate.now());
+				WebElementUtils.pickDate(endDateTxt, LocalDate.now());
+			}
+			selectLimitType(helpdeskGeneral.getLimitType());
+			enterClientCreditLimit(helpdeskGeneral.getClientCreditLimit());
+			enterAccountCreditLimit(helpdeskGeneral.getAccountCreditLimit());
+			enterNewCreditLimit(helpdeskGeneral.getNewCreditLimit());
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();

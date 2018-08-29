@@ -698,7 +698,7 @@ public class HelpDeskSteps {
 		List<String>deviceNumbers=context.get(CreditConstants.SUPPLEMENTARY_DEVICE_NUMBER);
 		for(String deviceNumber:deviceNumbers)
 		{
-			helpDeskGetterSetter.setDeviceNumber(deviceNumber);
+			helpDeskGetterSetter.setDeviceNumber("");
 			String actualStatus = helpdeskFlows.searchForNewDevice(helpDeskGetterSetter);
 			if (actualStatus.contains(status)) {
 				Assert.assertTrue("status of newly created device is normal ", true);
