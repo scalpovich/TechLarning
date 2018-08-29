@@ -1846,7 +1846,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(5000);
 		waitForReturnButtonToGetEnable();
 		captureSaveScreenShot(methodName);
-		executeAutoITExe("visaTestExeution.exe");
+//		executeAutoITExe("visaTestExeution.exe");
 		captureSaveScreenShot(methodName);
 	}
 
