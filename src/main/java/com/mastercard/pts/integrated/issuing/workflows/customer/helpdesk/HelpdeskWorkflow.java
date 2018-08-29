@@ -17,13 +17,13 @@ import com.mastercard.pts.integrated.issuing.utils.ConnectionUtils;
 
 @Workflow
 public class HelpdeskWorkflow {
-	
+
 	@Autowired
 	private HelpdeskGeneralPage helpDeskPage;
 
 	@Autowired
 	private Navigator navigator;
-	
+
 	@Autowired
 	ConnectionUtils connctionUtils;
 
@@ -50,12 +50,12 @@ public class HelpdeskWorkflow {
 	public void searchByDeviceNumber(Device device) {
 		helpDeskPage.searchByDeviceNumber(device);
 	}
-	
+
 	public void searchByClientId(String clientId,String cardType){
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);		
 		helpDeskPage.searchByClientID(clientId, cardType);
 	}
-	
+
 	public String getDeviceNumberStatus() {
 		return helpDeskPage.getDeviceNumberStatus();
 	}
@@ -75,15 +75,15 @@ public class HelpdeskWorkflow {
 	public void activateDevice(HelpdeskGeneral helpdeskGeneral) {
 		helpDeskPage.activateDevice(helpdeskGeneral);
 	}
-	
+
 	public BigDecimal activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
 		return helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
 	}
-	
+
 	public void creditLimitChange(HelpdeskGeneral helpdeskGeneral){
 		helpDeskPage.activateDevice(helpdeskGeneral);
 	}
-	
+
 	public void resetPinCounter(HelpdeskGeneral helpdeskGeneral) {
 		helpDeskPage.resetPinRetryCounter(helpdeskGeneral);
 	}
@@ -91,7 +91,7 @@ public class HelpdeskWorkflow {
 	public void setupDeviceCurrency(HelpdeskGeneral helpdeskGeneral) {
 		helpDeskPage.setupDeviceCurrency(helpdeskGeneral);
 	}
-	
+
 	public void clickOnCurrentStatusTab(){
 		helpDeskPage.clickCurrentStatusAndLimitsTab();
 	}
@@ -154,33 +154,33 @@ public class HelpdeskWorkflow {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		return helpDeskPage.verifyInitialLoadBalanceUpdatedCorreclty(transactionDetailsFromExcel, afterLoadBalanceInformation);
 	}
-	
+
 	public boolean resetCardholderLoginPassword(String clientID){		
 		return helpDeskPage.serviceRequestCardholderLoginPassword(clientID);
 	}
-	
+
 	public BigDecimal noteDownAvailableLimit(String type,Device device) {
 		clickCustomerCareEditLink();
 		return helpDeskPage.noteDownAvailableLimit(type);
 	}
-	
+
 	public LinkedList <BigDecimal> noteDownCreditLimit(String type,Device device) {
 		clickCustomerCareEditLink();
 		return helpDeskPage.noteDownCreditLimit(type);
 	}
-	
+
 	public boolean resetCardholderTranPassword(String clientID){		
 		return helpDeskPage.serviceRequestCardholderTransactionPassword(clientID);
 	}
-	
+
 	public boolean changeRegisteredEmailID(HelpdeskGeneral general){		
 		return helpDeskPage.changeRegisteredEmailID(general);
 	}
-	
+
 	public boolean changeRegisteredMobileNo(HelpdeskGeneral general){
 		return helpDeskPage.changeRegisteredMobileNo(general);
 	}
-	
+
 	public Optional<String[]> getDeviceTypeAndNumber(String institutionSelector){	
 		String institution = System.getProperty("institution");
 		if (institution != null && !institution.trim().isEmpty())
@@ -188,14 +188,15 @@ public class HelpdeskWorkflow {
 		String query = "SELECT * FROM device WHERE bank_code = '"+ institutionSelector +"'AND activation_date IS NOT NULL  AND status_code = 0 AND ROWNUM <= 1";
 		ResultSet set = connctionUtils.executeQueryForBIN(query);
 		try {
-	        set.next();
-	        return Optional.of(new String[]{ set.getString("PRODUCT_TYPE"),set.getString("DEVICE_NUMBER"),set.getString("Default_Wallet_Number")});
+			set.next();
+			return Optional.of(new String[]{ set.getString("PRODUCT_TYPE"),set.getString("DEVICE_NUMBER"),set.getString("Default_Wallet_Number")});
 		} catch (SQLException|NullPointerException e ) {
 			// TODO Auto-generated catch block
-		   e.printStackTrace();
+			e.printStackTrace();
 			return Optional.empty();
 		}
 	}
+	
 	public void validateRequiredFields(HelpdeskGeneral general){
 		helpDeskPage.validateRequiredFields(general);
 		helpDeskPage.validateMandatoryFields(3);

@@ -159,4 +159,5 @@ public class PinGenerationBatchPage extends AbstractBasePage {
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(batchNumberTxt));
 	}
+
 }

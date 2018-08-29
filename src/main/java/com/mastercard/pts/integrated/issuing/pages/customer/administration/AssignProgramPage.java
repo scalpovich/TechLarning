@@ -50,6 +50,5 @@ public class AssignProgramPage extends AbstractBasePage {
 		if (!canceled.get()) {
 			verifyOperationStatus();
 		}
-		verifyOperationStatus();
 	}
 }
