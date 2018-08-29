@@ -4,12 +4,12 @@ As a user
 I want to assert pages
 
 Meta:
-@CreditRegression
+@DebitRegression
 @StoryName credit_emv_retail
 @Individual				 
 Scenario:creation of mastercard_individual_primary_Physical NFC Device Card debit device
 Meta:
-@UserCreatesNewCreditDevice
+@UserCreatesNewDebitDevice
 Given setting json values in excel for Debit
 And user is logged in institution
 When User fills Dedupe Plan
@@ -29,3 +29,4 @@ And debit processes pre-production batch using new Device
 And debit processes deviceproduction batch using new Device for Supplementary
 And debit processes pinProduction batch using new Device for Supplementary
 And User search for new device Supplementary on search screen for debit and validates the status as NORMAL
+And user sign out from customer portal

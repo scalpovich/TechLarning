@@ -29,3 +29,4 @@ And debit processes pre-production batch using new Device
 And debit processes deviceproduction batch using new Device for Supplementary
 And debit processes pinProduction batch using new Device for Supplementary
 And User search for new device Supplementary on search screen for debit and validates the status as NORMAL
+And user sign out from customer portal
