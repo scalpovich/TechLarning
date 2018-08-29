@@ -2008,8 +2008,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			//startWiniumDriverWithSimulator("MCPS");
 			activateMcps();
 			//System.out.println("****GGG*****" + getIpmFileName());
-			loadIpmFile(getIpmFileName());
-			winiumClickOperation(getIpmFileName());
+			//loadIpmFile(getIpmFileName());
+			//winiumClickOperation(getIpmFileName());
 			assignUniqueFileId();
 		}catch(Exception e){
 			logger.debug("Exception occurred while editing fields :: {}", e);
