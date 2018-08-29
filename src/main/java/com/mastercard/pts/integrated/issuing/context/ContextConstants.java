@@ -60,6 +60,10 @@ public class ContextConstants {
 	
 	public static final String ALL_DEVICE_NUMBERS = "ALL_DEVICE_NUMBERS";
 	
+	public static final String PRIMARY_DEVICE = "PRIMARY_DEVICE";
+	
+	public static final String PRIMARY_DEVICE_PLAN = "PRIMARY_DEVICE_PLAN";
+	
 	private ContextConstants() {
 	}
 

@@ -97,6 +97,7 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 		WebElementUtils.enterText(lytGraceDaysTxt, NUMBER);
 		WebElementUtils.enterText(lytRedeemPtsTxt, NUMBER);
 		WebElementUtils.enterText(lytRedeemAmtTxt, NUMBER);
+		ClickCheckBox(roundedOffChkBox, true);
 		newLoyaltyPlan.setLoyaltyPlan(lytPlanCodeTxt.getAttribute("value"));
 		clickSaveButton();
 	}
