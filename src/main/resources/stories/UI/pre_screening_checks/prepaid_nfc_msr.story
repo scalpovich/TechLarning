@@ -11,7 +11,7 @@ Meta:
 Scenario: Set up prepaid emv retail general purpose card
 Given setting json values in excel for Prepaid
 And user is logged in institution
-And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
+And device range for program with device plan for "prepaid" "NFC Device - Mag Stripe" card without pin
 And user sign out from customer portal
 
 Scenario: prepaid msr retail general purpose card device production
@@ -29,7 +29,7 @@ And user has current wallet balance amount information for prepaid device
 And embossing file batch was generated in correct format
 Then user sign out from customer portal
 
-Scenario: Perform MSR_PURCHASE Authorization transaction with inrnational MCC detached
+Scenario: Perform MSR_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an MSR_NFC_PURCHASE MAS transaction
 And user is logged in institution
