@@ -1511,7 +1511,7 @@ public class ProgramSetupSteps {
 	}
 	@When("User edit Program to update $editItem")
 	public void andUserEditProgramToUpdateCountryWhiteBlackList(String editItem) {
-		program.setCountryWhiteBlackListPlan(provider);
+		program.setCountryWhiteListAndBlackListPlan(provider);
 		programSetupWorkflow.editProgram(program,editItem);
 
 	}

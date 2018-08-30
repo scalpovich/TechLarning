@@ -133,14 +133,14 @@ public class Program implements HasCodeAndDescription {
 	public String WalletPlan3;
 	private String applicationType;
 	private String subApplicationType;
-	private String countryWhiteBlackListPlan;
+	private String countryWhiteListAndBlackListPlan;
 
-	public String getCountryWhiteBlackListPlan() {
-		return countryWhiteBlackListPlan;
+	public String getCountryWhiteListAndBlackListPlan() {
+		return countryWhiteListAndBlackListPlan;
 	}
 
-	public void setCountryWhiteBlackListPlan(KeyValueProvider provider) {
-		this.countryWhiteBlackListPlan = provider.getString(COUNTRY_WHITE_BLACK_LIST_PLAN);
+	public void setCountryWhiteListAndBlackListPlan(KeyValueProvider provider) {
+		this.countryWhiteListAndBlackListPlan = provider.getString(COUNTRY_WHITE_BLACK_LIST_PLAN);
 	}
 
 	public static Program createWithProvider(DataProvider dataProvider, KeyValueProvider provider) {

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CountryWhiteListBlackListPlan;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.CountryWhiteListBlackListWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.CountryWhiteListAndBlackListWorkflow;
 
 @Component
 public class CountryWhiteListBlackListSteps {
@@ -17,7 +17,7 @@ public class CountryWhiteListBlackListSteps {
 	private KeyValueProvider provider;
 
 	@Autowired
-	private CountryWhiteListBlackListWorkflow countryWhiteListBlackListWorkflow;
+	private CountryWhiteListAndBlackListWorkflow countryWhiteListBlackListWorkflow;
 
 	@When("user can add country in black or white list in plan")
 	public void thenUserCanAddCountryInBlackOrWhiteListInPlan() {

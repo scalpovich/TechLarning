@@ -24,9 +24,9 @@ import net.serenitybdd.core.annotations.findby.By;
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_PROGRAM_SETUP,
 		CardManagementNav.L2_COUNTRY_WHITE_LIST_BLACK_LIST_PLAN })
-public class CountryWhiteListBlackListPlanPage extends AbstractBasePage {
+public class CountryWhiteListAndBlackListPlanPage extends AbstractBasePage {
 
-	private static final Logger logger = LoggerFactory.getLogger(CountryWhiteListBlackListPlanPage.class);
+	private static final Logger logger = LoggerFactory.getLogger(CountryWhiteListAndBlackListPlanPage.class);
 	private final String WHITE_LIST="White List";
 	private final String BLACK_LIST="Black List";
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=countryWblistPlanCode]")

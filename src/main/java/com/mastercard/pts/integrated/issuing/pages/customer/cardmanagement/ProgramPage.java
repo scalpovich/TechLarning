@@ -419,7 +419,7 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	private void setCountryWhiteBlackListPlan(Program program) {
-		WebElementUtils.selectDropDownByVisibleText(countryWhiteBlackListPlan, program.getCountryWhiteBlackListPlan());
+		WebElementUtils.selectDropDownByVisibleText(countryWhiteBlackListPlan, program.getCountryWhiteListAndBlackListPlan());
 
 	}
 
