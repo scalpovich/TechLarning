@@ -526,7 +526,7 @@ public class ProgramPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByOptionalVisibleText(mccRulePlanCodeDDwn, program.getMmcRulePlan());
 
 		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
-		//	WebElementUtils.selectDropDownByOptionalVisibleText(markupFeePlanDDwn, program.getMarkUpFeePlan());
+			WebElementUtils.selectDropDownByOptionalVisibleText(markupFeePlanDDwn, program.getMarkUpFeePlan());
 			WebElementUtils.selectDropDownByOptionalVisibleText(stmtPlanCodeDDwn, program.getPrepaidStatementPlan());
 		}
 		
