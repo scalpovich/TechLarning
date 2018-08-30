@@ -8,8 +8,6 @@ Meta:
 @StoryName credit_emv_retail	
 			 
 Scenario:creation of retail primary msr Amex credit device
-Meta:
-@UserCreatesNewCreditDevice
 Given setting json values in excel for Credit
 When user is logged in institution
 And User fills Dedupe Plan
