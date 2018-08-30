@@ -21,5 +21,6 @@ And for Primary Device and New Client user fills Device Range section for prepai
 And user creates Application Upload prepaid batch file and upload it on server for Corporate for prepaid
 And prepaid processes pre-production batch using new Application for fileUpload in Bulk from jobid
 And All processes prepaid device production batch for fileUpload in Bulk from jobid
+And User search for device on search screen for product type prepaid and validates the status as NORMAL
 And For fileUpload when user search for new application on search screen for prepaid and validates the status as NORMAL
 Then user logouts from customer portal
