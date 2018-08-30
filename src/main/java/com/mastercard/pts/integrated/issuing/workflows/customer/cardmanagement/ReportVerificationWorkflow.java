@@ -39,7 +39,22 @@ public class ReportVerificationWorkflow {
 
     public void verifyGenericReport(GenericReport report) {
 		page = (ReportVerificationPage)getInstance(report.getReportName());
-		Map<Integer, String> reportContent = getGenericReport(report);
+		Map<Object, String> reportContent = getGenericReport(report);
+		if(report.getReportRegEx()==null&&report.getReportRegEx().isEmpty()){
+			reportContent.forEach((k,v)->{
+				report.getFieldToValidate().forEach((field,fieldValue) ->{
+					if(field.contains((String)k)){
+						assertTrue(field+" did not match with Authoraization Report content", v.equalsIgnoreCase(fieldValue));
+						}
+					else{
+						assertTrue("Field not present in the Report"+report.getDeviceNumber(),false);
+					}
+					logger.info("{field} is present in the report",fieldValue);
+				});
+				
+			});
+		}
+		else{
 		reportContent.forEach((k,v)-> {
 			if(v.contains(report.getDeviceNumber())){
 			report.getFieldToValidate().forEach((field,fieldValue) ->{
@@ -51,9 +66,10 @@ public class ReportVerificationWorkflow {
 				assertTrue("Device Number is not present in the Report"+report.getDeviceNumber(),false);
 			}
 		});
+		}
 	}
     
-    public Map<Integer, String> getGenericReport(GenericReport report) {
+    public Map<Object, String> getGenericReport(GenericReport report) {
     	deleteExistingReportsFromSystem(report.getReportName());
     	page = navigator.navigateToPage(page.getClass().getSimpleName());
 		String reportUrl = page.generateReport(report);
@@ -61,9 +77,9 @@ public class ReportVerificationWorkflow {
 		return getReportContent(report);
 	}
     
-    public Map<Integer, String> getReportContent(GenericReport genericReports) {
+    public Map<Object, String> getReportContent(GenericReport genericReports) {
 		PDFUtils pdfutils = new PDFUtils();
-		Map<Integer, String> records = pdfutils.getContentRow(genericReports);
+		Map<Object, String> records = pdfutils.getContentRow(genericReports);
 		return records;
 	}
     
