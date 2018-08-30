@@ -1192,20 +1192,25 @@ public void AddDevicePlan() {
 
 	private void forEmvOrNfc(DevicePlan devicePlan) {
 		iCVVOptionChkBx.click();
-		if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)){
+		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			WebElementUtils.selectDropDownByIndex(iframeChipTypeDdwn, 1);
-		}else{
+		} else {
 			selectIframeChipTypeDdwnDdwn(devicePlan.getChipType());
-		}		
-		
+		}
+
 		if (devicePlan.getFillEMVPlan().equalsIgnoreCase(STATUS_YES)) {
 			clickWhenClickable(atcFlagChkBx);
-			//atcFlagChkBx.click();
+			// atcFlagChkBx.click();
 			WebElementUtils.selectDropDownByVisibleText(emvPlanResponseDdwn, devicePlan.getEmvPlanResponse());
 			WebElementUtils.enterText(acceptableBelowATCRangeTxt, devicePlan.getEmvBelowATCRange());
 			WebElementUtils.enterText(acceptableAboveATCRangeTxt, devicePlan.getEmvAboveATCRange());
 			clickWhenClickable(allowFallBackChkBx);
 		}
+		fillIssuerScriptingDetails(devicePlan);
+	}
+
+	private void fillIssuerScriptingDetails(DevicePlan devicePlan )
+	{
 		if (devicePlan.getEmvPlanIssuerScripting().equalsIgnoreCase(STATUS_YES))
 		{
 			clickWhenClickable(issuerScriptingChkBx);
@@ -1245,9 +1250,7 @@ public void AddDevicePlan() {
 					devicePlan.getEmvPlanPinUnblockPriority());
 
 		}
-		
 	}
-
 	private void fillPinGenerationSection(DevicePlan devicePlan) {
 		// perform below steps only when pinRequired is true which is the
 		// default state

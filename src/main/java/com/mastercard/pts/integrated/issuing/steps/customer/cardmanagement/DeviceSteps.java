@@ -44,6 +44,7 @@ public class DeviceSteps {
 	private static final String CORPORATE_CLIENT_CODE_DEVICE2 = "CORPORATE_CLIENT_CODE_DEVICE2";
 
 	@When("user creates new device of $type type for new client")
+	@Then("user creates new device of $type type for new client")
 	public void whenUserCreatesNewDeviceForNewClient(String type) {
 		Device device = Device.createWithProvider(provider);
 

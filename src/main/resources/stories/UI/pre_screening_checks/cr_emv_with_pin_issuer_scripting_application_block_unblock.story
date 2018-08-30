@@ -41,12 +41,12 @@ Scenario: Transaction EMV_PURCHASE and EMV_PURCHASE_ISSUER_SCRIPTING_RES for App
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 When user is logged in institution
-Then assert Pending [2] status of Last Executed Script Status in Device Details Screen
+Then verify Pending [2] status of Last Executed Script Status in Device Details Screen
 And search Purchase authorization and verify 208-LOST CARD, PICK-UP status
 And user sign out from customer portal
 When perform an EMV_PURCHASE_ISSUER_SCRIPTING_RES MAS transaction on the same card
 When user is logged in institution
-Then assert Success [0] status of Last Executed Script Status in Device Details Screen
+Then verify Success [0] status of Last Executed Script Status in Device Details Screen
 And search Purchase authorization and verify 208-LOST CARD, PICK-UP status
 And user sign out from customer portal
 
@@ -59,13 +59,13 @@ Scenario: Transaction EMV_PURCHASE and EMV_PURCHASE_ISSUER_SCRIPTING_RES for App
 When perform an EMV_PURCHASE MAS transaction on the same card
 And MAS test results are verified
 When user is logged in institution
-Then assert Pending [2] status of Last Executed Script Status in Device Details Screen
+Then verify Pending [2] status of Last Executed Script Status in Device Details Screen
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 When perform an EMV_PURCHASE_ISSUER_SCRIPTING_RES MAS transaction on the same card
 And MAS test results are verified
 Then MAS simulator is closed
 When user is logged in institution
-Then assert Success [0] status of Last Executed Script Status in Device Details Screen
+Then verify Success [0] status of Last Executed Script Status in Device Details Screen
 And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
