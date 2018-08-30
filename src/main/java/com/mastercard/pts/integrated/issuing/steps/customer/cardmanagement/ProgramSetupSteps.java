@@ -1134,8 +1134,8 @@ public class ProgramSetupSteps {
 		}
 		program.setProgramType(programType);
 		
-		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID))
-			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+//		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID))
+//			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
 
 		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);

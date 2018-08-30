@@ -9,10 +9,10 @@ Meta:
 @StoryName p_emv_retail_travel_mc_new
 @CRCardsWithAuthorizationCashAdvancedWithClearing
 
-Scenario: Setup multi-currency prepaid emv retail travel card and perfomr cash advanced  without pin authorization
-Given user is logged in institution
-When device range for program with device plan for "prepaid" "emv" card
-Then user sign out from customer portal
+!-- Scenario: Setup multi-currency prepaid emv retail travel card and perfomr cash advanced  without pin authorization
+!-- Given user is logged in institution
+!-- When device range for program with device plan for "prepaid" "emv" card
+!-- Then user sign out from customer portal
 
 
 Scenario: Device Production
