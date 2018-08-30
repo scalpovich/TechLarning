@@ -58,11 +58,12 @@ public class CountryWhiteListBlackListPlanPage extends AbstractBasePage {
 	
 	private String addCountryFrame="//h3[contains(text(), 'Add Country')]/ancestor::div//iframe";
 
+	private final String ADD_COUNTRY_WHITELIST_BLACK_LIST_PLAN_FRAME="Add Country White List/ Black List Plan";
 	public void verifyUiOperationStatus() {
 		logger.info("Country White List/ Black List Plan");
 		verifyUiOperation("Add Country White List/ Black List Plan");
 	}
-
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(countryWblistPlanCode),
@@ -71,11 +72,11 @@ public class CountryWhiteListBlackListPlanPage extends AbstractBasePage {
 
 	public boolean addCountryInBlackOrWhiteListInPlan(CountryWhiteListBlackListPlan countryWhiteListBlackListPlan) {
 		clickAddNewButton();
-		runWithinPopup("Add Country White List/ Black List Plan", () -> {
+		runWithinPopup(ADD_COUNTRY_WHITELIST_BLACK_LIST_PLAN_FRAME, () -> {
 			addPlanDetailsInPopUp(countryWhiteListBlackListPlan);
 			addCountry(countryWhiteListBlackListPlan);
 		});
-		runWithinPopup("Add Country White List/ Black List Plan", () -> {
+		runWithinPopup(ADD_COUNTRY_WHITELIST_BLACK_LIST_PLAN_FRAME, () -> {
 			clickSaveButton();
 		});
 		verifyUiOperationStatus();
@@ -86,21 +87,18 @@ public class CountryWhiteListBlackListPlanPage extends AbstractBasePage {
 	private void addPlanDetailsInPopUp(CountryWhiteListBlackListPlan countryWhiteListBlackListPlan) {
 		WebElementUtils.enterText(planCode, countryWhiteListBlackListPlan.getPlanCode());
 		WebElementUtils.enterText(planDescription, countryWhiteListBlackListPlan.getDescription());
-		if (countryWhiteListBlackListPlan.getPlanType().equals(WHITE_LIST))
+		if (countryWhiteListBlackListPlan.getPlanType().equals(WHITE_LIST)) {
 			WebElementUtils.selectRadioBtn(planTypeWhiteList);
-		else if (countryWhiteListBlackListPlan.getPlanType().equals(BLACK_LIST))
+		} else if (countryWhiteListBlackListPlan.getPlanType().equals(BLACK_LIST)) {
 			WebElementUtils.selectRadioBtn(planTypeBlackList);
+		}
 		clickAddDetailsButton();
 		clickAddNewButton();
-
 	}
 
 	private void addCountry(CountryWhiteListBlackListPlan countryWhiteListBlackListPlan) {
 		SimulatorUtilities.wait(1000);
 		switchToDefaultFrame();
-		/*driver().switchTo().frame(
-				driver().findElements(By.xpath("//h3[contains(text(), 'Add Country')]/ancestor::div//iframe")).get(1));
-		*/
 		switchToDefaultFrame(addCountryFrame,1);
 		WebElementUtils.selectDropDownByVisibleText(countryCode, countryWhiteListBlackListPlan.getCountryCode());
 		WebElementUtils.pickDate(effectiveDate, LocalDate.now().plusDays(1));
