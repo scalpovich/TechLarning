@@ -17,16 +17,17 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_REPORTS,
-		CardManagementNav.L2_REPORTS_STOP_LIST })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
+		CardManagementNav.L1_REPORTS, CardManagementNav.L2_REPORTS_STOP_LIST})
 
 public class StopListPage extends AbstractBasePage {
 
-	private static final Logger logger = LoggerFactory.getLogger(StopListPage.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(StopListPage.class);
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "componentPanel")
 	private MCWebElement selectReportDDwn;
-
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Stop List");
 		verifySearchButton("Go");
@@ -34,6 +35,8 @@ public class StopListPage extends AbstractBasePage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.elementToBeClickable(selectReportDDwn));
+		return Arrays.asList(
+				WebElementUtils.elementToBeClickable(selectReportDDwn)
+				);
 	}
 }

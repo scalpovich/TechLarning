@@ -1390,9 +1390,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		getFinder().getWebDriver().switchTo().defaultContent();
 	}
 
-	public void switchToDefaultFrame(String element,int index) {
-		driver().switchTo().frame(Elements(element).get(index));
-	}
 	public void enterText(MCWebElement field, String fieldValue) {
 		waitForElementVisible(field);
 		field.sendKeys(fieldValue);
@@ -1839,5 +1836,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		logger.info("Not validaiting any elements, as this is an Abstraction layer to Pages");
 		return null;
+	}
+	
+	public void switchToDefaultFrame(String element,int index) {
+		driver().switchTo().frame(Elements(element).get(index));
 	}
 }

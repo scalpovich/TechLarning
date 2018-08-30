@@ -93,7 +93,7 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanCode1:input:dropdowncomponent")
 	private MCWebElement devicePlanPlan1DDwn;
-
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanCode2:input:dropdowncomponent")
 	private MCWebElement devicePlanPlan2DDwn;
 
@@ -199,9 +199,6 @@ public class ProgramPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:referenceCurrency:input:dropdowncomponent")
 	private MCWebElement ReferenceCurrency;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//ul[@class='tabs']/li[2]")
-	private MCWebElement planTab;
-
 	/*
 	 * @PageElement(findBy = FindBy.NAME, valueToFind =
 	 * "view:cashLimitVariable:input:inputTextField") private MCWebElement
@@ -234,7 +231,7 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:currencyPayoutListPlanCode:input:dropdowncomponent")
 	private MCWebElement payoutCurrencyPlanDDwn;
-
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:cashLimitCycleIndicatior:input:dropdowncomponent")
 	private MCWebElement CashLimitResetDDwn;
 
@@ -282,6 +279,9 @@ public class ProgramPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "adaptiveEcommFlag:checkBoxComponent")
 	private MCWebElement adaptiveAuthenticationCheckBx;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//ul[@class='tabs']/li[2]")
+	private MCWebElement planTab;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[contains(@name,'countryWbPlanCode:input:dropdowncomponent')]")
 	private MCWebElement countryWhiteBlackListPlan;
 
@@ -363,7 +363,7 @@ public class ProgramPage extends AbstractBasePage {
 	public void selectDevicePlanPlan1DDwn(String devicePlanPlan1) {
 		WebElementUtils.selectDropDownByVisibleText(devicePlanPlan1DDwn, devicePlanPlan1);
 	}
-
+	
 	public void selectDevicePlanPlan2DDwn(String devicePlanPlan2) {
 		WebElementUtils.selectDropDownByVisibleText(devicePlanPlan2DDwn, devicePlanPlan2);
 	}
@@ -375,9 +375,10 @@ public class ProgramPage extends AbstractBasePage {
 	public void selectOtherPlanMarketingMessagePlan(String otherPlanMarketingMessagePlan) {
 		WebElementUtils.selectDropDownByVisibleText(otherPlanMarketingMessagePlanDDwn, otherPlanMarketingMessagePlan);
 	}
-
+	
 	public void selectPayoutCurrencyPlan(String payoutCurrencyPlan) {
-		if (payoutCurrencyPlanDDwn.isEnabled()) {
+		if (payoutCurrencyPlanDDwn.isEnabled())
+		{
 			WebElementUtils.selectDropDownByVisibleText(payoutCurrencyPlanDDwn, payoutCurrencyPlan);
 		}
 	}
@@ -387,7 +388,7 @@ public class ProgramPage extends AbstractBasePage {
 		clickAddNewButton();
 
 		runWithinPopup("Add Program", () -> {
-			addProgram(program.getProgramCode());
+			addProgram(program.getProgramCode());          	
 			addDescription(program.getDescription());
 			SimulatorUtilities.wait(2000);
 			selectInterchange(program.getInterchange());
@@ -418,11 +419,6 @@ public class ProgramPage extends AbstractBasePage {
 		verifyOperationStatus();
 	}
 
-	private void setCountryWhiteBlackListPlan(Program program) {
-		WebElementUtils.selectDropDownByVisibleText(countryWhiteBlackListPlan, program.getCountryWhiteListAndBlackListPlan());
-
-	}
-
 	public void addProgramForMultiWallet(Program program, String productType) {
 		logger.info("Add Program: {}", program.getProgramCode());
 		clickAddNewButton();
@@ -430,15 +426,15 @@ public class ProgramPage extends AbstractBasePage {
 		runWithinPopup("Add Program", () -> {
 			addProgram(program.getProgramCode());
 			addDescription(program.getDescription());
-			SimulatorUtilities.wait(2000);
+          	SimulatorUtilities.wait(2000);
 			selectInterchange(program.getInterchange());
-			SimulatorUtilities.wait(2000);
+          	SimulatorUtilities.wait(2000);
 			selectProduct(program.getProduct());
-			SimulatorUtilities.wait(2000);
+          	SimulatorUtilities.wait(2000);
 			selectProgramType(program.getProgramType());
-			SimulatorUtilities.wait(2000);
+          	SimulatorUtilities.wait(2000);
 			selectBaseCurrency(program.getBaseCurrency());
-			SimulatorUtilities.wait(2000);
+          	SimulatorUtilities.wait(2000);
 			program.setProgramCodeDevice(program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
@@ -864,13 +860,18 @@ public class ProgramPage extends AbstractBasePage {
 	public void switchToEditProgramframe() {
 		switchToIframe(Constants.EDIT_PROGRAM_FRAME);
 	}
-
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(programSearchTxt));
 
 	}
+	
+	private void setCountryWhiteListAndBlackListPlan(Program program) {
+		WebElementUtils.selectDropDownByVisibleText(countryWhiteBlackListPlan, program.getCountryWhiteListAndBlackListPlan());
 
+	}
+	
 	public void editProgramForPlans(Program program, String editItem) {
 		enterValueinTextBox(enterProgram, program.getProgramCode());
 		logger.info("Program code :" +program.getProgramCode() + "]");
@@ -881,7 +882,7 @@ public class ProgramPage extends AbstractBasePage {
 			switch (editItem) {
 			case COUNTRY_WHITELIST_AND_BLACKLIST_PLAN:
 				clickWhenClickable(planTab);
-				setCountryWhiteBlackListPlan(program);
+				setCountryWhiteListAndBlackListPlan(program);
 				clickSaveButton();
 				break;
 			}
