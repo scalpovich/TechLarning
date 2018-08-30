@@ -75,9 +75,6 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:billingCycleCode:input:dropdowncomponent")
 	private MCWebElement billingCycleCodeDDwn;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//following-sibling::td[4]/span/a")
-	private MCWebElement editWalletPlan;
-	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "whiteListedMcgCode:input:dropdowncomponent")
 	private MCWebElement editWhiteListedMCGDdwn;
 	
