@@ -127,37 +127,34 @@ public class StoplistReasonPage extends AbstractBasePage {
 		for (int index = 0; index < stopListReasonPlan.getSize(); index++) {
 			if (verifyReasonAlreadyExistsOrNotInStopList(stopListReasonPlan.getDescription(index))) {
 				clickAddNewButton();
-				addLostPlanInStopList(stopListReasonPlan.getReasonCode()[index],
-						stopListReasonPlan.getDescription(index), stopListReasonPlan.getSticky(index),
-						stopListReasonPlan.getSentToMastercard(index), stopListReasonPlan.getRegionMastercard(index),
-						stopListReasonPlan.getSentToVisa(index), stopListReasonPlan.getRegionVisa(index),
-						stopListReasonPlan.getSentToRupay(index), stopListReasonPlan.getSentToAmex(index));
+				addLostPlanInStopList(stopListReasonPlan,index);
 			}
 		}
 	}
 
-	private void addLostPlanInStopList(String reasonCode, String description, String sticky, String sentToMasterCard,
-			String regionMastercard, String sentToVisa, String regionVisa, String sentToRupay, String sentToAmex) {
+	private void addLostPlanInStopList(StopListReasonPlan stopListReasonPlan, int index) {
 		runWithinPopup("Add Stoplist Reason", () -> {
-			WebElementUtils.selectDropDownByVisibleText(reasonCodeInPopUpDDwn, reasonCode);
-			WebElementUtils.enterText(txtDescriptionInPopUp, description);
-			if (sticky.equals("Yes"))
+			WebElementUtils.selectDropDownByVisibleText(reasonCodeInPopUpDDwn,
+					stopListReasonPlan.getReasonCode()[index]);
+			WebElementUtils.enterText(txtDescriptionInPopUp, stopListReasonPlan.getDescription(index));
+			if (stopListReasonPlan.getSticky(index).equals("Yes"))
 				WebElementUtils.selectRadioBtn(rbtnSticky);
-			if (sentToMasterCard.equals("Online"))
+			if (stopListReasonPlan.getSentToMastercard(index).equals("Online"))
 				WebElementUtils.selectRadioBtn(rbtnSentToMasterOnline);
-			if (sentToVisa.equals("Online"))
+			if (stopListReasonPlan.getSentToVisa(index).equals("Online"))
 				WebElementUtils.selectRadioBtn(rbtnSentToVisaOnline);
-			if (sentToRupay.equals("Online"))
+			if (stopListReasonPlan.getSentToRupay(index).equals("Online"))
 				WebElementUtils.selectRadioBtn(rbtnSentToRupayOnline);
-			if (sentToRupay.equals("Batch Mode"))
+			if (stopListReasonPlan.getSentToRupay(index).equals("Batch Mode"))
 				WebElementUtils.selectRadioBtn(rbtnSentToRupayBatch);
-			if (sentToAmex.equals("Online"))
+			if (stopListReasonPlan.getSentToAmex(index).equals("Online"))
 				WebElementUtils.selectRadioBtn(rbtnSentToAmexOnline);
-			if (sentToAmex.equals("Batch Mode"))
+			if (stopListReasonPlan.getSentToAmex(index).equals("Batch Mode"))
 				WebElementUtils.selectRadioBtn(rbtnSentToAmexBatch);
-			if (regionMastercard != null || regionVisa != null) {
-				selectRegions(regionMastercard.split(" "));
-				selectRegions(regionVisa.split(" "));
+			if (stopListReasonPlan.getRegionMastercard(index) != null
+					|| stopListReasonPlan.getRegionVisa(index) != null) {
+				selectRegions(stopListReasonPlan.getRegionMastercard(index).split(" "));
+				selectRegions(stopListReasonPlan.getRegionVisa(index).split(" "));
 			}
 			clickSaveButton();
 		});
@@ -212,10 +209,7 @@ public class StoplistReasonPage extends AbstractBasePage {
 			case "F-Latin America and Caribbean(LAC)":
 				WebElementUtils.checkCheckbox(regionVisaCarribbeanChkBx, true);
 				break;
-
 			}
 		}
-
 	}
-
 }
