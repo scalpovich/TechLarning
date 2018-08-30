@@ -79,7 +79,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private String[] values;
 	private String walletBalanceInformation;
 	public  boolean serviceStatus = false;
-	public String availablebalance;
+	private String availablebalance;
 
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -1269,6 +1269,5 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(3000);
 		clickEndCall();
 	}
-
 }
 

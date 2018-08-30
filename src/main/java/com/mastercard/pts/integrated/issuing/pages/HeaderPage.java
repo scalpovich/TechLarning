@@ -37,7 +37,6 @@ public class HeaderPage extends AbstractPage{
 
     public void signOutCustomer(){
     	signOutCustomerLnk.click();
-    	SimulatorUtilities.wait(2000);
     }
     
     public void signOutCollect(){

@@ -30,30 +30,30 @@ And User fills MCC Rules for credit product
 And User Primary Device fills New Program Corporate Credit Card section for credit product for Mastercard
 When for Primary Device and New Client user fills Device Range section for credit product
 When user assigns service code to program
-Then credit device is created using new device screen for Corporate and Primary Device and New Client and Magnetic Stripe Card
-Then credit processes pre-production batch using new Device
-Then credit processes deviceproduction batch using new Device for Supplementary
-Then credit processes pinProduction batch using new Device for Supplementary
-Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-Then user activates permanent credit limit change request
-Then device has "normal" status
-Then user verify available Card limit for card after transaction
-And user sign out from customer portal
+And credit device is created using new device screen for Corporate and Primary Device and New Client and Magnetic Stripe Card
+And credit processes pre-production batch using new Device
+And credit processes deviceproduction batch using new Device for Supplementary
+And credit processes pinProduction batch using new Device for Supplementary
+And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+And user activates permanent credit limit change request
+And device has "normal" status
+And user verify available Card limit for card after transaction
+Then user sign out from customer portal
 
 Scenario: Pin Generation 
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
-When embossing file batch was generated in correct format
-When PIN is retrieved successfully with data from Pin Offset File
+And embossing file batch was generated in correct format
+And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
 Scenario: Perform MSR_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an MSR_PURCHASE MAS transaction
-Then MAS test results are verified
-When MAS simulator is closed
-Then user is logged in institution
-Then search Purchase authorization and verify 000-Successful status
-Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-Then user verify permanent credit limit for credit product
-And user sign out from customer portal
+And MAS test results are verified
+And MAS simulator is closed
+And user is logged in institution
+And search Purchase authorization and verify 000-Successful status
+And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+And user verify permanent credit limit for credit product
+Then user sign out from customer portal
