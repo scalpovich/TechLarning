@@ -93,7 +93,6 @@ public class BatchProcessSteps {
 	}
 	
 	@When("processes pre-production batch for $type")
-	@Then("processes pre-production batch for $type")
 	public void whenProcessesPreproductionBatchForPrepaid(String type){
 		PreProductionBatch batch = new PreProductionBatch();
 		batch.setProductType(ProductType.fromShortName(type));
@@ -133,7 +132,6 @@ public class BatchProcessSteps {
 	}
 	
 	@When("processes pin generation batch for $type")
-	@Then("processes pin generation batch for $type")
 	public void whenProcessesPinGenerationBatch(String type){
 		PinGenerationBatch batch = new PinGenerationBatch();
 		batch.setProductType(ProductType.fromShortName(type));

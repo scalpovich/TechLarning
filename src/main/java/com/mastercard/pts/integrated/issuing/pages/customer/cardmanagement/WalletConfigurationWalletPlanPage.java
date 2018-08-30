@@ -79,7 +79,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	private MCWebElement editWalletPlan;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "whiteListedMcgCode:input:dropdowncomponent")
-	private MCWebElement editWhiteListedMCG;
+	private MCWebElement editWhiteListedMCGDdwn;
 	
 	
 	
@@ -266,7 +266,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 		runWithinPopup("Edit Wallet Plan", () -> {
 			switch (updateField) {
 			case "White Listed MCG":
-				selectByVisibleText(editWhiteListedMCG, walletPlan.getWhiteListedMCGPlan());
+				selectByVisibleText(editWhiteListedMCGDdwn, walletPlan.getWhiteListedMCGPlan());
 				break;
 			}
 			clickSaveButton();
