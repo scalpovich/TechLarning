@@ -276,7 +276,7 @@ public class TransactionSteps {
 		transactionData.setCardDataElementsDynamic("035.04", device.getServiceCode());
 		if (transactionWorkflow.isContains(transaction, "EMV")) {
 			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getIcvvData());
-		} else if (transactionWorkflow.isContains(transaction, "MSR")) {
+		} else if (transactionWorkflow.isContains(transaction, "MSR") || transactionWorkflow.isContains(transaction, "FALLBACK") ) {
 			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getCvvData());
 		}
 	}
