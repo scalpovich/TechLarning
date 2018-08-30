@@ -22,53 +22,47 @@ import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_SEARCH, CardManagementNav.L2_SEARCH_DEVICE,
-		CardManagementNav.L3_DEVICE_DETAILS})
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_SEARCH,
+		CardManagementNav.L2_SEARCH_DEVICE, CardManagementNav.L3_DEVICE_DETAILS })
 
 public class DeviceDetailsPage extends AbstractCardManagementPage {
 
 	private static final Logger logger = LoggerFactory.getLogger(DeviceDetailsPage.class);
-	
-      private String statusFieldAssertion = "";
+
+	private String statusText = "";
 
 	@Autowired
 	private TestContext context;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=deviceNumber]")
-	private MCWebElement fieldAssertion;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//ul/li/a[contains(text(),'EMV-Scripting Details')]")
 	private MCWebElement emvScriptingDetailsTab;
-	
+
 	@PageElement(findBy = FindBy.ID, valueToFind = "lastExecutedScriptStatus")
 	private MCWebElement lastExecutedScriptStatus;
+
 	@Override
 	public void verifyUiOperationStatus() {
 		logger.info("Device Details");
 		verifySearchButton("Search");
 	}
 
-	
-	public String verifyLastExecutedScriptStatusFromDeviceDetails()
-	{
-		Device device=context.get(ContextConstants.DEVICE);
+	public String verifyLastExecutedScriptStatusFromDeviceDetails() {
+		Device device = context.get(ContextConstants.DEVICE);
 		enterText(deviceNumber, device.getDeviceNumber());
 		clickSearchButton();
 		viewFirstRecord();
-		runWithinPopup("View Device Details", ()->{
+		runWithinPopup("View Device Details", () -> {
 			clickWhenClickable(emvScriptingDetailsTab);
-			statusFieldAssertion=lastExecutedScriptStatus.getText();
+			statusText = lastExecutedScriptStatus.getText();
 			clickCloseButton();
 		});
-		return statusFieldAssertion;
+		return statusText;
 	}
+
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(deviceNumber),
+		return Arrays.asList(WebElementUtils.elementToBeClickable(deviceNumber),
 				WebElementUtils.elementToBeClickable(applicationNumber),
-				WebElementUtils.elementToBeClickable(batchCreateNum)
-				);
+				WebElementUtils.elementToBeClickable(batchCreateNum));
 	}
 }
