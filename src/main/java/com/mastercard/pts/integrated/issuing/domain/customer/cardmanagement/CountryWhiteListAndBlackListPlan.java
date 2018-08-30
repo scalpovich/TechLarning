@@ -7,7 +7,7 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 @Component
-public class CountryWhiteListBlackListPlan {
+public class CountryWhiteListAndBlackListPlan {
 
 	private static final String PLAN_TYPE = "PLAN_TYPE";
 	private static final String COUNTRY_CODE = "COUNTRY_CODE";
@@ -49,8 +49,8 @@ public class CountryWhiteListBlackListPlan {
 		this.countryCode = countryCode;
 	}
 
-	public static CountryWhiteListBlackListPlan createWithProvider(KeyValueProvider provider) {
-		CountryWhiteListBlackListPlan plan = new CountryWhiteListBlackListPlan();
+	public static CountryWhiteListAndBlackListPlan createWithProvider(KeyValueProvider provider) {
+		CountryWhiteListAndBlackListPlan plan = new CountryWhiteListAndBlackListPlan();
 		plan.setCountryCode(provider.getString(COUNTRY_CODE));
 		plan.setPlanType(provider.getString(PLAN_TYPE));
 		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);
