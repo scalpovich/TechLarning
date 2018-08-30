@@ -11,7 +11,7 @@ Meta:
 @FallbackTrx
 Scenario:creation of mastercard_individual_primary_emv Card credit device
 Given setting json values in excel for Credit
-Given user is logged in institution
+And user is logged in institution
 When for EMV Card User fills without pin Device Plan for credit product for Mastercard
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
