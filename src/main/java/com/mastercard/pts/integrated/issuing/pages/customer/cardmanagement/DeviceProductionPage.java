@@ -130,6 +130,16 @@ public class DeviceProductionPage extends AbstractBasePage {
 		verifyOperationStatus();
 	}
 
+	public void processDeviceProductionBatchForAllForFileUploadForPrepaid(DeviceProductionBatch batch) {
+		String batchNumber = context.get(CreditConstants.BATCH_NUMBER_FILEUPLOAD);
+		waitForLoaderToDisappear();
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+		WebElementUtils.enterText(batchNumberTxt,batchNumber);
+		waitAndSearchForRecordToAppear();
+		clickWhenClickable(processAllBtn);
+		verifyOperationStatus();
+	}
+	
 	public void selectProduct(BulkDeviceRequestbatch bulkdeviceGenBatch) {
 		selectByVisibleText(productTypeDDwn, bulkdeviceGenBatch.getProduct());
 	}

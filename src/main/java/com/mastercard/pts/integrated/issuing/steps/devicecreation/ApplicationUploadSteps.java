@@ -122,6 +122,14 @@ public class ApplicationUploadSteps {
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPreProductionBatchNewApplicationFileUpload(preProductionBatch);
 	}
+	
+	@Then("$type processes pre-production batch using new Application for fileUpload in Bulk from jobid")
+	@When("$type processes pre-production batch using new Application for fileUpload in Bulk from jobid")
+	public void whenProcessesPreproductionBatchForDeviceUsingApplicationForFileUploadForPrepaid(String type) {
+
+		preProductionBatch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processPreProductionBatchNewApplicationFileUploadForPrepaid(preProductionBatch);
+	}
 
 	@Then("$type processes deviceproduction batch using new Device")
 	@When("$type processes deviceproduction batch using new Device")
@@ -216,6 +224,14 @@ public class ApplicationUploadSteps {
 		DeviceProductionBatch batch = new DeviceProductionBatch();
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processDeviceProductionBatchAllForFileUpload(batch);
+	}
+	
+	@Then("All processes $type device production batch for fileUpload in Bulk from jobid")
+	@When("All processes $type device production batch for fileUpload in Bulk from jobid")
+	public void whenProcessesDeviceProductionBatchForAllForFileUploadForPrepaid(String type) {
+		DeviceProductionBatch batch = new DeviceProductionBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processDeviceProductionBatchAllForFileUploadForPrepaid(batch);
 	}
 	
 	@Then("All processes $type pin production batch for fileUpload in Bulk")

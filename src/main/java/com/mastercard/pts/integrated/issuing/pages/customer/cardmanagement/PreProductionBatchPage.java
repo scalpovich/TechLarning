@@ -68,6 +68,9 @@ public class PreProductionBatchPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class = 'repeat']//div[2]//li[2]//span[@class = 'feedbackPanelINFO']")
 	private MCWebElement confirmationMsgTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview tbody tr:nth-of-type(1) td:nth-of-type(3)")
+	private MCWebElement batchNumberFirstRowTxt;
 
 	public void preproduction(String product, String batchNum) {
 		menuSubMenuPage.getPreProductionBatch().click();
@@ -229,6 +232,21 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		switchToDefaultFrame();
 
 	}
+		
+		public void processPreProductionBatchNewApplicationForFileUploadForPrepaid(PreProductionBatch batch) {
+	        String jobID=context.get(CreditConstants.JOB_ID);
+			waitForLoaderToDisappear();
+			selectDropDownByText(productTypeDDwn, batch.getProductType());
+			SimulatorUtilities.wait(8000);
+			enterText(sourceJobIdTxt, jobID);
+			ClickButton(searchBtn);
+			ClickCheckBox(preProductionBatchRecordChkBx, true);
+			context.put(CreditConstants.BATCH_NUMBER_FILEUPLOAD, batchNumberFirstRowTxt.getText());
+			ClickButton(processSelectedBtn);
+			verifyOperationStatus();
+			switchToDefaultFrame();
+
+		}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
