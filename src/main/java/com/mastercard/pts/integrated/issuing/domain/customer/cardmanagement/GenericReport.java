@@ -52,8 +52,7 @@ public class GenericReport {
 	public static GenericReport createWithProvider(KeyValueProvider provider){
 		GenericReport report = new GenericReport();
 		reportFields = new HashMap<>();
-		reportRegEx = new HashMap<>();
-		reportRegEx.put("RAMP", "\\d\\d-\\d\\d-\\d\\d\\d\\d");
+		report.setReportRegEx();
 		return report;
 	}
 	
@@ -91,6 +90,11 @@ public class GenericReport {
 	
 	public String getReportRegEx(){
 		return reportRegEx.get(reportName);
+	}
+	
+	public void setReportRegEx(){
+		reportRegEx = new HashMap<>();
+		reportRegEx.put("RAMP", "\\d\\d-\\d\\d-\\d\\d\\d\\d");
 	}
 	
 	

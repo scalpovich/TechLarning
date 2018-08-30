@@ -99,9 +99,10 @@ public class PDFUtils {
 		return programWiseContent;
 	}
 	
-	public Map<Integer, String> getContentRow(GenericReport genericReports) {
+	public Map<Object, String> getContentRow(GenericReport genericReports) {
 		dateutils=new DateUtils();
-		HashMap<Integer, String> map = new HashMap<>();
+		HashMap<Object, String> map = new HashMap<>();
+		String row[] =  new String[]{};
 		try {
 			File file = new File(genericReports.getReportUrl());
 			PDDocument document =  PDDocument.load(file,genericReports.getUsername().substring(0,4)+dateutils.getDateDDMMFormat());
@@ -121,11 +122,23 @@ public class PDFUtils {
             
             String pdfFileInText = tStripper.getText(pd);
             
-			// split by RegEx
-            String row[] = pdfFileInText.split(genericReports.getReportRegEx());
-            for(String text : row){
-            	map.put(i++, text);
-            }
+			if(genericReports.getReportRegEx()== null){
+				
+				// Split by line separtor
+				tStripper.setLineSeparator("****");
+				row  = pdfFileInText.split("****");
+				for(int j = 0; j<row.length;j=j+2 ){
+					map.put(row[j],row[j+1]);
+				}
+	            }
+			else{
+            // split by RegEx
+             row = pdfFileInText.split(genericReports.getReportRegEx());
+             for(String text : row){
+             	map.put(i++, text);
+             }
+			}
+			pd.close();
 			}
            document.close();
 		}catch(Exception e){
