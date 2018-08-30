@@ -5,14 +5,14 @@ I want to assert pages
 
 Meta:
 @debitRegression
-@StoryName credit_emv_retail
+@StoryName debit_emv_retail
 @Individual				 
 Scenario:creation of mastercard_individual_primary_LVC Card debit device
 Meta:
 @UserCreatesNewdebitDevice
 Given setting json values in excel for Debit
-And user is logged in institution
-When User fills Dedupe Plan
+When user is logged in institution
+And User fills Dedupe Plan
 And user creates a mark up fee plan and verify it
 And User fills Transaction Plan for debit product
 And User fills Transaction Limit Plan for debit product
@@ -23,7 +23,7 @@ And for Limited Validity Virtual Card [8] User fills Device Plan for debit produ
 And User fills Wallet Plan for debit product and program Retail Debit Card [11]
 And User fills MCC Rules for debit product
 And User Primary Device [P] fills New Client [N] Program Retail Debit Card [11] section for debit product for MASTERCARD [02]
-When for Primary Device [P] and New Client [N] user fills Device Range section for debit product
+And for Primary Device [P] and New Client [N] user fills Device Range section for debit product
 Then debit device is created using new device screen for Individual [0] and Primary Device [P] and New Client [N] and Limited Validity Virtual Card [8]
 And debit processes pre-production batch using new Device
 And debit processes deviceproduction batch using new Device for Supplementary
