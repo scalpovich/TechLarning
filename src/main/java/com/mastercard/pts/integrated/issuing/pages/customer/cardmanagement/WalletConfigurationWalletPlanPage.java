@@ -262,7 +262,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	public void editWalletPlan(WalletPlan walletPlan, String updateField) {
 		WebElementUtils.enterText(walletPlanCodeSearchTxt, walletPlan.getWalletPlanCode());
 		clickSearchButton();
-		clickWhenClickable(editWalletPlan);
+		editFirstRecord();
 		runWithinPopup("Edit Wallet Plan", () -> {
 			switch (updateField) {
 			case "White Listed MCG":
