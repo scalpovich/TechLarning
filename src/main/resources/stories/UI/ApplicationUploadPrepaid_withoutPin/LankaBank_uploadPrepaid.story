@@ -18,7 +18,6 @@ And User fills Wallet Fee Plan for prepaid product
 And User fills Wallet Plan for prepaid product and program Retail General Purpose Card [4]
 And User fills MCC Rules for prepaid product
 And User Primary Device fills New Program Retail General Purpose Card [4] section for prepaid product for Mastercard
-!-- And User Primary Device fills New Program Retail prepaid Card section without dedupe for prepaid product for Mastercard
 And for Primary Device and New Client user fills Device Range section for prepaid product
 And user creates Application Upload prepaid batch file and upload it on server for Individual for prepaid
 And prepaid processes pre-production batch using new Application for fileUpload in Bulk
