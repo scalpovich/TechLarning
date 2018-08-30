@@ -1440,7 +1440,14 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 	
-
+	@When("User edits Wallet Plan for $updateField")
+	public void whenUserEditsWalletPlan(String updateField)
+	{
+		walletPlan.setWhiteListedMCGPlan(provider);
+		programSetupWorkflow.editWalletPlan(walletPlan,updateField);
+		
+	}
+	
 	@When("User fills Device Plan for $productType $deviceType card with transaction fee waived Off")
 	public void whenUserFillsDevicePlaWithTransactionFeeWaivedOff(String productType, String deviceType) {
 		settingDevicePlanTestData(productType, deviceType); // call to re-usable method
