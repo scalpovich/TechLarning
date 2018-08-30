@@ -9,6 +9,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.Batch
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
 @Component
 public class ProcessBatchesFlows {
@@ -39,6 +40,7 @@ public class ProcessBatchesFlows {
 
 	public String processUploadBatches(String batchName, String fileName) {
 		processBatchesPage = navigator.navigateToPage(ProcessBatchesPage.class);
+		SimulatorUtilities.wait(5000);
 		processBatchesPage.processUploadBatch(batchName);
 		processBatchesPage.checkAndSumbitFile(fileName);
 		return processBatchesPage.retrieveJobID(fileName);
