@@ -247,6 +247,12 @@ public class ProgramSetupWorkflow {
 		MCCRulePlanPage page = navigator.navigateToPage(MCCRulePlanPage.class);
 		page.createMCCRulePlanPage(plan);
 	}
+
+	public void editWalletPlan(WalletPlan walletPlan, String editableFieldForWalletPlan) {
+		WalletConfigurationWalletPlanPage page = navigator.navigateToPage(WalletConfigurationWalletPlanPage.class);
+		page.editWalletPlan(walletPlan,editableFieldForWalletPlan);
+		
+	}
 	public void enableStopListFlag(DevicePlan devicePlanDataObject) {
 		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
 		page.enableStopListFlag(devicePlanDataObject);

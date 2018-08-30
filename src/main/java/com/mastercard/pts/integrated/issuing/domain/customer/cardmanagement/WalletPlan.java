@@ -36,6 +36,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	private static final String WP_WALLET_INACTVITY_RULES_INACTIVITY_AFTER_DAYS = "WP_WALLET_INACTVITY_RULES_INACTIVITY_AFTER_DAYS";
 	private static final String WP_WALLET_INACTVITY_RULES_CLOSURE_WALLET_AFTER_DAYS = "WP_WALLET_INACTVITY_RULES_CLOSURE_WALLET_AFTER_DAYS";
 	private static final String WP_WALLET_RESERVERD_AMOUNT = "WP_WALLET_RESERVERD_AMOUNT";
+	private static final String WHITE_LISTED_MCG_PLAN="WHITE_LISTED_MCG_PLAN";
 
 	private String walletReserveAmount;
 	private String description;
@@ -74,6 +75,15 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String firstWallet;
 	private String secondWallet;
 	private String whiteMcgCode;
+	private String whiteListedMCGPlan;
+
+	public String getWhiteListedMCGPlan() {
+		return whiteListedMCGPlan;
+	}
+
+	public void setWhiteListedMCGPlan(KeyValueProvider provider) {
+		this.whiteListedMCGPlan = provider.getString(WHITE_LISTED_MCG_PLAN);
+	}
 
 	public String getWhiteMcgCode() {
 		return whiteMcgCode;
