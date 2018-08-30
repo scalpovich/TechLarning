@@ -196,7 +196,6 @@ public class HelpdeskWorkflow {
 			return Optional.empty();
 		}
 	}
-	
 	public void validateRequiredFields(HelpdeskGeneral general){
 		helpDeskPage.validateRequiredFields(general);
 		helpDeskPage.validateMandatoryFields(3);

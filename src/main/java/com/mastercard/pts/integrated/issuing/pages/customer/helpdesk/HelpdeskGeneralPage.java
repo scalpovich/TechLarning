@@ -37,10 +37,8 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = HelpdeskNav.TAB_HELPDESK,treeMenuItems = { 
-		HelpdeskNav.L1_ACTIVITY, 
-		HelpdeskNav.L2_GENERAL
-})
+@Navigation(tabTitle = HelpdeskNav.TAB_HELPDESK,treeMenuItems = { HelpdeskNav.L1_ACTIVITY, HelpdeskNav.L2_GENERAL})
+
 public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String TABLE_XPATH = "//div[@class='TransScrollY']//table[@class='dataview']//tr";
 	private static final String COLUMN_STATUS = "Status";
@@ -114,7 +112,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "memo1:input:textAreaComponent")
 	private MCWebElement notesTxt;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "udf6:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "//select[@name='udf6:input:dropdowncomponent']")
 	private MCWebElement selectLimitType;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "udf29:input:inputAmountField")
@@ -147,13 +145,13 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='date1']/..")
 	private MCWebElement effectiveDateTxt;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "udf29:input:inputAmountField")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='udf29:input:inputAmountField']")
 	private MCWebElement creditClientLimit;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "udf19:input:inputAmountField")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "//input[@name='udf19:input:inputAmountField']")
 	private MCWebElement creditAccountLimit;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanels:1:childdataPanel:inlineTable:container:dataList:0:colList:colHeaders:3:inputField:input:inputAmountField")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "//input[@fld_fqn='newCreditLimit']")
 	private MCWebElement newCreditLimit;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='date2']/..")

@@ -28,9 +28,11 @@ public class InstitutionSelectionPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "select[name^=institutionCode]")
 	private MCWebElement institutionSelect;
 
-
 	@PageElement(findBy = FindBy.NAME, valueToFind = "institutionCode:input:dropdowncomponent")
 	private MCWebElement institution;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[contains(text(),'Click here to login')]")
+	private MCWebElement login;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "confirm")
 	private MCWebElement confirmButton;
@@ -104,7 +106,7 @@ public class InstitutionSelectionPage extends AbstractBasePage {
 	public boolean checkSessionExpired(){
 		SimulatorUtilities.wait(5000);
 		if( Elements("//ul[@class='feedbackPanel']//span").size()>0 ){
-			Element("//a[contains(text(),'Click here to login')]").click();
+			login.click();
 			return true;
 		}
 		return false;

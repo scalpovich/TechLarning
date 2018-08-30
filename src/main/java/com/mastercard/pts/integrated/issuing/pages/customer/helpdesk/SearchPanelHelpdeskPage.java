@@ -204,7 +204,5 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 			}
 		}
 		return index + 1;
-
 	}
-
 }
