@@ -39,37 +39,37 @@ public class StoplistReasonPage extends AbstractBasePage {
 	private MCWebElement txtDescriptionInPopUp;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "stickyFlag:checkBoxComponent")
-	private MCWebElement stickyRadioButton;
+	private MCWebElement rbtnSticky;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='sentToMaster:radioComponent' and @value='O']")
-	private MCWebElement sentToMasterOnline;
+	private MCWebElement rbtnSentToMasterOnline;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='sentToMaster:radioComponent' and @value='N']")
-	private MCWebElement sentToMasterNotRequired;
+	private MCWebElement rbtnSentToMasterNotRequired;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='sentToVisa:radioComponent' and @value='O']")
-	private MCWebElement sentToVisaOnline;
+	private MCWebElement rbtnSentToVisaOnline;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='sentToVisa:radioComponent' and @value='N']")
-	private MCWebElement sentToVisaNotRequired;
+	private MCWebElement rbtnSentToVisaNotRequired;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='sentToRupay:radioComponent' and @value='O']")
-	private MCWebElement sentToRupayOnline;
+	private MCWebElement rbtnSentToRupayOnline;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='sentToRupay:radioComponent' and @value='B']")
-	private MCWebElement sentToRupayBatch;
+	private MCWebElement rbtnSentToRupayBatch;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='sentToRupay:radioComponent' and @value='N']")
-	private MCWebElement sentToRupayNotRequired;
+	private MCWebElement rbtnSentToRupayNotRequired;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='sentToAmex:radioComponent' and @value='B']")
-	private MCWebElement sentToAmexBatch;
+	private MCWebElement rbtnSentToAmexBatch;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='sentToAmex:radioComponent' and @value='O']")
-	private MCWebElement sentToAmexOnline;
+	private MCWebElement rbtnSentToAmexOnline;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='sentToAmex:radioComponent' and @value='N']")
-	private MCWebElement sentToAmexNotRequired;
+	private MCWebElement rbtnSentToAmexNotRequired;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mcUS:checkBoxComponent")
 	private MCWebElement regionMCUSChkBx;
@@ -142,19 +142,19 @@ public class StoplistReasonPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(reasonCodeInPopUpDDwn, reasonCode);
 			WebElementUtils.enterText(txtDescriptionInPopUp, description);
 			if (sticky.equals("Yes"))
-				WebElementUtils.selectRadioBtn(stickyRadioButton);
+				WebElementUtils.selectRadioBtn(rbtnSticky);
 			if (sentToMasterCard.equals("Online"))
-				WebElementUtils.selectRadioBtn(sentToMasterOnline);
+				WebElementUtils.selectRadioBtn(rbtnSentToMasterOnline);
 			if (sentToVisa.equals("Online"))
-				WebElementUtils.selectRadioBtn(sentToVisaOnline);
+				WebElementUtils.selectRadioBtn(rbtnSentToVisaOnline);
 			if (sentToRupay.equals("Online"))
-				WebElementUtils.selectRadioBtn(sentToRupayOnline);
+				WebElementUtils.selectRadioBtn(rbtnSentToRupayOnline);
 			if (sentToRupay.equals("Batch Mode"))
-				WebElementUtils.selectRadioBtn(sentToRupayBatch);
+				WebElementUtils.selectRadioBtn(rbtnSentToRupayBatch);
 			if (sentToAmex.equals("Online"))
-				WebElementUtils.selectRadioBtn(sentToAmexOnline);
+				WebElementUtils.selectRadioBtn(rbtnSentToAmexOnline);
 			if (sentToAmex.equals("Batch Mode"))
-				WebElementUtils.selectRadioBtn(sentToAmexBatch);
+				WebElementUtils.selectRadioBtn(rbtnSentToAmexBatch);
 			if (regionMastercard != null || regionVisa != null) {
 				selectRegions(regionMastercard.split(" "));
 				selectRegions(regionVisa.split(" "));
