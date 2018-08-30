@@ -46,6 +46,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDeskFlows;
@@ -374,6 +375,7 @@ public class HelpDeskSteps {
 
 	@Given("user has wallet number information for $type device")
 	@When("user has wallet number information for $type device")
+	@Then("user has wallet number information for $type device")
 	public void givenUserHasWalletNumberInformation(String type) {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
@@ -513,6 +515,27 @@ public class HelpDeskSteps {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.activateDevice(helpdeskGeneral);
+	}
+	
+	@Then("user selects $reason status")
+	@When("user selects $reason status")
+	public void whenUserSelectsEccomerceUseAllowDisallowStatus(String status) {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskWorkflow.getDeviceStatus(device);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW)) {
+			helpdeskWorkflow.setupInternationalAllowDisallowCheck(status);
+		} else {
+			helpdeskWorkflow.setupEccomerceAllowDisallowCheck(helpdeskGeneral, status);
+		}
+	}
+
+	@When("user allow $type Transaction For One Hour")
+	public void whenUserTransactionForOneHour(String status) {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskWorkflow.getDeviceStatus(device);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.allowTransactionForOneHour(status);
 	}
 
 	@Then("user activates $limittype credit limit change request")

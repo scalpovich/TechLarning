@@ -41,6 +41,8 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String TABLE_XPATH = "//div[@class='TransScrollY']//table[@class='dataview']//tr";
+	private static final String OPERATION="//select[@name='udf1:input:dropdowncomponent']";
+	private static final String ROWCOUNT_REMITTANCE = "//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr";
 	private static final String COLUMN_STATUS = "Status";
 	private static final String CURRENT_AVAILABLE_BALANCE = "Current Available Balance";
 	private static final String WALLET_NUMBER = "Wallet Number";
@@ -120,6 +122,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Save']")
 	private MCWebElement saveBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='udf4:input:inputTextField']")
+	private MCWebElement timeInHourTxt;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".feedbackPanelINFO")
 	private MCWebElement activationMessage;
@@ -249,6 +254,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//li/a[text()='Current Status and Limits']")
 	private MCWebElement tabCurrentStatusAndLimits;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@name='udf23:radioComponent' and @value='0']")
+	private MCWebElement eccomDeactivate;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@name='udf23:radioComponent' and @value='1']")
+	private MCWebElement eccomActivate;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Card :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement creditLimitLable;
@@ -585,7 +596,107 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 	}
 
-	public boolean verifyCurrencySetupDoneCorrectly(HelpdeskGeneral helpdeskGeneral, Device device){
+	public void chooseOperationDeactivate(String status) {
+		SimulatorUtilities.wait(1000);
+		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW)) {
+			WebElementUtils.retryUntilNoErrors(() -> new Select(driver().findElement(By.xpath(OPERATION))).selectByValue("0"));
+		} else {
+			eccomDeactivate.click();
+		}
+	}
+
+	public void chooseOperationActivate(String status) {
+		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW)) {
+			SimulatorUtilities.wait(1000);
+			WebElement operation = driver().findElement(
+					By.xpath("//select[@name='udf1:input:dropdowncomponent']"));
+			WebElement activationType = driver().findElement(
+					By.xpath("//select[@name='udf2:input:dropdowncomponent']"));
+			WebElementUtils.retryUntilNoErrors(() -> new Select(operation)
+					.selectByValue("1"));
+			WebElementUtils.retryUntilNoErrors(() -> new Select(activationType)
+					.selectByVisibleText(ConstantData.GENERIC_DESCRIPTION));
+			WebElementUtils.enterText(timeInHourTxt, "1");
+		} else {
+			SimulatorUtilities.wait(1000);
+			List<WebElement> listEccom = driver().findElements(
+					By.xpath("//input[@name='udf23:radioComponent']"));
+			boolean rValue;
+			if (rValue = listEccom.get(1).isSelected()) {
+				listEccom.get(0).click();
+			}
+			WebElement element = driver().findElement(By.xpath("//input[@name='udf25:radioComponent' and @value='2']"));
+			element.click();
+			SimulatorUtilities.wait(2000);
+			WebElementUtils.enterText(timeInHourTxt, "1");
+		}
+	}
+	
+	public void setupInternationalAllowDisallowCheck(String status) {
+		selectServiceCode(ConstantData.INTERNATIONAL_ALLOW_DISALLOW);
+		clickGoButton();
+		runWithinPopup("400 - International Use Allow/Disallow", () -> {
+			chooseOperationDeactivate(status);
+			SimulatorUtilities.wait(2000);
+			enterNotes("Automation");
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();			
+		});
+		//There is a delay in page rendering
+		SimulatorUtilities.wait(5000);
+		clickEndCall();
+	}
+	
+	public void setupEccomerceDisallowCheck(String status) {
+		selectServiceCode(ConstantData.ECCOMERCE_ALLOW_DISALLOW);
+		clickGoButton();
+		runWithinPopup("304 - E-commerce Activation/Deactivation", () -> {
+			chooseOperationDeactivate(status);
+			SimulatorUtilities.wait(2000);
+			enterNotes("Automation");
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();			
+		});
+		//There is a delay in page rendering
+		SimulatorUtilities.wait(5000);
+		clickEndCall();
+	}
+	
+	public void allowTransactionForOneHour(String status) {
+		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW))
+		{
+		selectServiceCode(ConstantData.INTERNATIONAL_ALLOW_DISALLOW);
+		clickGoButton();
+		runWithinPopup("400 - International Use Allow/Disallow", () -> {
+			chooseOperationActivate(status);
+			enterNotes(ConstantData.GENERIC_DESCRIPTION);
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();			
+		});
+		}
+		else
+		{
+			selectServiceCode(ConstantData.ECCOMERCE_ALLOW_DISALLOW);
+			clickGoButton();
+			runWithinPopup("304 - E-commerce Activation/Deactivation", () -> {
+				chooseOperationActivate(status);
+				enterNotes(ConstantData.GENERIC_DESCRIPTION);
+				clickSaveButton();
+				verifyOperationStatus();
+				clickOKButtonPopup();			
+			});
+		}
+	
+		//There is a delay in page rendering
+		SimulatorUtilities.wait(5000);
+		clickEndCall();
+	}
+	
+
+	public boolean verifyCurrencySetupDoneCorrectly(HelpdeskGeneral helpdeskGeneral, Device device) {
 		logger.info("verify added currecy for device number: {}", device.getDeviceNumber());
 		int count = 0;
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());

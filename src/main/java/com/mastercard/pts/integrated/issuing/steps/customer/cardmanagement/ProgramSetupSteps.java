@@ -307,6 +307,20 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 
+	@When("User checks Pin Change Transaction First check box on Device Plan Page")
+	public void userChecksPinChangeTransactionFirstOnDevicePlan() {
+		programSetupWorkflow.checkPinChangeTransactionFirst(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+
+	@When("User checks Cross Border Transaction check box on Device Plan Page")
+	public void userChecksCrossBorderTransactionCheckBoxOnDevicePlanPage()
+	{
+		programSetupWorkflow.checkCrossBorderTransaction(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+		
+	}
+
 	@When("device range for program with device plan for \"debit\" \"$deviceType\" card without pin")
 	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin")
 	@Composite(steps = { "When User fills Dedupe Plan", "When User fills MCC Rules for debit product", "When User fills Transaction Plan for debit product",
@@ -1495,7 +1509,6 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
 	}
-	
 	@When("User creates empty Transaction Plan for $type product")
 	public void createEmptyTransactionPlan(String type) {
 		setPinRequiredToDefaultState();

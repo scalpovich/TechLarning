@@ -91,6 +91,17 @@ public class HelpdeskWorkflow {
 	public void setupDeviceCurrency(HelpdeskGeneral helpdeskGeneral) {
 		helpDeskPage.setupDeviceCurrency(helpdeskGeneral);
 	}
+	
+	public void setupInternationalAllowDisallowCheck(String status) {
+		helpDeskPage.setupInternationalAllowDisallowCheck(status);
+	}
+	
+	public void setupEccomerceAllowDisallowCheck(HelpdeskGeneral helpdeskGeneral, String status) {
+		helpDeskPage.setupEccomerceDisallowCheck(status);
+	}
+	public void allowTransactionForOneHour(String status) {
+		helpDeskPage.allowTransactionForOneHour(status);
+	}
 
 	public void clickOnCurrentStatusTab(){
 		helpDeskPage.clickCurrentStatusAndLimitsTab();
