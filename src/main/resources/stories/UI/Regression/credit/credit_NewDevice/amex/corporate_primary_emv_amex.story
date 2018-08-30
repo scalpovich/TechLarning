@@ -1,10 +1,9 @@
 Narrative:
 In order to a create a Credit Device under customer portal cardmanagement tab
 As a user
-I want to assert pages
+I want to assert device creation
 
 Meta:
-@CreditRegression
 @StoryName credit_emv_retail	
 			 
 Scenario:creation of corporate primary emv Amex credit device
