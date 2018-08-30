@@ -13,11 +13,9 @@ public class StopListReasonWorkflow {
 		@Autowired
 		private Navigator navigator;
 		
-		@Autowired
-		private StoplistReasonPage stopListPage;
 		public void addStopListReasonPlan(StopListReasonPlan stopListReasonPlan)
 		{
-			stopListPage=navigator.navigateToPage(StoplistReasonPage.class);
+			StoplistReasonPage stopListPage=navigator.navigateToPage(StoplistReasonPage.class);
 			stopListPage.addStopListReasonInStopListPage(stopListReasonPlan);
 		}
 }

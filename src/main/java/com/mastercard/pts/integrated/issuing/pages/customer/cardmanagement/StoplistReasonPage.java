@@ -72,43 +72,43 @@ public class StoplistReasonPage extends AbstractBasePage {
 	private MCWebElement sentToAmexNotRequired;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mcUS:checkBoxComponent")
-	private MCWebElement regionMCUS;
+	private MCWebElement regionMCUSChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mcCanada:checkBoxComponent")
-	private MCWebElement regionMCCanada;
+	private MCWebElement regionMCCanadaChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mcAmerica:checkBoxComponent")
-	private MCWebElement regionMCCarribbean;
+	private MCWebElement regionMCCarribbeanChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mcAsia:checkBoxComponent")
-	private MCWebElement regionMCAsia;
+	private MCWebElement regionMCAsiaChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mcEurope:checkBoxComponent")
-	private MCWebElement regionMCEurope;
+	private MCWebElement regionMCEuropeChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mcMiddleEast:checkBoxComponent")
-	private MCWebElement regionMCAfrica;
+	private MCWebElement regionMCAfricaChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "visaVIP:checkBoxComponent")
-	private MCWebElement regionVisaVIP;
+	private MCWebElement regionVisaVIPChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "visaAisapacific:checkBoxComponent")
-	private MCWebElement regionVisaAsia;
+	private MCWebElement regionVisaAsiaChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "visaCentralUroppe:checkBoxComponent")
-	private MCWebElement regionVisaAfrica;
+	private MCWebElement regionVisaAfricaChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "visaCanadaVisa:checkBoxComponent")
-	private MCWebElement regionVisaCanada;
+	private MCWebElement regionVisaCanadaChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "visaNaReBulettin:checkBoxComponent")
-	private MCWebElement regionVisaNationalCardRecovery;
+	private MCWebElement regionVisaNationalCardRecoveryChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "visaEurope:checkBoxComponent")
-	private MCWebElement regionVisaEurope;
+	private MCWebElement regionVisaEuropeChkBx;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "visaLatinAm:checkBoxComponent")
-	private MCWebElement regionVisaCarribbean;
+	private MCWebElement regionVisaCarribbeanChkBx;
 
 	private String noOfRecordXpath = "//table[@class='dataview']/tbody/tr/td[2]/span";
 
@@ -174,43 +174,43 @@ public class StoplistReasonPage extends AbstractBasePage {
 		for (String string : regions) {
 			switch (string) {
 			case "1-US":
-				WebElementUtils.checkCheckbox(regionMCUS, true);
+				WebElementUtils.checkCheckbox(regionMCUSChkBx, true);
 				break;
 			case "A-Cananda":
-				WebElementUtils.checkCheckbox(regionMCCanada, true);
+				WebElementUtils.checkCheckbox(regionMCCanadaChkBx, true);
 				break;
 			case "B-Latin America/Carribbean":
-				WebElementUtils.checkCheckbox(regionMCCarribbean, true);
+				WebElementUtils.checkCheckbox(regionMCCarribbeanChkBx, true);
 				break;
 			case "C-Asia/Pacific":
-				WebElementUtils.checkCheckbox(regionMCAsia, true);
+				WebElementUtils.checkCheckbox(regionMCAsiaChkBx, true);
 				break;
 			case "D-Europe":
-				WebElementUtils.checkCheckbox(regionMCEurope, true);
+				WebElementUtils.checkCheckbox(regionMCEuropeChkBx, true);
 				break;
 			case "E-Middle East/Africa":
-				WebElementUtils.checkCheckbox(regionMCAfrica, true);
+				WebElementUtils.checkCheckbox(regionMCAfricaChkBx, true);
 				break;
 			case "0-No Bulletin/V.I.P. Only":
-				WebElementUtils.checkCheckbox(regionVisaVIP, true);
+				WebElementUtils.checkCheckbox(regionVisaVIPChkBx, true);
 				break;
 			case "A-Asia-Pacific region":
-				WebElementUtils.checkCheckbox(regionVisaAsia, true);
+				WebElementUtils.checkCheckbox(regionVisaAsiaChkBx, true);
 				break;
 			case "B- Central Europe/Middle East and Africa(CEMEA)":
-				WebElementUtils.checkCheckbox(regionVisaAfrica, true);
+				WebElementUtils.checkCheckbox(regionVisaAfricaChkBx, true);
 				break;
 			case "C-Canada":
-				WebElementUtils.checkCheckbox(regionVisaCanada, true);
+				WebElementUtils.checkCheckbox(regionVisaCanadaChkBx, true);
 				break;
 			case "D-National Card recovery Bulletin":
-				WebElementUtils.checkCheckbox(regionVisaNationalCardRecovery, true);
+				WebElementUtils.checkCheckbox(regionVisaNationalCardRecoveryChkBx, true);
 				break;
 			case "E-Europe":
-				WebElementUtils.checkCheckbox(regionVisaEurope, true);
+				WebElementUtils.checkCheckbox(regionVisaEuropeChkBx, true);
 				break;
 			case "F-Latin America and Caribbean(LAC)":
-				WebElementUtils.checkCheckbox(regionVisaCarribbean, true);
+				WebElementUtils.checkCheckbox(regionVisaCarribbeanChkBx, true);
 				break;
 
 			}
