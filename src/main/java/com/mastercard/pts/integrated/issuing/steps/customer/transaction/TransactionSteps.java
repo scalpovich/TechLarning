@@ -121,7 +121,8 @@ public class TransactionSteps {
 	}
 
 	@When("perform an $transaction MAS transaction on the same card")
-	@Alias("a sample simulator \"$transaction\" is executed on the same card")
+	@Aliases(values={"a sample simulator \"$transaction\" is executed on the same card",
+    "user performs an \"$transaction\" MAS transaction on the same card"})
 	@Given("perform an $transaction MAS transaction on the same card")
 	public void givenTransactionIsExecutedOnTheSameCard(String transaction) {
 		String temp = transaction;
@@ -229,7 +230,7 @@ public class TransactionSteps {
 
 	private void setDeElementsDynamically(Device device, Transaction transactionData, String transaction) {
 		MiscUtils.reportToConsole("********** Start setDeElementsDynamically ********");
-		if (!"pinless".equalsIgnoreCase(device.getPinNumberForTransaction()) && !transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE")) // ecomm transactions cannot have a PIN
+		if (!"pinless".equalsIgnoreCase(device.getPinNumberForTransaction()) && !transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") && !transactionWorkflow.isContains(transaction, ConstantData.THREE_D_SECURE_TRANSACTION)) // ecomm transactions cannot have a PIN
 			transactionData.setDeKeyValuePairDynamic("052", device.getPinNumberForTransaction());
 		// data format is 12 digits hence leftpad with 0
 		transactionData.setDeKeyValuePairDynamic("004", StringUtils.leftPad(device.getTransactionAmount(), 12, "0"));
@@ -244,6 +245,10 @@ public class TransactionSteps {
 			// for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInuxbox
 			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); // Transaction currency code
 		}
+		if(transaction.equalsIgnoreCase("INT_MSR_CASH_ADVANCE")){
+			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data());
+		} 
+
 		// This is a Single Wallet, Single Currency INDIA card
 		// transactionData.setDeKeyValuePairDynamic("049", device.getCurrency()); // Transaction currency code
 		// transactionData.setDeKeyValuePairDynamic("050", device.getCurrency()); // Settlement currency code
@@ -271,7 +276,7 @@ public class TransactionSteps {
 		transactionData.setCardDataElementsDynamic("035.04", device.getServiceCode());
 		if (transactionWorkflow.isContains(transaction, "EMV")) {
 			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getIcvvData());
-		} else if (transactionWorkflow.isContains(transaction, "MSR")) {
+		} else if (transactionWorkflow.isContains(transaction, "MSR") || transactionWorkflow.isContains(transaction, "FALLBACK") ) {
 			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getCvvData());
 		}
 	}
@@ -388,6 +393,14 @@ public class TransactionSteps {
 		String pinNumber = transactionWorkflow.getPinNumber(transactionData);
 		logger.info("FINSim PIN Number generated : {} ", pinNumber);
 		device.setPinNumberForTransaction(pinNumber);
+	}
+	
+	@When("PIN is created for Pin Change First Transaction")
+	@Then("PIN is created for Pin Change First Transaction")
+	public void thenPINIsCreatedForPinChangeFirstTransaction() {
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
+		context.put(ContextConstants.DEVICE, device);
 	}
 
 	@When("$simulatorName simulator is closed")
@@ -541,5 +554,13 @@ public class TransactionSteps {
 		else if (type.equalsIgnoreCase(IPMINCOMING))
 			transactionWorkflow.setFolderPermisson(provider.getString(IPM_INCOMING));
 		transactionWorkflow.closeWinSCP();
+	}
+	
+	@Then("user sets invalid pin")
+	@When("user sets invalid pin")
+	public void userSetInvalidPin(){
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
+		context.put(ContextConstants.DEVICE, device);
 	}
 }

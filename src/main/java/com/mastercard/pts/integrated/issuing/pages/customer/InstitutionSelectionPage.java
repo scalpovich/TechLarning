@@ -22,16 +22,18 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
  */
 @Component
 public class InstitutionSelectionPage extends AbstractBasePage {
-	
+
 	private static final String OPTION_SELECT_ONE = "Select One";
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "select[name^=institutionCode]")
 	private MCWebElement institutionSelect;
-	
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "institutionCode:input:dropdowncomponent")
 	private MCWebElement institution;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[contains(text(),'Click here to login')]")
+	private MCWebElement loginElement;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "confirm")
 	private MCWebElement confirmButton;
 
@@ -68,7 +70,7 @@ public class InstitutionSelectionPage extends AbstractBasePage {
 		}
 		confirmButton.click();
 	}
-	
+
 	public void selectBankAdminInstitution(String... optionName) {
 		if (optionName.length == 0) {
 			selectByVisibleText(institution, InstitutionSelection.IntitutionDataProvider()
@@ -92,22 +94,22 @@ public class InstitutionSelectionPage extends AbstractBasePage {
 				.map(WebElement::getText).filter(text -> !text.equals(OPTION_SELECT_ONE))
 				.collect(Collectors.toList());
 	}
-	
+
 	public String getSelectedInstitution() {
 		return institutionSelect.getSelect().getFirstSelectedOption().getText();
 	}
-	
-	
+
+
 	public void clickConfirm() {
 		confirmButton.click();
 	}
-	      public boolean checkSessionExpired(){
-		          SimulatorUtilities.wait(5000);
-		          if( Elements("//ul[@class='feedbackPanel']//span").size()>0 ){
-		              Element("//a[contains(text(),'Click here to login')]").click();
-		              return true;
-		          }
-		          return false;
-		     }
+	public boolean checkSessionExpired(){
+		SimulatorUtilities.wait(5000);
+		if( Elements("//ul[@class='feedbackPanel']//span").size()>0 ){
+			loginElement.click();
+			return true;
+		}
+		return false;
+	}
 
 }

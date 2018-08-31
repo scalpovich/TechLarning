@@ -7,6 +7,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionLimitPlan;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionLimitPlanPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.workflows.MenuFlows;
 
 @Component
@@ -36,6 +37,7 @@ public class TransactionLimitPlanFlows extends MenuFlows {
 	}
 	
 	public void clickSave(){
+		WebElementUtils.scrollDown(driver(), 0, 300);
 		pageToPass.clickSaveButton();
 	}
 	

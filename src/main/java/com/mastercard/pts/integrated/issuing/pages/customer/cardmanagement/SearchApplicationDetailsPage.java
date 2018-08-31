@@ -1,6 +1,8 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.slf4j.Logger;
@@ -72,8 +74,6 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='toDate']/../..")
 	private MCWebElement toDate;
 	
-	
-	
 	public void enterFirstName(SearchApplicationDetails search){
 		enterText(firstName, search.getFirstName());
 	}
@@ -90,33 +90,30 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		date.setDate(search.getToDate());
 	}
 	
-	public String searchApplicationNumber()
-	{
+	public String searchApplicationNumber(){
 		Device device=context.get(CreditConstants.APPLICATION);
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
 		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDate, LocalDate.now());
 		clickSearchButton();		
-		searchUntilBatchNumberIsDisplayed();		
+		searchUntilBatchNumberIsDisplayed();	
 		return batchNumberTxt.getText();
-		
 	}
+	
 	public void clickSearchButton(){
 		clickWhenClickable(SearchBtn);
 	}
 	
-	public void searchUntilBatchNumberIsDisplayed()
-	{
-		try
-		{	String path = String.format("//table[@class='dataview']/..//td[count(//th[.//*[text()='%S']]/preceding-sibling::th)+1]", "Device Batch Number");
-			if(!driver().findElement(By.xpath(path)).isDisplayed())
-			{	SimulatorUtilities.wait(8000);
+	public void searchUntilBatchNumberIsDisplayed() {
+		try {
+			String path = String.format("//table[@class='dataview']/..//td[count(//th[.//*[text()='%S']]/preceding-sibling::th)+1]", "Device Batch Number");
+			if (driver().findElement(By.xpath(path)).getText().equals("-")) {
+				SimulatorUtilities.wait(8000);
 				clickSearchButton();
 				waitForPageToLoad(driver());
 				searchUntilBatchNumberIsDisplayed();
 			}
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -126,8 +123,7 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		enterLastName(search);
 		selectFromDate(search);
 		selectToDate(search);
-		clickSearchButton();
-		
+		clickSearchButton();		
 	}
 	
 	public void verifyNewApplication(){
@@ -135,5 +131,18 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 			if(element.getText().contains("abc"));
 			logger.info("New application processed successfully");
 		}
+	}
+	
+	public void searchApplicationNumberForFileUpload() {
+		List<String> applicationNumbers = context.get(CreditConstants.ALL_APPLICATION_NUMBERS);
+		logger.info("size :{}", applicationNumbers.size());
+		List<String> batchNumbersForPreProduction = new LinkedList<>();
+		waitForLoaderToDisappear();
+		WebElementUtils.enterText(applicationNumberTxt, applicationNumbers.get(0));
+		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
+		WebElementUtils.pickDate(toDate, LocalDate.now());
+		waitAndSearchForApplicationBatchNumberToAppear();
+		batchNumbersForPreProduction.add(batchNumberTxt.getText());
+		context.put(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION, batchNumbersForPreProduction);
 	}
 }

@@ -363,6 +363,15 @@ public class DevicePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:lvcPerTxnLimit:input:inputAmountField")
 	private MCWebElement perTranscLimitTxt;
 	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#pinChangeTnxFirst input")
+	private MCWebElement pinChangeTransactionFirstChbx;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#crossBorderTxnCheck input")
+	private MCWebElement crossBorderTransaction;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#crossBorderTxnCheckTime input")
+	private MCWebElement timeIntervalCrossBorder;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:virtualDeviceCreditLimit:input:inputTextField")
 	private MCWebElement virtualDeviceCrediLimitTxt;
 
@@ -403,9 +412,8 @@ public class DevicePlanPage extends AbstractBasePage {
 	private MCWebElement virtualDeviceCreditLimitTxt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "stopListFlag:checkBoxComponent")
-	private MCWebElement stopListFlagChkBx;
-		
-	
+	private MCWebElement stoplistFlagChkBx;
+
 	public void AddDevicePlan() {
 		clickWhenClickable(AddDevicePlanBtn);
 		switchToAddDevicePlanFrame();
@@ -669,8 +677,6 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 	
 	public void enterVirtualCreditLimit(DevicePlan devicePlan){
-		
-		
 		if (virtualDeviceCreditLimitTxt.isVisible()) {
 			if (virtualDeviceCreditLimitTxt.isEnabled())
 				enterValueinTextBox(virtualDeviceCreditLimitTxt, devicePlan.getPerTransactionLimit());
@@ -808,11 +814,11 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectIframeAssociationType(String associationType) {
-		WebElementUtils.selectDropDownByVisibleText(iframeAssociationDdwn, associationType);
+		selectByVisibleText(iframeAssociationDdwn, associationType);
 	}
 
 	public void selectIframeProductType(String productType) {
-		WebElementUtils.selectDropDownByVisibleText(iframeProductTypeDdwn, productType);
+		selectByVisibleText(iframeProductTypeDdwn, productType);
 	}
 
 	public void selectIframeDeviceType(String deviceType) {
@@ -830,22 +836,22 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectIframeDeviceIDGenerationTemplate(String deviceIdTemplate) {
-		WebElementUtils.selectDropDownByVisibleText(iframeDeviceIDGenerationTemplateDdwn, deviceIdTemplate);
+		selectByVisibleText(iframeDeviceIDGenerationTemplateDdwn, deviceIdTemplate);
 	}
 
 	public void selectIframeCardPackIDGenerationTemplate(String cardPackIdTemplate) {
-		WebElementUtils.selectDropDownByVisibleText(iframeCardPackIDGenerationTemplateDdwn, cardPackIdTemplate);
+		selectByVisibleText(iframeCardPackIDGenerationTemplateDdwn, cardPackIdTemplate);
 	}
 
 	public void selectIframePlasticIdDdwn(String plasticId) {
 		if (plasticId != null) {
-			WebElementUtils.selectDropDownByVisibleText(iframePlasticIdDdwn, plasticId);
+			selectByVisibleText(iframePlasticIdDdwn, plasticId);
 		}
 	}
 
 	public void selectIframePictureCodeDdwn(String pictureCode) {
 		if (pictureCode != null) {
-			WebElementUtils.selectDropDownByVisibleText(iframePictureCodeDdwn, pictureCode);
+			selectByVisibleText(iframePictureCodeDdwn, pictureCode);
 		}
 	}
 
@@ -856,7 +862,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void selectIframeEmbossingVendorDdwn(String embossingVendor) {
-		WebElementUtils.selectDropDownByVisibleText(iframeEmbossingVendorDdwn, embossingVendor);
+		selectByVisibleText(iframeEmbossingVendorDdwn, embossingVendor);
 	}
 
 	public void selectIframeActivationModeLst(String activationMode) {
@@ -946,9 +952,17 @@ public class DevicePlanPage extends AbstractBasePage {
 	public void checkCvcCvv(boolean status) {
 		ClickCheckBox(cvccCvvChkBx, status);
 	}
-	
-	public void checStopListFlg(boolean status) {
-		ClickCheckBox(stopListFlagChkBx, status);
+
+	public void checkPinChangeTransactionFirst(boolean status) {
+		ClickCheckBox(pinChangeTransactionFirstChbx, status);
+	}
+
+	public void checkCrossBorderTransaction(boolean status) {
+		ClickCheckBox(crossBorderTransaction, status);
+	}
+
+	public void checkStoplistFlag(boolean status) {
+		ClickCheckBox(stoplistFlagChkBx, status);
 	}
 
 	public void clickIframeDialogCloseX() {
@@ -975,6 +989,37 @@ public class DevicePlanPage extends AbstractBasePage {
 		verifyOperationStatus();
 	}
 
+	public void updatePinChangeTransactionFirst(DevicePlan devicePlanDataObject) {
+		logger.info("Update Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
+		enterValueinTextBox(devicePlanCode, devicePlanDataObject.getDevicePlanCode());
+		clickSearchButton();
+		editFirstRecord();
+		runWithinPopup("Edit Device Plan", () -> {
+			WebElementUtils.elementToBeClickable(authorizationTab);
+			clickWhenClickable(authorizationTab);
+			WebElementUtils.elementToBeClickable(pinChangeTransactionFirstChbx);
+			checkPinChangeTransactionFirst(true);
+			clickSaveButton();
+		});
+		verifyOperationStatus();
+	}
+
+	public void checkCrossBorderTransaction(DevicePlan devicePlanDataObject) {
+		logger.info("Update Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
+		enterValueinTextBox(devicePlanCode, devicePlanDataObject.getDevicePlanCode());
+		clickSearchButton();
+		editFirstRecord();
+		runWithinPopup("Edit Device Plan", () -> {
+			WebElementUtils.elementToBeClickable(authorizationTab);
+			clickWhenClickable(authorizationTab);
+			WebElementUtils.elementToBeClickable(crossBorderTransaction);
+			checkCrossBorderTransaction(true);
+			WebElementUtils.enterText(timeIntervalCrossBorder, 20);
+			clickSaveButton();
+		});
+		verifyOperationStatus();
+	}
+
 	public void createDevicePlan(DevicePlan devicePlanDataObject) {
 		logger.info("Create Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
 		clickAddNewButton();
@@ -982,61 +1027,39 @@ public class DevicePlanPage extends AbstractBasePage {
 		runWithinPopup("Add Device Plan", () -> {
 			enterIframeDevicePlanCode(devicePlanDataObject.getDevicePlanCode());
 			enterIframeDescription(devicePlanDataObject.getDescription());
-			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT))
-			{
-			selectByVisibleText(iframeAssociationDdwn, devicePlanDataObject.getAssociation());
-			selectByVisibleText(iframeProductTypeDdwn, devicePlanDataObject.getProductType());
-			}
-			else
-			{
+	
 			selectIframeAssociationType(devicePlanDataObject.getAssociation());
 			selectIframeProductType(devicePlanDataObject.getProductType());
-			}
 			
-					if (devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-						SimulatorUtilities.wait(2000);
-						selectByVisibleText(iframeDeviceTypeDdwn,devicePlanDataObject.getDeviceType());
-						if (devicePlanDataObject.getDeviceType().contains("EMV")) {
-							WebElementUtils.enterText(iframeServiceCodeTxt,Constants.EMV_SERVICE_CODE);
-							devicePlanDataObject.setServiceCode(Constants.EMV_SERVICE_CODE);
-						} else if (devicePlanDataObject.getDeviceType().contains("Mag")) {
-							WebElementUtils.enterText(iframeServiceCodeTxt,Constants.MSR_SERVICE_CODE);
-							devicePlanDataObject.setServiceCode(Constants.MSR_SERVICE_CODE );
-						}
-						else
-						{
-							WebElementUtils.enterText(iframeServiceCodeTxt,Constants.MSR_SERVICE_CODE);
-						}
-					} else {
-						selectIframeDeviceType(devicePlanDataObject.getDeviceType());
-						enterIframeServiceCode(devicePlanDataObject.getServiceCode());
-					}
+			if (devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
+				SimulatorUtilities.wait(2000);
+				selectByVisibleText(iframeDeviceTypeDdwn,devicePlanDataObject.getDeviceType());
+				if (devicePlanDataObject.getDeviceType().contains("EMV")) {
+					WebElementUtils.enterText(iframeServiceCodeTxt,Constants.EMV_SERVICE_CODE);
+					devicePlanDataObject.setServiceCode(Constants.EMV_SERVICE_CODE);
+				} else if (devicePlanDataObject.getDeviceType().contains("Mag")) {
+					WebElementUtils.enterText(iframeServiceCodeTxt,Constants.MSR_SERVICE_CODE);
+					devicePlanDataObject.setServiceCode(Constants.MSR_SERVICE_CODE );
+				}else{
+					WebElementUtils.enterText(iframeServiceCodeTxt,Constants.MSR_SERVICE_CODE);
+				}
+			} else {
+				selectIframeDeviceType(devicePlanDataObject.getDeviceType());
+				enterIframeServiceCode(devicePlanDataObject.getServiceCode());
+			}
 			selectIframeDeliveryMode(devicePlanDataObject.getDeliveryMode());
-			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT))
-			{
-			selectByVisibleText(iframeDeviceIDGenerationTemplateDdwn, devicePlanDataObject.getDeviceIdGenerationTemplate());
-			selectByVisibleText(iframeCardPackIDGenerationTemplateDdwn, devicePlanDataObject.getCardPackIdGenerationTemplate());
-			selectByVisibleText(iframePlasticIdDdwn, devicePlanDataObject.getPlasticId());
-			selectByVisibleText(iframePictureCodeDdwn, devicePlanDataObject.getPictureCode());
-			
-			}
-			else
-			{
 			selectIframeDeviceIDGenerationTemplate(devicePlanDataObject.getDeviceIdGenerationTemplate());
 			selectIframeCardPackIDGenerationTemplate(devicePlanDataObject.getCardPackIdGenerationTemplate());
 			selectIframePlasticIdDdwn(devicePlanDataObject.getPlasticId());
-			selectIframePictureCodeDdwn(devicePlanDataObject.getPictureCode());
-			}
-			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT)&& !DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlanDataObject.getDeviceType()))
-			{
+			selectIframePictureCodeDdwn(devicePlanDataObject.getPictureCode());				
+			
+			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT)&& !DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlanDataObject.getDeviceType())){
 				selectIframeActivationModeLst(devicePlanDataObject.getActivationMode());
 				selectIframeExpiryFlagDdwn(devicePlanDataObject.getExpiryFlag());	
-			}
-			else
-			{
-			selectIframeActivationModeLst(devicePlanDataObject.getActivationMode());
-			selectIframeExpiryFlagDdwn(devicePlanDataObject.getExpiryFlag());
-			}
+			}else{
+				selectIframeActivationModeLst(devicePlanDataObject.getActivationMode());
+				selectIframeExpiryFlagDdwn(devicePlanDataObject.getExpiryFlag());
+			}	
 			// next steps have been pushed to below method due to SONAR
 			// limitation
 			createDevicePlanContinuation(devicePlanDataObject);
@@ -1052,12 +1075,14 @@ public class DevicePlanPage extends AbstractBasePage {
 		
 		selectIframeBeforeKYCDdwn(devicePlan.getBeforeKYC());
 		selectIframeAfterKYCDdwn(devicePlan.getAfterKYC());
-		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES))
+		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES)){
 			selectAllcavv();
+		}			
 		// perform below steps only when pinRequired is true which is the
 		// default state
-		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
+		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())){
 			selectAllPinValidation();
+		}	
 		if (devicePlan.getSelectAllCVCCVV().equalsIgnoreCase(STATUS_YES)) {
 			selectAllcvccvv();
 			// as of now, we do not need CVV check for MDFS pin change transactions
@@ -1071,58 +1096,39 @@ public class DevicePlanPage extends AbstractBasePage {
 
 		WebElementUtils.checkCheckbox(ecommAllowedChkBx, devicePlan.isEcommerceAllowed());
 	
-		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-			if (DeviceType.MAGNETIC_STRIPE_CARD.contains(devicePlan.getDeviceType())|| DeviceType.EMV_CARD.contains(devicePlan.getDeviceType()) && "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
-				if(pinRetryLimitTxt.isEnabled())
-				{
-				WebElementUtils.enterText(pinRetryLimitTxt,devicePlan.getPinRetryLimit());
-				}
-			}
+		if("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())){
+			if (!(DeviceType.STATIC_VIRTUAL_CARD.contains(devicePlan.getDeviceType())
+					|| DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType()))) {
+				WebElementUtils.enterText(pinRetryLimitTxt, devicePlan.getPinRetryLimit());
+			}	
 		}
-		else
-		{
-		if (!devicePlan.getDeviceType().contains(DeviceType.STATIC_VIRTUAL_CARD)&& "true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
-			WebElementUtils.enterText(pinRetryLimitTxt, devicePlan.getPinRetryLimit());
-		}	
-		}
+		
 		clickIframeNextButton();
 		SimulatorUtilities.wait(300);
-		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-			if (DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType())) {
-				fillVirtualDeviceDetails(devicePlan);
-				enterVirtualDeviceCreditLimit();
-			} else if (DeviceType.STATIC_VIRTUAL_CARD.contains(devicePlan.getDeviceType())) {
-				enterVirtualDeviceCreditLimit();
-			}
-		}
-			clickIframeNextButton();			
 		
+		if (DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType())) {
+			fillVirtualDeviceDetails(devicePlan);
+			enterVirtualDeviceCreditLimit();
+		} else if (DeviceType.STATIC_VIRTUAL_CARD.contains(devicePlan.getDeviceType())) {
+			enterVirtualDeviceCreditLimit();
+		}
 		
-		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-			if (DeviceType.EMV_CARD.contains(devicePlan.getDeviceType())|| DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS.contains(devicePlan.getDeviceType())) {
-				forEmvOrNfc(devicePlan);
-			}
-		}
-			else
-			{
-			if (DeviceType.EMV_CARD.contains(devicePlan.getDeviceType())
-					|| DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS
-							.contains(devicePlan.getDeviceType())) {
-				forEmvOrNfc(devicePlan);
-			}
-		}
+		clickIframeNextButton();
+		
+		if (DeviceType.EMV_CARD.contains(devicePlan.getDeviceType()) || DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS.contains(devicePlan.getDeviceType())) {
+			forEmvOrNfc(devicePlan);
+		}		
 		clickIframeFinishButton();
 	}
 
 	private void fillDevicePlanPage(DevicePlan devicePlan) {
 		selectIframeBaseDeviceEventBasedPlanDdwn(devicePlan.getBaseDeviceEventBasedPlan());
 		selectIframeBaseDeviceJoiningMemberShipPlanDdwn(devicePlan.getBaseDeviceJoiningMemberShipPlan());
-		if(!devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
-		{
-		selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
+		if(!devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)){
+			selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
 		}
 		selectIframeTransactionLimitPlanDdwn(devicePlan.getTransactionLimitPlan());
-		clickIframeNextButton();
+		clickIframeNextButton();		
 	}
 
 	private void cvvCvv2PinGenerationSelectionScreen(DevicePlan devicePlan) {
@@ -1131,84 +1137,51 @@ public class DevicePlanPage extends AbstractBasePage {
 		// filling date when flag is fixed
 		if(!devicePlan.DeviceType.equalsIgnoreCase("Limited Validity Virtual Card [8]")){
 			if ("Fixed [F]".equalsIgnoreCase(devicePlan.getExpiryFlag())) {
-			if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT) )
-			{
-				if(!DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType()))
+				if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT) )
 				{
-					enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
-					String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
-					devicePlan.setExpiryDate(dateInYYMM);
-					logger.info("Expiry date for device = {}",devicePlan.getExpiryDate());				
-				}
+					if(!DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType()))
+					{
+						enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
+						String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
+						devicePlan.setExpiryDate(dateInYYMM);
+						logger.info("Expiry date for device = {}",devicePlan.getExpiryDate());				
+					}
 				}
 				else
 				{
-			enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
-			// making necessary changes so that this value can be set in the
-			// required format so that it can be used when a pinless card is
-			// used
-			logger.info("Validity On Initial Months = {} ", devicePlan.getValidityOnInitialMonths());
-			String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
-			devicePlan.setExpiryDate(dateInYYMM);
+					enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
+					// making necessary changes so that this value can be set in the
+					// required format so that it can be used when a pinless card is
+					// used
+					logger.info("Validity On Initial Months = {} ", devicePlan.getValidityOnInitialMonths());
+					String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
+					devicePlan.setExpiryDate(dateInYYMM);
 				}
 			} else {
 				enterIframeValidityOnInitialMonthsTxt(devicePlan.getValidityOnInitialMonths());
 			}
 		
-		if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT) && DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType()))
-		{
-		logger.info("Skipping anable of card production check box");
-		}
-		else
-		{
+		if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT) && DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType())){
+			logger.info("Skipping anable of card production check box");
+		}else{
 			enableIframeCardProductionChkbx();
 		}
-
-		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
-			{
-			if(iframeEmbossingVendorDdwn.isEnabled())
-			  selectByVisibleText(iframeEmbossingVendorDdwn, devicePlan.getEmbossingVendor());
-			}
-			else
-			{
-				 selectIframeEmbossingVendorDdwn(devicePlan.getEmbossingVendor());
-			 }
-		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-			if (DeviceType.EMV_CARD.contains(devicePlan.getDeviceType())|| DeviceType.MAGNETIC_STRIPE_CARD.contains(devicePlan.getDeviceType())) {
-				fillRenewalSection(devicePlan);
-				fillReplacementSection(devicePlan);
-				fillPinGenerationSection(devicePlan);
-			}
-		} else {
-			if (devicePlan.getFillRenewalSection().equalsIgnoreCase(STATUS_YES))
-				fillRenewalSection(devicePlan);
 		
-			if (devicePlan.getFillReplacementSection().equalsIgnoreCase(STATUS_YES)){
-				if(!devicePlan.getDeviceType().contains(DeviceType.VIRTUAL_CARD)){
-					fillReplacementSection(devicePlan);
-				}
-			}	
-			if (!devicePlan.getDeviceType().contains(DeviceType.VIRTUAL_CARD)){
-					fillPinGenerationSection(devicePlan);
-			}
-			
-		}		
-		clickIframeNextButton();
+		if(iframeEmbossingVendorDdwn.isEnabled())
+			selectIframeEmbossingVendorDdwn(devicePlan.getEmbossingVendor());
 		}
 		
-	}
+		if (devicePlan.getFillRenewalSection().equalsIgnoreCase(STATUS_YES))
+			fillRenewalSection(devicePlan);
 	
-	private void fillVirtualDeviceInfo(DevicePlan devicePlan){		
-		enterPerTransactionLimit(devicePlan);
-		enterTotalTransactionLimit(devicePlan);		
-		enterVelocity(devicePlan);		
-		enterValidity(devicePlan);
-		enterVirtualCreditLimit(devicePlan);	
-	}
-	
-	private void fillVirtualDeviceCreditLimit(DevicePlan devicePlan){
+		if (devicePlan.getFillReplacementSection().equalsIgnoreCase(STATUS_YES)){
+			fillReplacementSection(devicePlan);
+		}	
+		if("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())){
+			fillPinGenerationSection(devicePlan);
+		}		
 		
-		enterVirtualDeviceCreditLimit(devicePlan);
+		clickIframeNextButton();
 	}
 	
 	private String getValueInYYMMFormatForExpiryDate(String dateVal) {
@@ -1221,14 +1194,12 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	private void forEmvOrNfc(DevicePlan devicePlan) {
 		iCVVOptionChkBx.click();
-		if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
-		{
+		if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)){
 			WebElementUtils.selectDropDownByIndex(iframeChipTypeDdwn, 1);
-		}
-		else
-		{
-		selectIframeChipTypeDdwnDdwn(devicePlan.getChipType());
-		}
+		}else{
+			selectIframeChipTypeDdwnDdwn(devicePlan.getChipType());
+		}		
+		
 		if (devicePlan.getFillEMVPlan().equalsIgnoreCase(STATUS_YES)) {
 			clickWhenClickable(atcFlagChkBx);
 			//atcFlagChkBx.click();
@@ -1236,54 +1207,53 @@ public class DevicePlanPage extends AbstractBasePage {
 			WebElementUtils.enterText(acceptableBelowATCRangeTxt, devicePlan.getEmvBelowATCRange());
 			WebElementUtils.enterText(acceptableAboveATCRangeTxt, devicePlan.getEmvAboveATCRange());
 			clickWhenClickable(allowFallBackChkBx);
-
 		}
+		
 	}
 
 	private void fillPinGenerationSection(DevicePlan devicePlan) {
 		// perform below steps only when pinRequired is true which is the
 		// default state
-		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
+		if (!(devicePlan.getDeviceType().contains(DeviceType.VIRTUAL_CARD) || devicePlan.getDeviceType().contains(DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD))){
 			WebElementUtils.scrollDown(driver(), 0, 250);
 			pinRequiredChk.click();
 			WebElementUtils.selectDropDownByVisibleText(pinDataTransmissionDDwn, devicePlan.getPinDataTransmission());
-			WebElementUtils.enterText(pinLengthTxt, devicePlan.getPinLength());
-			if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
-			{
+
+			WebElementUtils.enterText(pinLengthTxt, devicePlan.getPinLength());			
 			selectByVisibleText(pinProductionVendorDDwn, devicePlan.getEmbossingVendor());
-			}
-			else
-			{
-			WebElementUtils.selectDropDownByVisibleText(pinProductionVendorDDwn, devicePlan.getEmbossingVendor());
-			}
 			WebElementUtils.selectDropDownByVisibleText(pinGenerationOptionDDwn, devicePlan.getPinGenerationOption());
 		}
 	}
 
 	private void fillRenewalSection(DevicePlan devicePlan) {
-		allowRenewalChkBx.click();
-		if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
-		{
-			selectByVisibleText(renewalDeviceTechnologyDdwn, devicePlan.getDeviceType());
+		if(devicePlan.getDeviceType().contains(DeviceType.MAGNETIC_STRIPE_CARD) 
+				|| devicePlan.getDeviceType().contains(DeviceType.EMV_CARD) 
+				|| devicePlan.getDeviceType().contains(DeviceType.PHYSICAL_NFC_DEVICE_MAG_STRIPE_PAYPASS)
+				|| devicePlan.getDeviceType().contains(DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS)
+				|| devicePlan.getDeviceType().contains(DeviceType.PHYSICAL_NFC_DEVICE_PAYPASS)){
+			allowRenewalChkBx.click();
+			selectByVisibleText(renewalDeviceTechnologyDdwn,devicePlan.getDeviceType());
+			WebElementUtils.enterText(validityOnRenewalMonthsTxt, devicePlan.getValidityOnRenewalMonths());
+			WebElementUtils.enterText(autoRenewalDaysTxt, devicePlan.getAutoRenewalDays());
+			WebElementUtils.enterText(advanceRenewalReportTxt, devicePlan.getAdvanceRenewalReport());
+			WebElementUtils.enterText(renewalActivationModeTxt, devicePlan.getRenewalActivationMode());
 		}
-		else
-		{
-		WebElementUtils.selectDropDownByVisibleText(renewalDeviceTechnologyDdwn, devicePlan.getDeviceType());
-		}
-		WebElementUtils.enterText(validityOnRenewalMonthsTxt, devicePlan.getValidityOnRenewalMonths());
-		WebElementUtils.enterText(autoRenewalDaysTxt, devicePlan.getAutoRenewalDays());
-		WebElementUtils.enterText(advanceRenewalReportTxt, devicePlan.getAdvanceRenewalReport());
-		WebElementUtils.enterText(renewalActivationModeTxt, devicePlan.getRenewalActivationMode());
 	}
 
 	private void fillReplacementSection(DevicePlan devicePlan) {
-		replacementNewExpiryFlagChkBx.click();
-		WebElementUtils.enterText(replacementNoOfDaysTxt, devicePlan.getReplacementNoOfDays());
-		WebElementUtils.enterText(validityOnReplacementMonthsTxt, devicePlan.getValidityOnReplacementMonths());
-		allowInstanceDeviceReplaceChkBx.click();
-		if (!devicePlan.getReplacementDeviceTechnology().isEmpty()) {
-			WebElementUtils.selectDropDownByVisibleText(replacementDeviceTechnologyDdwn,
-					devicePlan.getReplacementDeviceTechnology());
+		if(devicePlan.getDeviceType().contains(DeviceType.MAGNETIC_STRIPE_CARD) 
+				|| devicePlan.getDeviceType().contains(DeviceType.EMV_CARD) 
+				|| devicePlan.getDeviceType().contains(DeviceType.PHYSICAL_NFC_DEVICE_MAG_STRIPE_PAYPASS)
+				|| devicePlan.getDeviceType().contains(DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS)
+				|| devicePlan.getDeviceType().contains(DeviceType.PHYSICAL_NFC_DEVICE_PAYPASS)){
+			replacementNewExpiryFlagChkBx.click();
+			WebElementUtils.enterText(replacementNoOfDaysTxt, devicePlan.getReplacementNoOfDays());
+			WebElementUtils.enterText(validityOnReplacementMonthsTxt, devicePlan.getValidityOnReplacementMonths());
+			allowInstanceDeviceReplaceChkBx.click();
+			if (!devicePlan.getReplacementDeviceTechnology().isEmpty()) {
+				WebElementUtils.selectDropDownByVisibleText(replacementDeviceTechnologyDdwn,
+						devicePlan.getReplacementDeviceTechnology());
+			}
 		}
 	}
 
@@ -1295,16 +1265,18 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 
 	public void enterVirtualDeviceCreditLimit()
-	{
-		WebElementUtils.enterText(virtualDeviceCreditLimitTxt,CustomUtils.randomNumbers(3));
+	{	
+		if(virtualDeviceCreditLimitTxt.isEnabled()){
+			WebElementUtils.enterText(virtualDeviceCreditLimitTxt,CustomUtils.randomNumbers(3));
+		}
 	}
 	
-	private String getStoryName()
-	{
+	private String getStoryName(){
 		String name = System.getProperty("storyName").toString();
 		logger.info("System.getStoryName  : "+name);
 		return name;
 	}
+	
 	public void enableStopListFlag(DevicePlan devicePlanDataObject) {
 		logger.info("Update Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
 		enterValueinTextBox(devicePlanCode, devicePlanDataObject.getDevicePlanCode());
@@ -1313,7 +1285,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		runWithinPopup("Edit Device Plan", () -> {			
 			WebElementUtils.elementToBeClickable(authorizationTab);
 			clickWhenClickable(authorizationTab);
-			checStopListFlg(true);
+			checkStoplistFlag(true);
 			clickSaveButton();
 		});
 

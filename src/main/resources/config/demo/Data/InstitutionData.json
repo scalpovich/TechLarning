@@ -1,0 +1,35 @@
+{
+	"institute": [
+		{
+			"productIdentity": "Prepaid",
+			"code": "121212",
+			"abbreviation": "AUTO",
+			"branch": "auto branch [1000]",
+			"cardPackIdGenerationTemplate": "AUTOMATION [PAN042]",
+			"deviceIdGenerationTemplate": "AUTOMATION [PAN022]",
+			"embossingVendor": "AUTOMATION PERS BUREAU [AUTOBU]",
+			"mastercardPrepaidIssuerBin": "automation prepaid card [588765]",
+			"mastercardDebitIssuerBin": "587765",
+			"mastercardCreditIssuerBin": "589765",
+			"visaPrepaidIssuerBin": "477765",
+			"visaDebitIssuerBin": "487677",
+			"visaCreditIssuerBin": "470110",
+			"plasticId": "Plastic code [164]",
+			"pictureCode": "Picture code [217]",
+			"corporateClientCode": "companyName [12121218148000001]",
+			"dedupePlanCode": "TA5150QXLA [TA5150QXLA]",
+			"prepaidStatementPlan": "AUTOMATION [TA9551ULEG]",
+			"statementMessagePlan": "AUTOMATION [TA5586DYPS]",
+			"marketingMessagePlan": "AUTOMATION [TA6223FUEY]",
+			"documentCheckListPlan": "AUTOMATION [TA2735FKEM]",
+			"mccRulePlan": "AUTOMATION [TA9307FU9]",
+			"deviceJoiningAndMemberShipFeePlan": "AUTOMATION [TA1938YD]",
+			"deviceEventBasedFeePlan": "AUTOMATION [TA3323JC]",
+			"transactionLimitPlan": "AUTOMATION [TA3767PXPK]",
+			"transactionPlan": "AUTOMATION [T4093E]",
+			"creditPlan": "AUTOMATION [100]",
+			"billingCycle": "AUTOMATION [180]",
+			"walletPlan": "AUTOMATION [TA8640BQEH]"
+		}
+	]
+}

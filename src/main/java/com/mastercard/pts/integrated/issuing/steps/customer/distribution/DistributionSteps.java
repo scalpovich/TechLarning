@@ -19,7 +19,7 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.distribution.Dis
 
 @Component
 public class DistributionSteps {
-	private static final String CARD_PACKID_CREATION_MESSAGE = "Dispatched sucessfully with Dispatch Number";
+	private static final String CARD_PACKID_CREATION_MESSAGE = "Dispatched successfully with Dispatch Number";
 	@Autowired
 	private TestContext context;
 	

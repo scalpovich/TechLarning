@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.xerces.dom3.as.ASElementDeclaration;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -81,6 +82,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	private static final String SUCCESS_MESSAGE = "Success message: {}";
 
+	private static final String WALLET_NUMBER = "Wallet number: {}";
+	
 	public static final String ERROR_MESSAGE = "Error: {}";
 
 	public static final String RESPONSE_MESSAGE	 = "Response message: {}";
@@ -106,7 +109,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
 	
 	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid transaction type - ";
-
+    
     private static final String Device = null;
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -291,6 +294,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private MCWebElement errorMsgPresence;
 	
 	private static final String DeviceNumber="Device Number";
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers']/td[5]/span")
+	private MCWebElement deviceProductionHeaderBatchTxt;
+	
+	private static final int loopIterationToCheckBatchNumber=21;
 	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -489,7 +497,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void runWithinPopup(String caption, Runnable action) {
 		SimulatorUtilities.wait(3000);
-		By frameSelector = By.xpath(String.format("//h3[contains(text(), '%s')]/ancestor::div//iframe", caption));
+		String xpath = String.format("//h3[contains(text(), '%s')]/ancestor::div//iframe", caption);
+		logger.info("runWithinPopup -> xpath: {}", xpath);
+		By frameSelector = By.xpath(xpath);
 		WebElementUtils.runWithinFrame(driver(), timeoutInSec, frameSelector, action);
 	}
 
@@ -600,8 +610,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected boolean verifyDuplicateAndClickCancel() {
 		String message = getMessageFromFeedbackPanel();
 		if (message != null
-				&& (message.contains("Effective Date and End Date should not overlap for same Country") || message.contains("Error in Insertion/Save") || message
-						.contains("Business Calendar setup already exists for logged in Institution for same Effective Date"))) {
+				&& (message.contains("Effective Date and End Date should not overlap for same Country") || 
+						message.contains("Error in Insertion/Save") || 
+						message.contains("Effective Date and End Date should not overlap for same MCG") ||
+						message.contains("Business Calendar setup already exists for logged in Institution for same Effective Date"))) {
 			clickCancelButton();
 			return true;
 		}
@@ -623,6 +635,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected void clickWhenClickable(MCWebElement element) {
 		SimulatorUtilities.wait(4000);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
+        logger.info("Button clicked successfully.");
+	}
+	
+	protected void clickWhenClickablewithWicket(MCWebElement element) {
+		SimulatorUtilities.wait(4000);
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
+		waitForWicket();
 	}
 
 	protected void clickWhenClickableDoNotWaitForWicket(MCWebElement element) {
@@ -676,7 +695,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		// Pre-production batch and device production batch & Authorization
 		// Search page take little long to
 		// be completed, and do not appear in search result, hence a for loop
-		for (int l = 0; l < 21; l++) {
+		for (int l = 0; l < loopIterationToCheckBatchNumber; l++) {
 			if (!waitForRow())
 				clickSearchButton();
 			else {
@@ -684,12 +703,37 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 		}
 	}
+	
+	public void waitAndSearchForApplicationBatchNumberToAppear() {
+		clickSearchButton();
+		// Pre-production batch and device production batch & Authorization Search page take little long to
+				// be completed, and do not appear in search result, hence a for loop
+		for (int l = 0; l < 21; l++) {
+			if (!waitForbatchNumber())
+				clickSearchButton();
+			else {
+				break;
+			}
+		}
+	}
+	
+	protected boolean waitForbatchNumber() {
+		try {
+			waitForWicket();
+			SimulatorUtilities.wait(20000); 
+			return asWebElement(deviceProductionHeaderBatchTxt).isDisplayed();
+		} catch (Exception e) {
+			logger.debug("Result not found", e);
+			return false;
+		}
+	}
 
 	protected void waitAndSearchForRecordToExist() {
 		waitAndSearchForRecordToAppear();
+		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, deviceNumberFetch.getText());
+		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
 		selectFirstRecord();
-		clickProcessSelectedButton();
-		
+		clickProcessSelectedButton();		
 	}	
 	
 	protected void waitAndSearchForRecordToExists() {
@@ -1708,12 +1752,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 	}
 	
+	
 	private void deviceNumberContextDeviceProduction() {
 		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());		
 		Device device  = context.get(CreditConstants.APPLICATION);
 		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
 	}
-	
 	public int getDeviceNumberIndex()
 	{  
 		int index=0;
@@ -1768,7 +1812,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		String ins = String.format(instituteSelectionVal, instituteName);
 		CustomUtils.ThreadDotSleep(500);
 		getFinder().getWebDriver().findElement(By.xpath(ins)).click();
-
 	}
 
 	public void deleteExistingRecord(String parameter) {
@@ -1783,7 +1826,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public List<WebElement> getValidationErrors() {
 		return Elements(ERROR_XPATH);
 	}
-
+	
+	public void moveToElementAndClick(MCWebElement element,int xOffset, int yOffset){
+		Actions action = new Actions(driver());		
+		action.moveToElement(asWebElement(element), xOffset, yOffset).click().build().perform();
+	}
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		logger.info("Not validaiting any elements, as this is an Abstraction layer to Pages");
