@@ -7,7 +7,7 @@ Meta:
 @CreditRegression
 @StoryName credit_emv_retail_stoplist_withdraw
  
-Scenario:creation of mastercard_individual_primary_msr Card credit device
+Scenario: 1 Create EMV credit device
 Given setting json values in excel for Credit
 When user is logged in institution
 And for EMV Card User fills Device Plan for credit product for Mastercard
@@ -22,19 +22,19 @@ And credit processes pinProduction batch using new Device for Supplementary
 And device has "normal" status
 Then user sign out from customer portal
 
-Scenario: Pin Generation
+Scenario: 2 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform EMV_PURCHASE Authorization transaction
+Scenario: 3 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
 
-Scenario: Generate Auth File for Clearing
+Scenario: 4 Generate Auth File for Clearing
 Meta:
 @TestId 
 When Auth file is generated after transaction
@@ -43,15 +43,15 @@ And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 
-Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
+Scenario: 5 Clearing: Load auth file in MCPS and create NOT file of IPM extension
 Meta:
 @TestId 
 Given connection to MCPS is established
 When Auth file is generated
 And Auth file is loaded into MCPS and processed
-And NOT file is successfully generated
+Then NOT file is successfully generated
 
-Scenario: Upload ipm file from customer portal and process it
+Scenario: 6 Upload ipm file from customer portal and process it
 Meta:
 @TestId
 Given user is logged in institution
@@ -59,7 +59,7 @@ When User uploads the NOT file
 And user processes batch for credit
 Then user sign out from customer portal
 
-Scenario: Matching & Posting to Cardholders account
+Scenario: 7 Matching & Posting to Cardholders account
 Meta:
 @TestId 
 Given user is logged in institution
@@ -68,17 +68,26 @@ And "Matching" batch for credit is successful
 And transaction status is "Presentment Matched with authorization"
 Then user sign out from customer portal
 
-Scenario: Update IPM for duplicate record
+Scenario: 8 Update Existing IPM for duplicate presentment
 Meta:
 @TestId 
 When user update IPM for duplicate record check
 And NOT file is successfully generated
-When MCPS simulator is closed
+Then MCPS simulator is closed
 
-Scenario: Upload duplicate ipm file from customer portal and process it
+Scenario: 9 Upload updated ipm file for duplicate presentment
 Meta:
 @TestId
 Given user is logged in institution
 When User uploads the NOT file
 And user processes batch for credit
+Then user sign out from customer portal
+
+
+Scenario: 10 Verify Transaction Status
+Meta:
+@TestId 
+Given user is logged in institution
+When "Matching" batch for credit is successful
+And transaction status is "Duplicate presentment"
 Then user sign out from customer portal

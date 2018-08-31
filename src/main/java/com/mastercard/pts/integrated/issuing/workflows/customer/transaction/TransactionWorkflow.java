@@ -1375,9 +1375,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		return winiumDriver.findElementByName(clickOn).isDisplayed();
 	}
 
-	public String getAuthorizationStatus(String arnNumber, TransactionSearch ts) {
+	public String getAuthorizationStatus(String arnNumber, TransactionSearch ts, String type) {
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
-		return page.searchTransactionWithARN(arnNumber, ts);
+		return page.searchTransactionWithARN(arnNumber, ts, type);
 	}
 
 	public String getFeePostingStatus(String arnNumber, TransactionSearch ts) {
@@ -2005,11 +2005,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void manipulateIPMData(){
 		try{
-			//startWiniumDriverWithSimulator("MCPS");
 			activateMcps();
-			//System.out.println("****GGG*****" + getIpmFileName());
-			//loadIpmFile(getIpmFileName());
-			//winiumClickOperation(getIpmFileName());
 			assignUniqueFileId();
 		}catch(Exception e){
 			logger.debug("Exception occurred while editing fields :: {}", e);

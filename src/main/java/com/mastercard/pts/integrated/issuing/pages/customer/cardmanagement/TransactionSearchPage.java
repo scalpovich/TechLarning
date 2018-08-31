@@ -3,7 +3,9 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
+
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Tran
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -55,15 +58,23 @@ public class TransactionSearchPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement productTypeSelect;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=cardNumber]")
 	private MCWebElement cardNumberTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[1]/td/span[contains(text(),'DR')]/../../td[1]/span/a/span")
 	private MCWebElement retrieveARNLabel;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Sequence Number')]")
+	private MCWebElement sequenceNumberText;
+
+	private final String DUPLICATE_PRESENTMENT = "Duplicate presentment";
+	private String flag;
+
+
+
 	private String authorizationStatus;	
-	
+
 	public String searchTransactionWithDevice(String deviceNumber, TransactionSearch ts) {
 		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
 		WebElementUtils.enterText(cardNumberTxt, deviceNumber);
@@ -77,19 +88,29 @@ public class TransactionSearchPage extends AbstractBasePage {
 		return retrieveARN;
 	}
 
-	public String searchTransactionWithARN(String arnNumber, TransactionSearch ts) {
+	public String searchTransactionWithARN(String arnNumber, TransactionSearch ts, String type) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, ts.getProductType());
 		WebElementUtils.enterText(searchARNTxt, arnNumber);
 		WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
-		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
+		WebElementUtils.pickDate(fromDateTxt, LocalDate.now().minusDays(6));
 		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
 		clickSearchButton();
-		viewFirstRecord();
+		
+		if(type.equalsIgnoreCase(DUPLICATE_PRESENTMENT)){
+			SimulatorUtilities.wait(2000);
+			int size = Elements("//table[@class='dataview']/tbody/tr").size();
+			Element("//table[@class='dataview']/tbody/tr["+size+"]/td").click();
+		}
+		else{
+			viewFirstRecord();
+		}
+		
 		runWithinPopup("View Transactions", () -> {
 			logger.info("Retrieving authorization status : " + authorizationStatusTxt.getText());
 			authorizationStatus = authorizationStatusTxt.getText();
 			clickCloseButton();
 		});
+
 		return authorizationStatus;
 	}
 
