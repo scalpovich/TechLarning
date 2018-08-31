@@ -10,6 +10,8 @@ public class WithdrawDeviceRange {
 	String withdrawReason;
 	String withdrawDescription;
 	
+	static String WITHDRAW_REASON="Device_Range_Withdraw_Reason";
+	
 	public String getWithdrawReason() {
 		return withdrawReason;
 	}
@@ -28,7 +30,7 @@ public class WithdrawDeviceRange {
 
 	public static WithdrawDeviceRange createWithProvider(KeyValueProvider provider) {
 		WithdrawDeviceRange withdrawDeviceRange=new WithdrawDeviceRange();
-		withdrawDeviceRange.setWithdrawReason(provider.getString("Device_Range_Withdraw_Reason"));
+		withdrawDeviceRange.setWithdrawReason(provider.getString(WITHDRAW_REASON));
 		withdrawDeviceRange.setWithdrawDescription(CustomUtils.randomString(8));
 		return withdrawDeviceRange;
 	}

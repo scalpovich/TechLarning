@@ -10,6 +10,8 @@ public class StopListDeviceRange {
 	String stopListReason;
 	String stopListReasonDescription;
 	
+	public static final String STOPLIST_REASON="Device_Range_Stop_List_Reason";
+	
 	public String getStopListReason() {
 		return stopListReason;
 	}
@@ -28,7 +30,7 @@ public class StopListDeviceRange {
 
 	public static StopListDeviceRange createWithProvider(KeyValueProvider provider) {
 		StopListDeviceRange stopListDevice=new StopListDeviceRange();
-		stopListDevice.setStopListReason(provider.getString("Device_Range_Stop_List_Reason"));
+		stopListDevice.setStopListReason(provider.getString(STOPLIST_REASON));
 		stopListDevice.setStopListReasonDescription(CustomUtils.randomString(8));
 		return stopListDevice;
 	}

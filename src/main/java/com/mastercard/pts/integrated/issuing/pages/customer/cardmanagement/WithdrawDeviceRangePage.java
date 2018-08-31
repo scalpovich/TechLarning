@@ -63,12 +63,12 @@ public class WithdrawDeviceRangePage extends AbstractBasePage {
 		String startRange=null;
 		String endRange=null;
 		if(!deviceRange.getIssuerBin().contains("[")){
-			startRange=deviceRange.getIssuerBin()+""+deviceRange.getFromDeviceNumber();
-			endRange=deviceRange.getIssuerBin()+""+deviceRange.getToDeviceNumber();
+			startRange=deviceRange.getIssuerBin()+deviceRange.getFromDeviceNumber();
+			endRange=deviceRange.getIssuerBin()+deviceRange.getToDeviceNumber();
 		}
 		else{
-			startRange=deviceRange.getIssuerBinCode(deviceRange.getIssuerBin())+""+deviceRange.getFromDeviceNumber();
-			endRange=deviceRange.getIssuerBinCode(deviceRange.getIssuerBin())+""+deviceRange.getToDeviceNumber();
+			startRange=deviceRange.getIssuerBinCode(deviceRange.getIssuerBin())+deviceRange.getFromDeviceNumber();
+			endRange=deviceRange.getIssuerBinCode(deviceRange.getIssuerBin())+deviceRange.getToDeviceNumber();
 		}
 		enterStartRange(startRange);
 		enterEndRange(endRange);
