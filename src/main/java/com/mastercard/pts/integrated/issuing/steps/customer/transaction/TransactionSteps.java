@@ -407,7 +407,7 @@ public class TransactionSteps {
 	@Then("transaction status is \"$type\"")
 	public void thenTransactionStatusIsPresentmentMatched(String type) {
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
-		assertEquals(type, transactionWorkflow.getAuthorizationStatus(arnNumber, ts));
+		assertEquals(type, transactionWorkflow.getAuthorizationStatus(arnNumber, ts,type));
 	}
 
 	@Then("transaction fee is correctly posted")
