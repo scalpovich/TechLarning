@@ -35,7 +35,7 @@ public class UpdateClientDetailsPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=lastName]")
 	private MCWebElement lastNameTxt;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:3:componentList:0:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[text()='Branch Code']/following-sibling::td/select")
 	private MCWebElement branchCodeDDwn;
 
 	public void verifyUiOperationStatus() {
