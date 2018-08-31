@@ -433,8 +433,8 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 				WebElementUtils.selectDropDownByVisibleText(accountTypeDDwn, device.getAccountType());
 			}	
 		}
-		
-		WebElementUtils.enterText(registeredMailIdTxt, "tuptewar.pavan7+"+ RandomStringUtils.randomNumeric(4)+"@gmail.com");
+		//"tuptewar.pavan7+"+ RandomStringUtils.randomNumeric(4)+"@gmail.com"
+		WebElementUtils.enterText(registeredMailIdTxt, "e074060@mastercard.com");
 		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDDwn, client.getLanguagePreference());
 		WebElementUtils.selectDropDownByVisibleText(vipDDwn, device.getVip());
 
