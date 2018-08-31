@@ -7,7 +7,7 @@ So that transaction limit plan for vip customer is verified
 Meta:
 @FR
 @CreditFR
-@StoryName credit_emv_retail_overlimit
+@StoryName cr_vip_transaction_limit
 @vip_transaction_limit
 
 Scenario:1 creation of corporate emv credit device
