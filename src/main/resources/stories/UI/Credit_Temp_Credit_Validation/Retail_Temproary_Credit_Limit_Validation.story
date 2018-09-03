@@ -27,7 +27,6 @@ And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
 And User fills MCC Rules for credit product
 And User Primary Device fills New Program Retail Credit Card section for credit product for Mastercard
-And user edits the program
 And for Primary Device and New Client user fills Device Range section for credit product
 And user assigns service code to program
 Then user sign out from customer portal
