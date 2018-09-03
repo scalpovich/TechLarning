@@ -8,7 +8,6 @@ I want to create an emv prepaid card for client and perform manual authorization
 Meta:
 @StoryName prepaid_cgpr_manual_auth
 @CRCardsWithAuthorization
-@nitin_summarised
 
 Scenario: Set up emv corporate general purpose prepaid card
 Meta:

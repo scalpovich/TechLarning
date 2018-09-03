@@ -8,7 +8,6 @@ I want to create an msr prepaid card for client and perform manual authorization
 Meta:
 @StoryName prepaid_cgpr_manual_auth
 @CRCardsWithAuthorization
-@nitin_summarised
 
 Scenario: Set up corporate general purpose msr prepaid card
 Meta:

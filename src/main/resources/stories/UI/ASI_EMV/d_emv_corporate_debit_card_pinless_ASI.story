@@ -8,7 +8,6 @@ I want to authorize transactions for EMV Corporate debit card
 Meta:
 @StoryName d_emv_corp_ASI
 @MMSR
-@nitin_summarised
 
 Scenario: Set up program for emv corporate debit card
 Given user is logged in institution
