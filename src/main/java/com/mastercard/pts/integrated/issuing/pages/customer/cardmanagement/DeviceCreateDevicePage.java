@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -68,7 +67,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:programCode:input:dropdowncomponent")
 	private MCWebElement programCodeDDwn;
 	 
-	private By programCodeDDwnBy = By.name("view:programCode:input:dropdowncomponent");
+	private String programCodeDDwnBy = "view:programCode:input:dropdowncomponent";
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:deviceType1:input:dropdowncomponent")
 	private MCWebElement deviceType1DDwn;
@@ -346,9 +345,8 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			try{
 			selectByVisibleText(programCodeDDwn, device.getProgramCode());}
 			catch(StaleElementReferenceException e){
-				driver().findElement(programCodeDDwnBy);
-				selectByVisibleText(programCodeDDwn, device.getProgramCode());
-			}
+				MCWebElement element = getMCWebElementFromWebElement(FindBy.NAME,programCodeDDwnBy);
+				selectByVisibleText(element, device.getProgramCode());			}
 			SimulatorUtilities.wait(2000);			
 		}
 		SimulatorUtilities.wait(1000);
