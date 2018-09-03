@@ -8,7 +8,7 @@ I want to make transaction at black listed country via debit card
 Meta:
 @StoryName d_msr_trx_on_black_list_country
 @CountryWhiteBlackListPreScreening
-Scenario: Set up program for debit emv corporate debit card
+Scenario: Set up program for debit magnetic stripe corporate debit card
 Given user is logged in institution
 When User fills Dedupe Plan
 And User fills MCC Rules for debit product
@@ -17,10 +17,10 @@ And User fills Transaction Limit Plan for debit product
 And User fills Document Checklist Screen for debit product
 And User fills Device Joining and Membership Fee Plan for debit product
 And User fills Device Event Based Fee Plan for debit product
-And User fills Device Plan for "debit" "emv" card with no pin
+And User fills Device Plan for "debit" "magnetic stripe" card with no pin
 And User fills Wallet Plan for debit product
 And User fills Program section for debit product
-And User edit Program to update country white black list
+And User edit Program to update country white and black list
 And User fills Business Mandatory Fields Screen for debit product
 And User fills Device Range section for debit product
 And user assigns service code to program

@@ -285,7 +285,7 @@ public class ProgramPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[contains(@name,'countryWbPlanCode:input:dropdowncomponent')]")
 	private MCWebElement countryWhiteBlackListPlan;
 
-	private final String COUNTRY_WHITELIST_AND_BLACKLIST_PLAN="country white black list";
+	private final String COUNTRY_WHITELIST_AND_BLACKLIST_PLAN="country white and black list";
 	public void addProgram(String programCode) {
 		WebElementUtils.enterText(programTxt, programCode);
 	}
@@ -874,7 +874,7 @@ public class ProgramPage extends AbstractBasePage {
 	
 	public void editProgramForPlans(Program program, String editItem) {
 		enterValueinTextBox(enterProgram, program.getProgramCode());
-		logger.info("Program code :" +program.getProgramCode() + "]");
+		logger.info("Program code :{}",program.getProgramCode());
 		clickWhenClickable(search);
 		waitForElementVisible(editProgram);
 		clickWhenClickable(editProgram);

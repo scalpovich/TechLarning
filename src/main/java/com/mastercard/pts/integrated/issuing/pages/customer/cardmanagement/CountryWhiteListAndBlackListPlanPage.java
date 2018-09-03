@@ -32,29 +32,29 @@ public class CountryWhiteListAndBlackListPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=countryWblistPlanCode]")
 	private MCWebElement countryWblistPlanCode;
 
-	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=description]")
-	private MCWebElement description;
+	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=txtDescription]")
+	private MCWebElement txtDescription;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "countryWblistPlanCode:input:inputTextField")
-	private MCWebElement planCode;
+	private MCWebElement txtPlanCode;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "description:input:inputTextField")
-	private MCWebElement planDescription;
+	@PageElement(findBy = FindBy.NAME, valueToFind = "txtDescription:input:inputTextField")
+	private MCWebElement txtPlanDescription;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='planType:radioComponent' and @value='W']")
-	private MCWebElement planTypeWhiteList;
+	private MCWebElement rbtnPlanTypeWhiteList;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='planType:radioComponent' and @value='B']")
-	private MCWebElement planTypeBlackList;
+	private MCWebElement rbtnPlanTypeBlackList;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "countryCode:input:dropdowncomponent")
-	private MCWebElement countryCode;
+	private MCWebElement countryCodeDDwn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='countryWblistEffectiveDate:input:dateTextField']/..")
-	private MCWebElement effectiveDate;
+	private MCWebElement dtPkrEffectiveDate;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='countryWblistEndDate:input:dateTextField']/..")
-	private MCWebElement endDate;
+	private MCWebElement dtPkrEndDate;
 	
 	private String addCountryFrame="//h3[contains(text(), 'Add Country')]/ancestor::div//iframe";
 
@@ -67,7 +67,7 @@ public class CountryWhiteListAndBlackListPlanPage extends AbstractBasePage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(countryWblistPlanCode),
-				WebElementUtils.elementToBeClickable(description));
+				WebElementUtils.elementToBeClickable(txtDescription));
 	}
 
 	public boolean addCountryInBlackOrWhiteListInPlan(CountryWhiteListAndBlackListPlan countryWhiteListBlackListPlan) {
@@ -85,12 +85,12 @@ public class CountryWhiteListAndBlackListPlanPage extends AbstractBasePage {
 	}
 
 	private void addPlanDetailsInPopUp(CountryWhiteListAndBlackListPlan countryWhiteListBlackListPlan) {
-		WebElementUtils.enterText(planCode, countryWhiteListBlackListPlan.getPlanCode());
-		WebElementUtils.enterText(planDescription, countryWhiteListBlackListPlan.getDescription());
+		WebElementUtils.enterText(txtPlanCode, countryWhiteListBlackListPlan.getPlanCode());
+		WebElementUtils.enterText(txtPlanDescription, countryWhiteListBlackListPlan.getDescription());
 		if (countryWhiteListBlackListPlan.getPlanType().equals(WHITE_LIST)) {
-			WebElementUtils.selectRadioBtn(planTypeWhiteList);
+			WebElementUtils.selectRadioBtn(rbtnPlanTypeWhiteList);
 		} else if (countryWhiteListBlackListPlan.getPlanType().equals(BLACK_LIST)) {
-			WebElementUtils.selectRadioBtn(planTypeBlackList);
+			WebElementUtils.selectRadioBtn(rbtnPlanTypeBlackList);
 		}
 		clickAddDetailsButton();
 		clickAddNewButton();
@@ -100,9 +100,9 @@ public class CountryWhiteListAndBlackListPlanPage extends AbstractBasePage {
 		SimulatorUtilities.wait(1000);
 		switchToDefaultFrame();
 		switchToDefaultFrame(addCountryFrame,1);
-		WebElementUtils.selectDropDownByVisibleText(countryCode, countryWhiteListBlackListPlan.getCountryCode());
-		WebElementUtils.pickDate(effectiveDate, LocalDate.now().plusDays(1));
-		WebElementUtils.pickDate(endDate, LocalDate.now().plusYears(7));
+		WebElementUtils.selectDropDownByVisibleText(countryCodeDDwn, countryWhiteListBlackListPlan.getCountryCode());
+		WebElementUtils.pickDate(dtPkrEffectiveDate, LocalDate.now().plusDays(1));
+		WebElementUtils.pickDate(dtPkrEndDate, LocalDate.now().plusYears(7));
 		clickSaveButton();
 	}
 

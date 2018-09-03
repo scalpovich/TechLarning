@@ -23,7 +23,7 @@ And User fills Device Event Based Fee Plan for prepaid product
 And User fills Device Plan for "prepaid" "magnetic stripe" card
 And User fills Wallet Plan for prepaid product
 And User fills Program section for prepaid product
-And User edit Program to update country white black list
+And User edit Program to update country white and black list
 And User fills Business Mandatory Fields Screen for prepaid product
 And User fills Device Range section for prepaid product
 And user assigns service code to program
