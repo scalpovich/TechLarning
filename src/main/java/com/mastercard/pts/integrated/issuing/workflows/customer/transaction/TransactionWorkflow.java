@@ -257,9 +257,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 				performClickOperation("Edit Node");
 				wait(4000);
 				fillEmvChipKeySetDetails();
-				selectCVC3KeySet(transactionData);
 			}
 		}
+		selectCVC3KeySet(transactionData);
 		importAndLoadTestCase(transactionData.getTestCase(), transaction);
 		performExecution(transaction);
 	}
