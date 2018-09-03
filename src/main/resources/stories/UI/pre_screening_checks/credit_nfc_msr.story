@@ -35,9 +35,8 @@ Scenario:creation of mastercard_individual_primary_nfc_msr Card credit device st
 Given user is logged in institution
 When credit device is created using new device screen for Individual and Primary Device and New Client and NFC Device - Mag Stripe
 And credit processes pre-production batch using new Device
-And credit processes deviceproduction batch using new Device for Supplementary
-And credit processes pingeneration batch using new Device for Supplementary
-And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+And credit processes deviceproduction batch using new Device
+And User search for new device on search screen for credit and validates the status as NORMAL
 Then user sign out from customer portal
 
 Scenario: Perform MSR_NFC_PURCHASE Authorization transaction

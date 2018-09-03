@@ -20,7 +20,6 @@ When user creates new device of prepaid type for new client
 And a new device was created
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
-And processes pin generation batch for prepaid
 And device has "normal" status
 And user activates device through helpdesk
 And user has wallet number information for prepaid device
