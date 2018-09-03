@@ -24,6 +24,7 @@ And User search for new device Supplementary on search screen for credit and val
 And user activates temproary credit limit change request
 Then user sign out from customer portal
 
+
 Scenario: Pin Generation 
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
