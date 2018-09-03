@@ -268,4 +268,9 @@ public class ProgramSetupWorkflow {
 		page.setReservedAmount(reservedAmount);
 		page.addWalletPlanData(walletPlan);
 	}
+	
+	public void editsProgram(Program program,String editItem) {
+		ProgramPage page = navigator.navigateToPage(ProgramPage.class);
+		page.editsProgramForPlans(program,editItem);
+	}
 }

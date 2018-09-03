@@ -279,6 +279,13 @@ public class ProgramPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "adaptiveEcommFlag:checkBoxComponent")
 	private MCWebElement adaptiveAuthenticationCheckBx;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//ul[@class='tabs']/li[2]")
+	private MCWebElement planTab;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[contains(@name,'countryWbPlanCode:input:dropdowncomponent')]")
+	private MCWebElement countryWhiteBlackListPlan;
+
+	private final String COUNTRY_WHITELIST_AND_BLACKLIST_PLAN="country white and black list";
 	public void addProgram(String programCode) {
 		WebElementUtils.enterText(programTxt, programCode);
 	}
@@ -858,5 +865,31 @@ public class ProgramPage extends AbstractBasePage {
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(programSearchTxt));
 
+	}
+	
+	private void setCountryWhiteListAndBlackListPlan(Program program) {
+		WebElementUtils.selectDropDownByVisibleText(countryWhiteBlackListPlan, program.getCountryWhiteListAndBlackListPlan());
+
+	}
+
+	private void editsProgram(Program program, String editItem) {
+		switch (editItem) {
+		case COUNTRY_WHITELIST_AND_BLACKLIST_PLAN:
+			clickWhenClickable(planTab);
+			setCountryWhiteListAndBlackListPlan(program);
+			clickSaveButton();
+			break;
+		}
+	}
+
+	public void editsProgramForPlans(Program program, String editItem) {
+		enterValueinTextBox(enterProgram, program.getProgramCode());
+		logger.info("Program code :{}", program.getProgramCode());
+		clickWhenClickable(search);
+		waitForElementVisible(editProgram);
+		clickWhenClickable(editProgram);
+		runWithinPopup("Edit Program", () -> {
+			editsProgram(program, editItem);
+		});
 	}
 }
