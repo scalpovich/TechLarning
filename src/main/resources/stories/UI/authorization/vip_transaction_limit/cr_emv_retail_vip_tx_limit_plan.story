@@ -33,7 +33,7 @@ And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform EMV_PURCHASE Authorization transaction
+Scenario:3 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 And MAS simulator is closed
