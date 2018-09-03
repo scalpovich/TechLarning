@@ -276,7 +276,7 @@ public class TransactionSteps {
 		transactionData.setCardDataElementsDynamic("035.04", device.getServiceCode());
 		if (transactionWorkflow.isContains(transaction, "EMV")) {
 			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getIcvvData());
-		} else if (transactionWorkflow.isContains(transaction, "MSR")) {
+		} else if (transactionWorkflow.isContains(transaction, "MSR") || transactionWorkflow.isContains(transaction, "FALLBACK") ) {
 			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getCvvData());
 		}
 	}
@@ -393,6 +393,14 @@ public class TransactionSteps {
 		String pinNumber = transactionWorkflow.getPinNumber(transactionData);
 		logger.info("FINSim PIN Number generated : {} ", pinNumber);
 		device.setPinNumberForTransaction(pinNumber);
+	}
+	
+	@When("PIN is created for Pin Change First Transaction")
+	@Then("PIN is created for Pin Change First Transaction")
+	public void thenPINIsCreatedForPinChangeFirstTransaction() {
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
+		context.put(ContextConstants.DEVICE, device);
 	}
 
 	@When("$simulatorName simulator is closed")

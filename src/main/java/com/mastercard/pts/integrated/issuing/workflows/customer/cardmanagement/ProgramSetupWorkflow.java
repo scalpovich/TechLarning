@@ -122,6 +122,15 @@ public class ProgramSetupWorkflow {
 		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
 		page.updateCVCCVVDevicePlan(devicePlan);
 	}
+	
+	public void checkPinChangeTransactionFirst(DevicePlan devicePlan){
+		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
+		page.updatePinChangeTransactionFirst(devicePlan);
+	}
+	public void checkCrossBorderTransaction(DevicePlan devicePlan){
+		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
+		page.checkCrossBorderTransaction(devicePlan);
+	}
 	// Device configuration ends
 	
 	public void fillDocumentChecklist(ApplicationDocumentChecklist  applicationDocumentChecklist) {
@@ -237,6 +246,12 @@ public class ProgramSetupWorkflow {
 	public void createMCCRulePlan(MCCRulePlan plan) {
 		MCCRulePlanPage page = navigator.navigateToPage(MCCRulePlanPage.class);
 		page.createMCCRulePlanPage(plan);
+	}
+
+	public void editWalletPlan(WalletPlan walletPlan, String editableFieldForWalletPlan) {
+		WalletConfigurationWalletPlanPage page = navigator.navigateToPage(WalletConfigurationWalletPlanPage.class);
+		page.editWalletPlan(walletPlan,editableFieldForWalletPlan);
+		
 	}
 	public void enableStopListFlag(DevicePlan devicePlanDataObject) {
 		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);

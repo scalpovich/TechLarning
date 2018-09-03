@@ -28,6 +28,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.InstitutionSelection
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
 
 import org.apache.commons.lang.RandomStringUtils;
@@ -311,5 +312,15 @@ public class UserManagementSteps {
 		userDefaultInstitution = Institution.createWithProvider(provider).buildAbbreviationAndCode();
 		String expectedInstitution = userDefaultInstitution.replace('[', '(').replace(']', ')');
 		Assert.assertEquals("Default institution is not selected", expectedInstitution, selectedInstitution);
+	}
+	@When("user wait for one hour to perform transaction")
+	public void whenUserWaitForOneHourToPerformTransaction()
+	{
+		SimulatorUtilities.wait(ConstantData.STATIC_WAIT_FOR_PRESCREENING);
+	}
+	@When("user wait for one 21 mins to perform transaction")
+	public void whenUserWaitToPerformCrossBorderTransaction()
+	{
+		SimulatorUtilities.wait(1260000);
 	}
 }
