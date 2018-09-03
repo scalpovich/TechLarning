@@ -54,7 +54,17 @@ public class LoadFromFileUploadSteps {
 	private String jobStatus;
 
 	private FileCreation file;
+	
+	private static String batchStatus = "SUCCESS [2]";
 
+	
+	@Then("verify processes batch for type $type with status $stauts")
+	public void whenUserProcessesBatchForPrepaid(String type, String status) {
+		batchStatus = status;
+		whenUserProcessesBatchForPrepaid(type);
+	}
+	
+	
 	@When("user processes batch for $type")
 	public void whenUserProcessesBatchForPrepaid(String type) {
 		// since data is constant for this transaction, we do not need this data to go into Excel
@@ -62,10 +72,10 @@ public class LoadFromFileUploadSteps {
 		// batch.setBatchName("Load IPM Incoming File [IPM_INCOMING]");
 		batch.setProductType(ProductType.fromShortName(type));
 		HashMap<String, String> hm = (HashMap<String, String>) loadFromFileUploadWorkflow.processUploadBatch(batch);
-		assertEquals("SUCCESS [2]", hm.get("BatchStatus"));
+		assertEquals(batchStatus, hm.get("BatchStatus"));
 		jobId = hm.get("JobId");
 	}
-
+	
 	@When("user creates and uploads transaction file")
 	public void whenUserCreatesAndUploadsTransactionFile() {
 		Device device = context.get(ContextConstants.DEVICE);

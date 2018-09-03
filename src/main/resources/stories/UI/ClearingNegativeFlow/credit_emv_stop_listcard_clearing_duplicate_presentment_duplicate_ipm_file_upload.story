@@ -7,7 +7,7 @@ Meta:
 @CreditRegression
 @StoryName credit_emv_retail_stoplist_withdraw
  
-Scenario:creation of mastercard_individual_primary_msr Card credit device
+Scenario: 1.1 Create EMV credit device
 Given setting json values in excel for Credit
 When user is logged in institution
 And for EMV Card User fills Device Plan for credit product for Mastercard
@@ -22,19 +22,19 @@ And credit processes pinProduction batch using new Device for Supplementary
 And device has "normal" status
 Then user sign out from customer portal
 
-Scenario: Pin Generation
+Scenario: 1.2 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform EMV_PURCHASE Authorization transaction
+Scenario: 1.3 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
 
-Scenario: Generate Auth File for Clearing
+Scenario: 1.4 Generate Auth File for Clearing
 Meta:
 @TestId 
 When Auth file is generated after transaction
@@ -43,23 +43,15 @@ And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 
-Scenario: Stoplist credit device from stoplist screen
-Given user is logged in institution
-When user stoplists a card from stoplist device screen
-And user edits deviceplan and enables stoplist flag
-And device has "lost" status
-Then user sign out from customer portal
-
-Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
+Scenario: 1.5 Clearing: Load auth file in MCPS and create NOT file of IPM extension
 Meta:
 @TestId 
 Given connection to MCPS is established
 When Auth file is generated
 And Auth file is loaded into MCPS and processed
-And NOT file is successfully generated
-When MCPS simulator is closed
+Then NOT file is successfully generated
 
-Scenario: Upload ipm file from customer portal and process it
+Scenario: 1.6 Upload ipm file from customer portal and process it
 Meta:
 @TestId
 Given user is logged in institution
@@ -67,7 +59,7 @@ When User uploads the NOT file
 And user processes batch for credit
 Then user sign out from customer portal
 
-Scenario: Matching & Posting to Cardholders account
+Scenario: 1.7 Matching & Posting to Cardholders account
 Meta:
 @TestId 
 Given user is logged in institution
@@ -75,3 +67,60 @@ When transaction status is "Matching Pending"
 And "Matching" batch for credit is successful
 And transaction status is "Presentment Matched with authorization"
 Then user sign out from customer portal
+
+Scenario: 1.8 Update Existing IPM for duplicate presentment
+Meta:
+@TestId 
+When user update IPM file to get status duplicate presentment
+Then NOT file is successfully generated
+
+
+Scenario: 1.9 Upload updated ipm file for duplicate presentment
+Meta:
+@TestId
+Given user is logged in institution
+When User uploads the NOT file
+And user processes batch for credit
+Then user sign out from customer portal
+
+
+Scenario: 2.0 Verify Transaction Status
+Meta:
+@TestId 
+Given user is logged in institution
+When "Matching" batch for credit is successful
+And transaction status is "Duplicate presentment"
+Then user sign out from customer portal
+
+Scenario: 2.2 Update Existing IPM for Unmatch
+Meta:
+@TestId 
+When user update IPM file to get status Unmatch
+Then NOT file is successfully generated
+And MCPS simulator is closed
+
+
+Scenario: 2.3 Upload updated ipm file for Unmatch
+Meta:
+@TestId
+Given user is logged in institution
+When User uploads the NOT file
+And user processes batch for credit
+Then user sign out from customer portal
+
+
+Scenario: 2.4 Verify Transaction Status
+Meta:
+@TestId 
+Given user is logged in institution
+When "Matching" batch for credit is successful
+And transaction status is "Unmatched Presentment"
+Then user sign out from customer portal
+
+Scenario: 2.1 Upload same file
+Meta:
+@TestId
+Given user is logged in institution
+When User uploads the NOT file
+Then verify processes batch for type credit with status FAILED [3]
+And user sign out from customer portal

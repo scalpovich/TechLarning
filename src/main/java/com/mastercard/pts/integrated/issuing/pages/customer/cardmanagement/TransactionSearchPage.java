@@ -96,7 +96,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
 		clickSearchButton();
 		
-		if(type.equalsIgnoreCase(DUPLICATE_PRESENTMENT)){
+		if(type.equalsIgnoreCase(DUPLICATE_PRESENTMENT) || type.equalsIgnoreCase("Unmatched Presentment")){
 			SimulatorUtilities.wait(2000);
 			int size = Elements("//table[@class='dataview']/tbody/tr").size();
 			Element("//table[@class='dataview']/tbody/tr["+size+"]/td").click();

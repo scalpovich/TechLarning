@@ -556,8 +556,8 @@ public class TransactionSteps {
 		context.put(ContextConstants.DEVICE, device);
 	}
 
-	@When("user update IPM for duplicate record check")
-	public void userUpdateIPMForDuplicateRecordCheck(){
-		transactionWorkflow.manipulateIPMData();
+	@When("user update IPM file to get status $status")
+	public void userUpdateIPMForDuplicateRecordCheck(String status){
+		transactionWorkflow.manipulateIPMData(status);
 	}
 }

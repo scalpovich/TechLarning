@@ -106,6 +106,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private static final String VISA_FAILURE_MESSAGE = "Visa Incomming Message for transaction did not come :: {}";
 	private static final String SIMULATOR_LICENSE_TYPE_17 = "17";
 	private static final String SIMULATOR_LICENSE_TYPE_18 = "18";
+	private static final String EDIT_SUBFIELD_VALUE = "Edit Subfield Value - Format: n(6) [YYMMDD] ";
 
 	@Autowired
 	private WebDriverProvider webProvider;
@@ -295,7 +296,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void launchWiniumAndSimulator(String simulator) {
 		launchRequiredSimulatorSession(simulator); // to fetch required Simulator installed on the machine or read value from WhichSimulatorVersionToChoose.java
-		closeSimulator(simulator);
+		//closeSimulator(simulator);
 		String methodName = new Object() {
 		}.getClass().getEnclosingMethod().getName();
 
@@ -2003,13 +2004,35 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("OK");
 	}
 
-	public void manipulateIPMData(){
+	public void manipulateIPMData(String status){
+		activateMcps();
 		try{
-			activateMcps();
+			if("Unmatch".equalsIgnoreCase(status)){
+				updateTransactionDate("180805");
+			}
 			assignUniqueFileId();
 		}catch(Exception e){
 			logger.debug("Exception occurred while editing fields :: {}", e);
 			throw MiscUtils.propagate(e);
 		}
+	}
+
+	private void updateTransactionDate(String date) throws AWTException {
+		Actions action = new Actions(winiumDriver);
+		activateMcps();
+		clickMiddlePresentmentAndMessageTypeIndicator();
+		action.moveToElement(winiumDriver.findElementByName("012 - Date And Time, Local Transaction")).doubleClick().build().perform();
+		wait(1000);
+		activateEditField();
+		action.moveToElement(winiumDriver.findElementByName(EDIT_SUBFIELD_VALUE)).moveByOffset(0, 15).doubleClick().build().perform();
+		setText("");
+		setText(date);
+		wait(1000);
+		winiumClickOperation(OK);
+		wait(1000);
+		activateEditField();
+		winiumClickOperation(SET_VALUE);
+		wait(1000);
+		winiumClickOperation(CLOSE);
 	}
 }
