@@ -9,7 +9,7 @@ when application is in block or unblock mode
 Meta:
 @StoryName d_emv_issuer_scripting_app_block_unblock
 @IssuerScript
-Scenario: Set up program for debit emv corporate debit card
+Scenario:1 Set up program for debit emv corporate debit card
 Given setting json values in excel for Debit
 When user is logged in institution
 And User fills Device Plan for "debit" "emv" card for issuer scripting
@@ -25,7 +25,7 @@ And user performs adjustment transaction
 Then user has current wallet balance amount information for debit device
 And user sign out from customer portal
 
-Scenario: debit msr corporate debit card device production
+Scenario:2 debit msr corporate debit card device production
 Given user is logged in institution
 When a new device was created
 And processes pre-production batch for debit
@@ -35,22 +35,22 @@ And device has "normal" status
 Then user activates device through helpdesk
 And user sign out from customer portal
 
-Scenario: Add the device into stoplist
+Scenario:3 Add the device into stoplist
 When user is logged in institution
 And user stoplists a card from stoplist device screen
 And user sign out from customer portal
 
-Scenario: Pin Generation
+Scenario:4 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Transaction EMV_PURCHASE and EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application block
+Scenario:5 Transaction EMV_PURCHASE and EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application block
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
-When user is logged in institution
+And user is logged in institution
 Then verify Pending [2] status of Last Executed Script Status in Device Details Screen
 And search Purchase authorization and verify 208-LOST CARD, PICK-UP status
 And user sign out from customer portal
@@ -60,12 +60,12 @@ Then verify Success [0] status of Last Executed Script Status in Device Details 
 And search Purchase authorization and verify 208-LOST CARD, PICK-UP status
 And user sign out from customer portal
 
-Scenario: Withdraw the device from stoplist
+Scenario:6 Withdraw the device from stoplist
 Given user is logged in institution
 When user withdraws a card from withdraw device screen
 And user sign out from customer portal
 
-Scenario: Transaction EMV_PURCHASE and EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application unblock
+Scenario:7 Transaction EMV_PURCHASE and EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application unblock
 When perform an EMV_PURCHASE MAS transaction on the same card
 And MAS test results are verified
 When user is logged in institution
@@ -78,4 +78,4 @@ Then MAS simulator is closed
 When user is logged in institution
 Then verify Success [0] status of Last Executed Script Status in Device Details Screen
 And search Purchase authorization and verify 000-Successful status
-Then user sign out from customer portal
+And user sign out from customer portal
