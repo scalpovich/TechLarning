@@ -10,7 +10,7 @@ Meta:
 
 Scenario: Setup - debit emv retail debit card
 Given user is logged in institution
-And device range for program with device plan for "debit" "NFC Device - Mag Stripe" card
+And device range for program with device plan for "debit" "NFC Device - Mag Stripe" card without pin
 Then user sign out from customer portal
 
 Scenario: Device production - debit emv retail debit card
