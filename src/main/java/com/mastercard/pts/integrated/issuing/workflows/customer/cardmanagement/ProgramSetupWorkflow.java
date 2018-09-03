@@ -269,8 +269,8 @@ public class ProgramSetupWorkflow {
 		page.addWalletPlanData(walletPlan);
 	}
 	
-	public void editProgram(Program program,String editItem) {
+	public void editsProgram(Program program,String editItem) {
 		ProgramPage page = navigator.navigateToPage(ProgramPage.class);
-		page.editProgramForPlans(program,editItem);
+		page.editsProgramForPlans(program,editItem);
 	}
 }

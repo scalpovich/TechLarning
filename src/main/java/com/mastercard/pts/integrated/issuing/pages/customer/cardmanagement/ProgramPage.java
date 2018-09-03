@@ -882,7 +882,7 @@ public class ProgramPage extends AbstractBasePage {
 		}
 	}
 
-	public void editProgramForPlans(Program program, String editItem) {
+	public void editsProgramForPlans(Program program, String editItem) {
 		enterValueinTextBox(enterProgram, program.getProgramCode());
 		logger.info("Program code :{}", program.getProgramCode());
 		clickWhenClickable(search);
