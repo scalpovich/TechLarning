@@ -21,7 +21,7 @@ And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pinProduction batch using new Device for Supplementary
 And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-And user activates permanent credit limit change request
+And user activates temproary credit limit change request
 And user verify available Card limit for card after transaction
 Then user sign out from customer portal
 
