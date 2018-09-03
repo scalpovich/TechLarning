@@ -162,7 +162,7 @@ public class HelpdeskWorkflow {
 	}
 	
 	public BigDecimal noteDownAvailableLimit(String type,Device device) {
-		clickCustomerCareEditLink();
+		//clickCustomerCareEditLink();
 		return helpDeskPage.noteDownAvailableLimit(type);
 	}
 	
