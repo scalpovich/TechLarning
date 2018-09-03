@@ -1464,7 +1464,7 @@ public class ProgramSetupSteps {
 		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
 		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
-		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());	
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
 	}
@@ -1473,7 +1473,7 @@ public class ProgramSetupSteps {
 	public void whenUserFillsDevicePlanForCrddForIssuerScripting(String productType, String deviceType) {
 		// virtual cards are pinless so even if this statement is called by
 		// mistake, we are setting Pin to false
-		if (deviceType.toLowerCase().contains("virtual")) {
+		if (DeviceType.fromShortName(deviceType).toLowerCase().contains("virtual")) {
 			setPinRequiredToFalse();
 		}
 		devicePlan = DevicePlan.createWithProviderForIssuerScripting(provider, productType);

@@ -11,14 +11,12 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 public class DeviceDetailsFlows {
 
 	@Autowired
-	DeviceDetailsPage deviceDetailsPage;
-
-	@Autowired
 	Navigator navigator;
 
 	public void verifyLastExecutedScriptStatusFromDeviceDetails(String lastExecutedScriptStatus) {
-		deviceDetailsPage = navigator.navigateToPage(DeviceDetailsPage.class);
-		Assert.assertTrue(deviceDetailsPage.verifyLastExecutedScriptStatusFromDeviceDetails().equalsIgnoreCase(lastExecutedScriptStatus)); 
+		DeviceDetailsPage deviceDetailsPage = navigator.navigateToPage(DeviceDetailsPage.class);
+		Assert.assertTrue(deviceDetailsPage.verifyLastExecutedScriptStatusFromDeviceDetails()
+				.equalsIgnoreCase(lastExecutedScriptStatus));
 	}
 
 }

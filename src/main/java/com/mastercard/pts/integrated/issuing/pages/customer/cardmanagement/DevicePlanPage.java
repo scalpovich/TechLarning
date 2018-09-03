@@ -445,19 +445,19 @@ public class DevicePlanPage extends AbstractBasePage {
 	private MCWebElement pinUnblockChkBx;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="view:appBlockPriority:input:dropdowncomponent")	
-	private MCWebElement applicationBlockPriorityDropdown;
+	private MCWebElement applicationBlockPriorityDdwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="view:appUnblockPriority:input:dropdowncomponent")	
-	private MCWebElement applicationUnblockPriorityDropdown;
+	private MCWebElement applicationUnblockPriorityDdwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="view:putDataPriority:input:dropdowncomponent")	
-	private MCWebElement putDataPriorityDropdown;
+	private MCWebElement putDataPriorityDdwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="view:pinChangePriority:input:dropdowncomponent")	
-	private MCWebElement pinChangePriorityDropdown;
+	private MCWebElement pinChangePriorityDdwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="view:pinUnblockPriority:input:dropdowncomponent")	
-	private MCWebElement pinUnblockPriorityDropdown;
+	private MCWebElement pinUnblockPriorityDdwn;
 	
 	
 public void AddDevicePlan() {
@@ -1286,15 +1286,15 @@ public void AddDevicePlan() {
 			if (devicePlan.getEmvPlanPinUnblock().equalsIgnoreCase(STATUS_YES)) {
 				clickWhenClickable(pinUnblockChkBx);
 			}
-			WebElementUtils.selectDropDownByVisibleText(applicationBlockPriorityDropdown,
+			WebElementUtils.selectDropDownByVisibleText(applicationBlockPriorityDdwn,
 					devicePlan.getEmvPlanApplicationBlockPriority());
-			WebElementUtils.selectDropDownByVisibleText(applicationUnblockPriorityDropdown,
+			WebElementUtils.selectDropDownByVisibleText(applicationUnblockPriorityDdwn,
 					devicePlan.getEmvPlanApplicationUnblockPriority());
-			WebElementUtils.selectDropDownByVisibleText(pinChangePriorityDropdown,
+			WebElementUtils.selectDropDownByVisibleText(pinChangePriorityDdwn,
 					devicePlan.getEmvPlanPinChangePriority());
-			WebElementUtils.selectDropDownByVisibleText(putDataPriorityDropdown,
+			WebElementUtils.selectDropDownByVisibleText(putDataPriorityDdwn,
 					devicePlan.getEmvPlanPutDataPriority());
-			WebElementUtils.selectDropDownByVisibleText(pinUnblockPriorityDropdown,
+			WebElementUtils.selectDropDownByVisibleText(pinUnblockPriorityDdwn,
 					devicePlan.getEmvPlanPinUnblockPriority());
 
 		}
