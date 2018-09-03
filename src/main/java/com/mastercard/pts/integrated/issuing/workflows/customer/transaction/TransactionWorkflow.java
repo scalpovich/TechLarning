@@ -259,7 +259,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 				fillEmvChipKeySetDetails();
 			}
 		}
-		selectCVC3KeySet(transactionData);
+		selectCVC3KeySet(transaction);
 		importAndLoadTestCase(transactionData.getTestCase(), transaction);
 		performExecution(transaction);
 	}
@@ -1200,8 +1200,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		
 	}
 	
-	public void selectCVC3KeySet(Transaction transactionData) {
-		if(transactionData.getTransactionProfile().equals("MSR_NFC_PURCHASE")){
+	public void selectCVC3KeySet(String transaction) {
+		if(transaction.equalsIgnoreCase("MSR_NFC_PURCHASE")){
 		executeAutoITExe("ActivateEditCardProfile.exe");
 		String methodName = new Object() {
 		}.getClass().getEnclosingMethod().getName();
