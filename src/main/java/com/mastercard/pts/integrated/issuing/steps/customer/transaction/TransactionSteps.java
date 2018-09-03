@@ -279,6 +279,9 @@ public class TransactionSteps {
 		} else if (transactionWorkflow.isContains(transaction, "MSR")) {
 			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getCvvData());
 		}
+		if(transaction.contains("NFC_MSR_PURCHASE")){
+			transactionData.setCardDataElementsDynamic("035.05", "*************");
+		}
 	}
 
 	@Given("Auth file is provided for $iteration")
