@@ -21,7 +21,7 @@ And User fills Device Event Based Fee Plan for debit product
 And User fills Device Plan for "debit" "emv" card with no pin
 And User fills Wallet Plan for debit product
 And User fills Program section for debit product
-And User edit Program to update country white and black list
+And User edits Program to update country white and black list
 And User fills Business Mandatory Fields Screen for debit product
 And User fills Device Range section for debit product
 And user assigns service code to program

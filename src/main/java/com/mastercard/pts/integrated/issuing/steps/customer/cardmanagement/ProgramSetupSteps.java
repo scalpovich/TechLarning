@@ -1534,7 +1534,7 @@ public class ProgramSetupSteps {
 		}
 		programSetupWorkflow.createWalletPlan(walletPlan,reservedAmount);
 	}
-	@When("User edit Program to update $editItem")
+	@When("User edits Program to update $editItem")
 	public void andUserEditProgramToUpdateCountryWhiteBlackList(String editItem) {
 		program.setCountryWhiteListAndBlackListPlan(provider);
 		programSetupWorkflow.editProgram(program,editItem);

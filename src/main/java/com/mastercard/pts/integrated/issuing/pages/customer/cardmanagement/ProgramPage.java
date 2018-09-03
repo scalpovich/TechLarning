@@ -871,21 +871,25 @@ public class ProgramPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(countryWhiteBlackListPlan, program.getCountryWhiteListAndBlackListPlan());
 
 	}
-	
+
+	private void editsProgram(Program program, String editItem) {
+		switch (editItem) {
+		case COUNTRY_WHITELIST_AND_BLACKLIST_PLAN:
+			clickWhenClickable(planTab);
+			setCountryWhiteListAndBlackListPlan(program);
+			clickSaveButton();
+			break;
+		}
+	}
+
 	public void editProgramForPlans(Program program, String editItem) {
 		enterValueinTextBox(enterProgram, program.getProgramCode());
-		logger.info("Program code :{}",program.getProgramCode());
+		logger.info("Program code :{}", program.getProgramCode());
 		clickWhenClickable(search);
 		waitForElementVisible(editProgram);
 		clickWhenClickable(editProgram);
 		runWithinPopup("Edit Program", () -> {
-			switch (editItem) {
-			case COUNTRY_WHITELIST_AND_BLACKLIST_PLAN:
-				clickWhenClickable(planTab);
-				setCountryWhiteListAndBlackListPlan(program);
-				clickSaveButton();
-				break;
-			}
+			editsProgram(program, editItem);
 		});
 	}
 }
