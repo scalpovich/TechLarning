@@ -165,7 +165,7 @@
 			"mccRulePlan": "AUTOMATION [TA3323VT6]",
 			"deviceJoiningAndMemberShipFeePlan": "AUTOMATION [TA3462WP]",
 			"deviceEventBasedFeePlan": "AUTOMATION [TA2430JW]",
-			"transactionLimitPlan": "AUTOMATION [TA8137UMAE]",
+			"transactionLimitPlan": "TLP VIP [VIP]",
 			"transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
 			"transactionPlan": "AUTOMATION [T5179K]",
 			"creditPlan": "TA5339PGQX [103]",
