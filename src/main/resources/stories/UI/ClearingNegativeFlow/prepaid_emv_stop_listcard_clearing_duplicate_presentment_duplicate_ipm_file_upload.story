@@ -4,22 +4,31 @@ As a Issuer
 I want to perform transaction clearing on card which is stoplisted after Authorization
 
 Meta:
-@StoryName credit_emv_retail_stoplist_withdraw
+@StoryName p_emv_corp_travel
 @ClearingNegativeScenario
- 
-Scenario: 1.1 Create EMV credit device
-Given setting json values in excel for Credit
+
+Scenario: 1.0 Set up prepaid emv corporate travel card
+Given setting json values in excel for Prepaid
 When user is logged in institution
-And for EMV Card User fills Device Plan for credit product for Mastercard
-And User fills Wallet Fee Plan for credit product
-And User fills Wallet Plan for credit product and program Retail Credit Card
-And User Primary Device fills New Program Retail Credit Card section for credit product for Mastercard
-And for Primary Device and New Client user fills Device Range section for credit product
-And credit device is created using new device screen for Individual and Primary Device and New Client and EMV Card
-And credit processes pre-production batch using new Device
-And credit processes deviceproduction batch using new Device for Supplementary
-And credit processes pinProduction batch using new Device for Supplementary
+And User fills Device Plan for "Prepaid" "emv" card
+And User fills Wallet Plan for prepaid product
+And User fills Program section for prepaid product
+And User fills Business Mandatory Fields Screen for prepaid product
+And User fills Device Range section for prepaid product
+And user assigns service code to program
+Then user creates new device of prepaid type for new client
+And user sign out from customer portal
+
+Scenario: 1.1 prepaid emv corporate travel card device production
+Given user is logged in institution
+When a new device was created
+And processes pre-production batch for prepaid
+And processes device production batch for prepaid
+And processes pin generation batch for prepaid
+And user has wallet number information for prepaid device
+And user performs adjustment transaction
 And device has "normal" status
+And user activates device through helpdesk
 Then user sign out from customer portal
 
 Scenario: 1.2 Pin Generation
@@ -56,7 +65,7 @@ Meta:
 @TestId
 Given user is logged in institution
 When User uploads the NOT file
-And user processes batch for credit
+And user processes batch for prepaid
 Then user sign out from customer portal
 
 Scenario: 1.7 Matching & Posting to Cardholders account
@@ -64,7 +73,7 @@ Meta:
 @TestId 
 Given user is logged in institution
 When transaction status is "Matching Pending"
-And "Matching" batch for credit is successful
+And "Matching" batch for prepaid is successful
 And transaction status is "Presentment Matched with authorization"
 Then user sign out from customer portal
 
@@ -80,7 +89,7 @@ Meta:
 @TestId
 Given user is logged in institution
 When User uploads the NOT file
-And user processes batch for credit
+And user processes batch for prepaid
 Then user sign out from customer portal
 
 
@@ -88,7 +97,7 @@ Scenario: 2.0 Verify Transaction Status Duplicate Presentment
 Meta:
 @TestId 
 Given user is logged in institution
-When "Matching" batch for credit is successful
+When "Matching" batch for prepaid is successful
 And transaction status is "Duplicate presentment"
 Then user sign out from customer portal
 
@@ -105,7 +114,7 @@ Meta:
 @TestId
 Given user is logged in institution
 When User uploads the NOT file
-And user processes batch for credit
+And user processes batch for prepaid
 Then user sign out from customer portal
 
 
@@ -113,7 +122,7 @@ Scenario: 2.3 Verify Transaction Status is Unmatched Presentment
 Meta:
 @TestId 
 Given user is logged in institution
-When "Matching" batch for credit is successful
+When "Matching" batch for prepaid is successful
 And transaction status is "Unmatched Presentment"
 Then user sign out from customer portal
 
@@ -122,5 +131,5 @@ Meta:
 @TestId
 Given user is logged in institution
 When User uploads the NOT file
-Then verify processes batch for type credit with status FAILED [3]
+Then verify processes batch for type prepaid with status FAILED [3]
 And user sign out from customer portal
