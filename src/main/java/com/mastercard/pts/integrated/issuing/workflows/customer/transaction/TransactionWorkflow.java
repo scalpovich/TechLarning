@@ -1225,6 +1225,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(2000);
 			DynamicDdwn.findElement(By.name("Yes")).click();
 			wait(1000);
+			captureSaveScreenShot(methodName);
 			WebElement keySetDdwn = winiumDriver.findElementByName("CVC3 Key Set");
 			wait(1000);
 			keySetDdwn.findElement(By.name("Drop Down Button")).click();
