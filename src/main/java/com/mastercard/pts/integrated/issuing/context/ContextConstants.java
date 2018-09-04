@@ -65,6 +65,8 @@ public class ContextConstants {
 	public static final String PRIMARY_DEVICE_PLAN = "PRIMARY_DEVICE_PLAN";
 	
 	public static final String INSTITUTION_DATE = "INSTITUTION_DATE";
+
+	public static final String PAYMENT = "PAYMENT";
 	
 	private ContextConstants() {
 	}

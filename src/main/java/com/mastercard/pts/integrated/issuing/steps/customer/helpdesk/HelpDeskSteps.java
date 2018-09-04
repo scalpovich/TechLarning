@@ -29,6 +29,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.domain.customer.distribution.Dispatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
@@ -44,6 +45,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.Proce
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -859,4 +861,31 @@ public class HelpDeskSteps {
 		device.setAmountType(amount);
 		assertThat(category +" "+ amount +BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device), equalTo(transactionAmount));
 	}
+	
+
+	@Given("check card balance details through helpdesk")
+	public void checkCardBalance(){
+		Device device = new Device();
+		device.setDeviceNumber("5897657458735414"); //stage 5377164858858416 5897659209884715
+		device.setProductType(ProductType.fromShortName(Constants.CREDIT));
+		device.setBranchCode("BRANCHBASE [1001]");
+		context.put(ContextConstants.DEVICE,device);
+		Device device1 = context.get(ContextConstants.DEVICE);
+		context.put("balanceBeforePayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device1));
+		
+	}
+	
+	@When("recheck card balance details through helpdesk after payment")
+	public void reCheckCardBalancePostPayment(){
+		Device device = context.get(ContextConstants.DEVICE);	
+		helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device);
+		context.put("balanceAfterPayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));	
+	}
+	
+	@Then("user check successful payments")
+	public void checkSuccessfulPayments(){		
+		Payment payment = context.get(ContextConstants.PAYMENT);
+		helpdeskWorkflow.compareBalancesAfterPayment(payment);;
+	}
+
 }

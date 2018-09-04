@@ -26,7 +26,6 @@ When credit device is created using new device screen for Individual and Primary
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pingeneration batch using new Device for Supplementary
-!-- And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 And device has "normal" status
 Then user sign out from customer portal
 
@@ -73,7 +72,7 @@ Meta:
 @TestId 
 Given user is logged in institution
 When transaction status is "Matching Pending"
-When user processes Pre-clearing system internal batch for Credit
+And user processes Pre-clearing system internal batch for Credit
 And "Matching" batch for credit is successful
 And transaction status is "Presentment Matched with authorization"
 When user processes EOD-Credit system internal batch for Credit
@@ -101,3 +100,40 @@ And user processes Billing Process - Credit system internal batch for Credit
 And user verify Billed amount for Purchase category
 And user run Statement Extract system internal batch
 Then user sign out from customer portal
+
+Scenario: Bump date 1 day ahead and Login & Logout to wait for date to be updated 
+Meta:
+@TestId 
+!-- And update institution date to next day
+Given user is logged in institution
+When user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+
+Scenario: Verify User is able to make Payment of credit card through cash mode
+Meta:
+@PaymentCash
+Given user is logged in institution
+And check card balance details through helpdesk
+When user initiates cash payment
+And "Pre-clearing" batch for credit is successful
+And "EOD-Credit" batch for credit is successful
+And recheck card balance details through helpdesk after payment
+Then user check successful payments
+And user sign out from customer portal
+When update institution date to first of next month
+
+Scenario: Process Batches after paying full payment bill
+Meta:
+@TestId 
+Given user is logged in institution
+When user processes Pre-clearing system internal batch for Credit
+When user processes EOD-Credit system internal batch for Credit
+And user verify Unbilled amount for Purchase category
+And user processes Billing Process - Credit system internal batch for Credit
+And user verify Billed amount for Purchase category
+And user run Statement Extract system internal batch
+And recheck card balance details through helpdesk after payment
+And user sign out from customer portal
