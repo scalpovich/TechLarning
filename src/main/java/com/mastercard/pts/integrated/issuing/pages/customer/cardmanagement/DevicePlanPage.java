@@ -1254,7 +1254,9 @@ public void AddDevicePlan() {
 			WebElementUtils.enterText(acceptableAboveATCRangeTxt, devicePlan.getEmvAboveATCRange());
 			clickWhenClickable(allowFallBackChkBx);
 		}
-		fillIssuerScriptingDetails(devicePlan);
+      	if (devicePlan.getEmvPlanIssuerScripting() != null) {
+			fillIssuerScriptingDetails(devicePlan);
+        }
 	}
 
 	private void fillIssuerScriptingDetails(DevicePlan devicePlan )
