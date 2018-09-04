@@ -60,8 +60,10 @@ public class LoadFromFileUploadSteps {
 	
 	@Then("verify processes batch for type $type with status $stauts")
 	public void whenUserProcessesBatchForPrepaid(String type, String status) {
+		String previousStatus = batchStatus;
 		batchStatus = status;
 		whenUserProcessesBatchForPrepaid(type);
+		batchStatus =previousStatus;
 	}
 	
 	

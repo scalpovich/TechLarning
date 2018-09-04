@@ -13,6 +13,8 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -2008,7 +2010,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		activateMcps();
 		try{
 			if("Unmatch".equalsIgnoreCase(status)){
-				updateTransactionDate("180805");
+				updateTransactionDate(LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyMMdd")));
 			}
 			assignUniqueFileId();
 		}catch(Exception e){

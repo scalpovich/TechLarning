@@ -92,7 +92,7 @@ When "Matching" batch for credit is successful
 And transaction status is "Duplicate presentment"
 Then user sign out from customer portal
 
-Scenario: 2.2 Update Existing IPM for Unmatch
+Scenario: 2.1 Update Existing IPM for Unmatch
 Meta:
 @TestId 
 When user update IPM file to get status Unmatch
@@ -100,7 +100,7 @@ Then NOT file is successfully generated
 And MCPS simulator is closed
 
 
-Scenario: 2.3 Upload updated ipm file for Unmatch
+Scenario: 2.2 Upload updated ipm file for Unmatch
 Meta:
 @TestId
 Given user is logged in institution
@@ -109,7 +109,7 @@ And user processes batch for credit
 Then user sign out from customer portal
 
 
-Scenario: 2.4 Verify Transaction Status
+Scenario: 2.3 Verify Transaction Status
 Meta:
 @TestId 
 Given user is logged in institution
@@ -117,7 +117,7 @@ When "Matching" batch for credit is successful
 And transaction status is "Unmatched Presentment"
 Then user sign out from customer portal
 
-Scenario: 2.1 Upload same file
+Scenario: 2.4 Upload same file
 Meta:
 @TestId
 Given user is logged in institution

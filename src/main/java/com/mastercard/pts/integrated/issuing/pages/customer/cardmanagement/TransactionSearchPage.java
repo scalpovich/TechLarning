@@ -69,10 +69,8 @@ public class TransactionSearchPage extends AbstractBasePage {
 	private MCWebElement sequenceNumberText;
 
 	private final String DUPLICATE_PRESENTMENT = "Duplicate presentment";
-	private String flag;
-
-
-
+	private final String UNMATCH_PRESENTMENT = "Unmatched Presentment";
+	
 	private String authorizationStatus;	
 
 	public String searchTransactionWithDevice(String deviceNumber, TransactionSearch ts) {
@@ -92,14 +90,14 @@ public class TransactionSearchPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, ts.getProductType());
 		WebElementUtils.enterText(searchARNTxt, arnNumber);
 		WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
-		WebElementUtils.pickDate(fromDateTxt, LocalDate.now().minusDays(6));
+		WebElementUtils.pickDate(fromDateTxt, LocalDate.now().minusDays(4));
 		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
 		clickSearchButton();
 		
-		if(type.equalsIgnoreCase(DUPLICATE_PRESENTMENT) || type.equalsIgnoreCase("Unmatched Presentment")){
+		if(type.equalsIgnoreCase(DUPLICATE_PRESENTMENT) || type.equalsIgnoreCase(UNMATCH_PRESENTMENT)){
 			SimulatorUtilities.wait(2000);
-			int size = Elements("//table[@class='dataview']/tbody/tr").size();
-			Element("//table[@class='dataview']/tbody/tr["+size+"]/td").click();
+			String st = String.format("//table[@class='dataview']/tbody/tr[%d]/td", Elements("//table[@class='dataview']/tbody/tr").size());
+			Element(st).click();
 		}
 		else{
 			viewFirstRecord();
