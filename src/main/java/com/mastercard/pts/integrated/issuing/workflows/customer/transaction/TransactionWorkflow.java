@@ -246,9 +246,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void performOptimizedMasTransaction(String transaction, Transaction transactionData, Boolean sameCard) {
 		handleDialogs();
-		addBinRangeAndCurrencyDetailsBasedOnCardNumber(transactionData, transaction, sameCard);
+		//addBinRangeAndCurrencyDetailsBasedOnCardNumber(transactionData, transaction, sameCard);
 		if (!sameCard) {
-			importAndLoadCardProfile(transactionData.getCardProfile(), transaction);
+		//	importAndLoadCardProfile(transactionData.getCardProfile(), transaction);
 			if (isContains(transaction, "emv")) {
 				activateMas(transaction);
 				performClickOperationOnImages("AUTOMATION CARD");
@@ -259,6 +259,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 				fillEmvChipKeySetDetails();
 			}
 		}
+		SimulatorUtilities.wait(20000);
 		selectCVC3KeySet(transaction);
 		importAndLoadTestCase(transactionData.getTestCase(), transaction);
 		performExecution(transaction);
