@@ -36,17 +36,13 @@ Then FINSim simulator is closed
 Scenario:3 Perform EMV_PURCHASE Auth transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
-And MAS simulator is closed
 Then user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
-And user sign out from customer portal
 
 Scenario:4 Perform EMV_PURCHASE Auth transaction after changing client type as VIP
-Given user is logged in institution
 When user updates client details
-And connection to MAS is established
 And perform an EMV_PURCHASE MAS transaction on the same card
-And MAS simulator is closed
-Then user is logged in institution
-And search Purchase authorization and verify 000-Successful status
+And user is logged in institution
+Then search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
+And MAS simulator is closed
