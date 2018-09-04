@@ -38,8 +38,10 @@ Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 Then user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
+And user sign out from customer portal
 
 Scenario:4 Perform EMV_PURCHASE Auth transaction after changing client type as VIP
+Given user is logged in institution
 When user updates client details
 And perform an EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
