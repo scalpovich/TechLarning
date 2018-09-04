@@ -23,7 +23,7 @@ Then credit device is created using new device screen for Individual and Primary
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pingeneration batch using new Device for Supplementary
-Then device has "normal" status
+And device has "normal" status
 And user sign out from customer portal
 
 Scenario:2 Pin Generation
@@ -33,9 +33,19 @@ And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario:3 Perform EMV_PURCHASE Authorization transaction
+Scenario:3 Perform EMV_PURCHASE Auth transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
+And MAS simulator is closed
+Then user is logged in institution
+And search Purchase authorization and verify 121-Exceeds Amount Limit status
+And user sign out from customer portal
+
+Scenario:3 Perform EMV_PURCHASE Auth transaction after changing client type as VIP
+Given user is logged in institution
+When user updates client details
+And connection to MAS is established
+And perform an EMV_PURCHASE MAS transaction on the same card
 And MAS simulator is closed
 Then user is logged in institution
 And search Purchase authorization and verify 000-Successful status
