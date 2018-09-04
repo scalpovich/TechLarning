@@ -109,6 +109,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
 	
 	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid transaction type - ";
+	
+	public static final String REFUND_SUCCESS = "Refund is successful";
     
     private static final String Device = null;
 	@Value("${default.wait.timeout_in_sec}")
@@ -131,6 +133,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Save']")
 	private MCWebElement saveBtn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Reverse']")
+	private MCWebElement reverseBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Add Details']")
 	private MCWebElement addDetailsBtn;
@@ -346,6 +351,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		clickWhenClickable(saveBtn);
 	}
+	
+	public void clickReverseButton(){
+		WebElementUtils.scrollDown(driver(), 0, 250);
+		clickWhenClickable(reverseBtn);
+	}
 
 	public void clickSubmitButton() {
 		clickWhenClickable(submitButton);
@@ -511,6 +521,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected void verifyOperationStatus() {
 		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
+	}
+	
+	public boolean verifyRefundMessage() {
+		WebElement refundMessage = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(),'Refund')]")));
+		String refundStatus = refundMessage.getText();
+		if (refundStatus.contains(REFUND_SUCCESS)) {
+			return true;
+		}
+		return false;
 	}
 
 	protected boolean waitForRow() {

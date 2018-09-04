@@ -31,6 +31,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
+import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -89,6 +90,12 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@fld_fqn='privateField12']/..")
 	private MCWebElement toDateAuth;
+	
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span.yui-skin-sam")
+	private MCWebElement bussinessDateTxt;
+	
+
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:8:cols:colspanMarkup:inputField:input:dateTimeField:hours")
 	private MCWebElement authFromDateHHTxtBx;
@@ -164,6 +171,11 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement binDDwn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
+	private MCWebElement institutionDateText;
+	
+	public final String SYSTEM_INTERNAL_PROCESSING = "SYSTEM INTERNAL PROCESSING [B]";
 	
 	private static final int NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE=100;
 
@@ -356,8 +368,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
 		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "SYSTEM INTERNAL PROCESSING [B]");
 		selectInternalBatchType(batch.getBatchName());
-		if (batch.getProductType() != null && !("".equals(batch.getProductType()))) {
-			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+		if (batch.getProductType() != null && !("".equals(batch.getProductType()) && batch.getBatchName().equalsIgnoreCase("Pre-clearing"))) {
+			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());	
 		}
 		try {
 			todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
@@ -370,6 +382,23 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 		return batchStatus;
 	}
+	
+	public String processCreditBillingBatch(ProcessBatches batch) {
+		selectBatchTypeAndName(batch);
+		SimulatorUtilities.wait(2000);
+		WebElementUtils.pickDate(bussinessDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateText)));
+		submitAndVerifyBatch();
+		return batchStatus;
+	}
+	private void selectBatchTypeAndName(ProcessBatches batch) {
+		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
+		batchStatus = null;
+		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, SYSTEM_INTERNAL_PROCESSING);		
+		selectInternalBatchType(batch.getBatchName());
+		if(batch.getBatchName().equalsIgnoreCase("Pre-clearing"))
+			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+	
+	}
 
 	private void selectInternalBatchType(String batchName) {
 		if ("Matching".equalsIgnoreCase(batchName))
@@ -380,6 +409,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 		else if ("EOD-Prepaid".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "End Of Day - Prepaid [EOD]");
+		
+		else if ("EOD-Credit".equalsIgnoreCase(batchName))
+			WebElementUtils.selectDropDownByOptionalVisibleText(batchNameDDwn, "End Of Day - Credit [DAILY]");
 
 		else if ("Loyalty-Calc".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Loyalty Calculation [LYT_CALC]");

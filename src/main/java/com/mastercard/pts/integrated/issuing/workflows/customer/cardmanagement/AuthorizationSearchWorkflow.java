@@ -11,16 +11,22 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AvailableBalance;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionReports;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.collect.administration.AdministrationHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.AuthorizationSearchPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.GenerateReversalPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReversalTransactionPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpdeskWorkflow;
 
 @Workflow
 public class AuthorizationSearchWorkflow {
@@ -39,6 +45,9 @@ public class AuthorizationSearchWorkflow {
 	
 	@Autowired
 	AuthorizationSearchPage authorizationSearchPage;
+	
+	@Autowired
+	HelpdeskWorkflow helpDeskWorkFlow;
 
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
@@ -97,6 +106,17 @@ public class AuthorizationSearchWorkflow {
 			condition = actualCodeAction.contains(type) && actualDescription.contains(state);
 
 		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
+	}
+	
+	public void generateReversalForTransaction(String deviceNumber)
+	{
+		GenerateReversalPage page = navigator.navigateToPage(GenerateReversalPage.class);
+		authorizationSearchPage.inputDeviceNumber(deviceNumber);
+		authorizationSearchPage.inputFromDate(LocalDate.now().minusDays(1));
+		authorizationSearchPage.inputToDate(LocalDate.now());
+		authorizationSearchPage.waitAndSearchForRecordToAppear();
+		helpDeskWorkFlow.clickCustomerCareEditLink();
+		page.createReversalForTransaction();
 	}
 
 	public List<String> checkTransactionFixedFee(String deviceNumber) {
@@ -177,4 +197,11 @@ public class AuthorizationSearchWorkflow {
 		logger.info("Available balance after transaction amount = {}", availBal.getAvailableBal());
 		return availBal;
 	}
+	
+	public BigDecimal noteDownAvailableBalanceAfterReversal(String deviceNumber) {
+		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
+		return page.viewAvailableBalanceAfterReversalTransaction(deviceNumber);
+		
+	}
+
 }

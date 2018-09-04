@@ -32,6 +32,8 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	List<String> txnFeesFields = new ArrayList<>();
 
 	private String billingAmountForMarkUpFee;
+	
+	BigDecimal availableBalanceAterReversal;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=cardNumber]")
 	private MCWebElement cardNumber;
@@ -178,6 +180,21 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		});
 		return fieldsForAssertion;
 	}
+	
+	public BigDecimal viewAvailableBalanceAfterReversalTransaction(String deviceNumber) {
+		inputDeviceNumber(deviceNumber);
+		inputFromDate(LocalDate.now().minusDays(1));
+		inputToDate(LocalDate.now());
+		clickSearchButton();
+		viewFirstRecord();
+		runWithinPopup("View Authorization", () -> {
+		availableBalanceAterReversal = new BigDecimal(availableBalanceTxt.getText());
+			clickCloseButton();
+		});
+		return availableBalanceAterReversal;
+	}
+	
+	
 	
 	public AvailableBalance getAvailableBalance(){
 		String[] amountType = amountTypes.split(":");

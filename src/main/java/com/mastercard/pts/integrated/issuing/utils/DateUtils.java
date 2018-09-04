@@ -320,4 +320,7 @@ public class DateUtils {
 		DateUtils date = new DateUtils();
 		System.out.println(date.getDateinDDMMYYYY());
 	}
+	public static LocalDate convertInstitutionDateInLocalDateFormat(String institutionDate){
+		return LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+	}
 }

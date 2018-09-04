@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReconciliationWorkFlow;
@@ -70,6 +71,14 @@ public class ReconciliationSteps {
 		processBatches.add(prepaidEodProcessBatch);
 
 		reconciliationWorkFlow.runPreClearingAndLoyaltyCalcBatch(processBatches);
+	}
+	
+	@When("user processes $batchName system internal batch for $productType")
+	public void processBillingBatchForCredit(String batchName,String productType){
+		ProcessBatches batch = new ProcessBatches();
+		batch.setProductType(ProductType.fromShortName(productType));
+		batch.setBatchName(batchName);
+		reconciliationWorkFlow.runCreditBillingBatch(batch);
 	}
 
 }

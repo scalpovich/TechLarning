@@ -610,6 +610,7 @@ public class ProgramSetupSteps {
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		} else {
 			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
+			devicePlan.setTransactionFeePlan(data.getTransactionFeePlan());
 		}
 		if (Objects.nonNull(transactionLimitPlan)) {
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
