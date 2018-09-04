@@ -200,6 +200,7 @@
 			"transactionPlan": "AUTOMATION [T5756G]",
 			"creditPlan": "AUTOMATION [103]",
 			"billingCycle": "AUTOMATION [141]",
+			"transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
 			"walletPlan": "AUTOMATION [TA6793WTPX]"
 		},
 		{
