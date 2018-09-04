@@ -267,6 +267,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[contains(.,'Payment :')]/..//span[@class='labeltextr']")
 	private MCWebElements paymentComponents;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[contains(.,'Purchase :')]/..//span[@class='labeltextr']")
+	private MCWebElements purchaseComponents;
+	
 	@Autowired
 	TestContext context;
 	
