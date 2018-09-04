@@ -1232,6 +1232,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			keySetDdwn.findElements(By.name("00999 - CVC3 Test Key Example 1"))
 					.get(0).click();
 			wait(2000);
+			captureSaveScreenShot(methodName);
 			winiumClickOperation("OK");
 			wait(1000);
 			captureSaveScreenShot(methodName);
