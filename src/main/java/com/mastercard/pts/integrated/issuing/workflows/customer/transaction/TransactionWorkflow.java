@@ -1204,6 +1204,12 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	
 	public void selectCVC3KeySet(String transaction) {
 		if(transaction.equalsIgnoreCase("MSR_NFC_PURCHASE")){
+			activateMas(transaction);
+			performClickOperationOnImages("AUTOMATION CARD");
+			performRightClickOperation("AUTOMATION CARD_Selected");
+			wait(1000);
+			performClickOperation("Edit Node");
+			wait(4000);
 		executeAutoITExe("ActivateEditCardProfile.exe");
 		String methodName = new Object() {
 		}.getClass().getEnclosingMethod().getName();
