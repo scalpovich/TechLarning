@@ -41,7 +41,7 @@ Then user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
 And user sign out from customer portal
 
-Scenario:3 Perform EMV_PURCHASE Auth transaction after changing client type as VIP
+Scenario:4 Perform EMV_PURCHASE Auth transaction after changing client type as VIP
 Given user is logged in institution
 When user updates client details
 And connection to MAS is established
