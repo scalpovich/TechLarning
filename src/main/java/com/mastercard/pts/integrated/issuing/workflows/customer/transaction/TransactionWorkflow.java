@@ -259,6 +259,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 				fillEmvChipKeySetDetails();
 			}
 		}
+		System.out.println("YOUR TIME HAS STARTED NOW++++++++++");
 		SimulatorUtilities.wait(20000);
 		selectCVC3KeySet(transaction);
 		importAndLoadTestCase(transactionData.getTestCase(), transaction);
