@@ -246,10 +246,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void performOptimizedMasTransaction(String transaction, Transaction transactionData, Boolean sameCard) {
 		handleDialogs();
-		//addBinRangeAndCurrencyDetailsBasedOnCardNumber(transactionData, transaction, sameCard);
+		addBinRangeAndCurrencyDetailsBasedOnCardNumber(transactionData, transaction, sameCard);
 		if (!sameCard) {
-		//	importAndLoadCardProfile(transactionData.getCardProfile(), transaction);
-			if (isContains(transaction, "emv")) {
+			importAndLoadCardProfile(transactionData.getCardProfile(), transaction);
+			if (isContains(transaction, "emv")){
 				activateMas(transaction);
 				performClickOperationOnImages("AUTOMATION CARD");
 				performRightClickOperation("AUTOMATION CARD_Selected");
@@ -259,8 +259,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 				fillEmvChipKeySetDetails();
 			}
 		}
-		System.out.println("YOUR TIME HAS STARTED NOW++++++++++");
-		SimulatorUtilities.wait(60000);
 		selectCVC3KeySet(transaction);
 		importAndLoadTestCase(transactionData.getTestCase(), transaction);
 		performExecution(transaction);
@@ -1203,37 +1201,40 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 	
 	public void selectCVC3KeySet(String transaction) {
-		if(transaction.equalsIgnoreCase("MSR_NFC_PURCHASE")){
+		if (transaction.equalsIgnoreCase("MSR_NFC_PURCHASE")) {
 			activateMas(transaction);
 			performClickOperationOnImages("AUTOMATION CARD");
 			performRightClickOperation("AUTOMATION CARD_Selected");
 			wait(1000);
 			performClickOperation("Edit Node");
 			wait(4000);
-		executeAutoITExe("ActivateEditCardProfile.exe");
-		String methodName = new Object() {
-		}.getClass().getEnclosingMethod().getName();
-		captureSaveScreenShot(methodName);
-		winiumClickOperation("CVC3 Data");
-		wait(2000);
-		captureSaveScreenShot(methodName);
-		winiumClickOperation("No");
-		wait(2000);
-		WebElement ele = winiumDriver.findElementByName("Not Specified");
-		wait(2000);
-		ele.findElement(By.name("Drop Down Button")).click();
-		wait(2000);
-		ele.findElement(By.name("Yes")).click();
-		wait(1000);
-		WebElement ele1 = winiumDriver.findElementByName("CVC3 Key Set");
-		wait(2000);
-		ele1.findElement(By.name("Drop Down Button")).click();
-		wait(2000);
-		ele1.findElements(By.name("00999 - CVC3 Test Key Example 1")).get(0).click();
-		wait(2000);
-		winiumClickOperation("OK");
-		wait(1000);
-		captureSaveScreenShot(methodName);
+			
+			
+			executeAutoITExe("ActivateEditCardProfile.exe");
+			String methodName = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			captureSaveScreenShot(methodName);
+			winiumClickOperation("CVC3 Data");
+			wait(2000);
+			captureSaveScreenShot(methodName);
+			winiumClickOperation("No");
+			wait(1000);
+			WebElement DynamicDdwn = winiumDriver.findElementByName("Not Specified");
+			wait(1000);
+			DynamicDdwn.findElement(By.name("Drop Down Button")).click();
+			wait(2000);
+			DynamicDdwn.findElement(By.name("Yes")).click();
+			wait(1000);
+			WebElement keySetDdwn = winiumDriver.findElementByName("CVC3 Key Set");
+			wait(1000);
+			keySetDdwn.findElement(By.name("Drop Down Button")).click();
+			wait(2000);
+			keySetDdwn.findElements(By.name("00999 - CVC3 Test Key Example 1"))
+					.get(0).click();
+			wait(2000);
+			winiumClickOperation("OK");
+			wait(1000);
+			captureSaveScreenShot(methodName);
 		}
 	}
 

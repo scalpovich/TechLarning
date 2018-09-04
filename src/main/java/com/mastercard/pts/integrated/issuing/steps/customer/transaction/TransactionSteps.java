@@ -110,12 +110,12 @@ public class TransactionSteps {
 
 		String temp = transaction;
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
-//		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));
-//		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
-//			// ECOMM are pinless tranasactions
-//			if (!transaction.toLowerCase().contains("ecom"))
-//				temp = transaction + "_PIN";
-//		}
+		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));
+		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
+			// ECOMM are pinless tranasactions
+			if (!transaction.toLowerCase().contains("ecom"))
+				temp = transaction + "_PIN";
+		}
 		performOperationOnSamecard(false);
 		givenOptimizedTransactionIsExecuted(temp);
 	}
@@ -153,8 +153,7 @@ public class TransactionSteps {
 		transactionWorkflow.browserMinimize(); // minimize browser
 		// operation of MAS/MDFS ... Storing transaction name in context to use it at runtime
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
-		//Transaction transactionData = generateMasTestDataForTransaction(transaction);
-		Transaction transactionData = null;
+		Transaction transactionData = generateMasTestDataForTransaction(transaction);
 		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
 	}
 
