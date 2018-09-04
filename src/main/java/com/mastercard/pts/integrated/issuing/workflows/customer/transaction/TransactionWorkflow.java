@@ -260,7 +260,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			}
 		}
 		System.out.println("YOUR TIME HAS STARTED NOW++++++++++");
-		SimulatorUtilities.wait(20000);
+		SimulatorUtilities.wait(60000);
 		selectCVC3KeySet(transaction);
 		importAndLoadTestCase(transactionData.getTestCase(), transaction);
 		performExecution(transaction);
