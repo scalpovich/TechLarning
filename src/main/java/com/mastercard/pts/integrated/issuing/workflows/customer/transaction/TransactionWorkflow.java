@@ -1229,7 +1229,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(2000);
 		ele1.findElement(By.name("Drop Down Button")).click();
 		wait(2000);
-		ele1.findElement(By.name("00123 - CVC3 Test Key Example 1")).click();
+		ele1.findElements(By.name("00999 - CVC3 Test Key Example 1")).get(0).click();
 		wait(2000);
 		winiumClickOperation("OK");
 		wait(1000);
