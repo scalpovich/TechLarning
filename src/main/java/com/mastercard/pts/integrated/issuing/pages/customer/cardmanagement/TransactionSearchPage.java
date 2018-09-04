@@ -90,7 +90,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, ts.getProductType());
 		WebElementUtils.enterText(searchARNTxt, arnNumber);
 		WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
-		WebElementUtils.pickDate(fromDateTxt, LocalDate.now().minusDays(4));
+		WebElementUtils.pickDate(fromDateTxt, LocalDate.now().minusDays(10));
 		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
 		clickSearchButton();
 		

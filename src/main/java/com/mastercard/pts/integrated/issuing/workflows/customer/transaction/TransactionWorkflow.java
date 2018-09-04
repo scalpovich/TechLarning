@@ -2010,7 +2010,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		activateMcps();
 		try{
 			if("Unmatch".equalsIgnoreCase(status)){
-				updateTransactionDate(LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyMMdd")));
+				updateTransactionDate(LocalDate.now().minusDays(9).format(DateTimeFormatter.ofPattern("yyMMdd")));
 			}
 			assignUniqueFileId();
 		}catch(Exception e){
