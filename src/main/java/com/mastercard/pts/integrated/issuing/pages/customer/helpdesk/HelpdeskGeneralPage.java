@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -242,6 +243,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
 	
 	private final String RESET_PIN_RETRY_COUNTER= "109 - Reset Pin Retry Counter";
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Balance Details']")
+	private MCWebElement balanceDetailsTab;
 
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
@@ -1080,6 +1084,18 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return creditLimit;
 
 	}
+	
+	public String verifyBillingDetails(Device device){
+		List<String> lst = new ArrayList<String>();
+		SimulatorUtilities.wait(5000);
+		editDeviceLink.click();
+		SimulatorUtilities.wait(1000);
+		clickWhenClickable(balanceDetailsTab);
+		SimulatorUtilities.wait(2000);
+		lst.add(Element("//span[contains(text(),'"+device.getCategory()+" :')]//ancestor::tr//td["+resolve(device.getAmountType())+"]/span/span").getText());
+		clickEndCall();
+		return lst.get(0);
+	}
 
 	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
 		selectServiceCode(helpdeskGeneral.getServiceCode());
@@ -1092,6 +1108,19 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		});
 		SimulatorUtilities.wait(3000);
 		clickEndCall();
+	}
+
+	private int resolve(String amountType)
+	{
+		switch(amountType){
+		case "Billed" :
+			return 2;
+		case "Unbilled" :
+			return 3;
+		case "Outstanding" :
+			return 4;
+		}
+		return 0;
 	}
 
 }

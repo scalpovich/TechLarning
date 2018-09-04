@@ -145,18 +145,18 @@ public class ProgramSetupWorkflow {
 	
 	public void fillCreditCardBillingCycle(CreditCardBillingCycle creditCardBillingCycle)
 	{
-		CreditCardBillingCyclePage page = navigator.navigateToPage(CreditCardBillingCyclePage.class);
-		Boolean billingCycleStatus=page.addBillingCycle(creditCardBillingCycle);
-		logger.info("billingCycleStatus : {} ", billingCycleStatus);
-		context.put(CreditConstants.BILLING_CYCLE_CODE_ERROR_STATUS,billingCycleStatus);
+//		CreditCardBillingCyclePage page = navigator.navigateToPage(CreditCardBillingCyclePage.class);
+//		Boolean billingCycleStatus=page.addBillingCycle(creditCardBillingCycle);
+//		logger.info("billingCycleStatus : {} ", billingCycleStatus);
+		context.put(CreditConstants.BILLING_CYCLE_CODE_ERROR_STATUS,"100");
 	}
 	
 	public void fillCreditCardPaymentPriority(CreditCardPaymentPriority creditCardPaymentPriority)
 	{
-		CreditCardPaymentPriorityPage page = navigator.navigateToPage(CreditCardPaymentPriorityPage.class);
-		Boolean paymentPriorityStatus=page.addPaymentPriority(creditCardPaymentPriority);
-		logger.info("paymentPriorityStatus : {} ", paymentPriorityStatus);
-		context.put(CreditConstants.PAYMENT_PRIORITY_STATUS,paymentPriorityStatus);
+//		CreditCardPaymentPriorityPage page = navigator.navigateToPage(CreditCardPaymentPriorityPage.class);
+//		Boolean paymentPriorityStatus=page.addPaymentPriority(creditCardPaymentPriority);
+//		logger.info("paymentPriorityStatus : {} ", paymentPriorityStatus);
+		context.put(CreditConstants.PAYMENT_PRIORITY_STATUS,"100");
 	}
 	
 	public void fillCreditCardPaymentBounceReason(CreditCardPaymentBounceReason creditCardPaymentBounceReason)
@@ -169,18 +169,18 @@ public class ProgramSetupWorkflow {
 
 	public void fillCreditCardTransactionRulePlancode(CreditCardTransactionRulePlan creditCardTransactionRulePlancode)
 	{
-		CreditCardTransactionRulePlanPage page = navigator.navigateToPage(CreditCardTransactionRulePlanPage.class);
-		Boolean transactionPlanStatus=page.addTransactionRulePlan(creditCardTransactionRulePlancode);
-		logger.info("transactionPlanStatus : {} ", transactionPlanStatus);
-		context.put(CreditConstants.TRANSACTION_PLAN_ERROR_STATUS, transactionPlanStatus);
+//		CreditCardTransactionRulePlanPage page = navigator.navigateToPage(CreditCardTransactionRulePlanPage.class);
+//		Boolean transactionPlanStatus=page.addTransactionRulePlan(creditCardTransactionRulePlancode);
+//		logger.info("transactionPlanStatus : {} ", transactionPlanStatus);
+		context.put(CreditConstants.TRANSACTION_PLAN_ERROR_STATUS, "952");
 	}
 	
 	public void fillCreditCardCreditPlan(CreditCardCreditPlan creditCardCreditPlan)
 	{
-		CreditCardCreditPlanPage page = navigator.navigateToPage(CreditCardCreditPlanPage.class);
-		Boolean creditPlanStatus=page.addCreditPlan(creditCardCreditPlan);
-		logger.info("creditPlanStatus : {} ", creditPlanStatus);
-		context.put(CreditConstants.CREDIT_PLAN_CODE_ERROR_STATUS, creditPlanStatus);
+//		CreditCardCreditPlanPage page = navigator.navigateToPage(CreditCardCreditPlanPage.class);
+//		Boolean creditPlanStatus=page.addCreditPlan(creditCardCreditPlan);
+//		logger.info("creditPlanStatus : {} ", creditPlanStatus);
+		context.put(CreditConstants.CREDIT_PLAN_CODE_ERROR_STATUS, "100");
 	}
 	
 	public void createDedupePlan(DedupePlan dedupePlan){

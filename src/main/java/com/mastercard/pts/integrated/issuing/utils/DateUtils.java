@@ -13,7 +13,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -24,11 +26,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
 
 @Component
 public class DateUtils {
-	
+	private static final Logger logger = LoggerFactory.getLogger(TransactionWorkflow.class);
 	private static final int DEFAULT_KEY_LENGTH = 10;
 	int month = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH);
 	int year = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
@@ -316,8 +323,19 @@ public class DateUtils {
 		return tempVal + tempArr[0];
 	}
 
-	public static void main(String[] args) {
-		DateUtils date = new DateUtils();
-		System.out.println(date.getDateinDDMMYYYY());
+	public static LocalDate convertInstitutionDateInLocalDateFormat(String institutionDate){
+		return LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
 	}
+	
+	public static int getNextMonthFirstDayDifference(String institutionDate){			
+		LocalDate localDate = LocalDate.now();
+		logger.info("localDate date : {}" , localDate);
+		LocalDate convertedDate = LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+		logger.info("Coverted Institution date : {} " , convertedDate);
+		LocalDate monthLastDate = convertedDate.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear())) ;
+		logger.info("monthLastDate date : {}" ,monthLastDate);
+		logger.info("Diffrence Days : {}",ChronoUnit.DAYS.between(localDate, monthLastDate));
+		return (int) (ChronoUnit.DAYS.between(localDate, monthLastDate) + 1);
+	}	
+	
 }

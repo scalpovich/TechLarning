@@ -43,6 +43,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -65,6 +66,7 @@ public class HelpDeskSteps {
 	private String beforeLoadBalanceInformation;
 	private static final String STATUS_INCORRECT_INFO_MSG = "Device has incorrect status";
 	private static final String INCORRECT_BALANCE_OR_CREDIT_LIMIT = "Available balance/Credit limit does not match : ";
+	private static final String BILLING_INCORRECT_MASSAGE = " amount does not match : ";
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
 	private String clientID;
 	private String loginType = "login";
@@ -846,5 +848,15 @@ public class HelpDeskSteps {
 		helpdeskGeneral.setNotes(MiscUtils.generateRandomNumberAsString(6));
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.resetPinCounter(helpdeskGeneral);
+	}
+	
+	@Then("user verify $amount amount for $category category")
+	@When("user verify $amount amount for $category category")
+	public void assertionForBilling(String amount, String category){
+		String transactionAmount = context.get(ConstantData.TRANSACTION_AMOUNT);
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setCategory(category);
+		device.setAmountType(amount);
+		assertThat(category +" "+ amount +BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device), equalTo(transactionAmount));
 	}
 }

@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
 import org.openqa.selenium.WebElement;
@@ -62,7 +63,22 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[1]/td/span[contains(text(),'DR')]/../../td[1]/span/a/span")
 	private MCWebElement retrieveARNLabel;
 
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
+	private MCWebElement institutionDateText;
+	
 	private String authorizationStatus;	
+	
+	public void selectFromDate(LocalDate date)
+	{
+		date = LocalDate.parse(getTextFromPage(institutionDateText), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(1);
+		WebElementUtils.pickDate(fromDateTxt, date);		
+	}
+	
+	public void selectToDate(LocalDate date)
+	{
+		date = LocalDate.parse(getTextFromPage(institutionDateText), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+		WebElementUtils.pickDate(toDateTxt, date);
+	}
 	
 	public String searchTransactionWithDevice(String deviceNumber, TransactionSearch ts) {
 		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
@@ -81,8 +97,8 @@ public class TransactionSearchPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, ts.getProductType());
 		WebElementUtils.enterText(searchARNTxt, arnNumber);
 		WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
-		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
-		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
+		selectFromDate(LocalDate.now());
+		selectToDate(LocalDate.now());
 		clickSearchButton();
 		viewFirstRecord();
 		runWithinPopup("View Transactions", () -> {

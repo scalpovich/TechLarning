@@ -567,5 +567,4 @@ public class DatabaseUtils {
 		System.out.println(EncryptUtils.encrypt("KmslWW3d"));
 
 	}
-
 }
