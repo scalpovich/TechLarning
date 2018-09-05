@@ -44,7 +44,6 @@ Scenario:4 Perform EMV_PURCHASE Auth transaction after changing client type as V
 Given user is logged in institution
 When user updates client details
 And perform an EMV_PURCHASE MAS transaction on the same card
-And user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
 And user signs out from customer portal
 And MAS simulator is closed
