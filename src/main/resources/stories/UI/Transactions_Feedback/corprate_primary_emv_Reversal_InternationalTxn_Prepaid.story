@@ -16,12 +16,16 @@ And User fills Wallet Plan for prepaid product
 And User fills Program section for prepaid product
 And User fills Business Mandatory Fields Screen for prepaid product
 And User fills Device Range section for prepaid product
-And user creates new device of prepaid type for new client
-When processes pre-production batch for prepaid
+When user creates new device of prepaid type for new client
+When a new device was created
+And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
 And device has "normal" status
-And user sign out from customer portal
+And user has wallet number information for prepaid device
+And user performs adjustment transaction
+And user has current wallet balance amount information for prepaid device
+Then user sign out from customer portal
 
 Scenario: Pin Generation
 Given connection to FINSim is established
