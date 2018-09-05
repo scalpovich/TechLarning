@@ -339,6 +339,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
 			SimulatorUtilities.wait(4000);
 			waitForWicket(driver());
+			selectByVisibleText(customerTypeDDwn, device.getCustomerType());          
+			SimulatorUtilities.wait(2000);
+          	waitForWicket(driver());
 			selectByVisibleText(programCodeDDwn, device.getProgramCode());
 			SimulatorUtilities.wait(2000);			
 		}
