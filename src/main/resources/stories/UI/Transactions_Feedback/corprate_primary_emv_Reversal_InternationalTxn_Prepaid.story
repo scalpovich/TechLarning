@@ -16,7 +16,6 @@ And User fills Wallet Plan for prepaid product
 And User fills Program section for prepaid product
 And User fills Business Mandatory Fields Screen for prepaid product
 And User fills Device Range section for prepaid product
-And user assigns service code to program
 And user creates new device of prepaid type for new client
 When processes pre-production batch for prepaid
 And processes device production batch for prepaid
