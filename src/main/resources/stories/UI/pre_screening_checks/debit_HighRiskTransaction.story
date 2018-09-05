@@ -11,7 +11,7 @@ Meta:
 Scenario: Set up prepaid emv retail general purpose card
 Given setting json values in excel for Debit
 And user is logged in institution
-And device range for program with device plan for "debit" "emv" card without pin
+And device range for program with device plan for "debit" "emv" card
 When user creates new device of debit type for new client
 
 Scenario: prepaid EMV retail general purpose card device production

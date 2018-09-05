@@ -19,7 +19,7 @@ And User fills Transaction Limit Plan for credit product
 And User fills Document Checklist Screen for credit product
 And User fills Device Joining and Membership Fee Plan for credit product
 And User fills Device Event Based Fee Plan for credit product
-And for EMV Card User fills without pin Device Plan for credit product for Mastercard
+And for EMV Card User fills Device Plan for credit product for Mastercard
 And User fills Billing Cycle
 And User fills Payment Priority
 And User fills Transaction Rule Plan

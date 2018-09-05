@@ -64,6 +64,9 @@ public class RAMPReportPage extends AbstractBasePage implements ReportVerificati
 	private MCWebElement selectHighRiskMccGroupDDwn;
 	
 	private String reportName = "RAMP Report";
+	private String type = "ALL";
+	private String fileType = "PDF";
+	private String recordType = "A-Authorised transactions";
 
 	public void verifyUiOperationStatus() {
 		logger.info(reportName);
@@ -84,15 +87,15 @@ public class RAMPReportPage extends AbstractBasePage implements ReportVerificati
 	    clicksearchButtonElement();
 	    
 	    selectByVisibleText(selectReportTypeDDwn, report.getReportType());
-	    selectByVisibleText(selectProductTypeDDwn, "ALL");
-	    selectByVisibleText(selectRecordTypeDDwn, "A-Authorised transactions");
-		selectByVisibleText(selectTransactionTypeDDwn, "ALL");
-	    selectByVisibleText(selectHighRiskMccDDwn, "ALL");
-	    selectByVisibleText(selectHighRiskMccGroupDDwn, "ALL");
-	    selectByVisibleText(selectTransactionTypeDDwn, "ALL");
+	    selectByVisibleText(selectProductTypeDDwn, type);
+	    selectByVisibleText(selectRecordTypeDDwn, recordType);
+		selectByVisibleText(selectTransactionTypeDDwn, type);
+	    selectByVisibleText(selectHighRiskMccDDwn, type);
+	    selectByVisibleText(selectHighRiskMccGroupDDwn, type);
+	    selectByVisibleText(selectTransactionTypeDDwn, type);
 		WebElementUtils.pickDate(fromDatePkr, LocalDate.now());
 		WebElementUtils.pickDate(toDateDPkr, LocalDate.now());
-		selectByVisibleText(selectFileTypeDDwn, "PDF");
+		selectByVisibleText(selectFileTypeDDwn, fileType);
 		clickWhenClickable(generateReportBtn);
 		return verifyReportDownloaded(report.getReportName());
 	}
