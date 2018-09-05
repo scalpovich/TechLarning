@@ -23,7 +23,7 @@ public class CashPaymentSteps {
 	
 	@Autowired
 	private CreditCardPaymentWorkFlows creditPaymentFlow;
-	
+
 	Payment cash;	
 	
 	@When("user initiates cash payment")

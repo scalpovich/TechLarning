@@ -16,13 +16,8 @@ public class CreditCardPaymentWorkFlows {
 	@Autowired
 	private Navigator navigator;
 
-	LocalChequePage localChqPage;
-	CashPage cashPage;
-	OutstationChequeCollectionPage outstationChequeCollectionPage;
-	OutstationChequeProcessingPage outstationChequeProcessingPage;
-
 	public void makeCashPayment(Payment cashPay) {
-		cashPage = navigator.navigateToPage(CashPage.class);
-		cashPage.performCashPayment(cashPay);
+		CashPage cashPage = navigator.navigateToPage(CashPage.class);
+		// cashPage.performCashPayment(cashPay);
 	}
 }

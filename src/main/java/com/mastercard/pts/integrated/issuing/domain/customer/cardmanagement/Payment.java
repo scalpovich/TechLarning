@@ -87,14 +87,14 @@ public class Payment {
 	
 	public static Payment cashPaymentDataProvider(KeyValueProvider provider) {
 		Payment cash = new Payment();
-		cash.setRemittanceNumber(CustomUtils.RandomNumbers(Integer.valueOf(provider.getString(REMITTANCE_NUMBER))));
+		cash.setRemittanceNumber(CustomUtils.RandomNumbers(99999999));
 		cash.setRemittanceDate(LocalDate.now());
 		cash.setValueDate(LocalDate.now());
 		cash.setBaseCurrency(provider.getString(BASE_CURRENCY));
 		cash.setAmount(provider.getString(CASH_AMOUNT));
 		cash.setTransactionDate(LocalDate.now());
 		cash.setDescription(provider.getString(DESCRIPTION_NOTE));
-		cash.setAuthNumber(CustomUtils.RandomNumbers(Integer.valueOf(provider.getString(AUTH_NUMBER))));
+		cash.setAuthNumber(CustomUtils.RandomNumbers(99999999));
 		cash.setPaymentBranchCode(provider.getString(BRANCH));
 		return cash;		
 	}

@@ -101,6 +101,7 @@ And user verify Billed amount for Purchase category
 And user run Statement Extract system internal batch
 Then user sign out from customer portal
 
+
 Scenario:11 Bump date 1 day ahead and Login & Logout to wait for date to be updated 
 Meta:
 @TestId 
@@ -148,4 +149,4 @@ And user verify Outstanding amount for Purchase category
 When user verify Unbilled amount for Payment category
 And user verify Billed amount for Payment category
 And user verify Outstanding amount for Payment category
-And user sign out from customer portal
+And user sign out from customer portal	
