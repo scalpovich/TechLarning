@@ -18,6 +18,10 @@ And User fills Business Mandatory Fields Screen for prepaid product
 And User fills Device Range section for prepaid product
 And user assigns service code to program
 And user creates new device of prepaid type for new client
+When processes pre-production batch for prepaid
+And processes device production batch for prepaid
+And processes pin generation batch for prepaid
+And device has "normal" status
 And user sign out from customer portal
 
 Scenario: Pin Generation
@@ -35,7 +39,6 @@ And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And verify fixed transaction fee applied on purchase transaction
 And verify markup fee applied on transaction
-And user verifies available balance after transaction
 And user sign out from customer portal
 
 Scenario: When user perform Reveral of Purchase Transaction
