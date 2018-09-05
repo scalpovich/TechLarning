@@ -26,4 +26,13 @@ public class DatabaseFlows {
 	public String getInstitutionCode() {
 		return institution.substring(institution.indexOf('[') + 1, institution.indexOf(']'));
 	}
+
+	public void updateInstituteDateToNextDay(String date) {
+
+		int dte = DateUtils.getNextMonthFirstDayDifference(date) + 1;
+
+		String queryString = "update system_codes set short_name='-" + dte
+				+ "'  WHERE TYPE_ID = 'SYS_PARAM' AND code = 'BACK_DAY' AND bank_code = '" + getInstitutionCode() + "'";
+		dbUtil.executeUpdate(queryString);
+	}
 }

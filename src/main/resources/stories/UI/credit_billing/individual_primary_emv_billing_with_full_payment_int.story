@@ -8,7 +8,7 @@ Meta:
 @StoryName credit_emv_retail_billing
 @Individual
 @Primary	 
-Scenario:creation of mastercard_individual_primary_emv Card credit device
+Scenario:1 creation of mastercard_individual_primary_emv Card credit device
 Meta:
 @UserCreatesNewCreditDevice
 Given setting json values in excel for Credit
@@ -20,7 +20,7 @@ And User Primary Device fills New Program Retail Credit Card section for credit 
 And for Primary Device and New Client user fills Device Range section for credit product
 Then user sign out from customer portal
 
-Scenario:creation of mastercard_individual_primary_emv Card credit device step 2
+Scenario:2 creation of mastercard_individual_primary_emv Card credit device step 2
 Given user is logged in institution
 When credit device is created using new device screen for Individual and Primary Device and New Client and EMV Card
 And credit processes pre-production batch using new Device
@@ -29,19 +29,19 @@ And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
 Then user sign out from customer portal
 
-Scenario: Pin Generation
+Scenario:3 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform EMV_PURCHASE Authorization transaction
+Scenario:4 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
 
-Scenario: Generate Auth File for Clearing
+Scenario:5 Generate Auth File for Clearing
 Meta:
 @TestId 
 When Auth file is generated after transaction
@@ -50,7 +50,7 @@ And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 
-Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
+Scenario:6 Clearing: Load auth file in MCPS and create NOT file of IPM extension
 Meta:
 @TestId 
 Given connection to MCPS is established
@@ -59,7 +59,7 @@ And Auth file is loaded into MCPS and processed
 And NOT file is successfully generated
 When MCPS simulator is closed
 
-Scenario: Upload ipm file from customer portal and process it
+Scenario:7 Upload ipm file from customer portal and process it
 Meta:
 @TestId
 Given user is logged in institution
@@ -67,7 +67,7 @@ When User uploads the NOT file
 And user processes batch for credit
 Then user sign out from customer portal
 
-Scenario: Matching & Posting to Cardholders account
+Scenario:8 Matching & Posting to Cardholders account
 Meta:
 @TestId 
 Given user is logged in institution
@@ -79,7 +79,7 @@ When user processes EOD-Credit system internal batch for Credit
 And user sign out from customer portal
 And update institution date to first of next month
 
-Scenario: Login & Logout to wait for date to be updated 
+Scenario:9 Login & Logout to wait for date to be updated 
 Meta:
 @TestId 
 Given user is logged in institution
@@ -89,7 +89,7 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario: Process Batches
+Scenario:10 Process Batches
 Meta:
 @TestId 
 Given user is logged in institution
@@ -101,10 +101,10 @@ And user verify Billed amount for Purchase category
 And user run Statement Extract system internal batch
 Then user sign out from customer portal
 
-Scenario: Bump date 1 day ahead and Login & Logout to wait for date to be updated 
+Scenario:11 Bump date 1 day ahead and Login & Logout to wait for date to be updated 
 Meta:
 @TestId 
-!-- And update institution date to next day
+When update institution date to next day
 Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
@@ -112,28 +112,40 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario: Verify User is able to make Payment of credit card through cash mode
+Scenario:12 Verify User is able to make Payment of credit card through cash mode
 Meta:
 @PaymentCash
 Given user is logged in institution
-And check card balance details through helpdesk
+When user verify Unbilled amount for Purchase category
+And user verify Billed amount for Purchase category
+And user verify Outstanding amount for Purchase category
+When user verify Unbilled amount for Payment category
+And user verify Billed amount for Payment category
+And user verify Outstanding amount for Payment category
 When user initiates cash payment
 And "Pre-clearing" batch for credit is successful
 And "EOD-Credit" batch for credit is successful
-And recheck card balance details through helpdesk after payment
-Then user check successful payments
+When user verify Unbilled amount for Purchase category
+And user verify Billed amount for Purchase category
+And user verify Outstanding amount for Purchase category
+When user verify Unbilled amount for Payment category
+And user verify Billed amount for Payment category
+And user verify Outstanding amount for Payment category
 And user sign out from customer portal
 When update institution date to first of next month
 
-Scenario: Process Batches after paying full payment bill
+Scenario:13 Process Batches after paying full payment bill and verify payments
 Meta:
 @TestId 
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
-And user verify Unbilled amount for Purchase category
 And user processes Billing Process - Credit system internal batch for Credit
-And user verify Billed amount for Purchase category
 And user run Statement Extract system internal batch
-And recheck card balance details through helpdesk after payment
+When user verify Unbilled amount for Purchase category
+And user verify Billed amount for Purchase category
+And user verify Outstanding amount for Purchase category
+When user verify Unbilled amount for Payment category
+And user verify Billed amount for Payment category
+And user verify Outstanding amount for Payment category
 And user sign out from customer portal

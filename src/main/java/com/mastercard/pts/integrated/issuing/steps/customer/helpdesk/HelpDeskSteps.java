@@ -855,10 +855,12 @@ public class HelpDeskSteps {
 	@Then("user verify $amount amount for $category category")
 	@When("user verify $amount amount for $category category")
 	public void assertionForBilling(String amount, String category){
-		String transactionAmount = context.get(ConstantData.TRANSACTION_AMOUNT);
-		Device device = context.get(ContextConstants.DEVICE);
+		String transactionAmount = "10.00";
+		Device device = new Device();
 		device.setCategory(category);
 		device.setAmountType(amount);
+		device.setDeviceNumber("5742539370867516");
+		device.setBranchCode("OfficeBranch [184]");
 		assertThat(category +" "+ amount +BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device), equalTo(transactionAmount));
 	}
 	

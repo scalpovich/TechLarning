@@ -1,5 +1,4 @@
 package com.mastercard.pts.integrated.issuing.steps;
-import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,5 +20,11 @@ public class DatabaseSteps {
 	@When("update institution date to first of next month")
 	public void updateInstituteDate(){
 			dbFlow.updateInstituteDateToFirstOfNextMonth(context.get(ContextConstants.INSTITUTION_DATE));
+	}
+	
+	@When("update institution date to next day")
+	public void updateInstitutionDateToNextDay()
+	{
+		dbFlow.updateInstituteDateToNextDay(context.get(ContextConstants.INSTITUTION_DATE));
 	}
 }

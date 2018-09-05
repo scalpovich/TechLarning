@@ -30,7 +30,9 @@ public class CashPaymentSteps {
 	@Then("user initiates cash payment")
 	public void addLocalChequeClearingDetails(){
 		cash = Payment.cashPaymentDataProvider(provider);
-		Device device = context.get(ContextConstants.DEVICE);		
+		Device device = new Device();
+		device.setDeviceNumber("5742539370867516");
+		device.setBranchCode("OfficeBranch [184]");
 		cash.setDeviceNumber(device.getDeviceNumber());
 		cash.setPaymentBranchCode(device.getBranchCode());
 		creditPaymentFlow.makeCashPayment(cash);	
