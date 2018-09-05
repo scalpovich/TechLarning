@@ -44,7 +44,14 @@ And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: validate the High Risk Country Report
+Scenario: validate the High Risk MCC Report
 Given user is logged in institution
 And validate the authCode in RAMP-REP05 report
 
+Scenario: validate the High Risk Country Report
+Given user is logged in institution
+And validate the authCode in RAMP-REP04 report
+
+Scenario: validate the High Risk Merchant Location Report
+Given user is logged in institution
+And validate the authCode in RAMP-REP06 report

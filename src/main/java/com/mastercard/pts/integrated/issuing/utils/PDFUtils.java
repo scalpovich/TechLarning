@@ -125,8 +125,9 @@ public class PDFUtils {
 			if(genericReports.getReportRegEx()== null){
 				
 				// Split by line separtor
-				tStripper.setLineSeparator("****");
-				row  = pdfFileInText.split("****");
+				tStripper.setLineSeparator("<EOL>");
+				pdfFileInText = tStripper.getText(pd);
+				row  = pdfFileInText.split("(<EOL>)+");
 				for(int j = 0; j<row.length;j=j+2 ){
 					map.put(row[j],row[j+1]);
 				}
