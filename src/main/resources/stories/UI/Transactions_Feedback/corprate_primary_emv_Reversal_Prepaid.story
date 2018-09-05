@@ -1,8 +1,7 @@
 Narrative:
-In order to a create a Prepaid Device under customer portal cardmanagement tab
+In order to a create a Credit Device under customer portal cardmanagement tab
 As a user
-I want to assert Pre-Screenning Checks by doing various transactions.
-
+I want to perform Transaction on corporate credit card.
 
 Meta:
 @Pre-ScreeningCheck
@@ -17,9 +16,16 @@ And User fills Wallet Plan for prepaid product
 And User fills Program section for prepaid product
 And User fills Business Mandatory Fields Screen for prepaid product
 And User fills Device Range section for prepaid product
-And user assigns service code to program
-And user creates new device of prepaid type for new client
-And user sign out from customer portal
+When user creates new device of prepaid type for new client
+When a new device was created
+And processes pre-production batch for prepaid
+And processes device production batch for prepaid
+And processes pin generation batch for prepaid
+And device has "normal" status
+And user has wallet number information for prepaid device
+And user performs adjustment transaction
+And user has current wallet balance amount information for prepaid device
+Then user sign out from customer portal
 
 Scenario: Pin Generation
 Given connection to FINSim is established
