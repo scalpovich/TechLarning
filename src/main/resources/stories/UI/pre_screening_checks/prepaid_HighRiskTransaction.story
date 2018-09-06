@@ -4,7 +4,6 @@ As an issuer
 I want to perform transaction for EMV prepaid card
 
 Meta:
-@HighRiskTransaction_p
 @Author Nitin Kumar
 @StoryName p_emv_retail_general
 
@@ -48,12 +47,15 @@ And user sign out from customer portal
 
 Scenario: validate the High Risk MCC Report
 Given user is logged in institution
-And validate the authCode in RAMP-REP05 report
+Then validate the authCode in RAMP-REP05 report
+And user sign out from customer portal
 
 Scenario: validate the High Risk Country Report
 Given user is logged in institution
-And validate the authCode in RAMP-REP04 report
+Then validate the authCode in RAMP-REP04 report
+And user sign out from customer portal
 
 Scenario: validate the High Risk Merchant Location Report
 Given user is logged in institution
-And validate the authCode in RAMP-REP06 report
+Then validate the authCode in RAMP-REP06 report
+And user sign out from customer portal

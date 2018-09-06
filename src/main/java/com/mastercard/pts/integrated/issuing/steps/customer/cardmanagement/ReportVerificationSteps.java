@@ -32,7 +32,6 @@ public class ReportVerificationSteps {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ReportVerificationSteps.class);
 
-	@Given("validate the $reportField in $reportName report")
 	@Then("validate the $reportField in $reportName report")
 	public void validateGenericReport(String reportFields, String reportName) {
 		Device device = context.get(ContextConstants.DEVICE);
