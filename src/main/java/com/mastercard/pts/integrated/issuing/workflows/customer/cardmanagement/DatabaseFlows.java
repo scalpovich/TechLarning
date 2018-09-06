@@ -29,9 +29,9 @@ public class DatabaseFlows {
 
 	public void updateInstituteDateToNextDay(String date) {
 
-		int dte = DateUtils.getNextMonthFirstDayDifference(date) + 1;
+		int getDiff = DateUtils.getNextMonthFirstDayDifference(date) + 1;
 
-		String queryString = "update system_codes set short_name='-" + dte
+		String queryString = "update system_codes set short_name='-" + getDiff
 				+ "'  WHERE TYPE_ID = 'SYS_PARAM' AND code = 'BACK_DAY' AND bank_code = '" + getInstitutionCode() + "'";
 		dbUtil.executeUpdate(queryString);
 	}
