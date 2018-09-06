@@ -221,8 +221,8 @@ public class HelpdeskWorkflow {
 		return actualbalanceMapPayments;		
 	}
 	
-	public Map<String,String> createExpectedBalanceMap(String type) {
-		return helpDeskPage.createExpectedBalanceMap(type);
+	public Map<String,String> createExpectedBalanceMap(String type,Device device) {
+		return helpDeskPage.createExpectedBalanceMap(type,device);
 	}
 	
 	public void compareBalancesPayment(){

@@ -866,7 +866,7 @@ public class HelpDeskSteps {
 	public void checkCardBalance(String type) {
 		Device device = context.get(ContextConstants.DEVICE);
 		context.put(ContextConstants.DEVICE, device);
-		context.put("expectedPayment", helpdeskWorkflow.createExpectedBalanceMap(type));
+		context.put("expectedPayment", helpdeskWorkflow.createExpectedBalanceMap(type,device));
 		context.put("actualPayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));
 		helpdeskWorkflow.compareBalancesPayment();
 	}

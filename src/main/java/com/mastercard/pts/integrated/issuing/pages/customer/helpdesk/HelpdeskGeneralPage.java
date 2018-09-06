@@ -273,6 +273,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@Autowired
 	TestContext context;
 	
+	private final String DEFAULT_BALANCE="0.00";
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
 		logger.info(WALLET_NUMBER, CharMatcher.DIGIT.retainFrom(walletNumber.getText()));
@@ -1220,32 +1221,32 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		}
 	}
 
-	public Map<String, String> createExpectedBalanceMap(String type) {
+	public Map<String, String> createExpectedBalanceMap(String type,Device device) {
 		Map<String, String> expcetedPayments = new HashMap<String, String>();
 		switch (type) {
 		case "before Payment":
-			expcetedPayments.put("BillledPurchase", "10.00");
-			expcetedPayments.put("UnbllledPurchase", "0.00");
-			expcetedPayments.put("OutstandingPurchase", "10.00");
-			expcetedPayments.put("BillledPayments", "0.00");
-			expcetedPayments.put("UnbllledPayments", "0.00");
-			expcetedPayments.put("OutstandingPayments", "10.00");
+			expcetedPayments.put("BillledPurchase", device.getTransactionAmount());
+			expcetedPayments.put("UnbllledPurchase", DEFAULT_BALANCE);
+			expcetedPayments.put("OutstandingPurchase", device.getTransactionAmount());
+			expcetedPayments.put("BillledPayments", DEFAULT_BALANCE);
+			expcetedPayments.put("UnbllledPayments", DEFAULT_BALANCE);
+			expcetedPayments.put("OutstandingPayments", device.getTransactionAmount());
 			break;
 		case "after Payment":
-			expcetedPayments.put("BillledPurchase", "10.00");
-			expcetedPayments.put("UnbllledPurchase", "0.00");
-			expcetedPayments.put("OutstandingPurchase", "0.00");
-			expcetedPayments.put("BillledPayments", "0.00");
-			expcetedPayments.put("UnbllledPayments", "10.00");
-			expcetedPayments.put("OutstandingPayments", "0.00");
+			expcetedPayments.put("BillledPurchase", device.getTransactionAmount());
+			expcetedPayments.put("UnbllledPurchase", DEFAULT_BALANCE);
+			expcetedPayments.put("OutstandingPurchase", DEFAULT_BALANCE);
+			expcetedPayments.put("BillledPayments", DEFAULT_BALANCE);
+			expcetedPayments.put("UnbllledPayments", device.getTransactionAmount());
+			expcetedPayments.put("OutstandingPayments", DEFAULT_BALANCE);
 			break;
 		case "after Billing":
-			expcetedPayments.put("BillledPurchase", "0.00");
-			expcetedPayments.put("UnbllledPurchase", "0.00");
-			expcetedPayments.put("OutstandingPurchase", "0.00");
-			expcetedPayments.put("BillledPayments", "10.00");
-			expcetedPayments.put("UnbllledPayments", "0.00");
-			expcetedPayments.put("OutstandingPayments", "0.00");
+			expcetedPayments.put("BillledPurchase", DEFAULT_BALANCE);
+			expcetedPayments.put("UnbllledPurchase", DEFAULT_BALANCE);
+			expcetedPayments.put("OutstandingPurchase", DEFAULT_BALANCE);
+			expcetedPayments.put("BillledPayments", device.getTransactionAmount());
+			expcetedPayments.put("UnbllledPayments", DEFAULT_BALANCE);
+			expcetedPayments.put("OutstandingPayments", DEFAULT_BALANCE);
 			break;
 
 		}
