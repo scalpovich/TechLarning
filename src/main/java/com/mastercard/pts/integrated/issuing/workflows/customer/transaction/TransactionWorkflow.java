@@ -298,7 +298,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void launchWiniumAndSimulator(String simulator) {
 		launchRequiredSimulatorSession(simulator); // to fetch required Simulator installed on the machine or read value from WhichSimulatorVersionToChoose.java
-		//closeSimulator(simulator);
+		closeSimulator(simulator);
 		String methodName = new Object() {
 		}.getClass().getEnclosingMethod().getName();
 
@@ -611,6 +611,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			updatePanNumber(device.getDeviceNumber());
 			updateAmountCardHolderBilling();
 			updateBillingCurrencyCode();
+			//
+			manipulateIPMData("");
+			
 			assignUniqueFileId();
 		} catch (Exception e) {
 			logger.debug("Exception occurred while editing fields :: {}", e);
@@ -2007,12 +2010,24 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public void manipulateIPMData(String status){
+		startWiniumDriverWithSimulator("MCPS");
 		activateMcps();
 		try{
-			if("Unmatch".equalsIgnoreCase(status)){
+			/*if("Unmatch".equalsIgnoreCase(status)){
 				updateTransactionDate(LocalDate.now().minusDays(9).format(DateTimeFormatter.ofPattern("yyMMdd")));
 			}
-			assignUniqueFileId();
+			assignUniqueFileId();*/
+			updateReconciliationAmount("005 - Amount, Reconciliation");
+			updateReconciliationAmount("004 - Amount, Transaction");
+			updateReconciliationAmount("006 - Amount, Cardholder Billing");
+			
+			//
+			updateReconciliationCurrencyCode("049 - Currency Code, Transaction");
+			updateReconciliationCurrencyCode("050 - Currency Code, Reconciliation");
+			updateReconciliationCurrencyCode("051 - Currency Code, Cardholder Billing");
+			
+			
+			
 		}catch(Exception e){
 			logger.debug("Exception occurred while editing fields :: {}", e);
 			throw MiscUtils.propagate(e);
@@ -2035,6 +2050,41 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		activateEditField();
 		winiumClickOperation(SET_VALUE);
 		wait(1000);
+		winiumClickOperation(CLOSE);
+	}
+	
+	private void updateReconciliationAmount(String test) throws AWTException {
+		String amount = "" + "000000002000" ; //getTransactionAmount();
+		Actions action = new Actions(winiumDriver);
+		activateMcps();
+		clickMiddlePresentmentAndMessageTypeIndicator();
+		action.moveToElement(winiumDriver.findElementByName(test)).doubleClick().build().perform();
+		activateEditField();
+		winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
+		setText("");
+		setText(amount.toString());
+		wait(2000);
+		winiumClickOperation(SET_VALUE);
+		wait(2000);
+		winiumClickOperation(CLOSE);
+	}
+	
+	private void updateReconciliationCurrencyCode(String test) throws AWTException {
+		Actions action = new Actions(winiumDriver);
+		activateMcps();
+		clickMiddlePresentmentAndMessageTypeIndicator();
+		pressPageDown();
+		pressPageDown();
+		action.moveToElement(winiumDriver.findElementByName(test)).doubleClick().build().perform();
+		activateEditField();
+		wait(2000);
+		winiumDriver.findElementByName(SELECT_DE_VALUE).click();
+		wait(2000);
+		pressPageDown(3);
+		wait(2000);
+		winiumDriver.findElementByName("840 - U.S. Dollar").click();
+		winiumClickOperation(SET_VALUE);
+		wait(2000);
 		winiumClickOperation(CLOSE);
 	}
 }
