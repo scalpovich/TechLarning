@@ -563,7 +563,7 @@ public class HelpDeskSteps {
 		BigDecimal transactionAmount= context.get(ConstantData.TRANSACTION_AMOUNT_BD);
 		//BigDecimal bd = new BigDecimal("500.00");
 		updatedAvailableBal = updatedAvailableBal.subtract(transactionAmount);
-		if(ContextConstants.CREDIT_LIMIT_TEMP.equalsIgnoreCase(limittype)){
+		if(ContextConstants.CREDIT_TEMP_LIMIT.equalsIgnoreCase(limittype)){
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(0)), equalTo(updatedAvailableBal));
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(1)), equalTo(updatedAvailableBal));
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, (creditLimit.get(2)), equalTo(updatedAvailableBal));
