@@ -498,6 +498,7 @@
 							   "transactionPlan":"AUTOMATION [T7185S]",
 							   "creditPlan":"Automation [100]",
 							   "billingCycle":"Automation Billing [100]",
+							   "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
 							   "walletPlan":"AUTOMATION [TA4946EBFC]"
   				 },
   				 {
@@ -515,7 +516,7 @@
 							   "visaDebitIssuerBin":"VISADEBIT [417360]",
 							   "visaCreditIssuerBin":"VISACREDIT [431112]",
 							   "plasticId":"Plastic code [266]",
-							   "pictureCode":"	Picture code [827]",
+							   "pictureCode":"Picture code [827]",
 							   "corporateClientCode":"MasterCard [11177716335000002]",
 							   "dedupePlanCode":"AMIT2018 [AMIT2018]",
 							   "prepaidStatementPlan":"AUTOMATION [TA4048YAQU]",
