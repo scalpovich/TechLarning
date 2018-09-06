@@ -24,7 +24,6 @@ And User search for new device Supplementary on search screen for credit and val
 And user activates temproary credit limit change request
 Then user sign out from customer portal
 
-
 Scenario: Pin Generation 
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
@@ -40,5 +39,5 @@ And MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-And user verify temproary credit limit for credit product
+When user verifies available temproary limit for card after transaction
 Then user sign out from customer portal

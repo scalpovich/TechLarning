@@ -51,10 +51,6 @@ public class HelpDeskFlows extends AbstractBasePage {
 		generalPage = navigator.navigateToPage(GeneralPage.class);
 	}
 	
-	public void navigateToCurrentStatusAndLimitsTab(){
-		
-	}
-
 	public void searchForDevice(HelpDeskGeneral helpdeskgettersetter) {
 		searchpanelhelpdesk.searchDevice(helpdeskgettersetter.getProductType(), helpdeskgettersetter.getDeviceNumber());
 		searchpanelhelpdesk.clickEditBtn();

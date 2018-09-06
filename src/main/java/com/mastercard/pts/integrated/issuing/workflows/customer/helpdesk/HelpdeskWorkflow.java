@@ -17,6 +17,7 @@ import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCas
 
 @Workflow
 public class HelpdeskWorkflow {
+	
 	@Autowired
 	private HelpdeskGeneralPage helpDeskPage;
 
@@ -39,6 +40,10 @@ public class HelpdeskWorkflow {
 	public boolean verifyCurrencySetupDoneCorrectly(HelpdeskGeneral helpdeskGeneral, Device device) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		return helpDeskPage.verifyCurrencySetupDoneCorrectly(helpdeskGeneral, device);
+	}
+	
+	public BigDecimal activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
+		return helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
 	}
 
 	public void searchWithDeviceNumber(HelpdeskGeneral helpdeskGeneral) {
