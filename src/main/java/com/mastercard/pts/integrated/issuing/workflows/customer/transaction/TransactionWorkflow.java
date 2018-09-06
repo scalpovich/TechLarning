@@ -850,6 +850,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		fillFileId(fileId);
 		winiumClickOperation("1644/695 File Trailer");
 		fillFileId(fileId);
+		saveIPMFile();
+	}
+
+	private void saveIPMFile() {
+		Actions action = new Actions(winiumDriver);
 		activateMcps();
 		action.moveToElement(winiumDriver.findElementByName("toolStripSplitButton1")).moveByOffset(35, 0).click().build().perform();
 		wait(1000);
@@ -2128,6 +2133,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			updateCurrencyCode(st[4],transactionData);	//Reconciliation Currency Code
 			updateCurrencyCode(st[5],transactionData);	//Billing Currency Code
 			fillChecksumAmount(st[6],transactionData);	//Transaction amount in Trailer
+			saveIPMFile();
 		}catch(Exception e){
 			logger.debug("Exception occurred while editing fields :: {}", e);
 			throw MiscUtils.propagate(e);

@@ -70,6 +70,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 
 	private final String DUPLICATE_PRESENTMENT = "Duplicate presentment";
 	private final String UNMATCH_PRESENTMENT = "Unmatched Presentment";
+	private final String DESCRIPTION = "Description";
 	
 	private String authorizationStatus;	
 
@@ -96,8 +97,14 @@ public class TransactionSearchPage extends AbstractBasePage {
 		
 		if(type.equalsIgnoreCase(DUPLICATE_PRESENTMENT) || type.equalsIgnoreCase(UNMATCH_PRESENTMENT)){
 			SimulatorUtilities.wait(2000);
-			String st = String.format("//table[@class='dataview']/tbody/tr[%d]/td", Elements("//table[@class='dataview']/tbody/tr").size());
-			Element(st).click();
+			String flag= getCellTextByColumnName(1, DESCRIPTION);
+			int size= Elements("//table[@class='dataview']/tbody/tr").size();
+			for(int i=size;i<=1;i++){
+				if(getCellTextByColumnName(i, DESCRIPTION).equalsIgnoreCase(flag)){
+					Element("//table[@class='dataview']/tbody/tr["+i+"]/td").click();
+					break;
+				}
+			}
 		}
 		else{	
 			viewFirstRecord();
