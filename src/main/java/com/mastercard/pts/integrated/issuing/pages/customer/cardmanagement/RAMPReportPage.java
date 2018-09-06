@@ -15,6 +15,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Gene
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -63,6 +64,12 @@ public class RAMPReportPage extends AbstractBasePage implements ReportVerificati
 	@PageElement(findBy = FindBy.NAME, valueToFind = "p_high_risk_mcc_group:input:dropdowncomponent")
 	private MCWebElement selectHighRiskMccGroupDDwn;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "p_high_risk_country_code:input:dropdowncomponent")
+	private MCWebElement selectHighRiskCountryDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "p_merchant_loc_code:input:dropdowncomponent")
+	private MCWebElement selectHighRiskMerchantLocationDDwn;
+	
 	private String reportName = "RAMP Report";
 	private String type = "ALL";
 	private String fileType = "PDF";
@@ -85,18 +92,57 @@ public class RAMPReportPage extends AbstractBasePage implements ReportVerificati
 		// TODO Auto-generated method stub
 		selectByVisibleText(selectReportDDwn,reportName);
 	    clicksearchButtonElement();
-	    
-	    selectByVisibleText(selectReportTypeDDwn, report.getReportType());
-	    selectByVisibleText(selectProductTypeDDwn, type);
-	    selectByVisibleText(selectRecordTypeDDwn, recordType);
-		selectByVisibleText(selectTransactionTypeDDwn, type);
-	    selectByVisibleText(selectHighRiskMccDDwn, type);
-	    selectByVisibleText(selectHighRiskMccGroupDDwn, type);
-	    selectByVisibleText(selectTransactionTypeDDwn, type);
+	    selectReportType(report);
+	    selectProductType();
+	    selectRecordtType();
+	    selectTransactionType();
+	    selectHighRiskMCCType();
+	    selectHighRiskMCCGroupType();
+	    selectHighRiskCountryType();
+	    selectHighRiskMerchantLocationType();
 		WebElementUtils.pickDate(fromDatePkr, LocalDate.now());
 		WebElementUtils.pickDate(toDateDPkr, LocalDate.now());
 		selectByVisibleText(selectFileTypeDDwn, fileType);
 		clickWhenClickable(generateReportBtn);
+		verifyNoErrors();
 		return verifyReportDownloaded(report.getReportName());
+	}
+	
+	private void selectReportType(GenericReport report){
+		selectByVisibleText(selectReportTypeDDwn, report.getReportType());
+	}
+	
+	private void selectProductType(){
+		selectByVisibleText(selectProductTypeDDwn, type);
+	}
+	
+	private void selectRecordtType(){
+		selectByVisibleText(selectRecordTypeDDwn, recordType);
+	}
+	
+	private void selectTransactionType(){
+		SimulatorUtilities.wait(2000);
+		if(selectTransactionTypeDDwn.isEnabled())
+		selectByVisibleText(selectTransactionTypeDDwn, type);
+	}
+	
+	private void selectHighRiskMCCType(){
+		if(selectHighRiskMccDDwn.isEnabled())
+			selectByVisibleText(selectHighRiskMccDDwn, type);
+	}
+	
+	private void selectHighRiskMCCGroupType(){
+		if(selectHighRiskMccGroupDDwn.isEnabled())
+			selectByVisibleText(selectHighRiskMccGroupDDwn, type);
+	}
+	
+	private void selectHighRiskCountryType(){
+		if(selectHighRiskCountryDDwn.isEnabled())
+			selectByVisibleText(selectHighRiskCountryDDwn, type);
+	}
+	
+	private void selectHighRiskMerchantLocationType(){
+		if(selectHighRiskMerchantLocationDDwn.isEnabled())
+			selectByVisibleText(selectHighRiskMerchantLocationDDwn, type);
 	}
 }
