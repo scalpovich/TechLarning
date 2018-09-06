@@ -30,6 +30,7 @@ public class LoginWorkflow {
 		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
 		loginPage.waitUntilIsLoaded();
 	}
+
 	@Step("Login as {0}")
 	public void login(String userName, String password) {
 		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
@@ -37,6 +38,7 @@ public class LoginWorkflow {
 		loginPage.inputPassword(password);
 		loginPage.clickLoginButton();
 	}
+
 	public boolean confirmInstitutionSelection(String institutionSelector) {
 		InstitutionSelectionPage page = pageFactory.getPage(InstitutionSelectionPage.class);
 		String institution = System.getProperty("institution");
@@ -46,6 +48,7 @@ public class LoginWorkflow {
 		page.clickConfirm();
 		return page.checkSessionExpired();
 	}
+
 	public void logInInstitution(Portal portal, String institution) {
 		openLoginPageForPortal(portal);
 		login(portal.getUserName(), portal.getPassword());
@@ -54,26 +57,31 @@ public class LoginWorkflow {
 			logInInstitution(portal,institution);
 		}
 	}
+
+
 	public void logInInstitutionAsAdmin(Portal portal, String institution) {
 		openLoginPageForPortal(portal);
 		login(portal.getAdminUserName(), portal.getAdminPassword());
 		confirmInstitutionSelection(institution);
 	}
+
 	public void signOutCustomer(){
 		HeaderPage page = pageFactory.getPage(HeaderPage.class);
 		page.signOutCustomer();
 	}
+
 	public void signOutCollect(){
 		HeaderPage page = pageFactory.getPage(HeaderPage.class);
 		page.signOutCollect();
 	}
+
 	public void signOutCardholder(){
 		HeaderPage page = pageFactory.getPage(HeaderPage.class);
 		page.signOutCardholder();
 	}
+
 	public void signOutAgent(){
 		HeaderPage page = pageFactory.getPage(HeaderPage.class);
 		page.signOutAgent();
 	}
 }
-

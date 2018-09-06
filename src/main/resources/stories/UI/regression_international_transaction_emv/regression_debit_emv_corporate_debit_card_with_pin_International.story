@@ -1,3 +1,5 @@
+debit emv corporate debit card with Pin
+
 Narrative:
 In order to check transactions on emv corporate debit card
 As an issuer

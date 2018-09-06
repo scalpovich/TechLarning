@@ -19,10 +19,6 @@ import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
-//TODO: Auto-generated Javadoc
-/**
- * @author E070234, E074127 The Class SearchPanelHelpdesk.
- */
 
 //TODO: Auto-generated Javadoc
 /**
@@ -165,5 +161,6 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 			}
 		}
 		return index + 1;
+
 	}
 }
