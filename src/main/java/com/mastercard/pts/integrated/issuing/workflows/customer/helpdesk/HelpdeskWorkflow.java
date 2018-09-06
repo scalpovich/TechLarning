@@ -3,8 +3,6 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +13,10 @@ import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGe
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConnectionUtils;
-import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
+import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 
 @Workflow
 public class HelpdeskWorkflow {
-	
 	@Autowired
 	private HelpdeskGeneralPage helpDeskPage;
 
@@ -78,14 +75,6 @@ public class HelpdeskWorkflow {
 		helpDeskPage.activateDevice(helpdeskGeneral);
 	}
 	
-	public BigDecimal activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
-		return helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
-	}
-	
-	public void creditLimitChange(HelpdeskGeneral helpdeskGeneral){
-		helpDeskPage.activateDevice(helpdeskGeneral);
-	}
-
 	public void resetPinCounter(HelpdeskGeneral helpdeskGeneral) {
 		helpDeskPage.resetPinRetryCounter(helpdeskGeneral);
 	}
@@ -94,8 +83,15 @@ public class HelpdeskWorkflow {
 		helpDeskPage.setupDeviceCurrency(helpdeskGeneral);
 	}
 	
-	public void clickOnCurrentStatusTab(){
-		helpDeskPage.clickCurrentStatusAndLimitsTab();
+	public void setupInternationalAllowDisallowCheck(String status) {
+		helpDeskPage.setupInternationalAllowDisallowCheck(status);
+	}
+	
+	public void setupEccomerceAllowDisallowCheck(HelpdeskGeneral helpdeskGeneral, String status) {
+		helpDeskPage.setupEccomerceDisallowCheck(status);
+	}
+	public void allowTransactionForOneHour(String status) {
+		helpDeskPage.allowTransactionForOneHour(status);
 	}
 
 	public void storeActivationDate() {
@@ -136,6 +132,11 @@ public class HelpdeskWorkflow {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		return helpDeskPage.getWalletBalanceInformation(device);
 	}
+	
+	public String getWalletBalanceInformationForRemittance(Device device, CardToCash cardToCash) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		return helpDeskPage.getWalletBalanceInformationForRemittance(device, cardToCash);
+	}
 
 	public boolean verifyBalanceUpdatedCorreclty(String beforeLoadBalanceInformation, String transactionDetailsFromExcel, String afterLoadBalanceInformation) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
@@ -161,16 +162,6 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.serviceRequestCardholderLoginPassword(clientID);
 	}
 	
-	public BigDecimal noteDownAvailableLimit(String type,Device device) {
-		//clickCustomerCareEditLink();
-		return helpDeskPage.noteDownAvailableLimit(type);
-	}
-	
-	public LinkedList <BigDecimal> noteDownCreditLimit(String type,Device device) {
-		clickCustomerCareEditLink();
-		return helpDeskPage.noteDownCreditLimit(type);
-	}
-	
 	public boolean resetCardholderTranPassword(String clientID){		
 		return helpDeskPage.serviceRequestCardholderTransactionPassword(clientID);
 	}
@@ -181,6 +172,16 @@ public class HelpdeskWorkflow {
 	
 	public boolean changeRegisteredMobileNo(HelpdeskGeneral general){
 		return helpDeskPage.changeRegisteredMobileNo(general);
+	}
+	
+	public BigDecimal noteDownAvailableLimit(String type) {
+		clickCustomerCareEditLink();
+		return helpDeskPage.noteDownAvailableLimit(type);
+	}
+	
+	public BigDecimal verifyAvailableLimit(String type) {
+		clickCustomerCareEditLink();
+		return helpDeskPage.noteDownAvailableLimit(type);
 	}
 	
 	public Optional<String[]> getDeviceTypeAndNumber(String institutionSelector){	
@@ -198,6 +199,7 @@ public class HelpdeskWorkflow {
 			return Optional.empty();
 		}
 	}
+	
 	public void validateRequiredFields(HelpdeskGeneral general){
 		helpDeskPage.validateRequiredFields(general);
 		helpDeskPage.validateMandatoryFields(3);
