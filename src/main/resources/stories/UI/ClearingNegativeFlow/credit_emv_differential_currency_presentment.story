@@ -49,7 +49,9 @@ Meta:
 Given connection to MCPS is established
 When Auth file is generated
 And Auth file is loaded into MCPS and processed
+And user update IPM file to get status Differential currency presentment
 Then NOT file is successfully generated
+And MCPS simulator is closed
 
 Scenario: 1.6 Upload ipm file from customer portal and process it
 Meta:

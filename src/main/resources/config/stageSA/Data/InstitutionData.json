@@ -137,6 +137,7 @@
 			"transactionPlan": "AUTOMATION [T1036T]",
 			"creditPlan": "AUTOMATION [103]",
 			"billingCycle": "AUTOMATION [141]",
+			"transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
 			"walletPlan": "AUTOMATION [TA8873DBAQ]"
 		},
 		{

@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -109,6 +110,22 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private static final String SIMULATOR_LICENSE_TYPE_17 = "17";
 	private static final String SIMULATOR_LICENSE_TYPE_18 = "18";
 	private static final String EDIT_SUBFIELD_VALUE = "Edit Subfield Value - Format: n(6) [YYMMDD] ";
+	private final String ELEMENTS_CODE = "004;005;006;049;050;051;0301" ;
+	private final String DIFFERENTIAL_CURRENCY_PRESENTMENT = "Differential currency presentment";
+	private final String UNMATCH = "UNMATCH";
+	private final String FILE_TRAILER = "1644/695 File Trailer";
+
+	private HashMap<String, String> hm = new HashMap<String, String>();
+	private void initialiseHashmap(){
+		hm.put("004", "004 - Amount, Transaction");
+		hm.put("005", "005 - Amount, Reconciliation");
+		hm.put("006", "006 - Amount, Cardholder Billing");
+		hm.put("049", "049 - Currency Code, Transaction");
+		hm.put("050", "050 - Currency Code, Reconciliation");
+		hm.put("051", "051 - Currency Code, Cardholder Billing");
+		hm.put("0301", "0301 - File Amount, Checksum");
+		hm.put("012","012 - Date And Time, Local Transaction");
+	}
 
 	@Autowired
 	private WebDriverProvider webProvider;
@@ -611,9 +628,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			updatePanNumber(device.getDeviceNumber());
 			updateAmountCardHolderBilling();
 			updateBillingCurrencyCode();
-			//
-			manipulateIPMData("");
-			
 			assignUniqueFileId();
 		} catch (Exception e) {
 			logger.debug("Exception occurred while editing fields :: {}", e);
@@ -2009,36 +2023,32 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("OK");
 	}
 
-	public void manipulateIPMData(String status){
-		startWiniumDriverWithSimulator("MCPS");
+	public void manipulateIPMData(String status,Transaction transactionData){
+		//startWiniumDriverWithSimulator("MCPS");
 		activateMcps();
 		try{
-			/*if("Unmatch".equalsIgnoreCase(status)){
-				updateTransactionDate(LocalDate.now().minusDays(9).format(DateTimeFormatter.ofPattern("yyMMdd")));
+			if(UNMATCH.equalsIgnoreCase(status)){
+				updateTransactionDate(LocalDate.now().minusDays(9).format(DateTimeFormatter.ofPattern("yyMMdd")),"012");
 			}
-			assignUniqueFileId();*/
-			updateReconciliationAmount("005 - Amount, Reconciliation");
-			updateReconciliationAmount("004 - Amount, Transaction");
-			updateReconciliationAmount("006 - Amount, Cardholder Billing");
-			
-			//
-			updateReconciliationCurrencyCode("049 - Currency Code, Transaction");
-			updateReconciliationCurrencyCode("050 - Currency Code, Reconciliation");
-			updateReconciliationCurrencyCode("051 - Currency Code, Cardholder Billing");
-			
-			
-			
+			else if(DIFFERENTIAL_CURRENCY_PRESENTMENT.equalsIgnoreCase(status)){
+				updateIPMFileForDifferentialPresentment(transactionData);
+			}
+
+			if(!DIFFERENTIAL_CURRENCY_PRESENTMENT.equalsIgnoreCase(status)){
+				assignUniqueFileId();
+			}
+
 		}catch(Exception e){
 			logger.debug("Exception occurred while editing fields :: {}", e);
 			throw MiscUtils.propagate(e);
 		}
 	}
 
-	private void updateTransactionDate(String date) throws AWTException {
+	private void updateTransactionDate(String date,String key) throws AWTException {
 		Actions action = new Actions(winiumDriver);
 		activateMcps();
 		clickMiddlePresentmentAndMessageTypeIndicator();
-		action.moveToElement(winiumDriver.findElementByName("012 - Date And Time, Local Transaction")).doubleClick().build().perform();
+		action.moveToElement(winiumDriver.findElementByName(key)).doubleClick().build().perform();
 		wait(1000);
 		activateEditField();
 		action.moveToElement(winiumDriver.findElementByName(EDIT_SUBFIELD_VALUE)).moveByOffset(0, 15).doubleClick().build().perform();
@@ -2052,13 +2062,13 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(1000);
 		winiumClickOperation(CLOSE);
 	}
-	
-	private void updateReconciliationAmount(String test) throws AWTException {
-		String amount = "" + "000000002000" ; //getTransactionAmount();
+
+	private void updateAmount(String key,Transaction transactiondata) throws AWTException {
+		String amount = "" +  transactiondata.getDiffentialAmount(); //getTransactionAmount();
 		Actions action = new Actions(winiumDriver);
 		activateMcps();
 		clickMiddlePresentmentAndMessageTypeIndicator();
-		action.moveToElement(winiumDriver.findElementByName(test)).doubleClick().build().perform();
+		action.moveToElement(winiumDriver.findElementByName(getElementValueFromMap(key))).doubleClick().build().perform();
 		activateEditField();
 		winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
 		setText("");
@@ -2068,23 +2078,59 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(2000);
 		winiumClickOperation(CLOSE);
 	}
-	
-	private void updateReconciliationCurrencyCode(String test) throws AWTException {
+
+	private String getElementValueFromMap(String key){
+		return hm.get(key);
+	}
+
+	private void updateCurrencyCode(String key,Transaction transactiondata) throws AWTException {
 		Actions action = new Actions(winiumDriver);
 		activateMcps();
 		clickMiddlePresentmentAndMessageTypeIndicator();
 		pressPageDown();
 		pressPageDown();
-		action.moveToElement(winiumDriver.findElementByName(test)).doubleClick().build().perform();
+		action.moveToElement(winiumDriver.findElementByName(getElementValueFromMap(key))).doubleClick().build().perform();
 		activateEditField();
 		wait(2000);
 		winiumDriver.findElementByName(SELECT_DE_VALUE).click();
 		wait(2000);
 		pressPageDown(3);
 		wait(2000);
-		winiumDriver.findElementByName("840 - U.S. Dollar").click();
+		winiumDriver.findElementByName(transactiondata.getDiffentialCurrency()).click();
 		winiumClickOperation(SET_VALUE);
 		wait(2000);
 		winiumClickOperation(CLOSE);
+	}
+
+	private void fillChecksumAmount(String key,Transaction transactionData) throws AWTException {
+		activateMcps();
+		Actions action = new Actions(winiumDriver);
+		performClickOperation(MESSAGE_TYPE_INDICATOR);
+		winiumClickOperation(FILE_TRAILER);
+		action.moveToElement(winiumDriver.findElementByName(getElementValueFromMap(key))).doubleClick().build().perform();
+		activateEditField();
+		setText("");
+		setText("0000"+transactionData.getDiffentialAmount());
+		wait(2000);
+		winiumClickOperation(SET_VALUE);
+		wait(2000);
+		winiumClickOperation(CLOSE);
+	}
+
+	private void updateIPMFileForDifferentialPresentment(Transaction transactionData){
+		initialiseHashmap();
+		String[] st = ELEMENTS_CODE.split(";");
+		try{
+			updateAmount(st[0],transactionData);		//Transaction Amount 
+			updateAmount(st[1],transactionData);		//Reconciliation Amount
+			updateAmount(st[2],transactionData);		//Billing Amount
+			updateCurrencyCode(st[3],transactionData);	//Transaction Currency Code
+			updateCurrencyCode(st[4],transactionData);	//Reconciliation Currency Code
+			updateCurrencyCode(st[5],transactionData);	//Billing Currency Code
+			fillChecksumAmount(st[6],transactionData);	//Transaction amount in Trailer
+		}catch(Exception e){
+			logger.debug("Exception occurred while editing fields :: {}", e);
+			throw MiscUtils.propagate(e);
+		}
 	}
 }

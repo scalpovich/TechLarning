@@ -103,8 +103,7 @@ public class MarkupFeePlanPage extends AbstractBasePage {
 	public void verifyUiOperationStatus() {
 		logger.info("Markup Fee Plan");
 		verifyUiOperation("Add Markup Fee Plan");
-		verifyResponseMessage();
-		;
+		//verifyResponseMessage();
 	}
 	
 	

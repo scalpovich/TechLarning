@@ -99,7 +99,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 			String st = String.format("//table[@class='dataview']/tbody/tr[%d]/td", Elements("//table[@class='dataview']/tbody/tr").size());
 			Element(st).click();
 		}
-		else{
+		else{	
 			viewFirstRecord();
 		}
 		
