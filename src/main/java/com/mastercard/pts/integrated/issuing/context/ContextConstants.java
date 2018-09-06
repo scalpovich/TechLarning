@@ -62,15 +62,14 @@ public class ContextConstants {
 	
 	public static final String AVAILABLE_CARD = "AVAILABLE_CARD";
 	
-	public static final String CREDIT_LIMIT_TEMP = "CREDIT_LIMIT_TEMP";
+	public static final String CREDIT_TEMP_LIMIT = "CREDIT_TEMP_LIMIT";
 	
-	public static final String CREDIT_LIMIT_PERM = "CREDIT_LIMIT_PERM";
+	public static final String CREDIT_PER_LIMIT = "CREDIT_PER_LIMIT";
 
 	public static final String INTERNATIONAL = "international";
 	
 	public static final String DOMESTIC = "domestic";
 
-	
 	public static final String DEVICE_RANGE = "DEVICE_RANGE";
 	
 	public static final String ALL_DEVICE_NUMBERS = "ALL_DEVICE_NUMBERS";
