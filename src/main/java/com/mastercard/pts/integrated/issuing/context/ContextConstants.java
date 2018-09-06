@@ -70,7 +70,6 @@ public class ContextConstants {
 	
 	public static final String DOMESTIC = "domestic";
 
-	
 	public static final String DEVICE_RANGE = "DEVICE_RANGE";
 	
 	public static final String ALL_DEVICE_NUMBERS = "ALL_DEVICE_NUMBERS";
