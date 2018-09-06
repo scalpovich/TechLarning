@@ -116,7 +116,7 @@ When check card balance details through helpdesk before Payment
 And user initiates cash payment
 And "Pre-clearing" batch for credit is successful
 And "EOD-Credit" batch for credit is successful
-When check card balance details through helpdesk $after Payment
+When check card balance details through helpdesk after Payment
 And user sign out from customer portal
 When update institution date to first of next month
 
@@ -128,5 +128,5 @@ When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
 And user processes Billing Process - Credit system internal batch for Credit
 And user run Statement Extract system internal batch
-When check card balance details through helpdesk $after Billing
+When check card balance details through helpdesk after Billing
 And user sign out from customer portal
