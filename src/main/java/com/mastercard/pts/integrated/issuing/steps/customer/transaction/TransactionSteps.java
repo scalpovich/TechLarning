@@ -160,10 +160,10 @@ public class TransactionSteps {
 		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
 	}
 	
-	@When("perform an $type transaction with wrong keys")
+	@When("perform an $type MAS transaction with wrong keys")
 	public void performTransactionWithWrongKeys(String transaction) {
 		TransactionWorkflow.STAGE_KEYS = INVALID_KEYS;
-		givenGenerateTestDataForOptimizedTransactionIsExecuted(transaction);
+		givenTransactionIsExecuted(transaction);
 	}
 
 	@When("user performs generate TestData for an optimized $transaction MAS transaction")

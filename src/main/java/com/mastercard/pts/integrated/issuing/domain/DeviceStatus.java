@@ -1,5 +1,8 @@
 package com.mastercard.pts.integrated.issuing.domain;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StopListDevice;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 public class DeviceStatus {
@@ -12,5 +15,11 @@ public class DeviceStatus {
 	
 	public static String fromShortName(String name) {
 		return MiscUtils.getConstantStringFromClassByPefixMatch(DeviceStatus.class, name);
+	}
+	
+	public static DeviceStatus createWithProvider(KeyValueProvider provider) {
+		DeviceStatus stopListDevice=new DeviceStatus();
+		return stopListDevice;
+	
 	}
 } 
