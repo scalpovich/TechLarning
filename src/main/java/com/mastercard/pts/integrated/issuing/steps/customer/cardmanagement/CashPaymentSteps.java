@@ -23,20 +23,17 @@ public class CashPaymentSteps {
 	
 	@Autowired
 	private CreditCardPaymentWorkFlows creditPaymentFlow;
-
-	Payment cash;	
+	
+	
 	
 	@When("user initiates cash payment")
 	@Then("user initiates cash payment")
 	public void addLocalChequeClearingDetails(){
-		cash = Payment.cashPaymentDataProvider(provider);
-		Device device = new Device();
-		device.setDeviceNumber("5742539370867516");
-		device.setBranchCode("OfficeBranch [184]");
+		Payment cash = Payment.cashPaymentDataProvider(provider);
+		Device device = context.get(ContextConstants.DEVICE);
 		cash.setDeviceNumber(device.getDeviceNumber());
-		cash.setPaymentBranchCode(device.getBranchCode());
+		cash.setPaymentBranch(device.getBranchCode());
 		creditPaymentFlow.makeCashPayment(cash);	
 		context.put(ContextConstants.PAYMENT, cash);		
 	}
 }
-

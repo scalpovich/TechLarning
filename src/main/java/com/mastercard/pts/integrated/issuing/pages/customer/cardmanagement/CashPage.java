@@ -125,7 +125,7 @@ public class CashPage extends AbstractBasePage {
 								enterAmount(cash.getAmount());								
 								enterDescription(cash.getDescription());
 								enterAuthNumber(cash.getAuthNumber());
-								selectPaymentBranch(cash.getPaymentBranchCode());
+								selectPaymentBranch(cash.getPaymentBranch());
 								clickSaveButton();								
 							});				
 					clickSaveButton();

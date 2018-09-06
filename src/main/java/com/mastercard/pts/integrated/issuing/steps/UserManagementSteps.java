@@ -128,8 +128,8 @@ public class UserManagementSteps {
 		context.put(USER_INSTITUTION_SELECTED, institution.getCode());
 		loginWorkflow.logInInstitution(loginPortal, userDefaultInstitution);
 		context.put(USERNAME, loginPortal.getUserName());
-		context.put(ContextConstants.INSTITUTION_DATE, loginWorkflow.getInstitutionDateLogin());		
-	}
+		context.put(ContextConstants.INSTITUTION_DATE, loginWorkflow.getInstitutionDateLogin());	
+		}
 
 	@Given("user is logged in non-default institution")
 	public void givenUserIsLoggedInNonDefaultInstitution() {

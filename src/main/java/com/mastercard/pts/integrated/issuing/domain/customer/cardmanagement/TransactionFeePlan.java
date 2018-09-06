@@ -111,14 +111,14 @@ public class TransactionFeePlan {
 	public static TransactionFeePlan getAllTransactionFee(KeyValueProvider provider) {
 
 		TransactionFeePlan txnFee = new TransactionFeePlan();
-		txnFee.setRateTxnFee(provider.getString(TRANSACTION_RATE));
-		txnFee.setBillingAmount(provider.getString(BILLING_AMOUNT));
+		txnFee.setRateTxnFee(provider.getString(TRANSACTION_RATE)+".00");
+		txnFee.setBillingAmount(provider.getString(BILLING_AMOUNT)+".00");
 		txnFee.setBillingAmountRate(provider.getString(BILLING_AMOUNT_RATE));
 		txnFee.setMinTxnRate(provider.getString(MIN_TXN_RATE));
 		txnFee.setRateTxnFee(provider.getString(RATE_TXN_FEE));
 		txnFee.setMaxTxnRate(provider.getString(MAX_TXN_RATE));
-		txnFee.setFixedRateFee(provider.getString(FIXED_RATE_FEE));
-		txnFee.setFixedTxnFees(provider.getString(FIXED_TXN_FEE));
+		txnFee.setFixedRateFee(provider.getString(FIXED_RATE_FEE)+"0");
+		txnFee.setFixedTxnFees(provider.getString(FIXED_TXN_FEE)+".00");
 
 		return txnFee;
 	}

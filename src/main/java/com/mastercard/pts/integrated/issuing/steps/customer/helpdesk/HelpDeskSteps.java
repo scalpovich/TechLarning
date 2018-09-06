@@ -856,38 +856,18 @@ public class HelpDeskSteps {
 	@When("user verify $amount amount for $category category")
 	public void assertionForBilling(String amount, String category){
 		String transactionAmount = "10.00";
-		Device device = new Device();
+		Device device = context.get(ContextConstants.DEVICE);
 		device.setCategory(category);
 		device.setAmountType(amount);
-		device.setDeviceNumber("5742539370867516");
-		device.setBranchCode("OfficeBranch [184]");
 		assertThat(category +" "+ amount +BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device), equalTo(transactionAmount));
 	}
-	
 
-	@Given("check card balance details through helpdesk")
-	public void checkCardBalance(){
-		Device device = new Device();
-		device.setDeviceNumber("5897657458735414"); //stage 5377164858858416 5897659209884715
-		device.setProductType(ProductType.fromShortName(Constants.CREDIT));
-		device.setBranchCode("BRANCHBASE [1001]");
-		context.put(ContextConstants.DEVICE,device);
-		Device device1 = context.get(ContextConstants.DEVICE);
-		context.put("balanceBeforePayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device1));
-		
+	@When("check card balance details through helpdesk $type")
+	public void checkCardBalance(String type) {
+		Device device = context.get(ContextConstants.DEVICE);
+		context.put(ContextConstants.DEVICE, device);
+		context.put("expectedPayment", helpdeskWorkflow.createExpectedBalanceMap(type));
+		context.put("actualPayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));
+		helpdeskWorkflow.compareBalancesPayment();
 	}
-	
-	@When("recheck card balance details through helpdesk after payment")
-	public void reCheckCardBalancePostPayment(){
-		Device device = context.get(ContextConstants.DEVICE);	
-		helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device);
-		context.put("balanceAfterPayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));	
-	}
-	
-	@Then("user check successful payments")
-	public void checkSuccessfulPayments(){		
-		Payment payment = context.get(ContextConstants.PAYMENT);
-		helpdeskWorkflow.compareBalancesAfterPayment(payment);;
-	}
-
 }

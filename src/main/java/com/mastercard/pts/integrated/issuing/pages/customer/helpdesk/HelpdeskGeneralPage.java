@@ -1171,6 +1171,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public List<String> getCreditCardBallance(){	
 		ArrayList<String> list = new ArrayList<>();		
 		clickWhenClickableDoNotWaitForWicket(balanceDetailsTab);
+		for (MCWebElement element: purchaseComponents.getElements()){
+			list.add(element.getText());
+		}
 		for (MCWebElement element: paymentComponents.getElements()){
 			list.add(element.getText());
 		}		
@@ -1178,7 +1181,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public Map<String,String> checkCreditBalances(Device device){
-		Map<String, String> balanceMapBeforePayments;	
+		Map<String, String> balanceMapBeforePayments = new HashMap<String, String>();	
 		List<String> list;
 		logger.info("get Credit balances");
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getProductType());
@@ -1186,32 +1189,66 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickSearchButton();
 		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
 		editDeviceLink.click();
-		clickCurrentStatusLimitTab();
 		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
-		balanceMapBeforePayments = getCreditLimitComponents();
+//		balanceMapBeforePayments = getCreditLimitComponents();
 			clickBalanceDetailsTab();
 			SimulatorUtilities.wait(5000);//this to wait till the table gets loaded	
 			list=getCreditCardBallance();
-			balanceMapBeforePayments.put("UnbllledPayments", list.get(1));
-			balanceMapBeforePayments.put("OutstandingPayments", list.get(2));			
+			balanceMapBeforePayments.put("BillledPurchase", list.get(0));
+			balanceMapBeforePayments.put("UnbllledPurchase", list.get(1));
+			balanceMapBeforePayments.put("OutstandingPurchase", list.get(2));	
+			balanceMapBeforePayments.put("BillledPayments", list.get(3));
+			balanceMapBeforePayments.put("UnbllledPayments", list.get(4));
+			balanceMapBeforePayments.put("OutstandingPayments", list.get(5));			
 			return balanceMapBeforePayments;
 	}
 	
-	public void checkAndCompareBalancePostPayment(Payment payment){		
-		Map<String, String> mapA= context.get("balanceBeforePayment");
-		Map<String, String> mapB =context.get("balanceAfterPayment");
-		    if (mapA != null && mapB != null && mapA.size() == mapB.size()) {
-		        for (Map.Entry m : mapA.entrySet()) {
-		            String keyFromFirstMap = (String) m.getKey();		           
-		            String valueFromFirstMap = (String) m.getValue();
-		            String valueFromSecondMap = mapB.get(keyFromFirstMap);
-		            if(keyFromFirstMap.equals("UnbllledPayments")){
-		            if (!valueFromSecondMap.equals(Integer.valueOf(valueFromFirstMap + payment.getAmount()))) {
-		               Assert.assertEquals("Payment has been done successfully", keyFromFirstMap + "::::" + valueFromSecondMap,  keyFromFirstMap + "::::" + Integer.valueOf(valueFromFirstMap + 500));
-		            }
-		        } }
-		        
-		    } 
-		    
+	public void checkAndCompareBalancePayment() {
+		Map<String, String> mapA = context.get("expectedPayment");
+		Map<String, String> mapB = context.get("actualPayment");
+		if (mapA != null && mapB != null && mapA.size() == mapB.size()) {
+			for (Map.Entry<String, String> map : mapA.entrySet()) {
+				String keyFromFirstMap = map.getKey();
+				String valueFromFirstMap = map.getValue();
+				String valueFromSecondMap = mapB.get(keyFromFirstMap);
+				if (!valueFromFirstMap.equals(valueFromSecondMap)) {
+					Assert.assertEquals("Payment Differ",
+							keyFromFirstMap + "::::" + valueFromSecondMap,
+							keyFromFirstMap + "::::" + valueFromFirstMap);
+				}
+			}
 		}
+	}
+
+	public Map<String, String> createExpectedBalanceMap(String type) {
+		Map<String, String> expcetedPayments = new HashMap<String, String>();
+		switch (type) {
+		case "before Payment":
+			expcetedPayments.put("BillledPurchase", "10.00");
+			expcetedPayments.put("UnbllledPurchase", "0.00");
+			expcetedPayments.put("OutstandingPurchase", "10.00");
+			expcetedPayments.put("BillledPayments", "0.00");
+			expcetedPayments.put("UnbllledPayments", "0.00");
+			expcetedPayments.put("OutstandingPayments", "10.00");
+			break;
+		case "after Payment":
+			expcetedPayments.put("BillledPurchase", "10.00");
+			expcetedPayments.put("UnbllledPurchase", "0.00");
+			expcetedPayments.put("OutstandingPurchase", "0.00");
+			expcetedPayments.put("BillledPayments", "0.00");
+			expcetedPayments.put("UnbllledPayments", "10.00");
+			expcetedPayments.put("OutstandingPayments", "0.00");
+			break;
+		case "after Billing":
+			expcetedPayments.put("BillledPurchase", "0.00");
+			expcetedPayments.put("UnbllledPurchase", "0.00");
+			expcetedPayments.put("OutstandingPurchase", "0.00");
+			expcetedPayments.put("BillledPayments", "10.00");
+			expcetedPayments.put("UnbllledPayments", "0.00");
+			expcetedPayments.put("OutstandingPayments", "0.00");
+			break;
+
+		}
+		return expcetedPayments;
+	}
 }

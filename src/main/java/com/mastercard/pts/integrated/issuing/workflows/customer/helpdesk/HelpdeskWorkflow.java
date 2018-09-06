@@ -214,14 +214,18 @@ public class HelpdeskWorkflow {
 	}
 	
 	public Map<String,String> fetchCardBalanceAndCloseHelpdesk(Device device) {
-		Map<String, String> balanceMapBeforePayments;	
+		Map<String, String> actualbalanceMapPayments;	
 		HelpdeskGeneralPage helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
-		balanceMapBeforePayments = helpDeskPage.checkCreditBalances(device);
+		actualbalanceMapPayments = helpDeskPage.checkCreditBalances(device);
 		helpDeskPage.clickEndCall();
-		return balanceMapBeforePayments;		
+		return actualbalanceMapPayments;		
 	}
 	
-	public void compareBalancesAfterPayment(Payment payment){
-		helpDeskPage.checkAndCompareBalancePostPayment(payment);
+	public Map<String,String> createExpectedBalanceMap(String type) {
+		return helpDeskPage.createExpectedBalanceMap(type);
+	}
+	
+	public void compareBalancesPayment(){
+		helpDeskPage.checkAndCompareBalancePayment();
 	}
 }

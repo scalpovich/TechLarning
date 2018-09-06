@@ -113,25 +113,15 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:12 Verify User is able to make Payment of credit card through cash mode
+Scenario:12 Verify User is able to make Payment of credit card through cash mode after billing cycle
 Meta:
 @PaymentCash
 Given user is logged in institution
-When user verify Unbilled amount for Purchase category
-And user verify Billed amount for Purchase category
-And user verify Outstanding amount for Purchase category
-When user verify Unbilled amount for Payment category
-And user verify Billed amount for Payment category
-And user verify Outstanding amount for Payment category
-When user initiates cash payment
+When check card balance details through helpdesk before Payment
+And user initiates cash payment
 And "Pre-clearing" batch for credit is successful
 And "EOD-Credit" batch for credit is successful
-When user verify Unbilled amount for Purchase category
-And user verify Billed amount for Purchase category
-And user verify Outstanding amount for Purchase category
-When user verify Unbilled amount for Payment category
-And user verify Billed amount for Payment category
-And user verify Outstanding amount for Payment category
+When check card balance details through helpdesk $after Payment
 And user sign out from customer portal
 When update institution date to first of next month
 
@@ -143,10 +133,5 @@ When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
 And user processes Billing Process - Credit system internal batch for Credit
 And user run Statement Extract system internal batch
-When user verify Unbilled amount for Purchase category
-And user verify Billed amount for Purchase category
-And user verify Outstanding amount for Purchase category
-When user verify Unbilled amount for Payment category
-And user verify Billed amount for Payment category
-And user verify Outstanding amount for Payment category
-And user sign out from customer portal	
+When check card balance details through helpdesk $after Billing
+And user sign out from customer portal

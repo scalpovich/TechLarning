@@ -65,4 +65,14 @@ public class GenerateReversalPage extends AbstractBasePage {
 				WebElementUtils.elementToBeClickable(invalid),
 				WebElementUtils.elementToBeClickable(branchRefNumber));
 	}
+	
+	public void createReversalForTransaction() {
+		runWithinPopup(
+				"Edit Generate Reversal",
+				() -> {
+//				    clickReverseButton();
+//				    verifyRefundMessage();
+				    clickOkButton();
+				});
+	}
 }

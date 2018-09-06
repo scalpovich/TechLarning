@@ -5,9 +5,6 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CashPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.LocalChequePage;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.OutstationChequeCollectionPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.OutstationChequeProcessingPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
 @Component
@@ -18,6 +15,6 @@ public class CreditCardPaymentWorkFlows {
 
 	public void makeCashPayment(Payment cashPay) {
 		CashPage cashPage = navigator.navigateToPage(CashPage.class);
-		// cashPage.performCashPayment(cashPay);
+		 cashPage.performCashPayment(cashPay);
 	}
 }

@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AdjustmentTransaction;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
 import com.mastercard.pts.integrated.issuing.pages.customer.dispute.AbstractDisputePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -68,4 +69,6 @@ public class ReversalTransactionPage extends AbstractDisputePage {
 		clickSearchButton();
 		return new BigDecimal(getFirstRecordCellTextByColumnName("Transaction Amount"));
 	}
+	
+	
 }

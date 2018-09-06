@@ -4,10 +4,13 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.hamcrest.Matchers;
+import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AvailableBalance;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.AuthorizationSearchWorkflow;
 
@@ -32,6 +36,8 @@ public class AuthorizationSearchSteps {
 
 	@Autowired
 	private KeyValueProvider provider;
+	
+	private static final String INCORRECT_BALANCE_AFTER_REVERSAL= "Incorrect Balance After Reversal";
 	
 	@When("search $type authorization and verify $state status")
 	@Then("search $type authorization and verify $state status")
@@ -108,14 +114,17 @@ public class AuthorizationSearchSteps {
 
 	@Then("verify markup fee applied on transaction")
 	public void veriyMarkupFeeOnTransaction() {
+		DecimalFormat df = new DecimalFormat("0.00");
 		Device device = context.get(ContextConstants.DEVICE);
 		TransactionFeePlan txnFeePlan = TransactionFeePlan.getMarkUpFees(provider);
 		Double billingAmount = Double.parseDouble(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()).get(0));
 		Double markUpFee = billingAmount * Double.parseDouble(txnFeePlan.getMarkupFee()) / 100;
-		String markUpFees = String.valueOf(Math.round(markUpFee * 100.0) / 100.0);
-		Double markUpFeeTax = Double.parseDouble(markUpFees) * Double.parseDouble(txnFeePlan.getMarkupFeeTax()) / 100;
-		String markUpFeesTax = String.valueOf(Math.round(markUpFeeTax * 100.0) / 100.0);
-		assertThat(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()), Matchers.hasItems(markUpFees, markUpFeesTax));
+	    BigDecimal bd = new BigDecimal(markUpFee.toString());
+	    bd=bd.setScale(2, RoundingMode.HALF_UP);
+	    double markUpFees = bd.doubleValue();
+		Double markUpFeeTax = markUpFees * Double.parseDouble(txnFeePlan.getMarkupFeeTax()) / 100;
+		String markUpFeesTax = String.valueOf(Math.round(markUpFeeTax * 100.0)/100.0);
+		assertThat(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()), Matchers.hasItems(String.valueOf(markUpFees), markUpFeesTax));
 	}
 
 	@Then("verify markup rate fee applied on transaction")
@@ -141,10 +150,20 @@ public class AuthorizationSearchSteps {
 	}
 	
 	@When("user verifies available balance after transaction")
+	@Then("user verifies available balance after transaction")
 	public void validateAvailableBalanceAfterTransaction(){
 		BigDecimal availableBalanceBeforeTransaction =context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
 		AvailableBalance availBal = authorizationSearchWorkflow.getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(availableBalanceBeforeTransaction);
 		assertThat("Verify Available Balance", availableBalanceBeforeTransaction.subtract(availBal.getSum()), equalTo(availBal.getAvailableBal()));
 		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, availBal.getAvailableBal());
+	}
+	
+	@Given("user verify available balance afer reversal")
+	@When("user verify available balance afer reversal")
+	@Then("user verify available balance afer reversal")
+	public void userVerifyAvailableBalanceAfterReversal() {
+		Device device = context.get(ContextConstants.DEVICE);
+		assertThat(INCORRECT_BALANCE_AFTER_REVERSAL, authorizationSearchWorkflow.noteDownAvailableBalanceAfterReversal(device.getDeviceNumber()),
+				equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
 	}
 }
