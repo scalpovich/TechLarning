@@ -106,6 +106,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private static final String VISA_FAILURE_MESSAGE = "Visa Incomming Message for transaction did not come :: {}";
 	private static final String SIMULATOR_LICENSE_TYPE_17 = "17";
 	private static final String SIMULATOR_LICENSE_TYPE_18 = "18";
+	public static String STAGE_KEYS="00998 - Example ETEC1 - 0213";
 
 	@Autowired
 	private WebDriverProvider webProvider;
@@ -245,6 +246,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public void performOptimizedMasTransaction(String transaction, Transaction transactionData, Boolean sameCard) {
+		Device device = context.get(ContextConstants.DEVICE);
 		handleDialogs();
 		addBinRangeAndCurrencyDetailsBasedOnCardNumber(transactionData, transaction, sameCard);
 		activateMas(transaction);
@@ -1171,7 +1173,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void fillEmvChipKeySetDetails() {
 		if ("stagesa".equalsIgnoreCase(getEnv()))
-			selectMChipKeySet("00998 - Example ETEC1 - 0213");
+			selectMChipKeySet(STAGE_KEYS);
 		else if ("automation".equalsIgnoreCase(getEnv()) || "demo".equalsIgnoreCase(getEnv()))
 			if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains("18") || SimulatorConstantsData.MAS_LICENSE_TYPE.contains("16"))
 				selectMChipKeySet("00999 - Example ETEC1 - 0213");

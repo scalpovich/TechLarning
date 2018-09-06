@@ -94,6 +94,8 @@ public class TransactionSteps {
 	private static String FAILED = "Transaction failed! ";
 
 	private static String FAIL_MESSAGE = FAILED + " -  Result : ";
+	
+    private static String INVALID_KEYS = "(default) M/Chip Key Set from the related BIN range will be used";
 
 	public String getTransactionAmount() {
 		return transactionAmount;
@@ -156,6 +158,12 @@ public class TransactionSteps {
 		Transaction transactionData = generateMasTestDataForTransaction(transaction);
 
 		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
+	}
+	
+	@When("perform an $type transaction with wrong keys")
+	public void performTransactionWithWrongKeys(String transaction) {
+		TransactionWorkflow.STAGE_KEYS = INVALID_KEYS;
+		givenGenerateTestDataForOptimizedTransactionIsExecuted(transaction);
 	}
 
 	@When("user performs generate TestData for an optimized $transaction MAS transaction")

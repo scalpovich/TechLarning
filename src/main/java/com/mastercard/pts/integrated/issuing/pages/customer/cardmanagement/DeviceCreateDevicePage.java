@@ -3,8 +3,10 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -73,6 +75,8 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePhotoIndicator1:input:dropdowncomponent")
 	private MCWebElement photoIndicatorDDwn;
+	
+	private String programCodeDDwnBy = "view:programCode:input:dropdowncomponent";
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#corporateClientCode select")
 	private MCWebElement corporateClientCodeDDwn;
@@ -339,7 +343,12 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
 			SimulatorUtilities.wait(4000);
 			waitForWicket();
-			selectByVisibleText(programCodeDDwn, device.getProgramCode());
+			try{
+				selectByVisibleText(programCodeDDwn, device.getProgramCode());}
+				catch(StaleElementReferenceException e){
+					MCWebElement element = getMCWebElementFromWebElement(FindBy.NAME,programCodeDDwnBy);
+					selectByVisibleText(element, device.getProgramCode());
+				}
 			SimulatorUtilities.wait(2000);			
 		}
 		SimulatorUtilities.wait(1000);
