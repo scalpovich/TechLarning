@@ -1,8 +1,13 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -55,15 +60,22 @@ public class TransactionSearchPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement productTypeSelect;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=cardNumber]")
 	private MCWebElement cardNumberTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[1]/td/span[contains(text(),'DR')]/../../td[1]/span/a/span")
 	private MCWebElement retrieveARNLabel;
 
-	private String authorizationStatus;	
-	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr[@class='even']//span[contains(.,'FEE(Card fees)')]/../preceding-sibling::td[@class='rightalign']")
+	private MCWebElement membershipFees;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr[@class='odd']//span[contains(.,'FEE(Card fees)')]/../preceding-sibling::td[@class='rightalign']")
+	private MCWebElement joiningFees;
+
+	private String authorizationStatus;
+	List<String> joiningAndMembershipFees = new ArrayList();
+
 	public String searchTransactionWithDevice(String deviceNumber, TransactionSearch ts) {
 		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
 		WebElementUtils.enterText(cardNumberTxt, deviceNumber);
@@ -141,6 +153,24 @@ public class TransactionSearchPage extends AbstractBasePage {
 				break;
 		}
 		return getCellTextByColumnName(i, "Description");
+	}
+
+	public List<String> searchTransactionWithDeviceAndGetJoiningAndMemberShipFees(Device device, TransactionSearch ts) {
+		logger.info("Select product {}", device.getProductType());
+		WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
+		logger.info("Search transaction for device {}", device.getDeviceNumber());
+		WebElementUtils.enterText(searchDeviceTxt, device.getDeviceNumber());
+		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
+		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
+		waitForWicket();
+		WebElementUtils.elementToBeClickable(tranDateDDwn);
+		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
+		clickSearchButton();
+		waitForWicket();
+		joiningAndMembershipFees.add(joiningFees.getText());
+		joiningAndMembershipFees.add(membershipFees.getText());
+		return joiningAndMembershipFees;
+
 	}
 
 	public void verifyUiOperationStatus() {

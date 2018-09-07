@@ -1392,6 +1392,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
 		return page.searchTransactionWithDeviceAndGetStatus(device, ts);
 	}
+	public List<String> searchTransactionWithDeviceAndGetFees(Device device, TransactionSearch ts) {
+		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
+		return page.searchTransactionWithDeviceAndGetJoiningAndMemberShipFees(device, ts);
+
+	}
 
 	public String getDecimalisationTableValue(String text) {
 		return text.toUpperCase().replace("A", "0").replace("B", "1").replace("C", "2").replace("D", "3").replace("E", "4").replace("F", "5").replace("G", "6").replace("H", "7").replace("I", "8")

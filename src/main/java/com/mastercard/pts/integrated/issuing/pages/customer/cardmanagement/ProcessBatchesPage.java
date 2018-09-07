@@ -165,6 +165,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement binDDwn;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
+	private MCWebElement binDD;
+	
 	private static final int NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE=100;
 
 	public void selectBatchType(String option) {
@@ -383,6 +386,10 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 		else if ("Loyalty-Calc".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Loyalty Calculation [LYT_CALC]");
+		
+		else if ("Post-Maintenance".equalsIgnoreCase(batchName)) {
+			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Post Maintence Fee Batch [POST_MAINTENANCE_FEE]");
+		}
 	}
 
 	public String processDownloadBatch(ProcessBatches batch) {
@@ -576,13 +583,32 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		getVisaOutGoingFileName();
 		return batchStatus;
 	}
-	public void selectMethodToGenerateFile(String option)
-	{
-		waitForElementVisible(methodToGenerateFileDD);
+	public void selectMethodToGenerateFile(String option) {
 		WebElementUtils.selectDropDownByVisibleText(methodToGenerateFileDD, option);
 	}
-	public void selectBin(String option)
-	{
-		WebElementUtils.selectDropDownByVisibleText(binDDwn, option);
+	
+	public void selectBin(String option) {
+		WebElementUtils.selectDropDownByVisibleText(binDD, option);
+	}
+	
+		
+	public String processSystemInternalProcessingBatchPostMaintenence(ProcessBatches batch) {
+		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
+		Date todayDate;
+		Date dateFromUI;
+		batchStatus = null;
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "SYSTEM INTERNAL PROCESSING [B]");
+		selectInternalBatchType(batch.getBatchName());
+		try {
+			todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
+			dateFromUI = getDateFromUI(dateFormatter, batch);
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
+
+		submitAndVerifyBatch();
+
+		return batchStatus;
 	}
 }

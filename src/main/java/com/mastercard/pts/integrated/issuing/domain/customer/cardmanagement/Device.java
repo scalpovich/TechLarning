@@ -41,6 +41,8 @@ public class Device {
 	private static final String CREDIT_LIMIT = "CREDIT_LIMIT";
 	private static final String TRANSACTION_PASSWORD = "TRANSACTION_PASSWORD";
 	private static final String CURRENCY_OF_TRANSFER = "CURRENCY_OF_TRANSFER";
+	private static final String JOINING_FEES = "JOINING_FEES";
+	private static final String MEMBERSHIP_FEES = "MEMBERSHIP_FEES";
 	
 	private String currencyofTransfer;
 	private String currentTransPassword;
@@ -102,6 +104,8 @@ public class Device {
 	private String creditLimit;
   	private String legalID;
   	private String walletCurrency;
+  	private String joiningFees;
+	private String membershipFees;
 
 
 	public  static Device createWithProvider(KeyValueProvider provider) {
@@ -656,5 +660,21 @@ public class Device {
 
 	public void setTransactionPassword(String transactionPassword) {
 		this.transactionPassword = transactionPassword;
+	}
+	
+	public String getJoiningFees() {
+		return joiningFees;
+	}
+
+	public void setJoiningFees(String joiningFees) {
+		this.joiningFees = joiningFees;
+	}
+
+	public String getMembershipFees() {
+		return membershipFees;
+	}
+
+	public void setMemberShipFees(String membershipFees) {
+		this.membershipFees = membershipFees;
 	}
 }

@@ -57,6 +57,9 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.MCGFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramSetupWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.TransactionFeeWaiverPlanFlows;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.mastercard.pts.integrated.issuing.steps.customer.transaction.TransactionSteps;
 
 @Component
 public class ProgramSetupSteps {
@@ -141,6 +144,10 @@ public class ProgramSetupSteps {
 	private static final String PICTURE_CODE_FOR_DEVICE2 = "PICTURE_CODE_FOR_DEVICE2";
 
 	private static final String EMBOSSING_VENDOR_FOR_DEVICE2 = "EMBOSSING_VENDOR_FOR_DEVICE2";
+	
+	private static final Logger logger = LoggerFactory.getLogger(ProgramSetupSteps.class);
+
+	private static final String JOINING_FEE_PLAN = "JOINING_FEE_PLAN";
 
 	@When("prepaid $deviceType device is available with balance amount")
 	@Given("prepaid $deviceType device is available with balance amount")
@@ -574,7 +581,8 @@ public class ProgramSetupSteps {
 	public void whenUserFillsDevicePlan(String type) {
 		devicePlan = DevicePlan.createWithProviderForCredit(provider);		
 		devicePlan.setProductType(ProductType.fromShortName(type));
-		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlan.setBaseDeviceJoiningMemberShipPlan(provider.getString(JOINING_FEE_PLAN));
+		logger.info("Plan {}", provider.getString(JOINING_FEE_PLAN));
 		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
 		/*
 		 * Below two line code creates template count in DB, it reaches max count 999 on continuous script execution, fetching existing values through excel This can be used when need arises to
@@ -840,6 +848,7 @@ public class ProgramSetupSteps {
 		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
 		devicePlan.setProductType(ProductType.fromShortName(productType));
 		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
+		devicePlan.setBaseDeviceJoiningMemberShipPlan(provider.getString(JOINING_FEE_PLAN, deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode()));
 		if (Objects.nonNull(deviceJoiningAndMemberShipFeePlan)) {
 		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
 		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
@@ -878,6 +887,7 @@ public class ProgramSetupSteps {
 		devicePlan.setProductType(ProductType.fromShortName(productType));
 		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
 		devicePlan.setAssociation(provider.getString(INTERCHANGE));
+		devicePlan.setBaseDeviceJoiningMemberShipPlan(provider.getString(JOINING_FEE_PLAN, deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode()));
 		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
 		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());

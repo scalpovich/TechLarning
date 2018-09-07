@@ -3,16 +3,19 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequest;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -85,7 +88,9 @@ public class DeviceProductionBulkDeviceRequestPage extends AbstractBasePage {
 		clickAddNewButton();
 		runWithinPopup("Add Bulk Device Request", () -> {
 			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, request.getProductType());
+			SimulatorUtilities.wait(1100);
 			WebElementUtils.selectDropDownByVisibleText(branchDDwn,	request.getBranch());
+			SimulatorUtilities.wait(1100);
 			WebElementUtils.selectDropDownByVisibleText(programDDwn, request.getProgram());
 			if (corporateClientCodeDDwn.isEnabled())
 				WebElementUtils.selectDropDownByVisibleText(corporateClientCodeDDwn, request.getCorporateClientCode());				

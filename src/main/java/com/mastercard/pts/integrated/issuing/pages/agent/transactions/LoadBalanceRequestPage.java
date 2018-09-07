@@ -97,7 +97,7 @@ public class LoadBalanceRequestPage extends TransactionsAbstractPage {
 						String transactionAmountCSS = "#sourceAmount_"+j;
 						driver().findElement(By.cssSelector(transactionAmountCSS)).sendKeys(data[1].trim());
 						String transactionCurrencyCSS = "#sourceCurrency_"+j;
-						WebElementUtils.retryUntilNoErrors(() -> new Select(driver().findElement(By.cssSelector(transactionCurrencyCSS))).selectByVisibleText(data[2].trim()));
+						WebElementUtils.retryUntilNoErrors(() -> new Select(driver().findElement(By.cssSelector(transactionCurrencyCSS))).selectByVisibleText(data[0].trim()));
 						break;
 					}
 				}
