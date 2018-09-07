@@ -8,6 +8,7 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -166,7 +167,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Existing Client Code')]")
 	private MCWebElement existingClientLabel;
 	
-	
+	private String programCodeDDwnBy = "view:programCode:input:dropdowncomponent";
 	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
 	}
@@ -341,7 +342,12 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		}else{
 			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
 			SimulatorUtilities.wait(4000);
-			selectByVisibleText(programCodeDDwn, device.getProgramCode());
+			try{
+				selectByVisibleText(programCodeDDwn, device.getProgramCode());}
+				catch(StaleElementReferenceException e){
+					MCWebElement element = getMCWebElementFromWebElement(FindBy.NAME,programCodeDDwnBy);
+					selectByVisibleText(element, device.getProgramCode());
+				} 
 			SimulatorUtilities.wait(2000);			
 		}
 		SimulatorUtilities.wait(1000);
