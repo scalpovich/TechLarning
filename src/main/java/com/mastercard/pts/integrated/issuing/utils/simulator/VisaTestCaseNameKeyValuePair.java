@@ -40,6 +40,24 @@ public class VisaTestCaseNameKeyValuePair {
 		visaTestCaseDetailsKeyValuePair.put("POS-Magstripe-egilibility-Inquiry_with_Pin", "Case 2: Eligibility Inquiry");
 		visaTestCaseDetailsKeyValuePair.put("POS-Retail-AccountFund", "AccountFunding");	
 		visaTestCaseDetailsKeyValuePair.put("POS-Retail-PreAuthCompletion_with_Pin", "PREAUTHCOMPLETION");	
+			
+		//International
+			
+		visaTestCaseDetailsKeyValuePair.put("INT_POS_Retail_Magstripe_cash_withdrawal_with_Pin", "Case 1: Cash Withdrawal");	
+		visaTestCaseDetailsKeyValuePair.put("INT_POS-Magstripe-balance-and-egilibility-Inquiry_with_Pin", "Case 1: Balance Inquiry");
+		visaTestCaseDetailsKeyValuePair.put("INT_POS-Magstripe-QuasiCash_with_Pin", "2 - Authorization - Quasi Cash");				
+		visaTestCaseDetailsKeyValuePair.put("INT_POS-Retail-Magstripe-purchase_with_Pin", "Case 1-Purchase Transaction With Pin");
+		visaTestCaseDetailsKeyValuePair.put("INT_POS-Retail-Magstripe-returns-of-goods_with_Pin", "Case 1- Returns Of Goods");
+		visaTestCaseDetailsKeyValuePair.put("INT_POS-Magstripe-CashAdvance_with_Pin", "1 - Authorization - Cash Advance");
+		visaTestCaseDetailsKeyValuePair.put("INT_POS-Retail-Magstripe-cashRev_with_Pin", "Case 2: Cashwithdrawal Reversal");
+		visaTestCaseDetailsKeyValuePair.put("INT_POS-Retail-Magstripe-cashPrev_with_Pin", "Case 3: Cashwithdrawl Partial Reversal");
+		visaTestCaseDetailsKeyValuePair.put("INT_POS-Retail-Magstripe-purchaseRev_with_Pin", "Case 4- Purchase Reversal Without Pin");	
+		visaTestCaseDetailsKeyValuePair.put("INT_POS-Retail-PreAuth_with_Pin", "PREAUTH");
+		visaTestCaseDetailsKeyValuePair.put("INT_POS-Retail-Refund_with_Pin", "Refund");
+		visaTestCaseDetailsKeyValuePair.put("INT_POS-Retail-RefundReversal_with_Pin", "RefundReversal");	
+		visaTestCaseDetailsKeyValuePair.put("INT_POS-Magstripe-egilibility-Inquiry_with_Pin", "Case 2: Eligibility Inquiry");
+		visaTestCaseDetailsKeyValuePair.put("INT_POS-Retail-PreAuthCompletion_with_Pin", "PREAUTHCOMPLETION");	
+		
 	}
 
 	private void setFileNameToUpload() {
@@ -70,6 +88,24 @@ public class VisaTestCaseNameKeyValuePair {
 		visaTestDataFileToSelectKeyValuePair.put("POS-Magstripe-egilibility-Inquiry_with_Pin", "POS-Magstripe-egilibility-Inquiry_with_Pin");		
 		visaTestDataFileToSelectKeyValuePair.put("POS-Retail-AccountFund", "POS-Retail-AccountFund");
 		visaTestDataFileToSelectKeyValuePair.put("POS-Retail-PreAuthCompletion_with_Pin", "POS-Retail-PreAuthCompletion_with_Pin");
+		
+		//International
+		
+		visaTestDataFileToSelectKeyValuePair.put("INT_POS_Retail_Magstripe_cash_withdrawal_with_Pin", "INT_POS_Retail_Magstripe_cash_withdrawal_with_Pin");
+		visaTestDataFileToSelectKeyValuePair.put("INT_POS-Magstripe-balance-and-egilibility-Inquiry_with_Pin", "INT_POS-Magstripe-balance-and-egilibility-Inquiry_with_Pin");
+		visaTestDataFileToSelectKeyValuePair.put("INT_POS-Magstripe-CashAdvance_with_Pin", "INT_POS-Magstripe-CashAdvance_with_Pin");	
+		visaTestDataFileToSelectKeyValuePair.put("INT_POS-Magstripe-egilibility-Inquiry_with_Pin", "INT_POS-Magstripe-egilibility-Inquiry_with_Pin");		
+		visaTestDataFileToSelectKeyValuePair.put("INT_POS-Magstripe-QuasiCash_with_Pin", "INT_POS-Magstripe-QuasiCash_with_Pin");
+		visaTestDataFileToSelectKeyValuePair.put("INT_POS-Retail-Magstripe-cashRev_with_Pin", "INT_POS-Retail-Magstripe-cashRev_with_Pin");
+		visaTestDataFileToSelectKeyValuePair.put("INT_POS-Retail-Magstripe-cashPrev_with_Pin", "INT_POS-Retail-Magstripe-cashPrev_with_Pin");
+		visaTestDataFileToSelectKeyValuePair.put("INT_POS-Retail-Magstripe-purchase_with_Pin", "INT_POS-Retail-Magstripe-purchase_with_Pin");
+		visaTestDataFileToSelectKeyValuePair.put("INT_POS-Retail-Magstripe-purchaseRev_with_Pin", "INT_POS-Retail-Magstripe-purchaseRev_with_Pin");
+		visaTestDataFileToSelectKeyValuePair.put("INT_POS-Retail-Magstripe-returns-of-goods_with_Pin", "INT_POS-Retail-Magstripe-returns-of-goods_with_Pin");			
+		visaTestDataFileToSelectKeyValuePair.put("INT_POS-Retail-PreAuth_with_Pin", "INT_POS-Retail-PreAuth_with_Pin");
+		visaTestDataFileToSelectKeyValuePair.put("INT_POS-Retail-PreAuthCompletion_with_Pin", "INT_POS-Retail-PreAuthCompletion_with_Pin");
+		visaTestDataFileToSelectKeyValuePair.put("INT_POS-Retail-Refund_with_Pin", "INT_POS-Retail-Refund_with_Pin");
+		visaTestDataFileToSelectKeyValuePair.put("INT_POS-Retail-RefundReversal_with_Pin", "INT_POS-Retail-RefundReversal_with_Pin");
+
 	}
 
 	public String getVisaTestCaseToSelect(String key) {
