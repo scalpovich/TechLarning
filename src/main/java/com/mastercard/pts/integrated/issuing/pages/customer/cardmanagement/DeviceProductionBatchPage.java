@@ -27,7 +27,7 @@ public class DeviceProductionBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
 	private MCWebElement deviceNumberTxt;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:inputTextField")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Batch Number')]//following-sibling::td[2]//input")
 	private MCWebElement batchNumberTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Product Type')]//following-sibling::td[2]//select")
