@@ -27,15 +27,15 @@ public class DeviceProductionBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
 	private MCWebElement deviceNumberTxt;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:inputTextField")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "input[fld_fqn='batchNumber']")
 	private MCWebElement batchNumberTxt;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:0:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "//select[@class='mandatoryFlag selectf']")
 	private MCWebElement productTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:1:componentPanel:input:dropdowncomponent")
 	private MCWebElement actionCodeDDwn;
-
+	
 	public void processDeviceProductionBatch(DeviceProductionBatch batch) {
 		logger.info("Device-Production Batch: {}", batch.getBatchNumber());
 		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
