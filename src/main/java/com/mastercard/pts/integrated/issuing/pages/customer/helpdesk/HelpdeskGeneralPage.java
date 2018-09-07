@@ -43,6 +43,8 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String TABLE_XPATH = "//div[@class='TransScrollY']//table[@class='dataview']//tr";
+	private static final String OPERATION="//select[@name='udf1:input:dropdowncomponent']";
+	private static final String ROWCOUNT_REMITTANCE = "//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr";
 	private static final String COLUMN_STATUS = "Status";
 	private static final String CURRENT_AVAILABLE_BALANCE = "Current Available Balance";
 	private static final String WALLET_NUMBER = "Wallet Number";
@@ -66,7 +68,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String CLOSURE_PERIOD = "Estimated Closure Period(Days:HH:MM):";
 	private static final String PRIORITY_REQUEST = "Priority Request:";
 	private static final String AVAILABLE_BALANCE = "AVAILABLE_BALANCE";
-	private static final String OPERATION="//select[@name='udf1:input:dropdowncomponent']";
+	
 
 	private static String ERROR_MESSAGE = "This field is required.";
 
@@ -595,7 +597,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		editDeviceLink.click();
 		clickWalletDetailsTab();
 		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
-		int rowCount = driver().findElements(By.xpath("//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr")).size();
+		int rowCount = driver().findElements(By.xpath(ROWCOUNT_REMITTANCE)).size();
 		values = helpdeskGeneral.getCurrencyWithPriority().trim().split(",");
 		for (int i = 0; i < values.length ; i++){
 			for (int j = 1; j <= rowCount; j++){
