@@ -904,25 +904,21 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	}
 
-	public boolean verifyBalanceNotChanged(String beforeLoadBalanceInformation, String afterLoadBalanceInformation){
+	public boolean verifyBalanceNotChanged(String beforeLoadBalanceInformation, String afterLoadBalanceInformation) {
 		logger.info("Verify Wallet Balance Information for Device Not Changed");
 
 		String[] beforeLoadBalanceData = beforeLoadBalanceInformation.trim().split(",");
 		String[] afterLoadBalanceData = afterLoadBalanceInformation.trim().split(",");
 
 		int count = 0;
-		for (int i = 0; i < beforeLoadBalanceData.length; i++)
-		{
+		for (int i = 0; i < beforeLoadBalanceData.length; i++){
 			String[] beforeLoadDataValues = beforeLoadBalanceData[i].trim().split(":");
 			String currencyName = beforeLoadDataValues[0];
-			for (int j = 0 ; j < afterLoadBalanceData.length; j++)
-			{
+			for (int j = 0 ; j < afterLoadBalanceData.length; j++){
 				String[] beforeLoadBalanceDataValues = beforeLoadBalanceData[j].trim().split(":");
 				String[] afterLoadBalanceDataValues = afterLoadBalanceData[j].trim().split(":");
-				if (currencyName.equalsIgnoreCase(beforeLoadBalanceDataValues[0]))
-				{
-					if ( new BigDecimal(beforeLoadBalanceDataValues[1]).equals(new BigDecimal(afterLoadBalanceDataValues[1])))
-					{
+				if (currencyName.equalsIgnoreCase(beforeLoadBalanceDataValues[0])){
+					if ( new BigDecimal(beforeLoadBalanceDataValues[1]).equals(new BigDecimal(afterLoadBalanceDataValues[1]))){
 						count++;
 						break;
 					}
@@ -932,24 +928,20 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return (count == beforeLoadBalanceData.length) ? true : false;
 	}
 
-	public boolean verifyInitialLoadBalanceUpdatedCorreclty(String transactionDetailsFromExcel, String afterLoadBalanceInformation){
+	public boolean verifyInitialLoadBalanceUpdatedCorreclty(String transactionDetailsFromExcel, String afterLoadBalanceInformation) {
 		logger.info("Verify Initial Load Wallet Balance Information for Device");
 
 		String[] transactionData = transactionDetailsFromExcel.trim().split(",");
 		String[] afterLoadBalanceData = afterLoadBalanceInformation.trim().split(",");
 
 		int count = 0;
-		for (int i = 0; i < transactionData.length; i++)
-		{
+		for (int i = 0; i < transactionData.length; i++){
 			String[] transactionDataValues = transactionData[i].trim().split(":");
 			String currencyName = transactionDataValues[0];
-			for (int j = 0 ; j < afterLoadBalanceData.length; j++)
-			{
+			for (int j = 0 ; j < afterLoadBalanceData.length; j++){
 				String[] afterLoadBalanceDataValues = afterLoadBalanceData[j].trim().split(":");
-				if (currencyName.equalsIgnoreCase(afterLoadBalanceDataValues[0]))
-				{
-					if (new BigDecimal(transactionDataValues[1]).equals(new BigDecimal(afterLoadBalanceDataValues[1])))
-					{
+				if (currencyName.equalsIgnoreCase(afterLoadBalanceDataValues[0])){
+					if (new BigDecimal(transactionDataValues[1]).equals(new BigDecimal(afterLoadBalanceDataValues[1]))){
 						count++;
 						break;
 					}
@@ -964,13 +956,13 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		verifySearchButton("Search");
 	}
 
-	public void selectWalleFromTransfer(String walletNumber){
+	public void selectWalleFromTransfer(String walletNumber) {
 		waitForElementVisible(Element("//td[@id='fromCurrencyDataTable']"));
 		waitForWicket();
 		clickWhenClickable(Element("//td[@id='fromCurrencyDataTable']//./td/span[text()='"+walletNumber+"']//..//..//td//input"));
 	}
 
-	public void selectWalleToTransfer(String walletNumber){
+	public void selectWalleToTransfer(String walletNumber) {
 		waitForElementVisible(Element("//td[@id='toCurrencyDataTable']"));
 		waitForWicket();
 		clickWhenClickable(Element("//td[@id='toCurrencyDataTable']//./td/span[text()='"+walletNumber+"']//..//..//td//input"));
@@ -980,21 +972,21 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickWhenClickable(saveBtn);
 	}
 
-	public void selectDeviceToTransferFunds(String deviceToTransfer){
+	public void selectDeviceToTransferFunds(String deviceToTransfer) {
 		WebElementUtils.waitForWicket(driver());
 		WebElementUtils.elementToBeClickable(toDeviceDropDn);
 		WebElementUtils.selectDropDownByValue(toDeviceDropDn, deviceToTransfer);
 	}
 
-	public void enterAmountToDebit(String amountToTransfer){
+	public void enterAmountToDebit(String amountToTransfer) {
 		WebElementUtils.enterText(debitAmtInpt, amountToTransfer);
 	}
 
-	public void enterNoteForTransaction(String transactionNote){
+	public void enterNoteForTransaction(String transactionNote) {
 		WebElementUtils.enterText(transactionNotesInpt, transactionNote);
 	}
 
-	public String verifyTheWalletToWalletTransactionStatus(){
+	public String verifyTheWalletToWalletTransactionStatus() {
 		return getTextFromPage(walletToWalletConfirMsg);
 	}
 
@@ -1016,7 +1008,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 	public boolean serviceRequestCardholderLoginPassword(String clientID) {
-		logger.info("Reset Cardholder Login Password [459] for {}", clientID );
+		logger.info("Reset Cardholder Login Password [459] for {}", clientID);
 		selectServiceCodeByValue(SERV_CODE_LOGIN_PASSWORD);
 		clickGoButton();
 		runWithinPopup(LABEL_LOGIN_PASSWORD, () -> {
@@ -1027,7 +1019,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				logger.info("Reset Login password service request is completed for {}", clientID);
 				clickOKButtonPopup();
 				serviceStatus = true;
-			}else{
+			} else {
 				logger.info("Reset Login password service request is not completed for {}", clientID);
 				clickCancelButtonPopup();
 			}			
@@ -1046,11 +1038,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			enterNotes("Servic_Request for " + clientID);
 			clickSaveButton();
 
-			if(verifyServiceRequestStatus().contains(ConstantData.RECORD_PROCESSED_SUCCESSFULLY)){
+			if (verifyServiceRequestStatus().contains(ConstantData.RECORD_PROCESSED_SUCCESSFULLY)){
 				logger.info("Reset Transaction password service request is completed for {}", clientID);
 				clickOKButtonPopup();
 				serviceStatus = true;
-			}else{
+			} else {
 				logger.info("Reset Transaction password service request is not completed for {}", clientID);
 				clickCancelButtonPopup();
 			}
@@ -1060,15 +1052,15 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return serviceStatus;
 	}
 
-	public String verifyServiceRequestStatus(){		
+	public String verifyServiceRequestStatus() {		
 		return getTextFromPage(responseMessage);
 	}
 
-	public List<String> errorMessage(){		
+	public List<String> errorMessage() {		
 		return getListOfElements(ERROR_MESSAGE_XPATH);
 	}
 
-	public boolean verifyFieldPresence(String field){
+	public boolean verifyFieldPresence(String field) {
 		try{
 			Element(String.format(".//form[@id='id1a4']//table[@class='modelFormClass'][1]//*[text() [contains(.,'%s:')]]",field));
 			return true;
@@ -1078,25 +1070,24 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		}
 	}
 
-	public boolean verifyCallReferenceNo(){
-		return verifyFieldPresence(CALL_REFERENCE_NUMBER)&&StringUtils.isNumeric(getTextFromPage(callReferenceNumberLbl));
+	public boolean verifyCallReferenceNo() {
+		return verifyFieldPresence(CALL_REFERENCE_NUMBER) && StringUtils.isNumeric(getTextFromPage(callReferenceNumberLbl));
 
 	}
 
-	public boolean verifyServiceDescription(HelpdeskGeneral helpdeskGeneral){
-		return verifyFieldPresence(SERVICE_DESCRIPTION)&&getTextFromPage(serviceDescriptionLbl).equalsIgnoreCase(String.format(helpdeskGeneral.getServiceDescription()+" [%s]",helpdeskGeneral.getServiceCode()));
+	public boolean verifyServiceDescription(HelpdeskGeneral helpdeskGeneral) {
+		return verifyFieldPresence(SERVICE_DESCRIPTION) && getTextFromPage(serviceDescriptionLbl).equalsIgnoreCase(String.format(helpdeskGeneral.getServiceDescription()+" [%s]",helpdeskGeneral.getServiceCode()));
 	}
 
-	public boolean verifyDeviceNumber(HelpdeskGeneral helpdeskGeneral){
-		return verifyFieldPresence(DEVICE_NUMBER)&&getTextFromPage(deviceNumberLbl).equalsIgnoreCase(helpdeskGeneral.getDeviceNumber());
+	public boolean verifyDeviceNumber(HelpdeskGeneral helpdeskGeneral) {
+		return verifyFieldPresence(DEVICE_NUMBER) && getTextFromPage(deviceNumberLbl).equalsIgnoreCase(helpdeskGeneral.getDeviceNumber());
 	}
 
 
 	public boolean verifyRequestDate() {
 		if (verifyFieldPresence(REQUEST_DATE)) {
 			try {
-				LocalDate.parse(getTextFromPage(requestDateLbl),
-						DateTimeFormatter.ofPattern("dd/MM/uuuu kk:mm:ss"));
+				LocalDate.parse(getTextFromPage(requestDateLbl), DateTimeFormatter.ofPattern("dd/MM/uuuu kk:mm:ss"));
 				return true;
 			} catch (DateTimeParseException e) {
 				return false;
@@ -1105,33 +1096,32 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			return false;
 	}
 
-	public boolean verifyLoggedBy(){
+	public boolean verifyLoggedBy() {
 		return verifyFieldPresence(LOGGED_BY); 
 	}
 
-	public boolean verifyWalletNumber(HelpdeskGeneral general){
-		return verifyFieldPresence(WALLET_NUMBER)&&getTextFromPage(walletNumberLbl).equalsIgnoreCase(general.getDefaultWalletNumber());
+	public boolean verifyWalletNumber(HelpdeskGeneral general) {
+		return verifyFieldPresence(WALLET_NUMBER) && getTextFromPage(walletNumberLbl).equalsIgnoreCase(general.getDefaultWalletNumber());
 	}
 
 	public boolean verifyClosureDate(){
-		if(verifyFieldPresence(CLOSURE_DATE)){
-			try{
+		if (verifyFieldPresence(CLOSURE_DATE)){
+			try {
 				LocalDate.parse(getTextFromPage(closureDateLbl), DateTimeFormatter.ofPattern("dd/MM/uuuu kk:mm:ss"));
 				return true;
 			}
-			catch(DateTimeParseException e){
+			catch (DateTimeParseException e) {
 				return false;
 			}
-		}
-		else
+		} else
 			return false;
 	}
 
-	public boolean verifyClosedBy(){
+	public boolean verifyClosedBy() {
 		return verifyFieldPresence(LOGGED_BY);
 	}
 
-	public  boolean verifyEstimatedClosurePeriod(){
+	public  boolean verifyEstimatedClosurePeriod() {
 		return verifyFieldPresence(CLOSURE_PERIOD);
 	}
 
@@ -1139,8 +1129,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		if (verifyFieldPresence(PRIORITY_REQUEST)){
 			ClickCheckBox(priorityRequestChkBx,true);
 			return true;
-		}
-		else
+		} else
 			return false;		
 	}
 
@@ -1154,11 +1143,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			enterNotes("Servic_Request for registered email ID" );
 			clickSaveButton();
 
-			if(verifyServiceRequestStatus().contains(ConstantData.RECORD_PROCESSED_SUCCESSFULLY)){
+			if (verifyServiceRequestStatus().contains(ConstantData.RECORD_PROCESSED_SUCCESSFULLY)){
 				logger.info("Registered Email ID service request processed successfully");
 				clickOKButtonPopup();
 				serviceStatus = true;
-			}else{
+			} else {
 				logger.info("Registered Email ID service request rejected");
 				clickCancelButtonPopup();
 			}
@@ -1167,7 +1156,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return serviceStatus;
 	}
 
-	public boolean changeRegisteredMobileNo(HelpdeskGeneral general) { 
+	public boolean changeRegisteredMobileNo(HelpdeskGeneral general) {
 		logger.info("change Registered Mobile No");
 
 		selectServiceCodeByText(CHANGE_REGISTERED_MOBILE_NO);
@@ -1192,7 +1181,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return serviceStatus;
 	}
 
-	public boolean validateRequiredFields(HelpdeskGeneral general){
+	public boolean validateRequiredFields(HelpdeskGeneral general) {
 		logger.info("Validate required fields in change Registered Email ID Screen");
 
 		selectServiceCodeByText(CHANGE_REGISTERED_EMAIL_ID);
@@ -1217,10 +1206,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
 		clickWhenClickable(currentStatusAndLimitTab);			
 		creditLimit = new BigDecimal(creditLimitLable.getText());
-		logger.info("Credit limit noted down : {} ",creditLimit);
+		logger.info("Credit limit noted down : {} ", creditLimit);
 		clickEndCall();
 		return creditLimit;				
-
 	}
 
 	public LinkedList<BigDecimal> noteDownCreditLimit(String type){	
@@ -1236,7 +1224,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		logger.info("Credit limit noted down : {} ",creditLimitAccount);
 		clickEndCall();
 		return creditLimit;				
-
 	}
 
 	public BigDecimal noteDownAvailableClient(String type){	
@@ -1247,7 +1234,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		logger.info("Credit limit noted down : {} ",creditLimitClient);
 		clickEndCall();
 		return creditLimitClient;				
-
 	}
 
 	public BigDecimal noteDownClient(String type){	
@@ -1258,7 +1244,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		logger.info("Credit limit noted down : {} ",creditClient);
 		clickEndCall();
 		return creditClient;				
-
 	}
 
 	public BigDecimal noteDownAccount(String type){	
@@ -1269,7 +1254,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		logger.info("Credit limit noted down : {} ",creditAccount);
 		clickEndCall();
 		return creditAccount;				
-
 	}
 
 	public BigDecimal noteDownCard(String type){	
@@ -1282,8 +1266,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return creditCard;				
 
 	}
-
-
 
 	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
 		selectServiceCode(helpdeskGeneral.getServiceCode());
