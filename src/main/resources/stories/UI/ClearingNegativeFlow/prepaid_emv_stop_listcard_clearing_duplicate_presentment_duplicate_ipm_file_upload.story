@@ -25,10 +25,6 @@ When a new device was created
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
-And user has wallet number information for prepaid device
-And user performs adjustment transaction
-And device has "normal" status
-And user activates device through helpdesk
 Then user sign out from customer portal
 
 Scenario: 1.2 Pin Generation
