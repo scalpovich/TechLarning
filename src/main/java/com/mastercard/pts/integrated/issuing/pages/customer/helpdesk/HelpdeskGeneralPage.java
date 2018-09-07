@@ -335,19 +335,19 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.enterText(timeInHoursTxt, timeInHours);
 	}
 
-	public String getDeviceNumberStatus(){
+	public String getDeviceNumberStatus() {
 		return getFirstRecordCellTextByColumnName(COLUMN_STATUS);
 	}
 
-	public void selectServiceCode(String serviceCode){
+	public void selectServiceCode(String serviceCode) {
 		WebElementUtils.selectDropDownByVisibleText(serviceCodeDdwn, serviceCode);
 	}
 
-	public void selectCreditLimitType(String limittype){
+	public void selectCreditLimitType(String limittype) {
 		WebElementUtils.selectDropDownByVisibleText(selectLimitType, limittype);
 	}
 
-	public void storeSaleDate(){
+	public void storeSaleDate() {
 		saleDate = new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(saleDateTxt)).getText();
 	}
 
@@ -355,14 +355,14 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return saleDate;
 	}
 
-	public void selectServiceCodeByValue(String serviceCode){
+	public void selectServiceCodeByValue(String serviceCode) {
 		WebElementUtils.selectDropDownByValue(serviceCodeDdwn, serviceCode);
 	}
 
-	public void selectServiceCodeByText(String serviceText){
+	public void selectServiceCodeByText(String serviceText) {
 		selectByVisibleText(serviceCodeDdwn, serviceText);
 	}
-	public void storeActivationDate(){
+	public void storeActivationDate() {
 		activationDate = new WebDriverWait(driver(), timeoutInSec)
 		.until(WebElementUtils.visibilityOf(activationDateTxt)).getText();
 	}
@@ -371,7 +371,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return activationDate;
 	}
 
-	public void storeDeliveryDate(){
+	public void storeDeliveryDate() {
 		deliveryDate = new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(deliveryDateTxt)).getText();
 	}
 
@@ -391,40 +391,40 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickWhenClickableDoNotWaitForWicket(goBtn);
 	}
 
-	public void clickCustomerCareEditLink(){
+	public void clickCustomerCareEditLink() {
 		clickFirstRowEditLink();
 	}
 
-	public void enterNotes(String notes){
+	public void enterNotes(String notes) {
 		WebElementUtils.enterText(notesTxt, notes);
 	}
 
-	public void enterClientCreditLimit(String clientcreditlimit){
+	public void enterClientCreditLimit(String clientcreditlimit) {
 		WebElementUtils.enterText(creditClientLimit, clientcreditlimit);
 	}
 
-	public void enterAccountCreditLimit(String accountcreditlimit){
+	public void enterAccountCreditLimit(String accountcreditlimit) {
 		WebElementUtils.enterText(creditAccountLimit, accountcreditlimit);
 	}
 
-	public void enterNewCreditLimit(String newcreditlimit){
+	public void enterNewCreditLimit(String newcreditlimit) {
 		WebElementUtils.enterText(newCreditLimit, newcreditlimit);
 	}
 
-	public void selectLimitType(String type){
+	public void selectLimitType(String type) {
 		WebElementUtils.selectDropDownByVisibleText(selectLimitType, type);
 	}
 
-	public void enterEmailID(HelpdeskGeneral general){
+	public void enterEmailID(HelpdeskGeneral general) {
 		enterValueinTextBox(emailIDInptTxt,general.getNewEmailID());
 	}
 
-	public void enterMobileNo(HelpdeskGeneral general){
+	public void enterMobileNo(HelpdeskGeneral general) {
 		SelectDropDownByValue(isdCodeDdwn,general.getNewMobileISD());
 		enterValueinTextBox(mobileInptTxt,general.getNewMobileNo());
 	}
 
-	public boolean validateMandatoryFields(int mandatoryFields){
+	public boolean validateMandatoryFields(int mandatoryFields) {
 		clickSaveButton();
 		clickSaveButton();
 		if(errorMessage().size()== mandatoryFields && errorMessage().get(mandatoryFields-1).equalsIgnoreCase(ERROR_MESSAGE))
@@ -433,33 +433,26 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			return false;
 	}
 
-	public String activationMessage(){
-		return new WebDriverWait(driver(), timeoutInSec)
-		.until(WebElementUtils.visibilityOf(activationMessage)).getText();
+	public String activationMessage() {
+		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(activationMessage)).getText();
 	}
 
-	public void clickOKButtonPopup(){
+	public void clickOKButtonPopup() {
 		SimulatorUtilities.wait(5000);
-		new WebDriverWait(driver(), timeoutInSec)
-		.until(WebElementUtils.elementToBeClickable(okBtn))
-		.click();
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(okBtn)).click();
 	}
 
-	public void clickCancelButtonPopup(){
+	public void clickCancelButtonPopup() {
 		SimulatorUtilities.wait(5000);
-		new WebDriverWait(driver(), timeoutInSec)
-		.until(WebElementUtils.elementToBeClickable(cancelBtn))
-		.click();
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(cancelBtn)).click();
 	}
 
 	public void clickEndCall() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
-		new WebDriverWait(driver(), timeoutInSec)
-		.until(WebElementUtils.elementToBeClickable(endCallBtn))
-		.click();
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(endCallBtn)).click();
 	}
 
-	public void setActiveDeviceNumberByCardPackId(HelpdeskGeneral helpdeskGeneral, String registeredType){
+	public void setActiveDeviceNumberByCardPackId(HelpdeskGeneral helpdeskGeneral, String registeredType) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, helpdeskGeneral.getProductType());
 		WebElementUtils.enterText(cardPackIdTxt, helpdeskGeneral.getCardPackId());
 		clickSearchButton();
@@ -468,10 +461,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			status = DeviceStatus.NORMAL;
 		else if(NOT_REGISTERED.equalsIgnoreCase(registeredType))
 			status = DeviceStatus.READY_FOR_SALE;
-		for (int i=1; i <= getRowCountFromTable(); i++)
-		{
-			if (getCellTextByColumnName(i,COLUMN_STATUS).equalsIgnoreCase(status))
-			{
+		for (int i=1; i <= getRowCountFromTable(); i++){
+			if (getCellTextByColumnName(i,COLUMN_STATUS).equalsIgnoreCase(status)){
 				activeDeviceNumber = getCellTextByColumnName(i,"Device Number");
 				break;
 			}
@@ -489,7 +480,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return getFirstRecordCellTextByColumnName(COLUMN_STATUS);
 	}
 
-	public boolean verifyTransactionOfDevice(Device device){
+	public boolean verifyTransactionOfDevice(Device device) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
@@ -562,15 +553,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(1000);
 		int rowCount = driver().findElements(By.xpath(TABLE_XPATH)).size();
 		values = lst.trim().split(",");
-		for (int i = 0; i < values.length ; i++)
-		{
-			for (int j = 2; j <= rowCount; j++)
-			{
+		for (int i = 0; i < values.length ; i++){
+			for (int j = 2; j <= rowCount; j++){
 				String[] data = values[i].trim().split(":");
 				String currencyName = data[0].trim();
 				String priority = data[1].trim();
-				if (driver().findElement(By.xpath(TABLE_XPATH+"["+j+"]/td[1]")).getText().equalsIgnoreCase(currencyName))
-				{
+				if (driver().findElement(By.xpath(TABLE_XPATH+"["+j+"]/td[1]")).getText().equalsIgnoreCase(currencyName)){
 					WebElement element = driver().findElement(By.xpath(TABLE_XPATH+"["+j+"]/td[2]//select"));
 					WebElementUtils.retryUntilNoErrors(() -> new Select(element).selectByVisibleText(priority));
 					break;
@@ -609,14 +597,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
 		int rowCount = driver().findElements(By.xpath("//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr")).size();
 		values = helpdeskGeneral.getCurrencyWithPriority().trim().split(",");
-		for (int i = 0; i < values.length ; i++)
-		{
-			for (int j = 1; j <= rowCount; j++)
-			{
+		for (int i = 0; i < values.length ; i++){
+			for (int j = 1; j <= rowCount; j++){
 				String[] data = values[i].trim().split(":");
 				String currencyName = data[0].trim();
-				if (getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency").equalsIgnoreCase(currencyName))
-				{
+				if (getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency").equalsIgnoreCase(currencyName)){
 					device.setWalletNumber2(getCellTextByColumnNameInEmbeddedTab(j, "Wallet Number"));
 					count++;
 					break;
@@ -633,7 +618,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickSearchButton();
 	}
 
-	public void searchByDeviceNumber(Device device){
+	public void searchByDeviceNumber(Device device) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
@@ -654,7 +639,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 	}
 
-	public BigDecimal getWalletBalance(Device device){
+	public BigDecimal getWalletBalance(Device device) {
 		logger.info("Get Wallet Balance for device number: {}", device.getDeviceNumber());
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
@@ -668,13 +653,13 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return balanceAmount;
 	}
 
-	public void searchByClientID(String clientID, String cardType){
+	public void searchByClientID(String clientID, String cardType) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn,cardType);
 		WebElementUtils.enterText(clientIDInpt,clientID);
 		clickSearchButton();
 	}
 
-	public String getWalletNumber(Device device){
+	public String getWalletNumber(Device device) { 
 		logger.info("Get Wallet Number for Device: {}", device.getDeviceNumber());
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
@@ -687,7 +672,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return walletNumber;
 	}
 
-	public String getWalletBalanceInformation(Device device){
+	public String getWalletBalanceInformation(Device device) {
 		logger.info("Get Wallet Balance Information for Device: {}", device.getDeviceNumber());
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
@@ -698,17 +683,14 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
 		int rowCount = driver().findElements(By.xpath("//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr")).size();
 		DecimalFormat dec = new DecimalFormat("#0.00");
-		for (int j = 1; j <= rowCount; j++)
-		{
-			if (j == 1)
-			{
+		for (int j = 1; j <= rowCount; j++){
+			if (j == 1){
 				logger.info("Current Available Balance {} Settled Debit {} ",getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"),getCellTextByColumnNameInEmbeddedTab(j, "Settled Debit"));
 				Double balance= Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance")) + Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Settled Debit"));			
 				logger.info("Current Available Balance + Settled Debit : "+dec.format(balance));
 				walletBalanceInformation = getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency")+":"+dec.format(balance)+":"+getCellTextByColumnNameInEmbeddedTab(j, "WALLET_NUMBER");
 
-			}else
-			{	
+			} else {	
 				logger.info("Current Available Balance {} Settled Debit {} ",getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"),getCellTextByColumnNameInEmbeddedTab(j, "Settled Debit"));
 				Double balance= Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance")) + Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Settled Debit"));
 				logger.info("Current Available Balance + Settled Debit : "+dec.format(balance));
@@ -727,19 +709,15 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		String[] afterLoadBalanceData = afterLoadBalanceInformation.trim().split(",");
 
 		int count = 0;
-		for (int i = 0; i < transactionData.length; i++)
-		{
+		for (int i = 0; i < transactionData.length; i++){
 			String[] transactionDataValues = transactionData[i].trim().split(":");
 			String currencyName = transactionDataValues[0];
-			for (int j = 0 ; j < afterLoadBalanceData.length; j++)
-			{
+			for (int j = 0 ; j < afterLoadBalanceData.length; j++){
 				String[] beforeLoadBalanceDataValues = beforeLoadBalanceData[j].trim().split(":");
 				String[] afterLoadBalanceDataValues = afterLoadBalanceData[j].trim().split(":");
-				if (currencyName.equalsIgnoreCase(beforeLoadBalanceDataValues[0]))
-				{
+				if (currencyName.equalsIgnoreCase(beforeLoadBalanceDataValues[0])){
 					BigDecimal calculatedBalance = new BigDecimal(beforeLoadBalanceDataValues[1]).add(new BigDecimal(transactionDataValues[1]));
-					if (calculatedBalance.equals(new BigDecimal(afterLoadBalanceDataValues[1])))
-					{
+					if (calculatedBalance.equals(new BigDecimal(afterLoadBalanceDataValues[1]))){
 						count++;
 						break;
 					}
@@ -757,19 +735,15 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		String[] afterLoadBalanceData = afterLoadBalanceInformation.trim().split(",");
 
 		int count = 0;
-		for (int i = 0; i < transactionData.length; i++)
-		{
+		for (int i = 0; i < transactionData.length; i++){
 			String[] transactionDataValues = transactionData[i].trim().split(":");
 			String currencyName = transactionDataValues[0];
-			for (int j = 0 ; j < afterLoadBalanceData.length; j++)
-			{
+			for (int j = 0 ; j < afterLoadBalanceData.length; j++){
 				String[] beforeLoadBalanceDataValues = beforeLoadBalanceData[j].trim().split(":");
 				String[] afterLoadBalanceDataValues = afterLoadBalanceData[j].trim().split(":");
-				if (currencyName.equalsIgnoreCase(beforeLoadBalanceDataValues[0]))
-				{
+				if (currencyName.equalsIgnoreCase(beforeLoadBalanceDataValues[0])){
 					BigDecimal calculatedBalance = new BigDecimal(beforeLoadBalanceDataValues[1]).subtract(new BigDecimal(transactionDataValues[1]));
-					if (calculatedBalance.equals(new BigDecimal(afterLoadBalanceDataValues[1])))
-					{
+					if (calculatedBalance.equals(new BigDecimal(afterLoadBalanceDataValues[1]))){
 						count++;
 						break;
 					}
@@ -821,8 +795,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public void allowTransactionForOneHour(String status) {
-		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW))
-		{
+		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW)){
 		selectServiceCode(ConstantData.INTERNATIONAL_ALLOW_DISALLOW);
 		clickGoButton();
 		runWithinPopup("400 - International Use Allow/Disallow", () -> {
@@ -854,14 +827,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void chooseOperationActivate(String status) {
 		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW)) {
 			SimulatorUtilities.wait(1000);
-			WebElement operation = driver().findElement(
-					By.xpath("//select[@name='udf1:input:dropdowncomponent']"));
-			WebElement activationType = driver().findElement(
-					By.xpath("//select[@name='udf2:input:dropdowncomponent']"));
-			WebElementUtils.retryUntilNoErrors(() -> new Select(operation)
-					.selectByValue("1"));
-			WebElementUtils.retryUntilNoErrors(() -> new Select(activationType)
-					.selectByVisibleText(ConstantData.GENERIC_DESCRIPTION));
+			WebElement operation = driver().findElement(By.xpath("//select[@name='udf1:input:dropdowncomponent']"));
+			WebElement activationType = driver().findElement(By.xpath("//select[@name='udf2:input:dropdowncomponent']"));
+			WebElementUtils.retryUntilNoErrors(() -> new Select(operation).selectByValue("1"));
+			WebElementUtils.retryUntilNoErrors(() -> new Select(activationType).selectByVisibleText(ConstantData.GENERIC_DESCRIPTION));
 			WebElementUtils.enterText(timeInHourTxt, "1");
 		} else {
 			SimulatorUtilities.wait(1000);
