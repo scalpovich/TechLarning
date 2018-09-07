@@ -76,6 +76,22 @@ public class ApplicationUploadSteps {
 		SimulatorUtilities.wait(5000);
 		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(processBatch, fileName));
 	}
+	
+	@When("user creates $application_upload_file batch file with duplicate data and upload it on server for $customerType for $cardType")
+	public void createFileForApplicationUploadWithDuplicateData(@Named("application_upload_file") String batchName, @Named("customerType") String customerType, @Named("cardType") String cardType) throws Exception {
+		String fileName = "";
+		if (cardType.equalsIgnoreCase("prepaid")) {
+			fileName = fileCreation.createApplicationUploadFileWithDuplicateData(Institution.createWithProvider(provider).getCode(), customerType, cardType);
+		} else if (cardType.equalsIgnoreCase("credit")) {
+			fileName = fileCreation.createApplicationUploadFileWithDuplicateData(Institution.createWithProvider(provider).getCodeCredit(), customerType, cardType);
+		} else if (cardType.contains("Static"))
+		{
+			fileName=fileCreation.createApplicationUploadForFileStaticVirtualCard(program.getInstitute(), customerType);
+		}
+		processBatch.setJoBID(processBatchesFlows.processUploadBatches(batchName, fileName));
+		SimulatorUtilities.wait(5000);
+		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(processBatch, fileName));
+	}
 
 	@When("user creates $application_upload_file batch file and uploads it on server for $customerType")
 	public void createFileForApplicationUpload(@Named("application_upload_file") String batchName, @Named("customerType") String customerType) throws Exception {

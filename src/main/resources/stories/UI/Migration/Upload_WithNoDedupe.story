@@ -13,9 +13,8 @@ And for EMV Card User fills without pin Device Plan for credit product for Maste
 And User fills Wallet Plan for credit product and program Retail Credit Card
 And User fills MCC Rules for credit product
 And User Primary Device fills New Program Retail Credit Card section for credit product without dedupe for Mastercard
-!-- And User Primary Device fills New Program Retail Credit Card section without dedupe for credit product for Mastercard
 And for Primary Device and New Client user fills Device Range section for credit product
-And user creates Application Upload Credit batch file and upload it on server for Individual for credit
+And user creates Application Upload Credit batch file with duplicate data and upload it on server for Individual for credit
 And user verifies the credit application device for fileUpload
 And user approves the credit application device for fileUpload
 And user processes close batch for new Application for FileUpload
