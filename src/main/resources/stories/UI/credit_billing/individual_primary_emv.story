@@ -28,7 +28,6 @@ When credit device is created using new device screen for Individual and Primary
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pingeneration batch using new Device for Supplementary
-!-- And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 And device has "normal" status
 Then user sign out from customer portal
 
@@ -115,25 +114,4 @@ And validate the statement with parameters:
 |Account Number|
 |Credit Limit|
 |Available Credit Limit|
-Then user sign out from customer portal
-
-Scenario:creation of mastercard_individual_primary_emv Card credit device
-Meta:
-@UserCreatesNewCreditDevice
-Given setting json values in excel for Credit
-When user is logged in institution
-And device has "normal" status
-And user notes down required values from helpdesk for credit
-And verify statement file is successfully downloaded
-And validate the statement with parameters:
-|parameters|
-|Credit Card Number|
-|Statement Date|
-|Payment Due Date|
-|Total Payment Due|
-|Minimum Payment Due|
-|Account Number|
-|Credit Limit|
-|Available Credit Limit|
-!-- And validate the "Statement Date,Payment Due Date,Total Payment Due,Minimum Payment Due,Account Number,Credit Limit" in statement
 Then user sign out from customer portal
