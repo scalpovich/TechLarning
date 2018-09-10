@@ -552,9 +552,10 @@ public class HelpDeskSteps {
 	public void whenUserNotesDownRequiredValuesThroughHelpDesk(String product) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);
-		HashMap<String, String> helpDeskValues = helpdeskWorkflow.noteDownRequiredValues(device.getDeviceNumber());
-		helpDeskValues.put(ContextConstants.ACCOUNT_NUMBER,device.getAccountNumber());	
-		context.put(ContextConstants.HELPDESK_VALUES,helpDeskValues); 		
+		HashMap<String, String> helpdeskValues = helpdeskWorkflow.noteDownRequiredValues(device.getDeviceNumber());
+		helpdeskValues.put(ContextConstants.ACCOUNT_NUMBER,device.getAccountNumber());	
+		helpdeskValues.put(ContextConstants.CREDIT_CARD_NUMBER_HEADER_IN_STATEMENT, device.getClientDetails().getFirstName().toUpperCase()+" "+device.getClientDetails().getMiddleName1().toUpperCase()+" "+device.getClientDetails().getLastName().toUpperCase());
+		context.put(ContextConstants.HELPDESK_VALUES,helpdeskValues); 		
 	}
 	
 	@Given("user verifies available $type limit for card after transaction")

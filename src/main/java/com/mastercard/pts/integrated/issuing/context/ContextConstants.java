@@ -94,10 +94,9 @@ public class ContextConstants {
 	
 	public static final String CLOSING_BALANCE = "Closing Balance";
 	
-	public static final String CREDIT_CARD_NUMBER = "Credit Card Number";
+	public static final String CREDIT_CARD_NUMBER_HEADER_IN_STATEMENT = "Credit Card Number";
 	
 	public static final String HELPDESK_VALUES = "HELPDESK_VALUES";
-	
 	
 	private ContextConstants() {
 	}

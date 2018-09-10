@@ -222,14 +222,14 @@ public class BatchProcessSteps {
 	public void validateStatement(ExamplesTable parameterTable) {
 		Device device = context.get(ContextConstants.DEVICE);
 		HashMap<String , String> helpdeskValues = context.get(ContextConstants.HELPDESK_VALUES);		
+		helpdeskValues.put(ContextConstants.STATEMENT_DATE, context.get(ContextConstants.STATEMENT_DATE));
 		GenericReport report = GenericReport.createWithProvider(provider);			
-		helpdeskValues.put(ContextConstants.CREDIT_CARD_NUMBER, device.getClientDetails().getFirstName().toUpperCase()+" "+device.getClientDetails().getMiddleName1().toUpperCase()+" "+device.getClientDetails().getLastName().toUpperCase());
 		String dateOfBirth = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH).format(device.getClientDetails().getBirthDate());
 		report.setPassword(device.getClientDetails().getFirstName().substring(0,4)+""+dateOfBirth.substring(0, dateOfBirth.length()-5).replaceAll("/", ""));				
 		for (int row = 0; row < parameterTable.getRows().size(); row++) {
 			String parameter = parameterTable.getRow(row).get(parameterTable.getHeaders().get(0));			
-			if(parameter.equals(ContextConstants.CREDIT_CARD_NUMBER))
-				report.getFieldToValidate().put(helpdeskValues.get(ContextConstants.CREDIT_CARD_NUMBER),device.getDeviceNumber());	
+			if(parameter.equals(ContextConstants.CREDIT_CARD_NUMBER_HEADER_IN_STATEMENT))
+				report.getFieldToValidate().put(helpdeskValues.get(ContextConstants.CREDIT_CARD_NUMBER_HEADER_IN_STATEMENT),device.getDeviceNumber());	
 			else
 				report.getFieldToValidate().put(parameter, helpdeskValues.get(parameter));
 		}			
