@@ -224,7 +224,8 @@ public class BatchProcessSteps {
 		HashMap<String , String> helpdeskValues = context.get(ContextConstants.HELPDESK_VALUES);		
 		GenericReport report = GenericReport.createWithProvider(provider);			
 		helpdeskValues.put(ContextConstants.CREDIT_CARD_NUMBER, device.getClientDetails().getFirstName().toUpperCase()+" "+device.getClientDetails().getMiddleName1().toUpperCase()+" "+device.getClientDetails().getLastName().toUpperCase());
-		report.setPassword(device.getClientDetails().getFirstName().substring(0,4)+""+device.getClientDetails().getBirthDate().getDayOfMonth()+""+device.getClientDetails().getBirthDate().getMonth());				
+		String dateOfBirth = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH).format(device.getClientDetails().getBirthDate());
+		report.setPassword(device.getClientDetails().getFirstName().substring(0,4)+""+dateOfBirth.substring(0, dateOfBirth.length()-5).replaceAll("/", ""));				
 		for (int row = 0; row < parameterTable.getRows().size(); row++) {
 			String parameter = parameterTable.getRow(row).get(parameterTable.getHeaders().get(0));			
 			if(parameter.equals(ContextConstants.CREDIT_CARD_NUMBER))
