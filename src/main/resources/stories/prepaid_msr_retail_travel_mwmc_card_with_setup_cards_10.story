@@ -19,7 +19,7 @@ Meta:
 @UserCreatesNewCreditDevice
 Given setting json values in excel for Prepaid
 When user is logged in institution
-And for EMV Card [2] User fills Device Plan for prepaid product for Mastercard
+And for Magnetic Stripe Card [1] User fills Device Plan for prepaid product for Mastercard
 And User fills Wallet Fee Plan for prepaid product
 And User fills Wallet Plan for prepaid product and program Retail Travel Card - Multi Currency [2]
 And User Primary Device fills New Program Retail Travel Card - Multi Currency [2] section for prepaid product for Mastercard

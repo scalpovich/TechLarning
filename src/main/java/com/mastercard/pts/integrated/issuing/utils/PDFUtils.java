@@ -149,7 +149,7 @@ public class PDFUtils {
 		String row[] =  new String[]{};
 		try {
 			File file = new File(genericReports.getReportUrl());
-			PDDocument document =  PDDocument.load(file,"22BI0108");
+			PDDocument document =  PDDocument.load(file,genericReports.getPassword());
 			document.setAllSecurityToBeRemoved(true);
      		PDFTextStripper tStripper = new PDFTextStripper();
      		tStripper.setAddMoreFormatting(true);

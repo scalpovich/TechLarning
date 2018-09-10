@@ -66,9 +66,9 @@ public class ContextConstants {
 	
 	public static final String INSTITUTION_DATE = "INSTITUTION_DATE";
 	
-	public static final String FROM_DATE = "FROM_DATE";
+	public static final String STATEMENT_FROM_DATE = "FROM_DATE";
 	
-	public static final String TO_DATE = "TO_DATE";
+	public static final String STATEMENT_TO_DATE = "TO_DATE";
 	
 	public static final String PDF_PASSWORD = "PDF_PASSWORD";
 	

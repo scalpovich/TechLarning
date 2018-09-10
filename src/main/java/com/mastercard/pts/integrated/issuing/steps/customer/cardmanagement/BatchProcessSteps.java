@@ -10,6 +10,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.Locale;
 
 import org.jbehave.core.annotations.Given;
@@ -208,10 +209,11 @@ public class BatchProcessSteps {
 	@When("verify statement file is successfully downloaded")
 	public void verifyStatementFileSuccessfullyGenerated(){
 		Device device =  context.get(ContextConstants.DEVICE);
-		String partialFileName = "STMT_" + "303045" +"_"+ device.getProgramCode() + "_" + device.getClientCode() +"_"+ context.get(ContextConstants.TO_DATE) + context.get(ContextConstants.FROM_DATE) + "_" + device.getDeviceNumber().substring(device.getDeviceNumber().length() - 4); 
-		System.out.println("File Name : "+partialFileName);
+		String institutionCode = System.getProperty("institution").substring(System.getProperty("institution").indexOf('[')+1, System.getProperty("institution").length() - 1);
+		String partialFileName = "STMT_" +institutionCode  +"_"+ device.getProgramCode() + "_" + device.getClientCode() +"_"+ context.get(ContextConstants.STATEMENT_TO_DATE) + context.get(ContextConstants.STATEMENT_FROM_DATE) + "_" + device.getDeviceNumber().substring(device.getDeviceNumber().length() - 4); 
+		logger.info("File Name :{} ",partialFileName);
 	    batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(), "STATEMENT_DOWNLOAD","proc");
-     	assertNotNull(partialFileName + " Statement file is successfully donwloaded",batchFile);			
+     	assertNotNull("Statement file is successfully donwloaded :  "+batchFile.getAbsolutePath(),batchFile);			
 		context.put(ContextConstants.DEVICE,device);	
 	}
 	
@@ -219,17 +221,17 @@ public class BatchProcessSteps {
 	@Then("validate the statement with parameters:$parameterTable")
 	public void validateStatement(ExamplesTable parameterTable) {
 		Device device = context.get(ContextConstants.DEVICE);
-		GenericReport report = GenericReport.createWithProvider(provider);	
-		context.put(ContextConstants.PDF_PASSWORD, device.getClientDetails().getFirstName().substring(0,4)+""+device.getClientDetails().getBirthDate().getDayOfMonth()+""+device.getClientDetails().getBirthDate().getMonth());
-		context.put("Credit Card Number",device.getClientDetails().getFirstName().toUpperCase()+" "+device.getClientDetails().getMiddleName1().toUpperCase()+" "+device.getClientDetails().getLastName().toUpperCase());		
-		report.setPassword(context.get(ContextConstants.PDF_PASSWORD));
+		HashMap<String , String> helpdeskValues = context.get(ContextConstants.HELPDESK_VALUES);		
+		GenericReport report = GenericReport.createWithProvider(provider);			
+		helpdeskValues.put(ContextConstants.CREDIT_CARD_NUMBER, device.getClientDetails().getFirstName().toUpperCase()+" "+device.getClientDetails().getMiddleName1().toUpperCase()+" "+device.getClientDetails().getLastName().toUpperCase());
+		report.setPassword(device.getClientDetails().getFirstName().substring(0,4)+""+device.getClientDetails().getBirthDate().getDayOfMonth()+""+device.getClientDetails().getBirthDate().getMonth());				
 		for (int row = 0; row < parameterTable.getRows().size(); row++) {
 			String parameter = parameterTable.getRow(row).get(parameterTable.getHeaders().get(0));			
-			if(parameter.equals("Credit Card Number"))
-				report.getFieldToValidate().put(context.get(parameter),device.getDeviceNumber());	
+			if(parameter.equals(ContextConstants.CREDIT_CARD_NUMBER))
+				report.getFieldToValidate().put(helpdeskValues.get(ContextConstants.CREDIT_CARD_NUMBER),device.getDeviceNumber());	
 			else
-				report.getFieldToValidate().put(parameter, context.get(parameter));
-		}	
+				report.getFieldToValidate().put(parameter, helpdeskValues.get(parameter));
+		}			
 		reportVerificationWorkflow.verifyStatement(report);		
 	}
 

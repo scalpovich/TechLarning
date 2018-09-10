@@ -631,8 +631,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		LocalDate toDate = DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateText)).minusDays(30);
 		WebElementUtils.pickDate(fromDateTxt, fromDate);
 		WebElementUtils.pickDate(toDateTxt,toDate);
-		context.put(ContextConstants.FROM_DATE, DateTimeFormatter.ofPattern("ddMMyyyy", Locale.ENGLISH).format(fromDate));
-		context.put(ContextConstants.TO_DATE, DateTimeFormatter.ofPattern("ddMMyyyy", Locale.ENGLISH).format(toDate));
+		context.put(ContextConstants.STATEMENT_FROM_DATE, DateTimeFormatter.ofPattern("ddMMyyyy", Locale.ENGLISH).format(fromDate));
+		context.put(ContextConstants.STATEMENT_TO_DATE, DateTimeFormatter.ofPattern("ddMMyyyy", Locale.ENGLISH).format(toDate));
 		context.put(ContextConstants.STATEMENT_DATE, DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH).format(fromDate));
 		submitAndVerifyBatch();
 		return batchStatus;
