@@ -300,6 +300,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	private static final int loopIterationToCheckBatchNumber=21;
 	
+    @PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
+	private MCWebElement institutionDateText;
+	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
 		MCAnnotationProcessor.initializeSuper(this, finderProvider);
@@ -1840,5 +1843,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	public void switchToDefaultFrame(String element,int index) {
 		driver().switchTo().frame(Elements(element).get(index));
+	}
+	
+	public String getInstitutionDate()
+	{	
+		logger.info("Institution date : {}",getTextFromPage(institutionDateText));
+		return getTextFromPage(institutionDateText);
 	}
 }
