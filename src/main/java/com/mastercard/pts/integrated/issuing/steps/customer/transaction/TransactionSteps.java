@@ -95,7 +95,7 @@ public class TransactionSteps {
 
 	private static String FAIL_MESSAGE = FAILED + " -  Result : ";
 	
-    private static String INVALID_KEYS = "(default) M/Chip Key Set from the related BIN range will be used";
+    private static String INVALID_KEYS = "(default) - M/Chip Key Set from the related BIN range will be used";
 
 	public String getTransactionAmount() {
 		return transactionAmount;

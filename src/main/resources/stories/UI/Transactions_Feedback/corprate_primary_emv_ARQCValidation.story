@@ -6,7 +6,11 @@ I want to perform Transaction on corporate credit card.
 Meta:
 @CreditRegression
 @CreditWithPin
-@StoryName credit_emv_retail				 
+@StoryName credit_emv_retail
+
+Scenario: Pin Generation
+Given connection to FINSim is established
+
 Scenario:creation of mastercard_corporate_primary_EMV Card credit device
 Meta:
 @TestId TC548377
