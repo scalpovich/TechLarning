@@ -1,8 +1,10 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
@@ -163,7 +165,14 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Existing Client Code')]")
 	private MCWebElement existingClientLabel;
 	
-	
+	@PageElement(findBy = FindBy.ID, valueToFind = "card_type_photo")
+	private MCWebElement photoFileInput;
+
+	@PageElement(findBy = FindBy.ID, valueToFind = "uploadPhoto")
+	private MCWebElement uploadPhotoBtn;
+
+	private static final String PHOTO_FILE_PATH = "src/main/resources/InstitutionLogo/CreditLogo.png";
+
 	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
 	}
@@ -439,6 +448,14 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)) {
 			WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);
 			WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));
+		}
+		if(device.getPhotoIndicator().equals("Photo [1]")) {
+			String filePath = new File(PHOTO_FILE_PATH).getAbsolutePath();
+			logger.info("upload file path : {}",filePath);
+			photoFileInput.sendKeys(filePath);
+			SimulatorUtilities.wait(5000);
+			clickWhenClickable(uploadPhotoBtn);
+			SimulatorUtilities.wait(5000);
 		}
 		clickNextButton();		
 	}
