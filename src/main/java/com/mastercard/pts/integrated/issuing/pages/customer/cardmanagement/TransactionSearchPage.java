@@ -99,7 +99,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 			SimulatorUtilities.wait(2000);
 			String flag= getCellTextByColumnName(1, DESCRIPTION);
 			int size= Elements("//table[@class='dataview']/tbody/tr").size();
-			for(int i=size;i<=1;i++){
+			for(int i=size;i>=1;i--){
 				if(getCellTextByColumnName(i, DESCRIPTION).equalsIgnoreCase(flag)){
 					Element("//table[@class='dataview']/tbody/tr["+i+"]/td").click();
 					break;
