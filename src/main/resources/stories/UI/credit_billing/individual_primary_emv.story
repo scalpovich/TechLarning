@@ -114,4 +114,5 @@ And validate the statement with parameters:
 |Account Number|
 |Credit Limit|
 |Available Credit Limit|
+|Closing Balance|
 Then user sign out from customer portal
