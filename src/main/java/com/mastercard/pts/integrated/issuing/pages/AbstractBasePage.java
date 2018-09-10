@@ -133,12 +133,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Save']")
 	private MCWebElement saveBtn;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Reverse']")
-	private MCWebElement reverseBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Add Details']")
 	private MCWebElement addDetailsBtn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Reverse']")
+	private MCWebElement reverseBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Cancel']")
 	private MCWebElement cancelBtn;
@@ -351,14 +351,14 @@ public abstract class AbstractBasePage extends AbstractPage {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		clickWhenClickable(saveBtn);
 	}
+
+	public void clickSubmitButton() {
+		clickWhenClickable(submitButton);
+	}
 	
 	public void clickReverseButton(){
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		clickWhenClickable(reverseBtn);
-	}
-
-	public void clickSubmitButton() {
-		clickWhenClickable(submitButton);
 	}
 
 	public void clickConfirmButton() {
@@ -629,8 +629,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected boolean verifyDuplicateAndClickCancel() {
 		String message = getMessageFromFeedbackPanel();
 		if (message != null
-				&& (message.contains("Effective Date and End Date should not overlap for same Country") || message.contains("Error in Insertion/Save") || message
-						.contains("Business Calendar setup already exists for logged in Institution for same Effective Date"))) {
+				&& (message.contains("Effective Date and End Date should not overlap for same Country") || 
+						message.contains("Error in Insertion/Save") || 
+						message.contains("Effective Date and End Date should not overlap for same MCG") ||
+						message.contains("Business Calendar setup already exists for logged in Institution for same Effective Date"))) {
 			clickCancelButton();
 			return true;
 		}
@@ -1853,5 +1855,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		logger.info("Not validaiting any elements, as this is an Abstraction layer to Pages");
 		return null;
+	}
+	
+	public void switchToDefaultFrame(String element,int index) {
+		driver().switchTo().frame(Elements(element).get(index));
 	}
 }

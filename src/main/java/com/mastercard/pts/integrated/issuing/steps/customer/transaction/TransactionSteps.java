@@ -95,7 +95,8 @@ public class TransactionSteps {
 
 	private static String FAIL_MESSAGE = FAILED + " -  Result : ";
 	
-    private static String INVALID_KEYS = "(default) - M/Chip Key Set from the related BIN range will be used";
+	private static String INVALID_KEYS = "(default) - M/Chip Key Set from the related BIN range will be used";
+	
 
 	public String getTransactionAmount() {
 		return transactionAmount;
@@ -284,7 +285,7 @@ public class TransactionSteps {
 		transactionData.setCardDataElementsDynamic("035.04", device.getServiceCode());
 		if (transactionWorkflow.isContains(transaction, "EMV")) {
 			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getIcvvData());
-		} else if (transactionWorkflow.isContains(transaction, "MSR")) {
+		} else if (transactionWorkflow.isContains(transaction, "MSR") || transactionWorkflow.isContains(transaction, "FALLBACK") ) {
 			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getCvvData());
 		}
 	}
@@ -397,10 +398,18 @@ public class TransactionSteps {
 	public void thenPINIsRetrievedSuccessfully() {
 		Device device = context.get(ContextConstants.DEVICE);
 		Transaction transactionData = Transaction.generateFinSimPinTestData(device, finSimConfig, provider);
-
 		String pinNumber = transactionWorkflow.getPinNumber(transactionData);
 		logger.info("FINSim PIN Number generated : {} ", pinNumber);
+      	Assert.assertTrue("INVALID PIN", !pinNumber.isEmpty());
 		device.setPinNumberForTransaction(pinNumber);
+	}
+	
+	@When("PIN is created for Pin Change First Transaction")
+	@Then("PIN is created for Pin Change First Transaction")
+	public void thenPINIsCreatedForPinChangeFirstTransaction() {
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
+		context.put(ContextConstants.DEVICE, device);
 	}
 
 	@When("$simulatorName simulator is closed")
@@ -572,5 +581,5 @@ public class TransactionSteps {
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		performOperationOnSamecard(true);
 		givenOptimizedTransactionIsExecuted(transaction);
-	} 
+	}
 }

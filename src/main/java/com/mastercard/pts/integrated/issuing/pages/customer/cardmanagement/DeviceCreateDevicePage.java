@@ -3,14 +3,13 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
 import org.hamcrest.Matchers;
 import org.junit.Assert;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -75,11 +74,11 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePhotoIndicator1:input:dropdowncomponent")
 	private MCWebElement photoIndicatorDDwn;
-	
-	private String programCodeDDwnBy = "view:programCode:input:dropdowncomponent";
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#corporateClientCode select")
 	private MCWebElement corporateClientCodeDDwn;
+	
+	private String programCodeDDwnBy = "view:programCode:input:dropdowncomponent";
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#branchCode select")
 	private MCWebElement branchCodeDDwn;
@@ -333,22 +332,17 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
 		SimulatorUtilities.wait(1000);
-		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
+		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
-			SimulatorUtilities.wait(5000);
+			SimulatorUtilities.wait(6000);
 			moveToElementAndClick(existingClientLabel, 50, 50);
 			waitForWicket(driver());
 			SimulatorUtilities.wait(15000);		
-		}else{
-			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
-			SimulatorUtilities.wait(4000);
-			waitForWicket();
-			try{
-				selectByVisibleText(programCodeDDwn, device.getProgramCode());}
-				catch(StaleElementReferenceException e){
-					MCWebElement element = getMCWebElementFromWebElement(FindBy.NAME,programCodeDDwnBy);
-					selectByVisibleText(element, device.getProgramCode());
-				}
+		} else {
+			selectByVisibleText(customerTypeDDwn, device.getCustomerType());          
+			SimulatorUtilities.wait(6000);
+          	waitForWicket(driver());
+			selectByVisibleText(programCodeDDwn, device.getProgramCode());
 			SimulatorUtilities.wait(2000);			
 		}
 		SimulatorUtilities.wait(1000);
