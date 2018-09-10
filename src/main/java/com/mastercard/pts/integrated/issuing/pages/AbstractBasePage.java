@@ -3,7 +3,6 @@ package com.mastercard.pts.integrated.issuing.pages;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -20,7 +19,6 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.xerces.dom3.as.ASElementDeclaration;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;

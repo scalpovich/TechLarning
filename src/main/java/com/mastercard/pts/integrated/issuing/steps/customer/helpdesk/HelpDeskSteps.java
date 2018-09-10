@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -18,6 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.yecht.Data.Str;
+
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
@@ -541,11 +544,18 @@ public class HelpDeskSteps {
 	@When("user notes down available $type limit for card")
 	public void whenUserNotesDownLimitThroughHelpDesk(String type) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
-		Device device = context.get(ContextConstants.DEVICE);
 		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.noteDownAvailableLimit(type));
 	}
 	
-	
+	@Given("user notes down required values from helpdesk for $product")
+	@When("user notes down required values from helpdesk for $product")
+	public void whenUserNotesDownRequiredValuesThroughHelpDesk(String product) {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		HashMap<String, String> helpDeskValues = helpdeskWorkflow.noteDownRequiredValues(device.getDeviceNumber());
+		helpDeskValues.put(ContextConstants.ACCOUNT_NUMBER,device.getAccountNumber());	
+		context.put(ContextConstants.HELPDESK_VALUES,helpDeskValues); 		
+	}
 	
 	@Given("user verifies available $type limit for card after transaction")
 	@When("user verifies available $type limit for card after transaction")
@@ -569,9 +579,12 @@ public class HelpDeskSteps {
 	@Then("device has \"$deviceStatus\" status")
 	public void thenDeviceHasStatus(String deviceStatus) {
 		String expectedStatus = DeviceStatus.fromShortName(deviceStatus);
-		Device device = context.get(ContextConstants.DEVICE);
+		Device device = new Device();//context.get(ContextConstants.DEVICE);
+		device.setDeviceNumber("5742539370867516");
+		device.setAppliedForProduct("Credit [C]");
 		String actualStatus = helpdeskWorkflow.getDeviceStatus(device);
 		assertThat(STATUS_INCORRECT_INFO_MSG, actualStatus, equalTo(expectedStatus));
+		context.put(ContextConstants.DEVICE, device);
 	}
 
 	@Then("device has \"$deviceStatus\" status for non-default institution")

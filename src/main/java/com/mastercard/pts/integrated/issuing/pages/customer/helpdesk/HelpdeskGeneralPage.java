@@ -8,6 +8,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -24,6 +25,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.CharMatcher;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
@@ -226,9 +228,36 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Current Status and Limits']")
 	private MCWebElement currentStatusAndLimitTab;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Card :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement creditLimitLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Account :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement availAccountCreditLimitLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Account :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement accountCreditLimitLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='PDD :']/../../following-sibling::td[1]/span/span/span")
+	private MCWebElement paymentDueDate;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='MAD :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement minimumAmountDue;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='TAD :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement totalAmountDue;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Closing Balance :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement closingBalance;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Interest :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement interest;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement loan;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Interest :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement loanInterest;
 	
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
 	
@@ -971,6 +1000,25 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		return creditLimit;
 
+	}
+	
+	public HashMap<String, String> noteDownRequiredValues(String deviceNumber) {
+		HashMap<String, String> helpDeskValues = new HashMap<>();		
+		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);		
+		clickWhenClickable(currentStatusAndLimitTab);
+		helpDeskValues.put(ContextConstants.CREDIT_LIMIT, accountCreditLimitLabel.getText());
+		helpDeskValues.put(ContextConstants.AVAILABLE_CREDIT_LIMIT, availAccountCreditLimitLabel.getText());
+		helpDeskValues.put(ContextConstants.PAYMENT_DUE_DATE, paymentDueDate.getText());
+		helpDeskValues.put(ContextConstants.MINIMUM_PAYMENT_DUE, minimumAmountDue.getText());		
+		helpDeskValues.put(ContextConstants.CLOSING_BALANCE, closingBalance.getText());	
+		WebElementUtils.elementToBeClickable(balanceDetailsTab);	
+		clickWhenClickable(balanceDetailsTab);
+		helpDeskValues.put(ContextConstants.TOTAL_PAYMENT_DUE, totalAmountDue.getText());		
+		helpDeskValues.put(ContextConstants.INTEREST, interest.getText());	
+		helpDeskValues.put(ContextConstants.LOAN, loan.getText());	
+		helpDeskValues.put(ContextConstants.LOAN_INTEREST, loanInterest.getText());	
+		clickEndCall();
+		return helpDeskValues;
 	}
 	
 	public String verifyBillingDetails(Device device){

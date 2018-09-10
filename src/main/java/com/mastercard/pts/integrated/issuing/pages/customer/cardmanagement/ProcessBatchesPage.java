@@ -3,12 +3,14 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.openqa.selenium.By;
@@ -625,8 +627,13 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	 */
 	public String processStatementExtractBatch(ProcessBatches batch) {
 		selectBatchTypeAndName(batch);
-		WebElementUtils.pickDate(fromDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateText)));
-		WebElementUtils.pickDate(toDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateText)).minusDays(30));
+		LocalDate fromDate = DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateText));
+		LocalDate toDate = DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateText)).minusDays(30);
+		WebElementUtils.pickDate(fromDateTxt, fromDate);
+		WebElementUtils.pickDate(toDateTxt,toDate);
+		context.put(ContextConstants.FROM_DATE, DateTimeFormatter.ofPattern("ddMMyyyy", Locale.ENGLISH).format(fromDate));
+		context.put(ContextConstants.TO_DATE, DateTimeFormatter.ofPattern("ddMMyyyy", Locale.ENGLISH).format(toDate));
+		context.put(ContextConstants.STATEMENT_DATE, DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH).format(fromDate));
 		submitAndVerifyBatch();
 		return batchStatus;
 	}

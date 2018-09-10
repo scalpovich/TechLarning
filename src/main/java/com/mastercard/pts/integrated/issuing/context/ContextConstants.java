@@ -66,6 +66,39 @@ public class ContextConstants {
 	
 	public static final String INSTITUTION_DATE = "INSTITUTION_DATE";
 	
+	public static final String FROM_DATE = "FROM_DATE";
+	
+	public static final String TO_DATE = "TO_DATE";
+	
+	public static final String PDF_PASSWORD = "PDF_PASSWORD";
+	
+	public static final String ACCOUNT_NUMBER = "Account Number";
+	
+	public static final String STATEMENT_DATE = "Statement Date";
+	
+	public static final String PAYMENT_DUE_DATE = "Payment Due Date";
+	
+	public static final String MINIMUM_PAYMENT_DUE = "Minimum Payment Due";
+	
+	public static final String TOTAL_PAYMENT_DUE = "Total Payment Due";
+	
+	public static final String INTEREST = "Interest";
+	
+	public static final String LOAN_INTEREST = "Loan Interest";
+	
+	public static final String LOAN = "Loan";
+	
+	public static final String CREDIT_LIMIT = "Credit Limit";
+	
+	public static final String AVAILABLE_CREDIT_LIMIT = "Available Credit Limit";
+	
+	public static final String CLOSING_BALANCE = "Closing Balance";
+	
+	public static final String CREDIT_CARD_NUMBER = "Credit Card Number";
+	
+	public static final String HELPDESK_VALUES = "HELPDESK_VALUES";
+	
+	
 	private ContextConstants() {
 	}
 

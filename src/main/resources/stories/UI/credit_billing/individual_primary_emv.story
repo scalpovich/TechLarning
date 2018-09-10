@@ -8,6 +8,8 @@ Meta:
 @StoryName credit_emv_retail_billing
 @Individual
 @Primary	 
+
+
 Scenario:creation of mastercard_individual_primary_emv Card credit device
 Meta:
 @UserCreatesNewCreditDevice
@@ -99,5 +101,39 @@ When user processes EOD-Credit system internal batch for Credit
 And user verify Unbilled amount for Purchase category
 And user processes Billing Process - Credit system internal batch for Credit
 And user verify Billed amount for Purchase category
+And device has "normal" status
+And user notes down required values from helpdesk for credit
 And user run Statement Extract system internal batch
+And verify statement file is successfully downloaded
+And validate the statement with parameters:
+|parameters|
+|Credit Card Number|
+|Statement Date|
+|Payment Due Date|
+|Total Payment Due|
+|Minimum Payment Due|
+|Account Number|
+|Credit Limit|
+|Available Credit Limit|
+Then user sign out from customer portal
+
+Scenario:creation of mastercard_individual_primary_emv Card credit device
+Meta:
+@UserCreatesNewCreditDevice
+Given setting json values in excel for Credit
+When user is logged in institution
+And device has "normal" status
+And user notes down required values from helpdesk for credit
+And verify statement file is successfully downloaded
+And validate the statement with parameters:
+|parameters|
+|Credit Card Number|
+|Statement Date|
+|Payment Due Date|
+|Total Payment Due|
+|Minimum Payment Due|
+|Account Number|
+|Credit Limit|
+|Available Credit Limit|
+!-- And validate the "Statement Date,Payment Due Date,Total Payment Due,Minimum Payment Due,Account Number,Credit Limit" in statement
 Then user sign out from customer portal

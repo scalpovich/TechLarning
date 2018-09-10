@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -162,6 +163,11 @@ public class HelpdeskWorkflow {
 	public BigDecimal noteDownAvailableLimit(String type) {
 		clickCustomerCareEditLink();
 		return helpDeskPage.noteDownAvailableLimit(type);
+	}
+	
+	public HashMap<String, String> noteDownRequiredValues(String deviceNumber) {
+		clickCustomerCareEditLink();
+		return helpDeskPage.noteDownRequiredValues(deviceNumber);
 	}
 	
 	public BigDecimal verifyAvailableLimit(String type) {
