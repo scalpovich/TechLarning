@@ -203,6 +203,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	}
 
 	public void processPreProductionBatchNewDevice(PreProductionBatch batch) {
+		
 		waitForLoaderToDisappear();
 		selectDropDownByText(productTypeDDwn, batch.getProductType());
 		CustomUtils.ThreadDotSleep(8000);

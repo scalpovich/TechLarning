@@ -119,7 +119,7 @@ public class CreditCardCreditPlanPage extends AbstractBasePage {
 			}
 			else
 			{
-			WebElementUtils.selectDropDownByVisibleText(transactionRuleDateDDwn, "AUTOMATION [952]");
+				WebElementUtils.selectDropDownByVisibleText(transactionRuleDateDDwn, creditCardCreditPlan.getTransactionRulePlan());
 			}
 			WebElementUtils.selectDropDownByVisibleText(currenyDDwn, creditCardCreditPlan.getCurreny());
 			WebElementUtils.enterText(minimumDueTxt, creditCardCreditPlan.getMinimumDue());
@@ -130,7 +130,7 @@ public class CreditCardCreditPlanPage extends AbstractBasePage {
 			}
 			else
 			{
-			WebElementUtils.selectDropDownByVisibleText(paymentPriorityPlanDDwn, "Payment Priority Plan [100]");
+				WebElementUtils.selectDropDownByVisibleText(paymentPriorityPlanDDwn, creditCardCreditPlan.getPaymentPriorityPlan());
 			}
 			WebElementUtils.enterText(allowedPercentageTxt, creditCardCreditPlan.getAllowedPercentage());
 			clickSaveButton();

@@ -8,6 +8,8 @@ Meta:
 @StoryName credit_emv_retail_billing
 @Individual
 @Primary	 
+
+
 Scenario:creation of mastercard_individual_primary_emv Card credit device
 Meta:
 @UserCreatesNewCreditDevice
@@ -26,7 +28,6 @@ When credit device is created using new device screen for Individual and Primary
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pingeneration batch using new Device for Supplementary
-!-- And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 And device has "normal" status
 Then user sign out from customer portal
 
@@ -99,5 +100,19 @@ When user processes EOD-Credit system internal batch for Credit
 And user verify Unbilled amount for Purchase category
 And user processes Billing Process - Credit system internal batch for Credit
 And user verify Billed amount for Purchase category
+And device has "normal" status
+And user notes down required values from helpdesk for credit
 And user run Statement Extract system internal batch
+And verify statement file is successfully downloaded
+And validate the statement with parameters:
+|parameters|
+|Credit Card Number|
+|Statement Date|
+|Payment Due Date|
+|Total Payment Due|
+|Minimum Payment Due|
+|Account Number|
+|Credit Limit|
+|Available Credit Limit|
+|Closing Balance|
 Then user sign out from customer portal

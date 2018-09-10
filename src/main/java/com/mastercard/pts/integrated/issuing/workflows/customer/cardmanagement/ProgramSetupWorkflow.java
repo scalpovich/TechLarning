@@ -133,6 +133,116 @@ public class ProgramSetupWorkflow {
 	}
 	// Device configuration ends
 	
+	public void checkPinChangeTransactionFirst(DevicePlan devicePlan){
+		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
+		page.updatePinChangeTransactionFirst(devicePlan);
+	}
+	public void checkCrossBorderTransaction(DevicePlan devicePlan){
+		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
+		page.checkCrossBorderTransaction(devicePlan);
+	}
+	// Device configuration ends
+	
+	public void fillDocumentChecklist(ApplicationDocumentChecklist  applicationDocumentChecklist) {
+		ApplicationDocumentChecklistPage page = navigator.navigateToPage(ApplicationDocumentChecklistPage.class);
+		page.addDocumentsInDocumentsChecklist(applicationDocumentChecklist);
+	}
+	
+	public void fillBusinessMandatoryFields(ApplicationBusinessMandatoryFields  applicationBusinessMandatoryFields) {
+		ApplicationBusinessMandatoryFieldsPage page = navigator.navigateToPage(ApplicationBusinessMandatoryFieldsPage.class);
+		page.addBusinessMandatoryFields(applicationBusinessMandatoryFields);
+	}
+	
+	public void fillCreditCardBillingCycle(CreditCardBillingCycle creditCardBillingCycle)
+	{
+		CreditCardBillingCyclePage page = navigator.navigateToPage(CreditCardBillingCyclePage.class);
+		Boolean billingCycleStatus=page.addBillingCycle(creditCardBillingCycle);
+		logger.info("billingCycleStatus : {} ", billingCycleStatus);
+		context.put(CreditConstants.BILLING_CYCLE_CODE_ERROR_STATUS,billingCycleStatus);
+	}
+	
+	public void fillCreditCardPaymentPriority(CreditCardPaymentPriority creditCardPaymentPriority)
+	{
+		CreditCardPaymentPriorityPage page = navigator.navigateToPage(CreditCardPaymentPriorityPage.class);
+		Boolean paymentPriorityStatus=page.addPaymentPriority(creditCardPaymentPriority);
+		logger.info("paymentPriorityStatus : {} ", paymentPriorityStatus);
+		context.put(CreditConstants.PAYMENT_PRIORITY_STATUS,paymentPriorityStatus);
+	}
+	
+	public void fillCreditCardPaymentBounceReason(CreditCardPaymentBounceReason creditCardPaymentBounceReason)
+	{
+		CreditCardPaymentBounceReasonPage page = navigator.navigateToPage(CreditCardPaymentBounceReasonPage.class);
+		Boolean paymentBounceStatus=page.addPaymentBounceReason(creditCardPaymentBounceReason);
+		logger.info("paymentBounceStatus : {} ", paymentBounceStatus);
+		context.put(CreditConstants.PAYMENT_BOUNCE_STATUS,paymentBounceStatus);
+	}
+
+	public void fillCreditCardTransactionRulePlancode(CreditCardTransactionRulePlan creditCardTransactionRulePlancode)
+	{
+		CreditCardTransactionRulePlanPage page = navigator.navigateToPage(CreditCardTransactionRulePlanPage.class);
+		Boolean transactionPlanStatus=page.addTransactionRulePlan(creditCardTransactionRulePlancode);
+		logger.info("transactionPlanStatus : {} ", transactionPlanStatus);
+		context.put(CreditConstants.TRANSACTION_PLAN_ERROR_STATUS, transactionPlanStatus);
+	}
+	
+	public void fillCreditCardCreditPlan(CreditCardCreditPlan creditCardCreditPlan)
+	{
+		CreditCardCreditPlanPage page = navigator.navigateToPage(CreditCardCreditPlanPage.class);
+		Boolean creditPlanStatus=page.addCreditPlan(creditCardCreditPlan);
+		logger.info("creditPlanStatus : {} ", creditPlanStatus);
+		context.put(CreditConstants.CREDIT_PLAN_CODE_ERROR_STATUS, creditPlanStatus);
+	}
+	
+	public void createDedupePlan(DedupePlan dedupePlan){
+		DedupePlanPage page = navigator.navigateToPage(DedupePlanPage.class);
+		page.addDedupePlanData(dedupePlan);
+	}
+	
+	public void createWalletFeePlan(WalletFeePlan walletFeePlan, String productType) {
+		WalletConfigurationWalletFeePlanPage page = navigator.navigateToPage(WalletConfigurationWalletFeePlanPage.class);
+		page.addWalletFeePlan(walletFeePlan, productType);
+	}
+
+	public void createWalletPlan(WalletPlan walletPlan) {
+		WalletConfigurationWalletPlanPage page = navigator.navigateToPage(WalletConfigurationWalletPlanPage.class);
+		page.addWalletPlanData(walletPlan);
+	}
+	
+	public void createNewWalletPlan(WalletPlan walletPlan) {
+		WalletConfigurationWalletPlanPage page = navigator.navigateToPage(WalletConfigurationWalletPlanPage.class);
+		page.addNewWalletPlanData(walletPlan);		
+	}
+
+	public void createProgram(Program program, String productType ) {
+		ProgramPage page = navigator.navigateToPage(ProgramPage.class);
+		page.addProgramData(program, productType);
+	}
+	
+	public void createNewProgram(Program program, String productType ) {
+		ProgramPage page = navigator.navigateToPage(ProgramPage.class);
+		page.addProgramForMultiWallet(program, productType);
+	}
+	
+	public void createAddProgram(Program program, String productType ) {
+		ProgramPage page = navigator.navigateToPage(ProgramPage.class);
+		page.addsProgramData(program, productType);
+	}
+	
+	public void createDeviceRange(DeviceRange deviceRange) {
+		DeviceRangePage page = navigator.navigateToPage(DeviceRangePage.class);
+		page.addDeviceRangeData(deviceRange);
+	}
+	
+	public void createPrepaidStatementPlan(PrepaidStatementPlan plan) {
+		PrepaidStatementPlanPage page = navigator.navigateToPage(PrepaidStatementPlanPage.class);
+		page.createPrepaidStatementPlan(plan);
+	}
+
+	public void createTransactionPlan(TransactionPlan plan) {
+		TransactionPlanPage page = navigator.navigateToPage(TransactionPlanPage.class);
+		page.createTransactionPlan(plan);
+	}
+	
 	public void fillDocumentChecklist(ApplicationDocumentChecklist  applicationDocumentChecklist) {
 		ApplicationDocumentChecklistPage page = navigator.navigateToPage(ApplicationDocumentChecklistPage.class);
 		page.addDocumentsInDocumentsChecklist(applicationDocumentChecklist);

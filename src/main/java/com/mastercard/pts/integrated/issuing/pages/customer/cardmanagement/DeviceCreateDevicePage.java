@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.lang.math.RandomUtils;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -333,13 +331,13 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
 		SimulatorUtilities.wait(1000);
-		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
+		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
-			SimulatorUtilities.wait(5000);
+			SimulatorUtilities.wait(6000);
 			moveToElementAndClick(existingClientLabel, 50, 50);
 			waitForWicket(driver());
 			SimulatorUtilities.wait(15000);		
-		}else{
+		} else {
 			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
 			SimulatorUtilities.wait(4000);
 			try{
@@ -440,7 +438,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			}	
 		}
 		
-		WebElementUtils.enterText(registeredMailIdTxt, "tuptewar.pavan7+"+ RandomStringUtils.randomNumeric(4)+"@gmail.com");
+		WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
 		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDDwn, client.getLanguagePreference());
 		WebElementUtils.selectDropDownByVisibleText(vipDDwn, device.getVip());
 

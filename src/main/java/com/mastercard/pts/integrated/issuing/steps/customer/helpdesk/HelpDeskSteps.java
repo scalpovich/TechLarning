@@ -4,13 +4,12 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
-
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
@@ -20,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.yecht.Data.Str;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
@@ -47,9 +47,7 @@ import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
-import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
-import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDeskFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpdeskWorkflow;
 
@@ -375,7 +373,6 @@ public class HelpDeskSteps {
 
 	@Given("user has wallet number information for $type device")
 	@When("user has wallet number information for $type device")
-	@Then("user has wallet number information for $type device")
 	public void givenUserHasWalletNumberInformation(String type) {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
@@ -534,27 +531,6 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.activateDevice(helpdeskGeneral);
 	}
-	
-	@Then("user selects $reason status")
-	@When("user selects $reason status")
-	public void whenUserSelectsEccomerceUseAllowDisallowStatus(String status) {
-		Device device = context.get(ContextConstants.DEVICE);
-		helpdeskWorkflow.getDeviceStatus(device);
-		helpdeskWorkflow.clickCustomerCareEditLink();
-		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW)) {
-			helpdeskWorkflow.setupInternationalAllowDisallowCheck(status);
-		} else {
-			helpdeskWorkflow.setupEccomerceAllowDisallowCheck(helpdeskGeneral, status);
-		}
-	}
-
-	@When("user allow $type Transaction For One Hour")
-	public void whenUserTransactionForOneHour(String status) {
-		Device device = context.get(ContextConstants.DEVICE);
-		helpdeskWorkflow.getDeviceStatus(device);
-		helpdeskWorkflow.clickCustomerCareEditLink();
-		helpdeskWorkflow.allowTransactionForOneHour(status);
-	}
 
 	@Given("user setup device currency through helpdesk")
 	@When("user setup device currency through helpdesk")
@@ -570,11 +546,19 @@ public class HelpDeskSteps {
 	@When("user notes down available $type limit for card")
 	public void whenUserNotesDownLimitThroughHelpDesk(String type) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
-		Device device = context.get(ContextConstants.DEVICE);
 		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.noteDownAvailableLimit(type));
 	}
 	
-	
+	@Given("user notes down required values from helpdesk for $product")
+	@When("user notes down required values from helpdesk for $product")
+	public void whenUserNotesDownRequiredValuesThroughHelpDesk(String product) {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		HashMap<String, String> helpdeskValues = helpdeskWorkflow.noteDownRequiredValues(device.getDeviceNumber());
+		helpdeskValues.put(ContextConstants.ACCOUNT_NUMBER,device.getAccountNumber());	
+		helpdeskValues.put(ContextConstants.CREDIT_CARD_NUMBER_HEADER_IN_STATEMENT, device.getClientDetails().getFirstName().toUpperCase()+" "+device.getClientDetails().getMiddleName1().toUpperCase()+" "+device.getClientDetails().getLastName().toUpperCase());
+		context.put(ContextConstants.HELPDESK_VALUES,helpdeskValues); 		
+	}
 	
 	@Given("user verifies available $type limit for card after transaction")
 	@When("user verifies available $type limit for card after transaction")
@@ -598,9 +582,12 @@ public class HelpDeskSteps {
 	@Then("device has \"$deviceStatus\" status")
 	public void thenDeviceHasStatus(String deviceStatus) {
 		String expectedStatus = DeviceStatus.fromShortName(deviceStatus);
-		Device device = context.get(ContextConstants.DEVICE);
+		Device device = new Device();//context.get(ContextConstants.DEVICE);
+		device.setDeviceNumber("5742539370867516");
+		device.setAppliedForProduct("Credit [C]");
 		String actualStatus = helpdeskWorkflow.getDeviceStatus(device);
 		assertThat(STATUS_INCORRECT_INFO_MSG, actualStatus, equalTo(expectedStatus));
+		context.put(ContextConstants.DEVICE, device);
 	}
 
 	@Then("device has \"$deviceStatus\" status for non-default institution")
@@ -839,17 +826,18 @@ public class HelpDeskSteps {
 	@When("For fileUpload when user search for new application on search screen for $productType and validates the status as $NORMAL")
 	public void thenUserSearchForApplicationOnSearchScreenforFileUpload(String productType, String status) {
 		helpDeskGetterSetter.setProductType(ProductType.fromShortName(productType));
+
 		helpdeskFlows.searchForNewApplicationFileUpload(helpDeskGetterSetter);
 	}
 	
-	
-	@Then("user creates service request for $serviceCode service")
-	@When("user creates service request for $serviceCode service")
-	public void whenUserResetPinRetryCounterThroughHelpDesk(String serviceCode) {
-		helpdeskGeneral.setServiceCode(serviceCode);			// Service Code e.g : Activate Device [108]
-		helpdeskGeneral.setNotes(MiscUtils.generateRandomNumberAsString(6));
-		helpdeskWorkflow.clickCustomerCareEditLink();
-		helpdeskWorkflow.resetPinCounter(helpdeskGeneral);
+	@Then("user verify $amount amount for $category category")
+	@When("user verify $amount amount for $category category")
+	public void assertionForBilling(String amount, String category){
+		String transactionAmount = context.get(ConstantData.TRANSACTION_AMOUNT);
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setCategory(category);
+		device.setAmountType(amount);
+		assertThat(category +" "+ amount +BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device), equalTo(transactionAmount));
 	}
 	
 	@Then("user verify $amount amount for $category category")

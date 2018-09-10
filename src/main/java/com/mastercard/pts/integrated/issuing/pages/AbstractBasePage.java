@@ -3,7 +3,6 @@ package com.mastercard.pts.integrated.issuing.pages;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -110,7 +109,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
 	
 	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid transaction type - ";
-
+    
     private static final String Device = null;
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -641,7 +640,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
         logger.info("Button clicked successfully.");
 	}
-
+	
 	protected void clickWhenClickablewithWicket(MCWebElement element) {
 		SimulatorUtilities.wait(4000);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
@@ -707,7 +706,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 		}
 	}
-
+	
 	public void waitAndSearchForApplicationBatchNumberToAppear() {
 		clickSearchButton();
 		// Pre-production batch and device production batch & Authorization Search page take little long to
@@ -737,7 +736,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, deviceNumberFetch.getText());
 		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
 		selectFirstRecord();
-		clickProcessSelectedButton();
+		clickProcessSelectedButton();		
 	}	
 	
 	protected void waitAndSearchForRecordToExists() {
@@ -1830,7 +1829,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public List<WebElement> getValidationErrors() {
 		return Elements(ERROR_XPATH);
 	}
-
+	
 	public void moveToElementAndClick(MCWebElement element,int xOffset, int yOffset){
 		Actions action = new Actions(driver());		
 		action.moveToElement(asWebElement(element), xOffset, yOffset).click().build().perform();

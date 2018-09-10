@@ -106,4 +106,9 @@ public class ConstantData {
 
 	private ConstantData() {
 	}
+
+	public static String fromShortName(String name) {
+		// TODO Auto-generated method stub
+		return MiscUtils.getConstantStringFromClassByPefixMatch(ConstantData.class, name);
+	}
 }

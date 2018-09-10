@@ -50,7 +50,7 @@ public class BatchSteps {
 		MiscUtils.reportToConsole("******** Embossing File Start ***** " );
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		try {
-			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE");		
+			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE","proc");		
 			String[] fileData = LinuxUtils.getCardNumberAndExpiryDate(batchFile);
 			MiscUtils.reportToConsole("File Data : " + fileData);
 			Device device = context.get(ContextConstants.DEVICE);
@@ -111,8 +111,7 @@ public class BatchSteps {
 		MiscUtils.reportToConsole("******** Pin Offset Start ***** ");
 		String[] values = null;
 		DevicePlan tempdevice = context.get(ContextConstants.DEVICE_PLAN);
-		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevice.getDevicePlanCode(),
-				tempDirectory.toString(), "PIN_PROD");
+		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevice.getDevicePlanCode(),tempDirectory.toString(), "PIN_PROD","proc");
 		Device device = context.get(ContextConstants.DEVICE);
 		try (Scanner scanner = new Scanner(batchFile)) {
 			while (scanner.hasNext()) {

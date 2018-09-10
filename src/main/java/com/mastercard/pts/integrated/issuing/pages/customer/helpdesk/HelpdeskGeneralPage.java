@@ -28,6 +28,7 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.base.CharMatcher;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
@@ -116,11 +117,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "memo1:input:textAreaComponent")
 	private MCWebElement notesTxt;
 
-	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Save']")
-	private MCWebElement saveBtn;
-	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='udf4:input:inputTextField']")
 	private MCWebElement timeInHourTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Save']")
+	private MCWebElement saveBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".feedbackPanelINFO")
 	private MCWebElement activationMessage;
@@ -244,10 +245,37 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@name='udf23:radioComponent' and @value='1']")
 	private MCWebElement eccomActivate;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Card :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement creditLimitLabel;
-
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Account :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement availAccountCreditLimitLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Account :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement accountCreditLimitLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='PDD :']/../../following-sibling::td[1]/span/span/span")
+	private MCWebElement paymentDueDate;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='MAD :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement minimumAmountDue;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='TAD :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement totalAmountDue;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Closing Balance :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement closingBalance;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Interest :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement interest;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement loan;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Interest :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement loanInterest;
+	
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
 	
 	private final String RESET_PIN_RETRY_COUNTER= "109 - Reset Pin Retry Counter";
@@ -453,7 +481,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickSearchButton();
 			firstRow = getFirstColumnValueFromTable();
 			clickCloseButton();
-
+			
 		});
 		clickEndCall();
 		return firstRow.isEmpty();
@@ -609,7 +637,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 	}
 	
-
 	public boolean verifyCurrencySetupDoneCorrectly(HelpdeskGeneral helpdeskGeneral, Device device) {
 		logger.info("verify added currecy for device number: {}", device.getDeviceNumber());
 		int count = 0;
@@ -1113,18 +1140,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	}
 	
-	public String verifyBillingDetails(Device device){
-		List<String> lst = new ArrayList<String>();
-		SimulatorUtilities.wait(5000);
-		editDeviceLink.click();
-		SimulatorUtilities.wait(1000);
-		clickWhenClickable(balanceDetailsTab);
-		SimulatorUtilities.wait(2000);
-		lst.add(Element("//span[contains(text(),'"+device.getCategory()+" :')]//ancestor::tr//td["+resolve(device.getAmountType())+"]/span/span").getText());
-		clickEndCall();
-		return lst.get(0);
-	}
-
 	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
@@ -1136,6 +1151,37 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		});
 		SimulatorUtilities.wait(3000);
 		clickEndCall();
+	}
+	
+	public HashMap<String, String> noteDownRequiredValues(String deviceNumber) {
+		HashMap<String, String> helpDeskValues = new HashMap<>();		
+		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);		
+		clickWhenClickable(currentStatusAndLimitTab);
+		helpDeskValues.put(ContextConstants.CREDIT_LIMIT, accountCreditLimitLabel.getText());
+		helpDeskValues.put(ContextConstants.AVAILABLE_CREDIT_LIMIT, availAccountCreditLimitLabel.getText());
+		helpDeskValues.put(ContextConstants.PAYMENT_DUE_DATE, paymentDueDate.getText());
+		helpDeskValues.put(ContextConstants.MINIMUM_PAYMENT_DUE, minimumAmountDue.getText());		
+		helpDeskValues.put(ContextConstants.CLOSING_BALANCE, closingBalance.getText());	
+		WebElementUtils.elementToBeClickable(balanceDetailsTab);	
+		clickWhenClickable(balanceDetailsTab);
+		helpDeskValues.put(ContextConstants.TOTAL_PAYMENT_DUE, totalAmountDue.getText());		
+		helpDeskValues.put(ContextConstants.INTEREST, interest.getText());	
+		helpDeskValues.put(ContextConstants.LOAN, loan.getText());	
+		helpDeskValues.put(ContextConstants.LOAN_INTEREST, loanInterest.getText());	
+		clickEndCall();
+		return helpDeskValues;
+	}
+	
+	public String verifyBillingDetails(Device device){
+		List<String> lst = new ArrayList<String>();
+		SimulatorUtilities.wait(5000);
+		editDeviceLink.click();
+		SimulatorUtilities.wait(1000);
+		clickWhenClickable(balanceDetailsTab);
+		SimulatorUtilities.wait(2000);
+		lst.add(Element("//span[contains(text(),'"+device.getCategory()+" :')]//ancestor::tr//td["+resolve(device.getAmountType())+"]/span/span").getText());
+		clickEndCall();
+		return lst.get(0);
 	}
 
 	private int resolve(String amountType)

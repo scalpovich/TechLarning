@@ -68,7 +68,7 @@ public class UserManagementSteps {
 
 	private static final String USER_INSTITUTION_NON_DEFAULT = "USER_INSTITUTION_NON_DEFAULT";
 	
-	private static final String USERNAME = "USERNAME";
+	public static final String USERNAME = "USERNAME";
 	
 	
 
