@@ -11,11 +11,13 @@ import org.springframework.stereotype.Component;
 
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientPhotoFlatFileDownloadBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.BatchProcessingPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ClientPhotoFlatFileDownloadBatchPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceProductionPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PinGenerationBatchPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PreProductionBatchPage;
@@ -190,6 +192,13 @@ public class BatchProcessFlows extends MenuFlows {
 	public void processPinProductionBatchNewApplication(PinGenerationBatch batch) {
 		PinGenerationBatchPage page = navigator.navigateToPage(PinGenerationBatchPage.class);
 		page.processPinProductionBatchNewApplication(batch);
+	}
+
+	public void processClientPhotoFlatFileDownloadBatchNewDevice(
+			ClientPhotoFlatFileDownloadBatch batch) {
+		ClientPhotoFlatFileDownloadBatchPage page = navigator.navigateToPage(ClientPhotoFlatFileDownloadBatchPage.class);
+		page.processClientPhotoFlatFileDownloadBatch(batch);
+		
 	}
 
 }

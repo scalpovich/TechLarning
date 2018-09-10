@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientPhotoFlatFileDownloadBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
@@ -131,6 +132,13 @@ public class ApplicationUploadSteps {
 		batchProcessFlows.processDeviceProductionBatchNewDevice(batch);
 	}
 	
+	@Then("$type processes Client photo/flat file download batch using new Device")
+	@When("$type processes Client photo/flat file download batch using new Device")
+	public void whenProcessesClientPhotoFlatFileDownloadBatchForDevice(String type) {
+		ClientPhotoFlatFileDownloadBatch batch = new ClientPhotoFlatFileDownloadBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processClientPhotoFlatFileDownloadBatchNewDevice(batch);
+	}
 	
 	@Then("$type processes deviceproduction batch using new Device for Supplementary")
 	@When("$type processes deviceproduction batch using new Device for Supplementary")
@@ -139,6 +147,8 @@ public class ApplicationUploadSteps {
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processDeviceProductionBatchNewDeviceSupplementary(batch);
 	}
+	
+	
 
 	@Then("$type processes pinProduction batch using new Application")
 	@When("$type processes pinProduction batch using new Application")
