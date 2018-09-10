@@ -250,6 +250,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	public void performOptimizedMasTransaction(String transaction, Transaction transactionData, Boolean sameCard) {
 		handleDialogs();
 		addBinRangeAndCurrencyDetailsBasedOnCardNumber(transactionData, transaction, sameCard);
+		activateMas(transaction);
 		if (!sameCard) {
 			importAndLoadCardProfile(transactionData.getCardProfile(), transaction);
 			if (isContains(transaction, "emv")) {

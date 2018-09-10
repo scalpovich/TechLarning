@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.xerces.dom3.as.ASElementDeclaration;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -108,7 +109,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
 	
 	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid transaction type - ";
-
+    
     private static final String Device = null;
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -298,9 +299,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private MCWebElement deviceProductionHeaderBatchTxt;
 	
 	private static final int loopIterationToCheckBatchNumber=21;
-	
-    @PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
-	private MCWebElement institutionDateText;
 	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -612,8 +610,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected boolean verifyDuplicateAndClickCancel() {
 		String message = getMessageFromFeedbackPanel();
 		if (message != null
-				&& (message.contains("Effective Date and End Date should not overlap for same Country") || message.contains("Error in Insertion/Save") || message
-						.contains("Business Calendar setup already exists for logged in Institution for same Effective Date"))) {
+				&& (message.contains("Effective Date and End Date should not overlap for same Country") || 
+						message.contains("Error in Insertion/Save") || 
+						message.contains("Effective Date and End Date should not overlap for same MCG") ||
+						message.contains("Business Calendar setup already exists for logged in Institution for same Effective Date"))) {
 			clickCancelButton();
 			return true;
 		}
@@ -637,7 +637,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
         logger.info("Button clicked successfully.");
 	}
-
+	
 	protected void clickWhenClickablewithWicket(MCWebElement element) {
 		SimulatorUtilities.wait(4000);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
@@ -703,7 +703,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 		}
 	}
-
+	
 	public void waitAndSearchForApplicationBatchNumberToAppear() {
 		clickSearchButton();
 		// Pre-production batch and device production batch & Authorization Search page take little long to
@@ -733,7 +733,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, deviceNumberFetch.getText());
 		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
 		selectFirstRecord();
-		clickProcessSelectedButton();
+		clickProcessSelectedButton();		
 	}	
 	
 	protected void waitAndSearchForRecordToExists() {
@@ -1826,7 +1826,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public List<WebElement> getValidationErrors() {
 		return Elements(ERROR_XPATH);
 	}
-
+	
 	public void moveToElementAndClick(MCWebElement element,int xOffset, int yOffset){
 		Actions action = new Actions(driver());		
 		action.moveToElement(asWebElement(element), xOffset, yOffset).click().build().perform();
@@ -1838,9 +1838,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return null;
 	}
 	
-	public String getInstitutionDate()
-	{	
-		logger.info("Institution date : {}",getTextFromPage(institutionDateText));
-		return getTextFromPage(institutionDateText);
+	public void switchToDefaultFrame(String element,int index) {
+		driver().switchTo().frame(Elements(element).get(index));
 	}
 }

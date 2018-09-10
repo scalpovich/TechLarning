@@ -75,9 +75,24 @@ public class HelpdeskWorkflow {
 	public void activateDevice(HelpdeskGeneral helpdeskGeneral) {
 		helpDeskPage.activateDevice(helpdeskGeneral);
 	}
+	
+	public void resetPinCounter(HelpdeskGeneral helpdeskGeneral) {
+		helpDeskPage.resetPinRetryCounter(helpdeskGeneral);
+	}
 
 	public void setupDeviceCurrency(HelpdeskGeneral helpdeskGeneral) {
 		helpDeskPage.setupDeviceCurrency(helpdeskGeneral);
+	}
+	
+	public void setupInternationalAllowDisallowCheck(String status) {
+		helpDeskPage.setupInternationalAllowDisallowCheck(status);
+	}
+	
+	public void setupEccomerceAllowDisallowCheck(HelpdeskGeneral helpdeskGeneral, String status) {
+		helpDeskPage.setupEccomerceDisallowCheck(status);
+	}
+	public void allowTransactionForOneHour(String status) {
+		helpDeskPage.allowTransactionForOneHour(status);
 	}
 
 	public void storeActivationDate() {
