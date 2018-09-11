@@ -113,11 +113,12 @@ Scenario:11 Verify User is able to make Payment of credit card through cash mode
 Meta:
 @PaymentCash
 Given user is logged in institution
-When check card balance details through helpdesk before Payment
+When check card balance details through helpdesk
 And user initiates cash payment
 And "Pre-clearing" batch for credit is successful
 And "EOD-Credit" batch for credit is successful
-When check card balance details through helpdesk after Payment
+And recheck card balance details through helpdesk after payment
+Then user check successful payments
 And user sign out from customer portal
 When update institution date to first of next month
 
@@ -129,5 +130,5 @@ When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
 And user processes Billing Process - Credit system internal batch for Credit
 And user run Statement Extract system internal batch
-When check card balance details through helpdesk after Billing
+When check card balance details through helpdesk
 And user sign out from customer portal

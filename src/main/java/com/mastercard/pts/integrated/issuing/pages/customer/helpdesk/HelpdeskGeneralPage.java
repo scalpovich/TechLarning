@@ -5,9 +5,12 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
@@ -19,12 +22,16 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.CharMatcher;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -34,7 +41,10 @@ import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
+
+import junit.framework.Assert;
 
 @Component
 @Navigation(tabTitle = HelpdeskNav.TAB_HELPDESK, treeMenuItems = { HelpdeskNav.L1_ACTIVITY, HelpdeskNav.L2_GENERAL })
@@ -242,7 +252,56 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
 	
 	private final String RESET_PIN_RETRY_COUNTER= "109 - Reset Pin Retry Counter";
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Balance Details']")
+	private MCWebElement balanceDetailsTab;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//a[.='Current Status and Limits']")
+	private MCWebElement currentStatusLimits;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//div[@id='tab4']//table[1]//td//span[@class='labeltextr']")
+	private MCWebElements creditLimitParamter;	
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//div[@id='tab4']//table[1]//td//span[@class='labeltextr']/preceding::span[1]")
+	private MCWebElements creditLimitParamterLabels;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[contains(.,'Payment :')]/..//span[@class='labeltextr']")
+	private MCWebElements paymentComponents;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[contains(.,'Purchase :')]/..//span[@class='labeltextr']")
+	private MCWebElements purchaseComponents;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Account :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement availAccountCreditLimitLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Account :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement accountCreditLimitLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='PDD :']/../../following-sibling::td[1]/span/span/span")
+	private MCWebElement paymentDueDate;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='MAD :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement minimumAmountDue;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='TAD :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement totalAmountDue;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Closing Balance :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement closingBalance;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Interest :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement interest;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement loan;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Interest :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement loanInterest;
+	
+	@Autowired
+	TestContext context;
+	
+	private final String DEFAULT_BALANCE="0.00";
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
 		logger.info(WALLET_NUMBER, CharMatcher.DIGIT.retainFrom(walletNumber.getText()));
@@ -400,6 +459,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	public String getDeviceStatus(Device device) {
 		logger.info("Fetching information for : {}", device.getDeviceNumber());
+		device.setAppliedForProduct("Credit [C]");
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
@@ -477,7 +537,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(5000);
 		clickEndCall();
 	}
-	
 
 	public void chooseOperationDeactivate(String status) {
 		SimulatorUtilities.wait(1000);
@@ -1081,10 +1140,23 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return creditLimit;
 
 	}
+	
+	public String verifyBillingDetails(Device device){
+		List<String> lst = new ArrayList<String>();
+		SimulatorUtilities.wait(5000);
+		editDeviceLink.click();
+		SimulatorUtilities.wait(1000);
+		clickWhenClickable(balanceDetailsTab);
+		SimulatorUtilities.wait(2000);
+		lst.add(Element("//span[contains(text(),'"+device.getCategory()+" :')]//ancestor::tr//td["+resolve(device.getAmountType())+"]/span/span").getText());
+		clickEndCall();
+		return lst.get(0);
+	}
+
 	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
-		runWithinPopup("109 - Reset Pin Retry Counter", () -> {
+		runWithinPopup(RESET_PIN_RETRY_COUNTER, () -> {
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();
@@ -1093,4 +1165,109 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(3000);
 		clickEndCall();
 	}
+
+	public HashMap<String, String> noteDownRequiredValues(String deviceNumber) {
+		HashMap<String, String> helpDeskValues = new HashMap<>();		
+		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);		
+		clickWhenClickable(currentStatusAndLimitTab);
+		helpDeskValues.put(ContextConstants.CREDIT_LIMIT, accountCreditLimitLabel.getText());
+		helpDeskValues.put(ContextConstants.AVAILABLE_CREDIT_LIMIT, availAccountCreditLimitLabel.getText());
+		helpDeskValues.put(ContextConstants.PAYMENT_DUE_DATE, paymentDueDate.getText());
+		helpDeskValues.put(ContextConstants.MINIMUM_PAYMENT_DUE, minimumAmountDue.getText());		
+		helpDeskValues.put(ContextConstants.CLOSING_BALANCE, closingBalance.getText());	
+		WebElementUtils.elementToBeClickable(balanceDetailsTab);	
+		clickWhenClickable(balanceDetailsTab);
+		helpDeskValues.put(ContextConstants.TOTAL_PAYMENT_DUE, totalAmountDue.getText());		
+		helpDeskValues.put(ContextConstants.INTEREST, interest.getText());	
+		helpDeskValues.put(ContextConstants.LOAN, loan.getText());	
+		helpDeskValues.put(ContextConstants.LOAN_INTEREST, loanInterest.getText());	
+		clickEndCall();
+		return helpDeskValues;
+	}
+	
+	private int resolve(String amountType)
+	{
+		switch(amountType){
+		case "Billed" :
+			return 2;
+		case "Unbilled" :
+			return 3;
+		case "Outstanding" :
+			return 4;
+		}
+		return 0;
+	}
+	
+	public void clickCurrentStatusLimitTab() {
+		new WebDriverWait(driver(), timeoutInSec)
+		.until(WebElementUtils.visibilityOf(currentStatusLimits)).click();
+	}
+	
+	public void clickBalanceDetailsTab() {
+		new WebDriverWait(driver(), timeoutInSec)
+		.until(WebElementUtils.visibilityOf(balanceDetailsTab)).click();
+	}
+	
+	public Map<String,String> getCreditLimitComponents(){
+		Map<String, String> map= new HashMap<>();
+		for(int i=0 ; i<=creditLimitParamter.getElements().size()-2; i +=2){
+			map.put(creditLimitParamterLabels.getElements().get(i).getText(), creditLimitParamter.getElements().get(i).getText());
+		}
+		return map;
+	}
+	
+	public List<String> getCreditCardBallance(){	
+		ArrayList<String> list = new ArrayList<>();		
+		clickWhenClickableDoNotWaitForWicket(balanceDetailsTab);
+		for (MCWebElement element: purchaseComponents.getElements()){
+			list.add(element.getText());
+		}
+		for (MCWebElement element: paymentComponents.getElements()){
+			list.add(element.getText());
+		}		
+		return list;		
+	}
+	
+	public Map<String,String> checkCreditBalances(Device device){
+		Map<String, String> balanceMapBeforePayments = new HashMap<String, String>();	
+		List<String> list;
+		logger.info("get Credit balances");
+		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getProductType());
+		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
+		clickSearchButton();
+		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
+		editDeviceLink.click();
+		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
+//		balanceMapBeforePayments = getCreditLimitComponents();
+			clickBalanceDetailsTab();
+			SimulatorUtilities.wait(5000);//this to wait till the table gets loaded	
+			list=getCreditCardBallance();
+			balanceMapBeforePayments.put("BillledPurchase", list.get(0));
+			balanceMapBeforePayments.put("UnbllledPurchase", list.get(1));
+			balanceMapBeforePayments.put("OutstandingPurchase", list.get(2));	
+			balanceMapBeforePayments.put("BillledPayments", list.get(3));
+			balanceMapBeforePayments.put("UnbllledPayments", list.get(4));
+			balanceMapBeforePayments.put("OutstandingPayments", list.get(5));			
+			return balanceMapBeforePayments;
+	}
+	
+	public void checkAndCompareBalancePostPayment(Payment payment) {
+		Map<String, String> mapA = context.get("expectedPayment");
+		Map<String, String> mapB = context.get("actualPayment");
+		if (mapA != null && mapB != null && mapA.size() == mapB.size()) {
+			for (Map.Entry<String, String> m : mapA.entrySet()) {
+				String keyFromFirstMap = (String) m.getKey();
+				String valueFromFirstMap = (String) m.getValue();
+				String valueFromSecondMap = mapB.get(keyFromFirstMap);
+				if (keyFromFirstMap.equals("UnbllledPayments")) {
+					if (!valueFromSecondMap.equals(Integer.valueOf(valueFromFirstMap + payment.getAmount()))) {
+						Assert.assertEquals("Payment has been done successfully",
+								keyFromFirstMap + "::::" + valueFromSecondMap,
+								keyFromFirstMap + "::::" + Integer.valueOf(valueFromFirstMap + 500));
+					}
+				}
+			}
+		}
+	}
+
 }
