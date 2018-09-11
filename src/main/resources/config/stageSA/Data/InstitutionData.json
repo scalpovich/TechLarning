@@ -502,6 +502,7 @@
 							   "transactionLimitPlan":"AUTOMATION [TA9706ODEV]",
 							   "transactionPlan":"AUTOMATION [T7185S]",
 							   "creditPlan":"Automation [100]",
+							   "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
 							   "billingCycle":"Automation Billing [100]",
 							   "walletPlan":"AUTOMATION [TA4946EBFC]"
   				 },
@@ -534,6 +535,7 @@
 							   "transactionPlan":"AUTOMATION [T66888]",
 							   "creditPlan":"Credit Plan [233]",
 							   "billingCycle":"Credit Bill [012]",
+							   "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
 							   "walletPlan":"MultiCurrency INR [WP03]"
   				 }
 ]
