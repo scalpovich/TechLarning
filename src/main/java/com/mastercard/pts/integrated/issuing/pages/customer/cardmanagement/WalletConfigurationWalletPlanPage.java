@@ -1,3 +1,4 @@
+
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
@@ -74,10 +75,15 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:billingCycleCode:input:dropdowncomponent")
 	private MCWebElement billingCycleCodeDDwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "whiteListedMcgCode:input:dropdowncomponent")
+	private MCWebElement editWhiteListedMCGDdwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:mcgLimitPlan:input:dropdowncomponent")
 	private MCWebElement mcgLimitPlanDDwn;
-
+	
+	
+	
 	private int reservedAmount = 0; // MiscUtils.randomNumber(5);
 
 	public void inputWalletPlanCode(String walletPlanCodeString) {
@@ -225,10 +231,10 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			SimulatorUtilities.wait(2000);
 			waitForPageToLoad(driver());
 			selectUsage(walletPlan.getUsage());
-			waitForPageToLoad(driver());
-			selectMCGLimitPlan(walletPlan.getMcgLimitPlan());
 			SimulatorUtilities.wait(2000);
 			waitForPageToLoad(driver());
+			waitForPageToLoad(driver());
+			selectMCGLimitPlan(walletPlan.getMcgLimitPlan());
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			SimulatorUtilities.wait(2000);
 			clickNextButton(); // Click on next button
@@ -268,4 +274,19 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(walletPlanCodeSearchTxt));
 	}
+	
+	public void editWalletPlan(WalletPlan walletPlan, String updateField) {
+		WebElementUtils.enterText(walletPlanCodeSearchTxt, walletPlan.getWalletPlanCode());
+		clickSearchButton();
+		editFirstRecord();
+		runWithinPopup("Edit Wallet Plan", () -> {
+			switch (updateField) {
+			case "White Listed MCG":
+				selectByVisibleText(editWhiteListedMCGDdwn, walletPlan.getWhiteListedMCGPlan());
+				break;
+			}
+			clickSaveButton();
+		});
+	}
+
 }

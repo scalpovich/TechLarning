@@ -36,6 +36,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	private static final String WP_WALLET_INACTVITY_RULES_INACTIVITY_AFTER_DAYS = "WP_WALLET_INACTVITY_RULES_INACTIVITY_AFTER_DAYS";
 	private static final String WP_WALLET_INACTVITY_RULES_CLOSURE_WALLET_AFTER_DAYS = "WP_WALLET_INACTVITY_RULES_CLOSURE_WALLET_AFTER_DAYS";
 	private static final String WP_WALLET_RESERVERD_AMOUNT = "WP_WALLET_RESERVERD_AMOUNT";
+	private static final String WHITE_LISTED_MCG_PLAN="WHITE_LISTED_MCG_PLAN";
 	private static final String WP_MCG_LIMIT_PLAN = "WP_MCG_LIMIT_PLAN";
 	private static final String WP_MCG = "WP_MCG";
 
@@ -76,6 +77,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String firstWallet;
 	private String secondWallet;
 	private String whiteMcgCode;
+	private String whiteListedMCGPlan;
 	private String mcgLimitPlan;
 	private String mCG;
 
@@ -85,6 +87,14 @@ public class WalletPlan implements HasCodeAndDescription {
 
 	public void setMCG(String mCG) {
 		this.mCG = mCG;
+	}
+
+	public String getWhiteListedMCGPlan() {
+		return whiteListedMCGPlan;
+	}
+
+	public void setWhiteListedMCGPlan(KeyValueProvider provider) {
+		this.whiteListedMCGPlan = provider.getString(WHITE_LISTED_MCG_PLAN);
 	}
 
 	public String getWhiteMcgCode() {
@@ -158,7 +168,7 @@ public class WalletPlan implements HasCodeAndDescription {
 	public void setWalletFeePlan(String walletFeePlan) {
 		this.walletFeePlan = walletFeePlan;
 	}
-
+	
 	public String getMcgLimitPlan() {
 		return mcgLimitPlan;
 	}

@@ -8,8 +8,13 @@
    "cardPackIdGenerationTemplate":"AUTOMATION [PAN042]",
    "deviceIdGenerationTemplate":"AUTOMATION [PAN019]",
    "embossingVendor":"AUTOMATION PERS BUREAU [AUTOB1]",
+<<<<<<< HEAD
    "mastercardPrepaidIssuerBin":"588765",
    "mastercardDebitIssuerBin":"587765",
+=======
+   "mastercardPrepaidIssuerBin":"532560",
+   "mastercardDebitIssuerBin":"543870",
+>>>>>>> release/Iteration14
    "mastercardCreditIssuerBin":"589765",
    "visaPrepaidIssuerBin":"443823",
    "visaDebitIssuerBin":"418233",
@@ -39,8 +44,13 @@
    "cardPackIdGenerationTemplate":"AUTOMATION [PAN042]",
    "deviceIdGenerationTemplate":"AUTOMATION [PAN019]",
    "embossingVendor":"AUTOMATION PERS BUREAU [AUTOB1]",
+<<<<<<< HEAD
    "mastercardPrepaidIssuerBin":"588765",
    "mastercardDebitIssuerBin":"587765",
+=======
+   "mastercardPrepaidIssuerBin":"532560",
+   "mastercardDebitIssuerBin":"543870",
+>>>>>>> release/Iteration14
    "mastercardCreditIssuerBin":"589765",
    "visaPrepaidIssuerBin":"443823",
    "visaDebitIssuerBin":"418233",
@@ -70,8 +80,13 @@
    "cardPackIdGenerationTemplate":"AUTOMATION [PAN042]",
    "deviceIdGenerationTemplate":"AUTOMATION [PAN019]",
    "embossingVendor":"AUTOMATION PERS BUREAU [AUTOB1]",
+<<<<<<< HEAD
    "mastercardPrepaidIssuerBin":"588765",
    "mastercardDebitIssuerBin":"587765",
+=======
+   "mastercardPrepaidIssuerBin":"532560",
+   "mastercardDebitIssuerBin":"543870",
+>>>>>>> release/Iteration14
    "mastercardCreditIssuerBin":"589765",
    "visaPrepaidIssuerBin":"443823",
    "visaDebitIssuerBin":"418233",

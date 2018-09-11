@@ -33,8 +33,8 @@ public class InstitutionData {
 	private String billingCycle;
 	private String walletPlan;
 	private String productIdentity;
-	private String transactionFeePlan;
-	  
+  	private String transactionFeePlan;
+  
  	public String getTransactionFeePlan() {
 		return transactionFeePlan;
 	}
