@@ -41,6 +41,12 @@ public class DeviceProductionPage extends AbstractBasePage {
 	TestContext context;
 	// ------------- Card Management > Institution Parameter Setup > Institution
 	// Currency [ISSS05]
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
+	private MCWebElement productTypeDD;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=batchNumber]")
+	private MCWebElement batchNumberText;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Product Type')]//following-sibling::td[2]//select")
 	private MCWebElement productTypeDDwn;
@@ -123,8 +129,8 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public void processDeviceProductionBatchForAllForFileUpload(DeviceProductionBatch batch) {
 		List<String> batchNumbers = context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
 		waitForLoaderToDisappear();
-		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		WebElementUtils.enterText(batchNumberTxt, batchNumbers.get(0));
+		WebElementUtils.selectDropDownByVisibleText(productTypeDD, batch.getProductType());
+		WebElementUtils.enterText(batchNumberText, batchNumbers.get(0));
 		waitAndSearchForRecordToAppear();
 		clickWhenClickable(processAllBtn);
 		verifyOperationStatus();

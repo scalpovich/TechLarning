@@ -1,4 +1,6 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,10 @@ public class ProcessBatchesFlows {
 	public boolean verifyFileProcessFlowsUpload(
 			ProcessBatches processBatchesDomainPage, String FileName) {
 		return processBatchesPage.verifyFileProcessUpload(processBatchesDomainPage, FileName);
+	}
+	public boolean verifyProcessUploadBatch(
+			ProcessBatches processBatchesDomainPage, String FileName) {
+		return processBatchesPage.processBatchUpload(processBatchesDomainPage, FileName);
 	}
 	public boolean verifyErrorMessageFlows(String errorType) {
 		return processBatchesPage.verifyErrorMessage(errorType);

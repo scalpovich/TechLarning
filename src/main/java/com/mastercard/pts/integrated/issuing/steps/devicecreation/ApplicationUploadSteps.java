@@ -1,5 +1,9 @@
 package com.mastercard.pts.integrated.issuing.steps.devicecreation;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.HashMap;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
@@ -8,6 +12,7 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.jcraft.jsch.Logger;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
@@ -35,6 +40,8 @@ public class ApplicationUploadSteps {
 	@Autowired
 	private ProcessBatches processBatch;
 
+	private String jobId;
+	
 	@Autowired
 	private SearchApplicationDetailsFlows search;
 
@@ -88,9 +95,12 @@ public class ApplicationUploadSteps {
 		{
 			fileName=fileCreation.createApplicationUploadForFileStaticVirtualCard(program.getInstitute(), customerType);
 		}
+		
 		processBatch.setJoBID(processBatchesFlows.processUploadBatches(batchName, fileName));
 		SimulatorUtilities.wait(5000);
-		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(processBatch, fileName));
+		
+		Assert.assertTrue(processBatchesFlows.verifyProcessUploadBatch(processBatch, fileName));
+		
 	}
 
 	@When("user creates $application_upload_file batch file and uploads it on server for $customerType")

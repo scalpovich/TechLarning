@@ -225,10 +225,15 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		selectDropDownByText(productTypeDDwn, batch.getProductType());
 		SimulatorUtilities.wait(8000);
 		enterText(batchNumberTxt, batchNumbers.get(0));
+		SimulatorUtilities.wait(8000);
 		ClickButton(searchBtn);
+		SimulatorUtilities.wait(8000);
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
+		SimulatorUtilities.wait(5000);
 		ClickButton(processSelectedBtn);
+		SimulatorUtilities.wait(5000);
 		verifyOperationStatus();
+		SimulatorUtilities.wait(5000);
 		switchToDefaultFrame();
 
 	}

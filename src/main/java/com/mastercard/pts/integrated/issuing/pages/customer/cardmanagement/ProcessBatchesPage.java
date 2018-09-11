@@ -158,6 +158,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='jobId']//span[@class='labeltextf']")
 	private MCWebElement processBatchjobIDTxt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "*//td[@width='15%']/span[@class='labeltextf']")
+	private MCWebElement processBatchjobIDTxtPath;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='dispTraceLink']/a")
 	private MCWebElement tracesLink;
@@ -588,6 +591,35 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		waitForWicket(driver());
 		getFinder().getWebDriver().switchTo().defaultContent();
 		return isProcessed;
+	}
+	
+	public boolean processBatchUpload(ProcessBatches processBatchesDomain, String fileName){
+		FileCreation.filenameStatic = fileName;
+		//HashMap<String, String> hm = new HashMap<>();
+		Boolean isProcessed = true;
+		String elementXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic);
+		String statusXpath = elementXpath + "//parent::td//following-sibling::td/a";
+		SimulatorUtilities.wait(20000);
+		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
+		
+		SimulatorUtilities.wait(5000);//this delay is for table to load data 
+		runWithinPopup("View Batch Details", () -> {
+			logger.info("Retrieving batch status");
+			waitForBatchStatus();
+			batchStatus = batchStatusTxt.getText();
+			clickCloseButton();
+		});
+		
+		SimulatorUtilities.wait(3000);//this delay is for table to load data
+		processBatchesDomain.setJoBID(processBatchjobIDTxtPath.getText());
+		MiscUtils.reportToConsole("JobID: {}", processBatchesDomain.getJoBID());
+		context.put(CreditConstants.JOB_ID, processBatchesDomain.getJoBID());
+		//ClickButton(closeBtn);
+		//waitForPageToLoad(getFinder().getWebDriver());
+		waitForWicket(driver());
+		getFinder().getWebDriver().switchTo().defaultContent();
+		return isProcessed;
+		
 	}
 
 	public String visaOutgoingDownloadBatch(ProcessBatches batch) {
