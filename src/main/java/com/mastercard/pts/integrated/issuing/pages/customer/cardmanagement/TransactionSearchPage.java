@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -67,10 +68,14 @@ public class TransactionSearchPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Sequence Number')]")
 	private MCWebElement sequenceNumberText;
-
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Reconciliation Status')]//following-sibling::td[2]/select")
+	private MCWebElement reconciliationStatusDD;
+	
 	private final String DUPLICATE_PRESENTMENT = "Duplicate presentment";
 	private final String UNMATCH_PRESENTMENT = "Unmatched Presentment";
 	private final String DESCRIPTION = "Description";
+	private final String RECONCILIATION_STATUS_OPTIONS = "//*[contains(text(),'Reconciliation Status')]//following-sibling::td[2]/select/option";
 	
 	private String authorizationStatus;	
 
@@ -88,27 +93,19 @@ public class TransactionSearchPage extends AbstractBasePage {
 	}
 
 	public String searchTransactionWithARN(String arnNumber, TransactionSearch ts, String type) {
-		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, ts.getProductType());
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn,ts.getProductType());
 		WebElementUtils.enterText(searchARNTxt, arnNumber);
 		WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
 		WebElementUtils.pickDate(fromDateTxt, LocalDate.now().minusDays(10));
 		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
-		clickSearchButton();
 		
 		if(type.equalsIgnoreCase(DUPLICATE_PRESENTMENT) || type.equalsIgnoreCase(UNMATCH_PRESENTMENT)){
-			SimulatorUtilities.wait(2000);
-			String flag= getCellTextByColumnName(1, DESCRIPTION);
-			int size= Elements("//table[@class='dataview']/tbody/tr").size();
-			for(int i=size;i>=1;i--){
-				if(getCellTextByColumnName(i, DESCRIPTION).equalsIgnoreCase(flag)){
-					Element("//table[@class='dataview']/tbody/tr["+i+"]/td").click();
-					break;
-				}
-			}
+			String st = Elements(RECONCILIATION_STATUS_OPTIONS).stream().filter(x -> x.getText().contains(type)).findFirst().get().getText();
+			selectByText(reconciliationStatusDD, st);
 		}
-		else{	
-			viewFirstRecord();
-		}
+		
+		clickSearchButton();
+		viewFirstRecord();
 		
 		runWithinPopup("View Transactions", () -> {
 			logger.info("Retrieving authorization status : " + authorizationStatusTxt.getText());
