@@ -1,10 +1,10 @@
-prepaid Issuer scripting application block/unblock
+prepaid Issuer scripting pin change
 
 Narrative:
-In order to check issuer scripting on application block/unblock
+In order to check issuer scripting on pin change
 As an issuer
 I want to authorize transactions for prepaid emv retail general purpose card 
-when application is in block or unblock mode
+when application id for pin change status
 
 Meta:
 @StoryName p_emv_issuer_scripting_app_block_unblock
@@ -46,7 +46,7 @@ And user is logged in institution
 Then search Pin Change authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Verify Last executed script status for Application block
+Scenario: Verify Last executed script status for Pin Change
 When user is logged in institution
 Then verify Pending [2] status of Last Executed Script Status in Device Details Screen
 And user sign out from customer portal
@@ -60,7 +60,7 @@ And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 And MAS simulator is closed
 
-Scenario: Verify Last executed script status for Application unblock
+Scenario: Verify Last executed script status for Pin Change
 When user is logged in institution
 Then verify Success [0] status of Last Executed Script Status in Device Details Screen
 And user sign out from customer portal

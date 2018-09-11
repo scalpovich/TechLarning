@@ -1,10 +1,10 @@
-prepaid Issuer scripting application block/unblock
+credit Issuer scripting pin unblock
 
 Narrative:
-In order to check issuer scripting on application block/unblock
+In order to check issuer scripting on pin unblock
 As an issuer
-I want to authorize transactions for prepaid emv retail general purpose card 
-when application is in block or unblock mode
+I want to authorize transactions for credit emv retail general purpose card 
+when pin unblock is in block or unblock mode
 
 Meta:
 @StoryName cr_emv_issuer_scripting_app_block_unblock
@@ -79,7 +79,7 @@ Then user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Verify Last executed script status for Application unblock
+Scenario: Verify Last executed script status for Pin unblock
 When user is logged in institution
 Then verify Success [0] status of Last Executed Script Status in Device Details Screen
 And user sign out from customer portal
