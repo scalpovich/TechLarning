@@ -2,14 +2,13 @@ Narrative:
 In order to verify the mcc overlimit functionality for credit products
 As a user
 I want to trigger a purchase transaction on a credit card where mcc overlimit is set
-So that mcc overlimit functionality is tested and transaction gets accepted
+So that mcc overlimit functionality is tested and transaction gets verified
 
 Meta:
 @CreditFR
 @FR
 @StoryName credit_emv_retail_overlimit
 @mcc_overlimit 
-@mcc_overlimit_tx_accept
 
 Scenario:1 Creation of emv retail credit card
 Given setting json values in excel for Credit
