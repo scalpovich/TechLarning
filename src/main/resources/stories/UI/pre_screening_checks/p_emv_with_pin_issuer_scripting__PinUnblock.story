@@ -18,12 +18,12 @@ And User fills Program section for prepaid product
 And User fills Business Mandatory Fields Screen for prepaid product
 And User fills Device Range section for prepaid product
 And user assigns service code to program
-When user creates new device of prepaid type for new client
+And user creates new device of prepaid type for new client
 And device has "normal" status
 And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
-When a new device was created
+And a new device was created
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
@@ -35,7 +35,7 @@ Then user sign out from customer portal
 Scenario: Perform EMV_PURCHASE Authorization transaction with invalid pin
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
-Then user is logged in institution
+And user is logged in institution
 And search Purchase authorization and verify 117-Incorrect PIN status
 And assert Decline response with 46051 AuthDecline Code and Incorrect Pin. as description
 And user sign out from customer portal
@@ -45,7 +45,7 @@ When perform an EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 106-Allowable Pin tries exceeded status
 And assert Decline response with 46053 AuthDecline Code and Pin retry limit exceeded. as description
-Then device has "normal" status
+And device has "normal" status
 And user creates service request for Pin Retry Counter [109] service
 And user sign out from customer portal
 
