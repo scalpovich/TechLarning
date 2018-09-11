@@ -24,18 +24,18 @@ public class DeviceProductionBatchPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(DeviceProductionBatchPage.class);
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='cardNumber']")
 	private MCWebElement deviceNumberTxt;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "input[fld_fqn='batchNumber']")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='batchNumber']")
 	private MCWebElement batchNumberTxt;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "//select[@class='mandatoryFlag selectf']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Product Type')]//following-sibling::td[2]//select")
 	private MCWebElement productTypeDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:1:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Action Code')]//following-sibling::td[2]//select")
 	private MCWebElement actionCodeDDwn;
-	
+
 	public void processDeviceProductionBatch(DeviceProductionBatch batch) {
 		logger.info("Device-Production Batch: {}", batch.getBatchNumber());
 		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
