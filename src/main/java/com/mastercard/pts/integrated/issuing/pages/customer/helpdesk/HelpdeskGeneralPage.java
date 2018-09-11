@@ -1093,18 +1093,4 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return creditLimit;
 
 	}
-
-	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
-		selectServiceCode(helpdeskGeneral.getServiceCode());
-		clickGoButton();
-		runWithinPopup(RESET_PIN_RETRY_COUNTER, () -> {
-			enterNotes(helpdeskGeneral.getNotes());
-			clickSaveButton();
-			verifyOperationStatus();
-			clickOKButtonPopup();			
-		});
-		SimulatorUtilities.wait(3000);
-		clickEndCall();
-	}
-
 }

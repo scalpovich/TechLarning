@@ -29,7 +29,7 @@ And processes device production batch for prepaid
 And processes pin generation batch for prepaid
 And device has "normal" status
 And embossing file batch was generated in correct format
-And user set invalid pin
+And user sets invalid pin
 Then user sign out from customer portal
 
 Scenario: Perform EMV_PURCHASE Authorization transaction with invalid pin
@@ -46,7 +46,7 @@ Then user is logged in institution
 And search Purchase authorization and verify 106-Allowable Pin tries exceeded status
 And assert Decline response with 46053 AuthDecline Code and Pin retry limit exceeded. as description
 Then device has "normal" status
-When user reset pin retry counter Reset Pin Retry Counter [109]
+And user creates service request for Pin Retry Counter [109] service
 And user sign out from customer portal
 
 Scenario: Pin Generation
@@ -62,7 +62,7 @@ And user sign out from customer portal
 
 Scenario: Verify Last executed script status for Application block
 When user is logged in institution
-Then assert Pending [2] status of Last Executed Script Status in Device Details Screen
+Then verify Pending [2] status of Last Executed Script Status in Device Details Screen
 And user sign out from customer portal
 
 Scenario: Perform EMV_PURCHASE_ISSUER_SCRIPTING_RES Transaction
@@ -73,6 +73,6 @@ And user sign out from customer portal
 
 Scenario: Verify Last executed script status for Application unblock
 When user is logged in institution
-Then assert Success [0] status of Last Executed Script Status in Device Details Screen
+Then verify Success [0] status of Last Executed Script Status in Device Details Screen
 And user sign out from customer portal
 And FINSim simulator is closed
