@@ -477,6 +477,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(5000);
 		clickEndCall();
 	}
+	
 
 	public void chooseOperationDeactivate(String status) {
 		SimulatorUtilities.wait(1000);
@@ -1080,11 +1081,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return creditLimit;
 
 	}
-
 	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
-		runWithinPopup(RESET_PIN_RETRY_COUNTER, () -> {
+		runWithinPopup("109 - Reset Pin Retry Counter", () -> {
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();
@@ -1093,5 +1093,4 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(3000);
 		clickEndCall();
 	}
-
 }
