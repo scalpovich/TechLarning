@@ -1004,7 +1004,16 @@ public class DevicePlanPage extends AbstractBasePage {
 			selectIframeDeviceIDGenerationTemplate(devicePlanDataObject.getDeviceIdGenerationTemplate());
 			selectIframeCardPackIDGenerationTemplate(devicePlanDataObject.getCardPackIdGenerationTemplate());
 			selectIframePlasticIdDdwn(devicePlanDataObject.getPlasticId());
-			selectIframePictureCodeDdwn(devicePlanDataObject.getPictureCode());				
+			selectIframePictureCodeDdwn(devicePlanDataObject.getPictureCode());
+			
+			//Priority pass
+			if(devicePlanDataObject.getPriorityPassIndicator().equalsIgnoreCase("with")){				
+				checkPriorityPas();
+				selectPriorityIDtemplate(devicePlanDataObject);
+				priorityPassExMonth(devicePlanDataObject);
+				selectPrirotyPassVendor(devicePlanDataObject);
+			}
+			
 			
 			if(devicePlanDataObject.getProductType().equalsIgnoreCase(ProductType.CREDIT)&& !DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlanDataObject.getDeviceType())){
 				selectIframeActivationModeLst(devicePlanDataObject.getActivationMode());
@@ -1237,6 +1246,22 @@ public class DevicePlanPage extends AbstractBasePage {
 		});
 
 		verifyOperationStatus();
+	}
+	
+	public void checkPriorityPas(){	
+		ClickCheckBox(iframePriorityPassIndicatorChkbx,true);
+	}
+	
+	public void selectPriorityIDtemplate(DevicePlan devicePlan){
+		selectByVisibleText(iframePriorityPassIDTemplateDdwn, devicePlan.getPriorityPassIdTemplate());
+	}
+	
+	public void priorityPassExMonth(DevicePlan devicePlan){		
+		enterText(iframePriorityPassExpiryInMonthsTxt, devicePlan.getPriorityPassExpiry());
+	}
+	
+	public void selectPrirotyPassVendor(DevicePlan devicePlan){	
+		selectByVisibleText(iframePriorityPassIDTemplateDdwn, devicePlan.getPriorityPassVendor());
 	}
 	
 	private String getStoryName(){
