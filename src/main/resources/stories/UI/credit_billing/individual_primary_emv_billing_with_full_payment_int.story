@@ -8,6 +8,7 @@ Meta:
 @StoryName credit_emv_retail_billing
 @Individual
 @Primary	 
+
 Scenario:1 creation of mastercard_individual_primary_emv Card credit device
 Given setting json values in excel for Credit
 When user is logged in institution

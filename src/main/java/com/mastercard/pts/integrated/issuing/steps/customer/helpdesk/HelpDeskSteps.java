@@ -840,15 +840,7 @@ public class HelpDeskSteps {
 		assertThat(category +" "+ amount +BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device), equalTo(transactionAmount));
 	}
 	
-	@Then("user verify $amount amount for $category category")
-	@When("user verify $amount amount for $category category")
-	public void assertionForBilling(String amount, String category){
-		String transactionAmount = "10.00";
-		Device device = context.get(ContextConstants.DEVICE);
-		device.setCategory(category);
-		device.setAmountType(amount);
-		assertThat(category +" "+ amount +BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device), equalTo(transactionAmount));
-	}
+	
 
 	@When("check card balance details through helpdesk $type")
 	public void checkCardBalance(String type) {
