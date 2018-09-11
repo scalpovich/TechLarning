@@ -1,14 +1,13 @@
 Narrative:
-In order to a create a Credit Device under customer portal cardmanagement tab
+In order to validate billing with statemnt create device with billing cycle 1 perform authorization with clearing along with billing batches  
 As a user
-I want to assert pages
+I want to assert unbilled and billed amount on helpdesk and validate statement generated
 
 Meta:
 @CreditRegression
 @StoryName credit_emv_retail_billing
 @Individual
 @Primary	 
-
 
 Scenario:creation of mastercard_individual_primary_emv Card credit device
 Meta:
@@ -91,7 +90,7 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario: Process Batches
+Scenario: Process Batches for billing and validated values on helpdesk and statement 
 Meta:
 @TestId 
 Given user is logged in institution
