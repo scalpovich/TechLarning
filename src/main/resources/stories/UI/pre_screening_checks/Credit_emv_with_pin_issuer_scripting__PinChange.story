@@ -12,7 +12,7 @@ Meta:
 Scenario:creation of mastercard_individual_primary_emv Card credit device
 Given setting json values in excel for Credit
 When user is logged in institution
-When User fills Device Plan for "credit" "emv" card for issuer scripting
+And User fills Device Plan for "credit" "emv" card for issuer scripting
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
 And User fills MCC Rules for credit product

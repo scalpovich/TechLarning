@@ -11,8 +11,8 @@ Meta:
 
 Scenario: Set up prepaid emv retail general purpose card
 Given setting json values in excel for Prepaid
-Given user is logged in institution
-When User fills Device Plan for "prepaid" "emv" card for issuer scripting
+When user is logged in institution
+And User fills Device Plan for "prepaid" "emv" card for issuer scripting
 And User fills Wallet Plan for prepaid product
 And User fills Program section for prepaid product
 And User fills Business Mandatory Fields Screen for prepaid product

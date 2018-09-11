@@ -56,7 +56,6 @@ public class TransactionSteps {
 	private static final String IPM_INCOMING = "IPM_INCOMING";
 	private static final String DEVICE_PRODUCTION = "device production";
 	private static final String PIN_PRODUCTION = "pin production";
-	private final String INVALID_PIN = "1234";
 	private static final String IPMINCOMING = "ipm incoming";
 	private static Boolean sameCard = false;
 
