@@ -1217,20 +1217,30 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return null;
 	}
 
-	public void selectByVisibleText(MCWebElement ele, String optionName) {
-		String optionVisbleText = "";
+	public void doSelectByVisibleText(MCWebElement ele, String optionName) {
+		String optionalVisibleText = "";
 		waitUntilSelectOptionsPopulated(ele);
-		List<WebElement> selectedOptions = ele.getSelect().getOptions();
+		List<WebElement> selectedOptions = new Select(asWebElement(ele)).getOptions();
 		for (WebElement element : selectedOptions) {
 			if (element.getText().toUpperCase().contains(optionName.toUpperCase())) {
-				optionVisbleText = element.getText();
+				optionalVisibleText = element.getText();
 				break;
 			}
 		}
-		ele.getSelect().selectByVisibleText(optionVisbleText);
-		waitForLoaderToDisappear();
+		ele.getSelect().selectByVisibleText(optionalVisibleText);
+	}
+
+	public void selectByVisibleText(MCWebElement ele, String optionName) {
+		try {
+			doSelectByVisibleText(ele, optionName);
+			waitForLoaderToDisappear();
+			waitForPageToLoad(driver());
+		} catch (StaleElementReferenceException e) {
+			doSelectByVisibleText(ele, optionName);
+		}
 		waitForPageToLoad(driver());
 	}
+
 
 	private void waitUntilSelectOptionsPopulated(MCWebElement ele) {
 		WebDriverWait wait = new WebDriverWait(driver(), 100);
