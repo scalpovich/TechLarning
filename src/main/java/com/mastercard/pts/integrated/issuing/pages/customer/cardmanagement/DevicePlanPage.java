@@ -363,6 +363,15 @@ public class DevicePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:lvcPerTxnLimit:input:inputAmountField")
 	private MCWebElement perTranscLimitTxt;
 	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#pinChangeTnxFirst input")
+	private MCWebElement pinChangeTransactionFirstChbx;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#crossBorderTxnCheck input")
+	private MCWebElement crossBorderTransaction;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#crossBorderTxnCheckTime input")
+	private MCWebElement timeIntervalCrossBorder;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:virtualDeviceCreditLimit:input:inputTextField")
 	private MCWebElement virtualDeviceCrediLimitTxt;
 
@@ -404,7 +413,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "stopListFlag:checkBoxComponent")
 	private MCWebElement stoplistFlagChkBx;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind="view:issuerScripting:checkBoxComponent")	
 	private MCWebElement issuerScriptingChkBx;
 	
@@ -436,21 +445,22 @@ public class DevicePlanPage extends AbstractBasePage {
 	private MCWebElement pinUnblockChkBx;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="view:appBlockPriority:input:dropdowncomponent")	
-	private MCWebElement applicationBlockPriorityDropdown;
+	private MCWebElement applicationBlockPriorityDdwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="view:appUnblockPriority:input:dropdowncomponent")	
-	private MCWebElement applicationUnblockPriorityDropdown;
+	private MCWebElement applicationUnblockPriorityDdwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="view:putDataPriority:input:dropdowncomponent")	
-	private MCWebElement putDataPriorityDropdown;
+	private MCWebElement putDataPriorityDdwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="view:pinChangePriority:input:dropdowncomponent")	
-	private MCWebElement pinChangePriorityDropdown;
+	private MCWebElement pinChangePriorityDdwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="view:pinUnblockPriority:input:dropdowncomponent")	
-	private MCWebElement pinUnblockPriorityDropdown;
-
-	public void AddDevicePlan() {
+	private MCWebElement pinUnblockPriorityDdwn;
+	
+	
+public void AddDevicePlan() {
 		clickWhenClickable(AddDevicePlanBtn);
 		switchToAddDevicePlanFrame();
 	}
@@ -988,7 +998,15 @@ public class DevicePlanPage extends AbstractBasePage {
 	public void checkCvcCvv(boolean status) {
 		ClickCheckBox(cvccCvvChkBx, status);
 	}
-	
+
+	public void checkPinChangeTransactionFirst(boolean status) {
+		ClickCheckBox(pinChangeTransactionFirstChbx, status);
+	}
+
+	public void checkCrossBorderTransaction(boolean status) {
+		ClickCheckBox(crossBorderTransaction, status);
+	}
+
 	public void checkStoplistFlag(boolean status) {
 		ClickCheckBox(stoplistFlagChkBx, status);
 	}
@@ -1014,6 +1032,37 @@ public class DevicePlanPage extends AbstractBasePage {
 			clickSaveButton();
 		});
 
+		verifyOperationStatus();
+	}
+
+	public void updatePinChangeTransactionFirst(DevicePlan devicePlanDataObject) {
+		logger.info("Update Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
+		enterValueinTextBox(devicePlanCode, devicePlanDataObject.getDevicePlanCode());
+		clickSearchButton();
+		editFirstRecord();
+		runWithinPopup("Edit Device Plan", () -> {
+			WebElementUtils.elementToBeClickable(authorizationTab);
+			clickWhenClickable(authorizationTab);
+			WebElementUtils.elementToBeClickable(pinChangeTransactionFirstChbx);
+			checkPinChangeTransactionFirst(true);
+			clickSaveButton();
+		});
+		verifyOperationStatus();
+	}
+
+	public void checkCrossBorderTransaction(DevicePlan devicePlanDataObject) {
+		logger.info("Update Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
+		enterValueinTextBox(devicePlanCode, devicePlanDataObject.getDevicePlanCode());
+		clickSearchButton();
+		editFirstRecord();
+		runWithinPopup("Edit Device Plan", () -> {
+			WebElementUtils.elementToBeClickable(authorizationTab);
+			clickWhenClickable(authorizationTab);
+			WebElementUtils.elementToBeClickable(crossBorderTransaction);
+			checkCrossBorderTransaction(true);
+			WebElementUtils.enterText(timeIntervalCrossBorder, 20);
+			clickSaveButton();
+		});
 		verifyOperationStatus();
 	}
 
@@ -1191,20 +1240,27 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	private void forEmvOrNfc(DevicePlan devicePlan) {
 		iCVVOptionChkBx.click();
-		if(devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)){
+		if (devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			WebElementUtils.selectDropDownByIndex(iframeChipTypeDdwn, 1);
-		}else{
+		} else {
 			selectIframeChipTypeDdwnDdwn(devicePlan.getChipType());
-		}		
-		
+		}
+
 		if (devicePlan.getFillEMVPlan().equalsIgnoreCase(STATUS_YES)) {
 			clickWhenClickable(atcFlagChkBx);
-			//atcFlagChkBx.click();
+			// atcFlagChkBx.click();
 			WebElementUtils.selectDropDownByVisibleText(emvPlanResponseDdwn, devicePlan.getEmvPlanResponse());
 			WebElementUtils.enterText(acceptableBelowATCRangeTxt, devicePlan.getEmvBelowATCRange());
 			WebElementUtils.enterText(acceptableAboveATCRangeTxt, devicePlan.getEmvAboveATCRange());
 			clickWhenClickable(allowFallBackChkBx);
 		}
+      	if (devicePlan.getEmvPlanIssuerScripting() != null) {
+			fillIssuerScriptingDetails(devicePlan);
+        }
+	}
+
+	private void fillIssuerScriptingDetails(DevicePlan devicePlan )
+	{
 		if (devicePlan.getEmvPlanIssuerScripting().equalsIgnoreCase(STATUS_YES))
 		{
 			clickWhenClickable(issuerScriptingChkBx);
@@ -1232,21 +1288,19 @@ public class DevicePlanPage extends AbstractBasePage {
 			if (devicePlan.getEmvPlanPinUnblock().equalsIgnoreCase(STATUS_YES)) {
 				clickWhenClickable(pinUnblockChkBx);
 			}
-			WebElementUtils.selectDropDownByVisibleText(applicationBlockPriorityDropdown,
+			WebElementUtils.selectDropDownByVisibleText(applicationBlockPriorityDdwn,
 					devicePlan.getEmvPlanApplicationBlockPriority());
-			WebElementUtils.selectDropDownByVisibleText(applicationUnblockPriorityDropdown,
+			WebElementUtils.selectDropDownByVisibleText(applicationUnblockPriorityDdwn,
 					devicePlan.getEmvPlanApplicationUnblockPriority());
-			WebElementUtils.selectDropDownByVisibleText(pinChangePriorityDropdown,
+			WebElementUtils.selectDropDownByVisibleText(pinChangePriorityDdwn,
 					devicePlan.getEmvPlanPinChangePriority());
-			WebElementUtils.selectDropDownByVisibleText(putDataPriorityDropdown,
+			WebElementUtils.selectDropDownByVisibleText(putDataPriorityDdwn,
 					devicePlan.getEmvPlanPutDataPriority());
-			WebElementUtils.selectDropDownByVisibleText(pinUnblockPriorityDropdown,
+			WebElementUtils.selectDropDownByVisibleText(pinUnblockPriorityDdwn,
 					devicePlan.getEmvPlanPinUnblockPriority());
 
 		}
-		
 	}
-
 	private void fillPinGenerationSection(DevicePlan devicePlan) {
 		// perform below steps only when pinRequired is true which is the
 		// default state

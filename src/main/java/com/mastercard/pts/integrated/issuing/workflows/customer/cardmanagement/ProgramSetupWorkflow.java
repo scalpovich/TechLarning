@@ -122,6 +122,15 @@ public class ProgramSetupWorkflow {
 		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
 		page.updateCVCCVVDevicePlan(devicePlan);
 	}
+	
+	public void checkPinChangeTransactionFirst(DevicePlan devicePlan){
+		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
+		page.updatePinChangeTransactionFirst(devicePlan);
+	}
+	public void checkCrossBorderTransaction(DevicePlan devicePlan){
+		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
+		page.checkCrossBorderTransaction(devicePlan);
+	}
 	// Device configuration ends
 	
 	public void fillDocumentChecklist(ApplicationDocumentChecklist  applicationDocumentChecklist) {
@@ -223,6 +232,11 @@ public class ProgramSetupWorkflow {
 		TransactionPlanPage page = navigator.navigateToPage(TransactionPlanPage.class);
 		page.createTransactionPlan(plan);
 	}
+	
+	public void createTransactionPlanWithoutAnyTransaction(TransactionPlan plan) {
+		TransactionPlanPage page = navigator.navigateToPage(TransactionPlanPage.class);
+		page.createTransactionPlanWithoutAnyTransaction(plan);
+	}
 
 	public void createTransactionFeePlan(TransactionFeePlan plan) {
 		TransactionFeePlanPage page = navigator.navigateToPage(TransactionFeePlanPage.class);
@@ -233,6 +247,12 @@ public class ProgramSetupWorkflow {
 		MCCRulePlanPage page = navigator.navigateToPage(MCCRulePlanPage.class);
 		page.createMCCRulePlanPage(plan);
 	}
+
+	public void editWalletPlan(WalletPlan walletPlan, String editableFieldForWalletPlan) {
+		WalletConfigurationWalletPlanPage page = navigator.navigateToPage(WalletConfigurationWalletPlanPage.class);
+		page.editWalletPlan(walletPlan,editableFieldForWalletPlan);
+		
+	}
 	public void enableStopListFlag(DevicePlan devicePlanDataObject) {
 		DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
 		page.enableStopListFlag(devicePlanDataObject);
@@ -241,5 +261,16 @@ public class ProgramSetupWorkflow {
 	public void editMCCRulePlan(MCCRulePlan plan) {
 		MCCRulePlanPage page = navigator.navigateToPage(MCCRulePlanPage.class);
 		page.editMCCRulePlanPage(plan);
+	}
+	
+	public void createWalletPlan(WalletPlan walletPlan, int reservedAmount) {
+		WalletConfigurationWalletPlanPage page = navigator.navigateToPage(WalletConfigurationWalletPlanPage.class);
+		page.setReservedAmount(reservedAmount);
+		page.addWalletPlanData(walletPlan);
+	}
+	
+	public void editsProgram(Program program,String editItem) {
+		ProgramPage page = navigator.navigateToPage(ProgramPage.class);
+		page.editsProgramForPlans(program,editItem);
 	}
 }

@@ -8,16 +8,12 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.D
 
 @Component
 public class DeviceDetailsSteps {
-	
+
 	@Autowired
 	DeviceDetailsFlows detailsFlows;
 
-	
-	@Then("assert $lastExecutedScriptStatus status of Last Executed Script Status in Device Details Screen")
-	public void thenAssertLastExecutedScriptStatusFromDeviceDetails(String lastExecutedScriptStatus) {
-		
+	@Then("verify $lastExecutedScriptStatus status of Last Executed Script Status in Device Details Screen")
+	public void thenVerifyLastExecutedScriptStatusFromDeviceDetails(String lastExecutedScriptStatus) {
 		detailsFlows.verifyLastExecutedScriptStatusFromDeviceDetails(lastExecutedScriptStatus);
-		
 	}
-
 }

@@ -277,7 +277,7 @@ public class TransactionSteps {
 		transactionData.setCardDataElementsDynamic("035.04", device.getServiceCode());
 		if (transactionWorkflow.isContains(transaction, "EMV")) {
 			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getIcvvData());
-		} else if (transactionWorkflow.isContains(transaction, "MSR")) {
+		} else if (transactionWorkflow.isContains(transaction, "MSR") || transactionWorkflow.isContains(transaction, "FALLBACK") ) {
 			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getCvvData());
 		}
 	}
@@ -390,10 +390,18 @@ public class TransactionSteps {
 	public void thenPINIsRetrievedSuccessfully() {
 		Device device = context.get(ContextConstants.DEVICE);
 		Transaction transactionData = Transaction.generateFinSimPinTestData(device, finSimConfig, provider);
-
 		String pinNumber = transactionWorkflow.getPinNumber(transactionData);
 		logger.info("FINSim PIN Number generated : {} ", pinNumber);
+      	Assert.assertTrue("INVALID PIN", !pinNumber.isEmpty());
 		device.setPinNumberForTransaction(pinNumber);
+	}
+	
+	@When("PIN is created for Pin Change First Transaction")
+	@Then("PIN is created for Pin Change First Transaction")
+	public void thenPINIsCreatedForPinChangeFirstTransaction() {
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
+		context.put(ContextConstants.DEVICE, device);
 	}
 
 	@When("$simulatorName simulator is closed")
@@ -534,14 +542,7 @@ public class TransactionSteps {
 		context.put(ConstantData.ARN_NUMBER, arn);
 		logger.info("ARN for device transactions = {} ", arn);
 	}
-	
-	@When("PIN is created for Pin Change First Transaction")
-	@Then("PIN is created for Pin Change First Transaction")
-	public void thenPINIsCreatedForPinChangeFirstTransaction() {
-		Device device = context.get(ContextConstants.DEVICE);
-		device.setPinNumberForTransaction("1234");
-		context.put(ContextConstants.DEVICE, device);
-	}
+
 	@Given("user update folder permission through WinSCP for $type folder")
 	@When("user update folder permission through WinSCP for $type folder")
 	public void connectionToApplicationIsEstablished(String type) {
@@ -555,10 +556,12 @@ public class TransactionSteps {
 			transactionWorkflow.setFolderPermisson(provider.getString(IPM_INCOMING));
 		transactionWorkflow.closeWinSCP();
 	}
-	@When("user set invalid pin")
+	
+	@Then("user sets invalid pin")
+	@When("user sets invalid pin")
 	public void userSetInvalidPin(){
 		Device device = context.get(ContextConstants.DEVICE);
-		device.setPinNumberForTransaction(INVALID_PIN);
+		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
 		context.put(ContextConstants.DEVICE, device);
 	}
 }

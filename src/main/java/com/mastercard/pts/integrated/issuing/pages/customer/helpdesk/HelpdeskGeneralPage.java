@@ -40,6 +40,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Navigation(tabTitle = HelpdeskNav.TAB_HELPDESK, treeMenuItems = { HelpdeskNav.L1_ACTIVITY, HelpdeskNav.L2_GENERAL })
 public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String TABLE_XPATH = "//div[@class='TransScrollY']//table[@class='dataview']//tr";
+	private static final String OPERATION="//select[@name='udf1:input:dropdowncomponent']";
 	private static final String ROWCOUNT_REMITTANCE = "//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr";
 	private static final String COLUMN_STATUS = "Status";
 	private static final String CURRENT_AVAILABLE_BALANCE = "Current Available Balance";
@@ -108,6 +109,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Save']")
 	private MCWebElement saveBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='udf4:input:inputTextField']")
+	private MCWebElement timeInHourTxt;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".feedbackPanelINFO")
 	private MCWebElement activationMessage;
@@ -225,11 +229,19 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Current Status and Limits']")
 	private MCWebElement currentStatusAndLimitTab;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@name='udf23:radioComponent' and @value='0']")
+	private MCWebElement eccomDeactivate;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@name='udf23:radioComponent' and @value='1']")
+	private MCWebElement eccomActivate;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Card :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement creditLimitLabel;
-	
+
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
+	
+	private final String RESET_PIN_RETRY_COUNTER= "109 - Reset Pin Retry Counter";
 
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
@@ -409,7 +421,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickSearchButton();
 			firstRow = getFirstColumnValueFromTable();
 			clickCloseButton();
-			
+
 		});
 		clickEndCall();
 		return firstRow.isEmpty();
@@ -478,6 +490,106 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(3000);
 		clickEndCall();
 	}
+
+	public void chooseOperationDeactivate(String status) {
+		SimulatorUtilities.wait(1000);
+		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW)) {
+			WebElementUtils.retryUntilNoErrors(() -> new Select(driver().findElement(By.xpath(OPERATION))).selectByValue("0"));
+		} else {
+			eccomDeactivate.click();
+		}
+	}
+
+	public void chooseOperationActivate(String status) {
+		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW)) {
+			SimulatorUtilities.wait(1000);
+			WebElement operation = driver().findElement(
+					By.xpath("//select[@name='udf1:input:dropdowncomponent']"));
+			WebElement activationType = driver().findElement(
+					By.xpath("//select[@name='udf2:input:dropdowncomponent']"));
+			WebElementUtils.retryUntilNoErrors(() -> new Select(operation)
+					.selectByValue("1"));
+			WebElementUtils.retryUntilNoErrors(() -> new Select(activationType)
+					.selectByVisibleText(ConstantData.GENERIC_DESCRIPTION));
+			WebElementUtils.enterText(timeInHourTxt, "1");
+		} else {
+			SimulatorUtilities.wait(1000);
+			List<WebElement> listEccom = driver().findElements(
+					By.xpath("//input[@name='udf23:radioComponent']"));
+			boolean rValue;
+			if (rValue = listEccom.get(1).isSelected()) {
+				listEccom.get(0).click();
+			}
+			WebElement element = driver().findElement(By.xpath("//input[@name='udf25:radioComponent' and @value='2']"));
+			element.click();
+			SimulatorUtilities.wait(2000);
+			WebElementUtils.enterText(timeInHourTxt, "1");
+		}
+	}
+	
+	public void setupInternationalAllowDisallowCheck(String status) {
+		selectServiceCode(ConstantData.INTERNATIONAL_ALLOW_DISALLOW);
+		clickGoButton();
+		runWithinPopup("400 - International Use Allow/Disallow", () -> {
+			chooseOperationDeactivate(status);
+			SimulatorUtilities.wait(2000);
+			enterNotes("Automation");
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();			
+		});
+		//There is a delay in page rendering
+		SimulatorUtilities.wait(5000);
+		clickEndCall();
+	}
+	
+	public void setupEccomerceDisallowCheck(String status) {
+		selectServiceCode(ConstantData.ECCOMERCE_ALLOW_DISALLOW);
+		clickGoButton();
+		runWithinPopup("304 - E-commerce Activation/Deactivation", () -> {
+			chooseOperationDeactivate(status);
+			SimulatorUtilities.wait(2000);
+			enterNotes("Automation");
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();			
+		});
+		//There is a delay in page rendering
+		SimulatorUtilities.wait(5000);
+		clickEndCall();
+	}
+	
+	public void allowTransactionForOneHour(String status) {
+		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW))
+		{
+		selectServiceCode(ConstantData.INTERNATIONAL_ALLOW_DISALLOW);
+		clickGoButton();
+		runWithinPopup("400 - International Use Allow/Disallow", () -> {
+			chooseOperationActivate(status);
+			enterNotes(ConstantData.GENERIC_DESCRIPTION);
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();			
+		});
+		}
+		else
+		{
+			selectServiceCode(ConstantData.ECCOMERCE_ALLOW_DISALLOW);
+			clickGoButton();
+			runWithinPopup("304 - E-commerce Activation/Deactivation", () -> {
+				chooseOperationActivate(status);
+				enterNotes(ConstantData.GENERIC_DESCRIPTION);
+				clickSaveButton();
+				verifyOperationStatus();
+				clickOKButtonPopup();			
+			});
+		}
+	
+		//There is a delay in page rendering
+		SimulatorUtilities.wait(5000);
+		clickEndCall();
+	}
+	
 
 	public boolean verifyCurrencySetupDoneCorrectly(HelpdeskGeneral helpdeskGeneral, Device device) {
 		logger.info("verify added currecy for device number: {}", device.getDeviceNumber());
@@ -980,6 +1092,19 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		return creditLimit;
 
+	}
+
+	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		clickGoButton();
+		runWithinPopup(RESET_PIN_RETRY_COUNTER, () -> {
+			enterNotes(helpdeskGeneral.getNotes());
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();			
+		});
+		SimulatorUtilities.wait(3000);
+		clickEndCall();
 	}
 
 }
