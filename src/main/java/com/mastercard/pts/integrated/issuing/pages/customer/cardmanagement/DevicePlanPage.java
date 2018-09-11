@@ -1261,7 +1261,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	}
 	
 	public void selectPrirotyPassVendor(DevicePlan devicePlan){	
-		selectByVisibleText(iframePriorityPassIDTemplateDdwn, devicePlan.getPriorityPassVendor());
+		selectByVisibleText(iframePriorityPassVendorDdwn, devicePlan.getPriorityPassVendor());
 	}
 	
 	private String getStoryName(){
