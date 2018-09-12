@@ -35,9 +35,9 @@ Then user sign out from customer portal
 Scenario: Transaction ECOMM Purchase
 Given user is logged in institution
 When connection to MAS is established
-When perform an ECOMM_PURCHASE MAS transaction
-Then MAS test results are verified
-When MAS simulator is closed
-Then user is logged in institution
-Then search E-Commerce Transaction authorization and verify 000-Successful status
+And perform an ECOMM_PURCHASE MAS transaction
+And MAS test results are verified
+And MAS simulator is closed
+And user is logged in institution
+And search E-Commerce Transaction authorization and verify 000-Successful status
 Then user sign out from customer portal
