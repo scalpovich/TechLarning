@@ -86,7 +86,7 @@ public class BatchProcessSteps {
 
 	private static final String INSTITUTION_CODE = "INSTITUTION_CODE";
 	
-	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
+	private static final Logger logger = LoggerFactory.getLogger(BatchProcessSteps.class);
 	
 	private File batchFile;
 
@@ -212,7 +212,7 @@ public class BatchProcessSteps {
 	@When("verify statement file is successfully downloaded")
 	public void verifyStatementFileSuccessfullyGenerated(){
 		Device device =  context.get(ContextConstants.DEVICE);
-		String institutionCode = System.getProperty("institution").substring(System.getProperty("institution").indexOf('[')+1, System.getProperty("institution").length() - 1);
+		String institutionCode = System.getProperty(ContextConstants.INST_PROPERTY).substring(System.getProperty(ContextConstants.INST_PROPERTY).indexOf('[')+1, System.getProperty(ContextConstants.INST_PROPERTY).length() - 1);
 		String partialFileName = "STMT_" +institutionCode  +"_"+ device.getProgramCode() + "_" + device.getClientCode() +"_"+ context.get(ContextConstants.STATEMENT_TO_DATE) + context.get(ContextConstants.STATEMENT_FROM_DATE) + "_" + device.getDeviceNumber().substring(device.getDeviceNumber().length() - 4); 
 		logger.info("File Name :{} ",partialFileName);
 	    batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(), "STATEMENT_DOWNLOAD","proc");

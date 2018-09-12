@@ -196,7 +196,7 @@ public class PDFUtils {
 	public HashMap<Object, String> resolvePDFLine(HashMap<Object, String> map,String field,String value)
 	{
 		String [] fieldArray  = field.split("-|\\+|=");
-		String [] valuesArray = value.split("( PHP)+");
+		String [] valuesArray = value.split("( INR)+");
 		for (int iCounter = 0;iCounter < fieldArray.length - 1 ; iCounter++) {
 			map.put(fieldArray[iCounter],valuesArray[iCounter]);
 			logger.info("Field in statement : {}={}",fieldArray[iCounter].trim(),valuesArray[iCounter].trim());	

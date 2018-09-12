@@ -48,6 +48,7 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDeskFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpdeskWorkflow;
 
@@ -532,6 +533,27 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.activateDevice(helpdeskGeneral);
 	}
 
+	@Then("user selects $reason status")
+	@When("user selects $reason status")
+	public void whenUserSelectsEccomerceUseAllowDisallowStatus(String status) {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskWorkflow.getDeviceStatus(device);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW)) {
+			helpdeskWorkflow.setupInternationalAllowDisallowCheck(status);
+		} else {
+			helpdeskWorkflow.setupEccomerceAllowDisallowCheck(helpdeskGeneral, status);
+		}
+	}
+
+	@When("user allow $type Transaction For One Hour")
+	public void whenUserTransactionForOneHour(String status) {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskWorkflow.getDeviceStatus(device);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.allowTransactionForOneHour(status);
+	}
+	
 	@Given("user setup device currency through helpdesk")
 	@When("user setup device currency through helpdesk")
 	public void whenUserSetupDeviceCurrencyThroughHelpDesk() {
@@ -582,9 +604,7 @@ public class HelpDeskSteps {
 	@Then("device has \"$deviceStatus\" status")
 	public void thenDeviceHasStatus(String deviceStatus) {
 		String expectedStatus = DeviceStatus.fromShortName(deviceStatus);
-		Device device = new Device();//context.get(ContextConstants.DEVICE);
-		device.setDeviceNumber("5742539370867516");
-		device.setAppliedForProduct("Credit [C]");
+		Device device = context.get(ContextConstants.DEVICE);
 		String actualStatus = helpdeskWorkflow.getDeviceStatus(device);
 		assertThat(STATUS_INCORRECT_INFO_MSG, actualStatus, equalTo(expectedStatus));
 		context.put(ContextConstants.DEVICE, device);
@@ -826,8 +846,16 @@ public class HelpDeskSteps {
 	@When("For fileUpload when user search for new application on search screen for $productType and validates the status as $NORMAL")
 	public void thenUserSearchForApplicationOnSearchScreenforFileUpload(String productType, String status) {
 		helpDeskGetterSetter.setProductType(ProductType.fromShortName(productType));
-
 		helpdeskFlows.searchForNewApplicationFileUpload(helpDeskGetterSetter);
+	}
+	
+	@Then("user creates service request for $serviceCode service")
+	@When("user creates service request for $serviceCode service")
+	public void whenUserResetPinRetryCounterThroughHelpDesk(String serviceCode) {
+		helpdeskGeneral.setServiceCode(serviceCode);			// Service Code e.g : Activate Device [108]
+		helpdeskGeneral.setNotes(MiscUtils.generateRandomNumberAsString(6));
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskWorkflow.resetPinCounter(helpdeskGeneral);
 	}
 	
 	@Then("user verify $amount amount for $category category")
