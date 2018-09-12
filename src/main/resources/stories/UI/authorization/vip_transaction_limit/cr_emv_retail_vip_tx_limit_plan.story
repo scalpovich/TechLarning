@@ -10,7 +10,7 @@ Meta:
 @StoryName cr_vip_transaction_limit
 @vip_transaction_limit
 
-Scenario:1 creation of corporate emv credit device
+Scenario:1 creation of retail emv credit device
 Given setting json values in excel for Credit
 And user is logged in institution
 When for EMV Card User fills Device Plan for credit product for Mastercard
