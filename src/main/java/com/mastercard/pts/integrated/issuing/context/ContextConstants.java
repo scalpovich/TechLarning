@@ -98,6 +98,8 @@ public class ContextConstants {
 	
 	public static final String HELPDESK_VALUES = "HELPDESK_VALUES";
 	
+	public static final String INST_PROPERTY = "institution";
+	
 	private ContextConstants() {
 	}
 

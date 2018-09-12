@@ -627,8 +627,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	 */
 	public String processStatementExtractBatch(ProcessBatches batch) {
 		selectBatchTypeAndName(batch);
-		LocalDate fromDate = DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt));
-		LocalDate toDate = DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)).minusDays(30);
+		LocalDate fromDate = DateUtils.convertInstitutionDateInLocalDateFormat(getInstitutionDate());
+		LocalDate toDate = DateUtils.convertInstitutionDateInLocalDateFormat(getInstitutionDate()).minusDays(30);
 		WebElementUtils.pickDate(fromDateTxt, fromDate);
 		WebElementUtils.pickDate(toDateTxt,toDate);
 		context.put(ContextConstants.STATEMENT_FROM_DATE, DateTimeFormatter.ofPattern("ddMMyyyy", Locale.ENGLISH).format(fromDate));
