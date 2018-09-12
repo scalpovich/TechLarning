@@ -13,17 +13,17 @@ Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
 When user creates new device of prepaid type for new client
 Then device has "normal" status
-Then user sign out from customer portal
+And user sign out from customer portal
 
 Scenario: prepaid msr retail gift card authorization pinless device production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
-When processes device production batch for prepaid
+And processes device production batch for prepaid
 Then device has "normal" status
-Then user activates device through helpdesk
-Then user sign out from customer portal
-Then embossing file batch was generated in correct format
+And user activates device through helpdesk
+And user sign out from customer portal
+And embossing file batch was generated in correct format
 
 Scenario: Perform MMSR-RetailGiftCard Authorization transaction
 Given connection to MAS is established

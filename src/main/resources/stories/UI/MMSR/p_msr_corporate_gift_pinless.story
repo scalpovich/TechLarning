@@ -18,11 +18,11 @@ Scenario: Device production - prepaid MSR corporate gift card without PIN
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
-When processes device production batch for prepaid
+And processes device production batch for prepaid
 Then device has "normal" status
 When user activates device through helpdesk
 Then user sign out from customer portal
-Then embossing file batch was generated in correct format
+And embossing file batch was generated in correct format
 
 Scenario: Perform MMSR-CORPORATE_GiftCard Authorization transaction
 Given connection to MAS is established

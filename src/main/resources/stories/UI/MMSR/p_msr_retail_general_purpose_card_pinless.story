@@ -20,9 +20,9 @@ And a new device was created
 When processes pre-production batch for prepaid
 When processes device production batch for prepaid
 Then device has "normal" status
-Then user activates device through helpdesk
-Then user sign out from customer portal
-Then embossing file batch was generated in correct format
+And user activates device through helpdesk
+And user sign out from customer portal
+And embossing file batch was generated in correct format
 
 Scenario: Perform MMSR-RetailGeneralPurposeCard Authorization transaction
 Given connection to MAS is established
