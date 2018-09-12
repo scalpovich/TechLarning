@@ -1,7 +1,7 @@
 Narrative:
 In order to a create a Credit Device under customer portal cardmanagement tab
 As a user
-I want to assert pages
+I want to assert pages and make full payment of bill
 
 Meta:
 @CreditRegression
@@ -119,6 +119,7 @@ And "Pre-clearing" batch for credit is successful
 And "EOD-Credit" batch for credit is successful
 And recheck card balance details through helpdesk after payment
 Then user check successful payments
+When check card balance details through helpdesk
 And user sign out from customer portal
 When update institution date to first of next month
 
@@ -130,5 +131,6 @@ When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
 And user processes Billing Process - Credit system internal batch for Credit
 And user run Statement Extract system internal batch
-When check card balance details through helpdesk
+And recheck card balance details through helpdesk after payment
+Then user check successful payments
 And user sign out from customer portal
