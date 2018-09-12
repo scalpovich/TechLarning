@@ -35,7 +35,7 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.Tran
 
 @Component
 public class DateUtils {
-	private static final Logger logger = LoggerFactory.getLogger(TransactionWorkflow.class);
+	private static final Logger logger = LoggerFactory.getLogger(DateUtils.class);
 	private static final int DEFAULT_KEY_LENGTH = 10;
 	int month = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH);
 	int year = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);

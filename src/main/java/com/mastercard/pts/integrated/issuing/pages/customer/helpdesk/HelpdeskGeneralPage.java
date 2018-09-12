@@ -249,25 +249,25 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement accountCreditLimitLabel;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='PDD :']/../../following-sibling::td[1]/span/span/span")
-	private MCWebElement paymentDueDate;
+	private MCWebElement paymentDueDateLabel;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='MAD :']/../../following-sibling::td[1]/span/span")
-	private MCWebElement minimumAmountDue;
+	private MCWebElement minimumAmountDueLabel;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='TAD :']/../../following-sibling::td[1]/span/span")
-	private MCWebElement totalAmountDue;
+	private MCWebElement totalAmountDueLabel;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Closing Balance :']/../../following-sibling::td[1]/span/span")
-	private MCWebElement closingBalance;
+	private MCWebElement closingBalanceLabel;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Interest :']/../../following-sibling::td[1]/span/span")
-	private MCWebElement interest;
+	private MCWebElement interestLabel;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan :']/../../following-sibling::td[1]/span/span")
-	private MCWebElement loan;
+	private MCWebElement loanLabel;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Interest :']/../../following-sibling::td[1]/span/span")
-	private MCWebElement loanInterest;
+	private MCWebElement loanInterestLabel;
 	
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
 	
@@ -1132,15 +1132,15 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickWhenClickable(currentStatusAndLimitTab);
 		helpDeskValues.put(ContextConstants.CREDIT_LIMIT, accountCreditLimitLabel.getText());
 		helpDeskValues.put(ContextConstants.AVAILABLE_CREDIT_LIMIT, availAccountCreditLimitLabel.getText());
-		helpDeskValues.put(ContextConstants.PAYMENT_DUE_DATE, paymentDueDate.getText());
-		helpDeskValues.put(ContextConstants.MINIMUM_PAYMENT_DUE, minimumAmountDue.getText());		
-		helpDeskValues.put(ContextConstants.CLOSING_BALANCE, closingBalance.getText());	
+		helpDeskValues.put(ContextConstants.PAYMENT_DUE_DATE, paymentDueDateLabel.getText());
+		helpDeskValues.put(ContextConstants.MINIMUM_PAYMENT_DUE, minimumAmountDueLabel.getText());		
+		helpDeskValues.put(ContextConstants.CLOSING_BALANCE, closingBalanceLabel.getText());	
 		WebElementUtils.elementToBeClickable(balanceDetailsTab);	
 		clickWhenClickable(balanceDetailsTab);
-		helpDeskValues.put(ContextConstants.TOTAL_PAYMENT_DUE, totalAmountDue.getText());		
-		helpDeskValues.put(ContextConstants.INTEREST, interest.getText());	
-		helpDeskValues.put(ContextConstants.LOAN, loan.getText());	
-		helpDeskValues.put(ContextConstants.LOAN_INTEREST, loanInterest.getText());	
+		helpDeskValues.put(ContextConstants.TOTAL_PAYMENT_DUE, totalAmountDueLabel.getText());		
+		helpDeskValues.put(ContextConstants.INTEREST, interestLabel.getText());	
+		helpDeskValues.put(ContextConstants.LOAN, loanLabel.getText());	
+		helpDeskValues.put(ContextConstants.LOAN_INTEREST, loanInterestLabel.getText());	
 		clickEndCall();
 		return helpDeskValues;
 	}
