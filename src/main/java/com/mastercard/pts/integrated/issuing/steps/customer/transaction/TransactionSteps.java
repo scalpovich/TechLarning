@@ -107,6 +107,7 @@ public class TransactionSteps {
 	@Aliases(values = { "a sample simulator \"$transaction\" is executed", "user performs an $transaction MAS transaction" })
 	@Given("perform an $transaction MAS transaction")
 	public void givenTransactionIsExecuted(String transaction) {
+
 		String temp = transaction;
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));

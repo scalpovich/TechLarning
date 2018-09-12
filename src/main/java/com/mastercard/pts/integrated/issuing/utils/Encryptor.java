@@ -14,9 +14,6 @@ public class Encryptor {
 	}
 
 	public static void main(String[] args) {
-		System.setProperty("institution", "AUTOBNG [303045]");
-		String institutionCode = System.getProperty("institution").substring(System.getProperty("institution").indexOf('[')+1, System.getProperty("institution").length() - 1);
-		System.out.println("Code :"+institutionCode);
 		Arrays.stream(args).map(Encryptor::encrypt).forEach(logger::info);
 	}
 

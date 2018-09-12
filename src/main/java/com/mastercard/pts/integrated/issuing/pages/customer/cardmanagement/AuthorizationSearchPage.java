@@ -95,7 +95,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	private MCWebElement availableBalanceTxt;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
-	private MCWebElement institutionDateText;
+	private MCWebElement institutionDateTxt;
 	
 	private String amountTypes = "Billing Amount:Transaction Fee:Service Tax:Markup Fee:Markup Service Tax";
 	
@@ -109,12 +109,12 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	}
 
 	public void inputFromDate(LocalDate date) {
-		date = LocalDate.parse(getTextFromPage(institutionDateText), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(1);
+		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(1);
 		WebElementUtils.pickDate(fromDate, date);
 	}
 
 	public void inputToDate(LocalDate date) {
-		date = LocalDate.parse(getTextFromPage(institutionDateText), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
 		WebElementUtils.pickDate(toDate, date);
 	}
 

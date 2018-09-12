@@ -64,19 +64,19 @@ public class TransactionSearchPage extends AbstractBasePage {
 	private MCWebElement retrieveARNLabel;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
-	private MCWebElement institutionDateText;
+	private MCWebElement institutionDateTxt;
 	
 	private String authorizationStatus;	
 	
 	public void selectFromDate(LocalDate date)
 	{
-		date = LocalDate.parse(getTextFromPage(institutionDateText), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(1);
+		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(1);
 		WebElementUtils.pickDate(fromDateTxt, date);		
 	}
 	
 	public void selectToDate(LocalDate date)
 	{
-		date = LocalDate.parse(getTextFromPage(institutionDateText), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
 		WebElementUtils.pickDate(toDateTxt, date);
 	}
 	

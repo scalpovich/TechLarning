@@ -174,7 +174,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private MCWebElement bussinessDateTxt;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
-	private MCWebElement institutionDateText;
+	private MCWebElement institutionDateTxt;
 
 	public final String SYSTEM_INTERNAL_PROCESSING = "SYSTEM INTERNAL PROCESSING [B]";
 	
@@ -615,7 +615,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	 */
 	public String processCreditBillingBatch(ProcessBatches batch) {
 		selectBatchTypeAndName(batch);
-		WebElementUtils.pickDate(bussinessDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateText)));
+		WebElementUtils.pickDate(bussinessDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
 		submitAndVerifyBatch();
 		return batchStatus;
 	}
@@ -627,8 +627,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	 */
 	public String processStatementExtractBatch(ProcessBatches batch) {
 		selectBatchTypeAndName(batch);
-		LocalDate fromDate = DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateText));
-		LocalDate toDate = DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateText)).minusDays(30);
+		LocalDate fromDate = DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt));
+		LocalDate toDate = DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)).minusDays(30);
 		WebElementUtils.pickDate(fromDateTxt, fromDate);
 		WebElementUtils.pickDate(toDateTxt,toDate);
 		context.put(ContextConstants.STATEMENT_FROM_DATE, DateTimeFormatter.ofPattern("ddMMyyyy", Locale.ENGLISH).format(fromDate));
