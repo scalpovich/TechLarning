@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import java.util.Map;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -40,6 +42,8 @@ public class DeviceSteps {
 
 	@Autowired
 	Program program;
+	
+	private static final String PROMOTION_FEE_PLAN = "PROMOTION_FEE_PLAN";
 
 	private static final String CORPORATE_CLIENT_CODE_DEVICE2 = "CORPORATE_CLIENT_CODE_DEVICE2";
 
@@ -143,32 +147,7 @@ public class DeviceSteps {
 		context.put(CreditConstants.APPLICATION, device);
 	}
 	
-	@Given("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType and $promotionFee Plan")
-	@When("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType and $promotionFee Plan")
-	@Then("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType and $promotionFee Plan")
-	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewDevice(String type,String customerType,String applicationType,String subApplicationType,String deviceType, String promotionFee) {
-		Device device = Device.createWithProviderForOtherDetails(provider);
-		device.setAppliedForProduct(ProductType.fromShortName(type));
-		device.setCustomerType(customerType);
-		device.setApplicationType(applicationType);
-		device.setSubApplicationType(subApplicationType);
-		device.setDeviceType1(deviceType);
-		device.setPromotionPlanCode(promotionFee);
-		
-		Program program = context.get(ContextConstants.PROGRAM);
-		device.setProgramCode(program.buildDescriptionAndCode());
-		
-		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && !(device.getSubApplicationType().contains(SubApplicationType.NEW_CLIENT))){
-			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
-			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
-		} else {
-			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
-			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
-		}
-		deviceWorkflow.createDevice(device);
-		context.put(ContextConstants.DEVICE, device);
-	}
-	
+
 	@Given("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
 	@When("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
 	@Then("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
@@ -180,6 +159,13 @@ public class DeviceSteps {
 		device.setSubApplicationType(subApplicationType);
 		device.setDeviceType1(deviceType);
 		
+		Map<String,Object> allData=context.get(TestContext.KEY_STORY_DATA);
+
+		if (allData.containsKey(PROMOTION_FEE_PLAN))
+		{
+			device.setPromotionPlanCode(provider.getString(PROMOTION_FEE_PLAN));					
+		}
+		
 		Program program = context.get(ContextConstants.PROGRAM);
 		device.setProgramCode(program.buildDescriptionAndCode());
 		
@@ -194,7 +180,6 @@ public class DeviceSteps {
 		context.put(ContextConstants.DEVICE, device);
 	}
 	
-
 	
 	@When("$type device is created using new Application screen for $customerType and \"$applicationType\" and $subApplicationType and $deviceType")
 	@Given("$type device is created using new Application screen for $customerType and \"$applicationType\" and $subApplicationType and $deviceType")

@@ -17,6 +17,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -105,11 +106,16 @@ public class WebElementUtils {
 	}
 
 	@SuppressWarnings("deprecation")
-	public static void selectDropDownByVisibleText(MCWebElement element, String visibleText) {
-		retryUntilNoErrors(() -> new Select(asWebElement(element)).selectByVisibleText(visibleText));
-		SimulatorUtilities.wait(1000);
-		//waitForWicket(TestContext.getDriver());
-	}
+    public static void selectDropDownByVisibleText(MCWebElement element, String visibleText) {
+          try{
+          retryUntilNoErrors(() -> new Select(asWebElement(element)).selectByVisibleText(visibleText));        
+          SimulatorUtilities.wait(1000);
+    }     catch(StaleElementReferenceException e){              
+                Select sel = new Select(asWebElement(element)); 
+                sel.selectByVisibleText(visibleText);
+          } 
+    }
+
 
 	public static void selectDDByVisibleText(MCWebElement element, String visibleText) {
 		retryUntilNoErrors(() -> new Select(asWebElement(element)).selectByVisibleText(visibleText));

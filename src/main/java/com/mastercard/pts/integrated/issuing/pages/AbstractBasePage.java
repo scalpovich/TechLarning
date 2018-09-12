@@ -1218,19 +1218,35 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	public void selectByVisibleText(MCWebElement ele, String optionName) {
-		String optionVisbleText = "";
-		waitUntilSelectOptionsPopulated(ele);
-		List<WebElement> selectedOptions = ele.getSelect().getOptions();
-		for (WebElement element : selectedOptions) {
-			if (element.getText().toUpperCase().contains(optionName.toUpperCase())) {
-				optionVisbleText = element.getText();
-				break;
-			}
-		}
-		ele.getSelect().selectByVisibleText(optionVisbleText);
-		waitForLoaderToDisappear();
-		waitForPageToLoad(driver());
-	}
+        try{
+        String optionVisbleText = "";
+        waitUntilSelectOptionsPopulated(ele);
+        List<WebElement> selectedOptions = ele.getSelect().getOptions();
+        for (WebElement element : selectedOptions) {
+              if (element.getText().toUpperCase().contains(optionName.toUpperCase())) {
+                    optionVisbleText = element.getText();
+                    break;
+              }
+        }
+        ele.getSelect().selectByVisibleText(optionVisbleText);
+        waitForLoaderToDisappear();
+        waitForPageToLoad(driver());
+        }
+        catch(StaleElementReferenceException e){  
+              String optionVisbleText = "";
+              Select sel = new Select(asWebElement(ele));
+              List<WebElement> selectedOptions = sel.getOptions();
+              for (WebElement element : selectedOptions) {
+                    if (element.getText().toUpperCase().contains(optionName.toUpperCase())) {
+                          optionVisbleText = element.getText();
+                          break;
+                    }
+              }
+              ele.getSelect().selectByVisibleText(optionVisbleText);                  
+              } 
+        waitForPageToLoad(driver());
+  }
+
 
 	private void waitUntilSelectOptionsPopulated(MCWebElement ele) {
 		WebDriverWait wait = new WebDriverWait(driver(), 100);

@@ -458,11 +458,6 @@ public class TransactionSteps {
 		
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		Device device = context.get(ContextConstants.DEVICE);
-		
-		//Device device = new Device();
-		//device.setDeviceNumber(context.get(ContextConstants.DEVICE_NUMBER));
-		//device.setProductType(provider.getString("PRODUCT_TYPE"));
-		
 		device.setJoiningFees(provider.getString("JOINING_FEES"));
 		device.setMemberShipFees(provider.getString("MEMBERSHIP_FEES"));
 		assertThat(transactionWorkflow.searchTransactionWithDeviceAndGetFees(device, ts), Matchers.hasItems(device.getJoiningFees(), device.getMembershipFees()));
