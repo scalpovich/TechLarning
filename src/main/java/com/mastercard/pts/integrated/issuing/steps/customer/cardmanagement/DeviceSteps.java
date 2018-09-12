@@ -157,10 +157,10 @@ public class DeviceSteps {
 		Program program = context.get(ContextConstants.PROGRAM);
 		device.setProgramCode(program.buildDescriptionAndCode());
 		
-		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
+		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && !(device.getSubApplicationType().contains(SubApplicationType.NEW_CLIENT))){
 			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
 			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
-		}else{
+		} else {
 			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 		}
@@ -225,6 +225,17 @@ public class DeviceSteps {
 		sdnUncheckProgram(program.getProgramCode());
 		deviceWorkflow.createDevice(device);
 		context.put(ContextConstants.DEVICE, device);
+	}
+	
+	@When("User enters incorrect Expiry Date")
+	@Then("User enters incorrect Expiry Date")
+	public void expiryDateIsIncorrect() {
+		Device device = context.get(ContextConstants.DEVICE);
+		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		devicePlan.setExpiryDate(ConstantData.WORNG_EXPIRY);
+		device.setExpirationDate(ConstantData.WORNG_EXPIRY);
+		context.put(ContextConstants.DEVICE, device);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 
 	@When("$type device is created using new device screen by data driven $pinOption Pin")

@@ -307,6 +307,20 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 
+	@When("User checks Pin Change Transaction First check box on Device Plan Page")
+	public void userChecksPinChangeTransactionFirstOnDevicePlan() {
+		programSetupWorkflow.checkPinChangeTransactionFirst(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+
+	@When("User checks Cross Border Transaction check box on Device Plan Page")
+	public void userChecksCrossBorderTransactionCheckBoxOnDevicePlanPage()
+	{
+		programSetupWorkflow.checkCrossBorderTransaction(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+		
+	}
+
 	@When("device range for program with device plan for \"debit\" \"$deviceType\" card without pin")
 	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin")
 	@Composite(steps = { "When User fills Dedupe Plan", "When User fills MCC Rules for debit product", "When User fills Transaction Plan for debit product",
@@ -647,6 +661,7 @@ public class ProgramSetupSteps {
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 		} else {
 			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
+         	devicePlan.setTransactionFeePlan(data.getTransactionFeePlan()); 
 			devicePlan.setAfterKYC(data.getTransactionPlan());
 			devicePlan.setBeforeKYC(data.getTransactionPlan());
 		}
@@ -1425,7 +1440,14 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 	
-
+	@When("User edits Wallet Plan for $updateField")
+	public void whenUserEditsWalletPlan(String updateField)
+	{
+		walletPlan.setWhiteListedMCGPlan(provider);
+		programSetupWorkflow.editWalletPlan(walletPlan,updateField);
+		
+	}
+	
 	@When("User fills Device Plan for $productType $deviceType card with transaction fee waived Off")
 	public void whenUserFillsDevicePlaWithTransactionFeeWaivedOff(String productType, String deviceType) {
 		settingDevicePlanTestData(productType, deviceType); // call to re-usable method
@@ -1442,9 +1464,45 @@ public class ProgramSetupSteps {
 		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
 		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
-		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());	
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
+	}
+	
+	@When("User fills Device Plan for \"$productType\" \"$deviceType\" card for issuer scripting")
+	public void whenUserFillsDevicePlanForCrddForIssuerScripting(String productType, String deviceType) {
+		// virtual cards are pinless so even if this statement is called by
+		// mistake, we are setting Pin to false
+		if (DeviceType.fromShortName(deviceType).toLowerCase().contains("virtual")) {
+			setPinRequiredToFalse();
+		}
+		devicePlan = DevicePlan.createWithProviderForIssuerScripting(provider, productType);
+		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
+		devicePlan.setProductType(ProductType.fromShortName(productType));
+		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
+		if (Objects.nonNull(deviceJoiningAndMemberShipFeePlan)) {
+			devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+			devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+			devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		} else {
+			devicePlan.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());
+			devicePlan.setBaseDeviceEventBasedPlan(data.getDeviceEventBasedFeePlan());
+			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
+			setPinRequiredToDefaultState();
+		}
+		if (Objects.nonNull(transactionPlan)) {
+			devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+			devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		} else {
+			devicePlan.setAfterKYC(data.getTransactionPlan());
+			devicePlan.setBeforeKYC(data.getTransactionPlan());
+		}
+
+		// setting a flag through setter to figure out if the card is pinless card or not. This is used in TransactionSteps to set ExpiryDate in case of PinLess Card
+		if ("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
+			devicePlan.setIsPinLess("YES");
+		programSetupWorkflow.createDevicePlan(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 	
 	@When("User $applicationType fills $subApplicationType Program $programType section without dedupe for $type product for $interchange")
@@ -1493,5 +1551,29 @@ public class ProgramSetupSteps {
 
 		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
+	}
+	@When("User creates empty Transaction Plan for $type product")
+	public void createEmptyTransactionPlan(String type) {
+		setPinRequiredToDefaultState();
+		transactionPlan = TransactionPlan.createWithProvider(dataProvider);
+		transactionPlan.setProductType(ProductType.fromShortName(type));
+		programSetupWorkflow.createTransactionPlanWithoutAnyTransaction(transactionPlan);
+	}
+	
+	@When("User fills Wallet Plan for $type product and $reservedAmount reserved amount")
+	public void whenUserFillsWalletPlanWithReservedAmount(String type, int reservedAmount) {
+		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
+		walletPlan.setProductType(ProductType.fromShortName(type));
+		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
+			walletPlan.setCreditPlan(context.get(CreditConstants.CREDIT_PLAN));
+			walletPlan.setBillingCyleCode(context.get(CreditConstants.BILLING_CYCLE));
+		}
+		programSetupWorkflow.createWalletPlan(walletPlan,reservedAmount);
+	}
+	@When("User edits Program to update $editItem")
+	public void andUserEditsProgramToUpdateCountryWhiteBlackList(String editItem) {
+		program.setCountryWhiteListAndBlackListPlan(provider);
+		programSetupWorkflow.editsProgram(program,editItem);
+
 	}
 }

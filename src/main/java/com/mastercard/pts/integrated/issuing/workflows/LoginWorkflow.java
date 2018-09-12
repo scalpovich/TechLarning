@@ -84,4 +84,10 @@ public class LoginWorkflow {
 		HeaderPage page = pageFactory.getPage(HeaderPage.class);
 		page.signOutAgent();
 	}
+	
+	public String getInstitutionDateLogin()
+	{
+		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
+		return loginPage.getInstitutionDateLogin();
+	}
 }

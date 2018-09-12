@@ -571,7 +571,7 @@ Scenario: UI verification Agent Portal - Services - Device Sale/Issuance - Check
 
 Given user is logged in agent portal as agent user
 When user navigates to checker page
-Then checker page is loaded and master detail content title is Card Sale Checker
+Then checker page is loaded and master detail content title is Device Sale Checker
 And Checker page of services tab is rendered correctly
 And user sign out from agent portal
 
@@ -691,7 +691,7 @@ Scenario: UI verification Agent Portal - Transactions - Balance Refund - Request
 
 Given user is logged in agent portal as agent user
 When user navigates to balance refund request page
-Then balance refund request page is loaded and master detail content title is Cancel Wallet Request
+Then balance refund request page is loaded and master detail content title is Refund Wallet - Request
 And BalanceRefundRequest page of transactions tab is rendered correctly
 And user sign out from agent portal
 
