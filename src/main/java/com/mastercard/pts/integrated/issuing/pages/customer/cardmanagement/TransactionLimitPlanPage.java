@@ -497,4 +497,64 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 			driver().switchTo().alert().accept();
 		}
 	}
+
+	public void createTransactionLimitPlan(TransactionLimitPlan transactionLimitPlanDataObject, String limitType) {
+		logger.info("Create Transaction Limit Plan: {}", transactionLimitPlanDataObject.getTransactionLimitPlanCode());
+		clickAddNewButton();
+
+		runWithinPopup("Add Transaction Limit Plan", () -> {
+			enterIframeTransactionLimitPlanCode(transactionLimitPlanDataObject.getTransactionLimitPlanCode());
+			enterIframeDescription(transactionLimitPlanDataObject.getDescription());
+			selectIframeProductType(transactionLimitPlanDataObject.getIframeproductType());
+			selectIframePlanType(transactionLimitPlanDataObject.getIframePlanType());
+			selectIframeStartMonthForYearlyLimits(transactionLimitPlanDataObject.getIframeStartMonthForYearlyLimits());
+			selectPeriodicity("Month [9]");
+			enterPeriodicityMonth("12");
+			clickAddDetailsButton();
+			transactionLimitPlanDataObject.getTransactionLimitPlanDetails().forEach(details -> addDetails(details, transactionLimitPlanDataObject.getIframeproductType(),limitType));
+			WebElementUtils.scrollDown(driver(), 0, 250);
+			clickSaveButton();
+		});
+		verifyOperationStatus();
+	}
+
+	private void addDetails(TransactionLimitPlanDetails details, String productType, String limitType) {
+		clickAddNewButton();
+
+		runWithinPopup("Add Transaction Limit Plan Detail", () -> {
+			selectIframeTransactionType(details.getIframeTransactionType());
+			waitForWicket();
+			selectIframeTransactionSource(details.getIframeTransactionSource());
+			waitForWicket();
+			selectIframeTransactionChannel(details.getIframeTransactionChannel());
+			waitForWicket();
+			selectIframeTransactionOrigin(details.getIframeTransactionOrigin());
+			enterIframeFloorAmount(details.getIframeFloorAmount());
+			selectIframeFloorResponse(details.getIframeFloorResponse());
+			enterIframeCeilingAmount(details.getIframeCeilingAmount());
+			selectIframeCeilingResponse(details.getIframeCeilingResponse());
+
+			if(limitType.equalsIgnoreCase("Daily")){
+				enterIframeDailyAmount(details.getIframeDailyAmount());
+				selectIframeDailyResponse(details.getIframeDailyResponse());
+				enterDailyVelocity(details.getLimitDailyVelocity());
+			}else if(limitType.equalsIgnoreCase("Periodic")){
+				enterPeriodicAmt(details.getLimitPeriodicAmount());
+				enterPeriodicVel(details.getLimitPeriodicVelocity());
+			}else if(limitType.equalsIgnoreCase("Yearly")){
+				enterYearlyData(details);
+			}
+			clickWhenClickable(saveBtn);
+		});
+
+		verifyRecordMarkedForUpdationStatusSuccess();
+	}
+	
+	private void selectPeriodicity(String value){
+		selectDropDownByText(periodicityDDwn, value);
+	}
+	
+	private void enterPeriodicityMonth(String number){
+		WebElementUtils.enterText(periodicityNumberTxt, number);
+	}
 }
