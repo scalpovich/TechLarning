@@ -1,9 +1,9 @@
-regression prepaid MSR Retail general purpose card authorization PINLESS
+regression prepaid MSR Corporate travel card authorization PINLESS
 
 Narrative:
-In order to check transactions on prepaid MSR retail general purpose card
+In order to check transactions on prepaid MSR Corporate travel card
 As an issuer
-I want to authorize transactions for prepaid MSR retail general purpose card
+I want to authorize transactions for prepaid MSR Corporate travel card
 
 Meta:
 @StoryName p_emv_corp_travel_ASI
