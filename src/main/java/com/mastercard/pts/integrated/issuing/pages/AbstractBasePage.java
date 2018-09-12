@@ -300,6 +300,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	private static final int loopIterationToCheckBatchNumber=21;
 	
+    @PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
+	private MCWebElement institutionDateTxt;
+	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
 		MCAnnotationProcessor.initializeSuper(this, finderProvider);
@@ -1233,14 +1236,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public void selectByVisibleText(MCWebElement ele, String optionName) {
 		try {
 			doSelectByVisibleText(ele, optionName);
-			waitForLoaderToDisappear();
-			waitForPageToLoad(driver());
+		waitForLoaderToDisappear();
+		waitForPageToLoad(driver());
 		} catch (StaleElementReferenceException e) {
 			doSelectByVisibleText(ele, optionName);
-		}
+	}
 		waitForPageToLoad(driver());
 	}
-
 
 	private void waitUntilSelectOptionsPopulated(MCWebElement ele) {
 		WebDriverWait wait = new WebDriverWait(driver(), 100);
@@ -1850,5 +1852,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	public void switchToDefaultFrame(String element,int index) {
 		driver().switchTo().frame(Elements(element).get(index));
+	}
+	
+	public String getInstitutionDate()
+	{	
+		logger.info("Institution date : {}",getTextFromPage(institutionDateTxt));
+		return getTextFromPage(institutionDateTxt);
 	}
 }
