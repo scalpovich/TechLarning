@@ -139,6 +139,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	private static final String DP_EMV_PLAN_PIN_CHANGE_PRIORITY="DP_EMV_PLAN_PIN_CHANGE_PRIORITY";	 		 
 	private static final String DP_EMV_PLAN_PIN_UNBLOCK_PRIORITY="DP_EMV_PLAN_PIN_UNBLOCK_PRIORITY";
 
+
 	
 	public String association;
 	public String DeviceType;

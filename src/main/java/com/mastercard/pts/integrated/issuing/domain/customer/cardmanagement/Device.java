@@ -106,6 +106,7 @@ public class Device {
   	private String walletCurrency;
   	private String joiningFees;
 	private String membershipFees;
+	private String promotionPlanCode;
 
 
 	public  static Device createWithProvider(KeyValueProvider provider) {
@@ -676,5 +677,13 @@ public class Device {
 
 	public void setMemberShipFees(String membershipFees) {
 		this.membershipFees = membershipFees;
+	}
+	
+	public String getPromotionPlanCode() {
+		return promotionPlanCode;
+	}
+
+	public void setPromotionPlanCode(String promotionPlanCode) {
+		this.promotionPlanCode = promotionPlanCode;
 	}
 }

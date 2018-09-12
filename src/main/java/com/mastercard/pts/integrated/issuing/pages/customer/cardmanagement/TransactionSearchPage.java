@@ -165,8 +165,9 @@ public class TransactionSearchPage extends AbstractBasePage {
 		waitForWicket();
 		WebElementUtils.elementToBeClickable(tranDateDDwn);
 		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
-		clickSearchButton();
-		waitForWicket();
+		waitAndSearchForRecordToAppear();
+//		clickSearchButton();
+//		waitForWicket();
 		joiningAndMembershipFees.add(joiningFees.getText());
 		joiningAndMembershipFees.add(membershipFees.getText());
 		return joiningAndMembershipFees;

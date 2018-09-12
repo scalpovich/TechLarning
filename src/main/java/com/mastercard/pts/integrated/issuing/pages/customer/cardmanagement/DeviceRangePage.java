@@ -424,6 +424,7 @@ public class DeviceRangePage extends AbstractBasePage {
 	private void fillAddDevicePage(DeviceRange deviceRange) {
 		selectProductType(deviceRange.getProductType());
 		selectProgram(deviceRange.getProgram());
+		waitForWicket();
 		selectDevicePlanCode(deviceRange.getDevicePlanCode());
 		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);		
 		logger.info("ProductType : {}", devicePlan.getProductType());

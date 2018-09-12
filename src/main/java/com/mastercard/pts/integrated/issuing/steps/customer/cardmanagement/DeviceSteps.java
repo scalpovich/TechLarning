@@ -143,17 +143,18 @@ public class DeviceSteps {
 		context.put(CreditConstants.APPLICATION, device);
 	}
 	
-	@Given("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
-	@When("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
-	@Then("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
-	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewDevice(String type,String customerType,String applicationType,String subApplicationType,String deviceType) {
+	@Given("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType and $promotionFee Plan")
+	@When("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType and $promotionFee Plan")
+	@Then("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType and $promotionFee Plan")
+	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewDevice(String type,String customerType,String applicationType,String subApplicationType,String deviceType, String promotionFee) {
 		Device device = Device.createWithProviderForOtherDetails(provider);
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		device.setCustomerType(customerType);
 		device.setApplicationType(applicationType);
 		device.setSubApplicationType(subApplicationType);
 		device.setDeviceType1(deviceType);
-
+		device.setPromotionPlanCode(promotionFee);
+		
 		Program program = context.get(ContextConstants.PROGRAM);
 		device.setProgramCode(program.buildDescriptionAndCode());
 		
@@ -167,6 +168,33 @@ public class DeviceSteps {
 		deviceWorkflow.createDevice(device);
 		context.put(ContextConstants.DEVICE, device);
 	}
+	
+	@Given("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
+	@When("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
+	@Then("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
+	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewDevice(String type,String customerType,String applicationType,String subApplicationType,String deviceType) {
+		Device device = Device.createWithProviderForOtherDetails(provider);
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+		device.setCustomerType(customerType);
+		device.setApplicationType(applicationType);
+		device.setSubApplicationType(subApplicationType);
+		device.setDeviceType1(deviceType);
+		
+		Program program = context.get(ContextConstants.PROGRAM);
+		device.setProgramCode(program.buildDescriptionAndCode());
+		
+		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && !(device.getSubApplicationType().contains(SubApplicationType.NEW_CLIENT))){
+			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
+			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+		} else {
+			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+		}
+		deviceWorkflow.createDevice(device);
+		context.put(ContextConstants.DEVICE, device);
+	}
+	
+
 	
 	@When("$type device is created using new Application screen for $customerType and \"$applicationType\" and $subApplicationType and $deviceType")
 	@Given("$type device is created using new Application screen for $customerType and \"$applicationType\" and $subApplicationType and $deviceType")
@@ -203,6 +231,23 @@ public class DeviceSteps {
 	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceCreationUsingNewDevice(String type){
 		Device device = Device.createWithProviderForOtherDetails(provider);
 		device.setAppliedForProduct(ProductType.fromShortName(type));
+		Program program = context.get(ContextConstants.PROGRAM);
+		device.setProgramCode(program.buildDescriptionAndCode());
+		sdnUncheckProgram(program.getProgramCode());
+		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+
+		deviceWorkflow.createDevice(device);
+		context.put(ContextConstants.DEVICE, device);
+	}
+	
+	@Given("$type device is created using new device screen with $type plan")
+	@When("$type device is created using new device screen with $type plan")
+	@Then ("$type device is created using new device screen with $type plan")
+	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceCreationUsingNewDevice(String type, String plan){
+		Device device = Device.createWithProviderForOtherDetails(provider);
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+		device.setPromotionPlanCode(plan);
 		Program program = context.get(ContextConstants.PROGRAM);
 		device.setProgramCode(program.buildDescriptionAndCode());
 		sdnUncheckProgram(program.getProgramCode());

@@ -23,6 +23,7 @@ Then user signs out from customer portal
 Then user is logged in institution
 Then device has "normal" status
 
+
 Scenario: Prepaid - Admin User - Assign Program to Agency
 
 When user is logged in agent portal as admin user

@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -70,6 +71,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanCode1:input:dropdowncomponent")
 	private MCWebElement devicePlan1DDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanPromoCode1:input:dropdowncomponent")
+	private MCWebElement promotionPlanDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePhotoIndicator1:input:dropdowncomponent")
 	private MCWebElement photoIndicatorDDwn;
@@ -163,6 +167,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Existing Client Code')]")
 	private MCWebElement existingClientLabel;
 	
+	private String programCodeDDwnBy = "view:programCode:input:dropdowncomponent";
 	
 	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
@@ -339,7 +344,14 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			selectByVisibleText(customerTypeDDwn, device.getCustomerType());          
 			SimulatorUtilities.wait(6000);
           	waitForWicket(driver());
-			selectByVisibleText(programCodeDDwn, device.getProgramCode());
+          	
+			try {
+				selectByVisibleText(programCodeDDwn, device.getProgramCode());
+			} catch (StaleElementReferenceException e) {
+				MCWebElement element = getMCWebElementFromWebElement(FindBy.NAME, programCodeDDwnBy);
+				selectByVisibleText(element, device.getProgramCode());
+			}
+          	
 			SimulatorUtilities.wait(2000);			
 		}
 		SimulatorUtilities.wait(1000);
@@ -347,6 +359,11 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		
 		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());		
 		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
+		if(device.getPromotionPlanCode()!=null)
+		{
+			WebElementUtils.selectDropDownByVisibleText(promotionPlanDDwn, device.getPromotionPlanCode());
+		}
+																	
 		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
 	}
 

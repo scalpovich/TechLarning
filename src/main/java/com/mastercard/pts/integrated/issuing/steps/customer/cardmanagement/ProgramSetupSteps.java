@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import java.util.Map;
 import java.util.Objects;
 
 import org.jbehave.core.annotations.Composite;
@@ -622,6 +623,15 @@ public class ProgramSetupSteps {
 		} else {
 			devicePlan.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());
 		}
+		
+		Map<String,Object> allData=context.get(TestContext.KEY_STORY_DATA);
+
+		if (allData.containsKey(JOINING_FEE_PLAN)) 
+		{
+			devicePlan.setBaseDeviceJoiningMemberShipPlan(provider.getString(JOINING_FEE_PLAN));
+						
+		}
+		
 		if (Objects.nonNull(deviceEventBasedFeePlan)) {
 		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
 		} else {
@@ -655,6 +665,7 @@ public class ProgramSetupSteps {
 		if ("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
 			devicePlan.setIsPinLess("YES");
 		devicePlan.setProductType(ProductType.fromShortName(type));
+		
 		if (Objects.nonNull(deviceJoiningAndMemberShipFeePlan) && Objects.nonNull(deviceEventBasedFeePlan)) {
 		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
 		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
@@ -662,6 +673,15 @@ public class ProgramSetupSteps {
 			devicePlan.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());
 			devicePlan.setBaseDeviceEventBasedPlan(data.getDeviceEventBasedFeePlan());
 		}
+		
+		Map<String,Object> allData=context.get(TestContext.KEY_STORY_DATA);
+
+		if (allData.containsKey(JOINING_FEE_PLAN)) 
+		{
+			devicePlan.setBaseDeviceJoiningMemberShipPlan(provider.getString(JOINING_FEE_PLAN));
+						
+		}
+
 		devicePlan.setAssociation(interchange);
 		if (Objects.nonNull(transactionLimitPlan) && Objects.nonNull(transactionPlan)) {
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
@@ -677,6 +697,7 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
+	
 	
 	@When("user edits deviceplan and enables stoplist flag")
 	public void editDevicePlanAndEnableStopListFlag() {
@@ -695,6 +716,7 @@ public class ProgramSetupSteps {
 		devicePlanSupplementary.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlanSupplementary.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlanSupplementary.setDeviceType(deviceType);
+		
 
 		programSetupWorkflow.createDevicePlan(devicePlanSupplementary);
 		context.put(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY, devicePlanSupplementary);
@@ -848,9 +870,8 @@ public class ProgramSetupSteps {
 		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
 		devicePlan.setProductType(ProductType.fromShortName(productType));
 		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
-		devicePlan.setBaseDeviceJoiningMemberShipPlan(provider.getString(JOINING_FEE_PLAN, deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode()));
 		if (Objects.nonNull(deviceJoiningAndMemberShipFeePlan)) {
-		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		devicePlan.setBaseDeviceJoiningMemberShipPlan(provider.getString(JOINING_FEE_PLAN, deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode()));
 		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		} else {
@@ -888,7 +909,6 @@ public class ProgramSetupSteps {
 		devicePlan.setDeviceType(DeviceType.fromShortName(deviceType));
 		devicePlan.setAssociation(provider.getString(INTERCHANGE));
 		devicePlan.setBaseDeviceJoiningMemberShipPlan(provider.getString(JOINING_FEE_PLAN, deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode()));
-		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
 		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
