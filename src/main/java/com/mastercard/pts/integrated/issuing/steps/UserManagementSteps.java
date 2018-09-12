@@ -94,8 +94,8 @@ public class UserManagementSteps {
 
 	private String userDefaultInstitution;
 
-	@When("user sign out from $type portal")
-	@Given("user sign out from $type portal")
+	@When("user {sign|signs} out from $type portal")
+	@Given("user {sign|signs} out from $type portal")
 	public void givenUserSignOutFromPortal(String type) {
 		if (CUSTOMER.equalsIgnoreCase(type))
 			loginWorkflow.signOutCustomer();
