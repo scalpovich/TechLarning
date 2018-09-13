@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -38,13 +39,12 @@ public class CloseBatchPage extends AbstractBasePage {
 	TestContext context;
 	
 	protected  static final Logger logger = LoggerFactory.getLogger(CloseBatchPage.class);
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview-div")
 	private MCWebElement batchNoColumn;
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[2]/div[4]/div[2]/div[2]/form[1]/div[2]/div[4]/table/tbody/tr/td[10]/span/input")
-	private MCWebElement CloseBatchRecord;
-
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElement ProcessSelected;
+	private MCWebElement processSelectedBtn;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]")
 	public MCWebElements allBatchNumberTxt;
@@ -55,16 +55,15 @@ public class CloseBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElements allRowsTxt;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Yes']")
+	private MCWebElement yesBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//h3[text()= 'Confirmation Message']/ancestor::div//iframe")
+	private MCWebElement confirmMsgBtn;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Process All']")
 	private MCWebElement processAllBtn;
 
-	public void closebatch() {
-		waitForLoaderToDisappear();
-		CloseBatchRecord.click();
-		CustomUtils.ThreadDotSleep(1000);
-		ProcessSelected.click();
-		CustomUtils.ThreadDotSleep(1000);
-	}
 
 	public List<String> allBatchNumberRetrieval() {
 		List<String> batchNumbers = new ArrayList<>();
@@ -89,20 +88,63 @@ public class CloseBatchPage extends AbstractBasePage {
 	public void processAppropriateBatchForApplication() {
 		String checkBox = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd'][" + identifyBatchNumberToProcess() + 1 + "]/td[10]/span/input";
 		clickWhenClickable(driver().findElement(By.xpath(checkBox)));
-		ProcessSelected.click();
+		clickWhenClickable(processSelectedBtn);
 		verifyOperationStatus();
 
 	}
 	
 	public void processFirstBatch() {
 		clickWhenClickable(firstBatchNumberTxt);
-		ProcessSelected.click();
+		clickWhenClickable(processSelectedBtn);
 		verifyOperationStatus();
 	}
 	
 	public void processAllBatch() {
 		clickWhenClickable(processAllBtn);
-		verifyOperationStatus();
+		try {
+			if (confirmMsgBtn.isEnabled()) {
+				switchToIframe("Confirmation Message");
+				clickWhenClickable(yesBtn);
+				verifyOperationStatus();
+			} else {
+				verifyOperationStatus();
+			}
+
+		} catch (Exception e) {
+			e.getMessage();
+		}
+	}
+	
+	public int identifyBatchNumberToProcessForFileUpload() {
+		int i;
+		String batchNumber = context.get(CreditConstants.BATCH_NUMBER_FILEUPLOAD);
+		logger.info("BatchNumber_Application:{}", batchNumber);
+		for (i = 0; i < allBatchNumberRetrieval().size(); i++) {
+			if (allBatchNumberRetrieval().get(i).equals(batchNumber.trim())) {
+				logger.info("Batch Number: {}", allBatchNumberRetrieval().get(i));
+				break;
+			}
+		}
+		return i;
+	}
+	
+	public void processAppropriateBatchForApplicationForFileUpload() {
+		String checkBox = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd'][" + identifyBatchNumberToProcessForFileUpload() + 1 + "]/td[10]/span/input";
+		clickWhenClickable(driver().findElement(By.xpath(checkBox)));
+		clickWhenClickable(processSelectedBtn);
+		try {
+			if (asWebElement(confirmMsgBtn).isDisplayed()) {
+				switchToIframe("Confirmation Message");
+				clickWhenClickable(yesBtn);
+				verifyOperationStatus();
+			} else {
+				verifyOperationStatus();
+			}
+
+		} catch (Exception e) {
+			e.getMessage();
+		}
+
 	}
 	
     @Override
