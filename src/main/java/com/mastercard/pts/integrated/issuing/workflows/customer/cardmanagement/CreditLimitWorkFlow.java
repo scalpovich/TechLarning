@@ -14,20 +14,21 @@ public class CreditLimitWorkFlow {
 
 	@Autowired
 	Navigator navigator;
-	
-	public void addCreditLimit()
+	private CreditLimitRulePage creditLimitRulePage;
+	public boolean addCreditLimitRule(String fieldName)
 	{
-		CreditLimitRulePage creditLimitRulePage = navigator.navigateToPage(CreditLimitRulePage.class);
+	    creditLimitRulePage = navigator.navigateToPage(CreditLimitRulePage.class);
 		creditLimitRulePage.addProgramCode();
 		creditLimitRulePage.selectProgramCode();
-		creditLimitRulePage.selectFieldName(1);
-		creditLimitRulePage.selectOperator(1);
-		creditLimitRulePage.selectValue(1);
+		creditLimitRulePage.selectFieldName(fieldName);
+		creditLimitRulePage.selectOperator(2);
+		creditLimitRulePage.enterValue();
 		creditLimitRulePage.selectLimitType(1);
-		creditLimitRulePage.enterCreditLimit(1);
-		creditLimitRulePage.enterMaxCreditLimit(1);
+		creditLimitRulePage.enterCreditLimit();
+		creditLimitRulePage.enterMaxCreditLimit();
 		creditLimitRulePage.appendButtonClick();
 		creditLimitRulePage.save();
+		return creditLimitRulePage.successMessageDisplay();
 		
 	}
 }

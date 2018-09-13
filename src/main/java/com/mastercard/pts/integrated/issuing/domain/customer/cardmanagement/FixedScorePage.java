@@ -1,4 +1,4 @@
-package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
+package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,22 +14,23 @@ import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CardManagementNav;
+
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_APPLICATION,
-		CardManagementNav.L3_CREDIT, CardManagementNav.L4_VARIABLE_SCORE })
-public class VariableScorePage extends AbstractBasePage {
+		CardManagementNav.L3_CREDIT, CardManagementNav.L4_FIXED_SCORE})
+
+public class FixedScorePage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(VariableScorePage.class);
+			.getLogger(FixedScorePage.class);
 
 	@Autowired
 	TestContext context;
-	private static final String START_RANGE_VALUE="2";
-	private static final String END_RANGE_VALUE="90";
-	private static final String VARIABLE_SCORE="1000";
-	private static final String VARIBALE_SCORE_IFRAME="Add Variable Score";
+	private static final String FIXED_SCORE="500";
+	private static final String FIXED_SCORE_FRAME="Add Fixed Score";
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#prodCode select")
 	private MCWebElement programDdwn;
@@ -37,13 +38,10 @@ public class VariableScorePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#columnCode select")
 	private MCWebElement fieldNameDdwn;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "rangedStartValue:input:inputTextField")
-	private MCWebElement rangeStartValueTxt;
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#columnValue select")
+	private MCWebElement fieldValueDdwn;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "rangedEndValue:input:inputTextField")
-	private MCWebElement rangeEndValueTxt;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "score:input:inputTextField")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#score input")
 	private MCWebElement scoreTxt;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Record Added Successfully.']")
@@ -52,43 +50,43 @@ public class VariableScorePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
 	private MCWebElement searchTable;
 	
-	private static final String VARIABLE_SCORE_PARAMETER="AGE [AGE]";
+	private static final String FIXED_SCORE_PARAMETER="MARITAL STATUS [MARRIED]";
 	
 	public boolean successMessageDisplay(){
 		return validateSuccessMsgDisplay.isVisible();
 	}
-	
-	public void selectProgram() {
-		ifTextAvailableinTableThenDelete(searchTable, VARIABLE_SCORE_PARAMETER);
+    
+	public void selectProgram(){
+		ifTextAvailableinTableThenDelete(searchTable, FIXED_SCORE_PARAMETER);
 		clickAddNewButton();
-		switchToIframe(VARIBALE_SCORE_IFRAME);
+		switchToIframe(FIXED_SCORE_FRAME);
 		Program program = context.get(ContextConstants.PROGRAM);
 		WebElementUtils.selectDropDownByVisibleText(programDdwn, program.buildDescriptionAndCode());
 	}
 	
 	public void selectFieldName(String fieldName){
-		selectByVisibleText(fieldNameDdwn, fieldName);
+		selectByVisibleText(fieldNameDdwn,fieldName);
+		waitForLoaderToDisappear();
 	}
 	
-	public void enterRangeStartValue(){
-		WebElementUtils.enterText(rangeStartValueTxt, START_RANGE_VALUE);
-	}
-	
-	public void enterRangeEndValue(){
-		WebElementUtils.enterText(rangeEndValueTxt, END_RANGE_VALUE);
+	public void selectFieldValue(String fieldValue){
+		selectByVisibleText(fieldValueDdwn,fieldValue);
 	}
 	
 	public String enterScore(){
-		WebElementUtils.enterText(scoreTxt, VARIABLE_SCORE);
-		return VARIABLE_SCORE;
+		WebElementUtils.enterText(scoreTxt, FIXED_SCORE);
+		clickSaveButton();
+		waitForLoaderToDisappear();
+		return FIXED_SCORE;
+	}
+	
+	 public void saveButtonClick(){
+	    	clickSaveButton();
+	    }
+	
+	public void verifyUiOperationStatus() {
+		logger.info("Fixed Score");
+		verifyUiOperation("Add Fixed Score");
 	}
 
-	public void verifyUiOperationStatus() {
-		logger.info("Variable Score");
-		verifyUiOperation("Add Variable Score");
-	}
-	  
-    public void saveButtonClick(){
-    	clickSaveButton();
-    }
 }

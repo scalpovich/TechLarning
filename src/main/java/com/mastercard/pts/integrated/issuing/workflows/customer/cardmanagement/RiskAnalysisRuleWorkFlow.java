@@ -16,15 +16,15 @@ public class RiskAnalysisRuleWorkFlow {
 	private Navigator navigator;
 	private RiskAnalysisRulePage page;
 	
-	public boolean userCreatesAValidRiskAnalysisRulePlan()
+	public boolean userCreatesAValidRiskAnalysisRulePlan(String fieldName,String fieldName2)
 	{
 	 page = navigator.navigateToPage(RiskAnalysisRulePage.class);
 	 page.addButtonToEnterRiskAnalysisRulePlanFrame();
 	 page.addMandatoryLabelsAndFields();
-	 page.selectProgram(1);
-	 page.selectField(1);
+	 page.selectProgram();
+	 page.selectField(fieldName);
 	 page.selectOperator(1);
-	 page.selectFieldName2(1);
+	 page.selectFieldName2(fieldName2);
 	 page.appendButtonClick();
 	 page.settingMandatoryValuesWithLabels();
 	 page.saveButtonClick();

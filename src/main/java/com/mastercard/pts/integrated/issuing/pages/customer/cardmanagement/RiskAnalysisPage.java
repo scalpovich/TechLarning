@@ -1,12 +1,10 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -21,13 +19,26 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L3_OPERATION_APPLICATION_CREDIT,
 		CardManagementNav.L4_RISK_ANALYSIS })
 public class RiskAnalysisPage extends AbstractBasePage {
+   @Autowired
+   TestContext context;
+   
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Process All']")
+	private MCWebElement processAllBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Risk Analysis']")
+	private MCWebElement riskAnalysisBtn;
+    
+	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
+	private MCWebElement searchTable;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Batch No')]")
-	private MCWebElement batchNoColumn;
-
-	@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils
-				.elementToBeClickable(batchNoColumn));
+	public void riskAnalysisBatchProcess() {
+		for (int l = 0; l < 21; l++) {
+			if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))) {
+				clickWhenClickable(riskAnalysisBtn);
+			} else {
+				break;
+			}
+			clickWhenClickable(processAllBtn);
+		}
 	}
 }

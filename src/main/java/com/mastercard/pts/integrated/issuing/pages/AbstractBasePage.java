@@ -1832,6 +1832,38 @@ public abstract class AbstractBasePage extends AbstractPage {
 		action.moveToElement(asWebElement(element), xOffset, yOffset).click().build().perform();
 	}
 	
+	public void ifTextAvailableinTableThenDelete(MCWebElement tableHandle, String text) {
+		WebElement table = asWebElement(tableHandle);
+
+		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
+
+		int rowscount = rowstable.size();
+
+		for (int row = 1; row < rowscount; row++) {
+
+			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
+
+			int columnscount = columnsrow.size();
+
+			for (int col = 0; col < columnscount; col++) {
+				if (columnsrow.get(col).getText().equals(text)) {
+					List<WebElement> editAndDeleteIcon = rowstable.get(row).findElements(By.tagName("img"));
+					for (int icon = 0; icon < editAndDeleteIcon.size(); icon++) {
+						if (editAndDeleteIcon.get(icon).getAttribute("alt").contains("Delete")) {
+							editAndDeleteIcon.get(icon).click();
+							SimulatorUtilities.wait(2000);
+							Alert alert = driver().switchTo().alert();
+							alert.accept();
+							waitForPageToLoad(driver());
+						}
+					}
+
+				}
+			}
+		}
+
+	}
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		logger.info("Not validaiting any elements, as this is an Abstraction layer to Pages");

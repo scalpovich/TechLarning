@@ -58,6 +58,12 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[1]/td[10]/span/input")
 	public MCWebElement firstBatchNumberTxt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Process All']")
+	public MCWebElement processAllBtn;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
+	private MCWebElement searchTable;
 
 	public List<String> allBatchNumberRetrieval() {
 		List<String> batchnumbers = new ArrayList<>();
@@ -99,12 +105,15 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 		verifyOperationStatus();
 	}
 	
-	public void processAllClick() {
-		SimulatorUtilities.wait(8000);
-		if (!waitForRow()) {
-			clickWhenClickable(deviceGenerationLink);
+	public void processAllBatch() {
+		for (int l = 0; l < 21; l++) {
+			if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER)))
+				clickWhenClickable(deviceGenerationLink);
+			else {
+				break;
+			}
+			clickWhenClickable(processAllBtn);
 		}
-		clickWhenClickable(processAll);
 	}
 	
 	public int identifyBatchNumberToProcessForFileUpload() {

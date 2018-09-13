@@ -19,8 +19,8 @@ public class ApprovalScoreWorkFlow {
 		approvalScorePage.addMandatoryLabelsAndFields();
 		approvalScorePage.selectProgram();
 		approvalScorePage.selectAction(1);
-		approvalScorePage.enterStartRangeValue(5);
-		approvalScorePage.enterEndRangeValue(6);
+		approvalScorePage.enterStartRangeValue();
+		approvalScorePage.enterEndRangeValue();
 		approvalScorePage.settingMandatoryValuesWithLabels();
 		approvalScorePage.saveButtonClick();
 		return approvalScorePage.successMessageDisplay();
