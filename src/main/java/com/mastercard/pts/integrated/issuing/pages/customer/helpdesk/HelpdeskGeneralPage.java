@@ -130,6 +130,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'End Call']")
 	private MCWebElement endCallBtn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody a img")
+	private MCWebElement editDeviceLink;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'Transactions']")
 	private MCWebElement transactionsBtn;
