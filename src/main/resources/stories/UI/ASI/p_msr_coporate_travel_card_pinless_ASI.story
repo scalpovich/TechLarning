@@ -1,13 +1,14 @@
-regression prepaid MSR Retail general purpose card authorization PINLESS
+regression prepaid MSR Corporate general purpose card authorization PINLESS
 
 Narrative:
-In order to check transactions on prepaid MSR retail general purpose card
+In order to check transactions on prepaid MSR Corporate general purpose card
 As an issuer
-I want to authorize transactions for prepaid MSR retail general purpose card
+I want to authorize transactions for prepaid MSR Corporate general purpose card
 
 Meta:
 @StoryName p_msr_corp_travel_ASI
 @MMSR
+
 Scenario: Set up prepaid msr corporate travel card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card without pin
@@ -18,11 +19,11 @@ Scenario: prepaid msr corporate travel card device production
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
-When processes device production batch for prepaid
+And processes device production batch for prepaid
 Then device has "normal" status
-Then user activates device through helpdesk
-Then user sign out from customer portal
-Then embossing file batch was generated in correct format
+And user activates device through helpdesk
+And user sign out from customer portal
+And embossing file batch was generated in correct format
 
 Scenario: Perform MMSR-CORPORATE_TravelCard Authorization transaction
 Given connection to MAS is established

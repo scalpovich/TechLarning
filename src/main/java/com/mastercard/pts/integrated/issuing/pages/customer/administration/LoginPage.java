@@ -347,4 +347,9 @@ public class LoginPage extends AbstractBasePage {
 			return null;
 		}
 	}
+	
+	public String getInstitutionDateLogin()
+	{
+		return getInstitutionDate();
+	}
 }
