@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.FixedScorePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.*;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
