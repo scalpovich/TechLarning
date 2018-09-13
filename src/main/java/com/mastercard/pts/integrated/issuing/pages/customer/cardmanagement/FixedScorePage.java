@@ -1,4 +1,4 @@
-package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
+package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
