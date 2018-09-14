@@ -4,7 +4,7 @@ As an issuer
 I want to perform Balance Inquiry through vts
 
 Meta:
-@StoryName SWSC_MSR_CGP_LOAD_ACTV_VTS_NPIN
+@StoryName VISAPREPAID
 @visa_transaction_types
 
 Scenario: Set up prepaid msr retail general purpose pin card and perform Balance Inquiry transaction
