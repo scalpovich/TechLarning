@@ -227,7 +227,7 @@ public class HelpdeskWorkflow {
 		return balanceMapBeforePayments;		
 	}
 	
-	public void compareBalancesAfterPayment(Payment payment){
-		helpDeskPage.checkAndCompareBalancePostPayment(payment);
+	public void compareBalancesAfterPayment(Payment payment, String payments){
+		helpDeskPage.checkAndCompareBalancePostPayment(payment,payments);
 	}
 }

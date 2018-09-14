@@ -336,6 +336,22 @@ public class DateUtils {
 		logger.info("monthLastDate date : {}" ,monthLastDate);
 		logger.info("Diffrence Days : {}",ChronoUnit.DAYS.between(localDate, monthLastDate));
 		return (int) (ChronoUnit.DAYS.between(localDate, monthLastDate) + 1);
-	}	
+	}
 	
+	public static int getDaysDifferenceBetweenTwoDates(String institutionDate,String trxDate){			
+		LocalDate convertedDate1 = LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+		LocalDate convertedDate2 = LocalDate.parse(trxDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+		logger.info("Coverted Institution date : {} " , convertedDate1);
+		logger.info("Coverted Institution date : {} " , convertedDate2);
+		logger.info("Diffrence Days : {}",ChronoUnit.DAYS.between(convertedDate1, convertedDate2));
+		return (int) (ChronoUnit.DAYS.between(convertedDate1, convertedDate2) - 1);
+	}
+	
+	public static int noOfDaysInYear(String institutionDate){
+		LocalDate convertedDate1 = LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+		if(convertedDate1.isLeapYear()){
+			return 366;
+		}
+		return 365;
+	}
 }

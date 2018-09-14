@@ -68,6 +68,8 @@ public class HelpDeskSteps {
 	private static final String STATUS_INCORRECT_INFO_MSG = "Device has incorrect status";
 	private static final String INCORRECT_BALANCE_OR_CREDIT_LIMIT = "Available balance/Credit limit does not match : ";
 	private static final String BILLING_INCORRECT_MASSAGE = " amount does not match : ";
+	private static final String LATE_PAYMENT_PLAN = "5.00";
+	private static final int INTEREST_RATE_ON_PURCHASE = 2;
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
 	private String clientID;
 	private String loginType = "login";
@@ -865,20 +867,42 @@ public class HelpDeskSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setCategory(category);
 		device.setAmountType(amount);
-		assertThat(category +" "+ amount +BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device), equalTo(transactionAmount));
+		if (device.getCategory().equalsIgnoreCase("Fee")) {
+			transactionAmount = LATE_PAYMENT_PLAN;
+		} else if (device.getCategory().equalsIgnoreCase("Interest")) {
+			int noOfDays = DateUtils.getDaysDifferenceBetweenTwoDates(context.get(ContextConstants.INSTITUTION_DATE),
+					context.get(ConstantData.TRANSACTION_DATE));
+			double interest = new Double(
+					((Integer.valueOf(device.getTransactionAmount()) * noOfDays * INTEREST_RATE_ON_PURCHASE) / 100)
+							/ DateUtils.noOfDaysInYear(context.get(ContextConstants.INSTITUTION_DATE)));
+			transactionAmount = Double.toString(Math.round(interest * 100D) / 100D);
+		} else if (device.getCategory().equalsIgnoreCase("Unpaid1")) {
+			int noOfDays = DateUtils.getDaysDifferenceBetweenTwoDates(context.get(ContextConstants.INSTITUTION_DATE),
+					context.get(ConstantData.TRANSACTION_DATE));
+			double interest = new Double(
+					((Integer.valueOf(device.getTransactionAmount()) * noOfDays * INTEREST_RATE_ON_PURCHASE) / 100)
+							/ DateUtils.noOfDaysInYear(context.get(ContextConstants.INSTITUTION_DATE)));
+			transactionAmount = Double.toString(Math.round((interest + Integer.valueOf(LATE_PAYMENT_PLAN)
+					+ Integer.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))) * 100D) / 100D);
+		}
+		else if (device.getCategory().equalsIgnoreCase("new Unpaid1")) {
+			device.setCategory(category.replaceAll("new", "").trim());
+			transactionAmount = "0.00";
+		}
+		assertThat(category + " " + amount + BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device),
+				equalTo(transactionAmount));
 	}
-	
 	
 
 	@When("check card balance details through helpdesk")
 	public void checkCardBalance(){
-		Device device = new Device();
-		device.setDeviceNumber("5897657458735414"); //stage 5377164858858416 5897659209884715
-		device.setProductType(ProductType.fromShortName(Constants.CREDIT));
-		device.setBranchCode("BRANCHBASE [1001]");
+		Device device = context.get(ContextConstants.DEVICE);
+//		device.setDeviceNumber("5897657458735414"); //stage 5377164858858416 5897659209884715
+//		device.setProductType(ProductType.fromShortName(Constants.CREDIT));
+//		device.setBranchCode("BRANCHBASE [1001]");
 		context.put(ContextConstants.DEVICE,device);
-		Device device1 = context.get(ContextConstants.DEVICE);
-		context.put("balanceBeforePayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device1));
+//		Device device1 = context.get(ContextConstants.DEVICE);
+		context.put("balanceBeforePayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));
 		
 	}
 	
@@ -889,9 +913,9 @@ public class HelpDeskSteps {
 		context.put("balanceAfterPayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));	
 	}
 	
-	@Then("user check successful payments")
-	public void checkSuccessfulPayments(){		
+	@Then("user check successful $payments")
+	public void checkSuccessfulPayments(String payments){		
 		Payment payment = context.get(ContextConstants.PAYMENT);
-		helpdeskWorkflow.compareBalancesAfterPayment(payment);;
+		helpdeskWorkflow.compareBalancesAfterPayment(payment,payments);;
 	}
 }

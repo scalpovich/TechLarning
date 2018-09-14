@@ -1190,6 +1190,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			return 3;
 		case "Outstanding" :
 			return 4;
+		case "Amount" :
+			return 6;
 		}
 		return 0;
 	}
@@ -1247,7 +1249,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			return balanceMapBeforePayments;
 	}
 	
-	public void checkAndCompareBalancePostPayment(Payment payment) {
+	public void checkAndCompareBalancePostPayment(Payment payment, String payments) {
 		Map<String, String> mapA = context.get("expectedPayment");
 		Map<String, String> mapB = context.get("actualPayment");
 		if (mapA != null && mapB != null && mapA.size() == mapB.size()) {
@@ -1255,15 +1257,84 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				String keyFromFirstMap = (String) m.getKey();
 				String valueFromFirstMap = (String) m.getValue();
 				String valueFromSecondMap = mapB.get(keyFromFirstMap);
-				if (keyFromFirstMap.equals("UnbllledPayments")) {
-					if (!valueFromSecondMap.equals(Integer.valueOf(valueFromFirstMap + payment.getAmount()))) {
-						Assert.assertEquals("Payment has been done successfully",
-								keyFromFirstMap + "::::" + valueFromSecondMap,
-								keyFromFirstMap + "::::" + Integer.valueOf(valueFromFirstMap + 500));
-					}
-				}
+				comparePayments(valueFromFirstMap,keyFromFirstMap,payment,payments,valueFromSecondMap);
 			}
 		}
+	}
+
+	private void comparePayments(String valueFromFirstMap, String keyFromFirstMap, Payment payment, String payments,
+			String valueFromSecondMap) {
+		switch (keyFromFirstMap) {
+		case "BillledPurchase":
+			if (!valueFromSecondMap.equals(valueFromFirstMap)) {
+				Assert.assertEquals("Billed Purchase->", keyFromFirstMap + "::::" + valueFromSecondMap,
+						keyFromFirstMap + "::::" + Integer.valueOf(valueFromFirstMap));
+			}
+			break;
+		case "UnbllledPurchase":
+			if (!valueFromSecondMap.equals(valueFromFirstMap)) {
+				Assert.assertEquals("Unbllled Purchase->", keyFromFirstMap + "::::" + valueFromSecondMap,
+						keyFromFirstMap + "::::" + Integer.valueOf(valueFromFirstMap));
+			}
+			break;
+		case "OutstandingPurchase":
+			if (payments.equalsIgnoreCase("after payment")) {
+				if (!valueFromSecondMap
+						.equals(Integer.valueOf(valueFromFirstMap) - Integer.valueOf(payment.getAmount()))) {
+					Assert.assertEquals("Unbllled Payments->", keyFromFirstMap + "::::" + valueFromSecondMap,
+							keyFromFirstMap + "::::" + Integer.valueOf(valueFromFirstMap));
+				}
+			} else {
+				if (!valueFromSecondMap.equals(valueFromFirstMap)) {
+					Assert.assertEquals("Unbllled Payments->", keyFromFirstMap + "::::" + valueFromSecondMap,
+							keyFromFirstMap + "::::" + Integer.valueOf(valueFromFirstMap));
+				}
+			}
+			break;
+		case "BillledPayments":
+			if (payments.equalsIgnoreCase("after billing")) {
+				if (!valueFromSecondMap
+						.equals(Integer.valueOf(valueFromFirstMap) + Integer.valueOf(payment.getAmount()))) {
+					Assert.assertEquals("Unbllled Payments->", keyFromFirstMap + "::::" + valueFromSecondMap,
+							keyFromFirstMap + "::::" + Integer.valueOf(valueFromFirstMap));
+				}
+			} else {
+				if (!valueFromSecondMap.equals(valueFromFirstMap)) {
+					Assert.assertEquals("Unbllled Payments->", keyFromFirstMap + "::::" + valueFromSecondMap,
+							keyFromFirstMap + "::::" + Integer.valueOf(valueFromFirstMap));
+				}
+			}
+			break;
+		case "UnbllledPayments":
+			if (payments.equalsIgnoreCase("after payment")) {
+				if (!valueFromSecondMap
+						.equals(Integer.valueOf(valueFromFirstMap) + Integer.valueOf(payment.getAmount()))) {
+					Assert.assertEquals("Unbllled Payments->", keyFromFirstMap + "::::" + valueFromSecondMap,
+							keyFromFirstMap + "::::" + Integer.valueOf(valueFromFirstMap));
+				}
+			} else if (payments.equalsIgnoreCase("after billing")) {
+				if (!valueFromSecondMap
+						.equals(Integer.valueOf(valueFromFirstMap) - Integer.valueOf(payment.getAmount()))) {
+					Assert.assertEquals("Unbllled Payments->", keyFromFirstMap + "::::" + valueFromSecondMap,
+							keyFromFirstMap + "::::" + Integer.valueOf(valueFromFirstMap));
+				}
+			} else {
+				if (!valueFromSecondMap
+						.equals(Integer.valueOf(valueFromFirstMap) - Integer.valueOf(payment.getAmount()))) {
+					Assert.assertEquals("Unbllled Payments->", keyFromFirstMap + "::::" + valueFromSecondMap,
+							keyFromFirstMap + "::::" + Integer.valueOf(valueFromFirstMap));
+				}
+			}
+			break;
+		case "OutstandingPayments":
+			if (!valueFromSecondMap.equals(valueFromFirstMap)) {
+				Assert.assertEquals("Outstanding Payments->", keyFromFirstMap + "::::" + valueFromSecondMap,
+						keyFromFirstMap + "::::" + Integer.valueOf(valueFromFirstMap));
+			}
+			break;
+
+		}
+
 	}
 
 }

@@ -9,7 +9,7 @@ Meta:
 @Individual
 @Primary	 
 
-Scenario:1.0 creation of mastercard_individual_primary_emv Card credit device
+Scenario:1.1 creation of mastercard_individual_primary_emv Card credit device
 Meta:
 @UserCreatesNewCreditDevice
 Given setting json values in excel for Credit
@@ -78,11 +78,11 @@ And "Matching" batch for credit is successful
 And transaction status is "Presentment Matched with authorization"
 When user processes EOD-Credit system internal batch for Credit
 And user sign out from customer portal
-And update institution date to first of next month
 
 Scenario:1.9 Login & Logout to wait for date to be updated 
 Meta:
 @TestId 
+When update institution date to first of next month
 Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
@@ -136,9 +136,9 @@ And user processes EOD-Credit system internal batch for Credit
 And user verify Unbilled amount for Purchase category
 And user processes Billing Process - Credit system internal batch for Credit
 And user verify Billed amount for Purchase category
-!-- And user verify "Late Payment fee"
-!-- And user verify "Interest on bill"-> ((100*44*2)/100)/365)
-!-- And user verify "Unpaid-1"
+And user verify Billed amount for Fee category
+And user verify Billed amount for Interest category
+And user verify Amount amount for Unpaid1 category
 And device has "normal" status
 And user notes down required values from helpdesk for credit
 And user run Statement Extract system internal batch
@@ -173,18 +173,18 @@ Meta:
 Given user is logged in institution
 When check card balance details through helpdesk
 And user initiates cash payment
-!-- And user verify "Unpaid-1"
 And "Pre-clearing" batch for credit is successful
 And "EOD-Credit" batch for credit is successful
 And recheck card balance details through helpdesk after payment
-Then user check successful payments
+Then user check successful after payment
 When check card balance details through helpdesk
+And user verify Amount amount for new Unpaid1 category
 And user sign out from customer portal
-When update institution date to first of next month
 
 Scenario:2.5 Login & Logout to wait for date to be updated for next billing
 Meta:
-@TestId 
+@TestId  
+When update institution date to first of next month
 Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
@@ -200,8 +200,8 @@ When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
 And user processes Billing Process - Credit system internal batch for Credit
 And recheck card balance details through helpdesk after payment
-Then user check successful payments
-And user run Statement Extract system internal batch
+Then user check successful after billing
+When user run Statement Extract system internal batch
 And verify statement file is successfully downloaded
 Then validate the statement with parameters:
 |parameters|

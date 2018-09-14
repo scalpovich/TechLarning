@@ -9,7 +9,7 @@ Meta:
 @Individual
 @Primary	 
 
-Scenario:1.0 creation of mastercard_individual_primary_emv Card credit device
+Scenario:1.1 creation of mastercard_individual_primary_emv Card credit device
 Meta:
 @UserCreatesNewCreditDevice
 Given setting json values in excel for Credit
@@ -78,11 +78,12 @@ And "Matching" batch for credit is successful
 And transaction status is "Presentment Matched with authorization"
 When user processes EOD-Credit system internal batch for Credit
 And user sign out from customer portal
-And update institution date to first of next month
+
 
 Scenario:1.9 Login & Logout to wait for date to be updated 
 Meta:
 @TestId 
+When update institution date to first of next month
 Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
@@ -136,14 +137,14 @@ And user initiates cash payment
 And "Pre-clearing" batch for credit is successful
 And "EOD-Credit" batch for credit is successful
 And recheck card balance details through helpdesk after payment
-Then user check successful payments
+Then user check successful after payment
 When check card balance details through helpdesk
 And user sign out from customer portal
-When update institution date to first of next month
 
 Scenario:2.3 Login & Logout to wait for date to be updated foe next billing
 Meta:
 @TestId 
+When update institution date to first of next month
 Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
@@ -159,8 +160,8 @@ When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
 And user processes Billing Process - Credit system internal batch for Credit
 And recheck card balance details through helpdesk after payment
-Then user check successful payments
-And user run Statement Extract system internal batch
+Then user check successful after billing
+When user run Statement Extract system internal batch
 And verify statement file is successfully downloaded
 Then validate the statement with parameters:
 |parameters|
