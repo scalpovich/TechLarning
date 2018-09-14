@@ -175,6 +175,13 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
   	@PageElement(findBy = FindBy.NAME, valueToFind = "view:applicationBatch.openedBatches:input:dropdowncomponent")  													  
 	private MCWebElement openBatchDDwn;
   	
+  	 @PageElement(findBy = FindBy.NAME, valueToFind = "view:existingDeviceNumber:input:inputTextField")
+ 	private MCWebElement existingDeviceNumberTxt;
+ 	 	
+ 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Existing Client Code')]")
+ 	private MCWebElement existingClientLabel;
+ 	
+  	
 	public void selectAppliedForProduct(String product) {
 		WebElementUtils.selectDropDownByVisibleText(appliedForProdutDDwn, product);
 	}
@@ -297,20 +304,24 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
 		
-		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){				
-			enterText(existingDeviceTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
-			SimulatorUtilities.wait(8000);
-			Actions action = new Actions(driver());		
-			action.moveToElement(asWebElement(existingDeviceTxt), 50, 50).click().build().perform();
+		SimulatorUtilities.wait(1000);
+		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
+			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
+			SimulatorUtilities.wait(5000);
+			moveToElementAndClick(existingClientLabel, 50, 50);
 			waitForWicket(driver());
-			SimulatorUtilities.wait(10000);
+			SimulatorUtilities.wait(15000);		
 		}else{
-			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
-			WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, device.getProgramCode());	
+			selectByVisibleText(customerTypeDDwn, device.getCustomerType());          
+			SimulatorUtilities.wait(8000);
+			waitForWicket(driver());
+			selectByVisibleText(programCodeDDwn, device.getProgramCode());
+			SimulatorUtilities.wait(5000);			
 		}
-		
+		SimulatorUtilities.wait(1000);
 		clickNextButton();
-		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());
+		
+		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());		
 		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
 		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
 	}
