@@ -10,6 +10,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.CreditCardPaymentWorkFlows;
 
 @Component
@@ -33,6 +34,7 @@ public class CashPaymentSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		cash.setDeviceNumber(device.getDeviceNumber());
 		cash.setPaymentBranch(device.getBranchCode());
+		cash.setAmount(context.get(ConstantData.TRANSACTION_AMOUNT));
 		creditPaymentFlow.makeCashPayment(cash);	
 		context.put(ContextConstants.PAYMENT, cash);		
 	}

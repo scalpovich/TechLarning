@@ -884,6 +884,7 @@ public class HelpDeskSteps {
 							/ DateUtils.noOfDaysInYear(context.get(ContextConstants.INSTITUTION_DATE)));
 			transactionAmount = Double.toString(Math.round((interest + Integer.valueOf(LATE_PAYMENT_PLAN)
 					+ Integer.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))) * 100D) / 100D);
+			context.put(ConstantData.TRANSACTION_AMOUNT,transactionAmount);
 		}
 		else if (device.getCategory().equalsIgnoreCase("new Unpaid1")) {
 			device.setCategory(category.replaceAll("new", "").trim());
