@@ -3,9 +3,11 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
-public class GenericReport {
+public class GenericReport implements HasCodeAndDescription{
 
 	private String authorizationCode;
 	private String deviceNumber;
@@ -104,5 +106,22 @@ public class GenericReport {
 	public void setReportRegEx(){
 		reportRegEx = new HashMap<>();
 		reportRegEx.put("RAMP", "\\d\\d-\\d\\d-\\d\\d\\d\\d");
+	}
+	
+	@Override
+	public String toString() {
+		return MiscUtils.toString(this);
+	}
+
+	@Override
+	public String getCode() {
+		// TODO Auto-generated method stub
+		return reportName;
+	}
+
+	@Override
+	public String getDescription() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

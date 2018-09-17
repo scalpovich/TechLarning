@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.utils;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,6 +15,7 @@ import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.pdfbox.multipdf.Splitter;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -186,8 +188,9 @@ public class PDFUtils {
 			pd.close();
 			}
            document.close();
-		}catch(Exception e){
+		}catch(IOException e){
 			e.printStackTrace();
+			return null;
 		}	
 			return map;
 	}

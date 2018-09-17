@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.xerces.dom3.as.ASElementDeclaration;
@@ -1264,7 +1265,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			public Boolean apply(WebDriver driver) {
 				Boolean exists = false;
 				for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
-				 if(file.isFile()&& file.getName().startsWith(reportName)){
+				 if(file.isFile()&& file.getName().startsWith(reportName)&&FilenameUtils.getExtension(file.getName()).equalsIgnoreCase("pdf")){
 					exists = true;
 				    path.append(file.getAbsolutePath());
 				    logger.info("File Path:"+path.toString());

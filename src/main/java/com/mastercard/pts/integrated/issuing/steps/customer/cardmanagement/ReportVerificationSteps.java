@@ -14,7 +14,6 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.GenericReport;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
-import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReportVerificationWorkflow;
 
@@ -45,10 +44,9 @@ public class ReportVerificationSteps {
 			logger.info("No Report Type is present here!!");
 		}
 		report.setDeviceNumber(device.getDeviceNumber());
-		report.setUsername(context.get(UserManagementSteps.USERNAME));
 		for(String field : reportFields.split(",")){
 			report.setFieldToValidate(field, context.get(ConstantData.fromShortName(field)));
-			logger.info("value of {field} is {value}",field,context.get(ConstantData.fromShortName(field)));
+			logger.info("value of {} is {}",field,context.get(ConstantData.fromShortName(field)));
 		}
 		reportVerificationWorkflow.verifyGenericReport(report);		
 	}

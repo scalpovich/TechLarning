@@ -16,6 +16,8 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.collect.administration.AdministrationHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReportVerificationPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
+import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.PDFUtils;
 
 @Workflow
@@ -81,13 +83,13 @@ public class ReportVerificationWorkflow {
     	page = navigator.navigateToPage(page.getClass().getSimpleName());
 		String reportUrl = page.generateReport(report);
 		report.setReportUrl(reportUrl);
+		report.setPassword(((String)context.get(UserManagementSteps.USERNAME)).substring(0,4)+(new DateUtils()).getDateDDMMFormat());
 		return getReportContent(report);
 	}
     
     public Map<Object, String> getReportContent(GenericReport genericReports) {
 		PDFUtils pdfutils = new PDFUtils();
-		Map<Object, String> records = pdfutils.getContentRow(genericReports);
-		return records;
+		return pdfutils.getContentRow(genericReports);
 	}
     
     public void deleteExistingReportsFromSystem(String reportName)
