@@ -123,8 +123,8 @@ Meta:
 Given user is logged in institution
 When check card balance details through helpdesk
 And user initiates cash payment
-And "Pre-clearing" batch for credit is successful
-And "EOD-Credit" batch for credit is successful
+When user processes Pre-clearing system internal batch for Credit
+When user processes EOD-Credit system internal batch for Credit
 And recheck card balance details through helpdesk after payment
 Then user check successful after payment
 When check card balance details through helpdesk
