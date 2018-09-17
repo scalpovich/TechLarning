@@ -302,6 +302,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	private static final int loopIterationToCheckBatchNumber=21;
 	
+    @PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
+	private MCWebElement institutionDateTxt;
+	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
 		MCAnnotationProcessor.initializeSuper(this, finderProvider);
@@ -612,8 +615,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected boolean verifyDuplicateAndClickCancel() {
 		String message = getMessageFromFeedbackPanel();
 		if (message != null
-				&& (message.contains("Effective Date and End Date should not overlap for same Country") || message.contains("Error in Insertion/Save") || message
-						.contains("Business Calendar setup already exists for logged in Institution for same Effective Date"))) {
+				&& (message.contains("Effective Date and End Date should not overlap for same Country") || 
+						message.contains("Error in Insertion/Save") || 
+						message.contains("Effective Date and End Date should not overlap for same MCG") ||
+						message.contains("Business Calendar setup already exists for logged in Institution for same Effective Date"))) {
 			clickCancelButton();
 			return true;
 		}
@@ -1217,18 +1222,27 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return null;
 	}
 
-	public void selectByVisibleText(MCWebElement ele, String optionName) {
-		String optionVisbleText = "";
+	public void doSelectByVisibleText(MCWebElement ele, String optionName) {
+		String optionalVisibleText = "";
 		waitUntilSelectOptionsPopulated(ele);
-		List<WebElement> selectedOptions = ele.getSelect().getOptions();
+		List<WebElement> selectedOptions = new Select(asWebElement(ele)).getOptions();
 		for (WebElement element : selectedOptions) {
 			if (element.getText().toUpperCase().contains(optionName.toUpperCase())) {
-				optionVisbleText = element.getText();
+				optionalVisibleText = element.getText();
 				break;
 			}
 		}
-		ele.getSelect().selectByVisibleText(optionVisbleText);
+		ele.getSelect().selectByVisibleText(optionalVisibleText);
+	}
+
+	public void selectByVisibleText(MCWebElement ele, String optionName) {
+		try {
+			doSelectByVisibleText(ele, optionName);
 		waitForLoaderToDisappear();
+		waitForPageToLoad(driver());
+		} catch (StaleElementReferenceException e) {
+			doSelectByVisibleText(ele, optionName);
+	}
 		waitForPageToLoad(driver());
 	}
 
@@ -1236,7 +1250,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		WebDriverWait wait = new WebDriverWait(driver(), 100);
 		wait.until(new ExpectedCondition<Boolean>() {
 			@Override
-			public Boolean apply(WebDriver driver) {			
+			public Boolean apply(WebDriver driver) {
 				return ele.getSelect().getOptions().size() > 1;
 			}
 		});
@@ -1858,5 +1872,14 @@ public abstract class AbstractBasePage extends AbstractPage {
 		logger.info("Not validaiting any elements, as this is an Abstraction layer to Pages");
 		return null;
 	}
+	
+	public void switchToDefaultFrame(String element,int index) {
+		driver().switchTo().frame(Elements(element).get(index));
+	}
+	
+	public String getInstitutionDate()
+	{	
+		logger.info("Institution date : {}",getTextFromPage(institutionDateTxt));
+		return getTextFromPage(institutionDateTxt);
+	}
 }
-

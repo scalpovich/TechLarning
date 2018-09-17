@@ -36,7 +36,6 @@ public class ReportVerificationWorkflow {
 
 	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
 
-
     public void verifyGenericReport(GenericReport report) {
 		page = (ReportVerificationPage)getInstance(report.getReportName());
 		Map<Object, String> reportContent = getGenericReport(report);
@@ -67,6 +66,14 @@ public class ReportVerificationWorkflow {
 			}
 		});
 		}
+	}
+    
+    public void verifyStatement(GenericReport report) {		
+		Map<Object, String> reportContent = getReportContent(report);
+		report.getFieldToValidate().forEach((field,fieldValue)-> {
+				logger.info(field + "=" + fieldValue);	
+				assertTrue(field+" Actual "+ reportContent.get(field)+" value does not match with expected : "+ report.getFieldToValidate().get(field), reportContent.get(field).contains(report.getFieldToValidate().get(field)));			
+		});
 	}
     
     public Map<Object, String> getGenericReport(GenericReport report) {

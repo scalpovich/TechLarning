@@ -130,18 +130,14 @@ public class ReconciliationWorkFlow {
 		}
 	}
 	
-	public boolean verifyReportDownloaded(String authFileName)
-	{
-		String downLoadPath = System.getProperty("user.home") + "\\Downloads";
-		File report = new File(downLoadPath+authFileName+".pdf");
-		System.out.println("++++++++++++++--+"+report.getAbsolutePath());
-       for (int i = 0;i<=5;i++ ){
-    	   if(report.isFile())
-    	   break;
-    	   else
-    		  SimulatorUtilities.wait(1000); 
-       }
-        return true;
+	public String runCreditBillingBatch(ProcessBatches batch) {
+		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
+		return processBatch.processCreditBillingBatch(batch);
+	}
+	
+	public String processStatementExtractBatch(ProcessBatches batch) {
+		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
+		return processBatch.processStatementExtractBatch(batch);
 	}
 
 }

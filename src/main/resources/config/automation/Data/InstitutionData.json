@@ -85,12 +85,13 @@
    "marketingMessagePlan":"AUTOMATION [TA6508TNRG]",
    "documentCheckListPlan":"AUTOMATION [TA3988DCBJ]",
    "mccRulePlan":"AUTOMATION [TA8840AT5]",
-   "deviceJoiningAndMemberShipFeePlan":"AUTOMATION [TA6622TO]",
-   "deviceEventBasedFeePlan":"AUTOMATION [TA6417MO]",
+   "deviceJoiningAndMemberShipFeePlan":"AUTOMATION [TAIOPLEA]",
+   "deviceEventBasedFeePlan":"AUTOMATION [TA5049MX]",
    "transactionLimitPlan":"AUTOMATION [TA4488ZYRO]",
    "transactionPlan":"AUTOMATION [T2847S]",
    "creditPlan":"TA5931RPHJ [101]",
    "billingCycle":"AUTOMATION [128]",
+   "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
    "walletPlan":"AUTOMATION [TA6164QTOL]"
    }
   ]

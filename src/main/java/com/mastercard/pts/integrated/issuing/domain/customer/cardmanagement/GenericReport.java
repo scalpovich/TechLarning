@@ -16,7 +16,16 @@ public class GenericReport {
 	private String reportName;
 	private String reportType;
 	private String reportUrl;
+	private String password;
 	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getReportUrl() {
 		return reportUrl;
 	}
@@ -96,6 +105,4 @@ public class GenericReport {
 		reportRegEx = new HashMap<>();
 		reportRegEx.put("RAMP", "\\d\\d-\\d\\d-\\d\\d\\d\\d");
 	}
-	
-	
 }
