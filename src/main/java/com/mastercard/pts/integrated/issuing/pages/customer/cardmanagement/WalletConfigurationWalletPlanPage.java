@@ -171,6 +171,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			waitForPageToLoad(driver());
 			SimulatorUtilities.wait(2000);
 			selectProductType(productType);
+			SimulatorUtilities.wait(2000);
 			waitForPageToLoad(driver());
 			if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 				selectByVisibleText(programTypeDDwn, walletPlan.getProgramType());
@@ -180,12 +181,13 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 				waitForPageToLoad(driver());
 				SimulatorUtilities.wait(2000);
 			}
+			SimulatorUtilities.wait(3000);
 			selectCurrency(walletPlan.getCurrency());
 			waitForPageToLoad(driver());
-			SimulatorUtilities.wait(2000);
+			SimulatorUtilities.wait(3000);
 			selectUsage(walletPlan.getUsage());
 			waitForPageToLoad(driver());
-			SimulatorUtilities.wait(2000);
+			SimulatorUtilities.wait(3000);
 			waitForPageToLoad(driver());
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			waitForPageToLoad(driver());
