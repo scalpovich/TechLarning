@@ -389,9 +389,9 @@ public class TransactionSteps {
 	public void thenPINIsRetrievedSuccessfully() {
 		Device device = context.get(ContextConstants.DEVICE);
 		Transaction transactionData = Transaction.generateFinSimPinTestData(device, finSimConfig, provider);
-
 		String pinNumber = transactionWorkflow.getPinNumber(transactionData);
 		logger.info("FINSim PIN Number generated : {} ", pinNumber);
+      	Assert.assertTrue("INVALID PIN", !pinNumber.isEmpty());
 		device.setPinNumberForTransaction(pinNumber);
 	}
 	
