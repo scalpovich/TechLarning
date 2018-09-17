@@ -8,7 +8,7 @@ Meta:
 @StoryName credit_emv_retail_stoplist_withdraw
 @CardStoplistAndWithdrawal
 		 
-Scenario:creation of mastercard_individual_primary_msr Card credit device
+Scenario:1 creation of mastercard_individual_primary_msr Card credit device
 Given setting json values in excel for Credit
 Given user is logged in institution
 When User fills Dedupe Plan
@@ -36,14 +36,14 @@ And User search for new device Supplementary on search screen for credit and val
 Then embossing file batch was generated in correct format
 And user sign out from customer portal
 
-Scenario:To Verify that the user can stoplist credit device from stoplist screen
+Scenario:2 To Verify that the user can stoplist credit device from stoplist screen
 Given user is logged in institution
 When user stoplists a card from stoplist device screen
 And user edits deviceplan and enables stoplist flag
 And device has "lost" status
 Then user sign out from customer portal
 
-Scenario: Transaction - MSR_PREAUTH Authorization transaction on credit device after stoplisted device
+Scenario:3 Transaction - MSR_PREAUTH Authorization transaction on credit device after stoplisted device
 Given connection to MAS is established
 When perform an MSR_PREAUTH MAS transaction
 And user is logged in institution
@@ -51,13 +51,13 @@ And search Pre-Auth authorization and verify 208-LOST CARD, PICK-UP status
 And assert Capture response with 70053 AuthDecline Code and Card Status is Lost with Capture Response as description
 Then user sign out from customer portal
 
-Scenario:To Verify that the user can withdraw stoplist credit device from stoplist screen
+Scenario:4 To Verify that the user can withdraw stoplist credit device from stoplist screen
 Given user is logged in institution
 When user withdraws a card from withdraw device screen
 And device has "normal" status
 Then user sign out from customer portal
 
-Scenario: Transaction - MSR_PREAUTH Authorization transaction on credit device after withdrawn device
+Scenario:5 Transaction - MSR_PREAUTH Authorization transaction on credit device after withdrawn device
 Given perform an MSR_PREAUTH MAS transaction on the same card
 When MAS test results are verified
 And MAS simulator is closed
