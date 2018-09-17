@@ -72,9 +72,9 @@ Scenario:1.8 Matching & Posting to Cardholders account
 Meta:
 @TestId 
 Given user is logged in institution
-When transaction status is "Matching Pending"
+!-- When transaction status is "Matching Pending"
 When user processes Pre-clearing system internal batch for Credit
-And "Matching" batch for credit is successful
+!-- And "Matching" batch for credit is successful
 !-- And transaction status is "Presentment Matched with authorization"
 When user processes EOD-Credit system internal batch for Credit
 And user sign out from customer portal
@@ -117,18 +117,7 @@ Then validate the statement with parameters:
 |Closing Balance|
 And user sign out from customer portal
 
-Scenario:2.1 Bump date 1 day ahead and Login & Logout to wait for date to be updated 
-Meta:
-@TestId 
-When update institution date to next day
-Given user is logged in institution
-When user sign out from customer portal
-And user is logged in institution
-And user sign out from customer portal
-And user is logged in institution
-And user sign out from customer portal
-
-Scenario:2.2 Verify User is able to make Payment of credit card through cash mode after billing cycle
+Scenario:2.1 Verify User is able to make Payment of credit card through cash mode after billing cycle
 Meta:
 @PaymentCash
 Given user is logged in institution
@@ -141,7 +130,7 @@ Then user check successful after payment
 When check card balance details through helpdesk
 And user sign out from customer portal
 
-Scenario:2.3 Login & Logout to wait for date to be updated foe next billing
+Scenario:2.2 Login & Logout to wait for date to be updated foe next billing
 Meta:
 @TestId 
 When update institution date to first of next month
@@ -152,7 +141,7 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:2.4 Process Batches after paying full payment bill and verify payments
+Scenario:2.3 Process Batches after paying full payment bill and verify payments
 Meta:
 @TestId 
 Given user is logged in institution

@@ -41,6 +41,8 @@ public class Device {
 	private static final String CREDIT_LIMIT = "CREDIT_LIMIT";
 	private static final String TRANSACTION_PASSWORD = "TRANSACTION_PASSWORD";
 	private static final String CURRENCY_OF_TRANSFER = "CURRENCY_OF_TRANSFER";
+	private static final String LATE_PAYMENT_FEE = "LATE_PAYMENT_FEE";
+	private static final String INTEREST_ON_PURCHASE = "INTEREST_ON_PURCHASE";
 	
 	private String currencyofTransfer;
 	private String currentTransPassword;
@@ -104,6 +106,8 @@ public class Device {
   	private String walletCurrency;
  	private String category;
   	private String amountType;
+  	private String latePaymentFee;
+  	private String interestOnPurcahse;
   	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -162,6 +166,12 @@ public class Device {
 		return device;
 	}
 
+	public static Device createProviderForLatePaymentAndInterestOnPurchase(KeyValueProvider provider,Device device){
+		device.setLatePaymentFee(provider.getString(LATE_PAYMENT_FEE));
+		device.setInterestOnPurcahse(provider.getString(INTEREST_ON_PURCHASE));
+		return device;
+	}
+	
 	public String getWalletCurrency() {
 		return walletCurrency;
 	}
@@ -673,5 +683,21 @@ public class Device {
 
 	public void setAmountType(String amountType) {
 		this.amountType = amountType;
+	}
+
+	public String getLatePaymentFee() {
+		return latePaymentFee;
+	}
+
+	public void setLatePaymentFee(String latePaymentFee) {
+		this.latePaymentFee = latePaymentFee;
+	}
+
+	public String getInterestOnPurcahse() {
+		return interestOnPurcahse;
+	}
+
+	public void setInterestOnPurcahse(String interestOnPurcahse) {
+		this.interestOnPurcahse = interestOnPurcahse;
 	}
 }

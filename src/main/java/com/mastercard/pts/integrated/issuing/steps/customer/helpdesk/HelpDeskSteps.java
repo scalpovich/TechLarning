@@ -68,8 +68,6 @@ public class HelpDeskSteps {
 	private static final String STATUS_INCORRECT_INFO_MSG = "Device has incorrect status";
 	private static final String INCORRECT_BALANCE_OR_CREDIT_LIMIT = "Available balance/Credit limit does not match : ";
 	private static final String BILLING_INCORRECT_MASSAGE = " amount does not match : ";
-	private static final String LATE_PAYMENT_PLAN = "5.00";
-	private static final int INTEREST_RATE_ON_PURCHASE = 2;
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
 	private String clientID;
 	private String loginType = "login";
@@ -867,28 +865,30 @@ public class HelpDeskSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setCategory(category);
 		device.setAmountType(amount);
+		if (device.getCategory().equalsIgnoreCase("Fee") || device.getCategory().equalsIgnoreCase("Interest")
+				|| device.getCategory().equalsIgnoreCase("Unpaid1")) {
+			device = Device.createProviderForLatePaymentAndInterestOnPurchase(provider, device);
+		}
 		if (device.getCategory().equalsIgnoreCase("Fee")) {
-			transactionAmount = LATE_PAYMENT_PLAN;
+			transactionAmount = device.getLatePaymentFee();
 		} else if (device.getCategory().equalsIgnoreCase("Interest")) {
 			int noOfDays = DateUtils.getDaysDifferenceBetweenTwoDates(context.get(ContextConstants.INSTITUTION_DATE),
 					context.get(ConstantData.TRANSACTION_DATE));
-			double interest = new Double(
-					((Integer.valueOf(device.getTransactionAmount()) * noOfDays * INTEREST_RATE_ON_PURCHASE) / 100)
-							/ DateUtils.noOfDaysInYear(context.get(ContextConstants.INSTITUTION_DATE)));
+			double interest = new Double(((Integer.valueOf(device.getTransactionAmount()) * noOfDays
+					* Integer.valueOf(device.getInterestOnPurcahse())) / 100)
+					/ DateUtils.noOfDaysInYear(context.get(ContextConstants.INSTITUTION_DATE)));
 			transactionAmount = Double.toString(Math.round(interest * 100D) / 100D);
+			context.put("billed interest", transactionAmount);
 		} else if (device.getCategory().equalsIgnoreCase("Unpaid1")) {
-			int noOfDays = DateUtils.getDaysDifferenceBetweenTwoDates(context.get(ContextConstants.INSTITUTION_DATE),
-					context.get(ConstantData.TRANSACTION_DATE));
-			double interest = new Double(
-					((Integer.valueOf(device.getTransactionAmount()) * noOfDays * INTEREST_RATE_ON_PURCHASE) / 100)
-							/ DateUtils.noOfDaysInYear(context.get(ContextConstants.INSTITUTION_DATE)));
-			transactionAmount = Double.toString(Math.round((interest + Integer.valueOf(LATE_PAYMENT_PLAN)
-					+ Integer.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))) * 100D) / 100D);
-			context.put(ConstantData.TRANSACTION_AMOUNT,transactionAmount);
-		}
-		else if (device.getCategory().equalsIgnoreCase("new Unpaid1")) {
+			transactionAmount = Double.toString(Math.round(
+					(Integer.valueOf(context.get("billed interest")) + Integer.valueOf(device.getLatePaymentFee())
+							+ Integer.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))) * 100D)
+					/ 100D);
+
+		} else if (device.getCategory().equalsIgnoreCase("new Unpaid1")) {
 			device.setCategory(category.replaceAll("new", "").trim());
-			transactionAmount = "0.00";
+			transactionAmount = Integer.toString(Integer.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))
+					- Integer.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT)));
 		}
 		assertThat(category + " " + amount + BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device),
 				equalTo(transactionAmount));

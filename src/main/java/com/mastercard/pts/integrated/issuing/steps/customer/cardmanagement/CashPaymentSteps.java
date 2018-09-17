@@ -34,7 +34,7 @@ public class CashPaymentSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		cash.setDeviceNumber(device.getDeviceNumber());
 		cash.setPaymentBranch(device.getBranchCode());
-		cash.setAmount(context.get(ConstantData.TRANSACTION_AMOUNT));
+//		cash.setAmount(context.get(ConstantData.TRANSACTION_AMOUNT));
 		creditPaymentFlow.makeCashPayment(cash);	
 		context.put(ContextConstants.PAYMENT, cash);		
 	}

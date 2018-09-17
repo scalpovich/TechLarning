@@ -5,7 +5,7 @@ I want to not payment for one bill cycle and verify late payment and interest is
 
 Meta:
 @CreditRegression
-@StoryName credit_emv_retail_billing
+@StoryName credit_emv_retail_billing_with_late_payment
 @Individual
 @Primary	 
 
