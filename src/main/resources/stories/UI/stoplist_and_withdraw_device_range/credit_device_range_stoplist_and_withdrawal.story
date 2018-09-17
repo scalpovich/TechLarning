@@ -6,7 +6,7 @@ so that the user's device range can be stoplisted and stoplist withdrawal
 
 Meta:
 @StoryName credit_emv_retail_stoplist_withdraw			 
-Scenario:creation of mastercard_individual_primary_msr Card credit device
+Scenario:1 creation of mastercard_individual_primary_msr Card credit device
 Given setting json values in excel for Credit
 And user is logged in institution
 When User fills Dedupe Plan
@@ -34,13 +34,13 @@ And User search for new device Supplementary on search screen for credit and val
 Then embossing file batch was generated in correct format
 And user sign out from customer portal
 
-Scenario:To Verify that the user can stoplist device range of credit device
+Scenario:2 To Verify that the user can stoplist device range of credit device
 Given user is logged in institution
 When user stoplists a device range from stoplist device range screen
 And user edits deviceplan and enables stoplist flag
 Then user sign out from customer portal
 
-Scenario: Transaction - MSR_PREAUTH Authorization transaction on credit device after stoplisted device range
+Scenario:3 Transaction - MSR_PREAUTH Authorization transaction on credit device after stoplisted device range
 Given connection to MAS is established
 When perform an MSR_PREAUTH MAS transaction
 And user is logged in institution
@@ -48,12 +48,12 @@ Then search Pre-Auth authorization and verify 207-PICK-UP CARD status
 And assert Capture response with 27001 AuthDecline Code and Device range is stoplisted. as description
 And user sign out from customer portal
 
-Scenario:To Verify that the user can withdraw stoplist device range of credit device
+Scenario:4 To Verify that the user can withdraw stoplist device range of credit device
 Given user is logged in institution
 When user withdraws a device range from withdraw device range screen
 Then user sign out from customer portal
 
-Scenario: Transaction - MSR_PREAUTH Authorization transaction on credit device after withdrawn device range
+Scenario:5 Transaction - MSR_PREAUTH Authorization transaction on credit device after withdrawn device range
 Given perform an MSR_PREAUTH MAS transaction on the same card
 When MAS test results are verified
 And MAS simulator is closed
