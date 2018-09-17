@@ -226,22 +226,6 @@ public class DeviceSteps {
 		context.put(ContextConstants.DEVICE, device);
 	}
 	
-	@Given("$type device is created using new device screen with $type plan")
-	@When("$type device is created using new device screen with $type plan")
-	@Then ("$type device is created using new device screen with $type plan")
-	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceCreationUsingNewDevice(String type, String plan){
-		Device device = Device.createWithProviderForOtherDetails(provider);
-		device.setAppliedForProduct(ProductType.fromShortName(type));
-		device.setPromotionPlanCode(plan);
-		Program program = context.get(ContextConstants.PROGRAM);
-		device.setProgramCode(program.buildDescriptionAndCode());
-		sdnUncheckProgram(program.getProgramCode());
-		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
-		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
-
-		deviceWorkflow.createDevice(device);
-		context.put(ContextConstants.DEVICE, device);
-	}
 
 	public void sdnUncheckProgram(String value) {
 		programFlows.programEdit(value);

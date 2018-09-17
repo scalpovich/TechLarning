@@ -127,5 +127,7 @@ public class ProcessBatches {
 	public void setMethodToGenerateFile(String methodToGenerateFile) {
 		this.methodToGenerateFile = methodToGenerateFile;
 	}
+	
+	
 
 }

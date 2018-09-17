@@ -44,6 +44,7 @@ public class Device {
 	private static final String JOINING_FEES = "JOINING_FEES";
 	private static final String MEMBERSHIP_FEES = "MEMBERSHIP_FEES";
 	
+	
 	private String currencyofTransfer;
 	private String currentTransPassword;
 	private String newTransPassword;
@@ -104,10 +105,12 @@ public class Device {
 	private String creditLimit;
   	private String legalID;
   	private String walletCurrency;
-  	private String joiningFees;
+ 	private String category;
+  	private String amountType;
+	private String joiningFees;
 	private String membershipFees;
 	private String promotionPlanCode;
-
+  	
 
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -663,6 +666,21 @@ public class Device {
 		this.transactionPassword = transactionPassword;
 	}
 	
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getAmountType() {
+		return amountType;
+	}
+
+	public void setAmountType(String amountType) {
+		this.amountType = amountType;
+	}
 	public String getJoiningFees() {
 		return joiningFees;
 	}
@@ -677,7 +695,8 @@ public class Device {
 
 	public void setMemberShipFees(String membershipFees) {
 		this.membershipFees = membershipFees;
-	}
+}
+	
 	
 	public String getPromotionPlanCode() {
 		return promotionPlanCode;

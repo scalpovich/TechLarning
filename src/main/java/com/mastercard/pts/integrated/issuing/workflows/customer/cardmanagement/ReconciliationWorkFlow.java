@@ -130,5 +130,15 @@ public class ReconciliationWorkFlow {
 				file.delete();
 		}
 	}
+	
+	public String runCreditBillingBatch(ProcessBatches batch) {
+		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
+		return processBatch.processCreditBillingBatch(batch);
+	}
+	
+	public String processStatementExtractBatch(ProcessBatches batch) {
+		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
+		return processBatch.processStatementExtractBatch(batch);
+	}
 
 }

@@ -105,17 +105,16 @@ public class WebElementUtils {
 		retryUntilNoErrors(() -> new Select(asWebElement(element)).selectByIndex(value));
 	}
 
-	@SuppressWarnings("deprecation")
-    public static void selectDropDownByVisibleText(MCWebElement element, String visibleText) {
-          try{
-          retryUntilNoErrors(() -> new Select(asWebElement(element)).selectByVisibleText(visibleText));        
-          SimulatorUtilities.wait(1000);
-    }     catch(StaleElementReferenceException e){              
-                Select sel = new Select(asWebElement(element)); 
-                sel.selectByVisibleText(visibleText);
-          } 
-    }
+	public static void selectDropDownByVisibleText(MCWebElement element, String visibleText) {
+		try {
+			retryUntilNoErrors(() -> new Select(asWebElement(element)).selectByVisibleText(visibleText));
+			SimulatorUtilities.wait(1000);
+		} catch (StaleElementReferenceException e) {
+			Select sel = new Select(asWebElement(element));
+			sel.selectByVisibleText(visibleText);
+		}
 
+	}
 
 	public static void selectDDByVisibleText(MCWebElement element, String visibleText) {
 		retryUntilNoErrors(() -> new Select(asWebElement(element)).selectByVisibleText(visibleText));

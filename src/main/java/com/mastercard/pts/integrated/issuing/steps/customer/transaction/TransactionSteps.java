@@ -453,6 +453,8 @@ public class TransactionSteps {
 				transactionWorkflow.searchTransactionWithDeviceAndGetStatus(device, ts).contains(" Wallet to Wallet Transfer(Credit)"));
 	}
 	
+	
+	@When("search with device in transaction screen and status for Joining and Membership Fees")
 	@Then("search with device in transaction screen and status for Joining and Membership Fees")
 	public void thenSearchWithDeviceInTransactionScreenAndStatusForJoiningandMembershipFees() {
 		
@@ -461,6 +463,18 @@ public class TransactionSteps {
 		device.setJoiningFees(provider.getString("JOINING_FEES"));
 		device.setMemberShipFees(provider.getString("MEMBERSHIP_FEES"));
 		assertThat(transactionWorkflow.searchTransactionWithDeviceAndGetFees(device, ts), Matchers.hasItems(device.getJoiningFees(), device.getMembershipFees()));
+		logger.info("Assertion Successful");
+				}
+	
+	@When("search with device in transaction screen and status for Joining Fee")
+	@Then("search with device in transaction screen and status for Joining Fee")
+	public void thenSearchWithDeviceInTransactionScreenAndStatusForJoiningFee() {
+		
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setJoiningFees(provider.getString("JOINING_FEES"));
+		assertEquals(transactionWorkflow.searchTransactionWithDeviceAndGetJoiningFee(device, ts), device.getJoiningFees());
+		logger.info("Assertion Successful");
 				}
 
 	@When("user performs load balance request")

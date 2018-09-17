@@ -1,13 +1,9 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -18,10 +14,15 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_SEARCH, CardManagementNav.L2_TRANSACTION, CardManagementNav.L3_TRANSACTION_SEARCH })
@@ -60,22 +61,38 @@ public class TransactionSearchPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement productTypeSelect;
-
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=cardNumber]")
 	private MCWebElement cardNumberTxt;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[1]/td/span[contains(text(),'DR')]/../../td[1]/span/a/span")
 	private MCWebElement retrieveARNLabel;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr[@class='even']//span[contains(.,'FEE(Card fees)')]/../preceding-sibling::td[@class='rightalign']")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
+	private MCWebElement institutionDateTxt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr[@class='odd']//span[contains(.,'FEE(Annual Fees)')]/../preceding-sibling::td[@class='rightalign']")
 	private MCWebElement membershipFees;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr[@class='odd']//span[contains(.,'FEE(Card fees)')]/../preceding-sibling::td[@class='rightalign']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr[@class='even']//span[contains(.,'FEE(Joining Fees)')]/../preceding-sibling::td[@class='rightalign']")
 	private MCWebElement joiningFees;
 
 	private String authorizationStatus;
+	private String joiningFee;
 	List<String> joiningAndMembershipFees = new ArrayList();
-
+	
+	public void selectFromDate(LocalDate date)
+	{
+		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(1);
+		WebElementUtils.pickDate(fromDateTxt, date);		
+	}
+	
+	public void selectToDate(LocalDate date)
+	{
+		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+		WebElementUtils.pickDate(toDateTxt, date);
+	}
+	
 	public String searchTransactionWithDevice(String deviceNumber, TransactionSearch ts) {
 		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
 		WebElementUtils.enterText(cardNumberTxt, deviceNumber);
@@ -93,8 +110,8 @@ public class TransactionSearchPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, ts.getProductType());
 		WebElementUtils.enterText(searchARNTxt, arnNumber);
 		WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
-		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
-		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
+		selectFromDate(LocalDate.now());
+		selectToDate(LocalDate.now());
 		clickSearchButton();
 		viewFirstRecord();
 		runWithinPopup("View Transactions", () -> {
@@ -160,20 +177,33 @@ public class TransactionSearchPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
 		logger.info("Search transaction for device {}", device.getDeviceNumber());
 		WebElementUtils.enterText(searchDeviceTxt, device.getDeviceNumber());
-		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
-		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
+		WebElementUtils.pickDate(fromDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
+		WebElementUtils.pickDate(toDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
 		waitForWicket();
 		WebElementUtils.elementToBeClickable(tranDateDDwn);
 		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
 		waitAndSearchForRecordToAppear();
-//		clickSearchButton();
-//		waitForWicket();
 		joiningAndMembershipFees.add(joiningFees.getText());
 		joiningAndMembershipFees.add(membershipFees.getText());
 		return joiningAndMembershipFees;
-
 	}
-
+	
+	public String searchTransactionWithDeviceAndGetJoiningFees(Device device, TransactionSearch ts) {
+		logger.info("Select product {}", device.getProductType());
+		WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
+		logger.info("Search transaction for device {}", device.getDeviceNumber());
+		WebElementUtils.enterText(searchDeviceTxt, device.getDeviceNumber());
+		WebElementUtils.pickDate(fromDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
+		WebElementUtils.pickDate(toDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
+		waitForWicket();
+		WebElementUtils.elementToBeClickable(tranDateDDwn);
+		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
+		waitAndSearchForRecordToAppear();
+		joiningFee = joiningFees.getText();
+		return joiningFee;
+	}
+	
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Transaction Search");
 		verifySearchButton("Search");

@@ -300,6 +300,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	private static final int loopIterationToCheckBatchNumber=21;
 	
+    @PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
+	private MCWebElement institutionDateTxt;
+	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
 		MCAnnotationProcessor.initializeSuper(this, finderProvider);
@@ -1217,36 +1220,29 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return null;
 	}
 
-	public void selectByVisibleText(MCWebElement ele, String optionName) {
-        try{
-        String optionVisbleText = "";
-        waitUntilSelectOptionsPopulated(ele);
-        List<WebElement> selectedOptions = ele.getSelect().getOptions();
-        for (WebElement element : selectedOptions) {
-              if (element.getText().toUpperCase().contains(optionName.toUpperCase())) {
-                    optionVisbleText = element.getText();
-                    break;
-              }
-        }
-        ele.getSelect().selectByVisibleText(optionVisbleText);
-        waitForLoaderToDisappear();
-        waitForPageToLoad(driver());
-        }
-        catch(StaleElementReferenceException e){  
-              String optionVisbleText = "";
-              Select sel = new Select(asWebElement(ele));
-              List<WebElement> selectedOptions = sel.getOptions();
-              for (WebElement element : selectedOptions) {
-                    if (element.getText().toUpperCase().contains(optionName.toUpperCase())) {
-                          optionVisbleText = element.getText();
-                          break;
-                    }
-              }
-              ele.getSelect().selectByVisibleText(optionVisbleText);                  
-              } 
-        waitForPageToLoad(driver());
-  }
+	public void doSelectByVisibleText(MCWebElement ele, String optionName) {
+		String optionalVisibleText = "";
+		waitUntilSelectOptionsPopulated(ele);
+		List<WebElement> selectedOptions = new Select(asWebElement(ele)).getOptions();
+		for (WebElement element : selectedOptions) {
+			if (element.getText().toUpperCase().contains(optionName.toUpperCase())) {
+				optionalVisibleText = element.getText();
+				break;
+			}
+		}
+		ele.getSelect().selectByVisibleText(optionalVisibleText);
+	}
 
+	public void selectByVisibleText(MCWebElement ele, String optionName) {
+		try {
+			doSelectByVisibleText(ele, optionName);
+		waitForLoaderToDisappear();
+		waitForPageToLoad(driver());
+		} catch (StaleElementReferenceException e) {
+			doSelectByVisibleText(ele, optionName);
+	}
+		waitForPageToLoad(driver());
+	}
 
 	private void waitUntilSelectOptionsPopulated(MCWebElement ele) {
 		WebDriverWait wait = new WebDriverWait(driver(), 100);
@@ -1856,5 +1852,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	public void switchToDefaultFrame(String element,int index) {
 		driver().switchTo().frame(Elements(element).get(index));
+	}
+	
+	public String getInstitutionDate()
+	{	
+		logger.info("Institution date : {}",getTextFromPage(institutionDateTxt));
+		return getTextFromPage(institutionDateTxt);
 	}
 }
