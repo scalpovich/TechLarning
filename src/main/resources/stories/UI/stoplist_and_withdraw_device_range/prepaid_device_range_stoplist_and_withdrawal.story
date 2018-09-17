@@ -30,7 +30,7 @@ Then user sign out from customer portal
 Scenario:To Verify that the user can stoplist device range of prepaid card
 Given user is logged in institution
 When user stoplists a device range from stoplist device range screen
-When user stoplists a device range from stoplist device range screen
+And user edits deviceplan and enables stoplist flag
 Then user sign out from customer portal
 
 Scenario: Transaction - MSR_PREAUTH Authorization transaction on prepaid card after stoplisted device range

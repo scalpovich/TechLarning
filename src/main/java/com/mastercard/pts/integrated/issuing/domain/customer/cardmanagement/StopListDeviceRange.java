@@ -7,10 +7,10 @@ import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 public class StopListDeviceRange {
      
 	
-	String stopListReason;
-	String stopListReasonDescription;
+	private String stopListReason;
+	private String stopListReasonDescription;
 	
-	public static final String STOPLIST_REASON="Device_Range_Stop_List_Reason";
+	private static final String STOPLIST_REASON="Device_Range_Stop_List_Reason";
 	
 	public String getStopListReason() {
 		return stopListReason;

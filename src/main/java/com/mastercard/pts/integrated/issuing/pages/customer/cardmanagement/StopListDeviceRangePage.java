@@ -84,6 +84,7 @@ public class StopListDeviceRangePage extends AbstractBasePage {
 			enterDescription(stopListDeviceRange.getStopListReasonDescription());
 			clickSaveButton();
 		});
+		verifyOperationStatus();
 	}
 	
 	public void selectStartRange(String starRange){

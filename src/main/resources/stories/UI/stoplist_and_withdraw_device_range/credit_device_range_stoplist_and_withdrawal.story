@@ -38,7 +38,7 @@ Scenario:To Verify that the user can stoplist device range of credit device
 Given user is logged in institution
 When user stoplists a device range from stoplist device range screen
 And user edits deviceplan and enables stoplist flag
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario: Transaction - MSR_PREAUTH Authorization transaction on credit device after stoplisted device range
 Given connection to MAS is established

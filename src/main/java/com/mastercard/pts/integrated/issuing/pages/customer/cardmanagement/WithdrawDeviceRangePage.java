@@ -79,6 +79,7 @@ public class WithdrawDeviceRangePage extends AbstractBasePage {
 			enterWithdrawalDescription(withdrawDeviceRange.getWithdrawDescription());
 			clickSaveButton();
 		});
+		verifyOperationStatus();
 	}
 	
 	public void enterStartRange(String startRange){

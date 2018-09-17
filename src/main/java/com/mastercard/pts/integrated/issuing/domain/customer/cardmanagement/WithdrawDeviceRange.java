@@ -7,10 +7,10 @@ import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 public class WithdrawDeviceRange {
      
 	
-	String withdrawReason;
-	String withdrawDescription;
+	private String withdrawReason;
+	private String withdrawDescription;
 	
-	static String WITHDRAW_REASON="Device_Range_Withdraw_Reason";
+	private static String WITHDRAW_REASON="Device_Range_Withdraw_Reason";
 	
 	public String getWithdrawReason() {
 		return withdrawReason;
