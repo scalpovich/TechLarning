@@ -1223,6 +1223,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		}
 		for (MCWebElement element: paymentComponents.getElements()){
 			list.add(element.getText());
+			logger.info("Elemnent Text-> " + element.getText());
 		}		
 		return list;		
 	}
@@ -1251,8 +1252,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public void checkAndCompareBalancePostPayment(Payment payment, String payments) {
-		Map<String, String> mapA = context.get("expectedPayment");
-		Map<String, String> mapB = context.get("actualPayment");
+		Map<String, String> mapA = context.get("balanceBeforePayment");
+		Map<String, String> mapB = context.get("balanceAfterPayment");
 		if (mapA != null && mapB != null && mapA.size() == mapB.size()) {
 			for (Map.Entry<String, String> m : mapA.entrySet()) {
 				String keyFromFirstMap = (String) m.getKey();
