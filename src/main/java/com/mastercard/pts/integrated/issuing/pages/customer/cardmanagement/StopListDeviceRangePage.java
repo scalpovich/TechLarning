@@ -36,7 +36,7 @@ public class StopListDeviceRangePage extends AbstractBasePage {
 	private MCWebElement rangeEnd;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "stopCardRangeContainer:rangeStart:input:dropdowncomponent")
-	private MCWebElement starRangeDDwn;
+	private MCWebElement startRangeDDwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "stopCardRangeContainer:rangeEnd:input:dropdowncomponent")
 	private MCWebElement endRangeDDwn;
@@ -88,7 +88,7 @@ public class StopListDeviceRangePage extends AbstractBasePage {
 	}
 	
 	public void selectStartRange(String starRange){
-		selectDropDownByText(starRangeDDwn, starRange);
+		selectDropDownByText(startRangeDDwn, starRange);
 	}
 	
 	public void selectEndRange(String endRange){
