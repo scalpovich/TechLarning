@@ -422,8 +422,8 @@ public class DeviceRangePage extends AbstractBasePage {
 		});
 
 		verifyOperationStatus();
-		if(Objects.nonNull(ConstantData.DEVICE_RANGE_DATA)){
-		context.put(ConstantData.DEVICE_RANGE_DATA, deviceRange);
+		if (Objects.nonNull(ConstantData.DEVICE_RANGE_DATA)) {
+			context.put(ConstantData.DEVICE_RANGE_DATA, deviceRange);
 		}
 	}
 

@@ -67,8 +67,8 @@ public class StopListDeviceRangePage extends AbstractBasePage {
 	public void addStopListDeviceRange(StopListDeviceRange stopListDeviceRange,DeviceRange deviceRange){
 		clickAddNewButton();
 		runWithinPopup("Add Stop List", ()->{
-			String startRange=null;
-			String endRange=null;
+			String startRange="";
+			String endRange="";
 			if(!deviceRange.getIssuerBin().contains("[")){
 				startRange=deviceRange.getIssuerBin()+""+deviceRange.getFromDeviceNumber();
 				endRange=deviceRange.getIssuerBin()+""+deviceRange.getToDeviceNumber();
@@ -87,8 +87,8 @@ public class StopListDeviceRangePage extends AbstractBasePage {
 		verifyOperationStatus();
 	}
 	
-	public void selectStartRange(String starRange){
-		selectDropDownByText(startRangeDDwn, starRange);
+	public void selectStartRange(String startRange){
+		selectDropDownByText(startRangeDDwn, startRange);
 	}
 	
 	public void selectEndRange(String endRange){

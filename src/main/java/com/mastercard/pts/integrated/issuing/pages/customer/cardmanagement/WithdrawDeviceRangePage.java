@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StopListDeviceRange;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WithdrawDeviceRange;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -41,10 +40,10 @@ public class WithdrawDeviceRangePage extends AbstractBasePage {
 	private MCWebElement rangeEndDDwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "withdrawalReasonCode:input:dropdowncomponent")
-	private MCWebElement withdarwReasonDDwn;
+	private MCWebElement withdrawReasonDDwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "withdrawalDescription:input:textAreaComponent")
-	private MCWebElement withdarwalDescriptionTxt;
+	private MCWebElement withdrawalDescriptionTxt;
 	
 	
 
@@ -60,8 +59,8 @@ public class WithdrawDeviceRangePage extends AbstractBasePage {
 	}
 	
 	public void withdrawDeviceRange(WithdrawDeviceRange withdrawDeviceRange,DeviceRange deviceRange){
-		String startRange=null;
-		String endRange=null;
+		String startRange="";
+		String endRange="";
 		if(!deviceRange.getIssuerBin().contains("[")){
 			startRange=deviceRange.getIssuerBin()+deviceRange.getFromDeviceNumber();
 			endRange=deviceRange.getIssuerBin()+deviceRange.getToDeviceNumber();
@@ -91,10 +90,10 @@ public class WithdrawDeviceRangePage extends AbstractBasePage {
 	}
 	
 	public void selectWithdrawReason(String withdrawReason){
-		selectDropDownByText(withdarwReasonDDwn, withdrawReason);	
+		selectDropDownByText(withdrawReasonDDwn, withdrawReason);	
 	}
 	
 	public void enterWithdrawalDescription(String description){
-		enterText(withdarwalDescriptionTxt, description);
+		enterText(withdrawalDescriptionTxt, description);
 	}
 }
