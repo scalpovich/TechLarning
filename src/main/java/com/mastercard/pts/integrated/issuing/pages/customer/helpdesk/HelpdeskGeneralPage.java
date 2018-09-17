@@ -1218,6 +1218,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		ArrayList<String> list = new ArrayList<>();		
 		clickWhenClickableDoNotWaitForWicket(balanceDetailsTab);
 		for (MCWebElement element: purchaseComponents.getElements()){
+			logger.info("Elemnent Text-> " + element.getText());
 			list.add(element.getText());
 		}
 		for (MCWebElement element: paymentComponents.getElements()){
@@ -1257,6 +1258,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				String keyFromFirstMap = (String) m.getKey();
 				String valueFromFirstMap = (String) m.getValue();
 				String valueFromSecondMap = mapB.get(keyFromFirstMap);
+				logger.info("Key->"+keyFromFirstMap);
+				logger.info("Value1->"+valueFromFirstMap +"Value2->"+valueFromSecondMap);
 				comparePayments(valueFromFirstMap,keyFromFirstMap,payment,payments,valueFromSecondMap);
 			}
 		}

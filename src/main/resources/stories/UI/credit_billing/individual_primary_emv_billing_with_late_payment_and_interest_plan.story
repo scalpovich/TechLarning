@@ -72,9 +72,9 @@ Scenario:1.8 Matching & Posting to Cardholders account
 Meta:
 @TestId 
 Given user is logged in institution
-When transaction status is "Matching Pending"
+!-- When transaction status is "Matching Pending"
 When user processes Pre-clearing system internal batch for Credit
-And "Matching" batch for credit is successful
+!-- And "Matching" batch for credit is successful
 !-- And transaction status is "Presentment Matched with authorization"
 When user processes EOD-Credit system internal batch for Credit
 And user sign out from customer portal
@@ -159,7 +159,6 @@ And user sign out from customer portal
 Scenario:2.3 Bump date 1 day ahead and Login & Logout to wait for date to be updated 
 Meta:
 @TestId 
-When update institution date to next day
 Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
@@ -173,8 +172,8 @@ Meta:
 Given user is logged in institution
 When check card balance details through helpdesk
 And user initiates cash payment
-And "Pre-clearing" batch for credit is successful
-And "EOD-Credit" batch for credit is successful
+When user processes Pre-clearing system internal batch for Credit
+And user processes EOD-Credit system internal batch for Credit
 And recheck card balance details through helpdesk after payment
 Then user check successful after payment
 When check card balance details through helpdesk
