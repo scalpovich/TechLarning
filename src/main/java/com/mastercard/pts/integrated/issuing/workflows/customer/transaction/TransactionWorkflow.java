@@ -1259,7 +1259,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(1000);
 			keySetDdwn.findElement(By.name("Drop Down Button")).click();
 			wait(2000);
-			keySetDdwn.findElements(By.name("00999 - CVC3 Test Key Example 1"))
+			keySetDdwn.findElements(By.name("00123 - CVC3 Test Key Example 1"))
 					.get(0).click();
 			wait(2000);
 			captureSaveScreenShot(methodName);
