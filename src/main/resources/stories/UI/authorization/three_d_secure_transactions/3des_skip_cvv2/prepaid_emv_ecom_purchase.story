@@ -33,7 +33,7 @@ Given user is logged in institution
 When user edits 3D ecommerce security parameters to skip CVV2/CVC2 validation for product Credit and interchange Mastercard as check
 Then user sign out from customer portal
 
-Scenario:1.4 perform 3D_SECURE_NO_CVV2 authorization on corporate msr card
+Scenario:1.4 perform 3D_SECURE_NO_CVV2 authorization on prepaid emv corporate general purpose card
 Given connection to MAS is established
 When perform an 3D_SECURE_NO_CVV2 MAS transaction
 And MAS test results are verified
