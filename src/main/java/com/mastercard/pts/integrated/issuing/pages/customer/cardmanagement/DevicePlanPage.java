@@ -36,6 +36,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class DevicePlanPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(DevicePlanPage.class);
 	private static final String STATUS_YES = "Yes";
+	private static final String STATUS_NO = "No";
 
 	@Autowired
 	MenuSubMenuPage menuSubMenuPage;
@@ -1269,10 +1270,14 @@ public void AddDevicePlan() {
 
 			if (devicePlan.getEmvPlanApplicationBlock().equalsIgnoreCase(STATUS_YES)) {
 				clickWhenClickable(applicationBlockChkBx);
+				WebElementUtils.selectDropDownByVisibleText(applicationBlockPriorityDdwn,
+						devicePlan.getEmvPlanApplicationBlockPriority());
 			}
 
 			if (devicePlan.getEmvPlanApplicationUnblock().equalsIgnoreCase(STATUS_YES)) {
 				clickWhenClickable(applicationUnblockChkBx);
+				WebElementUtils.selectDropDownByVisibleText(applicationUnblockPriorityDdwn,
+						devicePlan.getEmvPlanApplicationUnblockPriority());
 			}
 
 			if (devicePlan.getEmvPlanPutData().equalsIgnoreCase(STATUS_YES)) {
@@ -1286,17 +1291,13 @@ public void AddDevicePlan() {
 			if (devicePlan.getEmvPlanPinUnblock().equalsIgnoreCase(STATUS_YES)) {
 				clickWhenClickable(pinUnblockChkBx);
 			}
-			WebElementUtils.selectDropDownByVisibleText(applicationBlockPriorityDdwn,
-					devicePlan.getEmvPlanApplicationBlockPriority());
-			WebElementUtils.selectDropDownByVisibleText(applicationUnblockPriorityDdwn,
-					devicePlan.getEmvPlanApplicationUnblockPriority());
-			WebElementUtils.selectDropDownByVisibleText(pinChangePriorityDdwn,
-					devicePlan.getEmvPlanPinChangePriority());
-			WebElementUtils.selectDropDownByVisibleText(putDataPriorityDdwn,
-					devicePlan.getEmvPlanPutDataPriority());
-			WebElementUtils.selectDropDownByVisibleText(pinUnblockPriorityDdwn,
-					devicePlan.getEmvPlanPinUnblockPriority());
-
+			
+		
+			if (devicePlan.getEmvIssuerScriptingNegative().equalsIgnoreCase(STATUS_NO)) {
+				WebElementUtils.selectDropDownByVisibleText(pinChangePriorityDdwn, devicePlan.getEmvPlanPinChangePriority());
+				WebElementUtils.selectDropDownByVisibleText(putDataPriorityDdwn, devicePlan.getEmvPlanPutDataPriority());
+				WebElementUtils.selectDropDownByVisibleText(pinUnblockPriorityDdwn, devicePlan.getEmvPlanPinUnblockPriority());
+			}
 		}
 	}
 	private void fillPinGenerationSection(DevicePlan devicePlan) {

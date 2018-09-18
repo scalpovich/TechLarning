@@ -19,7 +19,7 @@ public class DBUtility {
 			.getLogger(DBUtility.class);
 	private Connection conn = null;
 	private Statement stmt = null;
-	private ResultSet rs = null;
+	private ResultSet rs;
 	private String recordColumnValue = null;
 	
 
@@ -53,16 +53,19 @@ public class DBUtility {
 	 * @param queryString takes the SQL query
 	 * @param columnName takes the columnName for which the value has to be fetched
 	 */
-	public String getSingleRecordColumnValueFromDB(String queryString,
-			String columnName) {
+	public String getSingleRecordColumnValueFromDB(String queryString, String columnName) {
 		try {
 			stmt = getConnection().createStatement();
 			rs = stmt.executeQuery(queryString);
 			while (rs.next()) {
-				recordColumnValue = rs.getString(columnName);
-				logger.info("value returned from database ",recordColumnValue);
-				break;
-			}	
+				if (rs.getString(columnName) == null) {
+					recordColumnValue = null;
+				} else {
+					recordColumnValue = rs.getString(columnName);
+					logger.info("value returned from database ", recordColumnValue);
+
+				}
+			}
 		} catch (Exception e) {
 			MiscUtils.propagate(e);
 		} finally {
@@ -108,11 +111,32 @@ public class DBUtility {
 			}
 	}
 	
+	/*
+	 * This method executes update query
+	 */
+	public void executeUpdate(String queryString) {
+		logger.info("** executing update query ** : {}",queryString);
+		try {
+			stmt = getConnection().createStatement();
+		      stmt.executeUpdate(queryString);
+		      conn.commit();
+		} catch (Exception e) {
+			MiscUtils.propagate(e);
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				MiscUtils.propagate(e);
+			}
+		}
+	}
+	
 	public Connection getConnection()
 	{
 		try {
 			conn = DriverManager.getConnection("jdbc:oracle:thin:@" + dbHost
-					+ ":" + dbPort + ":" + dbServiceName, dbUsername,
+					+ ":" + dbPort + "/" + dbServiceName, dbUsername,
 					dbPassword);
 			return conn;
 		} catch (SQLException e) {

@@ -43,7 +43,7 @@ When Pin Offset file batch was generated successfully
 Then embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 And FINSim simulator is closed
-And User enter incorrect Expiry Date
+And User enters incorrect Expiry Date
 
 Scenario: Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established

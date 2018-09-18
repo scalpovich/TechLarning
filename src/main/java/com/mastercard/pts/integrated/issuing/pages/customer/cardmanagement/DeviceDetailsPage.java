@@ -54,6 +54,10 @@ public class DeviceDetailsPage extends AbstractCardManagementPage {
 		runWithinPopup("View Device Details", () -> {
 			clickWhenClickable(emvScriptingDetailsTab);
 			statusText = lastExecutedScriptStatus.getText();
+			if (statusText.contains("-"))
+			{
+			 statusText="Empty";
+			}
 			clickCloseButton();
 		});
 		return statusText;

@@ -51,3 +51,8 @@ Then MAS test results are verified
 And user is logged in institution
 And search Refer authorization and verify 000-Successful status
 And user sign out from customer portal
+
+Scenario: When User Chnage device status to Capture of Lost Status
+Given user is logged in institution
+When User Change Device Status to Capture [3]
+And user sign out from customer portal
