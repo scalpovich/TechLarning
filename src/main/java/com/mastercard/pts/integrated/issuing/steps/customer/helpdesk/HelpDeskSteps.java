@@ -870,6 +870,7 @@ public class HelpDeskSteps {
 			device = Device.createProviderForLatePaymentAndInterestOnPurchase(provider, device);
 		}
 		if (device.getCategory().equalsIgnoreCase("Fee")) {
+			logger.info("Late Payment Fee->"+device.getLatePaymentFee());
 			transactionAmount = device.getLatePaymentFee();
 		} else if (device.getCategory().equalsIgnoreCase("Interest")) {
 			int noOfDays = DateUtils.getDaysDifferenceBetweenTwoDates(context.get(ContextConstants.INSTITUTION_DATE),
@@ -878,17 +879,19 @@ public class HelpDeskSteps {
 					* Integer.valueOf(device.getInterestOnPurcahse())) / 100)
 					/ DateUtils.noOfDaysInYear(context.get(ContextConstants.INSTITUTION_DATE)));
 			transactionAmount = Double.toString(Math.round(interest * 100D) / 100D);
+			logger.info("Billed interest->"+transactionAmount);
 			context.put("billed interest", transactionAmount);
 		} else if (device.getCategory().equalsIgnoreCase("Unpaid1")) {
 			transactionAmount = Double.toString(Math.round(
 					(Integer.valueOf(context.get("billed interest")) + Integer.valueOf(device.getLatePaymentFee())
 							+ Integer.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))) * 100D)
 					/ 100D);
-
+			logger.info("Unpaid1->"+transactionAmount);
 		} else if (device.getCategory().equalsIgnoreCase("new Unpaid1")) {
 			device.setCategory(category.replaceAll("new", "").trim());
 			transactionAmount = Integer.toString(Integer.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))
 					- Integer.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT)));
+			logger.info("After paying full payment, unpaid1->"+transactionAmount);
 		}
 		assertThat(category + " " + amount + BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device),
 				equalTo(transactionAmount));

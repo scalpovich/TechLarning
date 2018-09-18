@@ -72,10 +72,14 @@ Scenario:1.8 Matching & Posting to Cardholders account
 Meta:
 @TestId 
 Given user is logged in institution
-!-- When transaction status is "Matching Pending"
+When transaction status is "Matching Pending"
+And "Matching" batch for credit is successful
+And transaction status is "Presentment Matched with authorization"
+Then user sign out from customer portal
+
+Scenario:1.8.1 Run Pre-clearing and EOD-Credit
+Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
-!-- And "Matching" batch for credit is successful
-!-- And transaction status is "Presentment Matched with authorization"
 When user processes EOD-Credit system internal batch for Credit
 And user sign out from customer portal
 

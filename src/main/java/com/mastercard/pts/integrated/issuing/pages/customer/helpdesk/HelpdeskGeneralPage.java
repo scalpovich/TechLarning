@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -1230,26 +1231,28 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public Map<String,String> checkCreditBalances(Device device){
-		Map<String, String> balanceMapBeforePayments = new LinkedHashMap<String, String>();	
+		Map<String, String> balanceMapBeforePayments = new LinkedHashMap<String, String>();
 		List<String> list;
 		logger.info("get Credit balances");
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getProductType());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
-		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
+		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
 		editDeviceLink.click();
-		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
-//		balanceMapBeforePayments = getCreditLimitComponents();
-			clickBalanceDetailsTab();
-			SimulatorUtilities.wait(5000);//this to wait till the table gets loaded	
-			list=getCreditCardBallance();
-			balanceMapBeforePayments.put("BilledPurchase", list.get(0));
-			balanceMapBeforePayments.put("UnbilledPurchase", list.get(1));
-			balanceMapBeforePayments.put("OutstandingPurchase", list.get(2));	
-			balanceMapBeforePayments.put("BilledPayments", list.get(4));
-			balanceMapBeforePayments.put("UnbilledPayments", list.get(5));
-			balanceMapBeforePayments.put("OutstandingPayments", list.get(6));			
-			return balanceMapBeforePayments;
+		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
+		clickBalanceDetailsTab();
+		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
+		list = getCreditCardBallance();
+		balanceMapBeforePayments.put("BilledPurchase", list.get(0));
+		balanceMapBeforePayments.put("UnbilledPurchase", list.get(1));
+		balanceMapBeforePayments.put("OutstandingPurchase", list.get(2));
+		balanceMapBeforePayments.put("BilledPayments", list.get(4));
+		balanceMapBeforePayments.put("UnbilledPayments", list.get(5));
+		balanceMapBeforePayments.put("OutstandingPayments", list.get(6));
+		for (Map.Entry<String, String> m : balanceMapBeforePayments.entrySet()) {
+			logger.info("Key->" + (String) m.getKey() + " Value1->" + (String) m.getValue());
+		}
+		return balanceMapBeforePayments;
 	}
 	
 	public void checkAndCompareBalancePostPayment(Payment payment, String payments) {
