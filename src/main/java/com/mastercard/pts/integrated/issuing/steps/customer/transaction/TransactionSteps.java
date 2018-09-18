@@ -463,7 +463,7 @@ public class TransactionSteps {
 		device.setJoiningFees(provider.getString("JOINING_FEES"));
 		device.setMemberShipFees(provider.getString("MEMBERSHIP_FEES"));
 		assertThat(transactionWorkflow.searchTransactionWithDeviceAndGetFees(device, ts), Matchers.hasItems(device.getJoiningFees(), device.getMembershipFees()));
-		logger.info("Assertion Successful");
+		
 				}
 	
 	@When("search with device in transaction screen and status for Joining Fee")
@@ -474,7 +474,7 @@ public class TransactionSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setJoiningFees(provider.getString("JOINING_FEES"));
 		assertEquals(transactionWorkflow.searchTransactionWithDeviceAndGetJoiningFee(device, ts), device.getJoiningFees());
-		logger.info("Assertion Successful");
+		
 				}
 
 	@When("user performs load balance request")
