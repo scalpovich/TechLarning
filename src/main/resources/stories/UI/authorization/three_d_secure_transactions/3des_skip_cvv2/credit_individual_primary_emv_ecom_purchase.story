@@ -8,7 +8,6 @@ Meta:
 @StoryName credit_emv_retail_billing
 @Individual
 @Primary	 
-
 Scenario:1.0 creation of mastercard_individual_primary_emv Card credit device
 Meta:
 @UserCreatesNewCreditDevice
@@ -37,12 +36,12 @@ And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario:  Skip CVV2/CVC2 Validation in 3DES Params
+Scenario:1.4 Skip CVV2/CVC2 Validation in 3DES Params
 Given user is logged in institution
-When user edits 3D ecommerce security parameters to skip CVV2/CVC2 validation for product Credit and interchange Mastercard
+When user edits 3D ecommerce security parameters to skip CVV2/CVC2 validation for product Credit and interchange Mastercard as check
 Then user sign out from customer portal
 
-Scenario: perform 3D_SECURE_NO_CVV2 authorization on corporate msr card
+Scenario:1.5 perform 3D_SECURE_NO_CVV2 authorization on corporate msr card
 Given connection to MAS is established
 When perform an 3D_SECURE_NO_CVV2 MAS transaction
 And MAS test results are verified
@@ -51,7 +50,7 @@ And user is logged in institution
 Then search E-Commerce Transaction authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario:  Skip CVV2/CVC2 Validation in 3DES Params
+Scenario:1.6 Skip CVV2/CVC2 Validation in 3DES Params
 Given user is logged in institution
-When user edits 3D ecommerce security parameters to skip CVV2/CVC2 validation for product Credit and interchange Mastercard
+When user edits 3D ecommerce security parameters to skip CVV2/CVC2 validation for product Credit and interchange Mastercard as uncheck
 Then user sign out from customer portal

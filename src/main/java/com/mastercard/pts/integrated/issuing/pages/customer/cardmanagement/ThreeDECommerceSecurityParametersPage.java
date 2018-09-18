@@ -80,8 +80,11 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 		enterSearchDeviceRangeFrom(threeDESParams.getDeviceRangeFrom());
 		clickSearchButton();
 		editFirstRecord();
-		runWithinPopup("Edit 3D E-Commerce Security", () -> {			
-			ClickCheckBox(skipCvv2ChkBx, true);
+		runWithinPopup("Edit 3D E-Commerce Security", () -> {
+			if(threeDESParams.getCheckStatus().equals("check"))
+				ClickCheckBox(skipCvv2ChkBx, true);
+			else
+				ClickCheckBox(skipCvv2ChkBx, false);
 			clickSaveButton();
 		});
 	}

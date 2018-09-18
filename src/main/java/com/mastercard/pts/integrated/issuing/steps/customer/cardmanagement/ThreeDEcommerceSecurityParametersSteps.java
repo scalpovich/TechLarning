@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ThreeDECommerceSecurityParameters;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ThreeDECommerceSecurityParametersFlows;
 
@@ -18,6 +19,10 @@ public class ThreeDEcommerceSecurityParametersSteps {
 
 	@Autowired
 	DataProvider jsonProvider;
+	
+	@Autowired
+	private KeyValueProvider provider;
+
 
 	@When("user adds 3D ecommerce security parameters for $type")
 	public void add3DEcommerceSecurityParameters(String type) {
@@ -28,10 +33,12 @@ public class ThreeDEcommerceSecurityParametersSteps {
 		threeDECommerceSecurityParametersFlows.add3DEcommerceSecurityParameters(threeDECommerceSecurityParameters);
 	}
 
-	@When("user edits 3D ecommerce security parameters to skip CVV2/CVC2 validation for product $type and interchange $interchange")
-	public void edit3DEcommerceSecurityParameters(String type, String interchange) {
+	@When("user edits 3D ecommerce security parameters to skip CVV2/CVC2 validation for product $type and interchange $interchange as $status")
+	public void edit3DEcommerceSecurityParameters(String type, String interchange,String status) {
 		ThreeDECommerceSecurityParameters threeDESParams = new ThreeDECommerceSecurityParameters();
-		DeviceRange deviceRange = DeviceRange.createWithProvider(jsonProvider, type);
+		threeDESParams.setCheckStatus(status);
+		//DeviceRange deviceRange = DeviceRange.createWithProvider(jsonProvider, type);
+		DeviceRange deviceRange = DeviceRange.createWithProvider(jsonProvider,provider, type);
 		threeDESParams.setDeviceRangeFrom(deviceRange.getIssuerBinCode(deviceRange.getIssuerBin()) + ConstantData.START_RANGE_DIGITS);
 		threeDESParams.seteCommerceSecurityInterchange(interchange);
 		threeDECommerceSecurityParametersFlows.edit3DESParams(threeDESParams);

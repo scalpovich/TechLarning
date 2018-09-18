@@ -14,6 +14,16 @@ public class ThreeDECommerceSecurityParameters {
 	
 	private String deviceRangeTo;
 	
+	private String checkStatus;
+	
+	public String getCheckStatus() {
+		return checkStatus;
+	}
+
+	public void setCheckStatus(String checkStatus) {
+		this.checkStatus = checkStatus;
+	}
+
 	public String geteCommerceSecurityInterchange() {
 		return eCommerceSecurityInterchange;
 	}
