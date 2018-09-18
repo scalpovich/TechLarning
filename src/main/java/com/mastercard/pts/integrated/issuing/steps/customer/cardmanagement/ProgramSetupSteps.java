@@ -665,13 +665,32 @@ public class ProgramSetupSteps {
 	@When("for $deviceType User fills Supplementary Device Plan for $type product for $interchange")
 	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeForSupplementary(String deviceType,String type,String interchange) {
 		devicePlanSupplementary = DevicePlan.createProviderForCredit(provider);
+		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
 		devicePlanSupplementary.setProductType(ProductType.fromShortName(type));
-		devicePlanSupplementary.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
-		devicePlanSupplementary.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
-		devicePlanSupplementary.setAssociation(interchange);
-		devicePlanSupplementary.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
-		devicePlanSupplementary.setAfterKYC(transactionPlan.buildDescriptionAndCode());
-		devicePlanSupplementary.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		if (Objects.nonNull(deviceJoiningAndMemberShipFeePlan)) {
+			devicePlanSupplementary.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+		} else {
+			devicePlanSupplementary.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());
+		}
+		if (Objects.nonNull(deviceEventBasedFeePlan)) {
+			devicePlanSupplementary.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+		} else {
+			devicePlanSupplementary.setBaseDeviceEventBasedPlan(data.getDeviceEventBasedFeePlan());
+		}
+			devicePlanSupplementary.setAssociation(interchange);
+		if (Objects.nonNull(transactionLimitPlan)) {
+			devicePlanSupplementary.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		} else {
+			devicePlanSupplementary.setTransactionLimitPlan(data.getTransactionLimitPlan());
+		}
+		if (Objects.nonNull(transactionLimitPlan)) {
+			devicePlanSupplementary.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+			devicePlanSupplementary.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+		} else {
+			setPinRequiredToDefaultState();
+			devicePlanSupplementary.setAfterKYC(data.getTransactionPlan());
+			devicePlanSupplementary.setBeforeKYC(data.getTransactionPlan());
+		}
 		devicePlanSupplementary.setDeviceType(deviceType);
 
 		programSetupWorkflow.createDevicePlan(devicePlanSupplementary);
