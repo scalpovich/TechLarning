@@ -99,10 +99,10 @@ When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
 And user verify Unbilled amount for Purchase category
 And user processes Billing Process - Credit system internal batch for Credit
-And user verify Billed amount for Purchase category
 And device has "normal" status
 And user notes down required values from helpdesk for credit
 And user run Statement Extract system internal batch
+And user verify Billed amount for Purchase category
 And verify statement file is successfully downloaded
 Then validate the statement with parameters:
 |parameters|

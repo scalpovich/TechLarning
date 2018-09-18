@@ -898,11 +898,7 @@ public class HelpDeskSteps {
 	@When("check card balance details through helpdesk")
 	public void checkCardBalance(){
 		Device device = context.get(ContextConstants.DEVICE);
-//		device.setDeviceNumber("5897657458735414"); //stage 5377164858858416 5897659209884715
-//		device.setProductType(ProductType.fromShortName(Constants.CREDIT));
-//		device.setBranchCode("BRANCHBASE [1001]");
 		context.put(ContextConstants.DEVICE,device);
-//		Device device1 = context.get(ContextConstants.DEVICE);
 		context.put("balanceBeforePayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));
 		
 	}

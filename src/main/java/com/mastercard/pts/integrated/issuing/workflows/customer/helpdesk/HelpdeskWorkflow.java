@@ -228,6 +228,7 @@ public class HelpdeskWorkflow {
 	}
 	
 	public void compareBalancesAfterPayment(Payment payment, String payments){
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
 		helpDeskPage.checkAndCompareBalancePostPayment(payment,payments);
 	}
 }

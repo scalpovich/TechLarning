@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -297,11 +298,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
   
     @PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody a img")
 	private MCWebElement editDeviceLink;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody a img")
-	private MCWebElement editDeviceLink;
-	
-	@Autowired
+
+    @Autowired
 	TestContext context;
 	
 	private final String DEFAULT_BALANCE="0.00";
@@ -1232,7 +1230,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public Map<String,String> checkCreditBalances(Device device){
-		Map<String, String> balanceMapBeforePayments = new HashMap<String, String>();	
+		Map<String, String> balanceMapBeforePayments = new LinkedHashMap<String, String>();	
 		List<String> list;
 		logger.info("get Credit balances");
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getProductType());
@@ -1245,11 +1243,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickBalanceDetailsTab();
 			SimulatorUtilities.wait(5000);//this to wait till the table gets loaded	
 			list=getCreditCardBallance();
-			balanceMapBeforePayments.put("BillledPurchase", list.get(0));
-			balanceMapBeforePayments.put("UnbllledPurchase", list.get(1));
+			balanceMapBeforePayments.put("BilledPurchase", list.get(0));
+			balanceMapBeforePayments.put("UnbilledPurchase", list.get(1));
 			balanceMapBeforePayments.put("OutstandingPurchase", list.get(2));	
-			balanceMapBeforePayments.put("BillledPayments", list.get(4));
-			balanceMapBeforePayments.put("UnbllledPayments", list.get(5));
+			balanceMapBeforePayments.put("BilledPayments", list.get(4));
+			balanceMapBeforePayments.put("UnbilledPayments", list.get(5));
 			balanceMapBeforePayments.put("OutstandingPayments", list.get(6));			
 			return balanceMapBeforePayments;
 	}
@@ -1272,13 +1270,13 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private void comparePayments(String valueFromFirstMap, String keyFromFirstMap, Payment payment, String payments,
 			String valueFromSecondMap) {
 		switch (keyFromFirstMap) {
-		case "BillledPurchase":
+		case "BilledPurchase":
 			if (!valueFromSecondMap.equals(valueFromFirstMap)) {
 				Assert.assertEquals("Billed Purchase->", keyFromFirstMap + "::::" + valueFromSecondMap,
 						keyFromFirstMap + "::::" + Double.valueOf(valueFromFirstMap));
 			}
 			break;
-		case "UnbllledPurchase":
+		case "UnbilledPurchase":
 			if (!valueFromSecondMap.equals(valueFromFirstMap)) {
 				Assert.assertEquals("Unbllled Purchase->", keyFromFirstMap + "::::" + valueFromSecondMap,
 						keyFromFirstMap + "::::" + Double.valueOf(valueFromFirstMap));
@@ -1298,7 +1296,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				}
 			}
 			break;
-		case "BillledPayments":
+		case "BilledPayments":
 			if (payments.equalsIgnoreCase("after billing")) {
 				if (!valueFromSecondMap.equals(
 						String.valueOf(Double.valueOf(valueFromFirstMap) + Double.valueOf(payment.getAmount())))) {
@@ -1312,7 +1310,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				}
 			}
 			break;
-		case "UnbllledPayments":
+		case "UnbilledPayments":
 			if (payments.equalsIgnoreCase("after payment")) {
 				if (!valueFromSecondMap.equals(
 						String.valueOf(Double.valueOf(valueFromFirstMap) + Double.valueOf(payment.getAmount())))) {
