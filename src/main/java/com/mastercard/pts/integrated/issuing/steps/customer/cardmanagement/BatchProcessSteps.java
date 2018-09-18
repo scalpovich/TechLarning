@@ -213,7 +213,7 @@ public class BatchProcessSteps {
 	public void verifyStatementFileSuccessfullyGenerated(){
 		Device device =  context.get(ContextConstants.DEVICE);
 		String institutionCode = System.getProperty(ContextConstants.INST_PROPERTY).substring(System.getProperty(ContextConstants.INST_PROPERTY).indexOf('[')+1, System.getProperty(ContextConstants.INST_PROPERTY).length() - 1);
-		String partialFileName = "STMT_" +institutionCode  +"_"+ device.getProgramCode().split("[")[1].replace("]", "") + "_" + device.getClientCode() +"_"+ context.get(ContextConstants.STATEMENT_TO_DATE) + context.get(ContextConstants.STATEMENT_FROM_DATE) + "_" + device.getDeviceNumber().substring(device.getDeviceNumber().length() - 4); 
+		String partialFileName = "STMT_" +institutionCode  +"_"+ device.getProgramCode().substring(12,18) + "_" + device.getClientCode() +"_"+ context.get(ContextConstants.STATEMENT_TO_DATE) + context.get(ContextConstants.STATEMENT_FROM_DATE) + "_" + device.getDeviceNumber().substring(device.getDeviceNumber().length() - 4); 
 		logger.info("File Name :{} ",partialFileName);
 	    batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(), "STATEMENT_DOWNLOAD","proc");
      	assertNotNull("Statement file is successfully donwloaded :  "+batchFile.getAbsolutePath(),batchFile);			
