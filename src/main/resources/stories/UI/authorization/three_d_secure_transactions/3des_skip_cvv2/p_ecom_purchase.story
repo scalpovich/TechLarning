@@ -41,3 +41,8 @@ And MAS simulator is closed
 And user is logged in institution
 Then search E-Commerce Transaction authorization and verify 000-Successful status
 And user sign out from customer portal
+
+Scenario:  Skip CVV2/CVC2 Validation in 3DES Params
+Given user is logged in institution
+When user edits 3D ecommerce security parameters to skip CVV2/CVC2 validation for product Prepaid and interchange Mastercard
+Then user sign out from customer portal
