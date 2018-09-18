@@ -33,7 +33,7 @@ public class DeviceUsageSteps {
 	private static final String ATC = "ATC" ;
 	public static final String DEVICE_USUAGE = "DEVICE_USUAGE";
 	
-	public static double previousAmountUtilized =0.00;
+	private static double previousAmountUtilized =0.00;
 	
 	@Autowired
 	private TestContext context;
@@ -63,6 +63,33 @@ public class DeviceUsageSteps {
 		deviceUsageWorkflow.deviceUsageVerification(device.getDeviceNumber());
 	}
 
+	@Then("verify the MCG daily transaction in Device Usage Screen for $type transaction after failed transaction")
+	public void verifyDeviceUsageAfterFailedTransactuon(String type) {
+		DecimalFormat df2 = new DecimalFormat("0.00"); 
+		mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
+		device = context.get(ContextConstants.DEVICE);
+		deviceUsage = context.get(DEVICE_USUAGE);
+		if(deviceUsage==null){
+		deviceUsage = DeviceUsage.getDeviceUsageDetails(provider);}
+		deviceUsage.setDeviceNumber(device.getDeviceNumber());
+		Optional<Map<String, String>> data = deviceUsageWorkflow.getWalletMCGUsage(deviceUsage);
+
+		if (data.isPresent()) {
+			Assert.assertEquals("Error asserting MCG Code", mcgLimitPlan.getMcgCode(), data.get().get(DeviceUsagePage.MCG_CODE));
+			if (type.equalsIgnoreCase(DOMESTIC)) {
+				Assert.assertEquals("Domestic Transaction Amount is changed even after failed transaction", df2.format(deviceUsage.getPreviousTransactionValue()), df2.format(Double.parseDouble(data.get().get(DeviceUsagePage.DAILY_AMOUNT_DOMESTIC_UTILIZED))));
+				Assert.assertEquals("Domestic Transaction velocity is changed even after failed transaction", deviceUsage.getPreviousVelocityValue(), data.get().get(DeviceUsagePage.DAILY_VELOCLITY_DOMESTIC_UTILIZED));
+			} else if (type.equalsIgnoreCase(INTERNATIONAL)) {
+				Assert.assertEquals("Internationl Transaction Amount is changed even after failed transaction", df2.format(Double.parseDouble(context.get(ConstantData.BILLING_AMOUNT))), df2.format(Double.parseDouble(data.get().get(DeviceUsagePage.DAILY_AMOUNT_INTERNATIONAL_UTILIZED))));
+				Assert.assertEquals("Internationl Transaction Velocity is changed even after failed transaction", deviceUsage.getVelocity(), data.get().get(DeviceUsagePage.DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
+			} else {
+				Assert.fail("Incorrect transaction type in step");
+			}
+		} else {
+			Assert.fail("No Transaction was recorded under MCG usage");
+		}
+	}
+	
 	@Then("verify the MCG daily transaction in Device Usage Screen for $type transactions")
 	public void userDeviceUsage(String type) {
 		DecimalFormat df2 = new DecimalFormat("0.00"); 
@@ -87,12 +114,15 @@ public class DeviceUsageSteps {
 			} else {
 				Assert.fail("Incorrect transaction type in step");
 			}
+			deviceUsage.setPreviousTransactionValue(context.get(ConstantData.TRANSACTION_AMOUNT));
+			deviceUsage.setPreviousVelocityValue(deviceUsage.getVelocity());
 			device.setTransactionAmount(deviceUsage.getNextTransactionAmount());
 			context.put(ContextConstants.DEVICE, device);
 		} else {
 			Assert.fail("No Transaction was recorded under MCG usage");
 		}
 	}
+
 	
 	@Then("verify the MCG daily velocity in Device Usage Screen for $type transactions")
 	public void userDeviceUsageDailyVelocity(String type) {
@@ -119,6 +149,8 @@ public class DeviceUsageSteps {
 			} else {
 				Assert.fail("Incorrect transaction type in step");
 			}
+			deviceUsage.setPreviousTransactionValue(context.get(ConstantData.TRANSACTION_AMOUNT));
+			deviceUsage.setPreviousVelocityValue(deviceUsage.getVelocity());
 			DeviceUsage.setVelocity();
 		} else {
 			Assert.fail("No Transaction was recorded under MCG usage");

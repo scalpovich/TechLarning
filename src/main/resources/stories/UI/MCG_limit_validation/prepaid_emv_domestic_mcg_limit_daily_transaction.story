@@ -44,6 +44,6 @@ Then MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
 And assert Decline response with 40005 AuthDecline Code and Exceeds Amount Limit Domestic as description
-And verify the MCG daily transaction in Device Usage Screen for domestic transactions
+And verify the MCG daily transaction in Device Usage Screen for domestic transaction after failed transaction
 And user sign out from customer portal
 

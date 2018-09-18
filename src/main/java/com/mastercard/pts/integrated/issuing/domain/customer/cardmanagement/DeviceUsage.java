@@ -37,6 +37,24 @@ public class DeviceUsage {
 	private String walletMCGCode;
 	private static int velocity =1;
 	private String deviceNumber;
+	private int previousVelocityValue;
+	private double previousTransactionValue;
+
+	public int getPreviousVelocityValue() {
+		return previousVelocityValue;
+	}
+
+	public void setPreviousVelocityValue(String previousVelocityValue) {
+		this.previousVelocityValue = Integer.parseInt(previousVelocityValue);
+	}
+
+	public double getPreviousTransactionValue() {
+		return previousTransactionValue;
+	}
+
+	public void setPreviousTransactionValue(String previousTransactionValue) {
+		this.previousTransactionValue = Double.parseDouble(previousTransactionValue);
+	}
 
 	public String getDailyDebitVelocity() {
 		return dailyDebitVelocity;
