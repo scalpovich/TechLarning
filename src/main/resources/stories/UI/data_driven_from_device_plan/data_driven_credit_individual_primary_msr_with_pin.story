@@ -9,7 +9,7 @@ Meta:
 Scenario:creation of mastercard_individual_primary_msr Card credit device
 Given setting json values in excel for Credit
 When user is logged in institution
-And for Magnetic Stripe Card User fills Device Plan for credit product for Mastercard
+And for Magnetic Stripe Card [1] User fills Device Plan for credit product for Mastercard
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
 And User Primary Device fills New Program Retail Credit Card section for credit product for Mastercard

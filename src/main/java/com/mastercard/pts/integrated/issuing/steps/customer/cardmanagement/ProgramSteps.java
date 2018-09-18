@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import java.util.Objects;
+
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -9,8 +11,10 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.InstitutionData;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.ProgramType;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MarketingMessagePlan;
@@ -59,6 +63,9 @@ public class ProgramSteps {
 			@Named("interchange") String interchange, @Named("product") String product,
 			@Named("programType") String programType) {
 		program.ProgramDataProvider();
+
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+
 		program.setInterchange(interchange);
 		program.setProduct(ProductType.fromShortName(product));
 		program.setProgramType(programType);
@@ -73,7 +80,11 @@ public class ProgramSteps {
 		if (product.contains(ProductType.Prepaid) && programType.contains(ProgramType.CORPORATE_GIFT_CARD)
 				|| programType.contains(ProgramType.RETAIL_GENERAL_PURPOSE_CARD)
 				|| programType.contains(ProgramType.CORPORATE_GENERAL_PURPOSE_CARD)) {
-			Program = programflows.createprogramPrepaid(program, newLoyaltyPlan.getLoyaltyPlan());
+			if (Objects.nonNull(newLoyaltyPlan)) {
+				Program = programflows.createprogramPrepaid(program, newLoyaltyPlan.getLoyaltyPlan());
+			} else {
+				Program = programflows.createprogramPrepaid(program, data.getLoyaltyPlan());
+			}
 
 		}
 

@@ -33,9 +33,18 @@ public class InstitutionData {
 	private String billingCycle;
 	private String walletPlan;
 	private String productIdentity;
-  	private String transactionFeePlan;
-  
- 	public String getTransactionFeePlan() {
+	private String transactionFeePlan;
+	private String loyaltyPlan;
+
+	public String getLoyaltyPlan() {
+		return loyaltyPlan;
+	}
+
+	public void setLoyaltyPlan(String loyaltyPlan) {
+		this.loyaltyPlan = loyaltyPlan;
+	}
+
+	public String getTransactionFeePlan() {
 		return transactionFeePlan;
 	}
 
@@ -50,7 +59,7 @@ public class InstitutionData {
 	public void setBranch(String branch) {
 		this.branch = branch;
 	}
-	
+
 	public String getCardPackIdGenerationTemplate() {
 		return cardPackIdGenerationTemplate;
 	}
@@ -106,7 +115,7 @@ public class InstitutionData {
 	public void setAbbreviation(String abbreviation) {
 		this.abbreviation = abbreviation;
 	}
-	
+
 	public String getCorporateClientCode() {
 		return corporateClientCode;
 	}
@@ -162,7 +171,7 @@ public class InstitutionData {
 	public void setVisaCreditIssuerBin(String visaCreditIssuerBin) {
 		this.visaCreditIssuerBin = visaCreditIssuerBin;
 	}
-	
+
 	public String getDedupePlanCode() {
 		return dedupePlanCode;
 	}
@@ -194,7 +203,7 @@ public class InstitutionData {
 	public void setMarketingMessagePlan(String marketingMessagePlan) {
 		this.marketingMessagePlan = marketingMessagePlan;
 	}
-    
+
 	public String getDocumentCheckListPlan() {
 		return documentCheckListPlan;
 	}
@@ -210,13 +219,12 @@ public class InstitutionData {
 	public void setMccRulePlan(String mccRulePlan) {
 		this.mccRulePlan = mccRulePlan;
 	}
-    
+
 	public String getDeviceJoiningAndMemberShipFeePlan() {
 		return deviceJoiningAndMemberShipFeePlan;
 	}
 
-	public void setDeviceJoiningAndMemberShipFeePlan(
-			String deviceJoiningAndMemberShipFeePlan) {
+	public void setDeviceJoiningAndMemberShipFeePlan(String deviceJoiningAndMemberShipFeePlan) {
 		this.deviceJoiningAndMemberShipFeePlan = deviceJoiningAndMemberShipFeePlan;
 	}
 
@@ -243,7 +251,7 @@ public class InstitutionData {
 	public void setTransactionPlan(String transactionPlan) {
 		this.transactionPlan = transactionPlan;
 	}
-    
+
 	public String getCreditPlan() {
 		return creditPlan;
 	}
@@ -259,7 +267,7 @@ public class InstitutionData {
 	public void setBillingCycle(String billingCycle) {
 		this.billingCycle = billingCycle;
 	}
-    
+
 	public String getWalletPlan() {
 		return walletPlan;
 	}
@@ -267,8 +275,6 @@ public class InstitutionData {
 	public void setWalletPlan(String walletPlan) {
 		this.walletPlan = walletPlan;
 	}
-	
-	
 
 	public String getProductIdentity() {
 		return productIdentity;
@@ -278,11 +284,10 @@ public class InstitutionData {
 		this.productIdentity = productIdentity;
 	}
 
-	public static InstitutionData createWithProvider(DataProvider provider,String institutionCode) {
-         return  provider.getDataBySimpleClassNameForInstitute(InstitutionData.class, institutionCode);
+	public static InstitutionData createWithProvider(DataProvider provider, String institutionCode) {
+		return provider.getDataBySimpleClassNameForInstitute(InstitutionData.class, institutionCode);
 	}
-	
-	
+
 	@Override
 	public String toString() {
 		return MiscUtils.toString(this);

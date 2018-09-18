@@ -25,7 +25,8 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_WALLET_CONFIGURATION, CardManagementNav.L3_WALLET_PLAN })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_PROGRAM_SETUP,
+		CardManagementNav.L2_WALLET_CONFIGURATION, CardManagementNav.L3_WALLET_PLAN })
 public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 
 	@Autowired
@@ -77,9 +78,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "whiteListedMcgCode:input:dropdowncomponent")
 	private MCWebElement editWhiteListedMCGDdwn;
-	
-	
-	
+
 	private int reservedAmount = 0; // MiscUtils.randomNumber(5);
 
 	public void inputWalletPlanCode(String walletPlanCodeString) {
@@ -172,14 +171,19 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			SimulatorUtilities.wait(2000);
 			selectProductType(productType);
 			waitForPageToLoad(driver());
-			if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-				selectByVisibleText(programTypeDDwn, walletPlan.getProgramType());
-			} else {
-				SimulatorUtilities.wait(2000);
-				selectProgramType(walletPlan.getProgramType());
-				waitForPageToLoad(driver());
-				SimulatorUtilities.wait(2000);
-			}
+
+			selectByVisibleText(programTypeDDwn, walletPlan.getProgramType());
+			// if
+			// (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT))
+			// {
+			// selectByVisibleText(programTypeDDwn,
+			// walletPlan.getProgramType());
+			// } else {
+			// SimulatorUtilities.wait(2000);
+			// selectProgramType(walletPlan.getProgramType());
+			// waitForPageToLoad(driver());
+			// SimulatorUtilities.wait(2000);
+			// }
 			selectCurrency(walletPlan.getCurrency());
 			waitForPageToLoad(driver());
 			SimulatorUtilities.wait(2000);
@@ -190,8 +194,8 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			waitForPageToLoad(driver());
 			clickNextButton(); // Click on next button
-				clickFinishButton(); // click on finish button
-			});
+			clickFinishButton(); // click on finish button
+		});
 		verifyOperationStatus();
 	}
 
@@ -219,8 +223,8 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			SimulatorUtilities.wait(2000);
 			clickNextButton(); // Click on next button
-				clickFinishButton(); // click on finish button
-			});
+			clickFinishButton(); // click on finish button
+		});
 		verifyOperationStatus();
 	}
 
@@ -241,21 +245,21 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			}
 		}
 	}
-	
+
 	public void verifyUiOperationStatus() {
 		logger.info("Wallet Configuration Wallet PLan");
 		verifySearchButton("Search");
 	}
-	
-	public void setReservedAmount(int reservedAmount){
-		this.reservedAmount=reservedAmount; 
+
+	public void setReservedAmount(int reservedAmount) {
+		this.reservedAmount = reservedAmount;
 	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(walletPlanCodeSearchTxt));
 	}
-	
+
 	public void editWalletPlan(WalletPlan walletPlan, String updateField) {
 		WebElementUtils.enterText(walletPlanCodeSearchTxt, walletPlan.getWalletPlanCode());
 		clickSearchButton();

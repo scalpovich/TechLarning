@@ -32,6 +32,7 @@ public class ReconciliationSteps {
 		Assert.assertTrue(reconciliationWorkFlow.verifyReportGenerationRecon());
 	}
 
+	@Then("pre-clearing and Pre-EOD batches are run")
 	@When("pre-clearing and Pre-EOD batches are run")
 	public void whenPreclearingAndPreEODBatchesAreRun() {
 
@@ -52,6 +53,7 @@ public class ReconciliationSteps {
 		reconciliationWorkFlow.runPreClearingAndPrepaidEodBatch(processBatches);
 	}
 
+	@Then("pre-clearing and Loyalty Calc batches are run")
 	@When("pre-clearing and Loyalty Calc batches are run")
 	public void whenPreclearingAndLoyaltyBatchesAreRun() {
 

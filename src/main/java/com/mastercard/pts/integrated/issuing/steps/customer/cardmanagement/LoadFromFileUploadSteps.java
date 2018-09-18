@@ -57,7 +57,8 @@ public class LoadFromFileUploadSteps {
 
 	@When("user processes batch for $type")
 	public void whenUserProcessesBatchForPrepaid(String type) {
-		// since data is constant for this transaction, we do not need this data to go into Excel
+		// since data is constant for this transaction, we do not need this data
+		// to go into Excel
 		ProcessBatches batch = ProcessBatches.getBatchData();
 		// batch.setBatchName("Load IPM Incoming File [IPM_INCOMING]");
 		batch.setProductType(ProductType.fromShortName(type));
@@ -69,7 +70,8 @@ public class LoadFromFileUploadSteps {
 	@When("user creates and uploads transaction file")
 	public void whenUserCreatesAndUploadsTransactionFile() {
 		Device device = context.get(ContextConstants.DEVICE);
-		String defaultLine = FileCreation.createTransactionLine(device.getDeviceNumber(), device.getWalletNumber(), provider);
+		String defaultLine = FileCreation.createTransactionLine(device.getDeviceNumber(), device.getWalletNumber(),
+				provider);
 		file = FileCreation.createFile(provider);
 		file.setTransactionLine(defaultLine);
 		loadFromFileUploadWorkflow.createFileForUpload(file);
@@ -98,6 +100,21 @@ public class LoadFromFileUploadSteps {
 		details.setAdjustmentAmount(amount);
 		details.setDeviceNumber(device.getDeviceNumber());
 		details.setWalletNumber(device.getWalletNumber());
+		transaction.getAdjustmentTransactionDetails().add(details);
+		loadFromFileUploadWorkflow.createAdjustmentTransaction(transaction);
+	}
+
+	@Given("user performs $type adjustment transaction with $amount amount")
+	@When("user performs $type adjustment transaction with $amount amount")
+	@Then("user performs $type adjustment transaction with $amount amount")
+	public void whenUserPerformsAdjustmentTransactionMiscWithAmount(String type, String amount) {
+		Device device = context.get(ContextConstants.DEVICE);
+		AdjustmentTransaction transaction = AdjustmentTransaction.createWithProvider(provider);
+		AdjustmentTransactionDetails details = AdjustmentTransactionDetails.createTransactionWithDetails();
+		details.setAdjustmentAmount(amount);
+		details.setDeviceNumber(device.getDeviceNumber());
+		details.setWalletNumber(device.getWalletNumber());
+		transaction.setAdjustmentType(type);
 		transaction.getAdjustmentTransactionDetails().add(details);
 		loadFromFileUploadWorkflow.createAdjustmentTransaction(transaction);
 	}
@@ -137,7 +154,8 @@ public class LoadFromFileUploadSteps {
 	@Then("transaction is succesful")
 	public void thenTransactionIsSuccesful() {
 		Device device = context.get(ContextConstants.DEVICE);
-		assertTrue("Adjustment transaction is visible under transactions device", loadFromFileUploadWorkflow.verifyTransactionforDevice(device));
+		assertTrue("Adjustment transaction is visible under transactions device",
+				loadFromFileUploadWorkflow.verifyTransactionforDevice(device));
 	}
 
 	@Given("NOT file is successfully generated")

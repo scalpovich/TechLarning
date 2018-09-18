@@ -42,10 +42,10 @@ public class DeviceProductionPage extends AbstractBasePage {
 	// ------------- Card Management > Institution Parameter Setup > Institution
 	// Currency [ISSS05]
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:0:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Product Type')]//following-sibling::td[2]//select")
 	private MCWebElement productTypeDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:inputTextField")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='batchNumber']")
 	private MCWebElement batchNumberTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
@@ -74,7 +74,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr")
 	private MCWebElements rowSize;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class='headers']//a/span")
 	private MCWebElements deviceNumberHeaderTxt;
 
@@ -119,7 +119,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 		verifyOperationStatus();
 
 	}
-	
+
 	public void processDeviceProductionBatchForAllForFileUpload(DeviceProductionBatch batch) {
 		List<String> batchNumbers = context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
 		waitForLoaderToDisappear();
@@ -211,7 +211,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	public void processDeviceProductionBatchNewApplication(DeviceProductionBatch batch) {
 		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
-		WebElementUtils.enterText(batchNumberTxt,batchNumber);
+		WebElementUtils.enterText(batchNumberTxt, batchNumber);
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 	}
@@ -219,21 +219,19 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public void processDeviceProductionBatchNewDevice(DeviceProductionBatch batch) {
 		Device device = context.get(ContextConstants.DEVICE);
 		WebElementUtils.enterText(batchNumberTxt, device.getBatchNumber());
-        WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 	}
-	
-	public void processDeviceProductionBatchNewDeviceSupplementary(DeviceProductionBatch batch) {		
-		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
+
+	public void processDeviceProductionBatchNewDeviceSupplementary(DeviceProductionBatch batch) {
+		String batchNumber = context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
 		WebElementUtils.enterText(batchNumberTxt, batchNumber);
-        WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		waitAndSearchForRecordToExistForSupplementary();
 		verifyOperationStatus();
 	}
-	
-	
-   
+
 	public int deviceNumberHeaderIndexFetch() {
 		int index = 0;
 		for (int i = 0; i < deviceNumberHeaderTxt.getElements().size(); i++) {
@@ -243,11 +241,12 @@ public class DeviceProductionPage extends AbstractBasePage {
 		}
 		return index + 1;
 	}
-	
+
 	public List<String> deviceNumbers() {
 		List<WebElement> allDeviceNumbers = new ArrayList<>();
 		List<String> allDeviceNumberfText = new ArrayList<>();
-		String deviceNumberToFetch=String.format("//table[@class='dataview']//tr[@class='even' or 'odd']/td['%s']/span",deviceNumberHeaderIndexFetch());
+		String deviceNumberToFetch = String.format(
+				"//table[@class='dataview']//tr[@class='even' or 'odd']/td['%s']/span", deviceNumberHeaderIndexFetch());
 		allDeviceNumbers = Elements(deviceNumberToFetch);
 
 		for (int i = 0; i < allDeviceNumbers.size(); i++) {
@@ -256,7 +255,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 		context.put(ContextConstants.ALL_DEVICE_NUMBERS, allDeviceNumberfText);
 		return allDeviceNumberfText;
 	}
-	
+
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		// TODO Auto-generated method stub

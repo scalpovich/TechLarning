@@ -138,7 +138,8 @@
 			"creditPlan": "AUTOMATION [103]",
 			"billingCycle": "AUTOMATION [141]",
             "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
-			"walletPlan": "AUTOMATION [TA8873DBAQ]"
+			"walletPlan": "AUTOMATION [TA8873DBAQ]",
+			"loyaltyPlan" : "Automation Test [AUTO]"
 		},
 		{
 			"productIdentity": "Credit",
@@ -170,7 +171,8 @@
 			"transactionPlan": "AUTOMATION [T5179K]",
 			"creditPlan": "TA5339PGQX [103]",
 			"billingCycle": "AUTOMATION [340]",
-			"walletPlan": "AUTOMATION [TA1343CSGQ]"
+			"walletPlan": "AUTOMATION [TA1343CSGQ]",
+			"loyaltyPlan" : "Automation Test [AUTO]"
 		},
 		{
 			"productIdentity": "Prepaid",
@@ -196,13 +198,14 @@
 			"documentCheckListPlan": "AUTOMATION [TA2054HCXD]",
 			"mccRulePlan": "AUTOMATION [TA6065VN9]",
 			"deviceJoiningAndMemberShipFeePlan": "AUTOMATION [TA7565TA]",
-			"deviceEventBasedFeePlan": "AUTOMATION [TA1000EG]",
+			"deviceEventBasedFeePlan": "AUTOMATION [TA5555PL]",
 			"transactionLimitPlan": "AUTOMATION [TA7791KCVA]",
 			"transactionPlan": "AUTOMATION [T5756G]",
 			"creditPlan": "AUTOMATION [103]",
 			"billingCycle": "AUTOMATION [141]",
             "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
-			"walletPlan": "AUTOMATION [TA6793WTPX]"
+			"walletPlan": "AUTOMATION [TA6793WTPX]",
+			"loyaltyPlan" : "Automation Test [AUTO]"
 		},
 		{
 			"productIdentity": "Debit",

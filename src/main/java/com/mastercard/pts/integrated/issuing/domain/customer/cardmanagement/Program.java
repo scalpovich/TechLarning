@@ -56,7 +56,7 @@ public class Program implements HasCodeAndDescription {
 	private static final String CREDIT_LIMIT = "CREDIT_LIMIT";
 	private static final String MARK_UP_FEE_PLAN = "MARK_UP_FEE_PLAN";
 	private static final String PAYOUT_CURRENCY_PLAN = "PAYOUT_CURRENCY_PLAN";
-	private static final String COUNTRY_WHITE_LIST_AND_BLACK_LIST_PLAN="COUNTRY_WHITE_BLACK_LIST_PLAN";
+	private static final String COUNTRY_WHITE_LIST_AND_BLACK_LIST_PLAN = "COUNTRY_WHITE_BLACK_LIST_PLAN";
 	private String payoutCurrencyPlan;
 	private String walletToWalletTransferType;
 	private String refundInCurrency;
@@ -133,12 +133,21 @@ public class Program implements HasCodeAndDescription {
 	private String applicationType;
 	private String subApplicationType;
 	private String countryWhiteListAndBlackListPlan;
+	private String loyaltyPlan;
+
+	public String getLoyaltyPlan() {
+		return loyaltyPlan;
+	}
+
+	public void setLoyaltyPlan(String loyaltyPlan) {
+		this.loyaltyPlan = loyaltyPlan;
+	}
 
 	public static Program createWithProvider(DataProvider dataProvider, KeyValueProvider provider) {
 		Program programObject = dataProvider.getDataBySimpleClassName(Program.class);
 		programObject.setProgramCode(MiscUtils.generate6CharAlphaNumeric());
 		programObject.setDescription(ConstantData.GENERIC_DESCRIPTION);
-		programObject.setInterchange(provider.getString(INTERCHANGE));		
+		programObject.setInterchange(provider.getString(INTERCHANGE));
 		programObject.setProgramType(provider.getString(PROGRAM_TYPE));
 		programObject.setMaximumBalanceWithoutKyc(RandomStringUtils.randomNumeric(9));
 		programObject.setNumberOfLoadsAllowedWithoutKyc(String.valueOf(RandomUtils.nextInt(1, 99)));
@@ -198,17 +207,21 @@ public class Program implements HasCodeAndDescription {
 		programObject.setKycRequired(provider.getString(PGM_KYC_REQUIRED));
 		programObject.setKycLimitsMaxBalWithoutKyc(provider.getString(PGM_KYC_LIMITS_MAX_BAL_WO_KYC));
 		programObject.setKycLimitsMaxBalAfterKyc(provider.getString(PGM_KYC_LIMITS_MAX_BAL_AFTER_KYC));
-		programObject.setKycLimitsNoOfLoadsAllowedWithoutKyc(provider.getString(PGM_KYC_LIMITS_NO_OF_LOADS_ALLOWED_WO_KYC));
-		programObject.setKycLimitsNoOfLoadsAllowedAfterKyc(provider.getString(PGM_KYC_LIMITS_NO_OF_LOADS_ALLOWED_AFTER_KYC));
+		programObject
+				.setKycLimitsNoOfLoadsAllowedWithoutKyc(provider.getString(PGM_KYC_LIMITS_NO_OF_LOADS_ALLOWED_WO_KYC));
+		programObject
+				.setKycLimitsNoOfLoadsAllowedAfterKyc(provider.getString(PGM_KYC_LIMITS_NO_OF_LOADS_ALLOWED_AFTER_KYC));
 		programObject.setAllowFundsRecieve(provider.getString(PGM_ALLOW_FUNDS_RECIEVE));
 		programObject.setAllowFundsSend(provider.getString(PGM_ALLOW_FUNDS_SEND));
 		programObject.setLoadRefundToleranceUnitForLoad(provider.getString(PGM_LOAD_REFUND_TOLERANCE_UNIT_FOR_LOAD));
-		programObject.setLoadRefundToleranceUnitForRefund(provider.getString(PGM_LOAD_REFUND_TOLERANCE_UNIT_FOR_REFUND));
+		programObject
+				.setLoadRefundToleranceUnitForRefund(provider.getString(PGM_LOAD_REFUND_TOLERANCE_UNIT_FOR_REFUND));
 		programObject.setLoadRefundRefundInCurrency(provider.getString(PGM_LOAD_REFUND_REFUND_IN_CURRENCY));
 		programObject.setTravelLimitTravelPlan(provider.getString(PGM_TRAVEL_LIMIT_TRAVEL_PLAN));
 		programObject.setCreditLimitsMinCreditLimit(provider.getString(PGM_CREDIT_LIMITS_MIN_CREDIT_LIMIT));
 		programObject.setCreditLimitsMaxCreditLimit(provider.getString(PGM_CREDIT_LIMITS_MAX_CREDIT_LIMIT));
-		programObject.setCreditLimitsCreditLimitValidation(provider.getString(PGM_CREDIT_LIMITS_CREDIT_LIMIT_VALIDATION));
+		programObject
+				.setCreditLimitsCreditLimitValidation(provider.getString(PGM_CREDIT_LIMITS_CREDIT_LIMIT_VALIDATION));
 		programObject.setCashLimitsCashLimitType(provider.getString(PGM_CASH_LIMITS_CASH_LIMIT_TYPE));
 		programObject.setCashLimitsCashLimitAmount(provider.getString(PGM_CASH_LIMITS_CASH_LIMIT_AMOUNT));
 		programObject.setCashLimitsMinCashLimit(provider.getString(PGM_CASH_LIMITS_MIN_CASH_LIMIT));
@@ -789,7 +802,7 @@ public class Program implements HasCodeAndDescription {
 	public void setMarkUpFeePlan(String markUpFeePlan) {
 		this.markUpFeePlan = markUpFeePlan;
 	}
-	
+
 	public String getPayoutCurrencyPlan() {
 		return payoutCurrencyPlan;
 	}
@@ -830,6 +843,7 @@ public class Program implements HasCodeAndDescription {
 	public void setCountryWhiteListAndBlackListPlan(KeyValueProvider provider) {
 		this.countryWhiteListAndBlackListPlan = provider.getString(COUNTRY_WHITE_LIST_AND_BLACK_LIST_PLAN);
 	}
+
 	public String getCountryWhiteListAndBlackListPlan() {
 		return countryWhiteListAndBlackListPlan;
 	}

@@ -54,16 +54,17 @@ public class ReconciliationWorkFlow {
 		return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
 	}
 
-	public List<String> verifyAuthReport(String fileName,TransactionReports transactionReports) {
+	public List<String> verifyAuthReport(String fileName, TransactionReports transactionReports) {
 		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
 		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
 		deleteExistingAuthorizationFilesFromSystem(fileName);
 		page.generateTransactionAuthReport();
 		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
-		return getReportContent(fileName,transactionReports);
-		//return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
+		return getReportContent(fileName, transactionReports);
+		// return (fileCountAfterReportGeneration -
+		// fileCountBeforeReportGeneration == 1) ? true : false;
 	}
-		
+
 	public boolean verifyReportGenerationClearing() {
 		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
 		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
@@ -109,20 +110,20 @@ public class ReconciliationWorkFlow {
 		return fileCountAfterDownload;
 	}
 
-	public List<String> getReportContent(String fileName,TransactionReports transactionReports) {
-		PDFUtils pdfutils=new PDFUtils();
-		List<String> records = pdfutils.getContentRow(PDFUtils.getuserDownloadPath() + "\\"+fileName, transactionReports);
-		for(int i=0;i<records.size();i++)
-		{
+	public List<String> getReportContent(String fileName, TransactionReports transactionReports) {
+		PDFUtils pdfutils = new PDFUtils();
+		List<String> records = pdfutils.getContentRow(PDFUtils.getuserDownloadPath() + "\\" + fileName,
+				transactionReports);
+		for (int i = 0; i < records.size(); i++) {
 			if (records != null)
 				logger.info("Authorization data file content {} ", records.get(i));
 		}
 		return records;
 	}
-	public void deleteExistingAuthorizationFilesFromSystem(String authFileName)
-	{
-		for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
-			if (!file.isDirectory()&& file.getName().startsWith(ConstantData.AUTHORIZATION_REPORT_NAME))   	
+
+	public void deleteExistingAuthorizationFilesFromSystem(String authFileName) {
+		for (File file : new File(PDFUtils.getuserDownloadPath()).listFiles()) {
+			if (!file.isDirectory() && file.getName().startsWith(ConstantData.AUTHORIZATION_REPORT_NAME))
 				file.delete();
 		}
 	}

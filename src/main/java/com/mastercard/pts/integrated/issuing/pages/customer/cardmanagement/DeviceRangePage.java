@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+
 import org.jbehave.core.model.ExamplesTable;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.InstitutionData;
@@ -160,10 +162,10 @@ public class DeviceRangePage extends AbstractBasePage {
 	private MCWebElement searchbtn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[contains(@name,'branchCode')]/option[text()!='Select One']")
-	private MCWebElements branchDDwnList; 
+	private MCWebElements branchDDwnList;
 
 	private final String DEVICE_ROUTING = "Device Range Based [D]";
-	
+
 	int i = 0;
 
 	public void clickAddDeviceRange() {
@@ -234,7 +236,6 @@ public class DeviceRangePage extends AbstractBasePage {
 		selectDropDownByIndex(BranchDDwn, 1);
 
 	}
-
 
 	public void clickAddButton() {
 		clickWhenClickable(AddTxt);
@@ -425,22 +426,21 @@ public class DeviceRangePage extends AbstractBasePage {
 		selectProductType(deviceRange.getProductType());
 		selectProgram(deviceRange.getProgram());
 		selectDevicePlanCode(deviceRange.getDevicePlanCode());
-		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);		
+		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		logger.info("ProductType : {}", devicePlan.getProductType());
 		logger.info("issuerBin :{}", deviceRange.getIssuerBin());
 		program = context.get(ContextConstants.PROGRAM);
 
-		if(Objects.nonNull(context.get(CreditConstants.JSON_VALUES))){
+		if (Objects.nonNull(context.get(CreditConstants.JSON_VALUES))) {
 			InstitutionData valuesFromJson = context.get(CreditConstants.JSON_VALUES);
 			if (program.getInterchange().toUpperCase().contains("MASTERCARD")) {
 				if (program.getProduct().toUpperCase().contains(ProductType.PREPAID.toUpperCase())) {
 					deviceRange.setIssuerBin(valuesFromJson.getMastercardPrepaidIssuerBin());
+					System.out.println(valuesFromJson.getMastercardPrepaidIssuerBin());
 				} else if (program.getProduct().toUpperCase().contains(ProductType.DEBIT.toUpperCase())) {
-					deviceRange.setIssuerBin(valuesFromJson
-							.getMastercardDebitIssuerBin());
+					deviceRange.setIssuerBin(valuesFromJson.getMastercardDebitIssuerBin());
 				} else if (program.getProduct().toUpperCase().contains(ProductType.CREDIT.toUpperCase())) {
-					deviceRange.setIssuerBin(valuesFromJson
-							.getMastercardCreditIssuerBin());
+					deviceRange.setIssuerBin(valuesFromJson.getMastercardCreditIssuerBin());
 				}
 			} else if (program.getInterchange().toUpperCase().contains("VISA")) {
 				if (program.getProduct().toUpperCase().contains(ProductType.PREPAID.toUpperCase())) {
@@ -454,10 +454,10 @@ public class DeviceRangePage extends AbstractBasePage {
 
 			selectByVisibleText(issuerBinDDwn, deviceRange.getIssuerBin());
 			selectByVisibleText(branchDDwn, deviceRange.getBranch());
-		}else {
+		} else {
 			selectIssuerBin(deviceRange.getIssuerBin());
 			selectBranch(deviceRange.getBranch());
-		}		
+		}
 
 		addBtn.click();
 		waitForWicket();
@@ -467,7 +467,7 @@ public class DeviceRangePage extends AbstractBasePage {
 		if (ProductType.DEBIT.equalsIgnoreCase(deviceRange.getProductType())) {
 			WebElementUtils.selectDropDownByVisibleText(endPointModeDDwn, deviceRange.getEndPointMode());
 			WebElementUtils.selectDropDownByVisibleText(routingTypeDDwn, deviceRange.getRoutingType());
-			if(deviceRange.getRoutingType().equalsIgnoreCase(DEVICE_ROUTING)){
+			if (deviceRange.getRoutingType().equalsIgnoreCase(DEVICE_ROUTING)) {
 				WebElementUtils.selectDropDownByVisibleText(interfaceNameDDwn, deviceRange.getInterfaceName());
 			}
 		}

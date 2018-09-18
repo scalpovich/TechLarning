@@ -7,18 +7,18 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 @Component
 public class CreditMappingForExcel {
-	private static String ASSOCIATION="ASSOCIATION";
-	private static String BRANCH="BRANCH";
-	private static String CARD_PACKID_GENERATION_TEMPLATE="CARD_PACKID_GENERATION_TEMPLATE";
-	private static String DEVICE_ID_GENERATION_TEMPLATE="DEVICE_ID_GENERATION_TEMPLATE";
-	private static String DEVICE_CUSTOMER_TYPE="DEVICE_CUSTOMER_TYPE";
-	private static String EMBOSSING_VENDOR="EMBOSSING_VENDOR";
-	private static String INTERCHANGE="INTERCHANGE";
-	private static String ISSUER_BIN="ISSUER_BIN";
-	private static String PLASTIC_ID="PLASTIC_ID";
-	private static String PICTURE_CODE="PICTURE_CODE";
+	private static String ASSOCIATION = "ASSOCIATION";
+	private static String BRANCH = "BRANCH";
+	private static String CARD_PACKID_GENERATION_TEMPLATE = "CARD_PACKID_GENERATION_TEMPLATE";
+	private static String DEVICE_ID_GENERATION_TEMPLATE = "DEVICE_ID_GENERATION_TEMPLATE";
+	private static String DEVICE_CUSTOMER_TYPE = "DEVICE_CUSTOMER_TYPE";
+	private static String EMBOSSING_VENDOR = "EMBOSSING_VENDOR";
+	private static String INTERCHANGE = "INTERCHANGE";
+	private static String ISSUER_BIN = "ISSUER_BIN";
+	private static String PLASTIC_ID = "PLASTIC_ID";
+	private static String PICTURE_CODE = "PICTURE_CODE";
 	private static String CORPORATE_CLIENT_CODE = "CORPORATE_CLIENT_CODE";
-	
+
 	private String association;
 	private String branch;
 	private String cardPackIdGenerationTemplate;
@@ -36,30 +36,37 @@ public class CreditMappingForExcel {
 	private String visaPrepaidIssuerBin;
 	private String visaDebitIssuerBin;
 	private String visaCreditIssuerBin;
-	
+
 	public CreditMappingForExcel createWithProviderCSV(KeyValueProvider provider) {
-		CreditMappingForExcel creditMappingCsv=new CreditMappingForExcel();
-		creditMappingCsv.setBranch(provider.getString(BRANCH));
-		creditMappingCsv.setAssociation(provider.getString(ASSOCIATION));
-		creditMappingCsv.setCardPackIdGenerationTemplate(provider.getString(CARD_PACKID_GENERATION_TEMPLATE));
-		creditMappingCsv.setDeviceIdGenerationTemplate(provider.getString(DEVICE_ID_GENERATION_TEMPLATE));
-		creditMappingCsv.setCustomerType(provider.getString(DEVICE_CUSTOMER_TYPE));
-		creditMappingCsv.setEmbossingVendor(provider.getString(EMBOSSING_VENDOR));
-		creditMappingCsv.setInterchange(provider.getString(INTERCHANGE));
-		creditMappingCsv.setIssuerBin(provider.getString(ISSUER_BIN));
-		creditMappingCsv.setPlasticId(provider.getString(PLASTIC_ID));
-		creditMappingCsv.setPictureCode(provider.getString(PICTURE_CODE));
-		creditMappingCsv.setCorporateClientCode(provider.getString(CORPORATE_CLIENT_CODE));
-		creditMappingCsv.setMastercardPrepaidIssuerBin("");
-		creditMappingCsv.setMastercardDebitIssuerBin("");
-		creditMappingCsv.setMastercardCreditIssuerBin("");
-		creditMappingCsv.setVisaPrepaidIssuerBin("");
-		creditMappingCsv.setVisaDebitIssuerBin("");
-		creditMappingCsv.setVisaCreditIssuerBin("");
+		CreditMappingForExcel creditMappingCsv = new CreditMappingForExcel();
+		/*
+		 * creditMappingCsv.setBranch(provider.getString(BRANCH));
+		 * creditMappingCsv.setAssociation(provider.getString(ASSOCIATION));
+		 * creditMappingCsv.setCardPackIdGenerationTemplate(provider.getString(
+		 * CARD_PACKID_GENERATION_TEMPLATE));
+		 * creditMappingCsv.setDeviceIdGenerationTemplate(provider.getString(
+		 * DEVICE_ID_GENERATION_TEMPLATE));
+		 * creditMappingCsv.setCustomerType(provider.getString(
+		 * DEVICE_CUSTOMER_TYPE));
+		 * creditMappingCsv.setEmbossingVendor(provider.getString(
+		 * EMBOSSING_VENDOR));
+		 * creditMappingCsv.setInterchange(provider.getString(INTERCHANGE));
+		 * creditMappingCsv.setIssuerBin(provider.getString(ISSUER_BIN));
+		 * creditMappingCsv.setPlasticId(provider.getString(PLASTIC_ID));
+		 * creditMappingCsv.setPictureCode(provider.getString(PICTURE_CODE));
+		 * creditMappingCsv.setCorporateClientCode(provider.getString(
+		 * CORPORATE_CLIENT_CODE));
+		 * creditMappingCsv.setMastercardPrepaidIssuerBin("");
+		 * creditMappingCsv.setMastercardDebitIssuerBin("");
+		 * creditMappingCsv.setMastercardCreditIssuerBin("");
+		 * creditMappingCsv.setVisaPrepaidIssuerBin("");
+		 * creditMappingCsv.setVisaDebitIssuerBin("");
+		 * creditMappingCsv.setVisaCreditIssuerBin("");
+		 */
 		return creditMappingCsv;
-		
+
 	}
-	
+
 	public String getAssociation() {
 		return association;
 	}
@@ -92,7 +99,6 @@ public class CreditMappingForExcel {
 		this.interchange = interchange;
 	}
 
-	
 	public String getIssuerBin() {
 		return issuerBin;
 	}
