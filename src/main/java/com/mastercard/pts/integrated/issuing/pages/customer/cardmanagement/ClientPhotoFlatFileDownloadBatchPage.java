@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.common.base.Strings;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientPhotoFlatFileDownloadBatch;
@@ -44,7 +45,7 @@ public class ClientPhotoFlatFileDownloadBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Action Code')]//following-sibling::td[2]//select")
 	private MCWebElement actionCodeDDwn;
 
-	public void processClientPhotoFlatFileDownloadBatch(ClientPhotoFlatFileDownloadBatch batch) {
+	public boolean processClientPhotoFlatFileDownloadBatch(ClientPhotoFlatFileDownloadBatch batch) {
 		Device device = context.get(ContextConstants.DEVICE);
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		WebElementUtils.enterText(deviceNumberTxt, device.getDeviceNumber());
@@ -52,6 +53,7 @@ public class ClientPhotoFlatFileDownloadBatchPage extends AbstractBasePage {
 		waitAndSearchForRecordToExist();
 
 		verifyOperationStatus();
+		return !Strings.isNullOrEmpty(getSuccessMessage());
 	}
 
 	public void verifyUiOperationStatus() {

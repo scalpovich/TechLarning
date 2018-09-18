@@ -18,8 +18,7 @@ And credit device with photo is created using new device screen for Individual a
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device
 And credit processes Client photo/flat file download batch using new Device
-Then device has "normal" status
-Then embossing file batch was generated in correct format
+Then photo reference number present at given position in embossing file
 And user sign out from customer portal
 
 
