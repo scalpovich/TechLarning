@@ -8,7 +8,7 @@ I want to use Behaviour-Driven Development
 Meta:
 @StoryName bvt
 					 
-Scenario:  A scenario is a collection of executable steps of different type
+Scenario:  Skip CVV2/CVC2 Validation in 3DES Params
 Meta:
 @ttt
 Given setting json values in excel for Prepaid
