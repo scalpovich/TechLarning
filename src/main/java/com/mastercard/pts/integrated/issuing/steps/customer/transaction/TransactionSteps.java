@@ -563,4 +563,11 @@ public class TransactionSteps {
 		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
 		context.put(ContextConstants.DEVICE, device);
 	}
+	
+	@Given("set the transaction amount to $amount in program currency")
+	public void setTransactionAmountFromStep(String amount){
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setTransactionAmount(Integer.toString((Integer.parseInt(amount)*100)));
+		context.put(ContextConstants.DEVICE, device);
+	}
 }
