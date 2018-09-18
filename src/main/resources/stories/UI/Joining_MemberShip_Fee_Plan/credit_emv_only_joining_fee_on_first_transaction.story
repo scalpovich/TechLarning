@@ -7,6 +7,7 @@ I want to create EMV Credit card with pin and verify joining Fee
 
 Meta:
 @StoryName credit_emv_retail_firsttransaction
+@JMFCreditPlans
 
 Scenario: Set up credit emv retail general purpose card device production
 Given setting json values in excel for Credit

@@ -7,6 +7,7 @@ I want to create EMV Credit card pinless and verify joining and membersip fee
 
 Meta:
 @StoryName credit_emv_retail_cardproduction
+@JMFCreditPlans
 
 Scenario: Set up credit emv retail general purpose card device production
 Given setting json values in excel for Credit
