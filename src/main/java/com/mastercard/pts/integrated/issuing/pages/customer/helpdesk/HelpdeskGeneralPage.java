@@ -294,6 +294,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Interest :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement loanInterestLabel;
+  
+    @PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody a img")
+	private MCWebElement editDeviceLink;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody a img")
 	private MCWebElement editDeviceLink;
