@@ -36,7 +36,7 @@ When perform an INT_EMV_PURCHASE MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-And verify the MCG daily transaction in Device Usage Screen for international transactions
+And verify the MCG limit utilization in Device Usage Screen for domestic transaction after failed transaction
 And user sign out from customer portal
 
 Scenario:4 Perform EMV-RetailGeneralPurposeCard Purchase 2nd transaction
@@ -45,6 +45,7 @@ When perform an INT_EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
 And assert Decline response with 40005 AuthDecline Code and Exceeds Amount Limit International as description
+Then verify the MCG daily transaction and velocity in Device Usage Screen for international transactions
 And user sign out from customer portal
 
 Scenario:5 Perform EMV-RetailGeneralPurposeCard Purchase 3rd transaction
@@ -53,6 +54,7 @@ When perform an INT_EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
 And assert Decline response with 40005 AuthDecline Code and Exceeds Amount Limit International as description
+Then verify the MCG limit utilization in Device Usage Screen for domestic transaction after failed transaction
 And user sign out from customer portal
 
 Scenario:6 Perform EMV-RetailGeneralPurposeCard Purchase 4th transaction
@@ -61,6 +63,7 @@ When perform an INT_EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
 And assert Decline response with 40005 AuthDecline Code and Exceeds Amount Limit International as description
+Then verify the MCG daily transaction and velocity in Device Usage Screen for international transactions
 And user sign out from customer portal
 
 Scenario:7 Perform EMV-RetailGeneralPurposeCard Purchase 5th transaction
@@ -70,4 +73,5 @@ Then MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
 And assert Decline response with 40005 AuthDecline Code and Exceeds Amount Limit International as description
+And verify the MCG limit utilization in Device Usage Screen for domestic transaction after failed transaction
 And user sign out from customer portal

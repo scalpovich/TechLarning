@@ -8,7 +8,7 @@ Meta:
 @Author Nitin Kumar
 @StoryName mcg_credit_emv_retail
 
-Scenario: Set up Credit emv retail with MCG Limit Plan
+Scenario:1 Set up Credit emv retail with MCG Limit Plan
 Given setting json values in excel for Credit
 And user is logged in institution
 When User fills Dedupe Plan
@@ -37,8 +37,9 @@ And fetch currency exchange rate from USD currency to program currency
 And user sign out from customer portal
 And embossing file batch was generated in correct format
 
-Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 1st transaction
+Scenario:2 Perform EMV-RetailGeneralPurposeCard Purchase 1st transaction
 Given connection to MAS is established
+Given set the transaction amount to 110 in program currency
 When perform an INT_EMV_PURCHASE MAS transaction
 Then MAS test results are verified
 And user is logged in institution
@@ -46,11 +47,35 @@ And search Purchase authorization and verify 000-Successful status
 And verify the MCG daily transaction in Device Usage Screen for international transactions
 And user sign out from customer portal
 
-Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 2nd transaction
+Scenario:3 Perform EMV-RetailGeneralPurposeCard Purchase 2nd transaction
+Given set the transaction amount to 90 in program currency
+When perform an INT_EMV_PURCHASE MAS transaction on the same card
+And user is logged in institution
+And search Purchase authorization and verify 121-Exceeds Amount Limit status
+And assert Decline response with 40005 AuthDecline Code and Exceeds Amount Limit International as description
+And user sign out from customer portal
+
+Scenario:4 Perform EMV-RetailGeneralPurposeCard Purchase 2nd transaction
+Given set the transaction amount to 70 in program currency
+When perform an INT_EMV_PURCHASE MAS transaction on the same card
+And user is logged in institution
+And search Purchase authorization and verify 121-Exceeds Amount Limit status
+And assert Decline response with 40005 AuthDecline Code and Exceeds Amount Limit International as description
+And user sign out from customer portal
+
+Scenario:5 Perform EMV-RetailGeneralPurposeCard Purchase 2nd transaction
+Given set the transaction amount to 20 in program currency
+When perform an INT_EMV_PURCHASE MAS transaction on the same card
+And user is logged in institution
+And search Purchase authorization and verify 121-Exceeds Amount Limit status
+And assert Decline response with 40005 AuthDecline Code and Exceeds Amount Limit International as description
+And user sign out from customer portal
+
+Scenario:6 Perform EMV-RetailGeneralPurposeCard Purchase 2nd transaction
+Given set the transaction amount to 20 in program currency
 When perform an INT_EMV_PURCHASE MAS transaction on the same card
 Then MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
 And assert Decline response with 40005 AuthDecline Code and Exceeds Amount Limit International as description
 And user sign out from customer portal
-

@@ -48,7 +48,7 @@ public class DeviceUsageWorkflow extends MenuFlows {
 		}
 	}
 
-	public Optional<Map<String, String>> getWalletMCGUsage(DeviceUsage deviceUsage) {
+	public DeviceUsage getWalletMCGUsage(DeviceUsage deviceUsage) {
 		DeviceUsagePage page = navigator.navigateToPage(DeviceUsagePage.class);
 		return page.getWalletMCGUsage(deviceUsage);
 	}
