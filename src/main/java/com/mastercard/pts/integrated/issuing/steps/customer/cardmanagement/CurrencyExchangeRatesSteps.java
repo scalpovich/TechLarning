@@ -308,7 +308,7 @@ public class CurrencyExchangeRatesSteps {
 		double amount = (Double.parseDouble(mcgLimitPlan.getDailyAmountInternational())/Double.parseDouble(currencyRate));
 		System.out.println("AMOUNT+++++++"+amount);
 		device.setTransactionAmount(Integer.toString(((int)(amount/3))*100));
-		deviceUsage.setTransactionAmount(Integer.toString(((int)amount)*100));
+		//deviceUsage.setTransactionAmount(Integer.toString(((int)amount)*100));
 		context.put(ContextConstants.DEVICE,device);
 		context.put(DeviceUsageSteps.DEVICE_USUAGE,deviceUsage);
 		}

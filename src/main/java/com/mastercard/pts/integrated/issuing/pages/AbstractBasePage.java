@@ -622,7 +622,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	// fetching any message that may appear in the Label Panel
-	protected String getMessageFromFeedbackPanel() {
+	public String getMessageFromFeedbackPanel() {
 		List<WebElement> messages = driver().findElements(By.cssSelector(".feedbackPanel li"));
 
 		if (messages.isEmpty()) {
