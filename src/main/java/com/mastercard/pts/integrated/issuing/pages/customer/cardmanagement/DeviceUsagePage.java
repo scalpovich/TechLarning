@@ -148,7 +148,7 @@ public class DeviceUsagePage extends AbstractBasePage {
 		
 	public List<Map<String, Double>> getDeviceUsageDetails(Device device){
 		List<Map<String, Double>> deviceDetails = new LinkedList<>();
-		WebElementUtils.enterText(deviceNumber, "5377161257072912");//device.getDeviceNumber());
+		WebElementUtils.enterText(deviceNumber, device.getDeviceNumber());
 		searchButtonElement.click();
 		String[] transactionAttributes = ConstantData.LIMIT_VALIDATION_PARAMETER.split(";");
 		Map<String, Double> deviceTotalDetails = new LinkedHashMap<>();

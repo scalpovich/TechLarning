@@ -57,6 +57,7 @@ Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
 And user validate device usage for Periodic Velocity Utilized and Periodic Amount Utilized
+And assert Decline response with 34001 AuthDecline Code and Transaction amount is greater than per transaction limit configured at device plan level. as description
 And user sign out from customer portal
 
 Scenario: 1.7 Update Transaction Amount Less than Allowed Periodic Amount
@@ -76,4 +77,5 @@ Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 123-Frequency Exceeded status
 And user validate device usage for Periodic Velocity Utilized and Periodic Amount Utilized
+And assert Decline response with 34004 AuthDecline Code and Transaction exceeded with periodic velocity configured at device plan level. as description
 And user sign out from customer portal
