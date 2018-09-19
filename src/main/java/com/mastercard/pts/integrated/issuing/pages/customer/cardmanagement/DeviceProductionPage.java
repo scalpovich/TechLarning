@@ -39,7 +39,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	// ------------- Card Management > Institution Parameter Setup > Institution
 	// Currency [ISSS05]
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:0:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement productTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:inputTextField")
@@ -216,9 +216,9 @@ public class DeviceProductionPage extends AbstractBasePage {
 	}
 	
 	public void processDeviceProductionBatchNewDeviceSupplementary(DeviceProductionBatch batch) {		
-		String batchNumber = context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
-		selectByVisibleText(productTypeDDwn, batch.getProductType());
+		String batchNumber = context.get(CreditConstants.PRIMARY_BATCH_NUMBER);		
 		WebElementUtils.enterText(batchNumberTxt, batchNumber);		
+		selectByVisibleText(productTypeDDwn, batch.getProductType());
 		waitAndSearchForRecordToExistForSupplementary();
 		verifyOperationStatus();
 	}
