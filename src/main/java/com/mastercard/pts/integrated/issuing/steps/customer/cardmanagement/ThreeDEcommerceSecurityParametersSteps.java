@@ -4,6 +4,8 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ThreeDECommerceSecurityParameters;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
@@ -23,6 +25,8 @@ public class ThreeDEcommerceSecurityParametersSteps {
 	@Autowired
 	private KeyValueProvider provider;
 
+	@Autowired
+	private TestContext context;
 
 	@When("user adds 3D ecommerce security parameters for $type")
 	public void add3DEcommerceSecurityParameters(String type) {
@@ -37,8 +41,7 @@ public class ThreeDEcommerceSecurityParametersSteps {
 	public void edit3DEcommerceSecurityParameters(String type, String interchange,String status) {
 		ThreeDECommerceSecurityParameters threeDESParams = new ThreeDECommerceSecurityParameters();
 		threeDESParams.setCheckStatus(status);
-		//DeviceRange deviceRange = DeviceRange.createWithProvider(jsonProvider, type);
-		DeviceRange deviceRange = DeviceRange.createWithProvider(jsonProvider,provider, type);
+		DeviceRange deviceRange =   context.get(ContextConstants.DEVICE_RANGE); 		
 		threeDESParams.setDeviceRangeFrom(deviceRange.getIssuerBinCode(deviceRange.getIssuerBin()) + ConstantData.START_RANGE_DIGITS);
 		threeDESParams.seteCommerceSecurityInterchange(interchange);
 		threeDECommerceSecurityParametersFlows.edit3DESParams(threeDESParams);
