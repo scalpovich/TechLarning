@@ -566,12 +566,12 @@ public class TransactionSteps {
 	
 	/***
 	 * This method is implemented to change transaction amount for transaction
-	 * @param amount : Integer representation for amount
+	 * @param amount : Decimal representation for amount
 	 * */
 	@When("user update transaction amount to $amount")
-	public void userSetTransactionAmount(int amount){
+	public void userSetTransactionAmount(Double amount){
 		Device device = context.get(ContextConstants.DEVICE);
-		device.setTransactionAmount(Integer.toString(amount * 100));
+		device.setTransactionAmount(Double.toString(amount * 100));
 		context.put(ContextConstants.DEVICE, device);
 	}
 }
