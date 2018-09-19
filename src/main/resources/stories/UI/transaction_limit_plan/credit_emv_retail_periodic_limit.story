@@ -56,7 +56,7 @@ When perform an EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
 And user validate device usage for Periodic Velocity Utilized and Periodic Amount Utilized
-And assert Decline response with 34001 AuthDecline Code and Transaction exceeded with periodic amount configured at device plan level. as description
+And assert Decline response with 34005 AuthDecline Code and Transaction exceeded with periodic amount configured at device plan level. as description
 And user sign out from customer portal
 
 Scenario: 1.7 Update Transaction Amount Less than Allowed Periodic Amount

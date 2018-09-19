@@ -44,6 +44,7 @@ And perform an EMV_PURCHASE MAS transaction
 Then user is logged in institution
 And search Purchase authorization and verify "" status
 And assert "" response with "" AuthDecline Code and "" as description
+And user sign out from customer portal
 
 Scenario: 1.4 Perform EMV_PURCHASE Authorization transaction to check floor Amount Limit
 When user update transaction amount to 3
