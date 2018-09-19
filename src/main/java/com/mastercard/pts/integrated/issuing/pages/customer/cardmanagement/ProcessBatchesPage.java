@@ -362,25 +362,22 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 
 	public String processSystemInternalProcessingBatch(ProcessBatches batch) {
-		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
+		selectBatchTypeAndName(batch);
 		Date todayDate;
 		Date dateFromUI;
-		batchStatus = null;
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
-		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "SYSTEM INTERNAL PROCESSING [B]");
-		selectInternalBatchType(batch.getBatchName());
-		if (batch.getProductType() != null && !("".equals(batch.getProductType()))) {
-			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		}
 		try {
 			todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
 			dateFromUI = getDateFromUI(dateFormatter, batch);
 		} catch (ParseException e) {
 			throw Throwables.propagate(e);
 		}
+		
+		if(batch.getBatchName().equalsIgnoreCase("Matching"))
+			submitAndVerifyBatch();
 		if (!dateFromUI.after(todayDate))
 			submitAndVerifyBatch();
-
+		
 		return batchStatus;
 	}
 
@@ -643,7 +640,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		batchStatus = null;
 		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, SYSTEM_INTERNAL_PROCESSING);		
 		selectInternalBatchType(batch.getBatchName());
-		if(batch.getBatchName().equalsIgnoreCase("Pre-clearing"))
+		if(batch.getBatchName().equalsIgnoreCase("Pre-clearing")||batch.getBatchName().equalsIgnoreCase("Matching"))
 			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 	
 	}

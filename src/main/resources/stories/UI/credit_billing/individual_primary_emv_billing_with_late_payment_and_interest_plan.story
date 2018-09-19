@@ -166,6 +166,15 @@ Meta:
 Given user is logged in institution
 When check card balance details through helpdesk
 And user initiates cash payment
+And user sign out from customer portal
+When update institution date to next day
+Given user is logged in institution
+When user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+And user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
 And recheck card balance details through helpdesk after payment

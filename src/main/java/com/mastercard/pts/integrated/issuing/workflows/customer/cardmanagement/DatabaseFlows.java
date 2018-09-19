@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -15,10 +17,13 @@ public class DatabaseFlows {
 
 	//@Value("${institution}")
 	private String institution;
-
+	private static final Logger logger = LoggerFactory.getLogger(DateUtils.class);
+	private static int daysDifference;
 	public void updateInstituteDateToFirstOfNextMonth(String date) {
 
-		String queryString = "update system_codes set short_name='-" + DateUtils.getNextMonthFirstDayDifference(date)
+		daysDifference=DateUtils.getNextMonthFirstDayDifference(date);
+		logger.info("Diffrence Days : "+daysDifference);
+		String queryString = "update system_codes set short_name='-" + daysDifference
 				+ "'  WHERE TYPE_ID = 'SYS_PARAM' AND code = 'BACK_DAY' AND bank_code = '" + getInstitutionCode() + "'";
 		dbUtil.executeUpdate(queryString);
 	}
@@ -29,9 +34,9 @@ public class DatabaseFlows {
 
 	public void updateInstituteDateToNextDay(String date) {
 
-		int getDiff = DateUtils.getNextMonthFirstDayDifference(date) + 1;
-
-		String queryString = "update system_codes set short_name='-" + getDiff
+		daysDifference = daysDifference + 1;
+		logger.info("Diffrence Days : "+daysDifference);
+		String queryString = "update system_codes set short_name='-" + daysDifference
 				+ "'  WHERE TYPE_ID = 'SYS_PARAM' AND code = 'BACK_DAY' AND bank_code = '" + getInstitutionCode() + "'";
 		dbUtil.executeUpdate(queryString);
 	}

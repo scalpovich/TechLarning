@@ -28,6 +28,7 @@ And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
+And user notes down available Card limit for card
 Then user sign out from customer portal
 
 Scenario:1.3 Pin Generation
@@ -49,6 +50,10 @@ When Auth file is generated after transaction
 And MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
+When user verifies available balance after transaction
+Then verify fixed transaction fee applied on purchase transaction
+And device has "normal" status
+When user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 Scenario:1.6 Clearing: Load auth file in MCPS and create NOT file of IPM extension
@@ -81,4 +86,99 @@ Scenario:1.8.1 Run Pre-clearing and EOD-Credit
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
+And user sign out from customer portal
+
+Scenario:1.9 Login & Logout to wait for date to be updated 
+Meta:
+@TestId 
+When update institution date to first of next month
+Given user is logged in institution
+When user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+
+Scenario:2.0 Process Batches for billing and validated values on helpdesk and statement 
+Meta:
+@TestId 
+Given user is logged in institution
+When user processes Pre-clearing system internal batch for Credit
+And user processes EOD-Credit system internal batch for Credit
+And user verify Unbilled amount for Purchase category
+And user processes Billing Process - Credit system internal batch for Credit
+And device has "normal" status
+And user notes down required values from helpdesk for credit
+And user run Statement Extract system internal batch
+And user verify Billed amount for Purchase category
+And user verify Billed amount for Fee category
+And verify statement file is successfully downloaded
+Then validate the statement with parameters:
+|parameters|
+|Credit Card Number|
+|Statement Date|
+|Payment Due Date|
+|Total Payment Due|
+|Minimum Payment Due|
+|Account Number|
+|Credit Limit|
+|Available Credit Limit|
+|Closing Balance|
+And user sign out from customer portal
+
+Scenario:2.1 Verify User is able to make Payment of credit card through cash mode after billing cycle
+Meta:
+@PaymentCash
+When update institution date to next day
+Given user is logged in institution
+When user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+Given user is logged in institution
+When check card balance details through helpdesk
+And user initiates cash payment
+And user sign out from customer portal
+And user is logged in institution
+When user processes Pre-clearing system internal batch for Credit
+When user processes EOD-Credit system internal batch for Credit
+And recheck card balance details through helpdesk after payment
+Then user check successful after payment
+When check card balance details through helpdesk
+And user sign out from customer portal
+
+Scenario:2.2 Login & Logout to wait for date to be updated foe next billing
+Meta:
+@TestId 
+When update institution date to first of next month
+Given user is logged in institution
+When user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+
+Scenario:2.3 Process Batches after paying full payment bill and verify payments
+Meta:
+@TestId 
+Given user is logged in institution
+When user processes Pre-clearing system internal batch for Credit
+When user processes EOD-Credit system internal batch for Credit
+And user processes Billing Process - Credit system internal batch for Credit
+And recheck card balance details through helpdesk after payment
+Then user check successful after billing
+When user run Statement Extract system internal batch
+And verify statement file is successfully downloaded
+Then validate the statement with parameters:
+|parameters|
+|Credit Card Number|
+|Statement Date|
+|Payment Due Date|
+|Total Payment Due|
+|Minimum Payment Due|
+|Account Number|
+|Credit Limit|
+|Available Credit Limit|
+|Closing Balance|
 And user sign out from customer portal

@@ -187,10 +187,8 @@ public class BatchProcessSteps {
 	@When("\"$batchName\" batch for $type is successful")
 	public void whenMatchingBatchIsExecuted(String batchName, String type){
 		ProcessBatches batch =  new ProcessBatches();;
-		batch.setProductType(ProductType.fromShortName(type));
+		batch.setProductType("Credit [C]");
 		batch.setBatchName(batchName);
-		//batch.setBusinessDate(LocalDate.now().plusDays(1));
-		
 		assertEquals("SUCCESS [2]", batchProcessWorkflow.processSystemInternalProcessingBatch(batch));			
 
 	}

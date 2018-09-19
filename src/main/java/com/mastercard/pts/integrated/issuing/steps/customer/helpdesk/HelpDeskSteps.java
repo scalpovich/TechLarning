@@ -30,6 +30,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.distribution.Dispatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
@@ -863,6 +864,7 @@ public class HelpDeskSteps {
 	public void assertionForBilling(String amount, String category){
 		String transactionAmount = context.get(ConstantData.TRANSACTION_AMOUNT);
 		Device device = context.get(ContextConstants.DEVICE);
+		TransactionFeePlan txnFeePlan = context.get("TransactionFeePlan");
 		device.setCategory(category);
 		device.setAmountType(amount);
 		if (device.getCategory().equalsIgnoreCase("Fee") || device.getCategory().equalsIgnoreCase("Interest")
@@ -871,25 +873,25 @@ public class HelpDeskSteps {
 		}
 		if (device.getCategory().equalsIgnoreCase("Fee")) {
 			logger.info("Late Payment Fee->"+device.getLatePaymentFee());
-			transactionAmount = device.getLatePaymentFee();
+			transactionAmount = String.valueOf(Double.valueOf(device.getLatePaymentFee())+Double.valueOf(txnFeePlan.getfixedTxnFees()));
 		} else if (device.getCategory().equalsIgnoreCase("Interest")) {
 			int noOfDays = DateUtils.getDaysDifferenceBetweenTwoDates(context.get(ContextConstants.INSTITUTION_DATE),
 					context.get(ConstantData.TRANSACTION_DATE));
-			double interest = new Double(((Integer.valueOf(device.getTransactionAmount()) * noOfDays
-					* Integer.valueOf(device.getInterestOnPurcahse())) / 100)
-					/ DateUtils.noOfDaysInYear(context.get(ContextConstants.INSTITUTION_DATE)));
+			double interest = ((Double.valueOf(device.getTransactionAmount()) * noOfDays
+					* Double.valueOf(device.getInterestOnPurcahse())) / 100)
+					/ DateUtils.noOfDaysInYear(context.get(ContextConstants.INSTITUTION_DATE));
 			transactionAmount = Double.toString(Math.round(interest * 100D) / 100D);
 			logger.info("Billed interest->"+transactionAmount);
 			context.put("billed interest", transactionAmount);
 		} else if (device.getCategory().equalsIgnoreCase("Unpaid1")) {
 			transactionAmount = Double.toString(Math.round(
-					(Integer.valueOf(context.get("billed interest")) + Integer.valueOf(device.getLatePaymentFee())
-							+ Integer.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))) * 100D)
+					(Double.valueOf(context.get("billed interest")) + Double.valueOf(device.getLatePaymentFee())
+							+ Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))) * 100D)
 					/ 100D);
 			logger.info("Unpaid1->"+transactionAmount);
 		} else if (device.getCategory().equalsIgnoreCase("new Unpaid1")) {
 			device.setCategory(category.replaceAll("new", "").trim());
-			transactionAmount = Integer.toString(Integer.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))
+			transactionAmount = Double.toString(Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))
 					- Integer.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT)));
 			logger.info("After paying full payment, unpaid1->"+transactionAmount);
 		}

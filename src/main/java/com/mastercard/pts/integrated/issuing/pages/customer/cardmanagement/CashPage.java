@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -62,7 +63,8 @@ public class CashPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "authorizationNumber:input:inputTextField")
 	private MCWebElement authNumberTxt;	
 	
-	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
+	private MCWebElement institutionDateTxt;
 	public void enterRemittanceNumber(String remittanceNumber){
 		WebElementUtils.enterText(remittanceNumberTxt, remittanceNumber);		
 	}
@@ -114,7 +116,7 @@ public class CashPage extends AbstractBasePage {
 				"Add Cash",
 				() -> {
 					enterRemittanceNumber(cash.getRemittanceNumber());
-					enterValueDate(cash.getValueDate());
+					enterValueDate(DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
 					selectBaseCurrency(cash.getBaseCurrency());
 					clickAddDetailsBtn();	
 					clickAddNewButton();
