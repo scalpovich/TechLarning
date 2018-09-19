@@ -13,7 +13,7 @@ Meta:
 @UserCreatesNewCreditDevice
 Given setting json values in excel for Credit
 When user is logged in institution
-And for EMV Card User fills Device Plan for credit product for Mastercard
+And for EMV Card User fills without pin Device Plan for credit product for Mastercard
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
 And User Primary Device fills New Program Retail Credit Card section for credit product for Mastercard
@@ -25,16 +25,9 @@ Given user is logged in institution
 When credit device is created using new device screen for Individual and Primary Device and New Client and EMV Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
-And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
 Then user sign out from customer portal
-
-Scenario:1.3 Pin Generation
-Given connection to FINSim is established
-When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
-And PIN is retrieved successfully with data from Pin Offset File
-Then FINSim simulator is closed
 
 Scenario:1.4 Skip CVV2/CVC2 Validation in 3DES Params
 Given user is logged in institution
