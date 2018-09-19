@@ -3,12 +3,14 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.openqa.selenium.By;
@@ -23,6 +25,7 @@ import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.BatchType;
+import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -31,6 +34,8 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
+import com.mastercard.pts.integrated.issuing.utils.DatabaseUtils;
+import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -164,6 +169,14 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement binDDwn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span.yui-skin-sam")
+	private MCWebElement bussinessDateTxt;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
+	private MCWebElement institutionDateTxt;
+
+	public final String SYSTEM_INTERNAL_PROCESSING = "SYSTEM INTERNAL PROCESSING [B]";
 	
 	private static final int NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE=100;
 
@@ -383,6 +396,15 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 		else if ("Loyalty-Calc".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Loyalty Calculation [LYT_CALC]");
+		
+		else if("EOD-Credit".equalsIgnoreCase(batchName))
+			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "End Of Day - Credit [DAILY]");
+		
+		else if("Statement Extract".equalsIgnoreCase(batchName))
+			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Statement Extract [STATEMENT_GENERATION]"); 
+		
+		else if("Billing Process - Credit".equalsIgnoreCase(batchName))
+			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Billing Process - Credit [BILLING]"); 
 	}
 
 	public String processDownloadBatch(ProcessBatches batch) {
@@ -584,5 +606,45 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	public void selectBin(String option)
 	{
 		WebElementUtils.selectDropDownByVisibleText(binDDwn, option);
+	}
+	
+	/**
+	 * This function is written to execute batches which has only one date field.
+	 * @param batch 
+	 * @return status of batch e.g pass, fail
+	 */
+	public String processCreditBillingBatch(ProcessBatches batch) {
+		selectBatchTypeAndName(batch);
+		WebElementUtils.pickDate(bussinessDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
+		submitAndVerifyBatch();
+		return batchStatus;
+	}
+
+	/**
+	 * This function is written to execute batches which has two date field.
+	 * @param batch 
+	 * @return status of batch e.g pass, fail
+	 */
+	public String processStatementExtractBatch(ProcessBatches batch) {
+		selectBatchTypeAndName(batch);
+		LocalDate fromDate = DateUtils.convertInstitutionDateInLocalDateFormat(getInstitutionDate());
+		LocalDate toDate = DateUtils.convertInstitutionDateInLocalDateFormat(getInstitutionDate()).minusDays(30);
+		WebElementUtils.pickDate(fromDateTxt, fromDate);
+		WebElementUtils.pickDate(toDateTxt,toDate);
+		context.put(ContextConstants.STATEMENT_FROM_DATE, DateTimeFormatter.ofPattern("ddMMyyyy", Locale.ENGLISH).format(fromDate));
+		context.put(ContextConstants.STATEMENT_TO_DATE, DateTimeFormatter.ofPattern("ddMMyyyy", Locale.ENGLISH).format(toDate));
+		context.put(ContextConstants.STATEMENT_DATE, DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH).format(fromDate));
+		submitAndVerifyBatch();
+		return batchStatus;
+	}
+	
+	private void selectBatchTypeAndName(ProcessBatches batch) {
+		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
+		batchStatus = null;
+		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, SYSTEM_INTERNAL_PROCESSING);		
+		selectInternalBatchType(batch.getBatchName());
+		if(batch.getBatchName().equalsIgnoreCase("Pre-clearing"))
+			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+	
 	}
 }

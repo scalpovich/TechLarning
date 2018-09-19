@@ -1,4 +1,3 @@
-
 package com.mastercard.pts.integrated.issuing.pages;
 
 import java.lang.annotation.Annotation;
@@ -301,6 +300,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	private static final int loopIterationToCheckBatchNumber=21;
 	
+    @PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
+	private MCWebElement institutionDateTxt;
+	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
 		MCAnnotationProcessor.initializeSuper(this, finderProvider);
@@ -590,7 +592,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	 * Verify already exists and click cancel
 	 * @return true if error exists otherwise false
 	 */
-	public boolean verifyAlreadyExistsAndClickCancel() {
+	protected boolean verifyAlreadyExistsAndClickCancel() {
 		String message = getMessageFromFeedbackPanel();
 		if (message != null && message.contains("already exist")) {
 			clickCancelButton();
@@ -1218,18 +1220,27 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return null;
 	}
 
-	public void selectByVisibleText(MCWebElement ele, String optionName) {
-		String optionVisbleText = "";
+	public void doSelectByVisibleText(MCWebElement ele, String optionName) {
+		String optionalVisibleText = "";
 		waitUntilSelectOptionsPopulated(ele);
-		List<WebElement> selectedOptions = ele.getSelect().getOptions();
+		List<WebElement> selectedOptions = new Select(asWebElement(ele)).getOptions();
 		for (WebElement element : selectedOptions) {
 			if (element.getText().toUpperCase().contains(optionName.toUpperCase())) {
-				optionVisbleText = element.getText();
+				optionalVisibleText = element.getText();
 				break;
 			}
 		}
-		ele.getSelect().selectByVisibleText(optionVisbleText);
+		ele.getSelect().selectByVisibleText(optionalVisibleText);
+	}
+
+	public void selectByVisibleText(MCWebElement ele, String optionName) {
+		try {
+			doSelectByVisibleText(ele, optionName);
 		waitForLoaderToDisappear();
+		waitForPageToLoad(driver());
+		} catch (StaleElementReferenceException e) {
+			doSelectByVisibleText(ele, optionName);
+	}
 		waitForPageToLoad(driver());
 	}
 
@@ -1841,5 +1852,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	public void switchToDefaultFrame(String element,int index) {
 		driver().switchTo().frame(Elements(element).get(index));
+	}
+	
+	public String getInstitutionDate()
+	{	
+		logger.info("Institution date : {}",getTextFromPage(institutionDateTxt));
+		return getTextFromPage(institutionDateTxt);
 	}
 }
