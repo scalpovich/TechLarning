@@ -97,7 +97,7 @@ public class AuthorizationSearchWorkflow {
 			condition = actualCodeAction.contains(type) && actualDescription.contains(state);
 		
 		// Device Usage Code
-		if("000-Successful".equalsIgnoreCase(actualDescription)){
+		if("000-Successful".equalsIgnoreCase(actualCodeAction)){
 			device.setDeviceVelocity();
 			device.setDeviceAmountUsage(Double.parseDouble(transactionAmountValue));
 		}

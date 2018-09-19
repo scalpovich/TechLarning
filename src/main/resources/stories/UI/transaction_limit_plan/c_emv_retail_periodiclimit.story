@@ -53,8 +53,7 @@ When user update transaction amount to 21
 
 Scenario: 1.6 Perform EMV_PURCHASE Authorization transaction to check Exceeds Amount Limit
 When perform an EMV_PURCHASE MAS transaction on the same card
-Then MAS test results are verified
-And user is logged in institution
+Then user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
 And user validate device usage for Periodic Velocity Utilized and Periodic Amount Utilized
 And assert Decline response with 34001 AuthDecline Code and Transaction amount is greater than per transaction limit configured at device plan level. as description
@@ -73,8 +72,7 @@ And user sign out from customer portal
 
 Scenario: 1.9 Perform EMV_PURCHASE Authorization transaction to check Frequency Exceeded
 When perform an EMV_PURCHASE MAS transaction on the same card
-Then MAS test results are verified
-And user is logged in institution
+Then user is logged in institution
 And search Purchase authorization and verify 123-Frequency Exceeded status
 And user validate device usage for Periodic Velocity Utilized and Periodic Amount Utilized
 And assert Decline response with 34004 AuthDecline Code and Transaction exceeded with periodic velocity configured at device plan level. as description
