@@ -41,3 +41,39 @@ Scenario: 1.3 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
+
+Scenario: 1.4 Perform EMV_PURCHASE Authorization transaction
+Given user is logged in institution
+Then search Purchase authorization and verify 000-Successful status
+And user validate device usage for Periodic Velocity Utilized and Periodic Amount Utilized
+And user sign out from customer portal
+
+Scenario: 1.5 Update Transaction Amount More than Allowed Periodic Amount
+When user update transaction amount to 21
+
+Scenario: 1.6 Perform EMV_PURCHASE Authorization transaction to check Exceeds Amount Limit
+When perform an EMV_PURCHASE MAS transaction on the same card
+Then MAS test results are verified
+And user is logged in institution
+And search Purchase authorization and verify 121-Exceeds Amount Limit status
+And user validate device usage for Periodic Velocity Utilized and Periodic Amount Utilized
+Then user sign out from customer portal
+
+Scenario: 1.7 Update Transaction Amount Less than Allowed Periodic Amount
+When user update transaction amount to 10
+ 
+Scenario: 1.8 Perform EMV_PURCHASE Authorization transaction
+When perform an EMV_PURCHASE MAS transaction on the same card
+Then MAS test results are verified
+And user is logged in institution
+And search Purchase authorization and verify 000-Successful status
+And user validate device usage for Periodic Velocity Utilized and Periodic Amount Utilized
+Then user sign out from customer portal
+
+Scenario: 1.9 Perform EMV_PURCHASE Authorization transaction to check Frequency Exceeded
+When perform an EMV_PURCHASE MAS transaction on the same card
+Then MAS test results are verified
+And user is logged in institution
+And search Purchase authorization and verify 123-Frequency Exceeded status
+And user validate device usage for Periodic Velocity Utilized and Periodic Amount Utilized
+Then user sign out from customer portal

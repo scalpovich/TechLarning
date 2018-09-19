@@ -102,7 +102,26 @@ public class Device {
 	private String creditLimit;
   	private String legalID;
   	private String walletCurrency;
+  	private static double deviceAmountUsage = 0.00;
+  	private static double deviceVelocity = 0;
+  	
 
+
+	public double getDeviceAmountUsage() {
+		return deviceAmountUsage;
+	}
+
+	public void setDeviceAmountUsage(double deviceAmountUsage) {
+		Device.deviceAmountUsage = Device.deviceAmountUsage + deviceAmountUsage;
+	}
+
+	public double getDeviceVelocity() {
+		return deviceVelocity;
+	}
+
+	public void setDeviceVelocity() {
+		++deviceVelocity;
+	}
 
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();

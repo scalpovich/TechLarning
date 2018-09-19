@@ -100,6 +100,7 @@ public class ConstantData {
 	public static final String PIN_REQUIRED_YES = "YES";
 	public static final String WORNG_EXPIRY = "1809";
 	public static final String ACTIVATION_VALUE ="Immediate Activation for n Hrs [Immediate Activation for n Hrs]";
+	public static final String LIMIT_VALIDATION_PARAMETER = "Daily Velocity Utilized;Daily Amount Utilized;Periodic Velocity Utilized;Periodic Amount Utilized;Yearly Velocity Utilized;Yearly Amount Utilized";
 	
 	public static final String ZERO_ZERO = "00";
 	public static final String NINE_NINE = "99";

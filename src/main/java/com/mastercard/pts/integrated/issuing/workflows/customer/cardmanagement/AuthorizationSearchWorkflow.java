@@ -46,7 +46,7 @@ public class AuthorizationSearchWorkflow {
 
 	private static final String USERNAME = "USERNAME";
 
-	public void verifyAuthTransactionSearch(String type, String state, String deviceNumber) {
+	public void verifyAuthTransactionSearch(String type, String state, Device device) {
 		String varType = type;
 		// state value sent from stroy file is different from what appears on
 		// the screen hence setting to the correct value if it is
@@ -54,18 +54,18 @@ public class AuthorizationSearchWorkflow {
 		if ("Rvmt_Receiving".equalsIgnoreCase(varType))
 			varType = "RVMT - Receiving";
 
-		authSearchAndVerification(deviceNumber, varType, state, "Code Action", "Description");
+		authSearchAndVerification(device, varType, state, "Code Action", "Description");
 	}
 
-	public void verifyTransactionAndBillingCurrency(String transactionCurrency, String billingCurrency, String deviceNumber) {
-		authSearchAndVerification(deviceNumber, transactionCurrency, billingCurrency, "Transaction Currency", "Billing Currency");
+	public void verifyTransactionAndBillingCurrency(String transactionCurrency, String billingCurrency, Device device) {
+		authSearchAndVerification(device, transactionCurrency, billingCurrency, "Transaction Currency", "Billing Currency");
 	}
 
-	private void authSearchAndVerification(String deviceNumber, String type, String state, String codeColumnName, String descriptionColumnName) {
+	private void authSearchAndVerification(Device device, String type, String state, String codeColumnName, String descriptionColumnName) {
 		boolean condition;
 
 		AuthorizationSearchPage authSearchPage = navigator.navigateToPage(AuthorizationSearchPage.class);
-		authSearchPage.inputDeviceNumber(deviceNumber);
+		authSearchPage.inputDeviceNumber(device.getDeviceNumber());
 		authSearchPage.inputFromDate(LocalDate.now().minusDays(1));
 		authSearchPage.inputToDate(LocalDate.now());
 		// using waitAndSearchForRecordToAppear instead of
@@ -95,6 +95,12 @@ public class AuthorizationSearchWorkflow {
 		else
 			// to handle "Transaction Currency", "Billing Currency"
 			condition = actualCodeAction.contains(type) && actualDescription.contains(state);
+		
+		// Device Usage Code
+		if("000-Successful".equalsIgnoreCase(state)){
+			device.setDeviceVelocity();
+			device.setDeviceAmountUsage(Double.parseDouble(transactionAmountValue));
+		}
 
 		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
 	}

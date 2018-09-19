@@ -37,7 +37,7 @@ public class AuthorizationSearchSteps {
 	@Then("search $type authorization and verify $state status")
 	public void thenUserSearchDeviceNumerWithTodaysDate(String type, String state) {
 		Device device = context.get(ContextConstants.DEVICE);
-		authorizationSearchWorkflow.verifyAuthTransactionSearch(type, state,device.getDeviceNumber());
+		authorizationSearchWorkflow.verifyAuthTransactionSearch(type, state,device);
 	}
 
 	@When("assert $response response with $code AuthDecline Code and $description as description")
@@ -55,7 +55,7 @@ public class AuthorizationSearchSteps {
 	@Then("verify transaction currency as $tcurrency and billing currency as $bcurrency on auth search")
 	public void verifyBillingCurrency(String tcurrency, String bcurrency) {
 		Device device = context.get(ContextConstants.DEVICE);
-		authorizationSearchWorkflow.verifyTransactionAndBillingCurrency(tcurrency, bcurrency, device.getDeviceNumber());
+		authorizationSearchWorkflow.verifyTransactionAndBillingCurrency(tcurrency, bcurrency, device);
 	}
 
 	@Then("verify fixed transaction fee applied on purchase transaction")

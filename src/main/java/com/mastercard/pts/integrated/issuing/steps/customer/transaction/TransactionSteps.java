@@ -563,4 +563,15 @@ public class TransactionSteps {
 		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
 		context.put(ContextConstants.DEVICE, device);
 	}
+	
+	/***
+	 * This method is implemented to change transaction amount for transaction
+	 * @param amount : Integer representation for amount
+	 * */
+	@When("user update transaction amount to $amount")
+	public void userSetTransactionAmount(int amount){
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setTransactionAmount(Integer.toString(amount * 100));
+		context.put(ContextConstants.DEVICE, device);
+	}
 }
