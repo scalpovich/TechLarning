@@ -1,4 +1,4 @@
-peform debit authorization on msr with pin card
+Peform debit authorization on msr with pin card
 
 Narrative:
 In order to check transactions on debit msr corporate debit card
@@ -27,7 +27,6 @@ And processes device production batch for Debit
 And processes pin generation batch for Debit
 And user has wallet number information for Debit device
 And user performs adjustment transaction
-And user has current wallet balance amount information for Debit device
 And device has "normal" status
 And user sign out from customer portal
 
@@ -46,7 +45,6 @@ Then VISA simulator is closed
 And user is logged in institution
 Then search Balance Inquiry authorization and verify 000-Successful status
 Then verify fixed transaction fee applied on purchase transaction
-When user verifies available balance after transaction
 And user sign out from customer portal
 
 Scenario: Perform Cash Advance Authorization transaction
@@ -57,7 +55,6 @@ Then VISA simulator is closed
 And user is logged in institution
 Then search Cash Advance/ Cash @ POS / Cash Out authorization and verify 000-Successful status
 Then verify fixed transaction fee applied on purchase transaction
-When user verifies available balance after transaction
 And user sign out from customer portal
 
 Scenario: Transaction - Cash Withdrawl Full Reversal
@@ -68,7 +65,6 @@ Then VISA simulator is closed
 And user is logged in institution
 Then search CWD - Full Reversal authorization and verify 000-Successful status
 Then verify fixed transaction fee applied on purchase transaction
-When user verifies available balance after transaction
 And user sign out from customer portal
 
 Scenario: Transaction - Cash Withdrawl Partial Reversal
@@ -79,7 +75,6 @@ Then VISA simulator is closed
 And user is logged in institution
 Then search CWD - Partial Reversal authorization and verify 000-Successful status
 Then verify fixed transaction fee applied on purchase transaction
-When user verifies available balance after transaction
 And user sign out from customer portal
 
 Scenario: Transaction - Cash eWithdrawl
@@ -90,7 +85,6 @@ Then VISA simulator is closed
 And user is logged in institution
 Then search CWD authorization and verify 000-Successful status
 Then verify fixed transaction fee applied on purchase transaction
-When user verifies available balance after transaction
 And user sign out from customer portal
 
 Scenario: Transaction - Eligibility_Inquiry transaction
@@ -101,7 +95,6 @@ Then VISA simulator is closed
 And user is logged in institution
 Then search Eligibility Inquiry authorization and verify 000-Successful status
 Then verify fixed transaction fee applied on purchase transaction
-When user verifies available balance after transaction
 And user sign out from customer portal
 
 Scenario: Transaction - PreAuth transaction
@@ -112,7 +105,6 @@ Then VISA simulator is closed
 And user is logged in institution
 Then search Pre-Auth authorization and verify 000-Successful status
 Then verify fixed transaction fee applied on purchase transaction
-When user verifies available balance after transaction
 And user sign out from customer portal
 
 Scenario: Transaction - PreAuth Completion transaction
@@ -123,7 +115,6 @@ Then VISA simulator is closed
 And user is logged in institution
 Then search Pre-Auth Completion authorization and verify Successful status
 Then verify fixed transaction fee applied on purchase transaction
-When user verifies available balance after transaction
 And user sign out from customer portal
 
 Scenario: Transaction - Purchase  transaction
@@ -134,7 +125,6 @@ Then VISA simulator is closed
 And user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
 Then verify fixed transaction fee applied on purchase transaction
-When user verifies available balance after transaction
 And user sign out from customer portal
 
 Scenario: Transaction - Purchase Reversal transaction
@@ -145,7 +135,6 @@ Then VISA simulator is closed
 And user is logged in institution
 Then search Purchase Reversal authorization and verify 000-Successful status
 Then verify fixed transaction fee applied on purchase transaction
-When user verifies available balance after transaction
 And user sign out from customer portal
 
 Scenario: Transaction - Quasi Cash transaction
@@ -156,7 +145,6 @@ Then VISA simulator is closed
 And user is logged in institution
 Then search Quasi Cash authorization and verify 000-Successful status
 Then verify fixed transaction fee applied on purchase transaction
-When user verifies available balance after transaction
 And user sign out from customer portal
 
 Scenario: Transaction - Refund transaction
@@ -167,7 +155,6 @@ Then VISA simulator is closed
 And user is logged in institution
 Then search Refund authorization and verify 000-Successful status
 Then verify fixed transaction fee applied on purchase transaction
-When user verifies available balance after transaction
 And user sign out from customer portal
 
 Scenario: Transaction - Refund Reversal transaction
@@ -178,7 +165,6 @@ Then VISA simulator is closed
 And user is logged in institution
 Then search Refund Reversal authorization and verify 000-Successful status
 Then verify fixed transaction fee applied on purchase transaction
-When user verifies available balance after transaction
 And user sign out from customer portal
 
 Scenario: Transaction - ReturnofGoods transaction
@@ -189,7 +175,6 @@ Then VISA simulator is closed
 And user is logged in institution
 Then search Refund authorization and verify 000-Successful status
 Then verify fixed transaction fee applied on purchase transaction
-When user verifies available balance after transaction
 And user sign out from customer portal
 
 Scenario: Transaction - STIP Advice transaction
@@ -200,5 +185,4 @@ Then VISA simulator is closed
 And user is logged in institution
 Then search STIP - Purchase/Auth Completion authorization and verify 000-Successful status
 Then verify fixed transaction fee applied on purchase transaction
-When user verifies available balance after transaction
 And user sign out from customer portal
