@@ -71,10 +71,10 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	private MCWebElement institutionDateTxt;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr[@class='odd']//span[contains(.,'FEE(Annual Fees)')]/../preceding-sibling::td[@class='rightalign']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr//span[contains(.,'FEE(Annual Fees)')]/../preceding-sibling::td[@class='rightalign']")
 	private MCWebElement membershipFees;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr[@class='even']//span[contains(.,'FEE(Joining Fees)')]/../preceding-sibling::td[@class='rightalign']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr//span[contains(.,'FEE(Joining Fees)')]/../preceding-sibling::td[@class='rightalign']")
 	private MCWebElement joiningFees;
 
 	private String authorizationStatus;
