@@ -196,11 +196,7 @@
 			"documentCheckListPlan": "AUTOMATION [TA2054HCXD]",
 			"mccRulePlan": "AUTOMATION [TA6065VN9]",
 			"deviceJoiningAndMemberShipFeePlan": "AUTOMATION [TA7565TA]",
-<<<<<<< HEAD
-			"deviceEventBasedFeePlan": "AUTOMATION [TA6611FO]",
-=======
 			"deviceEventBasedFeePlan": "AUTOMATION [TA1000EG]",
->>>>>>> release/Iteration14
 			"transactionLimitPlan": "AUTOMATION [TA7791KCVA]",
 			"transactionPlan": "AUTOMATION [T5756G]",
 			"creditPlan": "AUTOMATION [103]",
@@ -480,7 +476,3 @@
 		}
 	]
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> release/Iteration14
