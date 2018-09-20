@@ -1,4 +1,3 @@
-
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import java.util.Objects;
@@ -629,7 +628,7 @@ public class ProgramSetupSteps {
 		} else {
 			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
 		}
-		if (Objects.nonNull(transactionLimitPlan)) {
+		if (Objects.nonNull(transactionPlan)) {
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 		} else {
