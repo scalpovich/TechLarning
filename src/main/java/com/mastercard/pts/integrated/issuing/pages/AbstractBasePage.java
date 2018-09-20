@@ -303,6 +303,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='time']/label/following-sibling::*")
     private MCWebElement instutionCurrentDate;
 	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
+	private MCWebElement institutionDateTxt;
+	
 	private static final int loopIterationToCheckBatchNumber=21;
 	
 	@Autowired
@@ -1391,7 +1394,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public void switchToDefaultFrame() {
 		getFinder().getWebDriver().switchTo().defaultContent();
 	}
-
+		
 	public void enterText(MCWebElement field, String fieldValue) {
 		waitForElementVisible(field);
 		field.sendKeys(fieldValue);
@@ -1845,5 +1848,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		logger.info("Not validaiting any elements, as this is an Abstraction layer to Pages");
 		return null;
+	}
+	
+	public void switchToDefaultFrame(String element,int index) {
+		driver().switchTo().frame(Elements(element).get(index));
+	}
+	
+	public String getInstitutionDate()
+	{	
+		logger.info("Institution date : {}",getTextFromPage(institutionDateTxt));
+		return getTextFromPage(institutionDateTxt);
 	}
 }

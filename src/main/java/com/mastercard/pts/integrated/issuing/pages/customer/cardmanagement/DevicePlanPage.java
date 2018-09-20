@@ -366,6 +366,15 @@ public class DevicePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:lvcPerTxnLimit:input:inputAmountField")
 	private MCWebElement perTranscLimitTxt;
 	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#pinChangeTnxFirst input")
+	private MCWebElement pinChangeTransactionFirstChbx;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#crossBorderTxnCheck input")
+	private MCWebElement crossBorderTransaction;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "#crossBorderTxnCheckTime input")
+	private MCWebElement timeIntervalCrossBorder;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:virtualDeviceCreditLimit:input:inputTextField")
 	private MCWebElement virtualDeviceCrediLimitTxt;
 
@@ -947,6 +956,14 @@ public class DevicePlanPage extends AbstractBasePage {
 		ClickCheckBox(cvccCvvChkBx, status);
 	}
 	
+	public void checkPinChangeTransactionFirst(boolean status) {
+		ClickCheckBox(pinChangeTransactionFirstChbx, status);
+	}
+
+	public void checkCrossBorderTransaction(boolean status) {
+		ClickCheckBox(crossBorderTransaction, status);
+	}
+	
 	public void checkStoplistFlag(boolean status) {
 		ClickCheckBox(stoplistFlagChkBx, status);
 	}
@@ -975,7 +992,38 @@ public class DevicePlanPage extends AbstractBasePage {
 
 		verifyOperationStatus();
 	}
+	
+	public void updatePinChangeTransactionFirst(DevicePlan devicePlanDataObject) {
+		logger.info("Update Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
+		enterValueinTextBox(devicePlanCode, devicePlanDataObject.getDevicePlanCode());
+		clickSearchButton();
+		editFirstRecord();
+		runWithinPopup("Edit Device Plan", () -> {
+			WebElementUtils.elementToBeClickable(authorizationTab);
+			clickWhenClickable(authorizationTab);
+			WebElementUtils.elementToBeClickable(pinChangeTransactionFirstChbx);
+			checkPinChangeTransactionFirst(true);
+			clickSaveButton();
+		});
+		verifyOperationStatus();
+	}
 
+	public void checkCrossBorderTransaction(DevicePlan devicePlanDataObject) {
+		logger.info("Update Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
+		enterValueinTextBox(devicePlanCode, devicePlanDataObject.getDevicePlanCode());
+		clickSearchButton();
+		editFirstRecord();
+		runWithinPopup("Edit Device Plan", () -> {
+			WebElementUtils.elementToBeClickable(authorizationTab);
+			clickWhenClickable(authorizationTab);
+			WebElementUtils.elementToBeClickable(crossBorderTransaction);
+			checkCrossBorderTransaction(true);
+			WebElementUtils.enterText(timeIntervalCrossBorder, 20);
+			clickSaveButton();
+		});
+		verifyOperationStatus();
+	}
+	
 	public void createDevicePlan(DevicePlan devicePlanDataObject) {
 		logger.info("Create Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
 		clickAddNewButton();

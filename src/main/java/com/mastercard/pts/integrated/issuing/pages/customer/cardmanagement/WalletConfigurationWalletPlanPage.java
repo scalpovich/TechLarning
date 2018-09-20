@@ -74,6 +74,9 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:billingCycleCode:input:dropdowncomponent")
 	private MCWebElement billingCycleCodeDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "whiteListedMcgCode:input:dropdowncomponent")
+	private MCWebElement editWhiteListedMCGDdwn;
 
 	private int reservedAmount = 0; // MiscUtils.randomNumber(5);
 
@@ -245,5 +248,19 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(walletPlanCodeSearchTxt));
+	}
+	
+	public void editWalletPlan(WalletPlan walletPlan, String updateField) {
+		WebElementUtils.enterText(walletPlanCodeSearchTxt, walletPlan.getWalletPlanCode());
+		clickSearchButton();
+		editFirstRecord();
+		runWithinPopup("Edit Wallet Plan", () -> {
+			switch (updateField) {
+			case "White Listed MCG":
+				selectByVisibleText(editWhiteListedMCGDdwn, walletPlan.getWhiteListedMCGPlan());
+				break;
+			}
+			clickSaveButton();
+		});
 	}
 }
