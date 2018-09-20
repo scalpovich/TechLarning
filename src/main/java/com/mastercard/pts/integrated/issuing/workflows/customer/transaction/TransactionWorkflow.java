@@ -13,6 +13,8 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -69,6 +71,7 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKey
 @Workflow
 public class TransactionWorkflow extends SimulatorUtilities {
 	private static final Logger logger = LoggerFactory.getLogger(TransactionWorkflow.class);
+	private static final String EDIT_SUBFIELD_VALUE = "Edit Subfield Value - Format: n(6) [YYMMDD] ";
 	private static final String EDIT_DE_VALUE = "Edit DE Value";
 	private static final String SELECT_DE_VALUE = "Drop Down Button";
 	private static final String BILLING_CURRENCY_VALUE = "356 - Indian Rupee";
@@ -610,6 +613,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			updatePanNumber(device.getDeviceNumber());
 			updateAmountCardHolderBilling();
 			updateBillingCurrencyCode();
+			updateTransactionDate(resolveDate());
 			assignUniqueFileId();
 		} catch (Exception e) {
 			logger.debug("Exception occurred while editing fields :: {}", e);
@@ -618,6 +622,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		return aRN;
 	}
 
+	public String resolveDate()
+	{
+		LocalDate date = LocalDate.parse(context.get(ContextConstants.INSTITUTION_DATE), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+		return date.toString().replaceAll("-","").substring(2, date.toString().replaceAll("-","").length());
+	}
 	private void updateAuthCode() throws AWTException {
 		activateMcps();
 		Actions action = new Actions(winiumDriver);
@@ -634,6 +643,25 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation(CLOSE);
 	}
 
+	private void updateTransactionDate(String date) throws AWTException {
+		Actions action = new Actions(winiumDriver);
+		activateMcps();
+		clickMiddlePresentmentAndMessageTypeIndicator();
+		action.moveToElement(winiumDriver.findElementByName("012 - Date And Time, Local Transaction")).doubleClick().build().perform();
+		wait(1000);
+		activateEditField();
+		action.moveToElement(winiumDriver.findElementByName(EDIT_SUBFIELD_VALUE)).moveByOffset(0, 15).doubleClick().build().perform();
+		setText("");
+		setText(date);
+		wait(1000);
+		winiumClickOperation(OK);
+		wait(1000);
+		activateEditField();
+		winiumClickOperation(SET_VALUE);
+		wait(1000);
+		winiumClickOperation(CLOSE);
+	}
+	
 	private void updateBillingCurrencyCode() throws AWTException {
 		Actions action = new Actions(winiumDriver);
 		activateMcps();

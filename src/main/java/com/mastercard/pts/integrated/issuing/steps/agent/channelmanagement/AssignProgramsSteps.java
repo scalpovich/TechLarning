@@ -103,6 +103,7 @@ public class AssignProgramsSteps {
 	}
 
 	@Then("program assigned to agency successfully")
+	@Given("program assigned to agency successfully")
 	public void thenProgramAssignedToAgencySuccessfully() {
 		assertThat("Assigning Program to Agency Failed", assignProgramsWorkflow.getAgencyProgramAssignedMessage(),
 				containsString(PROGRAM_ASSIGNED_MESSAGE));
