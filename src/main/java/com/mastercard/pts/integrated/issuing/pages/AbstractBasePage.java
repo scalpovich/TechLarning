@@ -3,10 +3,8 @@ package com.mastercard.pts.integrated.issuing.pages;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -300,13 +298,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers']/td[5]/span")
 	private MCWebElement deviceProductionHeaderBatchTxt;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='time']/label/following-sibling::*")
-    private MCWebElement instutionCurrentDate;
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
-	private MCWebElement institutionDateTxt;
-	
 	private static final int loopIterationToCheckBatchNumber=21;
+	
+    @PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
+	private MCWebElement institutionDateTxt;
 	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -480,8 +475,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public String getCellTextByColumnName(int rowNumber, String columnName) {
 		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]", rowNumber, columnName);
-		SimulatorUtilities.wait(15000);
-		waitForRow();
 		WebElement element = driver().findElement(By.xpath(xpath));
 		waitForElementVisible(element);
 		return element.getText().trim();
@@ -507,7 +500,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	protected void runWithinPopup(String caption, Runnable action) {
 		SimulatorUtilities.wait(3000);
-		By frameSelector = By.xpath(String.format("//h3[contains(text(), '%s')]/ancestor::div//iframe", caption));
+		String xpath = String.format("//h3[contains(text(), '%s')]/ancestor::div//iframe", caption);
+		logger.info("runWithinPopup -> xpath: {}", xpath);
+		By frameSelector = By.xpath(xpath);
 		WebElementUtils.runWithinFrame(driver(), timeoutInSec, frameSelector, action);
 	}
 
@@ -618,8 +613,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected boolean verifyDuplicateAndClickCancel() {
 		String message = getMessageFromFeedbackPanel();
 		if (message != null
-				&& (message.contains("Effective Date and End Date should not overlap for same Country") || message.contains("Error in Insertion/Save") || message
-						.contains("Business Calendar setup already exists for logged in Institution for same Effective Date"))) {
+				&& (message.contains("Effective Date and End Date should not overlap for same Country") || 
+						message.contains("Error in Insertion/Save") || 
+						message.contains("Effective Date and End Date should not overlap for same MCG") ||
+						message.contains("Business Calendar setup already exists for logged in Institution for same Effective Date"))) {
 			clickCancelButton();
 			return true;
 		}
@@ -641,6 +638,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected void clickWhenClickable(MCWebElement element) {
 		SimulatorUtilities.wait(4000);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
+        logger.info("Button clicked successfully.");
 	}
 	
 	protected void clickWhenClickablewithWicket(MCWebElement element) {
@@ -1222,18 +1220,27 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return null;
 	}
 
-	public void selectByVisibleText(MCWebElement ele, String optionName) {
-		String optionVisbleText = "";
+	public void doSelectByVisibleText(MCWebElement ele, String optionName) {
+		String optionalVisibleText = "";
 		waitUntilSelectOptionsPopulated(ele);
-		List<WebElement> selectedOptions = ele.getSelect().getOptions();
+		List<WebElement> selectedOptions = new Select(asWebElement(ele)).getOptions();
 		for (WebElement element : selectedOptions) {
 			if (element.getText().toUpperCase().contains(optionName.toUpperCase())) {
-				optionVisbleText = element.getText();
+				optionalVisibleText = element.getText();
 				break;
 			}
 		}
-		ele.getSelect().selectByVisibleText(optionVisbleText);
+		ele.getSelect().selectByVisibleText(optionalVisibleText);
+	}
+
+	public void selectByVisibleText(MCWebElement ele, String optionName) {
+		try {
+			doSelectByVisibleText(ele, optionName);
 		waitForLoaderToDisappear();
+		waitForPageToLoad(driver());
+		} catch (StaleElementReferenceException e) {
+			doSelectByVisibleText(ele, optionName);
+	}
 		waitForPageToLoad(driver());
 	}
 
@@ -1394,7 +1401,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public void switchToDefaultFrame() {
 		getFinder().getWebDriver().switchTo().defaultContent();
 	}
-		
+
 	public void enterText(MCWebElement field, String fieldValue) {
 		waitForElementVisible(field);
 		field.sendKeys(fieldValue);
@@ -1836,13 +1843,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		Actions action = new Actions(driver());		
 		action.moveToElement(asWebElement(element), xOffset, yOffset).click().build().perform();
 	}
-	
-	@SuppressWarnings("deprecation")
-	public LocalDate getCurrentInstitutionDate(){
-           String dateInString = instutionCurrentDate.getText(); 
-           Date date = new Date(dateInString);
-           return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-     }
 	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
