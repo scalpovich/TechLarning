@@ -1577,7 +1577,7 @@ public class ProgramSetupSteps {
 
 	}
 
-	@When("user create transaction limit plan for prodcut $productType and limit type $limitType")
+	@When("user creates transaction limit plan for prodcut $productType and limit type $limitType")
 	public void createTranactionLimitPlan(String type, String limitType){
 		transactionLimitPlan = TransactionLimitPlan.createWithProvider(dataProvider);
 		transactionLimitPlan.setIframeproductType(ProductType.fromShortName(type));

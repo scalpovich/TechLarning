@@ -1,9 +1,7 @@
-credit emv corporate general purpose card authorization PINLESS
-
 Narrative:
-In order to provide a corporate client various transactions
+In order to validate floor and ceiling amount of transaction limit plan
 As an issuer
-I want to create a prepaid emv corporate general purpose card and test various transactions
+I want to perform transaction
 
 Meta:
 @StoryName credit_emv_retail_Limits
@@ -12,7 +10,7 @@ Meta:
 
 Scenario: 1.0 Transaction plan with specific limits
 Given user is logged in institution
-When user create transaction limit plan for prodcut credit and limit type Periodic 
+When user creates transaction limit plan for prodcut credit and limit type Periodic 
 Then user signs out from customer portal
 
 Scenario: 1.1 Create EMV credit device
