@@ -69,8 +69,8 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 	}	
 	
 	public void selectFromAndToDate() {
-		WebElementUtils.pickDate(fromDatePicker, getCurrentInstitutionDate());
-		WebElementUtils.pickDate(toDatePicker, getCurrentInstitutionDate());
+		WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
+		WebElementUtils.pickDate(toDatePicker, LocalDate.now());
 		clickSearchButton();
 	}
 	
