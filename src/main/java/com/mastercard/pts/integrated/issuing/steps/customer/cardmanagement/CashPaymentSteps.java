@@ -15,27 +15,25 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.C
 
 @Component
 public class CashPaymentSteps {
-	
+
 	@Autowired
 	public KeyValueProvider provider;
-	
+
 	@Autowired
 	private TestContext context;
-	
+
 	@Autowired
 	private CreditCardPaymentWorkFlows creditPaymentFlow;
-	
-	
-	
+
 	@When("user initiates cash payment")
 	@Then("user initiates cash payment")
-	public void addLocalChequeClearingDetails(){
+	public void addLocalChequeClearingDetails() {
 		Payment cash = Payment.cashPaymentDataProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		cash.setDeviceNumber(device.getDeviceNumber());
 		cash.setPaymentBranch(device.getBranchCode());
-//		cash.setAmount(context.get(ConstantData.TRANSACTION_AMOUNT));
-		creditPaymentFlow.makeCashPayment(cash);	
-		context.put(ContextConstants.PAYMENT, cash);		
+		cash.setAmount(context.get(ConstantData.TRANSACTION_AMOUNT));
+		creditPaymentFlow.makeCashPayment(cash);
+		context.put(ContextConstants.PAYMENT, cash);
 	}
 }

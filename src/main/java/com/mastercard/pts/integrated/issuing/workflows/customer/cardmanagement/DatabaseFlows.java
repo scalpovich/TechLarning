@@ -15,7 +15,7 @@ public class DatabaseFlows {
 	@Autowired
 	private DBUtility dbUtil;
 
-	//@Value("${institution}")
+	@Value("${institution}")
 	private String institution;
 	private static final Logger logger = LoggerFactory.getLogger(DateUtils.class);
 	private static int daysDifference;

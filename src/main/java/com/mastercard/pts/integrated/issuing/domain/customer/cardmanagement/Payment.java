@@ -23,6 +23,7 @@ public class Payment {
 	public static final String DRAWEE_BRANCH = "DRAWEE_BRANCH";
 	public static final String REFERENCE_NUMBER = "REFERENCE_NUMBER";	
 	public static final String MICR_NUMBER = "MICR_NUMBER";
+	public static final String TRANSACTION_AMOUNT="TRANSACTION_AMOUNT";
 	
 		
 	private String remittanceNumber;
@@ -213,6 +214,7 @@ public class Payment {
 		cash.setTransactionDate(LocalDate.now());
 		cash.setDescription(provider.getString(DESCRIPTION_NOTE));
 		cash.setAuthNumber(CustomUtils.RandomNumbers(Integer.valueOf(provider.getString(AUTH_NUMBER))));
+		
 		return cash;		
 	}
 	

@@ -861,7 +861,7 @@ public class HelpDeskSteps {
 	
 	@Then("user verify $amount amount for $category category")
 	@When("user verify $amount amount for $category category")
-	public void assertionForBilling(String amount, String category){
+	public void assertionForBilling(String amount, String category) {
 		String transactionAmount = context.get(ConstantData.TRANSACTION_AMOUNT);
 		Device device = context.get(ContextConstants.DEVICE);
 		TransactionFeePlan txnFeePlan = context.get("TransactionFeePlan");
@@ -872,28 +872,32 @@ public class HelpDeskSteps {
 			device = Device.createProviderForLatePaymentAndInterestOnPurchase(provider, device);
 		}
 		if (device.getCategory().equalsIgnoreCase("Fee")) {
-			logger.info("Late Payment Fee->"+device.getLatePaymentFee());
-			transactionAmount = String.valueOf(Double.valueOf(device.getLatePaymentFee())+Double.valueOf(txnFeePlan.getfixedTxnFees()));
+			logger.info("Late Payment Fee->" + device.getLatePaymentFee());
+			transactionAmount = String
+					.valueOf(Double.valueOf(device.getLatePaymentFee()) + Double.valueOf(txnFeePlan.getfixedTxnFees()));
+			context.put(ConstantData.TRANSACTION_AMOUNT, transactionAmount);
 		} else if (device.getCategory().equalsIgnoreCase("Interest")) {
 			int noOfDays = DateUtils.getDaysDifferenceBetweenTwoDates(context.get(ContextConstants.INSTITUTION_DATE),
 					context.get(ConstantData.TRANSACTION_DATE));
-			double interest = ((Double.valueOf(device.getTransactionAmount()) * noOfDays
-					* Double.valueOf(device.getInterestOnPurcahse())) / 100)
-					/ DateUtils.noOfDaysInYear(context.get(ContextConstants.INSTITUTION_DATE));
+			double interest = ((Double.valueOf(device.getTransactionAmount())
+					+ Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT)) * noOfDays
+							* Double.valueOf(device.getInterestOnPurcahse()))
+					/ 100) / DateUtils.noOfDaysInYear(context.get(ContextConstants.INSTITUTION_DATE));
 			transactionAmount = Double.toString(Math.round(interest * 100D) / 100D);
-			logger.info("Billed interest->"+transactionAmount);
+			logger.info("Billed interest->" + transactionAmount);
 			context.put("billed interest", transactionAmount);
 		} else if (device.getCategory().equalsIgnoreCase("Unpaid1")) {
 			transactionAmount = Double.toString(Math.round(
-					(Double.valueOf(context.get("billed interest")) + Double.valueOf(device.getLatePaymentFee())
+					(Double.valueOf(context.get("billed interest")) + Double.valueOf(device.getTransactionAmount())
 							+ Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))) * 100D)
 					/ 100D);
-			logger.info("Unpaid1->"+transactionAmount);
+			logger.info("Unpaid1->" + transactionAmount);
+			context.put(ConstantData.TRANSACTION_AMOUNT, transactionAmount);
 		} else if (device.getCategory().equalsIgnoreCase("new Unpaid1")) {
 			device.setCategory(category.replaceAll("new", "").trim());
 			transactionAmount = Double.toString(Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))
 					- Integer.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT)));
-			logger.info("After paying full payment, unpaid1->"+transactionAmount);
+			logger.info("After paying full payment, unpaid1->" + transactionAmount);
 		}
 		assertThat(category + " " + amount + BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device),
 				equalTo(transactionAmount));
@@ -915,9 +919,23 @@ public class HelpDeskSteps {
 		context.put("balanceAfterPayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));	
 	}
 	
-	@Then("user check successful $payments")
-	public void checkSuccessfulPayments(String payments){		
+	@Then("user check successful payments")
+	public void checkSuccessfulPayments(){		
 		Payment payment = context.get(ContextConstants.PAYMENT);
-		helpdeskWorkflow.compareBalancesAfterPayment(payment,payments);;
+		helpdeskWorkflow.compareBalancesAfterPayment(payment);
+	}
+	
+	@When("user check balance details through helpdesk $payment")
+	public void userCheckBalanceDetailsThroughHelpdesk(String payment){
+		Device device = new Device();
+		device.setDeviceNumber("5742534423153519");
+		device.setProductType("Credit [C]");
+		context.put(ContextConstants.DEVICE,device);
+		helpdeskWorkflow.checkBalanceDetailsThroughHelpdesk(device,payment);
+	}
+	
+	@Then("user compare balance details $payment")
+	public void compareBalanceDetails(String payment){
+		helpdeskWorkflow.compareBalanceDetailsPostPayments(payment);
 	}
 }

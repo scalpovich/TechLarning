@@ -126,7 +126,7 @@ Then validate the statement with parameters:
 |Closing Balance|
 And user sign out from customer portal
 
-Scenario:2.1 Verify User is able to make Payment of credit card through cash mode after billing cycle
+Scenario:2.0.1 Verify User is able to make Payment of credit card through cash mode after billing cycle
 Meta:
 @PaymentCash
 When update institution date to next day
@@ -136,16 +136,19 @@ And user is logged in institution
 And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
+
+Scenario:2.1 Verify User is able to make Payment of credit card through cash mode after billing cycle
+Meta:
+@PaymentCash
 Given user is logged in institution
-When check card balance details through helpdesk
+When user check balance details through helpdesk before payment
 And user initiates cash payment
 And user sign out from customer portal
 And user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
-And recheck card balance details through helpdesk after payment
-Then user check successful after payment
-When check card balance details through helpdesk
+When user check balance details through helpdesk after payment
+Then user compare balance details after full payment
 And user sign out from customer portal
 
 Scenario:2.2 Login & Logout to wait for date to be updated foe next billing
@@ -166,8 +169,8 @@ Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
 And user processes Billing Process - Credit system internal batch for Credit
-And recheck card balance details through helpdesk after payment
-Then user check successful after billing
+When user check balance details through helpdesk after billing
+Then user compare balance details after billing
 When user run Statement Extract system internal batch
 And verify statement file is successfully downloaded
 Then validate the statement with parameters:

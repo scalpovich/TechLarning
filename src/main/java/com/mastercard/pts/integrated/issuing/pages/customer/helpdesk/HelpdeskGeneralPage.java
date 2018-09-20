@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
@@ -1231,9 +1232,44 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public Map<String,String> checkCreditBalances(Device device){
-		Map<String, String> balanceMapBeforePayments = new LinkedHashMap<String, String>();
+		Map<String, String> balanceMapBeforePayments;	
 		List<String> list;
 		logger.info("get Credit balances");
+		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getProductType());
+		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
+		clickSearchButton();
+		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
+		editDeviceLink.click();
+		clickCurrentStatusLimitTab();
+		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
+		balanceMapBeforePayments = getCreditLimitComponents();
+			clickBalanceDetailsTab();
+			SimulatorUtilities.wait(5000);//this to wait till the table gets loaded	
+			list=getCreditCardBallance();
+			balanceMapBeforePayments.put("UnbllledPayments", list.get(1));
+			balanceMapBeforePayments.put("OutstandingPayments", list.get(2));			
+			return balanceMapBeforePayments;
+	}
+	
+	public void checkAndCompareBalancePostPayment(Payment payment){		
+		Map<String, String> mapA= context.get("balanceBeforePayment");
+		Map<String, String> mapB =context.get("balanceAfterPayment");
+		    if (mapA != null && mapB != null && mapA.size() == mapB.size()) {
+		        for (Map.Entry m : mapA.entrySet()) {
+		            String keyFromFirstMap = (String) m.getKey();		           
+		            String valueFromFirstMap = (String) m.getValue();
+		            String valueFromSecondMap = mapB.get(keyFromFirstMap);
+		            if(keyFromFirstMap.equals("UnbllledPayments")){
+		            if (!valueFromSecondMap.equals(Integer.valueOf(valueFromFirstMap + payment.getAmount()))) {
+		               Assert.assertEquals("Payment has been done successfully", keyFromFirstMap + "::::" + valueFromSecondMap,  keyFromFirstMap + "::::" + Integer.valueOf(valueFromFirstMap + 500));
+		            }
+		        } }
+		        
+		    } 
+		    
+		}
+
+	public void checkBalancesDetails(Device device, String payment) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getProductType());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
@@ -1242,106 +1278,84 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
 		clickBalanceDetailsTab();
 		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
-		list = getCreditCardBallance();
-		balanceMapBeforePayments.put("BilledPurchase", list.get(0));
-		balanceMapBeforePayments.put("UnbilledPurchase", list.get(1));
-		balanceMapBeforePayments.put("OutstandingPurchase", list.get(2));
-		balanceMapBeforePayments.put("BilledPayments", list.get(4));
-		balanceMapBeforePayments.put("UnbilledPayments", list.get(5));
-		balanceMapBeforePayments.put("OutstandingPayments", list.get(6));
-		for (Map.Entry<String, String> m : balanceMapBeforePayments.entrySet()) {
-			logger.info("Key->" + (String) m.getKey() + " Value1->" + (String) m.getValue());
-		}
-		return balanceMapBeforePayments;
-	}
-	
-	public void checkAndCompareBalancePostPayment(Payment payment, String payments) {
-		Map<String, String> mapA = context.get("balanceBeforePayment");
-		Map<String, String> mapB = context.get("balanceAfterPayment");
-		if (mapA != null && mapB != null && mapA.size() == mapB.size()) {
-			for (Map.Entry<String, String> m : mapA.entrySet()) {
-				String keyFromFirstMap = (String) m.getKey();
-				String valueFromFirstMap = (String) m.getValue();
-				String valueFromSecondMap = mapB.get(keyFromFirstMap);
-				logger.info("Key->"+keyFromFirstMap);
-				logger.info("Value1->"+valueFromFirstMap +"Value2->"+valueFromSecondMap);
-				comparePayments(valueFromFirstMap,keyFromFirstMap,payment,payments,valueFromSecondMap);
-			}
-		}
+		List<String> balanceComponent = createBalanceComponentCategory();
+		Map<String, String> billedBalancedComponents = createBalancedComponentsDetails("Billed", balanceComponent);
+		Map<String, String> unbilledBalancedComponents = createBalancedComponentsDetails("Unbilled", balanceComponent);
+		Map<String, String> outstandingBalancedComponents = createBalancedComponentsDetails("Outstanding",
+				balanceComponent);
+		context.put(payment.replaceAll(" ", "").trim() + "Billed", billedBalancedComponents);
+		context.put(payment.replaceAll(" ", "").trim() + "Unbilled", unbilledBalancedComponents);
+		context.put(payment.replaceAll(" ", "").trim() + "Outstanding", outstandingBalancedComponents);
+
 	}
 
-	private void comparePayments(String valueFromFirstMap, String keyFromFirstMap, Payment payment, String payments,
-			String valueFromSecondMap) {
-		switch (keyFromFirstMap) {
-		case "BilledPurchase":
-			if (!valueFromSecondMap.equals(valueFromFirstMap)) {
-				Assert.assertEquals("Billed Purchase->", keyFromFirstMap + "::::" + valueFromSecondMap,
-						keyFromFirstMap + "::::" + Double.valueOf(valueFromFirstMap));
+	private Map<String, String> createBalancedComponentsDetails(String amountType, List<String> balanceComponent) {
+		Map<String, String> billedBalancedComponents = new LinkedHashMap<String, String>();
+		for (int index = 0; index < 11; index++) {
+			billedBalancedComponents.put(amountType + balanceComponent.get(index),
+					Element("//span[contains(text(),'" + balanceComponent.get(index) + " :')]//ancestor::tr//td["
+							+ resolve(amountType) + "]/span/span").getText());
+		}
+		return billedBalancedComponents;
+	}
+
+	private List<String> createBalanceComponentCategory() {
+		List<WebElement> elements = driver()
+				.findElements(By.xpath("//div[@id='tab5']/table/tbody[1]/tr/td[1]/label/span"));
+		List<String> balanceComponent = new ArrayList<String>();
+		for (int index = 0; index < 11; index++) {
+			balanceComponent.add(elements.get(index).getText().replace(":", "").trim());
+		}
+		return balanceComponent;
+	}
+
+	public void compareBalanceDetailsPostPayments(String payment) {
+		Map<String, String> afterPaymentBilled = context.get("afterpaymentBilled");
+		Map<String, String> afterPaymentUnbilled = context.get("afterpaymentUnbilled");
+		Map<String, String> afterPaymentOutstanding = context.get("afterpaymentOutstanding");
+		if (payment.equalsIgnoreCase("after full payment")) {
+			Map<String, String> beforePaymentBilled = context.get("beforepaymentBilled");
+			Map<String, String> beforePaymentUnbilled = context.get("beforepaymentUnbilled");
+			Map<String, String> beforePaymentOutstanding = context.get("beforepaymentOutstanding");
+			double sum = 0.00;
+			for (Entry<String, String> set : beforePaymentOutstanding.entrySet()) {
+				sum = sum + Double.valueOf(set.getValue());
+				set.setValue(String.valueOf(Double.valueOf(set.getValue()) - Double.valueOf(set.getValue())));
 			}
-			break;
-		case "UnbilledPurchase":
-			if (!valueFromSecondMap.equals(valueFromFirstMap)) {
-				Assert.assertEquals("Unbllled Purchase->", keyFromFirstMap + "::::" + valueFromSecondMap,
-						keyFromFirstMap + "::::" + Double.valueOf(valueFromFirstMap));
+			beforePaymentUnbilled.replace("UnbilledPayment", String.valueOf(sum));
+			compareMaps(beforePaymentBilled, afterPaymentBilled);
+			compareMaps(beforePaymentUnbilled, afterPaymentUnbilled);
+			compareMaps(beforePaymentOutstanding, afterPaymentOutstanding);
+		}
+		if (payment.equalsIgnoreCase("after billing")) {
+			Map<String, String> afterBillingBilled = context.get("afterbillingBilled");
+			Map<String, String> afterBillingUnbilled = context.get("afterbillingUnbilled");
+			Map<String, String> afterBillingOutstanding = context.get("afterbillingOutstanding");
+			double sum = 0.00;
+			for (Entry<String, String> set : afterPaymentUnbilled.entrySet()) {
+				sum = sum + Double.valueOf(set.getValue());
+				set.setValue(String.valueOf(Double.valueOf(set.getValue()) - Double.valueOf(set.getValue())));
 			}
-			break;
-		case "OutstandingPurchase":
-			if (payments.equalsIgnoreCase("after payment")) {
-				if (!valueFromSecondMap.equals(
-						String.valueOf(Double.valueOf(valueFromFirstMap) - Double.valueOf(payment.getAmount())))) {
-					Assert.assertEquals("Unbllled Payments->", keyFromFirstMap + "::::" + valueFromSecondMap,
-							keyFromFirstMap + "::::" + Double.valueOf(valueFromFirstMap));
-				}
-			} else {
-				if (!valueFromSecondMap.equals(valueFromFirstMap)) {
-					Assert.assertEquals("Unbllled Payments->", keyFromFirstMap + "::::" + valueFromSecondMap,
-							keyFromFirstMap + "::::" + Double.valueOf(valueFromFirstMap));
-				}
-			}
-			break;
-		case "BilledPayments":
-			if (payments.equalsIgnoreCase("after billing")) {
-				if (!valueFromSecondMap.equals(
-						String.valueOf(Double.valueOf(valueFromFirstMap) + Double.valueOf(payment.getAmount())))) {
-					Assert.assertEquals("Unbllled Payments->", keyFromFirstMap + "::::" + valueFromSecondMap,
-							keyFromFirstMap + "::::" + Double.valueOf(valueFromFirstMap));
-				}
-			} else {
-				if (!valueFromSecondMap.equals(valueFromFirstMap)) {
-					Assert.assertEquals("Unbllled Payments->", keyFromFirstMap + "::::" + valueFromSecondMap,
-							keyFromFirstMap + "::::" + Double.valueOf(valueFromFirstMap));
-				}
-			}
-			break;
-		case "UnbilledPayments":
-			if (payments.equalsIgnoreCase("after payment")) {
-				if (!valueFromSecondMap.equals(
-						String.valueOf(Double.valueOf(valueFromFirstMap) + Double.valueOf(payment.getAmount())))) {
-					Assert.assertEquals("Unbllled Payments->", keyFromFirstMap + "::::" + valueFromSecondMap,
-							keyFromFirstMap + "::::" + Double.valueOf(valueFromFirstMap));
-				}
-			} else if (payments.equalsIgnoreCase("after billing")) {
-				if (!valueFromSecondMap.equals(
-						String.valueOf(Double.valueOf(valueFromFirstMap) - Double.valueOf(payment.getAmount())))) {
-					Assert.assertEquals("Unbllled Payments->", keyFromFirstMap + "::::" + valueFromSecondMap,
-							keyFromFirstMap + "::::" + Double.valueOf(valueFromFirstMap));
-				}
-			} else {
-				if (!valueFromSecondMap.equals(
-						String.valueOf(Double.valueOf(valueFromFirstMap) - Double.valueOf(payment.getAmount())))) {
-					Assert.assertEquals("Unbllled Payments->", keyFromFirstMap + "::::" + valueFromSecondMap,
-							keyFromFirstMap + "::::" + Double.valueOf(valueFromFirstMap));
-				}
-			}
-			break;
-		case "OutstandingPayments":
-			if (!valueFromSecondMap.equals(valueFromFirstMap)) {
-				Assert.assertEquals("Outstanding Payments->", keyFromFirstMap + "::::" + valueFromSecondMap,
-						keyFromFirstMap + "::::" + Double.valueOf(valueFromFirstMap));
-			}
-			break;
+			afterPaymentBilled.replace("BilledPayment", String.valueOf(sum));
+			compareMaps(afterPaymentBilled, afterBillingBilled);
+			compareMaps(afterPaymentUnbilled, afterBillingUnbilled);
+			compareMaps(afterPaymentOutstanding, afterBillingOutstanding);
 		}
 
+	}
+
+	private void compareMaps(Map<String, String> expectedMap, Map<String, String> actualMap) {
+		for (Map.Entry<String, String> m : actualMap.entrySet()) {
+			String keyFromFirstMap = (String) m.getKey();
+			String valueFromFirstMap = (String) m.getValue();
+			String valueFromSecondMap = expectedMap.get(keyFromFirstMap);
+			logger.info("Comparing values-> ", keyFromFirstMap + ": Expected:" + valueFromFirstMap,
+					": Actual:" + valueFromSecondMap);
+			if (!valueFromSecondMap.equals(valueFromFirstMap)) {
+				Assert.assertEquals("Failed in Comparing at ", keyFromFirstMap + ": Expected:" + valueFromFirstMap,
+						": Actual:" + valueFromSecondMap);
+			}
+		}
 	}
 
 }

@@ -227,8 +227,18 @@ public class HelpdeskWorkflow {
 		return balanceMapBeforePayments;		
 	}
 	
-	public void compareBalancesAfterPayment(Payment payment, String payments){
+	public void compareBalancesAfterPayment(Payment payment){
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
-		helpDeskPage.checkAndCompareBalancePostPayment(payment,payments);
+		helpDeskPage.checkAndCompareBalancePostPayment(payment);
+	}
+
+	public void checkBalanceDetailsThroughHelpdesk(Device device, String payment) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
+		helpDeskPage.checkBalancesDetails(device,payment);
+	}
+	
+	public void compareBalanceDetailsPostPayments(String payment){
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
+		helpDeskPage.compareBalanceDetailsPostPayments(payment);
 	}
 }
