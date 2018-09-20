@@ -82,7 +82,12 @@
                         <enabled>false</enabled>
                         <updatePolicy>never</updatePolicy>
                   </snapshots>
-            </repository>            
+            </repository>
+            <repository>
+	            <id>PDFBox</id>
+	            <name>Override for maven super pom central</name>
+	            <url>http://central.maven.org/maven2/</url>
+          </repository>
       </repositories>
 
       <dependencies>
