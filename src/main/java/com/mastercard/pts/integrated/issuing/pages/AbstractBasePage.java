@@ -302,6 +302,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
     @PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	private MCWebElement institutionDateTxt;
+    
+    int retryCounter =0;
 	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -1858,5 +1860,32 @@ public abstract class AbstractBasePage extends AbstractPage {
 	{	
 		logger.info("Institution date : {}",getTextFromPage(institutionDateTxt));
 		return getTextFromPage(institutionDateTxt);
+	}
+	
+	protected void waitForContentToLoad(MCWebElement element){
+		waitForWicket();
+		SimulatorUtilities.wait(5000);
+		while(retryCounter < 4){
+			
+			if(element.getTagName().contains("input")){
+				if(element.getText().equals("-") || element.getText().isEmpty() || element.getText().equals("0")){
+					SimulatorUtilities.wait(3000);
+					retryCounter++;
+					waitForContentToLoad(element);
+				}
+			}else if(element.getTagName().contains("select")){
+				Select options = new Select(asWebElement(element));
+				if(options.getOptions().size() < 1){
+					retryCounter++;
+					waitForContentToLoad(element);	
+				}
+			}else if(element.getText().equals("-") || element.getText().isEmpty() || element.getText().equals("0")){
+				SimulatorUtilities.wait(3000);
+				retryCounter++;
+				waitForContentToLoad(element);
+			}else{
+				break;
+			}
+		}
 	}
 }
