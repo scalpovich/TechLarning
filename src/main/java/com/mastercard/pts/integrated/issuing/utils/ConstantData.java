@@ -56,7 +56,7 @@ public class ConstantData {
 	public static final String AUTHORIZATION_REPORT_FILE_KEY = "Auto";
 	public static final String AUTHORIZATION_CODE = "authCode";
 	public static final String TRANSACTION_AMOUNT = "transactionAmount";
-public static final String INTERNATIONAL_ALLOW_DISALLOW = "International Use Allow/Disallow [400]";
+	public static final String INTERNATIONAL_ALLOW_DISALLOW = "International Use Allow/Disallow [400]";
 	public static final String ECCOMERCE_ALLOW_DISALLOW= "E-commerce Activation/Deactivation [304]";
 
 	public static final String OPTION_SELECT_ONE = "Select One";
@@ -92,6 +92,8 @@ public static final String INTERNATIONAL_ALLOW_DISALLOW = "International Use All
 	public static final String INVALID_PIN = "1234";
 	
 	public static final int STATIC_WAIT_FOR_PRESCREENING = 3900000;
+	
+	
 	public static final String OPEN_BATCH = "Open [O]";
 
 	
