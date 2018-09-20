@@ -1,9 +1,7 @@
-3d secure debit msr corporate card setup and authorization with invalid cavv
-
 Narrative:
-In order to a validate 3 d secure invalid Transaction on debit device
+In order to a validate 3 d secure Transaction on debit device
 As a user
-I want to perform 3 d secure Transaction with invalid cavv
+I want to perform 3 d secure Transaction without CVV2
 
 Meta:
 @StoryName d_msr_corp

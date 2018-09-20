@@ -1,7 +1,7 @@
 Narrative:
-In order to validate billing with statemnt create device with billing cycle 1 perform authorization with clearing along with billing batches  
+In order to a validate 3 d secure Transaction on credit device
 As a user
-I want to assert unbilled and billed amount on helpdesk and validate statement generated
+I want to perform 3 d secure Transaction without CVV2
 
 Meta:
 @CreditRegression

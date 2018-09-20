@@ -1,9 +1,7 @@
-Sample story
-
 Narrative:
-In order to communicate effectively to the business some functionality
-As a development team
-I want to use Behaviour-Driven Development
+In order to a validate 3 d secure Transaction on prepaid device
+As a user
+I want to perform 3 d secure Transaction without CVV2
 
 Meta:
 @StoryName p_emv_corp_general_purpose
