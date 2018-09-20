@@ -32,6 +32,9 @@ public class UploadFile extends SimulatorUtilities{
 	@Value("${linux.ipm_upload.path}")
 	private String ipmUploadPath;
 	
+	@Value("${linux.pinoffset_upload.path}")
+	private String pinOffsetFileUploadPath;
+	
 public void createTransactionUploadFileMC(FileCreation fileCreation,String remoteDir) {
 
 		File file = new File(fileCreation.getFilename());
@@ -68,4 +71,10 @@ public void createTransactionUploadFileMC(FileCreation fileCreation,String remot
 		String remoteDir = folderPath+ipmUploadPath;
 		linuxBox.upload(getTempDirectoryLocationForSimulatorResults() + "\\" + fileName, remoteDir);		
 	}
+	
+	public void uploadPinOffsetFile(String fileName){
+		String remoteDir = folderPath+pinOffsetFileUploadPath;
+		linuxBox.upload(fileName, remoteDir);	
+	}
+	
 }

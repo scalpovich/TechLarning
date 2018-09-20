@@ -147,7 +147,7 @@
 								"branch": "OfficeBranch [184]",
 								"cardPackIdGenerationTemplate": "Card Pack ID [PAN743]",
 								"deviceIdGenerationTemplate": "CardTemplate/DeviceTemplate [PAN678]",
-								"embossingVendor": "EmbossVendor [V25157]",
+								"embossingVendor": "AUTOVENDOR [A22222]",
 								"mastercardPrepaidIssuerBin": "automation prepaid card [538316]",
 								"mastercardDebitIssuerBin": "537716",
 								"mastercardCreditIssuerBin": "537716",

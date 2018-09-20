@@ -1,10 +1,12 @@
 package com.mastercard.pts.integrated.issuing.utils;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.PrintWriter;
@@ -148,6 +150,25 @@ public class FileCreation {
 		}
 		return content;
 	}
+	
+	public static void appendContentsToFile(String filename, String contents) throws IOException 
+	{ 
+		BufferedWriter writer = null;
+		try { 
+		File file = new File(filename);
+		writer = new BufferedWriter(new FileWriter(file, true)); 
+		writer.write(contents); 
+		} 
+		catch (IOException e) { 
+			logger.error(ConstantData.EXCEPTION, e);
+			// NO SONAR. We are propagating exception to another class where it
+			// is thrown
+			MiscUtils.propagate(e);
+		} finally {
+			writer.close();
+		}
+	}
+	
 
 	public void setTransactionLine(String transactionLine) {
 		this.transactionLine = transactionLine;
@@ -241,6 +262,7 @@ public class FileCreation {
 			str = String.valueOf(number);
 		return str;
 	}
+	
 
 	public String nextDay(String date, String format) {
 		int day = Integer.parseInt(date.substring(0, 2));

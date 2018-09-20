@@ -183,6 +183,8 @@ public class TransactionSearchPage extends AbstractBasePage {
 		WebElementUtils.elementToBeClickable(tranDateDDwn);
 		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
 		waitAndSearchForRecordToAppear();
+		logger.info("Joining Fee on Transaction Search is {}", joiningFees.getText() );
+		logger.info("Membership Fee on Transaction Search is {}", membershipFees.getText() );
 		joiningAndMembershipFees.add(joiningFees.getText());
 		joiningAndMembershipFees.add(membershipFees.getText());
 		return joiningAndMembershipFees;

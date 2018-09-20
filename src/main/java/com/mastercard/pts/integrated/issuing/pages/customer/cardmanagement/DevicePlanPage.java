@@ -907,6 +907,11 @@ public void AddDevicePlan() {
 		}
 	}
 
+	public void enableIframeCourierTrackingChkbx() {
+		if (iframeCourierTrackingChkbx.isEnabled()) {
+			iframeCourierTrackingChkbx.click();
+		}
+	}
 	public void selectIframeEmbossingVendorDdwn(String embossingVendor) {
 		selectByVisibleText(iframeEmbossingVendorDdwn, embossingVendor);
 	}
@@ -1215,6 +1220,10 @@ public void AddDevicePlan() {
 		
 		if(iframeEmbossingVendorDdwn.isEnabled())
 			selectIframeEmbossingVendorDdwn(devicePlan.getEmbossingVendor());
+		
+		if (devicePlan.getDeliveryMode().equalsIgnoreCase("Mail [2]"))
+			enableIframeCourierTrackingChkbx();
+		
 		}
 		
 		if (devicePlan.getFillRenewalSection().equalsIgnoreCase(STATUS_YES))

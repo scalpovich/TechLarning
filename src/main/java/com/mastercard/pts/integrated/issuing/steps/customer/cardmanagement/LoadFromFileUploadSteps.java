@@ -167,6 +167,14 @@ public class LoadFromFileUploadSteps {
 		loadFromFileUploadWorkflow.loadIncomingIPM(notFileName);
 		batch.setBatchFileName(notFileName.getName());
 	}
+	
+	
+	@When("User uploads the PinOffset file")
+	@Then("User uploads the PinOffset file")
+	public void thenUserUploadsThePinOffsetFile() {
+		ProcessBatches batch = ProcessBatches.getBatchData();
+		loadFromFileUploadWorkflow.loadIncomingPinOffset(context.get("PIN_OFFSET_FILE"));
+	}	
 
 	@When("user processes upload batch for $type")
 	public void whenUserProcessesUploadBatchForPrepaid(String type) {

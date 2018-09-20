@@ -2,9 +2,11 @@ package com.mastercard.pts.integrated.issuing.steps;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Scanner;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.slf4j.Logger;
@@ -19,6 +21,8 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.DateUtils;
+import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
@@ -31,7 +35,7 @@ public class BatchSteps {
 	private static final String DEFAULT_HEADER = "[\\w ]{32}\\d{6}";
 	
 	private static final Logger logger = LoggerFactory.getLogger(BatchSteps.class);
-
+	
 	@Autowired
 	private KeyValueProvider provider;
 
@@ -123,6 +127,8 @@ public class BatchSteps {
 				logger.info("Pin Offset :  {}", values[0]);
 			}
 			scanner.close(); 
+			context.put("PIN_OFFSET_FILE",batchFile.toString());
+			
 			// renaming file name as sometimes the embosing file name is also same
 			MiscUtils.renamePinFile(batchFile.toString());
 			MiscUtils.reportToConsole("******** Pin Offset Completed ***** ");
@@ -136,6 +142,27 @@ public class BatchSteps {
 			throw MiscUtils.propagate(e);
 		}
 	}
+	
+	@When("Pin Offset file was updated with $type pin acknowledgement")
+	@Then("Pin Offset file was updated with $type pin acknowledgement")
+	public void updatePinOffsetFileWithPinAcknowledgement(String acknowledgementType) throws IOException 
+	{
+	
+		String batchFile = context.get("PIN_OFFSET_FILE") + "_PinFile";
+		//String batchFile = "C:\\Users\\e084930\\AppData\\Local\\Temp\\20180919_IssuingTests_7158600152725784983\\19092018110088CTA5050PQT7686A2181A22222_PinFile";
+		String ackIndicator = "";
+		if(acknowledgementType.equalsIgnoreCase("positive"))
+			ackIndicator = "Y";
+		else
+			ackIndicator = "N";
+		
+		String wholeDataToAppend = "  " + ackIndicator + StringUtils.rightPad(DateUtils.getDateddMMyyyy(), 208, "0");
+		FileCreation.appendContentsToFile(batchFile,wholeDataToAppend);
+		
+		MiscUtils.changePinFileToOriginalName(batchFile, context.get("PIN_OFFSET_FILE"));
+		
+	}
+	
 	
 	@SuppressWarnings("unused")
 	private String getHeaderPattern() {

@@ -81,4 +81,8 @@ public class LoadFromFileUploadWorkflow {
 		uploadFile.uploadIpmFile(fileName);		
 	}
 	
+	public void loadIncomingPinOffset(String fileName){
+		uploadFile.uploadPinOffsetFile(fileName);		
+	}
+	
 }

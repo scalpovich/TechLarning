@@ -625,11 +625,8 @@ public class ProgramSetupSteps {
 		}
 		
 		Map<String,Object> allData=context.get(TestContext.KEY_STORY_DATA);
-
-		if (allData.containsKey(JOINING_FEE_PLAN)) 
-		{
-			devicePlan.setBaseDeviceJoiningMemberShipPlan(provider.getString(JOINING_FEE_PLAN));
-						
+		if (allData.containsKey(JOINING_FEE_PLAN)) {
+			devicePlan.setBaseDeviceJoiningMemberShipPlan(provider.getString(JOINING_FEE_PLAN));			
 		}
 		
 		if (Objects.nonNull(deviceEventBasedFeePlan)) {
