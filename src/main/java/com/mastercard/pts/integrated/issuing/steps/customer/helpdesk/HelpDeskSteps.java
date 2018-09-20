@@ -867,6 +867,8 @@ public class HelpDeskSteps {
 		TransactionFeePlan txnFeePlan = context.get("TransactionFeePlan");
 		device.setCategory(category);
 		device.setAmountType(amount);
+		context.put("Billed interest", "0.00");
+		context.put("Fee", "0.00");
 		if (device.getCategory().equalsIgnoreCase("Fee") || device.getCategory().equalsIgnoreCase("Interest")
 				|| device.getCategory().equalsIgnoreCase("Unpaid1")) {
 			device = Device.createProviderForLatePaymentAndInterestOnPurchase(provider, device);
@@ -875,24 +877,23 @@ public class HelpDeskSteps {
 			logger.info("Late Payment Fee->" + device.getLatePaymentFee());
 			transactionAmount = String
 					.valueOf(Double.valueOf(device.getLatePaymentFee()) + Double.valueOf(txnFeePlan.getfixedTxnFees()));
-			context.put(ConstantData.TRANSACTION_AMOUNT, transactionAmount);
+			context.put("Fee",transactionAmount);
 		} else if (device.getCategory().equalsIgnoreCase("Interest")) {
 			int noOfDays = DateUtils.getDaysDifferenceBetweenTwoDates(context.get(ContextConstants.INSTITUTION_DATE),
 					context.get(ConstantData.TRANSACTION_DATE));
 			double interest = ((Double.valueOf(device.getTransactionAmount())
-					+ Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT)) * noOfDays
+					+ Double.valueOf(context.get("Fee")) * noOfDays
 							* Double.valueOf(device.getInterestOnPurcahse()))
 					/ 100) / DateUtils.noOfDaysInYear(context.get(ContextConstants.INSTITUTION_DATE));
 			transactionAmount = Double.toString(Math.round(interest * 100D) / 100D);
 			logger.info("Billed interest->" + transactionAmount);
-			context.put("billed interest", transactionAmount);
+			context.put("Billed interest", transactionAmount);
 		} else if (device.getCategory().equalsIgnoreCase("Unpaid1")) {
 			transactionAmount = Double.toString(Math.round(
 					(Double.valueOf(context.get("billed interest")) + Double.valueOf(device.getTransactionAmount())
-							+ Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))) * 100D)
+							+ Double.valueOf(context.get("Fee"))) * 100D)
 					/ 100D);
 			logger.info("Unpaid1->" + transactionAmount);
-			context.put(ConstantData.TRANSACTION_AMOUNT, transactionAmount);
 		} else if (device.getCategory().equalsIgnoreCase("new Unpaid1")) {
 			device.setCategory(category.replaceAll("new", "").trim());
 			transactionAmount = Double.toString(Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))
