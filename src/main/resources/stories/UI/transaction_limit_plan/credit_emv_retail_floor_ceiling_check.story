@@ -42,14 +42,14 @@ Given connection to MAS is established
 When user update transaction amount to 105
 And perform an EMV_PURCHASE MAS transaction
 Then user is logged in institution
-And search Purchase authorization and verify "" status
-And assert "" response with "" AuthDecline Code and "" as description
+And search Purchase authorization and verify 121-Exceeds Amount Limit status
+And assert 34001 response with Decline AuthDecline Code and Transaction amount is greater than per transaction limit configured at device plan level. as description
 And user sign out from customer portal
 
 Scenario: 1.4 Perform EMV_PURCHASE Authorization transaction to check floor Amount Limit
 When user update transaction amount to 3
 And perform an EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
-And search Purchase authorization and verify "" status
-And assert "" response with "" AuthDecline Code and "" as description
+And search Purchase authorization and verify 100-Do Not Honour status
+And assert 34000 response with Decline AuthDecline Code and Transaction amount is less than Minimum amount configured at device plan level. as description
 And user sign out from customer portal
