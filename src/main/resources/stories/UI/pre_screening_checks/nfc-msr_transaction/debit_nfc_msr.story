@@ -9,8 +9,14 @@ Meta:
 @StoryName d_emv_retail
 
 Scenario: Setup - debit emv retail debit card
-Given user is logged in institution
-And device range for program with device plan for "debit" "NFC Device - Mag Stripe" card without pin
+Given setting json values in excel for Debit
+When user is logged in institution
+And User fills Device Plan for "Debit" "NFC Device - Mag Stripe" card without pin
+And User fills Wallet Plan for debit product
+And User fills Program section for debit product
+And User fills Business Mandatory Fields Screen for debit product
+And User fills Device Range section for debit product
+And user assigns service code to program
 Then user sign out from customer portal
 
 Scenario: Device production - debit emv retail debit card
