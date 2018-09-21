@@ -29,9 +29,6 @@ public class AuthorizationTransactionFactory {
 	private static final Logger logger = LoggerFactory.getLogger(AuthorizationTransactionFactory.class);
 
 	@Autowired
-	private Path tempDir;
-
-	@Autowired
 	private TestContext context;
 
 	public String createCsvCardProfile(Transaction transaction) {
