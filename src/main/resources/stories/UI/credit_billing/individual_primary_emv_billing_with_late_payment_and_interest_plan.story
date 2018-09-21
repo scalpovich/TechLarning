@@ -181,7 +181,7 @@ Meta:
 @PaymentCash
 Given user is logged in institution
 When user check balance details through helpdesk before payment
-And user initiates cash payment
+And user makes full bill payment through cash
 And user sign out from customer portal
 And user is logged in institution
 When user processes Pre-clearing system internal batch for Credit

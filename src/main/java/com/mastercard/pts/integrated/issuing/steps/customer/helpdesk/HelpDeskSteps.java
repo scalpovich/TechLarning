@@ -928,9 +928,7 @@ public class HelpDeskSteps {
 	
 	@When("user check balance details through helpdesk $payment")
 	public void userCheckBalanceDetailsThroughHelpdesk(String payment){
-		Device device = new Device();
-		device.setDeviceNumber("5742534423153519");
-		device.setProductType("Credit [C]");
+		Device device = context.get(ContextConstants.DEVICE);	
 		context.put(ContextConstants.DEVICE,device);
 		helpdeskWorkflow.checkBalanceDetailsThroughHelpdesk(device,payment);
 	}
