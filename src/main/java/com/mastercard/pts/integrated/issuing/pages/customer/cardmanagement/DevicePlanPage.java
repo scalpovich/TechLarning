@@ -1108,7 +1108,7 @@ public class DevicePlanPage extends AbstractBasePage {
 					checkPriorityPas();
 					selectPriorityIDtemplate(devicePlanDataObject);
 					priorityPassExMonth(devicePlanDataObject);
-					selectPrirotyPassVendor(devicePlanDataObject);
+					selectPriorityPassVendor(devicePlanDataObject);
 				}
 			}
 			
@@ -1408,7 +1408,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		enterText(iframePriorityPassExpiryInMonthsTxt, devicePlan.getPriorityPassExpiry());
 	}
 	
-	public void selectPrirotyPassVendor(DevicePlan devicePlan){	
+	public void selectPriorityPassVendor(DevicePlan devicePlan){	
 		selectByVisibleText(iframePriorityPassVendorDdwn, devicePlan.getPriorityPassVendor());
 	}
 }
