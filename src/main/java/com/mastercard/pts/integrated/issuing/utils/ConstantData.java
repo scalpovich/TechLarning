@@ -72,9 +72,11 @@ public class ConstantData {
 	public static final String END_RANGE_DIGITS = "9999999999";
 	public static final String RRN_NUMBER = "rrnumber";
 	
+	public static final String THREE_D_SECURE_NO_CVV2 = "3D_SECURE_NO_CVV2";
 	public static final String THREE_D_SECURE_TRANSACTION = "3D_SECURE_CAVV";
 	public static final String DATA_ELEMENT_CAVV = "048.TLV.43";
 	
+	public static final String DEVICE_RANGE_DATA = "DeviceRangeData";
 	public static final String INSTITUTION_KEY = "institution";
 	public static final String PRODUCT_IDENTITY = "productIdentity";
 	public static final String INSTITUTION_CODE_KEY = "code";
@@ -106,5 +108,9 @@ public class ConstantData {
 	public static final String NINE_NINE = "99";
 
 	private ConstantData() {
+	}
+
+	public static String fromShortName(String name) {
+		return MiscUtils.getConstantStringFromClassByPefixMatch(ConstantData.class, name);
 	}
 }

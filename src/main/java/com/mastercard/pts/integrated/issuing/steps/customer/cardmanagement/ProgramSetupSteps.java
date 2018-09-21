@@ -1585,4 +1585,10 @@ public class ProgramSetupSteps {
 		transactionLimitPlan.getTransactionLimitPlanDetails().add(details);
 		programSetupWorkflow.createTransactionLimitPlan(transactionLimitPlan,limitType);	
 	}
+	
+	@When("user use already created transaction limit plan for limit type $limitType")
+	public void userAlreadyCreatedTransactionLimitPlan(String limitType){
+		transactionLimitPlan = TransactionLimitPlan.createWithProvider(dataProvider);
+		transactionLimitPlan.setTransactionLimitPlanCode(provider.getString(limitType));
+	}
 }

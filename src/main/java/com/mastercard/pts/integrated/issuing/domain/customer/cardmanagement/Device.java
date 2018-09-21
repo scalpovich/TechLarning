@@ -102,27 +102,11 @@ public class Device {
 	private String creditLimit;
   	private String legalID;
   	private String walletCurrency;
+ 	private String category;
+  	private String amountType;
   	private static double deviceAmountUsage = 0.00;
   	private static double deviceVelocity = 0;
   	
-
-
-	public double getDeviceAmountUsage() {
-		return deviceAmountUsage;
-	}
-
-	public void setDeviceAmountUsage(double deviceAmountUsage) {
-		Device.deviceAmountUsage = Device.deviceAmountUsage + deviceAmountUsage;
-	}
-
-	public double getDeviceVelocity() {
-		return deviceVelocity;
-	}
-
-	public void setDeviceVelocity() {
-		++deviceVelocity;
-	}
-
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
 		device.setApplicationType(provider.getString(APPLICATION_TYPE));
@@ -675,5 +659,37 @@ public class Device {
 
 	public void setTransactionPassword(String transactionPassword) {
 		this.transactionPassword = transactionPassword;
+	}
+	
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getAmountType() {
+		return amountType;
+	}
+
+	public void setAmountType(String amountType) {
+		this.amountType = amountType;
+	}
+	
+	public double getDeviceAmountUsage() {
+		return deviceAmountUsage;
+	}
+
+	public void setDeviceAmountUsage(double deviceAmountUsage) {
+		Device.deviceAmountUsage = Device.deviceAmountUsage + deviceAmountUsage;
+	}
+
+	public double getDeviceVelocity() {
+		return deviceVelocity;
+	}
+
+	public void setDeviceVelocity() {
+		++deviceVelocity;
 	}
 }
