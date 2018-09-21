@@ -5,7 +5,7 @@ I want to perform transaction
 
 Meta:
 @StoryName credit_emv_retail_Limits
-@PeriodicLimit
+@YearlyLimit
 @Limits
 
 Scenario: 1.0 Create transaction plan with specific limits
