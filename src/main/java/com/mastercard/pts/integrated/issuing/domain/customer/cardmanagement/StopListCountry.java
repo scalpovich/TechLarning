@@ -7,10 +7,14 @@ import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 public class StopListCountry {
      
 	
-	String stopListReason;
-	String stopListReasonDescription;
-	String stoplistCountry;
+	private String stopListReason;
+	private String stopListReasonDescription;
+	private String stoplistCountry;
 	
+	private static final String STOPLIST_WITHDRAW_COUNTRY="Stoplist_Withdraw_Country";
+	
+	private static final String STOPLIST_COUNTRY_REASON="Stop_List_Country_Reason";
+		
 	public String getStoplistCountry() {
 		return stoplistCountry;
 	}
@@ -37,8 +41,8 @@ public class StopListCountry {
 
 	public static StopListCountry createWithProvider(KeyValueProvider provider) {
 		StopListCountry stopListCountry=new StopListCountry();
-		stopListCountry.setStoplistCountry(provider.getString("Stoplist_Withdraw_Country"));
-		stopListCountry.setStopListReason(provider.getString("Stop_List_Country_Reason"));
+		stopListCountry.setStoplistCountry(provider.getString(STOPLIST_WITHDRAW_COUNTRY));
+		stopListCountry.setStopListReason(provider.getString(STOPLIST_COUNTRY_REASON));
 		stopListCountry.setStopListReasonDescription(CustomUtils.randomString(8));
 		return stopListCountry;
 	}
