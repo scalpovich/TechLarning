@@ -876,7 +876,7 @@ public class HelpDeskSteps {
 		if (device.getCategory().equalsIgnoreCase("Fee")) {
 			logger.info("Late Payment Fee->" + device.getLatePaymentFee());
 			transactionAmount = String
-					.valueOf(Double.valueOf(device.getLatePaymentFee()) + Double.valueOf(txnFeePlan.getfixedTxnFees()));
+					.valueOf(Double.valueOf(device.getLatePaymentFee()) + Double.valueOf(txnFeePlan.getfixedTxnFees())+Double.valueOf(txnFeePlan.getFixedRateFee()));
 			context.put("Fee",transactionAmount);
 		} else if (device.getCategory().equalsIgnoreCase("Interest")) {
 			int noOfDays = DateUtils.getDaysDifferenceBetweenTwoDates(context.get(ContextConstants.INSTITUTION_DATE),

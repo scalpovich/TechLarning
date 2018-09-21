@@ -1295,6 +1295,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			billedBalancedComponents.put(amountType + balanceComponent.get(index),
 					Element("//span[contains(text(),'" + balanceComponent.get(index) + " :')]//ancestor::tr//td["
 							+ resolve(amountType) + "]/span/span").getText());
+			logger.info(amountType + balanceComponent.get(index)+"->"+
+					Element("//span[contains(text(),'" + balanceComponent.get(index) + " :')]//ancestor::tr//td["
+							+ resolve(amountType) + "]/span/span").getText());
 		}
 		return billedBalancedComponents;
 	}
@@ -1313,10 +1316,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		Map<String, String> afterPaymentBilled = context.get("afterpaymentBilled");
 		Map<String, String> afterPaymentUnbilled = context.get("afterpaymentUnbilled");
 		Map<String, String> afterPaymentOutstanding = context.get("afterpaymentOutstanding");
+		Map<String, String> beforePaymentBilled = context.get("beforepaymentBilled");
+		Map<String, String> beforePaymentUnbilled = context.get("beforepaymentUnbilled");
+		Map<String, String> beforePaymentOutstanding = context.get("beforepaymentOutstanding");
 		if (payment.equalsIgnoreCase("after full payment")) {
-			Map<String, String> beforePaymentBilled = context.get("beforepaymentBilled");
-			Map<String, String> beforePaymentUnbilled = context.get("beforepaymentUnbilled");
-			Map<String, String> beforePaymentOutstanding = context.get("beforepaymentOutstanding");
 			double sum = 0.00;
 			for (Entry<String, String> set : beforePaymentOutstanding.entrySet()) {
 				sum = sum + Double.valueOf(set.getValue());

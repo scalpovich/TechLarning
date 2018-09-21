@@ -63,8 +63,6 @@ public class CashPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "authorizationNumber:input:inputTextField")
 	private MCWebElement authNumberTxt;	
 	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
-	private MCWebElement institutionDateTxt;
 	public void enterRemittanceNumber(String remittanceNumber){
 		WebElementUtils.enterText(remittanceNumberTxt, remittanceNumber);		
 	}
@@ -116,7 +114,7 @@ public class CashPage extends AbstractBasePage {
 				"Add Cash",
 				() -> {
 					enterRemittanceNumber(cash.getRemittanceNumber());
-					enterValueDate(DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
+					enterValueDate(cash.getValueDate());
 					selectBaseCurrency(cash.getBaseCurrency());
 					clickAddDetailsBtn();	
 					clickAddNewButton();

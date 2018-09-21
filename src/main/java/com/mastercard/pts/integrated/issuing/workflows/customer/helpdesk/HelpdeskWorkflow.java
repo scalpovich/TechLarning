@@ -235,6 +235,7 @@ public class HelpdeskWorkflow {
 	public void checkBalanceDetailsThroughHelpdesk(Device device, String payment) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
 		helpDeskPage.checkBalancesDetails(device,payment);
+		helpDeskPage.clickEndCall();
 	}
 	
 	public void compareBalanceDetailsPostPayments(String payment){
