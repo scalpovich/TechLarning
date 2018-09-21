@@ -4,12 +4,14 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
@@ -24,6 +26,7 @@ import org.yecht.Data.Str;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
+import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
@@ -68,7 +71,8 @@ public class HelpDeskSteps {
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
 	private String clientID;
 	private String loginType = "login";
-
+	private CardToCash cardtocash;
+	
 	@Autowired
 	private TestContext context;
 
@@ -403,10 +407,15 @@ public class HelpDeskSteps {
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		beforeLoadBalanceInformation = helpdeskWorkflow.getWalletBalanceInformation(device);			
 		String walletinfo [] = beforeLoadBalanceInformation.split(",");	
-		walletinfo=walletinfo[0].split(":");		
-		logger.info("Wallet Number : "+walletinfo[2]);
-		device.setWalletNumber(walletinfo[2]);	
-		context.put(ContextConstants.DEVICE,device);
+		if (walletinfo.length > 1) {
+			walletinfo = walletinfo[1].split(":");
+			device.setWalletNumber(walletinfo[2]);
+			context.put(ContextConstants.DEVICE, device);
+		} else {
+			walletinfo=walletinfo[0].split(":");		
+			device.setWalletNumber(walletinfo[2]);	
+			context.put(ContextConstants.DEVICE,device);
+		}
 	}
 
 	@When("balance in helpdesk updated correctly for $type device")
@@ -440,7 +449,18 @@ public class HelpDeskSteps {
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		assertTrue(helpdeskWorkflow.verifyBalanceDeductedCorreclty(beforeLoadBalanceInformation, helpdeskGeneral.getTransactionDetails(), helpdeskWorkflow.getWalletBalanceInformation(device)));
 	}
-
+	
+	@Then("balance in helpdesk for remittance not changed for $type device")
+	@When("balance in helpdesk for remittance not changed for $type device")
+	public void thenBalanceInHelpDeskNotChangedForRemittance(String type) {
+		Device device = context.get(ContextConstants.DEVICE);
+		cardtocash = context.get(ContextConstants.REMITTANCE);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+		assertTrue(helpdeskWorkflow.verifyBalanceNotChanged(beforeLoadBalanceInformation, helpdeskWorkflow.getWalletBalanceInformationForRemittance(device, cardtocash)));
+	}
+	
 	@When("balance in helpdesk not changed for $type device")
 	@Then("balance in helpdesk not changed for $type device")
 	public void thenBalanceInHelpDeskNotChanged(String type) {

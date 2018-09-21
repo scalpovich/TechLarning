@@ -4,7 +4,8 @@ As a user
 I want to assert pages
 
 Meta:
-@StoryName CardBoarding_Priority				 
+@StoryName CardBoarding_Priority
+				 
 Scenario:creation of mastercard_individual_primary_emv Card credit device with priority pass through New Device
 Given setting json values in excel for Credit
 When user is logged in institution

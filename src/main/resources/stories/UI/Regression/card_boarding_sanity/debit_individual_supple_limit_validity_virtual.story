@@ -6,7 +6,6 @@ In order to create supplementary debit card
 
 Meta:
 @StoryName debit_card
-@DebitRegression
 
 Scenario: To verify functionality of supplementary limited validity virtual debit card boarding
 Given setting json values in excel for Debit

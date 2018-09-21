@@ -1,4 +1,3 @@
-!-- author: e076178
 Narrative:
 In order to a create a Credit device with loan 
 As a user
@@ -6,6 +5,7 @@ I want to validate card boarding with Loan
 
 Meta:
 @StoryName loan_process
+
 Scenario: User creates a Credit Device Using New Device screen with Existing client of emv type for mastercard interchance
 Given setting json values in excel for Credit
 When user is logged in institution

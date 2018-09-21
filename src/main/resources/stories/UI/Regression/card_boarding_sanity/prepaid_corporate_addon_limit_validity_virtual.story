@@ -6,7 +6,6 @@ In order to create add-on prepaid card
 
 Meta:
 @StoryName prepaid_card
-@PrepaidRegression
 
 Scenario: To verify functionality of addon limited validity virtual prepaid card boarding
 Given setting json values in excel for Prepaid

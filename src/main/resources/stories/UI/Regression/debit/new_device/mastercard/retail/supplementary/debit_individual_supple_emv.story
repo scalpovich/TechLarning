@@ -1,4 +1,3 @@
-!-- author: e076168
 Narrative:
 As a user
 I want to login into customer portal 
@@ -7,7 +6,6 @@ In order to create supplementary debit card
 
 Meta:
 @StoryName debit_card
-@DebitRegression
 
 Scenario: To verify functionality of debit supplementary EMV Card [2] card boarding
 Given setting json values in excel for Debit

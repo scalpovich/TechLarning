@@ -4,8 +4,8 @@ As a user
 I want to assert card creation
 
 Meta:
-@CreditRegression
-@StoryName credit_card				 
+@StoryName credit_card
+			 
 Scenario:creation of mastercard_individual_primary_Static Virtual Card credit device
 Given setting json values in excel for Credit
 When user is logged in institution

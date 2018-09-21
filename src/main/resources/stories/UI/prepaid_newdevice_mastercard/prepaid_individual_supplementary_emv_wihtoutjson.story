@@ -1,4 +1,3 @@
-!-- auther: e076168
 Narrative:
 As a Cardhodler
 I want to loing into customer portal 
@@ -7,7 +6,6 @@ In order to create EMV prepaid card
 
 Meta:
 @StoryName prepaid_card
-@SanityCards
 
 Scenario: To verify functionality of prepaid card boarding
 Given user is logged in institution

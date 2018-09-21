@@ -5,8 +5,8 @@ I want to assert card creation
 
 
 Meta:
-@CreditRegression
-@StoryName credit_card			 
+@StoryName credit_card
+			 
 Scenario:creation of addon magnetic stripe credit card
 Given setting json values in excel for Credit
 When user is logged in institution

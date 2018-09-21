@@ -6,7 +6,6 @@ In order to create supplementary prepaid card
 
 Meta:
 @StoryName prepaid_card
-@SanityCards
 
 Scenario: To verify functionality of NFC_EMV prepaid card boarding
 Given user is logged in institution

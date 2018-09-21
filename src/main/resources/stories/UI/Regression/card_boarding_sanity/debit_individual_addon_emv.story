@@ -6,7 +6,6 @@ In order to create add-on debit card
 
 Meta:
 @StoryName debit_card
-@DebitRegression
 
 Scenario: To verify functionality of addon emv debit card boarding
 Given setting json values in excel for Debit
