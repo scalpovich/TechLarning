@@ -28,5 +28,5 @@ And device has "normal" status
 And Pin Offset file batch was generated successfully
 And Pin Offset file was updated with positive pin acknowledgement
 And User uploads the PinOffset file and creates PIN Offset File Acknowledgement Upload batch file
-And credit processes Send To Carrier batch for Pin File Type
 Then user sign out from customer portal
+

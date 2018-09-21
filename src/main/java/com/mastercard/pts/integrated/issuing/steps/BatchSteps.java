@@ -127,8 +127,7 @@ public class BatchSteps {
 				logger.info("Pin Offset :  {}", values[0]);
 			}
 			scanner.close(); 
-			context.put("PIN_OFFSET_FILE",batchFile.toString());
-			
+			context.put("PIN_OFFSET_FILE", batchFile.toString());
 			// renaming file name as sometimes the embosing file name is also same
 			MiscUtils.renamePinFile(batchFile.toString());
 			MiscUtils.reportToConsole("******** Pin Offset Completed ***** ");
@@ -138,7 +137,6 @@ public class BatchSteps {
 				device.setPinOffset("pin not retrieved");
 				MiscUtils.reportToConsole("Pin Offset :  " + "pin not retrieved");
 			}
-			
 			throw MiscUtils.propagate(e);
 		}
 	}
@@ -159,8 +157,9 @@ public class BatchSteps {
 		String wholeDataToAppend = "  " + ackIndicator + StringUtils.rightPad(DateUtils.getDateddMMyyyy(), 208, "0");
 		FileCreation.appendContentsToFile(batchFile,wholeDataToAppend);
 		
+		logger.info("Changing Pin Offset File to Original Name");
 		MiscUtils.changePinFileToOriginalName(batchFile, context.get("PIN_OFFSET_FILE"));
-		
+		logger.info("Pin Offset File Name Successfully Changed");
 	}
 	
 	

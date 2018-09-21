@@ -72,9 +72,9 @@ public void createTransactionUploadFileMC(FileCreation fileCreation,String remot
 		linuxBox.upload(getTempDirectoryLocationForSimulatorResults() + "\\" + fileName, remoteDir);		
 	}
 	
-	public void uploadPinOffsetFile(String fileName){
+	public void uploadPinOffsetFile(File fileName){
 		String remoteDir = folderPath+pinOffsetFileUploadPath;
-		linuxBox.upload(fileName, remoteDir);	
+		linuxBox.upload(fileName.toString(), remoteDir);	
 	}
 	
 }

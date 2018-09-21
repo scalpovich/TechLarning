@@ -912,6 +912,13 @@ public void AddDevicePlan() {
 			iframeCourierTrackingChkbx.click();
 		}
 	}
+	
+	public void enableIframeManufacturingTrackingChkbx() {
+		if (iframeManufacturingTrackingChkbx.isEnabled()) {
+			iframeManufacturingTrackingChkbx.click();
+		}
+	}
+	
 	public void selectIframeEmbossingVendorDdwn(String embossingVendor) {
 		selectByVisibleText(iframeEmbossingVendorDdwn, embossingVendor);
 	}
@@ -1223,6 +1230,7 @@ public void AddDevicePlan() {
 		
 		if (devicePlan.getDeliveryMode().equalsIgnoreCase("Mail [2]"))
 			enableIframeCourierTrackingChkbx();
+			enableIframeManufacturingTrackingChkbx();
 		
 		}
 		

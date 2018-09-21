@@ -12,6 +12,7 @@ import java.util.List;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +27,9 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Proc
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProcessBatchesFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
 
 @Component
@@ -43,11 +46,14 @@ public class LoadFromFileUploadSteps {
 
 	@Autowired
 	private TransactionWorkflow transWorkflow;
+	
+	@Autowired
+	private ProcessBatchesFlows processBatchesFlows;
 
 	@Autowired
 	private LinuxBox linuxBox;
 
-	private File notFileName;
+	private File notFileName, pinOffsetFileName;
 
 	private String jobId;
 
@@ -169,12 +175,21 @@ public class LoadFromFileUploadSteps {
 	}
 	
 	
-	@When("User uploads the PinOffset file")
-	@Then("User uploads the PinOffset file")
-	public void thenUserUploadsThePinOffsetFile() {
+	@When("User uploads the PinOffset file and creates $batchName batch file")
+	@Then("User uploads the PinOffset file and creates $batchName batch file")
+	public void thenUserUploadsThePinOffsetFile(String batchName) {
 		ProcessBatches batch = ProcessBatches.getBatchData();
-		loadFromFileUploadWorkflow.loadIncomingPinOffset(context.get("PIN_OFFSET_FILE"));
-	}	
+		String batchFile = context.get("PIN_OFFSET_FILE");
+		pinOffsetFileName = new File(batchFile);
+		loadFromFileUploadWorkflow.loadIncomingPinOffset(pinOffsetFileName);
+		batch.setBatchFileName(pinOffsetFileName.getName());
+		
+		SimulatorUtilities.wait(30000);	
+		
+		batch.setJoBID(processBatchesFlows.processUploadBatches(batchName, batch.getFileName()));
+		SimulatorUtilities.wait(5000);
+		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(batch, batch.getFileName()));
+	}	 
 
 	@When("user processes upload batch for $type")
 	public void whenUserProcessesUploadBatchForPrepaid(String type) {

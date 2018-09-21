@@ -153,6 +153,8 @@ public class FileCreation {
 	
 	public static void appendContentsToFile(String filename, String contents) throws IOException 
 	{ 
+		logger.info("***** File Updation Started : {} ******", filename);
+		
 		BufferedWriter writer = null;
 		try { 
 		File file = new File(filename);
@@ -167,6 +169,7 @@ public class FileCreation {
 		} finally {
 			writer.close();
 		}
+		logger.info("***** File Updation Completed *****");
 	}
 	
 
