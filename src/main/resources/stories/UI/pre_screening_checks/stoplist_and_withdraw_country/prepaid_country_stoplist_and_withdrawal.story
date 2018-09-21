@@ -33,13 +33,13 @@ Then embossing file batch was generated in correct format
 And user sign out from customer portal
 
 
-Scenario:To Verify that the user can stoplist device country of prepaid device
+Scenario:3 To Verify that the user can stoplist device country of prepaid device
 Given user is logged in institution
 When user stoplists a country from stoplist country screen
 And user edits deviceplan and enables stoplist flag
 Then user sign out from customer portal
 
-Scenario: Transaction - MSR_PREAUTH Authorization transaction on prepaid device after stoplisted device country
+Scenario:4 Transaction - MSR_PREAUTH Authorization transaction on prepaid device after stoplisted device country
 Given connection to MAS is established
 When perform an MSR_PREAUTH MAS transaction
 And user is logged in institution
@@ -47,12 +47,12 @@ And search Pre-Auth authorization and verify 100-Do Not Honour status
 And assert Decline response with 27003 AuthDecline Code and Country is stoplisted. as description
 Then user sign out from customer portal
 
-Scenario:To Verify that the user can withdraw stoplist device country of prepaid device
+Scenario:5 To Verify that the user can withdraw stoplist device country of prepaid device
 Given user is logged in institution
 When user withdraws a country from withdraw country screen
 Then user sign out from customer portal
 
-Scenario: Transaction - MSR_PREAUTH Authorization transaction on prepaid device after withdrawn device country
+Scenario:6 Transaction - MSR_PREAUTH Authorization transaction on prepaid device after withdrawn device country
 Given perform an MSR_PREAUTH MAS transaction on the same card
 When MAS test results are verified
 And MAS simulator is closed

@@ -10,7 +10,7 @@ public class StopListBin {
 	private String stopListReason;
 	private String stopListReasonDescription;
 	
-	private static final String BIN_STOPLIST_REASON="Bin_Stop_List_Reason";
+	private static final String BIN_STOPLIST_REASON="BIN_STOPLIST_REASON";
 	
 	public String getStopListReason() {
 		return stopListReason;

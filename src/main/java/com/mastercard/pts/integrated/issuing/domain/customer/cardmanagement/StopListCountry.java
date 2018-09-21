@@ -11,9 +11,9 @@ public class StopListCountry {
 	private String stopListReasonDescription;
 	private String stoplistCountry;
 	
-	private static final String STOPLIST_WITHDRAW_COUNTRY="Stoplist_Withdraw_Country";
+	private static final String STOPLIST_WITHDRAW_COUNTRY="STOPLIST_WITHDRAW_COUNTRY";
 	
-	private static final String STOPLIST_COUNTRY_REASON="Stop_List_Country_Reason";
+	private static final String STOPLIST_COUNTRY_REASON="STOPLIST_COUNTRY_REASON";
 		
 	public String getStoplistCountry() {
 		return stoplistCountry;

@@ -10,7 +10,7 @@ public class WithdrawBin {
 	private String withdrawReason;
 	private String withdrawDescription;
 	
-	private static String WITHDRAW_BIN_REASON="Withdraw_Bin_Reason";
+	private static String WITHDRAW_BIN_REASON="WITHDRAW_BIN_REASON";
 
 	
 	
