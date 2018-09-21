@@ -36,7 +36,7 @@ public class BatchSteps {
 	@Autowired
 	private KeyValueProvider provider;
 
-	@Autowired
+	//@Autowired
 	private Path tempDirectory;
 
 	@Autowired
