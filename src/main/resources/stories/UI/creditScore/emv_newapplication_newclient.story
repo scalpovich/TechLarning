@@ -27,7 +27,6 @@ When user processesAll riskAnalysis batch for new Application
 When user processesAll applicationScoring batch for new Application
 When user refers the credit application device
 When user processesAll creditBureauVerification batch for new Application
-When user approves the credit application device
 When user processesAll deviceGeneration batch for new Application
 When user searches for created application
 When credit processes pre-production batch using new Application
