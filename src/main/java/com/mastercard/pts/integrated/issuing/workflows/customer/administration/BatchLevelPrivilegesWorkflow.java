@@ -23,6 +23,25 @@ public class BatchLevelPrivilegesWorkflow extends AbstractBaseFlows {
 		batch.clickSearchBtn();
 	}
 
+	public void verifyPhotoFileDownloadBatchPresent() {
+		navigator.navigateToPage(BatchLevelPreviledgePage.class);
+		batch.selectEntityType("User [U]");
+		portal.getUserName();
+		batch.selectEntityID("ravindra1 [ravindra1]");
+		batch.clickSearchBtn();
+		batch.clickBatchDownloadTab();
+		batch.verifyClientPhotoBatchPresent();
+	}
+	
+	public void provideAccessToDownloadPhotoFileDownloadBatch() {
+		navigator.navigateToPage(BatchLevelPreviledgePage.class);
+		batch.selectEntityType("User [U]");
+		portal.getUserName();
+		batch.selectEntityID("ravindra1 [ravindra1]");
+		batch.clickSearchBtn();
+		batch.supplyAccessToClientPhotoBatch();
+	}
+	
 	public void selectEntityTypeAsRole() {
 		batch.selectEntityType();
 		batch.selectEntityID();

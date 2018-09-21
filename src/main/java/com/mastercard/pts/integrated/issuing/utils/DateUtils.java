@@ -64,7 +64,7 @@ public class DateUtils {
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyyHHmmss");
 		return sdf.format(cal.getTime());
-	}
+	}	
 	
 	public static String getEffectiveDate(){
 		Calendar c = Calendar.getInstance();   

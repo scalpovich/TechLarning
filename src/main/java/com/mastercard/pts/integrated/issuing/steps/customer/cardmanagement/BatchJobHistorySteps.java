@@ -9,6 +9,8 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BatchJobHistory;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
@@ -29,6 +31,9 @@ public class BatchJobHistorySteps {
 
 	@Autowired
 	BatchJobHistoryFlows batchjobhistoryflows;
+	
+	@Autowired
+	TestContext context;
 
 	@Then("Statement download batch is available on Batch Job History Page")
 	public void statementDownloadBatchIsAvailableOnBatchJobHistoryPage() {
@@ -47,5 +52,19 @@ public class BatchJobHistorySteps {
 			batchjobhistory.setJobIdBatchJobHistory(bulkdevicerequestbatch.getJobId());
 		}
 		batchjobhistoryflows.CheckBatchJobHistory(batchjobhistory);
+	}
+	
+	@When("user checks for the client photo/flat file batch job history status for $batchType batch")
+	@Then("user checks for the client photo/flat file batch job history status for $batchType batch")
+	public void checkBatchStatusForClientPhotoFlatFile(@Named("batchType") String batchType) {		
+		if (batchType.equalsIgnoreCase("download")) {
+			batchjobhistory.setBatchType("DOWNLOAD [D]");
+		}else if (batchType.equalsIgnoreCase("upload")) {
+			batchjobhistory.setBatchType("UPLOAD [U]");
+		}		
+		
+		batchjobhistory.setJobIdBatchJobHistory(context.get(ContextConstants.JOB_ID));
+		
+		batchjobhistoryflows.verifyBatchJobHistoryStatusDisplayed(batchjobhistory);
 	}
 }

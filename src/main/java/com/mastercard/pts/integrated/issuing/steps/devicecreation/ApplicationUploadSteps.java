@@ -137,7 +137,8 @@ public class ApplicationUploadSteps {
 	public void whenProcessesClientPhotoFlatFileDownloadBatchForDevice(String type) {
 		ClientPhotoFlatFileDownloadBatch batch = new ClientPhotoFlatFileDownloadBatch();
 		batch.setProductType(ProductType.fromShortName(type));
-		batchProcessFlows.processClientPhotoFlatFileDownloadBatchNewDevice(batch);
+		boolean result = batchProcessFlows.processClientPhotoFlatFileDownloadBatchNewDevice(batch);
+		Assert.assertTrue("batch job id not displayed for Client photo/flat file download batch", result);
 	}
 	
 	@Then("$type processes deviceproduction batch using new Device for Supplementary")

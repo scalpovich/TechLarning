@@ -36,6 +36,7 @@ import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProcessBatchesFlows;
 
 /**
  * @author E071669
@@ -56,6 +57,9 @@ public class BatchProcessSteps {
 
 	@Autowired
 	private LoadFromFileUploadWorkflow loadFromFileUploadWorkflow;
+	
+	@Autowired
+	private ProcessBatchesFlows processBatchesFlows;
 
 	@Autowired
 	private LinuxBox linuxBox;
@@ -193,6 +197,15 @@ public class BatchProcessSteps {
 		batchProcessWorkflow.processDownloadBatch(batch);
 	}
 	
+	@When("cardholder dump download batch is processed for $type")
+	public void whenDownloadBatchIsProcessedForCredit(String batchType, String type){
+		ProcessBatches batch =  ProcessBatches.createWithProvider(provider);
+		batch.setBatchName("Cardholder Dump [CARDHOLDER_DUMP]");
+		batch.setExtractType("FULL [F]");
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessWorkflow.processDownloadBatch(batch);
+	}
+	
 	/**
 	 * Step Definition for Processing batches
 	 * <p>
@@ -221,6 +234,20 @@ public class BatchProcessSteps {
 		String partialFileName = context.get(ConstantData.VISA_OUT_GOING_FILE_NAME);
 		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(), ConstantData.VISA_BASEII_LINUX_DIRECTORY);
 		Assert.assertTrue("Transaction Data Does not match ",batchProcessWorkflow.validateVisaOutGoingFile(batchFile));
-
 	}
+	
+	@When("user checks for the client photo/flat file batch trace for $batchType batch")
+	public void checkBatchTraceForClientPhotoFlatFile(@Named("batchType") String batchType) {		
+				
+		
+		batchProcessWorkflow.verifyBatchTraceAvailability(context.get(ContextConstants.JOB_ID));	
+		
+	}
+	
+	@When("process batch for $batchType type and Batch name $batchName")
+    public void submitJobforProcessing(String batchType, String batchName)
+    {
+                   processBatchesFlows.processDownloadBatches(batchType,batchName);
+    }
+
 }

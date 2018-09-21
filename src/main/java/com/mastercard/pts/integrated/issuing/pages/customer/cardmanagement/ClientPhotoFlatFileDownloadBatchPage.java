@@ -38,6 +38,9 @@ public class ClientPhotoFlatFileDownloadBatchPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='batchNumber']")
 	private MCWebElement batchNumberTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind =  "input[fld_fqn='batchDate']" )
+	private MCWebElement batchDate;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Product Type')]//following-sibling::td[2]//select")
 	private MCWebElement productTypeDDwn;
@@ -51,9 +54,15 @@ public class ClientPhotoFlatFileDownloadBatchPage extends AbstractBasePage {
 		WebElementUtils.enterText(deviceNumberTxt, device.getDeviceNumber());
 
 		waitAndSearchForRecordToExist();
-
 		verifyOperationStatus();
+		String successMessage[] = getSuccessMessage().split(" ");
+		String jobId = successMessage[successMessage.length-1];
+		context.put(ContextConstants.JOB_ID, jobId);
 		return !Strings.isNullOrEmpty(getSuccessMessage());
+	}
+	
+	public boolean isBatchDatePresent(){
+		return isElementPresent(batchDate);
 	}
 
 	public void verifyUiOperationStatus() {

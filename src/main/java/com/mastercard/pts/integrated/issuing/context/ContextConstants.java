@@ -64,6 +64,12 @@ public class ContextConstants {
 	
 	public static final String PRIMARY_DEVICE_PLAN = "PRIMARY_DEVICE_PLAN";
 	
+	public static final String JOB_ID = "JOB_ID";
+	
+	public static final String CLIENT_PHOTO_BATCH_SUCCESS_TIME = "CLIENT_PHOTO_BATCH_SUCCESS_TIME";
+	
+	
+	
 	private ContextConstants() {
 	}
 

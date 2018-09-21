@@ -565,6 +565,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		getFinder().getWebDriver().switchTo().defaultContent();
 		return isProcessed;
 	}
+	
 
 	public String visaOutgoingDownloadBatch(ProcessBatches batch) {
 		Device device=context.get(ContextConstants.DEVICE);
@@ -584,5 +585,29 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	public void selectBin(String option)
 	{
 		WebElementUtils.selectDropDownByVisibleText(binDDwn, option);
+	}
+	
+	public void processDownloadBatch(String batchType, String batchName) {
+		selectByVisibleText(batchTypeDdwn, "DOWNLOAD [D]");
+		if (batchName.equalsIgnoreCase("CLIENT_PHOTO_BATCH"))
+			selectByVisibleText(batchNameDdwn,
+					"Client Photo/Flat File Download Batch [CLIENT_PHOTO_DOWNLOAD]");
+		else {
+			if (batchName.equalsIgnoreCase("CardholderDump"))
+				selectByVisibleText(batchNameDdwn,
+						"Cardholder Dump [CARDHOLDER_DUMP]");
+		}
+		SimulatorUtilities.wait(2000);
+		selectByVisibleText(productTypeDDwn, "Credit [C]");
+		selectByVisibleText(extractTypeDrpDwn, "FULL [F]");
+		WebElementUtils.pickDate(fromDateAuth, LocalDate.now());
+		WebElementUtils.pickDate(toDateAuth, LocalDate.now());
+		WebElementUtils.enterText(cardHolderKycFromDateHHTxtBx, "00");
+		WebElementUtils.enterText(cardHolderKycFromDateMMTxtBx, "00");
+		WebElementUtils.enterText(cardHolderKycToDateHHTxtBx, "23");
+		WebElementUtils.enterText(cardHolderKycToDateMMTxtBx, "00");
+		clickSubmitBtn();
+//		context.put("jobID", jobIDNumber.getText());
+		SimulatorUtilities.wait(3000);
 	}
 }

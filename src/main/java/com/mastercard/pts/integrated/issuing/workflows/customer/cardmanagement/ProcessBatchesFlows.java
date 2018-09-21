@@ -43,6 +43,10 @@ public class ProcessBatchesFlows {
 		processBatchesPage.checkAndSumbitFile(fileName);
 		return processBatchesPage.retrieveJobID(fileName);
 	}
+	
+	public void processDownloadBatches(String batchType, String batchName) {
+		processBatchesPage = navigator.navigateToPage(ProcessBatchesPage.class);
+		processBatchesPage.processDownloadBatch(batchType, batchName);
 
-
+	}
 }

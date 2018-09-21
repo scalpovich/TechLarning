@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.administration;
 
 import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -51,4 +52,13 @@ public class BatchLevelPrivilegesSteps {
 				.buildDescriptionAndCode());
 	}
 
+	@Then("client photo/flat file download batch is present under download in batch level priviledge page")
+	public void photoFileBatchDownloadPresentUnderBatchLevelPriviledgeScreen(){
+		batchlevelprevFlow.verifyPhotoFileDownloadBatchPresent();
+	}
+	
+	@Then("admin provides access to download photo/flat file download batch")
+	public void whenAdminProvidesAccessToDownloadPhotoFile(){
+		batchlevelprevFlow.provideAccessToDownloadPhotoFileDownloadBatch();
+	}
 }

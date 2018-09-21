@@ -765,6 +765,19 @@ public abstract class AbstractBasePage extends AbstractPage {
 			logger.debug("Result not found", e);
 		}
 	}
+	
+	protected void waitForBatchStatus(MCWebElement status) {
+		try {
+			WebElementUtils.waitForWicket(driver());
+			for (int l = 0; l < 21; l++) {
+				while ("PENDING [0]".equalsIgnoreCase(batchStatus.getText()) || "IN PROCESS [1]".equalsIgnoreCase(batchStatus.getText()))
+					Thread.sleep(10000); // waiting for page auto refresh
+				clickSearchButton();
+			}
+		} catch (NoSuchElementException | InterruptedException e) {
+			logger.debug("Result not found", e);
+		}
+	}
 
 	protected void verifySearchButton(String buttonLabel) {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(searchButtonElement));

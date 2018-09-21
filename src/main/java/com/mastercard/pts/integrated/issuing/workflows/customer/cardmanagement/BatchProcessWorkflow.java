@@ -77,6 +77,11 @@ public class BatchProcessWorkflow extends MenuFlows{
 		BatchTraceHistoryPage page = navigator.navigateToPage(BatchTraceHistoryPage.class);
 		return page.searchJob(jobId);
 	}
+	
+	public boolean verifyBatchTraceAvailability(String jobId){
+		BatchTraceHistoryPage page = navigator.navigateToPage(BatchTraceHistoryPage.class);
+		return page.searchJobTrace(jobId);
+	}
 
 	public boolean searchBatchJobHistory(String jobId){
 		BatchJobHistoryPage page = navigator.navigateToPage(BatchJobHistoryPage.class);

@@ -148,6 +148,7 @@ public class DatePicker extends AbstractBasePage {
 		setDateRangeYear(year);
 		clickCalendarMonthYearOkBtn();
 		waitForPageToLoad(getFinder().getWebDriver());
+		CustomUtils.ThreadDotSleep(5000);
 		setCalendarDay2(Calelement, day);
 	}
 	
