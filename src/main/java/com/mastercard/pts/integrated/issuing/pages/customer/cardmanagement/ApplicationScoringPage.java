@@ -31,13 +31,13 @@ public class ApplicationScoringPage extends AbstractBasePage {
 
 
 	public void processAllApplicationScoring() {
-		for (int l = 0; l < 21; l++) {
-			if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER)))
-				clickWhenClickable(applicationScoringBtn);
-			else {
-				break;
-			}
-			clickWhenClickable(processAllBtn);
+
+		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))) {
+			clickWhenClickable(applicationScoringBtn);
+			processAllApplicationScoring();
 		}
+
+		clickWhenClickable(processAllBtn);
+
 	}
 }

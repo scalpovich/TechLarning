@@ -40,15 +40,16 @@ public class CreditBureauVerificationPage extends AbstractBasePage {
 	private MCWebElement searchTable;
 	
 	public void creditBureauVerificationBatchProcess() {
-		for (int l = 0; l < 21; l++) {
-			if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER)))
-				clickWhenClickable(creditBureauVerificationLink);
-			else {
-				break;
-			}
-			clickWhenClickable(manualApprovalLink);
-			switchToIframe(CREDIT_BUREAU_VERIFICATION_FRAME);
-			clickWhenClickable(OKButtonClick);
+		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))) {
+			clickWhenClickable(creditBureauVerificationLink);
+			creditBureauVerificationBatchProcess();
 		}
+
 	}
-}
+	
+	public void switchToManualApprovalLink() {
+		clickWhenClickable(manualApprovalLink);
+		switchToIframe(CREDIT_BUREAU_VERIFICATION_FRAME);
+		clickWhenClickable(OKButtonClick);
+	}
+	}

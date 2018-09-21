@@ -32,13 +32,12 @@ public class RiskAnalysisPage extends AbstractBasePage {
 	private MCWebElement searchTable;
 
 	public void riskAnalysisBatchProcess() {
-		for (int l = 0; l < 21; l++) {
-			if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))) {
-				clickWhenClickable(riskAnalysisBtn);
-			} else {
-				break;
-			}
-			clickWhenClickable(processAllBtn);
+
+		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))) {
+			clickWhenClickable(riskAnalysisBtn);
+			riskAnalysisBatchProcess();
 		}
+		clickWhenClickable(processAllBtn);
+
 	}
 }
