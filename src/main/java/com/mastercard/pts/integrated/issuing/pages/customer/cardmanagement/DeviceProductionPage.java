@@ -42,13 +42,13 @@ public class DeviceProductionPage extends AbstractBasePage {
 	// ------------- Card Management > Institution Parameter Setup > Institution
 	// Currency [ISSS05]
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Batch Number')]//following-sibling::td[2]//input")
-	private MCWebElement batchNumberTxt;
-
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Product Type')]//following-sibling::td[2]//select")
 	private MCWebElement productTypeDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='batchNumber']")
+	private MCWebElement batchNumberTxt;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='cardNumber']")
 	private MCWebElement deviceNumberTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:searchButtonPanel:buttonCol:searchButton")
@@ -63,7 +63,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "processAll")
 	private MCWebElement processAllBtn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:1:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Action Code')]//following-sibling::td[2]//select")
 	private MCWebElement actionCodeDDwn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class = 'feedbackPanelINFO']")

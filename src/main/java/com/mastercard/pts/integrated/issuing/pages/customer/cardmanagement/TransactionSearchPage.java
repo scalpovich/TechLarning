@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -66,6 +67,9 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[1]/td/span[contains(text(),'DR')]/../../td[1]/span/a/span")
 	private MCWebElement retrieveARNLabel;
 
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
+	private MCWebElement institutionDateTxt;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Sequence Number')]")
 	private MCWebElement sequenceNumberText;
 	
@@ -74,11 +78,23 @@ public class TransactionSearchPage extends AbstractBasePage {
 	
 	private final String DUPLICATE_PRESENTMENT = "Duplicate presentment";
 	private final String UNMATCH_PRESENTMENT = "Unmatched Presentment";
-	private final String DESCRIPTION = "Description";
 	private final String RECONCILIATION_STATUS_OPTIONS = "//*[contains(text(),'Reconciliation Status')]//following-sibling::td[2]/select/option";
+	private final String DESCRIPTION = "Description";
 	
 	private String authorizationStatus;	
-
+	
+	public void selectFromDate(LocalDate date)
+	{
+		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(1);
+		WebElementUtils.pickDate(fromDateTxt, date);		
+	}
+	
+	public void selectToDate(LocalDate date)
+	{
+		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+		WebElementUtils.pickDate(toDateTxt, date);
+	}
+	
 	public String searchTransactionWithDevice(String deviceNumber, TransactionSearch ts) {
 		WebElementUtils.selectDDByVisibleText(productTypeDDwn, ts.getProductType());
 		WebElementUtils.enterText(cardNumberTxt, deviceNumber);
@@ -97,12 +113,13 @@ public class TransactionSearchPage extends AbstractBasePage {
 		WebElementUtils.enterText(searchARNTxt, arnNumber);
 		WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
 		WebElementUtils.pickDate(fromDateTxt, LocalDate.now().minusDays(10));
-		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
+		selectToDate(LocalDate.now());
 		
 		if(type.equalsIgnoreCase(DUPLICATE_PRESENTMENT) || type.equalsIgnoreCase(UNMATCH_PRESENTMENT)){
 			String st = Elements(RECONCILIATION_STATUS_OPTIONS).stream().filter(x -> x.getText().contains(type)).findFirst().get().getText();
 			selectByText(reconciliationStatusDD, st);
 		}
+		selectFromDate(LocalDate.now());
 		
 		clickSearchButton();
 		viewFirstRecord();
