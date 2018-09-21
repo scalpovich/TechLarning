@@ -45,7 +45,7 @@ public class ReferPage extends AbstractCardManagementPage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[8]/span//img")
 	private MCWebElement editImg;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[@name='refer']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[@name='approve']")
 	private MCWebElement referBtn;
     
 	public void referApplication() {
