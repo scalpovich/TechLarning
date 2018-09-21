@@ -417,6 +417,51 @@ public class DevicePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "stopListFlag:checkBoxComponent")
 	private MCWebElement stoplistFlagChkBx;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:issuerScripting:checkBoxComponent")	
+	private MCWebElement issuerScriptingChkBx;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:ucol:input:inputAmountField")	
+	private MCWebElement ucol;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:ucota:input:inputAmountField")	
+	private MCWebElement ucota;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:lcol:input:inputAmountField")	
+	private MCWebElement lcol;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:lcota:input:inputAmountField")	
+	private MCWebElement lcota;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:applicationBlock:checkBoxComponent")	
+	private MCWebElement applicationBlockChkBx;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:applicationUnblock:checkBoxComponent")	
+	private MCWebElement applicationUnblockChkBx;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:putData:checkBoxComponent")	
+	private MCWebElement putDataChkBx;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:pinChange:checkBoxComponent")	
+	private MCWebElement pinChangeChkBx;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:pinUnblock:checkBoxComponent")	
+	private MCWebElement pinUnblockChkBx;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:appBlockPriority:input:dropdowncomponent")	
+	private MCWebElement applicationBlockPriorityDdwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:appUnblockPriority:input:dropdowncomponent")	
+	private MCWebElement applicationUnblockPriorityDdwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:putDataPriority:input:dropdowncomponent")	
+	private MCWebElement putDataPriorityDdwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:pinChangePriority:input:dropdowncomponent")	
+	private MCWebElement pinChangePriorityDdwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="view:pinUnblockPriority:input:dropdowncomponent")	
+	private MCWebElement pinUnblockPriorityDdwn;
+	
 	public void AddDevicePlan() {
 		clickWhenClickable(AddDevicePlanBtn);
 		switchToAddDevicePlanFrame();
@@ -1277,12 +1322,17 @@ public class DevicePlanPage extends AbstractBasePage {
 		enterVelocity(devicePlan);
 		enterValidity(devicePlan);
 	}
-
-	public void enterVirtualDeviceCreditLimit()
-	{	
+	
+	public void enterVirtualDeviceCreditLimit(){	
 		if(virtualDeviceCreditLimitTxt.isEnabled()){
 			WebElementUtils.enterText(virtualDeviceCreditLimitTxt,CustomUtils.randomNumbers(3));
 		}
+	}
+	
+	private String getStoryName(){
+		String name = System.getProperty("storyName").toString();
+		logger.info("System.getStoryName  : "+name);
+		return name;
 	}
 	
 	public void enableStopListFlag(DevicePlan devicePlanDataObject) {
@@ -1315,10 +1365,4 @@ public class DevicePlanPage extends AbstractBasePage {
 	public void selectPrirotyPassVendor(DevicePlan devicePlan){	
 		selectByVisibleText(iframePriorityPassVendorDdwn, devicePlan.getPriorityPassVendor());
 	}
-	
-	private String getStoryName(){
-		String name = System.getProperty("storyName").toString();
-		logger.info("System.getStoryName  : "+name);
-		return name;
-	}	
 }

@@ -306,6 +306,18 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.uncheckCVCCVVDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
+	
+	@When("User checks Pin Change Transaction First check box on Device Plan Page")
+	public void userChecksPinChangeTransactionFirstOnDevicePlan() {
+		programSetupWorkflow.checkPinChangeTransactionFirst(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+
+	@When("User checks Cross Border Transaction check box on Device Plan Page")
+	public void userChecksCrossBorderTransactionCheckBoxOnDevicePlanPage(){
+		programSetupWorkflow.checkCrossBorderTransaction(devicePlan);
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);		
+	}	
 
 	@When("device range for program with device plan for \"debit\" \"$deviceType\" card without pin")
 	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin")
@@ -686,8 +698,7 @@ public class ProgramSetupSteps {
 		if (Objects.nonNull(transactionLimitPlan)) {
 			devicePlanSupplementary.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 			devicePlanSupplementary.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
-		} else {
-			setPinRequiredToDefaultState();
+		} else {			
 			devicePlanSupplementary.setAfterKYC(data.getTransactionPlan());
 			devicePlanSupplementary.setBeforeKYC(data.getTransactionPlan());
 		}
@@ -1556,5 +1567,12 @@ public class ProgramSetupSteps {
 			walletPlan.setBillingCyleCode(context.get(CreditConstants.BILLING_CYCLE));
 		}
 		programSetupWorkflow.createWalletPlan(walletPlan,reservedAmount);
+	}
+	
+	@When("User edits Program to update $editItem")
+	public void andUserEditsProgramToUpdateCountryWhiteBlackList(String editItem) {
+		program.setCountryWhiteListAndBlackListPlan(provider);
+		programSetupWorkflow.editsProgram(program,editItem);
+
 	}
 }

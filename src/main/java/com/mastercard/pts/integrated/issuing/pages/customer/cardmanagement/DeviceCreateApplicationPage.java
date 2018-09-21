@@ -375,19 +375,10 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		Address currentAddress = device.getCurrentAddress();
 		WebElementUtils.enterText(currentAddressLine1Txt, currentAddress.getAddressLine1());
 		WebElementUtils.selectDropDownByVisibleText(currentCountryCodeDDwn, currentAddress.getCountry());
-		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());
-
-		try {
-			Thread.sleep(5000); // added some sleep as the page does not repond after adding zip code
-		} catch (InterruptedException e) {
-			logger.error("Error" + e);
-			Thread.currentThread().interrupt();
-		}
+		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());		
+		SimulatorUtilities.wait(5000);		
 		pageScrollDown();
-		pageScrollDown();
-		//moveToWebElementAndClickJS(driver().findElement(By.cssSelector("input[value='Next >']")));
-		clickNextButton();
-		clickNextButton();
+		clickNextButton();		
 	}
 
 	private void fillProfile(Device device) {
