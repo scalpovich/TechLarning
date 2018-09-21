@@ -1269,6 +1269,49 @@ public class DevicePlanPage extends AbstractBasePage {
 		}
 		
 	}
+	
+	private void fillIssuerScriptingDetails(DevicePlan devicePlan )
+	{
+		if (devicePlan.getEmvPlanIssuerScripting().equalsIgnoreCase(STATUS_YES))
+		{
+			clickWhenClickable(issuerScriptingChkBx);
+			WebElementUtils.enterText(ucol, devicePlan.getEmvPlanUcol());
+			WebElementUtils.enterText(ucota, devicePlan.getEmvPlanUcota());
+			WebElementUtils.enterText(lcol, devicePlan.getEmvPlanLcol());
+			WebElementUtils.enterText(lcota, devicePlan.getEmvPlanLcota());
+
+			if (devicePlan.getEmvPlanApplicationBlock().equalsIgnoreCase(STATUS_YES)) {
+				clickWhenClickable(applicationBlockChkBx);
+			}
+
+			if (devicePlan.getEmvPlanApplicationUnblock().equalsIgnoreCase(STATUS_YES)) {
+				clickWhenClickable(applicationUnblockChkBx);
+			}
+		
+			if (devicePlan.getEmvPlanPutData().equalsIgnoreCase(STATUS_YES)) {
+				clickWhenClickable(putDataChkBx);
+	}
+
+			if (devicePlan.getEmvPlanPinChange().equalsIgnoreCase(STATUS_YES)) {
+				clickWhenClickable(pinChangeChkBx);
+			}
+
+			if (devicePlan.getEmvPlanPinUnblock().equalsIgnoreCase(STATUS_YES)) {
+				clickWhenClickable(pinUnblockChkBx);
+			}
+			WebElementUtils.selectDropDownByVisibleText(applicationBlockPriorityDdwn,
+					devicePlan.getEmvPlanApplicationBlockPriority());
+			WebElementUtils.selectDropDownByVisibleText(applicationUnblockPriorityDdwn,
+					devicePlan.getEmvPlanApplicationUnblockPriority());
+			WebElementUtils.selectDropDownByVisibleText(pinChangePriorityDdwn,
+					devicePlan.getEmvPlanPinChangePriority());
+			WebElementUtils.selectDropDownByVisibleText(putDataPriorityDdwn,
+					devicePlan.getEmvPlanPutDataPriority());
+			WebElementUtils.selectDropDownByVisibleText(pinUnblockPriorityDdwn,
+					devicePlan.getEmvPlanPinUnblockPriority());
+
+		}
+	}
 
 	private void fillPinGenerationSection(DevicePlan devicePlan) {
 		// perform below steps only when pinRequired is true which is the
