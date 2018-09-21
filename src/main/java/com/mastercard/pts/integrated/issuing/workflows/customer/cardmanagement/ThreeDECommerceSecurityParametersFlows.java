@@ -9,12 +9,18 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
 @Component
 public class ThreeDECommerceSecurityParametersFlows {
-	
+
 	@Autowired
 	private Navigator navigator;
-	public void add3DEcommerceSecurityParameters(ThreeDECommerceSecurityParameters eCommerceSecurityParameters){
+
+	public void add3DEcommerceSecurityParameters(ThreeDECommerceSecurityParameters eCommerceSecurityParameters) {
 		ThreeDECommerceSecurityParametersPage page = navigator.navigateToPage(ThreeDECommerceSecurityParametersPage.class);
 		page.add3DECommerceSecurityParameters(eCommerceSecurityParameters);
+	}
+
+	public void edit3DESParams(ThreeDECommerceSecurityParameters threeDESParams) {
+		ThreeDECommerceSecurityParametersPage page = navigator.navigateToPage(ThreeDECommerceSecurityParametersPage.class);
+		page.edit3DESParams(threeDESParams);
 	}
 
 }

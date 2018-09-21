@@ -1,7 +1,6 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 
-import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
 
@@ -15,6 +14,16 @@ public class ThreeDECommerceSecurityParameters {
 	
 	private String deviceRangeTo;
 	
+	private String checkStatus;
+	
+	public String getCheckStatus() {
+		return checkStatus;
+	}
+
+	public void setCheckStatus(String checkStatus) {
+		this.checkStatus = checkStatus;
+	}
+
 	public String geteCommerceSecurityInterchange() {
 		return eCommerceSecurityInterchange;
 	}
