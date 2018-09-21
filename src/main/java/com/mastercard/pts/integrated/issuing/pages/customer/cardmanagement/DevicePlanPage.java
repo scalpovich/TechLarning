@@ -1267,6 +1267,9 @@ public class DevicePlanPage extends AbstractBasePage {
 			WebElementUtils.enterText(acceptableAboveATCRangeTxt, devicePlan.getEmvAboveATCRange());
 			clickWhenClickable(allowFallBackChkBx);
 		}
+		if (devicePlan.getEmvPlanIssuerScripting() != null) {
+			fillIssuerScriptingDetails(devicePlan);
+        }
 		
 	}
 	
