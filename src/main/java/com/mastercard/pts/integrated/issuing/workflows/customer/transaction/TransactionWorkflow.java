@@ -1230,7 +1230,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 	
 	public void selectCVC3KeySet(String transaction) {
-		if (transaction.equalsIgnoreCase("MSR_NFC_PURCHASE")) {
+		if (transaction.equalsIgnoreCase(ConstantData.MSR_NFC_PURCHASE)) {
 			activateMas(transaction);
 			performClickOperationOnImages("AUTOMATION CARD");
 			performRightClickOperation("AUTOMATION CARD_Selected");

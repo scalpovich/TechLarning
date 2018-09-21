@@ -1,5 +1,3 @@
-NFC-MSR Transaction
-
 Narrative:
 In order to verify NFC MSR Transaction 
 As an issuer

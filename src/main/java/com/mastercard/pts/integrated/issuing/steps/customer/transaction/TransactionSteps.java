@@ -278,7 +278,7 @@ public class TransactionSteps {
 		} else if (transactionWorkflow.isContains(transaction, "MSR") || transactionWorkflow.isContains(transaction, "FALLBACK") ) {
 			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getCvvData());
 		}
-		if(transaction.contains("MSR_NFC_PURCHASE")){
+		if(transaction.contains(ConstantData.MSR_NFC_PURCHASE)){
 			transactionData.setCardDataElementsDynamic("035.05", "*************");
 		}
 	}

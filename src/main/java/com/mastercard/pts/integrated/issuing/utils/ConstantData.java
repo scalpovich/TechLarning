@@ -64,6 +64,7 @@ public class ConstantData {
 	public static final String API_NAME = "API_NAME";
 	public static final String MSR_CARD = "magnetic stripe card";
 	public static final String NFC_MSR_CARD = "mag stripe";
+	public static final String MSR_NFC_PURCHASE = "MSR_NFC_PURCHASE";
 	public static final String DEBIT_DEVICE = "Debitdevice";
 	public static final String PREPAID_DEVICE = "Prepaiddevice";
 	
