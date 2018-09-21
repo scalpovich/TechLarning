@@ -60,7 +60,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "processAll")
 	private MCWebElement processAllBtn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "//*[contains(text(),'Action Code')]//following-sibling::td[2]//select")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Action Code')]//following-sibling::td[2]//select")
 	private MCWebElement actionCodeDDwn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class = 'feedbackPanelINFO']")
