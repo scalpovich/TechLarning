@@ -255,7 +255,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		activateMas(transaction);
 		if (!sameCard) {
 			importAndLoadCardProfile(transactionData.getCardProfile(), transaction);
-			if (isContains(transaction, "emv")) {
+			if (isContains(transaction, "emv")){
 				activateMas(transaction);
 				performClickOperationOnImages("AUTOMATION CARD");
 				performRightClickOperation("AUTOMATION CARD_Selected");
@@ -265,6 +265,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 				fillEmvChipKeySetDetails();
 			}
 		}
+		selectCVC3KeySet(transaction);
 		importAndLoadTestCase(transactionData.getTestCase(), transaction);
 		performExecution(transaction);
 	}
@@ -1227,6 +1228,47 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("OK");
 		wait(1000);
 		captureSaveScreenShot(methodName);
+		
+	}
+	
+	public void selectCVC3KeySet(String transaction) {
+		if (transaction.equalsIgnoreCase(ConstantData.MSR_NFC_PURCHASE)) {
+			activateMas(transaction);
+			performClickOperationOnImages("AUTOMATION CARD");
+			performRightClickOperation("AUTOMATION CARD_Selected");
+			wait(1000);
+			performClickOperation("Edit Node");
+			wait(4000);
+			
+			
+			executeAutoITExe("ActivateEditCardProfile.exe");
+			String methodName = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			captureSaveScreenShot(methodName);
+			winiumClickOperation("CVC3 Data");
+			wait(2000);
+			captureSaveScreenShot(methodName);
+			winiumClickOperation("No");
+			wait(1000);
+			WebElement DynamicDdwn = winiumDriver.findElementByName("Not Specified");
+			wait(1000);
+			DynamicDdwn.findElement(By.name("Drop Down Button")).click();
+			wait(2000);
+			DynamicDdwn.findElement(By.name("Yes")).click();
+			wait(1000);
+			captureSaveScreenShot(methodName);
+			WebElement keySetDdwn = winiumDriver.findElementByName("CVC3 Key Set");
+			wait(1000);
+			keySetDdwn.findElement(By.name("Drop Down Button")).click();
+			wait(2000);
+			keySetDdwn.findElements(By.name("00123 - CVC3 Test Key Example 1"))
+					.get(0).click();
+			wait(2000);
+			captureSaveScreenShot(methodName);
+			winiumClickOperation("OK");
+			wait(1000);
+			captureSaveScreenShot(methodName);
+		}
 	}
 
 	public String getEnv() {

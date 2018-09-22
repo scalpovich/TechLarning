@@ -63,6 +63,8 @@ public class ConstantData {
 
 	public static final String API_NAME = "API_NAME";
 	public static final String MSR_CARD = "magnetic stripe card";
+	public static final String NFC_MSR_CARD = "mag stripe";
+	public static final String MSR_NFC_PURCHASE = "MSR_NFC_PURCHASE";
 	public static final String DEBIT_DEVICE = "Debitdevice";
 	public static final String PREPAID_DEVICE = "Prepaiddevice";
 	
@@ -72,6 +74,7 @@ public class ConstantData {
 	public static final String END_RANGE_DIGITS = "9999999999";
 	public static final String RRN_NUMBER = "rrnumber";
 	
+	public static final String THREE_D_SECURE_NO_CVV2 = "3D_SECURE_NO_CVV2";
 	public static final String THREE_D_SECURE_TRANSACTION = "3D_SECURE_CAVV";
 	public static final String DATA_ELEMENT_CAVV = "048.TLV.43";
 	

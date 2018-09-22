@@ -11,6 +11,7 @@ import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.configuration.Portal;
 import com.mastercard.pts.integrated.issuing.pages.HeaderPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.LoginPage;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.pages.PageObjectFactory;
 import com.mastercard.pts.integrated.issuing.pages.customer.InstitutionSelectionPage;
 
@@ -44,7 +45,9 @@ public class LoginWorkflow {
 		String institution = System.getProperty("institution");
 		if (institution != null && !institution.trim().isEmpty())
 			institutionSelector=institution;
+		SimulatorUtilities.wait(500);
 		page.selectInstitution(institutionSelector);
+		SimulatorUtilities.wait(500);
 		page.clickConfirm();
 		return page.checkSessionExpired();
 	}
