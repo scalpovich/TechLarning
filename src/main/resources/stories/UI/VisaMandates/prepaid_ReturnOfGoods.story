@@ -1,13 +1,13 @@
 Narrative:
 In order to provide to client easy-to-use payment method
 As an issuer
-I want to perform Balance Inquiry through vts
+I want to perform ReturnofGoods through vts
 
 Meta:
 @StoryName VISAPREPAID
 @visa_transaction_types
 
-Scenario: Set up prepaid msr retail general purpose pin card and perform Balance Inquiry transaction
+Scenario: Set up prepaid msr retail general purpose pin card and perform ReturnofGoods transaction
 Given setting json values in excel for Prepaid
 When user is logged in institution
 And User fills Device Plan for "Prepaid" "magnetic stripe" card
@@ -36,17 +36,16 @@ And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Transaction - Balance_Enquiry transaction
-When connection to VISA is established
-When perform an POS-Magstripe-balance-and-egilibility-Inquiry_with_Pin VISA transaction
-When VISA test results are verified for POS-Magstripe-balance-and-egilibility-Inquiry_with_Pin
-Then search Balance Inquiry authorization and verify Successful status
+Scenario: Transaction - Return of Goods transaction
+Given connection to VISA is established
+When perform an POS-Retail-Magstripe-returns-of-goods_with_Pin VISA transaction
+When VISA test results are verified for POS-Retail-Magstripe-returns-of-goods_with_Pin
+And search Refund authorization and verify 000-Successful status
 And user sign out from customer portal
 Then VISA simulator is closed
 
 Scenario: Calculate fees and available balance
-When user is logged in institution
-Then verify fixed transaction fee applied on purchase transaction
-When user verifies available balance after transaction
-And user sign out from customer portal
-
+Given user is logged in institution
+When verify fixed transaction fee applied on purchase transaction
+And user verifies available balance after transaction
+Then user sign out from customer portal

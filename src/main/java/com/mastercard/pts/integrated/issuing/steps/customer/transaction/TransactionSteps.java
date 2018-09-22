@@ -502,6 +502,7 @@ public class TransactionSteps {
 
 	@When("$tool test results are verified for $transaction")
 	@Then("$tool test results are verified for $transaction")
+	@Given("$tool test results are verified for $transaction")
 	public void thenVisaTestResultsAreReported(String tool, String transaction) {
 		String testResults = null;
 		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseToSelect(transaction);

@@ -512,6 +512,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void verifyOperationStatus() {
+		SimulatorUtilities.wait(3000);
 		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
 	}

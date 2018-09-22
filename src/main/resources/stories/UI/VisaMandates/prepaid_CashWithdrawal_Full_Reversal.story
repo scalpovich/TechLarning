@@ -1,13 +1,13 @@
 Narrative:
 In order to provide to client easy-to-use payment method
 As an issuer
-I want to perform Purchase Reversal through vts
+I want to perform Cash Withdrawl Full Reversal through vts
 
 Meta:
 @StoryName VISAPREPAID
 @visa_transaction_types
 
-Scenario: Set up prepaid msr retail general purpose pin card and perform Purchase Reversal transaction
+Scenario: Set up prepaid msr retail general purpose pin card and perform Cash Withdrawl Full Reversal transaction
 Given setting json values in excel for Prepaid
 When user is logged in institution
 And User fills Device Plan for "Prepaid" "magnetic stripe" card
@@ -36,16 +36,16 @@ And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Transaction - Purchase Reversal transaction
-When connection to VISA is established
-When perform an POS-Retail-Magstripe-cashPrev_with_Pin VISA transaction
-When VISA test results are verified for POS-Retail-Magstripe-cashPrev_with_Pin
-Then search Purchase Reversal authorization and verify 000-Successful status
+Scenario: Transaction - Cash Withdrawl Full Reversal
+Given connection to VISA is established
+When perform an POS-Retail-Magstripe-cashRev_with_Pin VISA transaction
+And VISA test results are verified for POS-Retail-Magstripe-cashRev_with_Pin
+And search CWD - Full Reversal authorization and verify 000-Successful status
 And user sign out from customer portal
 Then VISA simulator is closed
 
 Scenario: Calculate fees and available balance
-When user is logged in institution
-Then verify fixed transaction fee applied on purchase transaction
-When user verifies available balance after transaction
-And user sign out from customer portal
+Given user is logged in institution
+When verify fixed transaction fee applied on purchase transaction
+And user verifies available balance after transaction
+Then user sign out from customer portal

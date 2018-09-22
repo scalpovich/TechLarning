@@ -37,15 +37,15 @@ And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
 Scenario: Transaction - Purchase Completion transaction
-When connection to VISA is established
+Given connection to VISA is established
 When perform an POS-Retail-Magstripe-purchase_with_Pin VISA transaction
-When VISA test results are verified for POS-Retail-Magstripe-purchase_with_Pin
-Then search Purchase authorization and verify 000-Successful status
+And VISA test results are verified for POS-Retail-Magstripe-purchase_with_Pin
+And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 Then VISA simulator is closed
 
 Scenario: Calculate fees and available balance
-When user is logged in institution
-Then verify fixed transaction fee applied on purchase transaction
-When user verifies available balance after transaction
-And user sign out from customer portal
+Given user is logged in institution
+When verify fixed transaction fee applied on purchase transaction
+And user verifies available balance after transaction
+Then user sign out from customer portal

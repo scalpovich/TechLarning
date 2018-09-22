@@ -17,7 +17,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.jbehave.web.selenium.WebDriverProvider;
@@ -110,8 +109,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private static final String VISA_FAILURE_MESSAGE = "Visa Incomming Message for transaction did not come :: {}";
 	private static final String SIMULATOR_LICENSE_TYPE_17 = "17";
 	private static final String SIMULATOR_LICENSE_TYPE_18 = "18";
-	private static final int MAX_RETRY = 30;
-
+	private static final String REVERSAL="Reversal";
+	private static final String STIP="STIP";
+	
 	@Autowired
 	private WebDriverProvider webProvider;
 
@@ -1839,24 +1839,19 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		logMessage(" ********* " + propertyByName + " :  response is : ", tempValue);
 		return tempValue;
 	}
+
+	private WebElement transactionReturnButton() {
+		WebElement retunButton = winiumDriver.findElementByName("Return");
+		return retunButton;
+	}
 	
 	private void waitForReturnButtonToGetEnable() {
-		boolean flag = false;
-		int retry = 0;
-		WebElement retunButtuon = null;
-		try {
-			while (!flag && retry <= MAX_RETRY) {
-				retunButtuon = winiumDriver.findElementByName("Return");
-				flag = retunButtuon.isEnabled();
-				wait(500);
-				retry ++;
-			}
-
-		} catch (NoSuchElementException ex) {
-			logMessage("Waiting for elemnt to get enabled", ex.getMessage());
+		WebElement retunButton = transactionReturnButton();
+		while (!retunButton.isEnabled()) {
+			waitForReturnButtonToGetEnable();
 		}
-		retunButtuon.click();
-		wait(3000);
+		retunButton.click();
+
 	}
 
 	public void executeVisaTest(String transaction) {
@@ -1892,9 +1887,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(1000);
 		winiumClickOperation(RESULT_IDENTIFIER);
 		Actions action = new Actions(winiumDriver);
-		if (transaction.contains("Reversal")){
+		if (transaction.contains(REVERSAL)){
 			lst = winiumDriver.findElements(By.name("0410 ISO Message, INCOMING. Match found"));
-		} else if(transaction.contains("STIP")){
+		} else if(transaction.contains(STIP)){
 			lst = winiumDriver.findElements(By.name("0130 ISO Message, INCOMING. Match found"));
 		} else{
 			lst = winiumDriver.findElements(By.name("0110 ISO Message, INCOMING. Match found"));

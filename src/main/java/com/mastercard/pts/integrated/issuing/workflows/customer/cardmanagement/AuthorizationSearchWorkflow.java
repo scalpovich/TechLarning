@@ -64,7 +64,7 @@ public class AuthorizationSearchWorkflow {
 
 	private void authSearchAndVerification(String deviceNumber, String type, String state, String codeColumnName, String descriptionColumnName) {
 		boolean condition;
-        SimulatorUtilities.wait(10000);
+        SimulatorUtilities.wait(5000);
 		AuthorizationSearchPage authSearchPage = navigator.navigateToPage(AuthorizationSearchPage.class);
 		authSearchPage.inputDeviceNumber(deviceNumber);
 		authSearchPage.inputFromDate(LocalDate.now().minusDays(1));
