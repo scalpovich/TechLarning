@@ -16,10 +16,14 @@
     ControlClick("Message Editor", "", "&Field Editor ...");
 
 	WinActivate("Field Editor")
-    ControlCommand("Field Editor", '', "[CLASS:ComboBox; INSTANCE:2]", "SetCurrentSelection", "Literal")
-	Sleep(5000)
-	ControlSetText("Field Editor", '', "[CLASS:Edit; INSTANCE:3]", $CmdLine[1])
-	Sleep(5000)
+    ControlCommand("Field Editor", '', "ComboBox2", "SelectString", 'Literal')
+	Sleep(3000)
+	If ControlCommand("Field Editor", '', "ComboBox1", "IsVisible", "") Then
+		ControlCommand("Field Editor", '', "ComboBox1", "SelectString", $CmdLine[1])
+	Else
+		ControlSetText("Field Editor", '', "Edit3", $CmdLine[1])
+	EndIf
+	Sleep(3000)
 	ControlClick("Field Editor", '', "[CLASS:Button; INSTANCE:11]")
 
 	WinActivate("VTS", "&Yes")
