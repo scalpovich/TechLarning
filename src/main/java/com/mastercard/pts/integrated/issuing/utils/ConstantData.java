@@ -107,6 +107,8 @@ public class ConstantData {
 	
 	public static final String ZERO_ZERO = "00";
 	public static final String NINE_NINE = "99";
+	
+	public static final String DEVICE_RANGE_DATA = "Device_Range_Data";
 
 	private ConstantData() {
 	}
