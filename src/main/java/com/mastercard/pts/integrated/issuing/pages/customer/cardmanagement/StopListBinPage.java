@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StopListBin;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -33,6 +35,18 @@ public class StopListBinPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent")
 	private MCWebElement interchange;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "stopBinsContainer:bin:input:dropdowncomponent")
+	private MCWebElement binDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "stopBinsContainer:search")
+	private MCWebElement btnSearch;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "stopBinsDetailContainer:reasonCode:input:dropdowncomponent")
+	private MCWebElement reasonCodeDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "stopBinsDetailContainer:abrevName:input:textAreaComponent")
+	private MCWebElement txtDescription;
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Stop List Bins");
 		verifyButton("Search");
@@ -45,4 +59,37 @@ public class StopListBinPage extends AbstractBasePage {
 				WebElementUtils.elementToBeClickable(interchange)
 				);
 	}
+	
+	public void stoplistBin(StopListBin stopListBin, DeviceRange deviceRange){
+		clickAddNewButton();
+		runWithinPopup("Add Stop List Bins", ()->{
+			String issuerBin="";
+			if(!deviceRange.getIssuerBin().contains("[")){
+				issuerBin=deviceRange.getIssuerBin();
+			}
+			else{
+				issuerBin=deviceRange.getIssuerBinCode(deviceRange.getIssuerBin());
+			}
+			selectBin(String.format("%s [%s]", issuerBin, issuerBin));
+			clickSearch();
+			waitForElementVisible(reasonCodeDDwn);
+			selectReasonCode(stopListBin.getStopListReason());
+			enterDescription(stopListBin.getStopListReasonDescription());
+			clickSaveButton();
+		});
+		verifyOperationStatus();
+	}
+	public void selectBin(String bin){
+		selectDropDownByText(binDDwn, bin);
+	}
+    public void selectReasonCode(String reasonCode){
+    	selectDropDownByText(reasonCodeDDwn, reasonCode);
+	}
+    public void enterDescription(String description){
+    	enterText(txtDescription, description);
+    }
+    
+    public void clickSearch(){
+    	ClickButton(btnSearch);
+    }
 }
