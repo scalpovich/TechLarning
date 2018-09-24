@@ -3,10 +3,8 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
 import org.hamcrest.Matchers;
 import org.junit.Assert;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -42,8 +40,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(DeviceCreateDevicePage.class);
 	
 	private static final String OPEN_BATCH = "Open [O]";
-	
-	private String programCodeDDwnBy = "view:programCode:input:dropdowncomponent";
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
 	private MCWebElement deviceNumberSearchTxt;
@@ -333,22 +329,19 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
 		SimulatorUtilities.wait(1000);
-		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
+		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
-			SimulatorUtilities.wait(5000);
+			SimulatorUtilities.wait(6000);
 			moveToElementAndClick(existingClientLabel, 50, 50);
 			waitForWicket(driver());
 			SimulatorUtilities.wait(15000);		
-		}else{
+		} else {
 			selectByVisibleText(customerTypeDDwn, device.getCustomerType());          
-			SimulatorUtilities.wait(2000);
-			try{
-                selectByVisibleText(programCodeDDwn, device.getProgramCode());}
-                catch(StaleElementReferenceException e){
-                      MCWebElement element = getMCWebElementFromWebElement(FindBy.NAME,programCodeDDwnBy);
-                      selectByVisibleText(element, device.getProgramCode());
-                }
-			}
+			SimulatorUtilities.wait(6000);
+          	waitForWicket(driver());
+			selectByVisibleText(programCodeDDwn, device.getProgramCode());
+			SimulatorUtilities.wait(2000);			
+		}
 		SimulatorUtilities.wait(1000);
 		clickNextButton();
 		

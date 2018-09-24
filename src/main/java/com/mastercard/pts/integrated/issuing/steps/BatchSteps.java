@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.DeviceType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
@@ -50,11 +51,11 @@ public class BatchSteps {
 		MiscUtils.reportToConsole("******** Embossing File Start ***** " );
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		try {
-			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE");		
+			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE","proc");		
 			String[] fileData = LinuxUtils.getCardNumberAndExpiryDate(batchFile);
 			MiscUtils.reportToConsole("File Data : " + fileData);
 			Device device = context.get(ContextConstants.DEVICE);
-			if(device.getDeviceType1().toLowerCase().contains(ConstantData.MSR_CARD))
+			if(device.getDeviceType1().toLowerCase().contains(ConstantData.MSR_CARD)||device.getDeviceType1().toLowerCase().contains(ConstantData.NFC_MSR_CARD))
 			{
 				device.setDeviceNumber(fileData[0]);
 				device.setCvv2Data(fileData[2]);
@@ -111,8 +112,7 @@ public class BatchSteps {
 		MiscUtils.reportToConsole("******** Pin Offset Start ***** ");
 		String[] values = null;
 		DevicePlan tempdevice = context.get(ContextConstants.DEVICE_PLAN);
-		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevice.getDevicePlanCode(),
-				tempDirectory.toString(), "PIN_PROD");
+		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevice.getDevicePlanCode(),tempDirectory.toString(), "PIN_PROD","proc");
 		Device device = context.get(ContextConstants.DEVICE);
 		try (Scanner scanner = new Scanner(batchFile)) {
 			while (scanner.hasNext()) {

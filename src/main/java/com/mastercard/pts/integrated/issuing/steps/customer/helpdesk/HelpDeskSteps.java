@@ -4,13 +4,12 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
-
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
@@ -20,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.yecht.Data.Str;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
@@ -43,8 +43,8 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
-import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDeskFlows;
@@ -65,6 +65,7 @@ public class HelpDeskSteps {
 	private String beforeLoadBalanceInformation;
 	private static final String STATUS_INCORRECT_INFO_MSG = "Device has incorrect status";
 	private static final String INCORRECT_BALANCE_OR_CREDIT_LIMIT = "Available balance/Credit limit does not match : ";
+	private static final String BILLING_INCORRECT_MASSAGE = " amount does not match : ";
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
 	private String clientID;
 	private String loginType = "login";
@@ -371,7 +372,6 @@ public class HelpDeskSteps {
 
 	@Given("user has wallet number information for $type device")
 	@When("user has wallet number information for $type device")
-	@Then("user has wallet number information for $type device")
 	public void givenUserHasWalletNumberInformation(String type) {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
@@ -530,7 +530,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.activateDevice(helpdeskGeneral);
 	}
-	
+
 	@Then("user selects $reason status")
 	@When("user selects $reason status")
 	public void whenUserSelectsEccomerceUseAllowDisallowStatus(String status) {
@@ -551,7 +551,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.allowTransactionForOneHour(status);
 	}
-
+	
 	@Given("user setup device currency through helpdesk")
 	@When("user setup device currency through helpdesk")
 	public void whenUserSetupDeviceCurrencyThroughHelpDesk() {
@@ -566,8 +566,18 @@ public class HelpDeskSteps {
 	@When("user notes down available $type limit for card")
 	public void whenUserNotesDownLimitThroughHelpDesk(String type) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
-		Device device = context.get(ContextConstants.DEVICE);
 		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.noteDownAvailableLimit(type));
+	}
+	
+	@Given("user notes down required values from helpdesk for $product")
+	@When("user notes down required values from helpdesk for $product")
+	public void whenUserNotesDownRequiredValuesThroughHelpDesk(String product) {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		HashMap<String, String> helpdeskValues = helpdeskWorkflow.noteDownRequiredValues(device.getDeviceNumber());
+		helpdeskValues.put(ContextConstants.ACCOUNT_NUMBER,device.getAccountNumber());	
+		helpdeskValues.put(ContextConstants.CREDIT_CARD_NUMBER_HEADER_IN_STATEMENT, device.getClientDetails().getFirstName().toUpperCase()+" "+device.getClientDetails().getMiddleName1().toUpperCase()+" "+device.getClientDetails().getLastName().toUpperCase());
+		context.put(ContextConstants.HELPDESK_VALUES,helpdeskValues); 		
 	}
 	
 	@Given("user verifies available $type limit for card after transaction")
@@ -575,15 +585,6 @@ public class HelpDeskSteps {
 	public void whenUserVerifyLimitThroughHelpDesk(String type) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.noteDownAvailableLimit(type), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
-	}
-	
-	@Then("user activates $limittype credit limit change request")
-	@Given("user activates $limittype credit limit change request")
-	@When("user activates $limittype credit limit change request")
-	public void whenUserActivatesCreditLimitChangeRequestThroughHelpdesk(String limittype) {
-		helpdeskGeneral = HelpdeskGeneral.createWithProviderWithCreditCardLimits(provider);
-		helpdeskWorkflow.clickCustomerCareEditLink();		
-		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.activateCreditLimitChangeRequest(helpdeskGeneral));
 	}
 
 	@Given("user sets up device currency through helpdesk for FileUpload")
@@ -604,6 +605,7 @@ public class HelpDeskSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		String actualStatus = helpdeskWorkflow.getDeviceStatus(device);
 		assertThat(STATUS_INCORRECT_INFO_MSG, actualStatus, equalTo(expectedStatus));
+		context.put(ContextConstants.DEVICE, device);
 	}
 
 	@Then("device has \"$deviceStatus\" status for non-default institution")
@@ -845,7 +847,6 @@ public class HelpDeskSteps {
 		helpdeskFlows.searchForNewApplicationFileUpload(helpDeskGetterSetter);
 	}
 	
-	
 	@Then("user creates service request for $serviceCode service")
 	@When("user creates service request for $serviceCode service")
 	public void whenUserResetPinRetryCounterThroughHelpDesk(String serviceCode) {
@@ -853,5 +854,15 @@ public class HelpDeskSteps {
 		helpdeskGeneral.setNotes(MiscUtils.generateRandomNumberAsString(6));
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.resetPinCounter(helpdeskGeneral);
+	}
+	
+	@Then("user verify $amount amount for $category category")
+	@When("user verify $amount amount for $category category")
+	public void assertionForBilling(String amount, String category){
+		String transactionAmount = context.get(ConstantData.TRANSACTION_AMOUNT);
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setCategory(category);
+		device.setAmountType(amount);
+		assertThat(category +" "+ amount +BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device), equalTo(transactionAmount));
 	}
 }
