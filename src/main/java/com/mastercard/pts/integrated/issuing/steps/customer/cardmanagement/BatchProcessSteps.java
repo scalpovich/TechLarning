@@ -237,6 +237,7 @@ public class BatchProcessSteps {
 	}
 	
 	@When("user checks for the client photo/flat file batch trace for $batchType batch")
+	@Then("user checks for the client photo/flat file batch trace for $batchType batch")
 	public void checkBatchTraceForClientPhotoFlatFile(@Named("batchType") String batchType) {		
 				
 		

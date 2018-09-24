@@ -148,7 +148,7 @@ public class BatchSteps {
 	@When("photo image file generated in JPEG format")
 	@Then("photo image file generated in JPEG format")
 	public void thenPhotoFileGeneratedInJPEGFormat() {
-		
+		flow.findAndPutDeviceApplicationNumberInContext();
 		String timestamp = context.get(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME);
 		Device device = context.get(ContextConstants.DEVICE);
 		String deviceApplicationNumber = device.getApplicationNumber();
@@ -228,6 +228,7 @@ public class BatchSteps {
 	@Then("to verify photo reference number is present in card holder dump file")
 	public void  cardHolderDumpFileWasGeneratedSuccessfullyForPhotoCard() {
 		MiscUtils.reportToConsole("******** Embossing File Start ***** " );
+		flow.findAndPutDeviceApplicationNumberInContext();
 		try {
 			String CSVno = context.get("CSVno");
 			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(CSVno, tempDirectory.toString(), "CARDHOLDER_DUMP");

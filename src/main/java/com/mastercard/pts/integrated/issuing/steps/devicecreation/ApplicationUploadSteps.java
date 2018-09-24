@@ -143,7 +143,7 @@ public class ApplicationUploadSteps {
 	
 	@Then("Date should be displayed as editable on screen")
 	@When("Date should be displayed as editable on screen")
-	public void thenDateShouldBeDisplayedOnOnScreen(String type) {
+	public void thenDateShouldBeDisplayedOnOnScreen() {
 		boolean result = batchProcessFlows.verifyClientPhotoFlatFileDownloadBatchScreen();
 		Assert.assertTrue("Client photo/flat file download batch screen is not displayed properly", result);
 	}

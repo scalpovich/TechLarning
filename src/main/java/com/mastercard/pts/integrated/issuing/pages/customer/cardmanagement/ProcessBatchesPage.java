@@ -165,6 +165,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement binDDwn;
 	
+	@PageElement( findBy = FindBy.X_PATH, valueToFind="//span[@id='jobId'] ")
+	private MCWebElement jobIDNumber;
+
 	private static final int NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE=100;
 
 	public void selectBatchType(String option) {
@@ -202,6 +205,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private By tracesDescription = By.xpath("//table[@class='modelFormClass']//table[@class='dataview']//tr//child::td[position()=4]");
 
 	private List<String> errorDescription = new ArrayList<String>();
+
 
 	public void processUploadBatch(String batchName) {
 		selectBatchType(BatchType.UPLOAD);
@@ -593,7 +597,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			selectByVisibleText(batchNameDdwn,
 					"Client Photo/Flat File Download Batch [CLIENT_PHOTO_DOWNLOAD]");
 		else {
-			if (batchName.equalsIgnoreCase("CardholderDump"))
+			if (batchName.equalsIgnoreCase("CARDHOLDER_DUMP"))
 				selectByVisibleText(batchNameDdwn,
 						"Cardholder Dump [CARDHOLDER_DUMP]");
 		}
@@ -607,7 +611,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		WebElementUtils.enterText(cardHolderKycToDateHHTxtBx, "23");
 		WebElementUtils.enterText(cardHolderKycToDateMMTxtBx, "00");
 		clickSubmitBtn();
-//		context.put("jobID", jobIDNumber.getText());
+		context.put(ContextConstants.JOB_ID, jobIDNumber.getText());
 		SimulatorUtilities.wait(3000);
 	}
 }
