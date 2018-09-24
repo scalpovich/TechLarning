@@ -99,6 +99,8 @@ public class ContextConstants {
 	public static final String HELPDESK_VALUES = "HELPDESK_VALUES";
 	
 	public static final String INST_PROPERTY = "institution";
+
+	public static final String REJECTED_FILE_UPLOAD = "REJECTED_FILE_UPLOAD";
 	
 	private ContextConstants() {
 	}

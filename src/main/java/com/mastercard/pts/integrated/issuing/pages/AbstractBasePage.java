@@ -1242,7 +1242,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		waitForPageToLoad(driver());
 		} catch (StaleElementReferenceException e) {
 			doSelectByVisibleText(ele, optionName);
-	}
+		}
 		waitForPageToLoad(driver());
 	}
 
@@ -1856,11 +1856,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 		driver().switchTo().frame(Elements(element).get(index));
 	}
 	
-	public String getInstitutionDate()
-	{	
+	public String getInstitutionDate(){	
 		logger.info("Institution date : {}",getTextFromPage(institutionDateTxt));
 		return getTextFromPage(institutionDateTxt);
-	}
+	}	
 	
 	protected void waitForContentToLoad(MCWebElement element){
 		waitForWicket();

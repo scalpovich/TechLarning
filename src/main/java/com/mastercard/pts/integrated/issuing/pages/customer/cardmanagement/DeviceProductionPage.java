@@ -47,7 +47,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=batchNumber]")
 	private MCWebElement batchNumberText;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Product Type')]//following-sibling::td[2]//select")
 	private MCWebElement productTypeDDwn;
 
@@ -56,7 +56,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='cardNumber']")
 	private MCWebElement deviceNumberTxt;
-
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:searchButtonPanel:buttonCol:searchButton")
 	private MCWebElement searchBtn;
 
@@ -247,8 +247,6 @@ public class DeviceProductionPage extends AbstractBasePage {
 		waitAndSearchForRecordToExistForSupplementary();
 		verifyOperationStatus();
 	}
-	
-	
    
 	public int deviceNumberHeaderIndexFetch() {
 		int index = 0;

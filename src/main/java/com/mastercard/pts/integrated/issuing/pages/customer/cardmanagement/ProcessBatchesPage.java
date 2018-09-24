@@ -63,6 +63,12 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "buttonPanel:submitButton")
 	private MCWebElement submitBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Rejected')]")
+	private MCWebElement rejectedTxt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers']//td[3]/span")
+	private MCWebElement rejectDueToMandatory;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='productType']/select")
 	private MCWebElement productTypeDDwn;
@@ -159,7 +165,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='jobId']//span[@class='labeltextf']")
 	private MCWebElement processBatchjobIDTxt;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "*//td[@width='15%']/span[@class='labeltextf']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "*//td[@width='150px']/span[@class='labeltextf']")
 	private MCWebElement processBatchjobIDTxtPath;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='dispTraceLink']/a")
@@ -183,6 +189,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	public final String SYSTEM_INTERNAL_PROCESSING = "SYSTEM INTERNAL PROCESSING [B]";
 	
 	private static final int NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE=100;
+	
+	private String reasonToReject = "";
 
 	public void selectBatchType(String option) {
 		selectByVisibleText(batchTypeDDwn, option);
@@ -595,8 +603,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	
 	public boolean processBatchUpload(ProcessBatches processBatchesDomain, String fileName){
 		FileCreation.filenameStatic = fileName;
-		//HashMap<String, String> hm = new HashMap<>();
 		Boolean isProcessed = true;
+		String failStatus = "FAILED [3]";
 		String elementXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic);
 		String statusXpath = elementXpath + "//parent::td//following-sibling::td/a";
 		SimulatorUtilities.wait(20000);
@@ -606,22 +614,31 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		runWithinPopup("View Batch Details", () -> {
 			logger.info("Retrieving batch status");
 			waitForBatchStatus();
+			SimulatorUtilities.wait(5000);
 			batchStatus = batchStatusTxt.getText();
+			SimulatorUtilities.wait(5000);
+			if(batchStatus.equals(failStatus)){
+				SimulatorUtilities.wait(5000);
+				ClickButton(rejectedTxt);
+				SimulatorUtilities.wait(5000);
+				runWithinPopup("Rejected Record Details", () -> {
+					reasonToReject = getTextFromPage(rejectDueToMandatory);
+					context.put(ContextConstants.REJECTED_FILE_UPLOAD, reasonToReject);
+					clickCloseButton();
+				});
+			}
 			clickCloseButton();
 		});
-		
 		SimulatorUtilities.wait(3000);//this delay is for table to load data
-		processBatchesDomain.setJoBID(processBatchjobIDTxtPath.getText());
+		processBatchesDomain.setJoBID(processBatchjobIDTxt.getText());
 		MiscUtils.reportToConsole("JobID: {}", processBatchesDomain.getJoBID());
 		context.put(CreditConstants.JOB_ID, processBatchesDomain.getJoBID());
-		//ClickButton(closeBtn);
-		//waitForPageToLoad(getFinder().getWebDriver());
 		waitForWicket(driver());
 		getFinder().getWebDriver().switchTo().defaultContent();
 		return isProcessed;
 		
 	}
-
+	
 	public String visaOutgoingDownloadBatch(ProcessBatches batch) {
 		Device device=context.get(ContextConstants.DEVICE);
 		selectBatchType(batch.getBatchType());

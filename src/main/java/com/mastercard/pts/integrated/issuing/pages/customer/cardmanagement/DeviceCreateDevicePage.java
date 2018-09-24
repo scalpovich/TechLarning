@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
@@ -40,6 +41,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(DeviceCreateDevicePage.class);
 	
 	private static final String OPEN_BATCH = "Open [O]";
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class = 'feedbackPanelERROR']")
+	private MCWebElement panelErrorTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
 	private MCWebElement deviceNumberSearchTxt;
@@ -162,7 +166,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Existing Client Code')]")
 	private MCWebElement existingClientLabel;
-	
 	
 	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
@@ -303,22 +306,16 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
   		WebElementUtils.selectDropDownByIndex(professionDDwn, index);
   	}
 
-	private void fillBatchDetails(Device device) {
-		if(device.getApplicationType().contains(ApplicationType.PRIMARY_DEVICE)){
-			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
-			clickWhenClickable(generateDeviceBatchBtn);
-			waitForWicket();
-			SimulatorUtilities.wait(10000);
-			context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());
-		}else if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
-			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn,ConstantData.OPEN_BATCH);
-			WebElementUtils.selectDropDownByVisibleText(openBatchDdwn, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));			
-		}		
+  	private void fillBatchDetails(Device device) {
+		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
+		clickWhenClickable(generateDeviceBatchBtn);
+		waitForWicket();
+		SimulatorUtilities.wait(10000);
+		context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());
 		device.setBatchNumber(batchNumberTxt.getText());
-		logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());
-		
+		logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());		
 		clickNextButton();
-	}
+	} 
 
 	private void fillDeviceInformation(Device device) {
 		WebElementUtils.selectDropDownByVisibleText(appliedForProdutDDwn, device.getAppliedForProduct());
@@ -440,6 +437,12 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);
 			WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));
 		}
-		clickNextButton();		
+		clickNextButton();
+		if(isElementPresent(panelErrorTxt)){
+			context.put(CreditConstants.CREDIT_LIMIT_GREATER_THAN_MAXIMUM, panelErrorTxt.getText());
+			program.setCreditLimit(String.valueOf(Integer.parseInt(program.getCreditLimit())-25));
+			WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));
+			clickNextButton();
+		}
 	}
 }

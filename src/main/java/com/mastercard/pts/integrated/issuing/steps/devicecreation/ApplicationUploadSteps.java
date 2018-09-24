@@ -13,6 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.jcraft.jsch.Logger;
+
+import static org.junit.Assert.assertThat;
+
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
@@ -30,6 +35,7 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProcessBatchesFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.SearchApplicationDetailsFlows;
+import org.hamcrest.core.*;
 
 @Component
 public class ApplicationUploadSteps {
@@ -65,6 +71,11 @@ public class ApplicationUploadSteps {
 
 	@Autowired
 	private DataProvider provider;
+	
+	@Autowired
+	TestContext context;
+	
+	private String ExpectedRejectedTxt = "Reuter reference number is Business mandatory field.";
 	
 	public SearchApplicationDetails searchDomain;
 
@@ -103,6 +114,12 @@ public class ApplicationUploadSteps {
 		
 	}
 
+	@When("Application Upload rejected due to missing Business Mandatory feild")
+	public void applicationUploadRejectedDueToMissingBMF(){
+		String rejectedDueToMissingMandatory = context.get(ContextConstants.REJECTED_FILE_UPLOAD);
+		Assert.assertEquals("Reuter reference number is Business mandatory field.",rejectedDueToMissingMandatory,ExpectedRejectedTxt);
+	}
+	
 	@When("user creates $application_upload_file batch file and uploads it on server for $customerType")
 	public void createFileForApplicationUpload(@Named("application_upload_file") String batchName, @Named("customerType") String customerType) throws Exception {
 		String fileName = fileCreation.createApplicationUploadForFile(program.getInstitute(), customerType);

@@ -73,6 +73,7 @@ public class CreditConstants {
 	
 	public static final String JOB_ID="JOB_ID";
 	
+	public static final String CREDIT_LIMIT_GREATER_THAN_MAXIMUM = "CREDIT_LIMIT_GREATER_THAN_MAXIMUM";
 
 	private CreditConstants() {
 	}
