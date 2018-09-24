@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.URL;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -868,7 +866,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void assignUniqueFileId() throws AWTException {
 		activateMcps();
-		Actions action = new Actions(winiumDriver);
 		String fileId = RandomStringUtils.randomNumeric(5);
 		performClickOperation(MESSAGE_TYPE_INDICATOR); // selecting the table
 		winiumClickOperation("1644/697 File Header");
@@ -2075,10 +2072,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private void updateTransactionDate(String date,String key) throws AWTException {
+		initialiseHashmap();
 		Actions action = new Actions(winiumDriver);
 		activateMcps();
 		clickMiddlePresentmentAndMessageTypeIndicator();
-		action.moveToElement(winiumDriver.findElementByName(key)).doubleClick().build().perform();
+		action.moveToElement(winiumDriver.findElementByName(getElementValueFromMap(key))).doubleClick().build().perform();
 		wait(1000);
 		activateEditField();
 		action.moveToElement(winiumDriver.findElementByName(EDIT_SUBFIELD_VALUE)).moveByOffset(0, 15).doubleClick().build().perform();
