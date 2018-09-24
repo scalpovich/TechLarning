@@ -350,7 +350,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
           	}
 			SimulatorUtilities.wait(5000);			
 		}
-		SimulatorUtilities.wait(1000);
+		SimulatorUtilities.wait(6000);
 		clickNextButton();
 		
 		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());		
@@ -383,7 +383,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			}
 	
 			fillAddress(device);
-			
+			SimulatorUtilities.wait(2000);
 			fillEmploymentDetails(device);
 			selectProfessionByIndex(1);
 			

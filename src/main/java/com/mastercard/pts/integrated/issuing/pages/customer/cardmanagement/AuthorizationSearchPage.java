@@ -96,6 +96,8 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	private MCWebElement availableBalanceTxt;
 	
 	private String amountTypes = "Billing Amount:Transaction Fee:Service Tax:Markup Fee:Markup Service Tax";
+	
+	
 
 	public void verifyUiOperationStatus() {
 		logger.info("Authorization Search");
@@ -200,7 +202,8 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		String[] amountType = amountTypes.split(":");
 		AvailableBalance availBal = new AvailableBalance();
 		runWithinPopup("View Authorization", () -> {
-			BigDecimal sum =  new BigDecimal(0)   ;
+			BigDecimal sum =  new BigDecimal(0);
+			BigDecimal sumBillingAmount = new BigDecimal(0);
 			for(String str : amountType){
 				String value = Element("//span[contains(text(),'"+str+"')]/../span[2]/span").getText();
 				logger.info("value of " + str + " = "+  value);
@@ -212,4 +215,5 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		});
 		return availBal;
 	}
+	
 }

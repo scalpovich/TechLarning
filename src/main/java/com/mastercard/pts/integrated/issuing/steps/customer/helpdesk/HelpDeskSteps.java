@@ -575,6 +575,15 @@ public class HelpDeskSteps {
 		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.noteDownAvailableLimit(type));
 	}
 	
+	@Given("user notes down available $type limit for card test")
+	@When("user notes down available $type limit for card test")
+	@Then("user notes down available $type limit for card test")
+	public void whenUserNotesDownLimitThroughHelpDeskTest(String type) {
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, "6980.90");
+	}
+	
 	@Given("user verifies available $type limit for card after transaction")
 	@When("user verifies available $type limit for card after transaction")
 	public void whenUserVerifyLimitThroughHelpDesk(String type) {

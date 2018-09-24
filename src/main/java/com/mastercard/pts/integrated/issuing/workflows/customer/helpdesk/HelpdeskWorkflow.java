@@ -15,6 +15,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGe
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConnectionUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 
 @Workflow
@@ -178,6 +179,7 @@ public class HelpdeskWorkflow {
 	
 	public BigDecimal noteDownAvailableLimit(String type) {
 		clickCustomerCareEditLink();
+		SimulatorUtilities.wait(10000);
 		return helpDeskPage.noteDownAvailableLimit(type);
 	}
 	

@@ -33,6 +33,9 @@ public class AuthorizationSearchSteps {
 
 	@Autowired
 	private AuthorizationSearchWorkflow authorizationSearchWorkflow;
+	
+	@Autowired
+	private TransactionFeePlan txnFeePlan;
 
 	@Autowired
 	private KeyValueProvider provider;
@@ -66,8 +69,11 @@ public class AuthorizationSearchSteps {
 
 	@Then("verify fixed transaction fee applied on purchase transaction")
 	public void veriyFixedTransactionFeeonPurchaseTransaction() {
-		Device device = context.get(ContextConstants.DEVICE);
-		TransactionFeePlan txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
+		Device device = new Device();
+		device.setDeviceNumber("5377169071390212");
+		device.setTransactionAmount("5.00");
+		txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
+		context.put(ContextConstants.DEVICE, device);
 		assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),
 				Matchers.hasItems(txnFeePlan.getfixedTxnFees(), txnFeePlan.getFixedRateFee(), txnFeePlan.getBillingAmount()));
 	}
@@ -158,6 +164,17 @@ public class AuthorizationSearchSteps {
 		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, availBal.getAvailableBal());
 	}
 	
+	@When("verify available balance after completion transaction")
+	@Then("verify available balance after completion transaction")
+	public void validateAvailableBalanceAfterCompletionTransaction(){
+		BigDecimal availableBalanceBeforeTransaction =context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
+		//BigDecimal availableBalanceBeforeTransaction = BigDecimal.valueOf(6980.90);
+		Device device = context.get(ContextConstants.DEVICE);
+		AvailableBalance availBal = authorizationSearchWorkflow.getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(availableBalanceBeforeTransaction);
+		BigDecimal billingAmount = new BigDecimal(txnFeePlan.getBillingAmount());
+		BigDecimal difference=billingAmount.subtract(new BigDecimal(device.getTransactionAmount()));
+		assertThat("Verify Available Balance", availableBalanceBeforeTransaction.add(difference), equalTo(availBal.getAvailableBal()));
+	}	
 	@Given("user verify available balance afer reversal")
 	@When("user verify available balance afer reversal")
 	@Then("user verify available balance afer reversal")
