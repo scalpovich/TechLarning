@@ -170,7 +170,7 @@ public class AuthorizationSearchSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		AvailableBalance availBal = authorizationSearchWorkflow.getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(availableBalanceBeforeTransaction);
 		BigDecimal billingAmount = new BigDecimal(txnFeePlan.getBillingAmount());
-		BigDecimal difference=billingAmount.subtract(new BigDecimal(device.getTransactionAmount()));
+		BigDecimal difference=billingAmount.subtract(new BigDecimal(device.getTransactionAmount().substring(0, device.getTransactionAmount().length()-2)));
 		assertThat("Verify Available Balance", availableBalanceBeforeTransaction.add(difference), equalTo(availBal.getAvailableBal()));
 	}	
 	@Given("user verify available balance afer reversal")
