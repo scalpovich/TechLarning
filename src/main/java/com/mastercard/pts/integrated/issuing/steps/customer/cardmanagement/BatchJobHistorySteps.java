@@ -9,15 +9,20 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BatchJobHistory;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchJobHistoryFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchJobHistoryWorkflow;
 
 @Component
 public class BatchJobHistorySteps {
 
+	
+	@Autowired
+	TestContext context;
 	@Autowired
 	BatchJobHistoryWorkflow batchJobHistoryWorkflow;
 
@@ -47,5 +52,26 @@ public class BatchJobHistorySteps {
 			batchjobhistory.setJobIdBatchJobHistory(bulkdevicerequestbatch.getJobId());
 		}
 		batchjobhistoryflows.CheckBatchJobHistory(batchjobhistory);
+	}
+	
+	@When("check status in batch job history for $batchType batch and $batchName")
+	public boolean checkStatusInBatchJobHistory(String batchType,String batchName)
+	{
+		if(batchType.equalsIgnoreCase("DOWNLOAD"))
+		batchjobhistory.setBatchType("DOWNLOAD [D]");
+		SimulatorUtilities.wait(3000);
+		if(batchName.equalsIgnoreCase("CLIENT_PHOTO_BATCH"))
+			batchjobhistory.setBatch("Client Photo/Flat File Download Batch [CLIENT_PHOTO_DOWNLOAD]");
+		else
+		{
+			if(batchName.equalsIgnoreCase("CardholderDump"))
+				batchjobhistory.setBatch("Cardholder Dump [CARDHOLDER_DUMP]");
+		}
+		batchjobhistory.setJobIdBatchJobHistory(context.get("jobID"));
+		batchjobhistory.setFromdate(DateUtils.currentDateddMMyyyy());
+		batchjobhistory.setToDate(DateUtils.currentDateddMMyyyy());
+		batchjobhistoryflows.checkBatchStatusInBatchJobHistory(batchjobhistory);
+	
+		return true;
 	}
 }

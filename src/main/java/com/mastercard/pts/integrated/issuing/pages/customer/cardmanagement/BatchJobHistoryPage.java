@@ -1,6 +1,9 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -14,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BatchJobHistory;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -22,6 +27,7 @@ import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -31,6 +37,8 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L2_BATCH_JOB_HISTORY })
 public class BatchJobHistoryPage extends AbstractBasePage {
 
+	@Autowired
+	TestContext context;
 	private static final Logger logger = LoggerFactory.getLogger(BatchJobHistoryPage.class);
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
@@ -63,6 +71,12 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@class = 'searchButton']//input[@type= 'submit'][@value ='Search']")
 	private MCWebElement searchBtn;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr/td[6]")
+	private MCWebElement status;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr/td[8]")
+	private MCWebElement CSVno;
+	
 	public String calelement = "//td[7]";
 
 	@Autowired
@@ -182,5 +196,31 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 			}
 		}
 		return found;
+	}
+	
+	
+	public boolean checkBatchStatus(BatchJobHistory batchjobhistory) {
+		
+		selectByVisibleText(batchTypeDDwn, batchjobhistory.getBatchType());
+		SimulatorUtilities.wait(1000);
+		WebElementUtils.pickDate(fromJobStartDttmDPkr, LocalDate.now());
+		WebElementUtils.pickDate(toJobStartDttmDPkr, LocalDate.now());
+		enterValueinTextBox(jobIdTxt, batchjobhistory.getJobIdBatchJobHistory());
+		selectByVisibleText(batchDDwn,batchjobhistory.getBatch());
+		clickSearchButton();
+		waitForBatchStatus(status);
+		context.put("CSVno",CSVno.getText());
+		SimulatorUtilities.wait(20000);
+		if(status.getText().equals("SUCCESS [2]"))
+		{	
+			String timeStamp = LocalDateTime.now(ZoneId.of("GMT-5")).format(DateTimeFormatter.ofPattern("ddMMyyyyHHmm")); //CDT time when batch download is done. 
+            context.put(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME,timeStamp);
+            logger.info("timestamp of processing",timeStamp);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }

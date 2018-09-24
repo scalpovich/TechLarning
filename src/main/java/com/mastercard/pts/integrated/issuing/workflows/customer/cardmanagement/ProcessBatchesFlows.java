@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.BatchProcessingPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
@@ -42,6 +41,13 @@ public class ProcessBatchesFlows {
 		processBatchesPage.processUploadBatch(batchName);
 		processBatchesPage.checkAndSumbitFile(fileName);
 		return processBatchesPage.retrieveJobID(fileName);
+	}
+	
+	public void processDownloadBatches(String batchType, String batchName)
+	{
+		processBatchesPage = navigator.navigateToPage(ProcessBatchesPage.class);
+		processBatchesPage.processDownloadBatch(batchType, batchName);
+		
 	}
 
 

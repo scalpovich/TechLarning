@@ -82,4 +82,11 @@ public class ReportGenerationSteps {
 	public void verifyReportForClearingIsDownloaded() {
 		Assert.assertTrue(reconciliationWorkFlow.verifyReportGenerationClearing());
 	}
+	
+	@When("verify photo reference number is present in application production detail report")
+	public void verifyPhotoReferenceNumberinApplicationDetailReport() {
+		System.out.println("verifyPhotoReferenceNumberinApplicationDetailReport");
+		reconciliationWorkFlow.verifyPhotoReferenceNumber();
+	
+	}
 }

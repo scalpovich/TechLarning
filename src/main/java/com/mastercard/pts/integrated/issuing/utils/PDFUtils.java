@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import com.google.common.base.Throwables;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BatchProcessingReports;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionReports;
 
 @Component
@@ -90,6 +91,37 @@ public class PDFUtils {
 			throw Throwables.propagate(e);
 		}
 		return programWiseContent;
+	}
+	
+	public boolean getContentRow(String pdfPath, BatchProcessingReports batchProcessingReports) {
+		String pageContent = "";
+		int pages = 0;
+		int flg=0;
+		String applicationNumber = batchProcessingReports.getApplicationNumber();
+		System.out.println(applicationNumber);
+		try {
+			File file = new File(pdfPath);
+			file.getParentFile().mkdirs();
+			PdfReader pdfReader = manipulatePdf(pdfPath, batchProcessingReports.getPassword());
+			if (pdfReader != null)
+				pages = pdfReader.getNumberOfPages();
+			for (int i = 1; i <= pages; i++) {
+				pageContent = PdfTextExtractor.getTextFromPage(pdfReader, i);
+				System.out.println(pageContent);
+				if (pageContent.contains(applicationNumber)){
+					 flg=1;
+					}
+				
+			}
+		}catch(Exception e) {
+			logger.info("Failed to read pdf file ", e);
+		
+		}
+		System.out.println("flag:"+flg);
+		if(flg==1)
+			return true;
+		else 
+			return false;
 	}
 
 	public PdfReader manipulatePdf(String src, String username) {

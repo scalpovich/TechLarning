@@ -15,7 +15,7 @@ And OrderCancellation page of inventory tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378859| agency |
 |@TestId TC411878| branch |
@@ -28,7 +28,7 @@ And Order page of inventory tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378860| agency |
 |@TestId TC411879| branch |
@@ -41,7 +41,7 @@ And Acceptance page of inventory tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378857| agency |
 |@TestId TC411880| branch |
@@ -54,7 +54,7 @@ And Status page of inventory tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378858| agency |
 |@TestId TC411881| branch |
@@ -67,7 +67,7 @@ And StockTransferIntraBranch page of inventory tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378864| agency |
 |@TestId TC411882| branch |
@@ -80,7 +80,7 @@ And StockTransferAcceptance page of inventory tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378863| agency |
 |@TestId TC411883| branch |
@@ -93,7 +93,7 @@ And StockReturn page of inventory tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378862| agency |
 |@TestId TC411884| branch |
@@ -106,7 +106,7 @@ And InventoryStatus page of inventory tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378861| agency |
 |@TestId TC411885| branch |

@@ -21,6 +21,7 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
@@ -102,7 +103,8 @@ public class CloseBatchPage extends AbstractBasePage {
 		String checkBox = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcess()+1+"]/td[10]/span/input";
 		clickWhenClickable(driver().findElement(By.xpath(checkBox)));
 		processSelected.click();
-		verifyOperationStatus();		
+		verifyOperationStatus();
+		SimulatorUtilities.wait(3000);
 	}
 	
 	

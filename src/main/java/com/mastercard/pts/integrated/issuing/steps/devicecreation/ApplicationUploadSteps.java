@@ -225,4 +225,10 @@ public class ApplicationUploadSteps {
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPinProductionBatchAllForFileUpload(batch);
 	}
+	
+	@When("process batch for $batchType type and Batch name $batchName")
+	public void submitJobforProcessing(String batchType, String batchName)
+	{
+		processBatchesFlows.processDownloadBatches(batchType,batchName);
+	}
 }

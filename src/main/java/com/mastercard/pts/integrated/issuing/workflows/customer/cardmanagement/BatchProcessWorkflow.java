@@ -154,5 +154,9 @@ public void processDownloadBatch(ProcessBatches batch){
 		return  tranLine.substring(61, 73).contains(visafeecollection.getSourceAmount()) && tranLine.substring(27, 43).equals(device.getDeviceNumber()) ;
 	}
 	
+	public boolean verifyBatchTraceAvailability(String jobId){
+        BatchTraceHistoryPage page = navigator.navigateToPage(BatchTraceHistoryPage.class);
+        return page.searchJobTrace(jobId);
+}
 	
 }

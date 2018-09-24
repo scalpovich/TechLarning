@@ -41,6 +41,7 @@ public class Device {
 	private static final String CREDIT_LIMIT = "CREDIT_LIMIT";
 	private static final String TRANSACTION_PASSWORD = "TRANSACTION_PASSWORD";
 	private static final String CURRENCY_OF_TRANSFER = "CURRENCY_OF_TRANSFER";
+	private static final String PHOTO_INDICATOR = "PHOTO_INDICATOR";
 	
 	private String currencyofTransfer;
 	private String currentTransPassword;
@@ -117,7 +118,7 @@ public class Device {
 		device.setBranchCode(provider.getString(BRANCH));
 		device.setAccountNumber(RandomStringUtils.randomNumeric(16));
 		device.setAccountType(provider.getString(ACCOUNT_TYPE));
-		device.setPhotoIndicator("Normal [0]");
+		device.setPhotoIndicator(provider.getString(PHOTO_INDICATOR));
 		device.setTransactionAmount(provider.getString(TRANSACTION_AMOUNT));
 		device.setVip(provider.getString(ND_VIP));
 		device.setMiddleName2(provider.getString(ND_MIDDLE_NAME_2));

@@ -211,6 +211,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	public void processDeviceProductionBatchNewApplication(DeviceProductionBatch batch) {
 		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
+		selectByVisibleText(productTypeDDwn, batch.getProductType());
 		WebElementUtils.enterText(batchNumberTxt,batchNumber);
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();

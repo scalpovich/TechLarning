@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -175,6 +176,16 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
   	@PageElement(findBy = FindBy.NAME, valueToFind = "view:applicationBatch.openedBatches:input:dropdowncomponent")  													  
 	private MCWebElement openBatchDDwn;
   	
+  	@PageElement(findBy = FindBy.NAME, valueToFind = "view:uploadPhoto")  													  
+	private MCWebElement uploadBtn;
+  	
+  	@PageElement(findBy = FindBy.ID, valueToFind = "card_type_photo")  													  
+	private MCWebElement chooseFileBtn;
+  	
+  	private static final String PHOTO_FILE_PATH = "src//main/resources//InstitutionLogo//CreditLogo.png";
+  	
+  	//String photoPath = "C:\\Users\\E084343\\Downloads";
+  	
 	public void selectAppliedForProduct(String product) {
 		WebElementUtils.selectDropDownByVisibleText(appliedForProdutDDwn, product);
 	}
@@ -264,7 +275,6 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		
 		device.setApplicationNumber(getCodeFromInfoMessage("Application Number"));
 		logger.info("Application Number: {}",device.getApplicationNumber());
-		
 		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)
 				&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)) {
 			context.put(ContextConstants.DEVICE_SUPPLEMENTARY_ADDON_EXISTING,device);
@@ -281,7 +291,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
 		clickWhenClickable(generateDeviceBatchBtn);
 		waitForWicket();
-		SimulatorUtilities.wait(30000);
+		SimulatorUtilities.wait(10000);
 		context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());		
 		device.setBatchNumber(batchNumberTxt.getText());
 		logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());		
@@ -306,10 +316,14 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			SimulatorUtilities.wait(10000);
 		}else{
 			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
+			waitForWicket(driver());
 			WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, device.getProgramCode());	
 		}
 		
 		clickNextButton();
+		waitForWicket(driver());
+		waitForElementVisible(deviceType1DDwn);
+		
 		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());
 		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
 		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
@@ -436,6 +450,16 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)) {
 			WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));		
 		}
+		
+		if(device.getPhotoIndicator().equals("Photo [1]")) {
+			String filePath = new File(PHOTO_FILE_PATH).getAbsolutePath();
+			logger.info("upload file path : {}",filePath);
+			chooseFileBtn.sendKeys(filePath);
+			SimulatorUtilities.wait(5000);
+			clickWhenClickable(uploadBtn);
+			SimulatorUtilities.wait(5000);
+		} 
+		
 		clickNextButton();
 	}
 	

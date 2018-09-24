@@ -85,5 +85,19 @@ public class BatchTraceHistoryPage extends AbstractBasePage {
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(jobId));
 	}
+	
+	public boolean searchJobTrace(String jobIdNumber) {                     
+        logger.info("Searching for jobId: {}", jobIdNumber);
+        WebElementUtils.enterText(jobId, jobIdNumber);
+        clickSearchButton();
+        for (int k = 0; k < 11; k++) {
+                        if (!waitForRow())
+                                        clickSearchButton();
+                        else {
+                                        break;
+                        }
+        }
+        return !isNoRecordsFoundInTable();
+}
 
 }

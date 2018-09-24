@@ -81,7 +81,8 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	
 	public void processAppropriateBatchForApplication(){  
 		checkWhetherRecordPersists();
-		String checkBox="//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcess()+1+"]/td[8]/span/input";
+		processSelected.click();
+		String checkBox = String.format("//table[@class='dataview']//tr/td/span[contains(text(),'%s')]/../../td[8]/span/input", String.valueOf(identifyBatchNumberToProcess()));
 		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(checkBox)));
 		processSelected.click();
 		verifyOperationStatus();		

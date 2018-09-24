@@ -35,6 +35,7 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ClientPhotoDownloadBatchWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
 
 /**
@@ -56,6 +57,8 @@ public class BatchProcessSteps {
 
 	@Autowired
 	private LoadFromFileUploadWorkflow loadFromFileUploadWorkflow;
+	@Autowired
+	ClientPhotoDownloadBatchWorkflow clientPhotoDownloadBatchWorkflow;
 
 	@Autowired
 	private LinuxBox linuxBox;
@@ -223,4 +226,19 @@ public class BatchProcessSteps {
 		Assert.assertTrue("Transaction Data Does not match ",batchProcessWorkflow.validateVisaOutGoingFile(batchFile));
 
 	}
+	
+	@When("verify new batch named as photo reference number is present under download batch")
+	public void verifyBatchNameIsPresentInDownLoadBatch() {
+		boolean[] a = clientPhotoDownloadBatchWorkflow.verifyBatchNameIsPresentInDownloadBatchFlows();
+		Assert.assertTrue("No Batch is Present in Table for Given Application Number", a[0]);
+		Assert.assertTrue("No Details are present for given job", a[1]);
+		Assert.assertTrue(" Job ID is not generated", a[2]);
+	}
+	
+	@When("user checks for the client photo/flat file batch trace for $batchType batch")
+    public void checkBatchTraceForClientPhotoFlatFile(@Named("batchType") String batchType) {                  
+                    batchProcessWorkflow.verifyBatchTraceAvailability(context.get("jobID"));    
+                    
+    }
+	
 }

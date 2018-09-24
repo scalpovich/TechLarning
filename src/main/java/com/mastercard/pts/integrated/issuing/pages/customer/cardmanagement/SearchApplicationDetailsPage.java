@@ -74,6 +74,8 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='toDate']/../..")
 	private MCWebElement toDate;
 	
+	int retryCnt =0;
+	
 	public void enterFirstName(SearchApplicationDetails search){
 		enterText(firstName, search.getFirstName());
 	}
@@ -108,10 +110,13 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		try {
 			String path = String.format("//table[@class='dataview']/..//td[count(//th[.//*[text()='%S']]/preceding-sibling::th)+1]", "Device Batch Number");
 			if (driver().findElement(By.xpath(path)).getText().equals("-")) {
+				while(retryCnt<4) {
 				SimulatorUtilities.wait(8000);
 				clickSearchButton();
 				waitForPageToLoad(driver());
+				retryCnt++;
 				searchUntilBatchNumberIsDisplayed();
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

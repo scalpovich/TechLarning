@@ -513,6 +513,14 @@ public abstract class AbstractBasePage extends AbstractPage {
 		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
 	}
 
+	protected String verifyOperationStatusandgetJobID() {
+		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
+		String successMessage = successMessageLbl.getText();
+		int l = successMessage.length();
+		context.put("jobID",successMessage.substring(l-20,l));
+		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
+		return successMessage.substring(l-20,l);
+	}
 	protected boolean waitForRow() {
 		try {
 			waitForWicket();
@@ -1840,5 +1848,20 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	public void switchToDefaultFrame(String element,int index) {
 		driver().switchTo().frame(Elements(element).get(index));
+	}
+	
+	protected void waitForBatchStatus(MCWebElement ele) {
+		try {
+			WebElementUtils.waitForWicket(driver());
+			for (int l = 0; l < 21; l++) {
+				while ("PENDING [0]".equalsIgnoreCase(ele.getText()) || "IN PROCESS [1]".equalsIgnoreCase(ele.getText()))
+					{Thread.sleep(10000); // waiting for page auto refresh
+						clickSearchButton();
+					}
+					}
+			
+		} catch (NoSuchElementException | InterruptedException e) {
+			logger.debug("Result not found", e);
+		}
 	}
 }
