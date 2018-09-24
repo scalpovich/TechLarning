@@ -54,7 +54,7 @@ public class StopListCountryPage extends AbstractBasePage {
 	private MCWebElement responseCodeDDwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "stopCountryDetailContainer:abrevName:input:textAreaComponent")
-	private MCWebElement txDescription;
+	private MCWebElement txtDescription;
 
 	public void verifyUiOperationStatus() {
 		logger.info("Stop List Country");
@@ -117,7 +117,7 @@ public class StopListCountryPage extends AbstractBasePage {
 	}
 	
 	public void enterDescription(String description){
-		enterText(txDescription, description);
+		enterText(txtDescription, description);
 	}
 	
 	

@@ -45,7 +45,7 @@ public class StopListBinPage extends AbstractBasePage {
 	private MCWebElement reasonCodeDDwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "stopBinsDetailContainer:abrevName:input:textAreaComponent")
-	private MCWebElement txDescription;
+	private MCWebElement txtDescription;
 	
 	public void verifyUiOperationStatus() {
 		logger.info("Stop List Bins");
@@ -86,7 +86,7 @@ public class StopListBinPage extends AbstractBasePage {
     	selectDropDownByText(reasonCodeDDwn, reasonCode);
 	}
     public void enterDescription(String description){
-    	enterText(txDescription, description);
+    	enterText(txtDescription, description);
     }
     
     public void clickSearch(){

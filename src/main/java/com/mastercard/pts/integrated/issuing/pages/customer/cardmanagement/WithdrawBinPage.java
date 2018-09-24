@@ -40,7 +40,7 @@ public class WithdrawBinPage extends AbstractBasePage {
 	private MCWebElement reasonCodeDDwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "withdrawalDescription:input:textAreaComponent")
-	private MCWebElement txDescription;
+	private MCWebElement txtDescription;
 	
 	
 
@@ -83,6 +83,6 @@ public class WithdrawBinPage extends AbstractBasePage {
 		selectDropDownByText(reasonCodeDDwn, reasonCode);
 	}
 	public void enterDescription(String description){
-		enterText(txDescription, description);		
+		enterText(txtDescription, description);		
 	}
 }
