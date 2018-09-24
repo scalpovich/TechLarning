@@ -4,7 +4,7 @@ As a(n)  Customer portal user
 I want to onboard credit device using application upload 
 
 Meta:
-@StoryName prepaid_emv
+@StoryName credit_emv
 @FileUpload
 Scenario: To verify user is able to board a duplicate application via application upload when dedupe plan is not configured. File upload for credit
 Given setting json values in excel for Credit

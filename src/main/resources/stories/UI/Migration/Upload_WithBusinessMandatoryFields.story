@@ -4,7 +4,7 @@ As a(n)  Customer portal user
 I want to onboard credit device using application upload 
 
 Meta:
-@StoryName prepaid_emv
+@StoryName credit_emv
 @FileUpload
 Scenario: To verify user is not able to process application file upload with missing Business Mandatory fields for credit
 Given setting json values in excel for Credit
