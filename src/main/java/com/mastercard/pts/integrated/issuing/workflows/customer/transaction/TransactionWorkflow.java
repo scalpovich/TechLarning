@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -1788,8 +1789,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		captureSaveScreenShot(methodName);
 		selectVisaTestCaseToMakeDataElementChange(transactionName);
 		Device device = context.get(ContextConstants.DEVICE);
-		if (transaction.toLowerCase().contains("pin"))
-			setValueInMessageEditorForTransction("F35.05", transactionName, (MiscUtils.randomNumber(2) + device.getCvvData()));
+		if (transaction.toLowerCase().contains("pin")) {
+			setValueInMessageEditorForTransction("F35.05", transactionName, (MiscUtils.randomNumber(2) + device.getCvvData()));	
+		}
 			setValueInMessageEditorForTransction("F52", transactionName, device.getPinNumberForTransaction());
 		if(transaction.toLowerCase().contains("ECOM"))
 			setValueInMessageEditorForTransction("F126.10", transactionName, (MiscUtils.randomNumber(3) + device.getCvv2Data()));	
@@ -1889,11 +1891,15 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	
 	private void waitForReturnButtonToGetEnable() {
 		WebElement retunButton = transactionReturnButton();
-		while (!retunButton.isEnabled()) {
-			waitForReturnButtonToGetEnable();
+		for (int i = 1; i < 25; i++) {
+			if (!retunButton.isEnabled()) {
+				SimulatorUtilities.wait(2000);		
+			}
+			else{
+				logger.info("Return button is enabled in given time");
+				retunButton.click();
+			}
 		}
-		retunButton.click();
-
 	}
 
 	public void executeVisaTest(String transaction) {
@@ -1911,13 +1917,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(5000);
 		waitForReturnButtonToGetEnable();
 		captureSaveScreenShot(methodName);
-//		executeAutoITExe("visaTestExeution.exe");
-		captureSaveScreenShot(methodName);
 	}
 
 	public String verifyVisaOutput(String transaction) {
 		String results;
-		List<WebElement> lst;
+		List<WebElement> lst = new ArrayList<>();
 		MiscUtils.reportToConsole(" ******* verifyVisaOutput ******");
 		winiumClickOperation(transaction);
 		pressEnter();

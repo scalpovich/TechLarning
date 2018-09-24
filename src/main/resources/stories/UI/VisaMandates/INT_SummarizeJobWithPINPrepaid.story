@@ -39,8 +39,8 @@ Then FINSim simulator is closed
 
 Scenario: Transaction - Balance_Enquiry transaction
 Given connection to VISA is established
-When perform an INT_POS-Magstripe-balance-and-egilibility-Inquiry_with_Pin VISA transaction
-And VISA test results are verified for INT_POS-Magstripe-balance-and-egilibility-Inquiry_with_Pin
+When perform an INT_POS-Magstripe-balance-and-eligibility-Inquiry_with_Pin VISA transaction
+And VISA test results are verified for INT_POS-Magstripe-balance-and-eligibility-Inquiry_with_Pin
 And VISA simulator is closed
 And user is logged in institution
 And search Balance Inquiry authorization and verify 000-Successful status
