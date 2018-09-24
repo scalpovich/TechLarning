@@ -31,24 +31,10 @@ And device has "normal" status
 And user notes down available Card limit for card
 Then user sign out from customer portal
 
-Scenario:1.3 Pin Generation
-Given connection to FINSim is established
-When Pin Offset file batch was generated successfully
-And embossing file batch was generated in correct format
-And PIN is retrieved successfully with data from Pin Offset File
-Then FINSim simulator is closed
-
-Scenario:1.4 Perform EMV_PURCHASE Authorization transaction
-Given connection to MAS is established
-When perform an EMV_PURCHASE MAS transaction
-Then MAS test results are verified
-
-Scenario:1.5 Generate Auth File for Clearing
-Meta:
-@TestId 
-When Auth file is generated after transaction
-And MAS simulator is closed
-And user is logged in institution
+Scenario:1.3 Perform Authorization transaction
+When user is logged in institution
+And user raises an authorization request
+Then status of request is "approved"
 And search Purchase authorization and verify 000-Successful status
 When user verifies available balance after transaction
 Then verify fixed transaction fee applied on purchase transaction
@@ -56,39 +42,13 @@ And device has "normal" status
 When user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
-Scenario:1.6 Clearing: Load auth file in MCPS and create NOT file of IPM extension
-Meta:
-@TestId 
-Given connection to MCPS is established
-When Auth file is generated
-And Auth file is loaded into MCPS and processed
-And NOT file is successfully generated
-When MCPS simulator is closed
-
-Scenario:1.7 Upload ipm file from customer portal and process it
-Meta:
-@TestId
-Given user is logged in institution
-When User uploads the NOT file
-And user processes batch for credit
-Then user sign out from customer portal
-
-Scenario:1.8 Matching & Posting to Cardholders account
-Meta:
-@TestId 
-Given user is logged in institution
-When transaction status is "Matching Pending"
-And "Matching" batch for credit is successful
-And transaction status is "Presentment Matched with authorization"
-Then user sign out from customer portal
-
-Scenario:1.8.1 Run Pre-clearing and EOD-Credit
+Scenario:1.4 Run Pre-clearing and EOD-Credit
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
 And user sign out from customer portal
 
-Scenario:1.9 Login & Logout to wait for date to be updated 
+Scenario:1.5 Login & Logout to wait for date to be updated 
 Meta:
 @TestId 
 When update institution date to first of next month
@@ -99,7 +59,7 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:2.0 Process Batches for billing and validated values on helpdesk and statement 
+Scenario:1.6 Process Batches for billing and validated values on helpdesk and statement 
 Meta:
 @TestId 
 Given user is logged in institution
@@ -126,7 +86,7 @@ Then validate the statement with parameters:
 |Closing Balance|
 And user sign out from customer portal
 
-Scenario:2.0.1 Verify User is able to make Payment of credit card through cash mode after billing cycle
+Scenario:1.7 Verify User is able to make Payment of credit card through cash mode after billing cycle
 Meta:
 @PaymentCash
 When update institution date to next day
@@ -137,7 +97,7 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:2.1 Verify User is able to make Payment of credit card through cash mode after billing cycle
+Scenario:1.8 Verify User is able to make Payment of credit card through cash mode after billing cycle
 Meta:
 @PaymentCash
 Given user is logged in institution
@@ -151,7 +111,7 @@ When user check balance details through helpdesk after payment
 Then user compare balance details after full payment
 And user sign out from customer portal
 
-Scenario:2.2 Login & Logout to wait for date to be updated foe next billing
+Scenario:1.9 Login & Logout to wait for date to be updated foe next billing
 Meta:
 @TestId 
 When update institution date to first of next month
@@ -162,7 +122,7 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:2.3 Process Batches after paying full payment bill and verify payments
+Scenario:2.0 Process Batches after paying full payment bill and verify payments
 Meta:
 @TestId 
 Given user is logged in institution
