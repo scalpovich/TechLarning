@@ -37,7 +37,7 @@ public class WithdrawCountryPage extends AbstractBasePage {
 	private MCWebElement withdrawalReasonCodeDDwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "withdrawalDescription:input:textAreaComponent")
-	private MCWebElement withdrawalDescriptionTxt;
+	private MCWebElement txtWithdrawalDescription;
 	
 	
 	public void verifyUiOperationStatus() {
@@ -72,6 +72,6 @@ public class WithdrawCountryPage extends AbstractBasePage {
 	}
 	
 	public void enterDescription(String description){
-		enterText(withdrawalDescriptionTxt, description);
+		enterText(txtWithdrawalDescription, description);
 	}
 }

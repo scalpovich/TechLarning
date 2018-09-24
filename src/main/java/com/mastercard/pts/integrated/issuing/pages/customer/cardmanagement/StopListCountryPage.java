@@ -48,13 +48,13 @@ public class StopListCountryPage extends AbstractBasePage {
 	private MCWebElement countryDDwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "stopCountryContainer:search")
-	private MCWebElement searchBtn;
+	private MCWebElement btnSearch;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "stopCountryDetailContainer:responseCode:input:dropdowncomponent")
 	private MCWebElement responseCodeDDwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "stopCountryDetailContainer:abrevName:input:textAreaComponent")
-	private MCWebElement descriptionTxt;
+	private MCWebElement txDescription;
 
 	public void verifyUiOperationStatus() {
 		logger.info("Stop List Country");
@@ -109,7 +109,7 @@ public class StopListCountryPage extends AbstractBasePage {
     }
 	
 	public void clickSearch(){
-		ClickButton(searchBtn);	
+		ClickButton(btnSearch);	
 	}
 	
 	public void selectResponseCode(String responseCode){
@@ -117,7 +117,7 @@ public class StopListCountryPage extends AbstractBasePage {
 	}
 	
 	public void enterDescription(String description){
-		enterText(descriptionTxt, description);
+		enterText(txDescription, description);
 	}
 	
 	

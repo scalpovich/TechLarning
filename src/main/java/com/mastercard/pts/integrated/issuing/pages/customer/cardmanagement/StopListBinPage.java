@@ -39,13 +39,13 @@ public class StopListBinPage extends AbstractBasePage {
 	private MCWebElement binDDwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "stopBinsContainer:search")
-	private MCWebElement searchBtn;
+	private MCWebElement btnSearch;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "stopBinsDetailContainer:reasonCode:input:dropdowncomponent")
 	private MCWebElement reasonCodeDDwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "stopBinsDetailContainer:abrevName:input:textAreaComponent")
-	private MCWebElement descriptionTxt;
+	private MCWebElement txDescription;
 	
 	public void verifyUiOperationStatus() {
 		logger.info("Stop List Bins");
@@ -86,10 +86,10 @@ public class StopListBinPage extends AbstractBasePage {
     	selectDropDownByText(reasonCodeDDwn, reasonCode);
 	}
     public void enterDescription(String description){
-    	enterText(descriptionTxt, description);
+    	enterText(txDescription, description);
     }
     
     public void clickSearch(){
-    	ClickButton(searchBtn);
+    	ClickButton(btnSearch);
     }
 }
