@@ -1,7 +1,7 @@
 !-- @author: E076170
 Narrative:
 As a Customer portal user
-I want to stoplist and stoplist withdraw a credit device bin 
+I want to stoplist and stoplist withdraw a debit device bin 
 so that the user's device bin can be stoplisted and stoplist withdrawal
 
 Meta:
