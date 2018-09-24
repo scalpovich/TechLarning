@@ -216,4 +216,8 @@ public class HelpdeskWorkflow {
 		helpDeskPage.getDeviceStatus(device);
 		return helpDeskPage.verifyBillingDetails(device);
 	}
+	
+	public BigDecimal activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
+		return helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
+	}
 }
