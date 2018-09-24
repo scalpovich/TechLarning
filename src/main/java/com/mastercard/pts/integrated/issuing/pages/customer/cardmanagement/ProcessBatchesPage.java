@@ -616,6 +616,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			waitForBatchStatus();
 			SimulatorUtilities.wait(5000);
 			batchStatus = batchStatusTxt.getText();
+			processBatchesDomain.setJoBID(processBatchjobIDTxt.getText());
 			SimulatorUtilities.wait(5000);
 			if(batchStatus.equals(failStatus)){
 				SimulatorUtilities.wait(5000);
@@ -630,7 +631,6 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			clickCloseButton();
 		});
 		SimulatorUtilities.wait(3000);//this delay is for table to load data
-		processBatchesDomain.setJoBID(processBatchjobIDTxt.getText());
 		MiscUtils.reportToConsole("JobID: {}", processBatchesDomain.getJoBID());
 		context.put(CreditConstants.JOB_ID, processBatchesDomain.getJoBID());
 		waitForWicket(driver());
