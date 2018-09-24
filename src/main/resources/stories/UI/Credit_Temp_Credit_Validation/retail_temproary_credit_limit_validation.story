@@ -1,6 +1,6 @@
 Narrative:
 As a Customer portal user
-I want to validate permanent credit limit for retail card
+I want to validate temporary credit limit for retail card
 so that credit limit should be validated
 
 Meta:
@@ -39,5 +39,5 @@ And MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-When user verifies available temproary limit for card after transaction
+And user verifies available temporary limit for card after transaction
 Then user sign out from customer portal

@@ -109,7 +109,6 @@ public class HelpdeskGeneral {
 		plan.setNewMobileNo(provider.getString(NEW_MOBILE_NO));
 		plan.setNewMobileISD(provider.getString(NEW_MOBILE_ISD));
 		plan.setDeviceNumber(provider.getString(DEVICE_NUMBER));
-		plan.setAvailableBalance(provider.getString(AVAILABLE_BALANCE));
 		return plan;
 	}
 	
@@ -120,6 +119,7 @@ public class HelpdeskGeneral {
 		plan.setClientCreditLimit(provider.getString(CLIENT_CREDIT_LIMIT));
 		plan.setAccountCreditLimit(provider.getString(ACCOUNT_CREDIT_LIMIT));
 		plan.setNewCreditLimit(provider.getString(NEW_CREDIT_LIMIT));
+		plan.setAvailableBalance(provider.getString(AVAILABLE_BALANCE));
 		return plan;
 	}
 	

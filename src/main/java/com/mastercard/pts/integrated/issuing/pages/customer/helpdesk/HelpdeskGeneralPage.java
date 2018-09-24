@@ -277,16 +277,16 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement balanceDetailsTab;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "udf29:input:inputAmountField")
-	private MCWebElement creditClientLimit;
+	private MCWebElement creditClientLimitTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "udf19:input:inputAmountField")
-	private MCWebElement creditAccountLimit;
-
+	private MCWebElement creditAccountLimitTxt;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='newCreditLimit']")
-	private MCWebElement newCreditLimit;
+	private MCWebElement newCreditLimitTxt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "udf6:input:dropdowncomponent")
-	private MCWebElement selectLimitType;
+	private MCWebElement selectLimitTypeDdwn;
 
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
@@ -425,19 +425,19 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 	public void enterClientCreditLimit(String clientcreditlimit) {
-		WebElementUtils.enterText(creditClientLimit, clientcreditlimit);
+		WebElementUtils.enterText(creditClientLimitTxt, clientcreditlimit);
 	}
 
 	public void enterAccountCreditLimit(String accountcreditlimit) {
-		WebElementUtils.enterText(creditAccountLimit, accountcreditlimit);
+		WebElementUtils.enterText(creditAccountLimitTxt, accountcreditlimit);
 	}
 
 	public void enterNewCreditLimit(String newcreditlimit) {
-		WebElementUtils.enterText(newCreditLimit, newcreditlimit);
+		WebElementUtils.enterText(newCreditLimitTxt, newcreditlimit);
 	}
 
 	public void selectLimitType(String type) {
-		WebElementUtils.selectDropDownByVisibleText(selectLimitType, type);
+		WebElementUtils.selectDropDownByVisibleText(selectLimitTypeDdwn, type);
 	}
 	
 	public void clickCurrentStatusAndLimitsTab(){
