@@ -38,7 +38,7 @@ Then FINSim simulator is closed
 
 Scenario: Transaction - Eligibility_Inquiry transaction
 Given connection to VISA is established
-When perform an POS-Magstripe-egilibility-Inquiry_with_Pin VISA transaction
+When perform an POS-Magstripe-eligibility-Inquiry_with_Pin VISA transaction
 And VISA test results are verified for POS-Magstripe-egilibility-Inquiry_with_Pin
 And search Eligibility Inquiry authorization and verify 000-Successful status
 And user sign out from customer portal
