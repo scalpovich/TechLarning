@@ -54,9 +54,9 @@ public class BatchJobHistorySteps {
 		batchjobhistoryflows.CheckBatchJobHistory(batchjobhistory);
 	}
 	
-	@When("user checks for the client photo/flat file batch job history status for $batchType batch")
-	@Then("user checks for the client photo/flat file batch job history status for $batchType batch")
-	public void checkBatchStatusForClientPhotoFlatFile(@Named("batchType") String batchType) {		
+	@When("check status in batch job history for $batchType batch and $batch")
+	@Then("check status in batch job history for $batchType batch and $batch")
+	public void checkBatchStatusForClientPhotoFlatFile(@Named("batchType") String batchType, @Named("batch") String batch) {		
 		if (batchType.equalsIgnoreCase("download")) {
 			batchjobhistory.setBatchType("DOWNLOAD [D]");
 		}else if (batchType.equalsIgnoreCase("upload")) {
@@ -64,7 +64,11 @@ public class BatchJobHistorySteps {
 		}		
 		
 		batchjobhistory.setJobIdBatchJobHistory(context.get(ContextConstants.JOB_ID));
-		
+		if(batch.equalsIgnoreCase("CLIENT_PHOTO_DOWNLOAD")){
+			batchjobhistory.setBatch("Client Photo/Flat File Download Batch [CLIENT_PHOTO_DOWNLOAD]");
+		} else if(batch.equalsIgnoreCase("CARDHOLDER_DUMP")) {
+			batchjobhistory.setBatch("Cardholder Dump [CARDHOLDER_DUMP]");
+		}
 		batchjobhistoryflows.verifyBatchJobHistoryStatusDisplayed(batchjobhistory);
 	}
 }

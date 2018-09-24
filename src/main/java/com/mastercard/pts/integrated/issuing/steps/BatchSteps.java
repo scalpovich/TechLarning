@@ -126,7 +126,7 @@ public class BatchSteps {
 		String deviceApplicationNumber = device.getApplicationNumber();
 		
 		String timestamp = context.get(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME);
-		
+		timestamp = timestamp.substring(0,timestamp.length()-1);
 		String partialFileName = "Account_PhotoNonPhoto_"+timestamp;
 		
 		boolean isPhotoReferencePresentInFlatFile=false;
@@ -143,6 +143,31 @@ public class BatchSteps {
 			throw MiscUtils.propagate(e);
 		}
 		Assert.assertTrue(isPhotoReferencePresentInFlatFile);
+	}
+	
+	@When("photo image file generated in JPEG format")
+	@Then("photo image file generated in JPEG format")
+	public void thenPhotoFileGeneratedInJPEGFormat() {
+		
+		String timestamp = context.get(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME);
+		Device device = context.get(ContextConstants.DEVICE);
+		String deviceApplicationNumber = device.getApplicationNumber();
+		
+		String partialFileName = "Account_PhotoNonPhoto_"+timestamp;
+		
+		String photoFileName=deviceApplicationNumber+".jpeg";
+		File photoJpegFile = null;
+		try {
+			MiscUtils.reportToConsole("Flat file path name :  " + partialFileName);
+			MiscUtils.reportToConsole("Photo file name :  " + photoFileName );		
+			photoJpegFile = linuxBox.downloadFileThroughSCPByPartialFileName(photoFileName, tempDirectory.toString(), "CLIENT_PHOTO_BATCH");		
+			MiscUtils.reportToConsole("******** Photo Flat File Completed ***** " );
+
+		} catch (Exception e) {
+			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
+			throw MiscUtils.propagate(e);
+		}
+		Assert.assertNotNull(photoJpegFile);
 	}
 	
 	@When("user sets invalid cvv/ccv2/icvv to device")
@@ -200,6 +225,7 @@ public class BatchSteps {
 	}
 	
 	@When("to verify photo reference number is present in card holder dump file")
+	@Then("to verify photo reference number is present in card holder dump file")
 	public void  cardHolderDumpFileWasGeneratedSuccessfullyForPhotoCard() {
 		MiscUtils.reportToConsole("******** Embossing File Start ***** " );
 		try {

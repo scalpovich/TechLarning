@@ -146,7 +146,7 @@ public class BatchLevelPreviledgePage extends BatchLevelPriviledge {
 	public void supplyAccessToClientPhotoBatch(){
 		clickBatchDownloadTab();
 		ClickCheckBox(clientPhotoDownloadChkBox, true);
-		clickWhenClickable(saveBtn);
+		clickSaveButton();
 		Assert.assertTrue(!Strings.isNullOrEmpty(getSuccessMessage()));
 	}
 }

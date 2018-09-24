@@ -27,7 +27,7 @@ public class BatchLevelPrivilegesWorkflow extends AbstractBaseFlows {
 		navigator.navigateToPage(BatchLevelPreviledgePage.class);
 		batch.selectEntityType("User [U]");
 		portal.getUserName();
-		batch.selectEntityID("ravindra1 [ravindra1]");
+		batch.selectEntityID("Truptii Gaikwad [Truptii]");
 		batch.clickSearchBtn();
 		batch.clickBatchDownloadTab();
 		batch.verifyClientPhotoBatchPresent();
@@ -37,7 +37,7 @@ public class BatchLevelPrivilegesWorkflow extends AbstractBaseFlows {
 		navigator.navigateToPage(BatchLevelPreviledgePage.class);
 		batch.selectEntityType("User [U]");
 		portal.getUserName();
-		batch.selectEntityID("ravindra1 [ravindra1]");
+		batch.selectEntityID("Truptii Gaikwad [Truptii]");
 		batch.clickSearchBtn();
 		batch.supplyAccessToClientPhotoBatch();
 	}

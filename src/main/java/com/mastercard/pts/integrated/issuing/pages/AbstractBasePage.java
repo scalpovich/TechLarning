@@ -770,7 +770,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		try {
 			WebElementUtils.waitForWicket(driver());
 			for (int l = 0; l < 21; l++) {
-				while ("PENDING [0]".equalsIgnoreCase(batchStatus.getText()) || "IN PROCESS [1]".equalsIgnoreCase(batchStatus.getText()))
+				while ("PENDING [0]".equalsIgnoreCase(status.getText()) || "IN PROCESS [1]".equalsIgnoreCase(status.getText()))
 					Thread.sleep(10000); // waiting for page auto refresh
 				clickSearchButton();
 			}

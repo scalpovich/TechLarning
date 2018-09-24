@@ -201,4 +201,9 @@ public class BatchProcessFlows extends MenuFlows {
 		
 	}
 
+	public boolean verifyClientPhotoFlatFileDownloadBatchScreen() {
+		ClientPhotoFlatFileDownloadBatchPage page = navigator.navigateToPage(ClientPhotoFlatFileDownloadBatchPage.class);
+		return page.isBatchDatePresent();
+	}
+
 }

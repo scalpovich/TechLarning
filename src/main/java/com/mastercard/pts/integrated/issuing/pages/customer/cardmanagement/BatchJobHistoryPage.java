@@ -77,12 +77,17 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 
 	@PageElement (findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr/td[6]")
 	private MCWebElement status;
+
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//table[@class='dataview']/tbody/tr/td[8]")
+	private MCWebElement csvFileName;
 	
 	@Autowired
 	private TestContext context;
 	
 	@Autowired
 	DatePicker date;
+
 
 	public void switchToViewBatchDetailsFrame() {
 		switchToIframe(Constants.VIEW_BATCH_DETAILS_FRAME);
@@ -206,10 +211,11 @@ public class BatchJobHistoryPage extends AbstractBasePage {
         clickSearchButton();
         waitForBatchStatus(status);
 
-       // context.put("CSVno",CSVno.getText());
+       context.put("CSVno",csvFileName.getText());
         if(status.getText().equals("SUCCESS [2]")){
     	    String timeStamp = LocalDateTime.now(ZoneId.of("GMT-5")).format(DateTimeFormatter.ofPattern("ddMMyyyyHHmm")); //CDT time when batch download is done. 
             context.put(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME,timeStamp);
+            logger.info("timestamp of processing",timeStamp);
                return true;
         } else {
                return false;

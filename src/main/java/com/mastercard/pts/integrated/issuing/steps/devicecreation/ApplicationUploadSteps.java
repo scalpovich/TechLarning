@@ -141,6 +141,13 @@ public class ApplicationUploadSteps {
 		Assert.assertTrue("batch job id not displayed for Client photo/flat file download batch", result);
 	}
 	
+	@Then("Date should be displayed as editable on screen")
+	@When("Date should be displayed as editable on screen")
+	public void thenDateShouldBeDisplayedOnOnScreen(String type) {
+		boolean result = batchProcessFlows.verifyClientPhotoFlatFileDownloadBatchScreen();
+		Assert.assertTrue("Client photo/flat file download batch screen is not displayed properly", result);
+	}
+	
 	@Then("$type processes deviceproduction batch using new Device for Supplementary")
 	@When("$type processes deviceproduction batch using new Device for Supplementary")
 	public void whenProcessesDeviceproductionBatchForDeviceSupplementary(String type) {

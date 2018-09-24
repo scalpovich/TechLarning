@@ -241,7 +241,7 @@ public abstract class LinuxUtils {
 	
 	public static void downloadFileViaScp(RemoteConnectionDetails connectiondetails, String remoteDir,
 			String localsource) throws InterruptedException  {
-
+		
 		Scp scp = new Scp();
 		String serverSSH = connectiondetails.getHostName();
 		String userSSH = connectiondetails.getUserName(); 
@@ -425,6 +425,8 @@ public abstract class LinuxUtils {
 		// channel1.close();
 
 	}
+	
+	
 
 	public static boolean isPhotoReferenceNumberPresentFlatFile(File filePath,
 			String applicationNumber) {
@@ -443,6 +445,26 @@ public abstract class LinuxUtils {
 			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
 			throw MiscUtils.propagate(e);
 		}
+		MiscUtils.reportToConsole("*********   ending Flat file check*******  ");		
 		return isPhotoReferenceNumberFound;
+	}
+
+	public static String getJPEGPhotoFileName(File batchFile) {
+		String photoFileName = "";
+		MiscUtils.reportToConsole("*********   getting  image file name*******  ");
+		try (BufferedReader br = new BufferedReader(new FileReader(batchFile)))
+		{
+			String strLine;
+			if ((strLine = br.readLine()) != null){
+				String[] fileData = strLine.split(",");
+				photoFileName = fileData[0]+".jpeg";
+			}
+			
+		} catch (Exception e) {
+			MiscUtils.reportToConsole("getphotoReferenceNumber Exception :  " + e.toString());
+			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
+			throw MiscUtils.propagate(e);
+		}
+		return photoFileName;
 	}
 }

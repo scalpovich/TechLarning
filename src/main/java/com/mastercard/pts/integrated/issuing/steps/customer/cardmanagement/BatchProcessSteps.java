@@ -245,9 +245,9 @@ public class BatchProcessSteps {
 	}
 	
 	@When("process batch for $batchType type and Batch name $batchName")
-    public void submitJobforProcessing(String batchType, String batchName)
-    {
-                   processBatchesFlows.processDownloadBatches(batchType,batchName);
-    }
+	@Then("process batch for $batchType type and Batch name $batchName")
+	public void submitJobforProcessing(String batchType, String batchName) {
+		processBatchesFlows.processDownloadBatches(batchType, batchName);
+	}
 
 }
