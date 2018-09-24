@@ -1005,6 +1005,56 @@ public class ProgramSetupSteps {
 		context.put(ContextConstants.PROGRAM, program);
 	}
 
+	@When("User $applicationType fills $subApplicationType Program $programType section for $type product without dedupe for $interchange")
+	public void whenUserFillsProgramSectionWithNoDedupe(String applicationType, String subApplicationType, String programType, String type, String interchange) {
+		program = Program.createWithProvider(dataProvider, provider);
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		program.setProduct(ProductType.fromShortName(type));
+		program.setInterchange(interchange);
+		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
+			if (Objects.nonNull(statementMessagePlan) && Objects.nonNull(marketingMessagePlan)) {
+				program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
+				program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+			} else {
+				program.setOtherPlanStatementMessagePlan(data.getStatementMessagePlan());
+				program.setOtherPlanMarketingMessagePlan(data.getMarketingMessagePlan());
+			}
+		}
+		if (Objects.nonNull(walletPlan)) {
+			program.setFirstWalletPlan(walletPlan.buildDescriptionAndCode());
+		} else {
+			program.setFirstWalletPlan(data.getWalletPlan());
+		}
+		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
+		program.setApplicationType(applicationType);
+		program.setSubApplicationType(subApplicationType);
+		if (program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE) || program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && program.getSubApplicationType().contains(ConstantData.EXISTING)) {
+			program.setDevicePlanPlan2(devicePlanSupplementary.buildDescriptionAndCode());
+		}
+
+		if (Objects.nonNull(documentCheckListPlan)) {
+			program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
+		} else {
+			program.setDocumentChecklistPlan(data.getDocumentCheckListPlan());
+		}
+		if (Objects.nonNull(mccRulePlan)) {
+			program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
+		} else {
+			program.setMccRulePlan(data.getMccRulePlan());
+		}
+		program.setProgramType(programType);
+
+		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID))
+			if (Objects.nonNull(prepaidStatementPlan)) {
+				program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+			} else {
+				program.setPrepaidStatementPlan(data.getPrepaidStatementPlan());
+			}
+
+		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
+		context.put(ContextConstants.PROGRAM, program);
+	}
+
 	@When("User fills Program section for $type product and program $programType")
 	public void userFillsProgramSection(String type, String programType) {
 		program = Program.createWithProvider(dataProvider, provider);
