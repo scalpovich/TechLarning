@@ -40,6 +40,7 @@ And MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
+And user verifies available balance after transaction
 And device has "normal" status
 And user verifies available temporary limit for card after transaction
 Then user sign out from customer portal
