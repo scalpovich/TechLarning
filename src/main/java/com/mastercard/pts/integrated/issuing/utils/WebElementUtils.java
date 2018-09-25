@@ -287,10 +287,6 @@ public class WebElementUtils {
 	public static ExpectedCondition<WebElement> visibilityOf(MCWebElement element) {
 		return ExpectedConditions.visibilityOf(asWebElement(element));
 	}
-	
-	public static ExpectedCondition<Boolean> stalenessOf(MCWebElement element) {
-		return ExpectedConditions.refreshed(ExpectedConditions.stalenessOf(asWebElement(element)));
-	}
 
 	public static void enableAllCheckBoxesInTable(MCWebElement tableHandle) {
 		WebElement table = asWebElement(tableHandle);

@@ -79,14 +79,14 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String whiteMcgCode;
 	private String whiteListedMCGPlan;
 	private String mcgLimitPlan;
-	private String mCG;
+	private String mcg;
 
 	public String getMCG() {
-		return mCG;
+		return mcg;
 	}
 
-	public void setMCG(String mCG) {
-		this.mCG = mCG;
+	public void setMCG(String mcg) {
+		this.mcg = mcg;
 	}
 
 	public String getWhiteListedMCGPlan() {

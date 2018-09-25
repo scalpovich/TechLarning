@@ -10,7 +10,7 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 public class MCG {
 
 	private String mcg;
-	private String mCGCode;
+	private String mcgCode;
 	private String mccFrom;
 	private String mccTo;
 	private String description;
@@ -71,11 +71,11 @@ public class MCG {
 	}
 
 	public String getMCGCode() {
-		return mCGCode;
+		return mcgCode;
 	}
 
-	public void setMCGCode(String mCGCode) {
-		this.mCGCode = mCGCode;
+	public void setMCGCode(String mcgCode) {
+		this.mcgCode = mcgCode;
 	}
      
 	@Override
