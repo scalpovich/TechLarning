@@ -67,7 +67,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	private MCWebElement processAllBtn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class = 'repeat']//div[2]//li[2]//span[@class = 'feedbackPanelINFO']")
-	private MCWebElement confirmationMsgTxt;
+	private MCWebElement confirmationMsgTxt;	
 
 	public void preproduction(String product, String batchNum) {
 		menuSubMenuPage.getPreProductionBatch().click();
@@ -114,7 +114,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	public void processPreProductionBatchNewApplication(PreProductionBatch batch) {
 		waitForLoaderToDisappear();
 		selectDropDownByText(productTypeDDwn, batch.getProductType());
-		CustomUtils.ThreadDotSleep(8000);		
+		CustomUtils.ThreadDotSleep(10000);		
 		enterText(batchNumberTxt, context.get(CreditConstants.NEW_APPLICATION_BATCH));
 		ClickButton(searchBtn);
 		waitAndSearchForRecordToAppear();
@@ -214,9 +214,9 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		ClickButton(processSelectedBtn);
 		verifyOperationStatus();
 		switchToDefaultFrame();
-	}
-	
-		public void processPreProductionBatchNewApplicationForFileUpload(PreProductionBatch batch) {
+	}	
+
+	public void processPreProductionBatchNewApplicationForFileUpload(PreProductionBatch batch) {
         List<String>batchNumbers=context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
 		waitForLoaderToDisappear();
 		selectDropDownByText(productTypeDDwn, batch.getProductType());

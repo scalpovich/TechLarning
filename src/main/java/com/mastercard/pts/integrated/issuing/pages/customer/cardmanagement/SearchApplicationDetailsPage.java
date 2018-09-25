@@ -38,6 +38,7 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 	
 	@Autowired
 	TestContext context;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='firstName']")
 	private MCWebElement firstName;
 	
@@ -74,6 +75,8 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='toDate']/../..")
 	private MCWebElement toDate;
 	
+	public int retryCounter =0;
+	
 	public void enterFirstName(SearchApplicationDetails search){
 		enterText(firstName, search.getFirstName());
 	}
@@ -94,7 +97,7 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		Device device=context.get(CreditConstants.APPLICATION);
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
 		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
-		WebElementUtils.pickDate(toDate, LocalDate.now());
+		WebElementUtils.pickDate(toDate, LocalDate.now());		
 		clickSearchButton();		
 		searchUntilBatchNumberIsDisplayed();	
 		return batchNumberTxt.getText();
@@ -104,16 +107,19 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		clickWhenClickable(SearchBtn);
 	}
 	
-	public void searchUntilBatchNumberIsDisplayed() {
-		try {
-			String path = String.format("//table[@class='dataview']/..//td[count(//th[.//*[text()='%S']]/preceding-sibling::th)+1]", "Device Batch Number");
-			if (driver().findElement(By.xpath(path)).getText().equals("-")) {
-				SimulatorUtilities.wait(8000);
-				clickSearchButton();
-				waitForPageToLoad(driver());
-				searchUntilBatchNumberIsDisplayed();
-			}
-		} catch (Exception e) {
+	public void searchUntilBatchNumberIsDisplayed(){
+		try{	
+			String path = String.format("//table[@class='dataview']/..//td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]", "Device Batch Number");
+			SimulatorUtilities.wait(10000);
+			if(driver().findElement(By.xpath(path)).getText().trim().equals("-")){
+				while(retryCounter <= 4){
+					retryCounter++;
+					clickSearchButton();
+					waitForPageToLoad(driver());
+					searchUntilBatchNumberIsDisplayed();
+				}
+			}						
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
