@@ -6,8 +6,7 @@ I want to authorize transactions for EMV prepaid card
 Meta:
 @MCGLimitPlan
 @Author Nitin Kumar
-@StoryName mcg_prepaid_emv_general_purpose
-@Data WP_MCG_LIMIT_PLAN = MCGP[MCGP]
+@StoryName mcg_periodic_prepaid_emv
 
 Scenario:1 Set up prepaid emv retail general purpose card with MCG Limit Plan
 Given setting json values in excel for Prepaid
