@@ -5,13 +5,13 @@ I want to perform transaction
 
 Meta:
 @StoryName d_emv_corp
-@DailyLimit
+@YearlyLimit
 @Limits
 
 Scenario: 1.1 Set up program for debit EMV corporate debit card
 Given setting json values in excel for Debit
 When user is logged in institution
-And user use existing transaction limit plan for limit type DAILY
+And user use existing transaction limit plan for limit type YEARLY
 And User fills Device Plan for "Debit" "emv" card without pin
 And User fills Wallet Plan for debit product
 And User fills Program section for debit product
@@ -54,7 +54,7 @@ When perform an EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
 And user validate device usage for Daily Velocity Utilized and Daily Amount Utilized
-And assert Decline response with 34005 AuthDecline Code and Transaction exceeded with Daily amount configured at device plan level. as description
+And assert Decline response with 34005 AuthDecline Code and Transaction exceeded with Yearly amount configured at device plan level. as description
 And user sign out from customer portal
 
 Scenario: 1.7 Update Transaction Amount Less than Allowed Periodic Amount
@@ -73,5 +73,5 @@ When perform an EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 123-Frequency Exceeded status
 And user validate device usage for Daily Velocity Utilized and Daily Amount Utilized
-And assert Decline response with 34004 AuthDecline Code and Transaction exceeded with daily velocity configured at device plan level. as description
+And assert Decline response with 34004 AuthDecline Code and Transaction exceeded with yearly velocity configured at device plan level. as description
 And user sign out from customer portal

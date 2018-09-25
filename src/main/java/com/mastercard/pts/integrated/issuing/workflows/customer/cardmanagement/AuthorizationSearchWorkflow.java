@@ -79,6 +79,8 @@ public class AuthorizationSearchWorkflow {
 		String actualDescription = authSearchPage.getCellTextByColumnName(1, descriptionColumnName);
 		String authCodeValue = authSearchPage.getCellTextByColumnName(1, "Auth Code");
 		String transactionAmountValue = authSearchPage.getCellTextByColumnName(1, "Transaction Amount");
+		String transaction = context.get(ConstantData.TRANSACTION_NAME);
+		
 		context.put(ConstantData.AUTHORIZATION_CODE, authCodeValue);
 		context.put(ConstantData.TRANSACTION_AMOUNT, transactionAmountValue);
 		logger.info("CodeAction on Authorization Search Page : {} ", actualCodeAction);
@@ -97,7 +99,7 @@ public class AuthorizationSearchWorkflow {
 			condition = actualCodeAction.contains(type) && actualDescription.contains(state);
 		
 		// Device Usage Code
-		if("000-Successful".equalsIgnoreCase(actualCodeAction) && !"Pre-Auth Completion".equalsIgnoreCase(type) ){
+		if(("000-Successful".equalsIgnoreCase(actualCodeAction) && !"Pre-Auth Completion".equalsIgnoreCase(type)) || !transaction.contains("INT")){
 			device.setDeviceVelocity();
 			device.setDeviceAmountUsage(Double.parseDouble(transactionAmountValue));
 		}
