@@ -134,10 +134,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'Transactions']")
 	private MCWebElement transactionsBtn;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='fromDate']/..")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='From Date :']/../following-sibling::td[1]/span/span/input")
 	private MCWebElement effectiveDateTxt;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='toDate']/..")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='To Date :']/../following-sibling::td[1]/span/span/input")
 	private MCWebElement endDateTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[2]//td[2]//div[@class='radioInput']/input[1]")
