@@ -3,19 +3,18 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
+import java.util.HashMap;
 import java.util.Optional;
-
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConnectionUtils;
-import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 
 @Workflow
@@ -179,8 +178,12 @@ public class HelpdeskWorkflow {
 	
 	public BigDecimal noteDownAvailableLimit(String type) {
 		clickCustomerCareEditLink();
-		SimulatorUtilities.wait(10000);
 		return helpDeskPage.noteDownAvailableLimit(type);
+	}
+	
+	public HashMap<String, String> noteDownRequiredValues(String deviceNumber) {
+		clickCustomerCareEditLink();
+		return helpDeskPage.noteDownRequiredValues(deviceNumber);
 	}
 	
 	public BigDecimal verifyAvailableLimit(String type) {
@@ -208,6 +211,13 @@ public class HelpdeskWorkflow {
 		helpDeskPage.validateRequiredFields(general);
 		helpDeskPage.validateMandatoryFields(3);
 	}
+	
+	public String verifyBillingAmounts(Device device){
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		helpDeskPage.getDeviceStatus(device);
+		return helpDeskPage.verifyBillingDetails(device);
+	}
+	
 	
 	public Map<String,String> fetchCardBalanceAndCloseHelpdesk(Device device) {
 		Map<String, String> balanceMapBeforePayments;	

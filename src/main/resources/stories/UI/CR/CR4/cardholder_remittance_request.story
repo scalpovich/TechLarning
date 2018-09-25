@@ -33,7 +33,7 @@ When User fills Device Range section for prepaid product
 When add menus to access card holder portal
 When user creates new device of prepaid type for new client of Corporate customer
 Then device has "normal" status
-Then user get attached wallet details for device
+Then user gets attached wallet details for device
 Then user performs adjustment transaction
 Given user is on login page of cardholder portal
 Then cardholder signup with valid details
@@ -61,7 +61,7 @@ When User fills Device Range section for prepaid product
 When add menus to access card holder portal
 When user creates new device of prepaid type for new client of Corporate customer
 Then device has "normal" status
-Then user get attached wallet details for device
+Then user gets attached wallet details for device
 Then user performs adjustment transaction
 Given user is on login page of cardholder portal
 Then cardholder signup with valid details
@@ -89,7 +89,7 @@ When User fills Device Range section for prepaid product
 When add menus to access card holder portal
 When user creates new device of prepaid type for new client of Individual customer
 Then device has "normal" status
-Then user get attached wallet details for device
+Then user gets attached wallet details for device
 Then user performs adjustment transaction
 Given user is on login page of cardholder portal
 Then cardholder signup with valid details
@@ -117,7 +117,7 @@ When User fills Device Range section for prepaid product
 When add menus to access card holder portal
 When user creates new device of prepaid type for new client of Individual customer
 Then device has "normal" status
-Then user get attached wallet details for device
+Then user gets attached wallet details for device
 Then user performs adjustment transaction
 Given user is on login page of cardholder portal
 Then cardholder signup with valid details

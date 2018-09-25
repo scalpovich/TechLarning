@@ -16,6 +16,7 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.jcabi.log.Logger;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AvailableBalance;
@@ -76,6 +77,16 @@ public class AuthorizationSearchSteps {
 				Matchers.hasItems(txnFeePlan.getfixedTxnFees(), txnFeePlan.getFixedRateFee(), txnFeePlan.getBillingAmount()));
 	}
 	
+	@Then("verify fixed transaction fee applied on purchase transaction test")
+	public void veriyFixedTransactionFeeonPurchaseTransactionTest() {
+        Device device = new Device();
+        device.setDeviceNumber("5377165755876716");
+        device.setTransactionAmount("500");
+		txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
+		context.put(ContextConstants.DEVICE, device);
+		assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),
+				Matchers.hasItems(txnFeePlan.getfixedTxnFees(), txnFeePlan.getFixedRateFee(), txnFeePlan.getBillingAmount()));
+	}
 	@Then("verify transaction fee waived off")
 	public void veriyTransactionFeeWaivedOff() {
 		Device device = context.get(ContextConstants.DEVICE);
@@ -166,7 +177,6 @@ public class AuthorizationSearchSteps {
 	@Then("verify available balance after completion transaction")
 	public void validateAvailableBalanceAfterCompletionTransaction(){
 		BigDecimal availableBalanceBeforeTransaction =context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
-		//BigDecimal availableBalanceBeforeTransaction = BigDecimal.valueOf(6980.90);
 		Device device = context.get(ContextConstants.DEVICE);
 		AvailableBalance availBal = authorizationSearchWorkflow.getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(availableBalanceBeforeTransaction);
 		BigDecimal billingAmount = new BigDecimal(txnFeePlan.getBillingAmount());

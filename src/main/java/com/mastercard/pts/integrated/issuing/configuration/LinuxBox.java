@@ -88,9 +88,9 @@ public class LinuxBox implements RemoteConnectionDetails {
 		return null;
 	}
 
-	public File downloadFileThroughSCPByPartialFileName(String lookupForFile, String localDestination, String whatAreWeLookingFile) {
+	public File downloadFileThroughSCPByPartialFileName(String lookupForFile, String localDestination, String whatAreWeLookingFile,String childFolder) {
 		logger.info("Download {} -> {} at folder", lookupForFile, localDestination);
-		downloadFileViaScp(folderPath + "*" + whatAreWeLookingFile + "*//proc//*" + lookupForFile + "*", localDestination);
+		downloadFileViaScp(folderPath + "*" + whatAreWeLookingFile + "*//"+ childFolder +"//*" + lookupForFile + "*", localDestination);
 		logger.info(Paths.get(localDestination).resolve(Paths.get(localDestination + "\\" + ListFileOffSetAndEmbossing(localDestination, lookupForFile)).getFileName()).toFile().getAbsolutePath());
 		return Paths.get(localDestination).resolve(Paths.get(localDestination + "\\" + ListFileOffSetAndEmbossing(localDestination, lookupForFile)).getFileName()).toFile();
 	}
