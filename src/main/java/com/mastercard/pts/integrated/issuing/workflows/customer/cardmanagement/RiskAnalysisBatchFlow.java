@@ -17,5 +17,6 @@ public class RiskAnalysisBatchFlow {
 	public void processAllRiskAnalysisBatch() {
 		riskAnalysisPage = navigator.navigateToPage(RiskAnalysisPage.class);
 		riskAnalysisPage.riskAnalysisBatchProcess();
+		riskAnalysisPage.clickProcessALL();
 	}
 }

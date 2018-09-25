@@ -16,5 +16,6 @@ public class ApplicationScoringBatchFlow {
 	public void processApplicationScoringBatch(){
 		applicationScoringPage=navigator.navigateToPage(ApplicationScoringPage.class);
 		applicationScoringPage.processAllApplicationScoring();
+		applicationScoringPage.clickProcessALL();
 	}
 }

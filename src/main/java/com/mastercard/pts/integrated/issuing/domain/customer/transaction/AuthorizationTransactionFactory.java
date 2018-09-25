@@ -28,7 +28,7 @@ public class AuthorizationTransactionFactory {
 
 	private static final Logger logger = LoggerFactory.getLogger(AuthorizationTransactionFactory.class);
 
-	//@Autowired
+	@Autowired
 	private Path tempDir;
 
 	@Autowired

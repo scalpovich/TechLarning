@@ -54,5 +54,6 @@ public class CreditBureauVerificationPage extends AbstractBasePage {
 		clickWhenClickable(OKButtonClick);
 		SimulatorUtilities.wait(3000);
 		clickWhenClickable(processAllBtn);
+		return;
 	}
 	}

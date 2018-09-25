@@ -79,6 +79,7 @@ public class CreditLimitRulePage extends AbstractBasePage {
 
 	public void addProgramCode() {
 		ifTextAvailableinTableThenDelete(searchTable, CREDIT_LIMIT_RULE_SCORE_PARAMETER);
+		SimulatorUtilities.wait(4000);
 		clickAddNewButton();
 		switchToIframe(CREDIT_LIMIT_RULE_FRAME);
 	}

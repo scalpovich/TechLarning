@@ -14,7 +14,6 @@ import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CardManagementNav;
 
 
 @Component
@@ -56,12 +55,13 @@ public class FixedScorePage extends AbstractBasePage {
 		return validateSuccessMsgDisplay.isVisible();
 	}
     
-	public void selectProgram(){
+	public void selectProgram() {
 		ifTextAvailableinTableThenDelete(searchTable, FIXED_SCORE_PARAMETER);
 		clickAddNewButton();
 		switchToIframe(FIXED_SCORE_FRAME);
 		Program program = context.get(ContextConstants.PROGRAM);
 		WebElementUtils.selectDropDownByVisibleText(programDdwn, program.buildDescriptionAndCode());
+
 	}
 	
 	public void selectFieldName(String fieldName){

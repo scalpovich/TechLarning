@@ -106,15 +106,17 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	}
 	
 	public void processAllBatch() {
-		for (int l = 0; l < 21; l++) {
-			if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER)))
-				clickWhenClickable(deviceGenerationLink);
-			else {
-				break;
-			}
-			clickWhenClickable(processAllBtn);
+		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))) {
+			clickWhenClickable(deviceGenerationLink);
+			processAllBatch();
 		}
+		SimulatorUtilities.wait(4000);
 	}
+	
+	public void clickProcessALL() {
+		clickWhenClickable(processAllBtn);
+	}
+	
 	
 	public int identifyBatchNumberToProcessForFileUpload() {
 		int i = 0;

@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.xerces.dom3.as.ASElementDeclaration;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -1852,25 +1851,26 @@ public abstract class AbstractBasePage extends AbstractPage {
 		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
 
 		int rowscount = rowstable.size();
-
-		for (int row = 1; row < rowscount; row++) {
+		outerloop:
+		for (int row = 0; row < rowscount; row++) {
 
 			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
 
 			int columnscount = columnsrow.size();
-
 			for (int col = 0; col < columnscount; col++) {
 				if (columnsrow.get(col).getText().equals(text)) {
 					List<WebElement> editAndDeleteIcon = rowstable.get(row).findElements(By.tagName("img"));
-					for (int icon = 0; icon < editAndDeleteIcon.size(); icon++) {
-						if (editAndDeleteIcon.get(icon).getAttribute("alt").contains("Delete")) {
-							editAndDeleteIcon.get(icon).click();
-							SimulatorUtilities.wait(2000);
-							Alert alert = driver().switchTo().alert();
-							alert.accept();
-							waitForPageToLoad(driver());
+					
+						for (int icon = 0; icon < editAndDeleteIcon.size(); icon++) {
+							if (editAndDeleteIcon.get(icon).getAttribute("alt").contains("Delete")) {
+								editAndDeleteIcon.get(icon).click();
+								SimulatorUtilities.wait(2000);
+								Alert alert = driver().switchTo().alert();
+								alert.accept();
+								break outerloop;
+							}
 						}
-					}
+				
 
 				}
 			}
