@@ -781,11 +781,9 @@ public class ProgramSetupSteps {
 		if (Objects.nonNull(deviceJoiningAndMemberShipFeePlan)) {
 			devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
 			devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
-			devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		} else {
 			devicePlan.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());
 			devicePlan.setBaseDeviceEventBasedPlan(data.getDeviceEventBasedFeePlan());
-			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
 		}
 		if (Objects.nonNull(transactionPlan)) {
 			devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
@@ -794,7 +792,13 @@ public class ProgramSetupSteps {
 			devicePlan.setAfterKYC(data.getTransactionPlan());
 			devicePlan.setBeforeKYC(data.getTransactionPlan());
 		}
-
+		
+		if (Objects.nonNull(transactionLimitPlan)) {
+			devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		} else {
+			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
+		}
+		
 		// setting a flag through setter to figure out if the card is pinless
 		// card or not. This is used in TransactionSteps to set ExpiryDate in
 		// case of PinLess Card

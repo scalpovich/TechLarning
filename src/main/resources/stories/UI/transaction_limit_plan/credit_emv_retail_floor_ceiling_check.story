@@ -8,14 +8,10 @@ Meta:
 @FloorAndCeiling
 @Limits
 
-Scenario: 1.0 Transaction plan with specific limits
-Given user is logged in institution
-When user creates transaction limit plan for prodcut credit and limit type Periodic 
-Then user signs out from customer portal
-
 Scenario: 1.1 Create EMV credit device
 Given setting json values in excel for Credit
 When user is logged in institution
+And user use existing transaction limit plan for limit type DAILY
 And for EMV Card User fills Device Plan for credit product for Mastercard
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
