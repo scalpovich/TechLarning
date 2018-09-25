@@ -98,6 +98,16 @@ Meta:
 @TC857984
 Given setting json values in excel for Credit
 Given user is logged in institution
+When for Magnetic Stripe Card User fills without pin Device Plan for credit product for Mastercard
+And User fills Wallet Fee Plan for credit product
+And User fills Wallet Plan for credit product and program Retail Credit Card
+And User Primary Device fills New Program Retail Credit Card section for credit product for Mastercard
+And for Primary Device and New Client user fills Device Range section for credit product
+And credit device with photo is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
+And credit processes pre-production batch using new Device
+And credit processes deviceproduction batch using new Device
+Then credit processes Client photo/flat file download batch using new Device
+Then check status in batch job history for DOWNLOAD batch and CLIENT_PHOTO_DOWNLOAD
 Then photo flat file generated with photo reference number
 And user sign out from customer portal
 
