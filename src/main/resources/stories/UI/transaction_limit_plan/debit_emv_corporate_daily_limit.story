@@ -29,7 +29,6 @@ Given user is logged in institution
 When a new device was created
 And processes pre-production batch for debit
 And processes device production batch for debit
-And processes pin generation batch for debit
 And device has "normal" status
 Then user activates device through helpdesk
 And user sign out from customer portal
