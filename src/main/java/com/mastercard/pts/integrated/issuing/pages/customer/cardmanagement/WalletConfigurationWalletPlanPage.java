@@ -1,4 +1,3 @@
-
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
@@ -82,8 +81,6 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:mcgLimitPlan:input:dropdowncomponent")
 	private MCWebElement mcgLimitPlanDDwn;
 	
-	
-	
 	private int reservedAmount = 0; // MiscUtils.randomNumber(5);
 
 	public void inputWalletPlanCode(String walletPlanCodeString) {
@@ -103,7 +100,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectProgramType(String programType) {
-		WebElementUtils.selectDropDownByVisibleText(programTypeDDwn, programType);
+		selectByVisibleText(programTypeDDwn, programType);
 	}
 
 	public void selectUsage(String usage) {
@@ -186,23 +183,17 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			SimulatorUtilities.wait(2000);
 			selectProductType(productType);
 			waitForPageToLoad(driver());
-			if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-				selectByVisibleText(programTypeDDwn, walletPlan.getProgramType());
-			} else {
-				SimulatorUtilities.wait(2000);
-				selectProgramType(walletPlan.getProgramType());
-				waitForPageToLoad(driver());
-				SimulatorUtilities.wait(2000);
-			}
-			selectCurrency(walletPlan.getCurrency());
+			SimulatorUtilities.wait(2000);
+			selectProgramType(walletPlan.getProgramType());
 			waitForPageToLoad(driver());
 			SimulatorUtilities.wait(2000);
-			selectMCGLimitPlan(walletPlan.getMcgLimitPlan());
+			selectCurrency(walletPlan.getCurrency());
 			waitForPageToLoad(driver());
 			SimulatorUtilities.wait(2000);
 			selectUsage(walletPlan.getUsage());
 			waitForPageToLoad(driver());
 			SimulatorUtilities.wait(2000);
+			selectMCGLimitPlan(walletPlan.getMcgLimitPlan());
 			waitForPageToLoad(driver());
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			waitForPageToLoad(driver());
@@ -288,5 +279,4 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			clickSaveButton();
 		});
 	}
-
 }
