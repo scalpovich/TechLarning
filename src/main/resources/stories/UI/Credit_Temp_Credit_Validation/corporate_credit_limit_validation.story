@@ -7,22 +7,25 @@ so that credit limit should be validated
 Meta:
 @StoryName credit_emv_retail
 @CardReplacementCredit
-
-Scenario:To Verify that the user can validate credit transaction limit for retail card
+Scenario:1.0 creation of mastercard_individual_primary_emv Card credit device
+Meta:
+@UserCreatesNewCreditDevice
 Given setting json values in excel for Credit
 When user is logged in institution
 And for EMV Card User fills Device Plan for credit product for Mastercard
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
-And User fills MCC Rules for credit product
-And User Primary Device fills New Program Corporate Credit Card section for credit product for Mastercard
+And User Primary Device fills New Program Retail Credit Card section for credit product for Mastercard
 And for Primary Device and New Client user fills Device Range section for credit product
-And credit device is created using new device screen for Individual and Primary Device and New Client and EMV Card
+Then user sign out from customer portal
+
+Scenario:1.2 creation of mastercard_individual_primary_emv Card credit device step 2
+Given user is logged in institution
+When credit device is created using new device screen for Individual and Primary Device and New Client and EMV Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
-And credit processes pinProduction batch using new Device for Supplementary
-And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-And user activates temproary credit limit change request
+And credit processes pingeneration batch using new Device for Supplementary
+And device has "normal" status
 Then user sign out from customer portal
 
 Scenario: Pin Generation 
