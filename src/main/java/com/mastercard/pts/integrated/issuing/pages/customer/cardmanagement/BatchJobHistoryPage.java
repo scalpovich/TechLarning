@@ -203,7 +203,7 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		
 		selectByVisibleText(batchTypeDDwn, batchjobhistory.getBatchType());
 		SimulatorUtilities.wait(1000);
-		WebElementUtils.pickDate(fromJobStartDttmDPkr, LocalDate.now());
+		WebElementUtils.pickDate(fromJobStartDttmDPkr, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toJobStartDttmDPkr, LocalDate.now());
 		enterValueinTextBox(jobIdTxt, batchjobhistory.getJobIdBatchJobHistory());
 		selectByVisibleText(batchDDwn,batchjobhistory.getBatch());

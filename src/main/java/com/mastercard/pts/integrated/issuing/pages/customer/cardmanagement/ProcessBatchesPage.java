@@ -609,7 +609,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		SimulatorUtilities.wait(2000);
 		selectByVisibleText(productTypeDDwn, "Credit [C]");
 		selectByVisibleText(extractTypeDrpDwn, "FULL [F]");
-		WebElementUtils.pickDate(fromDate, LocalDate.now());
+		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDate, LocalDate.now());
 		WebElementUtils.enterText(cardHolderKycFromDateHHTxtBx, "00");
 		WebElementUtils.enterText(cardHolderKycFromDateMMTxtBx, "00");
