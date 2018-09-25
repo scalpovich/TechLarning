@@ -1,7 +1,7 @@
 Narrative:
 In order to a create a Credit Device under customer portal cardmanagement tab
 As a user
-I want to perform Transaction on Retails credit card.
+I want to perform Transaction on Retails credit card and assert Completion Transaction of Greater Amount.
 
 Meta:
 @CreditRegression
@@ -9,7 +9,7 @@ Meta:
 @StoryName credit_emv_retail
 @Individual
 @Primary	 
-Scenario:creation of mastercard_individual_primary_emv Card credit device
+Scenario:creation of mastercard_retail_primary_emv Card credit device
 Meta:
 @UserCreatesNewCreditDevice
 Given setting json values in excel for Credit
@@ -51,3 +51,4 @@ And search Pre-Auth Completion authorization and verify 000-Successful status
 And verify fixed transaction fee applied on purchase transaction
 And verify available balance after completion transaction
 And user sign out from customer portal
+And MAS simulator is closed

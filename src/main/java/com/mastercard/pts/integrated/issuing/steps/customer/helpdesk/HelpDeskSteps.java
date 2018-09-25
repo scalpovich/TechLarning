@@ -865,6 +865,7 @@ public class HelpDeskSteps {
 	}
 	
 	@Given("check card balance details through helpdesk")
+	@When("check card balance details through helpdesk")
 	public void checkCardBalance(){
 		Device device = context.get(ContextConstants.DEVICE);
 		context.put("balanceBeforePayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));

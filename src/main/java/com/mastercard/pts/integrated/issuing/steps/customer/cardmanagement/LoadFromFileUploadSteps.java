@@ -94,6 +94,8 @@ public class LoadFromFileUploadSteps {
 	}
 	
 	@Given("user generate Reversal for Transaction")
+	@When("user generate Reversal for Transaction")
+	@Then("user generate Reversal for Transaction")
 	public void userGenerateReversalForTransaction(){
 		Device device = context.get(ContextConstants.DEVICE);
 		authSearchWorkFlow.generateReversalForTransaction(device.getDeviceNumber());

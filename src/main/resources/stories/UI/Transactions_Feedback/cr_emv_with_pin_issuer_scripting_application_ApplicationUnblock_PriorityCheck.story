@@ -30,7 +30,7 @@ Given user is logged in institution
 When user stoplists a card from stoplist device screen
 And user edits deviceplan and enables stoplist flag
 And device has "lost" status
-Then user sign out from customer portal
+And user sign out from customer portal
 
 Scenario:3 Withdraw the device from stoplist
 Given user is logged in institution
@@ -42,7 +42,7 @@ Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
-Then FINSim simulator is closed
+And FINSim simulator is closed
 
 Scenario:5 Transaction EMV_PURCHASE Application block
 Given connection to MAS is established
@@ -51,6 +51,7 @@ And user is logged in institution
 Then verify Empty status of Last Executed Script Status in Device Details Screen
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
+And MAS simulator is closed
 
 Scenario:6 Verify DB has value in Application Unblock Column
 Given Verify APPLICATION_BLOCK_ICC has column value as null

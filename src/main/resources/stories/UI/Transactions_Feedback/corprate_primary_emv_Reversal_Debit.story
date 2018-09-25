@@ -1,7 +1,7 @@
 Narrative:
-In order to a create a Prepaid Device under customer portal cardmanagement tab
+In order to a create a Debit Device under customer portal cardmanagement tab
 As a user
-I want to assert Pre-Screenning Checks by doing various transactions.
+I want to assert Reversal of Transaction.
 
 
 Meta:
@@ -9,7 +9,7 @@ Meta:
 @StoryName d_emv_corp_travel				 
 @PreScreening
 
-Scenario:1 Set up prepaid emv corporate travel card
+Scenario:1 Set up debit emv corporate tsravel card
 Given setting json values in excel for Debit
 When user is logged in institution
 And User fills Device Plan for "debit" "emv" card
@@ -43,3 +43,4 @@ Given user is logged in institution
 Given user generate Reversal for Transaction
 Then search Purchase Reversal authorization and verify 000-Successful status
 And user verify available balance afer reversal
+And MAS simulator is closed

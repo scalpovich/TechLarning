@@ -1,14 +1,14 @@
 Narrative:
-In order to a create a Credit Device under customer portal cardmanagement tab
+In order to a create a Debit Device under customer portal cardmanagement tab
 As a user
-I want to perform Transaction on corporate credit card.
+I want to perform Transaction on corporate debit card to assert Reversal of Transaction on International Transaction.
 
 Meta:
 @Pre-ScreeningCheck
 @StoryName d_emv_corp_travel				 
 @PreScreening
 
-Scenario:1 Set up prepaid emv corporate travel card
+Scenario:1 Set up debit emv corporate travel card
 Given setting json values in excel for Debit
 When user is logged in institution
 And User fills Device Plan for "debit" "emv" card
@@ -27,7 +27,7 @@ Then embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 And FINSim simulator is closed
 
-Scenario: Perform EMV_PURCHASE Authorization transaction
+Scenario: Perform INTERNATIONAL EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an INT_EMV_PURCHASE MAS transaction
 Then MAS test results are verified
@@ -40,6 +40,7 @@ And user sign out from customer portal
 
 Scenario: When user perform Reveral of Purchase Transaction
 Given user is logged in institution
-Given user generate Reversal for Transaction
+When user generate Reversal for Transaction
 Then search Purchase Reversal authorization and verify 000-Successful status
 And user verify available balance afer reversal
+And MAS simulator is closed

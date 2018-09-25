@@ -1,7 +1,7 @@
 Narrative:
 In order to a create a Credit Device under customer portal cardmanagement tab
 As a user
-I want to perform Transaction on Retails credit card.
+I want to perform Transaction on Retails credit card to assert Completion Transaction of Less Amount.
 
 Meta:
 @CreditRegression
@@ -51,3 +51,4 @@ And search Pre-Auth Completion authorization and verify 000-Successful status
 And verify fixed transaction fee applied on purchase transaction
 And verify available balance after completion transaction
 And user sign out from customer portal
+And MAS simulator is closed

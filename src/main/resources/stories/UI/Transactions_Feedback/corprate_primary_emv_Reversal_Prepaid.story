@@ -1,7 +1,7 @@
 Narrative:
-In order to a create a Credit Device under customer portal cardmanagement tab
+In order to a create a Prepaid Device under customer portal cardmanagement tab
 As a user
-I want to perform Transaction on corporate credit card.
+I want to perform Transaction on corporate prepaid card to assert Reversal Transaction.
 
 Meta:
 @Pre-ScreeningCheck
@@ -16,8 +16,8 @@ And User fills Wallet Plan for prepaid product
 And User fills Program section for prepaid product
 And User fills Business Mandatory Fields Screen for prepaid product
 And User fills Device Range section for prepaid product
-When user creates new device of prepaid type for new client
-When a new device was created
+And user creates new device of prepaid type for new client
+And a new device was created
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
@@ -45,6 +45,7 @@ And user sign out from customer portal
 
 Scenario: When user perform Reveral of Purchase Transaction
 Given user is logged in institution
-Given user generate Reversal for Transaction
+When user generate Reversal for Transaction
 Then search Purchase Reversal authorization and verify 000-Successful status
 And user verify available balance afer reversal
+And MAS simulator is closed

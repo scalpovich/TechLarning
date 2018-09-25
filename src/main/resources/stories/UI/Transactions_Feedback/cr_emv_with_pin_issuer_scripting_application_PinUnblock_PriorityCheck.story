@@ -1,10 +1,10 @@
-credit Issuer scripting application block/unblock
+credit Issuer scripting Pin unblock
 
 Narrative:
-In order to check issuer scripting on application block/unblock
+In order to check issuer scripting on Pin unblock
 As an issuer
 I want to authorize transactions for credit mastercard_individual_primary_emv card 
-when application is in block or unblock mode
+when pin is in unblock mode
 
 Meta:
 @StoryName cr_emv_issuer_scripting_app_blockCheck
@@ -41,14 +41,14 @@ And user sign out from customer portal
 Scenario: Perform EMV_PURCHASE Authorization transaction with invalid pin
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
-Then user is logged in institution
+And user is logged in institution
 And search Purchase authorization and verify 117-Incorrect PIN status
 And assert Decline response with 46051 AuthDecline Code and Incorrect Pin. as description
 And user sign out from customer portal
 
 Scenario: Perform EMV_PURCHASE Authorization transaction for pin retry limit check
 When perform an EMV_PURCHASE MAS transaction on the same card
-Then user is logged in institution
+And user is logged in institution
 And search Purchase authorization and verify 106-Allowable Pin tries exceeded status
 And assert Decline response with 46053 AuthDecline Code and Pin retry limit exceeded. as description
 And device has "normal" status
@@ -58,8 +58,8 @@ And user sign out from customer portal
 Scenario:4 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
-And PIN is retrieved successfully with data from Pin Offset File
-Then FINSim simulator is closed
+Then PIN is retrieved successfully with data from Pin Offset File
+And FINSim simulator is closed
 
 Scenario:5 Transaction EMV_PURCHASE Application block
 When perform an EMV_PURCHASE MAS transaction on the same card
@@ -67,3 +67,4 @@ And user is logged in institution
 Then verify Empty status of Last Executed Script Status in Device Details Screen
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
+And MAS simulator is closed

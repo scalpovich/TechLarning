@@ -30,7 +30,7 @@ Given user is logged in institution
 When user stoplists a card from stoplist device screen
 And user edits deviceplan and enables stoplist flag
 And device has "lost" status
-Then user sign out from customer portal
+And user sign out from customer portal
 
 Scenario:3 Withdraw the device from stoplist
 Given user is logged in institution
@@ -42,7 +42,7 @@ Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
-Then FINSim simulator is closed
+And FINSim simulator is closed
 
 Scenario:5 Transaction EMV_PURCHASE Application block
 Given connection to MAS is established
@@ -61,7 +61,7 @@ Given user is logged in institution
 When user stoplists a card from stoplist device screen
 And user edits deviceplan and enables stoplist flag
 And device has "lost" status
-Then user sign out from customer portal
+And user sign out from customer portal
 
 Scenario:8 Withdraw the device from stoplist
 Given user is logged in institution
@@ -77,7 +77,7 @@ And user sign out from customer portal
 
 Scenario:10 Verify DB has value in Application Unblock Column
 Given Verify APPLICATION_BLOCK_ICC has column value as not null
-Given Verify APPLICATION_UNBLOCK_ICC has column value as null
+Then Verify APPLICATION_UNBLOCK_ICC has column value as null
 
 Scenario:11 Transaction of EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application block
 When perform an EMV_PURCHASE_ISSUER_SCRIPTING_RES MAS transaction on the same card
@@ -87,7 +87,7 @@ And user sign out from customer portal
 
 Scenario:12 Verify DB has value in Application Unblock Column
 Given Verify APPLICATION_BLOCK_ICC has column value as null
-Given Verify APPLICATION_UNBLOCK_ICC has column value as not null
+Then Verify APPLICATION_UNBLOCK_ICC has column value as not null
 
 Scenario:13 Transaction of EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application block
 When perform an EMV_PURCHASE_ISSUER_SCRIPTING_RES MAS transaction on the same card
@@ -98,4 +98,4 @@ And MAS simulator is closed
 
 Scenario:14 Verify DB has value in Application Unblock Column
 Given Verify APPLICATION_BLOCK_ICC has column value as null
-Given Verify APPLICATION_UNBLOCK_ICC has column value as null
+Then Verify APPLICATION_UNBLOCK_ICC has column value as null

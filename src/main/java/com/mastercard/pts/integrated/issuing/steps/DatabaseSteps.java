@@ -1,11 +1,14 @@
 package com.mastercard.pts.integrated.issuing.steps;
+import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
+import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DatabaseFlows;
 
 @Component
@@ -17,9 +20,22 @@ public class DatabaseSteps {
 	
 	@Autowired
 	private TestContext context;
+
 	
-	@When("update institution date to first of next month")
-	public void updateInstituteDate(){
-			dbFlow.updateInstituteDateToFirstOfNextMonth(context.get(ContextConstants.INSTITUTION_DATE));
+	@Given("Verify $type has column value as null")
+	@Then("Verify $type has column value as null")
+	public void executeQueryToGetApplicationBlockStatus(String columnName) {
+
+		Device device = context.get(ContextConstants.DEVICE);
+		dbFlow.executeQueryToGetStatusAsNull(device, columnName);
 	}
+
+	@Given("Verify $type has column value as not null")
+	@Then("Verify $type has column value as not null")
+	public void executeQueryToGetApplicationBlockStatusAsNotNulll(String columnName) {
+
+		Device device = context.get(ContextConstants.DEVICE);
+		dbFlow.executeQueryToGetStatusNotNull(device, columnName);
+	}
+
 }
