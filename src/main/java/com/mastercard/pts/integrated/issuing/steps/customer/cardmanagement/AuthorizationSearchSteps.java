@@ -141,6 +141,7 @@ public class AuthorizationSearchSteps {
 	}
 	
 	@When("user verifies available balance after transaction")
+	@Then("user verifies available balance after transaction")
 	public void validateAvailableBalanceAfterTransaction(){
 		BigDecimal availableBalanceBeforeTransaction =context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
 		AvailableBalance availBal = authorizationSearchWorkflow.getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(availableBalanceBeforeTransaction);

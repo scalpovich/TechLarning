@@ -582,6 +582,7 @@ public class HelpDeskSteps {
 	
 	@Given("user verifies available $type limit for card after transaction")
 	@When("user verifies available $type limit for card after transaction")
+	@Then("user verifies available $type limit for card after transaction")
 	public void whenUserVerifyLimitThroughHelpDesk(String type) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.noteDownAvailableLimit(type), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
@@ -864,5 +865,13 @@ public class HelpDeskSteps {
 		device.setCategory(category);
 		device.setAmountType(amount);
 		assertThat(category +" "+ amount +BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device), equalTo(transactionAmount));
+	}
+	
+	@When("user verifies available balance for product $type on helpdesk")
+	public void whenUserVerifyPrepaidBalanceThroughHelpDesk(String type) {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.getWalletBalance(device), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
 	}
 }
