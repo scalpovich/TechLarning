@@ -6,7 +6,7 @@ so that credit limit should be validated
 Meta:
 @StoryName credit_emv_retail_limit
 @CardReplacementCredit
-
+Scenario:1.0 creation of mastercard_individual_primary_emv Card credit device
 Given setting json values in excel for Credit
 When user is logged in institution
 And for EMV Card User fills Device Plan for credit product for Mastercard
