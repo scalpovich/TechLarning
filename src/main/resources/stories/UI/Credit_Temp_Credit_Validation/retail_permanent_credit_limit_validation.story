@@ -41,6 +41,6 @@ And MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+And device has "normal" status
 And user verifies available permanent limit for card after transaction
 Then user sign out from customer portal
