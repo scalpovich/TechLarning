@@ -38,7 +38,7 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
-
+import com.mastercard.pts.integrated.issuing.domain.ProductType;
 @Component
 @Navigation(tabTitle = HelpdeskNav.TAB_HELPDESK, treeMenuItems = { HelpdeskNav.L1_ACTIVITY, HelpdeskNav.L2_GENERAL })
 public class HelpdeskGeneralPage extends AbstractBasePage {
@@ -1202,13 +1202,36 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		logger.info("credit limit change request: {}",helpdeskGeneral.getCardPackId());
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
+		if(ProductType.INDIVIDUAL.contains(helpdeskGeneral.getCustomerType()))
+			creditLimitChangeRequestIndividual(helpdeskGeneral);
+		else if(ProductType.CORPORATE.contains(helpdeskGeneral.getCustomerType()))
+			creditLimitChangeRequestCorporate(helpdeskGeneral);
+		SimulatorUtilities.wait(5000);
+		clickCurrentStatusAndLimitsTab();
+		clickEndCall();
+		return new BigDecimal(helpdeskGeneral.getNewCreditLimit()+".00");
+	}
+	
+	
+	public void creditLimitChangeRequestCorporate(HelpdeskGeneral helpdeskGeneral){
+		runWithinPopup("227 - Credit limit Change Commercial Cards", ()->{
+			selectLimitType(helpdeskGeneral.getLimitType());
+			enterNewCreditLimit(helpdeskGeneral.getNewCreditLimit());
+			enterNotes(helpdeskGeneral.getNotes());
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();
+		});
+	}
+	
+	public void creditLimitChangeRequestIndividual(HelpdeskGeneral helpdeskGeneral){
 		runWithinPopup("226 - Credit limit Change Request", ()->{
-			if(helpdeskGeneral.getLimittypestatus().equalsIgnoreCase("true")){
-				selectLimitType(helpdeskGeneral.getLimitType());
+			selectLimitType(helpdeskGeneral.getLimitType());
+			if(helpdeskGeneral.getLimitType().equalsIgnoreCase("Temporary [T]"))
+			{
 				WebElementUtils.pickDate(effectiveDateTxt, LocalDate.now());
 				WebElementUtils.pickDate(endDateTxt, LocalDate.now());
 			}
-			selectLimitType(helpdeskGeneral.getLimitType());
 			enterClientCreditLimit(helpdeskGeneral.getClientCreditLimit());
 			enterAccountCreditLimit(helpdeskGeneral.getAccountCreditLimit());
 			enterNewCreditLimit(helpdeskGeneral.getNewCreditLimit());
@@ -1217,11 +1240,5 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			verifyOperationStatus();
 			clickOKButtonPopup();
 		});
-		SimulatorUtilities.wait(5000);
-		clickCurrentStatusAndLimitsTab();
-		clickEndCall();
-		return new BigDecimal(helpdeskGeneral.getNewCreditLimit()+".00");
 	}
-
-
 }

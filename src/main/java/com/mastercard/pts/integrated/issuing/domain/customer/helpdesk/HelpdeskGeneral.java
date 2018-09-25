@@ -58,8 +58,17 @@ public class HelpdeskGeneral {
 	private String clientCreditLimit;
 	private String accountCreditLimit; 
 	private String newCreditLimit;
+	private String customerType;
 	
 	
+	public String getCustomerType() {
+		return customerType;
+	}
+
+	public void setCustomerType(String customerType) {
+		this.customerType = customerType;
+	}
+
 	public String getLimittypestatus() {
 		return limittypestatus;
 	}

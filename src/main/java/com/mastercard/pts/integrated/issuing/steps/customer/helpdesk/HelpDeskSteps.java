@@ -602,7 +602,9 @@ public class HelpDeskSteps {
 	@Then("device has \"$deviceStatus\" status")
 	public void thenDeviceHasStatus(String deviceStatus) {
 		String expectedStatus = DeviceStatus.fromShortName(deviceStatus);
-		Device device = context.get(ContextConstants.DEVICE);
+		Device device = new Device();//context.get(ContextConstants.DEVICE);
+		device.setDeviceNumber("5377166021013019");
+		device.setAppliedForProduct("Credit [C]");
 		String actualStatus = helpdeskWorkflow.getDeviceStatus(device);
 		assertThat(STATUS_INCORRECT_INFO_MSG, actualStatus, equalTo(expectedStatus));
 		context.put(ContextConstants.DEVICE, device);
@@ -862,12 +864,13 @@ public class HelpDeskSteps {
 		assertThat(category +" "+ amount +BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device), equalTo(transactionAmount));
 	}
 	
-	@Then("user activates $limittype credit limit change request")
-	@Given("user activates $limittype credit limit change request")
-	@When("user activates $limittype credit limit change request")
-	public void whenUserActivatesCreditLimitChangeRequestThroughHelpdesk(String limitType) {
+	@Then("user activates $limittype credit limit change request for $customerType")
+	@Given("user activates $limittype credit limit change request for $customerType")
+	@When("user activates $limittype credit limit change request for $customerType")
+	public void whenUserActivatesCreditLimitChangeRequestThroughHelpdesk(String limitType,String customerType) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProviderWithCreditCardLimits(provider);
 		helpdeskGeneral.setLimitType(limitType);
+		helpdeskGeneral.setCustomerType(customerType);
 		helpdeskWorkflow.clickCustomerCareEditLink();		
 		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.activateCreditLimitChangeRequest(helpdeskGeneral));
 	}
