@@ -89,6 +89,7 @@
 	   "deviceJoiningAndMemberShipFeePlan":"AUTOMATION [TA3608VH]",
 	   "deviceEventBasedFeePlan":"AUTOMATION [TA1764NE]",
 	   "transactionLimitPlan":"AUTOMATION [TA1347LPRR]",
+	   "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
 	   "transactionPlan":"AUTOMATION [T8278L]",
 	   "creditPlan":"TA4413NYAX [102]",
 	   "billingCycle":"AUTOMATION [131]",
