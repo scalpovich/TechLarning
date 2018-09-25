@@ -33,6 +33,7 @@ And processes device production batch for debit
 And device has "normal" status
 Then user activates device through helpdesk
 And user sign out from customer portal
+And embossing file batch was generated in correct format
 
 Scenario: 1.3 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
