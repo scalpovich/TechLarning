@@ -140,11 +140,4 @@ public class CashPage extends AbstractBasePage {
 		verifyUiOperationNoEdit("Add Cash");
 	}
 	
-	/*@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(remittanceNumberTxt),
-				WebElementUtils.elementToBeClickable(remittanceSeq)
-				);
-	}*/
 }
