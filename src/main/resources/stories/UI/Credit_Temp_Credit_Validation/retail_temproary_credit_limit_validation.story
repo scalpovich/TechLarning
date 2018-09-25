@@ -4,7 +4,7 @@ I want to validate temporary credit limit for retail card
 so that credit limit should be validated
 
 Meta:
-@StoryName credit_emv_retail
+@StoryName credit_emv_retail_limit
 @CardReplacementCredit
 
 Given setting json values in excel for Credit
@@ -23,7 +23,7 @@ And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
-And user activates temproary credit limit change request
+And user activates Temporary [T] credit limit change request
 Then user sign out from customer portal
 
 Scenario: Pin Generation 

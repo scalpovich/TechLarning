@@ -5,7 +5,7 @@ I want to validate temporary credit limit for corporate card
 so that credit limit should be validated
 
 Meta:
-@StoryName credit_emv_retail
+@StoryName credit_emv_retail_limit
 @CardReplacementCredit
 Scenario:1.0 creation of mastercard_individual_primary_emv Card credit device
 Meta:
