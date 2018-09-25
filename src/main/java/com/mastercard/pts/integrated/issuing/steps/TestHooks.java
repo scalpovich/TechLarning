@@ -46,11 +46,15 @@ public class TestHooks {
 	private DataLoader dataLoader;
 
 	@BeforeStory
-	public void initStoryContext(@Named("StoryName") String storyName) {
+	public void initStoryContext(@Named("StoryName") String storyName, @Named("Data") String testData) {
 		testContext.initStoryContext(storyName);
 		Optional<Map<String, String>> data = dataLoader.loadData(storyName);
 		if (data.isPresent()) {
 			testContext.put(TestContext.KEY_STORY_DATA, data.get());
+			if(testData!=null&&!testData.isEmpty()){
+			    data.get().put(testData.split("=")[0].trim(), testData.split("=")[1].trim());
+				testContext.put(TestContext.KEY_STORY_DATA, data.get());
+				}
 		} else {
 			logger.warn("There is no data set for story: {}", storyName);
 		}
