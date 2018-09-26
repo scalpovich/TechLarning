@@ -50,6 +50,7 @@ public class ClientPhotoDownloadBatchPage extends AbstractBasePage {
 		enterValueinTextBox(applicationNumberTxt,device.getApplicationNumber());
 		clickSearchButton();
 		SimulatorUtilities.wait(2000);
+		waitAndSearchForRecordToAppear();
 		if(isNoRecordsFoundInTable())
 		{a[0]=false; a[1]=false;}
 		else
