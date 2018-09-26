@@ -56,7 +56,6 @@ public class ConstantData {
 	public static final String AUTHORIZATION_REPORT_FILE_KEY = "Auto";
 	public static final String AUTHORIZATION_CODE = "authCode";
 	public static final String TRANSACTION_AMOUNT = "transactionAmount";
-	public static final String TRANSACTION_DATE = "transactionDate";
 	public static final String INTERNATIONAL_ALLOW_DISALLOW = "International Use Allow/Disallow [400]";
 	public static final String ECCOMERCE_ALLOW_DISALLOW= "E-commerce Activation/Deactivation [304]";
 

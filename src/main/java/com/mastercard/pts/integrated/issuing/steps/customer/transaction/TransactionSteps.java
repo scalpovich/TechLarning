@@ -110,7 +110,7 @@ public class TransactionSteps {
 
 		String temp = transaction;
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
-		context.put(ConstantData.TRANSACTION_DATE, ContextConstants.INSTITUTION_DATE);
+		context.put(ContextConstants.TRANSACTION_DATE, ContextConstants.INSTITUTION_DATE);
 		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));
 		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 			// ECOMM are pinless tranasactions
