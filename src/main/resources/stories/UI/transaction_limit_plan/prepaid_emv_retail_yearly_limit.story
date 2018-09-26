@@ -5,23 +5,32 @@ I want to perform transaction
 
 Meta:
 @StoryName prepaid_emv_retail_Limits
-@DailyLimit
+@YearlyLimit
 @Limits
 
-Scenario: 1.1 Create EMV prepaid device
+Scenario: 1.0 Set up prepaid emv corporate travel card
 Given setting json values in excel for Prepaid
 When user is logged in institution
 And user use existing transaction limit plan for limit type YEARLY
-And for EMV Card User fills Device Plan for prepaid product for Mastercard
-And User fills Wallet Fee Plan for prepaid product
-And User fills Wallet Plan for prepaid product and program Retail prepaid Card
-And User Primary Device fills New Program Retail prepaid Card section for prepaid product for Mastercard
-And for Primary Device and New Client user fills Device Range section for prepaid product
-And prepaid device is created using new device screen for Individual and Primary Device and New Client and EMV Card
-And prepaid processes pre-production batch using new Device
-And prepaid processes deviceproduction batch using new Device for Supplementary
-And prepaid processes pinProduction batch using new Device for Supplementary
+And User fills Device Plan for "Prepaid" "emv" card
+And User fills Wallet Plan for prepaid product
+And User fills Program section for prepaid product
+And User fills Business Mandatory Fields Screen for prepaid product
+And User fills Device Range section for prepaid product
+And user assigns service code to program
+Then user creates new device of prepaid type for new client
+
+Scenario: 1.1 prepaid emv corporate travel card device production
+Given user is logged in institution
+When a new device was created
+And processes pre-production batch for prepaid
+And processes device production batch for prepaid
+And processes pin generation batch for prepaid
+And user has wallet number information for prepaid device
+And user performs adjustment transaction
+And user has current wallet balance amount information for prepaid device
 And device has "normal" status
+And user activates device through helpdesk
 Then user sign out from customer portal
 
 Scenario: 1.2 Pin Generation
@@ -39,7 +48,9 @@ Then MAS test results are verified
 Scenario: 1.4 Authorization Search page validation
 Given user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
+And user verifies available balance after transaction
 And user validate device usage for Daily Velocity Utilized and Daily Amount Utilized
+And user validate available balance for prepaid product on helpdesk
 And user sign out from customer portal
 
 Scenario: 1.5 Update Transaction Amount More than Allowed Periodic Amount
@@ -50,7 +61,8 @@ When perform an EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
 And user validate device usage for Daily Velocity Utilized and Daily Amount Utilized
-And assert Decline response with 34007 AuthDecline Code and Transaction exceeded with daily amount configured at device plan level. as description
+And assert Decline response with 34007 AuthDecline Code and Transaction exceeded with yearly amount configured at device plan level. as description
+And user validate available balance for prepaid product on helpdesk
 And user sign out from customer portal
 
 Scenario: 1.7 Update Transaction Amount Less than Allowed Periodic Amount
@@ -61,7 +73,9 @@ When perform an EMV_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
+And user verifies available balance after transaction
 And user validate device usage for Daily Velocity Utilized and Daily Amount Utilized
+And user validate available balance for prepaid product on helpdesk
 And user sign out from customer portal
 
 Scenario: 1.9 Perform EMV_PURCHASE Authorization transaction to check Frequency Exceeded
@@ -69,5 +83,6 @@ When perform an EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 123-Frequency Exceeded status
 And user validate device usage for Daily Velocity Utilized and Daily Amount Utilized
-And assert Decline response with 34006 AuthDecline Code and Transaction exceeded with periodic daily configured at device plan level. as description
+And assert Decline response with 34006 AuthDecline Code and Transaction exceeded with yearly velocity configured at device plan level. as description
+And user validate available balance for prepaid product on helpdesk
 And user sign out from customer portal
