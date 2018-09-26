@@ -159,17 +159,14 @@ public class DeviceSteps {
 		device.setSubApplicationType(subApplicationType);
 		device.setDeviceType1(deviceType);
 		
-		Map<String,Object> allData=context.get(TestContext.KEY_STORY_DATA);
-
-		if (allData.containsKey(PROMOTION_FEE_PLAN))
-		{
-			device.setPromotionPlanCode(provider.getString(PROMOTION_FEE_PLAN));					
+		Map<String, Object> allData = context.get(TestContext.KEY_STORY_DATA);
+		if (allData.containsKey(PROMOTION_FEE_PLAN)) {
+			device.setPromotionPlanCode(provider.getString(PROMOTION_FEE_PLAN));
 		}
-		
 		Program program = context.get(ContextConstants.PROGRAM);
 		device.setProgramCode(program.buildDescriptionAndCode());
 		
-		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && !(device.getSubApplicationType().contains(SubApplicationType.NEW_CLIENT))){
+		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) /*&& !(device.getSubApplicationType().contains(SubApplicationType.NEW_CLIENT))*/){
 			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
 			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 		} else {

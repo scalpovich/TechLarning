@@ -200,7 +200,6 @@ public class TransactionSearchPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
 		waitAndSearchForRecordToAppear();
 		joiningFee = joiningFees.getText();
-		logger.info("Joining Fee on Transaction Search is {}", joiningFee );
 		return joiningFee;
 	}
 	

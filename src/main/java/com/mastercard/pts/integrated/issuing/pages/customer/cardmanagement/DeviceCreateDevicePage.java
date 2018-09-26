@@ -3,9 +3,10 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
 import org.hamcrest.Matchers;
 import org.junit.Assert;
-import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -71,9 +72,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanCode1:input:dropdowncomponent")
 	private MCWebElement devicePlan1DDwn;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanPromoCode1:input:dropdowncomponent")
-	private MCWebElement promotionPlanDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePhotoIndicator1:input:dropdowncomponent")
 	private MCWebElement photoIndicatorDDwn;
@@ -167,8 +165,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Existing Client Code')]")
 	private MCWebElement existingClientLabel;
 	
-	private String programCodeDDwnBy = "view:programCode:input:dropdowncomponent";
-	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanPromoCode1:input:dropdowncomponent")
+	private MCWebElement promotionPlanDDwn;
+		
 	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
 	}
@@ -309,19 +308,13 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
   	}
 
 	private void fillBatchDetails(Device device) {
-		if(device.getApplicationType().contains(ApplicationType.PRIMARY_DEVICE)){
-			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
-			clickWhenClickable(generateDeviceBatchBtn);
-			waitForWicket();
-			SimulatorUtilities.wait(10000);
-			context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());
-		}else if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
-			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn,ConstantData.OPEN_BATCH);
-			WebElementUtils.selectDropDownByVisibleText(openBatchDdwn, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));			
-		}		
+		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
+		clickWhenClickable(generateDeviceBatchBtn);
+		waitForWicket();
+		SimulatorUtilities.wait(10000);
+		context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());
 		device.setBatchNumber(batchNumberTxt.getText());
-		logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());
-		
+		logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());		
 		clickNextButton();
 	}
 
@@ -336,23 +329,20 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		SimulatorUtilities.wait(1000);
 		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
-			SimulatorUtilities.wait(6000);
+			SimulatorUtilities.wait(8000);
 			moveToElementAndClick(existingClientLabel, 50, 50);
 			waitForWicket(driver());
-			SimulatorUtilities.wait(15000);		
-		} else {
-			selectByVisibleText(customerTypeDDwn, device.getCustomerType());          
-			SimulatorUtilities.wait(6000);
-          	waitForWicket(driver());
-          	
-			try {
-				selectByVisibleText(programCodeDDwn, device.getProgramCode());
-			} catch (StaleElementReferenceException e) {
-				MCWebElement element = getMCWebElementFromWebElement(FindBy.NAME, programCodeDDwnBy);
-				selectByVisibleText(element, device.getProgramCode());
-			}
-          	
-			SimulatorUtilities.wait(5000);			
+			SimulatorUtilities.wait(10000);
+			JavascriptExecutor jse = (JavascriptExecutor) getFinder().getWebDriver();
+			jse.executeScript("el = document.elementFromPoint(400, 400); el.click();");
+
+		}else{
+			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
+			SimulatorUtilities.wait(10000);
+			waitForWicket(driver());
+			selectByVisibleText(programCodeDDwn, device.getProgramCode());
+			SimulatorUtilities.wait(10000);	
+			waitForWicket(driver());
 		}
 		SimulatorUtilities.wait(1000);
 		clickNextButton();
@@ -363,7 +353,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		{
 			WebElementUtils.selectDropDownByVisibleText(promotionPlanDDwn, device.getPromotionPlanCode());
 		}
-																	
 		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
 	}
 
@@ -457,6 +446,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);
 			WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));
 		}
+		
 		clickNextButton();		
 	}
 }
