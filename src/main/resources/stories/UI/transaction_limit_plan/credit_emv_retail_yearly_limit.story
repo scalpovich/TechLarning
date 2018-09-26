@@ -39,6 +39,9 @@ Then MAS test results are verified
 Scenario: 1.4 Authorization Search page validation
 Given user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
+And user verifies available balance after transaction
+And device has "normal" status
+And user verifies available Card limit for card after transaction
 And user validate device usage for Yearly Velocity Utilized and Yearly Amount Utilized
 And user sign out from customer portal
 
@@ -51,6 +54,8 @@ Then user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
 And user validate device usage for Yearly Velocity Utilized and Yearly Amount Utilized
 And assert Decline response with 34007 AuthDecline Code and Transaction exceeded with yearly amount configured at device plan level. as description
+And device has "normal" status
+And user verifies available Card limit for card after transaction
 And user sign out from customer portal
 
 Scenario: 1.7 Update Transaction Amount Less than Allowed Periodic Amount
@@ -61,6 +66,9 @@ When perform an EMV_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
+And user verifies available balance after transaction
+And device has "normal" status
+And user verifies available Card limit for card after transaction
 And user validate device usage for Yearly Velocity Utilized and Yearly Amount Utilized
 And user sign out from customer portal
 
@@ -70,4 +78,6 @@ Then user is logged in institution
 And search Purchase authorization and verify 123-Frequency Exceeded status
 And user validate device usage for Yearly Velocity Utilized and Yearly Amount Utilized
 And assert Decline response with 34006 AuthDecline Code and Transaction exceeded with yearly velocity configured at device plan level. as description
+And device has "normal" status
+And user verifies available Card limit for card after transaction
 And user sign out from customer portal
