@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.Scanner;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.slf4j.Logger;
@@ -47,7 +48,10 @@ public class BatchSteps {
 
 	@Autowired
 	private TestContext context;
-
+	
+	@Autowired
+	private FileCreation fileCreation;
+	
 	@When("embossing file batch was generated in correct format")
 	@Then("embossing file batch was generated in correct format")
 	public void  embossingFileWasGeneratedSuccessfully() {
@@ -108,7 +112,7 @@ public class BatchSteps {
 		}
 	}
 	
-	
+	@Given("Pin Offset file batch was generated successfully")
 	@When("Pin Offset file batch was generated successfully")
 	@Then("Pin Offset file batch was generated successfully")
 	public void getPinFileData() {
@@ -126,8 +130,9 @@ public class BatchSteps {
 				device.setPinOffset(values[0]);
 				logger.info("Pin Offset :  {}", values[0]);
 			}
-			scanner.close(); 
+			scanner.close();
 			context.put("PIN_OFFSET_FILE", batchFile.toString());
+			
 			// renaming file name as sometimes the embosing file name is also same
 			MiscUtils.renamePinFile(batchFile.toString());
 			MiscUtils.reportToConsole("******** Pin Offset Completed ***** ");
@@ -147,19 +152,16 @@ public class BatchSteps {
 	{
 	
 		String batchFile = context.get("PIN_OFFSET_FILE") + "_PinFile";
-		//String batchFile = "C:\\Users\\e084930\\AppData\\Local\\Temp\\20180919_IssuingTests_7158600152725784983\\19092018110088CTA5050PQT7686A2181A22222_PinFile";
 		String ackIndicator = "";
 		if(acknowledgementType.equalsIgnoreCase("positive"))
 			ackIndicator = "Y";
 		else
 			ackIndicator = "N";
 		
-		String wholeDataToAppend = "  " + ackIndicator + StringUtils.rightPad(DateUtils.getDateddMMyyyy(), 208, "0");
-		FileCreation.appendContentsToFile(batchFile,wholeDataToAppend);
+		String wholeDataToAppend = "\t" + ackIndicator + StringUtils.rightPad(DateUtils.getDateddMMyyyy(), 208, "0");
+		fileCreation.appendContentsToFile(batchFile,wholeDataToAppend);
 		
-		logger.info("Changing Pin Offset File to Original Name");
-		MiscUtils.changePinFileToOriginalName(batchFile, context.get("PIN_OFFSET_FILE"));
-		logger.info("Pin Offset File Name Successfully Changed");
+
 	}
 	
 	

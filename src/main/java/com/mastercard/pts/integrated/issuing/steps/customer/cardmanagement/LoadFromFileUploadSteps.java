@@ -175,22 +175,17 @@ public class LoadFromFileUploadSteps {
 	}
 	
 	
-	@When("User uploads the PinOffset file and creates $batchName batch file")
-	@Then("User uploads the PinOffset file and creates $batchName batch file")
-	public void thenUserUploadsThePinOffsetFile(String batchName) {
-		ProcessBatches batch = ProcessBatches.getBatchData();
+	@When("User uploads the updated PinOffset file to Server")
+	@Then("User uploads the updated PinOffset file to Server")
+	public void thenUserUploadsTheUpdatedPinOffsetFileToServer() {
+		ProcessBatches batch=new ProcessBatches();
 		String batchFile = context.get("PIN_OFFSET_FILE");
 		pinOffsetFileName = new File(batchFile);
 		loadFromFileUploadWorkflow.loadIncomingPinOffset(pinOffsetFileName);
 		batch.setBatchFileName(pinOffsetFileName.getName());
-		
-		SimulatorUtilities.wait(30000);	
-		
-		batch.setJoBID(processBatchesFlows.processUploadBatches(batchName, batch.getFileName()));
-		SimulatorUtilities.wait(5000);
-		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(batch, batch.getFileName()));
+		SimulatorUtilities.wait(15000);
 	}	 
-
+	
 	@When("user processes upload batch for $type")
 	public void whenUserProcessesUploadBatchForPrepaid(String type) {
 		ProcessBatches batch = ProcessBatches.getBatchData();

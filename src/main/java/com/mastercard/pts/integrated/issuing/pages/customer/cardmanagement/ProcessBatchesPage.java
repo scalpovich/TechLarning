@@ -175,6 +175,15 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	private MCWebElement institutionDateTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
+	private MCWebElement fileTypeDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:3:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	private MCWebElement vendorNameDDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='processFileName']//span[@class='labeltextf']")
+	private MCWebElement processFileNameTxt;
 
 	public final String SYSTEM_INTERNAL_PROCESSING = "SYSTEM INTERNAL PROCESSING [B]";
 	
@@ -422,7 +431,6 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			processAccountsDownloadBatch(batch);
 		else if ("Statement Download [STATEMENT_DOWNLOAD]".equals(batch.getBatchName()))
 			statementDownloadBatch(batch);
-
 		return batchStatus;
 	}
 
@@ -477,12 +485,13 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 
 	public void submitAndVerifyBatch() {
-		submitBtn.click();
+		submitBtn.click();	
 		statusBtn.click();
 		runWithinPopup("View Batch Details", () -> {
 			logger.info("Retrieving batch status");
 			waitForBatchStatus();
 			batchStatus = batchStatusTxt.getText();
+			context.put("DAT_FILE_NAME", processFileNameTxt.getText());
 			clickCloseButton();
 		});
 	}
@@ -555,6 +564,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		String statusXpath = elementXpath + "//parent::td//following-sibling::td/a";
 		SimulatorUtilities.wait(20000);
 		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
+
 		switchToIframe(Constants.VIEW_BATCH_DETAILS);
 
 		// unless it is completed, refresh it - No of attempts: 100
@@ -674,4 +684,20 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 		return batchStatus;
 	}
+	
+	public String processCarrierDownloadBatch(ProcessBatches batch) {
+		logger.info("Process Carrier Download Batch: {}", batch.getBatchName());
+		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, batch.getBatchType());
+		doSelectByVisibleText(batchNameDDwn, batch.getBatchName());
+		SimulatorUtilities.wait(5000);
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+		doSelectByVisibleText(fileTypeDDwn, batch.getFileType());
+		SimulatorUtilities.wait(5000);
+		WebElementUtils.selectDropDownByVisibleText(vendorNameDDwn, batch.getVendorName());
+		submitAndVerifyBatch();
+		return batchStatus;
+	}
+	
+	
+
 }

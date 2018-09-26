@@ -39,7 +39,7 @@
    "branch":"auto branch [1000]",
    "cardPackIdGenerationTemplate":"AUTOMATION [PAN042]",
    "deviceIdGenerationTemplate":"AUTOMATION [PAN019]",
-   "embossingVendor":"AUTOVENDOR [A22222]",
+   "embossingVendor":"AUTOMATION PERS BUREAU [AUTOB1]",
    "mastercardPrepaidIssuerBin":"532560",
    "mastercardDebitIssuerBin":"543870",
    "mastercardCreditIssuerBin":"589765",

@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.steps.devicecreation;
 
+import java.io.File;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
@@ -8,26 +10,34 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ResendPinRequest;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SearchApplicationDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessFlows;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProcessBatchesFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.SearchApplicationDetailsFlows;
 
 @Component
 public class ApplicationUploadSteps {
+	
+	@Autowired
+	private TestContext context;
 
 	@Autowired
 	private FileCreation fileCreation;
@@ -51,6 +61,9 @@ public class ApplicationUploadSteps {
 	private BatchProcessFlows batchProcessFlows;
 	
 	@Autowired
+	private BatchProcessWorkflow batchProcessWorkflow;
+	
+	@Autowired
 	Program program;
 	
 	@Autowired
@@ -58,6 +71,9 @@ public class ApplicationUploadSteps {
 
 	@Autowired
 	private DataProvider provider;
+	
+	@Autowired
+	private KeyValueProvider keyValueProvider;
 	
 	public SearchApplicationDetails searchDomain;
 
@@ -85,7 +101,6 @@ public class ApplicationUploadSteps {
 		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(processBatch, fileName));
 	}
 	
-
 	@Then("The file will process the records successfully if all the all the business mandatory field are configured in file")
 	public void verifyApplicationFileUpload() {
 		searchDomain = searchDomain.getSearchApplicationData();
@@ -225,4 +240,39 @@ public class ApplicationUploadSteps {
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPinProductionBatchAllForFileUpload(batch);
 	}
+	
+
+	@When("User creates UPLOAD $batchName batch")
+	@Then("User creates UPLOAD $batchName batch")
+	public void thenUserCreatesUploadPinFileAcknowledgementBatch(String batchName) {
+		ProcessBatches batch=new ProcessBatches();
+		//ProcessBatches batch = ProcessBatches.getBatchData()
+		String batchFile = context.get("PIN_OFFSET_FILE");
+		batch.setBatchFileName((new File(batchFile)).getName());
+		batch.setJoBID(processBatchesFlows.processUploadBatches(batchName, batch.getFileName()));
+		SimulatorUtilities.wait(5000);
+		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(batch, batch.getFileName()));
+	}	 
+	
+	@When("$type processes DOWNLOAD $batchName batch for $fileType File Type")
+	@Then("$type processes DOWNLOAD $batchName batch for $fileType File Type")
+	public void thenUserCreatesCarrierDownloadBatch(String type, String batchName, String fileType) {
+
+		ProcessBatches batch= ProcessBatches.getBatchDataForDownload(keyValueProvider);
+		batch.setBatchName(batchName);
+		batch.setProductType(ProductType.fromShortName(type));
+		batch.setFileType(fileType);
+		batchProcessWorkflow.processCarrierDownloadBatch(batch);
+		
+	}	 
+	
+	@When("$type processes resend pin request batch using new Device")
+	@Then("$type processes resend pin request batch using new Device")
+	public void whenProcessesResendPinRequestBatchUsingNewDevice(String type) {
+		ResendPinRequest batch = new ResendPinRequest();
+		batch.setProductType(ProductType.fromShortName(type));
+		batch.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
+		batchProcessWorkflow.processResendPinRequestBatch(batch);
+	}
+	
 }

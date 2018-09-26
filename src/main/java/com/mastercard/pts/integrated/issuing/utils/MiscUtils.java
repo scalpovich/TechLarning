@@ -46,11 +46,6 @@ public class MiscUtils {
 		return oldfile.renameTo(newfile);
 	}
 		
-	public static boolean changePinFileToOriginalName(String fileName, String originalPinFileName) {
-		File oldfile =new File(fileName);
-		File newfile =new File(originalPinFileName);
-		return oldfile.renameTo(newfile);
-	}
 
 	public static String generateRandomNumberAsString(int number) {
 		return RandomStringUtils.randomNumeric(number);

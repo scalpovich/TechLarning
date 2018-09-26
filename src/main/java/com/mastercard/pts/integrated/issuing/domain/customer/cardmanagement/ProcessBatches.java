@@ -17,9 +17,11 @@ public class ProcessBatches {
 	private String interchangeType;
 	private String extractType;
 	private String methodToGenerateFile;
+	private String vendorName;
 
 	
 	
+
 
 	private static final String BATCH_TYPE = "UPLOAD [U]";
 	
@@ -41,6 +43,14 @@ public class ProcessBatches {
 		batch.setBatchType(BATCH_TYPE);
 		return batch;
 	}
+	
+	public static ProcessBatches getBatchDataForDownload(KeyValueProvider provider){
+		ProcessBatches batch = new ProcessBatches();
+		batch.setBatchType("DOWNLOAD [D]");
+		batch.setVendorName(provider.getString("COURIER_VENDOR"));
+		return batch;
+	}
+	
 	
 	public static void setBatchFileName(String sFileName){
 		fileName = sFileName;
@@ -126,6 +136,14 @@ public class ProcessBatches {
 
 	public void setMethodToGenerateFile(String methodToGenerateFile) {
 		this.methodToGenerateFile = methodToGenerateFile;
+	}
+
+	public String getVendorName() {
+		return vendorName;
+	}
+
+	public void setVendorName(String vendorName) {
+		this.vendorName = vendorName;
 	}
 	
 	

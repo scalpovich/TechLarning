@@ -94,6 +94,7 @@ public class FileCreation {
 	private static final String SELL_RATE = "DEST_CURRENCY";
 	private static final String UPLOAD_FILENAME = "UploadFile";	
 	private static final String CORPORATE_CLIENT_CODE = "12121217222000002";
+	
 
 	private String filename;
 	private String header;
@@ -151,15 +152,28 @@ public class FileCreation {
 		return content;
 	}
 	
-	public static void appendContentsToFile(String filename, String contents) throws IOException 
+	public void appendContentsToFile(String filename, String contents) throws IOException 
 	{ 
 		logger.info("***** File Updation Started : {} ******", filename);
 		
 		BufferedWriter writer = null;
+		BufferedReader reader = null;
+		String line = null;
+		filenameStatic = context.get("PIN_OFFSET_FILE");
+		
 		try { 
-		File file = new File(filename);
-		writer = new BufferedWriter(new FileWriter(file, true)); 
-		writer.write(contents); 
+		File oldfile = new File(filename);
+		File newFile = new File(filenameStatic);
+		
+		reader = new BufferedReader(new FileReader(oldfile));
+		writer = new BufferedWriter(new FileWriter(newFile, true));
+		
+		line = (reader.readLine()).replace(System.lineSeparator(), "");
+		writer.write(line);
+		writer.write(contents);
+		
+		oldfile.deleteOnExit();
+		
 		} 
 		catch (IOException e) { 
 			logger.error(ConstantData.EXCEPTION, e);
@@ -168,6 +182,7 @@ public class FileCreation {
 			MiscUtils.propagate(e);
 		} finally {
 			writer.close();
+			reader.close();
 		}
 		logger.info("***** File Updation Completed *****");
 	}
