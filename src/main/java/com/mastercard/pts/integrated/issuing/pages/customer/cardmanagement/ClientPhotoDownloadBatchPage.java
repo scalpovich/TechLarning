@@ -49,7 +49,7 @@ public class ClientPhotoDownloadBatchPage extends AbstractBasePage {
 		selectByVisibleText(productTypeDDwn,context.get(ConstantData.PRODUCT_IDENTITY));
 		enterValueinTextBox(applicationNumberTxt,device.getApplicationNumber());
 		clickSearchButton();
-		SimulatorUtilities.wait(500);
+		SimulatorUtilities.wait(2000);
 		if(isNoRecordsFoundInTable())
 		{a[0]=false; a[1]=false;}
 		else
