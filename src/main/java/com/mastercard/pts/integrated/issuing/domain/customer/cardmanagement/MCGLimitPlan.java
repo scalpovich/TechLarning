@@ -11,42 +11,19 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 public class MCGLimitPlan {
 
-	private static final String PERIOD = "PERIOD";
-	private static final String PERIOD_NUMBER = "PERIOD_NUMBER";
 	private static final String MCG_CODE = "MCG_CODE";
 	private static final String FROM_MONTH_ON_BOOK = "0";
 	private static final String TO_MONTH_ON_BOOK = "12";
-	private static final String PER_TRANSACTION_AMOUNT = "PER_TRANSACTION_AMOUNT";
-	private static final String PER_TRANSACTION_RESPONSE = "PER_TRANSACTION_RESPONSE";
-	private static final String PER_TRANSACTION_PERCENTAGE_OF_CREDIT_LIMIT = "PER_TRANSACTION_PERCENTAGE_OF_CREDIT_LIMIT";
 	private static final String MCG_DAILY_AMOUNT = "MCG_DAILY_AMOUNT";
 	private static final String MCG_DAILY_RESPONSE = "MCG_DAILY_RESPONSE";
-	private static final String DAILY_PERCENTAGE_OF_CREDIT_LIMIT = "DAILY_PERCENTAGE_OF_CREDIT_LIMIT";
 	private static final String MCG_DAILY_VELOCITY = "MCG_DAILY_VELOCITY";
 	private static final String MCG_DAILY_VELOCITY_RESPONSE = "MCG_DAILY_VELOCITY_RESPONSE";
-	private static final String PERIODIC_AMOUNT = "PERIODIC_AMOUNT";
-	private static final String PERIODIC_RESPONSE = "PERIODIC_RESPONSE";
-	private static final String PERIODIC_PERCENTAGE_OF_CREDIT_LIMIT = "PERIODIC_PERCENTAGE_OF_CREDIT_LIMIT";
-	private static final String PERIODIC_VELOCITY = "PERIODIC_VELOCITY";
-	private static final String PERIODIC_VELOCITY_RESPONSE = "PERIODIC_VELOCITY_RESPONSE";
-	private static final String PER_TRANSACTION_AMOUNT_INTERNATIONAL = "PER_TRANSACTION_AMOUNT_INTERNATIONAL";
-	private static final String PER_TRANSACTION_RESPONSE_INTERNATIONAL = "PER_TRANSACTION_RESPONSE_INTERNATIONAL";
-	private static final String PER_TRANSACTION_PERCENTAGE_OF_CREDIT_LIMIT_INTERNATIONAL = "PER_TRANSACTION_PERCENTAGE_OF_CREDIT_LIMIT_INTERNATIONAL";
 	private static final String MCG_DAILY_AMOUNT_INTERNATIONAL = "DAILY_AMOUNT_INTERNATIONAL";
-	private static final String DAILY_RESPONSE_INTERNATIONAL = "DAILY_RESPONSE_INTERNATIONAL";
-	private static final String DAILY_PERCENTAGE_OF_CREDIT_LIMIT_INTERNATIONAL = "DAILY_PERCENTAGE_OF_CREDIT_LIMIT_INTERNATIONAL";
-	private static final String DAILY_VELOCITY_INTERNATIONAL = "DAILY_VELOCITY_INTERNATIONAL";
-	private static final String DAILY_VELOCITY_RESPONSE_INTERNATIONAL = "DAILY_VELOCITY_RESPONSE_INTERNATIONAL";
-	private static final String PERIODIC_AMOUNT_INTERNATIONAL = "PERIODIC_AMOUNT_INTERNATIONAL";
-	private static final String PERIODIC_RESPONSE_INTERNATIONAL = "PERIODIC_RESPONSE_INTERNATIONAL";
-	private static final String PERIODIC_PERCENTAGE_OF_CREDIT_LIMIT_INTERNATIONAL = "PERIODIC_PERCENTAGE_OF_CREDIT_LIMIT_INTERNATIONAL";
-	private static final String PERIODIC_VELOCITY_INTERNATIONAL = "PERIODIC_VELOCITY_INTERNATIONAL";
-	private static final String PERIODIC_VELOCITY_RESPONSE_INTERNATIONAL = "PERIODIC_VELOCITY_RESPONSE_INTERNATIONAL";
 	public static final String EXCEEDS_AMOUNT_LIMIT_DOMESTIC_DESCRIPTION ="MCC - Transaction amount is greater than daily amount configured at Wallet Plan level (Domestic).";
 	public static final String FREQUENCY_EXCEEDED_DOMESTIC_DESCRIPTION ="MCC - Transaction amount is greater than daily velocity configured at Wallet Plan level (Domestic).";
 	public static final String EXCEEDS_AMOUNT_LIMIT_INTERNATIONAL_DESCRIPTION ="MCC - Transaction amount is greater than daily amount configured at Wallet Plan level (International).";
 	public static final String FREQUENCY_EXCEEDED_INTERNATIONAL_DESCRIPTION ="MCC - Transaction amount is greater than daily velocity configured at Wallet Plan level (International).";
-
+	public static final String EXCEEDS_AMOUNT_LIMIT_PER_TRANS_DOMESTIC_DESCRIPTION ="MCC - Transaction amount is greater than per transaction amount configured at Wallet Plan level (Domestic).";
 
 	private String mcgLimitPlanCode;
 	private String description;
@@ -109,6 +86,7 @@ public class MCGLimitPlan {
 		description.put("Frequency Exceeded Domestic",FREQUENCY_EXCEEDED_DOMESTIC_DESCRIPTION);
 		description.put("Exceeds Amount Limit International", EXCEEDS_AMOUNT_LIMIT_INTERNATIONAL_DESCRIPTION);
 		description.put("Frequency Exceeded International",FREQUENCY_EXCEEDED_INTERNATIONAL_DESCRIPTION);
+		description.put("Exceeds Amount Limit Per Trans Domestic",EXCEEDS_AMOUNT_LIMIT_PER_TRANS_DOMESTIC_DESCRIPTION);
 		return description;
 	}
 

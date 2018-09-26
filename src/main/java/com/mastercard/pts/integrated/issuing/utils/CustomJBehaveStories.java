@@ -49,7 +49,7 @@ public abstract class CustomJBehaveStories extends JUnitStories {
 
 	@Override
 	public Configuration configuration() {
-		return new MostUsefulConfiguration().useStoryReporterBuilder(getStoryReporterBuilder()).useStoryControls(new StoryControls().doResetStateBeforeScenario(false))
+		return new MostUsefulConfiguration().useStoryReporterBuilder(getStoryReporterBuilder()).useStoryControls(new StoryControls().doResetStateBeforeScenario(true))
 				.useParameterControls(new ParameterControls().useDelimiterNamedParameters(true)).useParameterConverters(getConverters());
 	}
 

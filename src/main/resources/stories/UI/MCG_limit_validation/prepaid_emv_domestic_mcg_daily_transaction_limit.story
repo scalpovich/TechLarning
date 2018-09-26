@@ -60,7 +60,7 @@ Given set the transaction amount to 10 in program currency
 When perform an EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-And verify the MCG daily transaction and velocity in Device Usage Screen for domestic transactions
+Then verify the MCG daily transaction and velocity in Device Usage Screen for domestic transactions
 And user sign out from customer portal
 
 Scenario:6 Perform EMV-RetailGeneralPurposeCard Purchase 4th transaction

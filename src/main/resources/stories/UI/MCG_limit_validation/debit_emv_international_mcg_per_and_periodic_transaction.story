@@ -38,10 +38,9 @@ Scenario:3 Perform EMV-RetailGeneralPurposeCard Purchase 1st transaction
 Given connection to MAS is established
 Given set the transaction amount to 110 in program currency
 When perform an INT_EMV_PURCHASE MAS transaction
-Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-And verify the MCG daily transaction in Device Usage Screen for international transactions
+Then verify the MCG daily transaction and velocity in Device Usage Screen for international transactions
 And user sign out from customer portal
 
 Scenario:4 Perform EMV-RetailGeneralPurposeCard Purchase 2nd transaction
