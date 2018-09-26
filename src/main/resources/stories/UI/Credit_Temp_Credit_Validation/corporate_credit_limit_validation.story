@@ -29,7 +29,7 @@ And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
 And user activates Permanent [P] credit limit change request for Corporate
 And device has "normal" status
-And user verifies available temporary limit
+And user verifies available permanent limit
 Then user sign out from customer portal
 
 Scenario: Pin Generation 
