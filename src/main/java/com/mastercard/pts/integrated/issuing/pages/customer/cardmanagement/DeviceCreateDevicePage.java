@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -349,7 +350,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		
 		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());		
 		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
-		if(device.getPromotionPlanCode()!=null)
+		if(Objects.nonNull(device.getPromotionPlanCode()))
 		{
 			WebElementUtils.selectDropDownByVisibleText(promotionPlanDDwn, device.getPromotionPlanCode());
 		}

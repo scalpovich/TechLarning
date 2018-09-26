@@ -3,13 +3,11 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequest;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;

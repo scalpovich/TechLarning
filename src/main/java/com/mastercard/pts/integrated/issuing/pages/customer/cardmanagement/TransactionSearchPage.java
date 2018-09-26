@@ -78,7 +78,6 @@ public class TransactionSearchPage extends AbstractBasePage {
 	private MCWebElement joiningFees;
 
 	private String authorizationStatus;
-	private String joiningFee;
 	List<String> joiningAndMembershipFees = new ArrayList();
 	
 	public void selectFromDate(LocalDate date)
@@ -199,8 +198,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 		WebElementUtils.elementToBeClickable(tranDateDDwn);
 		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
 		waitAndSearchForRecordToAppear();
-		joiningFee = joiningFees.getText();
-		return joiningFee;
+		return joiningFees.getText();
 	}
 	
 	

@@ -128,6 +128,4 @@ public class ProcessBatches {
 		this.methodToGenerateFile = methodToGenerateFile;
 	}
 	
-	
-
 }

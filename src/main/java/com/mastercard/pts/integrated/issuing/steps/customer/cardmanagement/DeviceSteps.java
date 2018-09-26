@@ -147,7 +147,6 @@ public class DeviceSteps {
 		context.put(CreditConstants.APPLICATION, device);
 	}
 	
-
 	@Given("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
 	@When("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
 	@Then("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
@@ -159,8 +158,8 @@ public class DeviceSteps {
 		device.setSubApplicationType(subApplicationType);
 		device.setDeviceType1(deviceType);
 		
-		Map<String, Object> allData = context.get(TestContext.KEY_STORY_DATA);
-		if (allData.containsKey(PROMOTION_FEE_PLAN)) {
+		Map<String, Object> storyTestData = context.get(TestContext.KEY_STORY_DATA);
+		if (storyTestData.containsKey(PROMOTION_FEE_PLAN)) {
 			device.setPromotionPlanCode(provider.getString(PROMOTION_FEE_PLAN));
 		}
 		Program program = context.get(ContextConstants.PROGRAM);
@@ -176,7 +175,6 @@ public class DeviceSteps {
 		deviceWorkflow.createDevice(device);
 		context.put(ContextConstants.DEVICE, device);
 	}
-	
 	
 	@When("$type device is created using new Application screen for $customerType and \"$applicationType\" and $subApplicationType and $deviceType")
 	@Given("$type device is created using new Application screen for $customerType and \"$applicationType\" and $subApplicationType and $deviceType")
@@ -223,7 +221,6 @@ public class DeviceSteps {
 		context.put(ContextConstants.DEVICE, device);
 	}
 	
-
 	public void sdnUncheckProgram(String value) {
 		programFlows.programEdit(value);
 		program.setProgramCode(value);
