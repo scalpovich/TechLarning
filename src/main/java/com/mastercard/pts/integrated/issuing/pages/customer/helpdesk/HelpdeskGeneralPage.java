@@ -237,13 +237,22 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement eccomActivate;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Card :']/../../following-sibling::td[1]/span/span")
-	private MCWebElement creditLimitLabel;
+	private MCWebElement availCardCreditLimitLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Card :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement cardCreditLimitLabel;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Account :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement availAccountCreditLimitLabel;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Account :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement accountCreditLimitLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Client :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement clientCreditLimitLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Client :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement availClientCreditLimitLabel;	
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='PDD :']/../../following-sibling::td[1]/span/span/span")
 	private MCWebElement paymentDueDateLabel;
@@ -1134,11 +1143,30 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		BigDecimal creditLimit;
 		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
 		clickWhenClickable(currentStatusAndLimitTab);
-		creditLimit = new BigDecimal(creditLimitLabel.getText());
+		creditLimit = new BigDecimal(availCardCreditLimitLabel.getText());
 		logger.info("Credit limit noted down : {} ", creditLimit);
 		clickEndCall();
 		return creditLimit;
-
+	}
+	
+	public HashMap<String,BigDecimal> noteDownCreditLimit(String type) {
+		HashMap<String,BigDecimal> creditLimit=new HashMap<>();
+		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
+		clickWhenClickable(currentStatusAndLimitTab);	
+		logger.info("Credit limit noted down : {} ", creditLimit);		
+		if(type.equalsIgnoreCase("temporary"))
+		{
+			creditLimit.put("Avail Client",new BigDecimal(availClientCreditLimitLabel.getText()));
+			creditLimit.put("Avail Account",new BigDecimal(availAccountCreditLimitLabel.getText()));
+			creditLimit.put("Avail Card",new BigDecimal(availCardCreditLimitLabel.getText()));
+			clickEndCall();
+			return creditLimit;
+		}		
+		creditLimit.put("Client",new BigDecimal(clientCreditLimitLabel.getText()));
+		creditLimit.put("Account",new BigDecimal(accountCreditLimitLabel.getText()));
+		creditLimit.put("Card",new BigDecimal(cardCreditLimitLabel.getText()));
+		clickEndCall();		
+		return creditLimit;
 	}
 	
 	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {

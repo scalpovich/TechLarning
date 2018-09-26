@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
+import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
@@ -582,9 +583,19 @@ public class HelpDeskSteps {
 	
 	@Given("user verifies available $type limit for card after transaction")
 	@When("user verifies available $type limit for card after transaction")
+	@Alias("user verifies available $type limit")
 	public void whenUserVerifyLimitThroughHelpDesk(String type) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.noteDownAvailableLimit(type), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
+		HashMap<String,BigDecimal> creditLimit;
+		creditLimit=helpdeskWorkflow.noteDownCreditLimit(type);
+		if(type.equalsIgnoreCase("temporary") || type.equalsIgnoreCase("permanent"))
+		{	for (Entry<String, BigDecimal> limit : creditLimit.entrySet()) 	
+				assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, limit.getValue(), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));	
+		}
+		else
+		{
+			assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.noteDownAvailableLimit(type), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
+		}
 	}
 
 	@Given("user sets up device currency through helpdesk for FileUpload")

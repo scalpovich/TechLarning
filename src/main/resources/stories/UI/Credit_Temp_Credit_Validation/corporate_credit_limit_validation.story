@@ -28,6 +28,8 @@ And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
 And user activates Permanent [P] credit limit change request for Corporate
+And device has "normal" status
+And user verifies available temporary limit
 Then user sign out from customer portal
 
 Scenario: Pin Generation 
@@ -46,5 +48,5 @@ And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And user verifies available balance after transaction
 And device has "normal" status
-And user verifies available temporary limit for card after transaction
+And user verifies available card limit for card after transaction
 Then user sign out from customer portal

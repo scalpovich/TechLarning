@@ -180,6 +180,11 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.noteDownAvailableLimit(type);
 	}
 	
+	public HashMap<String,BigDecimal>  noteDownCreditLimit(String type) {
+		clickCustomerCareEditLink();
+		return helpDeskPage.noteDownCreditLimit(type);
+	}
+	
 	public HashMap<String, String> noteDownRequiredValues(String deviceNumber) {
 		clickCustomerCareEditLink();
 		return helpDeskPage.noteDownRequiredValues(deviceNumber);
