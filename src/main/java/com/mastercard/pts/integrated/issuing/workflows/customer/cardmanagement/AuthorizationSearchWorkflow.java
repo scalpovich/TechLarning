@@ -36,7 +36,7 @@ public class AuthorizationSearchWorkflow {
 
 	@Autowired
 	KeyValueProvider provider;
-	
+
 	@Autowired
 	AuthorizationSearchPage authorizationSearchPage;
 
@@ -79,8 +79,8 @@ public class AuthorizationSearchWorkflow {
 		String actualDescription = authSearchPage.getCellTextByColumnName(1, descriptionColumnName);
 		String authCodeValue = authSearchPage.getCellTextByColumnName(1, "Auth Code");
 		String transactionAmountValue = authSearchPage.getCellTextByColumnName(1, "Transaction Amount");
-		String transaction = context.get(ConstantData.TRANSACTION_NAME);
 		
+
 		context.put(ConstantData.AUTHORIZATION_CODE, authCodeValue);
 		context.put(ConstantData.TRANSACTION_AMOUNT, transactionAmountValue);
 		logger.info("CodeAction on Authorization Search Page : {} ", actualCodeAction);
@@ -97,11 +97,21 @@ public class AuthorizationSearchWorkflow {
 		else
 			// to handle "Transaction Currency", "Billing Currency"
 			condition = actualCodeAction.contains(type) && actualDescription.contains(state);
-		
+
 		// Device Usage Code
-		if("000-Successful".equalsIgnoreCase(actualCodeAction) && !"Pre-Auth Completion".equalsIgnoreCase(type) && !transaction.contains("INT")){
+		String billingAmountValue = authSearchPage.getCellTextByColumnName(1, "Billing Amount");
+		String transaction = context.get(ConstantData.TRANSACTION_NAME);
+		/*if("000-Successful".equalsIgnoreCase(actualCodeAction) && !"Pre-Auth Completion".equalsIgnoreCase(type) && !transaction.contains("INT")){
 			device.setDeviceVelocity();
 			device.setDeviceAmountUsage(Double.parseDouble(transactionAmountValue));
+		}else if("000-Successful".equalsIgnoreCase(actualCodeAction) && !"Pre-Auth Completion".equalsIgnoreCase(type) && transaction.contains("INT")){
+			device.setDeviceVelocity();
+			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue));
+		}*/
+		
+		if("000-Successful".equalsIgnoreCase(actualCodeAction) && !"Pre-Auth Completion".equalsIgnoreCase(type)){
+			device.setDeviceVelocity();
+			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue));
 		}
 
 		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
@@ -153,19 +163,19 @@ public class AuthorizationSearchWorkflow {
 	}
 
 	public void verifyAuthTransactionSearchReport(Device device) {
-		
+
 		TransactionReports transactionReport = new TransactionReports();
 		transactionReport.setAuthorizationCode(context.get(ConstantData.AUTHORIZATION_CODE));
 		transactionReport.setDeviceNumber(device.getDeviceNumber());
 		transactionReport.setRrnNumber(context.get(ConstantData.RRN_NUMBER));
 		transactionReport.setUsername(context.get(USERNAME));
-		
+
 		List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME,transactionReport);
 		String authFileData = "";
 		for (int i = 0; i < reportContent.size(); i++) {
 			authFileData += reportContent.get(i) + " ";
 		}
-		
+
 		boolean condition = authFileData.contains(context.get(ConstantData.AUTHORIZATION_CODE)) && authFileData.contains(device.getDeviceNumber()) 
 				&& authFileData.contains(context.get(ConstantData.TRANSACTION_AMOUNT)) && authFileData.contains(context.get(ConstantData.RRN_NUMBER));
 		assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
@@ -176,7 +186,7 @@ public class AuthorizationSearchWorkflow {
 		List<String> actualAuthStatus = page.verifyState(deviceNumber);
 		assertTrue(String.format("Response, Auth Code and Auth Description does not match. Expecting %s. Actual %s", authStatus, actualAuthStatus), actualAuthStatus.containsAll(authStatus));
 	}
-	
+
 	public AvailableBalance getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(BigDecimal availableBalance){
 		authorizationSearchPage.viewDeviceDetails();
 		AvailableBalance availBal = authorizationSearchPage.getAvailableBalance();
