@@ -868,7 +868,7 @@ public class HelpDeskSteps {
 	}
 	
 	@Then("user validate available balance for prepaid product on helpdesk")
-	public void whenUserVerifyPrepaidBalanceThroughHelpDesk(String type) {
+	public void whenUserVerifyPrepaidBalanceThroughHelpDesk() {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.PREPAID);
