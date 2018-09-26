@@ -67,6 +67,7 @@ When perform an EMV_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
+And user verifies available balance after transaction
 And device has "normal" status
 And user verifies available Card limit for card after transaction
 And user validate device usage for Daily Velocity Utilized and Daily Amount Utilized
