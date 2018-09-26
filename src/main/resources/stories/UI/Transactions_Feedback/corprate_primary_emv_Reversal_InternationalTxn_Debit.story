@@ -20,14 +20,14 @@ And user assigns service code to program
 And user creates new device of debit type for new client
 And user sign out from customer portal
 
-Scenario: Pin Generation
+Scenario:2 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 Then embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 And FINSim simulator is closed
 
-Scenario: Perform INTERNATIONAL EMV_PURCHASE Authorization transaction
+Scenario:3 Perform INTERNATIONAL EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an INT_EMV_PURCHASE MAS transaction
 Then MAS test results are verified
@@ -38,7 +38,7 @@ And verify markup fee applied on transaction
 And user verifies available balance after transaction
 And user sign out from customer portal
 
-Scenario: When user perform Reveral of Purchase Transaction
+Scenario:4 When user perform Reveral of Purchase Transaction
 Given user is logged in institution
 When user generate Reversal for Transaction
 Then search Purchase Reversal authorization and verify 000-Successful status

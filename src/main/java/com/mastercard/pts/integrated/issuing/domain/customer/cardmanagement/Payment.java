@@ -213,9 +213,8 @@ public class Payment {
 		cash.setTransactionDate(LocalDate.now());
 		cash.setDescription(provider.getString(DESCRIPTION_NOTE));
 		cash.setAuthNumber(CustomUtils.RandomNumbers(Integer.valueOf(provider.getString(AUTH_NUMBER))));
-		return cash;		
+		return cash;
 	}
-	
 
 	public static Payment outStationChequePaymentDataProvider(KeyValueProvider provider) {
 		Payment outStationCheque = new Payment();
@@ -225,9 +224,8 @@ public class Payment {
 		outStationCheque.setChequeAmount(provider.getString(CHEQUE_AMOUNT));
 		outStationCheque.setTransactionCurrency(provider.getString(TRANSACTION_CURRENCY));
 		outStationCheque.setMemo(provider.getString(MEMO_MSG));
-		return outStationCheque;		
+		return outStationCheque;
 	}
-	
 
 }
 

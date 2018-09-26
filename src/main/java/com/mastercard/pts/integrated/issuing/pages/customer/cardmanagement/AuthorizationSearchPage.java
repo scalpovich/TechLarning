@@ -31,7 +31,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 
 	List<String> txnFeesFields = new ArrayList<>();
 	
-	BigDecimal availableBalanceAterReversal;
+	BigDecimal availableBalanceAfterReversal;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=cardNumber]")
 	private MCWebElement cardNumber;
@@ -191,10 +191,10 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		clickSearchButton();
 		viewFirstRecord();
 		runWithinPopup("View Authorization", () -> {
-		availableBalanceAterReversal = new BigDecimal(availableBalanceTxt.getText());
+			availableBalanceAfterReversal = new BigDecimal(availableBalanceTxt.getText());
 			clickCloseButton();
 		});
-		return availableBalanceAterReversal;
+		return availableBalanceAfterReversal;
 	}
 	
 	public AvailableBalance getAvailableBalance(){

@@ -7,7 +7,7 @@ Meta:
 @CreditRegression
 @CreditWithPin
 @StoryName credit_emv_retail				 
-Scenario:creation of mastercard_corporate_primary_EMV Card credit device
+Scenario:1 creation of mastercard_corporate_primary_EMV Card credit device
 Meta:
 @TestId TC548377
 Given setting json values in excel for Credit
@@ -25,7 +25,7 @@ And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
 And user sign out from customer portal
 
-Scenario: Verify User is able to make Payment of credit card through cash mode
+Scenario:2 Verify User is able to make Payment of credit card through cash mode
 Given user is logged in institution
 When check card balance details through helpdesk
 And user initiates cash payment
@@ -34,14 +34,14 @@ And user processes "EOD-Credit" system internal batch for Credit
 And recheck card balance details through helpdesk after payment
 Then user check successful payments
 
-Scenario: Pin Generation
+Scenario:3 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 Then embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 And FINSim simulator is closed
 
-Scenario: Perform EMV_PURCHASE Authorization transaction
+Scenario:4 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction with amount 750000
 Then MAS test results are verified

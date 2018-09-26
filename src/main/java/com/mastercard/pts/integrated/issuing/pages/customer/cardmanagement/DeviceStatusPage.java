@@ -2,13 +2,11 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.Collection;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
@@ -42,8 +40,6 @@ public class DeviceStatusPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "(//table[@class='dataview']//tr[5]//span//a)[2]")
 	private MCWebElement responseCodeLink;
 	
-	//table[@class='dataview']/tbody/tr[5]/td[4]/span/a
-
 	@PageElement(findBy = FindBy.NAME, valueToFind = "responseCode:input:dropdowncomponent")
 	private MCWebElement ResponseCode;
 

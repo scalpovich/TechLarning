@@ -27,14 +27,14 @@ And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
 Then user sign out from customer portal
 
-Scenario: Pin Generation
+Scenario:2 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 Then embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 And FINSim simulator is closed
 
-Scenario: Perform EMV_PURCHASE Authorization transaction
+Scenario:3 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
@@ -43,7 +43,7 @@ And search Purchase authorization and verify 000-Successful status
 And verify fixed transaction fee applied on purchase transaction
 And user sign out from customer portal
 
-Scenario: When user perform Reveral of Purchase Transaction
+Scenario:4 When user perform Reveral of Purchase Transaction
 Given user is logged in institution
 When user generate Reversal for Transaction
 Then search Purchase Reversal authorization and verify 000-Successful status

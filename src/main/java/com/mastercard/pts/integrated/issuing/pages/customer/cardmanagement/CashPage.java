@@ -27,7 +27,7 @@ public class CashPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(CashPage.class);
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=remittanceNumber]")
-	private MCWebElement remittanceNumberTxt;
+	private MCWebElement txtRemittanceNumber;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#remittanceDate")
 	private MCWebElement remittanceDate;
@@ -64,7 +64,7 @@ public class CashPage extends AbstractBasePage {
 	
 	
 	public void enterRemittanceNumber(String remittanceNumber){
-		WebElementUtils.enterText(remittanceNumberTxt, remittanceNumber);		
+		WebElementUtils.enterText(txtRemittanceNumber, remittanceNumber);		
 	}
 	
 	public void enterRemittanceDate(LocalDate remittanceDat){
@@ -108,36 +108,30 @@ public class CashPage extends AbstractBasePage {
 		clickWhenClickableDoNotWaitForWicket(addDetailsBtn);	
 	}		
 	
-	public void performCashPayment(Payment cash){
+	public void performCashPayment(Payment cash) {
 		clickAddNewButton();
-		runWithinPopup(
-				"Add Cash",
-				() -> {
-					enterRemittanceNumber(cash.getRemittanceNumber());
-					enterValueDate(cash.getValueDate());
-					selectBaseCurrency(cash.getBaseCurrency());
-					clickAddDetailsBtn();	
-					clickAddNewButton();
-					runWithinPopup(
-							"Add Cash Transaction",
-							() -> {	
-								enterDeviceNumber(cash.getDeviceNumber());								
-								enterAmount(cash.getAmount());								
-								enterDescription(cash.getDescription());
-								enterAuthNumber(cash.getAuthNumber());
-								selectPaymentBranch(cash.getPaymentBranch());
-								clickSaveButton();								
-							});				
-					clickSaveButton();
-					});
-			 verifyOperationStatus();
-					}
-	
-	
+		runWithinPopup("Add Cash", () -> {
+			enterRemittanceNumber(cash.getRemittanceNumber());
+			enterValueDate(cash.getValueDate());
+			selectBaseCurrency(cash.getBaseCurrency());
+			clickAddDetailsBtn();
+			clickAddNewButton();
+			runWithinPopup("Add Cash Transaction", () -> {
+				enterDeviceNumber(cash.getDeviceNumber());
+				enterAmount(cash.getAmount());
+				enterDescription(cash.getDescription());
+				enterAuthNumber(cash.getAuthNumber());
+				selectPaymentBranch(cash.getPaymentBranch());
+				clickSaveButton();
+			});
+			clickSaveButton();
+		});
+		verifyOperationStatus();
+	}
 
 	public void verifyUiOperationStatus() {
 		logger.info("Cash");
 		verifyUiOperationNoEdit("Add Cash");
 	}
-	
+
 }
