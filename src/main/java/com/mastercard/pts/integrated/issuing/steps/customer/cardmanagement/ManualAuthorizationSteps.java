@@ -46,7 +46,7 @@ public class ManualAuthorizationSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		request.setDeviceNumber(device.getDeviceNumber());
 		String trxDate=loginWorkflow.getInstitutionDateLogin();
-		logger.info("Transaction Date->",trxDate);
+		logger.info("Transaction Date->"+loginWorkflow.getInstitutionDateLogin());
 		context.put("transaction_date",trxDate);
 		successMessage = manualAuthorizationWorkflow.authorizeDevice(request);
 	}
