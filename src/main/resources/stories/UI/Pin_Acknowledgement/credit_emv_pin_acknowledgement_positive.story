@@ -11,7 +11,6 @@ Meta:
 @TCName TC857949
 
 Scenario: Set up credit emv retail general purpose card device production
-
 Given setting json values in excel for Credit
 When user is logged in institution
 And for EMV Card User fills Device Plan for credit product for Mastercard
@@ -29,14 +28,12 @@ Then user sign out from customer portal
 
 
 Scenario: Update pin offset file with pin acknowledgement and upload it on server
-
 Given Pin Offset file batch was generated successfully
 When Pin Offset file was updated with positive pin acknowledgement
 Then User uploads the updated PinOffset file to Server
 
 
 Scenario: Process Batches and verify status of Carrier
-
 Given user is logged in institution
 When User creates UPLOAD PIN Offset File Acknowledgement Upload batch
 And user processes Send To Carrier batch for PIN File Type and product credit
@@ -44,3 +41,4 @@ And credit processes DOWNLOAD Carrier Download Batch batch for PIN File Type
 And credit processes Carrier Acknowledgement batch for PIN File Type
 And search with device in device tracking screen and status of carrier
 Then user sign out from customer portal
+

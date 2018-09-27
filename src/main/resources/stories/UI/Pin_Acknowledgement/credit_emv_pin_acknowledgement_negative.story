@@ -29,14 +29,12 @@ Then user sign out from customer portal
 
 
 Scenario: Update pin offset file with negative pin acknowledgement and upload it on server
-
 Given Pin Offset file batch was generated successfully
 When Pin Offset file was updated with "negative" pin acknowledgement
 Then User uploads the updated PinOffset file to Server
 
 
 Scenario: Process Batches and Resend Pin Request
-
 Given user is logged in institution
 When User creates UPLOAD PIN Offset File Acknowledgement Upload batch
 And credit processes resend pin request batch using new Device
@@ -44,7 +42,6 @@ And credit processes pingeneration batch using new Device for Supplementary
 Then user sign out from customer portal
 
 Scenario: Update pin offset file with positive pin acknowledgement and upload it on server
-
 Given Pin Offset file batch was generated successfully
 When Pin Offset file was updated with "positive" pin acknowledgement
 Then User uploads the updated PinOffset file to Server

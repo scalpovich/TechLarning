@@ -1908,6 +1908,5 @@ public class ProgramSetupSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		assertEquals(deviceTrackingWorkflow.searchInDeviceTrackingWithDeviceAndCarrierStatus(device),
 				provider.getString("CARRIER_STATUS"));
-
 	}
 }
