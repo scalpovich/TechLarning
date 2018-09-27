@@ -31,8 +31,8 @@ public class DatabaseFlows {
 	public void updateInstituteDateToFirstOfNextMonth(String date)
 	{		
 		
-		//String queryString = "update system_codes set short_name='-" + DateUtils.getNextMonthFirstDayDifference(date) + "'  WHERE TYPE_ID = 'SYS_PARAM' AND code = 'BACK_DAY' AND bank_code = '"+ getInstitutionCode() +"'";
-		//dbUtil.executeUpdate(queryString);
+		String queryString = "update system_codes set short_name='-" + DateUtils.getNextMonthFirstDayDifference(date) + "'  WHERE TYPE_ID = 'SYS_PARAM' AND code = 'BACK_DAY' AND bank_code = '"+ getInstitutionCode() +"'";
+		dbUtil.executeUpdate(queryString);
 	}
 	
 	public void executeQueryToGetStatusAsNull(Device device, String columnName) {

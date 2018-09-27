@@ -14,7 +14,6 @@ import java.util.Map;
 import junit.framework.Assert;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.remote.server.handler.FindChildElement;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -23,7 +22,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
-import com.mastercard.testing.common.context.Context;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -36,7 +34,6 @@ import com.google.common.base.CharMatcher;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -257,13 +254,13 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement currentStatusLimits;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//div[@id='tab4']//table[1]//td//span[@class='labeltextr']")
-	private MCWebElements creditLimitParamter;	
+	private MCWebElements txtbxCreditLimitParamter;	
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//div[@id='tab4']//table[1]//td//span[@class='labeltextr']/preceding::span[1]")
-	private MCWebElements creditLimitParamterLabels;
+	private MCWebElements txtBxCreditLimitParamterLabels;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[contains(.,'Payment :')]/..//span[@class='labeltextr']")
-	private MCWebElements paymentComponents;
+	private MCWebElements txtBxPaymentComponents;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Account :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement accountCreditLimitLabel;
@@ -1159,8 +1156,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		balanceMapBeforePayments = getCreditLimitComponents();
 		clickBalanceDetailsTab();
 		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
-		list = getCreditCardBallance();
-		balanceMapBeforePayments.put("UnbllledPayments", list.get(1));
+		list = getCreditCardBalance();
+		balanceMapBeforePayments.put("Unbilled̥̥Payments", list.get(1));
 		balanceMapBeforePayments.put("OutstandingPayments", list.get(2));
 		return balanceMapBeforePayments;
 	}
@@ -1171,8 +1168,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	public Map<String, String> getCreditLimitComponents() {
 		Map<String, String> map = new HashMap<>();
-		for (int i = 0; i <= creditLimitParamter.getElements().size() - 2; i += 2) {
-			map.put(creditLimitParamterLabels.getElements().get(i).getText(), creditLimitParamter.getElements().get(i).getText());
+		for (int i = 0; i <= txtbxCreditLimitParamter.getElements().size() - 2; i += 2) {
+			map.put(txtBxCreditLimitParamterLabels.getElements().get(i).getText(), txtbxCreditLimitParamter.getElements().get(i).getText());
 		}
 		return map;
 	}
@@ -1181,10 +1178,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(balanceDetailsTab)).click();
 	}
 
-	public List<String> getCreditCardBallance() {
+	public List<String> getCreditCardBalance() {
 		ArrayList<String> list = new ArrayList<>();
 		clickWhenClickableDoNotWaitForWicket(balanceDetailsTab);
-		for (MCWebElement element : paymentComponents.getElements()) {
+		for (MCWebElement element : txtBxPaymentComponents.getElements()) {
 			list.add(element.getText());
 		}
 		return list;

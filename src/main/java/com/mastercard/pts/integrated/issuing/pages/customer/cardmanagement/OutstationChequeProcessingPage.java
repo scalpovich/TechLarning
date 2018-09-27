@@ -34,7 +34,7 @@ public class OutstationChequeProcessingPage extends AbstractBasePage {
 			.getLogger(OutstationChequeProcessingPage.class);
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[name='cardNumber:input:inputTextField']")
-	private MCWebElement deviceNumberTxt;
+	private MCWebElement txtDeviceNumber;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[name='chequeAmount:input:inputAmountField']")
 	private MCWebElement chequeNumberTxt;

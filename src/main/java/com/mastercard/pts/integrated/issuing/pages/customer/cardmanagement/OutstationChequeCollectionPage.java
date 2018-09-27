@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -56,7 +57,7 @@ public class OutstationChequeCollectionPage extends AbstractBasePage {
 	private MCWebElement chequeAmountTxt;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "select[name='transactionCurrency:input:dropdowncomponent']")
-	private MCWebElement transactionCurrencyDdwn;
+	private MCWebElement ddwnTransactionCurrency;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "select[name='draweeBank:input:dropdowncomponent']")
 	private MCWebElement draweeInstitutionDdwn;
@@ -81,10 +82,10 @@ public class OutstationChequeCollectionPage extends AbstractBasePage {
 		verifyUiOperation("Add Outstation Cheque Collection");
 	}
 	
-	public void performOutStationCollectionPayment(Payment outStationCollection) {
+	public void performOutStationCollectionPayment(Payment outStationCollection, Device device) {
 		clickAddNewButton();
 		runWithinPopup(ADD_OUTSTATION_CHEQUE_COLLECTION, () -> {
-			enterDeviceNumber("");
+			enterDeviceNumber(device);
 			enterChequeNumber(outStationCollection.getChequeNumber());
 			enterChequeDate(outStationCollection.getChequeDate());
 			enterChequeAmount(outStationCollection.getChequeAmount());
@@ -93,7 +94,7 @@ public class OutstationChequeCollectionPage extends AbstractBasePage {
 			if (!outStandingChequeErrorDisplay()) {
 				context.put(CreditConstants.PAYMENT_REFERENCE_NUMBER, referenceNumberFetch());
 			} else {
-				logger.info("Device Number is not correct-{}", "");
+				logger.info("Device Number is not correct-{}", device.getDeviceNumber());
 				clickCancelButton();
 			}
 			enterMemo();
@@ -101,17 +102,17 @@ public class OutstationChequeCollectionPage extends AbstractBasePage {
 		});
 		verifyOperationStatus();
 	}
-	
-	public void enterDeviceNumber(String DeviceNumber) {
 
+	public void enterDeviceNumber(Device device) {
+		WebElementUtils.enterText(deviceNumberTxt, device.getDeviceNumber());
 	}
-	
+
 	public void enterChequeNumber(String chequeNumber) {
 		if (chequeNumberTxt.isEnabled()) {
 			WebElementUtils.enterText(chequeNumberTxt, chequeNumber);
 		}
 	}
-    
+
 	public void enterChequeDate(LocalDate date) {
 		SimulatorUtilities.wait(5000);
 		WebElementUtils.pickDate(chequeDate, date.plusDays(2));
@@ -123,9 +124,9 @@ public class OutstationChequeCollectionPage extends AbstractBasePage {
 		}
 	}
     
-	public void enterTransactionCurrency(String transactionCurrecy) {
-		if (transactionCurrencyDdwn.isEnabled()) {
-			WebElementUtils.selectDropDownByVisibleText(transactionCurrencyDdwn, transactionCurrecy);
+	public void enterTransactionCurrency(String transactionCurrency) {
+		if (ddwnTransactionCurrency.isEnabled()) {
+			WebElementUtils.selectDropDownByVisibleText(ddwnTransactionCurrency, transactionCurrency);
 		}
 	}
     
@@ -150,7 +151,7 @@ public class OutstationChequeCollectionPage extends AbstractBasePage {
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
 				WebElementUtils.elementToBeClickable(chequeNumberTxt),
-				WebElementUtils.elementToBeClickable(transactionCurrencyDdwn)
+				WebElementUtils.elementToBeClickable(ddwnTransactionCurrency)
 				);
 	}
 }

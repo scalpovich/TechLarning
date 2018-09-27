@@ -165,7 +165,6 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 					enterDraweeBranch(localChq.getDraweeBank());
 					enterReferenceNumber(localChq.getReferenceNumber());
 					enterMICRNumber(localChq.getMicrNumber());
-					//fillValueDate(localChq.getValueDate());
 					selectPaymentBranch(localChq.getPaymntBranch());
 					clickSaveButton();
 															
