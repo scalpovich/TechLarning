@@ -101,8 +101,6 @@ public class ContextConstants {
 	public static final String HELPDESK_VALUES = "HELPDESK_VALUES";
 	
 	public static final String INST_PROPERTY = "institution";
-
-	public static final String TRANSACTION_DATE = "transaction_date";
 	
 	private ContextConstants() {
 	}

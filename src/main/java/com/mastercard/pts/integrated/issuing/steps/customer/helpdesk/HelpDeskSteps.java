@@ -876,7 +876,7 @@ public class HelpDeskSteps {
 			context.put("Fee",transactionAmount);
 		} else if (device.getCategory().equalsIgnoreCase("Interest")) {
 			int noOfDays = DateUtils.getDaysDifferenceBetweenTwoDates(context.get(ContextConstants.INSTITUTION_DATE),
-					context.get(ContextConstants.TRANSACTION_DATE));
+					context.get("transaction_date"));
 			double interest = ((Double.valueOf(device.getTransactionAmount())
 					+ Double.valueOf(context.get("Fee")) * noOfDays
 							* Double.valueOf(device.getInterestOnPurcahse()))

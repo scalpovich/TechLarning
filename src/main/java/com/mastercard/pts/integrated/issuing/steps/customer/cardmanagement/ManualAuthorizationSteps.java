@@ -6,6 +6,8 @@ import static org.junit.Assert.assertThat;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AuthorizationRequest;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ManualAuthorizationWorkflow;
 
 @Component
@@ -28,6 +31,7 @@ public class ManualAuthorizationSteps {
 	@Autowired
 	private ManualAuthorizationWorkflow manualAuthorizationWorkflow;
 	
+	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
 	private String successMessage;
 
 	@Given("user raises an authorization request")
@@ -35,9 +39,11 @@ public class ManualAuthorizationSteps {
 	@Then("user raises an authorization request")
 	public void whenUserRaisesAnAuthorizationRequest(){
 		AuthorizationRequest request = AuthorizationRequest.createWithProvider(provider);
-		Device device = context.get(ContextConstants.DEVICE);
-		request.setDeviceNumber(device.getDeviceNumber());
-		context.put(ContextConstants.TRANSACTION_DATE,context.get(ContextConstants.INSTITUTION_DATE));
+	//	Device device = context.get(ContextConstants.DEVICE);
+		request.setDeviceNumber("5742533123757611 ");
+		String trxDate=context.get(ContextConstants.INSTITUTION_DATE);
+		logger.info("Transaction Date->",trxDate);
+		context.put("transaction_date",trxDate);
 		successMessage = manualAuthorizationWorkflow.authorizeDevice(request);
 	}
 	
