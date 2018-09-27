@@ -8,12 +8,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConnectionUtils;
-import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 
 @Workflow
 public class HelpdeskWorkflow {
@@ -22,7 +22,7 @@ public class HelpdeskWorkflow {
 
 	@Autowired
 	private Navigator navigator;
-	
+
 	@Autowired
 	ConnectionUtils connctionUtils;
 
@@ -42,19 +42,19 @@ public class HelpdeskWorkflow {
 	}
 
 	public void searchWithDeviceNumber(HelpdeskGeneral helpdeskGeneral) {
-		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		helpDeskPage.searchWithDeviceNumber(helpdeskGeneral);
 	}
 
 	public void searchByDeviceNumber(Device device) {
 		helpDeskPage.searchByDeviceNumber(device);
 	}
-	
-	public void searchByClientId(String clientId,String cardType){
-		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);		
+
+	public void searchByClientId(String clientId, String cardType) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		helpDeskPage.searchByClientID(clientId, cardType);
 	}
-	
+
 	public String getDeviceNumberStatus() {
 		return helpDeskPage.getDeviceNumberStatus();
 	}
@@ -74,7 +74,7 @@ public class HelpdeskWorkflow {
 	public void activateDevice(HelpdeskGeneral helpdeskGeneral) {
 		helpDeskPage.activateDevice(helpdeskGeneral);
 	}
-	
+
 	public void resetPinCounter(HelpdeskGeneral helpdeskGeneral) {
 		helpDeskPage.resetPinRetryCounter(helpdeskGeneral);
 	}
@@ -82,14 +82,15 @@ public class HelpdeskWorkflow {
 	public void setupDeviceCurrency(HelpdeskGeneral helpdeskGeneral) {
 		helpDeskPage.setupDeviceCurrency(helpdeskGeneral);
 	}
-	
+
 	public void setupInternationalAllowDisallowCheck(String status) {
 		helpDeskPage.setupInternationalAllowDisallowCheck(status);
 	}
-	
+
 	public void setupEccomerceAllowDisallowCheck(HelpdeskGeneral helpdeskGeneral, String status) {
 		helpDeskPage.setupEccomerceDisallowCheck(status);
 	}
+
 	public void allowTransactionForOneHour(String status) {
 		helpDeskPage.allowTransactionForOneHour(status);
 	}
@@ -132,15 +133,22 @@ public class HelpdeskWorkflow {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		return helpDeskPage.getWalletBalanceInformation(device);
 	}
-	
+
 	public String getWalletBalanceInformationForRemittance(Device device, CardToCash cardToCash) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		return helpDeskPage.getWalletBalanceInformationForRemittance(device, cardToCash);
 	}
 
-	public boolean verifyBalanceUpdatedCorreclty(String beforeLoadBalanceInformation, String transactionDetailsFromExcel, String afterLoadBalanceInformation) {
+	public String getWalletBalanceAfterLoyaltyRedemption(Device device) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
-		return helpDeskPage.verifyBalanceUpdatedCorreclty(beforeLoadBalanceInformation, transactionDetailsFromExcel, afterLoadBalanceInformation);
+		return helpDeskPage.getWalletBalanceInformationAfterLoyaltyRedemption(device);
+	}
+
+	public boolean verifyBalanceUpdatedCorreclty(String beforeLoadBalanceInformation,
+			String transactionDetailsFromExcel, String afterLoadBalanceInformation) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		return helpDeskPage.verifyBalanceUpdatedCorreclty(beforeLoadBalanceInformation, transactionDetailsFromExcel,
+				afterLoadBalanceInformation);
 	}
 
 	public boolean verifyBalanceNotChanged(String beforeLoadBalanceInformation, String afterLoadBalanceInformation) {
@@ -148,59 +156,65 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.verifyBalanceNotChanged(beforeLoadBalanceInformation, afterLoadBalanceInformation);
 	}
 
-	public boolean verifyBalanceDeductedCorreclty(String beforeLoadBalanceInformation, String transactionDetailsFromExcel, String afterLoadBalanceInformation) {
+	public boolean verifyBalanceDeductedCorreclty(String beforeLoadBalanceInformation,
+			String transactionDetailsFromExcel, String afterLoadBalanceInformation) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
-		return helpDeskPage.verifyBalanceDeductedCorreclty(beforeLoadBalanceInformation, transactionDetailsFromExcel, afterLoadBalanceInformation);
+		return helpDeskPage.verifyBalanceDeductedCorreclty(beforeLoadBalanceInformation, transactionDetailsFromExcel,
+				afterLoadBalanceInformation);
 	}
 
-	public boolean verifyInitialLoadBalanceUpdatedCorreclty(String transactionDetailsFromExcel, String afterLoadBalanceInformation) {
+	public boolean verifyInitialLoadBalanceUpdatedCorreclty(String transactionDetailsFromExcel,
+			String afterLoadBalanceInformation) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
-		return helpDeskPage.verifyInitialLoadBalanceUpdatedCorreclty(transactionDetailsFromExcel, afterLoadBalanceInformation);
+		return helpDeskPage.verifyInitialLoadBalanceUpdatedCorreclty(transactionDetailsFromExcel,
+				afterLoadBalanceInformation);
 	}
-	
-	public boolean resetCardholderLoginPassword(String clientID){		
+
+	public boolean resetCardholderLoginPassword(String clientID) {
 		return helpDeskPage.serviceRequestCardholderLoginPassword(clientID);
 	}
-	
-	public boolean resetCardholderTranPassword(String clientID){		
+
+	public boolean resetCardholderTranPassword(String clientID) {
 		return helpDeskPage.serviceRequestCardholderTransactionPassword(clientID);
 	}
-	
-	public boolean changeRegisteredEmailID(HelpdeskGeneral general){		
+
+	public boolean changeRegisteredEmailID(HelpdeskGeneral general) {
 		return helpDeskPage.changeRegisteredEmailID(general);
 	}
-	
-	public boolean changeRegisteredMobileNo(HelpdeskGeneral general){
+
+	public boolean changeRegisteredMobileNo(HelpdeskGeneral general) {
 		return helpDeskPage.changeRegisteredMobileNo(general);
 	}
-	
+
 	public BigDecimal noteDownAvailableLimit(String type) {
 		clickCustomerCareEditLink();
 		return helpDeskPage.noteDownAvailableLimit(type);
 	}
-	
+
 	public BigDecimal verifyAvailableLimit(String type) {
 		clickCustomerCareEditLink();
 		return helpDeskPage.noteDownAvailableLimit(type);
 	}
-	
-	public Optional<String[]> getDeviceTypeAndNumber(String institutionSelector){	
+
+	public Optional<String[]> getDeviceTypeAndNumber(String institutionSelector) {
 		String institution = System.getProperty("institution");
 		if (institution != null && !institution.trim().isEmpty())
-			institutionSelector=institution;
-		String query = "SELECT * FROM device WHERE bank_code = '"+ institutionSelector +"'AND activation_date IS NOT NULL  AND status_code = 0 AND ROWNUM <= 1";
+			institutionSelector = institution;
+		String query = "SELECT * FROM device WHERE bank_code = '" + institutionSelector
+				+ "'AND activation_date IS NOT NULL  AND status_code = 0 AND ROWNUM <= 1";
 		ResultSet set = connctionUtils.executeQueryForBIN(query);
 		try {
-	        set.next();
-	        return Optional.of(new String[]{ set.getString("PRODUCT_TYPE"),set.getString("DEVICE_NUMBER"),set.getString("Default_Wallet_Number")});
-		} catch (SQLException|NullPointerException e ) {
+			set.next();
+			return Optional.of(new String[] { set.getString("PRODUCT_TYPE"), set.getString("DEVICE_NUMBER"),
+					set.getString("Default_Wallet_Number") });
+		} catch (SQLException | NullPointerException e) {
 			// TODO Auto-generated catch block
-		   e.printStackTrace();
+			e.printStackTrace();
 			return Optional.empty();
 		}
 	}
-	
-	public void validateRequiredFields(HelpdeskGeneral general){
+
+	public void validateRequiredFields(HelpdeskGeneral general) {
 		helpDeskPage.validateRequiredFields(general);
 		helpDeskPage.validateMandatoryFields(3);
 	}

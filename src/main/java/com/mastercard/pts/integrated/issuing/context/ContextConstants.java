@@ -52,6 +52,8 @@ public class ContextConstants {
 
 	public static final String AVAILABLE_BALANCE_OR_CREDIT_LIMIT = "AVAILABLE_BALANCE_OR_CREDIT_LIMIT";
 
+	public static final String AVAILABLE_BALANCE_AFTER_LOYALTY_REDEMPTION = "AVAILABLE_BALANCE_AFTER_LOYALTY_REDEMPTION";
+
 	public static final String INTERNATIONAL = "international";
 
 	public static final String DOMESTIC = "domestic";
@@ -65,6 +67,8 @@ public class ContextConstants {
 	public static final String PRIMARY_DEVICE_PLAN = "PRIMARY_DEVICE_PLAN";
 
 	public static final String TRANSACTION_PLAN = "TRANSACTIONPLAN";
+
+	public static final String PROMOTION_PLAN = "PROMOTION_PLAN";
 
 	private ContextConstants() {
 	}

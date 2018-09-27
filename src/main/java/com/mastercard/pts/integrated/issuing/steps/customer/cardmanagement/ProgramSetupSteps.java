@@ -1294,7 +1294,6 @@ public class ProgramSetupSteps {
 		// value is reset or set accordingly for Virtual and pinless cards
 		setPinRequiredToDefaultState();
 		transactionPlan = TransactionPlan.createWithProvider(dataProvider);
-		System.out.println("Transaction- " + transactionPlan.getTransactionPlanCode());
 		context.put(ContextConstants.TRANSACTION_PLAN, transactionPlan.getTransactionPlanCode());
 		transactionPlan.setProductType(ProductType.fromShortName(type));
 

@@ -103,7 +103,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	private static final Logger logger = LoggerFactory.getLogger(AbstractBasePage.class);
 
-	public static final LocalDate futureDate = LocalDate.now().plusDays(100);
+	public static final LocalDate futureDate = LocalDate.now().plusDays(1);
 
 	public static final LocalDate futureEndDate = LocalDate.now().plusDays(150);
 

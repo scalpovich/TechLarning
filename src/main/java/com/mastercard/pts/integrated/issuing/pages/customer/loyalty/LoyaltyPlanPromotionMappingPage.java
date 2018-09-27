@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.LoyaltyPromotionMapping;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.NewLoyaltyPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.PromotionPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -22,17 +23,14 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = LoyaltyNav.TAB_LOYALTY, treeMenuItems = {
-		LoyaltyNav.L1_LOYALTY_SETUP,
-		LoyaltyNav.L2_LOYALTY_PLAN_PROMOTION_MAPPING
-		})
-public class LoyaltyPlanPromotionMappingPage extends AbstractBasePage{
-    @Autowired
+@Navigation(tabTitle = LoyaltyNav.TAB_LOYALTY, treeMenuItems = { LoyaltyNav.L1_LOYALTY_SETUP,
+		LoyaltyNav.L2_LOYALTY_PLAN_PROMOTION_MAPPING })
+public class LoyaltyPlanPromotionMappingPage extends AbstractBasePage {
+	@Autowired
 	NewLoyaltyPlan newLoyaltyPlan;
-    @Autowired
-    PromotionPlan promotionPlan;
-	private static final Logger logger = LoggerFactory
-			.getLogger(LoyaltyPlanPromotionMappingPage.class);
+	@Autowired
+	PromotionPlan promotionPlan;
+	private static final Logger logger = LoggerFactory.getLogger(LoyaltyPlanPromotionMappingPage.class);
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement loyaltyPlanDDwn;
@@ -44,7 +42,7 @@ public class LoyaltyPlanPromotionMappingPage extends AbstractBasePage{
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='tables:1:rows:3:cols:colspanMarkup:inputField:input:inputAmountField']")
 	private MCWebElement priorityTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='btn_alignment']//input[@class='btn_or_sbt' and @value='Save']")
 	private MCWebElement btnSave;
 
@@ -59,53 +57,57 @@ public class LoyaltyPlanPromotionMappingPage extends AbstractBasePage{
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement iconLoyaltyPromotionAdd;
 
-
-	public void verifyUiOperationStatus() {
+	public void verifyUiOperationStatus(LoyaltyPromotionMapping loyaltypromotionmapping) {
 		logger.info("Loyalty Plan  Promotion Mapping");
 		verifyUiOperation("Add Loyalty Plan & Promotion Mapping");
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		clickWhenClickable(iconLoyaltyPromotionAdd);
 		switchToIframe(Constants.ADD_LOYALTY_PROMOTION_MAPPING);
-		//newLoyaltyPromotionPlanMappingAdd();
-		selectLoyaltyPlanMappingDropDown();
-		selectPromotionPlanMappingDropDown();
-		enterPriority();
+		// newLoyaltyPromotionPlanMappingAdd();
+		selectLoyaltyPlanMappingDropDown(loyaltypromotionmapping);
+		selectPromotionPlanMappingDropDown(loyaltypromotionmapping);
+		enterPriority(loyaltypromotionmapping);
 		clickSaveButton();
-		Assert.assertTrue("LoyaltyPlan Mapping success message is not proper",messageSuccess());
+		Assert.assertTrue("LoyaltyPlan Mapping success message is not proper", messageSuccess());
 	}
-	
-    public boolean messageSuccess() {
+
+	public boolean messageSuccess() {
 		if (iconSuccessMessage.isVisible()) {
 			return true;
-		
+
 		}
 		return false;
 	}
+
 	public void newLoyaltyPromotionPlanMappingAdd() {
 		clickWhenClickable(iconLoyaltyPromotionAdd);
 	}
 
-	public void selectLoyaltyPlanMappingDropDown() {
-
-		selectByVisibleText(ddwnLoyaltyPlanMapping, newLoyaltyPlan.getLoyaltyPlan());
+	public void selectLoyaltyPlanMappingDropDown(LoyaltyPromotionMapping loyaltypromotionmapping) {
+		WebElementUtils.selectDropDownByVisibleText(ddwnLoyaltyPlanMapping,
+				loyaltypromotionmapping.getMappingLoyaltyPlanddwn());
 	}
 
-	public void selectPromotionPlanMappingDropDown() {
-		selectByVisibleText(ddwnPromotionPlanMapping, promotionPlan.getPromotion());
+	public void selectPromotionPlanMappingDropDown(LoyaltyPromotionMapping loyaltypromotionmapping) {
+		WebElementUtils.selectDropDownByVisibleText(ddwnPromotionPlanMapping,
+				loyaltypromotionmapping.getMappingPromotionPlanddwn());
 	}
 
-	public void enterPriority() {
-		enterText(priorityTxt,"1");
+	public void enterPriority(LoyaltyPromotionMapping loyaltypromotionmapping) {
+		WebElementUtils.enterText(priorityTxt, loyaltypromotionmapping.getPriority());
 	}
 
+	@Override
 	public void clickSaveButton() {
 
 		clickWhenClickableDoNotWaitForWicket(btnSave);
 	}
 
+	@Override
 	public void clickCancelButton() {
 		clickWhenClickable(btnCancel);
 	}
+
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(loyaltyPlanDDwn));

@@ -37,8 +37,17 @@ public class ReconciliationWorkFlow {
 	}
 
 	public void runPreClearingAndLoyaltyCalcBatch(List<ProcessBatches> batch) {
-		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
-		processBatch.processSystemInternalProcessingBatch(batch.get(1));
+		if (batch.size() != 0) {
+			for (int i = 0; i < batch.size(); i++) {
+				ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
+				processBatch.processSystemInternalProcessingBatch(batch.get(i));
+			}
+		}
+		// ProcessBatchesPage processBatch =
+		// navigator.navigateToPage(ProcessBatchesPage.class);
+
+		// processBatch.processSystemInternalProcessingBatch(batch.get(1));
+		// processBatch.processSystemInternalProcessingBatch(batch.get(0));
 	}
 
 	public String runPreClearingBatch(ProcessBatches batch) {

@@ -58,15 +58,15 @@ public class ReconciliationSteps {
 	public void whenPreclearingAndLoyaltyBatchesAreRun() {
 
 		List<ProcessBatches> processBatches = new ArrayList<>();
-		ProcessBatches prepaidEodProcessBatch = new ProcessBatches();
-		prepaidEodProcessBatch.setProductType(provider.getString(BATCH_TYPE));
-		prepaidEodProcessBatch.setBatchName(provider.getString("BATCH_NAME_LOYALTY"));
-		prepaidEodProcessBatch.setProductType("");
-
 		ProcessBatches preClearingBatch = new ProcessBatches();
 		preClearingBatch.setProductType(provider.getString(BATCH_TYPE));
 		preClearingBatch.setBatchName(provider.getString("BATCH_NAME_PRE_CLEARING"));
 		preClearingBatch.setProductType(provider.getString("PREPAID_PRODUCT_TYPE"));
+
+		ProcessBatches prepaidEodProcessBatch = new ProcessBatches();
+		prepaidEodProcessBatch.setProductType(provider.getString(BATCH_TYPE));
+		prepaidEodProcessBatch.setBatchName(provider.getString("BATCH_NAME_LOYALTY"));
+		prepaidEodProcessBatch.setProductType("");
 
 		processBatches.add(preClearingBatch);
 		processBatches.add(prepaidEodProcessBatch);

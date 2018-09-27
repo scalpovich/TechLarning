@@ -25,6 +25,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.BatchType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
+import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -165,6 +166,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement binDDwn;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='yui-skin-sam']/..")
+	private MCWebElement businessDate;
 
 	private static final int NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE = 100;
 
@@ -356,10 +360,14 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		return batchStatus;
 	}
 
+	public void inputToDate(LocalDate date) {
+		WebElementUtils.pickDate(businessDate, date);
+	}
+
 	public String processSystemInternalProcessingBatch(ProcessBatches batch) {
 		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
-		Date todayDate;
-		Date dateFromUI;
+		Date todayDate = null;
+		Date dateFromUI = null;
 		batchStatus = null;
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
 		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "SYSTEM INTERNAL PROCESSING [B]");
@@ -370,13 +378,19 @@ public class ProcessBatchesPage extends AbstractBasePage {
 				WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 			}
 			try {
-				todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
-				dateFromUI = getDateFromUI(dateFormatter, batch);
+				if (batch.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
+					inputToDate(LocalDate.now());
+					submitAndVerifyBatch();
+				} else {
+					todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
+					dateFromUI = getDateFromUI(dateFormatter, batch);
+				}
+
 			} catch (ParseException e) {
 				throw Throwables.propagate(e);
 			}
 
-			if (!dateFromUI.after(todayDate))
+			if (dateFromUI != null && !dateFromUI.after(todayDate))
 				submitAndVerifyBatch();
 		} else {
 			submitAndVerifyBatch();

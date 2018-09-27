@@ -25,3 +25,4 @@ And search Purchase authorization and verify Successful status
 And user has current wallet balance amount information for Prepaid [P] device
 And pre-clearing and Loyalty Calc batches are run
 And user verifies rewards and redemption screen
+And user verifies current wallet balance amount information after loyalty redemption PREPAID device

@@ -3,6 +3,8 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.loyalty;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.LoyaltyPromotionMapping;
+import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.PromotionPlan;
 import com.mastercard.pts.integrated.issuing.pages.customer.loyalty.EventBasedLoyaltyPointsPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.loyalty.EventBasedLoyaltyPointsPostingPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.loyalty.GiftRewardCataloguePage;
@@ -16,7 +18,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.loyalty.RewardRedemp
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
 @Workflow
-public class  UiVerificationLoyaltyWorkflow{
+public class UiVerificationLoyaltyWorkflow {
 
 	@Autowired
 	private Navigator navigator;
@@ -35,14 +37,15 @@ public class  UiVerificationLoyaltyWorkflow{
 		GiftRewardCataloguePage page = navigator.navigateToPage(GiftRewardCataloguePage.class);
 		page.verifyUiOperationStatus();
 	}
-  public void verifyLoyaltyPlanPage() {
+
+	public void verifyLoyaltyPlanPage() {
 		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
 		page.verifyUiOperationStatus();
 	}
-    
-   public void verifyLoyaltyPlanPromotionMappingPage() {
+
+	public void verifyLoyaltyPlanPromotionMappingPage(LoyaltyPromotionMapping loyaltyPromotionMapping) {
 		LoyaltyPlanPromotionMappingPage page = navigator.navigateToPage(LoyaltyPlanPromotionMappingPage.class);
-		page.verifyUiOperationStatus();
+		page.verifyUiOperationStatus(loyaltyPromotionMapping);
 	}
 
 	public void verifyLoyaltyPointsPage() {
@@ -54,9 +57,10 @@ public class  UiVerificationLoyaltyWorkflow{
 		LoyaltyTransactionPlanPage page = navigator.navigateToPage(LoyaltyTransactionPlanPage.class);
 		page.verifyUiOperationStatus();
 	}
-   public void verifyPromotionPlanPage() {
+
+	public void verifyPromotionPlanPage(PromotionPlan plan) {
 		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
-		page.verifyUiOperationStatus();
+		page.verifyUiOperationStatus(plan);
 	}
 
 	public void verifyRedemptionPage() {

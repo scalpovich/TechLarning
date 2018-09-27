@@ -29,7 +29,9 @@
    "transactionPlan":"AUTOMATION [T1962C]",
    "creditPlan":"TA4413NYAX [102]",
    "billingCycle":"AUTOMATION [131]",
-   "walletPlan":"AUTOMATION [TA1160XDAT]"
+   "transactionFeePlan": "Automation FIX fee plan. [AUTOFEEP1]",
+   "walletPlan":"AUTOMATION [TA1160XDAT]",
+   "loyaltyPlan" : "Automation Test [AUTO]"
    },
    {
    "productIdentity":"Credit",
@@ -60,7 +62,9 @@
    "transactionPlan":"AUTOMATION [T6499A]",
    "creditPlan":"TA4413NYAX [102]",
    "billingCycle":"AUTOMATION [131]",
-   "walletPlan":"AUTOMATION [TA1160XDAT]"
+   "transactionFeePlan": "Automation FIX fee plan. [AUTOFEEP1]",
+   "walletPlan":"AUTOMATION [TA1160XDAT]",
+   "loyaltyPlan" : "Automation Test [AUTO]"
    },
    {
    "productIdentity":"Prepaid",
@@ -91,7 +95,9 @@
    "transactionPlan":"AUTOMATION [T8278L]",
    "creditPlan":"TA4413NYAX [102]",
    "billingCycle":"AUTOMATION [131]",
-   "walletPlan":"AUTOMATION [TA1160XDAT]"
+   "transactionFeePlan": "Automation FIX fee plan. [AUTOFEEP1]",
+   "walletPlan":"AUTOMATION [TA1160XDAT]",
+   "loyaltyPlan" : "Automation Test [AUTO]"
    }
   ]
 }
