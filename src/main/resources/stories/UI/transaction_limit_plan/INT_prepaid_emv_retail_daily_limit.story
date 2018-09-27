@@ -42,7 +42,8 @@ Then FINSim simulator is closed
 
 Scenario: 1.3 Perform INT_EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
-When perform an INT_EMV_PURCHASE MAS transaction
+When user update transaction amount to 15
+And perform an INT_EMV_PURCHASE MAS transaction
 Then MAS test results are verified
 
 Scenario: 1.4 Authorization Search page validation
@@ -54,7 +55,7 @@ And user validate available balance for prepaid product on helpdesk
 And user sign out from customer portal
 
 Scenario: 1.5 Update Transaction Amount More than Allowed Periodic Amount
-When user update transaction amount to 21
+When user update transaction amount to 10
 
 Scenario: 1.6 Perform INT_EMV_PURCHASE Authorization transaction to check Exceeds Amount Limit
 When perform an INT_EMV_PURCHASE MAS transaction on the same card
@@ -66,7 +67,7 @@ And user validate available balance for prepaid product on helpdesk
 And user sign out from customer portal
 
 Scenario: 1.7 Update Transaction Amount Less than Allowed Periodic Amount
-When user update transaction amount to 10
+When user update transaction amount to 2
  
 Scenario: 1.8 Perform INT_EMV_PURCHASE Authorization transaction with allowed amount
 When perform an INT_EMV_PURCHASE MAS transaction on the same card
