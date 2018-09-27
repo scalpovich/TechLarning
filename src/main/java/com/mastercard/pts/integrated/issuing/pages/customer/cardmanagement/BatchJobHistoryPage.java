@@ -213,9 +213,6 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 
        context.put("CSVno",csvFileName.getText());
         if(status.getText().equals("SUCCESS [2]")){
-    	    String timeStamp = LocalDateTime.now(ZoneId.of("GMT-5")).format(DateTimeFormatter.ofPattern("ddMMyyyyHHmm")); //CDT time when batch download is done. 
-            context.put(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME,timeStamp);
-            logger.info("timestamp of processing",timeStamp);
                return true;
         } else {
                return false;

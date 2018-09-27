@@ -125,7 +125,7 @@ public class BatchSteps {
 		MiscUtils.reportToConsole("******** Photo Flat File Start ***** " );
 		String deviceApplicationNumber = device.getApplicationNumber();
 		
-		String timestamp = context.get(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME);
+		String timestamp = context.get(ContextConstants.CLIENT_PHOTO_BATCH_PROCESS_TIME);
 		timestamp = timestamp.substring(0,timestamp.length()-1);
 		String partialFileName = "Account_PhotoNonPhoto_"+timestamp;
 		
@@ -149,7 +149,7 @@ public class BatchSteps {
 	@Then("photo image file generated in JPEG format")
 	public void thenPhotoFileGeneratedInJPEGFormat() {
 		flow.findAndPutDeviceApplicationNumberInContext();
-		String timestamp = context.get(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME);
+		String timestamp = context.get(ContextConstants.CLIENT_PHOTO_BATCH_PROCESS_TIME);
 		Device device = context.get(ContextConstants.DEVICE);
 		String deviceApplicationNumber = device.getApplicationNumber();
 		
