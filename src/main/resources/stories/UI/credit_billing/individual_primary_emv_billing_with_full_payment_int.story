@@ -44,7 +44,7 @@ Then user sign out from customer portal
 
 Scenario:1.4 Run Pre-clearing and EOD-Credit
 Given user is logged in institution
-When user wait for one hour to perform transaction
+When user wait for seven minutes to perform certain activity
 And user sign out from customer portal
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
@@ -109,7 +109,7 @@ When user check balance details through helpdesk before payment
 And user makes full bill payment through cash
 And user sign out from customer portal
 Given user is logged in institution
-When user wait for one hour to perform transaction
+When user wait for seven minutes to perform certain activity
 And user sign out from customer portal
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
