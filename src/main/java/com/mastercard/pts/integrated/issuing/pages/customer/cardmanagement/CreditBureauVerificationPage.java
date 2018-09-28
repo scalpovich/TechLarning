@@ -54,6 +54,7 @@ public class CreditBureauVerificationPage extends AbstractBasePage {
 		clickWhenClickable(OKButtonClick);
 		SimulatorUtilities.wait(3000);
 		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
+		clickProcessSelectedButton();
 		return;
 	}
 	}

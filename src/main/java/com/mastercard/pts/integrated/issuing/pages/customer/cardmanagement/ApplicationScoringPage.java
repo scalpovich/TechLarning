@@ -43,5 +43,6 @@ public class ApplicationScoringPage extends AbstractBasePage {
 	public void clickProcessALL() {
 		//clickWhenClickable(processAllBtn);
 		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
+		clickProcessSelectedButton();
 	}
 }
