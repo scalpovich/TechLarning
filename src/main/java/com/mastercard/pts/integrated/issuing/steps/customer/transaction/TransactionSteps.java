@@ -566,8 +566,8 @@ public class TransactionSteps {
 		context.put(ContextConstants.DEVICE, device);
 	}
 	
-	@Given("set the transaction amount to $amount in program currency")
-	public void setTransactionAmountFromStep(String amount){
+	@Given("set the transaction amount to $amount in $transactionType currency")
+	public void setTransactionAmountFromStep(String amount, String transactionType){
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setTransactionAmount(Integer.toString((Integer.parseInt(amount)*100)));
 		context.put(ContextConstants.DEVICE, device);

@@ -80,4 +80,3 @@ And search Purchase authorization and verify 123-Frequency Exceeded status
 And assert Decline response with 40014 AuthDecline Code and Frequency Exceeded Periodic Domestic as description
 And verify the MCG limit utilization in Device Usage Screen for domestic transaction after failed transaction
 And user sign out from customer portal
-

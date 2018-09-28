@@ -24,8 +24,11 @@ public class MCGLimitPlan {
 	public static final String EXCEEDS_AMOUNT_LIMIT_INTERNATIONAL_DESCRIPTION ="MCC - Transaction amount is greater than daily amount configured at Wallet Plan level (International).";
 	public static final String FREQUENCY_EXCEEDED_INTERNATIONAL_DESCRIPTION ="MCC - Transaction amount is greater than daily velocity configured at Wallet Plan level (International).";
 	public static final String EXCEEDS_AMOUNT_LIMIT_PER_TRANS_DOMESTIC_DESCRIPTION ="MCC - Transaction amount is greater than per transaction amount configured at Wallet Plan level (Domestic).";
+	public static final String EXCEEDS_AMOUNT_LIMIT_PER_TRANS_INTERNATIONAL_DESCRIPTION ="MCC - Transaction amount is greater than per transaction amount configured at Wallet Plan level (International).";
 	public static final String FREQUENCY_EXCEEDED_PERIODIC_DOMESTIC_DESCRIPTION ="MCC - Transaction amount is greater than periodic velocity configured at Wallet Plan level (Domestic).";
 	public static final String EXCEEDS_AMOUNT_LIMIT_PERIODIC_DOMESTIC_DESCRIPTION ="MCC - Transaction amount is greater than periodic amount configured at Wallet Plan level (Domestic).";
+	public static final String FREQUENCY_EXCEEDED_PERIODIC_INTERNATIONAL_DESCRIPTION ="MCC - Transaction amount is greater than periodic velocity configured at Wallet Plan level (International).";
+	public static final String EXCEEDS_AMOUNT_LIMIT_PERIODIC_INTERNATIONAL_DESCRIPTION ="MCC - Transaction amount is greater than periodic amount configured at Wallet Plan level (International).";	
 	
 	private String mcgLimitPlanCode;
 	private String description;
@@ -89,8 +92,11 @@ public class MCGLimitPlan {
 		description.put("Exceeds Amount Limit International", EXCEEDS_AMOUNT_LIMIT_INTERNATIONAL_DESCRIPTION);
 		description.put("Frequency Exceeded International",FREQUENCY_EXCEEDED_INTERNATIONAL_DESCRIPTION);
 		description.put("Exceeds Amount Limit Per Trans Domestic",EXCEEDS_AMOUNT_LIMIT_PER_TRANS_DOMESTIC_DESCRIPTION);
+		description.put("Exceeds Amount Limit Per Trans International",EXCEEDS_AMOUNT_LIMIT_PER_TRANS_INTERNATIONAL_DESCRIPTION);
 		description.put("Frequency Exceeded Periodic Domestic",FREQUENCY_EXCEEDED_PERIODIC_DOMESTIC_DESCRIPTION);
 		description.put("Exceeds Amount Limit Periodic Domestic",EXCEEDS_AMOUNT_LIMIT_PERIODIC_DOMESTIC_DESCRIPTION);
+		description.put("Frequency Exceeded Periodic International",FREQUENCY_EXCEEDED_PERIODIC_INTERNATIONAL_DESCRIPTION);
+		description.put("Exceeds Amount Limit Periodic International",EXCEEDS_AMOUNT_LIMIT_PERIODIC_INTERNATIONAL_DESCRIPTION);
 		return description;
 	}
 
