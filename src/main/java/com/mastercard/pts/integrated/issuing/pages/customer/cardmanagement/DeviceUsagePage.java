@@ -153,6 +153,7 @@ public class DeviceUsagePage extends AbstractBasePage {
 	}
 
 	public DeviceUsage getWalletMCGUsageData(DeviceUsage deviceUsage, int rowNumber) {
+		try{
 		deviceUsage.setRecordedMCG(getCellTextByColumnName(rowNumber, MCG_CODE));
 		deviceUsage.setDailyAmountDomesticUtilized(getCellTextByColumnName(rowNumber, DAILY_AMOUNT_DOMESTIC_UTILIZED));
 		deviceUsage.setDailyVelocityDomesticUtilized(getCellTextByColumnName(rowNumber, DAILY_VELOCLITY_DOMESTIC_UTILIZED));
@@ -167,8 +168,11 @@ public class DeviceUsagePage extends AbstractBasePage {
         switchToIframe(FRAME_VIEW_DEVICE_USAGE);
         clickCloseButton();
         switchToDefaultFrame();
-        
-		return deviceUsage;
+
+		return deviceUsage;}
+		catch(NullPointerException e){
+			return  null;
+		}
 	}
 
 	public List<String> getDeviceTotalTransactionUsage(String cardNumber) {
