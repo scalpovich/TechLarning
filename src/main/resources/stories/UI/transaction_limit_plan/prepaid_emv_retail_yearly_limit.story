@@ -6,6 +6,7 @@ I want to perform transaction
 Meta:
 @StoryName prepaid_emv_retail_Limits
 @YearlyLimit
+@PrepaidTxLimits
 @Limits
 
 Scenario: 1.0 Set up prepaid emv corporate travel card

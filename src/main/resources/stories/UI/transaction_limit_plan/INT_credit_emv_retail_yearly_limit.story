@@ -5,14 +5,14 @@ I want to perform transaction
 
 Meta:
 @StoryName credit_emv_retail_Limits
-@DailyLimit
+@INT_YearlyLimit
 @CreditTxLimits
 @Limits
 
 Scenario: 1.1 Create EMV credit device
 Given setting json values in excel for Credit
 When user is logged in institution
-And user use existing transaction limit plan for limit type DAILY
+And user use existing transaction limit plan for limit type INT_YEARLY
 And for EMV Card User fills Device Plan for credit product for Mastercard
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
@@ -33,9 +33,10 @@ And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: 1.3 Perform EMV_PURCHASE Authorization transaction
+Scenario: 1.3 Perform INT_EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
-When perform an EMV_PURCHASE MAS transaction
+When user update transaction amount to 15
+And perform an INT_EMV_PURCHASE MAS transaction
 Then MAS test results are verified
 
 Scenario: 1.4 Authorization Search page validation
@@ -48,23 +49,23 @@ And user validate device usage for Daily Velocity Utilized and Daily Amount Util
 And user sign out from customer portal
 
 Scenario: 1.5 Update Transaction Amount More than Allowed Periodic Amount
-When user update transaction amount to 21
+When user update transaction amount to 11
 
-Scenario: 1.6 Perform EMV_PURCHASE Authorization transaction to check Exceeds Amount Limit
-When perform an EMV_PURCHASE MAS transaction on the same card
+Scenario: 1.6 Perform INT_EMV_PURCHASE Authorization transaction to check Exceeds Amount Limit
+When perform an INT_EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
 And user validate device usage for Daily Velocity Utilized and Daily Amount Utilized
-And assert Decline response with 34003 AuthDecline Code and Transaction exceeded with Daily amount configured at device plan level. as description
+And assert Decline response with 34003 AuthDecline Code and Transaction exceeded with yearly amount configured at device plan level. as description
 And device has "normal" status
 And user verifies available Card limit for card after transaction
 And user sign out from customer portal
 
 Scenario: 1.7 Update Transaction Amount Less than Allowed Periodic Amount
-When user update transaction amount to 10
+When user update transaction amount to 3
  
-Scenario: 1.8 Perform EMV_PURCHASE Authorization transaction with allowed amount
-When perform an EMV_PURCHASE MAS transaction on the same card
+Scenario: 1.8 Perform INT_EMV_PURCHASE Authorization transaction with allowed amount
+When perform an INT_EMV_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
@@ -74,12 +75,12 @@ And user verifies available Card limit for card after transaction
 And user validate device usage for Daily Velocity Utilized and Daily Amount Utilized
 And user sign out from customer portal
 
-Scenario: 1.9 Perform EMV_PURCHASE Authorization transaction to check Frequency Exceeded
-When perform an EMV_PURCHASE MAS transaction on the same card
+Scenario: 1.9 Perform INT_EMV_PURCHASE Authorization transaction to check Frequency Exceeded
+When perform an INT_EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 123-Frequency Exceeded status
 And user validate device usage for Daily Velocity Utilized and Daily Amount Utilized
-And assert Decline response with 34002 AuthDecline Code and Transaction exceeded with daily velocity configured at device plan level. as description
+And assert Decline response with 34002 AuthDecline Code and Transaction exceeded with yearly velocity configured at device plan level. as description
 And device has "normal" status
 And user verifies available Card limit for card after transaction
 And user sign out from customer portal
