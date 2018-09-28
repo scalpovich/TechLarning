@@ -1887,7 +1887,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			int columnscount = columnsrow.size();
 			for (int col = 0; col < columnscount; col++) {
 				if (columnsrow.get(col).getText().equals(text)) {
-					columnsrow.get(columnscount).click();
+					columnsrow.get(columnscount-1).click();
 					break;
 					
 				}
