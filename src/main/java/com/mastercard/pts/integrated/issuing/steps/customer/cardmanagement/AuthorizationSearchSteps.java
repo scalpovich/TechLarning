@@ -15,14 +15,11 @@ import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.jcabi.log.Logger;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AvailableBalance;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
-import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.AuthorizationSearchWorkflow;
 
@@ -119,7 +116,6 @@ public class AuthorizationSearchSteps {
 
 	@Then("verify markup fee applied on transaction")
 	public void veriyMarkupFeeOnTransaction() {
-		DecimalFormat df = new DecimalFormat("0.00");
 		Device device = context.get(ContextConstants.DEVICE);
 		TransactionFeePlan txnFeePlan = TransactionFeePlan.getMarkUpFees(provider);
 		Double billingAmount = Double.parseDouble(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()).get(0));
@@ -173,9 +169,9 @@ public class AuthorizationSearchSteps {
 		BigDecimal difference=billingAmount.subtract(new BigDecimal(device.getTransactionAmount().substring(0, device.getTransactionAmount().length()-2)));
 		assertThat("Verify Available Balance", availableBalanceBeforeTransaction.add(difference), equalTo(availBal.getAvailableBal()));
 	}	
-	@Given("user verify available balance afer reversal")
-	@When("user verify available balance afer reversal")
-	@Then("user verify available balance afer reversal")
+	@Given("user verify available balance after reversal")
+	@When("user verify available balance after reversal")
+	@Then("user verify available balance after reversal")
 	public void userVerifyAvailableBalanceAfterReversal() {
 		Device device = context.get(ContextConstants.DEVICE);
 		assertThat(INCORRECT_BALANCE_AFTER_REVERSAL, authorizationSearchWorkflow.noteDownAvailableBalanceAfterReversal(device.getDeviceNumber()),
