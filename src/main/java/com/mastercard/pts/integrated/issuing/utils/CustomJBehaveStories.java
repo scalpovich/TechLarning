@@ -50,7 +50,7 @@ public abstract class CustomJBehaveStories extends JUnitStories {
 	@Override
 	public Configuration configuration() {
       	// pass the value as VM argument if you dont want to skip remaining scenarios in a story after one failure
-      	boolean skip = System.getProperty("skip") == null ? true : false;
+      	boolean skip = System.getProperty("skip") == null ? false : true;
 		return new MostUsefulConfiguration().useStoryReporterBuilder(getStoryReporterBuilder()).useStoryControls(new StoryControls().doResetStateBeforeScenario(skip))
 				.useParameterControls(new ParameterControls().useDelimiterNamedParameters(true)).useParameterConverters(getConverters());
 	}
