@@ -59,7 +59,7 @@ Given set the transaction amount to 70 in program currency
 When perform an EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
-And assert Decline response with 40005 AuthDecline Code and Exceeds Amount Limit Domestic as description
+And assert Decline response with 40011 AuthDecline Code and Exceeds Amount Limit Periodic Domestic as description
 Then verify the MCG limit utilization in Device Usage Screen for domestic transaction after failed transaction
 And user sign out from customer portal
 
@@ -77,7 +77,7 @@ When perform an EMV_PURCHASE MAS transaction on the same card
 Then MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 123-Frequency Exceeded status
-And assert Decline response with 40005 AuthDecline Code and Exceeds Amount Limit Domestic as description
+And assert Decline response with 40014 AuthDecline Code and Frequency Exceeded Periodic Domestic as description
 And verify the MCG limit utilization in Device Usage Screen for domestic transaction after failed transaction
 And user sign out from customer portal
 
