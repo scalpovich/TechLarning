@@ -27,7 +27,7 @@ public class LoginWorkflow {
 
 	public void openLoginPageForPortal(Portal portal) {                        
 		webProvider.get().get(portal.getUrl());
-		webProvider.get().manage().window().maximize();
+		//webProvider.get().manage().window().maximize();
 		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
 		loginPage.waitUntilIsLoaded();
 	}
