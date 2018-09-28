@@ -6,6 +6,7 @@ I want to perform transaction
 Meta:
 @StoryName d_emv_corp
 @PeriodicLimit
+@DebitTxLimits
 @Limits
 
 Scenario: 1.1 Set up program for debit EMV corporate debit card
