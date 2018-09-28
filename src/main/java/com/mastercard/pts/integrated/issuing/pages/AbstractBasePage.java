@@ -1878,6 +1878,23 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	}
 	
+	public void clickOncheckBoxIfBatchAvailableinTable(MCWebElement tableHandle, String text) {
+		WebElement table = asWebElement(tableHandle);
+		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
+		int rowscount = rowstable.size();
+		for (int row = 1; row < rowscount; row++) {
+			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
+			int columnscount = columnsrow.size();
+			for (int col = 0; col < columnscount; col++) {
+				if (columnsrow.get(col).getText().equals(text)) {
+					columnsrow.get(columnscount).click();
+					break;
+					
+				}
+			}
+		}
+	}
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		logger.info("Not validaiting any elements, as this is an Abstraction layer to Pages");

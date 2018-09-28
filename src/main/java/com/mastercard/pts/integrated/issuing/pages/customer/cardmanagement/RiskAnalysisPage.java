@@ -43,6 +43,7 @@ public class RiskAnalysisPage extends AbstractBasePage {
 	}
 	
 	public void clickProcessALL() {
-		clickWhenClickable(processAllBtn);
+		//clickWhenClickable(processAllBtn);
+		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
 	}
 }
