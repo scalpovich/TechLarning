@@ -23,6 +23,7 @@ public class VisaTestCaseNameKeyValuePair {
 		visaTestCaseDetailsKeyValuePair.put(RVMT_RECEIVING_CERTIFICATION + "_5", "Case 5 - 0100/0110. 0400/0410 Original Credit & Reversal (TAGs 57, 5F & 71)");
 		visaTestCaseDetailsKeyValuePair.put(RVMT_RECEIVING_CERTIFICATION + "_6", "Case 6 - 0100/0110 Original Credit (VSEC Transaction)");
 		visaTestCaseDetailsKeyValuePair.put(RVMT_RECEIVING_CERTIFICATION + "_7", "Case 7 - 0100/0110 Original Credit (VSEC Transaction)");
+		visaTestCaseDetailsKeyValuePair.put("POS-Retail-Magstripe-purchase_with_Pin_Highrisk", "Case 1-Purchase Transaction With Pin");
 	}
 
 	private void setFileNameToUpload() {
@@ -36,6 +37,7 @@ public class VisaTestCaseNameKeyValuePair {
 		visaTestDataFileToSelectKeyValuePair.put(RVMT_RECEIVING_CERTIFICATION + "_5", RVMT_RECEIVING_CERTIFICATION);
 		visaTestDataFileToSelectKeyValuePair.put(RVMT_RECEIVING_CERTIFICATION + "_6", RVMT_RECEIVING_CERTIFICATION);
 		visaTestDataFileToSelectKeyValuePair.put(RVMT_RECEIVING_CERTIFICATION + "_7", RVMT_RECEIVING_CERTIFICATION);
+		visaTestDataFileToSelectKeyValuePair.put("POS-Retail-Magstripe-purchase_with_Pin_Highrisk", "POS-Retail-Magstripe-purchase_with_Pin_Highrisk");
 	}
 
 	public String getVisaTestCaseToSelect(String key) {
