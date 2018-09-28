@@ -471,7 +471,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	public void submitAndVerifyBatch() {
 		submitBtn.click();
-		statusBtn.click();
+		//statusBtn.click();
+		clickWhenClickable(statusBtn);
 		runWithinPopup("View Batch Details", () -> {
 			logger.info("Retrieving batch status");
 			waitForBatchStatus();
