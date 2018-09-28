@@ -4,3 +4,4 @@ target
 .project
 debug.log
 /bin/
+*.log
