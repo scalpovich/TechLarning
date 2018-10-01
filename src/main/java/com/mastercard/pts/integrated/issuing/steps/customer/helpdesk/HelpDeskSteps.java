@@ -21,7 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.yecht.Data.Str;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
@@ -72,6 +71,9 @@ public class HelpDeskSteps {
 	private String clientID;
 	private String loginType = "login";
 	private CardToCash cardtocash;
+	private static final String STOPLIST_NOTES = "STOPLIST_NOTES";
+	private static final String STOPLIST_REASON = "STOPLIST_REASON";
+	private static final String WITHDRAWAL_REASON = "WITHDRAWAL_REASON";
 	
 	@Autowired
 	private TestContext context;
@@ -861,4 +863,22 @@ public class HelpDeskSteps {
 		device.setAmountType(amount);
 		assertThat(category +" "+ amount +BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device), equalTo(transactionAmount));
 	}
+
+	@When("user stop lists the device")
+	public void stopListsDevice() {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskWorkflow.raiseStoplistRequest(device,
+				provider.getString(STOPLIST_NOTES),
+				provider.getString(STOPLIST_REASON));
+	}
+
+	@When("user withdraws the stoplisted device")
+	public void withdrawStoplistedDevice() {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskWorkflow.withdrawStoplistDeviceFlows(helpdeskGeneral, device,
+				provider.getString(WITHDRAWAL_REASON));
+	}
+
 }

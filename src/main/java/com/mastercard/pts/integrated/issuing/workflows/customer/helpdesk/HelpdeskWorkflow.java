@@ -9,12 +9,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConnectionUtils;
-import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 
 @Workflow
 public class HelpdeskWorkflow {
@@ -215,5 +216,22 @@ public class HelpdeskWorkflow {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		helpDeskPage.getDeviceStatus(device);
 		return helpDeskPage.verifyBillingDetails(device);
+	}
+
+	public void raiseStoplistRequest(Device device, String notes, String reason) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		helpDeskPage.searchByDeviceNumber(device);
+		helpDeskPage.addServiceRequest(reason, notes,
+				helpDeskPage.getstoplistReasonDDwn(),
+				Constants.FRAME_STOPLIST_REQUEST,
+				Constants.DEVICE_STOPLIST_REQ, false);
+	}
+
+	public void withdrawStoplistDeviceFlows(HelpdeskGeneral general,
+			Device device, String withdrawReason) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		helpDeskPage.searchByDeviceNumber(device);
+		helpDeskPage.withdrawDeviceFromStoplist(general, withdrawReason);
+
 	}
 }

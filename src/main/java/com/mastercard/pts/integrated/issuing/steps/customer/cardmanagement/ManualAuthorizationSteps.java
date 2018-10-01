@@ -28,7 +28,7 @@ public class ManualAuthorizationSteps {
 	@Autowired
 	private ManualAuthorizationWorkflow manualAuthorizationWorkflow;
 	
-	private String successMessage;
+	private String statusMessage;
 
 	@Given("user raises an authorization request")
 	@When("user raises an authorization request")
@@ -37,12 +37,21 @@ public class ManualAuthorizationSteps {
 		AuthorizationRequest request = AuthorizationRequest.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		request.setDeviceNumber(device.getDeviceNumber());
-		successMessage = manualAuthorizationWorkflow.authorizeDevice(request);
+		statusMessage = manualAuthorizationWorkflow.authorizeDevice(request);
 	}
 	
 	@Then("status of request is \"approved\"")
 	public void thenStatusOfRequestIsapproved(){
-		 assertThat("Authorization is successful", successMessage, containsString("Authorization is successful"));
+		assertThat("Authorization is successful", statusMessage,
+				containsString("Authorization is successful"));
 
+	}
+
+	@Then("status of request is declined with reason $declineReason")
+	@When("status of request is declined with reason $declineReason")
+	public void thenVerifyDeclineStatusCode(String declineReason) {
+		assertThat("Authorization is declined", statusMessage,
+				containsString(manualAuthorizationWorkflow
+						.getDeclineReasonMessage(declineReason)));
 	}
 }

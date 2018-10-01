@@ -13,9 +13,15 @@ public class ManualAuthorizationWorkflow {
 	@Autowired
 	private Navigator navigator;
 
+	AuthorizationRequestPage page;
+
 	public String authorizeDevice(AuthorizationRequest request){
-		AuthorizationRequestPage page = navigator.navigateToPage(AuthorizationRequestPage.class);
+		page = navigator.navigateToPage(AuthorizationRequestPage.class);
 		return page.addAuthorizationRequest(request);
+	}
+
+	public String getDeclineReasonMessage(String declineReasonCode) {
+		return page.getDeclineReasonMessage(declineReasonCode);
 	}
 
 }

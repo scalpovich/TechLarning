@@ -100,6 +100,8 @@ public class ContextConstants {
 	
 	public static final String INST_PROPERTY = "institution";
 	
+	public static final String DEVICE_DETAILS = "DEVICE_DETAILS";
+
 	private ContextConstants() {
 	}
 

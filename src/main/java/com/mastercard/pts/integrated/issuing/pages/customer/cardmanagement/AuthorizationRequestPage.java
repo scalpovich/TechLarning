@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AuthorizationRequest;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -73,6 +74,19 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
 				WebElementUtils.elementToBeClickable(deviceNumberSearchTxt));
+	}
+
+	public String getDeclineReasonMessage(String declineReasonCode) {
+		String declineMessage = null;
+		switch (declineReasonCode) {
+		case "Lost":
+		case "lost":
+			declineMessage = Constants.REPLACE_DECLINE_MESSAGE_LOST;
+			break;
+		default:
+			break;
+		}
+		return declineMessage;
 	}
 
 }

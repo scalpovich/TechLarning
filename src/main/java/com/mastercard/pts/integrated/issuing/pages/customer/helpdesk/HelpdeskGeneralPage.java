@@ -21,18 +21,22 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.CharMatcher;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
+import com.mastercard.pts.integrated.issuing.domain.restapi.DeviceDetails;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -42,6 +46,10 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle = HelpdeskNav.TAB_HELPDESK, treeMenuItems = { HelpdeskNav.L1_ACTIVITY, HelpdeskNav.L2_GENERAL })
 public class HelpdeskGeneralPage extends AbstractBasePage {
+
+	@Autowired
+	private TestContext context;
+
 	private static final String TABLE_XPATH = "//div[@class='TransScrollY']//table[@class='dataview']//tr";
 	private static final String OPERATION="//select[@name='udf1:input:dropdowncomponent']";
 	private static final String ROWCOUNT_REMITTANCE = "//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr";
@@ -275,6 +283,24 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Balance Details']")
 	private MCWebElement balanceDetailsTab;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "udf20:input:dropdowncomponent")
+	private MCWebElement stoplistReasonDDwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "udf12:checkBoxComponent")
+	private MCWebElement chkBxNewDeviceNumber;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "udf1:input:dropdowncomponent")
+	private MCWebElement replaceDeviceRequestReasonDdwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "udf13:input:inputTextField")
+	private MCWebElement txtnewPackID;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "udf11:input:dropdowncomponent")
+	private MCWebElement withdrawStoplistReasonDDwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "udf13:checkBoxComponent")
+	private MCWebElement chkBxApplyFees;
 
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
@@ -1164,6 +1190,83 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			return 4;
 		}
 		return 0;
+	}
+
+	public void addServiceRequest(String reason, String notes,
+			MCWebElement element, String frame, String serviceCode,
+			boolean isNewDevice) {
+		editFirstRecord();
+		SimulatorUtilities.wait(2000);
+		selectServiceCode(serviceCode);
+		clickGoButton();
+		runWithinPopup(
+				frame,
+				() -> {
+					if (isNewDevice) {
+						selectNewDeviceCheckBox(isNewDevice);
+						SimulatorUtilities.wait(2000);
+						selectReasonForRequest(element, reason);
+					} else {
+						selectReasonForRequest(element, reason);
+						if (serviceCode
+								.equals(Constants.INSTANT_REPLACE_DEVICE)) {
+							DeviceDetails deviceDetails = context
+									.get(ContextConstants.DEVICE_DETAILS);
+							enterNewPackID(deviceDetails.getCardPackID());
+						}
+					}
+					enterNotes(notes);
+					clickSaveButton();
+					verifyOperationStatus();
+					clickOKButtonPopup();
+				});
+		SimulatorUtilities.wait(5000);
+		clickEndCall();
+	}
+
+	public MCWebElement getReplaceDeviceRequestReasonDdwn() {
+		return replaceDeviceRequestReasonDdwn;
+	}
+
+	public MCWebElement getstoplistReasonDDwn() {
+		return stoplistReasonDDwn;
+	}
+
+	public void selectNewDeviceCheckBox(boolean value) {
+		ClickCheckBox(chkBxNewDeviceNumber, value);
+	}
+
+	public void selectReasonForRequest(MCWebElement webelement, String reason) {
+		WebElementUtils.selectDropDownByVisibleText(webelement, reason);
+	}
+
+	public void enterNewPackID(String newPackID) {
+		WebElementUtils.enterText(txtnewPackID, newPackID);
+	}
+
+	public void withdrawDeviceFromStoplist(HelpdeskGeneral helpdeskGeneral,
+			String withdrawReason) {
+		editFirstRecord();
+		SimulatorUtilities.wait(5000);
+		runWithinPopup("221 - Withdraw Device from Stop-list", () -> {
+			selectWithdrawlReason(withdrawReason);
+			selectApplyFeesChkBx(true);
+			enterNotes(helpdeskGeneral.getNotes());
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();
+		});
+		SimulatorUtilities.wait(3000);
+		clickEndCall();
+	}
+
+	public void selectWithdrawlReason(String reason) {
+		WebElementUtils.selectDropDownByVisibleText(withdrawStoplistReasonDDwn,
+				reason);
+	}
+
+	public void selectApplyFeesChkBx(boolean value) {
+		ClickCheckBox(chkBxApplyFees, value);
 	}
 
 }
