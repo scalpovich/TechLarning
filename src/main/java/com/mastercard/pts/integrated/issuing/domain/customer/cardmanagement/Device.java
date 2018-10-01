@@ -44,7 +44,6 @@ public class Device {
 	private static final String JOINING_FEES = "JOINING_FEES";
 	private static final String MEMBERSHIP_FEES = "MEMBERSHIP_FEES";
 	
-	
 	private String currencyofTransfer;
 	private String currentTransPassword;
 	private String newTransPassword;
@@ -111,7 +110,6 @@ public class Device {
 	private String membershipFees;
 	private String promotionPlanCode;
   	
-
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
 		device.setApplicationType(provider.getString(APPLICATION_TYPE));
@@ -695,8 +693,7 @@ public class Device {
 
 	public void setMemberShipFees(String membershipFees) {
 		this.membershipFees = membershipFees;
-}
-	
+	}
 	
 	public String getPromotionPlanCode() {
 		return promotionPlanCode;

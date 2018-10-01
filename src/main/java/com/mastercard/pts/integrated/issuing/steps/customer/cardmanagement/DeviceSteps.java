@@ -44,7 +44,6 @@ public class DeviceSteps {
 	Program program;
 	
 	private static final String PROMOTION_FEE_PLAN = "PROMOTION_FEE_PLAN";
-
 	private static final String CORPORATE_CLIENT_CODE_DEVICE2 = "CORPORATE_CLIENT_CODE_DEVICE2";
 
 	@When("user creates new device of $type type for new client")
@@ -204,7 +203,6 @@ public class DeviceSteps {
 		context.put(CreditConstants.APPLICATION, device);
 	}
 		
-	
 	@Given("$type device is created using new device screen")
 	@When("$type device is created using new device screen")
 	@Then("$type device is created using new device screen")
