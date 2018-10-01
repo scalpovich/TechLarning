@@ -40,7 +40,7 @@ public class CustomerCareSteps {
 	@Then("User search for new application on customer care screen for $productType and validates the status as $NORMAL")
 	public void thenUserSearchForApplicationOnCustomerCareScreen(String productType, String status) {
 		helpDeskGetterSetter.setProductType(ProductType.fromShortName(productType));
-		String actualStatus = null;
+		String actualStatus = "";
 		Device device=context.get(ContextConstants.DEVICE);
 
 		if (Integer.parseInt(context.get(CreditConstants.QUANTITY_REQUESTED)) > 1) {
