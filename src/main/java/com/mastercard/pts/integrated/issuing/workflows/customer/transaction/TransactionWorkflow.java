@@ -1791,10 +1791,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		Device device = context.get(ContextConstants.DEVICE);
 		if (transaction.toLowerCase().contains("pin")) {
 			setValueInMessageEditorForTransction("F35.05", transactionName, (MiscUtils.randomNumber(2) + device.getCvvData()));	
-		}
 			setValueInMessageEditorForTransction("F52", transactionName, device.getPinNumberForTransaction());
-		if(transaction.toLowerCase().contains("ECOM"))
+		}
+		if(transaction.toLowerCase().contains("ECOM")) {
 			setValueInMessageEditorForTransction("F126.10", transactionName, (MiscUtils.randomNumber(3) + device.getCvv2Data()));	
+		}
 		captureSaveScreenShot(methodName);
 		executeVisaTest(transactionName);
 	}
@@ -1917,7 +1918,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(5000);
 		captureSaveScreenShot(methodName);
 		executeAutoITExe("visaTestExecution.exe");
-		waitForReturnButtonToGetEnable();
+//		waitForReturnButtonToGetEnable();
 		captureSaveScreenShot(methodName);
 	}
 
