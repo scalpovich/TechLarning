@@ -106,6 +106,12 @@ public class ConstantData {
 	
 	public static final String ZERO_ZERO = "00";
 	public static final String NINE_NINE = "99";
+	
+	public static final String DAILY = "Daily";
+	public static final String PERIODIC = "Periodic";
+	public static final String YEARLY = "Yearly";
+	public static final String PERIODICITY = "Month [9]";
+	public static final String PERIODICITY_MONTH = "12";
 
 	private ConstantData() {
 	}

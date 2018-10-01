@@ -244,7 +244,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	private void captureSaveScreenShot(String methodName) {
-		SimulatorUtilities.takeScreenShot(winiumDriver, methodName + "_" + new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
+		//SimulatorUtilities.takeScreenShot(winiumDriver, methodName + "_" + new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 	}
 
 	public void performOptimizedMasTransaction(String transaction, Transaction transactionData, Boolean sameCard) {

@@ -15,6 +15,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Tran
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionLimitPlanDetails;
@@ -508,8 +509,8 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 			selectIframeProductType(transactionLimitPlanDataObject.getIframeproductType());
 			selectIframePlanType(transactionLimitPlanDataObject.getIframePlanType());
 			selectIframeStartMonthForYearlyLimits(transactionLimitPlanDataObject.getIframeStartMonthForYearlyLimits());
-			selectPeriodicity("Month [9]");
-			enterPeriodicityMonth("12");
+			selectPeriodicity(ConstantData.PERIODICITY);
+			enterPeriodicityMonth(ConstantData.PERIODICITY_MONTH);
 			clickAddDetailsButton();
 			transactionLimitPlanDataObject.getTransactionLimitPlanDetails().forEach(details -> addDetails(details, transactionLimitPlanDataObject.getIframeproductType(),limitType));
 			WebElementUtils.scrollDown(driver(), 0, 250);
@@ -533,15 +534,19 @@ public class TransactionLimitPlanPage extends AbstractBasePage {
 			selectIframeFloorResponse(details.getIframeFloorResponse());
 			enterIframeCeilingAmount(details.getIframeCeilingAmount());
 			selectIframeCeilingResponse(details.getIframeCeilingResponse());
-
-			if(limitType.equalsIgnoreCase("Daily")){
+			
+			if(productType.equalsIgnoreCase(ProductType.DEBIT)){
+				enterIframeStandInAmount(details.getIframeStandInAmount());
+			}
+			
+			if(limitType.equalsIgnoreCase(ConstantData.DAILY)){
 				enterIframeDailyAmount(details.getIframeDailyAmount());
 				selectIframeDailyResponse(details.getIframeDailyResponse());
 				enterDailyVelocity(details.getLimitDailyVelocity());
-			}else if(limitType.equalsIgnoreCase("Periodic")){
+			}else if(limitType.equalsIgnoreCase(ConstantData.PERIODIC)){
 				enterPeriodicAmt(details.getLimitPeriodicAmount());
 				enterPeriodicVel(details.getLimitPeriodicVelocity());
-			}else if(limitType.equalsIgnoreCase("Yearly")){
+			}else if(limitType.equalsIgnoreCase(ConstantData.YEARLY)){
 				enterYearlyData(details);
 			}
 			clickWhenClickable(saveBtn);
