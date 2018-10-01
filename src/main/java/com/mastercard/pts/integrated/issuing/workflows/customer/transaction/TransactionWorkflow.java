@@ -18,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.jbehave.web.selenium.WebDriverProvider;
@@ -112,6 +113,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private static final String SIMULATOR_LICENSE_TYPE_18 = "18";
 	private static final String REVERSAL="Reversal";
 	private static final String STIP="STIP";
+	private static final int MAX_RETRY = 30;
 	
 	@Autowired
 	private WebDriverProvider webProvider;
@@ -1886,12 +1888,33 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		return tempValue;
 	}
 
-	private WebElement transactionReturnButton() {
+	private void waitForReturnButtonToGetEnable() {
+		boolean flag = false;
+		int retry = 0;
+		WebElement retunButtuon = null;
+		try {
+			while (!flag && retry <= MAX_RETRY) {
+				retunButtuon = winiumDriver.findElementByName("Return");
+				flag = retunButtuon.isEnabled();
+				wait(500);
+				retry ++;
+			}
+
+		} catch (NoSuchElementException ex) {
+			logMessage("Waiting for elemnt to get enabled", ex.getMessage());
+		}
+		retunButtuon.click();
+		wait(3000);
+	}
+	
+	
+	/*private WebElement transactionReturnButton() {
 		WebElement retunButton = winiumDriver.findElementByName("Return");
 		return retunButton;
 	}
+*/	
 	
-	private void waitForReturnButtonToGetEnable() {
+/*	private void waitForReturnButtonToGetEnable() {
 		WebElement retunButton = transactionReturnButton();
 		for (int i = 1; i < 25; i++) {
 			if (!retunButton.isEnabled()) {
@@ -1902,7 +1925,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 				retunButton.click();
 			}
 		}
-	}
+	}*/
 
 	public void executeVisaTest(String transaction) {
 		MiscUtils.reportToConsole(" ******* executeVisaTest ******");
