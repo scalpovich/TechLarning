@@ -118,7 +118,7 @@ public class AuthorizationTransactionFactory {
 			MiscUtils.reportToConsole("RRN Number for transaction : " + randNum);
 		}
       
-      	if ("011".equals(entry.getValue())) {
+      	if ("011".equals(entry.getKey())) {
 			String randNumAudit = RandomStringUtils.randomNumeric(6);
 			if (context.get(ConstantData.TRANSACTION_NAME).toString().contains("PREAUTH")) {
 				context.put("DATAELEMENT_011", randNumAudit);
