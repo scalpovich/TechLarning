@@ -24,12 +24,15 @@ And user searches for created application
 And credit processes pre-production batch using new Application
 And credit processes deviceproduction batch using new Application
 And new Application processes pin generation batch for credit
-Then User search for new application on search screen for credit and validates the status as NORMAL
+And User search for new application on search screen for credit and validates the status as NORMAL
 And credit device is created using new Application screen for Individual [0] and "Add-on Device [A]" and New Client [N] and EMV Card [2]
 And user checks in Incomplete Application for the credit application device
 And user verifies the credit application device
-And user approves the credit application device
 And user processes close batch for new Application
+And user processesAll riskAnalysis batch for new Application
+And user processesAll applicationScoring batch for new Application
+And user refer the credit application device
+And user processesAll creditBureauVerification batch for new Application
 And user processes deviceGeneration batch for new Application
 And user searches for created application
 And credit processes pre-production batch using new Application
