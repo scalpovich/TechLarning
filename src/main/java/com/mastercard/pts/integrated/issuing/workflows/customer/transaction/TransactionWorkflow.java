@@ -1917,13 +1917,13 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(5000);
 		captureSaveScreenShot(methodName);
 		executeAutoITExe("visaTestExecution.exe");
-//		waitForReturnButtonToGetEnable();
+		waitForReturnButtonToGetEnable();
 		captureSaveScreenShot(methodName);
 	}
 
 	public String verifyVisaOutput(String transaction) {
 		String results;
-		List<WebElement> lst = new ArrayList<>();
+		List<WebElement> lst;
 		MiscUtils.reportToConsole(" ******* verifyVisaOutput ******");
 		winiumClickOperation(transaction);
 		pressEnter();
