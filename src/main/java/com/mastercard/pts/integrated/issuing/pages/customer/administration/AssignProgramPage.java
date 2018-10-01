@@ -38,13 +38,15 @@ public class AssignProgramPage extends AbstractBasePage {
 		AtomicBoolean canceled = new AtomicBoolean(false);
 		logger.info("Program Code {}", program.getProgramCodeDevice());
 		clickAddNewButton();
-		runWithinPopup("Add SR Visibility at Program Level", () -> {
-			WebElementUtils.selectDDByVisibleText(programDDwn, program.getProgramCodeDevice());
-			WebElementUtils.selectAllOptionsInListBox(availableServiceCodeLstBx);
-			addServiceCodeBtn.click();
-			clickSaveButton();
-			canceled.set(verifyAlreadyExistsAndClickCancel());
-		});
+		runWithinPopup(
+				"Add SR Visibility at Program Level",
+				() -> {
+					WebElementUtils.selectDDByVisibleText(programDDwn, program.getProgramCodeDevice());
+					WebElementUtils .selectAllOptionsInListBox(availableServiceCodeLstBx);
+					addServiceCodeBtn.click();
+					clickSaveButton();
+					canceled.set(verifyAlreadyExistsAndClickCancel());
+				});
 		if (!canceled.get()) {
 			verifyOperationStatus();
 		}
