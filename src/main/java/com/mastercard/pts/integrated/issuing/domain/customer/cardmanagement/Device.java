@@ -69,6 +69,7 @@ public class Device {
 	private String existingDeviceNumber;
 	private String photoIndicator;
 	private String batchNumber;
+	private String partnerMembershipNumber;
 	private String sequenceNumber;
 	private String cvvData;
 	private String expirationYear;
@@ -558,6 +559,14 @@ public class Device {
 
 	public void setBatchNumber(String batchNumber) {
 		this.batchNumber = batchNumber;
+	}
+
+	public String getPartnerMembershipNumber() {
+		return partnerMembershipNumber;
+	}
+
+	public void setPartnerMembershipNumber(String partnerMembershipNumber) {
+		this.partnerMembershipNumber = partnerMembershipNumber;
 	}
 
 	public String getSequenceNumber() {

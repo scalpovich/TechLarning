@@ -706,8 +706,8 @@ public class HelpDeskSteps {
 
 	}
 
-	@Then("User search for new application on search screen for $productType and validates the status as $NORMAL")
-	@When("User search for new application on search screen for $productType and validates the status as $NORMAL")
+	@Then("User search for new application on search screen for $productType and validates the status as $status")
+	@When("User search for new application on search screen for $productType and validates the status as $status")
 	public void thenUserSearchForApplicationOnSearchScreen(String productType, String status) {
 		helpDeskGetterSetter.setProductType(ProductType.fromShortName(productType));
 		String actualStatus = null;

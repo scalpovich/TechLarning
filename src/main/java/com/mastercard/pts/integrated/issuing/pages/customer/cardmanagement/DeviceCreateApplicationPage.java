@@ -266,7 +266,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		logger.info("Application Number: {}",device.getApplicationNumber());
 		
 		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)
-				&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)) {
+				/*&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)*/) {
 			context.put(ContextConstants.DEVICE_SUPPLEMENTARY_ADDON_EXISTING,device);
 		} else {
 			context.put(ContextConstants.DEVICE, device);

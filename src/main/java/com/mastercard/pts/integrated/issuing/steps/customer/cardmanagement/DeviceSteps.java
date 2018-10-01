@@ -219,7 +219,7 @@ public class DeviceSteps {
 		
 		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)
 				|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)
-				&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)){
+				/*&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)*/){
 			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
 			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 		}else{
