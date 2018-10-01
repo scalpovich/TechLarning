@@ -47,8 +47,8 @@ Scenario:3 Transaction - MSR_PREAUTH Authorization transaction on credit device 
 Given connection to MAS is established
 When perform an MSR_PREAUTH MAS transaction
 And user is logged in institution
-And search Pre-Auth authorization and verify 208-LOST CARD, PICK-UP status
-And assert Capture response with 70053 AuthDecline Code and Card Status is Lost with Capture Response as description
+And search Pre-Auth authorization and verify 101-EXPIRED CARD status
+And assert Capture response with 70123 AuthDecline Code and Card Status is Expired with Decline Response as description
 Then user sign out from customer portal
 
 Scenario:4 To Verify that the user can withdraw stoplist credit device from stoplist screen
