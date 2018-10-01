@@ -1,5 +1,8 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -58,6 +61,14 @@ public class ClientPhotoFlatFileDownloadBatchPage extends AbstractBasePage {
 		String successMessage[] = getSuccessMessage().split(" ");
 		String jobId = successMessage[successMessage.length-1];
 		context.put(ContextConstants.JOB_ID, jobId);
+		LocalDateTime serverTime = LocalDateTime.now(ZoneId.of("GMT-5"));
+		if(serverTime.getHour()>12){
+			serverTime = serverTime.minusHours(12);
+		}
+	    String timeStamp = serverTime.format(DateTimeFormatter.ofPattern("ddMMyyyyHHmm")); //CDT time when batch download is done. 
+        context.put(ContextConstants.CLIENT_PHOTO_BATCH_PROCESS_TIME,timeStamp);
+        logger.info("timestamp of processing",timeStamp);
+        
 		return !Strings.isNullOrEmpty(getSuccessMessage());
 	}
 	

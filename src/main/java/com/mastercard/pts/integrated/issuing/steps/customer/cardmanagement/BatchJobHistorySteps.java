@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -69,6 +70,6 @@ public class BatchJobHistorySteps {
 		} else if(batch.equalsIgnoreCase("CARDHOLDER_DUMP")) {
 			batchjobhistory.setBatch("Cardholder Dump [CARDHOLDER_DUMP]");
 		}
-		batchjobhistoryflows.verifyBatchJobHistoryStatusDisplayed(batchjobhistory);
+		Assert.assertTrue( "Batch job status is not diplayed success",batchjobhistoryflows.verifyBatchJobHistoryStatusDisplayed(batchjobhistory) );
 	}
 }
