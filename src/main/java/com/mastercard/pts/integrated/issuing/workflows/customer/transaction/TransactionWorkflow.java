@@ -1917,9 +1917,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		captureSaveScreenShot(methodName);
 		winiumClickOperation("Execute Test");
 		wait(5000);
+		waitForReturnButtonToGetEnable();
 		captureSaveScreenShot(methodName);
-		executeAutoITExe("visaTestExecution.exe");
-//		waitForReturnButtonToGetEnable();
+//		executeAutoITExe("visaTestExecution.exe");
 		captureSaveScreenShot(methodName);
 	}
 
