@@ -1500,6 +1500,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void winiumClickOperation(String locator) {
 		logger.info(WINIUM_LOG_COMMENT, locator);
+		SimulatorUtilities.wait(8000);
 		winiumDriver.findElementByName(locator).click();
 	}
 
