@@ -293,11 +293,6 @@ public class CurrencyExchangeRatesSteps {
 		try{
 		Device device =context.get(ContextConstants.DEVICE);
 		Program program =context.get(ContextConstants.PROGRAM);
-		MCGLimitPlan mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
-		DeviceUsage deviceUsage = DeviceUsage.getDeviceUsageDetails(provider);
-		if(mcgLimitPlan==null){
-			mcgLimitPlan = MCGLimitPlan.getMCGLimitPlanData(provider);
-		}
 		currencyExchangeRateDomainPage.setSourceCurrency(currency);
 		currencyExchangeRateDomainPage.setDestinationCurrency(program.getBaseCurrency());
 		if(program.getProduct().equalsIgnoreCase(ProductType.PREPAID)){
@@ -305,10 +300,8 @@ public class CurrencyExchangeRatesSteps {
 		else{
 			currencyExchangeRateDomainPage.setRateOrigin(program.getCurrencyConversionBy());}
 		String currencyRate = currencyExchangeRatesFlows.fetchSourceToDestinationCurrency(currencyExchangeRateDomainPage);
-		double amount = (Double.parseDouble(mcgLimitPlan.getDailyAmountInternational())/Double.parseDouble(currencyRate));
-		device.setTransactionAmount(Integer.toString(((int)(amount/3))*100));
+		device.setExchangeRate(currencyRate);
 		context.put(ContextConstants.DEVICE,device);
-		context.put(DeviceUsageSteps.DEVICE_USUAGE,deviceUsage);
 		}
 		catch(NullPointerException e)
 		{

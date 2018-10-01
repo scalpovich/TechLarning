@@ -104,6 +104,7 @@ public class Device {
   	private String walletCurrency;
  	private String category;
   	private String amountType;
+  	private String exchangeRate;
   	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -674,4 +675,13 @@ public class Device {
 	public void setAmountType(String amountType) {
 		this.amountType = amountType;
 	}
+
+	public String getExchangeRate() {
+		return exchangeRate;
+	}
+
+	public void setExchangeRate(String exchangeRate) {
+		this.exchangeRate = exchangeRate;
+	}
+
 }

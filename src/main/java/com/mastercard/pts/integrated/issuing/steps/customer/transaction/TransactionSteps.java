@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jbehave.core.annotations.Alias;
@@ -566,10 +567,14 @@ public class TransactionSteps {
 		context.put(ContextConstants.DEVICE, device);
 	}
 	
-	@Given("set the transaction amount to $amount in $transactionType currency")
+	@Given("set the transaction amount to $amount in program currency")
 	public void setTransactionAmountFromStep(String amount, String transactionType){
 		Device device = context.get(ContextConstants.DEVICE);
-		device.setTransactionAmount(Integer.toString((Integer.parseInt(amount)*100)));
+		if(device.getExchangeRate()==null){
+		device.setTransactionAmount(Integer.toString((Integer.parseInt(amount)*100)));}
+		else{
+			Double moderatedAmount = (Double.parseDouble(amount))/(Double.parseDouble(device.getExchangeRate()));
+			device.setTransactionAmount(Double.toString(Math.round(moderatedAmount)*100));}
 		context.put(ContextConstants.DEVICE, device);
 	}
 }
