@@ -20,7 +20,7 @@ And user assigns service code to program
 Then user creates new device of prepaid type for new client
 And user sign out from customer portal
 
-Scenario:2 To Verify that the user can stoplist a credit device through helpdesk
+Scenario:2 To Verify that the user can stoplist a prepaid device through helpdesk
 Given user is logged in institution
 When a new device was created
 And processes pre-production batch for prepaid
