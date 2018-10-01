@@ -79,13 +79,10 @@ public class AuthorizationSearchWorkflow {
 		String actualDescription = authSearchPage.getCellTextByColumnName(1, descriptionColumnName);
 		String authCodeValue = authSearchPage.getCellTextByColumnName(1, "Auth Code");
 		String transactionAmountValue = authSearchPage.getCellTextByColumnName(1, "Transaction Amount");
-		
-
 		context.put(ConstantData.AUTHORIZATION_CODE, authCodeValue);
 		context.put(ConstantData.TRANSACTION_AMOUNT, transactionAmountValue);
 		logger.info("CodeAction on Authorization Search Page : {} ", actualCodeAction);
 		logger.info("Description on Authorization Search Page : {} ", actualDescription);
-
 		logger.info("type on Authorization Search Page : {} ", type);
 		logger.info("state on Authorization Search Page : {} ", state);
 		logger.info("auth code on Authorization Search Page : {} ", authCodeValue);
@@ -100,15 +97,6 @@ public class AuthorizationSearchWorkflow {
 
 		// Device Usage Code
 		String billingAmountValue = authSearchPage.getCellTextByColumnName(1, "Billing Amount");
-		String transaction = context.get(ConstantData.TRANSACTION_NAME);
-		/*if("000-Successful".equalsIgnoreCase(actualCodeAction) && !"Pre-Auth Completion".equalsIgnoreCase(type) && !transaction.contains("INT")){
-			device.setDeviceVelocity();
-			device.setDeviceAmountUsage(Double.parseDouble(transactionAmountValue));
-		}else if("000-Successful".equalsIgnoreCase(actualCodeAction) && !"Pre-Auth Completion".equalsIgnoreCase(type) && transaction.contains("INT")){
-			device.setDeviceVelocity();
-			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue));
-		}*/
-		
 		if("000-Successful".equalsIgnoreCase(actualCodeAction) && !"Pre-Auth Completion".equalsIgnoreCase(type)){
 			device.setDeviceVelocity();
 			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue));
