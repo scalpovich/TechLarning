@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Optional;
 
 
+
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -169,8 +171,9 @@ public class DeviceUsagePage extends AbstractBasePage {
         clickCloseButton();
         switchToDefaultFrame();
 
-		return deviceUsage;}
-		catch(NullPointerException e){
+		return deviceUsage;
+		}
+		catch(WebDriverException | NullPointerException e){
 			return  null;
 		}
 	}

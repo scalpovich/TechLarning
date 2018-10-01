@@ -75,7 +75,7 @@ public class DeviceUsageSteps {
 		deviceUsage.setDeviceNumber(device.getDeviceNumber());
 		deviceUsage = deviceUsageWorkflow.getWalletMCGUsage(deviceUsage);
 
-		if (Objects.nonNull(deviceUsage.getRecordedMCG())&&!deviceUsage.getRecordedMCG().isEmpty()) {
+		if (Objects.nonNull(deviceUsage.getRecordedMCG())) {
 			Assert.assertEquals("Error asserting MCG Code", mcgLimitPlan.getMcgCode(), deviceUsage.getRecordedMCG());
 			if (type.equalsIgnoreCase(DOMESTIC)) {
 				Assert.assertEquals("Domestic Daily Transaction Amount is changed even after failed transaction", df2.format(deviceUsage.getPreviousTransactionValue()), df2.format(Double.parseDouble(deviceUsage.getDailyAmountDomesticUtilized())));

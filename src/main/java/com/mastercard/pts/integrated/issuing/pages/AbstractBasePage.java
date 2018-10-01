@@ -41,6 +41,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
@@ -481,7 +482,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		WebElement element = driver().findElement(By.xpath(xpath));
 		waitForElementVisible(element);
 		return element.getText().trim();}
-		catch(NullPointerException e){
+		catch(ElementNotFoundException e){
 			return null;
 		}
 	}
