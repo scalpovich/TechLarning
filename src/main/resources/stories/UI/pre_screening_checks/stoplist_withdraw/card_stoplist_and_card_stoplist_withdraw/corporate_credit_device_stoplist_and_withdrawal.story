@@ -32,7 +32,8 @@ And for Primary Device and New Client user fills Device Range section for credit
 And credit device is created using new device screen for Corporate and Primary Device and New Client and Magnetic Stripe Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
-And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+And device has "normal" status
+And user activates device through helpdesk
 Then embossing file batch was generated in correct format
 And user sign out from customer portal
 
