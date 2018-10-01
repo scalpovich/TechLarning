@@ -129,35 +129,7 @@ Then validate the statement with parameters:
 |Closing Balance|
 And user sign out from customer portal
 
-Scenario:1.9 Verify User is able to make Payment of credit card through cash mode after billing cycle
-Meta:
-@PaymentCash
-When update institution date to next day
-Given user is logged in institution
-When user sign out from customer portal
-And user is logged in institution
-And user sign out from customer portal
-And user is logged in institution
-And user sign out from customer portal
-
-Scenario:2.0 Verify User is able to make Payment of credit card through cash mode after billing cycle
-Meta:
-@PaymentCash
-Given user is logged in institution
-When user check balance details through helpdesk before payment
-And user makes full bill payment through cash
-And user sign out from customer portal
-Given user is logged in institution
-When user wait for seven minutes to perform certain activity
-And user sign out from customer portal
-Given user is logged in institution
-When user processes Pre-clearing system internal batch for Credit
-When user processes EOD-Credit system internal batch for Credit
-When user check balance details through helpdesk after payment
-Then user compare balance details after full payment
-And user sign out from customer portal
-
-Scenario:2.1 Login & Logout to wait for date to be updated foe next billing
+Scenario: 1.9 Login & Logout to wait for date to be updated for next billing cycle
 Meta:
 @TestId 
 When update institution date to first of next month
@@ -168,7 +140,80 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:2.2 Process Batches after paying full payment bill and verify payments
+Scenario:2.0 Process Batches for billing to next cycle and validated values on helpdesk and statement 
+Meta:
+@TestId 
+Given user is logged in institution
+When user processes Pre-clearing system internal batch for Credit
+And user processes EOD-Credit system internal batch for Credit
+And user verify Unbilled amount for Purchase category
+And user processes Billing Process - Credit system internal batch for Credit
+!-- And user verify Billed amount for Purchase category
+!-- And user verify Billed amount for Fee category
+And user verify Billed amount for Interest category
+And user verify Amount amount for Unpaid1 category
+And user verify Amount amount for Unpaid2 category
+And device has "normal" status
+And user notes down required values from helpdesk for credit
+And user run Statement Extract system internal batch
+And verify statement file is successfully downloaded
+Then validate the statement with parameters:
+|parameters|
+|Credit Card Number|
+|Statement Date|
+|Payment Due Date|
+|Total Payment Due|
+|Minimum Payment Due|
+|Account Number|
+|Credit Limit|
+|Available Credit Limit|
+|Closing Balance|
+And user sign out from customer portal
+
+Scenario:2.1 Verify User is able to make Payment of credit card through cash mode after billing cycle
+Meta:
+@PaymentCash
+When update institution date to next day
+Given user is logged in institution
+When user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+
+Scenario:2.2 Verify User is able to make Payment of credit card through cash mode after billing cycle
+Meta:
+@PaymentCash
+Given user is logged in institution
+When user check balance details through helpdesk before payment
+And user makes MAD bill payment through cash
+And user sign out from customer portal
+Given user is logged in institution
+When user wait for seven minutes to perform certain activity
+And user sign out from customer portal
+Given user is logged in institution
+When user processes Pre-clearing system internal batch for Credit
+When user processes EOD-Credit system internal batch for Credit
+When user check balance details through helpdesk after payment
+Then user compare balance details after MAD payment
+!-- need to write comparison for MAD paymnet
+And user verify Amount amount for Unpaid1 category
+And user verify Amount amount for Unpaid2 category
+!-- need to discuss after doing MAD, will do remainig paymnet or not
+And user sign out from customer portal
+
+Scenario:2.3 Login & Logout to wait for date to be updated foe next billing
+Meta:
+@TestId 
+When update institution date to first of next month
+Given user is logged in institution
+When user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+
+Scenario:2.4 Process Batches after paying full payment bill and verify payments
 Meta:
 @TestId 
 Given user is logged in institution
