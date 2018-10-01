@@ -40,7 +40,7 @@ Given set the transaction amount to 70 in program currency
 When perform an INT_EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
 Then search Purchase authorization and verify 121-Exceeds Amount Limit status
-And assert Decline response with 40005 AuthDecline Code and Exceeds Amount Limit International as description
+And assert Decline response with 42005 AuthDecline Code and Exceeds Amount Limit International as description
 And verify the MCG limit utilization in Device Usage Screen for international transaction after failed transaction
 And user sign out from customer portal
 

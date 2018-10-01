@@ -8,7 +8,7 @@ Meta:
 @Author Nitin Kumar
 @StoryName mcg_debit_emv_general_purpose
 
-Scenario: Set up prepaid emv retail general purpose card with MCG Limit Plan
+Scenario:1 Set up prepaid emv retail general purpose card with MCG Limit Plan
 Given setting json values in excel for Debit
 And user is logged in institution
 When User fills Device Plan for "Debit" "emv" card without pin
@@ -19,7 +19,7 @@ And User fills Device Range section for Debit product
 And user assigns service code to program
 And user sign out from customer portal
 
-Scenario: prepaid EMV retail general purpose card device production
+Scenario:2 prepaid EMV retail general purpose card device production
 Given user is logged in institution
 When user creates new device of Debit type for new client
 And a new device was created
@@ -49,7 +49,7 @@ Given set the transaction amount to 70 in program currency
 When perform an INT_EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
-And assert Decline response with 40005 AuthDecline Code and Exceeds Amount Limit International as description
+And assert Decline response with 42005 AuthDecline Code and Exceeds Amount Limit International as description
 And user sign out from customer portal
 
 Scenario:5 Perform EMV-RetailGeneralPurposeCard Purchase 3rd transaction

@@ -8,7 +8,7 @@ Meta:
 @Author Nitin Kumar
 @StoryName mcg_credit_emv_retail
 
-Scenario: Set up Credit emv retail with MCG Limit Plan
+Scenario:1 Set up Credit emv retail with MCG Limit Plan
 Given setting json values in excel for Credit
 And user is logged in institution
 When for EMV Card User fills without pin Device Plan for credit product for Mastercard
