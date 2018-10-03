@@ -230,6 +230,34 @@ public class DeviceSteps {
  		Assert.assertTrue("Application is not created successfully",deviceWorkflow.createDeviceUsingApplication(device));
 		context.put(CreditConstants.APPLICATION, device);
 	}
+	
+	@When("$type device is created with $existing batch using new Application screen for $customerType and $applicationType and $subApplicationType and $deviceType")
+	@Given("$type device is created with $existing batch using new Application screen for $customerType and $applicationType and $subApplicationType and $deviceType")
+	@Then("$type device is created with $existing batch using new Application screen for $customerType and $applicationType and $subApplicationType and $deviceType")
+	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewApplicationWithSameBatch(String type,String existingBatch,String customerType,String applicationType,String subApplicationType,String deviceType) {
+		Device device = Device.createWithProviderForOtherDetails(provider);
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+		device.setCustomerType(customerType);
+		device.setApplicationType(applicationType);
+		device.setSubApplicationType(subApplicationType);
+		device.setDeviceType1(deviceType);
+		Program program = context.get(ContextConstants.PROGRAM);
+		device.setProgramCode(program.buildDescriptionAndCode());
+		sdnUncheckProgram(program.getProgramCode());		
+		context.put(CreditConstants.EXISTING_BATCH,existingBatch);
+		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)
+				|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)
+				/*&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)*/){
+			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
+			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+		}else{
+			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+		}		
+
+ 		Assert.assertTrue("Application is not created successfully",deviceWorkflow.createDeviceUsingApplication(device));
+		context.put(CreditConstants.APPLICATION, device);
+	}
 		
 	
 	@Given("$type device is created using new device screen")

@@ -1,7 +1,7 @@
 !-- Author e084017
 Narrative:
 As a(n)  Customer portal user 
-I want to onboard credit device using new application
+I want to onboard credit device using new application and verify then approve
 
 Meta:
 @StoryName credit_card_cobrand_number

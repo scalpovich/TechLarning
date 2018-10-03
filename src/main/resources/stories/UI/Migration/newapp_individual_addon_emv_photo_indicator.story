@@ -1,12 +1,12 @@
 Narrative:
 In order to a create a Credit Device under customer portal cardmanagement tab
 As a user
-I want to assert card creation
+I want to create Add-On photo card
 
 
 Meta:
 @StoryName credit_card	 
-Scenario:creation of mastercard_individual_primary_emv Card credit device
+Scenario:verify that the Add-on photo indicator should be available in Credit Screen
 Given setting json values in excel for Credit
 When user is logged in institution
 And for Magnetic Stripe Card [1] User fills Device Plan for credit product for MASTERCARD [02]

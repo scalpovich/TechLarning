@@ -49,6 +49,9 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[@name='approve']")
 	private MCWebElement approveBtn;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[@name='pushback']")
+	private MCWebElement pushbackBtn;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='formNumber']")
 	private MCWebElement formNumberTxt;
 	
@@ -88,6 +91,19 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 
 		runWithinPopup("Edit Application", () -> {
 			clickWhenClickable(approveBtn);
+		});
+		verifyOperationStatus();
+		return getCodeFromInfoMessage("Application Number");
+	}
+	
+	public String pushbackApplication() {
+		enterApplicationNumber();
+		selectFromAndToDate();
+		clickEditRecord();
+		SimulatorUtilities.wait(5000);
+
+		runWithinPopup("Edit Application", () -> {
+			clickWhenClickable(pushbackBtn);
 		});
 		verifyOperationStatus();
 		return getCodeFromInfoMessage("Application Number");
