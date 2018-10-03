@@ -61,6 +61,9 @@ public class CloseBatchPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Process All']")
 	private MCWebElement processAllBtn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
+	private MCWebElement searchTable;
 
 
 	public List<String> allBatchNumberRetrieval() {
@@ -98,9 +101,11 @@ public class CloseBatchPage extends AbstractBasePage {
 	}
 	
 	public void processAllBatch() {
-		clickWhenClickable(processAllBtn);
+		//clickWhenClickable(processAllBtn);
+		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
+		clickProcessSelectedButton();
 		try {
-			if (confirmMsgBtn.isEnabled()) {
+			if (confirmMsgBtn.isEnabled() && confirmMsgBtn.isVisible()) {
 				switchToIframe("Confirmation Message");
 				clickWhenClickable(yesBtn);
 				verifyOperationStatus();
