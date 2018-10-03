@@ -2,10 +2,11 @@ Narrative:
 As a(n)  Customer portal user 
 I want to configure the LoyaltyProgram
 So that the Loyalty points can be calculated and can be redeemed by the user
+
 Meta:
 @StoryName prepaid_msr_retail_loyalty		 
 
-Scenario: Loyalty program setup
+Scenario: Loyalty program setup - prepaid
 Given setting json values in excel for Prepaid
 When user is logged in institution
 And for Magnetic Stripe Card [1] User fills Device Plan for Prepaid product for Mastercard
