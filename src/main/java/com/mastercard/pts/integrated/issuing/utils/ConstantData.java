@@ -108,6 +108,17 @@ public class ConstantData {
 	
 	public static final String ZERO_ZERO = "00";
 	public static final String NINE_NINE = "99";
+	
+
+	public static final String CLIENT_LIMIT = "Client";
+	public static final String AVAIL_CLIENT_LIMIT = "Avail Client";
+	
+	
+	public static final String ACCOUNT_LIMIT = "Account";
+	public static final String AVAIL_ACCOUNT_LIMIT = "Avail Account";
+	
+	public static final String CARD_LIMIT = "Card";
+	public static final String AVAIL_CARD_LIMIT = "Avail Card";	
 
 	private ConstantData() {
 	}

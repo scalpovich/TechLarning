@@ -1143,7 +1143,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		BigDecimal creditLimit;
 		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
 		clickWhenClickable(currentStatusAndLimitTab);
-		creditLimit = new BigDecimal(availCardCreditLimitLabel.getText());
+		creditLimit = new BigDecimal(availAccountCreditLimitLabel.getText());
 		logger.info("Credit limit noted down : {} ", creditLimit);
 		clickEndCall();
 		return creditLimit;
@@ -1154,17 +1154,14 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
 		clickWhenClickable(currentStatusAndLimitTab);	
 		logger.info("Credit limit noted down : {} ", creditLimit);		
-		if(type.equalsIgnoreCase("temporary"))
-		{
-			creditLimit.put("Avail Client",new BigDecimal(availClientCreditLimitLabel.getText()));
-			creditLimit.put("Avail Account",new BigDecimal(availAccountCreditLimitLabel.getText()));
-			creditLimit.put("Avail Card",new BigDecimal(availCardCreditLimitLabel.getText()));
-			clickEndCall();
-			return creditLimit;
-		}		
-		creditLimit.put("Client",new BigDecimal(clientCreditLimitLabel.getText()));
-		creditLimit.put("Account",new BigDecimal(accountCreditLimitLabel.getText()));
-		creditLimit.put("Card",new BigDecimal(cardCreditLimitLabel.getText()));
+		creditLimit.put(ConstantData.CLIENT_LIMIT,new BigDecimal(clientCreditLimitLabel.getText()));
+		creditLimit.put(ConstantData.AVAIL_CLIENT_LIMIT,new BigDecimal(availClientCreditLimitLabel.getText()));
+		
+		creditLimit.put(ConstantData.ACCOUNT_LIMIT,new BigDecimal(accountCreditLimitLabel.getText()));
+		creditLimit.put(ConstantData.AVAIL_ACCOUNT_LIMIT,new BigDecimal(availAccountCreditLimitLabel.getText()));
+
+		creditLimit.put(ConstantData.CARD_LIMIT,new BigDecimal(cardCreditLimitLabel.getText()));	
+		creditLimit.put(ConstantData.AVAIL_CARD_LIMIT,new BigDecimal(availCardCreditLimitLabel.getText()));	
 		clickEndCall();		
 		return creditLimit;
 	}
@@ -1226,33 +1223,38 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return 0;
 	}
 	
-	public BigDecimal activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
+	public HashMap<String,BigDecimal> activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
 		logger.info("credit limit change request: {}",helpdeskGeneral.getCardPackId());
 		selectServiceCode(helpdeskGeneral.getServiceCode());
+		HashMap<String,BigDecimal> crediLimit = new HashMap<>();
 		clickGoButton();
 		if(ProductType.INDIVIDUAL.contains(helpdeskGeneral.getCustomerType()))
-			creditLimitChangeRequestIndividual(helpdeskGeneral);
+			return creditLimitChangeRequestIndividual(helpdeskGeneral,crediLimit);
 		else if(ProductType.CORPORATE.contains(helpdeskGeneral.getCustomerType()))
-			creditLimitChangeRequestCorporate(helpdeskGeneral);
+			return creditLimitChangeRequestCorporate(helpdeskGeneral,crediLimit);
 		SimulatorUtilities.wait(5000);
 		clickCurrentStatusAndLimitsTab();
 		clickEndCall();
-		return new BigDecimal(helpdeskGeneral.getNewCreditLimit()+".00");
+		return new HashMap<String,BigDecimal>();
 	}
 	
 	
-	public void creditLimitChangeRequestCorporate(HelpdeskGeneral helpdeskGeneral){
+	public HashMap<String,BigDecimal> creditLimitChangeRequestCorporate(HelpdeskGeneral helpdeskGeneral,HashMap<String,BigDecimal> creditLimit){
 		runWithinPopup("227 - Credit limit Change Commercial Cards", ()->{
 			selectLimitType(helpdeskGeneral.getLimitType());
-			enterNewCreditLimit(helpdeskGeneral.getNewCreditLimit());
+			enterNewCreditLimit(helpdeskGeneral.getNewCreditLimit());		
+			creditLimit.put(ConstantData.CARD_LIMIT,new BigDecimal(helpdeskGeneral.getNewCreditLimit()));	
+			creditLimit.put(ConstantData.AVAIL_CARD_LIMIT,new BigDecimal(helpdeskGeneral.getNewCreditLimit()));		
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();
 			clickOKButtonPopup();
-		});
+		});	
+		
+		return creditLimit;
 	}
 	
-	public void creditLimitChangeRequestIndividual(HelpdeskGeneral helpdeskGeneral){
+	public HashMap<String,BigDecimal> creditLimitChangeRequestIndividual(HelpdeskGeneral helpdeskGeneral,HashMap<String,BigDecimal> creditLimit){
 		runWithinPopup("226 - Credit limit Change Request", ()->{
 			selectLimitType(helpdeskGeneral.getLimitType());
 			if(helpdeskGeneral.getLimitType().equalsIgnoreCase("Temporary [T]"))
@@ -1260,13 +1262,25 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				WebElementUtils.pickDate(effectiveDateTxt, LocalDate.now());
 				WebElementUtils.pickDate(endDateTxt, LocalDate.now());
 			}
+		
 			enterClientCreditLimit(helpdeskGeneral.getClientCreditLimit());
+			creditLimit.put(ConstantData.CLIENT_LIMIT,new BigDecimal(helpdeskGeneral.getClientCreditLimit()));
+			creditLimit.put(ConstantData.AVAIL_CLIENT_LIMIT,new BigDecimal(helpdeskGeneral.getClientCreditLimit()));
+			
 			enterAccountCreditLimit(helpdeskGeneral.getAccountCreditLimit());
+			creditLimit.put(ConstantData.ACCOUNT_LIMIT,new BigDecimal(helpdeskGeneral.getAccountCreditLimit()));
+			creditLimit.put(ConstantData.AVAIL_ACCOUNT_LIMIT,new BigDecimal(helpdeskGeneral.getAccountCreditLimit()));
+			
 			enterNewCreditLimit(helpdeskGeneral.getNewCreditLimit());
+			creditLimit.put(ConstantData.CARD_LIMIT,new BigDecimal(helpdeskGeneral.getNewCreditLimit()));	
+			creditLimit.put(ConstantData.AVAIL_CARD_LIMIT,new BigDecimal(helpdeskGeneral.getNewCreditLimit()));			
+			
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();
 			clickOKButtonPopup();
-		});
+		});		
+		
+		return creditLimit;
 	}
 }

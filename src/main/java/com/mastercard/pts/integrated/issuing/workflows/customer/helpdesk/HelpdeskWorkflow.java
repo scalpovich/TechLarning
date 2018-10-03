@@ -222,7 +222,7 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.verifyBillingDetails(device);
 	}
 	
-	public BigDecimal activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
+	public HashMap<String,BigDecimal> activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
 		return helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
 	}
 }

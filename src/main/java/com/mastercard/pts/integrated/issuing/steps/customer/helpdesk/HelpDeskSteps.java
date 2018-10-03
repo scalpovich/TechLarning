@@ -587,10 +587,12 @@ public class HelpDeskSteps {
 	public void whenUserVerifyLimitThroughHelpDesk(String type) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		HashMap<String,BigDecimal> creditLimit;
+		HashMap<String,BigDecimal> creditLimitExpected;
+		creditLimitExpected = context.get(ContextConstants.CREDIT_LIMIT_AFTER_SR);
 		creditLimit=helpdeskWorkflow.noteDownCreditLimit(type);
 		if(type.equalsIgnoreCase("temporary") || type.equalsIgnoreCase("permanent"))
-		{	for (Entry<String, BigDecimal> limit : creditLimit.entrySet()) 	
-				assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, limit.getValue(), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));	
+		{	for (Entry<String, BigDecimal> expectedlimit : creditLimitExpected.entrySet()) 	
+				assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, expectedlimit.getValue(), equalTo(creditLimit.get(expectedlimit.getKey())));	
 		}
 		else
 		{
@@ -880,7 +882,7 @@ public class HelpDeskSteps {
 		helpdeskGeneral = HelpdeskGeneral.createWithProviderWithCreditCardLimits(provider);
 		helpdeskGeneral.setLimitType(limitType);
 		helpdeskGeneral.setCustomerType(customerType);
-		helpdeskWorkflow.clickCustomerCareEditLink();		
-		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.activateCreditLimitChangeRequest(helpdeskGeneral));
+		helpdeskWorkflow.clickCustomerCareEditLink();				
+		context.put(ContextConstants.CREDIT_LIMIT_AFTER_SR, helpdeskWorkflow.activateCreditLimitChangeRequest(helpdeskGeneral));
 	}
 }
