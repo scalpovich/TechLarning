@@ -7,7 +7,7 @@ Meta:
 @StoryName VISAPrePaidMSR
 @visa_transaction_types
 
-Scenario: Set up prepaid msr retail general purpose pin card and perform cash withdrawal transaction
+Scenario: 01. Set up prepaid msr retail general purpose pin card and perform cash withdrawal transaction
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card for an interface
 When user creates new device of prepaid type for new client
@@ -22,14 +22,14 @@ When user performs adjustment transaction with 10000 amount
 When user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 
-Scenario: Pin Generation
+Scenario: 02. Pin Generation
 When Pin Offset file batch was generated successfully
 Then connection to FINSim is established
 And embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Transaction - Balance_Enquiry transaction
+Scenario: 03. Transaction - Balance_Enquiry transaction
 Given connection to VISA is established
 When perform an POS-Magstripe-balance-and-eligibility-Inquiry_with_Pin VISA transaction
 And VISA test results are verified for POS-Magstripe-balance-and-eligibility-Inquiry_with_Pin
@@ -40,7 +40,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Perform Cash Advance Authorization transaction
+Scenario: 04. Perform Cash Advance Authorization transaction
 Given connection to VISA is established
 When perform an POS-Magstripe-CashAdvance_with_Pin VISA transaction
 And VISA test results are verified for POS-Magstripe-CashAdvance_with_Pin
@@ -51,7 +51,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Transaction - Cash Withdrawl Full Reversal
+Scenario: 05. Transaction - Cash Withdrawl Full Reversal
 Given connection to VISA is established
 When perform an POS-Retail-Magstripe-cashRev_with_Pin VISA transaction
 And VISA test results are verified for POS-Retail-Magstripe-cashRev_with_Pin
@@ -62,7 +62,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Transaction - Cash Withdrawl Partial Reversal
+Scenario: 06. Transaction - Cash Withdrawl Partial Reversal
 Given connection to VISA is established
 When perform an POS-Retail-Magstripe-cashPrev_with_Pin VISA transaction
 And VISA test results are verified for POS-Retail-Magstripe-cashPrev_with_Pin
@@ -73,7 +73,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Transaction - Cash eWithdrawl
+Scenario: 07. Transaction - Cash eWithdrawl
 Given connection to VISA is established
 When perform an POS_Retail_Magstripe_cash_withdrawal_with_Pin VISA transaction
 And VISA test results are verified for POS_Retail_Magstripe_cash_withdrawal_with_Pin
@@ -84,7 +84,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Transaction - Eligibility_Inquiry transaction
+Scenario: 08. Transaction - Eligibility_Inquiry transaction
 Given connection to VISA is established
 When perform an POS-Magstripe-eligibility-Inquiry_with_Pin VISA transaction
 And VISA test results are verified for POS-Magstripe-eligibility-Inquiry_with_Pin
@@ -95,7 +95,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Transaction - PreAuth transaction
+Scenario: 09. Transaction - PreAuth transaction
 Given connection to VISA is established
 When perform an POS-Retail-PreAuth_with_Pin VISA transaction
 And VISA test results are verified for POS-Retail-PreAuth_with_Pin
@@ -106,7 +106,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Transaction - PreAuth Completion transaction
+Scenario: 10. Transaction - PreAuth Completion transaction
 Given connection to VISA is established
 When perform an POS-Retail-PreAuthCompletion_with_Pin VISA transaction
 And VISA test results are verified for POS-Retail-PreAuthCompletion_with_Pin
@@ -117,7 +117,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Transaction - Purchase  transaction
+Scenario: 11. Transaction - Purchase  transaction
 Given connection to VISA is established
 When perform an POS-Retail-Magstripe-purchase_with_Pin VISA transaction
 And VISA test results are verified for POS-Retail-Magstripe-purchase_with_Pin
@@ -128,7 +128,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Transaction - Purchase Reversal transaction
+Scenario: 12. Transaction - Purchase Reversal transaction
 Given connection to VISA is established
 When perform an POS-Retail-Magstripe-cashPrev_with_Pin VISA transaction
 And VISA test results are verified for POS-Retail-Magstripe-cashPrev_with_Pin
@@ -139,7 +139,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Transaction - Quasi Cash transaction
+Scenario: 13. Transaction - Quasi Cash transaction
 Given connection to VISA is established
 When perform an POS-Magstripe-QuasiCash_with_Pin VISA transaction
 And VISA test results are verified for POS-Magstripe-QuasiCash_with_Pin
@@ -150,7 +150,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Transaction - Refund transaction
+Scenario: 14. Transaction - Refund transaction
 Given connection to VISA is established
 When perform an POS-Retail-Refund_with_Pin VISA transaction
 And VISA test results are verified for POS-Retail-Refund_with_Pin
@@ -161,7 +161,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Transaction - Refund Reversal transaction
+Scenario: 15. Transaction - Refund Reversal transaction
 Given connection to VISA is established
 When perform an POS-Retail-RefundReversal_with_Pin VISA transaction
 And VISA test results are verified for POS-Retail-RefundReversal_with_Pin
@@ -172,7 +172,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Transaction - ReturnofGoods transaction
+Scenario: 16. Transaction - ReturnofGoods transaction
 Given connection to VISA is established
 When perform an POS-Retail-Magstripe-returns-of-goods_with_Pin VISA transaction
 And VISA test results are verified for POS-Retail-Magstripe-returns-of-goods_with_Pin
@@ -183,7 +183,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Transaction - STIP Advice transaction
+Scenario: 17. Transaction - STIP Advice transaction
 Given connection to VISA is established
 When perform an POS-Retail-STIP_with_Pin VISA transaction
 And VISA test results are verified for POS-Retail-STIP_with_Pin

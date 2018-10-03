@@ -1906,26 +1906,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		returnButtuon.click();
 		wait(3000);
 	}
-	
-	
-	/*private WebElement transactionReturnButton() {
-		WebElement retunButton = winiumDriver.findElementByName("Return");
-		return retunButton;
-	}
-*/	
-	
-/*	private void waitForReturnButtonToGetEnable() {
-		WebElement retunButton = transactionReturnButton();
-		for (int i = 1; i < 25; i++) {
-			if (!retunButton.isEnabled()) {
-				SimulatorUtilities.wait(2000);		
-			}
-			else{
-				logger.info("Return button is enabled in given time");
-				retunButton.click();
-			}
-		}
-	}*/
 
 	public void executeVisaTest(String transaction) {
 		MiscUtils.reportToConsole(" ******* executeVisaTest ******");

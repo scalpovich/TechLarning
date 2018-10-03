@@ -7,7 +7,7 @@ Meta:
 @StoryName VISAPrepaidNPIN
 @visa_transaction_types
 
-Scenario: Set up prepaid msr retail general purpose pin card and perform Balance Inquiry transaction
+Scenario: 01. Set up prepaid msr retail general purpose pin card and perform Balance Inquiry transaction
 Given setting json values in excel for Prepaid
 When user is logged in institution
 And User fills Device Plan for "Prepaid" "magnetic stripe" card
@@ -18,7 +18,7 @@ And User fills Device Range section for prepaid product
 And user assigns service code to program
 Then user creates new device of prepaid type for new client
 
-Scenario: prepaid msr corporate travel card device production
+Scenario: 02. prepaid msr corporate travel card device production
 Given user is logged in institution
 When a new device was created
 And processes pre-production batch for prepaid
@@ -30,14 +30,14 @@ And user has current wallet balance amount information for prepaid device
 And device has "normal" status
 And user sign out from customer portal
 
-Scenario: Pin Generation
+Scenario: 03. Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Transaction - Balance_Enquiry transaction
+Scenario: 04. Transaction - Balance_Enquiry transaction
 Given connection to VISA is established
 When perform an INT_POS-Magstripe-balance-and-eligibility-Inquiry_with_Pin VISA transaction
 And VISA test results are verified for INT_POS-Magstripe-balance-and-eligibility-Inquiry_with_Pin
@@ -48,7 +48,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Calculate fees and available balance
+Scenario: 05. Calculate fees and available balance
 Given user is logged in institution
 When verify markup rate fee applied on transaction
 And verify fixed transaction fee applied on purchase transaction
@@ -57,7 +57,7 @@ And user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 
-Scenario: Perform Cash Advance Authorization transaction
+Scenario: 06. Perform Cash Advance Authorization transaction
 Given connection to VISA is established
 When perform an INT_POS-Magstripe-CashAdvance_with_Pin VISA transaction
 And VISA test results are verified for INT_POS-Magstripe-CashAdvance_with_Pin
@@ -68,7 +68,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Calculate fees and available balance
+Scenario: 07. Calculate fees and available balance
 Given user is logged in institution
 When verify markup rate fee applied on transaction
 And verify fixed transaction fee applied on purchase transaction
@@ -77,7 +77,7 @@ And user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 
-Scenario: Transaction - Cash Withdrawal Full Reversal
+Scenario: 08. Transaction - Cash Withdrawal Full Reversal
 Given connection to VISA is established
 When perform an INT_POS-Retail-Magstripe-cashRev_with_Pin VISA transaction
 And VISA test results are verified for INT_POS-Retail-Magstripe-cashRev_with_Pin
@@ -88,7 +88,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Calculate fees and available balance
+Scenario: 09. Calculate fees and available balance
 Given user is logged in institution
 When verify markup rate fee applied on transaction
 And verify fixed transaction fee applied on purchase transaction
@@ -97,7 +97,7 @@ And user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 
-Scenario: Transaction - Cash Withdrawal Partial Reversal
+Scenario: 10. Transaction - Cash Withdrawal Partial Reversal
 Given connection to VISA is established
 When perform an INT_POS-Retail-Magstripe-cashPrev_with_Pin VISA transaction
 And VISA test results are verified for INT_POS-Retail-Magstripe-cashPrev_with_Pin
@@ -108,7 +108,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Calculate fees and available balance
+Scenario: 11. Calculate fees and available balance
 Given user is logged in institution
 When verify markup rate fee applied on transaction
 And verify fixed transaction fee applied on purchase transaction
@@ -117,7 +117,7 @@ And user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 
-Scenario: Transaction - Cash Withdrawal
+Scenario: 12. Transaction - Cash Withdrawal
 Given connection to VISA is established
 When perform an INT_POS_Retail_Magstripe_cash_withdrawal_with_Pin VISA transaction
 And VISA test results are verified for INT_POS_Retail_Magstripe_cash_withdrawal_with_Pin
@@ -128,7 +128,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Calculate fees and available balance
+Scenario: 13. Calculate fees and available balance
 Given user is logged in institution
 When verify markup rate fee applied on transaction
 And verify fixed transaction fee applied on purchase transaction
@@ -137,7 +137,7 @@ And user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 
-Scenario: Transaction - Eligibility_Inquiry transaction
+Scenario: 14. Transaction - Eligibility_Inquiry transaction
 Given connection to VISA is established
 When perform an INT_POS-Magstripe-egilibility-Inquiry_with_Pin VISA transaction
 And VISA test results are verified for INT_POS-Magstripe-egilibility-Inquiry_with_Pin
@@ -148,7 +148,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Calculate fees and available balance
+Scenario: 15. Calculate fees and available balance
 Given user is logged in institution
 When verify markup rate fee applied on transaction
 And verify fixed transaction fee applied on purchase transaction
@@ -157,7 +157,7 @@ And user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 
-Scenario: Transaction - PreAuth transaction
+Scenario: 16. Transaction - PreAuth transaction
 Given connection to VISA is established
 When perform an INT_POS-Retail-PreAuth_with_Pin VISA transaction
 And VISA test results are verified for INT_POS-Retail-PreAuth_with_Pin
@@ -168,7 +168,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Calculate fees and available balance
+Scenario: 17. Calculate fees and available balance
 Given user is logged in institution
 When verify markup rate fee applied on transaction
 And verify fixed transaction fee applied on purchase transaction
@@ -177,7 +177,7 @@ And user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 
-Scenario: Transaction - PreAuth Completion transaction
+Scenario: 18. Transaction - PreAuth Completion transaction
 Given connection to VISA is established
 When perform an INT_POS-Retail-PreAuthCompletion_with_Pin VISA transaction
 And VISA test results are verified for INT_POS-Retail-PreAuthCompletion_with_Pin
@@ -188,7 +188,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Calculate fees and available balance
+Scenario: 19. Calculate fees and available balance
 Given user is logged in institution
 When verify markup rate fee applied on transaction
 And verify fixed transaction fee applied on purchase transaction
@@ -197,7 +197,7 @@ And user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 
-Scenario: Transaction - Purchase  transaction
+Scenario: 20. Transaction - Purchase  transaction
 Given connection to VISA is established
 When perform an INT_POS-Retail-Magstripe-purchase_with_Pin VISA transaction
 And VISA test results are verified for INT_POS-Retail-Magstripe-purchase_with_Pin
@@ -208,7 +208,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Calculate fees and available balance
+Scenario: 21. Calculate fees and available balance
 Given user is logged in institution
 When verify markup rate fee applied on transaction
 And verify fixed transaction fee applied on purchase transaction
@@ -217,7 +217,7 @@ And user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 
-Scenario: Transaction - Purchase Reversal transaction
+Scenario: 22. Transaction - Purchase Reversal transaction
 Given connection to VISA is established
 When perform an INT_POS-Retail-Magstripe-cashPrev_with_Pin VISA transaction
 And VISA test results are verified for INT_POS-Retail-Magstripe-cashPrev_with_Pin
@@ -228,7 +228,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Calculate fees and available balance
+Scenario: 23. Calculate fees and available balance
 Given user is logged in institution
 When verify markup rate fee applied on transaction
 And verify fixed transaction fee applied on purchase transaction
@@ -237,7 +237,7 @@ And user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 
-Scenario: Transaction - Quasi Cash transaction
+Scenario: 24. Transaction - Quasi Cash transaction
 Given connection to VISA is established
 When perform an INT_POS-Magstripe-QuasiCash_with_Pin VISA transaction
 And VISA test results are verified for INT_POS-Magstripe-QuasiCash_with_Pin
@@ -248,7 +248,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Calculate fees and available balance
+Scenario: 25. Calculate fees and available balance
 Given user is logged in institution
 When verify markup rate fee applied on transaction
 And verify fixed transaction fee applied on purchase transaction
@@ -257,7 +257,7 @@ And user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 
-Scenario: Transaction - Refund transaction
+Scenario: 26. Transaction - Refund transaction
 Given connection to VISA is established
 When perform an INT_POS-Retail-Refund_with_Pin VISA transaction
 And VISA test results are verified for INT_POS-Retail-Refund_with_Pin
@@ -268,7 +268,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Calculate fees and available balance
+Scenario: 27. Calculate fees and available balance
 Given user is logged in institution
 When verify markup rate fee applied on transaction
 And verify fixed transaction fee applied on purchase transaction
@@ -277,7 +277,7 @@ And user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 
-Scenario: Transaction - Refund Reversal transaction
+Scenario: 28. Transaction - Refund Reversal transaction
 Given connection to VISA is established
 When perform an INT_POS-Retail-RefundReversal_with_Pin VISA transaction
 And VISA test results are verified for INT_POS-Retail-RefundReversal_with_Pin
@@ -288,7 +288,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Calculate fees and available balance
+Scenario: 29. Calculate fees and available balance
 Given user is logged in institution
 When verify markup rate fee applied on transaction
 And verify fixed transaction fee applied on purchase transaction
@@ -297,7 +297,7 @@ And user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 
-Scenario: Transaction - Return of Goods transaction
+Scenario: 30. Transaction - Return of Goods transaction
 Given connection to VISA is established
 When perform an INT_POS-Retail-Magstripe-returns-of-goods_with_Pin VISA transaction
 And VISA test results are verified for INT_POS-Retail-Magstripe-returns-of-goods_with_Pin
@@ -308,7 +308,7 @@ And verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
 
-Scenario: Calculate fees and available balance
+Scenario: 31. Calculate fees and available balance
 Given user is logged in institution
 When verify markup rate fee applied on transaction
 And verify fixed transaction fee applied on purchase transaction
