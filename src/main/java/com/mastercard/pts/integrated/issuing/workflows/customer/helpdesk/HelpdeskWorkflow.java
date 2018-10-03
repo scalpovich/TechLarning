@@ -242,4 +242,10 @@ public class HelpdeskWorkflow {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
 		helpDeskPage.compareBalanceDetailsPostPayments(payment);
 	}
+
+	public String verifyUnpaidAndAuthFlag(Device device, String label) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		helpDeskPage.getDeviceStatus(device);
+		return helpDeskPage.verifyUnpaidAndAuthFlag(device,label);
+	}
 }

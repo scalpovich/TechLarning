@@ -33,7 +33,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	List<String> txnFeesFields = new ArrayList<>();
 
 	private String billingAmountForMarkUpFee;
-	
+	private String reconcilationStatus;
 	BigDecimal availableBalanceAterReversal;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=cardNumber]")
@@ -95,6 +95,9 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	
 	@PageElement(findBy=FindBy.X_PATH, valueToFind = "//td[contains(text(),'Available Balance')]/following-sibling::td[1]/span/span")
 	private MCWebElement availableBalanceTxt;
+	
+	@PageElement(findBy=FindBy.X_PATH, valueToFind = "//td/span[contains(text(),'Reconcilation Status')]/following::tr[1]/td[2]/span/span")
+	private MCWebElement txtReconcilationStatus;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	private MCWebElement institutionDateTxt;
@@ -217,5 +220,13 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 			clickCloseButton();
 		});
 		return availBal;
+	}
+
+	public String verifyReconciliationStatus() {
+		runWithinPopup("View Authorization", () -> {
+			reconcilationStatus=txtReconcilationStatus.getText();
+			clickCloseButton();
+		});
+		return reconcilationStatus;
 	}
 }

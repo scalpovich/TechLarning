@@ -106,7 +106,6 @@ Meta:
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
-And user verify Unbilled amount for Purchase category
 And user processes Billing Process - Credit system internal batch for Credit
 And user verify Billed amount for Purchase category
 And user verify Billed amount for Fee category
@@ -132,7 +131,7 @@ And user sign out from customer portal
 Scenario:1.9 Verify User is able to make Payment of credit card through cash mode after billing cycle
 Meta:
 @PaymentCash
-When update institution date to next day
+When update institution date to next days
 Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution

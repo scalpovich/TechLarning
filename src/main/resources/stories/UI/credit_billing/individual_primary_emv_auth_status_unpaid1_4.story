@@ -5,7 +5,7 @@ I want to not payment for one bill cycle and verify late payment and interest is
 
 Meta:
 @CreditRegression
-@StoryName credit_emv_retail_billing_with_late_payment
+@StoryName credit_emv_retail_billing
 @Individual
 @Primary	 
 
@@ -31,15 +31,18 @@ And device has "normal" status
 And user notes down available Card limit for card
 Then user sign out from customer portal
 
+Scenario: 1.2.1 Pin Generation
+Given connection to FINSim is established
+When Pin Offset file batch was generated successfully
+And embossing file batch was generated in correct format
+And PIN is retrieved successfully with data from Pin Offset File
+And FINSim simulator is closed
+
 Scenario:1.3 Perform Authorization transaction
 When user is logged in institution
 And user raises an authorization request
 Then status of request is "approved"
 And search Purchase authorization and verify 000-Successful status
-When user verifies available balance after transaction
-Then verify fixed transaction fee applied on purchase transaction
-And device has "normal" status
-When user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 Scenario:1.4 Run Pre-clearing and EOD-Credit
@@ -73,20 +76,7 @@ And user verify Unbilled amount for Purchase category
 And user processes Billing Process - Credit system internal batch for Credit
 And device has "normal" status
 And user notes down required values from helpdesk for credit
-And user run Statement Extract system internal batch
 And user verify Billed amount for Purchase category
-And verify statement file is successfully downloaded
-Then validate the statement with parameters:
-|parameters|
-|Credit Card Number|
-|Statement Date|
-|Payment Due Date|
-|Total Payment Due|
-|Minimum Payment Due|
-|Account Number|
-|Credit Limit|
-|Available Credit Limit|
-|Closing Balance|
 And user sign out from customer portal
 
 Scenario: 1.7 Login & Logout to wait for date to be updated for next billing cycle
@@ -100,79 +90,20 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:1.8 Process Batches for billing to next cycle and validated values on helpdesk and statement 
+Scenario:1.8 Process Batches for billing to next cycle and validated values on helpdesk
 Meta:
 @TestId 
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
-And user verify Unbilled amount for Purchase category
 And user processes Billing Process - Credit system internal batch for Credit
-And user verify Billed amount for Purchase category
-And user verify Billed amount for Fee category
-And user verify Billed amount for Interest category
-And user verify Amount amount for Unpaid1 category
-And device has "normal" status
-And user notes down required values from helpdesk for credit
-And user run Statement Extract system internal batch
-And verify statement file is successfully downloaded
-Then validate the statement with parameters:
-|parameters|
-|Credit Card Number|
-|Statement Date|
-|Payment Due Date|
-|Total Payment Due|
-|Minimum Payment Due|
-|Account Number|
-|Credit Limit|
-|Available Credit Limit|
-|Closing Balance|
+When user verify Delinquency value for Status category is 1ST UNPAID
+And user verify Authorization Flag value for Status category is Approve [0]
 And user sign out from customer portal
 
 Scenario: 1.9 Login & Logout to wait for date to be updated for next billing cycle
 Meta:
 @TestId 
-When update institution date to first of next month
-Given user is logged in institution
-When user sign out from customer portal
-And user is logged in institution
-And user sign out from customer portal
-And user is logged in institution
-And user sign out from customer portal
-
-Scenario:2.0 Process Batches for billing to next cycle and validated values on helpdesk and statement 
-Meta:
-@TestId 
-Given user is logged in institution
-When user processes Pre-clearing system internal batch for Credit
-And user processes EOD-Credit system internal batch for Credit
-And user verify Unbilled amount for Purchase category
-And user processes Billing Process - Credit system internal batch for Credit
-!-- And user verify Billed amount for Purchase category
-!-- And user verify Billed amount for Fee category
-And user verify Billed amount for Interest category
-And user verify Amount amount for Unpaid1 category
-And user verify Amount amount for Unpaid2 category
-And device has "normal" status
-And user notes down required values from helpdesk for credit
-And user run Statement Extract system internal batch
-And verify statement file is successfully downloaded
-Then validate the statement with parameters:
-|parameters|
-|Credit Card Number|
-|Statement Date|
-|Payment Due Date|
-|Total Payment Due|
-|Minimum Payment Due|
-|Account Number|
-|Credit Limit|
-|Available Credit Limit|
-|Closing Balance|
-And user sign out from customer portal
-
-Scenario:2.1 Verify User is able to make Payment of credit card through cash mode after billing cycle
-Meta:
-@PaymentCash
 When update institution date to next days
 Given user is logged in institution
 When user sign out from customer portal
@@ -181,28 +112,15 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:2.2 Verify User is able to make Payment of credit card through cash mode after billing cycle
-Meta:
-@PaymentCash
-Given user is logged in institution
-When user check balance details through helpdesk before payment
-And user makes MAD bill payment through cash
-And user sign out from customer portal
-Given user is logged in institution
-When user wait for seven minutes to perform certain activity
-And user sign out from customer portal
-Given user is logged in institution
-When user processes Pre-clearing system internal batch for Credit
-When user processes EOD-Credit system internal batch for Credit
-When user check balance details through helpdesk after payment
-Then user compare balance details after MAD payment
-!-- need to write comparison for MAD paymnet
-And user verify Amount amount for Unpaid1 category
-And user verify Amount amount for Unpaid2 category
-!-- need to discuss after doing MAD, will do remainig paymnet or not
+Scenario:2.0 Perform EMV_PURCHASE Authorization transaction
+Given connection to MAS is established
+When perform an EMV_PURCHASE MAS transaction
+And MAS test results are verified
+When user is logged in institution
+And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario:2.3 Login & Logout to wait for date to be updated foe next billing
+Scenario: 2.1 Login & Logout to wait for date to be updated for next billing cycle
 Meta:
 @TestId 
 When update institution date to first of next month
@@ -213,28 +131,113 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:2.4 Process Batches after paying full payment bill and verify payments
+Scenario:2.2 Process Batches for billing to next cycle and validated values on helpdesk and statement 
 Meta:
 @TestId 
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
-When user processes EOD-Credit system internal batch for Credit
+And user processes EOD-Credit system internal batch for Credit
 And user processes Billing Process - Credit system internal batch for Credit
-And device has "normal" status
-And user notes down required values from helpdesk for credit
-When user check balance details through helpdesk after billing
-Then user compare balance details after billing
-When user run Statement Extract system internal batch
-And verify statement file is successfully downloaded
-Then validate the statement with parameters:
-|parameters|
-|Credit Card Number|
-|Statement Date|
-|Payment Due Date|
-|Total Payment Due|
-|Minimum Payment Due|
-|Account Number|
-|Credit Limit|
-|Available Credit Limit|
-|Closing Balance|
+When user verify Delinquency value for Status category is 2ND UNPAID
+And user verify Authorization Flag value for Status category is Decline [1]
+And user sign out from customer portal
+
+Scenario: 2.3 Login & Logout to wait for date to be updated for next billing cycle
+Meta:
+@TestId 
+When update institution date to next days
+Given user is logged in institution
+When user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+
+Scenario:2.4 Perform EMV_PURCHASE Authorization transaction
+When perform an EMV_PURCHASE MAS transaction
+When user is logged in institution
+And search Purchase authorization and verify 100-Do Not Honour status
+And assert Decline response with 20004 AuthDecline Code and Invalid wallet. as description
+And user sign out from customer portal
+
+Scenario: 2.5 Login & Logout to wait for date to be updated for next billing cycle
+Meta:
+@TestId 
+When update institution date to first of next month
+Given user is logged in institution
+When user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+
+Scenario:2.6 Process Batches for billing to next cycle and validated values on helpdesk and statement 
+Meta:
+@TestId 
+Given user is logged in institution
+When user processes Pre-clearing system internal batch for Credit
+And user processes EOD-Credit system internal batch for Credit
+And user processes Billing Process - Credit system internal batch for Credit
+When user verify Delinquency value for Status category is 3RD UNPAID
+And user verify Authorization Flag value for Status category is Refer [2]
+And user sign out from customer portal
+
+Scenario: 2.7 Login & Logout to wait for date to be updated for next billing cycle
+Meta:
+@TestId 
+When update institution date to next days
+Given user is logged in institution
+When user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+
+Scenario:2.8 Perform EMV_PURCHASE Authorization transaction
+When perform an EMV_PURCHASE MAS transaction
+When user is logged in institution
+And search Purchase authorization and verify 100-Do Not Honour status
+And assert Decline response with 20004 AuthDecline Code and Invalid wallet. as description
+And user sign out from customer portal
+
+
+Scenario: 2.9 Login & Logout to wait for date to be updated for next billing cycle
+Meta:
+@TestId 
+When update institution date to first of next month
+Given user is logged in institution
+When user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+
+Scenario:3.0 Process Batches for billing to next cycle and validated values on helpdesk and statement 
+Meta:
+@TestId 
+Given user is logged in institution
+When user processes Pre-clearing system internal batch for Credit
+And user processes EOD-Credit system internal batch for Credit
+And user processes Billing Process - Credit system internal batch for Credit
+When user verify Delinquency value for Status category is 4TH UNPAID
+And user verify Authorization Flag value for Status category is Capture [3]
+And user sign out from customer portal
+
+Scenario: 3.1 Login & Logout to wait for date to be updated for next billing cycle
+Meta:
+@TestId 
+When update institution date to next days
+Given user is logged in institution
+When user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+
+Scenario:3.2 Perform EMV_PURCHASE Authorization transaction
+When perform an EMV_PURCHASE MAS transaction
+And MAS is simulator is closed
+When user is logged in institution
+And search Purchase authorization and verify 100-Do Not Honour status
+And assert Decline response with 20004 AuthDecline Code and Invalid wallet. as description
 And user sign out from customer portal

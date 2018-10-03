@@ -933,4 +933,12 @@ public class HelpDeskSteps {
 	public void compareBalanceDetails(String payment){
 		helpdeskWorkflow.compareBalanceDetailsPostPayments(payment);
 	}
+	
+	@When("user verify $label value for $category category is $value")
+	public void assertionForUnpaidAndAuthFlag(String label,String category,String value){
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setCategory(category);
+		assertThat(label + "value doesn't match ", helpdeskWorkflow.verifyUnpaidAndAuthFlag(device,label),
+				equalTo(value));
+	}
 }

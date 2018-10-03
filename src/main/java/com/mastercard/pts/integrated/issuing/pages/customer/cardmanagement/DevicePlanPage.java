@@ -462,6 +462,9 @@ public class DevicePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind="view:pinUnblockPriority:input:dropdowncomponent")	
 	private MCWebElement pinUnblockPriorityDdwn;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind="presentmentTimeLimit:input:inputTextField")	
+	private MCWebElement txtPresentmentTimeLimit;
+	
 	public void AddDevicePlan() {
 		clickWhenClickable(AddDevicePlanBtn);
 		switchToAddDevicePlanFrame();
@@ -1408,5 +1411,20 @@ public class DevicePlanPage extends AbstractBasePage {
 	
 	public void selectPriorityPassVendor(DevicePlan devicePlan){	
 		selectByVisibleText(iframePriorityPassVendorDdwn, devicePlan.getPriorityPassVendor());
+	}
+
+	public void editDevicePlan(DevicePlan device) {
+		enterValueinTextBox(devicePlanCode, device.getDevicePlanCode());
+		clickSearchButton();
+		editFirstRecord();				
+		runWithinPopup("Edit Device Plan", () -> {			
+			WebElementUtils.elementToBeClickable(authorizationTab);
+			clickWhenClickable(authorizationTab);
+			enterValueinTextBox(txtPresentmentTimeLimit, device.getTransSetPresentmentTimeLimit());
+			clickSaveButton();
+		});
+
+		verifyOperationStatus();
+		
 	}
 }

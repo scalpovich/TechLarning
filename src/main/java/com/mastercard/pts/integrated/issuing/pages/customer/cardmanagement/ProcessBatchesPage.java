@@ -373,7 +373,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			throw Throwables.propagate(e);
 		}
 		
-		if(batch.getBatchName().equalsIgnoreCase("Matching"))
+		if(batch.getBatchName().equalsIgnoreCase("Matching")||batch.getBatchName().equalsIgnoreCase("Ageing"))
 			submitAndVerifyBatch();
 		if (!dateFromUI.after(todayDate))
 			submitAndVerifyBatch();
@@ -402,6 +402,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		
 		else if("Billing Process - Credit".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Billing Process - Credit [BILLING]"); 
+		
+		else if("Ageing".equalsIgnoreCase(batchName))
+			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Ageing Batch [AGEING_BATCH]"); 
 	}
 
 	public String processDownloadBatch(ProcessBatches batch) {
@@ -641,8 +644,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		batchStatus = null;
 		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, SYSTEM_INTERNAL_PROCESSING);		
 		selectInternalBatchType(batch.getBatchName());
-		if(batch.getBatchName().equalsIgnoreCase("Pre-clearing")||batch.getBatchName().equalsIgnoreCase("Matching"))
+		if (batch.getBatchName().equalsIgnoreCase("Pre-clearing") || batch.getBatchName().equalsIgnoreCase("Matching")
+				|| batch.getBatchName().equalsIgnoreCase("Ageing"))
 			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-	
+
 	}
 }

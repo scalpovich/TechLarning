@@ -22,9 +22,9 @@ public class DatabaseSteps {
 			dbFlow.updateInstituteDateToFirstOfNextMonth(context.get(ContextConstants.INSTITUTION_DATE));
 	}
 	
-	@When("update institution date to next day")
-	public void updateInstitutionDateToNextDay()
+	@When("update institution date to $noOfDays days")
+	public void updateInstitutionDateToNextDay(String noOfDays)
 	{
-		dbFlow.updateInstituteDateToNextDay(context.get(ContextConstants.INSTITUTION_DATE));
+		dbFlow.updateInstituteDateToGivenDays(context.get(ContextConstants.INSTITUTION_DATE),noOfDays);
 	}
 }

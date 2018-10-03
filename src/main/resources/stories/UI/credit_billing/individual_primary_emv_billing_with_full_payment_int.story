@@ -93,7 +93,7 @@ And user sign out from customer portal
 Scenario:1.7 Verify User is able to make Payment of credit card through cash mode after billing cycle
 Meta:
 @PaymentCash
-When update institution date to next day
+When update institution date to next days
 Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution

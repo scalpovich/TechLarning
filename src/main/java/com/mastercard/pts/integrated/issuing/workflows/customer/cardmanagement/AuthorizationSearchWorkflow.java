@@ -204,4 +204,10 @@ public class AuthorizationSearchWorkflow {
 		
 	}
 
+	public void verifyReconciliationStatus(String status) {
+		authorizationSearchPage.viewDeviceDetails();
+		boolean condition=authorizationSearchPage.verifyReconciliationStatus().equalsIgnoreCase(status);
+		assertTrue("Reconciliation Status Doesnot match with Authoraization Report content", condition);
+	}
+
 }

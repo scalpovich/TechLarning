@@ -141,6 +141,8 @@ public class ProgramSetupSteps {
 	private static final String PICTURE_CODE_FOR_DEVICE2 = "PICTURE_CODE_FOR_DEVICE2";
 
 	private static final String EMBOSSING_VENDOR_FOR_DEVICE2 = "EMBOSSING_VENDOR_FOR_DEVICE2";
+	
+	private static final String defaultPresentmentTimeLimit = "3";
 
 	@When("prepaid $deviceType device is available with balance amount")
 	@Given("prepaid $deviceType device is available with balance amount")
@@ -1616,5 +1618,12 @@ public class ProgramSetupSteps {
 		program.setCountryWhiteListAndBlackListPlan(provider);
 		programSetupWorkflow.editsProgram(program,editItem);
 
+	}
+	
+	@When("user edits Presentment Time Limit in $plan")
+	public void userEditsPresentmentTimeLimit(String plan) {
+		DevicePlan device = context.get(ContextConstants.DEVICE_PLAN);
+		device.setTransSetPresentmentTimeLimit(defaultPresentmentTimeLimit);
+		programSetupWorkflow.editPlan(plan,device,program);
 	}
 }

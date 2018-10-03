@@ -1195,6 +1195,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			return 4;
 		case "Amount" :
 			return 6;
+		case "Status" :
+			return 2;
 		}
 		return 0;
 	}
@@ -1359,6 +1361,18 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 						": Actual:" + valueFromSecondMap);
 			}
 		}
+	}
+
+	public String verifyUnpaidAndAuthFlag(Device device, String label) {
+		List<String> lst = new ArrayList<String>();
+		SimulatorUtilities.wait(5000);
+		editDeviceLink.click();
+		SimulatorUtilities.wait(1000);
+		clickWhenClickable(balanceDetailsTab);
+		SimulatorUtilities.wait(2000);
+		lst.add(Element("//span[contains(text(),'"+label+" :')]//ancestor::tr//td["+resolve(device.getCategory())+"]/span/span").getText());
+		clickEndCall();
+		return lst.get(0);
 	}
 
 }
