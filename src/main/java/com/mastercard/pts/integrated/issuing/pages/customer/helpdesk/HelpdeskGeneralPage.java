@@ -1232,9 +1232,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			return creditLimitChangeRequestIndividual(helpdeskGeneral,crediLimit);
 		else if(ProductType.CORPORATE.contains(helpdeskGeneral.getCustomerType()))
 			return creditLimitChangeRequestCorporate(helpdeskGeneral,crediLimit);
-		SimulatorUtilities.wait(5000);
-		clickCurrentStatusAndLimitsTab();
-		clickEndCall();
+		
 		return new HashMap<String,BigDecimal>();
 	}
 	
@@ -1249,8 +1247,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickSaveButton();
 			verifyOperationStatus();
 			clickOKButtonPopup();
-		});	
-		
+		});			
+		SimulatorUtilities.wait(5000);
+		clickCurrentStatusAndLimitsTab();
+		clickEndCall();
 		return creditLimit;
 	}
 	
@@ -1280,7 +1280,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			verifyOperationStatus();
 			clickOKButtonPopup();
 		});		
-		
+		SimulatorUtilities.wait(5000);
+		clickCurrentStatusAndLimitsTab();
+		clickEndCall();
 		return creditLimit;
 	}
 }
