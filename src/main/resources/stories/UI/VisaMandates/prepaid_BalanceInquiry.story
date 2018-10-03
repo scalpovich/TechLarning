@@ -28,6 +28,7 @@ And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
 And device has "normal" status
+Then user sign out from customer portal
 
 Scenario: Pin Generation
 Given connection to FINSim is established
@@ -40,6 +41,7 @@ Scenario: Transaction - Balance_Enquiry transaction
 Given connection to VISA is established
 When perform an POS-Magstripe-balance-and-eligibility-Inquiry_with_Pin VISA transaction
 And VISA test results are verified for POS-Magstripe-balance-and-eligibility-Inquiry_with_Pin
+And user is logged in institution
 And search Balance Inquiry authorization and verify Successful status
 And user sign out from customer portal
 Then VISA simulator is closed
