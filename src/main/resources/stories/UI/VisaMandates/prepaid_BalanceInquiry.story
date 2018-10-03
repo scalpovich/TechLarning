@@ -42,13 +42,15 @@ Given connection to VISA is established
 When perform an POS-Magstripe-balance-and-eligibility-Inquiry_with_Pin VISA transaction
 And VISA test results are verified for POS-Magstripe-balance-and-eligibility-Inquiry_with_Pin
 And user is logged in institution
-And search Balance Inquiry authorization and verify Successful status
+And search Balance Inquiry authorization and verify 000-Successful status
+When verify fixed transaction fee applied on purchase transaction
+And user verifies available balance after transaction
 And user sign out from customer portal
 Then VISA simulator is closed
 
-Scenario: 05. Calculate fees and available balance
-Given user is logged in institution
-When verify fixed transaction fee applied on purchase transaction
-And user verifies available balance after transaction
-Then user sign out from customer portal
+!-- Scenario: 05. Calculate fees and available balance
+!-- Given user is logged in institution
+!-- When verify fixed transaction fee applied on purchase transaction
+!-- And user verifies available balance after transaction
+!-- Then user sign out from customer portal
 
