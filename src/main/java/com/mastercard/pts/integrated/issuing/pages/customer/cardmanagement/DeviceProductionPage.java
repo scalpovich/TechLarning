@@ -1,7 +1,9 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -9,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
@@ -74,6 +77,9 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers' and @class!='navigation'][1]/td[2]/span")
 	private MCWebElement deviceNumberFetch;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class='headers']//a/span")
+	private MCWebElements deviceNumberHeaderTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr")
 	private MCWebElements rowSize;
@@ -244,7 +250,9 @@ public class DeviceProductionPage extends AbstractBasePage {
 		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, deviceNumberFetch.getText());
 		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
 		selectFirstRecord();
-		clickProcessSelectedButton();		
+		clickProcessSelectedButton();	
+	}
+	
 	public int deviceNumberHeaderIndexFetch() {
 		int index = 0;
 		for (int i = 0; i < deviceNumberHeaderTxt.getElements().size(); i++) {
@@ -258,8 +266,15 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public List<String> deviceNumbers() {
 		List<WebElement> allDeviceNumbers = new ArrayList<>();
 		List<String> allDeviceNumberfText = new ArrayList<>();
-		String deviceNumberToFetch="//table[@class='dataview']//tr[@class='even' or 'odd']/td["+deviceNumberHeaderIndexFetch()+"]/span";
+		String deviceNumberToFetch=String.format("//table[@class='dataview']//tr[@class='even' or 'odd']/td['%s']/span",deviceNumberHeaderIndexFetch());
 		allDeviceNumbers = Elements(deviceNumberToFetch);
+
+		for (int i = 0; i < allDeviceNumbers.size(); i++) {
+			allDeviceNumberfText.add(allDeviceNumbers.get(i).getText());
+		}
+		context.put(ContextConstants.ALL_DEVICE_NUMBERS, allDeviceNumberfText);
+		return allDeviceNumberfText;
+	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
