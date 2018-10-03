@@ -877,9 +877,9 @@ public class HelpDeskSteps {
 		assertThat(category +" "+ amount +BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device), equalTo(transactionAmount));
 	}
 	
-	@Then("user activates $limittype credit limit change request for $customerType")
-	@Given("user activates $limittype credit limit change request for $customerType")
-	@When("user activates $limittype credit limit change request for $customerType")
+	@Then("user raises $limittype credit limit change request for $customerType")
+	@Given("user raises $limittype credit limit change request for $customerType")
+	@When("user raises $limittype credit limit change request for $customerType")
 	public void whenUserActivatesCreditLimitChangeRequestThroughHelpdesk(String limitType,String customerType) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProviderWithCreditCardLimits(provider);
 		helpdeskGeneral.setLimitType(limitType);

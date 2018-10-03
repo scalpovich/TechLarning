@@ -27,7 +27,7 @@ And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
-And user activates Permanent [P] credit limit change request for Corporate
+And user raises Permanent [P] credit limit change request for Corporate
 And device has "normal" status
 And user verifies available permanent limit
 Then user sign out from customer portal
