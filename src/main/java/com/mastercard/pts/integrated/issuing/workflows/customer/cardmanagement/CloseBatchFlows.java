@@ -3,14 +3,13 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CloseBatchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
-import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
+import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 
 @Workflow
-public class CloseBatchFlows {
+public class CloseBatchFlows extends AbstractBaseFlows {
 
 	@Autowired
 	Navigator navigator;

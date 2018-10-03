@@ -26,7 +26,7 @@ And processes pre-production batch for debit
 And processes device production batch for debit
 And processes pin generation batch for debit
 And device has "normal" status
-And user selects International Use Allow/Disallow status
+And user selects International Use Allow/Disallow [400] status
 And user activates device through helpdesk
 
 Scenario: Pin Generation

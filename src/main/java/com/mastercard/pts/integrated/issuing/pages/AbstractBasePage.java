@@ -300,6 +300,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	private static final int loopIterationToCheckBatchNumber=21;
 	
+    @PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
+	private MCWebElement institutionDateTxt;
+    
+    int retryCounter =0;
+	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
 		MCAnnotationProcessor.initializeSuper(this, finderProvider);
@@ -1230,18 +1235,27 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return null;
 	}
 
-	public void selectByVisibleText(MCWebElement ele, String optionName) {
-		String optionVisbleText = "";
+	public void doSelectByVisibleText(MCWebElement ele, String optionName) {
+		String optionalVisibleText = "";
 		waitUntilSelectOptionsPopulated(ele);
-		List<WebElement> selectedOptions = ele.getSelect().getOptions();
+		List<WebElement> selectedOptions = new Select(asWebElement(ele)).getOptions();
 		for (WebElement element : selectedOptions) {
 			if (element.getText().toUpperCase().contains(optionName.toUpperCase())) {
-				optionVisbleText = element.getText();
+				optionalVisibleText = element.getText();
 				break;
 			}
 		}
-		ele.getSelect().selectByVisibleText(optionVisbleText);
+		ele.getSelect().selectByVisibleText(optionalVisibleText);
+	}
+
+	public void selectByVisibleText(MCWebElement ele, String optionName) {
+		try {
+			doSelectByVisibleText(ele, optionName);
 		waitForLoaderToDisappear();
+		waitForPageToLoad(driver());
+		} catch (StaleElementReferenceException e) {
+			doSelectByVisibleText(ele, optionName);
+	}
 		waitForPageToLoad(driver());
 	}
 
@@ -1853,5 +1867,38 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	public void switchToDefaultFrame(String element,int index) {
 		driver().switchTo().frame(Elements(element).get(index));
+	}
+	
+	public String getInstitutionDate()
+	{	
+		logger.info("Institution date : {}",getTextFromPage(institutionDateTxt));
+		return getTextFromPage(institutionDateTxt);
+	}
+	
+	protected void waitForContentToLoad(MCWebElement element){
+		waitForWicket();
+		SimulatorUtilities.wait(5000);
+		while(retryCounter < 4){
+			
+			if(element.getTagName().contains("input")){
+				if(element.getText().equals("-") || element.getText().isEmpty() || element.getText().equals("0")){
+					SimulatorUtilities.wait(3000);
+					retryCounter++;
+					waitForContentToLoad(element);
+				}
+			}else if(element.getTagName().contains("select")){
+				Select options = new Select(asWebElement(element));
+				if(options.getOptions().size() < 1){
+					retryCounter++;
+					waitForContentToLoad(element);	
+				}
+			}else if(element.getText().equals("-") || element.getText().isEmpty() || element.getText().equals("0")){
+				SimulatorUtilities.wait(3000);
+				retryCounter++;
+				waitForContentToLoad(element);
+			}else{
+				break;
+			}
+		}
 	}
 }

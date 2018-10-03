@@ -306,7 +306,7 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.uncheckCVCCVVDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
-
+	
 	@When("User checks Pin Change Transaction First check box on Device Plan Page")
 	public void userChecksPinChangeTransactionFirstOnDevicePlan() {
 		programSetupWorkflow.checkPinChangeTransactionFirst(devicePlan);
@@ -314,12 +314,10 @@ public class ProgramSetupSteps {
 	}
 
 	@When("User checks Cross Border Transaction check box on Device Plan Page")
-	public void userChecksCrossBorderTransactionCheckBoxOnDevicePlanPage()
-	{
+	public void userChecksCrossBorderTransactionCheckBoxOnDevicePlanPage(){
 		programSetupWorkflow.checkCrossBorderTransaction(devicePlan);
-		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
-		
-	}
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);		
+	}	
 
 	@When("device range for program with device plan for \"debit\" \"$deviceType\" card without pin")
 	@Given("device range for program with device plan for \"debit\" \"$deviceType\" card without pin")
@@ -625,7 +623,7 @@ public class ProgramSetupSteps {
 		} else {
 			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
 		}
-		if (Objects.nonNull(transactionLimitPlan)) {
+		if (Objects.nonNull(transactionPlan)) {
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 		} else {
@@ -679,7 +677,7 @@ public class ProgramSetupSteps {
 	@When("for $deviceType User fills Supplementary Device Plan for $type product for $interchange")
 	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeForSupplementary(String deviceType, String type, String interchange) {
 		devicePlanSupplementary = DevicePlan.createProviderForCredit(provider);
-		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
 		devicePlanSupplementary.setProductType(ProductType.fromShortName(type));
 		if (Objects.nonNull(deviceJoiningAndMemberShipFeePlan)) {
 			devicePlanSupplementary.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
@@ -700,7 +698,7 @@ public class ProgramSetupSteps {
 		if (Objects.nonNull(transactionPlan)) {
 			devicePlanSupplementary.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 			devicePlanSupplementary.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
-		} else {
+		} else {			
 			devicePlanSupplementary.setAfterKYC(data.getTransactionPlan());
 			devicePlanSupplementary.setBeforeKYC(data.getTransactionPlan());
 		}
@@ -1168,9 +1166,14 @@ public class ProgramSetupSteps {
 		}
 		program.setProgramType(programType);
 		
-		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID))
+		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID)){
+			if (Objects.nonNull(prepaidStatementPlan)) {
 			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
-
+			} else {
+				program.setPrepaidStatementPlan(data.getPrepaidStatementPlan());
+			}
+		}
+		
 		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
 	}
@@ -1263,29 +1266,48 @@ public class ProgramSetupSteps {
 
 	@When("fills Program section for $type product and program $programType")
 	public void fillsProgramSection(String type, String programType) {
-		program = Program.createWithProvider(dataProvider, provider);
+		program = Program.createWithProvider(dataProvider, provider);		
+		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
 		program.setProduct(ProductType.fromShortName(type));
 		program.setProgramType(programType);
-
+		
 		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
+			if (Objects.nonNull(statementMessagePlan) && Objects.nonNull(marketingMessagePlan)) {
 			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
 			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+			} else {
+				program.setOtherPlanStatementMessagePlan(data.getStatementMessagePlan());
+				program.setOtherPlanMarketingMessagePlan(data.getMarketingMessagePlan());
 		}
-
+		}
+		
 		WalletPlan wallets = context.get(ContextConstants.WALLET);
 		program.setFirstWalletPlan(wallets.getFirstWallet());
 		program.setSecondWalletPlan(wallets.getSecondWallet());
-
+		
 		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
+		
+		if (Objects.nonNull(dedupePlan) && Objects.nonNull(documentCheckListPlan) && Objects.nonNull(mccRulePlan)) {
 		program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
 		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
 		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
-
-		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID)) {
-			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+		} else {
+			program.setDedupPlan(data.getDedupePlanCode());
+			program.setDocumentChecklistPlan(data.getDocumentCheckListPlan());
+			program.setMccRulePlan(data.getMccRulePlan());
 		}
+
+		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID)){
+			if (Objects.nonNull(prepaidStatementPlan)) {
+			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+			} else {
+				program.setPrepaidStatementPlan(data.getPrepaidStatementPlan());
+		}
+		}	
+
 		programSetupWorkflow.createAddProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
+		
 	}
 
 	@When("User fills Dedupe Plan")
@@ -1460,13 +1482,12 @@ public class ProgramSetupSteps {
 	}
 	
 	@When("User edits Wallet Plan for $updateField")
-	public void whenUserEditsWalletPlan(String updateField)
-	{
+	public void whenUserEditsWalletPlan(String updateField){
 		walletPlan.setWhiteListedMCGPlan(provider);
 		programSetupWorkflow.editWalletPlan(walletPlan,updateField);
 		
 	}
-	
+
 	@When("User fills Device Plan for $productType $deviceType card with transaction fee waived Off")
 	public void whenUserFillsDevicePlaWithTransactionFeeWaivedOff(String productType, String deviceType) {
 		settingDevicePlanTestData(productType, deviceType); // call to re-usable method
@@ -1483,7 +1504,7 @@ public class ProgramSetupSteps {
 		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
 		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
 		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
-		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());	
+		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
 	}
@@ -1571,6 +1592,7 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
 	}
+	
 	@When("User creates empty Transaction Plan for $type product")
 	public void createEmptyTransactionPlan(String type) {
 		setPinRequiredToDefaultState();
@@ -1589,6 +1611,7 @@ public class ProgramSetupSteps {
 		}
 		programSetupWorkflow.createWalletPlan(walletPlan,reservedAmount);
 	}
+	
 	@When("User edits Program to update $editItem")
 	public void andUserEditsProgramToUpdateCountryWhiteBlackList(String editItem) {
 		program.setCountryWhiteListAndBlackListPlan(provider);

@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -287,11 +288,10 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
 			clickWhenClickable(generateDeviceBatchBtn);
 			waitForWicket();
-			SimulatorUtilities.wait(30000);			
+			SimulatorUtilities.wait(30000);
 			context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());		
 			device.setBatchNumber(batchNumberTxt.getText());
-		}		
-		logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());		
+			logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());		
 		clickNextButton();
 	}
 
@@ -307,8 +307,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){				
 			enterText(existingDeviceTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
 			SimulatorUtilities.wait(8000);
-			Actions action = new Actions(driver());		
-			action.moveToElement(asWebElement(existingDeviceTxt), 50, 50).click().build().perform();
+			moveToElementAndClick(existingDeviceTxt, 50, 50);			
 			waitForWicket(driver());
 			SimulatorUtilities.wait(10000);
 		}else{
@@ -382,16 +381,10 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		Address currentAddress = device.getCurrentAddress();
 		WebElementUtils.enterText(currentAddressLine1Txt, currentAddress.getAddressLine1());
 		WebElementUtils.selectDropDownByVisibleText(currentCountryCodeDDwn, currentAddress.getCountry());
-		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());
-
-		try {
-			Thread.sleep(5000); // added some sleep as the page does not repond after adding zip code
-		} catch (InterruptedException e) {
-			logger.error("Error" + e);
-			Thread.currentThread().interrupt();
-		}
+		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());		
+		SimulatorUtilities.wait(5000);		
 		pageScrollDown();
-		clickNextButton();
+		clickNextButton();		
 	}
 
 	private void fillProfile(Device device) {

@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceGenerationBatchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
@@ -25,9 +24,9 @@ public class DeviceGenerationBatchFlows {
 		SimulatorUtilities.wait(5000);
 		deviceGenerationBatchPage.identifyBatchNumberToProcess();
 		deviceGenerationBatchPage.processAppropriateBatchForApplication();
-	}
-
-	public void deviceGenerationFirstBatchExecution() {
+	}	
+	
+	public void deviceGenerationFirstBatchExecution(){
 		deviceGenerationBatchPage = navigator.navigateToPage(DeviceGenerationBatchPage.class);
 		deviceGenerationBatchPage.processFirstBatch();
 	}

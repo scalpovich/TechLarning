@@ -1,9 +1,7 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -11,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
@@ -212,8 +209,9 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public void processDeviceProductionBatchNewApplication(DeviceProductionBatch batch) {
 		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
 		WebElementUtils.enterText(batchNumberTxt,batchNumber);
-		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		waitAndSearchForRecordToExist();
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+		waitForRecordAndAssignDevice();
 		verifyOperationStatus();
 	}
 
@@ -232,19 +230,24 @@ public class DeviceProductionPage extends AbstractBasePage {
 		waitAndSearchForRecordToExistForSupplementary();
 		verifyOperationStatus();
 	}
-	
-	
-   
+	protected void waitForRecordAndAssignDevice() {
+		waitAndSearchForRecordToAppear();
+		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, deviceNumberFetch.getText());
+		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
+		selectFirstRecord();
+		clickProcessSelectedButton();		
+	}
+
 	public int deviceNumberHeaderIndexFetch() {
 		int index = 0;
 		for (int i = 0; i < deviceNumberHeaderTxt.getElements().size(); i++) {
 			if (deviceNumberHeaderTxt.getElements().get(i).getText().equals("Device Number")) {
 				index = i;
-			}
 		}
 		return index + 1;
 	}
 	
+
 	public List<String> deviceNumbers() {
 		List<WebElement> allDeviceNumbers = new ArrayList<>();
 		List<String> allDeviceNumberfText = new ArrayList<>();

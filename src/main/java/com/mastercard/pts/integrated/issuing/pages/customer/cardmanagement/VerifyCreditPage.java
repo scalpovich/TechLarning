@@ -77,16 +77,17 @@ TestContext context;
 	public void verifyapplication() {
 		Device device = context.get(CreditConstants.APPLICATION);
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
-		WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
-		WebElementUtils.pickDate(toDatePicker, LocalDate.now());
+		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
+		WebElementUtils.pickDate(toDate, LocalDate.now());
 		clickSearchButton();
 	}
 
 	public String editAndVerifyApplication(){
 		verifyapplication();
 		waitForPageToLoad(driver());
-		clickWhenClickable(editImg);
 		SimulatorUtilities.wait(5000);
+		clickWhenClickable(editImg);
+		SimulatorUtilities.wait(30000);
 		
 		runWithinPopup("Edit Application", () ->{					
 			clickWhenClickable(verifyBtn);
