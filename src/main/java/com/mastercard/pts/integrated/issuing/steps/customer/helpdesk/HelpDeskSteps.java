@@ -592,7 +592,7 @@ public class HelpDeskSteps {
 		creditLimit=helpdeskWorkflow.noteDownCreditLimit(type);
 		if(type.equalsIgnoreCase("temporary") || type.equalsIgnoreCase("permanent"))
 		{	for (Entry<String, BigDecimal> expectedlimit : creditLimitExpected.entrySet()) 	
-				assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, expectedlimit.getValue(), equalTo(creditLimit.get(expectedlimit.getKey())));	
+				assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT,creditLimit.get(expectedlimit.getKey()),equalTo(expectedlimit.getValue()));
 		}
 		else
 		{
