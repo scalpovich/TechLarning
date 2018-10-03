@@ -1256,25 +1256,28 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	public HashMap<String,BigDecimal> creditLimitChangeRequestIndividual(HelpdeskGeneral helpdeskGeneral,HashMap<String,BigDecimal> creditLimit){
 		runWithinPopup("226 - Credit limit Change Request", ()->{
-			selectLimitType(helpdeskGeneral.getLimitType());
+			selectLimitType(helpdeskGeneral.getLimitType());			
+			enterClientCreditLimit(helpdeskGeneral.getClientCreditLimit().replaceAll(".00",""));
+			enterAccountCreditLimit(helpdeskGeneral.getAccountCreditLimit().replaceAll(".00",""));			
+			enterNewCreditLimit(helpdeskGeneral.getNewCreditLimit().replaceAll(".00",""));	
+			
 			if(helpdeskGeneral.getLimitType().equalsIgnoreCase("Temporary [T]"))
 			{
 				WebElementUtils.pickDate(effectiveDateTxt, LocalDate.now());
 				WebElementUtils.pickDate(endDateTxt, LocalDate.now());
+				creditLimit.put(ConstantData.AVAIL_CLIENT_LIMIT,new BigDecimal(helpdeskGeneral.getClientCreditLimit()));
+				creditLimit.put(ConstantData.AVAIL_ACCOUNT_LIMIT,new BigDecimal(helpdeskGeneral.getAccountCreditLimit()));
+				creditLimit.put(ConstantData.AVAIL_CARD_LIMIT,new BigDecimal(helpdeskGeneral.getNewCreditLimit()));		
 			}
-		
-			enterClientCreditLimit(helpdeskGeneral.getClientCreditLimit());
-			creditLimit.put(ConstantData.CLIENT_LIMIT,new BigDecimal(helpdeskGeneral.getClientCreditLimit()));
-			creditLimit.put(ConstantData.AVAIL_CLIENT_LIMIT,new BigDecimal(helpdeskGeneral.getClientCreditLimit()));
-			
-			enterAccountCreditLimit(helpdeskGeneral.getAccountCreditLimit());
-			creditLimit.put(ConstantData.ACCOUNT_LIMIT,new BigDecimal(helpdeskGeneral.getAccountCreditLimit()));
-			creditLimit.put(ConstantData.AVAIL_ACCOUNT_LIMIT,new BigDecimal(helpdeskGeneral.getAccountCreditLimit()));
-			
-			enterNewCreditLimit(helpdeskGeneral.getNewCreditLimit());
-			creditLimit.put(ConstantData.CARD_LIMIT,new BigDecimal(helpdeskGeneral.getNewCreditLimit()));	
-			creditLimit.put(ConstantData.AVAIL_CARD_LIMIT,new BigDecimal(helpdeskGeneral.getNewCreditLimit()));			
-			
+			else if(helpdeskGeneral.getLimitType().equalsIgnoreCase("Permanent [P]"))
+			{					
+				creditLimit.put(ConstantData.CLIENT_LIMIT,new BigDecimal(helpdeskGeneral.getClientCreditLimit()));
+				creditLimit.put(ConstantData.AVAIL_CLIENT_LIMIT,new BigDecimal(helpdeskGeneral.getClientCreditLimit()));
+				creditLimit.put(ConstantData.ACCOUNT_LIMIT,new BigDecimal(helpdeskGeneral.getAccountCreditLimit()));
+				creditLimit.put(ConstantData.AVAIL_ACCOUNT_LIMIT,new BigDecimal(helpdeskGeneral.getAccountCreditLimit()));
+				creditLimit.put(ConstantData.CARD_LIMIT,new BigDecimal(helpdeskGeneral.getNewCreditLimit()));	
+				creditLimit.put(ConstantData.AVAIL_CARD_LIMIT,new BigDecimal(helpdeskGeneral.getNewCreditLimit()));			
+			}
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();
