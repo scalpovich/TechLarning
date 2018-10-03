@@ -5,7 +5,7 @@ I want to age the trx and verify the status in transaction details
 
 Meta:
 @CreditRegression
-@StoryName credit_msr_corp
+@StoryName credit_msr_retail
 @Individual
 @Primary	 
 
@@ -17,7 +17,7 @@ When user is logged in institution
 And for Magnetic Stripe Card User fills without pin Device Plan for credit product for Mastercard
 And user edits Presentment Time Limit in device plan
 And User fills Wallet Fee Plan for credit product
-And User fills Wallet Plan for credit product and program Retail Credit Card
+And User fills Wallet Plan for credit product and program Corporate Credit Card
 And User Primary Device fills New Program Corporate Credit Card section for credit product for Mastercard
 And for Primary Device and New Client user fills Device Range section for credit product
 Then user sign out from customer portal
