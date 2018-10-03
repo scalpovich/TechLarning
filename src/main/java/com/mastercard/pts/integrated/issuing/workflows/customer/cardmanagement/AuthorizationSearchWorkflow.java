@@ -48,7 +48,7 @@ public class AuthorizationSearchWorkflow {
 
 	public void verifyAuthTransactionSearch(String type, String state, String deviceNumber) {
 		String varType = type;
-		// state value sent from stroy file is different from what appears on
+		// state value sent from story file is different from what appears on
 		// the screen hence setting to the correct value if it is
 		// "Rvmt_Receiving"
 		if ("Rvmt_Receiving".equalsIgnoreCase(varType))
