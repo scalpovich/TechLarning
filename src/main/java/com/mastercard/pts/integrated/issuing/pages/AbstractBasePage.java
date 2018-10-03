@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.xerces.dom3.as.ASElementDeclaration;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -573,7 +572,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		try {
 			WebElement errorMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.feedbackPanelERROR")));
 			logger.info("Error message : {}", errorMessageLbl.getText());
-			return errorMessageLbl.toString();
+			return errorMessageLbl.getText();
 		} catch (TimeoutException e) {
 			logger.info("Operation Status message {}: " + "No Status is updated");
 			logger.debug("Error message {}: ", e);
