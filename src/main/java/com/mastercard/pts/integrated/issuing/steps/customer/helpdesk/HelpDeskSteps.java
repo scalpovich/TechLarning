@@ -598,6 +598,8 @@ public class HelpDeskSteps {
 		{
 			assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.noteDownAvailableLimit(type), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
 		}
+		
+		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT,creditLimit.get(ConstantData.AVAIL_ACCOUNT_LIMIT));
 	}
 
 	@Given("user sets up device currency through helpdesk for FileUpload")
