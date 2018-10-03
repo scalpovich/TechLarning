@@ -1891,11 +1891,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private void waitForReturnButtonToGetEnable() {
 		boolean flag = false;
 		int retry = 0;
-		WebElement retunButtuon = null;
+		WebElement returnButtuon = null;
 		try {
 			while (!flag && retry <= MAX_RETRY) {
-				retunButtuon = winiumDriver.findElementByName("Return");
-				flag = retunButtuon.isEnabled();
+				returnButtuon = winiumDriver.findElementByName("Return");
+				flag = returnButtuon.isEnabled();
 				wait(500);
 				retry ++;
 			}
@@ -1903,7 +1903,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		} catch (NoSuchElementException ex) {
 			logMessage("Waiting for elemnt to get enabled", ex.getMessage());
 		}
-		retunButtuon.click();
+		returnButtuon.click();
 		wait(3000);
 	}
 	
