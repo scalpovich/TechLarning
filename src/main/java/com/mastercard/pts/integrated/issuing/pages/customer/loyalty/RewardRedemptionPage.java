@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.loyalty;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -63,8 +64,17 @@ public class RewardRedemptionPage extends AbstractBasePage {
 	}
 
 	public void verifyLoyaltyPointsNotRedeemed() {
-		Assert.assertFalse("Redeem button is not displayed as loyalty points not available for redemption",
-				redeemBtn.isVisible());
+		// assertFalse("Loyalty points shouldnot be available for redemption",
+		// isElementPresent(redeemBtn));
+
+		try {
+			if (isElementPresent(redeemBtn)) {
+				Assert.fail("Loyalty points shouldnot be available for redemption");
+			}
+
+		} catch (ElementNotVisibleException e) {
+			logger.info("Redeem button is not displayed as loyalty points not available for redemption");
+		}
 	}
 
 	public void verifyLoyaltyPointsRedeemed(KeyValueProvider provider) {

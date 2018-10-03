@@ -3,7 +3,7 @@ As a(n)  Customer portal user
 I want to configure the LoyaltyProgram
 So that the Loyalty points can be calculated and can be redeemed by the user
 Meta:
-@StoryName credit_msr_retail		 
+@StoryName prepaid_msr_retail_loyalty		 
 
 Scenario: Loyalty program setup
 Given setting json values in excel for Prepaid
