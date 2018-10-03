@@ -12,12 +12,11 @@ Meta:
 Scenario:1.1 creation of mastercard_individual_primary_emv Card credit device
 Given setting json values in excel for Credit
 When user is logged in institution
-And for EMV Card User fills without pin Device Plan for credit product for Mastercard
+And for EMV Card User fills Device Plan for credit product for Mastercard
 And user edits Presentment Time Limit in device plan
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
 And User Primary Device fills New Program Retail Credit Card section for credit product for Mastercard
-And user edits Presentment Time Limit in mcc rule plan
 And for Primary Device and New Client user fills Device Range section for credit product
 Then user sign out from customer portal
 
@@ -30,6 +29,13 @@ And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
 And user notes down available Card limit for card
 Then user sign out from customer portal
+
+Scenario: 1.2.1 Pin Generation
+Given connection to FINSim is established
+When Pin Offset file batch was generated successfully
+And embossing file batch was generated in correct format
+And PIN is retrieved successfully with data from Pin Offset File
+And FINSim simulator is closed
 
 Scenario:1.3 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
