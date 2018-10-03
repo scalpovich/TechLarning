@@ -44,7 +44,7 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 	@PageElement(findBy = FindBy.NAME, valueToFind = "memo:input:textAreaComponent")
 	private MCWebElement memoTxt;
 
-	private String successMessage = null;
+	private String statusMessage = null;
 	
 	public String addAuthorizationRequest(AuthorizationRequest request){
 		logger.info("Authorization Request: {}", request.getDeviceNumber());
@@ -57,12 +57,17 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 			WebElementUtils.enterText(transactionAmountTxt, request.getTransactionAmount());
 			WebElementUtils.enterText(memoTxt, request.getMemo());
 			clickSaveButton();
-			successMessage = getSuccessMessage();
-			logger.info("Success Meesage: " + successMessage);
+			try {
+				statusMessage = getSuccessMessage();
+			} catch (Exception e) {
+				logger.debug("Success Message not found: ", e);
+				statusMessage = getErrorMessage();
+			}
+			logger.info("Authorization Status: " + statusMessage);
 			clickOkButton();
 			});
 		
-		return successMessage;
+		return statusMessage;
 	}
 	
 	public void verifyUiOperationStatus() {
