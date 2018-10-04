@@ -704,7 +704,6 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.createDevicePlan(devicePlanSupplementary);
 		context.put(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY, devicePlanSupplementary);
 	}
-	
 
 	@When("for $deviceType User fills without pin Supplementary Device Plan for $type product for $interchange")
 	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeForSupplementaryWithoutPin(String deviceType, String type, String interchange) {
@@ -1601,7 +1600,6 @@ public class ProgramSetupSteps {
 		transactionPlan.setProductType(ProductType.fromShortName(type));
 		programSetupWorkflow.createTransactionPlanWithoutAnyTransaction(transactionPlan);
 	}
-	
 
 	@When("User fills Wallet Plan for $type product and $reservedAmount reserved amount")
 	public void whenUserFillsWalletPlanWithReservedAmount(String type, int reservedAmount) {
