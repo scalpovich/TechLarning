@@ -9,11 +9,11 @@ Meta:
 Scenario: Loyalty program setup - prepaid
 Given setting json values in excel for Prepaid
 When user is logged in institution
+When User fills Transaction Plan for Prepaid product
+And user selects all the transactions for loyalty transaction plan
 And for Magnetic Stripe Card [1] User fills Device Plan for Prepaid product for Mastercard
 And User fills Wallet Fee Plan for Prepaid product
 And User fills Wallet Plan for Prepaid product and program Retail General Purpose Card
-When User fills Transaction Plan for Prepaid product
-And user selects all the transactions for loyalty transaction plan
 And User Primary Device fills New Program Retail General Purpose Card section for Prepaid product for Mastercard
 And for Primary Device and New Client user fills Device Range section for Prepaid [P] product
 And Prepaid device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
