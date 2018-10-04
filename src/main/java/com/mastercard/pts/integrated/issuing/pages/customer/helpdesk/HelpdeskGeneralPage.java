@@ -1238,9 +1238,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	
 	public HashMap<String,BigDecimal> creditLimitChangeRequestCorporate(HelpdeskGeneral helpdeskGeneral,HashMap<String,BigDecimal> creditLimit){
-		runWithinPopup("227 - Credit limit Change Commercial Cards", ()->{
+		runWithinPopup(ConstantData.CREDIT_LIMIT_CHANGE_COMMERCIAL_CARDS, ()->{
 			selectLimitType(helpdeskGeneral.getLimitType());
-			enterNewCreditLimit(helpdeskGeneral.getNewCreditLimit().replaceAll(".00",""));		
+			enterNewCreditLimit(new BigDecimal(helpdeskGeneral.getNewCreditLimit()).toString());		
 			creditLimit.put(ConstantData.CARD_LIMIT,new BigDecimal(helpdeskGeneral.getNewCreditLimit()));	
 			creditLimit.put(ConstantData.AVAIL_CARD_LIMIT,new BigDecimal(helpdeskGeneral.getNewCreditLimit()));		
 			enterNotes(helpdeskGeneral.getNotes());
@@ -1255,13 +1255,13 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public HashMap<String,BigDecimal> creditLimitChangeRequestIndividual(HelpdeskGeneral helpdeskGeneral,HashMap<String,BigDecimal> creditLimit){
-		runWithinPopup("226 - Credit limit Change Request", ()->{
+		runWithinPopup(ConstantData.CREDIT_LIMIT_CHANGE_REQUEST, ()->{
 			selectLimitType(helpdeskGeneral.getLimitType());			
-			enterClientCreditLimit(helpdeskGeneral.getClientCreditLimit().replaceAll(".00",""));
-			enterAccountCreditLimit(helpdeskGeneral.getAccountCreditLimit().replaceAll(".00",""));			
-			enterNewCreditLimit(helpdeskGeneral.getNewCreditLimit().replaceAll(".00",""));	
+			enterClientCreditLimit(new BigDecimal(helpdeskGeneral.getClientCreditLimit()).toString());
+			enterAccountCreditLimit(new BigDecimal(helpdeskGeneral.getAccountCreditLimit()).toString());			
+			enterNewCreditLimit(new BigDecimal(helpdeskGeneral.getNewCreditLimit()).toString());	
 			
-			if(helpdeskGeneral.getLimitType().equalsIgnoreCase("Temporary [T]"))
+			if(helpdeskGeneral.getLimitType().equalsIgnoreCase(ConstantData.TEMPORARY_LIMIT))
 			{
 				WebElementUtils.pickDate(effectiveDateTxt, LocalDate.now());
 				WebElementUtils.pickDate(endDateTxt, LocalDate.now());
@@ -1269,7 +1269,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				creditLimit.put(ConstantData.AVAIL_ACCOUNT_LIMIT,new BigDecimal(helpdeskGeneral.getAccountCreditLimit()));
 				creditLimit.put(ConstantData.AVAIL_CARD_LIMIT,new BigDecimal(helpdeskGeneral.getNewCreditLimit()));		
 			}
-			else if(helpdeskGeneral.getLimitType().equalsIgnoreCase("Permanent [P]"))
+			else if(helpdeskGeneral.getLimitType().equalsIgnoreCase(ConstantData.PERMANENT_LIMIT))
 			{					
 				creditLimit.put(ConstantData.CLIENT_LIMIT,new BigDecimal(helpdeskGeneral.getClientCreditLimit()));
 				creditLimit.put(ConstantData.AVAIL_CLIENT_LIMIT,new BigDecimal(helpdeskGeneral.getClientCreditLimit()));

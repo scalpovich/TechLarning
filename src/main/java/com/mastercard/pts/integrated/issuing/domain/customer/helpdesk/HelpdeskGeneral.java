@@ -54,7 +54,7 @@ public class HelpdeskGeneral {
 	private String newMobileISD;
 	private String defaultWalletNumber;
 	private String limitType;
-	private String limittypestatus;
+	private String limitTypeStatus;
 	private String clientCreditLimit;
 	private String accountCreditLimit; 
 	private String newCreditLimit;
@@ -70,11 +70,11 @@ public class HelpdeskGeneral {
 	}
 
 	public String getLimittypestatus() {
-		return limittypestatus;
+		return limitTypeStatus;
 	}
 
 	public void setLimittypestatus(String limittypestatus) {
-		this.limittypestatus = limittypestatus;
+		this.limitTypeStatus = limittypestatus;
 	}
 	
 	public String getClientCreditLimit() {

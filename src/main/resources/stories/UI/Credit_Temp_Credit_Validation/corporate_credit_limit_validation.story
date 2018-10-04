@@ -6,11 +6,9 @@ so that credit limit should be validated
 
 Meta:
 @StoryName credit_emv_corp_limit
-@CardReplacementCredit
+
 
 Scenario:1.0 creation of mastercard_individual_primary_emv Card credit device
-Meta:
-@UserCreatesNewCreditDevice
 Given setting json values in excel for Credit
 When user is logged in institution
 And for EMV Card User fills Device Plan for credit product for Mastercard
@@ -29,17 +27,17 @@ And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
 And user raises Permanent [P] credit limit change request for Corporate
 And device has "normal" status
-And user verifies available permanent limit
+And user verifies available Permanent [P] limit
 Then user sign out from customer portal
 
-Scenario: Pin Generation 
+Scenario:1.3 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform EMV_PURCHASE Authorization transaction
+Scenario:1.4 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 And MAS test results are verified

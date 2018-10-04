@@ -590,7 +590,7 @@ public class HelpDeskSteps {
 		HashMap<String,BigDecimal> creditLimitExpected;
 		creditLimitExpected = context.get(ContextConstants.CREDIT_LIMIT_AFTER_SR);
 		creditLimit=helpdeskWorkflow.noteDownCreditLimit(type);
-		if(type.equalsIgnoreCase("temporary") || type.equalsIgnoreCase("permanent"))
+		if(type.equalsIgnoreCase(ConstantData.TEMPORARY_LIMIT) || type.equalsIgnoreCase(ConstantData.PERMANENT_LIMIT))
 		{	for (Entry<String, BigDecimal> expectedlimit : creditLimitExpected.entrySet()) 	
 				assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT,creditLimit.get(expectedlimit.getKey()),equalTo(expectedlimit.getValue()));
 		}
@@ -880,7 +880,7 @@ public class HelpDeskSteps {
 	@Then("user raises $limittype credit limit change request for $customerType")
 	@Given("user raises $limittype credit limit change request for $customerType")
 	@When("user raises $limittype credit limit change request for $customerType")
-	public void whenUserActivatesCreditLimitChangeRequestThroughHelpdesk(String limitType,String customerType) {
+	public void userRaisesCreditLimitChangeRequestThroughHelpdesk(String limitType,String customerType) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProviderWithCreditCardLimits(provider);
 		helpdeskGeneral.setLimitType(limitType);
 		helpdeskGeneral.setCustomerType(customerType);

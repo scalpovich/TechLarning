@@ -119,7 +119,13 @@ public class ConstantData {
 	
 	public static final String CARD_LIMIT = "Card";
 	public static final String AVAIL_CARD_LIMIT = "Avail Card";	
-
+	
+	public static final String TEMPORARY_LIMIT = "Temporary [T]";
+	public static final String PERMANENT_LIMIT = "Permanent [P]";	
+	
+	public static final String CREDIT_LIMIT_CHANGE_REQUEST = "226 - Credit limit Change Request";
+	public static final String CREDIT_LIMIT_CHANGE_COMMERCIAL_CARDS = 	"227 - Credit limit Change Commercial Cards";	
+	
 	private ConstantData() {
 	}
 
