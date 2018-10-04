@@ -19,9 +19,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Cred
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.CloseBatchFlows;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
@@ -63,6 +61,9 @@ public class CloseBatchPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Process All']")
 	private MCWebElement processAllBtn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
+	private MCWebElement searchTable;
 
 
 	public List<String> allBatchNumberRetrieval() {
@@ -100,9 +101,11 @@ public class CloseBatchPage extends AbstractBasePage {
 	}
 	
 	public void processAllBatch() {
-		clickWhenClickable(processAllBtn);
+		//clickWhenClickable(processAllBtn);
+		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
+		clickProcessSelectedButton();
 		try {
-			if (confirmMsgBtn.isEnabled()) {
+			if (confirmMsgBtn.isEnabled() && confirmMsgBtn.isVisible()) {
 				switchToIframe("Confirmation Message");
 				clickWhenClickable(yesBtn);
 				verifyOperationStatus();

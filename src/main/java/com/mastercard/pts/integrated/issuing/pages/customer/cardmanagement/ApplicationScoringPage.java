@@ -8,6 +8,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Cred
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -31,13 +32,17 @@ public class ApplicationScoringPage extends AbstractBasePage {
 
 
 	public void processAllApplicationScoring() {
-		for (int l = 0; l < 21; l++) {
-			if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER)))
-				clickWhenClickable(applicationScoringBtn);
-			else {
-				break;
-			}
-			clickWhenClickable(processAllBtn);
+
+		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))) {
+			clickWhenClickable(applicationScoringBtn);
+			processAllApplicationScoring();
 		}
+		SimulatorUtilities.wait(4000);
+	}
+	
+	public void clickProcessALL() {
+		//clickWhenClickable(processAllBtn);
+		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
+		clickProcessSelectedButton();
 	}
 }

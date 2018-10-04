@@ -89,8 +89,9 @@ TestContext context;
 	public String editAndVerifyApplication(){
 		verifyapplication();
 		waitForPageToLoad(driver());
-		clickWhenClickable(editImg);
 		SimulatorUtilities.wait(5000);
+		clickWhenClickable(editImg);
+		SimulatorUtilities.wait(30000);
 		
 		runWithinPopup("Edit Application", () ->{					
 			clickWhenClickable(verifyBtn);

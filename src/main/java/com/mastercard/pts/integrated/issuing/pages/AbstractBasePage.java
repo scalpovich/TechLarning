@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.xerces.dom3.as.ASElementDeclaration;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -302,6 +301,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
     @PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	private MCWebElement institutionDateTxt;
+    
+    int retryCounter =0;
 	
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
@@ -474,7 +475,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	public String getCellTextByColumnName(int rowNumber, String columnName) {
-		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]", rowNumber, columnName);
+		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]/span", rowNumber, columnName);
 		WebElement element = driver().findElement(By.xpath(xpath));
 		waitForElementVisible(element);
 		return element.getText().trim();
@@ -1850,31 +1851,55 @@ public abstract class AbstractBasePage extends AbstractPage {
 		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
 
 		int rowscount = rowstable.size();
-
-		for (int row = 1; row < rowscount; row++) {
+		outerloop:
+		for (int row = 0; row < rowscount; row++) {
 
 			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
 
 			int columnscount = columnsrow.size();
-
 			for (int col = 0; col < columnscount; col++) {
 				if (columnsrow.get(col).getText().equals(text)) {
 					List<WebElement> editAndDeleteIcon = rowstable.get(row).findElements(By.tagName("img"));
-					for (int icon = 0; icon < editAndDeleteIcon.size(); icon++) {
-						if (editAndDeleteIcon.get(icon).getAttribute("alt").contains("Delete")) {
-							editAndDeleteIcon.get(icon).click();
-							SimulatorUtilities.wait(2000);
-							Alert alert = driver().switchTo().alert();
-							alert.accept();
-							waitForPageToLoad(driver());
+					
+						for (int icon = 0; icon < editAndDeleteIcon.size(); icon++) {
+							if (editAndDeleteIcon.get(icon).getAttribute("alt").contains("Delete")) {
+								editAndDeleteIcon.get(icon).click();
+								SimulatorUtilities.wait(2000);
+								Alert alert = driver().switchTo().alert();
+								alert.accept();
+								break outerloop;
+							}
 						}
-					}
+				
 
 				}
 			}
 		}
 
 	}
+	
+	public void clickOncheckBoxIfBatchAvailableinTable(MCWebElement tableHandle, String text) {
+		WebElement table = asWebElement(tableHandle);
+		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
+		int rowscount = rowstable.size();
+		outerloop:
+		for (int row = 1; row < rowscount; row++) {
+			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
+			int columnscount = columnsrow.size();
+			for (int col = 0; col < columnscount; col++) {
+				if (columnsrow.get(col).getText().equals(text)) {
+					WebElement checkBox = columnsrow.get(columnscount - 1).findElement(By.cssSelector("input[type=checkbox]"));
+					if (checkBox.isEnabled() && !checkBox.isSelected()) {
+						checkBox.click();
+					}
+
+				}
+				break outerloop;
+
+			}
+		}
+	}
+	
 	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
@@ -1890,5 +1915,32 @@ public abstract class AbstractBasePage extends AbstractPage {
 	{	
 		logger.info("Institution date : {}",getTextFromPage(institutionDateTxt));
 		return getTextFromPage(institutionDateTxt);
+	}
+	
+	protected void waitForContentToLoad(MCWebElement element){
+		waitForWicket();
+		SimulatorUtilities.wait(5000);
+		while(retryCounter < 4){
+			
+			if(element.getTagName().contains("input")){
+				if(element.getText().equals("-") || element.getText().isEmpty() || element.getText().equals("0")){
+					SimulatorUtilities.wait(3000);
+					retryCounter++;
+					waitForContentToLoad(element);
+				}
+			}else if(element.getTagName().contains("select")){
+				Select options = new Select(asWebElement(element));
+				if(options.getOptions().size() < 1){
+					retryCounter++;
+					waitForContentToLoad(element);	
+				}
+			}else if(element.getText().equals("-") || element.getText().isEmpty() || element.getText().equals("0")){
+				SimulatorUtilities.wait(3000);
+				retryCounter++;
+				waitForContentToLoad(element);
+			}else{
+				break;
+			}
+		}
 	}
 }
