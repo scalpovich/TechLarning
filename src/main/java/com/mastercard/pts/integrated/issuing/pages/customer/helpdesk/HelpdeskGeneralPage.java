@@ -1249,6 +1249,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		editFirstRecord();
 		SimulatorUtilities.wait(5000);
 		selectServiceCode(Constants.DEVICE_WITHDRAW_STOPLIST_REQ);
+		clickGoButton();
 		runWithinPopup("221 - Withdraw Device from Stop-list", () -> {
 			selectWithdrawlReason(withdrawReason);
 			selectApplyFeesChkBx(true);
