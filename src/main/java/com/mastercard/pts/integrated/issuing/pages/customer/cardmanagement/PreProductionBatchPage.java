@@ -7,18 +7,13 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.MenuSubMenuPage;
@@ -67,7 +62,6 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	private MCWebElement processAllBtn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class = 'repeat']//div[2]//li[2]//span[@class = 'feedbackPanelINFO']")
-
 	private MCWebElement confirmationMsgTxt;	
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview tbody tr:nth-of-type(1) td:nth-of-type(3)")
@@ -89,14 +83,11 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		logger.info("Pre-Production Batch: {}", batch.getBatchNumber());
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
-
 		waitAndSearchForRecordToExist();
-
 		verifyOperationStatus();
 	}
 
 	public void processPreProductionBatch1(PreProductionBatch batch) {
-
 		waitForLoaderToDisappear();
 		selectDropDownByText(productTypeDDwn, batch.getProductType());
 		CustomUtils.ThreadDotSleep(8000);
@@ -166,7 +157,6 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		// + bulkdeviceGenBatch.getJobId()
 		// +
 		// "')]/following::span/input[@name='productionPanel:BasicDataTable:datatable:body:rows:1:cells:8:cell:columnCheckBox']"));
-
 		clickWhenClickable(preProductionBatchRecordChkBx);
 	}
 
@@ -207,7 +197,6 @@ public class PreProductionBatchPage extends AbstractBasePage {
 	}
 
 	public void processPreProductionBatchNewDevice(PreProductionBatch batch) {
-
 		waitForLoaderToDisappear();
 		selectDropDownByText(productTypeDDwn, batch.getProductType());
 		CustomUtils.ThreadDotSleep(8000);
@@ -220,7 +209,7 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		switchToDefaultFrame();
 	}	
 
-		public void processPreProductionBatchNewApplicationForFileUpload(PreProductionBatch batch) {
+	public void processPreProductionBatchNewApplicationForFileUpload(PreProductionBatch batch) {
         List<String>batchNumbers=context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
 		waitForLoaderToDisappear();
 		selectDropDownByText(productTypeDDwn, batch.getProductType());
@@ -239,20 +228,20 @@ public class PreProductionBatchPage extends AbstractBasePage {
 
 	}
 		
-		public void processPreProductionBatchNewApplicationForFileUploadForPrepaid(PreProductionBatch batch) {
-	        String jobID=context.get(CreditConstants.JOB_ID);
-			waitForLoaderToDisappear();
-			selectDropDownByText(productTypeDDwn, batch.getProductType());
-			SimulatorUtilities.wait(8000);
-			enterText(sourceJobIdTxt, jobID);
-			ClickButton(searchBtn);
-			ClickCheckBox(preProductionBatchRecordChkBx, true);
-			context.put(CreditConstants.BATCH_NUMBER_FILEUPLOAD, batchNumberFirstRowTxt.getText());
-			ClickButton(processSelectedBtn);
-			verifyOperationStatus();
-			switchToDefaultFrame();
+	public void processPreProductionBatchNewApplicationForFileUploadForPrepaid(PreProductionBatch batch) {
+		String jobID = context.get(CreditConstants.JOB_ID);
+		waitForLoaderToDisappear();
+		selectDropDownByText(productTypeDDwn, batch.getProductType());
+		SimulatorUtilities.wait(8000);
+		enterText(sourceJobIdTxt, jobID);
+		ClickButton(searchBtn);
+		ClickCheckBox(preProductionBatchRecordChkBx, true);
+		context.put(CreditConstants.BATCH_NUMBER_FILEUPLOAD, batchNumberFirstRowTxt.getText());
+		ClickButton(processSelectedBtn);
+		verifyOperationStatus();
+		switchToDefaultFrame();
 
-		}
+	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

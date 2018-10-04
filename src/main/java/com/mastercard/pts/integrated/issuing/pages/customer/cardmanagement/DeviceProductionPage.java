@@ -3,7 +3,6 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
@@ -52,7 +50,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	private MCWebElement productTypeDDwn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='batchNumber']")
-	private MCWebElement batchNumberTxt;
+	private MCWebElement txtBatchNumber;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='cardNumber']")
 	private MCWebElement deviceNumberTxt;
@@ -79,7 +77,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	private MCWebElement deviceNumberFetch;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class='headers']//a/span")
-	private MCWebElements deviceNumberHeaderTxt;
+	private MCWebElements txtDeviceNumberHeader;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr")
 	private MCWebElements rowSize;
@@ -88,7 +86,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 		menuSubMenuPage.getDeviceProduction().click();
 		selectDropDownByText(productTypeDDwn, prodType);
 		if (batchNum != null) {
-			enterText(batchNumberTxt, batchNum);
+			enterText(txtBatchNumber, batchNum);
 		}
 
 		if (DeviceNumber != null) {
@@ -108,7 +106,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	public void processDeviceProductionBatch(DeviceProductionBatch batch) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
+		WebElementUtils.enterText(txtBatchNumber, batch.getBatchNumber());
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 
@@ -116,7 +114,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	public void processDeviceProductionBatchForAll(DeviceProductionBatch batch) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
+		WebElementUtils.enterText(txtBatchNumber, batch.getBatchNumber());
 		waitAndSearchForRecordToExist();
 		clickWhenClickable(processAllBtn);
 		verifyOperationStatus();
@@ -127,7 +125,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 		List<String> batchNumbers = context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
 		waitForLoaderToDisappear();
 		WebElementUtils.selectDropDownByVisibleText(productTypeDD, batch.getProductType());
-		WebElementUtils.enterText(batchNumberText, batchNumbers.get(0));
+		WebElementUtils.enterText(txtBatchNumber, batchNumbers.get(0));
 		waitAndSearchForRecordToAppear();
 		clickWhenClickable(processAllBtn);
 		verifyOperationStatus();
@@ -137,7 +135,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 		String batchNumber = context.get(CreditConstants.BATCH_NUMBER_FILEUPLOAD);
 		waitForLoaderToDisappear();
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		WebElementUtils.enterText(batchNumberTxt,batchNumber);
+		WebElementUtils.enterText(txtBatchNumber,batchNumber);
 		waitAndSearchForRecordToAppear();
 		clickWhenClickable(processAllBtn);
 		verifyOperationStatus();
@@ -148,7 +146,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	}
 
 	public void enterBatchNumber(BulkDeviceRequestbatch bulkdeviceGenBatch) {
-		enterValueinTextBox(batchNumberTxt, bulkdeviceGenBatch.getBatchNumberForDeviceProduction());
+		enterValueinTextBox(txtBatchNumber, bulkdeviceGenBatch.getBatchNumberForDeviceProduction());
 	}
 
 	public void enterDeviceNumber(BulkDeviceRequestbatch bulkdeviceGenBatch) {
@@ -224,7 +222,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	public void processDeviceProductionBatchNewApplication(DeviceProductionBatch batch) {
 		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
-		WebElementUtils.enterText(batchNumberTxt,batchNumber);
+		WebElementUtils.enterText(txtBatchNumber,batchNumber);
 		waitForRecordAndAssignDevice();
 		verifyOperationStatus();
 	}
@@ -232,7 +230,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public void processDeviceProductionBatchNewDevice(DeviceProductionBatch batch) {
 		Device device = context.get(ContextConstants.DEVICE);
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		WebElementUtils.enterText(batchNumberTxt, device.getBatchNumber());
+		WebElementUtils.enterText(txtBatchNumber, device.getBatchNumber());
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 	}
@@ -240,7 +238,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public void processDeviceProductionBatchNewDeviceSupplementary(DeviceProductionBatch batch) {		
 		String batchNumber = context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
 		selectByVisibleText(productTypeDDwn, batch.getProductType());
-		WebElementUtils.enterText(batchNumberTxt, batchNumber);		
+		WebElementUtils.enterText(txtBatchNumber, batchNumber);		
 		waitAndSearchForRecordToExistForSupplementary();
 		verifyOperationStatus();
 	}
@@ -255,8 +253,8 @@ public class DeviceProductionPage extends AbstractBasePage {
 	
 	public int deviceNumberHeaderIndexFetch() {
 		int index = 0;
-		for (int i = 0; i < deviceNumberHeaderTxt.getElements().size(); i++) {
-			if (deviceNumberHeaderTxt.getElements().get(i).getText().equals("Device Number")) {
+		for (int i = 0; i < txtDeviceNumberHeader.getElements().size(); i++) {
+			if (txtDeviceNumberHeader.getElements().get(i).getText().equals("Device Number")) {
 				index = i;
 			}
 		}
