@@ -57,12 +57,7 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 			WebElementUtils.enterText(transactionAmountTxt, request.getTransactionAmount());
 			WebElementUtils.enterText(memoTxt, request.getMemo());
 			clickSaveButton();
-			try {
-				statusMessage = getSuccessMessage();
-			} catch (Exception e) {
-				logger.debug("Success Message not found: ", e);
-				statusMessage = getErrorMessage();
-			}
+			statusMessage = getMessageFromFeedbackPanel();
 			logger.info("Authorization Status: " + statusMessage);
 			clickOkButton();
 			});
