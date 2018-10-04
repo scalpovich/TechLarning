@@ -174,6 +174,7 @@ public class DeviceUsagePage extends AbstractBasePage {
 		return deviceUsage;
 		}
 		catch(WebDriverException | NullPointerException e){
+			e.printStackTrace();
 			return  null;
 		}
 	}

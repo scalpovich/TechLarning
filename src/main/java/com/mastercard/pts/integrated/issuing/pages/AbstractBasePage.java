@@ -483,6 +483,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		waitForElementVisible(element);
 		return element.getText().trim();}
 		catch(ElementNotFoundException e){
+			e.printStackTrace();
 			return null;
 		}
 	}
