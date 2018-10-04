@@ -44,13 +44,13 @@ public class DeviceProductionPage extends AbstractBasePage {
 	private MCWebElement productTypeDD;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=batchNumber]")
-	private MCWebElement batchNumberText;
+	private MCWebElement txtBatchNumber;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Product Type')]//following-sibling::td[2]//select")
 	private MCWebElement productTypeDDwn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='batchNumber']")
-	private MCWebElement txtBatchNumber;
+	private MCWebElement batchNumberTxt;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='cardNumber']")
 	private MCWebElement deviceNumberTxt;
@@ -86,7 +86,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 		menuSubMenuPage.getDeviceProduction().click();
 		selectDropDownByText(productTypeDDwn, prodType);
 		if (batchNum != null) {
-			enterText(txtBatchNumber, batchNum);
+			enterText(batchNumberTxt, batchNum);
 		}
 
 		if (DeviceNumber != null) {
@@ -106,7 +106,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	public void processDeviceProductionBatch(DeviceProductionBatch batch) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		WebElementUtils.enterText(txtBatchNumber, batch.getBatchNumber());
+		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 
@@ -114,7 +114,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	public void processDeviceProductionBatchForAll(DeviceProductionBatch batch) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		WebElementUtils.enterText(txtBatchNumber, batch.getBatchNumber());
+		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
 		waitAndSearchForRecordToExist();
 		clickWhenClickable(processAllBtn);
 		verifyOperationStatus();
@@ -125,7 +125,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 		List<String> batchNumbers = context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
 		waitForLoaderToDisappear();
 		WebElementUtils.selectDropDownByVisibleText(productTypeDD, batch.getProductType());
-		WebElementUtils.enterText(txtBatchNumber, batchNumbers.get(0));
+		WebElementUtils.enterText(batchNumberTxt, batchNumbers.get(0));
 		waitAndSearchForRecordToAppear();
 		clickWhenClickable(processAllBtn);
 		verifyOperationStatus();
@@ -135,7 +135,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 		String batchNumber = context.get(CreditConstants.BATCH_NUMBER_FILEUPLOAD);
 		waitForLoaderToDisappear();
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		WebElementUtils.enterText(txtBatchNumber,batchNumber);
+		WebElementUtils.enterText(batchNumberTxt,batchNumber);
 		waitAndSearchForRecordToAppear();
 		clickWhenClickable(processAllBtn);
 		verifyOperationStatus();
@@ -146,7 +146,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	}
 
 	public void enterBatchNumber(BulkDeviceRequestbatch bulkdeviceGenBatch) {
-		enterValueinTextBox(txtBatchNumber, bulkdeviceGenBatch.getBatchNumberForDeviceProduction());
+		enterValueinTextBox(batchNumberTxt, bulkdeviceGenBatch.getBatchNumberForDeviceProduction());
 	}
 
 	public void enterDeviceNumber(BulkDeviceRequestbatch bulkdeviceGenBatch) {
@@ -222,7 +222,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	public void processDeviceProductionBatchNewApplication(DeviceProductionBatch batch) {
 		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
-		WebElementUtils.enterText(txtBatchNumber,batchNumber);
+		WebElementUtils.enterText(batchNumberTxt,batchNumber);
 		waitForRecordAndAssignDevice();
 		verifyOperationStatus();
 	}
@@ -230,7 +230,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public void processDeviceProductionBatchNewDevice(DeviceProductionBatch batch) {
 		Device device = context.get(ContextConstants.DEVICE);
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		WebElementUtils.enterText(txtBatchNumber, device.getBatchNumber());
+		WebElementUtils.enterText(batchNumberTxt, device.getBatchNumber());
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 	}
@@ -238,7 +238,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public void processDeviceProductionBatchNewDeviceSupplementary(DeviceProductionBatch batch) {		
 		String batchNumber = context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
 		selectByVisibleText(productTypeDDwn, batch.getProductType());
-		WebElementUtils.enterText(txtBatchNumber, batchNumber);		
+		WebElementUtils.enterText(batchNumberTxt, batchNumber);		
 		waitAndSearchForRecordToExistForSupplementary();
 		verifyOperationStatus();
 	}
