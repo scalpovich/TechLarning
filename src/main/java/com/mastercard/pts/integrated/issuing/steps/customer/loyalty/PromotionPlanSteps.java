@@ -34,4 +34,13 @@ public class PromotionPlanSteps {
 		context.put(ContextConstants.PROMOTION_PLAN, promotionPlan);
 		uiVerificationLoyaltyWorkflow.verifyPromotionPlanPage(promotionPlan);
 	}
+
+	@When("user adds promotion Plan with MCG")
+	public void addPromotionPlanwithMCG() {
+		promotionPlan = PromotionPlan.createWithProvider(Provider);
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		promotionPlan.setPromotionloyaltyPlan(data.getLoyaltyPlan());
+		context.put(ContextConstants.PROMOTION_PLAN, promotionPlan);
+		uiVerificationLoyaltyWorkflow.verifyPromotionPlanwithMCG(promotionPlan);
+	}
 }

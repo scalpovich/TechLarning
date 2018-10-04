@@ -64,6 +64,9 @@ public class PromotionPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='lypMccCode']/select")
 	private MCWebElement mccRuleDdwn;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='lypMcgCode']/select")
+	private MCWebElement mcgRuleDdwn;
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=lypTxnAmt]")
 	private MCWebElement floorTxnAmtTxt;
 
@@ -76,11 +79,26 @@ public class PromotionPlanPage extends AbstractBasePage {
 		verifyUiOperation("Add Promotion Plan");
 	}
 
+	public void verifyUiOperationStatuswithMCG(PromotionPlan plan) {
+		logger.info("Promotion Plan");
+		addPromotionPlanConfigurationwithMCG(plan);
+		verifyUiOperation("Add Promotion Plan");
+	}
+
 	public void addPromotionPlanConfiguration(PromotionPlan plan) {
 		logger.info(ADD_PROMOTION_PLAN);
 		clickAddNewButton();
 		runWithinPopup(ADD_PROMOTION_PLAN, () -> {
 			addPromotionPlan(plan);
+			verifyAlreadyExistsAndClickCancel();
+		});
+	}
+
+	public void addPromotionPlanConfigurationwithMCG(PromotionPlan plan) {
+		logger.info(ADD_PROMOTION_PLAN);
+		clickAddNewButton();
+		runWithinPopup(ADD_PROMOTION_PLAN, () -> {
+			addPromotionPlanwithMCG(plan);
 			verifyAlreadyExistsAndClickCancel();
 		});
 	}
@@ -101,6 +119,25 @@ public class PromotionPlanPage extends AbstractBasePage {
 		clickWhenClickable(calculationMethodPerTXn);
 		WebElementUtils.enterText(floorTxnAmtTxt, plan.getFloortransactionAmount());
 		WebElementUtils.selectDropDownByVisibleText(mccRuleDdwn, plan.getMccCode());
+		clickSaveButton();
+	}
+
+	private void addPromotionPlanwithMCG(PromotionPlan plan) {
+		WebElementUtils.enterText(lypPromotionCodeTxt, plan.getPromotionPlanCode());
+		WebElementUtils.enterText(lypDescriptionTxt, plan.getPromotionDescription());
+		WebElementUtils.selectDropDownByVisibleText(currencyDDwn, plan.getPromotionCurrency());
+		WebElementUtils.enterText(lypAmtSpentTxt, plan.getPromotionamountSpent());
+		waitForElementVisible(startDateDPkr);
+		WebElementUtils.pickDate(startDateDPkr, futureDate);
+		waitForElementVisible(endDateDPkr);
+		WebElementUtils.pickDate(endDateDPkr, futureEndDate);
+		WebElementUtils.enterText(lypPtsEarnedTxt, plan.getPromotionpointsEarned());
+		WebElementUtils.enterText(lypPriorrunsTxt, NUMBER);
+		WebElementUtils.enterText(lypCumTxnamtTxt, NUMBER);
+		WebElementUtils.enterText(lypCumNotxnsTxt, NUMBER);
+		clickWhenClickable(calculationMethodPerTXn);
+		WebElementUtils.enterText(floorTxnAmtTxt, plan.getFloortransactionAmount());
+		WebElementUtils.selectDropDownByVisibleText(mcgRuleDdwn, plan.getMcgCode());
 		clickSaveButton();
 	}
 

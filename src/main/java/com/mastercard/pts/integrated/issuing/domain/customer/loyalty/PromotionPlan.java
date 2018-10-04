@@ -21,6 +21,16 @@ public class PromotionPlan implements HasCodeAndDescription {
 	private String promotionloyaltyBatchDate;
 	private String floortransactionAmount;
 	private String mccCode;
+	private String mcgCode;
+
+	public String getMcgCode() {
+		return mcgCode;
+	}
+
+	public void setMcgCode(String mcgCode) {
+		this.mcgCode = mcgCode;
+	}
+
 	private String promotionloyaltyPlan;
 
 	public String getPromotionloyaltyPlan() {
@@ -135,6 +145,7 @@ public class PromotionPlan implements HasCodeAndDescription {
 		plan.setPromotionpointsEarned(provider.getString("PROMOTION_POINTS_EARNED"));
 		plan.setFloortransactionAmount(provider.getString("FLOOR_TRANSACTION_AMOUNT"));
 		plan.setMccCode(provider.getString("MCC_CODE_INVALID"));
+		plan.setMcgCode(provider.getString("MCG_CODE"));
 		return plan;
 	}
 

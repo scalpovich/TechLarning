@@ -63,6 +63,11 @@ public class UiVerificationLoyaltyWorkflow {
 		page.verifyUiOperationStatus(plan);
 	}
 
+	public void verifyPromotionPlanwithMCG(PromotionPlan plan) {
+		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
+		page.verifyUiOperationStatuswithMCG(plan);
+	}
+
 	public void verifyRedemptionPage() {
 		RedemptionPage page = navigator.navigateToPage(RedemptionPage.class);
 		page.verifyUiOperationStatus();
