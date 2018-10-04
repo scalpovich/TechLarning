@@ -482,7 +482,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		WebElement element = driver().findElement(By.xpath(xpath));
 		waitForElementVisible(element);
 		return element.getText().trim();}
-		catch(ElementNotFoundException e){
+		catch(WebDriverException e){
 			e.printStackTrace();
 			return null;
 		}
