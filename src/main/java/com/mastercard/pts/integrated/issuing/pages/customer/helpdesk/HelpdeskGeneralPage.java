@@ -285,16 +285,16 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Balance Details']")
 	private MCWebElement balanceDetailsTab;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "udf29:input:inputAmountField")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//th[text()='New Credit Limit']/../following-sibling::tr[1]/td[4]/input")
 	private MCWebElement creditClientLimitTxt;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "udf19:input:inputAmountField")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//th[text()='New Credit Limit']/../following-sibling::tr[2]/td[4]/input")
 	private MCWebElement creditAccountLimitTxt;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='newCreditLimit']")
 	private MCWebElement newCreditLimitTxt;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "udf6:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Type :']/../following-sibling::td[1]/select")
 	private MCWebElement selectLimitTypeDdwn;
 
 	protected String getWalletNumber() {
