@@ -1240,7 +1240,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public HashMap<String,BigDecimal> creditLimitChangeRequestCorporate(HelpdeskGeneral helpdeskGeneral,HashMap<String,BigDecimal> creditLimit){
 		runWithinPopup(ConstantData.CREDIT_LIMIT_CHANGE_COMMERCIAL_CARDS, ()->{
 			selectLimitType(helpdeskGeneral.getLimitType());
-			enterNewCreditLimit(new BigDecimal(helpdeskGeneral.getNewCreditLimit()).toString());		
+			enterNewCreditLimit(new BigDecimal(helpdeskGeneral.getNewCreditLimit()).stripTrailingZeros().toPlainString());		
 			creditLimit.put(ConstantData.CARD_LIMIT,new BigDecimal(helpdeskGeneral.getNewCreditLimit()));	
 			creditLimit.put(ConstantData.AVAIL_CARD_LIMIT,new BigDecimal(helpdeskGeneral.getNewCreditLimit()));		
 			enterNotes(helpdeskGeneral.getNotes());
@@ -1257,9 +1257,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public HashMap<String,BigDecimal> creditLimitChangeRequestIndividual(HelpdeskGeneral helpdeskGeneral,HashMap<String,BigDecimal> creditLimit){
 		runWithinPopup(ConstantData.CREDIT_LIMIT_CHANGE_REQUEST, ()->{
 			selectLimitType(helpdeskGeneral.getLimitType());			
-			enterClientCreditLimit(new BigDecimal(helpdeskGeneral.getClientCreditLimit()).toString());
-			enterAccountCreditLimit(new BigDecimal(helpdeskGeneral.getAccountCreditLimit()).toString());			
-			enterNewCreditLimit(new BigDecimal(helpdeskGeneral.getNewCreditLimit()).toString());	
+			enterClientCreditLimit(new BigDecimal(helpdeskGeneral.getClientCreditLimit()).stripTrailingZeros().toPlainString());
+			enterAccountCreditLimit(new BigDecimal(helpdeskGeneral.getAccountCreditLimit()).stripTrailingZeros().toPlainString());			
+			enterNewCreditLimit(new BigDecimal(helpdeskGeneral.getNewCreditLimit()).stripTrailingZeros().toPlainString());	
 			
 			if(helpdeskGeneral.getLimitType().equalsIgnoreCase(ConstantData.TEMPORARY_LIMIT))
 			{
