@@ -32,9 +32,8 @@ And for Primary Device and New Client user fills Device Range section for credit
 And credit device is created using new device screen for Corporate and Primary Device and New Client and Magnetic Stripe Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
-And device has "normal" status
+Then device has "normal" status
 And user activates device through helpdesk
-Then embossing file batch was generated in correct format
 And user sign out from customer portal
 
 Scenario:2 To Verify that the user can stoplist credit device from stoplist screen
@@ -44,11 +43,11 @@ And user edits deviceplan and enables stoplist flag
 And device has "expired" status
 Then user sign out from customer portal
 
-Scenario:3 Transaction - MSR_PREAUTH Authorization transaction on credit device after stoplisted device
-Given connection to MAS is established
-When perform an MSR_PREAUTH MAS transaction
-And user is logged in institution
-And search Pre-Auth authorization and verify 101-EXPIRED CARD status
+Scenario:3 Transaction - Verify that the transaction declines with appropriate response for stoplisting
+Given user is logged in institution
+When user raises an authorization request
+And status of request is declined with reason Expired
+And search Purchase authorization and verify 101-EXPIRED CARD status
 And assert Capture response with 70123 AuthDecline Code and Card Status is Expired with Decline Response as description
 Then user sign out from customer portal
 
@@ -58,11 +57,9 @@ When user withdraws a card from withdraw device screen
 And device has "normal" status
 Then user sign out from customer portal
 
-Scenario:5 Transaction - MSR_PREAUTH Authorization transaction on credit device after withdrawn device
-Given perform an MSR_PREAUTH MAS transaction on the same card
-When MAS test results are verified
-And MAS simulator is closed
-And user is logged in institution
-And search Pre-Auth authorization and verify 000-Successful status
+Scenario:4 Transaction - Verify that the user is able to make a successful transaction on the withdrawaing the stoplisting
+Given user is logged in institution
+When user raises an authorization request
+And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 

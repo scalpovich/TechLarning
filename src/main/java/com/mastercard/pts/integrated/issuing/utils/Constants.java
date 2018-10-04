@@ -468,6 +468,7 @@ public class Constants {
 	
 	public static final String PROGRAM = "Program";
 	public static final String REPLACE_DECLINE_MESSAGE_LOST = "Card Status is Lost with Capture Response";
+	public static final String REPLACE_DECLINE_MESSAGE_EXPIRED = "Card Status is Expired with Decline Response.";
 	public static final String FRAME_STOPLIST_REQUEST = "220 - Stop list Device ";
 	public static final String DEVICE_STOPLIST_REQ = "Stop list Device  [220]";
 	public static final String INSTANT_REPLACE_DEVICE = "Instant Replacement Device [150]";
