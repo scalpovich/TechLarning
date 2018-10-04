@@ -23,11 +23,43 @@ public class ClientDetails {
 	private String emailId;	
 	private String nationality;
 	private String clientType;
+	private LocalDate dedupeBithDate;
+	private String dedupeFirstName;
+	private String dedupeLastName;
 	
+	public String getDedupeFirstName() {
+		return dedupeFirstName;
+	}
+
+	public void setDedupeFirstName(String dedupeFirstName) {
+		this.dedupeFirstName = dedupeFirstName;
+	}
+
+	public String getDedupeLastName() {
+		return dedupeLastName;
+	}
+
+	public void setDedupeLastName(String dedupeLastName) {
+		this.dedupeLastName = dedupeLastName;
+	}
+
+
+	
+	public LocalDate getDedupeBithDate() {
+		return dedupeBithDate;
+	}
+
+	public void setDedupeBithDate(LocalDate dedupeBithDate) {
+		this.dedupeBithDate = dedupeBithDate;
+	}
+
 	public static ClientDetails generateClient() {
 		ClientDetails client = new ClientDetails();
 		client.setTitle("Mr. [1]");
 		client.setBirthDate(LocalDate.now().minusYears(RandomUtils.nextLong(20, 50)));
+		client.setDedupeFirstName("John");
+		client.setDedupeLastName("Hudini");
+		client.setDedupeBithDate(LocalDate.now().minusYears(29));
 		client.setNationality("INDIA [356]");
 		client.setMaritialStatus("Married [1]");
 		client.setLanguagePreference("English [en]");

@@ -308,6 +308,50 @@ public class DeviceSteps {
 		context.put(CreditConstants.APPLICATION, device);
 	}
 	
+	@Given("\"$type\" is created with \"$application\" as application type with application sub-type as \"$applicationSubType\" and customer of type \"$customerType\" with \"$deviceType\" with $dedupe")
+	@When("\"$type\" is created with \"$application\" as application type with application sub-type as \"$applicationSubType\" and customer of type \"$customerType\" with \"$deviceType\" with $dedupe")
+	@Then("\"$type\" is created with \"$application\" as application type with application sub-type as \"$applicationSubType\" and customer of type \"$customerType\" with \"$deviceType\" with $dedupe")
+	public void createDeviceWithDeviceAndProgramPlanWithDedupe(String type, String application, String applicationSubType, String customerType, String deviceType, String dedupe) {
+		Device device = Device.createWithProvider(provider);
+
+		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
+
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+		device.setApplicationType(application);
+		device.setSubApplicationType(applicationSubType);
+		device.setCustomerType(customerType);
+		device.setDeviceType1(deviceType);
+		device.setDedupe(dedupe);
+
+		Device deviceTemp = Device.createWithProviderForOtherDetails(provider);
+		device.setOtherInfoDeliveryMode(deviceTemp.getOtherInfoDeliveryMode());
+		device.setOtherInfoEmailAlertRequired(deviceTemp.getOtherInfoEmailAlertRequired());
+		device.setOtherInfoFaxNo(deviceTemp.getOtherInfoFaxNo());
+		device.setOtherInfoPreferredLanguage(deviceTemp.getOtherInfoPreferredLanguage());
+		device.setOtherInfoRegisteredEmailAddress(deviceTemp.getOtherInfoRegisteredEmailAddress());
+		device.setOtherInfoRegisteredMobileNumber(deviceTemp.getOtherInfoRegisteredMobileNumber());
+		device.setOtherInfoRegisterForDncr(deviceTemp.getOtherInfoRegisterForDncr());
+		device.setOtherInfoSmsAlertRequired(deviceTemp.getOtherInfoSmsAlertRequired());
+		device.setOtherInfoStatementPreference(deviceTemp.getOtherInfoStatementPreference());
+
+		Program program = context.get(ContextConstants.PROGRAM);
+		device.setProgramCode(program.buildDescriptionAndCode());
+		sdnUncheckProgram(program.getProgramCode());
+
+		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE) || device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)) {
+			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
+			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+		} else {
+			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+		}
+
+		Assert.assertTrue("Application is not created successfully", deviceWorkflow.createDeviceUsingApplication(device));
+		context.put(CreditConstants.APPLICATION, device);
+	}
+	
+	
+	
 	@When("user selects secondary card for transaction")
 	public void userSelectSecondaryCardForTrasaction(){
 		//Code for saving primary device for future use

@@ -372,13 +372,16 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			clickNextButton();	
 		}	
 	}
-	private void fillAddOnProfileAndClickNext(Device device){
+
+	private void fillAddOnProfileAndClickNext(Device device) {
 		ClientDetails client = device.getClientDetails();
+
 		WebElementUtils.selectDropDownByVisibleText(addOnTitleOpt, client.getTitle());
 		WebElementUtils.enterText(addOnFirstNameTxt, client.getFirstName());
 		WebElementUtils.enterText(addOnLastNameTxt, client.getLastName());
-		WebElementUtils.selectDropDownByVisibleText(addOnGenderTxt, client.getGender());	
+		WebElementUtils.selectDropDownByVisibleText(addOnGenderTxt, client.getGender());
 		WebElementUtils.pickDate(addOnBirthCountryDate, client.getBirthDate());
+
 		clickNextButton();
 	}
 
@@ -421,18 +424,26 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		
 		ClientDetails client = device.getClientDetails();
 		WebElementUtils.selectDropDownByVisibleText(titleDDwn, client.getTitle());
-		WebElementUtils.enterText(firstNameTxt, client.getFirstName());
+		if (device.getDedupe().equals("dedupe")) {			
+			WebElementUtils.enterText(firstNameTxt, client.getDedupeFirstName());
+			WebElementUtils.enterText(lastNameTxt, client.getDedupeLastName());
+			WebElementUtils.pickDate(birthDateDPkr, client.getDedupeBithDate());
+		}
+		else{
+			WebElementUtils.enterText(firstNameTxt, client.getFirstName());
+			WebElementUtils.enterText(lastNameTxt, client.getLastName());
+			WebElementUtils.pickDate(birthDateDPkr, client.getBirthDate());
+		}
 		
 		if (client.getMiddleName1() != null) {
 			WebElementUtils.enterText(middleName1Txt, client.getMiddleName1());
 		}
 		
-		WebElementUtils.enterText(lastNameTxt, client.getLastName());
 		WebElementUtils.enterText(middleName2Txt, device.getMiddleName2());
 		WebElementUtils.enterText(encodedNameTxt, device.getEncodedName());
 		WebElementUtils.selectDropDownByVisibleText(genderDDwn, client.getGender());
 		WebElementUtils.selectDropDownByVisibleText(nationalityDDwn, client.getNationality());
-		WebElementUtils.pickDate(birthDateDPkr, client.getBirthDate());
+		
 		WebElementUtils.selectDropDownByVisibleText(maritalStatusDDwn, client.getMaritialStatus());
 		
 		if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.DEBIT)) {

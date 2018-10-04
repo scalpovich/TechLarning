@@ -104,7 +104,8 @@ public class Device {
   	private String walletCurrency;
  	private String category;
   	private String amountType;
-  	
+  	private String dedupe;
+
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
 		device.setApplicationType(provider.getString(APPLICATION_TYPE));
@@ -673,5 +674,13 @@ public class Device {
 
 	public void setAmountType(String amountType) {
 		this.amountType = amountType;
+	}
+  	
+	public String getDedupe() {
+		return dedupe;
+	}
+
+	public void setDedupe(String dedupe) {
+		this.dedupe = dedupe;
 	}
 }
