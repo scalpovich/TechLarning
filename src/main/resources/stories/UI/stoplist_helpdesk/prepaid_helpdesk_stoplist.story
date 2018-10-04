@@ -46,7 +46,7 @@ And user sign out from customer portal
 Scenario:4 Transaction - Verify that the user is able to make a successful transaction on the withdrawaing the stoplisting
 Given user is logged in institution
 When user withdraws the stoplisted device
-And user raises an authorization request
-Then status of request is declined with reason Lost
+Then user raises an authorization request
+And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
