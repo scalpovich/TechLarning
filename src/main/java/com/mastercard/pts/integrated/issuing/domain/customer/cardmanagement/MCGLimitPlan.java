@@ -18,7 +18,6 @@ public class MCGLimitPlan {
 	private static final String MCG_DAILY_RESPONSE = "MCG_DAILY_RESPONSE";
 	private static final String MCG_DAILY_VELOCITY = "MCG_DAILY_VELOCITY";
 	private static final String MCG_DAILY_VELOCITY_RESPONSE = "MCG_DAILY_VELOCITY_RESPONSE";
-	private static final String MCG_DAILY_AMOUNT_INTERNATIONAL = "DAILY_AMOUNT_INTERNATIONAL";
 	public static final String EXCEEDS_AMOUNT_LIMIT_DOMESTIC_DESCRIPTION ="MCC - Transaction amount is greater than daily amount configured at Wallet Plan level (Domestic).";
 	public static final String FREQUENCY_EXCEEDED_DOMESTIC_DESCRIPTION ="MCC - Transaction amount is greater than daily velocity configured at Wallet Plan level (Domestic).";
 	public static final String EXCEEDS_AMOUNT_LIMIT_INTERNATIONAL_DESCRIPTION ="MCC - Transaction amount is greater than daily amount configured at Wallet Plan level (International).";
@@ -81,7 +80,6 @@ public class MCGLimitPlan {
 		plan.setDailyResponse(provider.getString(MCG_DAILY_RESPONSE));
 		plan.setDailyVelocity(provider.getString(MCG_DAILY_VELOCITY));
 		plan.setDailyVelocityResponse(provider.getString(MCG_DAILY_VELOCITY_RESPONSE));
-		plan.setDailyAmountInternational(provider.getString(MCG_DAILY_AMOUNT_INTERNATIONAL));
 		return plan;
 	}
 	
