@@ -170,20 +170,6 @@ public class MID_TID_BlockingPage extends AbstractBasePage {
 	
 	public void deleteRecord(){
 		deleteFirstRecord();
-		verifyDeleteRecordAlert("Are you sure you want to delete the highlighted record?");
+		acceptPopup();
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
