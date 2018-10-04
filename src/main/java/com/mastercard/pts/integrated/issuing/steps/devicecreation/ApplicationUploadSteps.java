@@ -96,10 +96,8 @@ public class ApplicationUploadSteps {
 		{
 			fileName=fileCreation.createApplicationUploadForFileStaticVirtualCard(program.getInstitute(), customerType);
 		}
-		
 		processBatch.setJoBID(processBatchesFlows.processUploadBatches(batchName, fileName));
 		SimulatorUtilities.wait(5000);
-		
 		Assert.assertTrue(processBatchesFlows.verifyProcessUploadBatch(processBatch, fileName));
 		
 	}
@@ -126,7 +124,6 @@ public class ApplicationUploadSteps {
 
 	@When("processes $type pre-production batch")
 	public void whenProcessesPreproductionBatchForPrepaid(String type) {
-
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
 		preProductionBatch.setJobID(processBatch.getJoBID());
 		batchProcessFlows.processPreProductionBatch(preProductionBatch);
@@ -135,7 +132,6 @@ public class ApplicationUploadSteps {
 	@Then("$type processes pre-production batch using new Device")
 	@When("$type processes pre-production batch using new Device")
 	public void whenProcessesPreproductionBatchForDevice(String type) {
-
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPreProductionBatchNewDevice(preProductionBatch);
 	}
@@ -150,7 +146,6 @@ public class ApplicationUploadSteps {
 	@Then("$type processes pre-production batch using new Application for fileUpload in Bulk")
 	@When("$type processes pre-production batch using new Application for fileUpload in Bulk")
 	public void whenProcessesPreproductionBatchForDeviceUsingApplicationForFileUpload(String type) {
-
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPreProductionBatchNewApplicationFileUpload(preProductionBatch);
 	}
@@ -158,7 +153,6 @@ public class ApplicationUploadSteps {
 	@Then("$type processes pre-production batch using new Application for fileUpload in Bulk from jobid")
 	@When("$type processes pre-production batch using new Application for fileUpload in Bulk from jobid")
 	public void whenProcessesPreproductionBatchForDeviceUsingApplicationForFileUploadForPrepaid(String type) {
-
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPreProductionBatchNewApplicationFileUploadForPrepaid(preProductionBatch);
 	}
