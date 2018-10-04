@@ -1252,7 +1252,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickGoButton();
 		runWithinPopup("221 - Withdraw Device from Stop-list", () -> {
 			selectWithdrawlReason(withdrawReason);
-			selectApplyFeesChkBx(true);
+			selectApplyFeesChkBx(false);
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();
