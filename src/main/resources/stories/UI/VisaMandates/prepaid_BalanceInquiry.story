@@ -28,6 +28,7 @@ And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
 And device has "normal" status
+And user notes down available Card limit for card
 Then user sign out from customer portal
 
 Scenario: 03. Pin Generation
