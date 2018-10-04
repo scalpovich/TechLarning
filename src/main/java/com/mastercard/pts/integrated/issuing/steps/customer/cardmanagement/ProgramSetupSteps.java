@@ -36,6 +36,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCCRulePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCG;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MID_TID_Blocking;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MarketingMessageDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MarketingMessagePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PrepaidStatementPlan;
@@ -1615,6 +1616,14 @@ public class ProgramSetupSteps {
 	public void andUserEditsProgramToUpdateCountryWhiteBlackList(String editItem) {
 		program.setCountryWhiteListAndBlackListPlan(provider);
 		programSetupWorkflow.editsProgram(program,editItem);
-
+	}
+	
+	@When("user creates MID TID Blocking for combination $type")
+	public void userCreatesMIDTIDBlockingForCombination(String type){
+		MID_TID_Blocking details = MID_TID_Blocking.createWithProvider(provider);
+		programSetupWorkflow.addMID_TID_Blocking(type, details);
+		
+		
+		
 	}
 }

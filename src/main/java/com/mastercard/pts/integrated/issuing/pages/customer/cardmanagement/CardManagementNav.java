@@ -249,6 +249,7 @@ public class CardManagementNav {
 	public static final String L4_REVERSAL_TRANSACTION = "ISATO2";
 
 	public static final String L2_STOP_LIST = "ISAS00";
+	public static final String L2_MID_TID_BLOCKING = "ISAMT0";
 	public static final String L3_STOP_LIST_DEVICE = "ISAS01";
 	public static final String L3_STOP_LIST_DEVICE_RANGE = "ISAS02";
 	public static final String L3_STOP_LIST_BIN = "ISAS03";
@@ -257,6 +258,7 @@ public class CardManagementNav {
 	public static final String L3_WITHDRAW_DEVICE_RANGE = "ISAS06";
 	public static final String L3_WITHDRAW_BIN = "ISAS07";
 	public static final String L3_WITHDRAW_COUNTRY = "ISAS08";
+	
 
 	public static final String L2_LOAN = "ISAL00";
 	public static final String L3_LOAN_APPROVAL_RETAIL_TRANSACTION_TO_LOAN = "RTLS001";

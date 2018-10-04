@@ -21,6 +21,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePriorityPassIDAndCardPackIDTemplate;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCCRulePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MID_TID_Blocking;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MarketingMessagePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PrepaidStatementPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -44,6 +45,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.Devic
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DevicePriorityPassIDAndCardPackIDTemplatePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceRangePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.MCCRulePlanPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.MID_TID_BlockingPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.MarketingMessagePlanPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PrepaidStatementPlanPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProgramPage;
@@ -272,5 +274,11 @@ public class ProgramSetupWorkflow {
 	public void editsProgram(Program program,String editItem) {
 		ProgramPage page = navigator.navigateToPage(ProgramPage.class);
 		page.editsProgramForPlans(program,editItem);
+	}
+	
+	public void addMID_TID_Blocking(String combination, MID_TID_Blocking details){
+		MID_TID_BlockingPage page = navigator.navigateToPage(MID_TID_BlockingPage.class);
+	//	page.deleteRecord();
+		page.addBlockingMID_TID(combination,details);
 	}
 }
