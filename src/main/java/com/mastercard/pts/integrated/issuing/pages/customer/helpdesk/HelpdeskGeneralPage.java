@@ -1368,7 +1368,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(5000);
 		editDeviceLink.click();
 		SimulatorUtilities.wait(1000);
-		clickWhenClickable(balanceDetailsTab);
+		clickWhenClickable(currentStatusAndLimitTab);
 		SimulatorUtilities.wait(2000);
 		lst.add(Element("//span[contains(text(),'"+label+" :')]//ancestor::tr//td["+resolve(device.getCategory())+"]/span/span").getText());
 		clickEndCall();
