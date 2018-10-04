@@ -213,26 +213,25 @@ public class PreProductionBatchPage extends AbstractBasePage {
         List<String>batchNumbers=context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
 		waitForLoaderToDisappear();
 		selectDropDownByText(productTypeDDwn, batch.getProductType());
-		SimulatorUtilities.wait(8000);
+		SimulatorUtilities.wait(5000);
 		enterText(batchNumberTxt, batchNumbers.get(0));
-		SimulatorUtilities.wait(8000);
+		SimulatorUtilities.wait(3000);
 		ClickButton(searchBtn);
-		SimulatorUtilities.wait(8000);
+		SimulatorUtilities.wait(3000);
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
-		SimulatorUtilities.wait(5000);
+		SimulatorUtilities.wait(3000);
 		ClickButton(processSelectedBtn);
-		SimulatorUtilities.wait(5000);
+		SimulatorUtilities.wait(3000);
 		verifyOperationStatus();
-		SimulatorUtilities.wait(5000);
+		SimulatorUtilities.wait(3000);
 		switchToDefaultFrame();
-
 	}
 		
 	public void processPreProductionBatchNewApplicationForFileUploadForPrepaid(PreProductionBatch batch) {
 		String jobID = context.get(CreditConstants.JOB_ID);
 		waitForLoaderToDisappear();
 		selectDropDownByText(productTypeDDwn, batch.getProductType());
-		SimulatorUtilities.wait(8000);
+		SimulatorUtilities.wait(5000);
 		enterText(sourceJobIdTxt, jobID);
 		ClickButton(searchBtn);
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
@@ -240,7 +239,6 @@ public class PreProductionBatchPage extends AbstractBasePage {
 		ClickButton(processSelectedBtn);
 		verifyOperationStatus();
 		switchToDefaultFrame();
-
 	}
 
 	@Override

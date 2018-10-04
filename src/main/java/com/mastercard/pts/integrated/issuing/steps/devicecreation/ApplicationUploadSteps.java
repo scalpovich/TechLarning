@@ -1,20 +1,11 @@
 package com.mastercard.pts.integrated.issuing.steps.devicecreation;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.HashMap;
-
-import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.jcraft.jsch.Logger;
-
-import static org.junit.Assert.assertThat;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
@@ -35,7 +26,6 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProcessBatchesFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.SearchApplicationDetailsFlows;
-import org.hamcrest.core.*;
 
 @Component
 public class ApplicationUploadSteps {
@@ -127,7 +117,6 @@ public class ApplicationUploadSteps {
 		CustomUtils.ThreadDotSleep(5000);
 		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(processBatch, fileName));
 	}
-	
 
 	@Then("The file will process the records successfully if all the all the business mandatory field are configured in file")
 	public void verifyApplicationFileUpload() {

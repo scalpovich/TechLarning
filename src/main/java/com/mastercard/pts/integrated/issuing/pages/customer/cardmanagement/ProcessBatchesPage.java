@@ -25,7 +25,6 @@ import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.BatchType;
-import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
@@ -35,7 +34,6 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
-import com.mastercard.pts.integrated.issuing.utils.DatabaseUtils;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
@@ -166,7 +164,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private MCWebElement processBatchjobIDTxt;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "*//td[@width='150px']/span[@class='labeltextf']")
-	private MCWebElement processBatchjobIDTxtPath;
+	private MCWebElement processBatchjobIDPathTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='dispTraceLink']/a")
 	private MCWebElement tracesLink;
@@ -191,6 +189,12 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private static final int NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE=100;
 	
 	private String reasonToReject = "";
+	
+	Boolean isProcess = false;
+	
+	private String failStatus = "FAILED [3]";
+	
+	private String successStatus = "SUCCESS [2]";
 
 	public void selectBatchType(String option) {
 		selectByVisibleText(batchTypeDDwn, option);
@@ -471,17 +475,11 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	public void processKYCDownloadBatch(ProcessBatches batch) {
 		selectDownloadBatch(batch);
-
 		WebElementUtils.enterText(cardHolderKycFromDateHHTxtBx, "00");
-
 		WebElementUtils.enterText(cardHolderKycFromDateMMTxtBx, "00");
-
 		WebElementUtils.enterText(cardHolderKycToDateHHTxtBx, "23");
-
 		WebElementUtils.enterText(cardHolderKycToDateMMTxtBx, "00");
-
 		submitAndVerifyBatch();
-
 	}
 
 	public void submitAndVerifyBatch() {
@@ -514,10 +512,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	public void statementDownloadBatch(ProcessBatches batch) {
 		selectDownloadBatch(batch);
-
 		WebElementUtils.pickDate(fromDateTxt, LocalDate.now().minusDays(2));
 		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
-
 		submitAndVerifyBatch();
 	}
 
@@ -603,13 +599,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	
 	public boolean processBatchUpload(ProcessBatches processBatchesDomain, String fileName){
 		FileCreation.filenameStatic = fileName;
-		Boolean isProcessed = true;
-		String failStatus = "FAILED [3]";
-		String elementXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic);
-		String statusXpath = elementXpath + "//parent::td//following-sibling::td/a";
+		String statusXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic) + "//parent::td//following-sibling::td/a";
 		SimulatorUtilities.wait(20000);
 		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
-		
 		SimulatorUtilities.wait(5000);//this delay is for table to load data 
 		runWithinPopup("View Batch Details", () -> {
 			logger.info("Retrieving batch status");
@@ -618,7 +610,11 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			batchStatus = batchStatusTxt.getText();
 			processBatchesDomain.setJoBID(processBatchjobIDTxt.getText());
 			SimulatorUtilities.wait(5000);
-			if(batchStatus.equals(failStatus)){
+			if(batchStatus.equalsIgnoreCase(successStatus)){
+				isProcess = true;
+			}
+			else if(batchStatus.equals(failStatus)){
+				isProcess = true;
 				SimulatorUtilities.wait(5000);
 				ClickButton(rejectedTxt);
 				SimulatorUtilities.wait(5000);
@@ -634,9 +630,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		MiscUtils.reportToConsole("JobID: {}", processBatchesDomain.getJoBID());
 		context.put(CreditConstants.JOB_ID, processBatchesDomain.getJoBID());
 		waitForWicket(driver());
-		getFinder().getWebDriver().switchTo().defaultContent();
-		return isProcessed;
-		
+		return isProcess;
 	}
 	
 	public String visaOutgoingDownloadBatch(ProcessBatches batch) {
