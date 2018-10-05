@@ -52,7 +52,7 @@ When user processes EOD-Credit system internal batch for Credit
 And user verify Unbilled amount for Purchase category
 And user sign out from customer portal
 
-Scenario:1.5 Login & Logout to wait for date to be updated 
+Scenario:1.5 Bump next month and Login & Logout to wait for date to be updated 
 Meta:
 @TestId 
 When update institution date to first of next month
@@ -89,7 +89,7 @@ Then validate the statement with parameters:
 |Closing Balance|
 And user sign out from customer portal
 
-Scenario: 1.7 Login & Logout to wait for date to be updated for next billing cycle
+Scenario: 1.7 Bump next month and Login & Logout to wait for date to be updated 
 Meta:
 @TestId 
 When update institution date to first of next month
@@ -129,7 +129,7 @@ Then validate the statement with parameters:
 |Closing Balance|
 And user sign out from customer portal
 
-Scenario: 1.9 Login & Logout to wait for date to be updated for next billing cycle
+Scenario: 1.9 Bump next month and Login & Logout to wait for date to be updated 
 Meta:
 @TestId 
 When update institution date to first of next month
@@ -148,10 +148,7 @@ When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
 And user verify Unbilled amount for Purchase category
 And user processes Billing Process - Credit system internal batch for Credit
-!-- And user verify Billed amount for Purchase category
-!-- And user verify Billed amount for Fee category
 And user verify Billed amount for Interest category
-And user verify Amount amount for Unpaid1 category
 And user verify Amount amount for Unpaid2 category
 And device has "normal" status
 And user notes down required values from helpdesk for credit

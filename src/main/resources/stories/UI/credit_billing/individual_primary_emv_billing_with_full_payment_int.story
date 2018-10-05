@@ -52,7 +52,7 @@ When user processes EOD-Credit system internal batch for Credit
 And user verify Unbilled amount for Purchase category
 And user sign out from customer portal
 
-Scenario:1.5 Login & Logout to wait for date to be updated 
+Scenario:1.5 Bump next month and Login & Logout to wait for date to be updated 
 Meta:
 @TestId 
 When update institution date to first of next month
@@ -90,7 +90,7 @@ Then validate the statement with parameters:
 |Closing Balance|
 And user sign out from customer portal
 
-Scenario:1.7 Verify User is able to make Payment of credit card through cash mode after billing cycle
+Scenario:1.7 Bump next day to make bill payment
 Meta:
 @PaymentCash
 When update institution date to next days
