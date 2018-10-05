@@ -588,7 +588,12 @@ public class TransactionSteps {
 	public void userCreatesMIDTIDBlockingForCombination(String type){
         midtidBlocking = MID_TID_Blocking.createWithProvider(provider);
 		transactionWorkflow.addMID_TID_Blocking(type, midtidBlocking);
-		
+	}
+	
+	@When("user deletes MID TID Blocking combination")
+	public void userCreatesMIDTIDBlockingForCombination(){
+        midtidBlocking = MID_TID_Blocking.createWithProvider(provider);
+		transactionWorkflow.deleteMID_TID_Blocking();
 	}
 
  private void setDEElementsForMIDTID (Transaction transactionData)
