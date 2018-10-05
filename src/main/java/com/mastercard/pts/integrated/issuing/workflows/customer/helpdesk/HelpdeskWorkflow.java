@@ -216,4 +216,9 @@ public class HelpdeskWorkflow {
 		helpDeskPage.getDeviceStatus(device);
 		return helpDeskPage.verifyBillingDetails(device);
 	}
+	
+	public String getDeclineCode(Device device, String rrnNumber){
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		return helpDeskPage.getDeclineCodeForTransaction(device, rrnNumber);
+	}
 }

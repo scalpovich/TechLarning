@@ -861,4 +861,12 @@ public class HelpDeskSteps {
 		device.setAmountType(amount);
 		assertThat(category +" "+ amount +BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device), equalTo(transactionAmount));
 	}
+	
+	
+	@Then("verify Decline code for Transaction $declineCode on helpdesk page for product $product")
+	public void verifyDeclineCodeOnTransactiOnHelpdeskPage(String declineCode,String product){
+		Device device = context.get(ContextConstants.DEVICE);
+		String rrnNumber = context.get(ConstantData.RRN_NUMBER);
+		assertThat("Verify Decline Code for Transaction", declineCode, equalTo(helpdeskWorkflow.getDeclineCode(device, rrnNumber)));
+	}
 }
