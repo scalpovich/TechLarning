@@ -90,6 +90,10 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 		case "expired":
 			declineMessage = Constants.REPLACE_DECLINE_MESSAGE_EXPIRED;
 			break;
+
+		case "Not delivered":
+			declineMessage = Constants.REPLACE_DECLINE_MESSAGE_NOT_DELIVERED;
+			break;
 		default:
 			break;
 		}

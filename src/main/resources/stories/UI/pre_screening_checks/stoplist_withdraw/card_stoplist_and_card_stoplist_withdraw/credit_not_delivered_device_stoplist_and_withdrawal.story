@@ -32,8 +32,7 @@ And for Primary Device and New Client user fills Device Range section for credit
 And credit device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
-And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-Then embossing file batch was generated in correct format
+Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 And user sign out from customer portal
 
 Scenario:2 To Verify that the user can stoplist credit device from stoplist screen
@@ -43,12 +42,12 @@ And user edits deviceplan and enables stoplist flag
 And device has "lost" status
 Then user sign out from customer portal
 
-Scenario:3 Transaction - Verify that the transaction declines with appropriate response for stoplisting
+Scenario:3 Transaction - Verify that the transaction declines with appropriate response for not delivered
 Given user is logged in institution
 When user raises an authorization request
-And status of request is declined with reason Lost
-And search Purchase authorization and verify 208-LOST CARD, PICK-UP status
-Then assert Capture response with 70053 AuthDecline Code and Card Status is Lost with Capture Response as description
+And status of request is declined with reason Not delivered
+And search Purchase authorization and verify 111-Invalid card number status
+Then assert Decline response with 20002 AuthDecline Code and Device is not delivered. as description
 And user sign out from customer portal
 
 Scenario:4 To Verify that the user can withdraw stoplist credit device from stoplist screen
@@ -57,9 +56,11 @@ When user withdraws a card from withdraw device screen
 And device has "normal" status
 Then user sign out from customer portal
 
-Scenario:5 Transaction - Verify that the user is able to make a successful transaction on the withdrawaing the stoplisting
+Scenario:5 Transaction - Verify that the transaction declines on the withdrawing the stoplisting of not activated card
 Given user is logged in institution
 When user raises an authorization request
-Then search Purchase authorization and verify 000-Successful status
+And status of request is declined with reason Not delivered
+And search Purchase authorization and verify 111-Invalid card number status
+Then assert Decline response with 20002 AuthDecline Code and Device is not delivered. as description
 And user sign out from customer portal
 
