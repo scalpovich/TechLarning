@@ -160,7 +160,7 @@ public class DeviceUsagePage extends AbstractBasePage {
 		deviceUsage.setDailyAmountDomesticUtilized(getCellTextByColumnName(rowNumber, DAILY_AMOUNT_DOMESTIC_UTILIZED));
 		deviceUsage.setDailyVelocityDomesticUtilized(getCellTextByColumnName(rowNumber, DAILY_VELOCLITY_DOMESTIC_UTILIZED));
 		deviceUsage.setDailyAmountIntenationalUtilized( getCellTextByColumnName(rowNumber, DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
-		deviceUsage.setDailyVelocityDomesticUtilized(getCellTextByColumnName(rowNumber, DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
+		deviceUsage.setDailyVelocityIntenationalUtilized(getCellTextByColumnName(rowNumber, DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
         deviceUsage.setPeriodAmountDomesticUtilized(getCellTextByColumnName(rowNumber,PERIOD_AMOUNT_DOMESTIC_UTILIZED));
         deviceUsage.setPeriodVelocityDomesticUtilized(getCellTextByColumnName(rowNumber,PERIOD_VELOCLITY_DOMESTIC_UTILIZED));
         deviceUsage.setPeriodAmountIntenationalUtilized(getCellTextByColumnName(rowNumber,PERIOD_AMOUNT_INTERNATIONAL_UTILIZED));
