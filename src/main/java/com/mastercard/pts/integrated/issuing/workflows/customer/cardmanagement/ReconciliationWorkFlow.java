@@ -67,7 +67,7 @@ public class ReconciliationWorkFlow {
 		return getReportContent(fileName,transactionReports);
 		//return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
 	}
-		
+			
 	public boolean verifyReportGenerationClearing() {
 		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
 		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();

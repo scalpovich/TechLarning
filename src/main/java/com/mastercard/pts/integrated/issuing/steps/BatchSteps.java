@@ -27,6 +27,7 @@ import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
 
 @Component
 public class BatchSteps {
@@ -51,6 +52,9 @@ public class BatchSteps {
 	
 	@Autowired
 	private FileCreation fileCreation;
+	
+	@Autowired
+	private LoadFromFileUploadWorkflow loadFromFileUploadWorkflow;
 	
 	@When("embossing file batch was generated in correct format")
 	@Then("embossing file batch was generated in correct format")
@@ -137,7 +141,7 @@ public class BatchSteps {
 			MiscUtils.renamePinFile(batchFile.toString());
 			MiscUtils.reportToConsole("******** Pin Offset Completed ***** ");
 		} catch (NullPointerException | FileNotFoundException e) {
-			MiscUtils.reportToConsole("getPinFileData Exception :  " + e.toString());
+			MiscUtils.reportToConsole("getPinFileData Exception :/  " + e.toString());
 			if (e.getLocalizedMessage().contains("NullPointerException")) {
 				device.setPinOffset("pin not retrieved");
 				MiscUtils.reportToConsole("Pin Offset :  " + "pin not retrieved");
@@ -146,8 +150,8 @@ public class BatchSteps {
 		}
 	}
 	
-	@When("Pin Offset file was updated with $type pin acknowledgement")
-	@Then("Pin Offset file was updated with $type pin acknowledgement")
+	@When("Pin Offset file was updated with $acknowledgementType pin acknowledgement")
+	@Then("Pin Offset file was updated with $acknowledgementType pin acknowledgement")
 	public void updatePinOffsetFileWithPinAcknowledgement(String acknowledgementType) throws IOException 
 	{
 	
@@ -160,16 +164,42 @@ public class BatchSteps {
 		
 		String wholeDataToAppend = "\t" + ackIndicator + StringUtils.rightPad(DateUtils.getDateddMMyyyy(), 208, "0");
 		fileCreation.appendContentsToFile(batchFile,wholeDataToAppend);
-		
-
 	}
 	
+	@When("User updates the new pin offset file with $acknowledgementType pin acknowledgement")
+	@Then("User updates the new pin offset file with $acknowledgementType pin acknowledgement")
+	public void updateTheNewPinOffsetFileWithPinAcknowledgement(String acknowledgementType) throws IOException 
+	{
+		String ackIndicator = "";
+		if(acknowledgementType.equalsIgnoreCase("positive"))
+			ackIndicator = "Y";
+		else
+			ackIndicator = "N";
+		
+		String wholeDataToAppend = "\t" + ackIndicator + StringUtils.rightPad(DateUtils.getDateddMMyyyy(), 208, "0");
+		String batchFile = tempDirectory.toString()+ "\\" +fileCreation.getNewPinOffsetFile(tempDirectory.toString());
+		
+		context.put("PIN_OFFSET_FILE", batchFile);
+		MiscUtils.renamePinFile(batchFile.toString());
+		fileCreation.appendContentsToFile(batchFile+"_PinFile", wholeDataToAppend);
+	}
+	
+	@When("User deletes existing pin offset files")
+	@Then("User deletes existing pin offset files")
+	public void deleteExistingPinOffsetFiles()
+	{
+		MiscUtils.deleteExistingFile(context.get("PIN_OFFSET_FILE"));
+		logger.info("Deleted File : {}" , context.get("PIN_OFFSET_FILE").toString()); 
+		
+		MiscUtils.deleteExistingFile(context.get("PIN_OFFSET_FILE")+"_PinFile");	
+		logger.info("Deleted File:{}" , (context.get("PIN_OFFSET_FILE")+"_PinFile").toString()); 
+	}
 	
 	@SuppressWarnings("unused")
 	private String getHeaderPattern() {
 		return provider.getString("BATCH_HEADER_PATTERN", DEFAULT_HEADER);
 	}
-
+	
 	@SuppressWarnings("unused")
 	private String getTrailerPattern() {
 		return provider.getString(" BATCH_TRAILER_PATTERN", DEFAULT_TRAILER);

@@ -189,4 +189,10 @@ public class MiscUtils {
 		String env = System.getProperty("env").toString();
 		return env;
 	}
+	
+	public static boolean deleteExistingFile(String fileName)
+	{
+		File file = new File(fileName);
+		return (file.delete());
+	}
 }

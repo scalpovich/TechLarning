@@ -201,7 +201,6 @@ public abstract class LinuxUtils {
 		Thread.sleep(60000); // long sleep as file permission cron job runs every minute
 	}
 
-	
 	public static void downloadFileViaScp(RemoteConnectionDetails connectiondetails, String remoteDir,
 			String localsource) throws InterruptedException  {
 

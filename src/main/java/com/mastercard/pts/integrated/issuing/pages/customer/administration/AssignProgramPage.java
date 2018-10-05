@@ -10,6 +10,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Prog
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -42,7 +43,8 @@ public class AssignProgramPage extends AbstractBasePage {
 				"Add SR Visibility at Program Level",
 				() -> {
 					WebElementUtils.selectDDByVisibleText(programDDwn, program.getProgramCodeDevice());
-					WebElementUtils .selectAllOptionsInListBox(availableServiceCodeLstBx);
+					SimulatorUtilities.wait(2000);
+					WebElementUtils.selectAllOptionsInListBox(availableServiceCodeLstBx);
 					addServiceCodeBtn.click();
 					clickSaveButton();
 					canceled.set(verifyAlreadyExistsAndClickCancel());

@@ -72,7 +72,6 @@ public class DeviceTrackingPage extends AbstractBasePage {
 			clickWhenClickable(pinCarierDetailsTab);
 			SimulatorUtilities.wait(1000);
 			carrierStatus = carrierStatusTxt.getText();
-			logger.info("STATUS---------------> {} ", carrierStatus);
 			clickCloseButton();
 		});
 		
