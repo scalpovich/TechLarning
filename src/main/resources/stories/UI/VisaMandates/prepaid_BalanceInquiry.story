@@ -28,7 +28,6 @@ And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
 And device has "normal" status
-!-- And user notes down available Card limit for card
 Then user sign out from customer portal
 
 Scenario: 03. Pin Generation
@@ -48,10 +47,3 @@ When verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 And user sign out from customer portal
 Then VISA simulator is closed
-
-!-- Scenario: 05. Calculate fees and available balance
-!-- Given user is logged in institution
-!-- When verify fixed transaction fee applied on purchase transaction
-!-- And user verifies available balance after transaction
-!-- Then user sign out from customer portal
-

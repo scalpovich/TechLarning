@@ -33,11 +33,8 @@ Given connection to VISA is established
 When perform an POS-Retail-AccountFund_with_Pin VISA transaction
 And VISA test results are verified for POS-Retail-AccountFund_with_Pin
 And search E-Commerce Transaction* authorization and verify 000-Successful status
-And user sign out from customer portal
-Then VISA simulator is closed
-
-Scenario: 04. Calculate fees and available Balance
-Given user is logged in institution
 When verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
 Then user sign out from customer portal
+And user sign out from customer portal
+Then VISA simulator is closed

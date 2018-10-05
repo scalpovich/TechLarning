@@ -41,11 +41,7 @@ Given connection to VISA is established
 When perform an POS-Retail-Magstripe-returns-of-goods_with_Pin VISA transaction
 When VISA test results are verified for POS-Retail-Magstripe-returns-of-goods_with_Pin
 And search Refund authorization and verify 000-Successful status
-And user sign out from customer portal
-Then VISA simulator is closed
-
-Scenario: 05. Calculate fees and available balance
-Given user is logged in institution
 When verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
-Then user sign out from customer portal
+And user sign out from customer portal
+Then VISA simulator is closed

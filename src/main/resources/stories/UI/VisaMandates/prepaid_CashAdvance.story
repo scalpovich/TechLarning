@@ -41,11 +41,7 @@ Given connection to VISA is established
 When perform an POS-Magstripe-CashAdvance_with_Pin VISA transaction
 And VISA test results are verified for POS-Magstripe-CashAdvance_with_Pin
 And search Cash Advance/ Cash @ POS / Cash Out authorization and verify 000-Successful status
-And user sign out from customer portal
-Then VISA simulator is closed
-
-Scenario: 05. Calculate fees and available Balance
-Given user is logged in institution
 When verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
-Then user sign out from customer portal
+And user sign out from customer portal
+Then VISA simulator is closed

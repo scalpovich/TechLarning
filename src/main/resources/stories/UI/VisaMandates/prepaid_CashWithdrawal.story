@@ -41,11 +41,7 @@ Given connection to VISA is established
 When perform an POS_Retail_Magstripe_cash_withdrawal_with_Pin VISA transaction
 And VISA test results are verified for POS_Retail_Magstripe_cash_withdrawal_with_Pin
 And search CWD authorization and verify 000-Successful status
-And user sign out from customer portal
-Then VISA simulator is closed
-
-Scenario: 05. Calculate fees and available balance
-Given user is logged in institution
 When verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
-Then user sign out from customer portal
+And user sign out from customer portal
+Then VISA simulator is closed
