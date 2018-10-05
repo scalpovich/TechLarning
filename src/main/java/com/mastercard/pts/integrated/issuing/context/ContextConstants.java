@@ -51,11 +51,25 @@ public class ContextConstants {
 	public static final String CARD_CREDIT_LIMIT = "CARD_CREDIT_LIMIT";
 	
 	public static final String AVAILABLE_BALANCE_OR_CREDIT_LIMIT = "AVAILABLE_BALANCE_OR_CREDIT_LIMIT";
+	
+	public static final String AVAILABLE_ACCOUNT_OR_CREDIT_LIMIT = "AVAILABLE_ACCOUNT_OR_CREDIT_LIMIT";
+	
+	public static final String AVAILABLE_CLIENT_OR_CREDIT_LIMIT = "AVAILABLE_CLIENT_OR_CREDIT_LIMIT";
+	
+	public static final String AVAILABLE_CLIENT = "AVAILABLE_CLIENT";
+	
+	public static final String AVAILABLE_ACCOUNT = "AVAILABLE_ACCOUNT";
+	
+	public static final String AVAILABLE_CARD = "AVAILABLE_CARD";
+	
+	public static final String CREDIT_TEMP_LIMIT = "CREDIT_TEMP_LIMIT";
+	
+	public static final String CREDIT_PER_LIMIT = "CREDIT_PER_LIMIT";
 
 	public static final String INTERNATIONAL = "international";
 	
 	public static final String DOMESTIC = "domestic";
-	
+
 	public static final String DEVICE_RANGE = "DEVICE_RANGE";
 	
 	public static final String ALL_DEVICE_NUMBERS = "ALL_DEVICE_NUMBERS";
@@ -99,6 +113,8 @@ public class ContextConstants {
 	public static final String HELPDESK_VALUES = "HELPDESK_VALUES";
 	
 	public static final String INST_PROPERTY = "institution";
+	
+	public static final String CREDIT_LIMIT_AFTER_SR = "CREDIT_LIMIT_AFTER_SR";
 	
 	private ContextConstants() {
 	}
