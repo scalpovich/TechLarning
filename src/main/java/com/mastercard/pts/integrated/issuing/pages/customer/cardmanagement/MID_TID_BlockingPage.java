@@ -156,7 +156,7 @@ public class MID_TID_BlockingPage extends AbstractBasePage {
 	}
 
 	public void addBlockingMID_TID(String combination, MID_TID_Blocking details){
-		logger.info("Create Blocking combination for case {} " , combination);
+		logger.info("Create MID TID Blocking combination for case {} " , combination);
 		clickAddNewButton();
 		runWithinPopup( "Add Blocking MID TID",
 				() -> {
