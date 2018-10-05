@@ -70,7 +70,6 @@ public class AdjustmentTransactionPage extends AbstractBasePage {
 		logger.info("Create Adjustment Transaction: {}",
 				transaction.getVoucherNumber());
 		clickAddNewButton();
-		SimulatorUtilities.wait(2000);
 		runWithinPopup(
 				"Add Adjustment Transaction",
 				() -> {
