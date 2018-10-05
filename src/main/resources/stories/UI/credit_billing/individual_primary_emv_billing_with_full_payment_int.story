@@ -139,9 +139,9 @@ And user processes Billing Process - Credit system internal batch for Credit
 And device has "normal" status
 And user notes down required values from helpdesk for credit
 When user check balance details through helpdesk after billing
-Then user compare balance details after billing
 When user run Statement Extract system internal batch
 And verify statement file is successfully downloaded
+Then user compare balance details after billing
 Then validate the statement with parameters:
 |parameters|
 |Credit Card Number|

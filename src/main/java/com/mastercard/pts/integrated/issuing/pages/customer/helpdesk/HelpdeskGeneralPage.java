@@ -1315,6 +1315,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 	public void compareBalanceDetailsPostPayments(String payment) {
+		double sum = 0.00;
 		Map<String, String> afterPaymentBilled = context.get("afterpaymentBilled");
 		Map<String, String> afterPaymentUnbilled = context.get("afterpaymentUnbilled");
 		Map<String, String> afterPaymentOutstanding = context.get("afterpaymentOutstanding");
@@ -1322,12 +1323,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		Map<String, String> beforePaymentUnbilled = context.get("beforepaymentUnbilled");
 		Map<String, String> beforePaymentOutstanding = context.get("beforepaymentOutstanding");
 		if (payment.equalsIgnoreCase("after full payment")) {
-			double sum = 0.00;
+
 			for (Entry<String, String> set : beforePaymentOutstanding.entrySet()) {
 				sum = sum + Double.valueOf(set.getValue());
 				set.setValue(String.valueOf(Double.valueOf(set.getValue()) - Double.valueOf(set.getValue())));
 			}
-			beforePaymentUnbilled.replace("UnbilledPayment", String.valueOf(sum));
+			beforePaymentUnbilled.replace("UnbilledPayment", String.format("%.2f", sum));
 			compareMaps(beforePaymentBilled, afterPaymentBilled);
 			compareMaps(beforePaymentUnbilled, afterPaymentUnbilled);
 			compareMaps(beforePaymentOutstanding, afterPaymentOutstanding);
@@ -1336,12 +1337,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			Map<String, String> afterBillingBilled = context.get("afterbillingBilled");
 			Map<String, String> afterBillingUnbilled = context.get("afterbillingUnbilled");
 			Map<String, String> afterBillingOutstanding = context.get("afterbillingOutstanding");
-			double sum = 0.00;
 			for (Entry<String, String> set : afterPaymentUnbilled.entrySet()) {
 				sum = sum + Double.valueOf(set.getValue());
 				set.setValue(String.valueOf(Double.valueOf(set.getValue()) - Double.valueOf(set.getValue())));
 			}
-			afterPaymentBilled.replace("BilledPayment", String.valueOf(sum));
+			afterPaymentBilled.replace("BilledPayment", String.format("%.2f", sum));
 			compareMaps(afterPaymentBilled, afterBillingBilled);
 			compareMaps(afterPaymentUnbilled, afterBillingUnbilled);
 			compareMaps(afterPaymentOutstanding, afterBillingOutstanding);
@@ -1354,7 +1354,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			String keyFromFirstMap = (String) m.getKey();
 			String valueFromFirstMap = (String) m.getValue();
 			String valueFromSecondMap = expectedMap.get(keyFromFirstMap);
-			logger.info("Comparing values-> ", keyFromFirstMap + ": Expected:" + valueFromFirstMap,
+			logger.info("Comparing values-> "+keyFromFirstMap + ": Expected:" + valueFromFirstMap,
 					": Actual:" + valueFromSecondMap);
 			if (!valueFromSecondMap.equals(valueFromFirstMap)) {
 				Assert.assertEquals("Failed in Comparing at ", keyFromFirstMap + ": Expected:" + valueFromFirstMap,
