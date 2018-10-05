@@ -65,7 +65,7 @@ And user signs out from customer portal
 
 Scenario: Post maintenance batch and pre-clearing batch is run
 Given user is logged in institution
-When post maintenence batch is run
+When post maintenance batch is run
 Then "Pre-clearing" batch for prepaid is successful
 And user signs out from customer portal
 

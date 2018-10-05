@@ -649,10 +649,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		selectInternalBatchType(batch.getBatchName());
 		if(batch.getBatchName().equalsIgnoreCase("Pre-clearing"))
 			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-	
 	}
 
-	public String processSystemInternalProcessingBatchPostMaintenence(ProcessBatches batch) {
+	public String processSystemInternalProcessingBatchPostMaintenance(ProcessBatches batch) {
 		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
 		Date todayDate;
 		Date dateFromUI;

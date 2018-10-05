@@ -41,6 +41,7 @@ public class DistributionSteps {
 		context.put(ContextConstants.DISPATCH, dispatch);
 	}
 	
+	@When("dispatch is successful")
 	@Then("dispatch is successful")
 	public void thenDispatchIsSuccessful(){
 		assertThat("Order Creation Failed", distributionWorkflow.getCardPackIdCreationMessage(), containsString(CARD_PACKID_CREATION_MESSAGE));

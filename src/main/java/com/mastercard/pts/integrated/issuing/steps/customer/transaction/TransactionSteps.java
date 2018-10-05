@@ -490,15 +490,15 @@ public class TransactionSteps {
 	
 	@When("user performs load balance request for Joining and Membership plan")
 	public void whenUserPerformsLoadBalanceRequestforJoiningandMemberShipPlan() {
-		Device device= new Device();
+		Device device = context.get(ContextConstants.DEVICE);
 		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
-		System.out.println(device);
 		LoadBalanceRequest lbr = LoadBalanceRequest.getProviderData(provider);
 		String loadRequestReferenceNumber = transactionWorkflow.performLoadBalanceRequestAndGetRequestReferenceNumber(device, lbr);
 		lbr.setLoadRequestReferenceNumber(loadRequestReferenceNumber);
 		context.put("LOADBALANCEREQUEST", lbr);
 	}
 
+	@When("load balance request is successful")
 	@Then("load balance request is successful")
 	public void thenLoadBalanceRequestIsSuccessful() {
 		assertThat("Load Balance Request Failed", transactionWorkflow.getLoadBalanceRequestSuccessMessage(), containsString("Load balance request forwarded for approval with request number :"));
@@ -511,6 +511,7 @@ public class TransactionSteps {
 		transactionWorkflow.performLoadBalanceApprove(device, lbr);
 	}
 
+	@When("load balance approve is successful")
 	@Then("load balance approve is successful")
 	public void thenLoadBalanceApproveIsSuccessful() {
 		assertThat("Load Balance Approve Failed", transactionWorkflow.getLoadBalanceApproveSuccessMessage(), containsString("approved successfully."));
