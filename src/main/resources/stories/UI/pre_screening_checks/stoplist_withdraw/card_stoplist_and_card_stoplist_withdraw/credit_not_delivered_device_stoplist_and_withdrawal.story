@@ -39,14 +39,14 @@ And credit processes deviceproduction batch using new Device for Supplementary
 Then device has "normal" status
 And user sign out from customer portal
 
-Scenario:2 To Verify that the user can stoplist credit device from stoplist screen
+Scenario:3 To Verify that the user can stoplist credit device from stoplist screen
 Given user is logged in institution
 When user stoplists a card from stoplist device screen
 And user edits deviceplan and enables stoplist flag
 And device has "lost" status
 Then user sign out from customer portal
 
-Scenario:3 Transaction - Verify that the transaction declines with appropriate response for not delivered
+Scenario:4 Transaction - Verify that the transaction declines with appropriate response for not delivered
 Given user is logged in institution
 When user raises an authorization request
 And status of request is declined with reason Not delivered
@@ -54,13 +54,13 @@ And search Purchase authorization and verify 111-Invalid card number status
 Then assert Decline response with 20002 AuthDecline Code and Device is not delivered. as description
 And user sign out from customer portal
 
-Scenario:4 To Verify that the user can withdraw stoplist credit device from stoplist screen
+Scenario:5 To Verify that the user can withdraw stoplist credit device from stoplist screen
 Given user is logged in institution
 When user withdraws a card from withdraw device screen
 And device has "normal" status
 Then user sign out from customer portal
 
-Scenario:5 Transaction - Verify that the transaction declines on the withdrawing the stoplisting of not activated card
+Scenario:6 Transaction - Verify that the transaction declines on the withdrawing the stoplisting of not activated card
 Given user is logged in institution
 When user raises an authorization request
 And status of request is declined with reason Not delivered

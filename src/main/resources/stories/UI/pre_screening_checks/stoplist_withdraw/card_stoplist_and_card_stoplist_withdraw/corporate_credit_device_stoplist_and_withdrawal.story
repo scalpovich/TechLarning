@@ -47,7 +47,7 @@ When user withdraws a card from withdraw device screen
 And device has "normal" status
 Then user sign out from customer portal
 
-Scenario:4 Transaction - Verify that the user is able to make a successful transaction on the withdrawaing the stoplisting
+Scenario:6 Transaction - Verify that the user is able to make a successful transaction on the withdrawaing the stoplisting
 Given user is logged in institution
 When user raises an authorization request
 And search Purchase authorization and verify 000-Successful status
