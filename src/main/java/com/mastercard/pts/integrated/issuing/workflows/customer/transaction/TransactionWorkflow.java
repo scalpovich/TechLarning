@@ -1797,7 +1797,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			setValueInMessageEditorForTransction("F52", transactionName, device.getPinNumberForTransaction());
 		}
 		if(transaction.toLowerCase().contains("ECOM")) {
-			setValueInMessageEditorForTransction("F126.10", transactionName, (MiscUtils.randomNumber(3) + device.getCvv2Data()));	
+			setValueInMessageEditorForTransction("F126.10", transactionName, ("11" + " "+ device.getCvv2Data()));	
 		}
 		captureSaveScreenShot(methodName);
 		executeVisaTest(transactionName);
