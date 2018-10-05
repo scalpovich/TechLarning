@@ -30,9 +30,13 @@ And User fills MCC Rules for credit product
 And User Primary Device fills New Program Retail Credit Card section for credit product for Mastercard
 And for Primary Device and New Client user fills Device Range section for credit product
 And credit device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
-And credit processes pre-production batch using new Device
+Then user sign out from customer portal
+
+Scenario:2 Card boarding batches - credit
+Given user is logged in institution
+When credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
-Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+Then device has "normal" status
 And user sign out from customer portal
 
 Scenario:2 To Verify that the user can stoplist credit device from stoplist screen
