@@ -27,10 +27,11 @@ And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
 And device has "normal" status
+And embossing file batch was generated in correct format
 
 Scenario: 03. Transaction - Balance_Enquiry transaction
 Given connection to VISA is established
-When perform an POS-Retail-ECOM_with_Pin VISA transaction
+When perform an POS-Retail-ECOM VISA transaction
 And VISA test results are verified for POS-Retail-ECOM
 And search E-Commerce  Transaction* authorization and verify 000-Successful status
 When verify fixed transaction fee applied on purchase transaction
