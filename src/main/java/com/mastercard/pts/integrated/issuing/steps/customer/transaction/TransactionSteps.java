@@ -30,6 +30,7 @@ import com.mastercard.pts.integrated.issuing.domain.agent.channelmanagement.Assi
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MID_TID_Blocking;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.AuthorizationTransactionFactory;
@@ -82,12 +83,19 @@ public class TransactionSteps {
 
 	@Autowired
 	private VisaTestCaseNameKeyValuePair visaTestCaseNameKeyValuePair;
+	
+	@Autowired
+	private MID_TID_Blocking midtidBlocking;
 
 	private String authFilePath;
 
 	private String arnNumber;
 
 	private String transactionAmount = "20.00";
+
+	private boolean midTidFlag=false;
+
+	private String midTidCombination;
 
 	private static String PASS_MESSAGE = "Transaction is succcessful!  - Expected Result : ";
 
@@ -238,6 +246,10 @@ public class TransactionSteps {
 			transactionData.setDeKeyValuePairDynamic("004", "000000000000");
 		}
 
+		if (midTidFlag==true)
+		{
+		    setDEElementsForMIDTID(transactionData);
+		}
 		// changed ECOMMERCE to ECOM
 		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") || transactionWorkflow.isContains(transaction, "ASI_") || transactionWorkflow.isContains(transaction, "MMSR")
 				|| transactionWorkflow.isContains(transaction, ConstantData.THREE_D_SECURE_TRANSACTION)) {
@@ -565,4 +577,62 @@ public class TransactionSteps {
 		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
 		context.put(ContextConstants.DEVICE, device);
 	}
+
+	@When("User set MID_TID flag $type and MID_TID Combination $type")
+	public void userSetMIDTIDFlagAndCaseValue(boolean midTidFlag, String midTidCombination) {
+		this.midTidFlag = midTidFlag;
+		this.midTidCombination = midTidCombination;
+	}
+	
+	@When("user creates MID TID Blocking for combination $type")
+	public void userCreatesMIDTIDBlockingForCombination(String type){
+        midtidBlocking = MID_TID_Blocking.createWithProvider(provider);
+		transactionWorkflow.addMID_TID_Blocking(type, midtidBlocking);
+		
+	}
+
+ private void setDEElementsForMIDTID (Transaction transactionData)
+ {
+	 switch(midTidCombination){
+		case "1" :
+			transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
+			transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
+			break;
+		case "2" :
+			transactionData.setDeKeyValuePairDynamic("019", midtidBlocking.getAcquiringCountryCode());
+			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
+			transactionData.setDeKeyValuePairDynamic("022.01", midtidBlocking.getPosEntryMode());
+			break;
+		case "3" :
+			transactionData.setDeKeyValuePairDynamic("022.01", midtidBlocking.getPosEntryMode());
+			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
+			break;
+		case "4": case "6" : 
+			transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
+			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
+			break;
+		case "5" :
+			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
+			break;
+		case "7" :
+			transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
+			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
+			break;
+		case "9" :
+			transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
+			break;
+		case "10" :
+			transactionData.setDeKeyValuePairDynamic("019", midtidBlocking.getAcquiringCountryCode());
+			transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
+			break;
+		case "11" : 
+			transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
+			break;
+		}
+ }
+	
 }

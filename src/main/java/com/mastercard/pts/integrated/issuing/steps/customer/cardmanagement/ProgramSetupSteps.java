@@ -73,6 +73,9 @@ public class ProgramSetupSteps {
 
 	@Autowired
 	private DataProvider dataProvider;
+	
+	@Autowired
+	private MID_TID_Blocking midtidBlocking;
 
 	@Autowired
 	MCGFlows mcgflows;
@@ -1618,12 +1621,5 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.editsProgram(program,editItem);
 	}
 	
-	@When("user creates MID TID Blocking for combination $type")
-	public void userCreatesMIDTIDBlockingForCombination(String type){
-		MID_TID_Blocking details = MID_TID_Blocking.createWithProvider(provider);
-		programSetupWorkflow.addMID_TID_Blocking(type, details);
-		
-		
-		
-	}
+
 }

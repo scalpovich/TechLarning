@@ -276,9 +276,5 @@ public class ProgramSetupWorkflow {
 		page.editsProgramForPlans(program,editItem);
 	}
 	
-	public void addMID_TID_Blocking(String combination, MID_TID_Blocking details){
-		MID_TID_BlockingPage page = navigator.navigateToPage(MID_TID_BlockingPage.class);
-	//	page.deleteRecord();
-		page.addBlockingMID_TID(combination,details);
-	}
+	
 }
