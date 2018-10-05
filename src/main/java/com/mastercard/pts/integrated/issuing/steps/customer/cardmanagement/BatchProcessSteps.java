@@ -225,6 +225,7 @@ public class BatchProcessSteps {
 		HashMap<String , String> helpdeskValues = context.get(ContextConstants.HELPDESK_VALUES);		
 		helpdeskValues.put(ContextConstants.STATEMENT_DATE, context.get(ContextConstants.STATEMENT_DATE));
 		GenericReport report = GenericReport.createWithProvider(provider);			
+		report.setReportUrl(batchFile.getAbsolutePath());
 		String dateOfBirth = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH).format(device.getClientDetails().getBirthDate());
 		report.setPassword(device.getClientDetails().getFirstName().substring(0,4)+""+dateOfBirth.substring(0, dateOfBirth.length()-5).replaceAll("/", ""));				
 		for (int row = 0; row < parameterTable.getRows().size(); row++) {

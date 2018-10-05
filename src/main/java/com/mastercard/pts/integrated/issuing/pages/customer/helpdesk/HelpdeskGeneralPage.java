@@ -1326,7 +1326,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 			for (Entry<String, String> set : beforePaymentOutstanding.entrySet()) {
 				sum = sum + Double.valueOf(set.getValue());
-				set.setValue(String.valueOf(Double.valueOf(set.getValue()) - Double.valueOf(set.getValue())));
+				set.setValue(String.format("%.2f", Double.valueOf(set.getValue()) - Double.valueOf(set.getValue())));
 			}
 			beforePaymentUnbilled.replace("UnbilledPayment", String.format("%.2f", sum));
 			compareMaps(beforePaymentBilled, afterPaymentBilled);
@@ -1339,7 +1339,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			Map<String, String> afterBillingOutstanding = context.get("afterbillingOutstanding");
 			for (Entry<String, String> set : afterPaymentUnbilled.entrySet()) {
 				sum = sum + Double.valueOf(set.getValue());
-				set.setValue(String.valueOf(Double.valueOf(set.getValue()) - Double.valueOf(set.getValue())));
+				set.setValue(String.format("%.2f", Double.valueOf(set.getValue()) - Double.valueOf(set.getValue())));
 			}
 			afterPaymentBilled.replace("BilledPayment", String.format("%.2f", sum));
 			compareMaps(afterPaymentBilled, afterBillingBilled);
@@ -1354,8 +1354,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			String keyFromFirstMap = (String) m.getKey();
 			String valueFromFirstMap = (String) m.getValue();
 			String valueFromSecondMap = expectedMap.get(keyFromFirstMap);
-			logger.info("Comparing values-> "+keyFromFirstMap + ": Expected:" + valueFromFirstMap,
-					": Actual:" + valueFromSecondMap);
+			logger.info("Comparing values-> " + keyFromFirstMap + ": Expected:" + valueFromFirstMap + ": Actual:"
+					+ valueFromSecondMap);
 			if (!valueFromSecondMap.equals(valueFromFirstMap)) {
 				Assert.assertEquals("Failed in Comparing at ", keyFromFirstMap + ": Expected:" + valueFromFirstMap,
 						": Actual:" + valueFromSecondMap);
