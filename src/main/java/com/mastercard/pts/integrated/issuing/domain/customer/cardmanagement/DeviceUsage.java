@@ -36,7 +36,6 @@ public class DeviceUsage {
 	private static int velocity =1;
 	private String deviceNumber;
 	private int previousVelocityValue;
-	private double previousTransactionValue;
 	
 	private String periodAmountDomesticUtilized;
 	private String periodVelocityDomesticUtilized;
@@ -54,14 +53,6 @@ public class DeviceUsage {
 
 	public void setPreviousVelocityValue(String previousVelocityValue) {
 		this.previousVelocityValue = Integer.parseInt(previousVelocityValue);
-	}
-
-	public double getPreviousTransactionValue() {
-		return previousTransactionValue;
-	}
-
-	public void setPreviousTransactionValue(String previousTransactionValue) {
-		this.previousTransactionValue = Double.parseDouble(previousTransactionValue);
 	}
 
 	public String getDailyDebitVelocity() {
