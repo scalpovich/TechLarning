@@ -460,6 +460,17 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickWhenClickableDoNotWaitForWicket(firstRowDeleteLink);
 	}
 
+	protected void deleteAllRecord() {
+		int rowCount = driver().findElements(By.xpath("//*[@class='dataview']/tbody[1]/tr[@class='even' or @class = 'odd']")).size();
+		for (int i = 0; i < rowCount; i++) {
+			WebElementUtils.visibilityOf(firstRowDeleteLink);
+			waitForWicket();
+			clickWhenClickableDoNotWaitForWicket(firstRowDeleteLink);
+			acceptPopup();
+		}
+
+	}
+
 	/**
 	 * Returns trimmed cell text by row number and column name
 	 * 

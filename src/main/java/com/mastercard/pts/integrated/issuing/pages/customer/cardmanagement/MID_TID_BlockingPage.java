@@ -169,7 +169,7 @@ public class MID_TID_BlockingPage extends AbstractBasePage {
 	}
 	
 	public void deleteRecord(){
-		deleteFirstRecord();
-		acceptPopup();
+		deleteAllRecord();
+		
 	}
 }
