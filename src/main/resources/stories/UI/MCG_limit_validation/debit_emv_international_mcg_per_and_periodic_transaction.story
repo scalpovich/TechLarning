@@ -40,7 +40,7 @@ And set the transaction amount to 110 in program currency
 When perform an INT_EMV_PURCHASE MAS transaction
 And user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
-And assert Decline response with 40002 AuthDecline Code and Exceeds Amount Limit Per Trans International as description
+And assert Decline response with 42002 AuthDecline Code and Exceeds Amount Limit Per Trans International as description
 Then verify the MCG limit utilization in Device Usage Screen for international transaction after failed transaction
 And user sign out from customer portal
 
@@ -57,7 +57,7 @@ Given set the transaction amount to 70 in program currency
 When perform an INT_EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
-And assert Decline response with 40011 AuthDecline Code and Exceeds Amount Limit Periodic International as description
+And assert Decline response with 42011 AuthDecline Code and Exceeds Amount Limit Periodic International as description
 Then verify the MCG limit utilization in Device Usage Screen for international transaction after failed transaction
 And user sign out from customer portal
 
@@ -75,6 +75,6 @@ When perform an INT_EMV_PURCHASE MAS transaction on the same card
 Then MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 123-Frequency Exceeded status
-And assert Decline response with 40014 AuthDecline Code and Frequency Exceeded Periodic International as description
+And assert Decline response with 42014 AuthDecline Code and Frequency Exceeded Periodic International as description
 And verify the MCG limit utilization in Device Usage Screen for international transaction after failed transaction
 And user sign out from customer portal
