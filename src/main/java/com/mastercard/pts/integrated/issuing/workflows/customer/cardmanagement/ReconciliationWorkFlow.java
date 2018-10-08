@@ -80,7 +80,7 @@ public class ReconciliationWorkFlow {
 		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
 		return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
 	}
-
+	
 	public int checkDownLoadedFilesCount() {
 		int fileCount = 0;
 		String downLoadPath = System.getProperty("user.home") + "\\Downloads";
