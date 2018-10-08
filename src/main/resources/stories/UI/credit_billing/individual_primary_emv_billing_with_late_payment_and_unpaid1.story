@@ -32,7 +32,7 @@ And user notes down available Card limit for card
 Then user sign out from customer portal
 
 Scenario:1.3 Perform Authorization transaction
-When user is logged in institution
+Given user is logged in institution
 And user raises an authorization request
 Then status of request is "approved"
 And search Purchase authorization and verify 000-Successful status
@@ -55,8 +55,8 @@ And user sign out from customer portal
 Scenario:1.5 Bump next month and Login & Logout to wait for date to be updated for next billing cycle
 Meta:
 @TestId 
-When update institution date to first of next month
-Given user is logged in institution
+Given update institution date to first of next month
+When user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
@@ -92,8 +92,8 @@ And user sign out from customer portal
 Scenario:1.6.1 Bump 21st of month to charge late payment fee
 Meta:
 @TestId 
-When update institution date to 21 days
-Given user is logged in institution
+Given update institution date to 21 days
+When user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
@@ -108,8 +108,8 @@ And user sign out from customer portal
 Scenario:1.7 Bump next month and Login & Logout to wait for date to be updated for next billing cycle
 Meta:
 @TestId 
-When update institution date to first of next month
-Given user is logged in institution
+Given update institution date to first of next month
+When user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
@@ -146,8 +146,8 @@ And user sign out from customer portal
 Scenario:1.9 Bump next day to make bill payment
 Meta:
 @PaymentCash
-When update institution date to next days
-Given user is logged in institution
+Given update institution date to next days
+When user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
@@ -175,8 +175,8 @@ And user sign out from customer portal
 Scenario:2.1 Bump next month and Login & Logout to wait for date to be updated for next billing
 Meta:
 @TestId 
-When update institution date to first of next month
-Given user is logged in institution
+Given update institution date to first of next month
+When user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
