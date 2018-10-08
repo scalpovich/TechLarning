@@ -114,16 +114,17 @@ public class DeviceUsageSteps {
 				Assert.assertEquals("Error asserting Domestic Daily Velocity", deviceUsage.getVelocity(), deviceUsage.getDailyVelocityDomesticUtilized());
 				Assert.assertEquals("Error asserting Domestic Periodic Velocity", deviceUsage.getVelocity(), deviceUsage.getPeriodVelocityDomesticUtilized());
 				previousAmountUtilized = Double.parseDouble(deviceUsage.getDailyAmountDomesticUtilized());
+				deviceUsage.setPreviousTransactionValue(context.get(ConstantData.TRANSACTION_AMOUNT));
 			} else if (type.equalsIgnoreCase(INTERNATIONAL)) {
 				Assert.assertEquals("Error asserting International Daily Transaction Amount", df2.format(Double.parseDouble(context.get(ConstantData.BILLING_AMOUNT))), df2.format(Double.parseDouble(deviceUsage.getDailyAmountIntenationalUtilized())-previousAmountUtilized));
 				Assert.assertEquals("Error asserting International Periodic Transaction Amount", df2.format(Double.parseDouble(context.get(ConstantData.BILLING_AMOUNT))), df2.format(Double.parseDouble(deviceUsage.getPeriodAmountIntenationalUtilized())-previousAmountUtilized));
 				Assert.assertEquals("Error asserting International Daily Velocity", deviceUsage.getVelocity(), deviceUsage.getDailyVelocityIntenationalUtilized());
 				Assert.assertEquals("Error asserting International Periodic Velocity", deviceUsage.getVelocity(), deviceUsage.getPeriodVelocityIntenationalUtilized());
 				previousAmountUtilized = Double.parseDouble(deviceUsage.getDailyAmountIntenationalUtilized());
+				deviceUsage.setPreviousTransactionValue(context.get(ConstantData.BILLING_AMOUNT));
 			} else {
 				Assert.fail("Incorrect transaction type in step");
 			}
-			deviceUsage.setPreviousTransactionValue(context.get(ConstantData.TRANSACTION_AMOUNT));
 			deviceUsage.setPreviousVelocityValue(deviceUsage.getVelocity());
 			deviceUsage.setVelocity();
 			context.put(DEVICE_USUAGE,deviceUsage);
