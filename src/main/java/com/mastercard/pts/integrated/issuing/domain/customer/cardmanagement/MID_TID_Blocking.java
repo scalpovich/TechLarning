@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 @Component
 public class MID_TID_Blocking {
@@ -39,7 +40,7 @@ public class MID_TID_Blocking {
 		plan.setNetwork(provider.getString(NETWORK));
 		plan.setProductType(provider.getString(PRODUCT_TYPE));
 		plan.setTerminalID(provider.getString(TERMINAL_ID));
-		plan.setMerchantID(MiscUtils.randomNumber(16));
+		plan.setMerchantID(String.valueOf(MiscUtils.randomNumber(16)));
 		plan.setMcc(provider.getString(MCC_CODE_VALUE));
 		plan.setAcquiringCountryCode(provider.getString(ACQUIRING_COUNTRY_CODE));
 		plan.setAcquirerID(provider.getString(ACQUIRER_ID));
