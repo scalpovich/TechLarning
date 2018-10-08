@@ -104,6 +104,7 @@ public class Device {
   	private String walletCurrency;
  	private String category;
   	private String amountType;
+  	private String updatedATCValue;
   	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -625,6 +626,15 @@ public class Device {
 
 	public void setServiceCode(String serviceCode) {
 		this.serviceCode = serviceCode;
+	}
+
+	public String getUpdatedATCValue() {
+
+		return updatedATCValue;
+	}
+
+	public void setUpdatedATCValue(String updatedATCValue) {
+		this.updatedATCValue = updatedATCValue;
 	}
 
 	public String getTransactionDateType() {

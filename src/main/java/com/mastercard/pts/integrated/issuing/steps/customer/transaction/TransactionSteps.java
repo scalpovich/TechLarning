@@ -45,6 +45,7 @@ import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKeyValuePair;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceUsageWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
 
 @Component
@@ -57,7 +58,9 @@ public class TransactionSteps {
 	private static final String DEVICE_PRODUCTION = "device production";
 	private static final String PIN_PRODUCTION = "pin production";
 	private static final String IPMINCOMING = "ipm incoming";
+	private static final String ATC = "ATC" ;
 	private static Boolean sameCard = false;
+	public boolean atcCounterFlag = false;
 
 	@Autowired
 	private TestContext context;
@@ -73,6 +76,9 @@ public class TransactionSteps {
 
 	@Autowired
 	private AuthorizationTransactionFactory transactionFactory;
+	
+	@Autowired
+	private DeviceUsageWorkflow deviceUsageWorkflow;
 
 	@Autowired
 	private TransactionProvider transactionProvider;
@@ -160,6 +166,16 @@ public class TransactionSteps {
 		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
 	}
 	
+	@When("user performs an optimized $transaction MAS transaction for ATC Range")
+	@Given("user performs an optimized $transaction MAS transaction for ATC Range")
+	public void givenOptimizedTransactionIsExecutedForUpdatedATCRannge(String transaction, String ATCRange) {
+		transactionWorkflow.browserMinimize(); // minimize browser
+		// operation of MAS/MDFS ... Storing transaction name in context to use it at runtime
+		context.put(ConstantData.TRANSACTION_NAME, transaction);
+		Transaction transactionData = generateMasTestDataForTransaction(transaction);
+		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
+	}
+	
 	@When("perform an $type MAS transaction with wrong keys")
 	public void performTransactionWithWrongKeys(String transaction) {
 		TransactionWorkflow.STAGE_KEYS = INVALID_KEYS;
@@ -172,6 +188,16 @@ public class TransactionSteps {
 		// Storing transaction name in context to use it at runtime
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		generateMasTestDataForTransaction(transaction);
+	}
+	
+	@Given("user update ATC update value as $type and value as $type")
+	@Then("user update ATC update value as $type and value as $type")
+	public void userUpdateATCValueAsRequired(String flag, String atcvalue)
+	{
+		atcCounterFlag=true;
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setUpdatedATCValue(atcvalue);
+		context.put(ContextConstants.DEVICE,device);		
 	}
 
 	private Transaction generateMasTestDataForTransaction(String transaction) {
@@ -230,6 +256,7 @@ public class TransactionSteps {
 			transactionData.setCardHolderBillingCurrency(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair().get("061.13")));
 		}
 		// creating & import card profile to temp location ex:C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413
+		
 		transactionData.setCardProfile(transactionFactory.createCsvCardProfile(transactionData));
 		// creating & import testcase/transaction file to temp location ex: * C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413
 		transactionData.setTestCase(transactionFactory.createCsvTesCase(transactionData));
@@ -282,6 +309,10 @@ public class TransactionSteps {
 		transactionData.setCardDataElementsDynamic("045.02", device.getDeviceNumber());
 		transactionData.setCardDataElementsDynamic("045.06", device.getExpirationDate());
 		transactionData.setCardDataElementsDynamic("035.04", device.getServiceCode());
+		if (atcCounterFlag==true)
+		{
+			transactionData.setCardDataElementsDynamic("055.9F36", device.getUpdatedATCValue());
+		}
 		if (transactionWorkflow.isContains(transaction, "EMV")) {
 			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getIcvvData());
 		} else if (transactionWorkflow.isContains(transaction, "MSR") || transactionWorkflow.isContains(transaction, "FALLBACK") ) {
