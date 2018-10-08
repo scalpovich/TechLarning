@@ -578,6 +578,7 @@ public class TransactionSteps {
 		context.put(ContextConstants.DEVICE, device);
 	}
 
+	@Given("User set MID_TID flag $type and MID_TID Combination $type")
 	@When("User set MID_TID flag $type and MID_TID Combination $type")
 	public void userSetMIDTIDFlagAndCaseValue(boolean midTidFlag, String midTidCombination) {
 		this.midTidFlag = midTidFlag;

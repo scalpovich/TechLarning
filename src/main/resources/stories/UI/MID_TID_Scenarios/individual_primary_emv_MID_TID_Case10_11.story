@@ -24,7 +24,7 @@ And user sign out from customer portal
 
 Scenario: 1.1 Create MID_TID Blocking Rule
 Given user is logged in institution
-When user creates MID TID Blocking for combination 1
+When user creates MID TID Blocking for combination 10
 Then user sign out from customer portal
 
 Scenario: 1.2 Pin Generation
@@ -36,7 +36,7 @@ And FINSim simulator is closed
 
 Scenario: 1.3 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
-When User set MID_TID flag true and MID_TID Combination 1
+When User set MID_TID flag true and MID_TID Combination 10
 And perform an EMV_PURCHASE MAS transaction
 And user is logged in institution
 And search Purchase authorization and verify 131-MID-TID Block status
@@ -48,7 +48,7 @@ Given user is logged in institution
 Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Credit
 And user sign out from customer portal
 
-Scenario: 1.5 Delete First Combination of MID_TID Blocking rule
+Scenario: 1.5 Delete Tenth Combination of MID_TID Blocking rule
 Given user is logged in institution
 When user deletes MID TID Blocking combination
 And user sign out from customer portal
@@ -59,3 +59,34 @@ Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
+
+Scenario: 1.7 Create MID_TID Blocking Rule
+Given user is logged in institution
+When user creates MID TID Blocking for combination 11
+Then user sign out from customer portal
+
+Scenario: 1.8 Perform EMV_PURCHASE Authorization transaction
+Given User set MID_TID flag true and MID_TID Combination 11
+When perform an EMV_PURCHASE MAS transaction on the same card
+And user is logged in institution
+And search Purchase authorization and verify 131-MID-TID Block status
+Then assert Decline response with 80049 AuthDecline Code and MID-TID Blocked as description
+And user sign out from customer portal
+
+Scenario: 1.9 Verify Decline Code on Helpdesk Page
+Given user is logged in institution
+Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Credit
+And user sign out from customer portal
+
+Scenario: 2.0 Delete Eleventh Combination of MID_TID Blocking rule
+Given user is logged in institution
+When user deletes MID TID Blocking combination
+And user sign out from customer portal
+
+Scenario: 2.1 Perform EMV_PURCHASE Authorization transaction
+When perform an EMV_PURCHASE MAS transaction on the same card
+Then MAS test results are verified
+And user is logged in institution
+And search Purchase authorization and verify 000-Successful status
+And user sign out from customer portal
+And MAS simulator is closed
