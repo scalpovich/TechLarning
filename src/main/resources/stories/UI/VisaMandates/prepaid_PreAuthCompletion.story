@@ -28,6 +28,7 @@ And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
 And device has "normal" status
+Then user sign out from customer portal
 
 Scenario: 03. Pin Generation
 Given connection to FINSim is established
@@ -40,6 +41,7 @@ Scenario: 04. Transaction - PreAuth Completion transaction
 Given connection to VISA is established
 When perform an POS-Retail-PreAuthCompletion_with_Pin VISA transaction
 And VISA test results are verified for POS-Retail-PreAuthCompletion_with_Pin
+And user is logged in institution
 And search Pre-Auth Completion authorization and verify Successful status
 When verify fixed transaction fee applied on purchase transaction
 And user verifies available balance after transaction
