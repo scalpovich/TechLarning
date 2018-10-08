@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
+import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
@@ -583,9 +584,23 @@ public class HelpDeskSteps {
 	@Given("user verifies available $type limit for card after transaction")
 	@When("user verifies available $type limit for card after transaction")
 	@Then("user verifies available $type limit for card after transaction")
+	@Alias("user verifies available $type limit")
 	public void whenUserVerifyLimitThroughHelpDesk(String type) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
-		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.noteDownAvailableLimit(type), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
+		HashMap<String,BigDecimal> creditLimit;
+		HashMap<String,BigDecimal> creditLimitExpected;
+		creditLimitExpected = context.get(ContextConstants.CREDIT_LIMIT_AFTER_SR);
+		creditLimit=helpdeskWorkflow.noteDownCreditLimit(type);
+		if(type.equalsIgnoreCase(ConstantData.TEMPORARY_LIMIT) || type.equalsIgnoreCase(ConstantData.PERMANENT_LIMIT))
+		{	for (Entry<String, BigDecimal> expectedlimit : creditLimitExpected.entrySet()) 	
+				assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT,creditLimit.get(expectedlimit.getKey()),equalTo(expectedlimit.getValue()));
+		}
+		else
+		{
+			assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, creditLimit.get(ConstantData.AVAIL_ACCOUNT_LIMIT), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
+		}
+		
+		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT,creditLimit.get(ConstantData.AVAIL_ACCOUNT_LIMIT));
 	}
 
 	@Given("user sets up device currency through helpdesk for FileUpload")
@@ -861,6 +876,17 @@ public class HelpDeskSteps {
 		device.setCategory(category);
 		device.setAmountType(amount);
 		assertThat(category +" "+ amount +BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device), equalTo(transactionAmount));
+	}
+	
+	@Then("user raises $limittype credit limit change request for $customerType")
+	@Given("user raises $limittype credit limit change request for $customerType")
+	@When("user raises $limittype credit limit change request for $customerType")
+	public void userRaisesCreditLimitChangeRequestThroughHelpdesk(String limitType,String customerType) {
+		helpdeskGeneral = HelpdeskGeneral.createWithProviderWithCreditCardLimits(provider);
+		helpdeskGeneral.setLimitType(limitType);
+		helpdeskGeneral.setCustomerType(customerType);
+		helpdeskWorkflow.clickCustomerCareEditLink();				
+		context.put(ContextConstants.CREDIT_LIMIT_AFTER_SR, helpdeskWorkflow.activateCreditLimitChangeRequest(helpdeskGeneral));
 	}
 	
 	@Then("user validates available balance for prepaid product on helpdesk")
