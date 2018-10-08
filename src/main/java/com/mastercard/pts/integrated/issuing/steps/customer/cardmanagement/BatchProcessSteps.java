@@ -162,6 +162,7 @@ public class BatchProcessSteps {
 	}
 	
 	@When("new Application processes pin generation batch for $type")
+	@Then("new Application processes pin generation batch for $type")
 	public void whenProcessesPinGenerationBatchUsingNewApplication(String type){
 		PinGenerationBatch batch = new PinGenerationBatch();
 		batch.setProductType(ProductType.fromShortName(type));

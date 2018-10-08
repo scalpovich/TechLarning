@@ -320,7 +320,6 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		}
 		SimulatorUtilities.wait(1000);
 		clickNextButton();
-		
 		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());		
 		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
 		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());

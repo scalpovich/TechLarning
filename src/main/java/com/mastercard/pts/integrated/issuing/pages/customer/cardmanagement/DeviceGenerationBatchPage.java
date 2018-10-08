@@ -104,12 +104,10 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 		processAll.click();
 		verifyOperationStatus();
 	}
-	
+
 	public void processAllBatch() {
-		
-			deviceGenerationBatch();
-		
-			clickWhenClickable(processAllBtn);
+		deviceGenerationBatch();
+		clickWhenClickable(processAllBtn);
 	}
 
 	private void deviceGenerationBatch() {
@@ -137,7 +135,6 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(checkBox)));
 		processSelected.click();
 		verifyOperationStatus();
-
 	}
 	
     @Override

@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 public class CreditConstants {
 
@@ -72,5 +74,9 @@ public class CreditConstants {
 	public static final String ALL_BATCH_NUMBERS_PREPRODUCTION="ALL_BATCH_NUMBERS_PREPRODUCTION";
 	
 	private CreditConstants() {
+	}
+	
+	public static String fromShortName(String name) {
+		return MiscUtils.getConstantStringFromClassByPefixMatch(ConstantData.class, name);
 	}
 }

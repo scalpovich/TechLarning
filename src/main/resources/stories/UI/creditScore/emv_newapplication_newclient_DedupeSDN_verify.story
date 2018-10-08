@@ -53,7 +53,7 @@ And User Adds WorkFlow Rule for fieldName1 Customer and fieldName2 Individual on
 And User Adds Credit Limit Rule on program for fieldName AGE
 When User fills Device Range section for credit product
 Then "credit" is created with "Primary Device" as application type with application sub-type as "New" and customer of type "Individual" with "EMV" with dedupe
-When verify duplicate application caught on dedupeSDN and then approve
+When approves duplicate application caught on dedupeSDN
 When user verifies the credit application device
 When user processesAll close batch for new Application
 When user processesAll riskAnalysis batch for new Application

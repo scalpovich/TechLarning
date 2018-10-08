@@ -20,9 +20,12 @@ public class DeDupeSDNVerificationWorkflow {
 	private DeDupeSDNVerificationPage deDupeSDNVerificationPage;
 	
 	public Boolean verifyAndApproveTheApplication() {
-		
 		deDupeSDNVerificationPage = navigator.navigateToPage(DeDupeSDNVerificationPage.class);
 		return deDupeSDNVerificationPage.approveApplication();
 	}
 
+	public Boolean verifyAndRejectTheApplication() {
+		deDupeSDNVerificationPage = navigator.navigateToPage(DeDupeSDNVerificationPage.class);
+		return deDupeSDNVerificationPage.rejectApplication();
+	}
 }

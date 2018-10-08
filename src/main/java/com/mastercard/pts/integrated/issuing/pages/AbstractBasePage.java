@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages;
 
+import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
@@ -50,6 +52,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomM
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.PDFUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementFinderProvider;
@@ -476,6 +479,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	public String getCellTextByColumnName(int rowNumber, String columnName) {
 		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]/span", rowNumber, columnName);
+		SimulatorUtilities.wait(3000);
 		WebElement element = driver().findElement(By.xpath(xpath));
 		waitForElementVisible(element);
 		return element.getText().trim();
@@ -1253,6 +1257,27 @@ public abstract class AbstractBasePage extends AbstractPage {
 				return ele.getSelect().getOptions().size() > 1;
 			}
 		});
+	}
+	
+	protected String verifyReportDownloaded(String reportName) {
+		StringBuffer path= new StringBuffer();
+		WebDriverWait wait = new WebDriverWait(driver(), TIMEOUT);
+		wait.until(new ExpectedCondition<Boolean>() {
+			@Override
+			public Boolean apply(WebDriver driver) {
+				Boolean exists = false;
+				for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
+				 if(file.isFile()&& file.getName().startsWith(reportName)&&FilenameUtils.getExtension(file.getName()).equalsIgnoreCase("pdf")){
+					exists = true;
+				    path.append(file.getAbsolutePath());
+				    logger.info("File Path:"+path.toString());
+					 break;
+				 }
+			}
+				return exists;
+			}
+		});
+		return path.toString();
 	}
 
 	protected void selectByText(MCWebElement ele, String optionName) {

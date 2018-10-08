@@ -144,52 +144,51 @@ public class PDFUtils {
 	}
 	
 	public Map<Object, String> getContentRow(GenericReport genericReports) {
-		dateutils=new DateUtils();
+		dateutils = new DateUtils();
 		HashMap<Object, String> map = new HashMap<>();
-		String row[] =  new String[]{};
+		String row[] = new String[] {};
 		try {
 			File file = new File(genericReports.getReportUrl());
-			PDDocument document =  PDDocument.load(file,genericReports.getPassword());
+			PDDocument document = PDDocument.load(file, genericReports.getPassword());
 			document.setAllSecurityToBeRemoved(true);
-     		PDFTextStripper tStripper = new PDFTextStripper();
-     		tStripper.setAddMoreFormatting(true);
-                //Instantiating Splitter class
-            Splitter splitter = new Splitter();
-            //Creating an iterator 
-            Iterator<PDDocument> iterator = splitter.split(document).listIterator();
-            //Saving each page as an individual document
-            Integer i = 1;
-          while(iterator.hasNext()) {
-               PDDocument pd = iterator.next();
-            String pdfFileInText = tStripper.getText(pd);
-			if(genericReports.getReportRegEx() == null){
-				// Split by line separtor
-				tStripper.setLineSeparator("<EOL>");
-				pdfFileInText = tStripper.getText(pd);
-				row  = pdfFileInText.split("(<EOL>)+");
-				for(int j = 0; j<row.length;j=j+2 ){
-					if(!row[j].contains("Opening Balance"))
-						map.put(row[j],row[j+1]);
-					else
-						map= resolvePDFLine(map,row[j],row[j+1]);
-					
-					logger.info("Field in statement : {}={}",row[j],row[j+1]);	
+			PDFTextStripper tStripper = new PDFTextStripper();
+			tStripper.setAddMoreFormatting(true);
+			// Instantiating Splitter class
+			Splitter splitter = new Splitter();
+			// Creating an iterator
+			Iterator<PDDocument> iterator = splitter.split(document).listIterator();
+			// Saving each page as an individual document
+			Integer i = 1;
+			while (iterator.hasNext()) {
+				PDDocument pd = iterator.next();
+				String pdfFileInText = tStripper.getText(pd);
+				if (genericReports.getReportRegEx() == null) {
+					// Split by line separtor
+					tStripper.setLineSeparator("<EOL>");
+					pdfFileInText = tStripper.getText(pd);
+					row = pdfFileInText.split("(<EOL>)+");
+					for (int j = 0; j < row.length; j = j + 2) {
+						if (!row[j].contains("Opening Balance"))
+							map.put(row[j], row[j + 1]);
+						else
+							map = resolvePDFLine(map, row[j], row[j + 1]);
+
+						logger.info("Field in statement : {}={}", row[j], row[j + 1]);
+					}
+				} else {
+					// split by RegEx
+					row = pdfFileInText.split(genericReports.getReportRegEx());
+					for (String text : row) {
+						map.put((i++).toString(), text);
+					}
 				}
-	            }
-			else{
-            // split by RegEx
-             row = pdfFileInText.split(genericReports.getReportRegEx());
-             for(String text : row){
-             	map.put(i++, text);
-             }
+				pd.close();
 			}
-			pd.close();
-			}
-           document.close();
-		}catch(Exception e){
+			document.close();
+		} catch (Exception e) {
 			e.printStackTrace();
-		}	
-			return map;
+		}
+		return map;
 	}
 
 	

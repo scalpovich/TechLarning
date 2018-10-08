@@ -54,21 +54,20 @@ public class DeDupeSDNVerificationPage extends AbstractCardManagementPage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Cancel']")
 	private MCWebElement cancelBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td/span[text()='Reject Reason :']/following::td[1]/span/select")
+	private MCWebElement rejectReasonDDwn;
+	
+	private static String REJECTED_REASON = "Rejected in De-Dupe [RDEDUPE]";
 
 	private String inputApplicationNumber;
 	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(applicationNumber),
-				WebElementUtils.elementToBeClickable(formNumber),
-				WebElementUtils.elementToBeClickable(fromDate),
-				WebElementUtils.elementToBeClickable(toDate)
-				);
+		return Arrays.asList(WebElementUtils.elementToBeClickable(applicationNumber), WebElementUtils.elementToBeClickable(formNumber), WebElementUtils.elementToBeClickable(fromDate), WebElementUtils.elementToBeClickable(toDate));
 	}
 
 	public void verifyDuplicateApplication(String inputApplicationNum) {
-		
 		WebElementUtils.enterText(applicationNumberTxt, inputApplicationNum);
 		WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDatePicker, LocalDate.now());
@@ -77,7 +76,6 @@ public class DeDupeSDNVerificationPage extends AbstractCardManagementPage {
 	}
 
 	public Boolean approveApplication() {
-
 		Device device = context.get(CreditConstants.APPLICATION);
 		inputApplicationNumber = device.getApplicationNumber();
 		logger.info(inputApplicationNumber);
@@ -88,9 +86,23 @@ public class DeDupeSDNVerificationPage extends AbstractCardManagementPage {
 		runWithinPopup("Edit Application", () ->{					
 			clickWhenClickable(approveBtn);
 		});	
-		
 		verifyOperationStatus();
 		return value;
 	}
 	
+	public Boolean rejectApplication() {
+		Device device = context.get(CreditConstants.APPLICATION);
+		inputApplicationNumber = device.getApplicationNumber();
+		logger.info(inputApplicationNumber);
+		verifyDuplicateApplication(inputApplicationNumber);
+		Boolean value = WebElementUtils.isTextAvailableinTable(searchTable, inputApplicationNumber);
+		clickWhenClickable(editRecord);
+		SimulatorUtilities.wait(1000);
+		runWithinPopup("Edit Application", () ->{
+			WebElementUtils.selectDropDownByVisibleText(rejectReasonDDwn, REJECTED_REASON);
+			clickWhenClickable(rejectBtn);
+		});	
+		verifyOperationStatus();
+		return value;
+	}
 }
