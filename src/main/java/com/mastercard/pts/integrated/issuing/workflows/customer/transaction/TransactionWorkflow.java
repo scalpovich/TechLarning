@@ -114,6 +114,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private static final String REVERSAL="Reversal";
 	private static final String STIP="STIP";
 	private static final int MAX_RETRY = 30;
+	private static final String CVV2_PREFIX_VALUE="11";
 	
 	@Autowired
 	private WebDriverProvider webProvider;
@@ -1797,7 +1798,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			setValueInMessageEditorForTransction("F52", transactionName, device.getPinNumberForTransaction());
 		}
 		else if(transaction.contains("ECOM")) {
-			setValueInMessageEditorForTransction("F126.10", transactionName, ("11" + " " + device.getCvv2Data()));	
+			setValueInMessageEditorForTransction("F126.10", transactionName, ("CVV2_PREFIX_VALUE" + " " + device.getCvv2Data()));	
 		}
 		captureSaveScreenShot(methodName);
 		executeVisaTest(transactionName);
