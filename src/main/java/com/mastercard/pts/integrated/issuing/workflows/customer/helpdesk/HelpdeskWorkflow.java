@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConnectionUtils;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
@@ -181,6 +181,11 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.noteDownAvailableLimit(type);
 	}
 	
+	public HashMap<String,BigDecimal>  noteDownCreditLimit(String type) {
+		clickCustomerCareEditLink();
+		return helpDeskPage.noteDownCreditLimit(type);
+	}
+	
 	public HashMap<String, String> noteDownRequiredValues(String deviceNumber) {
 		clickCustomerCareEditLink();
 		return helpDeskPage.noteDownRequiredValues(deviceNumber);
@@ -218,6 +223,9 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.verifyBillingDetails(device);
 	}
 	
+	public HashMap<String,BigDecimal> activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
+		return helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
+	}
 	
 	public Map<String,String> fetchCardBalanceAndCloseHelpdesk(Device device) {
 		Map<String, String> balanceMapBeforePayments;	
