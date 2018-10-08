@@ -120,6 +120,8 @@ public class LoadFromFileUploadSteps {
 		loadFromFileUploadWorkflow.createAdjustmentTransaction(transaction);
 	}
 
+	@Given("user get attached wallet details for device")
+	@When("user get attached wallet details for device")
 	@Then("user get attached wallet details for device")
 	public void getWalletDetailsForDevice() {
 		Device device = context.get(ContextConstants.DEVICE);

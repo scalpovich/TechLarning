@@ -59,20 +59,21 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[1]/td[10]/span/input")
 	public MCWebElement firstBatchNumberTxt;
 
-	public List<String> allBatchNumberRetrieval() {
-		List<String> batchnumbers = new ArrayList<>();
-		for (int i = 0; i < allBatchNumberTxt.getElements().size(); i++) {
-			batchnumbers.add(allBatchNumberTxt.getElements().get(i).getText());
-		}
-		return batchnumbers;
+	public List<String> allBatchNumberRetrieval(){
+		List<String>batchNumbers = new ArrayList<>();
+		allBatchNumberTxt.getElements().stream().forEach((element)->{
+			batchNumbers.add(element.getText());
+		});
+		return batchNumbers;	
 	}	
 	
-	public int identifyBatchNumberToProcess() {
+
+	public int identifyBatchNumberToProcess(){
 		Device device = context.get(ContextConstants.DEVICE);
 		int index = 0;
-		for (int i = 0; i < allBatchNumberRetrieval().size(); i++) {
-			if (allBatchNumberRetrieval().get(i).equals(device.getBatchNumber())) {
-				logger.info("batchNumber: {}", allBatchNumberRetrieval().get(i));
+		for(int i=0;i < allBatchNumberRetrieval().size(); i++){
+			if(allBatchNumberRetrieval().get(i).equals(device.getBatchNumber())){
+				logger.info("Batch Number: {}",allBatchNumberRetrieval().get(i));
 				index = i;
 			}
 		}
@@ -81,7 +82,7 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	
 	public void processAppropriateBatchForApplication(){  
 		checkWhetherRecordPersists();
-		String checkBox="//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcess()+1+"]/td[8]/span/input";
+		String checkBox = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcess()+1+"]/td[8]/span/input";
 		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(checkBox)));
 		processSelected.click();
 		verifyOperationStatus();		

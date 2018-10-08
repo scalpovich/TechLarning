@@ -32,7 +32,7 @@ public class CountryWhiteListAndBlackListPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=countryWblistPlanCode]")
 	private MCWebElement countryWblistPlanCode;
 
-	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=txtDescription]")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=description]")
 	private MCWebElement txtDescription;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "countryWblistPlanCode:input:inputTextField")
