@@ -50,11 +50,18 @@ public class CashPaymentSteps {
 		cash.setDeviceNumber(device.getDeviceNumber());
 		cash.setPaymentBranch(device.getBranchCode());
 		if (payment.equalsIgnoreCase("full")) {
-			cash.setAmount(String.format("%.2f", Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))
-					+ Double.valueOf(context.get("Fee")) + Double.valueOf(context.get("Billed interest"))));
+			logger.info("TRANSACTION_AMOUNT :-" + context.get(ConstantData.TRANSACTION_AMOUNT));
+			logger.info("TOTAL_FEE_OF_BILLING :-" + context.get(ConstantData.TOTAL_FEE_OF_BILLING));
+			logger.info("BILLED_INTEREST :-" + context.get(ConstantData.BILLED_INTEREST));
+			String amount = String.format("%.2f",
+					Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))
+							+ Double.valueOf(context.get(ConstantData.TOTAL_FEE_OF_BILLING))
+							+ Double.valueOf(context.get(ConstantData.BILLED_INTEREST)));
+			logger.info("BILLING PAYMENT :-" + amount);
+			cash.setAmount(amount);
 		} else if (payment.equalsIgnoreCase("MAD")) {
 			HashMap<String, String> helpdeskValues = context.get(ContextConstants.HELPDESK_VALUES);
-			logger.info("MINIMUM_PAYMENT_DUE"+helpdeskValues.get(ContextConstants.MINIMUM_PAYMENT_DUE));
+			logger.info("MINIMUM_PAYMENT_DUE" + helpdeskValues.get(ContextConstants.MINIMUM_PAYMENT_DUE));
 			cash.setAmount(helpdeskValues.get(ContextConstants.MINIMUM_PAYMENT_DUE));
 		}
 		creditPaymentFlow.makeCashPayment(cash);

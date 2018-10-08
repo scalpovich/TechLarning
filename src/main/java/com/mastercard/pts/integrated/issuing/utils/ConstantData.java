@@ -107,7 +107,9 @@ public class ConstantData {
 	
 	public static final String ZERO_ZERO = "00";
 	public static final String NINE_NINE = "99";
-
+	
+	public static final String TOTAL_FEE_OF_BILLING = "0.00";
+	public static final String BILLED_INTEREST = "0.00";
 	private ConstantData() {
 	}
 

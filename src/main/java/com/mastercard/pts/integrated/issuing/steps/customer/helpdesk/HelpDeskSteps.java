@@ -864,25 +864,28 @@ public class HelpDeskSteps {
 		TransactionFeePlan txnFeePlan = context.get("TransactionFeePlan");
 		device.setCategory(category);
 		device.setAmountType(amount);
-		context.put("Billed interest", "0.00");
-		context.put("Fee", "0.00");
-		if (device.getCategory().equalsIgnoreCase("Fee") || device.getCategory().equalsIgnoreCase("Interest")
-				|| device.getCategory().equalsIgnoreCase("Unpaid1")) {
+		if (device.getCategory().equalsIgnoreCase("Fee") || device.getCategory().equalsIgnoreCase("Interest")) {
 			device = Device.createProviderForLatePaymentAndInterestOnPurchase(provider, device);
 		}
-		if (device.getCategory().equalsIgnoreCase("Fee")) {
+		if (device.getCategory().equalsIgnoreCase("Fee") && device.getAmountType().equalsIgnoreCase("Unbilled")) {
+			transactionAmount = String.format("%.2f", Double.valueOf(device.getLatePaymentFee()));
+			logger.info("Unbilled Late Payment Fee->" + transactionAmount);
+		} else if (device.getCategory().equalsIgnoreCase("Fee")) {
 			logger.info("Late Payment Fee->" + device.getLatePaymentFee());
 			logger.info("Fixed txn Fee->" + txnFeePlan.getfixedTxnFees());
 			logger.info("Fixed rate Fee->" + txnFeePlan.getFixedRateFee());
 			transactionAmount = String.format("%.2f", Double.valueOf(device.getLatePaymentFee())
 					+ Double.valueOf(txnFeePlan.getfixedTxnFees()) + Double.valueOf(txnFeePlan.getFixedRateFee()));
-			context.put("Fee", transactionAmount);
+			logger.info("Total fee->" + transactionAmount);
+			context.put(ConstantData.TOTAL_FEE_OF_BILLING, transactionAmount);
+			logger.info("TOTAL_FEE_OF_BILLING" + context.get(ConstantData.TOTAL_FEE_OF_BILLING));
 		} else if (device.getCategory().equalsIgnoreCase("Interest")) {
 			int noOfDays = DateUtils.getDaysDifferenceBetweenTwoDates(context.get(ContextConstants.INSTITUTION_DATE),
 					context.get("transaction_date"));
 			logger.info("No of diff between Txn date and institution date ->" + noOfDays);
 			Double interest = ((Double.valueOf(device.getTransactionAmount())
-					+ Double.valueOf(context.get("Fee")) * noOfDays * Double.valueOf(device.getInterestOnPurcahse()))
+					+ Double.valueOf(context.get(ConstantData.TOTAL_FEE_OF_BILLING)) * noOfDays
+							* Double.valueOf(device.getInterestOnPurcahse()))
 					/ 100) / DateUtils.noOfDaysInYear(context.get(ContextConstants.INSTITUTION_DATE));
 			logger.info("Interest Occured on unpaid1 ->" + interest);
 			interest = (interest * 100D) / 100D;
@@ -890,7 +893,8 @@ public class HelpDeskSteps {
 			bd = bd.setScale(2, RoundingMode.HALF_UP);
 			transactionAmount = String.format("%.2f", bd.doubleValue());
 			logger.info("Billed interest on unpaid1->" + transactionAmount);
-			context.put("Billed interest", transactionAmount);
+			context.put(ConstantData.BILLED_INTEREST, transactionAmount);
+			logger.info("BILLED_INTEREST" + context.get(ConstantData.BILLED_INTEREST));
 		} else if (device.getCategory().equalsIgnoreCase("Unpaid1")) {
 			transactionAmount = context.get(ContextConstants.MINIMUM_PAYMENT_DUE);
 			logger.info("Unpaid1->" + transactionAmount);

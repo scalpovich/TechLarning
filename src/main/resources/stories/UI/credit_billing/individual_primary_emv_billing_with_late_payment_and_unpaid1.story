@@ -102,7 +102,7 @@ And user sign out from customer portal
 When user is logged in institution
 And user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
-And user verify Billed amount for Fee category
+And user verify Unbilled amount for Fee category
 And user sign out from customer portal
 
 Scenario:1.7 Bump next month and Login & Logout to wait for date to be updated for next billing cycle
@@ -123,6 +123,7 @@ Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
 And user processes Billing Process - Credit system internal batch for Credit
+And user verify Billed amount for Fee category
 And user verify Billed amount for Interest category
 And user verify Amount amount for Unpaid1 category
 When user verify Delinquency value for Status category is 1ST UNPAID

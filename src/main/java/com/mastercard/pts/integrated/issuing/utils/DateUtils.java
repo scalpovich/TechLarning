@@ -342,9 +342,9 @@ public class DateUtils {
 		LocalDate convertedDate1 = LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
 		LocalDate convertedDate2 = LocalDate.parse(trxDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
 		logger.info("Coverted Institution date : {} " , convertedDate1);
-		logger.info("Coverted Institution date : {} " , convertedDate2);
+		logger.info("Coverted Transaction date : {} " , convertedDate2);
 		logger.info("Diffrence Days : {}",ChronoUnit.DAYS.between(convertedDate1, convertedDate2));
-		return (int) (ChronoUnit.DAYS.between(convertedDate1, convertedDate2) - 1);
+		return (int) (ChronoUnit.DAYS.between(convertedDate1, convertedDate2));
 	}
 	
 	public static int noOfDaysInYear(String institutionDate){
