@@ -180,6 +180,11 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.noteDownAvailableLimit(type);
 	}
 	
+	public HashMap<String,BigDecimal>  noteDownCreditLimit(String type) {
+		clickCustomerCareEditLink();
+		return helpDeskPage.noteDownCreditLimit(type);
+	}
+	
 	public HashMap<String, String> noteDownRequiredValues(String deviceNumber) {
 		clickCustomerCareEditLink();
 		return helpDeskPage.noteDownRequiredValues(deviceNumber);
@@ -215,5 +220,9 @@ public class HelpdeskWorkflow {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		helpDeskPage.getDeviceStatus(device);
 		return helpDeskPage.verifyBillingDetails(device);
+	}
+	
+	public HashMap<String,BigDecimal> activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
+		return helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
 	}
 }
