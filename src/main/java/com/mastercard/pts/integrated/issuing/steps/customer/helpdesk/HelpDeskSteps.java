@@ -863,7 +863,7 @@ public class HelpDeskSteps {
 		assertThat(category +" "+ amount +BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device), equalTo(transactionAmount));
 	}
 	
-	@Then("user validate available balance for prepaid product on helpdesk")
+	@Then("user validates available balance for prepaid product on helpdesk")
 	public void whenUserVerifyPrepaidBalanceThroughHelpDesk() {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);

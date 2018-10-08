@@ -98,7 +98,7 @@ public class ConstantData {
 	
 	
 	public static final String OPEN_BATCH = "Open [O]";
-
+	
 	
 	public static final String EXISTING = "Existing";
 	public static final String PIN_REQUIRED_YES = "YES";
@@ -114,6 +114,8 @@ public class ConstantData {
 	public static final String YEARLY = "Yearly";
 	public static final String PERIODICITY = "Month [9]";
 	public static final String PERIODICITY_MONTH = "12";
+	public static final String TX_SUCESSFUL_MESSAGE = "000-Successful";
+	public static final String PRE_AUTH = "Pre-Auth Completion";
 
 	private ConstantData() {
 	}

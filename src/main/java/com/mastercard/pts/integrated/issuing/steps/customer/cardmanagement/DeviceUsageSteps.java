@@ -73,7 +73,7 @@ public class DeviceUsageSteps {
 	}
 
 
-	@Then("user validate device usage for $usageVelocity and $usageAmount")
+	@Then("user validates device usage for $usageVelocity and $usageAmount")
 	public void deviceUsageValidation(String usageVelocity, String usageAmount){
 		Device device = context.get(ContextConstants.DEVICE);
 		List<Map<String, Double>> lst = deviceUsageWorkflow.getDeviceUsageDetails(device);
