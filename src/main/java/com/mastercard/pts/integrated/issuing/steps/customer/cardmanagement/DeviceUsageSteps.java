@@ -83,10 +83,10 @@ public class DeviceUsageSteps {
 				Assert.assertEquals("Domestic Daily Transaction velocity is changed even after failed transaction", deviceUsage.getPreviousVelocityValue(), deviceUsage.getDailyVelocityDomesticUtilized());
 				Assert.assertEquals("Domestic Periodic Transaction velocity is changed even after failed transaction", deviceUsage.getPreviousVelocityValue(), deviceUsage.getPeriodVelocityDomesticUtilized());
 			} else if (type.equalsIgnoreCase(INTERNATIONAL)) {
-				Assert.assertEquals("Internationl Daily Transaction Amount is changed even after failed transaction", df2.format(Double.parseDouble(context.get(ConstantData.BILLING_AMOUNT))), df2.format(Double.parseDouble(deviceUsage.getDailyAmountIntenationalUtilized())));
-				Assert.assertEquals("Internationl Periodic Transaction Amount is changed even after failed transaction", df2.format(Double.parseDouble(context.get(ConstantData.BILLING_AMOUNT))), df2.format(Double.parseDouble(deviceUsage.getPeriodAmountIntenationalUtilized())));
-				Assert.assertEquals("Internationl Daily Transaction Velocity is changed even after failed transaction", deviceUsage.getVelocity(), deviceUsage.getDailyVelocityIntenationalUtilized());
-				Assert.assertEquals("Internationl Periodic Transaction Velocity is changed even after failed transaction", deviceUsage.getVelocity(), deviceUsage.getPeriodVelocityIntenationalUtilized());
+				Assert.assertEquals("Internationl Daily Transaction Amount is changed even after failed transaction", df2.format(deviceUsage.getPreviousTransactionValue()), df2.format(Double.parseDouble(deviceUsage.getDailyAmountIntenationalUtilized())));
+				Assert.assertEquals("Internationl Periodic Transaction Amount is changed even after failed transaction", df2.format(deviceUsage.getPreviousTransactionValue()), df2.format(Double.parseDouble(deviceUsage.getPeriodAmountIntenationalUtilized())));
+				Assert.assertEquals("Internationl Daily Transaction Velocity is changed even after failed transaction", deviceUsage.getPreviousVelocityValue(), deviceUsage.getDailyVelocityIntenationalUtilized());
+				Assert.assertEquals("Internationl Periodic Transaction Velocity is changed even after failed transaction", deviceUsage.getPreviousVelocityValue(), deviceUsage.getPeriodVelocityIntenationalUtilized());
 			} else {
 				Assert.fail("Incorrect transaction type in step");
 			}
