@@ -149,10 +149,10 @@ public class DeviceUsagePage extends AbstractBasePage {
 	public List<Map<String, Double>> getDeviceUsageDetails(Device device){
 		List<Map<String, Double>> deviceDetails = new LinkedList<>();
 		WebElementUtils.enterText(deviceNumber, device.getDeviceNumber());
-		searchButtonElement.click();
+		clickWhenClickable(searchButtonElement);
 		String[] transactionAttributes = ConstantData.LIMIT_VALIDATION_PARAMETER.split(";");
-		Map<String, Double> deviceTotalDetails = new LinkedHashMap<>();
-		Map<String, Double> deviceTransactionDetails = new LinkedHashMap<>();
+		Map<String, Double> deviceTotalDetails = new LinkedHashMap<String, Double>();
+		Map<String, Double> deviceTransactionDetails = new LinkedHashMap<String, Double>();
 		viewFirstRecord();
 		runWithinPopup("View Device Usage", () -> {
 
@@ -164,7 +164,7 @@ public class DeviceUsagePage extends AbstractBasePage {
 			deviceTotalDetails.put(transactionAttributes[4], Double.parseDouble(yearlyDebitTransactionVelocityUtilizedLbl.getText()));
 			deviceTotalDetails.put(transactionAttributes[5], Double.parseDouble(yearlyDebitTransactionAmountUtilizedLbl.getText()));
 			
-			devicetransactionUsageTabLink.click();
+			clickWhenClickable(devicetransactionUsageTabLink);
 			SimulatorUtilities.wait(500);
 			deviceTransactionDetails.putAll(getDeviceTransactionUsage(deviceTransactionDetails));
 			WebElementUtils.scrollDown(driver(), 250, 350);
@@ -182,8 +182,8 @@ public class DeviceUsagePage extends AbstractBasePage {
 		int size = Elements(DEVICE_TRANSACTION_USAGE).size();
 		for(String str : transactionAttributes){
 			double sum = 0 ;
-			for(int i=1;i<=size;i++){
-				sum = sum + Double.parseDouble(getCellTextByColumnName(i, str));
+			for(int index=1;index<=size;index++){
+				sum = sum + Double.parseDouble(getCellTextByColumnName(index, str));
 			}
 			deviceTransactionDetails.put(str, sum );
 		}

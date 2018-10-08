@@ -79,7 +79,6 @@ public class DeviceUsageSteps {
 		List<Map<String, Double>> lst = deviceUsageWorkflow.getDeviceUsageDetails(device);
 		Double velocity = lst.get(0).get(usageVelocity);
 		Double amount   = lst.get(0).get(usageAmount);
-		//Assert.assertEquals(lst.get(0),lst.get(1));
 		assertThat("Verify Device Total and Transaction Usage", lst.get(0), equalTo(lst.get(1)));
 		assertThat("Verify Device Velocity ", velocity, equalTo(device.getDeviceVelocity()));
 		assertThat("Verify Device Usage Amount", amount, equalTo(device.getDeviceAmountUsage()));
