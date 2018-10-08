@@ -48,8 +48,8 @@ public class DeviceUsage {
 	private String dailyAmountIntenationalUtilized;
 	private String recordedMCG;
 
-	public int getPreviousVelocityValue() {
-		return previousVelocityValue;
+	public String getPreviousVelocityValue() {
+		return String.valueOf(previousVelocityValue);
 	}
 
 	public void setPreviousVelocityValue(String previousVelocityValue) {
