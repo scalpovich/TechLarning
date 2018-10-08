@@ -89,6 +89,22 @@ Then validate the statement with parameters:
 |Closing Balance|
 And user sign out from customer portal
 
+Scenario:1.6.1 Bump 21st of month to charge late payment fee
+Meta:
+@TestId 
+When update institution date to 21 days
+Given user is logged in institution
+When user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+When user is logged in institution
+And user processes Pre-clearing system internal batch for Credit
+And user processes EOD-Credit system internal batch for Credit
+And user verify Billed amount for Fee category
+And user sign out from customer portal
+
 Scenario:1.7 Bump next month and Login & Logout to wait for date to be updated for next billing cycle
 Meta:
 @TestId 
@@ -107,8 +123,6 @@ Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
 And user processes Billing Process - Credit system internal batch for Credit
-And user verify Billed amount for Purchase category
-And user verify Billed amount for Fee category
 And user verify Billed amount for Interest category
 And user verify Amount amount for Unpaid1 category
 And device has "normal" status
@@ -154,7 +168,7 @@ When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
 When user check balance details through helpdesk after payment
 Then user compare balance details after full payment
-And user verify Amount amount for new Unpaid1 category
+When user verify Delinquency value for Status category is NORMAL
 And user sign out from customer portal
 
 Scenario:2.1 Bump next month and Login & Logout to wait for date to be updated for next billing
@@ -179,7 +193,6 @@ And device has "normal" status
 And user notes down required values from helpdesk for credit
 When user check balance details through helpdesk after billing
 Then user compare balance details after billing
-And user verify Amount amount for new Unpaid1 category
 When user run Statement Extract system internal batch
 And verify statement file is successfully downloaded
 Then validate the statement with parameters:

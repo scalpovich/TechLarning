@@ -892,36 +892,12 @@ public class HelpDeskSteps {
 			logger.info("Billed interest on unpaid1->" + transactionAmount);
 			context.put("Billed interest", transactionAmount);
 		} else if (device.getCategory().equalsIgnoreCase("Unpaid1")) {
-			transactionAmount = String.format("%.2f",
-					Double.valueOf(Math.round((Double.valueOf(context.get("billed interest"))
-							+ Double.valueOf(device.getTransactionAmount()) + Double.valueOf(context.get("Fee")))
-							* 100D) / 100D));
+			transactionAmount = context.get(ContextConstants.MINIMUM_PAYMENT_DUE);
 			logger.info("Unpaid1->" + transactionAmount);
-		} else if (device.getCategory().equalsIgnoreCase("new Unpaid1")) {
-			device.setCategory(category.replaceAll("new", "").trim());
-			transactionAmount = String.format("%.2f",
-					Double.valueOf(Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))
-							- Integer.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))));
-			logger.info("After paying full payment, unpaid1->" + transactionAmount);
-			context.put(ConstantData.TRANSACTION_AMOUNT,transactionAmount);
+		} else if (device.getCategory().equalsIgnoreCase("Unpaid2")) {
+			transactionAmount = context.get(ContextConstants.MINIMUM_PAYMENT_DUE);
 		}
-		 else if (device.getCategory().equalsIgnoreCase("Unpaid2")) {
-			int noOfDays = DateUtils.getDaysDifferenceBetweenTwoDates(context.get(ContextConstants.INSTITUTION_DATE),
-					context.get("transaction_date"));
-			logger.info("No of diff between Txn date and institution date for unpaid2 ->" + noOfDays);
-			Double interest = ((Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))
-					+ Double.valueOf(device.getLatePaymentFee()) * noOfDays
-							* Double.valueOf(device.getInterestOnPurcahse()))
-					/ 100) / DateUtils.noOfDaysInYear(context.get(ContextConstants.INSTITUTION_DATE));
-			logger.info("Interest Occured on unpaid2 ->" + interest);
-			interest = ((interest * 100D) / 100D) + Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))
-					+ Double.valueOf(device.getLatePaymentFee());
-			BigDecimal bd = new BigDecimal(interest.toString());
-			bd = bd.setScale(2, RoundingMode.HALF_UP);
-			transactionAmount = String.format("%.2f", bd.doubleValue());
-			logger.info("Billed interest on unpaid2->" + transactionAmount);
-			context.put(ConstantData.TRANSACTION_AMOUNT, transactionAmount);
-		}
+
 		assertThat(category + " " + amount + BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device),
 				equalTo(transactionAmount));
 	}

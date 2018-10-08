@@ -227,7 +227,8 @@ public class BatchProcessSteps {
 		GenericReport report = GenericReport.createWithProvider(provider);			
 		report.setReportUrl(batchFile.getAbsolutePath());
 		String dateOfBirth = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH).format(device.getClientDetails().getBirthDate());
-		report.setPassword(device.getClientDetails().getFirstName().substring(0,4)+""+dateOfBirth.substring(0, dateOfBirth.length()-5).replaceAll("/", ""));				
+		logger.info("passowrd for statement:{} ",device.getClientDetails().getFirstName().substring(0,4).toUpperCase()+dateOfBirth.substring(0, dateOfBirth.length()-5).replaceAll("/", "").trim());
+		report.setPassword(device.getClientDetails().getFirstName().substring(0,4).toUpperCase()+dateOfBirth.substring(0, dateOfBirth.length()-5).replaceAll("/", "").trim());				
 		for (int row = 0; row < parameterTable.getRows().size(); row++) {
 			String parameter = parameterTable.getRow(row).get(parameterTable.getHeaders().get(0));			
 			if(parameter.equals(ContextConstants.CREDIT_CARD_NUMBER_HEADER_IN_STATEMENT))

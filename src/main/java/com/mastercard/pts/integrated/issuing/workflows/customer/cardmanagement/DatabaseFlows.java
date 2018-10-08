@@ -33,14 +33,16 @@ public class DatabaseFlows {
 	}
 
 	public void updateInstituteDateToGivenDays(String date, String noOfDays) {
-
 		if (noOfDays.equalsIgnoreCase("next") || noOfDays.equalsIgnoreCase("one")) {
 			daysDifference = daysDifference + 1;
 		} else if (noOfDays.equalsIgnoreCase("three")) {
-			daysDifference=DateUtils.getNextDate(date);
-			logger.info("Diffrence Days : "+daysDifference);
+			daysDifference = DateUtils.getNextDate(date);
+			logger.info("Diffrence Days : " + daysDifference);
 			daysDifference = daysDifference + 4;
+		} else if (noOfDays.equalsIgnoreCase("21")) {
+			daysDifference = daysDifference + 20;
 		}
+
 		logger.info("Diffrence Days : " + daysDifference);
 		String queryString = "update system_codes set short_name='-" + daysDifference
 				+ "'  WHERE TYPE_ID = 'SYS_PARAM' AND code = 'BACK_DAY' AND bank_code = '" + getInstitutionCode() + "'";
