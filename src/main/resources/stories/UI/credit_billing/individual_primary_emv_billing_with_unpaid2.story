@@ -150,6 +150,7 @@ And user verify Unbilled amount for Purchase category
 And user processes Billing Process - Credit system internal batch for Credit
 And user verify Billed amount for Interest category
 And user verify Amount amount for Unpaid2 category
+When user verify Delinquency value for Status category is 2ND UNPAID
 And device has "normal" status
 And user notes down required values from helpdesk for credit
 And user run Statement Extract system internal batch
@@ -193,10 +194,8 @@ When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
 When user check balance details through helpdesk after payment
 Then user compare balance details after MAD payment
-!-- need to write comparison for MAD paymnet
-And user verify Amount amount for Unpaid1 category
-And user verify Amount amount for Unpaid2 category
-!-- need to discuss after doing MAD, will do remainig paymnet or not
+When user verify Delinquency value for Status category is 1ST UNPAID
+
 And user sign out from customer portal
 
 Scenario:2.3 Login & Logout to wait for date to be updated foe next billing

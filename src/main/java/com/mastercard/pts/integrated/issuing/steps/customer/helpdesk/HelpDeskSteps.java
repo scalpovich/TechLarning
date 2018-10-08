@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -880,12 +881,15 @@ public class HelpDeskSteps {
 			int noOfDays = DateUtils.getDaysDifferenceBetweenTwoDates(context.get(ContextConstants.INSTITUTION_DATE),
 					context.get("transaction_date"));
 			logger.info("No of diff between Txn date and institution date ->" + noOfDays);
-			double interest = ((Double.valueOf(device.getTransactionAmount())
+			Double interest = ((Double.valueOf(device.getTransactionAmount())
 					+ Double.valueOf(context.get("Fee")) * noOfDays * Double.valueOf(device.getInterestOnPurcahse()))
 					/ 100) / DateUtils.noOfDaysInYear(context.get(ContextConstants.INSTITUTION_DATE));
-			logger.info("Interest Occured ->" + interest);
-			transactionAmount = String.format("%.2f", Double.valueOf(Math.round(interest * 100D) / 100D));
-			logger.info("Billed interest->" + transactionAmount);
+			logger.info("Interest Occured on unpaid1 ->" + interest);
+			interest = (interest * 100D) / 100D;
+			BigDecimal bd = new BigDecimal(interest.toString());
+			bd = bd.setScale(2, RoundingMode.HALF_UP);
+			transactionAmount = String.format("%.2f", bd.doubleValue());
+			logger.info("Billed interest on unpaid1->" + transactionAmount);
 			context.put("Billed interest", transactionAmount);
 		} else if (device.getCategory().equalsIgnoreCase("Unpaid1")) {
 			transactionAmount = String.format("%.2f",
@@ -899,6 +903,24 @@ public class HelpDeskSteps {
 					Double.valueOf(Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))
 							- Integer.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))));
 			logger.info("After paying full payment, unpaid1->" + transactionAmount);
+			context.put(ConstantData.TRANSACTION_AMOUNT,transactionAmount);
+		}
+		 else if (device.getCategory().equalsIgnoreCase("Unpaid2")) {
+			int noOfDays = DateUtils.getDaysDifferenceBetweenTwoDates(context.get(ContextConstants.INSTITUTION_DATE),
+					context.get("transaction_date"));
+			logger.info("No of diff between Txn date and institution date for unpaid2 ->" + noOfDays);
+			Double interest = ((Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))
+					+ Double.valueOf(device.getLatePaymentFee()) * noOfDays
+							* Double.valueOf(device.getInterestOnPurcahse()))
+					/ 100) / DateUtils.noOfDaysInYear(context.get(ContextConstants.INSTITUTION_DATE));
+			logger.info("Interest Occured on unpaid2 ->" + interest);
+			interest = ((interest * 100D) / 100D) + Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))
+					+ Double.valueOf(device.getLatePaymentFee());
+			BigDecimal bd = new BigDecimal(interest.toString());
+			bd = bd.setScale(2, RoundingMode.HALF_UP);
+			transactionAmount = String.format("%.2f", bd.doubleValue());
+			logger.info("Billed interest on unpaid2->" + transactionAmount);
+			context.put(ConstantData.TRANSACTION_AMOUNT, transactionAmount);
 		}
 		assertThat(category + " " + amount + BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device),
 				equalTo(transactionAmount));
