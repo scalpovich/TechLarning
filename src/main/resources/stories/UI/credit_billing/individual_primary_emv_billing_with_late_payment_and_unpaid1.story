@@ -125,6 +125,7 @@ And user processes EOD-Credit system internal batch for Credit
 And user processes Billing Process - Credit system internal batch for Credit
 And user verify Billed amount for Interest category
 And user verify Amount amount for Unpaid1 category
+When user verify Delinquency value for Status category is 1ST UNPAID
 And device has "normal" status
 And user notes down required values from helpdesk for credit
 And user run Statement Extract system internal batch
