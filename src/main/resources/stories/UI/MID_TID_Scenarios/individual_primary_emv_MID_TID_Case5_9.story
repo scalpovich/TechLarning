@@ -50,7 +50,7 @@ And user sign out from customer portal
 
 Scenario: 1.5 Delete Fifth Combination of MID_TID Blocking rule
 Given user is logged in institution
-When user deletes MID TID Blocking combination
+When user deletes MID TID Blocking for Combination 5
 And user sign out from customer portal
 
 Scenario: 1.6 Perform EMV_PURCHASE Authorization transaction
@@ -80,7 +80,7 @@ And user sign out from customer portal
 
 Scenario: 2.0 Delete Seventh Combination of MID_TID Blocking rule
 Given user is logged in institution
-When user deletes MID TID Blocking combination
+When user deletes MID TID Blocking for Combination 7
 And user sign out from customer portal
 
 Scenario: 2.1 Perform EMV_PURCHASE Authorization transaction
@@ -110,7 +110,7 @@ And user sign out from customer portal
 
 Scenario: 2.5 Delete Eight Combination of MID_TID Blocking rule
 Given user is logged in institution
-When user deletes MID TID Blocking combination
+When user deletes MID TID Blocking for Combination 8
 And user sign out from customer portal
 
 Scenario: 2.6 Perform EMV_PURCHASE Authorization transaction
@@ -140,7 +140,7 @@ And user sign out from customer portal
 
 Scenario: 3.0 Delete Ninth Combination of MID_TID Blocking rule
 Given user is logged in institution
-When user deletes MID TID Blocking combination
+When user deletes MID TID Blocking for Combination 9
 And user sign out from customer portal
 
 Scenario: 3.1 Perform EMV_PURCHASE Authorization transaction
