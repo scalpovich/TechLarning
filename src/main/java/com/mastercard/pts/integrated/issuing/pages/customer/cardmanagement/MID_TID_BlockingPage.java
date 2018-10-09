@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -8,6 +9,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MID_
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -100,6 +102,8 @@ public class MID_TID_BlockingPage extends AbstractBasePage {
 
 
 	private void selectValidCombinationForBlocking(String caseNumber, MID_TID_Blocking details){
+		logger.info("Merchant Id {}",details.getMerchantID());
+		logger.info("terminal Id {}",details.getTerminalID());
 		switch(caseNumber){
 		case "1" :
 			enterMCC(details.getMcc());
@@ -168,8 +172,64 @@ public class MID_TID_BlockingPage extends AbstractBasePage {
 		verifyOperationStatus();
 	}
 	
-	public void deleteRecord(){
-		deleteAllRecord();
-		
+	public void deleteRecord(String combination, MID_TID_Blocking details){
+		deleteRecordAsPerCase(combination,details);
 	}
+	
+	protected void deleteRecordAsPerCase(String caseNumber, MID_TID_Blocking details) {
+		int rowCount = Elements("//*[@class='dataview']/tbody[1]//tr").size();
+		
+		switch (caseNumber) {
+		case "1":
+		case "10":
+		case "11":
+			logger.info("Terminal Id {}",details.getTerminalID());
+			for (int i = 1; i <=rowCount; i++) {
+				String terminalId = getCellTextByColumnName(i, TERMINAL_ID);
+				if (details.getTerminalID().equalsIgnoreCase(terminalId)) {
+					deleteRecord(i);
+					break;
+				}
+			}
+			break;
+
+		case "2":
+		case "3":
+		case "4":
+		case "5":
+		case "6":
+		case "7":
+		case "9	":
+			logger.info("Merchant Id {}",details.getMerchantID());
+			for (int i = 1; i <=rowCount; i++) {
+				String merchantID = getCellTextByColumnName(i, MERCHANT_ID);
+				if (details.getMerchantID().equalsIgnoreCase(merchantID)) {
+					deleteRecord(i);
+					break;
+				}
+			}
+			break;
+		case "8":
+			for (int i = 1; i <=rowCount; i++) {
+				String merchantID = getCellTextByColumnName(i, MERCHANT_ID);
+				String terminalId = getCellTextByColumnName(i, TERMINAL_ID);
+				if (("-").equalsIgnoreCase(merchantID) && ("-").equalsIgnoreCase(terminalId)) {
+					deleteRecord(i);
+					break;
+				}
+			}
+		break;
+		
+		default:
+		logger.info("Invalid Case Provided {}", caseNumber);
+
+		}
+	}
+
+	private void deleteRecord(int index) {
+		Element("//*[@class='dataview']//tbody//tr[" + index + "]//td[5]//a").click();
+		SimulatorUtilities.wait(1000);
+		acceptPopup();
+	}
+
 }

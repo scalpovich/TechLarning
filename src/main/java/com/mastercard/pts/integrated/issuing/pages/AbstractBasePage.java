@@ -47,6 +47,7 @@ import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MID_TID_Blocking;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -85,7 +86,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private static final String WALLET_NUMBER = "Wallet number: {}";
 	
 	public static final String ERROR_MESSAGE = "Error: {}";
-
+	
+	public static final String TERMINAL_ID = "Terminal Id";
+	
+	public static final String MERCHANT_ID = "Merchant Id";
+	
 	public static final String RESPONSE_MESSAGE	 = "Response message: {}";
 
 	public static final String CONTACT_INFORMATION_EXPECTED = "Contact Information";
@@ -460,19 +465,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickWhenClickableDoNotWaitForWicket(firstRowDeleteLink);
 	}
 
-	protected void deleteAllRecord() {
-		int rowCount = driver().findElements(By.xpath("//*[@class='dataview']/tbody[1]//tr")).size();
-		
-		for (int i = 0; i < rowCount; i++) {
-			WebElementUtils.visibilityOf(firstRowDeleteLink);
-			logger.info(String.valueOf(rowCount));
-			waitForWicket();
-			clickWhenClickableDoNotWaitForWicket(firstRowDeleteLink);
-			SimulatorUtilities.wait(1000);
-			acceptPopup();
-		}
-
-	}
+	
 
 	/**
 	 * Returns trimmed cell text by row number and column name

@@ -592,9 +592,9 @@ public class TransactionSteps {
 		transactionWorkflow.addMID_TID_Blocking(type, midtidBlocking);
 	}
 	
-	@When("user deletes MID TID Blocking combination")
-	public void userCreatesMIDTIDBlockingForCombination(){
-		transactionWorkflow.deleteMID_TID_Blocking();
+	@When("user deletes MID TID Blocking for Combination $type")
+	public void userDeleteMIDTIDBlockingForCombination(String type){
+		transactionWorkflow.deleteMID_TID_Blocking(type, midtidBlocking);
 	}
 
  private void setDEElementsForMIDTID (Transaction transactionData)

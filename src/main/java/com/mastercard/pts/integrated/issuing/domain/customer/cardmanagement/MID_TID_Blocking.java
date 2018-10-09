@@ -39,7 +39,7 @@ public class MID_TID_Blocking {
 		MID_TID_Blocking plan = new MID_TID_Blocking();
 		plan.setNetwork(provider.getString(NETWORK));
 		plan.setProductType(provider.getString(PRODUCT_TYPE));
-		plan.setTerminalID(provider.getString(TERMINAL_ID));
+		plan.setTerminalID(MiscUtils.generateRandomNumberAsString(8));
 		plan.setMerchantID(MiscUtils.generateRandomNumberAsString(15));
 		plan.setMcc(provider.getString(MCC_CODE_VALUE));
 		plan.setAcquiringCountryCode(provider.getString(ACQUIRING_COUNTRY_CODE));

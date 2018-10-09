@@ -280,9 +280,4 @@ public class ProgramSetupWorkflow {
 		MID_TID_BlockingPage page = navigator.navigateToPage(MID_TID_BlockingPage.class);
 		page.addBlockingMID_TID(combination,details);
 	}
-	
-	public void deleteMID_TID_Blocking(){
-		MID_TID_BlockingPage page = navigator.navigateToPage(MID_TID_BlockingPage.class);
-		page.deleteRecord();
-	}
 }
