@@ -607,10 +607,10 @@ public class TransactionSteps {
 		case "2" :
 			transactionData.setDeKeyValuePairDynamic("019", midtidBlocking.getAcquiringCountryCode());
 			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
-			transactionData.setDeKeyValuePairDynamic("022.01", midtidBlocking.getPosEntryMode());
+			transactionData.setDeKeyValuePairDynamic("022.01", ConstantData.POS_TERMIAL_VALUE);
 			break;
 		case "3" :
-			transactionData.setDeKeyValuePairDynamic("022.01", midtidBlocking.getPosEntryMode());
+			transactionData.setDeKeyValuePairDynamic("022.01", ConstantData.POS_TERMIAL_VALUE);
 			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
 			break;
 		case "4": case "6" : 
